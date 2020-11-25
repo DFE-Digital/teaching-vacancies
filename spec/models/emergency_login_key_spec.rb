@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe EmergencyLoginKey, type: :model do
-  it { should belong_to(:user) }
+  it { should belong_to(:publisher) }
 
   describe "validations" do
     context "a new key" do

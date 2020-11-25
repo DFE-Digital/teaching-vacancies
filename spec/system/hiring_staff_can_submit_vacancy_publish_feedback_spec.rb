@@ -83,7 +83,7 @@ RSpec.describe "Vacancy publish feedback" do
 
       expect(feedback).to_not be_nil
       expect(feedback.comment).to eq("Perfect!")
-      expect(feedback.user).to eq(User.find_by(oid: session_id))
+      expect(feedback.publisher).to eq(Publisher.find_by(oid: session_id))
       expect(feedback.email).to eq("user@email.com")
     end
 

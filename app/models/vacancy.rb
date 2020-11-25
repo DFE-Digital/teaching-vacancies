@@ -39,7 +39,7 @@ class Vacancy < ApplicationRecord
     hired_dont_know: 6,
   }
 
-  belongs_to :publisher_user, class_name: "User", optional: true
+  belongs_to :publisher, optional: true
   belongs_to :publisher_organisation, class_name: "Organisation", optional: true
 
   has_one :publish_feedback, class_name: "VacancyPublishFeedback"

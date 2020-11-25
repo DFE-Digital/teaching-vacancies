@@ -21,23 +21,23 @@ RSpec.describe UpdateDsiUsersInDb do
           )
       end
 
-      expect { update_dfe_sign_in_users.run! }.to change { User.all.size }.by(3)
+      expect { update_dfe_sign_in_users.run! }.to change { Publisher.all.size }.by(3)
 
-      user_with_one_school = User.find_by(email: "foo@example.com")
+      user_with_one_school = Publisher.find_by(email: "foo@example.com")
       expect(user_with_one_school.dsi_data["school_urns"]).to eq(%w[111111])
       expect(user_with_one_school.dsi_data["trust_uids"]).to eq([])
       expect(user_with_one_school.dsi_data["la_codes"]).to eq([])
       expect(user_with_one_school.given_name).to eq("Roger")
       expect(user_with_one_school.family_name).to eq("Johnson")
 
-      user_with_multiple_orgs = User.find_by(email: "bar@example.com")
+      user_with_multiple_orgs = Publisher.find_by(email: "bar@example.com")
       expect(user_with_multiple_orgs.dsi_data["school_urns"]).to eq(%w[333333 555555])
       expect(user_with_multiple_orgs.dsi_data["trust_uids"]).to eq(%w[222222 444444])
       expect(user_with_one_school.dsi_data["la_codes"]).to eq([])
       expect(user_with_multiple_orgs.given_name).to eq("Alice")
       expect(user_with_multiple_orgs.family_name).to eq("Robertson")
 
-      local_authority_user = User.find_by(email: "baz@example.com")
+      local_authority_user = Publisher.find_by(email: "baz@example.com")
       expect(local_authority_user.dsi_data["school_urns"]).to eq([])
       expect(local_authority_user.dsi_data["trust_uids"]).to eq([])
       expect(local_authority_user.dsi_data["la_codes"]).to eq(%w[813])

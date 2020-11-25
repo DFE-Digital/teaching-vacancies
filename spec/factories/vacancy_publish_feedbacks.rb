@@ -3,13 +3,13 @@ FactoryBot.define do
     rating { 1 }
     comment { "Some feedback text" }
     vacancy
-    user
+    publisher
     user_participation_response { :not_interested }
     email { nil }
 
-    trait :old_with_no_user do
+    trait :old_with_no_publisher do
       to_create { |instance| instance.save(validate: false) }
-      user { nil }
+      publisher { nil }
     end
   end
 end

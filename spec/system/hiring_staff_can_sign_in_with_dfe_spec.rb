@@ -128,7 +128,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
 
   context "with DSI data including a school group (trust or local authority) that the school belongs to" do
     let(:dsi_data) { { "trust_uids" => %w[14323], "school_urns" => %w[246757 953341 122792], "la_codes" => %w[323] } }
-    let!(:user) { create(:user, email: dsi_email_address, dsi_data: dsi_data) }
+    let!(:user) { create(:publisher, email: dsi_email_address, dsi_data: dsi_data) }
     let(:school) { create(:school, urn: "246757") }
 
     before do
@@ -171,10 +171,10 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
 
   context "with valid credentials that match a Trust" do
     let(:organisation) { create(:trust) }
-    let(:user_preference) { instance_double(UserPreference) }
+    let(:publisher_preference) { instance_double(PublisherPreference) }
 
     before do
-      allow(UserPreference).to receive(:find_by).and_return(user_preference)
+      allow(PublisherPreference).to receive(:find_by).and_return(publisher_preference)
 
       stub_authentication_step(school_urn: nil, trust_uid: organisation.uid, email: dsi_email_address)
       stub_authorisation_step
@@ -195,7 +195,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
     end
 
     context "when user preferences have not been set" do
-      let(:user_preference) { nil }
+      let(:publisher_preference) { nil }
 
       scenario "it redirects the sign in page to the managed organisations user preference page" do
         expect(current_path).to eql(organisation_managed_organisations_path)
@@ -210,7 +210,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
 
   context "with valid credentials that match a Local Authority" do
     let(:organisation) { create(:local_authority, local_authority_code: "100") }
-    let(:user_preference) { instance_double(UserPreference) }
+    let(:publisher_preference) { instance_double(PublisherPreference) }
     let(:la_user_allowed?) { true }
 
     context "LocalAuthorityAccessFeature enabled" do
@@ -218,7 +218,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
         allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(true)
         allow(ALLOWED_LOCAL_AUTHORITIES)
           .to receive(:include?).with(organisation.local_authority_code).and_return(la_user_allowed?)
-        allow(UserPreference).to receive(:find_by).and_return(user_preference)
+        allow(PublisherPreference).to receive(:find_by).and_return(publisher_preference)
 
         stub_authentication_step(school_urn: nil, la_code: organisation.local_authority_code, email: dsi_email_address)
         stub_authorisation_step
@@ -239,7 +239,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
       end
 
       context "when user preferences have not been set" do
-        let(:user_preference) { nil }
+        let(:publisher_preference) { nil }
 
         scenario "it redirects the sign in page to the managed organisations user preference page" do
           expect(current_path).to eql(organisation_managed_organisations_path)

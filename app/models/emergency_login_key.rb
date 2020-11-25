@@ -1,5 +1,5 @@
 class EmergencyLoginKey < ApplicationRecord
-  belongs_to :user
+  belongs_to :publisher
   validates :not_valid_after, presence: true
 
   def expired?

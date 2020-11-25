@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Hiring staff session" do
   let(:school) { create(:school) }
   let(:session_id) { "session_id" }
-  let(:current_user) { User.find_by(oid: session_id) }
+  let(:current_publisher) { Publisher.find_by(oid: session_id) }
   before do
     allow(AuthenticationFallback).to receive(:enabled?).and_return(false)
     stub_hiring_staff_auth(urn: school.urn, session_id: session_id)

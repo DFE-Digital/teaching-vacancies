@@ -860,14 +860,14 @@ RSpec.describe "Creating a vacancy" do
 
     describe "#publish" do
       scenario "adds the current user as a contact for feedback on the published vacancy" do
-        current_user = User.find_by(oid: session_id)
+        current_publisher = Publisher.find_by(oid: session_id)
         vacancy = create(:vacancy, :draft)
         vacancy.organisation_vacancies.create(organisation: school)
 
         visit organisation_job_review_path(vacancy.id)
         click_on I18n.t("buttons.submit_job_listing")
 
-        expect(vacancy.reload.publisher_user_id).to eq(current_user.id)
+        expect(vacancy.reload.publisher_id).to eq(current_publisher.id)
       end
 
       scenario "view the published listing as a jobseeker" do

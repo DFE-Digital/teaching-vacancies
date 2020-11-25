@@ -20,32 +20,32 @@ class HiringStaff::BaseController < ApplicationController
   end
 
   def check_terms_and_conditions
-    redirect_to terms_and_conditions_path unless current_user&.accepted_terms_and_conditions?
+    redirect_to terms_and_conditions_path unless current_publisher&.accepted_terms_and_conditions?
   end
 
-  def current_user
+  def current_publisher
     return if current_session_id.blank?
 
-    @current_user ||= User.find_or_create_by(oid: current_session_id)
+    @current_publisher ||= Publisher.find_or_create_by(oid: current_session_id)
   end
 
-  def current_user_preferences
+  def current_publisher_preferences
     return unless current_organisation.is_a?(SchoolGroup)
 
-    UserPreference.find_by(user_id: current_user.id, school_group_id: current_organisation.id)
+    PublisherPreference.find_by(publisher_id: current_publisher.id, school_group_id: current_organisation.id)
   end
 
   def check_user_last_activity_at
-    return redirect_to logout_endpoint if current_user&.last_activity_at.blank?
+    return redirect_to logout_endpoint if current_publisher&.last_activity_at.blank?
 
-    if Time.current > (current_user.last_activity_at + TIMEOUT_PERIOD)
+    if Time.current > (current_publisher.last_activity_at + TIMEOUT_PERIOD)
       session[:signing_out_for_inactivity] = true
       redirect_to logout_endpoint
     end
   end
 
   def update_user_last_activity_at
-    current_user&.update(last_activity_at: Time.current)
+    current_publisher&.update(last_activity_at: Time.current)
   end
 
   def logout_endpoint
@@ -56,7 +56,7 @@ class HiringStaff::BaseController < ApplicationController
     url.to_s
   end
 
-  def redirect_signed_in_users
+  def redirect_signed_in_publishers
     redirect_to organisation_path if current_organisation.present?
   end
 

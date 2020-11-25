@@ -67,10 +67,10 @@ ActiveRecord::Schema.define(version: 2020_11_24_120747) do
 
   create_table "emergency_login_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "not_valid_after", null: false
-    t.uuid "user_id"
+    t.uuid "publisher_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_emergency_login_keys_on_user_id"
+    t.index ["publisher_id"], name: "index_emergency_login_keys_on_publisher_id"
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
@@ -182,6 +182,26 @@ ActiveRecord::Schema.define(version: 2020_11_24_120747) do
     t.index ["urn"], name: "index_organisations_on_urn"
   end
 
+  create_table "publisher_preferences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "managed_organisations"
+    t.uuid "publisher_id"
+    t.uuid "school_group_id"
+    t.string "managed_school_ids", array: true
+    t.index ["publisher_id"], name: "index_publisher_preferences_on_publisher_id"
+    t.index ["school_group_id"], name: "index_publisher_preferences_on_school_group_id"
+  end
+
+  create_table "publishers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "oid"
+    t.datetime "accepted_terms_at"
+    t.string "email"
+    t.jsonb "dsi_data"
+    t.datetime "last_activity_at"
+    t.string "family_name"
+    t.string "given_name"
+    t.index ["oid"], name: "index_publishers_on_oid", unique: true
+  end
+
   create_table "school_group_memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "school_id"
     t.uuid "school_group_id"
@@ -226,26 +246,6 @@ ActiveRecord::Schema.define(version: 2020_11_24_120747) do
     t.index ["subscription_id"], name: "index_unsubscribe_feedbacks_on_subscription_id"
   end
 
-  create_table "user_preferences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "managed_organisations"
-    t.uuid "user_id"
-    t.uuid "school_group_id"
-    t.string "managed_school_ids", array: true
-    t.index ["school_group_id"], name: "index_user_preferences_on_school_group_id"
-    t.index ["user_id"], name: "index_user_preferences_on_user_id"
-  end
-
-  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "oid"
-    t.datetime "accepted_terms_at"
-    t.string "email"
-    t.jsonb "dsi_data"
-    t.datetime "last_activity_at"
-    t.string "family_name"
-    t.string "given_name"
-    t.index ["oid"], name: "index_users_on_oid", unique: true
-  end
-
   create_table "vacancies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "job_title"
     t.string "slug", null: false
@@ -274,7 +274,7 @@ ActiveRecord::Schema.define(version: 2020_11_24_120747) do
     t.integer "listed_elsewhere"
     t.integer "hired_status"
     t.datetime "stats_updated_at"
-    t.uuid "publisher_user_id"
+    t.uuid "publisher_id"
     t.datetime "expires_at"
     t.string "supporting_documents"
     t.string "salary"
@@ -295,8 +295,8 @@ ActiveRecord::Schema.define(version: 2020_11_24_120747) do
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["initially_indexed"], name: "index_vacancies_on_initially_indexed"
+    t.index ["publisher_id"], name: "index_vacancies_on_publisher_id"
     t.index ["publisher_organisation_id"], name: "index_vacancies_on_publisher_organisation_id"
-    t.index ["publisher_user_id"], name: "index_vacancies_on_publisher_user_id"
   end
 
   create_table "vacancy_publish_feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -305,18 +305,18 @@ ActiveRecord::Schema.define(version: 2020_11_24_120747) do
     t.text "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "user_id"
+    t.uuid "publisher_id"
     t.string "email"
     t.integer "user_participation_response"
-    t.index ["user_id"], name: "index_vacancy_publish_feedbacks_on_user_id"
+    t.index ["publisher_id"], name: "index_vacancy_publish_feedbacks_on_publisher_id"
     t.index ["vacancy_id"], name: "index_vacancy_publish_feedbacks_on_vacancy_id", unique: true
   end
 
   add_foreign_key "documents", "vacancies"
-  add_foreign_key "emergency_login_keys", "users"
+  add_foreign_key "emergency_login_keys", "publishers"
   add_foreign_key "job_alert_feedbacks", "subscriptions"
+  add_foreign_key "publisher_preferences", "publishers"
   add_foreign_key "unsubscribe_feedbacks", "subscriptions"
-  add_foreign_key "user_preferences", "users"
   add_foreign_key "vacancies", "organisations", column: "publisher_organisation_id"
-  add_foreign_key "vacancies", "users", column: "publisher_user_id"
+  add_foreign_key "vacancies", "publishers"
 end

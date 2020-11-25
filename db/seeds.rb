@@ -139,83 +139,83 @@ expired_two.save(validate: false)
 Vacancy.index.clear_index
 Vacancy.reindex!
 
-User.create(oid: "899808DB-9038-4779-A20A-9E47B9DB99F9",
-            email: "alex.bowen@digital.education.gov.uk",
-            dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
-            family_name: "Bowen",
-            given_name: "Alex")
+Publisher.create(oid: "899808DB-9038-4779-A20A-9E47B9DB99F9",
+                 email: "alex.bowen@digital.education.gov.uk",
+                 dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
+                 family_name: "Bowen",
+                 given_name: "Alex")
 
-User.create(oid: "B553A9A4-869B-44FA-8146-D35657EAD590",
-            email: "ben.mitchell@digital.education.gov.uk",
-            dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
-            family_name: "Mitchell",
-            given_name: "Ben")
+Publisher.create(oid: "B553A9A4-869B-44FA-8146-D35657EAD590",
+                 email: "ben.mitchell@digital.education.gov.uk",
+                 dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
+                 family_name: "Mitchell",
+                 given_name: "Ben")
 
-User.create(oid: "ED61B414-EFE4-4B32-82BC-FC9751F8443B",
-            email: "cesidio.dilanda@digital.education.gov.uk",
-            dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
-            family_name: "Di Landa",
-            given_name: "Cesidio")
+Publisher.create(oid: "ED61B414-EFE4-4B32-82BC-FC9751F8443B",
+                 email: "cesidio.dilanda@digital.education.gov.uk",
+                 dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
+                 family_name: "Di Landa",
+                 given_name: "Cesidio")
 
-User.create(oid: "5A21B414-EFE4-4B32-82BC-FC9751F841A5",
-            email: "christian.sutter@digital.education.gov.uk",
-            dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
-            family_name: "Sutter",
-            given_name: "Christian")
+Publisher.create(oid: "5A21B414-EFE4-4B32-82BC-FC9751F841A5",
+                 email: "christian.sutter@digital.education.gov.uk",
+                 dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
+                 family_name: "Sutter",
+                 given_name: "Christian")
 
-User.create(oid: "A120A4FB-B773-4336-9BB5-CDBD1C977A2E",
-            email: "chris.taylor@digital.education.gov.uk",
-            dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
-            family_name: "Taylor",
-            given_name: "Chris")
+Publisher.create(oid: "A120A4FB-B773-4336-9BB5-CDBD1C977A2E",
+                 email: "chris.taylor@digital.education.gov.uk",
+                 dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
+                 family_name: "Taylor",
+                 given_name: "Chris")
 
-User.create(oid: "421542E6-ED96-4656-B61F-A06D8D487C07",
-            email: "colin.saliceti@digital.education.gov.uk",
-            dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
-            family_name: "Saliceti",
-            given_name: "Colin")
+Publisher.create(oid: "421542E6-ED96-4656-B61F-A06D8D487C07",
+                 email: "colin.saliceti@digital.education.gov.uk",
+                 dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
+                 family_name: "Saliceti",
+                 given_name: "Colin")
 
-User.create(oid: "897A6EE6-83D2-43F2-9E71-22B106541C94",
-            email: "connor.mcquillan@digital.education.gov.uk",
-            dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
-            family_name: "McQuillan",
-            given_name: "Connor")
+Publisher.create(oid: "897A6EE6-83D2-43F2-9E71-22B106541C94",
+                 email: "connor.mcquillan@digital.education.gov.uk",
+                 dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
+                 family_name: "McQuillan",
+                 given_name: "Connor")
 
-User.create(oid: "B81FC38C-4122-4BCE-9F1D-8B1A328FA4D8",
-            email: "david.mears@digital.education.gov.uk",
-            dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
-            family_name: "Mears",
-            given_name: "David")
+Publisher.create(oid: "B81FC38C-4122-4BCE-9F1D-8B1A328FA4D8",
+                 email: "david.mears@digital.education.gov.uk",
+                 dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
+                 family_name: "Mears",
+                 given_name: "David")
 
-User.create(oid: "DF97F25C-3A3E-4655-B7D3-5CDBDCBBBC69",
-            email: "joseph.hull@digital.education.gov.uk",
-            dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
-            family_name: "Hull",
-            given_name: "Joseph")
+Publisher.create(oid: "DF97F25C-3A3E-4655-B7D3-5CDBDCBBBC69",
+                 email: "joseph.hull@digital.education.gov.uk",
+                 dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
+                 family_name: "Hull",
+                 given_name: "Joseph")
 
-User.create(oid: "CA300D6A-4FC1-4C1E-97E5-D6BD4FDB80D9",
-            email: "judith.thrasher@digital.education.gov.uk",
-            dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
-            family_name: "Thrasher",
-            given_name: "Judith")
+Publisher.create(oid: "CA300D6A-4FC1-4C1E-97E5-D6BD4FDB80D9",
+                 email: "judith.thrasher@digital.education.gov.uk",
+                 dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
+                 family_name: "Thrasher",
+                 given_name: "Judith")
 
-User.create(oid: "EC3312BA-E33B-4791-A815-4D1907DD578E",
-            email: "mili.malde@digital.education.gov.uk",
-            dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
-            family_name: "Malde",
-            given_name: "Mili")
+Publisher.create(oid: "EC3312BA-E33B-4791-A815-4D1907DD578E",
+                 email: "mili.malde@digital.education.gov.uk",
+                 dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
+                 family_name: "Malde",
+                 given_name: "Mili")
 
-User.create(oid: "B5ECCE49-634C-4212-AC55-07F5C7BE74C2",
-            email: "nick.romney@digital.education.gov.uk",
-            dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
-            family_name: "Romney",
-            given_name: "Nick")
+Publisher.create(oid: "B5ECCE49-634C-4212-AC55-07F5C7BE74C2",
+                 email: "nick.romney@digital.education.gov.uk",
+                 dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
+                 family_name: "Romney",
+                 given_name: "Nick")
 
-User.create(oid: "7AEC8E8D-6036-4E6E-92A4-800E381A12E0",
-            email: "valentine.carter@digital.education.gov.uk",
-            dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
-            family_name: "Carter",
-            given_name: "Valentine")
+Publisher.create(oid: "7AEC8E8D-6036-4E6E-92A4-800E381A12E0",
+                 email: "valentine.carter@digital.education.gov.uk",
+                 dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
+                 family_name: "Carter",
+                 given_name: "Valentine")
 
 Jobseeker.create(email: "jobseeker@example.com",
                  password: "password",

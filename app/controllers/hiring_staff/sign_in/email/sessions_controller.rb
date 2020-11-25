@@ -4,11 +4,11 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
   skip_before_action :check_session
   skip_before_action :check_terms_and_conditions
 
-  before_action :redirect_signed_in_users,
+  before_action :redirect_signed_in_publishers,
                 only: %i[new create check_your_email choose_organisation]
   before_action :redirect_for_dsi_authentication,
                 only: %i[new create check_your_email change_organisation choose_organisation]
-  before_action :redirect_unauthorised_users, only: %i[create]
+  before_action :redirect_unauthorised_publishers, only: %i[create]
 
   def new; end
 
@@ -24,12 +24,12 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
   end
 
   def check_your_email
-    user = User.find_by(email: params.dig(:user, :email).downcase.strip)
-    send_login_key(user: user) if user
+    publisher = Publisher.find_by(email: params.dig(:publisher, :email).downcase.strip)
+    send_login_key(publisher: publisher) if publisher
   end
 
   def change_organisation
-    key = generate_login_key(user: current_user)
+    key = generate_login_key(publisher: current_publisher)
     session.destroy
     redirect_to auth_email_choose_organisation_path(login_key: key.id)
   end
@@ -83,39 +83,39 @@ private
     end
   end
 
-  def send_login_key(user:)
+  def send_login_key(publisher:)
     AuthenticationFallbackMailer.sign_in_fallback(
-      login_key: generate_login_key(user: user),
-      email: user.email,
+      login_key: generate_login_key(publisher: publisher),
+      email: publisher.email,
     ).deliver_later
   end
 
-  def generate_login_key(user:)
-    user.emergency_login_keys.create(not_valid_after: Time.current + EMERGENCY_LOGIN_KEY_DURATION)
+  def generate_login_key(publisher:)
+    publisher.emergency_login_keys.create(not_valid_after: Time.current + EMERGENCY_LOGIN_KEY_DURATION)
   end
 
   def redirect_for_dsi_authentication
     redirect_to new_identifications_path unless AuthenticationFallback.enabled?
   end
 
-  def redirect_unauthorised_users
-    redirect_to new_auth_email_path, notice: I18n.t("hiring_staff.temp_login.not_authorised") unless user_authorised?
+  def redirect_unauthorised_publishers
+    redirect_to new_auth_email_path, notice: I18n.t("hiring_staff.temp_login.not_authorised") unless publisher_authorised?
   end
 
-  def user_authorised?
-    user = begin
-             User.find_by(oid: session.to_h["session_id"])
-           rescue StandardError
-             nil
-           end
+  def publisher_authorised?
+    publisher = begin
+                  Publisher.find_by(oid: session.to_h["session_id"])
+                rescue StandardError
+                  nil
+                end
 
-    allowed_user? &&
-      (user&.dsi_data&.dig("la_codes")&.include?(get_la_code) ||
-       user&.dsi_data&.dig("trust_uids")&.include?(get_uid) ||
-       user&.dsi_data&.dig("school_urns")&.include?(get_urn))
+    allowed_publisher? &&
+      (publisher&.dsi_data&.dig("la_codes")&.include?(get_la_code) ||
+       publisher&.dsi_data&.dig("trust_uids")&.include?(get_uid) ||
+       publisher&.dsi_data&.dig("school_urns")&.include?(get_urn))
   end
 
-  def allowed_user?
+  def allowed_publisher?
     get_urn.present? || get_uid.present? || (get_la_code.present? &&
       (Rails.env.staging? || Rails.env.development? || ALLOWED_LOCAL_AUTHORITIES.include?(get_la_code)))
   end

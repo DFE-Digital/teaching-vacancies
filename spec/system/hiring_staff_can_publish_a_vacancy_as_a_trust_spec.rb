@@ -11,7 +11,7 @@ RSpec.describe "Creating a vacancy" do
     SchoolGroupMembership.find_or_create_by(school_id: school_1.id, school_group_id: school_group.id)
     SchoolGroupMembership.find_or_create_by(school_id: school_2.id, school_group_id: school_group.id)
     SchoolGroupMembership.find_or_create_by(school_id: school_3.id, school_group_id: school_group.id)
-    allow(UserPreference).to receive(:find_by).and_return(instance_double(UserPreference))
+    allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference))
     stub_hiring_staff_auth(uid: school_group.uid, session_id: session_id)
   end
 

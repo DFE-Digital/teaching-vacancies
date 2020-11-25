@@ -4,7 +4,7 @@ RSpec.describe "Hiring staff can set managed organisations user preferences" do
   let(:school_1) { create(:school, name: "Happy Rainbows School") }
   let(:school_2) { create(:school, name: "Dreary Grey School") }
   let(:school_3) { create(:school, :closed, name: "Closed School") }
-  let(:user_preference) { UserPreference.last }
+  let(:publisher_preference) { PublisherPreference.last }
 
   before do
     allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(true)
@@ -60,7 +60,7 @@ RSpec.describe "Hiring staff can set managed organisations user preferences" do
       click_on I18n.t("buttons.continue")
 
       expect(page.current_path).to eql(organisation_path)
-      expect(user_preference.managed_school_ids).to eql([school_group.id, school_1.id])
+      expect(publisher_preference.managed_school_ids).to eql([school_group.id, school_1.id])
     end
 
     scenario "it allows school group users to select to manage all jobs" do
@@ -77,8 +77,8 @@ RSpec.describe "Hiring staff can set managed organisations user preferences" do
       click_on I18n.t("buttons.continue")
 
       expect(page.current_path).to eql(organisation_path)
-      expect(user_preference.managed_organisations).to eql("all")
-      expect(user_preference.managed_school_ids).to eql([])
+      expect(publisher_preference.managed_organisations).to eql("all")
+      expect(publisher_preference.managed_school_ids).to eql([])
     end
   end
 

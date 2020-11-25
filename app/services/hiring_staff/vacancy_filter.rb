@@ -1,10 +1,10 @@
 class HiringStaff::VacancyFilter
   attr_reader :managed_school_ids, :managed_organisations
 
-  def initialize(user, school_group)
-    @user_preference = UserPreference.find_or_initialize_by(user: user, school_group: school_group)
-    @managed_school_ids = @user_preference.managed_school_ids
-    @managed_organisations = @user_preference.managed_organisations
+  def initialize(publisher, school_group)
+    @publisher_preference = PublisherPreference.find_or_initialize_by(publisher: publisher, school_group: school_group)
+    @managed_school_ids = @publisher_preference.managed_school_ids
+    @managed_organisations = @publisher_preference.managed_organisations
   end
 
   def update(params)
@@ -16,7 +16,7 @@ class HiringStaff::VacancyFilter
       @managed_school_ids = []
     end
 
-    @user_preference.update(managed_organisations: managed_organisations, managed_school_ids: managed_school_ids)
+    @publisher_preference.update(managed_organisations: managed_organisations, managed_school_ids: managed_school_ids)
   end
 
   def to_h

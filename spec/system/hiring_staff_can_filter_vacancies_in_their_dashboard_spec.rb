@@ -28,8 +28,8 @@ RSpec.describe "Hiring staff can filter vacancies in their dashboard" do
     visit root_path
     sign_in_user
 
-    UserPreference.find_or_create_by(
-      user_id: User.last.id, school_group_id: school_group.id,
+    PublisherPreference.find_or_create_by(
+      publisher_id: Publisher.last.id, school_group_id: school_group.id,
       managed_organisations: managed_organisations, managed_school_ids: managed_school_ids
     )
   end

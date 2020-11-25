@@ -21,15 +21,15 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
     expect(page).to have_content(I18n.t("hiring_staff.temp_login.please_use_email"))
   end
 
-  context "user flow" do
+  context "publisher flow" do
     let(:school) { create(:school, name: "Some school") }
     let(:other_school) { create(:school, name: "Some other school") }
     let(:trust) { create(:trust) }
     let(:local_authority) { create(:local_authority, local_authority_code: "100") }
-    let(:user) { create(:user, dsi_data: dsi_data, accepted_terms_at: 1.day.ago) }
+    let(:publisher) { create(:publisher, dsi_data: dsi_data, accepted_terms_at: 1.day.ago) }
 
     let(:login_key) do
-      user.emergency_login_keys.create(
+      publisher.emergency_login_keys.create(
         not_valid_after: Time.current + HiringStaff::SignIn::Email::SessionsController::EMERGENCY_LOGIN_KEY_DURATION,
       )
     end
@@ -39,14 +39,14 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
     before do
       allow_any_instance_of(HiringStaff::SignIn::Email::SessionsController)
         .to receive(:generate_login_key)
-        .with(user: user)
+        .with(publisher: publisher)
         .and_return(login_key)
       allow(AuthenticationFallbackMailer).to receive(:sign_in_fallback)
-        .with(login_key: login_key, email: user.email)
+        .with(login_key: login_key, email: publisher.email)
         .and_return(message_delivery)
     end
 
-    context "when a user has multiple organisations" do
+    context "when a publisher has multiple organisations" do
       let(:dsi_data) do
         { "school_urns" => [school.urn, other_school.urn], "trust_uids" => [trust.uid, "1623"], "la_codes" => [local_authority.local_authority_code] }
       end
@@ -54,11 +54,11 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
       context "with LocalAuthorityAccessFeature enabled" do
         before do
           allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(true)
-          allow(UserPreference).to receive(:find_by).and_return(instance_double(UserPreference))
+          allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference))
         end
 
         let(:other_login_key) do
-          user.emergency_login_keys.create(
+          publisher.emergency_login_keys.create(
             not_valid_after: Time.current + HiringStaff::SignIn::Email::SessionsController::EMERGENCY_LOGIN_KEY_DURATION,
           )
         end
@@ -71,7 +71,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
             # Expect to send an email
             expect(message_delivery).to receive(:deliver_later)
 
-            fill_in "user[email]", with: user.email
+            fill_in "publisher[email]", with: publisher.email
             click_on "commit"
             expect(page).to have_content(I18n.t("hiring_staff.temp_login.check_your_email.sent"))
 
@@ -91,7 +91,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
             # Can switch organisations
             allow_any_instance_of(HiringStaff::SignIn::Email::SessionsController)
               .to receive(:generate_login_key)
-              .with(user: user)
+              .with(publisher: publisher)
               .and_return(other_login_key)
             click_on I18n.t("sign_in.organisation.change")
             click_on(trust.name)
@@ -113,7 +113,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
 
         scenario "cannot sign in if key has expired" do
           visit new_identifications_path
-          fill_in "user[email]", with: user.email
+          fill_in "publisher[email]", with: publisher.email
           expect(message_delivery).to receive(:deliver_later)
           click_on "commit"
           travel 5.hours do
@@ -133,7 +133,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
       end
     end
 
-    context "when a user has only one organisation" do
+    context "when a publisher has only one organisation" do
       context "organisation is a School" do
         let(:dsi_data) do
           { "school_urns" => [school.urn], "trust_uids" => [], "la_codes" => [] }
@@ -147,7 +147,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
             # Expect to send an email
             expect(message_delivery).to receive(:deliver_later)
 
-            fill_in "user[email]", with: user.email
+            fill_in "publisher[email]", with: publisher.email
             click_on "commit"
             expect(page).to have_content(I18n.t("hiring_staff.temp_login.check_your_email.sent"))
 
@@ -167,7 +167,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
         end
 
         before do
-          allow(UserPreference).to receive(:find_by).and_return(instance_double(UserPreference))
+          allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference))
         end
 
         scenario "can sign in and bypass choice of org" do
@@ -178,7 +178,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
             # Expect to send an email
             expect(message_delivery).to receive(:deliver_later)
 
-            fill_in "user[email]", with: user.email
+            fill_in "publisher[email]", with: publisher.email
             click_on "commit"
             expect(page).to have_content(I18n.t("hiring_staff.temp_login.check_your_email.sent"))
 
@@ -196,14 +196,14 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
         let(:dsi_data) do
           { "school_urns" => [], "trust_uids" => [], "la_codes" => [local_authority.local_authority_code] }
         end
-        let(:la_user_allowed?) { true }
+        let(:la_publisher_allowed?) { true }
 
         context "with LocalAuthorityAccessFeature enabled" do
           before do
             allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(true)
             allow(ALLOWED_LOCAL_AUTHORITIES)
-              .to receive(:include?).with(local_authority.local_authority_code).and_return(la_user_allowed?)
-            allow(UserPreference).to receive(:find_by).and_return(instance_double(UserPreference))
+              .to receive(:include?).with(local_authority.local_authority_code).and_return(la_publisher_allowed?)
+            allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference))
           end
 
           scenario "can sign in and bypass choice of org" do
@@ -214,7 +214,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
               # Expect to send an email
               expect(message_delivery).to receive(:deliver_later)
 
-              fill_in "user[email]", with: user.email
+              fill_in "publisher[email]", with: publisher.email
               click_on "commit"
               expect(page).to have_content(I18n.t("hiring_staff.temp_login.check_your_email.sent"))
 
@@ -227,8 +227,8 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
             end
           end
 
-          context "when user oid is not in the allowed list" do
-            let(:la_user_allowed?) { false }
+          context "when publisher oid is not in the allowed list" do
+            let(:la_publisher_allowed?) { false }
 
             scenario "cannot sign in" do
               freeze_time do

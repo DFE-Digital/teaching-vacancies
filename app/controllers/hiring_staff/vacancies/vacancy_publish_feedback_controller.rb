@@ -12,7 +12,7 @@ class HiringStaff::Vacancies::VacancyPublishFeedbackController < HiringStaff::Va
 
   def create
     @feedback = VacancyPublishFeedback.create(
-      vacancy_publish_feedback_params.merge(vacancy: @vacancy, user: current_user),
+      vacancy_publish_feedback_params.merge(vacancy: @vacancy, publisher: current_publisher),
     )
 
     return render "new" unless @feedback.save
