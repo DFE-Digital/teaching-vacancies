@@ -3,8 +3,7 @@ class VacanciesController < ApplicationController
 
   def index
     @jobs_search_form = VacancyAlgoliaSearchForm.new(algolia_search_params)
-    @vacancies_search = Search::VacancySearchBuilder.new(@jobs_search_form.to_hash)
-    @vacancies_search.call
+    @vacancies_search = Search::SearchBuilder.new(@jobs_search_form.to_hash)
     @vacancies = VacanciesPresenter.new(@vacancies_search.vacancies)
     AuditSearchEventJob.perform_later(audit_row) if valid_search?
     expires_in 5.minutes, public: true
@@ -23,7 +22,7 @@ class VacanciesController < ApplicationController
 
     @vacancy = VacancyPresenter.new(vacancy)
     @devised_job_alert_search_criteria = Search::CriteriaDeviser.new(vacancy).criteria
-    @similar_jobs = Search::VacancySimilarJobs.new(vacancy).similar_jobs
+    @similar_jobs = Search::SimilarJobs.new(vacancy).similar_jobs
 
     VacancyPageView.new(vacancy).track unless authenticated? || smoke_test?
 

@@ -1,16 +1,15 @@
 require "rails_helper"
 
-RSpec.describe Search::VacancyAlertBuilder do
-  subject { described_class.new(subscription_hash) }
+RSpec.describe Search::AlertBuilder do
+  let(:subject) { described_class.new(subscription_hash) }
 
   let!(:expired_now) { Time.current }
 
   let(:keyword) { "maths teacher" }
   let(:location) { "SW1A 1AA" }
-  let(:default_radius) { 10 }
   let(:date_today) { Date.current.to_time }
   let(:location_point_coordinates) { Geocoder::DEFAULT_STUB_COORDINATES }
-  let(:location_radius) { (default_radius * Search::VacancyLocationBuilder::MILES_TO_METRES).to_i }
+  let(:location_radius) { Search::LocationBuilder.convert_radius_in_miles_to_metres(10) }
   let(:location_polygon_boundary) { nil }
   let(:search_replica) { nil }
   let(:max_subscription_results) { 500 }
@@ -24,14 +23,12 @@ RSpec.describe Search::VacancyAlertBuilder do
       replica: search_replica,
       hitsPerPage: max_subscription_results,
       typoTolerance: false,
-    }
+    }.compact
   end
 
   before do
     travel_to(expired_now)
-    allow_any_instance_of(Search::VacancyFiltersBuilder)
-      .to receive(:expired_now_filter)
-      .and_return(expired_now.to_time.to_i)
+    allow_any_instance_of(Search::FiltersBuilder).to receive(:expired_now_filter).and_return(expired_now.to_time.to_i)
   end
 
   after(:all) do
@@ -101,12 +98,10 @@ RSpec.describe Search::VacancyAlertBuilder do
       end
 
       before do
-        allow(vacancies).to receive(:count).and_return(10)
-        mock_algolia_search_for_job_alert(vacancies, search_query, expected_algolia_search_args)
+        mock_algolia_search(vacancies, 10, search_query, expected_algolia_search_args)
       end
 
       it "carries out alert search with correct criteria" do
-        subject.call
         expect(subject.vacancies).to eql(vacancies)
       end
     end
@@ -131,12 +126,10 @@ RSpec.describe Search::VacancyAlertBuilder do
       end
 
       before do
-        allow(vacancies).to receive(:count).and_return(10)
-        mock_algolia_search_for_job_alert(vacancies, keyword, expected_algolia_search_args)
+        mock_algolia_search(vacancies, 10, keyword, expected_algolia_search_args)
       end
 
       it "carries out alert search with correct criteria" do
-        subject.call
         expect(subject.vacancies).to eql(vacancies)
       end
     end

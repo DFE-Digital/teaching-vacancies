@@ -8,7 +8,7 @@ RSpec.shared_examples "a search using polygons" do |options|
   end
 end
 
-RSpec.describe Search::VacancyLocationBuilder do
+RSpec.describe Search::LocationBuilder do
   subject { described_class.new(location, radius, location_category) }
 
   let(:location) { nil }
@@ -78,7 +78,7 @@ RSpec.describe Search::VacancyLocationBuilder do
           expect(subject.location_polygon).to be nil
           expect(subject.location_filter).to eql({
             point_coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
-            radius: (10 * Search::VacancyLocationBuilder::MILES_TO_METRES).to_i,
+            radius: Search::LocationBuilder.convert_radius_in_miles_to_metres(10),
           })
         end
       end
@@ -92,7 +92,7 @@ RSpec.describe Search::VacancyLocationBuilder do
           expect(subject.location_polygon).to be nil
           expect(subject.location_filter).to eql({
             point_coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
-            radius: (radius * Search::VacancyLocationBuilder::MILES_TO_METRES).to_i,
+            radius: Search::LocationBuilder.convert_radius_in_miles_to_metres(radius),
           })
         end
       end

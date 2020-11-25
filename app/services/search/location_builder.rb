@@ -1,9 +1,15 @@
-class Search::VacancyLocationBuilder
+require "geocoding"
+
+class Search::LocationBuilder
   DEFAULT_RADIUS = 10
   MILES_TO_METRES = 1.60934 * 1000
 
   attr_reader :location, :location_category, :location_filter,
-              :location_polygon, :location_polygon_boundary, :missing_polygon
+              :location_polygon, :location_polygon_boundary, :missing_polygon, :radius
+
+  def self.convert_radius_in_miles_to_metres(radius)
+    (radius * MILES_TO_METRES).to_i
+  end
 
   def initialize(location, radius, location_category)
     @location = location || location_category
@@ -49,10 +55,9 @@ private
   end
 
   def build_location_filter(location, radius)
-    { point_coordinates: Geocoding.new(location).coordinates, radius: convert_radius_in_miles_to_metres(radius) }
-  end
-
-  def convert_radius_in_miles_to_metres(radius)
-    (radius * MILES_TO_METRES).to_i
+    {
+      point_coordinates: Geocoding.new(location).coordinates,
+      radius: Search::LocationBuilder.convert_radius_in_miles_to_metres(radius),
+    }
   end
 end
