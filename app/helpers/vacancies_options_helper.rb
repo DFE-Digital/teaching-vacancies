@@ -5,13 +5,13 @@ module VacanciesOptionsHelper
 
   def job_location_options(organisation)
     mapped_job_location_options(organisation)
-      .delete_if { |_k, v| organisation.group_type == "local_authority" && v == :central_office }
+      .delete_if { |_k, v| organisation.group_type == "local_authority" && v == "central_office" }
       .reject(&:blank?)
   end
 
   def job_role_options
-    Vacancy::JOB_ROLE_OPTIONS.except(:nqt_suitable).map do |key, _value|
-      [I18n.t("jobs.job_role_options.#{key}"), key.to_s]
+    Vacancy.job_roles.except("nqt_suitable").keys.map do |option|
+      [I18n.t("jobs.job_role_options.#{option}"), option]
     end
   end
 
@@ -24,10 +24,10 @@ module VacanciesOptionsHelper
   end
 
   def mapped_job_location_options(organisation)
-    Vacancy::JOB_LOCATION_OPTIONS.map do |k, _v|
-      [I18n.t("helpers.options.job_location_form.job_location.#{k}",
+    Vacancy.job_locations.keys.map do |job_location|
+      [I18n.t("helpers.options.job_location_form.job_location.#{job_location}",
               organisation_type: organisation_type_basic(organisation)),
-       k]
+       job_location]
     end
   end
 
@@ -42,8 +42,8 @@ module VacanciesOptionsHelper
   end
 
   def working_pattern_options
-    Vacancy::WORKING_PATTERN_OPTIONS.keys.map do |key|
-      [Vacancy.human_attribute_name("working_patterns.#{key}"), key.to_s]
+    Vacancy.working_patterns.keys.map do |key|
+      [Vacancy.human_attribute_name("working_patterns.#{key}"), key]
     end
   end
 end

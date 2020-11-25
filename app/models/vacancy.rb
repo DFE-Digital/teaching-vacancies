@@ -8,21 +8,7 @@ class Vacancy < ApplicationRecord
   include Indexable
   include Redis::Objects
 
-  JOB_ROLE_OPTIONS = {
-    teacher: 0,
-    leadership: 1,
-    sen_specialist: 2,
-    nqt_suitable: 3,
-  }.freeze
-
-  WORKING_PATTERN_OPTIONS = {
-    full_time: 0,
-    part_time: 100,
-    job_share: 101,
-    # Legacy vacancies can have these options too
-    # compressed_hours: 102,
-    # staggered_hours: 103
-  }.freeze
+  friendly_id :slug_candidates, use: %w[slugged history]
 
   JOB_SORTING_OPTIONS = [
     [I18n.t("jobs.sort_by.most_relevant"), ""],
@@ -31,18 +17,11 @@ class Vacancy < ApplicationRecord
     [I18n.t("jobs.sort_by.expires_at.ascending"), "expires_at_asc"],
   ].freeze
 
-  JOB_LOCATION_OPTIONS = {
-    at_one_school: 0,
-    at_multiple_schools: 1,
-    central_office: 2,
-  }.freeze
-
-  friendly_id :slug_candidates, use: %w[slugged history]
-
+  array_enum job_roles: { teacher: 0, leadership: 1, sen_specialist: 2, nqt_suitable: 3 }
+  array_enum working_patterns: { full_time: 0, part_time: 100, job_share: 101 }
+  # Legacy vacancies can have these working_pattern options too: { compressed_hours: 102, staggered_hours: 103 }
   enum status: { published: 0, draft: 1, trashed: 2 }
   enum job_location: { at_one_school: 0, at_multiple_schools: 1, central_office: 2 }
-  array_enum job_roles: JOB_ROLE_OPTIONS
-  array_enum working_patterns: WORKING_PATTERN_OPTIONS
   enum listed_elsewhere: {
     listed_paid: 0,
     listed_free: 1,

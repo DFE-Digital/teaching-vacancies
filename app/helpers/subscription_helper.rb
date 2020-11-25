@@ -1,7 +1,7 @@
 module SubscriptionHelper
   def frequency_options
-    Subscription::FREQUENCY_OPTIONS.map do |key, _|
-      [key, I18n.t("subscriptions.frequency.#{key}")]
+    Subscription.frequencies.keys.map do |frequency|
+      [frequency, I18n.t("subscriptions.frequency.#{frequency}")]
     end
   end
 end
