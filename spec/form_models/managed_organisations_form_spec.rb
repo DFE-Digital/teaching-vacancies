@@ -22,7 +22,7 @@ RSpec.describe ManagedOrganisationsForm, type: :model do
       it "validates presence of managed_organisations or managed_school_ids" do
         expect(subject.valid?).to be(false)
         expect(subject.errors.messages[:managed_organisations]).to include(
-          I18n.t("hiring_staff_publisher_preference_errors.managed_organisations.blank"),
+          I18n.t("publishers_publisher_preference_errors.managed_organisations.blank"),
         )
       end
     end

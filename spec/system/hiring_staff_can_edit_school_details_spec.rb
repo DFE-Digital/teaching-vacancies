@@ -5,7 +5,7 @@ RSpec.describe "Editing a School’s details" do
   let(:session_id) { SecureRandom.uuid }
 
   before do
-    stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
+    stub_publishers_auth(urn: school.urn, session_id: session_id)
   end
 
   scenario "it allows school users to edit the school details" do

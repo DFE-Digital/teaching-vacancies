@@ -4,7 +4,7 @@ RSpec.describe "Hiring staff can see their vacancies" do
   scenario "school with geolocation" do
     school = create(:school, northing: "1", easting: "2")
 
-    stub_hiring_staff_auth(urn: school.urn)
+    stub_publishers_auth(urn: school.urn)
     vacancy = create(:vacancy, status: "published")
     vacancy.organisation_vacancies.create(organisation: school)
 
@@ -20,7 +20,7 @@ RSpec.describe "Hiring staff can see their vacancies" do
     scenario "hiring staff see a message informing them they have no jobs" do
       school = create(:school)
 
-      stub_hiring_staff_auth(urn: school.urn)
+      stub_publishers_auth(urn: school.urn)
       visit organisation_path
 
       expect(page).to have_content(I18n.t("schools.no_jobs.heading"))
@@ -44,7 +44,7 @@ RSpec.describe "Hiring staff can see their vacancies" do
       draft_vacancy.organisation_vacancies.create(organisation: school)
       pending_vacancy.organisation_vacancies.create(organisation: school)
       expired_vacancy.organisation_vacancies.create(organisation: school)
-      stub_hiring_staff_auth(urn: school.urn)
+      stub_publishers_auth(urn: school.urn)
     end
 
     scenario "jobs are split into sections" do

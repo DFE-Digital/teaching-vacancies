@@ -9,16 +9,16 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
     visit root_path
 
     within(".govuk-header__navigation.mobile-header-top-border") { click_on(I18n.t("nav.sign_in")) }
-    expect(page).to have_content(I18n.t("hiring_staff.temp_login.heading"))
-    expect(page).to have_content(I18n.t("hiring_staff.temp_login.please_use_email"))
+    expect(page).to have_content(I18n.t("publishers.temp_login.heading"))
+    expect(page).to have_content(I18n.t("publishers.temp_login.please_use_email"))
   end
 
   scenario "can reach email request page by sign in button" do
     visit root_path
 
-    within(".signin") { click_on(I18n.t("buttons.sign_in")) }
-    expect(page).to have_content(I18n.t("hiring_staff.temp_login.heading"))
-    expect(page).to have_content(I18n.t("hiring_staff.temp_login.please_use_email"))
+    click_sign_in
+    expect(page).to have_content(I18n.t("publishers.temp_login.heading"))
+    expect(page).to have_content(I18n.t("publishers.temp_login.please_use_email"))
   end
 
   context "publisher flow" do
@@ -30,14 +30,14 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
 
     let(:login_key) do
       publisher.emergency_login_keys.create(
-        not_valid_after: Time.current + HiringStaff::SignIn::Email::SessionsController::EMERGENCY_LOGIN_KEY_DURATION,
+        not_valid_after: Time.current + Publishers::SignIn::Email::SessionsController::EMERGENCY_LOGIN_KEY_DURATION,
       )
     end
 
     let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
 
     before do
-      allow_any_instance_of(HiringStaff::SignIn::Email::SessionsController)
+      allow_any_instance_of(Publishers::SignIn::Email::SessionsController)
         .to receive(:generate_login_key)
         .with(publisher: publisher)
         .and_return(login_key)
@@ -59,7 +59,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
 
         let(:other_login_key) do
           publisher.emergency_login_keys.create(
-            not_valid_after: Time.current + HiringStaff::SignIn::Email::SessionsController::EMERGENCY_LOGIN_KEY_DURATION,
+            not_valid_after: Time.current + Publishers::SignIn::Email::SessionsController::EMERGENCY_LOGIN_KEY_DURATION,
           )
         end
 
@@ -73,13 +73,13 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
 
             fill_in "publisher[email]", with: publisher.email
             click_on "commit"
-            expect(page).to have_content(I18n.t("hiring_staff.temp_login.check_your_email.sent"))
+            expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
             # Expect that the link in the email goes to the landing page
             visit auth_email_choose_organisation_path(login_key: login_key.id)
 
             expect(page).to have_content("Choose your organisation")
-            expect(page).not_to have_content(I18n.t("hiring_staff.temp_login.denial.title"))
+            expect(page).not_to have_content(I18n.t("publishers.temp_login.denial.title"))
             expect(page).to have_content(other_school.name)
             expect(page).to have_content(trust.name)
             expect(page).to have_content(local_authority.name)
@@ -89,11 +89,11 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
             expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
 
             # Can switch organisations
-            allow_any_instance_of(HiringStaff::SignIn::Email::SessionsController)
+            allow_any_instance_of(Publishers::SignIn::Email::SessionsController)
               .to receive(:generate_login_key)
               .with(publisher: publisher)
               .and_return(other_login_key)
-            click_on I18n.t("hiring_staff.organisations.change")
+            click_on I18n.t("publishers.organisations.change")
             click_on(trust.name)
             expect(page).to have_content("Jobs at #{trust.name}")
             expect { other_login_key.reload }.to raise_error ActiveRecord::RecordNotFound
@@ -149,7 +149,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
 
             fill_in "publisher[email]", with: publisher.email
             click_on "commit"
-            expect(page).to have_content(I18n.t("hiring_staff.temp_login.check_your_email.sent"))
+            expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
             # Expect that the link in the email goes to the landing page
             visit auth_email_choose_organisation_path(login_key: login_key.id)
@@ -180,7 +180,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
 
             fill_in "publisher[email]", with: publisher.email
             click_on "commit"
-            expect(page).to have_content(I18n.t("hiring_staff.temp_login.check_your_email.sent"))
+            expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
             # Expect that the link in the email goes to the landing page
             visit auth_email_choose_organisation_path(login_key: login_key.id)
@@ -216,7 +216,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
 
               fill_in "publisher[email]", with: publisher.email
               click_on "commit"
-              expect(page).to have_content(I18n.t("hiring_staff.temp_login.check_your_email.sent"))
+              expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
               # Expect that the link in the email goes to the landing page
               visit auth_email_choose_organisation_path(login_key: login_key.id)

@@ -41,9 +41,9 @@ This does not end any sessions cached by DSI (assuming DSI is live).
 
 ### Configuration
 
-Adjust the length of time before an EmergencyLoginKey expires with `EMERGENCY_LOGIN_KEY_DURATION` in [`HiringStaff::SignIn::Email::SessionsController`](app/controllers/hiring_staff/sign_in/email/sessions_controller.rb)
+Adjust the length of time before an EmergencyLoginKey expires with `EMERGENCY_LOGIN_KEY_DURATION` in [`Publishers::SignIn::Email::SessionsController`](app/controllers/publishers/sign_in/email/sessions_controller.rb)
 
-Adjust the default session duration with `TIMEOUT_PERIOD` in [`HiringStaff::BaseController`](app/controllers/hiring_staff/base_controller.rb).
+Adjust the default session duration with `TIMEOUT_PERIOD` in [`Publishers::BaseController`](app/controllers/publishers/base_controller.rb).
 
 Adjust all text involved in the fallback authentication under `temp_login` in [`config/locales/en.yml`](config/locales/en.yml).
 

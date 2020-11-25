@@ -14,7 +14,7 @@ RSpec.describe "Copying a vacancy" do
   end
 
   before(:each) do
-    stub_hiring_staff_auth(urn: school.urn)
+    stub_publishers_auth(urn: school.urn)
   end
 
   describe "#cancel_copy" do

@@ -7,7 +7,7 @@ RSpec.describe "Hiring staff can preview a vacancy" do
 
   before(:each) do
     vacancy.organisation_vacancies.create(organisation: school)
-    stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
+    stub_publishers_auth(urn: school.urn, session_id: session_id)
   end
 
   context "when reviewing a draft vacancy" do

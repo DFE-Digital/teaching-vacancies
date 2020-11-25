@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "School viewing vacancies" do
   let(:school) { create(:school) }
   before(:each) do
-    stub_hiring_staff_auth(urn: school.urn)
+    stub_publishers_auth(urn: school.urn)
   end
 
   scenario "A school should see advisory text when there are no vacancies" do

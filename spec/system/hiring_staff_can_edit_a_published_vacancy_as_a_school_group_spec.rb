@@ -11,7 +11,7 @@ RSpec.describe "Editing a published vacancy" do
     vacancy.organisation_vacancies.create(organisation: school_group)
     SchoolGroupMembership.find_or_create_by(school_id: school_1.id, school_group_id: school_group.id)
     SchoolGroupMembership.find_or_create_by(school_id: school_2.id, school_group_id: school_group.id)
-    stub_hiring_staff_auth(uid: school_group.uid, session_id: session_id)
+    stub_publishers_auth(uid: school_group.uid, session_id: session_id)
   end
 
   describe "#job_location" do
@@ -21,7 +21,7 @@ RSpec.describe "Editing a published vacancy" do
       expect(page).to have_content(I18n.t("school_groups.job_location_heading.central_office"))
       expect(page).to have_content(full_address(school_group))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eql(
-        I18n.t("hiring_staff.organisations.readable_job_location.central_office"),
+        I18n.t("publishers.organisations.readable_job_location.central_office"),
       )
 
       change_job_location(vacancy, "at_one_school")
@@ -64,7 +64,7 @@ RSpec.describe "Editing a published vacancy" do
       expect(page).to have_content(I18n.t("school_groups.job_location_heading.central_office"))
       expect(page).to have_content(full_address(school_group))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eql(
-        I18n.t("hiring_staff.organisations.readable_job_location.central_office"),
+        I18n.t("publishers.organisations.readable_job_location.central_office"),
       )
     end
 
@@ -75,7 +75,7 @@ RSpec.describe "Editing a published vacancy" do
         expect(page).to have_content(I18n.t("school_groups.job_location_heading.central_office"))
         expect(page).to have_content(full_address(school_group))
         expect(Vacancy.find(vacancy.id).readable_job_location).to eql(
-          I18n.t("hiring_staff.organisations.readable_job_location.central_office"),
+          I18n.t("publishers.organisations.readable_job_location.central_office"),
         )
 
         change_job_location(vacancy, "at_one_school")
@@ -86,7 +86,7 @@ RSpec.describe "Editing a published vacancy" do
         expect(page).to have_content(I18n.t("school_groups.job_location_heading.central_office"))
         expect(page).to have_content(full_address(school_group))
         expect(Vacancy.find(vacancy.id).readable_job_location).to eql(
-          I18n.t("hiring_staff.organisations.readable_job_location.central_office"),
+          I18n.t("publishers.organisations.readable_job_location.central_office"),
         )
 
         change_job_location(vacancy, "at_one_school")

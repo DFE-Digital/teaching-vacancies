@@ -1,0 +1,40 @@
+= render 'publishers/vacancies/new_attributes_tag', attributes: %i[contact_email contact_number school_visits how_to_apply application_link], section: 'applying_for_the_job'
+= render 'publishers/vacancies/error_tag', attributes: %i[contact_email contact_number school_visits how_to_apply application_link], section: 'applying_for_the_job'
+
+%h2.govuk-heading-m.app-task-list__section#applying_for_the_job_heading
+  %span.app-task-list__section-number= edit_vacancy_section_number(:applying_for_the_job, current_organisation)
+  = t('jobs.applying_for_the_job')
+  = link_to t('buttons.change'), organisation_job_build_path(@vacancy.id, :applying_for_the_job), class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_applying_for_the_job')
+
+%dl.app-check-your-answers.app-check-your-answers--short
+
+  .app-check-your-answers__contents
+    %dt.app-check-your-answers__question.first-question#contact_email
+      %h4.govuk-heading-s= t('jobs.contact_email')
+    %dd.app-check-your-answers__answer.first-question
+      = mail_to 'Job contact email', @vacancy.contact_email, class: 'govuk-link', 'aria-label': t('jobs.aria_labels.contact_email_link', email: @vacancy.contact_email)
+
+  .app-check-your-answers__contents
+    %dt.app-check-your-answers__question#contact_number
+      %h4.govuk-heading-s= t('jobs.contact_number')
+    %dd.app-check-your-answers__answer
+      = @vacancy.contact_number.present? ? link_to(@vacancy.contact_number, "tel:#{@vacancy.contact_number}", class: 'govuk-link') : t('jobs.not_defined')
+
+  .app-check-your-answers__contents
+    %dt.app-check-your-answers__question#school_visits
+      %h4.govuk-heading-s= t("jobs.#{school_or_trust_visits(@vacancy.parent_organisation)}")
+    %dd.app-check-your-answers__answer= @vacancy.school_visits.presence || t('jobs.not_defined')
+
+  .app-check-your-answers__contents
+    %dt.app-check-your-answers__question#how_to_apply
+      %h4.govuk-heading-s= t('jobs.how_to_apply')
+    %dd.app-check-your-answers__answer= @vacancy.how_to_apply.presence || t('jobs.not_defined')
+
+  .app-check-your-answers__contents
+    %dt.app-check-your-answers__question#application_link
+      %h4.govuk-heading-s= t('jobs.application_link')
+    %dd.app-check-your-answers__answer
+      - if @vacancy.application_link.present?
+        = link_to @vacancy.application_link, @vacancy.application_link, class: 'govuk-link', 'aria-label': t('jobs.aria_labels.application_link_url'), 'target': '_blank', rel: 'noopener noreferrer'
+      - else
+        = t('jobs.not_defined')

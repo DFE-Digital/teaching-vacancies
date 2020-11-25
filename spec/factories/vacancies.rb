@@ -35,7 +35,7 @@ FactoryBot.define do
 
     trait :at_central_office do
       job_location { "central_office" }
-      readable_job_location { I18n.t("hiring_staff.organisations.readable_job_location.central_office") }
+      readable_job_location { I18n.t("publishers.organisations.readable_job_location.central_office") }
     end
 
     trait :at_one_school do

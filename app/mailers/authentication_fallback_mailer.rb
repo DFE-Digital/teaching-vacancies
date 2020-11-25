@@ -7,7 +7,7 @@ class AuthenticationFallbackMailer < ApplicationMailer
     view_mail(
       NOTIFY_GENERIC_EMAIL_TEMPLATE,
       to: email,
-      subject: I18n.t("hiring_staff.temp_login.email.subject"),
+      subject: I18n.t("publishers.temp_login.email.subject"),
     )
   end
 end

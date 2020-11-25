@@ -1,0 +1,54 @@
+$desktop-container-width: 1200px;
+
+body.hiring-staff {
+  .govuk-width-container {
+    @include govuk-media-query($from: desktop) {
+      margin-left: auto;
+      margin-right: auto;
+      max-width: $desktop-container-width;
+      width: 90%;
+    }
+  }
+
+  .desktop-container-width {
+    @include govuk-media-query($from: tablet) {
+      width: $desktop-container-width;
+    }
+  }
+
+  &.publishers_vacancies_index,
+  &.publishers_vacancies_show,
+  &.publishers_vacancies_preview {
+    .govuk-main-wrapper {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+}
+
+.dashboard-header {
+  .filters-information {
+    display: inline-block;
+
+    .filters-applied-text {
+      line-height: 2em;
+    }
+  }
+}
+
+.button-link {
+  background-color: transparent;
+  border: 0;
+  box-shadow: none;
+  color: $govuk-link-colour;
+  display: block;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.button-link:hover {
+  background-color: transparent;
+  color: $govuk-link-hover-colour;
+  text-decoration: underline;
+}

@@ -8,7 +8,7 @@ RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: tru
   let(:school) { create(:school) }
 
   before(:each) do
-    stub_hiring_staff_auth(urn: school.urn)
+    stub_publishers_auth(urn: school.urn)
     vacancy = create(:vacancy, :published_slugged)
     vacancy.organisation_vacancies.create(organisation: school)
   end

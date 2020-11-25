@@ -5,7 +5,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
 
   before(:each) do
     vacancy.organisation_vacancies.create(organisation: school)
-    stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
+    stub_publishers_auth(urn: school.urn, session_id: session_id)
   end
 
   context "when attempting to edit a draft vacancy" do
@@ -127,7 +127,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
       end
 
       scenario "notifies the Google index service" do
-        expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
+        expect_any_instance_of(Publishers::Vacancies::ApplicationController)
           .to receive(:update_google_index).with(vacancy)
 
         visit edit_organisation_job_path(vacancy.id)
@@ -168,7 +168,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
       end
 
       scenario "adds a job to update the Google index in the queue" do
-        expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
+        expect_any_instance_of(Publishers::Vacancies::ApplicationController)
           .to receive(:update_google_index).with(vacancy)
 
         visit edit_organisation_job_path(vacancy.id)
@@ -236,7 +236,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
       end
 
       scenario "adds a job to update the Google index in the queue" do
-        expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
+        expect_any_instance_of(Publishers::Vacancies::ApplicationController)
           .to receive(:update_google_index).with(vacancy)
 
         visit edit_organisation_job_path(vacancy.id)
@@ -346,7 +346,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
       end
 
       scenario "adds a job to update the Google index in the queue" do
-        expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
+        expect_any_instance_of(Publishers::Vacancies::ApplicationController)
           .to receive(:update_google_index).with(vacancy)
 
         visit edit_organisation_job_path(vacancy.id)
@@ -386,7 +386,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
       end
 
       scenario "adds a job to update the Google index in the queue" do
-        expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
+        expect_any_instance_of(Publishers::Vacancies::ApplicationController)
           .to receive(:update_google_index).with(vacancy)
 
         visit edit_organisation_job_path(vacancy.id)

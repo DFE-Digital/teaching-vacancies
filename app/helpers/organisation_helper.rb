@@ -28,7 +28,7 @@ module OrganisationHelper
   end
 
   def location(organisation, job_location: nil)
-    return "#{I18n.t('hiring_staff.organisations.readable_job_location.at_multiple_schools')}, #{organisation.name}" if
+    return "#{I18n.t('publishers.organisations.readable_job_location.at_multiple_schools')}, #{organisation.name}" if
       job_location.presence == "at_multiple_schools"
 
     address_join([organisation.name, organisation.town, organisation.county])
@@ -36,9 +36,9 @@ module OrganisationHelper
 
   def managed_organisations_all_label(organisation)
     if organisation.group_type == "local_authority"
-      I18n.t("hiring_staff.organisations.managed_organisations.show.options.all_schools")
+      I18n.t("publishers.organisations.managed_organisations.show.options.all_schools")
     else
-      I18n.t("hiring_staff.organisations.managed_organisations.show.options.all")
+      I18n.t("publishers.organisations.managed_organisations.show.options.all")
     end
   end
 

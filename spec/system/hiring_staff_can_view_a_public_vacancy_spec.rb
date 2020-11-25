@@ -5,7 +5,7 @@ RSpec.describe "Hiring staff can view a public vacancy" do
     school = create(:school)
     vacancy = create(:vacancy, :published)
     vacancy.organisation_vacancies.create(organisation: school)
-    stub_hiring_staff_auth(urn: school.urn)
+    stub_publishers_auth(urn: school.urn)
 
     expect { visit job_path(vacancy) }.to change { vacancy.page_view_counter.to_i }.by(0)
   end

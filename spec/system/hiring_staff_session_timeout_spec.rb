@@ -6,7 +6,7 @@ RSpec.describe "Hiring staff session" do
   let(:current_publisher) { Publisher.find_by(oid: session_id) }
   before do
     allow(AuthenticationFallback).to receive(:enabled?).and_return(false)
-    stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
+    stub_publishers_auth(urn: school.urn, session_id: session_id)
   end
 
   after do
@@ -17,7 +17,7 @@ RSpec.describe "Hiring staff session" do
     visit organisation_path
     click_on I18n.t("buttons.create_job")
 
-    travel(HiringStaff::BaseController::TIMEOUT_PERIOD + 1.minute) do
+    travel(Publishers::BaseController::TIMEOUT_PERIOD + 1.minute) do
       click_on I18n.t("buttons.continue")
 
       sign_out_via_dsi
@@ -31,7 +31,7 @@ RSpec.describe "Hiring staff session" do
     visit organisation_path
     click_on I18n.t("buttons.create_job")
 
-    travel(HiringStaff::BaseController::TIMEOUT_PERIOD - 1.minute) do
+    travel(Publishers::BaseController::TIMEOUT_PERIOD - 1.minute) do
       click_on I18n.t("buttons.continue")
 
       expect(page.current_path).to eq organisation_job_build_path(Vacancy.last.id, :job_details)

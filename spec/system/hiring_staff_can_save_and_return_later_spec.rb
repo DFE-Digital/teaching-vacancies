@@ -5,7 +5,7 @@ RSpec.describe "Hiring staff can save and return later" do
   let(:session_id) { SecureRandom.uuid }
 
   before do
-    stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
+    stub_publishers_auth(urn: school.urn, session_id: session_id)
     @vacancy = VacancyPresenter.new(build(:vacancy, :draft))
   end
 

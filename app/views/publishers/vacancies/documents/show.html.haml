@@ -1,0 +1,42 @@
+- content_for :page_title_prefix, page_title_prefix(@vacancy, @documents_form, t('jobs.supporting_documents'))
+= render Publishers::VacancyFormPageHeadingComponent.new(@vacancy)
+
+- if @vacancy.state != 'create'
+  = render 'publishers/vacancies/vacancy_form_partials/cancel_and_return_link'
+- else
+  = link_to t('buttons.back'), organisation_job_build_path(@vacancy.id, :supporting_documents), class: 'govuk-back-link'
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @documents_form, url: organisation_job_documents_path(@vacancy.id) do |f|
+      = f.govuk_error_summary
+
+      %h2.govuk-heading-l
+        = t('jobs.supporting_documents')
+
+      = render 'publishers/vacancies/vacancy_form_partials/hidden_state_input', f: f
+
+      #js-xhr-flashes
+
+      = f.govuk_file_field :documents,
+        label: { text: t('jobs.upload_file'), size: 's' },
+        accept: '.doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, image/jpeg, image/png, video/mp4',
+        multiple: true,
+        enctype: 'multipart/form-data' do
+
+        %button.govuk-button.govuk-button--secondary.display-none{ class: 'govuk-!-margin-top-2 govuk-!-margin-bottom-1' }
+          = t('jobs.select_file')
+
+      = f.govuk_submit t('jobs.upload_file'), secondary: true
+
+      .js-documents{ class: ('js-documents--empty' if @documents.none?) }
+        = render 'publishers/vacancies/documents/documents'
+        %p.js-documents__no-files= t('jobs.no_files_message')
+
+      = render 'publishers/vacancies/vacancy_form_partials/submit', f: f
+
+  .govuk-grid-column-one-third
+    = render(Publishers::SidebarComponent.new(vacancy: @vacancy))
+
+- content_for :after_main do
+  = render 'shared/file_remove_confirmation_dialogue'

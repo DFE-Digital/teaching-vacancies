@@ -5,7 +5,7 @@ RSpec.describe "Hiring staff can see vacancy statistics" do
   let(:total_pageviews) { nil }
   let(:total_get_more_info_clicks) { nil }
 
-  before { stub_hiring_staff_auth(urn: school.urn) }
+  before { stub_publishers_auth(urn: school.urn) }
 
   context "when vacancy is published" do
     let(:status) { "published" }

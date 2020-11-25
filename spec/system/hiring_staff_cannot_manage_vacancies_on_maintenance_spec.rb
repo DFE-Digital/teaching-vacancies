@@ -8,7 +8,7 @@ RSpec.describe "Hiring staff cannot manage vacancies on maintenance" do
     before do
       allow(ReadOnlyFeature).to receive(:enabled?).and_return(true)
 
-      stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
+      stub_publishers_auth(urn: school.urn, session_id: session_id)
 
       visit organisation_path
     end
@@ -26,7 +26,7 @@ RSpec.describe "Hiring staff cannot manage vacancies on maintenance" do
     before do
       allow(ReadOnlyFeature).to receive(:enabled?).and_return(false)
 
-      stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
+      stub_publishers_auth(urn: school.urn, session_id: session_id)
 
       visit organisation_path
     end
