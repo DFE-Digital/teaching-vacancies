@@ -82,7 +82,7 @@ aws_secret_access_key=<AWS_SECRET_ACCESS_KEY>
 
 Some environment variables are stored in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table), some are stored in the repository.
 
-Secrets (eg: API keys) are stored in AWS Systems Manager Parameter Store in `/tvs/<env>/app/*` and `/tvs/<env>/infra/*` files.
+Secrets (eg: API keys) are stored in AWS Systems Manager Parameter Store in `/teaching-vacancies/<env>/app/*` and `/teaching-vacancies/<env>/infra/*` files.
 
 Non secrets (eg: public URLs or feature flags) are stored in the repository in `terraform/workspace-variables/<env>_app_env.yml` files.
 
