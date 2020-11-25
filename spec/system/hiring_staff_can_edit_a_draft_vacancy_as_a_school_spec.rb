@@ -8,7 +8,7 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
   end
   let(:draft_vacancy) { Vacancy.find_by(job_title: vacancy.job_title) }
 
-  before { stub_hiring_staff_auth(urn: school.urn) }
+  before { stub_publishers_auth(urn: school.urn) }
 
   context "editing an incomplete draft vacancy" do
     before do

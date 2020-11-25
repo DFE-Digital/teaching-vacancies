@@ -4,7 +4,7 @@ RSpec.describe "Hiring staff can manage vacancies from a link on home page" do
   let(:school) { create(:school) }
 
   scenario "as an authenticated user" do
-    stub_hiring_staff_auth(urn: school.urn)
+    stub_publishers_auth(urn: school.urn)
 
     visit root_path
 

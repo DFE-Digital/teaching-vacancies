@@ -1,0 +1,20 @@
+%h2.govuk-heading-m= t("jobs.#{selected_type}_jobs_with_count", count: vacancies.count)
+
+- if vacancies.any?
+  %p.govuk-body#awaiting_feedback_intro=t("jobs.awaiting_feedback_intro")
+
+  %table.govuk-table.vacancies#awaiting_feedback{ class: "govuk-!-margin-top-4" }
+    %thead.govuk-table__head
+      %tr.govuk-table__row
+        %th.govuk-table__header.job-title-table-header= table_header_sort_by(t("jobs.job_title"), "awaiting_feedback", column: "job_title", sort: sort)
+        - if organisation.is_a?(SchoolGroup)
+          %th.govuk-table__header= table_header_sort_by(t("jobs.location"), "awaiting_feedback", column: "readable_job_location", sort: sort)
+        %th.govuk-table__header= table_header_sort_by(t("jobs.expired_on"), "awaiting_feedback", column: "expires_on", sort: sort)
+        %th.govuk-table__header{ class: "govuk-!-width-one-quarter" }= t("jobs.job_filled")
+        %th.govuk-table__header{ class: "govuk-!-width-one-quarter" }= t("jobs.listed_elsewhere")
+        %th.govuk-table__header= t("jobs.actions")
+    %tbody.govuk-table__body.expired__vacancy-form
+      - vacancies.each do |vacancy|
+        = render "publishers/organisations/vacancy_awaiting_feedback", vacancy: vacancy, organisation: organisation
+- else
+  %p.govuk-body= t("jobs.no_awaiting_feedback")

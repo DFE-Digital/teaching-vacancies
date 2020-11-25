@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Hiring staff can share their vacancy" do
   let(:school) { create(:school) }
   before(:each) do
-    stub_hiring_staff_auth(urn: school.urn)
+    stub_publishers_auth(urn: school.urn)
   end
 
   scenario "A school can visit their page as the jobseeker would" do

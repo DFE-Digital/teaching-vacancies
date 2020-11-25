@@ -10,13 +10,13 @@ RSpec.describe DocumentCopy do
     expect { described_class.new(nil) }.to raise_error(described_class::MissingDocumentId)
   end
 
-  context "copy_hiring_staff_document" do
+  context "copy_publishers_document" do
     it "calls copy_file on drive_service with document id" do
       expect(subject.drive_service).to receive(:copy_file).with(
         document_id,
         anything,
       )
-      subject.copy_hiring_staff_document
+      subject.copy_publishers_document
     end
   end
 

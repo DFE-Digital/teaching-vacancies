@@ -5,7 +5,7 @@ RSpec.describe "Hiring staff can sign out with DfE Sign In" do
   before { allow(AuthenticationFallback).to receive(:enabled?).and_return(false) }
 
   scenario "as an authenticated user" do
-    stub_hiring_staff_auth(urn: school.urn)
+    stub_publishers_auth(urn: school.urn)
 
     visit root_path
 

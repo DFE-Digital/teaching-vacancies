@@ -4,11 +4,11 @@ RSpec.describe "Creating a vacancy" do
   let(:school) { create(:school) }
   let(:session_id) { SecureRandom.uuid }
 
-  before(:each) { stub_hiring_staff_auth(urn: school.urn, session_id: session_id) }
+  before(:each) { stub_publishers_auth(urn: school.urn, session_id: session_id) }
 
   scenario "Visiting the school page" do
     school = create(:school, name: "Salisbury School")
-    stub_hiring_staff_auth(urn: school.urn)
+    stub_publishers_auth(urn: school.urn)
 
     visit organisation_path
 
@@ -296,7 +296,7 @@ RSpec.describe "Creating a vacancy" do
         scenario "displays error message when invalid file type is uploaded" do
           visit organisation_job_documents_path(documents_vacancy.id)
 
-          allow_any_instance_of(HiringStaff::Vacancies::DocumentsController)
+          allow_any_instance_of(Publishers::Vacancies::DocumentsController)
             .to receive_message_chain(:valid_content_type?).and_return(false)
 
           upload_document(
@@ -309,7 +309,7 @@ RSpec.describe "Creating a vacancy" do
         end
 
         scenario "displays error message when large file is uploaded" do
-          stub_const("#{HiringStaff::Vacancies::DocumentsController}::FILE_SIZE_LIMIT", 1.kilobyte)
+          stub_const("#{Publishers::Vacancies::DocumentsController}::FILE_SIZE_LIMIT", 1.kilobyte)
           visit organisation_job_documents_path(documents_vacancy.id)
 
           upload_document(
@@ -1039,7 +1039,7 @@ RSpec.describe "Creating a vacancy" do
           vacancy = create(:vacancy, :draft, publish_on: Date.current)
           vacancy.organisation_vacancies.create(organisation: school)
 
-          expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
+          expect_any_instance_of(Publishers::Vacancies::ApplicationController)
             .to receive(:update_google_index).with(vacancy)
 
           visit organisation_job_review_path(vacancy.id)

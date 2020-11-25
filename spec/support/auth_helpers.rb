@@ -5,7 +5,7 @@ module AuthHelpers
       .and_return(return_value)
   end
 
-  def stub_hiring_staff_auth(urn: nil, uid: nil, la_code: "123", session_id: "session_id", email: nil)
+  def stub_publishers_auth(urn: nil, uid: nil, la_code: "123", session_id: "session_id", email: nil)
     if urn.present?
       page.set_rack_session(urn: urn, uid: "", la_code: "")
     elsif uid.present?

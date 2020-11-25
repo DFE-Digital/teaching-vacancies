@@ -91,7 +91,7 @@ module VacanciesHelper
 
   def vacancy_job_location(vacancy)
     organisation = vacancy.parent_organisation
-    return "#{I18n.t('hiring_staff.organisations.readable_job_location.at_multiple_schools')}, #{organisation.name}" if
+    return "#{I18n.t('publishers.organisations.readable_job_location.at_multiple_schools')}, #{organisation.name}" if
       vacancy.job_location == "at_multiple_schools"
 
     address_join([organisation.name, organisation.town, organisation.county])

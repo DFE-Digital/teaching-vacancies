@@ -1,6 +1,6 @@
 import ClipboardJS from 'clipboard';
 import './jobseekers/init';
-import './hiringStaff/init';
+import './publishers/init';
 
 document.addEventListener('DOMContentLoaded', () => {
   window.dataLayer = window.dataLayer || [];

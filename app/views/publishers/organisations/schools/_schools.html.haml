@@ -1,0 +1,58 @@
+- current_organisation.schools.not_closed.order(:name).each do |school|
+  .school-table
+    %table.govuk-table
+      %thead.govuk-table__head
+        %tr.govuk-table__row
+          %th.govuk-table__header{ colspan: "2" }
+            %h2.govuk-heading-m
+              = school.name.titlecase
+          %th.govuk-table__header
+      %tbody.govuk-table__body
+        %tr.govuk-table__row
+          %td.govuk-table__cell
+            %strong.strong= t('schools.description')
+          %td.govuk-table__cell
+            - if school.description.present?
+              = truncate(school.description, length: 130)
+              %br
+            = link_to t('organisation.view_more_or_change'), edit_organisation_school_path(school), class: 'govuk-link govuk-link--no-visited-state'
+          %td.govuk-table__cell
+        %tr.govuk-table__row
+          %td.govuk-table__cell
+            %strong.strong= t('schools.address')
+          %td.govuk-table__cell
+            = full_address(school)
+          %td.govuk-table__cell
+        %tr.govuk-table__row
+          %td.govuk-table__cell
+            %strong.strong= t('schools.school_age')
+          %td.govuk-table__cell
+            = age_range(school)
+          %td.govuk-table__cell
+        %tr.govuk-table__row
+          %td.govuk-table__cell
+            %strong.strong= t('schools.type')
+          %td.govuk-table__cell
+            = organisation_type(organisation: school)
+          %td.govuk-table__cell
+        %tr.govuk-table__row
+          %td.govuk-table__cell
+            %strong.strong= t('schools.website')
+          %td.govuk-table__cell
+            - if school.website.present?
+              = link_to school.website, school.website, class: 'govuk-link wordwrap', target: '_blank', rel: 'noopener'
+            - elsif school.url.present?
+              = link_to school.url, school.url, class: 'govuk-link wordwrap', target: '_blank', rel: 'noopener'
+            - else
+              = t('jobs.not_defined')
+          %td.govuk-table__cell.change-answer
+            = link_to edit_organisation_school_path(school), class: 'govuk-link govuk-link--no-visited-state' do
+              = t('buttons.change')
+              %span.govuk-visually-hidden
+                = t('publishers.organisations.aria_change_website', organisation_type: organisation_type_basic(school))
+        %tr.govuk-table__row
+          %td.govuk-table__cell
+            %strong.strong= t('schools.urn')
+          %td.govuk-table__cell
+            = school.urn
+          %td.govuk-table__cell

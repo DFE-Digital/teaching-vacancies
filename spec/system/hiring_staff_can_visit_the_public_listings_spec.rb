@@ -31,11 +31,11 @@ RSpec.describe "School viewing public listings" do
 
       sign_in_user
 
-      link_to_dashboard_is_visible_to_hiring_staff?
+      link_to_dashboard_is_visible_to_publishers?
     end
   end
 
-  def link_to_dashboard_is_visible_to_hiring_staff?
+  def link_to_dashboard_is_visible_to_publishers?
     expect(page).to have_content("Jobs at #{school.name}")
     within(".govuk-header__navigation") { expect(page).to have_content(I18n.t("nav.school_page_link")) }
 

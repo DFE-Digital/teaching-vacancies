@@ -12,14 +12,14 @@ RSpec.describe DocumentUpload do
     expect { described_class.new }.to raise_error(described_class::MissingUploadPath)
   end
 
-  context "upload_hiring_staff_document" do
+  context "upload_publishers_document" do
     it "calls create_file on drive_service" do
       expect(subject.drive_service).to receive(:create_file).with(
         { alt: "media", name: name },
         fields: "id, web_view_link, web_content_link, mime_type",
         upload_source: anything,
       )
-      subject.upload_hiring_staff_document
+      subject.upload_publishers_document
     end
 
     it "explicity expects the temporary file path" do
@@ -27,7 +27,7 @@ RSpec.describe DocumentUpload do
         anything,
         hash_including(upload_source: upload_path),
       )
-      subject.upload_hiring_staff_document
+      subject.upload_publishers_document
     end
   end
 

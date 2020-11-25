@@ -51,23 +51,23 @@ Rails.application.routes.draw do
 
   resources :stats, only: [:index]
 
-  resource :identifications, only: %i[new create], controller: "hiring_staff/identifications"
+  resource :identifications, only: %i[new create], controller: "publishers/identifications"
 
   # Sign in
-  resource :sessions, only: %i[destroy], controller: "hiring_staff/sessions"
+  resource :sessions, only: %i[destroy], controller: "publishers/sessions"
 
   # Authentication fallback with emailed magic link
-  get "auth/email/sessions/new", to: "hiring_staff/sign_in/email/sessions#new",
+  get "auth/email/sessions/new", to: "publishers/sign_in/email/sessions#new",
                                  as: "new_auth_email"
-  post "auth/email/sessions/check-your-email", to: "hiring_staff/sign_in/email/sessions#check_your_email",
+  post "auth/email/sessions/check-your-email", to: "publishers/sign_in/email/sessions#check_your_email",
                                                as: "auth_email_check_your_email"
-  get "auth/email/sessions/choose-organisation", to: "hiring_staff/sign_in/email/sessions#choose_organisation",
+  get "auth/email/sessions/choose-organisation", to: "publishers/sign_in/email/sessions#choose_organisation",
                                                  as: "auth_email_choose_organisation"
-  get "auth/email/sessions/sign-in", to: "hiring_staff/sign_in/email/sessions#create",
+  get "auth/email/sessions/sign-in", to: "publishers/sign_in/email/sessions#create",
                                      as: "auth_email_create_session"
-  get "auth/email/sessions/sign-out", to: "hiring_staff/sign_in/email/sessions#destroy",
+  get "auth/email/sessions/sign-out", to: "publishers/sign_in/email/sessions#destroy",
                                       as: "auth_email_sign_out"
-  get "auth/email/sessions/change-organisation", to: "hiring_staff/sign_in/email/sessions#change_organisation",
+  get "auth/email/sessions/change-organisation", to: "publishers/sign_in/email/sessions#change_organisation",
                                                  as: "auth_email_change_organisation"
 
   # DfE Sign In
@@ -75,36 +75,36 @@ Rails.application.routes.draw do
            only: %i[create new],
            as: :dfe,
            path: "/dfe/sessions",
-           controller: "hiring_staff/sign_in/dfe/sessions"
+           controller: "publishers/sign_in/dfe/sessions"
 
-  get "/auth/dfe/callback", to: "hiring_staff/sign_in/dfe/sessions#create"
-  get "/auth/dfe/signout", to: "hiring_staff/sign_in/dfe/sessions#destroy"
-  get "/auth/failure", to: "hiring_staff/sign_in/dfe/sessions#new"
+  get "/auth/dfe/callback", to: "publishers/sign_in/dfe/sessions#create"
+  get "/auth/dfe/signout", to: "publishers/sign_in/dfe/sessions#destroy"
+  get "/auth/failure", to: "publishers/sign_in/dfe/sessions#new"
 
-  resource :terms_and_conditions, only: %i[show update], controller: "hiring_staff/terms_and_conditions"
+  resource :terms_and_conditions, only: %i[show update], controller: "publishers/terms_and_conditions"
 
-  resource :organisation, only: %i[show edit update], controller: "hiring_staff/organisations" do
+  resource :organisation, only: %i[show edit update], controller: "publishers/organisations" do
     scope constraints: { type: /(published|draft|pending|expired|awaiting_feedback)/ } do
-      get "jobs(/:type)", to: "hiring_staff/organisations#show", defaults: { type: :published }, as: :jobs_with_type
+      get "jobs(/:type)", to: "publishers/organisations#show", defaults: { type: :published }, as: :jobs_with_type
     end
 
-    resources :jobs, only: %i[create edit destroy delete show], controller: "hiring_staff/vacancies" do
-      resources :build, only: %i[show update], controller: "hiring_staff/vacancies/build"
-      resource :documents, only: %i[create destroy show], controller: "hiring_staff/vacancies/documents"
+    resources :jobs, only: %i[create edit destroy delete show], controller: "publishers/vacancies" do
+      resources :build, only: %i[show update], controller: "publishers/vacancies/build"
+      resource :documents, only: %i[create destroy show], controller: "publishers/vacancies/documents"
       get "review"
       get "preview"
       get "summary"
-      post :publish, to: "hiring_staff/vacancies/publish#create"
-      get :publish, to: "hiring_staff/vacancies/publish#create"
-      resource :feedback, controller: "hiring_staff/vacancies/vacancy_publish_feedback", only: %i[new create]
-      resource :statistics, controller: "hiring_staff/vacancies/statistics", only: %i[update]
+      post :publish, to: "publishers/vacancies/publish#create"
+      get :publish, to: "publishers/vacancies/publish#create"
+      resource :feedback, controller: "publishers/vacancies/vacancy_publish_feedback", only: %i[new create]
+      resource :statistics, controller: "publishers/vacancies/statistics", only: %i[update]
       resource :copy, only: %i[new create],
-                      controller: "hiring_staff/vacancies/copy"
+                      controller: "publishers/vacancies/copy"
     end
 
-    resources :schools, only: %i[index edit update], controller: "hiring_staff/organisations/schools"
+    resources :schools, only: %i[index edit update], controller: "publishers/organisations/schools"
     resource :managed_organisations, only: %i[show update],
-                                     controller: "hiring_staff/organisations/managed_organisations"
+                                     controller: "publishers/organisations/managed_organisations"
   end
 
   post "/errors/csp_violation", to: "errors#csp_violation"

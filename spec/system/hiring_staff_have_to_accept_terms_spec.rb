@@ -5,7 +5,7 @@ RSpec.describe "Hiring staff accepts terms and conditions" do
   let(:session_id) { "a-valid-oid" }
   let(:current_publisher) { Publisher.find_by(oid: session_id) }
   before do
-    stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
+    stub_publishers_auth(urn: school.urn, session_id: session_id)
   end
 
   context "the user has not accepted the terms and conditions" do

@@ -4,11 +4,11 @@ RSpec.shared_examples "a successful edit" do
   it "allows users to manage the schools and school group details" do
     visit organisation_schools_path
 
-    expect(page).to have_content(I18n.t("hiring_staff.organisations.schools.index.title",
+    expect(page).to have_content(I18n.t("publishers.organisations.schools.index.title",
                                         organisation_type: organisation_type_basic(school_group)))
     expect(page).to have_content(school_group.name)
     expect(page).to have_content(
-      I18n.t("hiring_staff.organisations.schools.index.schools", count: school_group.schools.not_closed.count),
+      I18n.t("publishers.organisations.schools.index.schools", count: school_group.schools.not_closed.count),
     )
     expect(page).not_to have_content("Closed school")
 
