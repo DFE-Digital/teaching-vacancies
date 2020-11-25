@@ -2,9 +2,8 @@
 .tv-checkbox__group{ class: "#{scroll ? 'scrollable' : ''}"}
   - if search
     .search-input
-      %input.govuk-input.search-input__input{ placeholder: "Search" }
+      %input.govuk-input.search-input__input.icon.icon--left.icon--search{ placeholder: "Search" }
       %button{type: "submit"}
-        %i.fa.fa-search
   = f.govuk_collection_check_boxes attribute_name,
     options,
     value_method,

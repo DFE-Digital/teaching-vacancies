@@ -1,15 +1,13 @@
 class Subscription < ApplicationRecord
   include Auditor::Model
 
-  FREQUENCY_OPTIONS = {
-    daily: 0,
-    weekly: 1,
-  }.freeze
+  FREQUENCY_OPTIONS = { daily: 0, weekly: 1 }.freeze
 
   enum frequency: FREQUENCY_OPTIONS
 
   has_many :alert_runs, dependent: :destroy
   has_many :job_alert_feedbacks, dependent: :destroy
+  has_many :unsubscribe_feedbacks, dependent: :destroy
 
   scope :active, (-> { where(active: true) })
 
@@ -17,8 +15,7 @@ class Subscription < ApplicationRecord
     key_generator_secret = SUBSCRIPTION_KEY_GENERATOR_SECRET
     key_generator_salt = SUBSCRIPTION_KEY_GENERATOR_SALT
 
-    key_generator = ActiveSupport::KeyGenerator.new(key_generator_secret)
-                                               .generate_key(key_generator_salt, 32)
+    key_generator = ActiveSupport::KeyGenerator.new(key_generator_secret).generate_key(key_generator_salt, 32)
 
     ActiveSupport::MessageEncryptor.new(key_generator)
   end
@@ -47,9 +44,7 @@ class Subscription < ApplicationRecord
   end
 
   def vacancies_for_range(date_from, date_to)
-    Search::VacancyAlertBuilder.new(
-      search_criteria_to_h.symbolize_keys.merge(from_date: date_from, to_date: date_to),
-    ).call
+    Search::AlertBuilder.new(search_criteria_to_h.symbolize_keys.merge(from_date: date_from, to_date: date_to)).vacancies
   end
 
   def alert_run_today

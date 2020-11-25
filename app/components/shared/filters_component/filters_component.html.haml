@@ -32,8 +32,8 @@
               - group[:options].each do |tag|
                 - if group[:selected]&.include?(tag.send(group[:value_method]))
                   %li
-                    %button.moj-filter__tag{ data: { group: group[:key], key: tag.send(group[:value_method]) } }
-                      %i.fa.fa-times
+                    %button.moj-filter__tag.icon.icon--left.icon--cross{ data: { group: group[:key], key: tag.send(group[:value_method]) } }
+
                       %span.govuk-visually-hidden
                         = t('shared.filter_group.remove_filter_hidden')
                       = tag.send(group[:selected_method])

@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Jobseekers::SearchResults::JobAlertsLinkComponent, type: :component do
   subject { described_class.new(vacancies_search: vacancies_search, count: 1) }
 
-  let(:vacancies_search) { instance_double(Search::VacancySearchBuilder) }
+  let(:vacancies_search) { instance_double(Search::SearchBuilder) }
   let(:active_hash) { { keyword: "maths" } }
 
   before do

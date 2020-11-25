@@ -2,13 +2,8 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    .govuk-panel.tvs-panel.govuk-panel--confirmation.nqt-job-alert-success-gtm
-      = render partial: 'shared/checkmark'
-
-      %h1.govuk-panel__title{ class: 'govuk-!-font-size-24' }= t('nqt_job_alerts.confirm.splash.heading')
-
-      .govuk-panel__body
-        %p= t('nqt_job_alerts.confirm.splash.message', email: @nqt_job_alerts_form.email)
+    .nqt-job-alert-success-gtm
+      = render GovukComponent::Panel.new(title: t('nqt_job_alerts.confirm.splash.heading'), body: t('nqt_job_alerts.confirm.splash.message', email: @nqt_job_alerts_form.email))
 
     %h2.govuk-heading-l= t('nqt_job_alerts.confirm.heading')
     %p.govuk-body= t('nqt_job_alerts.confirm.intro')

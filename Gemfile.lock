@@ -184,6 +184,10 @@ GEM
       signet (~> 0.14)
     gov_uk_date_fields (4.1.0)
       rails (>= 5.0.7.2)
+    govuk-components (0.1.0)
+      rails (~> 6.0.2, >= 6.0.2.2)
+      slim-rails (~> 3.2)
+      view_component (~> 2.5)
     govuk_design_system_formbuilder (2.1.4)
       actionview (>= 5.2)
       activemodel (>= 5.2)
@@ -478,6 +482,13 @@ GEM
       skylight-core (= 4.3.1)
     skylight-core (4.3.1)
       activesupport (>= 4.2.0)
+    slim (4.1.0)
+      temple (>= 0.7.6, < 0.9)
+      tilt (>= 2.0.6, < 2.1)
+    slim-rails (3.2.0)
+      actionpack (>= 3.1)
+      railties (>= 3.1)
+      slim (>= 3.0, < 5.0)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -566,6 +577,7 @@ DEPENDENCIES
   google-cloud-bigquery
   google_drive
   gov_uk_date_fields
+  govuk-components
   govuk_design_system_formbuilder
   haml-rails
   high_voltage

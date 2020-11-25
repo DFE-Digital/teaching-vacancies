@@ -2,13 +2,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    .govuk-panel.tvs-panel.govuk-panel--confirmation
-      = render partial: 'shared/checkmark'
-
-      %h1.govuk-panel__title{ class: 'govuk-!-font-size-36' }= t('.header')
-
-      .govuk-panel__body
-        %p= t('.body', email: @subscription.email)
+    = render GovukComponent::Panel.new(title: t('.header'), body: t('.body', email: @subscription.email))
 
     %h2.govuk-heading-m=t('.next_step')
     %p.govuk-body=t('.next_step_details')

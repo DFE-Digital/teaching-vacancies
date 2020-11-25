@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Jobseekers::SearchResults::HeadingComponent, type: :component do
   subject { described_class.new(vacancies_search: vacancies_search) }
 
-  let(:vacancies_search) { instance_double(Search::VacancySearchBuilder) }
+  let(:vacancies_search) { instance_double(Search::SearchBuilder) }
   let(:keyword) { "maths" }
   let(:location) { "London" }
   let(:location_polygon) { "London" }

@@ -159,6 +159,10 @@
             width: 0;
           }
 
+          &.icon--left {
+            padding-left: govuk-spacing(3);
+          }
+
           .fa-times {
             color: $govuk-link-colour;
             font-size: 80%;

@@ -42,7 +42,7 @@ jobs:
     - name: Set environment variables
       id: set_env_vars
       run: |
-        BRANCH=${{ github.head_ref }}
+        BRANCH=$(echo ${GITHUB_REF#refs/heads/})
         TAG=${BRANCH}-${{ github.sha }}-$(date '+%Y%m%d%H%M%S')
         echo "BRANCH=${BRANCH}" >> $GITHUB_ENV
         echo "TAG=${TAG}" >> $GITHUB_ENV

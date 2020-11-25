@@ -33,6 +33,15 @@
             %ul.govuk-list.govuk-list--bullet
               - t('jobs.no_jobs.suggestions').each do |list_item|
                 %li= list_item
+        - if @vacancies_search.wider_radius_suggestions.present?
+          .divider-bottom
+            - if @vacancies_search.keyword.present?
+              .govuk-heading-m= t('jobs.no_jobs.radius_suggestions.heading.keyword_html', keyword: @vacancies_search.keyword)
+            - else
+              .govuk-heading-m= t('jobs.no_jobs.radius_suggestions.heading.no_keyword')
+            %ul.govuk-list.govuk-list--bullet
+              - @vacancies_search.wider_radius_suggestions.each do |wider_radius|
+                %li= link_to("#{wider_radius.first} miles", jobs_path(@vacancies_search.params_hash.merge(radius: wider_radius.first)), class: "govuk-link wider-radius-gtm") + ' ' + t('jobs.no_jobs.radius_suggestions.results', count: wider_radius.last)
         %span.govuk-heading-m
           = t('subscriptions.link.no_search_results_html', link_href: new_subscription_path(search_criteria: @vacancies_search.only_active_to_hash))
         %p{ class: 'govuk-!-margin-1' }

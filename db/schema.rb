@@ -216,6 +216,16 @@ ActiveRecord::Schema.define(version: 2020_11_24_120747) do
     t.index ["task", "date"], name: "index_transaction_auditors_on_task_and_date", unique: true
   end
 
+  create_table "unsubscribe_feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "reason"
+    t.string "other_reason"
+    t.text "additional_info"
+    t.uuid "subscription_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["subscription_id"], name: "index_unsubscribe_feedbacks_on_subscription_id"
+  end
+
   create_table "user_preferences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "managed_organisations"
     t.uuid "user_id"
@@ -305,6 +315,7 @@ ActiveRecord::Schema.define(version: 2020_11_24_120747) do
   add_foreign_key "documents", "vacancies"
   add_foreign_key "emergency_login_keys", "users"
   add_foreign_key "job_alert_feedbacks", "subscriptions"
+  add_foreign_key "unsubscribe_feedbacks", "subscriptions"
   add_foreign_key "user_preferences", "users"
   add_foreign_key "vacancies", "organisations", column: "publisher_organisation_id"
   add_foreign_key "vacancies", "users", column: "publisher_user_id"

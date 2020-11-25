@@ -1,4 +1,4 @@
-class Search::VacancyFiltersBuilder
+class Search::FiltersBuilder
   def initialize(filters_hash)
     # Although we are no longer indexing expired and pending vacancies, we need to maintain this filter for now as
     # expired vacancies only get removed from the index once a day.

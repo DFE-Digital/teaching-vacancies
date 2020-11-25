@@ -6,13 +6,9 @@
   @return url('~assets/images/' + $filename);
 }
 
-$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
-
 $govuk-font-url-function: frontend-font-url;
 $govuk-image-url-function: frontend-image-url;
 
-@import '~@fortawesome/fontawesome-free/scss/fontawesome';
-@import '~@fortawesome/fontawesome-free/scss/solid';
 @import '~govuk-frontend/govuk/all';
 @import '~@ministryofjustice/frontend/moj/all';
 
@@ -31,9 +27,11 @@ $govuk-image-url-function: frontend-image-url;
 @import 'application/banners';
 @import 'application/checkboxGroup';
 @import 'application/form';
+@import 'application/icons';
 @import 'application/modal';
 @import 'application/navigation';
 @import 'application/pagination';
+@import 'application/panel';
 @import 'application/school';
 @import 'application/signin';
 @import 'application/steps';

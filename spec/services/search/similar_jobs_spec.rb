@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Search::VacancySimilarJobs do
+RSpec.describe Search::SimilarJobs do
   subject { described_class.new(vacancy) }
 
   let(:school) { create(:school) }
@@ -11,8 +11,8 @@ RSpec.describe Search::VacancySimilarJobs do
     subject
   end
 
-  it "calls Search::VacancySearchBuilder" do
-    expect(Search::VacancySearchBuilder).to receive(:new).and_call_original
+  it "calls Search::SearchBuilder" do
+    expect(Search::SearchBuilder).to receive(:new).and_call_original
     subject
   end
 end
