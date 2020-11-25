@@ -5,6 +5,7 @@ RSpec.describe "Creating a vacancy" do
   let(:school_1) { create(:school, name: "First school") }
   let(:school_2) { create(:school, name: "Second school") }
   let(:session_id) { SecureRandom.uuid }
+  let(:vacancy) { build(:vacancy, :at_one_school, :complete) }
 
   before do
     allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(true)
@@ -12,6 +13,18 @@ RSpec.describe "Creating a vacancy" do
     SchoolGroupMembership.find_or_create_by(school_id: school_2.id, school_group_id: school_group.id)
     allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference))
     stub_publishers_auth(la_code: school_group.local_authority_code, session_id: session_id)
+  end
+
+  scenario "resets session current_step" do
+    page.set_rack_session(current_step: :review)
+
+    visit organisation_path
+    click_on I18n.t("buttons.create_job")
+
+    fill_in_job_location_form_field(vacancy)
+    click_on I18n.t("buttons.continue")
+
+    expect(page.get_rack_session["current_step"]).to be nil
   end
 
   context "when job is located at a single school in the local authority" do

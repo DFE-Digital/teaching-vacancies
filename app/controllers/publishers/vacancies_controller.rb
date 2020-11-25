@@ -13,6 +13,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::ApplicationContro
   end
 
   def create
+    reset_session_vacancy!
     vacancy = Vacancy.create(organisation_vacancies_attributes: [{ organisation: current_organisation }])
     redirect_to organisation_job_build_path(vacancy.id, :job_location)
   end
@@ -26,6 +27,8 @@ class Publishers::VacanciesController < Publishers::Vacancies::ApplicationContro
   end
 
   def review
+    reset_session_vacancy!
+
     if all_steps_valid? || %w[copy edit_published].include?(@vacancy.state)
       update_vacancy_state
       set_completed_step
