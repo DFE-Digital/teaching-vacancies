@@ -6,6 +6,7 @@ RSpec.describe "Creating a vacancy" do
   let(:school_2) { create(:school, name: "Second school") }
   let(:school_3) { create(:school, :closed, name: "Closed school") }
   let(:session_id) { SecureRandom.uuid }
+  let(:vacancy) { build(:vacancy, :at_central_office, :complete) }
 
   before do
     SchoolGroupMembership.find_or_create_by(school_id: school_1.id, school_group_id: school_group.id)
@@ -13,6 +14,18 @@ RSpec.describe "Creating a vacancy" do
     SchoolGroupMembership.find_or_create_by(school_id: school_3.id, school_group_id: school_group.id)
     allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference))
     stub_publishers_auth(uid: school_group.uid, session_id: session_id)
+  end
+
+  scenario "resets session current_step" do
+    page.set_rack_session(current_step: :review)
+
+    visit organisation_path
+    click_on I18n.t("buttons.create_job")
+
+    fill_in_job_location_form_field(vacancy)
+    click_on I18n.t("buttons.continue")
+
+    expect(page.get_rack_session["current_step"]).to be nil
   end
 
   context "when job is located at trust central office" do

@@ -6,6 +6,7 @@ class Publishers::Vacancies::PublishController < Publishers::Vacancies::Applicat
       redirect_to organisation_job_path(@vacancy.id), notice: I18n.t("messages.jobs.already_published")
     elsif all_steps_valid? && PublishVacancy.new(@vacancy, current_publisher, current_organisation).call
       audit_publish_vacancy
+      reset_session_vacancy!
       redirect_to organisation_job_summary_path(@vacancy.id)
     else
       redirect_to review_path_with_errors(@vacancy), danger: {

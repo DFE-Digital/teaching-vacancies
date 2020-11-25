@@ -40,6 +40,18 @@ RSpec.describe "Creating a vacancy" do
       expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 7))
     end
 
+    scenario "resets session current_step" do
+      page.set_rack_session(current_step: :review)
+
+      visit organisation_path
+      click_on I18n.t("buttons.create_job")
+
+      fill_in_job_details_form_fields(vacancy)
+      click_on I18n.t("buttons.continue")
+
+      expect(page.get_rack_session["current_step"]).to be nil
+    end
+
     describe "#job_details" do
       scenario "is invalid unless all mandatory fields are submitted" do
         visit organisation_path

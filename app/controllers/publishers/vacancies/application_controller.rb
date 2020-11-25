@@ -14,7 +14,7 @@ class Publishers::Vacancies::ApplicationController < Publishers::BaseController
       form.errors.each do |field, error|
         @vacancy.errors.add(field, error)
       end
-      session[:current_step] = "" unless valid
+      session[:current_step] = nil unless valid
     end
   end
 
@@ -72,6 +72,11 @@ class Publishers::Vacancies::ApplicationController < Publishers::BaseController
       form_object.errors.delete(field)
       form_object.errors.add(field, error)
     end
+  end
+
+  def reset_session_vacancy!
+    session[:job_location] = nil
+    session[:current_step] = nil
   end
 
   def review_path_with_errors(vacancy)
