@@ -1,13 +1,20 @@
-- content_for :page_title_prefix, t('sign_in.title')
+- content_for :page_title_prefix, t('hiring_staff.identifications.new.sign_in.title')
 
 .govuk-grid-row
-  = render(Shared::NotificationComponent.new(content: { title: t('hiring_staff.temp_login.heading'), body: t('hiring_staff.temp_login.please_use_email') }, style: 'danger'))
+  .govuk-grid-column-full
+    = render(Shared::NotificationComponent.new(content: { title: t('hiring_staff.temp_login.heading'), body: t('hiring_staff.temp_login.please_use_email') }, style: 'danger'))
   .govuk-grid-column-two-thirds
-    %h1.govuk-heading-l= t('sign_in.title')
-    %p= t('pages.home.signin.description')
+    %h1.govuk-heading-l= t('hiring_staff.identifications.new.sign_in.title')
+    %p= t('hiring_staff.identifications.new.sign_in.description')
     = form_for Publisher.new, url: auth_email_check_your_email_path do |f|
       = f.govuk_email_field :email
-      = f.govuk_submit 'Continue', classes: 'govuk-button fallback-authentication-submit-email-gtm'
+      = f.govuk_submit t('buttons.continue'), classes: 'fallback-authentication-submit-email-gtm govuk-!-margin-bottom-0'
     %hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
-    %h2.govuk-heading-m= I18n.t('.hiring_staff.identifications.new.request_account_title')
+    %h2.govuk-heading-m= I18n.t('hiring_staff.identifications.new.request_account_title')
     %p= t('hiring_staff.identifications.new.request_account_html', mail_to: mail_to(t('help.email'), t('help.email'), class: 'govuk-link'))
+
+  - if JobseekerAccountsFeature.enabled?
+    .govuk-grid-column-one-third
+      .account-sidebar
+        %h2.account-sidebar__heading= t("hiring_staff.identifications.new.assistance.heading")
+        %p.govuk-body= t("hiring_staff.identifications.new.assistance.content_html", link: link_to(t("hiring_staff.identifications.new.assistance.link_text"), new_jobseeker_session_path, class: "govuk-link"))
