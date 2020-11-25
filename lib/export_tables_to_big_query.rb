@@ -15,6 +15,8 @@ class ExportTablesToBigQuery
   # gias_data removes duplication of data.
   DROP_THESE_ATTRIBUTES = %w[
     benefits
+    boundary
+    buffers
     description
     education
     experience
@@ -49,7 +51,6 @@ class ExportTablesToBigQuery
     activities
     ar_internal_metadata
     friendly_id_slugs
-    location_polygons
     schema_migrations
     sessions
   ].freeze
