@@ -175,19 +175,22 @@ en:
   hiring_staff:
     identifications:
       new:
+        assistance:
+          content_html: "%{link} to your account to search for and save jobs"
+          heading: Teachers account
+          link_text: Sign in
         page_description: If you already have a Teaching Vacancies account you can sign in to the service here.
         request_account_title: Request an account
         request_account_html: >-
-          Don't have an account? You can get one if you work at a publicly funded school or trust in England.
-          Just send your full name, the name of the school or Trust you work for and your work email address to
-          %{mail_to}.
-        some_of_our_users: >-
-          Some of our users are having having trouble signing in. We're working on the problem now. If you can't sign
-          in, try again soon.
-        you_might_have_problems_signing_in: Sorry, the service is unavailable
+          You can get an account if you work at a publicly funded school or trust in England. Just send your
+          full name, the name of the school or Trust you work for and your work email address to %{mail_to}.
+        sign_in:
+          description: You must sign in to your Teaching Vacancies account to list a job.
+          title: Sign in to Teaching Vacancies
     organisations:
       aria_change_description: '%{organisation_type} description'
       aria_change_website: '%{organisation_type} website'
+      change: Change organisation
       managed_organisations:
         show:
           hints:
@@ -222,6 +225,18 @@ en:
         at_multiple_schools: More than one school
         at_multiple_schools_with_count: More than one school (%{count})
         central_office: Trust head office
+    sign_in:
+      email:
+        sessions:
+          new:
+            title: Sign in to Teaching Vacancies
+            heading: Temporary login
+            body: DfE Sign In is experiencing problems. Please sign in using your email address.
+            description: You must sign in to your Teaching Vacancies account to list a job.
+            request_account_title: Request an account
+            request_account_html: >-
+              You can get an account if you work at a publicly funded school or trust in England. Just send your
+              full name, the name of the school or Trust you work for and your work email address to %{mail_to}.
     temp_login:
       check_your_email:
         check_spam_html: >-
@@ -425,19 +440,6 @@ en:
       current_selected_filters: Selected filters
       remove_filter_hidden: Remove this filter
       return_to_results: Return to results
-
-  sign_in:
-    guidance: >-
-      You can get one if you work at a publicly funded school or trust providing primary or secondary education in
-      England and have been authorised by your headteacher or CEO. Just ask them to send your full name and
-      email address to %{email}. Or email us your details directly, copying in your headteacher or CEO.
-    intro: You must have an account to sign into this service.
-    link: Sign in
-    organisation:
-      title: Select your organisation
-      legend: You are associated with more than one organisation, please select the one you wish to sign-in with.
-      change: Change organisation
-    title: Sign in to Teaching Vacancies
 
   stats:
     intro: >-

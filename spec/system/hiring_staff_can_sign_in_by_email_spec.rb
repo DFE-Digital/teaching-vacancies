@@ -16,7 +16,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
   scenario "can reach email request page by sign in button" do
     visit root_path
 
-    within(".signin") { click_on(I18n.t("sign_in.link")) }
+    within(".signin") { click_on(I18n.t("buttons.sign_in")) }
     expect(page).to have_content(I18n.t("hiring_staff.temp_login.heading"))
     expect(page).to have_content(I18n.t("hiring_staff.temp_login.please_use_email"))
   end
@@ -93,7 +93,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
               .to receive(:generate_login_key)
               .with(publisher: publisher)
               .and_return(other_login_key)
-            click_on I18n.t("sign_in.organisation.change")
+            click_on I18n.t("hiring_staff.organisations.change")
             click_on(trust.name)
             expect(page).to have_content("Jobs at #{trust.name}")
             expect { other_login_key.reload }.to raise_error ActiveRecord::RecordNotFound
@@ -254,6 +254,6 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
 private
 
   def click_sign_in
-    within(".signin") { click_on(I18n.t("sign_in.link")) }
+    within(".signin") { click_on(I18n.t("buttons.sign_in")) }
   end
 end

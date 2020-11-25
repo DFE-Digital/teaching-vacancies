@@ -12,9 +12,9 @@
   - if @multiple_organisations && @organisation.is_a?(School)
     .govuk-grid-column-full
       - if AuthenticationFallback.enabled?
-        = link_to t('sign_in.organisation.change'), auth_email_change_organisation_path, class: 'govuk-link'
+        = link_to t('hiring_staff.organisations.change'), auth_email_change_organisation_path, class: 'govuk-link'
       - else
-        = link_to t('sign_in.organisation.change'), auth_dfe_callback_path, class: 'govuk-link'
+        = link_to t('hiring_staff.organisations.change'), auth_dfe_callback_path, class: 'govuk-link'
   .govuk-grid-column-full
     .govuk-grid-row{ class: "govuk-!-margin-top-6" }
       = render(HiringStaff::VacanciesComponent.new(organisation: @organisation, sort: @sort, selected_type: @selected_type, filters: @filters, filters_form: @managed_organisations_form))
