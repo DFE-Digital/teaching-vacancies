@@ -103,7 +103,7 @@ class VacancyPresenter < BasePresenter
   def show_job_roles
     return unless model.job_roles
 
-    model.job_roles.map { |job_role| I18n.t("jobs.job_role_options.#{job_role}") }.join(", ")
+    model.job_roles.map { |job_role| I18n.t("helpers.label.job_details_form.job_roles_options.#{job_role}") }.join(", ")
   end
 
   def show_subjects

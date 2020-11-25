@@ -10,16 +10,16 @@ RSpec.describe "Searching on the home page" do
       # Click 'Add more filters'
       find(".new_ > details").click
 
-      check I18n.t("jobs.job_role_options.nqt_suitable"),
+      check I18n.t("helpers.label.job_details_form.job_roles_options.nqt_suitable"),
             name: "job_roles[]",
             visible: false
       check I18n.t("jobs.education_phase_options.primary"),
             name: "phases[]",
             visible: false
-      check I18n.t("jobs.working_pattern_options.part_time"),
+      check I18n.t("helpers.label.job_details_form.working_patterns_options.part_time"),
             name: "working_patterns[]",
             visible: false
-      check I18n.t("jobs.working_pattern_options.full_time"),
+      check I18n.t("helpers.label.job_details_form.working_patterns_options.full_time"),
             name: "working_patterns[]",
             visible: false
 

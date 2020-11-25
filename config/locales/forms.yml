@@ -128,8 +128,17 @@ en:
         about_organisation_html: About %{organisation} (<span class='text-red'>Required</span>)
         job_summary_html: Job summary (<span class='text-red'>Required</span>)
       job_details_form:
+        job_roles_options:
+          teacher: Teacher
+          leadership: Leadership
+          sen_specialist: SEN specialist
+          nqt_suitable: Suitable for NQTs
         job_title_html: Job title (<span class='text-red'>Required</span>)
         suitable_for_nqt_html: Is this job suitable for NQTs? (<span class='text-red'>Required</span>)
+        working_patterns_options:
+          full_time: Full-time
+          part_time: Part-time
+          job_share: Job share
       nqt_job_alerts_form:
         email_html: Email address (<span class='text-red'>Required</span>)
         keywords_html: Keywords (<span class='text-red'>Required</span>)

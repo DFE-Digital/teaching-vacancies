@@ -63,11 +63,11 @@ private
   end
 
   def render_job_roles_filter(value)
-    { job_roles: value.map { |role| I18n.t("jobs.job_role_options.#{role}") }.join(", ") }
+    { job_roles: value.map { |role| I18n.t("helpers.label.job_details_form.job_roles_options.#{role}") }.join(", ") }
   end
 
   def render_working_patterns_filter(value)
-    { working_patterns: value.map { |role| I18n.t("jobs.working_pattern_options.#{role}") }.join(", ") }
+    { working_patterns: value.map { |role| I18n.t("helpers.label.job_details_form.working_patterns_options.#{role}") }.join(", ") }
   end
 
   def render_phases_filter(value)

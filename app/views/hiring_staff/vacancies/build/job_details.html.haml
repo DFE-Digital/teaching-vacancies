@@ -24,7 +24,7 @@
         %span#job_details_form_job_title-info.govuk-hint.govuk-character-count__message{ "aria-live": "polite" }
           You can enter up to 100 characters
 
-      = f.govuk_collection_check_boxes :job_roles, job_role_options, :last, :first
+      = f.govuk_collection_check_boxes :job_roles, Vacancy.job_roles.except("nqt_suitable").keys, :to_s, :to_s
 
       = f.govuk_collection_radio_buttons :suitable_for_nqt, %w[yes no], :to_s, :capitalize
 
@@ -36,9 +36,9 @@
           =t("helpers.hint.job_details_form.subjects")
 
         %div{ class: "govuk-!-margin-bottom-6" }
-          = render "shared/checkbox_group", classes: "checkbox-label__bold", f: f, search: true, scroll: true, attribute_name: :subjects, options: subject_options, value_method: :first, text_method: :first, hint_method: :last, small: true
+          = render "shared/checkbox_group", classes: "checkbox-label__bold", f: f, search: true, scroll: true, attribute_name: :subjects, options: SUBJECT_OPTIONS, value_method: :first, text_method: :first, hint_method: :last, small: true
 
-      = f.govuk_collection_check_boxes :working_patterns, working_pattern_options, :last, :first
+      = f.govuk_collection_check_boxes :working_patterns, Vacancy.working_patterns.keys, :to_s, :to_s
 
       = render "hiring_staff/vacancies/vacancy_form_partials/submit", f: f
 
