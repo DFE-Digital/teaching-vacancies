@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - dev
-      - staging
     paths-ignore:
     - 'bigquery/**'
     - 'documentation/**'
