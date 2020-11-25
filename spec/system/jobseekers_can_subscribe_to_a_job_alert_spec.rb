@@ -81,7 +81,7 @@ RSpec.describe "A job seeker can subscribe to a job alert" do
           page.choose("Daily")
           click_on "Subscribe"
 
-          expect(page).to have_content(I18n.t("subscriptions.frequency.daily"))
+          expect(page).to have_content(I18n.t("helpers.label.subscription_form.frequency_options.daily"))
         end
       end
 
@@ -91,7 +91,7 @@ RSpec.describe "A job seeker can subscribe to a job alert" do
           page.choose("Weekly")
           click_on "Subscribe"
 
-          expect(page).to have_content(I18n.t("subscriptions.frequency.weekly"))
+          expect(page).to have_content(I18n.t("helpers.label.subscription_form.frequency_options.weekly"))
         end
       end
 

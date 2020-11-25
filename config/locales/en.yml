@@ -459,6 +459,9 @@ en:
       back_to_search_results: Return to your search results
       body: We sent an email confirmation to %{email}.
       frequency_label: 'You will receive alerts '
+      frequency:
+        daily: daily, at around 3 pm
+        weekly: weekly (Friday evening at around 6 pm)
       header: Your email subscription has started
       next_step_details: 'We’ll email you details of any new teaching jobs that match the following criteria:'
       next_step: What happens next
@@ -468,6 +471,9 @@ en:
       back_to_search_results: Return to your search results
       body: We sent an email confirmation to %{email}.
       frequency_label: 'You will receive alerts '
+      frequency:
+        daily: daily, at around 3 pm
+        weekly: weekly (Friday evening at around 6 pm)
       header: Your job alert has been updated
       next_step_details: 'We’ll email you details of any new teaching jobs that match the following criteria:'
       next_step: What happens next
@@ -480,12 +486,6 @@ en:
     errors:
       duplicate_alert: A job alert matching this criteria already exists
       no_criteria_selected: Please choose at least one criteria
-    frequency:
-      daily: Daily, at around 3 pm
-      weekly: Weekly (Friday evening at around 6 pm)
-      downcase:
-        daily: daily, at around 3 pm
-        weekly: weekly (Friday evening at around 6 pm)
     info: You can unsubscribe at any time by following the simple instructions at the bottom of the alert.
     intro: 'We’ll email you details of any new jobs that match the following criteria:'
     link:

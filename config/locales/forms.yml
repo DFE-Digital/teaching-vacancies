@@ -134,6 +134,9 @@ en:
         salary_html: Salary (<span class='text-red'>Required</span>)
       subscription_form:
         email_html: Email address (<span class='text-red'>Required</span>)
+        frequency_options:
+          daily: Daily, at around 3 pm
+          weekly: Weekly (Friday evening at around 6 pm)
       unsubscribe_feedback_form:
         additional_info: Is there anything else you'd like to tell us?
         other_reason_html: Briefly, tell us more about that reason
