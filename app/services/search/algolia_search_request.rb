@@ -13,6 +13,8 @@ class Search::AlgoliaSearchRequest
     @typo_tolerance = search_params[:typo_tolerance]
 
     @vacancies = search
+    return if @vacancies.nil?
+
     @stats = build_stats(
       vacancies.raw_answer["page"],
       vacancies.raw_answer["nbPages"],
@@ -33,6 +35,9 @@ private
 
   def search
     Vacancy.includes(organisation_vacancies: :organisation).search(@keyword, search_arguments)
+  rescue Algolia::AlgoliaProtocolError => e
+    Rollbar.error("Algolia search error", details: e, search_arguments: search_arguments)
+    nil
   end
 
   def search_arguments
