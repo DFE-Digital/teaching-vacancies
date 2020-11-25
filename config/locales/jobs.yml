@@ -27,20 +27,11 @@ en:
       phases: Education phase
       working_patterns: Working pattern
 
-    job_role_options:
-      teacher: Teacher
-      leadership: Leadership
-      sen_specialist: SEN specialist
-      nqt_suitable: Suitable for NQTs
     education_phase_options:
       primary: Primary
       middle: Middle
       secondary: Secondary
       16-19: 16-19
-    working_pattern_options:
-      full_time: Full-time
-      part_time: Part-time
-      job_share: Job share
 
     number_of_results_html: >-
       Showing

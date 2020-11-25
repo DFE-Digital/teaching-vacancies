@@ -112,19 +112,33 @@ en:
         expires_at_meridiem: am or pm
         expires_at_mm: Minute
         job_title_html: Job title (<span class='text-red'>Required</span>)
-      organisation_form:
-        description: Description of %{organisation_type}
-        website: '%{organisation_type} website'
+      general_feedback:
+        visit_purpose_options:
+          find_teaching_job: Find a job in teaching
+          list_teaching_job: List a teaching job on the service
+          other_purpose: Something else
       important_dates_form:
         expires_at_hh: Hour
         expires_at_meridiem: am or pm
         expires_at_mm: Minute
+      organisation_form:
+        description: Description of %{organisation_type}
+        website: '%{organisation_type} website'
       job_summary_form:
         about_organisation_html: About %{organisation} (<span class='text-red'>Required</span>)
         job_summary_html: Job summary (<span class='text-red'>Required</span>)
       job_details_form:
+        job_roles_options:
+          teacher: Teacher
+          leadership: Leadership
+          sen_specialist: SEN specialist
+          nqt_suitable: Suitable for NQTs
         job_title_html: Job title (<span class='text-red'>Required</span>)
         suitable_for_nqt_html: Is this job suitable for NQTs? (<span class='text-red'>Required</span>)
+        working_patterns_options:
+          full_time: Full-time
+          part_time: Part-time
+          job_share: Job share
       nqt_job_alerts_form:
         email_html: Email address (<span class='text-red'>Required</span>)
         keywords_html: Keywords (<span class='text-red'>Required</span>)
@@ -134,6 +148,9 @@ en:
         salary_html: Salary (<span class='text-red'>Required</span>)
       subscription_form:
         email_html: Email address (<span class='text-red'>Required</span>)
+        frequency_options:
+          daily: Daily, at around 3 pm
+          weekly: Weekly (Friday evening at around 6 pm)
       unsubscribe_feedback_form:
         additional_info: Is there anything else you'd like to tell us?
         other_reason_html: Briefly, tell us more about that reason

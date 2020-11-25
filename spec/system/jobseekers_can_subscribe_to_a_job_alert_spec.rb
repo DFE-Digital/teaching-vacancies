@@ -81,7 +81,7 @@ RSpec.describe "A job seeker can subscribe to a job alert" do
           page.choose("Daily")
           click_on "Subscribe"
 
-          expect(page).to have_content(I18n.t("subscriptions.frequency.daily"))
+          expect(page).to have_content(I18n.t("helpers.label.subscription_form.frequency_options.daily"))
         end
       end
 
@@ -91,7 +91,7 @@ RSpec.describe "A job seeker can subscribe to a job alert" do
           page.choose("Weekly")
           click_on "Subscribe"
 
-          expect(page).to have_content(I18n.t("subscriptions.frequency.weekly"))
+          expect(page).to have_content(I18n.t("helpers.label.subscription_form.frequency_options.weekly"))
         end
       end
 
@@ -145,9 +145,9 @@ RSpec.describe "A job seeker can subscribe to a job alert" do
         within ".filters-form" do
           fill_in "keyword", with: "English"
           fill_in "location", with: "London"
-          check I18n.t("jobs.job_role_options.teacher"), name: "job_roles[]", visible: false
-          check I18n.t("jobs.job_role_options.nqt_suitable"), name: "job_roles[]", visible: false
-          check I18n.t("jobs.working_pattern_options.full_time"), name: "working_patterns[]", visible: false
+          check I18n.t("helpers.label.job_details_form.job_roles_options.teacher"), name: "job_roles[]", visible: false
+          check I18n.t("helpers.label.job_details_form.job_roles_options.nqt_suitable"), name: "job_roles[]", visible: false
+          check I18n.t("helpers.label.job_details_form.working_patterns_options.full_time"), name: "working_patterns[]", visible: false
           click_on I18n.t("buttons.search")
         end
 
@@ -192,9 +192,9 @@ RSpec.describe "A job seeker can subscribe to a job alert" do
           fill_in "keyword", with: "English"
           fill_in "location", with: "SW1A 1AA"
           select "40 miles", from: "radius"
-          check I18n.t("jobs.job_role_options.teacher"), name: "job_roles[]", visible: false
-          check I18n.t("jobs.job_role_options.nqt_suitable"), name: "job_roles[]", visible: false
-          check I18n.t("jobs.working_pattern_options.full_time"), name: "working_patterns[]", visible: false
+          check I18n.t("helpers.label.job_details_form.job_roles_options.teacher"), name: "job_roles[]", visible: false
+          check I18n.t("helpers.label.job_details_form.job_roles_options.nqt_suitable"), name: "job_roles[]", visible: false
+          check I18n.t("helpers.label.job_details_form.working_patterns_options.full_time"), name: "working_patterns[]", visible: false
           click_on I18n.t("buttons.search")
         end
 

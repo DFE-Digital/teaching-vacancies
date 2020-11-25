@@ -29,5 +29,5 @@
     %ul.govuk-list.two-column-list{ aria: { label: "#{t('.job_roles')} list" } }
       - @job_roles_facets.each do |job_role, count|
         %li
-          = link_to I18n.t("jobs.job_role_options.#{job_role.to_s}"), jobs_path(job_roles: job_role), class: 'govuk-link'
+          = link_to I18n.t("helpers.label.job_details_form.job_roles_options.#{job_role.to_s}"), jobs_path(job_roles: job_role), class: 'govuk-link'
           = "(#{count})"
