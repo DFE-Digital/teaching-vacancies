@@ -1,3 +1,3 @@
 class ActionView::TestCase::TestController
-  include AuthenticationConcerns
+  include Publishers::AuthenticationConcerns
 end

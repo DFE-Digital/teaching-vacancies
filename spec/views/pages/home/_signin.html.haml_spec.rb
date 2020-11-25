@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "pages/home/_signin.html.haml" do
   context "if session is authenticated" do
     before do
-      allow(view).to receive(:authenticated?).and_return(true)
+      allow(view).to receive(:publisher_signed_in?).and_return(true)
       school = create(:school, name: "Salisbury School")
       allow(view).to receive(:current_organisation) { school }
       render
@@ -16,7 +16,7 @@ RSpec.describe "pages/home/_signin.html.haml" do
 
   context "if session is not authenticated" do
     before do
-      allow(view).to receive(:authenticated?).and_return(false)
+      allow(view).to receive(:publisher_signed_in?).and_return(false)
       render
     end
 

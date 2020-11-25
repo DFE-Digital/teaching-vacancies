@@ -4,11 +4,11 @@ RSpec.describe Publishers::SidebarComponent, type: :component do
   let(:vacancy) { create(:vacancy, completed_step: completed_step) }
   let(:completed_step) { 0 }
   let(:current_step) { 1 }
-  let(:school_group_user?) { true }
+  let(:current_publisher_is_part_of_school_group?) { true }
 
   before do
     allow_any_instance_of(Publishers::JobCreationHelper).to receive(:current_step_number).and_return(current_step)
-    allow_any_instance_of(AuthenticationConcerns).to receive(:school_group_user?).and_return(school_group_user?)
+    allow_any_instance_of(Publishers::AuthenticationConcerns).to receive(:current_publisher_is_part_of_school_group?).and_return(current_publisher_is_part_of_school_group?)
   end
 
   let!(:inline_component) { render_inline(described_class.new(vacancy: vacancy)) }
@@ -46,7 +46,7 @@ RSpec.describe Publishers::SidebarComponent, type: :component do
   end
 
   context "when a School user creates a job" do
-    let(:school_group_user?) { false }
+    let(:current_publisher_is_part_of_school_group?) { false }
 
     it "does not render the job location step" do
       expect(rendered_component).not_to include(I18n.t("jobs.job_location"))

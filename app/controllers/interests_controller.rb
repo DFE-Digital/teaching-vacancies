@@ -1,6 +1,6 @@
 class InterestsController < ApplicationController
   def new
-    audit_click unless authenticated?
+    audit_click unless publisher_signed_in?
     redirect_to(vacancy.application_link)
   end
 

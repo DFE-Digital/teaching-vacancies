@@ -20,7 +20,7 @@ module Publishers::JobCreationHelper
                    else
                      params[:controller].split("/").last.to_sym == :documents ? :documents : :review
                    end
-    if school_group_user?
+    if current_publisher_is_part_of_school_group?
       STEPS[current_step][:number]
     else
       STEPS[current_step][:number] - NUMBER_OF_ADDITIONAL_STEPS_FOR_SCHOOL_GROUP_USERS
@@ -29,7 +29,7 @@ module Publishers::JobCreationHelper
 
   def steps_to_display
     steps = STEPS.dup
-    unless school_group_user?
+    unless current_publisher_is_part_of_school_group?
       steps = remove_school_group_user_only_steps(steps)
       steps = renumber_steps_for_single_school_users(steps)
     end

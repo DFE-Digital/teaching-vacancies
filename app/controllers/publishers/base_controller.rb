@@ -7,7 +7,6 @@ class Publishers::BaseController < ApplicationController
                 :check_session,
                 :check_terms_and_conditions
 
-  include AuthenticationConcerns
   include ActionView::Helpers::DateHelper
 
   def redirect_to_root_if_read_only
