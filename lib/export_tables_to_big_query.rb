@@ -8,7 +8,7 @@ class ExportTablesToBigQuery
   BIGQUERY_TABLE_PREFIX = "feb20".freeze
 
   # Attributes with postgres schema types that do not exist in BigQuery.
-  CONVERT_THESE_TYPES = { point: :float, text: :string, uuid: :string, json: :string }.freeze
+  CONVERT_THESE_TYPES = { point: :float, text: :string, uuid: :string, json: :string, jsonb: :string }.freeze
 
   # Skip attributes that cannot be queried, we do not report on or that frequently break the import.
   # Drop gias_data because it is aliased to data. This alias allows all records to be handled the same way and dropping
@@ -28,7 +28,7 @@ class ExportTablesToBigQuery
     supporting_documents
   ].freeze
 
-  # This is to deal with a gem that automatically maps an interger column to a look up table of strings.
+  # This is to deal with a gem that automatically maps an integer column to a look up table of strings.
   ENUM_ATTRIBUTES = {
     "category" => :string,
     "frequency" => :string,
@@ -38,7 +38,6 @@ class ExportTablesToBigQuery
     "listed_elsewhere" => :string,
     "phase" => :string,
     "reason" => :string,
-    "search_criteria" => :string,
     "status" => :string,
     "user_participation_response" => :string,
     "visit_purpose" => :string,
@@ -53,6 +52,10 @@ class ExportTablesToBigQuery
     schema_migrations
     sessions
   ].freeze
+
+  TYPES_TO_CONVERT_FROM_DATE = %i[datetime date].freeze
+
+  TYPES_TO_CONVERT_FROM_JSON = %i[json jsonb].freeze
 
   attr_reader :dataset, :runtime, :tables
 
@@ -96,8 +99,8 @@ private
       # being nullable.
       data = "" if c.name == "hired_status" && data.nil?
       data = data.to_s if data.is_a?(Array)
-      data = data.to_s(:db) if !data.nil? && (c.type == :datetime || c.type == :date)
-      data = data.to_s if c.type == :json
+      data = data.to_s(:db) if !data.nil? && TYPES_TO_CONVERT_FROM_DATE.include?(c.type)
+      data = data.to_s if TYPES_TO_CONVERT_FROM_JSON.include?(c.type)
       @bigquery_data[c.name] = data
     end
 
