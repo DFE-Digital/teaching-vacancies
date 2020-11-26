@@ -46,45 +46,79 @@ WITH
     SELECT
       dates.date AS date,
       tags.tag AS tag,
-      CASE tags.tag
-        WHEN "all" THEN COUNTIF(publish_on=date)
-        WHEN "has_documents" THEN COUNTIF(publish_on=date
-        AND number_of_documents>0)
-        WHEN "suitable_for_nqts" THEN COUNTIF(publish_on=date AND job_roles LIKE '%nqt%')
-        WHEN "mat_level" THEN COUNTIF(publish_on=date
-        AND schoolgroup_level
-        AND schoolgroup_type="Multi-academy trust")
-        WHEN "la_level" THEN COUNTIF(publish_on=date AND schoolgroup_level AND schoolgroup_type="local_authority")
-        WHEN "multi_school" THEN COUNTIF(publish_on=date
-        AND number_of_organisations > 1)
-        WHEN "published_by_mat" THEN COUNTIF(publish_on=date AND schoolgroup_type="Multi-academy trust")
-        WHEN "published_by_la" THEN COUNTIF(publish_on=date
-        AND schoolgroup_type="local_authority")
-    END
-      AS vacancies_published,
-      CASE tags.tag
-        WHEN "all" THEN COUNTIF(expires_on=date)
-        WHEN "has_documents" THEN COUNTIF(expires_on=date
-        AND number_of_documents>0)
-        WHEN "suitable_for_nqts" THEN COUNTIF(expires_on=date AND job_roles LIKE '%nqt%')
-        WHEN "mat_level" THEN COUNTIF(expires_on=date
-        AND schoolgroup_level
-        AND schoolgroup_type="Multi-academy trust")
-        WHEN "la_level" THEN COUNTIF(expires_on=date AND schoolgroup_level AND schoolgroup_type="local_authority")
-        WHEN "multi_school" THEN COUNTIF(expires_on=date
-        AND number_of_organisations > 1)
-        WHEN "published_by_mat" THEN COUNTIF(expires_on=date AND schoolgroup_type="Multi-academy trust")
-        WHEN "published_by_la" THEN COUNTIF(expires_on=date
-        AND schoolgroup_type="local_authority")
-    END
-      AS vacancies_expired,
+      COUNTIF(publish_on=date
+        AND
+        CASE tags.tag
+          WHEN "all" THEN TRUE
+          WHEN "has_documents" THEN number_of_documents>0
+          WHEN "suitable_for_nqts" THEN REGEXP_CONTAINS(job_roles,"(nqt)")
+          WHEN "mat_level" THEN (schoolgroup_level
+          AND publisher_schoolgroup_type="Multi-academy trust")
+          WHEN "la_level" THEN (schoolgroup_level AND schoolgroup_type="local_authority")
+          WHEN "multi_school" THEN number_of_organisations > 1
+          WHEN "published_by_mat" THEN publisher_schoolgroup_type="Multi-academy trust"
+          WHEN "published_by_la" THEN publisher_schoolgroup_type="local_authority"
+          WHEN "la_maintained_school" THEN school_type="Local authority maintained schools"
+          WHEN "faith_school" THEN faith_school
+          WHEN "federation" THEN federation_flag="Supported by a federation"
+          WHEN "free_school" THEN school_type="Free Schools"
+          WHEN "mat" THEN schoolgroup_type="Multi-academy trust"
+          WHEN "mat_21+" THEN (schoolgroup_type="Multi-academy trust"
+          AND trust_size > 20)
+          WHEN "mat_0-20" THEN (schoolgroup_type="Multi-academy trust" AND trust_size <= 20)
+          WHEN "academy" THEN school_type="Academies"
+          WHEN "flexible_working" THEN REGEXP_CONTAINS(working_patterns,"(part_time|job_share)")
+          WHEN "primary" THEN education_phase IN ("primary",
+          "middle_deemed_primary")
+          WHEN "secondary" THEN education_phase IN ("secondary", "middle_deemed_secondary")
+          WHEN "leadership" THEN category="leadership"
+          WHEN "teacher" THEN category="teacher"
+          WHEN "teaching_assistant" THEN category="teaching_assistant"
+          WHEN "stem" THEN REGEXP_CONTAINS(subjects,"(Mathematics|Science|technology|ICT|Biology|Chemistry|Physics|Economics|Psychology|Sociology|Computing|Food|Engineering)")
+          WHEN "sen" THEN (REGEXP_CONTAINS(job_roles,"(sen_specialist)")
+          OR school_type="Special Schools")
+      END
+        ) AS vacancies_published,
+      COUNTIF(expires_on=date
+        AND
+        CASE tags.tag
+          WHEN "all" THEN TRUE
+          WHEN "has_documents" THEN number_of_documents>0
+          WHEN "suitable_for_nqts" THEN REGEXP_CONTAINS(job_roles,"(nqt)")
+          WHEN "mat_level" THEN (schoolgroup_level
+          AND publisher_schoolgroup_type="Multi-academy trust")
+          WHEN "la_level" THEN (schoolgroup_level AND schoolgroup_type="local_authority")
+          WHEN "multi_school" THEN number_of_organisations > 1
+          WHEN "published_by_mat" THEN publisher_schoolgroup_type="Multi-academy trust"
+          WHEN "published_by_la" THEN publisher_schoolgroup_type="local_authority"
+          WHEN "la_maintained_school" THEN school_type="Local authority maintained schools"
+          WHEN "faith_school" THEN faith_school
+          WHEN "federation" THEN federation_flag="Supported by a federation"
+          WHEN "free_school" THEN school_type="Free Schools"
+          WHEN "mat" THEN schoolgroup_type="Multi-academy trust"
+          WHEN "mat_21+" THEN (schoolgroup_type="Multi-academy trust"
+          AND trust_size > 20)
+          WHEN "mat_0-20" THEN (schoolgroup_type="Multi-academy trust" AND trust_size <= 20)
+          WHEN "academy" THEN school_type="Academies"
+          WHEN "flexible_working" THEN REGEXP_CONTAINS(working_patterns,"(part_time|job_share)")
+          WHEN "primary" THEN education_phase IN ("primary",
+          "middle_deemed_primary")
+          WHEN "secondary" THEN education_phase IN ("secondary", "middle_deemed_secondary")
+          WHEN "leadership" THEN category="leadership"
+          WHEN "teacher" THEN category="teacher"
+          WHEN "teaching_assistant" THEN category="teaching_assistant"
+          WHEN "stem" THEN REGEXP_CONTAINS(subjects,"(Mathematics|Science|technology|ICT|Biology|Chemistry|Physics|Economics|Psychology|Sociology|Computing|Food|Engineering)")
+          WHEN "sen" THEN (REGEXP_CONTAINS(job_roles,"(sen_specialist)")
+          OR school_type="Special Schools")
+      END
+        ) AS vacancies_expired,
     FROM
       dates
     CROSS JOIN (
       SELECT
         *
       FROM
-        UNNEST(["all","has_documents","suitable_for_nqts","mat_level","la_level","multi_school","published_by_mat","published_by_la"]) AS tag) AS tags
+        UNNEST(["all","has_documents","suitable_for_nqts","mat_level","la_level","multi_school","published_by_mat","published_by_la","la_maintained_school","faith_school","federation","free_school","mat","mat_21+","mat_0-20","academy","flexible_working","primary","secondary","leadership","teacher","teaching_assistant","stem","sen"]) AS tag) AS tags
     CROSS JOIN
       `teacher-vacancy-service.production_dataset.vacancies_published` AS vacancies
     GROUP BY

@@ -247,29 +247,9 @@ WITH
           scraped_words=TV_words))<0.2 #allow only 1 in 5 words to be in one title but not in the other
       AND vacancies_joined_to_schools_and_groups.publish_on > DATE_SUB(TV_vacancy.publish_on, INTERVAL 14 DAY) #only match vacancies which were published within a fortnight of a vacancy in our database
       AND vacancies_joined_to_schools_and_groups.publish_on < DATE_ADD(TV_vacancy.publish_on, INTERVAL 14 DAY) )
-  SELECT DISTINCT
-    vacancies_joined_to_schools_and_groups.*,
-  IF
-    (LOWER(vacancies_joined_to_schools_and_groups.title) LIKE '%head%'
-      OR LOWER(vacancies_joined_to_schools_and_groups.title) LIKE '%ordinat%'
-      OR LOWER(vacancies_joined_to_schools_and_groups.title) LIKE '%principal%',
-      "leadership",
-    IF
-      ((vacancies_joined_to_schools_and_groups.title LIKE '%TA%'
-          OR vacancies_joined_to_schools_and_groups.title LIKE '%TAs%'
-          OR LOWER(vacancies_joined_to_schools_and_groups.title) LIKE '% assistant%' #picks up teaching assistant, learning support assistant etc.
-          OR LOWER(vacancies_joined_to_schools_and_groups.title) LIKE '%intervention %')
-        AND LOWER(vacancies_joined_to_schools_and_groups.title) NOT LIKE '%admin%'
-        AND LOWER(vacancies_joined_to_schools_and_groups.title) NOT LIKE '%account%'
-        AND LOWER(vacancies_joined_to_schools_and_groups.title) NOT LIKE '%marketing%'
-        AND LOWER(vacancies_joined_to_schools_and_groups.title) NOT LIKE '%admission%'
-        AND LOWER(vacancies_joined_to_schools_and_groups.title) NOT LIKE '%care%',
-        "teaching_assistant",
-      IF
-        (LOWER(vacancies_joined_to_schools_and_groups.title) LIKE '%teacher%'
-          OR LOWER(vacancies_joined_to_schools_and_groups.title) LIKE '%lecturer%',
-          "teacher",
-          NULL))) AS vacancy_category,
+  SELECT
+    DISTINCT vacancies_joined_to_schools_and_groups.*,
+    `teacher-vacancy-service.production_dataset.categorise_vacancy_job_title`(vacancies_joined_to_schools_and_groups.title) AS vacancy_category,
   IF
     (vacancies_joined_to_schools_and_groups.school_id IS NOT NULL,
       "school",
