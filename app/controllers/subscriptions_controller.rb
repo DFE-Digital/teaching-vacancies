@@ -4,7 +4,7 @@ class SubscriptionsController < ApplicationController
   def new
     @origin = origin_param[:origin]
     @subscription_form = SubscriptionForm.new(search_criteria_params)
-    Auditor::Audit.new(nil, "subscription.alert.new", current_session_id).log_without_association
+    Auditor::Audit.new(nil, "subscription.alert.new", current_publisher_oid).log_without_association
   end
 
   def create
@@ -19,7 +19,7 @@ class SubscriptionsController < ApplicationController
       redirect_to invalid_recaptcha_path(form_name: subscription.class.name.underscore.humanize)
     elsif @subscription_form.valid?
       subscription.save
-      Auditor::Audit.new(subscription, "subscription.#{subscription.frequency}_alert.create", current_session_id).log
+      Auditor::Audit.new(subscription, "subscription.#{subscription.frequency}_alert.create", current_publisher_oid).log
       AuditSubscriptionCreationJob.perform_later(@subscription.to_row)
       SubscriptionMailer.confirmation(subscription.id).deliver_later
       render :confirm
@@ -31,7 +31,7 @@ class SubscriptionsController < ApplicationController
   def edit
     @subscription = Subscription.find_and_verify_by_token(token)
     @subscription_form = SubscriptionForm.new(@subscription)
-    Auditor::Audit.new(@subscription, "subscription.alert.edit", current_session_id).log_without_association
+    Auditor::Audit.new(@subscription, "subscription.alert.edit", current_publisher_oid).log_without_association
   end
 
   def update
@@ -41,7 +41,7 @@ class SubscriptionsController < ApplicationController
 
     if @subscription_form.valid?
       subscription.update(@subscription_form.job_alert_params)
-      Auditor::Audit.new(subscription, "subscription.update", current_session_id).log
+      Auditor::Audit.new(subscription, "subscription.update", current_publisher_oid).log
       SubscriptionMailer.update(subscription.id).deliver_later
       render :confirm_update
     else
@@ -52,7 +52,7 @@ class SubscriptionsController < ApplicationController
   def unsubscribe
     subscription = Subscription.find_and_verify_by_token(token)
     @subscription = SubscriptionPresenter.new(subscription)
-    Auditor::Audit.new(subscription, "subscription.#{subscription.frequency}_alert.delete", current_session_id).log
+    Auditor::Audit.new(subscription, "subscription.#{subscription.frequency}_alert.delete", current_publisher_oid).log
     subscription.unsubscribe
     @unsubscribe_feedback_form = UnsubscribeFeedbackForm.new
   end

@@ -2,9 +2,9 @@ require "rails_helper"
 
 RSpec.describe "Creating a vacancy" do
   let(:school) { create(:school) }
-  let(:session_id) { SecureRandom.uuid }
+  let(:oid) { SecureRandom.uuid }
 
-  before(:each) { stub_publishers_auth(urn: school.urn, session_id: session_id) }
+  before(:each) { stub_publishers_auth(urn: school.urn, oid: oid) }
 
   scenario "Visiting the school page" do
     school = create(:school, name: "Salisbury School")
@@ -872,7 +872,7 @@ RSpec.describe "Creating a vacancy" do
 
     describe "#publish" do
       scenario "adds the current user as a contact for feedback on the published vacancy" do
-        current_publisher = Publisher.find_by(oid: session_id)
+        current_publisher = Publisher.find_by(oid: oid)
         vacancy = create(:vacancy, :draft)
         vacancy.organisation_vacancies.create(organisation: school)
 
@@ -1020,7 +1020,7 @@ RSpec.describe "Creating a vacancy" do
         click_on "Confirm and submit job"
 
         activity = vacancy.activities.last
-        expect(activity.session_id).to eq(session_id)
+        expect(activity.session_id).to eq(oid)
         expect(activity.key).to eq("vacancy.publish")
       end
 

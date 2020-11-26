@@ -10,7 +10,11 @@ module Publishers::AuthenticationConcerns
   end
 
   def publisher_signed_in?
-    session.key?(:session_id)
+    session.key?(:publisher_oid)
+  end
+
+  def current_publisher_oid
+    session.to_h["publisher_oid"]
   end
 
   def current_organisation
@@ -18,18 +22,18 @@ module Publishers::AuthenticationConcerns
   end
 
   def current_school
-    @current_school ||= School.find_by!(urn: session[:urn]) if session[:urn].present?
+    @current_school ||= School.find_by!(urn: session[:organisation_urn]) if session[:organisation_urn].present?
   end
 
   def current_school_group
-    if session[:uid].present?
-      @current_school_group ||= SchoolGroup.find_by!(uid: session[:uid])
-    elsif LocalAuthorityAccessFeature.enabled? && session[:la_code].present?
-      @current_school_group ||= SchoolGroup.find_by!(local_authority_code: session[:la_code])
+    if session[:organisation_uid].present?
+      @current_school_group ||= SchoolGroup.find_by!(uid: session[:organisation_uid])
+    elsif LocalAuthorityAccessFeature.enabled? && session[:organisation_la_code].present?
+      @current_school_group ||= SchoolGroup.find_by!(local_authority_code: session[:organisation_la_code])
     end
   end
 
   def current_publisher_is_part_of_school_group?
-    session[:uid].present? || session[:la_code].present?
+    session[:organisation_uid].present? || session[:organisation_la_code].present?
   end
 end

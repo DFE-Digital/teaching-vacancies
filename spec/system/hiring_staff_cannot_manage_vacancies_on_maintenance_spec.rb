@@ -2,13 +2,13 @@ require "rails_helper"
 
 RSpec.describe "Hiring staff cannot manage vacancies on maintenance" do
   let(:school) { create(:school) }
-  let(:session_id) { SecureRandom.uuid }
+  let(:oid) { SecureRandom.uuid }
 
   context "when the read-only feature flag is set to true" do
     before do
       allow(ReadOnlyFeature).to receive(:enabled?).and_return(true)
 
-      stub_publishers_auth(urn: school.urn, session_id: session_id)
+      stub_publishers_auth(urn: school.urn, oid: oid)
 
       visit organisation_path
     end
@@ -26,7 +26,7 @@ RSpec.describe "Hiring staff cannot manage vacancies on maintenance" do
     before do
       allow(ReadOnlyFeature).to receive(:enabled?).and_return(false)
 
-      stub_publishers_auth(urn: school.urn, session_id: session_id)
+      stub_publishers_auth(urn: school.urn, oid: oid)
 
       visit organisation_path
     end

@@ -1,8 +1,8 @@
 en:
   messages:
     access:
-      signed_out: You have signed out
-      signed_out_for_inactivity: You have been signed out because you have been inactive for %{duration}
+      publisher_signed_out: You have signed out
+      publisher_signed_out_for_inactivity: You have been signed out because you have been inactive for %{duration}
     feedback:
       submitted: Your feedback has been successfully submitted
     jobs:

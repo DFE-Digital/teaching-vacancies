@@ -5,16 +5,16 @@ module AuthHelpers
       .and_return(return_value)
   end
 
-  def stub_publishers_auth(urn: nil, uid: nil, la_code: "123", session_id: "session_id", email: nil)
+  def stub_publishers_auth(urn: nil, uid: nil, la_code: "123", oid: "oid", email: nil)
     if urn.present?
-      page.set_rack_session(urn: urn, uid: "", la_code: "")
+      page.set_rack_session(organisation_urn: urn, organisation_uid: "", organisation_la_code: "")
     elsif uid.present?
-      page.set_rack_session(urn: "", uid: uid, la_code: "")
+      page.set_rack_session(organisation_urn: "", organisation_uid: uid, organisation_la_code: "")
     else
-      page.set_rack_session(urn: "", uid: "", la_code: la_code)
+      page.set_rack_session(organisation_urn: "", organisation_uid: "", organisation_la_code: la_code)
     end
-    page.set_rack_session(session_id: session_id)
-    create(:publisher, oid: session_id, email: email, last_activity_at: Time.current)
+    page.set_rack_session(publisher_oid: oid)
+    create(:publisher, oid: oid, email: email, last_activity_at: Time.current)
   end
 
   def stub_authentication_step(organisation_id: "939eac36-0777-48c2-9c2c-b87c948a9ee0",

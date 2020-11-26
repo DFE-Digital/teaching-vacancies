@@ -18,7 +18,7 @@ class Publishers::Vacancies::PublishController < Publishers::Vacancies::Applicat
 private
 
   def audit_publish_vacancy
-    Auditor::Audit.new(@vacancy, "vacancy.publish", current_session_id).log
+    Auditor::Audit.new(@vacancy, "vacancy.publish", current_publisher_oid).log
     AuditPublishedVacancyJob.perform_later(@vacancy.id)
     update_google_index(@vacancy) if @vacancy.listed?
   end

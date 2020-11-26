@@ -4,14 +4,14 @@ RSpec.describe "Editing a draft vacancy" do
   let(:school_group) { create(:trust) }
   let(:school_1) { create(:school, name: "First school") }
   let(:school_2) { create(:school, name: "Second school") }
-  let(:session_id) { SecureRandom.uuid }
+  let(:oid) { SecureRandom.uuid }
   let(:vacancy) { create(:vacancy, :at_central_office, :draft) }
 
   before do
     vacancy.organisation_vacancies.create(organisation: school_group)
     SchoolGroupMembership.find_or_create_by(school_id: school_1.id, school_group_id: school_group.id)
     SchoolGroupMembership.find_or_create_by(school_id: school_2.id, school_group_id: school_group.id)
-    stub_publishers_auth(uid: school_group.uid, session_id: session_id)
+    stub_publishers_auth(uid: school_group.uid, oid: oid)
   end
 
   describe "#job_location" do

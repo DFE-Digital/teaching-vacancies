@@ -44,12 +44,12 @@ private
 
   def update_session(authorisation_permissions)
     session.update(
-      session_id: user_id,
-      urn: school_urn,
-      uid: trust_uid,
-      la_code: local_authority_code,
-      multiple_organisations: authorisation_permissions.many_organisations?,
-      id_token: id_token,
+      publisher_oid: user_id,
+      organisation_urn: school_urn,
+      organisation_uid: trust_uid,
+      organisation_la_code: local_authority_code,
+      publisher_multiple_organisations: authorisation_permissions.many_organisations?,
+      publisher_id_token: id_token,
     )
     use_school_group_if_available
     Rails.logger.info(updated_session_details)
@@ -150,7 +150,7 @@ private
     school_group = school&.school_groups&.first
     return unless school_group
 
-    session.update(urn: "", uid: school_group.uid) if user_trusts.include?(school_group.uid)
-    session.update(urn: "", la_code: school_group.local_authority_code) if user_local_authorities.include?(school_group.local_authority_code)
+    session.update(organisation_urn: "", organisation_uid: school_group.uid) if user_trusts.include?(school_group.uid)
+    session.update(organisation_urn: "", organisation_la_code: school_group.local_authority_code) if user_local_authorities.include?(school_group.local_authority_code)
   end
 end
