@@ -9,6 +9,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::Applicatio
   before_action :set_vacancy
   before_action :convert_date_params, only: %i[update]
   before_action :strip_checkbox_params, only: %i[update]
+  before_action :set_multiple_schools
   before_action :set_school_options
   before_action :set_up_show_form, only: %i[show]
   before_action :set_up_update_form, only: %i[update]
@@ -19,7 +20,6 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::Applicatio
       skip_step if current_organisation.is_a?(School)
     when :schools
       job_location = session[:job_location].presence || @vacancy.job_location
-      @multiple_schools = job_location == "at_multiple_schools"
       skip_step if current_organisation.is_a?(School) || job_location == "central_office"
     when :job_details
       @job_details_back_path = @vacancy.central_office? ? wizard_path(:job_location) : wizard_path(:schools)
@@ -82,6 +82,13 @@ private
     update_vacancy
     @vacancy.save(validate: false)
     redirect_saved_draft_with_message
+  end
+
+  def set_multiple_schools
+    return unless step == :schools && current_organisation.is_a?(SchoolGroup)
+
+    job_location = session[:job_location].presence || @vacancy.job_location
+    @multiple_schools = job_location == "at_multiple_schools"
   end
 
   def set_school_options
