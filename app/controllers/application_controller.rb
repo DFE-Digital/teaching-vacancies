@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :cookies_preference_set?, :referred_from_jobs_path?, :utm_parameters
 
-  include AuthenticationConcerns
+  include Publishers::AuthenticationConcerns
   include Ip
 
   def check

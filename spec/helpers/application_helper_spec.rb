@@ -14,7 +14,7 @@ RSpec.describe ApplicationHelper, type: :helper do
     before do
       expect(controller).to receive(:controller_path) { "foo/baz" }
       expect(controller).to receive(:action_name) { "bar" }
-      allow(controller).to receive(:authenticated?) { false }
+      allow(controller).to receive(:publisher_signed_in?) { false }
     end
 
     it "returns the controller and action name" do
@@ -27,7 +27,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
     context "when logged in" do
       before do
-        expect(controller).to receive(:authenticated?) { true }
+        expect(controller).to receive(:publisher_signed_in?) { true }
       end
 
       it "returns the authenticated class" do

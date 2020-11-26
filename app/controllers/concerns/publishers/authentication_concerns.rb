@@ -1,15 +1,15 @@
-module AuthenticationConcerns
+module Publishers::AuthenticationConcerns
   extend ActiveSupport::Concern
 
   included do
-    helper_method :authenticated?
+    helper_method :publisher_signed_in?
     helper_method :current_organisation
     helper_method :current_school
     helper_method :current_school_group
-    helper_method :school_group_user?
+    helper_method :current_publisher_is_part_of_school_group?
   end
 
-  def authenticated?
+  def publisher_signed_in?
     session.key?(:session_id)
   end
 
@@ -29,7 +29,7 @@ module AuthenticationConcerns
     end
   end
 
-  def school_group_user?
+  def current_publisher_is_part_of_school_group?
     session[:uid].present? || session[:la_code].present?
   end
 end

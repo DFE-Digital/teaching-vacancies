@@ -24,7 +24,7 @@ class VacanciesController < ApplicationController
     @devised_job_alert_search_criteria = Search::CriteriaDeviser.new(vacancy).criteria
     @similar_jobs = Search::SimilarJobs.new(vacancy).similar_jobs
 
-    VacancyPageView.new(vacancy).track unless authenticated? || smoke_test?
+    VacancyPageView.new(vacancy).track unless publisher_signed_in? || smoke_test?
 
     expires_in 5.minutes, public: true
   end

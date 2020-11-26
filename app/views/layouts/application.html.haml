@@ -67,7 +67,7 @@
                 %ul.govuk-footer__inline-list.hide-bullet-points
                   %li.govuk-footer-list-item
                     =link_to t('footer.search_teaching_vacancies'), root_url, class: 'govuk-footer__link'
-                  - if JobseekerAccountsFeature.enabled? && !authenticated?
+                  - if JobseekerAccountsFeature.enabled? && !publisher_signed_in?
                     %li.govuk-footer-list-item
                       - if jobseeker_signed_in?
                         =link_to t('footer.your_account'), jobseekers_account_path, class: 'govuk-footer__link'
