@@ -31,61 +31,39 @@ RSpec.describe "Creating a vacancy" do
     let(:vacancy) { build(:vacancy, :at_one_school, :complete) }
 
     describe "#job_location" do
-      context "when no school is selected" do
-        scenario "displays error message" do
-          visit organisation_path
-          click_on I18n.t("buttons.create_job")
+      scenario "displays error message unless a school is selected" do
+        visit organisation_path
+        click_on I18n.t("buttons.create_job")
 
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
-          within("h2.govuk-heading-l") do
-            expect(page).to have_content(I18n.t("jobs.job_location"))
-          end
-
-          fill_in_job_location_form_field(vacancy)
-          click_on I18n.t("buttons.continue")
-
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
-          within("h2.govuk-heading-l") do
-            expect(page).to have_content(I18n.t("jobs.job_location"))
-          end
-
-          click_on I18n.t("buttons.continue")
-
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
-          within("h2.govuk-heading-l") do
-            expect(page).to have_content(I18n.t("jobs.job_location"))
-          end
-          within("div.govuk-error-summary") do
-            expect(page).to have_content(I18n.t("schools_errors.organisation_ids.blank"))
-          end
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
+        within("h2.govuk-heading-l") do
+          expect(page).to have_content(I18n.t("jobs.job_location"))
         end
-      end
 
-      context "when a school is selected" do
-        scenario "redirects to job details when submitted successfully" do
-          visit organisation_path
-          click_on I18n.t("buttons.create_job")
+        fill_in_job_location_form_field(vacancy)
+        click_on I18n.t("buttons.continue")
 
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
-          within("h2.govuk-heading-l") do
-            expect(page).to have_content(I18n.t("jobs.job_location"))
-          end
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
+        within("h2.govuk-heading-l") do
+          expect(page).to have_content(I18n.t("jobs.job_location"))
+        end
 
-          fill_in_job_location_form_field(vacancy)
-          click_on I18n.t("buttons.continue")
+        click_on I18n.t("buttons.continue")
 
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
-          within("h2.govuk-heading-l") do
-            expect(page).to have_content(I18n.t("jobs.job_location"))
-          end
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
+        within("h2.govuk-heading-l") do
+          expect(page).to have_content(I18n.t("jobs.job_location"))
+        end
+        within("div.govuk-error-summary") do
+          expect(page).to have_content(I18n.t("schools_errors.organisation_ids.blank"))
+        end
 
-          fill_in_school_form_field(school_1)
-          click_on I18n.t("buttons.continue")
+        fill_in_school_form_field(school_2)
+        click_on I18n.t("buttons.continue")
 
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 8))
-          within("h2.govuk-heading-l") do
-            expect(page).to have_content(I18n.t("jobs.job_details"))
-          end
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 8))
+        within("h2.govuk-heading-l") do
+          expect(page).to have_content(I18n.t("jobs.job_details"))
         end
       end
     end
@@ -95,63 +73,41 @@ RSpec.describe "Creating a vacancy" do
     let(:vacancy) { build(:vacancy, :at_multiple_schools, :complete) }
 
     describe "#job_location" do
-      context "when only 1 school is selected" do
-        scenario "displays error message" do
-          visit organisation_path
-          click_on I18n.t("buttons.create_job")
+      scenario "displays error message unless at least 2 schools are selected" do
+        visit organisation_path
+        click_on I18n.t("buttons.create_job")
 
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
-          within("h2.govuk-heading-l") do
-            expect(page).to have_content(I18n.t("jobs.job_location"))
-          end
-
-          fill_in_job_location_form_field(vacancy)
-          click_on I18n.t("buttons.continue")
-
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
-          within("h2.govuk-heading-l") do
-            expect(page).to have_content(I18n.t("jobs.job_location"))
-          end
-
-          check school_1.name, name: "schools_form[organisation_ids][]", visible: false
-          click_on I18n.t("buttons.continue")
-
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
-          within("h2.govuk-heading-l") do
-            expect(page).to have_content(I18n.t("jobs.job_location"))
-          end
-          within("div.govuk-error-summary") do
-            expect(page).to have_content(I18n.t("schools_errors.organisation_ids.invalid"))
-          end
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
+        within("h2.govuk-heading-l") do
+          expect(page).to have_content(I18n.t("jobs.job_location"))
         end
-      end
 
-      context "when 2 schools are selected" do
-        scenario "redirects to job details when submitted successfully" do
-          visit organisation_path
-          click_on I18n.t("buttons.create_job")
+        fill_in_job_location_form_field(vacancy)
+        click_on I18n.t("buttons.continue")
 
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
-          within("h2.govuk-heading-l") do
-            expect(page).to have_content(I18n.t("jobs.job_location"))
-          end
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
+        within("h2.govuk-heading-l") do
+          expect(page).to have_content(I18n.t("jobs.job_location"))
+        end
 
-          fill_in_job_location_form_field(vacancy)
-          click_on I18n.t("buttons.continue")
+        check school_1.name, name: "schools_form[organisation_ids][]", visible: false
+        click_on I18n.t("buttons.continue")
 
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
-          within("h2.govuk-heading-l") do
-            expect(page).to have_content(I18n.t("jobs.job_location"))
-          end
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
+        within("h2.govuk-heading-l") do
+          expect(page).to have_content(I18n.t("jobs.job_location"))
+        end
+        within("div.govuk-error-summary") do
+          expect(page).to have_content(I18n.t("schools_errors.organisation_ids.invalid"))
+        end
 
-          check school_1.name, name: "schools_form[organisation_ids][]", visible: false
-          check school_2.name, name: "schools_form[organisation_ids][]", visible: false
-          click_on I18n.t("buttons.continue")
+        check school_1.name, name: "schools_form[organisation_ids][]", visible: false
+        check school_2.name, name: "schools_form[organisation_ids][]", visible: false
+        click_on I18n.t("buttons.continue")
 
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 8))
-          within("h2.govuk-heading-l") do
-            expect(page).to have_content(I18n.t("jobs.job_details"))
-          end
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 8))
+        within("h2.govuk-heading-l") do
+          expect(page).to have_content(I18n.t("jobs.job_details"))
         end
       end
     end
