@@ -118,9 +118,9 @@ WITH
         WHEN "mat_0-20" THEN NULL # MAT matching for crawled data not reliable enough, so this isn't likely to be statistically significant
         WHEN "academy" THEN school_type="Academies"
         WHEN "flexible_working" THEN employment_type="Part Time"
-        WHEN "primary" THEN education_phase IN ("primary", "middle_deemed_primary")
-        WHEN "secondary" THEN education_phase IN ("secondary",
-        "middle_deemed_secondary")
+        WHEN "primary" THEN education_phase IN ("Primary", "Middle_deemed_primary")
+        WHEN "secondary" THEN education_phase IN ("Secondary",
+        "Middle_deemed_secondary")
         WHEN "leadership" THEN vacancy_category="leadership"
         WHEN "teacher" THEN vacancy_category="teacher"
         WHEN "teaching_assistant" THEN vacancy_category="teaching_assistant"
@@ -150,9 +150,9 @@ WITH
         WHEN "mat_0-20" THEN NULL # MAT matching for crawled data not reliable enough, so this isn't likely to be statistically significant
         WHEN "academy" THEN school_type="Academies"
         WHEN "flexible_working" THEN employment_type="Part Time"
-        WHEN "primary" THEN education_phase IN ("primary", "middle_deemed_primary")
-        WHEN "secondary" THEN education_phase IN ("secondary",
-        "middle_deemed_secondary")
+        WHEN "primary" THEN education_phase IN ("Primary", "Middle_deemed_primary")
+        WHEN "secondary" THEN education_phase IN ("Secondary",
+        "Middle_deemed_secondary")
         WHEN "leadership" THEN vacancy_category="leadership"
         WHEN "teacher" THEN vacancy_category="teacher"
         WHEN "teaching_assistant" THEN vacancy_category="teaching_assistant"
