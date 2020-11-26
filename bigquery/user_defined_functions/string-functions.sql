@@ -5,15 +5,9 @@ CREATE OR REPLACE FUNCTION
   `teacher-vacancy-service.production_dataset.convert_client_user_agent_to_device_category`(client_user_agent STRING)
   RETURNS STRING AS (
     CASE
-      WHEN LOWER(client_user_agent) LIKE "%bot%" OR LOWER(client_user_agent) LIKE "%http%" OR LOWER(client_user_agent) LIKE "%python%" OR LOWER(client_user_agent) LIKE "%scan%" OR LOWER(client_user_agent) LIKE "%check%" OR LOWER(client_user_agent) LIKE "%spider%" OR LOWER(client_user_agent) LIKE "%curl%" OR LOWER(client_user_agent) LIKE "%trend%" OR LOWER(client_user_agent) LIKE "%ruby%" OR LOWER(client_user_agent) LIKE "%bash%" OR LOWER(client_user_agent) LIKE "%batch%" OR LOWER(client_user_agent) LIKE "%verification%" OR LOWER(client_user_agent) LIKE "%qwantify%" OR LOWER(client_user_agent) LIKE "%nuclei%" OR LOWER(client_user_agent) LIKE "%ai%" OR LOWER(client_user_agent) LIKE "%crawler%" OR LOWER(client_user_agent) LIKE "%perl%" OR LOWER(client_user_agent) LIKE "%java%" OR LOWER(client_user_agent) LIKE "%test%" OR LOWER(client_user_agent) LIKE "%scoop%" OR LOWER(client_user_agent) LIKE "%fetch%" OR LOWER(client_user_agent) LIKE "%adreview%" OR LOWER(client_user_agent) LIKE "%cortex%" OR LOWER(client_user_agent) LIKE "%nessus%" OR LOWER(client_user_agent) LIKE "%bitdiscovery%" OR LOWER(client_user_agent) LIKE "%postplanner%" OR LOWER(client_user_agent) LIKE "%faraday%" OR LOWER(client_user_agent) LIKE "%restsharp%" OR LOWER(client_user_agent) LIKE "%hootsuite%" OR LOWER(client_user_agent) LIKE "%mattermost%" OR LOWER(client_user_agent) LIKE "%shortlink%" OR LOWER(client_user_agent) LIKE "%retriever%" OR LOWER(client_user_agent) LIKE "%auto%" OR LOWER(client_user_agent) LIKE "%scrper%" OR LOWER(client_user_agent) LIKE "%alyzer%" OR LOWER(client_user_agent) LIKE "%dispatch%" OR LOWER(client_user_agent) LIKE "%traackr%" OR LOWER(client_user_agent) LIKE "%fiddler%" OR LOWER(client_user_agent) LIKE "%crowsnest%" OR LOWER(client_user_agent) LIKE "%gigablast%" OR LOWER(client_user_agent) LIKE "%wakelet%" OR LOWER(client_user_agent) LIKE "%installatron%" OR LOWER(client_user_agent) LIKE "%intently%" OR LOWER(client_user_agent) LIKE "%openurl%" OR LOWER(client_user_agent) LIKE "%anthill%" OR LOWER(client_user_agent) LIKE "%curb%" OR LOWER(client_user_agent) LIKE "%trello%" OR LOWER(client_user_agent) LIKE "%inject%" OR LOWER(client_user_agent) LIKE "%ahc%" THEN "bot"
-      WHEN LOWER(client_user_agent) LIKE "%mobile%"
-    OR LOWER(client_user_agent) LIKE "%android%"
-    OR LOWER(client_user_agent) LIKE "%whatsapp%"
-    OR LOWER(client_user_agent) LIKE "%iphone%"
-    OR LOWER(client_user_agent) LIKE "%ios%"
-    OR LOWER(client_user_agent) LIKE "%tablet%"
-    OR LOWER(client_user_agent) LIKE "%samsung%" THEN "mobile"
-      WHEN LOWER(client_user_agent) LIKE "%win%" OR LOWER(client_user_agent) LIKE "%mac%" OR LOWER(client_user_agent) LIKE "%x11%" OR LOWER(client_user_agent) LIKE "%linux%" OR LOWER(client_user_agent) LIKE "%opera%" OR LOWER(client_user_agent) LIKE "%whatweb%" OR LOWER(client_user_agent) LIKE "%microsoft%office%2014%" THEN "desktop"
+      WHEN REGEXP_CONTAINS(client_user_agent, "(?i)(bot|http|python|scan|check|spider|curl|trend|ruby|bash|batch|verification|qwantify|nuclei|ai|crawler|perl|java|test|scoop|fetch|adreview|cortex|nessus|bitdiscovery|postplanner|faraday|restsharp|hootsuite|mattermost|shortlink|retriever|auto|scrper|alyzer|dispatch|traackr|fiddler|crowsnest|gigablast|wakelet|installatron|intently|openurl|anthill|curb|trello|inject|ahc|sleep|sysdate|=|cloudinary)") THEN "bot"
+      WHEN REGEXP_CONTAINS(client_user_agent, "(?i)(mobile|android|whatsapp|iphone|ios|tablet|samsung)") THEN "mobile"
+      WHEN REGEXP_CONTAINS(client_user_agent, "(?i)(win|mac|x11|linux|opera|whatweb|office|MSIE)") THEN "desktop"
     ELSE
     "unknown"
   END
@@ -26,24 +20,14 @@ CREATE OR REPLACE FUNCTION
     landing_page_stem STRING)
   RETURNS STRING AS (
     CASE
-      WHEN utm_campaign LIKE "%alert%" THEN "Job alert"
-      WHEN LOWER(utm_medium) LIKE "%email%" THEN "Email"
-      WHEN referrer LIKE "%facebook%" OR referrer LIKE "%twitter%" OR referrer LIKE "%t.co%" OR referrer LIKE "%linkedin%" OR referrer LIKE "%youtube%" THEN "Social"
+      WHEN REGEXP_CONTAINS(utm_campaign,"(alert)") THEN "Job alert"
+      WHEN REGEXP_CONTAINS(utm_medium,"(?i)(email)") THEN "Email"
+      WHEN REGEXP_CONTAINS(referrer,"(?i)(facebook|twitter|t.co|linkedin|youtube)") THEN "Social"
       WHEN (referrer IS NOT NULL
-      AND referrer NOT LIKE "%teaching-jobs.service.gov.uk%"
-      AND referrer NOT LIKE "%teaching-vacancies.service.gov.uk%"
-      AND referrer NOT LIKE "%google%"
-      AND referrer NOT LIKE "%bing%"
-      AND referrer NOT LIKE "%yahoo%"
-      AND referrer NOT LIKE "%aol%"
-      AND referrer NOT LIKE "%ask.co%")
-    OR utm_medium="referral" THEN "Referral"
+      AND NOT REGEXP_CONTAINS(referrer,"(teaching-jobs.service.gov.uk|teaching-vacancies.service.gov.uk|google|bing|yahoo|aol|ask.co|baidu|duckduckgo)")
+      OR utm_medium="referral") THEN "Referral"
       WHEN utm_medium = "cpc" THEN "PPC"
-      WHEN referrer LIKE "%google%"
-    OR referrer LIKE "%bing%"
-    OR referrer LIKE "%yahoo%"
-    OR referrer LIKE "%aol"
-    OR referrer LIKE "%ask.co%"
+      WHEN REGEXP_CONTAINS(referrer,"(google|bing|yahoo|aol|ask.co|baidu|duckduckgo)")
     OR utm_medium="organic" THEN (CASE
         WHEN landing_page_stem = "/" THEN "Organic - to home page"
         WHEN landing_page_stem LIKE "/jobs/%" THEN "Organic - to listing (e.g. Google Jobs)"
@@ -104,24 +88,14 @@ CREATE OR REPLACE FUNCTION
   # Categorise the job title of a vacancy (either TV or crawled) as teacher, leadership, teaching_assistant or NULL
 CREATE OR REPLACE FUNCTION
   `teacher-vacancy-service.production_dataset.categorise_vacancy_job_title`(job_title STRING) AS (
-  IF
-    (LOWER(job_title) LIKE '%head%'
-      OR LOWER(job_title) LIKE '%ordinat%'
-      OR LOWER(job_title) LIKE '%principal%',
-      "leadership",
-    IF
-      ((job_title LIKE '%TA%'
-          OR job_title LIKE '%TAs%'
-          OR LOWER(job_title) LIKE '% assistant%' #picks up teaching assistant, learning support assistant etc.
-          OR LOWER(job_title) LIKE '%intervention %')
-        AND LOWER(job_title) NOT LIKE '%admin%'
-        AND LOWER(job_title) NOT LIKE '%account%'
-        AND LOWER(job_title) NOT LIKE '%marketing%'
-        AND LOWER(job_title) NOT LIKE '%admission%'
-        AND LOWER(job_title) NOT LIKE '%care%',
-        "teaching_assistant",
-      IF
-        (LOWER(job_title) LIKE '%teacher%'
-          OR LOWER(job_title) LIKE '%lecturer%',
-          "teacher",
-          NULL))))
+    CASE
+      WHEN REGEXP_CONTAINS(job_title,"(?i)(head|ordinat|principal)") THEN "leadership"
+      WHEN (REGEXP_CONTAINS(job_title,"(TA)")
+      OR REGEXP_CONTAINS(job_title,"(?i)( assistant|intervention )") #picks up teaching assistant, learning support assistant etc. as well as TAs
+      )
+    AND NOT REGEXP_CONTAINS(job_title,"(?i)(admin|account|marketing|admission|care)") THEN "teaching_assistant"
+      WHEN REGEXP_CONTAINS(job_title,"(?i)(teacher|lecturer)") THEN "teacher"
+    ELSE
+    NULL
+  END
+    )
