@@ -6,7 +6,7 @@ terraform {
 
   backend "s3" {
     bucket  = "terraform-state-002"
-    key     = "tvs/terraform-common.tfstate"
+    key     = "teaching-vacancies/terraform-common.tfstate"
     region  = "eu-west-2"
     encrypt = "true"
   }
