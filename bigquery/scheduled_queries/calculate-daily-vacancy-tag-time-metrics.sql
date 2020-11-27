@@ -30,8 +30,9 @@ WITH
         WHEN "free_school" THEN school_type="Free Schools"
         WHEN "mat" THEN schoolgroup_type="Multi-academy trust"
         WHEN "mat_21+" THEN (schoolgroup_type="Multi-academy trust" AND trust_size > 20)
-        WHEN "mat_0-20" THEN (schoolgroup_type="Multi-academy trust"
-        AND trust_size <= 20)
+        WHEN "mat_1-20" THEN (schoolgroup_type="Multi-academy trust"
+        AND trust_size <= 20
+        AND trust_size >=1)
         WHEN "academy" THEN school_type="Academies"
         WHEN "flexible_working" THEN REGEXP_CONTAINS(working_patterns,"(part_time|job_share)")
         WHEN "primary" THEN education_phase IN ("primary", "middle_deemed_primary")
@@ -64,8 +65,9 @@ WITH
         WHEN "free_school" THEN school_type="Free Schools"
         WHEN "mat" THEN schoolgroup_type="Multi-academy trust"
         WHEN "mat_21+" THEN (schoolgroup_type="Multi-academy trust" AND trust_size > 20)
-        WHEN "mat_0-20" THEN (schoolgroup_type="Multi-academy trust"
-        AND trust_size <= 20)
+        WHEN "mat_1-20" THEN (schoolgroup_type="Multi-academy trust"
+        AND trust_size <= 20
+        AND trust_size >=1)
         WHEN "academy" THEN school_type="Academies"
         WHEN "flexible_working" THEN REGEXP_CONTAINS(working_patterns,"(part_time|job_share)")
         WHEN "primary" THEN education_phase IN ("primary", "middle_deemed_primary")
@@ -84,7 +86,7 @@ WITH
     SELECT
       tag
     FROM
-      UNNEST(["all","in_scope","has_documents","suitable_for_nqts","mat_level","la_level","multi_school","published_by_mat","published_by_la","la_maintained_school","faith_school","federation","free_school","mat","mat_21+","mat_0-20","academy","flexible_working","primary","secondary","leadership","teacher","teaching_assistant","stem","sen"]) AS tag) AS tags
+      UNNEST(["all","in_scope","has_documents","suitable_for_nqts","mat_level","la_level","multi_school","published_by_mat","published_by_la","la_maintained_school","faith_school","federation","free_school","mat","mat_21+","mat_1-20","academy","flexible_working","primary","secondary","leadership","teacher","teaching_assistant","stem","sen"]) AS tag) AS tags
   CROSS JOIN
     `teacher-vacancy-service.production_dataset.vacancies_published` AS vacancies
   GROUP BY
@@ -113,9 +115,10 @@ WITH
         WHEN "faith_school" THEN school.religious_character IS NOT NULL AND school.religious_character NOT IN ("None", "Does not apply")
         WHEN "federation" THEN school.federation IS NOT NULL
         WHEN "free_school" THEN school_type="Free Schools"
-        WHEN "mat" THEN school.trusts_school_flag="Supported by a multi-academy trust"
-        WHEN "mat_21+" THEN NULL # MAT matching for crawled data not reliable enough, so this isn't likely to be statistically significant
-        WHEN "mat_0-20" THEN NULL # MAT matching for crawled data not reliable enough, so this isn't likely to be statistically significant
+        WHEN "mat" THEN school.trust_size >= 1
+        WHEN "mat_21+" THEN school.trust_size >= 21
+        WHEN "mat_1-20" THEN school.trust_size < 21
+      AND school.trust_size >= 1
         WHEN "academy" THEN school_type="Academies"
         WHEN "flexible_working" THEN employment_type="Part Time"
         WHEN "primary" THEN education_phase IN ("Primary", "Middle_deemed_primary")
@@ -145,9 +148,10 @@ WITH
         WHEN "faith_school" THEN school.religious_character IS NOT NULL AND school.religious_character NOT IN ("None", "Does not apply")
         WHEN "federation" THEN school.federation IS NOT NULL
         WHEN "free_school" THEN school_type="Free Schools"
-        WHEN "mat" THEN school.trusts_school_flag="Supported by a multi-academy trust"
-        WHEN "mat_21+" THEN NULL # MAT matching for crawled data not reliable enough, so this isn't likely to be statistically significant
-        WHEN "mat_0-20" THEN NULL # MAT matching for crawled data not reliable enough, so this isn't likely to be statistically significant
+        WHEN "mat" THEN school.trust_size >= 1
+        WHEN "mat_21+" THEN school.trust_size >= 21
+        WHEN "mat_1-20" THEN school.trust_size < 21
+      AND school.trust_size >= 1
         WHEN "academy" THEN school_type="Academies"
         WHEN "flexible_working" THEN employment_type="Part Time"
         WHEN "primary" THEN education_phase IN ("Primary", "Middle_deemed_primary")
@@ -166,18 +170,16 @@ WITH
     SELECT
       tag
     FROM
-      UNNEST(["all","in_scope","has_documents","suitable_for_nqts","mat_level","la_level","multi_school","published_by_mat","published_by_la","la_maintained_school","faith_school","federation","free_school","mat","mat_21+","mat_0-20","academy","flexible_working","primary","secondary","leadership","teacher","teaching_assistant","stem","sen"]) AS tag) AS tags
+      UNNEST(["all","in_scope","has_documents","suitable_for_nqts","mat_level","la_level","multi_school","published_by_mat","published_by_la","la_maintained_school","faith_school","federation","free_school","mat","mat_21+","mat_1-20","academy","flexible_working","primary","secondary","leadership","teacher","teaching_assistant","stem","sen"]) AS tag) AS tags
   CROSS JOIN
     `teacher-vacancy-service.production_dataset.scraped_vacancies` AS scraped_vacancies
   LEFT JOIN
-    `teacher-vacancy-service.production_dataset.school` AS school
+    `teacher-vacancy-service.production_dataset.CALCULATED_schools_joined_with_metrics` AS school
   ON
     scraped_vacancies.school_id=school.id
   WHERE
     scraped
     AND NOT expired_before_scrape
-    AND (detailed_school_type_in_scope
-      OR detailed_school_type IS NULL)
     AND (school_id IS NOT NULL
       OR school_group_id IS NOT NULL)
   GROUP BY
