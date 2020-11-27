@@ -13,6 +13,17 @@ module Publishers::AuthenticationConcerns
     session.key?(:publisher_oid)
   end
 
+  def sign_out_publisher!
+    %i[
+      organisation_la_code
+      organisation_uid
+      organisation_urn
+      publisher_id_token
+      publisher_multiple_organisations
+      publisher_oid
+    ].each { |key| session.delete(key) }
+  end
+
   def current_publisher_oid
     session.to_h["publisher_oid"]
   end
