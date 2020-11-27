@@ -2,11 +2,11 @@ require "rails_helper"
 RSpec.describe "Creating a vacancy" do
   include ActiveJob::TestHelper
   let(:school) { create(:school) }
-  let(:session_id) { SecureRandom.uuid }
+  let(:oid) { SecureRandom.uuid }
 
   before(:each) do
     ActionMailer::Base.deliveries.clear
-    stub_publishers_auth(urn: school.urn, session_id: session_id, email: "test@mail.com")
+    stub_publishers_auth(urn: school.urn, oid: oid, email: "test@mail.com")
   end
 
   after(:each) do
@@ -15,7 +15,7 @@ RSpec.describe "Creating a vacancy" do
 
   context "Hiring staff has expired vacancy that is not older than 2 weeks" do
     scenario "does not receive feedback prompt e-mail" do
-      current_publisher = Publisher.find_by(oid: session_id)
+      current_publisher = Publisher.find_by(oid: oid)
       vacancy = create(
         :vacancy,
         :published,
@@ -38,7 +38,7 @@ RSpec.describe "Creating a vacancy" do
 
   context "Hiring staff has 2 expired vacancies that are older than 2 weeks" do
     scenario "receives feedback prompt email with 2 vacancies" do
-      current_publisher = Publisher.find_by(oid: session_id)
+      current_publisher = Publisher.find_by(oid: oid)
       vacancy = create(
         :vacancy,
         :published,
@@ -85,7 +85,7 @@ RSpec.describe "Creating a vacancy" do
 
   context "Two expired vacancies for two users that are older than 2 weeks" do
     scenario "both receives feedback prompt emails" do
-      current_publisher = Publisher.find_by(oid: session_id)
+      current_publisher = Publisher.find_by(oid: oid)
       another_user = create(:publisher, email: "another@user.com")
       vacancy = create(
         :vacancy,

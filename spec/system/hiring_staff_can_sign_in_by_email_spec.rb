@@ -102,7 +102,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
             click_on(I18n.t("nav.sign_out"))
 
             within(".govuk-header__navigation") { expect(page).to have_content(I18n.t("nav.sign_in")) }
-            expect(page).to have_content(I18n.t("messages.access.signed_out"))
+            expect(page).to have_content(I18n.t("messages.access.publisher_signed_out"))
 
             # Login link no longer works
             visit auth_email_choose_organisation_path(login_key: login_key.id)

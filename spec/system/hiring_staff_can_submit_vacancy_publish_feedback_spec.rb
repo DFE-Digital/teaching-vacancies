@@ -1,13 +1,13 @@
 require "rails_helper"
 RSpec.describe "Vacancy publish feedback" do
   let(:school) { create(:school) }
-  let(:session_id) { SecureRandom.uuid }
+  let(:oid) { SecureRandom.uuid }
   let(:choose_yes_to_participation) { choose("vacancy-publish-feedback-user-participation-response-interested-field") }
   let(:choose_no_to_participation) do
     choose("vacancy-publish-feedback-user-participation-response-not-interested-field")
   end
 
-  before { stub_publishers_auth(urn: school.urn, session_id: session_id) }
+  before { stub_publishers_auth(urn: school.urn, oid: oid) }
 
   context "The feedback page can not be accessed for a draft job post" do
     let(:draft_job) { create(:vacancy, :complete, :draft) }
@@ -83,7 +83,7 @@ RSpec.describe "Vacancy publish feedback" do
 
       expect(feedback).to_not be_nil
       expect(feedback.comment).to eq("Perfect!")
-      expect(feedback.publisher).to eq(Publisher.find_by(oid: session_id))
+      expect(feedback.publisher).to eq(Publisher.find_by(oid: oid))
       expect(feedback.email).to eq("user@email.com")
     end
 
@@ -100,7 +100,7 @@ RSpec.describe "Vacancy publish feedback" do
 
       activity = published_job.activities.last
       expect(activity.key).to eq("vacancy.publish_feedback.create")
-      expect(activity.session_id).to eq(session_id)
+      expect(activity.session_id).to eq(oid)
     end
   end
 end

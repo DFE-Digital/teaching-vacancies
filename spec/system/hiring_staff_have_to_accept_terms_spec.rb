@@ -2,10 +2,10 @@ require "rails_helper"
 
 RSpec.describe "Hiring staff accepts terms and conditions" do
   let(:school) { create(:school) }
-  let(:session_id) { "a-valid-oid" }
-  let(:current_publisher) { Publisher.find_by(oid: session_id) }
+  let(:oid) { "a-valid-oid" }
+  let(:current_publisher) { Publisher.find_by(oid: oid) }
   before do
-    stub_publishers_auth(urn: school.urn, session_id: session_id)
+    stub_publishers_auth(urn: school.urn, oid: oid)
   end
 
   context "the user has not accepted the terms and conditions" do
@@ -40,7 +40,7 @@ RSpec.describe "Hiring staff accepts terms and conditions" do
 
       activity = current_publisher.activities.last
       expect(activity.key).to eq("user.terms_and_conditions.accept")
-      expect(activity.session_id).to eq(session_id)
+      expect(activity.session_id).to eq(oid)
     end
 
     scenario "an error is shown if they don’t accept" do
@@ -63,7 +63,7 @@ RSpec.describe "Hiring staff accepts terms and conditions" do
         visit terms_and_conditions_path
         click_on(I18n.t("nav.sign_out"))
 
-        expect(page).to have_content(I18n.t("messages.access.signed_out"))
+        expect(page).to have_content(I18n.t("messages.access.publisher_signed_out"))
       end
 
       scenario "without authentication fallback" do
@@ -75,7 +75,7 @@ RSpec.describe "Hiring staff accepts terms and conditions" do
 
         sign_out_via_dsi
 
-        expect(page).to have_content(I18n.t("messages.access.signed_out"))
+        expect(page).to have_content(I18n.t("messages.access.publisher_signed_out"))
       end
     end
   end

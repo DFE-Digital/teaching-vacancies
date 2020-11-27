@@ -14,7 +14,7 @@ class Publishers::Vacancies::CopyController < Publishers::Vacancies::Application
       new_vacancy.refresh_slug
       new_vacancy.save
       update_google_index(new_vacancy) if new_vacancy.listed?
-      Auditor::Audit.new(new_vacancy, "vacancy.copy", current_session_id).log
+      Auditor::Audit.new(new_vacancy, "vacancy.copy", current_publisher_oid).log
       redirect_to organisation_job_review_path(new_vacancy.id)
     else
       replace_errors_in_form(@date_errors, @copy_form)

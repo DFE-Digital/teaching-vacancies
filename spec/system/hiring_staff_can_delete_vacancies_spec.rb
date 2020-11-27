@@ -2,11 +2,11 @@ require "rails_helper"
 RSpec.describe "School deleting vacancies" do
   let(:school) { create(:school) }
   let(:vacancy) { create(:vacancy) }
-  let(:session_id) { SecureRandom.uuid }
+  let(:oid) { SecureRandom.uuid }
 
   before do
     vacancy.organisation_vacancies.create(organisation: school)
-    stub_publishers_auth(urn: school.urn, session_id: session_id)
+    stub_publishers_auth(urn: school.urn, oid: oid)
     stub_document_deletion_of_vacancy
   end
 
@@ -41,7 +41,7 @@ RSpec.describe "School deleting vacancies" do
     delete_vacancy(school, vacancy.id)
 
     activity = vacancy.activities.last
-    expect(activity.session_id).to eq(session_id)
+    expect(activity.session_id).to eq(oid)
     expect(activity.key).to eq("vacancy.delete")
   end
 

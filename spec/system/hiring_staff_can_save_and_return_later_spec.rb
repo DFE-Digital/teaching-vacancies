@@ -2,10 +2,10 @@ require "rails_helper"
 
 RSpec.describe "Hiring staff can save and return later" do
   let(:school) { create(:school) }
-  let(:session_id) { SecureRandom.uuid }
+  let(:oid) { SecureRandom.uuid }
 
   before do
-    stub_publishers_auth(urn: school.urn, session_id: session_id)
+    stub_publishers_auth(urn: school.urn, oid: oid)
     @vacancy = VacancyPresenter.new(build(:vacancy, :draft))
   end
 

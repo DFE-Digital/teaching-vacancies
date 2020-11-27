@@ -25,7 +25,7 @@ private
   end
 
   def session_has_multiple_organisations?
-    session[:multiple_organisations] == true
+    session[:publisher_multiple_organisations] == true
   end
 
   def sort_column

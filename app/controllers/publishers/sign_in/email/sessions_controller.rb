@@ -13,13 +13,13 @@ class Publishers::SignIn::Email::SessionsController < Publishers::SignIn::BaseSe
   def new; end
 
   def create
-    session.update(urn: get_urn, uid: get_uid, la_code: get_la_code)
+    session.update(organisation_urn: get_urn, organisation_uid: get_uid, organisation_la_code: get_la_code)
     Rails.logger.info(updated_session_details)
     redirect_to organisation_path
   end
 
   def destroy
-    Rails.logger.info("Hiring staff clicked sign out via fallback authentication: #{session[:oid]}")
+    Rails.logger.info("Hiring staff clicked sign out via fallback authentication: #{session[:publisher_oid]}")
     end_session_and_redirect
   end
 
@@ -56,8 +56,8 @@ private
     return unless options[:oid]
 
     session.update(
-      session_id: options[:oid],
-      multiple_organisations: options[:multiple_organisations],
+      publisher_oid: options[:oid],
+      publisher_multiple_organisations: options[:multiple_organisations],
     )
     Rails.logger.warn("Hiring staff signed in via fallback authentication: #{options[:oid]}")
   end
@@ -104,7 +104,7 @@ private
 
   def publisher_authorised?
     publisher = begin
-                  Publisher.find_by(oid: session.to_h["session_id"])
+                  Publisher.find_by(oid: session.to_h["publisher_oid"])
                 rescue StandardError
                   nil
                 end

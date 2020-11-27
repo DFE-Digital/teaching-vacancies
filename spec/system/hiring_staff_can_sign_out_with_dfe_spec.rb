@@ -14,6 +14,6 @@ RSpec.describe "Hiring staff can sign out with DfE Sign In" do
     sign_out_via_dsi
 
     within(".govuk-header__navigation") { expect(page).to have_content(I18n.t("nav.sign_in")) }
-    expect(page).to have_content(I18n.t("messages.access.signed_out"))
+    expect(page).to have_content(I18n.t("messages.access.publisher_signed_out"))
   end
 end

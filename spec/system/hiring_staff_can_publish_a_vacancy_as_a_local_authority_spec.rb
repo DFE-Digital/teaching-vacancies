@@ -4,7 +4,7 @@ RSpec.describe "Creating a vacancy" do
   let(:school_group) { create(:local_authority) }
   let(:school_1) { create(:school, name: "First school") }
   let(:school_2) { create(:school, name: "Second school") }
-  let(:session_id) { SecureRandom.uuid }
+  let(:oid) { SecureRandom.uuid }
   let(:vacancy) { build(:vacancy, :at_one_school, :complete) }
 
   before do
@@ -12,7 +12,7 @@ RSpec.describe "Creating a vacancy" do
     SchoolGroupMembership.find_or_create_by(school_id: school_1.id, school_group_id: school_group.id)
     SchoolGroupMembership.find_or_create_by(school_id: school_2.id, school_group_id: school_group.id)
     allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference))
-    stub_publishers_auth(la_code: school_group.local_authority_code, session_id: session_id)
+    stub_publishers_auth(la_code: school_group.local_authority_code, oid: oid)
   end
 
   scenario "resets session current_step" do

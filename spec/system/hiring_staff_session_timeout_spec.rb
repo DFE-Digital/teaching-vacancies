@@ -2,11 +2,11 @@ require "rails_helper"
 
 RSpec.describe "Hiring staff session" do
   let(:school) { create(:school) }
-  let(:session_id) { "session_id" }
-  let(:current_publisher) { Publisher.find_by(oid: session_id) }
+  let(:oid) { "oid" }
+  let(:current_publisher) { Publisher.find_by(oid: oid) }
   before do
     allow(AuthenticationFallback).to receive(:enabled?).and_return(false)
-    stub_publishers_auth(urn: school.urn, session_id: session_id)
+    stub_publishers_auth(urn: school.urn, oid: oid)
   end
 
   after do

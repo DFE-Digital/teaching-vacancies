@@ -15,7 +15,7 @@ class Publishers::BaseController < ApplicationController
 
   def check_session
     redirect_to new_identifications_path unless
-      session[:urn].present? || session[:uid].present? || session[:la_code].present?
+      session[:organisation_urn].present? || session[:organisation_uid].present? || session[:organisation_la_code].present?
   end
 
   def check_terms_and_conditions
@@ -23,9 +23,9 @@ class Publishers::BaseController < ApplicationController
   end
 
   def current_publisher
-    return if current_session_id.blank?
+    return if current_publisher_oid.blank?
 
-    @current_publisher ||= Publisher.find_or_create_by(oid: current_session_id)
+    @current_publisher ||= Publisher.find_or_create_by(oid: current_publisher_oid)
   end
 
   def current_publisher_preferences
@@ -38,7 +38,7 @@ class Publishers::BaseController < ApplicationController
     return redirect_to logout_endpoint if current_publisher&.last_activity_at.blank?
 
     if Time.current > (current_publisher.last_activity_at + TIMEOUT_PERIOD)
-      session[:signing_out_for_inactivity] = true
+      session[:publisher_signing_out_for_inactivity] = true
       redirect_to logout_endpoint
     end
   end
@@ -51,7 +51,7 @@ class Publishers::BaseController < ApplicationController
     return auth_email_sign_out_path if AuthenticationFallback.enabled?
 
     url = URI.parse("#{ENV['DFE_SIGN_IN_ISSUER']}/session/end")
-    url.query = { post_logout_redirect_uri: auth_dfe_signout_url, id_token_hint: session[:id_token] }.to_query
+    url.query = { post_logout_redirect_uri: auth_dfe_signout_url, id_token_hint: session[:publisher_id_token] }.to_query
     url.to_s
   end
 
