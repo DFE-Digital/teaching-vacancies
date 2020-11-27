@@ -177,9 +177,16 @@ en:
           link_text: Sign in
         page_description: If you already have a Teaching Vacancies account you can sign in to the service here.
         request_account_title: Request an account
-        request_account_html: >-
-          You can get an account if you work at a publicly funded school or trust in England. Just send your
-          full name, the name of the school or Trust you work for and your work email address to %{mail_to}.
+        request_account_html: &request_account_html >-
+          Don't have an account? You can get one if you work at a publicly funded school or trust in England. 
+          Just send the following details to %{mail_to}:
+          <ul class="govuk-list govuk-list--bullet">
+          <li>your full name</li>
+          <li>your work email address</li>
+          <li>the name of your school or trust</li>
+          <li>your school URN (unique reference number) or trust UID (unique identifier). You can find these details on our <a href="https://www.get-information-schools.service.gov.uk/" class="govuk-link">Get information about schools</a>
+          page.</li> 
+          </ul>
         sign_in:
           description: You must sign in to your Teaching Vacancies account to list a job.
           title: Sign in to Teaching Vacancies
@@ -230,9 +237,7 @@ en:
             body: DfE Sign In is experiencing problems. Please sign in using your email address.
             description: You must sign in to your Teaching Vacancies account to list a job.
             request_account_title: Request an account
-            request_account_html: >-
-              You can get an account if you work at a publicly funded school or trust in England. Just send your
-              full name, the name of the school or Trust you work for and your work email address to %{mail_to}.
+            request_account_html: *request_account_html
     temp_login:
       check_your_email:
         check_spam_html: >-
