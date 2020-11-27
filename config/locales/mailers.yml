@@ -28,6 +28,17 @@ en:
       unsubscribe_link_text: Unsubscribe here
       working_pattern: "Working pattern: %{working_pattern}"
 
+  jobseeker_mailer:
+    confirmation_instructions:
+      heading: Verify email to create an account with Teaching Vacancies
+      intro: You have requested to create an account with this email address
+      link: Verify email and create account
+      not_requested:
+        body: If you did not make this request, please email %{mail_to}
+        heading: Not requested this?
+      subject: Verify your email with Teaching Vacancies
+      what_to_do: What to do now
+
   subscription_mailer:
     confirmation:
       frequency:
