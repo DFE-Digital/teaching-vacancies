@@ -23,6 +23,17 @@ en:
       inclusion: Tell us why you want to unsubscribe
     other_reason:
       blank: Tell us why you want to unsubscribe
+
+  # Jobseekers
+  sign_up_errors: &sign_up_errors
+    email:
+      blank: Enter your email address
+      invalid: Enter an email address in the correct format, like name@example.com
+      taken: This email seems to already have an account with Teaching Vacancies
+    password:
+      blank: Enter a password
+      too_short: Enter a password that is at least 8 characters long
+
   # Hiring staff journey
   job_location_errors: &job_location_errors
     job_location:
@@ -156,6 +167,9 @@ en:
         part_time: Part-time
     errors:
       models:
+        jobseeker:
+          attributes:
+            <<: *sign_up_errors
         vacancy:
           attributes:
             <<: *schools_errors

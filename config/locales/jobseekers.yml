@@ -15,6 +15,29 @@ en:
           heading: Need assistance?
           content_html: "%{link} to get help with problems you are having with your account."
           link_text: Contact our support team
+    confirmations:
+      new:
+        description: The link has expired. You need to request that a new link is sent to your email address (%{email}).
+        title: Your request is no longer valid
+    registrations:
+      check_your_email:
+        description: We have sent you an email with simple instructions on how to quickly finish creating your account
+        having_trouble_html: Still having trouble? %{mail_to} to our support team
+        report_it: Report it
+        title: Check your email
+      new:
+        assistance:
+          content_html: Find out %{link_to} so that you can list teaching jobs at your school or Trust.
+          heading: School or Trust accounts
+          link: how to create an account
+        description: >-
+          If you have an account you can save teaching jobs you are interested in, apply for jobs and
+          create job alerts
+        existing_account:
+          content_html: You can %{link_to} here.
+          link: sign in
+          title: Already have an account?
+        title: Create an account
     saved_jobs:
       index:
         page_title: Saved jobs
