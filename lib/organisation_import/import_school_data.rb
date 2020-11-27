@@ -9,8 +9,7 @@ class ImportSchoolData < ImportOrganisationData
       Organisation.transaction do
         school = create_organisation(row)
 
-        # Only create SchoolGroupMembership relationships if a school is local-authority maintained
-        next unless row["EstablishmentTypeGroup (code)"].to_i == 4
+        next unless school_in_local_authority_scope?(row)
 
         local_authority = SchoolGroup.find_or_create_by(local_authority_code: row["LA (code)"],
                                                         name: row["LA (name)"],
@@ -55,6 +54,18 @@ private
 
   def datestring
     Time.current.strftime("%Y%m%d")
+  end
+
+  def school_in_local_authority_scope?(row)
+    school_is_local_authority_maintained?(row) || school_is_community_or_foundation_special_school?(row)
+  end
+
+  def school_is_local_authority_maintained?(row)
+    row["EstablishmentTypeGroup (code)"] == "4"
+  end
+
+  def school_is_community_or_foundation_special_school?(row)
+    row["EstablishmentTypeGroup (code)"] == "5" && %w[7 12].include?(row["TypeOfEstablishment (code)"])
   end
 
   def set_readable_phases(school)
