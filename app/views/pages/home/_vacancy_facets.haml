@@ -4,7 +4,7 @@
     %ul.govuk-list.two-column-list{ aria: { label: "#{t('.cities')} list" } }
       - @cities_facets.each do |city, count|
         %li
-          = link_to city, jobs_path(location: city), class: 'govuk-link'
+          = link_to city, location_category_path(city), class: 'govuk-link'
           = "(#{count})"
 
   .govuk-grid-column-one-half
@@ -12,7 +12,7 @@
     %ul.govuk-list.two-column-list{ aria: { label: "#{t('.counties')} list" } }
       - @counties_facets.each do |county, count|
         %li
-          = link_to county, jobs_path(location: county), class: 'govuk-link'
+          = link_to county, location_category_path(county), class: 'govuk-link'
           = "(#{count})"
 
 .govuk-grid-row

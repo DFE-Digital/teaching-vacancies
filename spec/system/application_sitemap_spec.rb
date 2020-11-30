@@ -20,7 +20,7 @@ RSpec.describe "Application sitemap", sitemap: true do
       end
 
       ALL_LOCATION_CATEGORIES.each do |location_category|
-        url = jobs_url(location: location_category, protocol: "https")
+        url = location_category_url(location_category, protocol: "https")
         expect(nodes.search("loc:contains('#{url}')").map(&:text)).to include(url)
       end
 
