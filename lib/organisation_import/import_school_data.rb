@@ -61,11 +61,11 @@ private
   end
 
   def school_is_local_authority_maintained?(row)
-    row["EstablishmentTypeGroup (code)"] == "4"
+    row["EstablishmentTypeGroup (code)"].to_i == 4
   end
 
   def school_is_community_or_foundation_special_school?(row)
-    row["EstablishmentTypeGroup (code)"] == "5" && %w[7 12].include?(row["TypeOfEstablishment (code)"])
+    row["EstablishmentTypeGroup (code)"].to_i == 5 && [7, 12].include?(row["TypeOfEstablishment (code)"].to_i)
   end
 
   def set_readable_phases(school)
