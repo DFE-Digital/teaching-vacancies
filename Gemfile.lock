@@ -68,7 +68,7 @@ GEM
     algoliasearch (1.27.5)
       httpclient (~> 2.8, >= 2.8.3)
       json (>= 1.5.1)
-    algoliasearch-rails (1.24.1)
+    algoliasearch-rails (1.25.0)
       algoliasearch (>= 1.26.0, < 2.0.0)
       json (>= 1.5.1)
     array_enum (1.2.0)
