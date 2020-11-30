@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(version: 2020_12_01_154558) do
     t.float "boundary", array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "buffers"
   end
 
   create_table "organisation_vacancies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
