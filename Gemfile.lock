@@ -159,7 +159,7 @@ GEM
       retriable (>= 2.0, < 4.0)
       rexml
       signet (~> 0.12)
-    google-cloud-bigquery (1.24.0)
+    google-cloud-bigquery (1.25.0)
       concurrent-ruby (~> 1.0)
       google-api-client (~> 0.47)
       google-cloud-core (~> 1.2)
