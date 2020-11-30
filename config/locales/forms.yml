@@ -129,8 +129,7 @@ en:
         description: Description of %{organisation_type}
         website: '%{organisation_type} website'
       jobseeker:
-        email_html: Email address (<span class='text-red'>Required</span>)
-        password_html: Password (<span class='text-red'>Required</span>)
+        email: Email address
       job_summary_form:
         about_organisation_html: About %{organisation} (<span class='text-red'>Required</span>)
         job_summary_html: Job summary (<span class='text-red'>Required</span>)

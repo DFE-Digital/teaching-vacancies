@@ -40,7 +40,7 @@ en:
         existing_account:
           content_html: You can %{link_to} here.
           link: sign in
-          title: Already have an account?
+          heading: Already have an account?
         title: Create an account
     passwords:
       check_your_email_password:
@@ -73,7 +73,18 @@ en:
       saved: Job saved
       success_html: >-
         You have saved this job. <a href="%{link}" class="govuk-link">View all your saved jobs</a> on your account.
-
+    sessions:
+      new:
+        assistance:
+          content_html: Find out %{link_to} so that you can list teaching jobs at your school or Trust.
+          heading: School or Trust accounts
+          link: how to create an account
+        description: Use your Teaching Vacancies account details to sign in.
+        no_account:
+          content_html: If you %{link_to} you can save and apply for jobs you are interested in.
+          heading: Don't have an account yet?
+          link: create an account
+        title: Teacher sign in
     subscriptions:
       index:
         frequency:
