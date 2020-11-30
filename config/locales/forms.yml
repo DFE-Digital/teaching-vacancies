@@ -64,7 +64,7 @@ en:
           Give a brief summary of the schools where the jobseeker would be teaching and any relevant information about
           the %{organisation_type}
         job_summary: >-
-          Give a brief summary of the job that job seekers can quickly scan.
+          Give a brief summary of the job that jobseekers can quickly scan.
           This will be the first thing they see on the listing or in search engine results
       job_details_form:
         job_roles: 'Select all that describe the role'
