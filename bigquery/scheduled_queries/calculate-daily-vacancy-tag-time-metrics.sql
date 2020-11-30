@@ -174,13 +174,15 @@ WITH
   CROSS JOIN
     `teacher-vacancy-service.production_dataset.scraped_vacancies` AS scraped_vacancies
   LEFT JOIN
-    `teacher-vacancy-service.production_dataset.CALCULATED_schools_joined_with_metrics` AS school
+    `teacher-vacancy-service.production_dataset.school` AS school
   ON
     scraped_vacancies.school_id=school.id
   WHERE
     scraped
     AND NOT expired_before_scrape
-    AND (school_id IS NOT NULL
+    AND (detailed_school_type_in_scope
+      OR school.id IS NULL)
+    AND (school.id IS NOT NULL
       OR school_group_id IS NOT NULL)
   GROUP BY
     date,

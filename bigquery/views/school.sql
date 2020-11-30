@@ -112,12 +112,20 @@ SELECT
   school.data_typeofresourcedprovision_name AS type_of_resourced_provision,
   school.data_ukprn AS ukprn,
   school.data_uprn AS uprn,
-  school.data_urbanrural_name AS urban_rural
+  school.data_urbanrural_name AS urban_rural,
+IF
+  (schoolgroup.type="Multi-academy trust",
+    schoolgroup.size,
+    NULL) AS trust_size
 FROM
   `teacher-vacancy-service.production_dataset.feb20_organisation` AS school
 LEFT JOIN
   `teacher-vacancy-service.production_dataset.feb20_schoolgroupmembership` AS schoolgroupmembership
 ON
   schoolgroupmembership.school_id = school.id
+LEFT JOIN
+  `teacher-vacancy-service.production_dataset.schoolgroup` AS schoolgroup
+ON
+  schoolgroup.id = schoolgroupmembership.school_group_id
 WHERE
   school.type="School" #excludes organisations which aren't schools, like School Groups i.e. MATs
