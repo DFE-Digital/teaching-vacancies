@@ -1,23 +1,25 @@
-nav ul .mobile-header-underline-text {
-  @include govuk-media-query($until: desktop) {
-    font-weight: normal;
-    text-decoration: underline;
-  }
-}
+.govuk-header {
+  .govuk-header__navigation {
+    @include govuk-media-query($from: tablet) {
+      display: flex;
 
-.mobile-header-top-border {
-  @include govuk-media-query($until: desktop) {
-    border-top: 3px solid govuk-colour('white');
-    margin-top: 2px;
-  }
-}
+      .govuk-header__navigation-spacer {
+        flex-grow: 1;
+      }
 
-.navigation_heading {
-  color: govuk-colour('white');
-  font-weight: bold;
-  margin-top: 20px;
+      .govuk-header__navigation-item--left {
+        align-self: flex-start;
+      }
 
-  @include govuk-media-query($from: desktop) {
-    display: none;
+      .govuk-header__navigation-item--right {
+        align-self: flex-end;
+      }
+    }
+
+    @include govuk-media-query($until: tablet) {
+      .govuk-header__navigation-spacer {
+        visibility: hidden;
+      }
+    }
   }
 }
