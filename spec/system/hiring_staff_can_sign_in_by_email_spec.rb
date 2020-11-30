@@ -8,7 +8,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
   scenario "can reach email request page by nav-bar link" do
     visit root_path
 
-    within(".govuk-header__navigation.mobile-header-top-border") { click_on(I18n.t("nav.sign_in")) }
+    within(".govuk-header__navigation") { click_on(I18n.t("nav.sign_in")) }
     expect(page).to have_content(I18n.t("publishers.temp_login.heading"))
     expect(page).to have_content(I18n.t("publishers.temp_login.please_use_email"))
   end

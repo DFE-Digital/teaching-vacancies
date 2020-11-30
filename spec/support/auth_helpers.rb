@@ -99,7 +99,7 @@ module AuthHelpers
   end
 
   def sign_in_user
-    within(".govuk-header__navigation.mobile-header-top-border") { click_on(I18n.t("nav.sign_in")) }
+    within(".govuk-header__navigation") { click_on(I18n.t("nav.sign_in")) }
     within("form") { click_on(I18n.t("buttons.sign_in")) }
   end
 
