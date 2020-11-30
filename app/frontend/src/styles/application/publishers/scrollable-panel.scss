@@ -28,11 +28,6 @@
     overflow-x: auto;
   }
 
-  .moj-scrollable-pane__wrapper .govuk-table__header,
-  .moj-scrollable-pane__wrapper .govuk-table__cell {
-    white-space: nowrap;
-  }
-
   .moj-scrollable-pane > div::-webkit-scrollbar {
     height: 10px; // Match GOVUK spacing units
   }
