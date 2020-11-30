@@ -38,7 +38,7 @@
             = t('app.title')
           %button.govuk-header__menu-button.govuk-js-header-toggle{ "data-module": "govuk-button", type: "button", role: "button", "aria-controls": "navigation", "aria-label": "Show or hide Top Level Navigation" }
             Menu
-          = render partial: 'shared/navigation'
+          = render(Shared::NavbarComponent.new)
 
     .govuk-width-container
       .govuk-phase-banner{ role: 'contentinfo' }

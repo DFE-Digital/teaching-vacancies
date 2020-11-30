@@ -9,9 +9,10 @@ RSpec.describe "Jobseekers can sign out from their account" do
   end
 
   scenario "signing out takes them to sign in page with banner" do
-    # TODO: Implement me properly when we have a real "sign out" link in the header
-    visit jobseekers_account_path
-    click_button "Temporary log out button until we create a proper logout link in the header"
+    visit root_path
+    within("nav") do
+      click_link I18n.t("nav.sign_out")
+    end
 
     expect(current_path).to eq(new_jobseeker_session_path)
     expect(page).to have_content(I18n.t("devise.sessions.signed_out"))

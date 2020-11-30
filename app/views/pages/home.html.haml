@@ -9,8 +9,10 @@
         .signin
           - if ReadOnlyFeature.enabled?
             = render 'pages/home/read_only'
+          - elsif JobseekerAccountsFeature.enabled?
+            = render 'pages/home/signin_jobseekers'
           - else
-            = render 'pages/home/signin'
+            = render 'pages/home/signin_publishers'
 
 .govuk-grid-row
   .govuk-grid-column-full

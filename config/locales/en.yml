@@ -286,6 +286,7 @@ en:
 
   nav:
     find_job: Find a teaching job
+    for_schools: For schools
     jobseekers_index_link: View public jobs
     school_group_index_link: Schools in your %{organisation_type}
     school_page_link: Manage jobs
@@ -334,7 +335,11 @@ en:
           <p>We’re completing planned maintenance on job listings.</p><p>You can search and view vacancies, but you
           can’t manage them.</p><p>You’ll be able to use the full service again in less than an hour.</p>
           <p><a href='mailto:teaching.vacancies@education.gov.uk'>Contact our support team</a> if you need help.</p>
-      signin:
+      signin_jobseekers:
+        title: Save and apply for jobs
+        description: "You don't need an account to search for a job. If you want to save or apply for a job sign in or "
+        signup_link: create an account
+      signin_publishers:
         title: List a teaching job
         description: Sign in to your Teaching Vacancies account to list a job at your school or Trust.
         signin_link: how you can register
