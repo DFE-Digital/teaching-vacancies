@@ -1,4 +1,5 @@
 require "rails_helper"
+include DistanceHelper
 
 RSpec.describe Search::SearchBuilder do
   let(:subject) { described_class.new(form_hash) }
@@ -94,14 +95,14 @@ RSpec.describe Search::SearchBuilder do
         {
           keyword: keyword,
           coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
-          radius: Search::LocationBuilder.convert_radius_in_miles_to_metres(radius),
+          radius: convert_miles_to_metres(radius),
           filters: filter_query,
           hits_per_page: 10,
           page: page,
         }
       end
 
-      before { allow(Search::SuggestionsBuilder).to receive_message_chain(:new, :radius_suggestions) }
+      before { allow(Search::RadiusSuggestionsBuilder).to receive_message_chain(:new, :radius_suggestions) }
 
       it "calls algolia search with the correct parameters" do
         expect(Search::AlgoliaSearchRequest).to receive(:new).with(search_params).and_call_original
@@ -115,7 +116,7 @@ RSpec.describe Search::SearchBuilder do
       let(:location) { polygonable_location }
 
       it "does not call suggestions builder" do
-        expect(Search::SuggestionsBuilder).not_to receive(:new)
+        expect(Search::RadiusSuggestionsBuilder).not_to receive(:new)
         subject
       end
     end
@@ -127,7 +128,7 @@ RSpec.describe Search::SearchBuilder do
         {
           keyword: keyword,
           coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
-          radius: Search::LocationBuilder.convert_radius_in_miles_to_metres(radius),
+          radius: convert_miles_to_metres(radius),
           filters: filter_query,
           hits_per_page: 10,
           page: page,
@@ -140,7 +141,7 @@ RSpec.describe Search::SearchBuilder do
         let(:arguments_to_algolia) do
           {
             aroundLatLng: Geocoder::DEFAULT_STUB_COORDINATES,
-            aroundRadius: Search::LocationBuilder.convert_radius_in_miles_to_metres(10),
+            aroundRadius: convert_miles_to_metres(radius),
             filters: filter_query,
             hitsPerPage: 10,
             page: 1,
@@ -153,14 +154,14 @@ RSpec.describe Search::SearchBuilder do
         end
 
         it "does not call suggestions builder" do
-          expect(Search::SuggestionsBuilder).not_to receive(:new)
+          expect(Search::RadiusSuggestionsBuilder).not_to receive(:new)
           subject
         end
       end
 
       context "when vacancies is empty" do
         it "calls suggestions builder" do
-          expect(Search::SuggestionsBuilder).to receive(:new).with(search_params, radius).and_call_original
+          expect(Search::RadiusSuggestionsBuilder).to receive(:new).with(search_params, radius).and_call_original
           subject
         end
       end
