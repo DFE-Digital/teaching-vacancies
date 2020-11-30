@@ -92,4 +92,12 @@ private
   def invalid_recaptcha_score?
     recaptcha_reply["score"] < SUSPICIOUS_RECAPTCHA_THRESHOLD
   end
+
+  def replace_devise_notice_flash_with_success!
+    flash[:success] = flash.discard(:notice)
+  end
+
+  def remove_devise_notice_flash!
+    flash.discard(:notice)
+  end
 end

@@ -1,8 +1,16 @@
 Rails.application.routes.draw do
   constraints(-> { JobseekerAccountsFeature.enabled? }) do
-    devise_for :jobseekers, controllers: { sessions: "jobseekers/sessions" }
+    devise_for :jobseekers, controllers: {
+      confirmations: "jobseekers/confirmations",
+      registrations: "jobseekers/registrations",
+      sessions: "jobseekers/sessions",
+    }
 
     namespace :jobseekers do
+      devise_scope :jobseeker do
+        get :check_your_email, to: "registrations#check_your_email", as: :check_your_email
+      end
+
       resources :saved_jobs, only: %i[index]
       resources :subscriptions, only: %i[index]
       resource :account, only: %i[show]

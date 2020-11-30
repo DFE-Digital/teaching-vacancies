@@ -1,0 +1,17 @@
+- content_for :page_title_prefix, t(".title")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    %h1.govuk-heading-l= t(".title")
+
+    %p.govuk-body= t(".description")
+
+    -# = form_for @jobseeker, url: jobseeker_registration_path, method: :put do |f|
+    -#   = f.govuk_error_summary
+
+    -#   = f.govuk_email_field :email, label: { size: "s" }, width: "two-thirds"
+    -#   = f.govuk_password_field :password, label: { size: "s" }, width: "two-thirds"
+
+    -#   = f.govuk_submit t("buttons.update"), classes: "govuk-!-margin-bottom-0"
+
+    -# %hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
