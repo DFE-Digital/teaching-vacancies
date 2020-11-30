@@ -341,7 +341,7 @@ en:
         signup_link: create an account
       signin_publishers:
         title: List a teaching job
-        description: Sign in to your Teaching Vacancies account to list a job at your school or Trust.
+        description: Sign in to your Teaching Vacancies account to list a vacancy at your school or Trust.
         signin_link: how you can register
         signin_guidance_html: If you don't have an account yet, you can find out %{link} if you are eligible.
       signed_in:
