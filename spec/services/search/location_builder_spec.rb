@@ -9,6 +9,7 @@ RSpec.shared_examples "a search using polygons" do |options|
 end
 
 RSpec.describe Search::LocationBuilder do
+
   subject { described_class.new(location, radius, location_category) }
 
   let(:location) { nil }
@@ -72,13 +73,15 @@ RSpec.describe Search::LocationBuilder do
     context "when a non-polygonable location is specified" do
       context "and no radius specified" do
         let(:location) { point_location }
+        let(:radius) { 10 }
+        let(:expected_radius) { 16093 }
 
         it "sets location filter around the location with the default radius" do
           expect(subject.location_category).to be nil
           expect(subject.location_polygon).to be nil
           expect(subject.location_filter).to eql({
             point_coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
-            radius: Search::LocationBuilder.convert_radius_in_miles_to_metres(10),
+            radius: expected_radius,
           })
         end
       end
@@ -86,13 +89,14 @@ RSpec.describe Search::LocationBuilder do
       context "and radius specified" do
         let(:location) { point_location }
         let(:radius) { 30 }
+        let(:expected_radius) { 48280 }
 
         it "carries out geographical search around a coordinate location with the specified radius" do
           expect(subject.location_category).to be nil
           expect(subject.location_polygon).to be nil
           expect(subject.location_filter).to eql({
             point_coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
-            radius: Search::LocationBuilder.convert_radius_in_miles_to_metres(radius),
+            radius: expected_radius,
           })
         end
       end
