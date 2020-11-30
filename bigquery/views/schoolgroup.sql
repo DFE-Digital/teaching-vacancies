@@ -1,5 +1,5 @@
 SELECT
-  id,
+  organisation.id,
   name,
   CAST(created_at AS DATE) AS date_created,
   CAST(updated_at AS DATE) AS date_updated,
@@ -28,8 +28,37 @@ SELECT
   data_head_of_group_last_name AS head_last_name,
   REPLACE(data_head_of_group_title,"Not recorded",NULL) AS head_title,
   data_incorporated_on_open_date AS date_opened,
-  data_ukprn AS ukprn
+  data_ukprn AS ukprn,
+  COUNT(DISTINCT schoolgroupmembership.school_id) AS size
 FROM
   `teacher-vacancy-service.production_dataset.feb20_organisation` AS organisation
+LEFT JOIN
+  `teacher-vacancy-service.production_dataset.feb20_schoolgroupmembership` AS schoolgroupmembership
+ON
+  organisation.id=schoolgroupmembership.school_group_id
 WHERE
   type="SchoolGroup" #excludes Schools
+GROUP BY
+  organisation.id,
+  name,
+  date_created,
+  date_updated,
+  date_closed,
+  companies_house_number,
+  county,
+  group_id,
+  locality,
+  group_name,
+  postcode,
+  status,
+  status_code,
+  street,
+  town,
+  full_address,
+  type,
+  uid,
+  head_first_name,
+  head_last_name,
+  head_title,
+  date_opened,
+  ukprn
