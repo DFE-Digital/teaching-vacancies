@@ -40,8 +40,8 @@ private
     %w[job_roles phases working_patterns].each do |facet|
       params[facet] = params[facet].split(" ") if params[facet].is_a?(String)
     end
-    params.permit(:keyword, :location, :location_category, :radius, :jobs_sort, :page,
-                  job_roles: [], phases: [], working_patterns: [])
+    params.permit(:keyword, :location, :location_category, :radius, :job_roles, :phases, :working_patterns,
+                  :jobs_sort, :page, job_roles: [], phases: [], working_patterns: [])
   end
 
   def old_vacancy_path?(vacancy)
