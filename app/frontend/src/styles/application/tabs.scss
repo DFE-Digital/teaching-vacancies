@@ -33,7 +33,7 @@ a.js-enabled .govuk-tabs__tab.tab-links-override:focus {
     }
 
     .moj-primary-navigation__link[aria-current] {
-      border-left: 5px solid $govuk-link-colour;
+      border-left: govuk-spacing(1) solid $govuk-link-colour;
 
       &::before {
         background-color: transparent;

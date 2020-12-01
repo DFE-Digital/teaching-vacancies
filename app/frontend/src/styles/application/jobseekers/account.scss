@@ -1,16 +1,11 @@
 .account-header {
   background-color: govuk-colour('light-grey');
-  left: 50%;
-  margin-bottom: govuk-spacing(6);
-  margin-left: -50vw;
-  padding-top: govuk-spacing(1);
-  position: relative;
-  width: 100vw;
+  padding-top: govuk-spacing(2);
 }
 
 .account-header__user-identifier {
   @include govuk-font(24);
-  margin: govuk-spacing(3) 0;
+  margin-bottom: govuk-spacing(3);
 }
 
 .account-sidebar {
@@ -25,4 +20,22 @@
 .account-sidebar__heading {
   @extend %govuk-heading-m;
   margin: govuk-spacing(3) 0;
+}
+
+.jobseekers_saved_jobs_index,
+.jobseekers_subscriptions_index,
+.jobseekers_accounts_show {
+  .govuk-main-wrapper {
+    left: 50%;
+    margin-left: -50vw;
+    padding-bottom: 0;
+    padding-top: govuk-spacing(2);
+    position: relative;
+    width: 100vw;
+
+    > .govuk-width-container {
+      background-color: govuk-colour('white');
+      padding-top: govuk-spacing(3);
+    }
+  }
 }
