@@ -1,5 +1,5 @@
 class Publishers::IdentificationsController < Publishers::BaseController
-  skip_before_action :check_user_last_activity_at
+  skip_before_action :authenticate_publisher!
   skip_before_action :check_session, only: %i[new create]
   skip_before_action :check_terms_and_conditions, only: %i[new create]
   skip_before_action :verify_authenticity_token, only: %i[create]

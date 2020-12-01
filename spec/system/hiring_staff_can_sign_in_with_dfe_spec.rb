@@ -30,7 +30,7 @@ RSpec.shared_examples "a failed sign in" do |options|
   scenario "it does not sign-in the user, and tells the user what to do" do
     visit root_path
 
-    sign_in_user
+    sign_in_publisher
 
     expect(page).to have_content(I18n.t("static_pages.not_authorised.title"))
     expect(page).to have_content(options[:email])
@@ -40,7 +40,7 @@ RSpec.shared_examples "a failed sign in" do |options|
   scenario "adds entries in the audit log" do
     visit root_path
 
-    sign_in_user
+    sign_in_publisher
 
     authentication = PublicActivity::Activity.first
     expect(authentication.key).to eq("dfe-sign-in.authentication.success")
@@ -60,7 +60,7 @@ RSpec.shared_examples "a failed sign in" do |options|
 
     visit root_path
 
-    sign_in_user
+    sign_in_publisher
   end
 end
 
@@ -90,7 +90,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
 
       visit root_path
 
-      sign_in_user
+      sign_in_publisher
     end
 
     it_behaves_like "a successful sign in"
@@ -141,7 +141,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
       stub_sign_in_with_multiple_organisations
 
       visit root_path
-      sign_in_user
+      sign_in_publisher
     end
 
     context "with trust" do
@@ -181,7 +181,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
       stub_sign_in_with_multiple_organisations
 
       visit root_path
-      sign_in_user
+      sign_in_publisher
     end
 
     context "when user preferences have been set" do
@@ -225,7 +225,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
         stub_sign_in_with_multiple_organisations
 
         visit root_path
-        sign_in_user
+        sign_in_publisher
       end
 
       context "when user preferences have been set" do
@@ -292,7 +292,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
     it "raises an error" do
       visit root_path
 
-      expect { sign_in_user }.to raise_error(Authorisation::ExternalServerError)
+      expect { sign_in_publisher }.to raise_error(Authorisation::ExternalServerError)
     end
   end
 end

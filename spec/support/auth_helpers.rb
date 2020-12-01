@@ -1,10 +1,4 @@
 module AuthHelpers
-  def stub_global_auth(return_value: true)
-    allow_any_instance_of(ApplicationController)
-      .to receive(:authenticate?)
-      .and_return(return_value)
-  end
-
   def stub_publishers_auth(urn: nil, uid: nil, la_code: "123", oid: "oid", email: nil)
     if urn.present?
       page.set_rack_session(organisation_urn: urn, organisation_uid: "", organisation_la_code: "")
@@ -98,8 +92,8 @@ module AuthHelpers
     ).to_return(body: authorisation_response, status: 200)
   end
 
-  def sign_in_user
-    within(".govuk-header__navigation") { click_on(I18n.t("nav.sign_in")) }
+  def sign_in_publisher
+    visit new_identifications_path
     within("form") { click_on(I18n.t("buttons.sign_in")) }
   end
 

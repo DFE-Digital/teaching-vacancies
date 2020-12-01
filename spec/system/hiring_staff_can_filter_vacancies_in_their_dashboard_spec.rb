@@ -26,7 +26,7 @@ RSpec.describe "Hiring staff can filter vacancies in their dashboard" do
     stub_sign_in_with_multiple_organisations
 
     visit root_path
-    sign_in_user
+    sign_in_publisher
 
     PublisherPreference.find_or_create_by(
       publisher_id: Publisher.last.id, school_group_id: school_group.id,

@@ -22,7 +22,7 @@ RSpec.describe "Hiring staff can set managed organisations user preferences" do
     stub_sign_in_with_multiple_organisations
 
     visit root_path
-    sign_in_user
+    sign_in_publisher
   end
 
   after do

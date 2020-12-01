@@ -1,5 +1,6 @@
 class Publishers::SignIn::BaseSessionsController < Publishers::BaseController
-  skip_before_action :check_user_last_activity_at
+  skip_before_action :authenticate_publisher!
+  before_action :sign_out_jobseeker!, only: %i[create]
 
   def end_session_and_redirect
     flash_message = if session[:publisher_signing_out_for_inactivity]
@@ -12,6 +13,10 @@ class Publishers::SignIn::BaseSessionsController < Publishers::BaseController
   end
 
 private
+
+  def sign_out_jobseeker!
+    sign_out(:jobseeker)
+  end
 
   def updated_session_details
     if session[:organisation_urn].present?

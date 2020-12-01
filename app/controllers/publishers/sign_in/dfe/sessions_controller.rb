@@ -120,7 +120,7 @@ private
   def check_authorisation(authorisation_permissions)
     if authorisation_permissions.authorised? && organisation_id_present? && allowed_user?
       update_session(authorisation_permissions)
-      update_user_last_activity_at
+      update_publisher_last_activity_at
       redirect_to organisation_path
     else
       not_authorised
