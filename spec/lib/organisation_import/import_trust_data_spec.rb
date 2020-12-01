@@ -111,7 +111,7 @@ RSpec.describe ImportTrustData do
       subject.run!
       expect(trust_1).not_to be_blank
       expect(trust_1.gias_data).not_to be_blank
-      expect(trust_1.name).to eql("Abbey Academies Trust")
+      expect(trust_1.name).to eql("St. Acquinas' Abbey Academies Co-operative Ltd (UK)")
       expect(trust_1.group_type).to eql("Multi-academy trust")
       expect(trust_1.address).to eql("Abbey Road")
       expect(trust_1.county).to eql("Not recorded")
