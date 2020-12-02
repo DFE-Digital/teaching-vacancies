@@ -3,13 +3,13 @@
   float: right;
 }
 
-span.notification {
-  @include govuk-font($size: 19);
-  background-color: $govuk-link-colour;
-  border-radius: 50%;
-  color: govuk-colour('white');
-  margin-left: govuk-spacing(1);
-  padding: 0 govuk-spacing(1);
+.govuk-main-wrapper__notification {
+  background-color: govuk-colour('light-grey');
+  padding-top: 10px;
+
+  .govuk-notification {
+    margin-bottom: 0;
+  }
 }
 
 .js-dismissable {
@@ -23,6 +23,7 @@ span.notification {
 
   border: $govuk-border-width solid govuk-colour('black');
   margin-bottom: govuk-spacing(6);
+  background-color: govuk-colour('white');
   background-position: 13px 23px;
 
   &:focus {

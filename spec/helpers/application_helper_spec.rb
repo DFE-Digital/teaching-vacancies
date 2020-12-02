@@ -22,7 +22,7 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
 
     it "does not return the authenticated class" do
-      expect(helper.body_class).to_not match(/hiring-staff/)
+      expect(helper.body_class).to_not match(/publisher/)
     end
 
     context "when logged in" do
@@ -31,7 +31,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
 
       it "returns the authenticated class" do
-        expect(helper.body_class).to match(/hiring-staff/)
+        expect(helper.body_class).to match(/publisher/)
       end
     end
   end

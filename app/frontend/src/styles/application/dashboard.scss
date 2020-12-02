@@ -1,0 +1,45 @@
+@mixin dashboard {
+  left: 50%;
+  margin-left: -50vw;
+  padding-bottom: 0;
+  padding-top: 0;
+  position: relative;
+  width: 100vw;
+
+  > .govuk-width-container {
+    background-color: govuk-colour('white');
+    padding-top: govuk-spacing(7);
+  }
+
+  .moj-primary-navigation {
+    background: none;
+
+    .moj-primary-navigation__container {
+      margin: 0;
+  
+      @include govuk-media-query ($until: desktop) {
+        .moj-primary-navigation__item {
+          display: block;
+          line-height: 1;
+          margin-bottom: 0;
+
+          .moj-primary-navigation__link {
+            padding: govuk-spacing(2);
+          }
+      
+          .moj-primary-navigation__link[aria-current] {
+            border-left: govuk-spacing(1) solid $govuk-link-colour;
+      
+            &::before {
+              background-color: transparent;
+            }
+          }
+        }
+      }
+
+      .moj-primary-navigation__link[aria-current] {
+        color: govuk-colour('black');
+      }
+    }
+  }
+}

@@ -45,7 +45,7 @@
 
 // If filter sidebar is hidden, apply shadow mixin to dashboard table only for certain device-widths.
 .govuk-grid-column-full.moj-filter-layout__content {
-  // The 0.9 comes from the class body.hiring-staff .govuk-width-container 'width: 90%'.
+  // The 0.9 comes from the class .publishers .govuk-width-container 'width: 90%'.
   $breakpoint-when-filters-hidden: $desktop-container-width / 0.9;
 
   @include govuk-media-query($until: $breakpoint-when-filters-hidden) {

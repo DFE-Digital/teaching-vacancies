@@ -1,6 +1,6 @@
 $desktop-container-width: 1200px;
 
-body.hiring-staff {
+.publisher {
   .govuk-width-container {
     @include govuk-media-query($from: desktop) {
       margin-left: auto;
@@ -24,7 +24,6 @@ body.hiring-staff {
       margin-right: auto;
     }
   }
-
 }
 
 .dashboard-header {
@@ -35,20 +34,4 @@ body.hiring-staff {
       line-height: 2em;
     }
   }
-}
-
-.button-link {
-  background-color: transparent;
-  border: 0;
-  box-shadow: none;
-  color: $govuk-link-colour;
-  display: block;
-  padding: 0;
-  text-decoration: underline;
-}
-
-.button-link:hover {
-  background-color: transparent;
-  color: $govuk-link-hover-colour;
-  text-decoration: underline;
 }
