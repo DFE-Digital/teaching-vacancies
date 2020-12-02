@@ -9,7 +9,8 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
-  before_action :set_headers, :set_root_headers, :strip_nested_param_whitespaces
+  before_action :set_headers, :set_root_headers
+  before_action { strip_nested_param_whitespaces(request.params) }
 
   helper_method :cookies_preference_set?, :referred_from_jobs_path?, :utm_parameters
 
@@ -92,13 +93,17 @@ private
     recaptcha_reply["score"] < SUSPICIOUS_RECAPTCHA_THRESHOLD
   end
 
-  def strip_nested_param_whitespaces(param = request.params)
+  def strip_nested_param_whitespaces(object)
     # Recursively find strings and strip them of trailing whitespaces
-    if param.respond_to?(:strip!)
-      param.strip!
-    elsif param.respond_to?(:each_value)
-      param.each_value(&method(:strip_nested_param_whitespaces))
+    if object.is_a?(String)
+      return object.strip
+    elsif object.is_a?(Hash)
+      object.each do |key, value|
+        object[key] = strip_nested_param_whitespaces(value)
+      end
     end
+
+    object
   end
 
   def replace_devise_notice_flash_with_success!
