@@ -1,5 +1,4 @@
 require "rails_helper"
-include DistanceHelper
 
 RSpec.describe Search::SearchBuilder do
   let(:subject) { described_class.new(form_hash) }
@@ -16,8 +15,6 @@ RSpec.describe Search::SearchBuilder do
     }.compact
   end
 
-  let(:polygonable_location) { "Bath" }
-  let(:polygon_coordinates) { [51.406361958644, -2.3780576677997, 51.4063596372237, -2.3787764623145] }
   let(:keyword) { "maths teacher" }
   let(:location) { "" }
   let(:radius) { "" }
@@ -26,23 +23,20 @@ RSpec.describe Search::SearchBuilder do
   let(:hits_per_page) { nil }
   let(:page) { 1 }
   let(:filter_query) { Search::FiltersBuilder.new(form_hash).filter_query }
-
-  let!(:location_polygon) do
-    LocationPolygon.create(name: polygonable_location.downcase, location_type: "cities", boundary: polygon_coordinates)
-  end
+  let!(:location_polygon) { create(:location_polygon, name: "london") }
 
   describe "#build_location_search" do
-    let(:location) { polygonable_location }
+    let(:location) { location_polygon.name }
 
     context "when a location search polygon is missing" do
       before { allow_any_instance_of(Search::LocationBuilder).to receive(:missing_polygon).and_return(true) }
 
       it "appends location to the keyword" do
-        expect(subject.keyword).to eql("maths teacher Bath")
+        expect(subject.keyword).to eql("maths teacher london")
       end
 
       it "appends location to keyword in the active hash" do
-        expect(subject.only_active_to_hash[:keyword]).to eql("maths teacher Bath")
+        expect(subject.only_active_to_hash[:keyword]).to eql("maths teacher london")
       end
     end
 
@@ -50,7 +44,7 @@ RSpec.describe Search::SearchBuilder do
       before { allow_any_instance_of(Search::LocationBuilder).to receive(:location_category_search?).and_return(true) }
 
       it "sets location_category in the active params hash" do
-        expect(subject.only_active_to_hash[:location_category]).to eql("Bath")
+        expect(subject.only_active_to_hash[:location_category]).to eql("london")
       end
     end
   end
@@ -71,16 +65,18 @@ RSpec.describe Search::SearchBuilder do
 
   describe "#call_algolia_search" do
     context "when location matches a location polygon" do
-      let(:location) { polygonable_location }
+      let(:location) { location_polygon.name }
       let(:search_params) do
         {
           keyword: keyword,
-          polygon: [polygon_coordinates],
+          polygon: [location_polygon.boundary],
           filters: filter_query,
           hits_per_page: 10,
           page: page,
         }
       end
+
+      before { allow(Search::BufferSuggestionsBuilder).to receive_message_chain(:new, :buffer_suggestions) }
 
       it "calls algolia search with the correct parameters" do
         expect(Search::AlgoliaSearchRequest).to receive(:new).with(search_params).and_call_original
@@ -113,11 +109,46 @@ RSpec.describe Search::SearchBuilder do
 
   describe "#build_suggestions" do
     context "when location matches a location polygon" do
-      let(:location) { polygonable_location }
+      let(:location) { location_polygon.name }
 
-      it "does not call suggestions builder" do
-        expect(Search::RadiusSuggestionsBuilder).not_to receive(:new)
-        subject
+      context "when vacancies is not empty" do
+        let(:vacancies) { double("vacancies") }
+
+        let(:arguments_to_algolia) do
+          {
+            insidePolygon: [location_polygon.boundary],
+            filters: filter_query,
+            hitsPerPage: 10,
+            page: page,
+          }
+        end
+
+        before do
+          allow(vacancies).to receive(:empty?).and_return(false)
+          mock_algolia_search(vacancies, 1, keyword, arguments_to_algolia)
+        end
+
+        it "does not call the buffer suggestions builder" do
+          expect(Search::BufferSuggestionsBuilder).not_to receive(:new)
+          subject
+        end
+      end
+
+      context "when vacancies is empty" do
+        let(:search_params) do
+          {
+            keyword: keyword,
+            polygon: [location_polygon.boundary],
+            filters: filter_query,
+            hits_per_page: 10,
+            page: page,
+          }
+        end
+
+        it "calls the buffer suggestions builder" do
+          expect(Search::BufferSuggestionsBuilder).to receive(:new).with(location_polygon.name, search_params).and_call_original
+          subject
+        end
       end
     end
 
@@ -144,7 +175,7 @@ RSpec.describe Search::SearchBuilder do
             aroundRadius: convert_miles_to_metres(radius),
             filters: filter_query,
             hitsPerPage: 10,
-            page: 1,
+            page: page,
           }
         end
 
@@ -153,14 +184,14 @@ RSpec.describe Search::SearchBuilder do
           mock_algolia_search(vacancies, 1, keyword, arguments_to_algolia)
         end
 
-        it "does not call suggestions builder" do
+        it "does not call the radius suggestions builder" do
           expect(Search::RadiusSuggestionsBuilder).not_to receive(:new)
           subject
         end
       end
 
       context "when vacancies is empty" do
-        it "calls suggestions builder" do
+        it "calls the radius suggestions builder" do
           expect(Search::RadiusSuggestionsBuilder).to receive(:new).with(search_params, radius).and_call_original
           subject
         end

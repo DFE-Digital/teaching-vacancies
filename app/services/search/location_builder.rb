@@ -2,20 +2,17 @@ require "geocoding"
 
 class Search::LocationBuilder
   DEFAULT_RADIUS = 10
-  MILES_TO_METRES = 1.60934 * 1000
+
+  include DistanceHelper
 
   attr_reader :location, :location_category, :location_filter,
-              :location_polygon, :location_polygon_boundary, :missing_polygon, :radius
+              :location_polygon, :search_polygon_boundary, :missing_polygon, :radius, :buffer_radius
 
-  def self.convert_radius_in_miles_to_metres(radius)
-    (radius * MILES_TO_METRES).to_i
-  end
-
-  def initialize(location, radius, location_category)
+  def initialize(location, radius, location_category, buffer_radius)
     @location = location || location_category
     @radius = (radius || DEFAULT_RADIUS).to_i
+    @buffer_radius = buffer_radius
     @location_filter = {}
-
     @location_category = if @location.present? && LocationCategory.include?(@location)
                            @location
                          else
@@ -38,7 +35,13 @@ private
 
   def initialize_location_polygon
     @location_polygon = LocationPolygon.with_name(@location_category)
-    @location_polygon_boundary = [@location_polygon.boundary] if @location_polygon.present?
+    if @location_polygon.present?
+      @search_polygon_boundary = if @buffer_radius.present?
+                                   [@location_polygon.buffers[@buffer_radius]]
+                                 else
+                                   [@location_polygon.boundary]
+                                 end
+    end
     if location_polygon.nil? && (DOWNCASE_REGIONS + DOWNCASE_COUNTIES).include?(@location_category.downcase)
       # If a location category that we expect to have a polygon actually does not,
       # append the location category to the text search as a fallback.
@@ -57,7 +60,7 @@ private
   def build_location_filter(location, radius)
     {
       point_coordinates: Geocoding.new(location).coordinates,
-      radius: Search::LocationBuilder.convert_radius_in_miles_to_metres(radius),
+      radius: convert_miles_to_metres(radius),
     }
   end
 end

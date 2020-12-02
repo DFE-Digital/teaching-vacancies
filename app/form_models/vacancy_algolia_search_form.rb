@@ -14,6 +14,7 @@ class VacancyAlgoliaSearchForm
     @location = params[:location] || params[:location_category]
     @location_category = params[:location_category]
     @radius = params[:radius] || 10
+    @buffer_radius = params[:buffer_radius]
 
     @job_roles = params[:job_roles]
     @phases = params[:phases]
@@ -32,6 +33,7 @@ class VacancyAlgoliaSearchForm
       location: @location,
       location_category: @location_category,
       radius: @radius,
+      buffer_radius: @buffer_radius,
       job_roles: @job_roles,
       phases: @phases,
       working_patterns: @working_patterns,

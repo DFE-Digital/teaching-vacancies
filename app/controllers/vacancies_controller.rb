@@ -38,7 +38,7 @@ private
     %w[job_roles phases working_patterns].each do |facet|
       params[facet] = params[facet].split(" ") if params[facet].is_a?(String)
     end
-    params.permit(:keyword, :location, :location_category, :radius, :job_roles, :phases, :working_patterns, :buffer_radius
+    params.permit(:keyword, :location, :location_category, :radius, :job_roles, :phases, :working_patterns, :buffer_radius,
                   :jobs_sort, :page, job_roles: [], phases: [], working_patterns: [])
   end
 
