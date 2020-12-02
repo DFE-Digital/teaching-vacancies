@@ -4,6 +4,8 @@ class SitemapController < ApplicationController
       add_vacancies(m)
       add_new_identifications(m)
       add_location_categories(m)
+      add_subjects(m)
+      add_job_roles(m)
       add_pages(m)
     end
 
@@ -26,6 +28,18 @@ private
   def add_location_categories(map)
     ALL_LOCATION_CATEGORIES.each do |location_category|
       map.add location_category_path(location_category), period: "hourly"
+    end
+  end
+
+  def add_subjects(map)
+    SUBJECT_OPTIONS.map(&:first).each do |subject|
+      map.add jobs_path(keyword: subject), period: "hourly"
+    end
+  end
+
+  def add_job_roles(map)
+    Vacancy.job_roles.each_key do |job_role|
+      map.add jobs_path(job_roles: job_role), period: "hourly"
     end
   end
 
