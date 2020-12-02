@@ -61,6 +61,11 @@
   margin-top: govuk-spacing(1);
 }
 
+
+.govuk-notification--empty {
+  border: 5px dashed $govuk-border-colour;
+}
+
 .govuk-notification--notice {
   border-color: govuk-colour('blue');
 }
@@ -89,6 +94,10 @@
   .govuk-notification__list a {
     color: govuk-colour('red');
   }
+}
+
+.govuk-notification--empty.govuk-notification__background {
+  background-color: rgba($color: govuk-colour('light-grey'), $alpha: 0.5);
 }
 
 .govuk-notification--notice.govuk-notification__background {
