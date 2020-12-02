@@ -4,5 +4,7 @@
 
 .govuk-width-container
   .govuk-grid-row
-    .govuk-grid-column-two-thirds
+    .govuk-grid-column-full-width
       %h1.govuk-heading-l= t(".page_title")
+
+      = render(Shared::NotificationComponent.new(content: { title: t('.zero_subscriptions_title'), body: t('.zero_subscriptions_body_html') }, style: 'empty', links: nil, dismiss: false, background: true, alert: false))
