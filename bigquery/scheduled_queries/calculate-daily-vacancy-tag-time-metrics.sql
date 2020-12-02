@@ -221,7 +221,39 @@ IF
   (date>='2020-08-01',
     SAFE_DIVIDE(live_vacancies_with_this_tag,
       live_benchmark_vacancies_with_this_tag),
-    NULL) AS live_vacancies_with_this_tag_as_proportion_of_benchmark
+    NULL) AS live_vacancies_with_this_tag_as_proportion_of_benchmark,
+  SAFE_SUBTRACT(SAFE_DIVIDE(live_vacancies_with_this_tag,
+      total_live_vacancies),
+    SAFE_DIVIDE(live_vacancies_with_this_tag_last_year,
+      total_live_vacancies_last_year)) AS change_in_proportion_of_live_vacancies_with_this_tag_since_last_year,
+IF
+  (date>='2021-08-01',
+    SAFE_SUBTRACT(SAFE_DIVIDE(live_benchmark_vacancies_with_this_tag,
+        benchmark_total_live_vacancies),
+      SAFE_DIVIDE(live_benchmark_vacancies_with_this_tag_last_year,
+        benchmark_total_live_vacancies_last_year)),
+    NULL) AS change_in_proportion_of_benchmark_live_vacancies_with_this_tag_since_last_year,
+IF
+  (date>='2021-08-01',
+    SAFE_SUBTRACT(SAFE_DIVIDE(live_vacancies_with_this_tag,
+        live_benchmark_vacancies_with_this_tag),
+      SAFE_DIVIDE(live_vacancies_with_this_tag_last_year,
+        live_benchmark_vacancies_with_this_tag_last_year)),
+    NULL) AS change_in_live_vacancies_with_this_tag_as_proportion_of_benchmark,
+  # test whether there is a >95% probability that the probabilities of a vacancy having this tag on this date and the same date in the previous year are different
+  `teacher-vacancy-service.production_dataset.two_proportion_z_test`("95%",
+    live_vacancies_with_this_tag,
+    total_live_vacancies,
+    live_vacancies_with_this_tag_last_year,
+    total_live_vacancies_last_year) AS significant_change_in_proportion_of_live_vacancies_with_this_tag_since_last_year,
+IF
+  (date>='2021-08-01',
+    `teacher-vacancy-service.production_dataset.two_proportion_z_test`("95%",
+      live_benchmark_vacancies_with_this_tag,
+      benchmark_total_live_vacancies,
+      live_benchmark_vacancies_with_this_tag_last_year,
+      benchmark_total_live_vacancies_last_year),
+    NULL) AS significant_change_in_proportion_of_benchmark_live_vacancies_with_this_tag_since_last_year
 FROM (
   SELECT
     dates.date AS date,
@@ -230,10 +262,14 @@ FROM (
     benchmark_vacancy_metrics.vacancies_published_with_this_tag AS benchmark_vacancies_published_with_this_tag_on_this_date,
     vacancy_metrics.vacancies_published AS total_vacancies_published_on_this_date,
     benchmark_vacancy_metrics.vacancies_published AS benchmark_total_vacancies_published_on_this_date,
-    SUM(vacancy_metrics.vacancies_published) OVER (PARTITION BY vacancy_metrics.tag ORDER BY date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) - SUM(vacancy_metrics.vacancies_expired) OVER (PARTITION BY vacancy_metrics.tag ORDER BY date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS total_live_vacancies,
-    SUM(vacancy_metrics.vacancies_published_with_this_tag) OVER (PARTITION BY vacancy_metrics.tag ORDER BY date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) - SUM(vacancy_metrics.vacancies_expired_with_this_tag) OVER (PARTITION BY vacancy_metrics.tag ORDER BY date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS live_vacancies_with_this_tag,
-    SUM(benchmark_vacancy_metrics.vacancies_published) OVER (PARTITION BY benchmark_vacancy_metrics.tag ORDER BY date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) - SUM(benchmark_vacancy_metrics.vacancies_expired) OVER (PARTITION BY benchmark_vacancy_metrics.tag ORDER BY date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS benchmark_total_live_vacancies,
-    SUM(benchmark_vacancy_metrics.vacancies_published_with_this_tag) OVER (PARTITION BY benchmark_vacancy_metrics.tag ORDER BY date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) - SUM(benchmark_vacancy_metrics.vacancies_expired_with_this_tag) OVER (PARTITION BY benchmark_vacancy_metrics.tag ORDER BY date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS live_benchmark_vacancies_with_this_tag,
+    SUM(vacancy_metrics.vacancies_published) OVER (dates_before_today) - SUM(vacancy_metrics.vacancies_expired) OVER (dates_before_today) AS total_live_vacancies,
+    SUM(vacancy_metrics.vacancies_published_with_this_tag) OVER (dates_before_today) - SUM(vacancy_metrics.vacancies_expired_with_this_tag) OVER (dates_before_today) AS live_vacancies_with_this_tag,
+    SUM(benchmark_vacancy_metrics.vacancies_published) OVER (dates_before_today) - SUM(benchmark_vacancy_metrics.vacancies_expired) OVER (dates_before_today) AS benchmark_total_live_vacancies,
+    SUM(benchmark_vacancy_metrics.vacancies_published_with_this_tag) OVER (dates_before_today) - SUM(benchmark_vacancy_metrics.vacancies_expired_with_this_tag) OVER (dates_before_today) AS live_benchmark_vacancies_with_this_tag,
+    SUM(vacancy_metrics.vacancies_published) OVER (dates_before_one_year_ago) - SUM(vacancy_metrics.vacancies_expired) OVER (dates_before_one_year_ago) AS total_live_vacancies_last_year,
+    SUM(vacancy_metrics.vacancies_published_with_this_tag) OVER (dates_before_one_year_ago) - SUM(vacancy_metrics.vacancies_expired_with_this_tag) OVER (dates_before_one_year_ago) AS live_vacancies_with_this_tag_last_year,
+    SUM(benchmark_vacancy_metrics.vacancies_published) OVER (dates_before_one_year_ago) - SUM(benchmark_vacancy_metrics.vacancies_expired) OVER (dates_before_one_year_ago) AS benchmark_total_live_vacancies_last_year,
+    SUM(benchmark_vacancy_metrics.vacancies_published_with_this_tag) OVER (dates_before_one_year_ago) - SUM(benchmark_vacancy_metrics.vacancies_expired_with_this_tag) OVER (dates_before_one_year_ago) AS live_benchmark_vacancies_with_this_tag_last_year,
   FROM
     dates
   LEFT JOIN
@@ -244,7 +280,20 @@ FROM (
     benchmark_vacancy_metrics
   USING
     (date,
-      tag) )
+      tag)
+  WINDOW
+    dates_before_today AS (
+    PARTITION BY
+      tag
+    ORDER BY
+      date ROWS BETWEEN UNBOUNDED PRECEDING
+      AND CURRENT ROW),
+    dates_before_one_year_ago AS (
+    PARTITION BY
+      tag
+    ORDER BY
+      date ROWS BETWEEN UNBOUNDED PRECEDING
+      AND 365 PRECEDING) )
 ORDER BY
   date ASC,
   tag ASC
