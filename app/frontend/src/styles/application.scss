@@ -27,6 +27,7 @@ $govuk-image-url-function: frontend-image-url;
 
 @import 'application/banners';
 @import 'application/checkboxGroup';
+@import 'application/dashboard';
 @import 'application/form';
 @import 'application/icons';
 @import 'application/modal';
@@ -41,25 +42,25 @@ $govuk-image-url-function: frontend-image-url;
 @import 'application/jobseekers/account';
 @import 'application/jobseekers/cookies-banner';
 @import 'application/jobseekers/feedback-form';
-@import 'application/jobseekers/location-search';
-@import 'application/jobseekers/search-panel';
-@import 'application/jobseekers/vacancies';
-@import 'application/jobseekers/vacancy';
+@import 'application/jobseekers/filter-vacancies';
 @import 'application/jobseekers/jobs-banner';
 @import 'application/jobseekers/key-dates-sidebar';
+@import 'application/jobseekers/location-search';
+@import 'application/jobseekers/search-panel';
 @import 'application/jobseekers/sortable-links';
-@import 'application/jobseekers/filter-vacancies';
+@import 'application/jobseekers/vacancies';
+@import 'application/jobseekers/vacancy';
 
 @import 'application/publishers/awaiting-feedback-vacancies';
-@import 'application/publishers/hiring-staff';
+@import 'application/publishers/check-your-answers';
 @import 'application/publishers/information-summary';
-@import 'application/publishers/schools-in-your-trust';
 @import 'application/publishers/interruption-card';
 @import 'application/publishers/og-preview';
+@import 'application/publishers/publisher';
+@import 'application/publishers/schools-in-your-trust';
 @import 'application/publishers/scrollable-panel';
 @import 'application/publishers/share-url';
 @import 'application/publishers/statistics';
-@import 'application/publishers/check-your-answers';
 
 body {
   .govuk-width-container {

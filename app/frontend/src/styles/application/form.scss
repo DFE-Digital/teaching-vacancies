@@ -3,3 +3,19 @@
     border: 4px solid $govuk-error-colour;
   }
 }
+
+.button-link {
+  background-color: transparent;
+  border: 0;
+  box-shadow: none;
+  color: $govuk-link-colour;
+  display: block;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.button-link:hover {
+  background-color: transparent;
+  color: $govuk-link-hover-colour;
+  text-decoration: underline;
+}

@@ -18,30 +18,3 @@ a.govuk-tabs__tab.tab-links-override:focus,
 a.js-enabled .govuk-tabs__tab.tab-links-override:focus {
   color: $govuk-link-active-colour;
 }
-
-.moj-primary-navigation {
-  background: none;
-
-  @include govuk-media-query ($until: desktop) {
-    .moj-primary-navigation__item {
-      display: block;
-      line-height: 1;
-    }
-
-    .moj-primary-navigation__link {
-      padding: govuk-spacing(2);
-    }
-
-    .moj-primary-navigation__link[aria-current] {
-      border-left: govuk-spacing(1) solid $govuk-link-colour;
-
-      &::before {
-        background-color: transparent;
-      }
-    }
-  }
-
-  .moj-primary-navigation__container {
-    margin: 0;
-  }
-}
