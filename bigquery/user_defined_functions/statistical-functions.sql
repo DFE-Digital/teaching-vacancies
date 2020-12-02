@@ -1,33 +1,33 @@
   # Contains useful statistical functions that can be reused across multiple scheduled queries and views in BigQuery.
   # This script must be run in BigQuery for these functions to become available, and re-run to overwrite the available functions with any new version.
   #
-  # Test whether there is a probability greater than a specified confidence_level that two probabilities of a Boolean-valued outcome calculated from two independent samples are different
+  # Test whether there is a probability greater than a specified confidence_level that two binomial distributions of the number of successes in a sample of trials have a different probability of success (normal approximation)
   # e.g. test whether there is a >95% probability that the probabilities of a vacancy having a particular tag on a particular date and the same date in the previous year are different
   # x1,x2 are the numbers of true outcomes (e.g. heads, vacancies with tag) in each sample of size n1,n2
 CREATE OR REPLACE FUNCTION
-  `teacher-vacancy-service.production_dataset.two_proportion_z_test`(confidence_level STRING, x1 INT64, n1 INT64, x2 INT64, n2 INT64)
+  `teacher-vacancy-service.production_dataset.two_proportion_z_test`(confidence_level STRING, successes_in_sample_1 INT64, trials_in_sample_1 INT64, successes_in_sample_2 INT64, trials_in_sample_2 INT64)
   RETURNS BOOL AS (
   # check whether we can approximate these binomial distributions as normal distributions - return NULL if we can't
   CASE
-  WHEN x1 <= 5 THEN NULL
-  WHEN (n1 - x1) <= 5 THEN NULL
-  WHEN x2 <= 5 THEN NULL
-  WHEN (n2 - x2) <= 5 THEN NULL
+  WHEN successes_in_sample_1 <= 5 THEN NULL
+  WHEN (trials_in_sample_1 - successes_in_sample_1) <= 5 THEN NULL
+  WHEN successes_in_sample_2 <= 5 THEN NULL
+  WHEN (trials_in_sample_2 - successes_in_sample_2) <= 5 THEN NULL
   ELSE
   # calculate the value of the test statistic
   ABS(
   SAFE_DIVIDE
     (
       (
-        SAFE_SUBTRACT(SAFE_DIVIDE(x1,n1), SAFE_DIVIDE(x2,n2))
+        SAFE_SUBTRACT(SAFE_DIVIDE(successes_in_sample_1,trials_in_sample_1), SAFE_DIVIDE(successes_in_sample_2,trials_in_sample_2))
       ),
       SAFE.SQRT(
         SAFE_MULTIPLY(
           SAFE_MULTIPLY(
-            SAFE_ADD(SAFE_DIVIDE(1,n1), SAFE_DIVIDE(1,n2)),
-            SAFE_DIVIDE(SAFE_ADD(x1,x2), SAFE_ADD(n1,n2))
+            SAFE_ADD(SAFE_DIVIDE(1,trials_in_sample_1), SAFE_DIVIDE(1,trials_in_sample_2)),
+            SAFE_DIVIDE(SAFE_ADD(successes_in_sample_1,successes_in_sample_2), SAFE_ADD(trials_in_sample_1,trials_in_sample_2))
             ),
-          SAFE_SUBTRACT(1,SAFE_DIVIDE(SAFE_ADD(x1,x2), SAFE_ADD(n1,n2)))
+          SAFE_SUBTRACT(1,SAFE_DIVIDE(SAFE_ADD(successes_in_sample_1,successes_in_sample_2), SAFE_ADD(trials_in_sample_1,trials_in_sample_2)))
           )
         )
     )
