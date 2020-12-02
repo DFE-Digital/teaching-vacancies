@@ -227,7 +227,7 @@ IF
     SAFE_DIVIDE(live_vacancies_with_this_tag_last_year,
       total_live_vacancies_last_year)) AS change_in_proportion_of_live_vacancies_with_this_tag_since_last_year,
 IF
-  (date>='2021-08-01',
+  (date>='2021-08-01', #don't calculate this until we have at least a year's worth of data to go on
     SAFE_SUBTRACT(SAFE_DIVIDE(live_benchmark_vacancies_with_this_tag,
         benchmark_total_live_vacancies),
       SAFE_DIVIDE(live_benchmark_vacancies_with_this_tag_last_year,
@@ -262,6 +262,7 @@ FROM (
     benchmark_vacancy_metrics.vacancies_published_with_this_tag AS benchmark_vacancies_published_with_this_tag_on_this_date,
     vacancy_metrics.vacancies_published AS total_vacancies_published_on_this_date,
     benchmark_vacancy_metrics.vacancies_published AS benchmark_total_vacancies_published_on_this_date,
+    # calculate numbers of live vacancies on each date for each tag - these are the differences between the cumulative sums of the numbers of vacancies published and expired on each date up to the date we're calculating for (or a year before this date if we're calculating the figure for last year)
     SUM(vacancy_metrics.vacancies_published) OVER (dates_before_today) - SUM(vacancy_metrics.vacancies_expired) OVER (dates_before_today) AS total_live_vacancies,
     SUM(vacancy_metrics.vacancies_published_with_this_tag) OVER (dates_before_today) - SUM(vacancy_metrics.vacancies_expired_with_this_tag) OVER (dates_before_today) AS live_vacancies_with_this_tag,
     SUM(benchmark_vacancy_metrics.vacancies_published) OVER (dates_before_today) - SUM(benchmark_vacancy_metrics.vacancies_expired) OVER (dates_before_today) AS benchmark_total_live_vacancies,
