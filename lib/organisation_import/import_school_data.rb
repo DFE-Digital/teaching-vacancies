@@ -22,6 +22,42 @@ class ImportSchoolData < ImportOrganisationData
 
 private
 
+  def convert_to_organisation(row)
+    school = School.find_or_initialize_by(urn: row["URN"])
+    set_properties(school, row)
+    set_gias_data_as_json(school, row)
+    set_readable_phases(school)
+    school
+  end
+
+  def set_readable_phases(school)
+    school.readable_phases = READABLE_PHASE_MAPPINGS[school.phase.to_sym]
+  end
+
+  def csv_file_location
+    "./tmp/#{datestring}-schools-data.csv"
+  end
+
+  def csv_url
+    "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv"
+  end
+
+  def datestring
+    Time.current.strftime("%Y%m%d")
+  end
+
+  def school_in_local_authority_scope?(row)
+    school_is_local_authority_maintained?(row) || school_is_community_or_foundation_special_school?(row)
+  end
+
+  def school_is_local_authority_maintained?(row)
+    row["EstablishmentTypeGroup (code)"].to_i == 4
+  end
+
+  def school_is_community_or_foundation_special_school?(row)
+    row["EstablishmentTypeGroup (code)"].to_i == 5 && [7, 12].include?(row["TypeOfEstablishment (code)"].to_i)
+  end
+
   def column_name_mappings
     {
       address: "Street",
@@ -50,41 +86,5 @@ private
       phase: :to_i,
       url: ->(url) { Addressable::URI.heuristic_parse(url).to_s },
     }
-  end
-
-  def set_readable_phases(school)
-    school.readable_phases = READABLE_PHASE_MAPPINGS[school.phase.to_sym]
-  end
-
-  def convert_to_organisation(row)
-    school = School.find_or_initialize_by(urn: row["URN"])
-    set_properties(school, row)
-    set_gias_data_as_json(school, row)
-    set_readable_phases(school)
-    school
-  end
-
-  def csv_file_location
-    "./tmp/#{datestring}-schools-data.csv"
-  end
-
-  def csv_url
-    "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv"
-  end
-
-  def datestring
-    Time.current.strftime("%Y%m%d")
-  end
-
-  def school_in_local_authority_scope?(row)
-    school_is_local_authority_maintained?(row) || school_is_community_or_foundation_special_school?(row)
-  end
-
-  def school_is_local_authority_maintained?(row)
-    row["EstablishmentTypeGroup (code)"].to_i == 4
-  end
-
-  def school_is_community_or_foundation_special_school?(row)
-    row["EstablishmentTypeGroup (code)"].to_i == 5 && [7, 12].include?(row["TypeOfEstablishment (code)"].to_i)
   end
 end
