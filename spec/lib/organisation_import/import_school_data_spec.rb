@@ -3,37 +3,6 @@ require "rails_helper"
 RSpec.describe ImportSchoolData do
   let(:subject) { described_class.new }
 
-  describe "#create_organisation" do
-    let(:row) { { "URN" => "test_urn" } }
-    let(:school) { create(:school) }
-
-    before do
-      allow(School).to receive(:find_or_initialize_by).with(hash_including(urn: row["URN"])).and_return(school)
-      allow(subject).to receive(:set_gias_data_as_json).with(school, row)
-      subject.send(:create_organisation, row)
-    end
-
-    it "calls set_complex_properties" do
-      expect(subject).to receive(:set_complex_properties).with(school, row)
-      subject.send(:create_organisation, row)
-    end
-
-    it "calls set_simple_properties" do
-      expect(subject).to receive(:set_simple_properties).with(school, row)
-      subject.send(:create_organisation, row)
-    end
-
-    it "calls set_gias_data_as_json" do
-      expect(subject).to receive(:set_gias_data_as_json).with(school, row)
-      subject.send(:create_organisation, row)
-    end
-
-    it "calls set_readable_phases" do
-      expect(subject).to receive(:set_readable_phases).with(school)
-      subject.send(:create_organisation, row)
-    end
-  end
-
   describe "#save_csv_file" do
     let(:csv_url) { "https://csv_endpoint.csv/magic_endpoint/test.csv" }
     let(:temp_file_location) { "/some_temporary_location/test.csv" }
@@ -175,7 +144,7 @@ RSpec.describe ImportSchoolData do
                     "Town,Postcode\n" \
                     "100000,St John\x92s School,999,999,ZZZ,,?,?,?")
         subject.run!
-        expect(example_school.url).to eql("")
+        expect(example_school.url).to be_nil
       end
     end
   end

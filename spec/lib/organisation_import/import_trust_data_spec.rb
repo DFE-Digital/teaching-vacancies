@@ -3,65 +3,6 @@ require "rails_helper"
 RSpec.describe ImportTrustData do
   let(:subject) { described_class.new }
 
-  describe "#create_organisation" do
-    let(:trust) { create(:trust) }
-    let(:row) do
-      { "Group UID" => "test_uid",
-        "Group Postcode" => "WA1 234",
-        "Group Type (code)" => "06",
-        "Group Name" => "test trust",
-        "Group Locality" => "3 Trust Street",
-        "Group Town" => "Trust Town",
-        "Group County" => "Trustshire" }
-    end
-
-    before do
-      allow(SchoolGroup).to receive(:find_or_initialize_by).with(hash_including(uid: row["Group UID"])).and_return(trust)
-      allow(subject).to receive(:set_gias_data_as_json).with(trust, row)
-      subject.send(:create_organisation, row)
-    end
-
-    it "calls set_complex_properties" do
-      expect(subject).to receive(:set_complex_properties).with(trust, row)
-      subject.send(:create_organisation, row)
-    end
-
-    it "calls set_simple_properties" do
-      expect(subject).to receive(:set_simple_properties).with(trust, row)
-      subject.send(:create_organisation, row)
-    end
-
-    it "calls set_gias_data_as_json" do
-      expect(subject).to receive(:set_gias_data_as_json).with(trust, row)
-      subject.send(:create_organisation, row)
-    end
-
-    it "calls set_geolocation" do
-      expect(subject).to receive(:set_geolocation).with(trust, row["Group Postcode"])
-      subject.send(:create_organisation, row)
-    end
-
-    it "updates the postcode" do
-      expect(trust.postcode).to eq("WA1 234")
-    end
-
-    it "updates the name (with title case)" do
-      expect(trust.name).to eq("Test Trust")
-    end
-
-    it "updates the address" do
-      expect(trust.address).to eq("3 Trust Street")
-    end
-
-    it "updates the town" do
-      expect(trust.town).to eq("Trust Town")
-    end
-
-    it "updates the county" do
-      expect(trust.county).to eq("Trustshire")
-    end
-  end
-
   describe "#save_csv_file" do
     let(:csv_url) { "https://csv_endpoint.csv/magic_endpoint/test.csv" }
     let(:temp_file_location) { "/some_temporary_location/test.csv" }

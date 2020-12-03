@@ -23,19 +23,6 @@ private
     end
   end
 
-  def set_complex_properties(organisation, row)
-    complex_mappings.each do |attribute_name, value|
-      row_key = value.first
-      transformation = value.last
-      organisation[attribute_name] = if attribute_name == :url
-                                       # Addressable::URI ensures we store a valid URL.
-                                       Addressable::URI.heuristic_parse(row[row_key]).to_s
-                                     else
-                                       row[row_key].send(transformation)
-                                     end
-    end
-  end
-
   def set_gias_data_as_json(organisation, row)
     gias_hash = {}
     row.each { |element| gias_hash[element.first] = element.last }
@@ -43,11 +30,18 @@ private
     organisation.gias_data = gias_hash
   end
 
-  def set_simple_properties(organisation, row)
-    simple_mappings.each do |attribute_name, column_name|
+  def set_properties(organisation, row)
+    column_name_mappings.each do |attribute_name, column_name|
+      transformation = column_value_transformations[attribute_name]
+      value = if transformation
+                transformation.to_proc.call(row[column_name])
+              else
+                row[column_name]
+              end
+
       # Using `send` for this  because `easting` and `northing` are both overloaded setters that look up lat/long when
       # you set them.
-      organisation.send("#{attribute_name}=", row[column_name])
+      organisation.send("#{attribute_name}=", value.presence)
     end
   end
 end
