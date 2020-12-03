@@ -68,6 +68,7 @@ RSpec.configure do |config|
   config.include DatesHelper
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include FactoryBot::Syntax::Methods
+  config.include MailerHelpers
   config.include OrganisationHelper
   config.include SearchHelper
   config.include VacanciesHelper

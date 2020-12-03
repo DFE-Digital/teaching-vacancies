@@ -4,9 +4,9 @@
   .govuk-grid-column-two-thirds
     %h1.govuk-heading-l= t(".title")
 
-    %p.govuk-body= t(".description", email: resource.email)
+    %p.govuk-body= t(".description", email: @jobseeker_from_token.email)
 
-    = form_for resource, url: jobseeker_confirmation_path, method: :post do |f|
+    = form_for @jobseeker_from_token, as: resource_name, url: password_path(resource_name), html: { method: :post } do |f|
       = f.hidden_field :email
 
       = f.govuk_submit t("buttons.resend_email"), classes: "govuk-!-margin-bottom-0"

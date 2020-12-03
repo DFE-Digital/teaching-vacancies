@@ -38,6 +38,14 @@ en:
         heading: Not requested this?
       subject: Verify your email with Teaching Vacancies
       what_to_do: What to do now
+    reset_password_instructions:
+      heading: Reset your password for your Teaching Vacancies account
+      intro: You have requested to reset your password
+      link: Reset your password
+      not_requested:
+        body: If you did not make this request, please email %{mail_to}
+        heading: Not requested a password reset?
+      subject: Reset your password
 
   subscription_mailer:
     confirmation:

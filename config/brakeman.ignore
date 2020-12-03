@@ -3,6 +3,22 @@
     {
       "warning_type": "Authentication",
       "warning_code": 101,
+      "fingerprint": "1d94226b7d2099d5fbdfc82158f8100f98d20a42e468bc779bf98c2ac77b7c05",
+      "check_name": "Secrets",
+      "message": "Hardcoded value for `NOTIFY_JOBSEEKER_RESET_PASSWORD_TEMPLATE` in source code",
+      "file": "config/initializers/notifications.rb",
+      "line": 3,
+      "link": "https://brakemanscanner.org/docs/warning_types/authentication/",
+      "code": null,
+      "render_path": null,
+      "location": null,
+      "user_input": null,
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
+      "warning_type": "Authentication",
+      "warning_code": 101,
       "fingerprint": "3fd6c02eaf08f8589806b4e13e635949f395519d1c3c68884f627224aa99a4d8",
       "check_name": "Secrets",
       "message": "Hardcoded value for `DFE_SIGN_IN_PASSWORD` in source code",
@@ -157,6 +173,6 @@
       "note": "Intended behaviour: Noreferrer is undesirable (would stop schools from seeing our traffic in analytics), noopener is good enough to stop tabnabbing."
     }
   ],
-  "updated": "2020-11-25 14:38:55 +0000",
+  "updated": "2020-12-04 18:04:00 +0000",
   "brakeman_version": "4.10.0"
 }

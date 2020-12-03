@@ -5,7 +5,7 @@ module JobseekerHelpers
 
   def resend_confirmation_email
     confirm_email_address
-    click_on I18n.t("buttons.resend_confirmation_email")
+    click_on I18n.t("buttons.resend_email")
   end
 
   def sign_up_jobseeker
