@@ -45,9 +45,5 @@
 }
 
 .icon--cross {
-  &::before {
-    color: $govuk-link-colour;
-    content: 'x';
-    font-weight: bold;
-  }
+  background-image: url('../../images/svg/icon-cross.svg');
 }
