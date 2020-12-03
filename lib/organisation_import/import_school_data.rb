@@ -22,23 +22,43 @@ class ImportSchoolData < ImportOrganisationData
 
 private
 
-  # These are the attributes that require additional transformation before being added to the model. The first value of
-  # the array is the row key name, the second is the method used for the transformation. URL is the exception, as it
-  # requires an external function call - this is handled in the set_complex_properties method.
-  def complex_mappings
+  def column_name_mappings
     {
-      address3: ["Address3", :presence],
-      county: ["County (name)", :presence],
-      locality: ["Locality", :presence],
-      phase: ["PhaseOfEducation (code)", :to_i],
-      url: ["SchoolWebsite", nil],
+      address: "Street",
+      address3: "Address3",
+      county: "County (name)",
+      detailed_school_type: "TypeOfEstablishment (name)",
+      easting: "Easting",
+      establishment_status: "EstablishmentStatus (name)",
+      local_authority_within: "LA (name)",
+      locality: "Locality",
+      maximum_age: "StatutoryHighAge",
+      minimum_age: "StatutoryLowAge",
+      name: "EstablishmentName",
+      northing: "Northing",
+      phase: "PhaseOfEducation (code)",
+      postcode: "Postcode",
+      region: "GOR (name)",
+      school_type: "EstablishmentTypeGroup (name)",
+      town: "Town",
+      url: "SchoolWebsite",
     }.freeze
+  end
+
+  def column_value_transformations
+    {
+      phase: :to_i,
+      url: ->(url) { Addressable::URI.heuristic_parse(url).to_s },
+    }
+  end
+
+  def set_readable_phases(school)
+    school.readable_phases = READABLE_PHASE_MAPPINGS[school.phase.to_sym]
   end
 
   def convert_to_organisation(row)
     school = School.find_or_initialize_by(urn: row["URN"])
-    set_complex_properties(school, row)
-    set_simple_properties(school, row)
+    set_properties(school, row)
     set_gias_data_as_json(school, row)
     set_readable_phases(school)
     school
@@ -66,27 +86,5 @@ private
 
   def school_is_community_or_foundation_special_school?(row)
     row["EstablishmentTypeGroup (code)"].to_i == 5 && [7, 12].include?(row["TypeOfEstablishment (code)"].to_i)
-  end
-
-  def set_readable_phases(school)
-    school.readable_phases = READABLE_PHASE_MAPPINGS[school.phase.to_sym]
-  end
-
-  def simple_mappings
-    {
-      address: "Street",
-      detailed_school_type: "TypeOfEstablishment (name)",
-      easting: "Easting",
-      establishment_status: "EstablishmentStatus (name)",
-      local_authority_within: "LA (name)",
-      maximum_age: "StatutoryHighAge",
-      minimum_age: "StatutoryLowAge",
-      name: "EstablishmentName",
-      northing: "Northing",
-      postcode: "Postcode",
-      region: "GOR (name)",
-      school_type: "EstablishmentTypeGroup (name)",
-      town: "Town",
-    }.freeze
   end
 end

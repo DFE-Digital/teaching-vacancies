@@ -12,18 +12,25 @@ class ImportTrustData < ImportOrganisationData
 
 private
 
-  # These are the attributes that require additional transformation before being added to the model. The first value of
-  # the array is the row key name, the second is the method used for the transformation.
-  def complex_mappings
+  def column_name_mappings
     {
-      name: ["Group Name", :titlecase],
+      name: "Group Name",
+      address: "Group Locality",
+      county: "Group County",
+      group_type: "Group Type",
+      town: "Group Town",
     }.freeze
+  end
+
+  def column_value_transformations
+    {
+      name: :titlecase,
+    }
   end
 
   def convert_to_organisation(row)
     trust = SchoolGroup.find_or_initialize_by(uid: row["Group UID"])
-    set_complex_properties(trust, row)
-    set_simple_properties(trust, row)
+    set_properties(trust, row)
     set_gias_data_as_json(trust, row)
     set_geolocation(trust, row["Group Postcode"])
     trust
@@ -57,6 +64,10 @@ private
     "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/alllinksdata#{datestring}.csv"
   end
 
+  def trust_csv_url
+    "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/allgroupsdata#{datestring}.csv"
+  end
+
   def set_geolocation(trust, postcode)
     # We don't need to make an API request if the postcode hasn't changed
     if postcode.present? && (trust.geolocation.blank? || trust.postcode != postcode)
@@ -64,18 +75,5 @@ private
       coordinates = Geocoding.new(trust.postcode).coordinates
       trust.geolocation = coordinates unless coordinates == [0, 0]
     end
-  end
-
-  def simple_mappings
-    {
-      address: "Group Locality",
-      county: "Group County",
-      group_type: "Group Type",
-      town: "Group Town",
-    }.freeze
-  end
-
-  def trust_csv_url
-    "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/allgroupsdata#{datestring}.csv"
   end
 end
