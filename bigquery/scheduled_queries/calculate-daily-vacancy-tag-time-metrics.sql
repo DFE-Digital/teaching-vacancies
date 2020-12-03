@@ -227,7 +227,8 @@ IF
     SAFE_DIVIDE(live_vacancies_with_this_tag_last_year,
       total_live_vacancies_last_year)) AS change_in_proportion_of_live_vacancies_with_this_tag_since_last_year,
 IF
-  (date>='2021-08-01', #don't calculate this until we have at least a year's worth of data to go on
+  (date>='2021-08-01',
+    #don't calculate this until we have at least a year's worth of data to go on
     SAFE_SUBTRACT(SAFE_DIVIDE(live_benchmark_vacancies_with_this_tag,
         benchmark_total_live_vacancies),
       SAFE_DIVIDE(live_benchmark_vacancies_with_this_tag_last_year,
@@ -253,7 +254,13 @@ IF
       benchmark_total_live_vacancies,
       live_benchmark_vacancies_with_this_tag_last_year,
       benchmark_total_live_vacancies_last_year),
-    NULL) AS significant_change_in_proportion_of_benchmark_live_vacancies_with_this_tag_since_last_year
+    NULL) AS significant_change_in_proportion_of_benchmark_live_vacancies_with_this_tag_since_last_year,
+  SAFE_DIVIDE(SAFE_SUBTRACT(live_vacancies_with_this_tag,
+      live_vacancies_with_this_tag_last_year),
+    live_vacancies_with_this_tag_last_year) AS percentage_change_in_number_of_live_vacancies_with_this_tag_since_last_year,
+  SAFE_DIVIDE(SAFE_SUBTRACT(live_benchmark_vacancies_with_this_tag,
+      live_benchmark_vacancies_with_this_tag_last_year),
+    live_benchmark_vacancies_with_this_tag_last_year) AS percentage_change_in_number_of_live_benchmark_vacancies_with_this_tag_since_last_year
 FROM (
   SELECT
     dates.date AS date,
