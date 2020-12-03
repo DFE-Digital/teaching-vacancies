@@ -6,7 +6,6 @@ class VacanciesController < ApplicationController
     @vacancies_search = Search::SearchBuilder.new(@jobs_search_form.to_hash)
     @vacancies = VacanciesPresenter.new(@vacancies_search.vacancies)
     AuditSearchEventJob.perform_later(audit_row) if valid_search?
-    expires_in 5.minutes, public: true
   end
 
   def show
@@ -26,8 +25,6 @@ class VacanciesController < ApplicationController
     @similar_jobs = Search::SimilarJobs.new(vacancy).similar_jobs
 
     VacancyPageView.new(vacancy).track unless publisher_signed_in? || smoke_test?
-
-    expires_in 5.minutes, public: true
   end
 
   def params
