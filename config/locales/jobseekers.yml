@@ -39,6 +39,8 @@ en:
           title: Already have an account?
         title: Create an account
     saved_jobs:
+      save: Save this job for later
+      saved: Job saved
       index:
         page_title: Saved jobs
     subscriptions:

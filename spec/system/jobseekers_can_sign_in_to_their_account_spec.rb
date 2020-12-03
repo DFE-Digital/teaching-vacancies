@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can sign in to their account" do
-  let!(:jobseeker) { create(:jobseeker, email: "jobseeker@example.com", password: "correct_horse_battery_staple") }
+  let(:jobseeker) { create(:jobseeker) }
 
   before do
     allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(true)
@@ -13,9 +13,7 @@ RSpec.describe "Jobseekers can sign in to their account" do
       click_link I18n.t("buttons.sign_in")
     end
 
-    fill_in "Email", with: "jobseeker@example.com"
-    fill_in "Password", with: "correct_horse_battery_staple"
-    click_button "Log in"
+    sign_in_jobseeker
 
     expect(current_path).to eq(jobseekers_saved_jobs_path)
     expect(page).to have_content(I18n.t("devise.sessions.signed_in"))

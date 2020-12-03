@@ -72,6 +72,7 @@ RSpec.configure do |config|
   config.include SearchHelper
   config.include VacanciesHelper
   config.include VacancyHelpers
+  config.include JobseekerHelpers
   config.include ViewComponent::TestHelpers, type: :component
 end
 
