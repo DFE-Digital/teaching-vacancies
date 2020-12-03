@@ -12,6 +12,8 @@ class ApplicationController < ActionController::Base
   before_action :set_headers, :set_root_headers
   before_action { strip_nested_param_whitespaces(request.params) }
 
+  after_action :trigger_page_visited_event, unless: :request_is_paas_healthcheck?
+
   helper_method :cookies_preference_set?, :referred_from_jobs_path?, :utm_parameters
 
   include Publishers::AuthenticationConcerns
@@ -70,11 +72,11 @@ private
   end
 
   def request_host_is_invalid?
-    !Rails.env.test? && request_is_not_paas_healthcheck? && request.host_with_port != DOMAIN
+    !Rails.env.test? && !request_is_paas_healthcheck? && request.host_with_port != DOMAIN
   end
 
-  def request_is_not_paas_healthcheck?
-    request.headers.env["HTTP_USER_AGENT"] != "diego-healthcheck"
+  def request_is_paas_healthcheck?
+    request.headers["User-Agent"] == "diego-healthcheck"
   end
 
   def set_root_headers
@@ -108,5 +110,13 @@ private
 
   def remove_devise_notice_flash!
     flash.discard(:notice) if flash[:notice].present?
+  end
+
+  def request_event
+    @request_event ||= RequestEvent.new(request, response, session, current_jobseeker, current_publisher_oid)
+  end
+
+  def trigger_page_visited_event
+    request_event.trigger(:page_visited)
   end
 end
