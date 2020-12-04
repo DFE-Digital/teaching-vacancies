@@ -1,5 +1,5 @@
 require "rails_helper"
 
 RSpec.describe Jobseeker, type: :model do
-  pending "add some examples"
+  it { should have_many(:saved_jobs) }
 end

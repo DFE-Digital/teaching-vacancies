@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Shared::BannerLinkComponent, type: :component do
-  let(:icon_class) { "icon-class" }
+  let(:icon_class) { "test" }
   let(:link_id) { "test-id" }
-  let(:link_path) { "/link-to-nowhere" }
+  let(:link_path) { "#test" }
   let(:link_text) { "Click this link!" }
 
   before do
@@ -21,7 +21,7 @@ RSpec.describe Shared::BannerLinkComponent, type: :component do
 
     it "renders the banner link" do
       expect(rendered_component).to eql(
-        '<a class="banner-link icon icon--left icon--icon-class-blue" id="test-id" data-method="get" href="/link-to-nowhere">'\
+        '<a class="banner-link icon icon--left icon--test" id="test-id" data-method="get" href="#test">'\
         '<div class="banner-link__text">Click this link!</div></a>',
       )
     end
@@ -32,7 +32,7 @@ RSpec.describe Shared::BannerLinkComponent, type: :component do
 
     it "renders the banner link" do
       expect(rendered_component).to eql(
-        '<a class="banner-link icon icon--left icon--icon-class-blue" id="test-id" rel="nofollow" data-method="post" href="/link-to-nowhere">'\
+        '<a class="banner-link icon icon--left icon--test" id="test-id" rel="nofollow" data-method="post" href="#test">'\
         '<div class="banner-link__text">Click this link!</div></a>',
       )
     end

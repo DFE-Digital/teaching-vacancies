@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_26_201055) do
+ActiveRecord::Schema.define(version: 2020_12_01_154558) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -200,6 +200,13 @@ ActiveRecord::Schema.define(version: 2020_11_26_201055) do
     t.string "family_name"
     t.string "given_name"
     t.index ["oid"], name: "index_publishers_on_oid", unique: true
+  end
+
+  create_table "saved_jobs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "jobseeker_id"
+    t.uuid "vacancy_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "school_group_memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

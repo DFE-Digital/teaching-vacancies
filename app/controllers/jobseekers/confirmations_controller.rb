@@ -4,9 +4,9 @@ class Jobseekers::ConfirmationsController < Devise::ConfirmationsController
 
 protected
 
-  def after_confirmation_path_for(_resource_name, _resource)
+  def after_confirmation_path_for(resource_name, resource)
     sign_in(resource)
-    jobseekers_saved_jobs_path
+    stored_location_for(resource_name) || jobseekers_saved_jobs_path
   end
 
   def after_resending_confirmation_instructions_path_for(_resource)

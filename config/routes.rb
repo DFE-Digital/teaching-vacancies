@@ -11,7 +11,7 @@ Rails.application.routes.draw do
         get :check_your_email, to: "registrations#check_your_email", as: :check_your_email
       end
 
-      resources :saved_jobs, only: %i[index]
+      resources :saved_jobs, only: %i[new destroy index]
       resources :subscriptions, only: %i[index]
       resource :account, only: %i[show]
     end

@@ -10,7 +10,7 @@ class Shared::BannerLinkComponent < ViewComponent::Base
   end
 
   def call
-    link_to link_path, method: link_method, class: "banner-link icon icon--left icon--#{icon_class}-blue", id: link_id do
+    link_to link_path, method: link_method, class: "banner-link icon icon--left icon--#{icon_class}", id: link_id do
       content_tag(:div, link_text, class: "banner-link__text")
     end
   end

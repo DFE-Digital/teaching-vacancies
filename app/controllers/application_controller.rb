@@ -51,8 +51,8 @@ class ApplicationController < ActionController::Base
 
 protected
 
-  def after_sign_in_path_for(_resource)
-    jobseekers_saved_jobs_path
+  def after_sign_in_path_for(resource_or_scope)
+    stored_location_for(resource_or_scope) || jobseekers_saved_jobs_path
   end
 
   def after_sign_out_path_for(_resource)

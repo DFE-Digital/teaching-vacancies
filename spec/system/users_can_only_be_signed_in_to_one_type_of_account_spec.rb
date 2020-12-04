@@ -1,28 +1,28 @@
 require "rails_helper"
 
 RSpec.describe "Users can only be signed in to one type of account" do
-  let!(:jobseeker) { create(:jobseeker, email: "jobseeker@example.com") }
+  let(:jobseeker) { create(:jobseeker) }
   let!(:publisher) { create(:publisher, dsi_data: dsi_data) }
 
   let(:school) { create(:school, urn: "110627") }
-  let(:dsi_data) do
-    { "school_urns" => [school.urn], "trust_uids" => [], "la_codes" => [] }
-  end
+  let(:dsi_data) { { "school_urns" => [school.urn], "trust_uids" => [], "la_codes" => [] } }
 
-  before(:each) do
+  let(:authentication_fallback_enabled?) { false }
+
+  before do
     allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(true)
+    allow(AuthenticationFallback).to receive(:enabled?).and_return(authentication_fallback_enabled?)
   end
 
   context "when a jobseeker is signed in" do
-    before(:each) do
+    before do
       login_as(jobseeker, scope: :jobseeker)
     end
 
     context "when email fallback is disabled" do
       let(:dsi_email_address) { Faker::Internet.email }
 
-      before(:each) do
-        allow(AuthenticationFallback).to receive(:enabled?) { false }
+      before do
         OmniAuth.config.test_mode = true
         stub_accepted_terms_and_conditions
         stub_authentication_step email: dsi_email_address
@@ -30,7 +30,7 @@ RSpec.describe "Users can only be signed in to one type of account" do
         stub_sign_in_with_multiple_organisations
       end
 
-      after(:each) do
+      after do
         OmniAuth.config.mock_auth[:default] = nil
         OmniAuth.config.mock_auth[:dfe] = nil
         OmniAuth.config.test_mode = false
@@ -50,14 +50,11 @@ RSpec.describe "Users can only be signed in to one type of account" do
     end
 
     context "when email fallback is enabled" do
-      let!(:login_key) do
+      let(:authentication_fallback_enabled?) { true }
+      let(:login_key) do
         publisher.emergency_login_keys.create(
           not_valid_after: Time.current + Publishers::SignIn::Email::SessionsController::EMERGENCY_LOGIN_KEY_DURATION,
         )
-      end
-
-      before(:each) do
-        allow(AuthenticationFallback).to receive(:enabled?) { true }
       end
 
       it "signs out from the jobseeker account when signing in as a publisher using DSI" do
@@ -74,24 +71,17 @@ RSpec.describe "Users can only be signed in to one type of account" do
   end
 
   context "when a publisher is signed in" do
-    let!(:jobseeker) { create(:jobseeker, email: "jobseeker@example.com", password: "passw0rd") }
-    before(:each) do
+    before do
       stub_publishers_auth(urn: "110627")
     end
 
     context "when email fallback is disabled" do
-      before(:each) do
-        allow(AuthenticationFallback).to receive(:enabled?) { false }
-      end
-
       it "signs out from the publisher account when signing in as a jobseeker" do
         visit organisation_path
         expect(current_path).to eq(organisation_path)
 
         visit new_jobseeker_session_path
-        fill_in "Email", with: "jobseeker@example.com"
-        fill_in "Password", with: "passw0rd"
-        click_button "Log in"
+        sign_in_jobseeker
 
         expect(current_path).to eq(jobseekers_saved_jobs_path)
 
@@ -101,18 +91,14 @@ RSpec.describe "Users can only be signed in to one type of account" do
     end
 
     context "when email fallback is enabled" do
-      before(:each) do
-        allow(AuthenticationFallback).to receive(:enabled?) { true }
-      end
+      let(:authentication_fallback_enabled?) { true }
 
       it "signs out from the publisher account when signing in as a jobseeker" do
         visit organisation_path
         expect(current_path).to eq(organisation_path)
 
         visit new_jobseeker_session_path
-        fill_in "Email", with: "jobseeker@example.com"
-        fill_in "Password", with: "passw0rd"
-        click_button "Log in"
+        sign_in_jobseeker
 
         expect(current_path).to eq(jobseekers_saved_jobs_path)
 
