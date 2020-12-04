@@ -4,7 +4,28 @@
 
 .govuk-width-container
   .govuk-grid-row
-    .govuk-grid-column-full-width
+    .govuk-grid-column-full
       %h1.govuk-heading-l= t(".page_title")
+
+      %table.govuk-table
+        %thead.govuk-table__head
+          %th.govuk-table__header{ class: 'govuk-!-width-two-thirds' }= t(".heading.criteria")
+          %th.govuk-table__header= t(".heading.frequency")
+          %th.govuk-table__header.govuk-table__header--numeric= t(".heading.actions")
+        %tr.govuk-table__row
+          %td.govuk-table__cell
+            %ul.govuk-list
+              %li
+                %span{ class: 'govuk-!-font-weight-bold' }= 'key'
+                = 'value'
+              %li
+                %span{ class: 'govuk-!-font-weight-bold' }= 'key'
+                = 'value'
+
+          %td.govuk-table__cell= 'Daily, at approx 3pm'
+          %td.govuk-table__cell.govuk-table__header--numeric
+            %ul.govuk-list
+              %li= link_to(t('.link_manage'), '/')
+              %li= link_to(t('.link_unsubscribe'), '/')
 
       = render(Shared::NotificationComponent.new(content: { title: t('.zero_subscriptions_title'), body: t('.zero_subscriptions_body_html') }, style: 'empty', links: nil, dismiss: false, background: true, alert: false))
