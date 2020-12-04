@@ -2,8 +2,6 @@
 
 = render partial: 'account_header'
 
-
-
 .govuk-width-container
   .govuk-grid-row
     .govuk-grid-column-two-thirds
@@ -30,4 +28,4 @@
     .govuk-grid-column-one-third
       .account-sidebar
         %h2.account-sidebar__heading= t(".assistance.heading")
-        %p.govuk-body-s= t(".assistance.content_html", link: link_to(t(".assistance.link_text"), "#", class: "govuk-link"))
+        %p.govuk-body-s= t(".assistance.content_html", link: mail_to(t('help.email'), t(".assistance.link_text"), class: "govuk-link"))
