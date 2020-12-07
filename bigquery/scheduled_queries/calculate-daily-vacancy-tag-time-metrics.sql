@@ -172,7 +172,7 @@ WITH
     FROM
       UNNEST(["all","in_scope","has_documents","suitable_for_nqts","mat_level","la_level","multi_school","published_by_mat","published_by_la","la_maintained_school","faith_school","federation","free_school","mat","mat_21+","mat_1-20","academy","flexible_working","primary","secondary","leadership","teacher","teaching_assistant","stem","sen"]) AS tag) AS tags
   CROSS JOIN
-    `teacher-vacancy-service.production_dataset.scraped_vacancies` AS scraped_vacancies
+    `teacher-vacancy-service.production_dataset.CALCULATED_scraped_vacancies` AS scraped_vacancies
   LEFT JOIN
     `teacher-vacancy-service.production_dataset.school` AS school
   ON
