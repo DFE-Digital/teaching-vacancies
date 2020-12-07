@@ -43,6 +43,12 @@ en:
       saved: Job saved
       index:
         page_title: Saved jobs
+        headings:
+          added: Added
+          deadline: Application deadline
+          job: Job listing
+        deadline_passed: Deadline passed
+        delete: Delete
     subscriptions:
       index:
         heading:

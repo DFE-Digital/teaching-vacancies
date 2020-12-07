@@ -1,8 +1,27 @@
 - content_for :page_title_prefix, t(".page_title")
 
-= render partial: 'account_header'
+= render "account_header"
 
 .govuk-width-container
   .govuk-grid-row
-    .govuk-grid-column-two-thirds
+    .govuk-grid-column-full
       %h1.govuk-heading-l= t(".page_title")
+
+      - if @saved_jobs.any?
+        %table.govuk-table
+          %thead.govuk-table__head
+            %th.govuk-table__header{ class: "govuk-!-width-one-half" }= t(".headings.job")
+            %th.govuk-table__header= t(".headings.deadline")
+            %th.govuk-table__header= t(".headings.added")
+            %th.govuk-table__header
+          - @saved_jobs.each do |saved_job|
+            %tr.govuk-table__row{ data: { slug: saved_job.vacancy.slug } }
+              %td.govuk-table__cell
+                = govuk_link_to(saved_job.vacancy.job_title, job_path(saved_job.vacancy.slug), class: "govuk-link--no-visited-state")
+                %p.govuk-body-s{ class: "govuk-!-margin-bottom-2" }= location(saved_job.vacancy.parent_organisation, job_location: saved_job.vacancy.job_location)
+              %td.govuk-table__cell
+                - if saved_job.vacancy.expires_at.past?
+                  .text-red= t(".deadline_passed")
+                = OrganisationVacancyPresenter.new(saved_job.vacancy).application_deadline
+              %td.govuk-table__cell= saved_job.created_at.strftime("%d %B %Y")
+              %td.govuk-table__cell= govuk_link_to(t(".delete"), jobseekers_saved_job_path(saved_job.vacancy.slug, redirect_to_dashboard: true), method: :delete, class: "govuk-link--no-visited-state")

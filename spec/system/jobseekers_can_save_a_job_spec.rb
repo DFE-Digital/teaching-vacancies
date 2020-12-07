@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers can save a job" do
   let(:school) { create(:school) }
-  let(:vacancy) { create(:vacancy, :published_slugged) }
+  let(:vacancy) { create(:vacancy, :published) }
   let(:created_jobseeker) { Jobseeker.first }
 
   before do
@@ -13,19 +13,19 @@ RSpec.describe "Jobseekers can save a job" do
   context "when a jobseeker has an account" do
     let(:jobseeker) { create(:jobseeker) }
 
-    context "and they are signed in to their account" do
+    context "when they are signed in to their account" do
       before do
         login_as(jobseeker, scope: :jobseeker)
       end
 
-      context "and the job is not already saved" do
+      context "when the job is not already saved" do
         it "saves the job" do
           save_job
           and_the_job_is_saved
         end
       end
 
-      context "and the job is already saved" do
+      context "when the job is already saved" do
         before do
           SavedJob.find_or_create_by(jobseeker_id: jobseeker.id, vacancy_id: vacancy.id)
         end
@@ -37,8 +37,8 @@ RSpec.describe "Jobseekers can save a job" do
       end
     end
 
-    context "and they are not signed in to their account" do
-      context "and the job is not already saved" do
+    context "when they are not signed in to their account" do
+      context "when the job is not already saved" do
         it "saves the job after signing in" do
           save_job
           expect(page).to have_content(I18n.t("messages.jobseekers.saved_jobs.unauthenticated"))
@@ -47,7 +47,7 @@ RSpec.describe "Jobseekers can save a job" do
         end
       end
 
-      context "and the job is already saved" do
+      context "when the job is already saved" do
         before do
           SavedJob.find_or_create_by(jobseeker_id: jobseeker.id, vacancy_id: vacancy.id)
         end
