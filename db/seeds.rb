@@ -212,10 +212,10 @@ Publisher.create(oid: "B5ECCE49-634C-4212-AC55-07F5C7BE74C2",
                  given_name: "Nick")
 
 Publisher.create(oid: "7AEC8E8D-6036-4E6E-92A4-800E381A12E0",
-                 email: "valentine.carter@digital.education.gov.uk",
+                 email: "rose.mackworth-young@digital.education.gov.uk",
                  dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
-                 family_name: "Carter",
-                 given_name: "Valentine")
+                 family_name: "Mackworth-Young",
+                 given_name: "Rose")
 
 Jobseeker.create(email: "jobseeker@example.com",
                  password: "password",
