@@ -8,15 +8,21 @@ class Jobseekers::SavedJobsController < Jobseekers::ApplicationController
 
   def destroy
     @saved_job.destroy
-    redirect_to job_path(@vacancy)
+    if saved_job_params[:redirect_to_dashboard] == "true"
+      redirect_to jobseekers_saved_jobs_path, success: I18n.t("messages.jobseekers.saved_jobs.destroy")
+    else
+      redirect_to job_path(@vacancy)
+    end
   end
 
-  def index; end
+  def index
+    @saved_jobs = current_jobseeker.saved_jobs
+  end
 
 private
 
   def saved_job_params
-    ParameterSanitiser.call(params).permit(:id)
+    ParameterSanitiser.call(params).permit(:id, :redirect_to_dashboard)
   end
 
   def set_up_saved_job
