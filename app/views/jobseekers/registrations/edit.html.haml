@@ -8,6 +8,8 @@
 
     = form_for resource, url: jobseeker_registration_path, method: :put do |f|
       = f.govuk_error_summary
+    
+      %p.govuk-body= t(".description", email: resource.email)
 
       = f.govuk_password_field :current_password, label: { text: t(".current_password"), size: "s" }, width: "two-thirds"
       = f.govuk_password_field :password, label: { text: t(".new_password"), size: "s" }, width: "two-thirds"

@@ -4,10 +4,10 @@
   .govuk-grid-column-two-thirds
     %h1.govuk-heading-xl= t(".title")
 
-    %p.govuk-body= t(".description")
-
     = form_for(resource, url: jobseeker_session_path) do |f|
       = f.govuk_error_summary
+
+      %p.govuk-body= t(".description")
 
       = f.govuk_email_field :email, label: { size: "s" }, width: "two-thirds"
       = f.govuk_password_field :password, label: { size: "s" }, width: "two-thirds"
