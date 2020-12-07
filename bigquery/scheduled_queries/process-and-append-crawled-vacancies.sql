@@ -1,5 +1,6 @@
   # Transforms the latest versions of scraped vacancy NoSQL documents from Firestore in scraped_vacancies_raw_latest into SQL-queriable rows
   # Also matches vacancies to schools where possible to allow this to be joined to the schools table, and if this is possible matches vacancies to vacancies on Teaching Vacancies.
+  # Data for newly discovered vacancies *only* is appended to the CALCULATED_scraped_vacancies table to avoid calculating things more than once.
 WITH
   stop_words AS (
   SELECT
@@ -100,7 +101,13 @@ WITH
   WHERE
     scraped
     AND NOT expired_before_scrape
-    AND location_address_country = "United Kingdom"),
+    AND location_address_country = "United Kingdom"
+    AND scraped_url NOT IN (
+    SELECT
+      scraped_url
+    FROM
+      `teacher-vacancy-service.production_dataset.CALCULATED_scraped_vacancies`)
+ ),
   vacancy_to_school_matches AS (
   SELECT
     DISTINCT scraped_vacancy.scraped_url,
