@@ -2,7 +2,7 @@
 SELECT
   scraped_vacancies.*
 FROM
-  `teacher-vacancy-service.production_dataset.scraped_vacancies` AS scraped_vacancies
+  `teacher-vacancy-service.production_dataset.CALCULATED_scraped_vacancies` AS scraped_vacancies
 LEFT JOIN
   `teacher-vacancy-service.production_dataset.school` AS school
 ON
