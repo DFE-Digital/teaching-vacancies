@@ -53,7 +53,7 @@ RSpec.describe AlertMailerJob, type: :job do
     let!(:alert_run) { create(:alert_run, subscription: subscription) }
 
     it "delivers the mail" do
-      expect { perform_enqueued_jobs { job } }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      expect { perform_enqueued_jobs { job } }.to change { delivered_emails.count }.by(1)
     end
 
     it "updates the alert run" do
@@ -65,7 +65,7 @@ RSpec.describe AlertMailerJob, type: :job do
     let!(:alert_run) { create(:alert_run, subscription: subscription, created_at: Time.current - 5.hours) }
 
     it "does not deliver the mail" do
-      expect { perform_enqueued_jobs { job } }.to change { ActionMailer::Base.deliveries.count }.by(0)
+      expect { perform_enqueued_jobs { job } }.to change { delivered_emails.count }.by(0)
     end
   end
 
@@ -73,7 +73,7 @@ RSpec.describe AlertMailerJob, type: :job do
     let!(:alert_run) { create(:alert_run, subscription: subscription, status: :sent) }
 
     it "does not deliver the mail" do
-      expect { perform_enqueued_jobs { job } }.to change { ActionMailer::Base.deliveries.count }.by(0)
+      expect { perform_enqueued_jobs { job } }.to change { delivered_emails.count }.by(0)
     end
   end
 end

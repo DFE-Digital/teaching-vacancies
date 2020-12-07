@@ -13,7 +13,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
       visit new_jobseeker_registration_path
       click_on I18n.t("buttons.continue")
       expect(page).to have_content("There is a problem")
-      expect { sign_up_jobseeker }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      expect { sign_up_jobseeker }.to change { delivered_emails.count }.by(1)
       expect(current_path).to eql(jobseekers_check_your_email_path)
     end
   end
@@ -45,7 +45,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
 
       context "when the confirmation email is resent" do
         it "resends confirmation email and redirects to check your email page" do
-          expect { resend_confirmation_email }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect { resend_confirmation_email }.to change { delivered_emails.count }.by(1)
           expect(current_path).to eql(jobseekers_check_your_email_path)
         end
       end

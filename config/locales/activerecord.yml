@@ -170,6 +170,8 @@ en:
         jobseeker:
           attributes:
             <<: *sign_up_errors
+            email:
+              not_found: Email address is not valid or the account was not created
         vacancy:
           attributes:
             <<: *schools_errors
