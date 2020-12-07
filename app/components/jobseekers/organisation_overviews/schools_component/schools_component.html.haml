@@ -2,7 +2,19 @@
   %h3.govuk-heading-l.section-heading
     = t('schools.schools_overview')
 
-  = render(Shared::TableComponent.new(rows: organisation_rows + vacancy_rows))
+  = render GovukComponent::SummaryList.new do |component|
+    - if organisation.group_type != "local_authority"
+      = component.slot(:row, key: I18n.t("school_groups.type"), value: organisation.group_type)
+    - if organisation.website.present? || organisation.url.present?
+      = component.slot(:row,
+                       key: I18n.t("school_groups.website", organisation_type: organisation_type_basic(organisation).humanize),
+                       value: link_to(I18n.t("schools.website_link_text", organisation_name: organisation.name), organisation.website.presence || organisation.url, class: "govuk-link link-wrap", target: "_blank"))
+    - if @vacancy.contact_email.present?
+      = component.slot(:row, key: I18n.t("jobs.contact_email"), value: mail_to(@vacancy.contact_email, @vacancy.contact_email, class: "govuk-link link-wrap",
+                                                                                subject: I18n.t("jobs.contact_email_subject", job: @vacancy.job_title),
+                                                                                body: I18n.t("jobs.contact_email_body", url: job_url(@vacancy))))
+    - if @vacancy.contact_number.present?
+      = component.slot(:row, key: I18n.t("jobs.contact_number"), value: link_to(@vacancy.contact_number, "tel:#{@vacancy.contact_number}", class: "govuk-link"))
 
   - if vacancy.about_school.present?
     %h4.govuk-heading-s
@@ -20,7 +32,18 @@
             %span.govuk-accordion__section-button{ id: "accordion-default-heading-#{index}"}
               = organisation.name
         .govuk-accordion__section-content{ id: "accordion-default-content-#{index}", aria: { labelledby: "accordion-default-heading-#{index}" } }
-          = render(Shared::TableComponent.new(rows: school_rows(organisation)))
+          = render GovukComponent::SummaryList.new do |component|
+            = component.slot(:row, key: I18n.t("schools.type"), value: organisation_type(organisation: organisation, with_age_range: false))
+            = component.slot(:row, key: I18n.t("schools.phase"), value: school_phase(organisation))
+            = component.slot(:row, key: I18n.t("schools.school_size"), value: school_size(organisation))
+            = component.slot(:row, key: I18n.t("schools.age_range"), value: age_range(organisation))
+            = component.slot(:row,
+                             key: I18n.t("schools.ofsted_report"),
+                             value: ofsted_report(organisation).present? ? link_to(I18n.t("schools.view_ofsted_report"), ofsted_report(organisation), class: "govuk-link wordwrap", target: "_blank") : I18n.t("schools.no_information"))
+            - if organisation.website.present? || organisation.url.present?
+              = component.slot(:row, key: I18n.t("schools.website"), value: link_to(I18n.t("schools.website_link_text", organisation_name: organisation.name),
+                                                                                    organisation.website.presence || organisation.url,
+                                                                                    class: "govuk-link wordwrap", target: "_blank"))
 
   - if vacancy.school_visits.present?
     %h4.govuk-heading-s

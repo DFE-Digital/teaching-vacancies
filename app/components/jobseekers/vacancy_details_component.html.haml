@@ -2,7 +2,13 @@
   %h3.govuk-heading-l.section-heading
     = t('jobs.job_details')
 
-  = render(Shared::TableComponent.new(rows: rows))
+  = render GovukComponent::SummaryList.new do |component|
+    - if @vacancy.job_roles.any?
+      = component.slot(:row, key: I18n.t("jobs.job_roles"), value: @vacancy.show_job_roles)
+    - if @vacancy.subjects.any?
+      = component.slot(:row, key: I18n.t("jobs.subject", count: @vacancy.subjects.count), value: @vacancy.show_subjects)
+    = component.slot(:row, key: I18n.t("jobs.working_patterns"), value: @vacancy.working_patterns)
+    = component.slot(:row, key: I18n.t("jobs.salary"), value: @vacancy.salary)
 
   %h4.govuk-heading-s= t('jobs.job_summary')
   %p= @vacancy.job_summary
