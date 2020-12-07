@@ -1,5 +1,8 @@
 - content_for :page_title_prefix, page_title_prefix(@vacancy, @form, t("jobs.important_dates"))
-= render Publishers::VacancyFormPageHeadingComponent.new(@vacancy)
+
+.govuk-grid-row
+  .govuk-grid-column-full
+    = render Publishers::VacancyFormPageHeadingComponent.new(@vacancy)
 
 - if @vacancy.state != 'create'
   = render 'publishers/vacancies/vacancy_form_partials/cancel_and_return_link'

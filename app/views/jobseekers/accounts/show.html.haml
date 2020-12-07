@@ -2,30 +2,29 @@
 
 = render partial: 'account_header'
 
-.govuk-width-container
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      %h1.govuk-heading-l= t(".page_title")
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    %h1.govuk-heading-l= t(".page_title")
 
-      %dl.govuk-summary-list
-        .govuk-summary-list__row
-          %dt.govuk-summary-list__key= t(".summary_list.email")
-          %dd.govuk-summary-list__value= current_jobseeker.email
-          %dd.govuk-summary-list__actions
-            = link_to edit_jobseeker_registration_path, class: "govuk-link" do
-              = t(".summary_list.change")
-              %span.govuk-visually-hidden
-                = t(".summary_list.email")
-        .govuk-summary-list__row
-          %dt.govuk-summary-list__key= t(".summary_list.password")
-          %dd.govuk-summary-list__value= t(".summary_list.password_placeholder")
-          %dd.govuk-summary-list__actions
-            = link_to edit_jobseeker_registration_path, class: "govuk-link" do
-              = t(".summary_list.change")
-              %span.govuk-visually-hidden
-                = t(".summary_list.password")
+    %dl.govuk-summary-list
+      .govuk-summary-list__row
+        %dt.govuk-summary-list__key= t(".summary_list.email")
+        %dd.govuk-summary-list__value= current_jobseeker.email
+        %dd.govuk-summary-list__actions
+          = link_to edit_jobseeker_registration_path, class: "govuk-link" do
+            = t(".summary_list.change")
+            %span.govuk-visually-hidden
+              = t(".summary_list.email")
+      .govuk-summary-list__row
+        %dt.govuk-summary-list__key= t(".summary_list.password")
+        %dd.govuk-summary-list__value= t(".summary_list.password_placeholder")
+        %dd.govuk-summary-list__actions
+          = link_to edit_jobseeker_registration_path, class: "govuk-link" do
+            = t(".summary_list.change")
+            %span.govuk-visually-hidden
+              = t(".summary_list.password")
 
-    .govuk-grid-column-one-third
-      .account-sidebar
-        %h2.account-sidebar__heading= t(".assistance.heading")
-        %p.govuk-body-s= t(".assistance.content_html", link: mail_to(t('help.email'), t(".assistance.link_text"), class: "govuk-link"))
+  .govuk-grid-column-one-third
+    .account-sidebar
+      %h2.account-sidebar__heading= t(".assistance.heading")
+      %p.govuk-body-s= t(".assistance.content_html", link: mail_to(t('help.email'), t(".assistance.link_text"), class: "govuk-link"))

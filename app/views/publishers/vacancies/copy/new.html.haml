@@ -1,8 +1,11 @@
 - content_for :page_title_prefix, "#{@copy_form.errors.present? ? 'Error: ' : ''}Copy a job for #{current_organisation.name}"
 
-%h1.govuk-heading-m= t('jobs.copy_job_title', job_title: @copy_form.vacancy.job_title)
+.govuk-grid-row{ class: 'govuk-!-margin-top-7 govuk-!-margin-bottom-5' }
+  .govuk-grid-column-full
 
-= link_to t('buttons.cancel_copy'), organisation_path, class: 'govuk-back-link govuk-!-margin-bottom-5'
+    %h1.govuk-heading-m= t('jobs.copy_job_title', job_title: @copy_form.vacancy.job_title)
+
+    = link_to t('buttons.cancel_copy'), organisation_path, class: 'govuk-back-link'
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds

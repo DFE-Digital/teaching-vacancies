@@ -1,0 +1,19 @@
+.jobseeker {
+  &.jobseekers_saved_jobs_index,
+  &.jobseekers_subscriptions_index,
+  &.jobseekers_accounts_show {
+    .govuk-main-wrapper {
+      > .govuk-width-container {
+        margin-top: 0;
+
+        > .govuk-grid-row {
+          margin-top: govuk-spacing(7);
+        }
+      }
+    }
+    
+    .govuk-main-wrapper__notification {
+      background-color: govuk-colour('light-grey');
+    }
+  }
+}

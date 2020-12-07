@@ -1,9 +1,8 @@
 - content_for :page_title_prefix, t('.title')
 
-= link_to t('buttons.back'), @origin.present? ? @origin : jobs_path(@subscription_form.search_criteria_hash), class: 'govuk-back-link govuk-!-margin-top-0'
-
 .govuk-grid-row
   .govuk-grid-column-two-thirds
+    = link_to t('buttons.back'), @origin.present? ? @origin : jobs_path(@subscription_form.search_criteria_hash), class: 'govuk-back-link govuk-!-margin-top-0'
     = form_for @subscription_form, url: subscriptions_path do |f|
       = f.govuk_error_summary
 

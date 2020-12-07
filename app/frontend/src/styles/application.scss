@@ -43,6 +43,7 @@ $govuk-image-url-function: frontend-image-url;
 @import 'application/jobseekers/feedback-form';
 @import 'application/jobseekers/filter-vacancies';
 @import 'application/jobseekers/jobs-banner';
+@import 'application/jobseekers/jobseeker';
 @import 'application/jobseekers/key-dates-sidebar';
 @import 'application/jobseekers/location-search';
 @import 'application/jobseekers/search-panel';
@@ -64,7 +65,7 @@ $govuk-image-url-function: frontend-image-url;
 body {
   .govuk-width-container {
     @include govuk-media-query($from: desktop) {
-      max-width: 1020px;
+      max-width: $desktop-container-width;
     }
   }
 
@@ -72,12 +73,38 @@ body {
     border-bottom: 10px solid govuk-colour('orange');
   }
 
+  .govuk-main-wrapper {
+    @include dashboard;
+
+    > .govuk-width-container {
+      margin-bottom: govuk-spacing(7);
+      margin-top: govuk-spacing(7);
+    }
+  }
+
   &.vacancies_index,
   &.vacancies_show,
-  &.vacancies_preview,
   &.pages_home {
     .govuk-main-wrapper {
-      padding-top: 0;
+      > .govuk-width-container {
+        margin-top: 0;
+      }
+    }
+  }
+
+  &.pages_home {
+    .govuk-main-wrapper__notification {
+      background-color: $govuk-brand-colour;
+
+      .govuk-notification__background {
+        background-color: govuk-colour('white');
+      }
+    }
+  }
+
+  &.vacancies_show {
+    .govuk-main-wrapper__notification {
+      background-color: govuk-colour('light-grey');
     }
   }
 }

@@ -1,4 +1,5 @@
 .account-header {
+  @include dashboard;
   background-color: govuk-colour('light-grey');
   padding: govuk-spacing(2) 0;
 
@@ -24,12 +25,4 @@
 .account-sidebar__heading {
   @extend %govuk-heading-m;
   margin: govuk-spacing(3) 0;
-}
-
-.jobseekers_saved_jobs_index,
-.jobseekers_subscriptions_index,
-.jobseekers_accounts_show {
-  .govuk-main-wrapper {
-    @include dashboard;
-  }
 }
