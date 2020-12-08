@@ -1,5 +1,9 @@
 - content_for :page_title_prefix, review_page_title_prefix(@vacancy)
-= render Publishers::VacancyFormPageHeadingComponent.new(@vacancy)
+
+.govuk-grid-row
+  .govuk-grid-column-full
+    = render Publishers::VacancyFormPageHeadingComponent.new(@vacancy)
+    
 .vacancy.govuk-grid-row
   .govuk-grid-column-two-thirds
     = render "publishers/vacancies/edit_heading"

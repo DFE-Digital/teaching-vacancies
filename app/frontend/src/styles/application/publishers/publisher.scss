@@ -20,8 +20,9 @@ $desktop-container-width: 1200px;
   &.publishers_vacancies_show,
   &.publishers_vacancies_preview {
     .govuk-main-wrapper {
-      margin-left: auto;
-      margin-right: auto;
+      > .govuk-width-container {
+        margin-top: govuk-spacing(4);
+      }
     }
   }
 }
