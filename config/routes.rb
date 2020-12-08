@@ -7,6 +7,8 @@ Rails.application.routes.draw do
       sessions: "jobseekers/sessions",
     }
 
+    get "/jobseekers/saved_jobs", to: "jobseekers/saved_jobs#index", as: :jobseeker_root
+
     namespace :jobseekers do
       devise_scope :jobseeker do
         get :check_your_email, to: "registrations#check_your_email", as: :check_your_email
