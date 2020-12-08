@@ -22,12 +22,13 @@
                                                  link_method: :get,
                                                  link_path: new_subscription_path(search_criteria: @devised_job_alert_search_criteria, origin: request.env['ORIGINAL_FULLPATH']),
                                                  link_text: t('jobs.alert.similar.terse')))
-      .govuk-grid-column-one-third
-        = render(Shared::BannerLinkComponent.new(icon_class: "#{@saved ? 'saved' : 'save'}",
-                                                 link_id: "#{@saved ? 'saved' : 'save'}-job-listing",
-                                                 link_method: @saved ? :delete : :get,
-                                                 link_path: @saved ? jobseekers_saved_job_path(@vacancy.slug) : new_jobseekers_saved_job_path(id: @vacancy.slug),
-                                                 link_text: t("jobseekers.saved_jobs.#{@saved ? 'saved' : 'save'}")))
+      - if JobseekerAccountsFeature.enabled?
+        .govuk-grid-column-one-third
+          = render(Shared::BannerLinkComponent.new(icon_class: "#{@saved ? 'saved' : 'save'}",
+                                                  link_id: "#{@saved ? 'saved' : 'save'}-job-listing",
+                                                  link_method: @saved ? :delete : :get,
+                                                  link_path: @saved ? jobseekers_saved_job_path(@vacancy.slug) : new_jobseekers_saved_job_path(id: @vacancy.slug),
+                                                  link_text: t("jobseekers.saved_jobs.#{@saved ? 'saved' : 'save'}")))
 
 .govuk-grid-row
 
