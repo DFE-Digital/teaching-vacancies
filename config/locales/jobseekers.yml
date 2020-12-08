@@ -81,6 +81,7 @@ en:
           heading: School or Trust accounts
           link: how to create an account
         description: Use your Teaching Vacancies account details to sign in.
+        forgotten: Forgotten your password?
         no_account:
           content_html: If you %{link_to} you can save and apply for jobs you are interested in.
           heading: Don't have an account yet?

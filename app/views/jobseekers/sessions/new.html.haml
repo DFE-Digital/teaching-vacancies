@@ -4,13 +4,15 @@
   .govuk-grid-column-two-thirds
     %h1.govuk-heading-xl= t(".title")
 
-    = form_for(resource, url: jobseeker_session_path) do |f|
+    = form_for(resource, url: new_session_path(resource_name)) do |f|
       = f.govuk_error_summary
 
       %p.govuk-body= t(".description")
 
       = f.govuk_email_field :email, label: { size: "s" }, width: "two-thirds"
       = f.govuk_password_field :password, label: { size: "s" }, width: "two-thirds"
+
+      %p.govuk-body= govuk_link_to(t(".forgotten"), new_password_path(resource_name))
 
       = f.govuk_submit t("buttons.sign_in"), classes: "govuk-!-margin-bottom-0"
 

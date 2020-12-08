@@ -68,7 +68,7 @@ RSpec.describe "Jobseekers can save a job" do
     it "saves the job after signing up" do
       save_job
       expect(page).to have_content(I18n.t("messages.jobseekers.saved_jobs.unauthenticated"))
-      click_on "Sign up"
+      click_on "create an account"
       sign_up_jobseeker
       confirm_email_address
       and_the_job_is_saved
