@@ -1,17 +1,17 @@
 - content_for :page_title_prefix, t(".title")
 
+= link_to t('buttons.back'), jobseekers_account_path, class: 'govuk-back-link'
+
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     %h1.govuk-heading-l= t(".title")
 
-    %p.govuk-body= t(".description")
+    = form_for resource, url: jobseeker_registration_path, method: :put do |f|
+      = f.govuk_error_summary
 
-    -# = form_for @jobseeker, url: jobseeker_registration_path, method: :put do |f|
-    -#   = f.govuk_error_summary
+      = f.govuk_password_field :current_password, label: { text: t(".current_password"), size: "s" }, width: "two-thirds"
+      = f.govuk_password_field :password, label: { text: t(".new_password"), size: "s" }, width: "two-thirds"
 
-    -#   = f.govuk_email_field :email, label: { size: "s" }, width: "two-thirds"
-    -#   = f.govuk_password_field :password, label: { size: "s" }, width: "two-thirds"
+      = f.govuk_submit t("buttons.update_password"), classes: "govuk-!-margin-bottom-0"
 
-    -#   = f.govuk_submit t("buttons.update"), classes: "govuk-!-margin-bottom-0"
-
-    -# %hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
+    %hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
