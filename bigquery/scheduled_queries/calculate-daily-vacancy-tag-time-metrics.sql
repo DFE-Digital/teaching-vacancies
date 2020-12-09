@@ -178,7 +178,8 @@ WITH
   ON
     scraped_vacancies.school_id=school.id
   WHERE
-    scraped
+    source="TES"
+    AND scraped
     AND NOT expired_before_scrape
     AND (detailed_school_type_in_scope
       OR school.id IS NULL)
