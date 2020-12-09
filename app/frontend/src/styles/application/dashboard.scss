@@ -6,6 +6,18 @@
   position: relative;
   width: 100vw;
 
+  @include govuk-media-query ($from: desktop) {
+    .dashboard__header .govuk-width-container {
+      position: relative;
+
+      .moj-action-bar {
+        bottom: 0;
+        position: absolute;
+        right: 0;
+      }
+    }
+  }
+
   > .govuk-width-container {
     background-color: inherit;
   }

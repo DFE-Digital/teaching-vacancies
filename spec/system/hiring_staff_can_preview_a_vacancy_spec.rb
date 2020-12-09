@@ -38,7 +38,7 @@ RSpec.describe "Hiring staff can preview a vacancy" do
     scenario "users can navigate back to manage jobs page" do
       click_on I18n.t("buttons.back_to_manage_jobs")
       expect(page).to have_current_path(jobs_with_type_organisation_path("draft", from_review: vacancy.id))
-      expect(page).to have_content(I18n.t("schools.jobs.index", organisation: school.name))
+      expect(page).to have_content(strip_tags(I18n.t("schools.jobs.index_html", organisation: school.name)))
     end
   end
 

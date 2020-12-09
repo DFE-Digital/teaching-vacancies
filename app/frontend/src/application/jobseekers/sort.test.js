@@ -1,5 +1,4 @@
 import {
-  hideSortSubmit,
   sortChange,
   SUBMIT_SELECTOR,
   FIELD_ID,
@@ -15,15 +14,6 @@ describe('Sort select', () => {
       <input type="submit" name="commit" value="Sort" class="jobs-sort-submit">
     </form>
   `;
-
-  describe('hideSortSubmit', () => {
-    describe('on the jobs page', () => {
-      test('hides the sort submit input element', () => {
-        hideSortSubmit();
-        expect(document.querySelector(SUBMIT_SELECTOR).style.display).toBe('none');
-      });
-    });
-  });
 
   describe('sortChange', () => {
     test('changing sort input triggers form submit', () => {

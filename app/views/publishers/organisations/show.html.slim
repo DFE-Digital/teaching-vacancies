@@ -1,23 +1,10 @@
 - content_for :page_title_prefix, @organisation.name
 
-.school.govuk-grid-row
+.govuk-grid-row
   .govuk-grid-column-full
-    h1.govuk-heading-l.inline-block class="govuk-!-margin-bottom-1"
-      - if @organisation.group_type == "local_authority"
-        = t("schools.jobs.local_authority_index", organisation: @organisation.name)
-      - else
-        = t("schools.jobs.index", organisation: @organisation.name)
-    - if @organisation.is_a?(School) && @organisation.all_vacancies.active.any?
-      = govuk_button_to t("buttons.create_job"), organisation_jobs_path, class: "govuk-!-margin-bottom-0 govuk-!-margin-top-0", form_class: "float-right"
-  - if @multiple_organisations && @organisation.is_a?(School)
-    .govuk-grid-column-full
-      - if AuthenticationFallback.enabled?
-        = govuk_link_to(t("publishers.organisations.change"), auth_email_change_organisation_path)
-      - else
-        = govuk_link_to(t("publishers.organisations.change"), auth_dfe_callback_path)
-  .govuk-grid-column-full
-    .govuk-grid-row class="govuk-!-margin-top-6"
-      = render(Publishers::VacanciesComponent.new(organisation: @organisation, sort: @sort, selected_type: @selected_type, filters: @filters, filters_form: @managed_organisations_form))
-      = render(Publishers::NoVacanciesComponent.new(organisation: @organisation))
+    = render(Publishers::VacanciesComponent.new(organisation: @organisation, sort: @sort, selected_type: @selected_type, filters: @filters, filters_form: @managed_organisations_form, sort_form: @vacancy_sort_form))
+    = render(Publishers::NoVacanciesComponent.new(organisation: @organisation))
 
+.govuk-grid-row
+  .govuk-grid-column-full
     = render(Publishers::SchoolOverviewComponent.new(organisation: @organisation))

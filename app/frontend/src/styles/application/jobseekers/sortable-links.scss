@@ -16,8 +16,8 @@
 
 .sortable-links {
   @extend .govuk-body-s;
-  margin-bottom: $govuk-gutter;
-  width: auto;
+  align-items: center;
+  display: flex;
 
   a {
     @extend .sortable-link;
@@ -30,8 +30,6 @@
   }
 
   form {
-    display: inline-block;
-
     @include govuk-media-query($until: tablet) {
       width: 100%;
     }
@@ -40,8 +38,8 @@
 
 .sort-results {
   #vacancies-stats-top {
-    margin-bottom: 0;
-    margin-top: 1rem;
+    flex-grow: 1;
+    text-align: right;
 
     @media (min-width: 1020px) {
       float: right;

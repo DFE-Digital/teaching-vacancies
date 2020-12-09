@@ -1,0 +1,37 @@
+= render(Shared::DashboardComponent.new(heading: heading, navigation_items: vacancy_links, link: { url: organisation_jobs_path, text: t("buttons.create_job") } ))
+
+.vacancies-component
+  .govuk-grid-row.vacancies-component__header class="govuk-!-margin-top-7"
+    .govuk-grid-column-one-third
+      h2.govuk-heading-l class="govuk-!-margin-bottom-4" = t("jobs.#{@selected_type}_jobs_with_count_html", count: @vacancies.count)
+
+    .govuk-grid-column-two-thirds
+      - if @vacancies.any?
+        - if sortable?
+          div class="govuk-!-margin-bottom-4"
+            = form_for @sort_form, as: "", url: jobs_with_type_organisation_path(@selected_type), id: "jobs_sort_form", html: { data: { 'auto-submit': true }, class: "sort-inline" }, method: :get do |f|
+              = f.govuk_collection_select :sort_column,
+                vacancy_sort_options,
+                :last,
+                :first,
+                label: { text: t("jobs.sort_by.label"), size: "s", class: "govuk-label inline govuk-!-margin-right-2" }
+
+              = f.govuk_submit t("jobs.sort_by.submit")
+
+      - if @organisation.is_a?(SchoolGroup)
+        button.govuk-button.govuk-button--secondary class="govuk-!-margin-bottom-0 moj-action-bar__filter" id="toggle-filters-sidebar"
+          = t("buttons.hide_filters")
+
+  .govuk-grid-row
+    .govuk-grid-column-full-width
+      .moj-filter-sidebar class="govuk-!-margin-bottom-5"
+        - if @organisation.is_a?(SchoolGroup)
+          .govuk-grid-column-one-third
+            = form_for @filters_form, url: organisation_managed_organisations_path(anchor: "search-results"), html: { data: { "auto-submit": true } }, method: :patch do |f|
+              = render(Shared::FiltersComponent.new(filters: { total_count: @filters[:managed_school_ids]&.count, title: t("jobs.filters.job_filters") }, form: f, items: [{ title: "Locations", key: "locations", search: true, scroll: true, attribute: :managed_school_ids, selected: @filters[:managed_school_ids], options: @organisation_options, value_method: :id, text_method: :label, selected_method: :name, small: true }], options: { remove_buttons: true, mobile_variant: true }))
+
+              = f.hidden_field :jobs_type, value: @selected_type
+
+      .moj-filter-layout__content class=grid_column_class
+        section
+          = render "publishers/organisations/vacancies_#{@selected_type}", selected_type: @selected_type, organisation: @organisation, vacancies: @vacancies, sort: @sort, filters_form: @filters_form

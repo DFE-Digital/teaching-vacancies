@@ -46,3 +46,15 @@
     }
   }
 }
+
+.sort-inline {
+  display: flex;
+}
+
+.js-enabled {
+  form[data-auto-submit='true'] {
+    .govuk-button {
+      display: none;
+    }
+  }
+}

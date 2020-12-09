@@ -100,13 +100,25 @@ en:
           <span class="govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize">%{location}</span>
 
     sort_by:
-      label: Sort by
-      most_relevant: most relevant first
-      publish_on:
-        descending: newest job listing
+      expires_on:
+        ascending: closing date (oldest)
+        descending: closing date (soonest)
       expires_at:
         descending: most time to apply
         ascending: least time to apply
+      job_title:
+        ascending: job title (A to Z)
+        descending: job title (Z to A)
+      label: Sort by
+      location:
+        ascending: location (A to Z)
+        descending: location (Z to A)
+      most_relevant: most relevant first
+      published_date:
+        ascending: date to be published (oldest)
+        descending: date to be published (soonest)
+      publish_on:
+        descending: newest job listing
       submit: Sort
 
     alert:
@@ -153,17 +165,23 @@ en:
 
     important_dates: Important dates and deadlines
     application_deadline: Application deadline
+    closing_date_html: '<span class="govuk-!-font-weight-bold">Closing date:</span> %{date}'
+    created_at_html: '<span class="govuk-!-font-weight-bold">Date drafted:</span> %{date}'
     days_to_apply:
       remaining: '%{days_remaining} days remaining to apply'
       today: Deadline is today
       tomorrow: Deadline is tomorrow
     expected_start: Expected start date
     publication_date: Date job will be listed
+    publication_date_html: '<span class="govuk-!-font-weight-bold">Date to be published:</span> %{date}'
     starts_asap: As soon as possible
-    starts_on: Date job starts
-    publish_on: Date listed
+    start_on: Date job starts
+    starts_on: Expected start date
+    page_views_html: '<span class="govuk-!-font-weight-bold">Page views:</span> %{views}'
+    published_on_html: '<span class="govuk-!-font-weight-bold">Date listed:</span> %{date}'
     expires_on: Closing date
     time_at: ' at '
+    updated_at_html: '<span class="govuk-!-font-weight-bold">Date last updated:</span> %{date}'
 
     education: Essential educational requirements
     qualifications: Essential qualifications
@@ -270,8 +288,8 @@ en:
 
     actions: Actions
     date_to_be_posted: Date to be published
-    edit_link: Edit
-    copy_link: Copy
+    edit_link: Edit listing
+    copy_link: Copy listing
     delete_link: Delete
     are_you_sure: Are you sure you want to delete the '%{job_title}' job?
     draft:
@@ -281,34 +299,19 @@ en:
     page_views: Total views
 
     published_jobs: Published jobs
-    published_jobs_with_count:
-      zero: No published jobs
-      one: 1 published job
-      other: '%{count} published jobs'
+    published_jobs_with_count_html: Published jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
     pending_jobs: Scheduled jobs
-    pending_jobs_with_count:
-      zero: No scheduled jobs
-      one: 1 scheduled job
-      other: '%{count} scheduled jobs'
+    pending_jobs_with_count_html: Scheduled jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
     draft_jobs: Draft jobs
-    draft_jobs_with_count:
-      zero: No draft jobs
-      one: 1 draft job
-      other: '%{count} draft jobs'
+    draft_jobs_with_count_html: Draft jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
     expired_jobs: Expired jobs
-    expired_jobs_with_count:
-      zero: No expired jobs
-      one: 1 expired job
-      other: '%{count} expired jobs'
+    expired_jobs_with_count_html: Expired jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
     awaiting_feedback_jobs: Jobs awaiting feedback
-    awaiting_feedback_jobs_with_count:
-      zero: No jobs awaiting feedback
-      one: 1 job awaiting feedback
-      other: '%{count} jobs awaiting feedback'
-    no_published_jobs: You currently have no published jobs
-    no_expired_jobs: You currently have no expired jobs
+    awaiting_feedback_jobs_with_count_html: Awaiting feedback <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
     no_draft_jobs: You currently have no draft jobs
+    no_expired_jobs: You currently have no expired jobs
     no_pending_jobs: You currently have no scheduled jobs
+    no_published_jobs: You currently have no published jobs
 
     awaiting_feedback_intro: >-
       Please tell us if you filled these expired jobs through Teaching Vacancies,
