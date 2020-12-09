@@ -16,14 +16,17 @@ $desktop-container-width: 1200px;
       }
     }
   }
-}
 
-.dashboard-header {
-  .filters-information {
-    display: inline-block;
+  &.publishers_organisations_show {
+    .govuk-main-wrapper {
+      > .govuk-width-container {
+        margin-top: 0;
 
-    .filters-applied-text {
-      line-height: 2em;
+      }
+    }
+
+    .govuk-main-wrapper__notification {
+      background-color: govuk-colour('light-grey');
     }
   }
 }

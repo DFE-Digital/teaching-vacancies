@@ -32,11 +32,11 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       let!(:inline_component) { render_inline(subject) }
 
       it "renders the vacancies component" do
-        expect(inline_component.css(".govuk-tabs").to_html).not_to be_blank
+        expect(inline_component.css(".moj-scrollable-pane__wrapper").to_html).not_to be_blank
       end
 
       it "renders the number of jobs in the heading" do
-        expect(inline_component.css("section.govuk-tabs__panel > h2.govuk-heading-m").to_html).to include("1 published job")
+        expect(inline_component.css(".moj-scrollable-pane__wrapper .govuk-heading-m").to_html).to include("1 published job")
       end
 
       it "renders the vacancy job title in the table" do
@@ -68,11 +68,11 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       let!(:inline_component) { render_inline(subject) }
 
       it "renders the vacancies component" do
-        expect(inline_component.css(".govuk-tabs").to_html).not_to be_blank
+        expect(inline_component.css(".moj-scrollable-pane__wrapper").to_html).not_to be_blank
       end
 
       it "renders the number of jobs in the heading" do
-        expect(inline_component.css("section.govuk-tabs__panel > h2.govuk-heading-m").to_html).to include("1 published job")
+        expect(inline_component.css(".moj-scrollable-pane__wrapper .govuk-heading-m").to_html).to include("1 published job")
       end
 
       it "renders the vacancy job title in the table" do
@@ -120,11 +120,11 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       let!(:inline_component) { render_inline(subject) }
 
       it "renders the vacancies component" do
-        expect(inline_component.css(".govuk-tabs").to_html).not_to be_blank
+        expect(inline_component.css(".moj-scrollable-pane__wrapper").to_html).not_to be_blank
       end
 
       it "renders the number of jobs in the heading" do
-        expect(inline_component.css("section.govuk-tabs__panel > h2.govuk-heading-m").to_html).to include("1 published job")
+        expect(inline_component.css(".moj-scrollable-pane__wrapper .govuk-heading-m").to_html).to include("1 published job")
       end
 
       it "renders the vacancy job title in the table" do

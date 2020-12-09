@@ -22,7 +22,7 @@ RSpec.describe "School viewing vacancies" do
 
     visit organisation_path
 
-    expect(page).to have_content(I18n.t("schools.jobs.index", organisation: school.name))
+    expect(page).to have_content(I18n.t("schools.jobs.index_html", organisation: school.name))
     expect(page).to have_content(vacancy1.job_title)
     expect(page).to have_content(vacancy2.job_title)
   end

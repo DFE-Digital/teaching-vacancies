@@ -12,7 +12,7 @@
     margin-bottom: $govuk-gutter-half;
   }
 
-  li {
+  > li {
     border-bottom: 1px solid govuk-colour('light-grey');
     margin-bottom: $govuk-gutter-half;
     padding-bottom: $govuk-gutter-half;

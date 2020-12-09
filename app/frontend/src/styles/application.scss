@@ -12,6 +12,7 @@ $govuk-image-url-function: frontend-image-url;
 @import '~govuk-frontend/govuk/all';
 @import '~@ministryofjustice/frontend/moj/all';
 
+@import 'shared/dashboard_component/dashboard_component';
 @import 'shared/navbar_component/navbar_component';
 @import 'shared/notification_component/notification_component';
 @import 'shared/banner_link_component/banner_link_component';
@@ -51,6 +52,9 @@ $govuk-image-url-function: frontend-image-url;
 @import 'application/jobseekers/sortable-links';
 @import 'application/jobseekers/vacancies';
 @import 'application/jobseekers/vacancy';
+
+@import 'jobseekers/search_results/job_alerts_link_component';
+@import 'jobseekers/similar_job_component/similar_job_component';
 
 @import 'application/publishers/awaiting-feedback-vacancies';
 @import 'application/publishers/check-your-answers';

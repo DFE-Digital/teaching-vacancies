@@ -1,4 +1,4 @@
-%h2.govuk-heading-m= t("jobs.#{selected_type}_jobs_with_count", count: vacancies.count)
+%h2.govuk-heading-l= t("jobs.#{selected_type}_jobs_with_count_html", count: vacancies.count)
 
 - if vacancies.any?
   %table.govuk-table.vacancies{ class: "govuk-!-margin-top-4" }

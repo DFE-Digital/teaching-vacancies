@@ -62,7 +62,7 @@ RSpec.describe "Hiring staff can see their vacancies" do
     scenario "with published vacancies" do
       visit organisation_path
 
-      within(".tab-list") do
+      within(".moj-primary-navigation__list") do
         click_on(I18n.t("jobs.published_jobs"))
       end
 
@@ -77,7 +77,7 @@ RSpec.describe "Hiring staff can see their vacancies" do
     scenario "with draft vacancies" do
       visit organisation_path
 
-      within(".tab-list") do
+      within(".moj-primary-navigation__list") do
         click_on(I18n.t("jobs.draft_jobs"))
       end
 
@@ -93,7 +93,7 @@ RSpec.describe "Hiring staff can see their vacancies" do
     scenario "with pending vacancies" do
       visit organisation_path
 
-      within(".tab-list") do
+      within(".moj-primary-navigation__list") do
         click_on(I18n.t("jobs.pending_jobs"))
       end
 
@@ -109,7 +109,7 @@ RSpec.describe "Hiring staff can see their vacancies" do
     scenario "with expired vacancies" do
       visit organisation_path
 
-      within(".tab-list") do
+      within(".moj-primary-navigation__list") do
         click_on(I18n.t("jobs.expired_jobs"))
       end
 
@@ -133,7 +133,7 @@ RSpec.describe "Hiring staff can see their vacancies" do
         draft_vacancy
         visit organisation_path
 
-        within(".tab-list") do
+        within(".moj-primary-navigation__list") do
           click_on(I18n.t("jobs.draft_jobs"))
         end
 
