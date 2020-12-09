@@ -5,6 +5,8 @@
   %td.govuk-table__cell= vacancy.publish_on
   %td.govuk-table__cell= vacancy.expires_on
   %td.govuk-table__cell= vacancy.page_views
-  %td.govuk-table__cell= govuk_link_to(t('jobs.edit_link'), vacancy.edit_path)
-  %td.govuk-table__cell= govuk_link_to(t('jobs.copy_link'), vacancy.copy_path, method: :get)
-  %td.govuk-table__cell= govuk_link_to(t('jobs.delete_link'), vacancy.delete_path, method: :delete, data: { confirm: t('jobs.are_you_sure', job_title: vacancy.job_title) })
+  %td.govuk-table__cell
+    %ul.govuk-list
+      %li= govuk_link_to(t('jobs.edit_link'), vacancy.edit_path)
+      %li= govuk_link_to(t('jobs.copy_link'), vacancy.copy_path, method: :get)
+      %li= govuk_link_to(t('jobs.delete_link'), vacancy.delete_path, method: :delete, data: { confirm: t('jobs.are_you_sure', job_title: vacancy.job_title) } )

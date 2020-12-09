@@ -3,6 +3,8 @@
   - if organisation.is_a?(SchoolGroup)
     %td.govuk-table__cell#vacancy_location= vacancy.readable_job_location
   %td.govuk-table__cell= vacancy.created_at
-  %td.govuk-table__cell= vacancy.updated_at
-  %td.govuk-table__cell= govuk_link_to(t('jobs.edit_link'), organisation_job_review_path(vacancy.id, edit_draft: true))
-  %td.govuk-table__cell= govuk_link_to(t('jobs.delete_link'), organisation_job_path(id: vacancy.id), method: :delete, data: { confirm: t('jobs.are_you_sure', job_title: vacancy.job_title) })
+  %td.govuk-table__cell
+    %ul.govuk-list
+      %li= govuk_link_to(t('jobs.edit_link'), vacancy.edit_path)
+      %li= govuk_link_to(t('jobs.copy_link'), vacancy.copy_path, method: :get)
+      %li= govuk_link_to(t('jobs.delete_link'), vacancy.delete_path, method: :delete, data: { confirm: t('jobs.are_you_sure', job_title: vacancy.job_title) } )

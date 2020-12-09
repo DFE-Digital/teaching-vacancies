@@ -269,8 +269,8 @@ en:
 
     actions: Actions
     date_to_be_posted: Date to be published
-    edit_link: Edit
-    copy_link: Copy
+    edit_link: Edit listing
+    copy_link: Copy listing
     delete_link: Delete
     are_you_sure: Are you sure you want to delete the '%{job_title}' job?
     draft:
@@ -280,30 +280,15 @@ en:
     page_views: Total views
 
     published_jobs: Published jobs
-    published_jobs_with_count:
-      zero: No published jobs
-      one: 1 published job
-      other: '%{count} published jobs'
+    published_jobs_with_count_html: Published jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
     pending_jobs: Scheduled jobs
-    pending_jobs_with_count:
-      zero: No scheduled jobs
-      one: 1 scheduled job
-      other: '%{count} scheduled jobs'
+    pending_jobs_with_count_html: Scheduled jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
     draft_jobs: Draft jobs
-    draft_jobs_with_count:
-      zero: No draft jobs
-      one: 1 draft job
-      other: '%{count} draft jobs'
+    draft_jobs_with_count_html: Draft jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
     expired_jobs: Expired jobs
-    expired_jobs_with_count:
-      zero: No expired jobs
-      one: 1 expired job
-      other: '%{count} expired jobs'
+    expired_jobs_with_count_html: Expired jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
     awaiting_feedback_jobs: Jobs awaiting feedback
-    awaiting_feedback_jobs_with_count:
-      zero: No jobs awaiting feedback
-      one: 1 job awaiting feedback
-      other: '%{count} jobs awaiting feedback'
+    awaiting_feedback_jobs_with_count_html: Jobs awaiting feedback <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
     no_published_jobs: You currently have no published jobs
     no_expired_jobs: You currently have no expired jobs
     no_draft_jobs: You currently have no draft jobs

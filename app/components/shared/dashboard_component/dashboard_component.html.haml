@@ -1,0 +1,19 @@
+.dashboard__header
+  .govuk-width-container
+    %h1.govuk-heading-m{ class: 'govuk-!-margin-bottom-1' }
+      = @heading
+
+    .desktop-container-width
+      - if @panel
+        .filters-information.moj-action-bar
+          %button.govuk-button.govuk-button--secondary{ class: "govuk-!-margin-bottom-0 moj-action-bar__filter", id: "toggle-filters-sidebar" }= t('buttons.hide_filters')
+
+          - if @link
+            = link_to t("buttons.create_job"), @link, method: :post, class: "govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-0"
+      .moj-primary-navigation
+        .moj-primary-navigation__container
+          .moj-primary-navigation__nav{aria: { label: "Account navigation" }}
+            %ul.moj-primary-navigation__list
+              - @navigation_items.each do |item|
+                %li.moj-primary-navigation__item
+                  = item

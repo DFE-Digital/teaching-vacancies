@@ -1,4 +1,4 @@
-%h2.govuk-heading-m= t("jobs.#{selected_type}_jobs_with_count", count: vacancies.count)
+%h2.govuk-heading-l= t("jobs.#{selected_type}_jobs_with_count_html", count: vacancies.count)
 
 - if vacancies.any?
   %p.govuk-body#awaiting_feedback_intro=t("jobs.awaiting_feedback_intro")
