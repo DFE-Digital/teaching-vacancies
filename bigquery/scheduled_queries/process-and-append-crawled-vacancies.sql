@@ -57,9 +57,14 @@ WITH
       JSON_EXTRACT_SCALAR(JSON_EXTRACT_SCALAR(DATA,
           '$.json'),
         '$.hiringOrganization.sameAs') AS hiring_organisation_url,
-      CAST(PARSE_TIMESTAMP("%FT%H:%M:%E*SZ",JSON_EXTRACT_SCALAR(JSON_EXTRACT_SCALAR(DATA,
-              '$.json'),
-            '$.datePosted')) AS DATE) AS publish_on,
+      CAST(COALESCE(SAFE.PARSE_TIMESTAMP( "%FT%H:%M:%E*SZ", #parse a timestamp like 2020-12-09T02:00:00.000Z
+            JSON_EXTRACT_SCALAR( JSON_EXTRACT_SCALAR( DATA,
+                '$.json'),
+              '$.datePosted') ),
+          PARSE_TIMESTAMP( "%F %T%Ez", #parse a timestamp like 2020-12-07 16:41:00+00:00
+            JSON_EXTRACT_SCALAR( JSON_EXTRACT_SCALAR( DATA,
+                '$.json'),
+              '$.datePosted') )) AS DATE) AS publish_on,
       JSON_EXTRACT_SCALAR(REPLACE(JSON_EXTRACT_SCALAR(DATA,
             '$.json'),"@type","type"),
         '$.jobLocation.type') AS location_type,
@@ -90,9 +95,12 @@ WITH
       JSON_EXTRACT_SCALAR(JSON_EXTRACT_SCALAR(DATA,
           '$.json'),
         '$.baseSalary.value.unitText') AS salary_unit,
-      CAST(PARSE_TIMESTAMP("%FT%H:%M:%E*SZ",JSON_EXTRACT_SCALAR(JSON_EXTRACT_SCALAR(DATA,
-              '$.json'),
-            '$.validThrough')) AS DATE) AS expires_on,
+      CAST(COALESCE(SAFE.PARSE_TIMESTAMP("%FT%H:%M:%E*SZ",JSON_EXTRACT_SCALAR(JSON_EXTRACT_SCALAR(DATA,
+                '$.json'),
+              '$.validThrough')),
+          PARSE_TIMESTAMP("%F %T%Ez",JSON_EXTRACT_SCALAR(JSON_EXTRACT_SCALAR(DATA,
+                '$.json'),
+              '$.validThrough'))) AS DATE) AS expires_on,
       JSON_EXTRACT_SCALAR(JSON_EXTRACT_SCALAR(DATA,
           '$.json'),
         '$.employmentType') AS employment_type,
@@ -101,13 +109,13 @@ WITH
   WHERE
     scraped
     AND NOT expired_before_scrape
-    AND location_address_country = "United Kingdom"
+    AND location_address_country IN ("United Kingdom",
+      "GB")
     AND scraped_url NOT IN (
     SELECT
       scraped_url
     FROM
-      `teacher-vacancy-service.production_dataset.CALCULATED_scraped_vacancies`)
- ),
+      `teacher-vacancy-service.production_dataset.CALCULATED_scraped_vacancies`) ),
   vacancy_to_school_matches AS (
   SELECT
     DISTINCT scraped_vacancy.scraped_url,
