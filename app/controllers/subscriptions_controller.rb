@@ -42,8 +42,13 @@ class SubscriptionsController < ApplicationController
     if @subscription_form.valid?
       subscription.update(@subscription_form.job_alert_params)
       Auditor::Audit.new(subscription, "subscription.update", current_publisher_oid).log
-      SubscriptionMailer.update(subscription.id).deliver_later
-      render :confirm_update
+
+      if current_jobseeker
+        redirect_to jobseekers_subscriptions_path, success: t(".success")
+      else
+        SubscriptionMailer.update(subscription.id).deliver_later
+        render :confirm_update
+      end
     else
       render :edit
     end
@@ -62,7 +67,11 @@ class SubscriptionsController < ApplicationController
     @unsubscribe_feedback_form = UnsubscribeFeedbackForm.new(unsubscribe_feedback_params)
 
     if @unsubscribe_feedback_form.valid? && @subscription.unsubscribe_feedbacks.create(unsubscribe_feedback_params)
-      render :feedback_received
+      if current_jobseeker
+        redirect_to jobseekers_subscriptions_path, success: t(".success")
+      else
+        render :feedback_received
+      end
     else
       render :unsubscribe
     end

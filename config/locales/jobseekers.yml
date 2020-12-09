@@ -71,6 +71,9 @@ en:
         delete: Delete
     subscriptions:
       index:
+        frequency:
+          daily: Daily, at around 3 pm
+          weekly: Weekly (Friday at around 6 pm)
         heading:
           actions: Actions
           criteria: Alert criteria
