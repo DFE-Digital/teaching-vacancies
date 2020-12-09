@@ -25,6 +25,7 @@ RSpec.describe "Jobseekers can sign in to their account" do
       sign_in_jobseeker(email: "i-forgot-my@email-address.com", password: jobseeker.password)
 
       expect(current_path).to eq(jobseeker_session_path)
+      expect(page).not_to have_selector(".govuk-notification")
       expect(page).to have_content(I18n.t("devise.failure.invalid"))
     end
   end
@@ -34,6 +35,7 @@ RSpec.describe "Jobseekers can sign in to their account" do
       sign_in_jobseeker(email: jobseeker.email, password: "wrong and bad")
 
       expect(current_path).to eq(jobseeker_session_path)
+      expect(page).not_to have_selector(".govuk-notification")
       expect(page).to have_content(I18n.t("devise.failure.invalid"))
     end
   end

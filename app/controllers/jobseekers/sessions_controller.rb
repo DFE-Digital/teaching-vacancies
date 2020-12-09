@@ -3,11 +3,10 @@ class Jobseekers::SessionsController < Devise::SessionsController
   before_action :sign_out_publisher!, only: %i[create]
 
   def new
-    if [I18n.t("devise.failure.invalid"), I18n.t("devise.failure.not_found_in_database")].include? flash[:alert]
-      self.resource = resource_class.new(sign_in_params)
-      resource.errors.add(:email, flash[:alert])
+    @sign_in_form = JobseekerSignInForm.new(flash[:alert], sign_in_params)
+    if params[:action] == "create" && @sign_in_form.invalid?
       flash.clear
-      render :new and return
+      render :new
     else
       super
     end
