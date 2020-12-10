@@ -99,7 +99,7 @@ private
   end
 
   def redirect_unauthorised_publishers
-    redirect_to new_auth_email_path, notice: I18n.t("publishers.temp_login.not_authorised") unless publisher_authorised?
+    redirect_to new_auth_email_path, notice: t(".not_authorised") unless publisher_authorised?
   end
 
   def publisher_authorised?

@@ -14,7 +14,7 @@ RSpec.describe "Giving general feedback for the service" do
 
       click_on I18n.t("buttons.submit_feedback")
 
-      expect(page).to have_content(I18n.t("messages.feedback.submitted"))
+      expect(page).to have_content(I18n.t("general_feedback.create.success"))
     end
   end
 

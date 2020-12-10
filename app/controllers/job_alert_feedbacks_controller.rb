@@ -10,7 +10,7 @@ class JobAlertFeedbacksController < ApplicationController
     )
     if @feedback.save
       Auditor::Audit.new(@feedback, "job_alert_feedback.create", current_publisher_oid).log
-      redirect_to edit_subscription_job_alert_feedback_path(id: @feedback.id), success: I18n.t("job_alert_feedbacks.submitted.relevance")
+      redirect_to edit_subscription_job_alert_feedback_path(id: @feedback.id), success: t(".success")
     end
   end
 
@@ -31,7 +31,7 @@ class JobAlertFeedbacksController < ApplicationController
     elsif @feedback_form.valid?
       @feedback.update(form_params)
       Auditor::Audit.new(@feedback, "job_alert_feedback.update", current_publisher_oid).log
-      redirect_to root_path, success: I18n.t("job_alert_feedbacks.submitted.comment")
+      redirect_to root_path, success: t(".success")
     else
       render :edit
     end

@@ -3,21 +3,14 @@ en:
     access:
       publisher_signed_out: You have signed out
       publisher_signed_out_for_inactivity: You have been signed out because you have been inactive for %{duration}
-    feedback:
-      submitted: Your feedback has been successfully submitted
     jobs:
       action_required:
         heading: Action required
         label: action required
         message: You must complete the required actions below in order to publish this listing
       already_published: This job has already been published
-      delete_html: >-
-        %{job_title} has been <span class="govuk-!-font-weight-bold delete-listing-success-gtm">deleted</span>
       draft_saved_html: <span class="govuk-!-font-weight-bold">Draft saved</span> for %{job_title}
       feedback:
-        awaiting:
-          one: You have %{count} job awaiting feedback
-          other: You have %{count} jobs awaiting feedback
         error_title: There was a problem submitting your feedback
         error_body: Please make sure you have submitted an answer for both questions
         inline_error: Please select an option
@@ -32,16 +25,9 @@ en:
         heading: New sections
         label: new
         message: Improve your job listing using the new sections and features below
-      view:
-        only_published: You can only view published jobs
     jobseekers:
       saved_jobs:
-        destroy: Saved job removed
-        new_html: >-
-          You have saved this job. <a href="%{link}" class="govuk-link">View all your saved jobs</a> on your account.
         unauthenticated: Sign in or create an account to save this job
-    organisation:
-      description_updated_html: Details updated for <span class="govuk-!-font-weight-bold">%{organisation}</span>
     subscriptions:
       created: Email subscription created successfully.
 
@@ -52,7 +38,5 @@ en:
     sign_in:
       unauthorised: You are not authorised to act on behalf of this school
       failure: An unexpected error occured. We have been notified.
-    vacancy_publish_feedback:
-      already_submitted: Feedback for this job has already been submitted
     subscriptions:
       already_exists: You're already subscribed to an alert for these search criteria

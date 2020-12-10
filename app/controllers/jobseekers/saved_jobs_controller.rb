@@ -5,13 +5,13 @@ class Jobseekers::SavedJobsController < Jobseekers::ApplicationController
 
   def new
     @saved_job.save
-    redirect_to job_path(@vacancy), success: I18n.t("messages.jobseekers.saved_jobs.new_html", link: jobseekers_saved_jobs_path)
+    redirect_to job_path(@vacancy), success: t(".success_html", link: jobseekers_saved_jobs_path)
   end
 
   def destroy
     @saved_job.destroy
     if saved_job_params[:redirect_to_dashboard] == "true"
-      redirect_to jobseekers_saved_jobs_path, success: I18n.t("messages.jobseekers.saved_jobs.destroy")
+      redirect_to jobseekers_saved_jobs_path, success: t(".success")
     else
       redirect_to job_path(@vacancy)
     end

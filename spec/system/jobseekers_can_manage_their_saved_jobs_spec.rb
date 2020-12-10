@@ -62,7 +62,7 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
 
         it "deletes the saved job and redirects to the dashboard" do
           expect(page).to have_content(I18n.t("jobseekers.saved_jobs.index.page_title"))
-          expect(page).to have_content(I18n.t("messages.jobseekers.saved_jobs.destroy"))
+          expect(page).to have_content(I18n.t("jobseekers.saved_jobs.destroy.success"))
           expect(page).not_to have_content(vacancy_1.job_title)
           expect(page).to have_content(vacancy_2.job_title)
           expect(page).to have_content(expired_vacancy.job_title)

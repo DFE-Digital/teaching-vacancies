@@ -15,7 +15,7 @@ class Publishers::Organisations::SchoolsController < Publishers::BaseController
 
     if @organisation_form.valid?
       @organisation.update(organisation_params)
-      redirect_to_organisation_or_organisation_schools_path
+      redirect_to @redirect_path, success: t(".success_html", organisation: @organisation.name)
     else
       render :edit
     end
@@ -33,10 +33,5 @@ private
 
   def organisation_params
     params.require(:organisation_form).permit(:description, :website)
-  end
-
-  def redirect_to_organisation_or_organisation_schools_path
-    redirect_to @redirect_path,
-                success: I18n.t("messages.organisation.description_updated_html", organisation: @organisation.name)
   end
 end
