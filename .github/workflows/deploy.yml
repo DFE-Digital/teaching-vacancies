@@ -157,7 +157,7 @@ jobs:
 
     - name: Send job status message to twd_tv_dev channel
       if: ${{ always() && github.ref == 'refs/heads/master' }}
-      uses: rtCamp/action-slack-notify@v2.1.1
+      uses: rtCamp/action-slack-notify@v2.1.2
       env:
         SLACK_CHANNEL: twd_tv_dev
         SLACK_USERNAME: CI Deployment
