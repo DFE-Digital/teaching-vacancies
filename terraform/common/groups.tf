@@ -13,6 +13,123 @@ resource aws_iam_group developers {
   path = "/${local.service_name}/"
 }
 
+data aws_iam_policy_document manage_own_security {
+
+  statement {
+    sid = "AllowUsersToCreateEnableResyncTheirOwnVirtualMFADevice"
+
+    actions = [
+      "iam:CreateVirtualMFADevice",
+      "iam:EnableMFADevice",
+      "iam:ResyncMFADevice",
+    ]
+
+    resources = [
+      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:mfa/&{aws:username}",
+      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/&{aws:username}",
+    ]
+  }
+
+  statement {
+    sid = "AllowUsersToDeactivateTheirOwnVirtualMFADevice"
+
+    actions = [
+      "iam:DeactivateMFADevice",
+    ]
+
+    resources = [
+      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:mfa/&{aws:username}",
+      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/&{aws:username}",
+    ]
+
+    condition {
+      test     = "Bool"
+      variable = "aws:MultiFactorAuthPresent"
+      values   = ["true"]
+    }
+  }
+
+  statement {
+    sid = "AllowUsersToDeleteTheirOwnVirtualMFADevice"
+
+    actions = [
+      "iam:DeleteVirtualMFADevice",
+    ]
+
+    resources = [
+      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:mfa/&{aws:username}",
+      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/&{aws:username}",
+    ]
+
+    condition {
+      test     = "Bool"
+      variable = "aws:MultiFactorAuthPresent"
+      values   = ["true"]
+    }
+  }
+
+  statement {
+    sid = "AllowUsersToListMFADevicesandUsersForConsole"
+
+    actions = [
+      "iam:ListMFADevices",
+      "iam:ListVirtualMFADevices",
+      "iam:ListUsers",
+    ]
+
+    resources = [
+      "*",
+    ]
+  }
+
+  statement {
+    actions = ["iam:ChangePassword"]
+
+    resources = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/&{aws:username}"]
+  }
+
+  statement {
+    actions   = ["iam:GetAccountPasswordPolicy"]
+    resources = ["*"]
+  }
+
+  statement {
+    actions = ["iam:GetLoginProfile"]
+
+    resources = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/&{aws:username}"]
+
+    condition {
+      test     = "Bool"
+      variable = "aws:MultiFactorAuthPresent"
+      values   = ["true"]
+    }
+  }
+
+  statement {
+    actions = [
+      "iam:DeleteAccessKey",
+      "iam:GetAccessKeyLastUsed",
+      "iam:UpdateAccessKey",
+      "iam:GetUser",
+      "iam:CreateAccessKey",
+      "iam:ListAccessKeys",
+    ]
+
+    resources = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/&{aws:username}"]
+
+    condition {
+      test     = "Bool"
+      variable = "aws:MultiFactorAuthPresent"
+      values   = ["true"]
+    }
+  }
+}
+
+resource aws_iam_policy manage_own_security {
+  name        = "manage_own_security"
+  description = "Allow managing own MFA, keys, passwords"
+  policy      = data.aws_iam_policy_document.manage_own_security.json
+}
 data aws_iam_policy_document assume_role_if_mfa_present {
 
   statement {
@@ -127,7 +244,6 @@ resource aws_iam_policy allow_assume_role_secreteditor {
 data aws_iam_policy_document parameter_store {
   statement {
     actions = [
-      "ssm:DescribeParameters",
       "ssm:PutParameter",
       "ssm:GetParameterHistory",
       "ssm:GetParametersByPath",
@@ -137,6 +253,13 @@ data aws_iam_policy_document parameter_store {
     resources = [
       "arn:aws:ssm:${var.region}:${data.aws_caller_identity.current.account_id}:parameter/${local.service_name}/*"
     ]
+  }
+
+  statement {
+    actions = [
+      "ssm:DescribeParameters"
+    ]
+    resources = ["*"]
   }
 }
 
@@ -151,7 +274,22 @@ resource aws_iam_role_policy_attachment secreteditor_role_policies {
   policy_arn = aws_iam_policy.parameter_store.arn
 }
 
-# Allow groups to assume roles
+# Allow group members to manage own MFA, access keys, passwords
+
+resource aws_iam_group_policy_attachment permit_administrators_group_manage_own_security {
+  group      = aws_iam_group.administrators.name
+  policy_arn = aws_iam_policy.manage_own_security.arn
+}
+
+resource aws_iam_group_policy_attachment permit_billingmanagers_group_manage_own_security {
+  group      = aws_iam_group.billingmanagers.name
+  policy_arn = aws_iam_policy.manage_own_security.arn
+}
+resource aws_iam_group_policy_attachment permit_developers_group_manage_own_security {
+  group      = aws_iam_group.developers.name
+  policy_arn = aws_iam_policy.manage_own_security.arn
+}
+# Allow group members to assume roles
 
 resource aws_iam_group_policy_attachment permit_administrators_group_assume_role_administrator {
   group      = aws_iam_group.administrators.name

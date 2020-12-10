@@ -8,10 +8,11 @@ LOCAL_TAG			:=dev-$(LOCAL_BRANCH)-$(LOCAL_SHA)
 ##@ Query parameter store to display environment variables. Requires AWS credentials
 
 .PHONY: print-env
-print-env: ## make -s local print-env > .env
-		$(if $(env), , $(error Usage: make <env> print-env))
+print-env: ## make -s local print-env mfa_code=123456 > .env
+		$(if $(env), , $(error Usage: make <env> print-env mfa_code=<mfa_code>))
+		$(if $(mfa_code), , $(error Usage: make <env> print-env mfa_code=<mfa_code>))
 		@bin/run-in-env -t /teaching-vacancies/dev/app -y terraform/workspace-variables/$(env)_app_env.yml \
-			$(local_override) -o env_stdout $(local_filter)
+			$(local_override) -m $(mfa_code) -o env_stdout $(local_filter)
 
 ##@ Set environment and corresponding configuration
 

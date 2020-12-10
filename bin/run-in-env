@@ -7,13 +7,14 @@ require 'aws-sdk-ssm'
 require 'erb'
 
 OUTPUT_LIST = ['stdout', 'env_stdout', 'env_file', 'subshell', 'tf_subshell', 'quiet']
+DEFAULT_AWS_REGION = 'eu-west-2'
 
 @log = Logger.new(STDOUT)
 @log.level = Logger::INFO
 
 def usage
   puts <<~EOF
-  Usage: run_in_env.sh [-p <parameter>]... [-t <parameter-path>]... [-o <output>] [-f <output_file>] [-v] [-- <command>]
+  Usage: run_in_env.sh [-p <parameter>]... [-t <parameter-path>]... [-o <output>] [-f <output_file>] [-m <MFA code>] [-v] [-- <command>]
   Arguments:
     -p (--parameter): parameter name in AWS SSM Parameter store. Can be repeated
     -t (--parameter-path): parameter path in AWS SSM Parameter store hierarchy. Can be repeated
@@ -26,6 +27,7 @@ def usage
       tf_subshell: Run command in a subshell with terraform env. variables. Must provide command
       quiet: No output (Validates input)
     -f (--output_file): path to output file
+    -m (--mfa_token_code): virtual MFA TOTP code
     -v (--verbose): verbose output
   EOF
   exit(1)
@@ -41,10 +43,37 @@ def run_command_with_env(config_map, command)
   exec command
 end
 
-def pull_ssm_parameters(parameters)
+def create_ssm_client(mfa_token_code=nil)
+  if mfa_token_code
+    sts_client = Aws::STS::Client.new
+    caller_id = sts_client.get_caller_identity()
+    serial_number = caller_id.arn.sub("user", "mfa")
+    user_name = caller_id.arn.split("/").last
+    role = "ReadOnly"
+    credentials = Aws::AssumeRoleCredentials.new(
+      client: sts_client,
+      role_arn: "arn:aws:iam::" + caller_id.account + ":role/" + role,
+      role_session_name: user_name + role,
+      serial_number: serial_number,
+      token_code: mfa_token_code
+    )
+    ssm_client = Aws::SSM::Client.new(
+      credentials: credentials,
+      region: DEFAULT_AWS_REGION
+    )
+  else
+    ssm_client = Aws::SSM::Client.new(
+      region: DEFAULT_AWS_REGION
+    )    
+  end
+
+  ssm_client
+end
+
+def pull_ssm_parameters(parameters, mfa_token_code=nil)
   @log.debug 'Fetching parameters ' + parameters.to_s
   config_map = {}
-  ssm_client = Aws::SSM::Client.new(region: 'eu-west-2')
+  ssm_client = create_ssm_client(mfa_token_code)
 
   parameters.each { |parameter_path|
     response = ssm_client.get_parameter({
@@ -63,10 +92,10 @@ def pull_ssm_parameters(parameters)
   config_map
 end
 
-def pull_ssm_parameter_paths(parameter_paths)
+def pull_ssm_parameter_paths(parameter_paths, mfa_token_code=nil)
   @log.debug 'Fetching parameters in paths ' + parameter_paths.to_s
   config_map = {}
-  ssm_client = Aws::SSM::Client.new(region: 'eu-west-2')
+  ssm_client = create_ssm_client(mfa_token_code)
 
   parameter_paths.each { |parameter_path|
     response = ssm_client.get_parameters_by_path({
@@ -149,6 +178,7 @@ opts = GetoptLong.new(
   [ '--yaml-file', '-y', GetoptLong::REQUIRED_ARGUMENT ],
   [ '--output', '-o', GetoptLong::REQUIRED_ARGUMENT ],
   [ '--output_file', '-f', GetoptLong::REQUIRED_ARGUMENT ],
+  [ '--mfa_token_code', '-m', GetoptLong::REQUIRED_ARGUMENT ],
   [ '--verbose', '-v', GetoptLong::NO_ARGUMENT ]
 )
 
@@ -158,6 +188,7 @@ yaml_files = []
 output = nil
 output_file = nil
 command = nil
+mfa_token_code = nil
 
 opts.each do |opt, arg|
   case opt
@@ -173,6 +204,8 @@ opts.each do |opt, arg|
     output = arg
   when '--output_file'
     output_file = arg
+  when '--mfa_token_code'
+    mfa_token_code = arg
   when '--verbose'
     @log.level = Logger::DEBUG
   end
@@ -200,11 +233,11 @@ end
 config_map = {}
 
 unless parameters.empty?
-  config_map.update pull_ssm_parameters parameters
+  config_map.update pull_ssm_parameters(parameters, mfa_token_code)
 end
 
 unless parameter_paths.empty?
-  config_map.update pull_ssm_parameter_paths parameter_paths
+  config_map.update pull_ssm_parameter_paths(parameter_paths, mfa_token_code)
 end
 
 unless yaml_files.empty?

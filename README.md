@@ -61,11 +61,20 @@ brew cask install chromedriver
 When onboarded, you will be provided with an AWS user. You can use it to access the AWS console at:
 https://teaching-vacancies.signin.aws.amazon.com/console.
 
-For programmatic access, including application deployment using Terraform, create access keys for yourself under [My Security Credentials](https://console.aws.amazon.com/iam/home?region=eu-west-2#/security_credentials) - note these credentials for later use when configuring the AWS CLI.
+Once you are logged in, go to [My Security Credentials](https://console.aws.amazon.com/iam/home?region=eu-west-2#/security_credentials)
+Choose `Assign MFA device` and set up an authenticator app as a Virtual MFA device.
+If using an Authenticator App, scan the QR code, and when prompted to enter codes, enter the first code, wait 30 seconds until a new code has been generated on your authenticator app, and enter the new code in the second box.
 
-In the same section, choose `Assign MFA device` and set up an authenticator app as a Virtual MFA device. 
+Log out, and back in. You should be prompted for an MFA code.
 
-Then install and configure the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html).
+Again, go to [My Security Credentials](https://console.aws.amazon.com/iam/home?region=eu-west-2#/security_credentials).
+Choose `Create access key`. Note the credentials securely, as you will need these to configure the AWS CLI.
+
+Check you can assume the [ReadOnly](https://signin.aws.amazon.com/switchrole?account=530003481352&roleName=ReadOnly&displayName=TV%20ReadOnly) role
+
+Check if you can see the [Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table)
+
+Install and configure the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html).
 
 ```bash
 brew install awscli
@@ -83,13 +92,13 @@ You'll be prompted to enter:
 - Default region name (choose `eu-west-2`)
 - Default output format (choose `json`)
 
-To check that everything has been done correctly you should be able to do:
+To check that everything has been done correctly, checking the contents of the generated files
 
 ```bash
 cat ~/.aws/credentials
 ```
 
-and see something like:
+should contain a default entry, with your access key and secret key:
 
 ```
 [default]
@@ -99,20 +108,26 @@ aws_secret_access_key=<AWS_SECRET_ACCESS_KEY>
 
 Edit `~/.aws/config`
 
+It should begin with the region and output defaults:
+
 ```
 [default]
 region = eu-west-2
 output = json
+```
 
+Extend this by adding to two profiles, replacing `<YOURUSERNAME>`
+
+```
 [profile readonly]
 role_arn = arn:aws:iam::530003481352:role/readonly
 source_profile = default
-mfa_serial = arn:aws:iam::530003481352:mfa/YOURUSERNAME
+mfa_serial = arn:aws:iam::530003481352:mfa/<YOURUSERNAME>
 
 [profile secreteditor]
 role_arn = arn:aws:iam::530003481352:role/secreteditor
 source_profile = default
-mfa_serial = arn:aws:iam::530003481352:mfa/YOURUSERNAME
+mfa_serial = arn:aws:iam::530003481352:mfa/<YOURUSERNAME>
 ```
 
 When using the AWS CLI, you may pass in the profile like so
@@ -121,12 +136,6 @@ When using the AWS CLI, you may pass in the profile like so
 aws --profile readonly s3 ls
 ```
 
-Or set with an environment variable
-
-```bash
-export AWS_PROFILE=readonly
-aws s3 ls
-```
 ### Environment Variables
 
 Some environment variables are stored in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table), some are stored in the repository.
@@ -135,11 +144,12 @@ Secrets (eg: API keys) are stored in AWS Systems Manager Parameter Store in `/te
 
 Non-secrets (eg: public URLs or feature flags) are stored in the repository in `terraform/workspace-variables/<env>_app_env.yml` files.
 
-Set the `AWS_PROFILE` environment variable to `readonly`.
+Open your Authenticator App, and get the 6-digit MFA code.
+
 Run the following command to fetch all the required environment variables for development and output to a shell environment file:
 
 ```
-make -s local print-env > .env
+make -s local print-env mfa_code=123456 > .env
 ```
 
 To run the command above you need [AWS credentials](#aws-credentials).
