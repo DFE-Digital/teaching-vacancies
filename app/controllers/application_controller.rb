@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   before_action :set_headers, :set_root_headers
   before_action { strip_nested_param_whitespaces(request.params) }
 
-  after_action :trigger_page_visited_event, unless: :request_is_paas_healthcheck?
+  after_action :trigger_page_visited_event, unless: :request_is_healthcheck?
 
   helper_method :cookies_preference_set?, :referred_from_jobs_path?, :utm_parameters
 
@@ -72,11 +72,11 @@ private
   end
 
   def request_host_is_invalid?
-    !Rails.env.test? && !request_is_paas_healthcheck? && request.host_with_port != DOMAIN
+    !Rails.env.test? && !request_is_healthcheck? && request.host_with_port != DOMAIN
   end
 
-  def request_is_paas_healthcheck?
-    request.headers["User-Agent"] == "diego-healthcheck"
+  def request_is_healthcheck?
+    ["diego-healthcheck", "Amazon CloudFront"].include?(request.headers["User-Agent"])
   end
 
   def set_root_headers
