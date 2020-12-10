@@ -120,7 +120,7 @@ jobs:
              https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/comments
 
     - name: Send job status message to twd_tv_dev channel
-      uses: rtCamp/action-slack-notify@v2.1.1
+      uses: rtCamp/action-slack-notify@v2.1.2
       env:
         SLACK_CHANNEL: twd_tv_dev
         SLACK_USERNAME: CI Deployment
