@@ -13,7 +13,7 @@
         %td.govuk-table__cell
           = @organisation.description.presence || 'Not provided'
         %td.govuk-table__cell.change-answer
-          = link_to edit_organisation_school_path(@organisation), class: 'govuk-link govuk-link--no-visited-state' do
+          = govuk_link_to edit_organisation_school_path(@organisation), class: 'govuk-link--no-visited-state' do
             = t('buttons.change')
             %span.govuk-visually-hidden
               = t('publishers.organisations.aria_change_description', organisation_type: organisation_type_basic(@organisation))
@@ -40,13 +40,13 @@
           %strong.strong= t('schools.website')
         %td.govuk-table__cell
           - if @organisation.website.present?
-            = link_to @organisation.website, @organisation.website, class: 'govuk-link wordwrap', target: '_blank'
+            = govuk_link_to(@organisation.website, @organisation.website, class: 'wordwrap', target: '_blank')
           - elsif @organisation.url.present?
-            = link_to @organisation.url, @organisation.url, class: 'govuk-link wordwrap', target: '_blank'
+            = govuk_link_to(@organisation.url, @organisation.url, class: 'wordwrap', target: '_blank')
           - else
             = t('jobs.not_defined')
         %td.govuk-table__cell.change-answer
-          = link_to edit_organisation_school_path(@organisation), class: 'govuk-link govuk-link--no-visited-state' do
+          = govuk_link_to edit_organisation_school_path(@organisation), class: 'govuk-link--no-visited-state' do
             = t('buttons.change')
             %span.govuk-visually-hidden
               = t('publishers.organisations.aria_change_website', organisation_type: organisation_type_basic(@organisation))

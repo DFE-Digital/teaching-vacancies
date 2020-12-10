@@ -19,4 +19,4 @@
 
     %p.govuk-body= t('nqt_job_alerts.confirm.unsubscribe')
 
-    %p= link_to t('buttons.go_to_teaching_vacancies'), jobs_path(keyword: "nqt #{@nqt_job_alerts_form.keywords}", location: @nqt_job_alerts_form.location), class: 'govuk-link govuk-link--no-visited-state'
+    %p= govuk_link_to(t('buttons.go_to_teaching_vacancies'), jobs_path(keyword: "nqt #{@nqt_job_alerts_form.keywords}", location: @nqt_job_alerts_form.location), class: 'govuk-link--no-visited-state')

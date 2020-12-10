@@ -2,6 +2,6 @@
 
 %p
   = t('.description')
-  = link_to t('.signup_link'), new_jobseeker_registration_path, class: 'govuk-link govuk-link--no-visited-state'
+  = govuk_link_to(t('.signup_link'), new_jobseeker_registration_path, class: 'govuk-link--no-visited-state')
 
 = link_to t('buttons.sign_in'), new_jobseeker_session_path, class: 'govuk-button govuk-button--secondary'

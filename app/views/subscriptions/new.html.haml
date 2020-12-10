@@ -18,7 +18,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = link_to t('buttons.cancel'), jobs_path(@subscription_form.search_criteria_hash), class: 'govuk-link govuk-!-font-size-19'
+    = govuk_link_to(t('buttons.cancel'), jobs_path(@subscription_form.search_criteria_hash), class: 'govuk-!-font-size-19')
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds.govuk-body{ class: 'govuk-!-margin-top-4' }

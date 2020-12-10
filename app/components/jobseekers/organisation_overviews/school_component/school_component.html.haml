@@ -9,17 +9,17 @@
     = component.slot(:row, key: I18n.t("schools.age_range"), value: age_range(organisation))
     = component.slot(:row,
                      key: I18n.t("schools.ofsted_report"),
-                     value: ofsted_report(organisation).present? ? link_to(I18n.t("schools.view_ofsted_report"), ofsted_report(organisation), class: "govuk-link wordwrap", target: "_blank") : I18n.t("schools.no_information"))
+                     value: ofsted_report(organisation).present? ? govuk_link_to(I18n.t("schools.view_ofsted_report"), ofsted_report(organisation), class: "wordwrap", target: "_blank") : I18n.t("schools.no_information"))
     - if organisation.website.present? || organisation.url.present?
-      = component.slot(:row, key: I18n.t("schools.website"), value: link_to(I18n.t("schools.website_link_text", organisation_name: organisation.name),
-                                                                            organisation.website.presence || organisation.url,
-                                                                            class: "govuk-link wordwrap", target: "_blank"))
+      = component.slot(:row, key: I18n.t("schools.website"), value: govuk_link_to(I18n.t("schools.website_link_text", organisation_name: organisation.name),
+                                                                                  organisation.website.presence || organisation.url,
+                                                                                  class: "wordwrap", target: "_blank"))
     - if @vacancy.contact_email.present?
       = component.slot(:row, key: I18n.t("jobs.contact_email"), value: mail_to(@vacancy.contact_email, @vacancy.contact_email, class: "govuk-link link-wrap",
                                                                                subject: I18n.t("jobs.contact_email_subject", job: @vacancy.job_title),
                                                                                body: I18n.t("jobs.contact_email_body", url: job_url(@vacancy))))
     - if @vacancy.contact_number.present?
-      = component.slot(:row, key: I18n.t("jobs.contact_number"), value: link_to(@vacancy.contact_number, "tel:#{@vacancy.contact_number}", class: "govuk-link"))
+      = component.slot(:row, key: I18n.t("jobs.contact_number"), value: govuk_link_to(@vacancy.contact_number, "tel:#{@vacancy.contact_number}"))
 
   - if vacancy.about_school.present?
     %h4.govuk-heading-s

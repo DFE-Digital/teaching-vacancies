@@ -44,5 +44,5 @@
         %ul
           - @vacancy.documents.each do |document|
             %li.icon.icon--left.icon--document
-              %a.govuk-link.document-link{ href: document[:download_url], target: '_blank' } #{document[:name]}
+              = govuk_link_to(document[:name], document[:download_url], class: "document-link", target: "_blank")
               &nbsp#{number_with_precision(document[:size] / 1024.0 / 1024.0, precision: 2)} MB

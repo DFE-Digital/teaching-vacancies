@@ -13,5 +13,5 @@
     = form_for :identifications, url: identifications_path do |f|
       = f.govuk_submit t('buttons.sign_in'), secondary: true, classes: "identifications-button govuk-!-margin-bottom-0"
 
-  %p= t('.signin_guidance_html', link: link_to(t('.signin_link'), new_identifications_path, class: 'govuk-link'))
+  %p= t('.signin_guidance_html', link: govuk_link_to(t('.signin_link'), new_identifications_path))
 

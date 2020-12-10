@@ -4,7 +4,7 @@
 %h2.govuk-heading-m.app-task-list__section#applying_for_the_job_heading
   %span.app-task-list__section-number= edit_vacancy_section_number(:applying_for_the_job, current_organisation)
   = t('jobs.applying_for_the_job')
-  = link_to t('buttons.change'), organisation_job_build_path(@vacancy.id, :applying_for_the_job), class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_applying_for_the_job')
+  = govuk_link_to(t('buttons.change'), organisation_job_build_path(@vacancy.id, :applying_for_the_job), class: 'change-button', 'aria-label': t('jobs.aria_labels.change_applying_for_the_job'))
 
 %dl.app-check-your-answers.app-check-your-answers--short
 
@@ -18,7 +18,7 @@
     %dt.app-check-your-answers__question#contact_number
       %h4.govuk-heading-s= t('jobs.contact_number')
     %dd.app-check-your-answers__answer
-      = @vacancy.contact_number.present? ? link_to(@vacancy.contact_number, "tel:#{@vacancy.contact_number}", class: 'govuk-link') : t('jobs.not_defined')
+      = @vacancy.contact_number.present? ? govuk_link_to(@vacancy.contact_number, "tel:#{@vacancy.contact_number}") : t('jobs.not_defined')
 
   .app-check-your-answers__contents
     %dt.app-check-your-answers__question#school_visits
@@ -35,6 +35,6 @@
       %h4.govuk-heading-s= t('jobs.application_link')
     %dd.app-check-your-answers__answer
       - if @vacancy.application_link.present?
-        = link_to @vacancy.application_link, @vacancy.application_link, class: 'govuk-link', 'aria-label': t('jobs.aria_labels.application_link_url'), 'target': '_blank', rel: 'noopener noreferrer'
+        = govuk_link_to(@vacancy.application_link, @vacancy.application_link, 'aria-label': t('jobs.aria_labels.application_link_url'), 'target': '_blank', rel: 'noopener noreferrer')
       - else
         = t('jobs.not_defined')
