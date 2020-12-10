@@ -1,20 +1,14 @@
 class Jobseekers::PasswordsController < Devise::PasswordsController
-  before_action :set_resource, only: %i[edit update]
-  before_action :check_reset_password_token, only: %i[edit update]
+  before_action :ensure_reset_password_period_valid, only: %i[edit update]
   after_action :remove_devise_notice_flash!, only: %i[create]
 
 protected
 
-  def reset_password_token
-    Devise.token_generator.digest(resource_class, :reset_password_token, params[:reset_password_token] || params[resource_name][:reset_password_token])
-  end
+  def ensure_reset_password_period_valid
+    token = params[:reset_password_token] || params[resource_name][:reset_password_token]
+    self.resource = resource_class.with_reset_password_token(token)
 
-  def set_resource
-    self.resource = Jobseeker.find_by(reset_password_token: reset_password_token)
-  end
-
-  def check_reset_password_token
-    render :expired_token if resource&.reset_password_sent_at&.before?(2.hours.ago)
+    render :expired_token if resource && !resource.reset_password_period_valid?
   end
 
   def after_sending_reset_password_instructions_path_for(_resource)
