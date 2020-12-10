@@ -63,6 +63,26 @@
       "note": "Intended behaviour: Noreferrer is undesirable (would stop schools from seeing our traffic in analytics), noopener is good enough to stop tabnabbing."
     },
     {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "7dd463abaaf914b7009cf96dd2e73b0b0cc1f37f17e4d23df5068e33afffe7b0",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/jobseekers/saved_jobs_controller.rb",
+      "line": 20,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "current_jobseeker.saved_jobs.includes(:vacancy).order(\"#{SavedJobSort.new.update(:column => sort_column, :order => sort_order).column} #{SavedJobSort.new.update(:column => sort_column, :order => sort_order).order}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Jobseekers::SavedJobsController",
+        "method": "index"
+      },
+      "user_input": "SavedJobSort.new.update(:column => sort_column, :order => sort_order).column",
+      "confidence": "Weak",
+      "note": "Sorts columns and orders only come from an allowed list of values, so SQL injection risk can be ignored"
+    },
+    {
       "warning_type": "Reverse Tabnabbing",
       "warning_code": 111,
       "fingerprint": "9be99173469b6739f553286eed3cc920d0f766b6722d3196ea732da050b4f7e0",
@@ -173,6 +193,6 @@
       "note": "Intended behaviour: Noreferrer is undesirable (would stop schools from seeing our traffic in analytics), noopener is good enough to stop tabnabbing."
     }
   ],
-  "updated": "2020-12-04 18:04:00 +0000",
+  "updated": "2020-12-10 10:21:42 +0000",
   "brakeman_version": "4.10.0"
 }
