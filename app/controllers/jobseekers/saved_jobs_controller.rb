@@ -1,4 +1,6 @@
 class Jobseekers::SavedJobsController < Jobseekers::ApplicationController
+  include Sortable
+
   before_action :set_up_saved_job, only: %i[new destroy]
 
   def new
@@ -35,13 +37,5 @@ private
       return render "/errors/trashed_vacancy_found", status: :not_found
     end
     @saved_job = SavedJob.find_or_initialize_by(jobseeker_id: current_jobseeker.id, vacancy_id: @vacancy.id)
-  end
-
-  def sort_column
-    params[:sort_column]
-  end
-
-  def sort_order
-    params[:sort_order]
   end
 end
