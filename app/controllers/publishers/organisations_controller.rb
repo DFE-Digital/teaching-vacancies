@@ -1,10 +1,12 @@
 class Publishers::OrganisationsController < Publishers::BaseController
+  include Sortable
+
   before_action :redirect_to_user_preferences
 
   def show
     @multiple_organisations = session_has_multiple_organisations?
     @organisation = current_organisation
-    @sort = VacancySort.new.update(column: sort_column, order: sort_order)
+    @sort = VacancySort.new.update(column: organisations_sort_column, order: organisations_sort_order)
     @filters = Publishers::VacancyFilter.new(current_publisher, current_school_group).to_h
     @managed_organisations_form = ManagedOrganisationsForm.new(@filters)
     @selected_type = params[:type]
