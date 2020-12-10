@@ -513,6 +513,10 @@ en:
       resubscribe_html: If you unsubscribed accidentally, you can %{link}.
       resubscribe_link_text: resubscribe here
       title: Subscription deleted
+    unsubscribe_feedback:
+      success: You have successfully unsubscribed from your job alert
+    update:
+      success: Your job alert has been updated
     feedback_received:
       header: Thank you for your feedback
       heading: Create a new alert
