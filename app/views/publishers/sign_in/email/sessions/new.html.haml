@@ -17,4 +17,4 @@
     .govuk-grid-column-one-third
       .account-sidebar
         %h2.account-sidebar__heading= t("publishers.identifications.new.assistance.heading")
-        %p.govuk-body-s= t("publishers.identifications.new.assistance.content_html", link: link_to(t("publishers.identifications.new.assistance.link_text"), new_jobseeker_session_path, class: "govuk-link"))
+        %p.govuk-body-s= t("publishers.identifications.new.assistance.content_html", link: govuk_link_to(t("publishers.identifications.new.assistance.link_text"), new_jobseeker_session_path))

@@ -4,7 +4,7 @@
   .govuk-grid-column-two-thirds
     %h1.govuk-heading-xl= t('static_pages.not_authorised.title')
 
-    %p.govuk-body= t('static_pages.not_authorised.intro_html', email: @identifier, signin_url: link_to('DfE Sign-in', 'https://profile.signin.education.gov.uk/', class: 'govuk-link'))
+    %p.govuk-body= t('static_pages.not_authorised.intro_html', email: @identifier, signin_url: govuk_link_to('DfE Sign-in', 'https://profile.signin.education.gov.uk/'))
 
     %h2.govuk-heading-m= t('static_pages.not_authorised.authorised.heading')
     %p.govuk-body= t('static_pages.not_authorised.authorised.text_html', mailto_url: mail_to(t("help.email"), t("help.email"), class: 'govuk-link'))

@@ -13,7 +13,7 @@
         - if current_organisation.description.present?
           = truncate(current_organisation.description, length: 130)
           %br
-        = link_to t('organisation.view_more_or_change'), edit_organisation_school_path(current_organisation), class: 'govuk-link govuk-link--no-visited-state'
+        = govuk_link_to(('organisation.view_more_or_change'), edit_organisation_school_path(current_organisation), class: 'govuk-link--no-visited-state')
       %td.govuk-table__cell
     - unless current_organisation.group_type == 'local_authority'
       %tr.govuk-table__row
@@ -27,13 +27,13 @@
         %strong.strong= t('school_groups.website', organisation_type: organisation_type_basic(current_organisation).humanize)
       %td.govuk-table__cell.change_answer
         - if current_organisation.website.present?
-          = link_to current_organisation.website, current_organisation.website, class: 'govuk-link wordwrap', target: '_blank', rel: 'noopener'
+          = govuk_link_to(current_organisation.website, current_organisation.website, class: 'wordwrap', target: '_blank', rel: 'noopener')
         - elsif current_organisation.url.present?
-          = link_to current_organisation.url, current_organisation.url, class: 'govuk-link wordwrap', target: '_blank', rel: 'noopener'
+          = govuk_link_to(current_organisation.url, current_organisation.url, class: 'wordwrap', target: '_blank', rel: 'noopener')
         - else
           = t('jobs.not_defined')
       %td.govuk-table__cell.change-answer
-        = link_to edit_organisation_school_path(current_organisation), class: 'govuk-link govuk-link--no-visited-state' do
+        = govuk_link_to edit_organisation_school_path(current_organisation), class: 'govuk-link--no-visited-state' do
           = t('buttons.change')
           %span.govuk-visually-hidden
             = t('publishers.organisations.aria_change_website', organisation_type: organisation_type_basic(current_organisation))

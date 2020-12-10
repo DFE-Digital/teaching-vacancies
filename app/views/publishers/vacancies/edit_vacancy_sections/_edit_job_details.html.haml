@@ -4,7 +4,7 @@
 %h2.govuk-heading-m.app-task-list__section#job_details_heading
   %span.app-task-list__section-number= edit_vacancy_section_number(:job_details, current_organisation)
   = t('jobs.job_details')
-  = link_to t('buttons.change'), organisation_job_build_path(@vacancy.id, :job_details), class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_job_details')
+  = govuk_link_to(t('buttons.change'), organisation_job_build_path(@vacancy.id, :job_details), class: 'change-button', 'aria-label': t('jobs.aria_labels.change_job_details'))
 
 %dl.app-check-your-answers.app-check-your-answers--short
 

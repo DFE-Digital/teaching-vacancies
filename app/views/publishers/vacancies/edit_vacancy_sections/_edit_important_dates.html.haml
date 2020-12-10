@@ -4,7 +4,7 @@
 %h2.govuk-heading-m.app-task-list__section#important_dates_heading
   %span.app-task-list__section-number= edit_vacancy_section_number(:important_dates, current_organisation)
   = t('jobs.important_dates')
-  = link_to t('buttons.change'), organisation_job_build_path(@vacancy.id, :important_dates), class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_important_dates')
+  = govuk_link_to(t('buttons.change'), organisation_job_build_path(@vacancy.id, :important_dates), class: 'change-button', 'aria-label': t('jobs.aria_labels.change_important_dates'))
 
 %dl.app-check-your-answers.app-check-your-answers--short
 

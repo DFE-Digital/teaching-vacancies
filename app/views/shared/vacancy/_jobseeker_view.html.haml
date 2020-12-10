@@ -78,7 +78,7 @@
 
     %section
       %p.icon.icon--left.icon--alert-blue
-        = link_to t('jobs.alert.similar.verbose.link_text'), new_subscription_path(search_criteria: @devised_job_alert_search_criteria, origin: request.env['ORIGINAL_FULLPATH']), class: 'govuk-link', id: 'job-alert-link-from-bottom-of-job-listing-gtm'
+        = govuk_link_to(t('jobs.alert.similar.verbose.link_text'), new_subscription_path(search_criteria: @devised_job_alert_search_criteria, origin: request.env['ORIGINAL_FULLPATH']), id: 'job-alert-link-from-bottom-of-job-listing-gtm')
         = t('jobs.alert.similar.verbose.remainder')
 
     %section{ class: 'govuk-!-margin-top-3' }

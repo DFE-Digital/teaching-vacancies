@@ -20,4 +20,4 @@
 
     %p.govuk-body= t('.unsubscribe')
     %p.govuk-body
-      = link_to t('.back_to_search_results'), jobs_path(@subscription.search_criteria_to_h), class: 'govuk-link'
+      = govuk_link_to(t('.back_to_search_results'), jobs_path(@subscription.search_criteria_to_h))

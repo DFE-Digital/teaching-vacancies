@@ -8,13 +8,13 @@
     - if organisation.website.present? || organisation.url.present?
       = component.slot(:row,
                        key: I18n.t("school_groups.website", organisation_type: organisation_type_basic(organisation).humanize),
-                       value: link_to(I18n.t("schools.website_link_text", organisation_name: organisation.name), organisation.website.presence || organisation.url, class: "govuk-link link-wrap", target: "_blank"))
+                       value: govuk_link_to(I18n.t("schools.website_link_text", organisation_name: organisation.name), organisation.website.presence || organisation.url, class: "link-wrap", target: "_blank"))
     - if @vacancy.contact_email.present?
       = component.slot(:row, key: I18n.t("jobs.contact_email"), value: mail_to(@vacancy.contact_email, @vacancy.contact_email, class: "govuk-link link-wrap",
                                                                                subject: I18n.t("jobs.contact_email_subject", job: @vacancy.job_title),
                                                                                body: I18n.t("jobs.contact_email_body", url: job_url(@vacancy))))
     - if @vacancy.contact_number.present?
-      = component.slot(:row, key: I18n.t("jobs.contact_number"), value: link_to(@vacancy.contact_number, "tel:#{@vacancy.contact_number}", class: "govuk-link"))
+      = component.slot(:row, key: I18n.t("jobs.contact_number"), value: govuk_link_to(@vacancy.contact_number, "tel:#{@vacancy.contact_number}"))
 
   - if vacancy_or_organisation_description(vacancy).present?
     %h4.govuk-heading-s

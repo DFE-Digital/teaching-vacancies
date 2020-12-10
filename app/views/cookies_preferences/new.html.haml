@@ -50,4 +50,4 @@
           %td.govuk-table__cell= t(".body.usage.google_analytics.table.#{row}.expires")
 
     %h2.govuk-heading-l= t(".body.service.heading")
-    %p.govuk-body= t(".body.service.intro_html", feedback_link: link_to(t(".body.service.feedback"), new_feedback_path, class: "govuk-link"))
+    %p.govuk-body= t(".body.service.intro_html", feedback_link: govuk_link_to(t(".body.service.feedback"), new_feedback_path))

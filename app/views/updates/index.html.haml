@@ -5,7 +5,7 @@
     %h1.govuk-heading-xl= t('updates.heading')
     %h2.govuk-heading-s
       = t('updates.updates_description_html',
-          link: link_to('provide feedback', new_feedback_path, class: 'govuk-link'))
+          link: govuk_link_to('provide feedback', new_feedback_path))
     %ul.updates-timeline.notes-timeline
       - @updates.each do |date, updates_by_date|
         %li.updates-timeline__item

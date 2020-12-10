@@ -1,7 +1,6 @@
 .govuk-notification.js-dismissable{role: 'alert', tabindex: '-1', class: notification_classes}
   - if @dismiss
-    %a.govuk-link.govuk-link--no-visited-state.dismiss-link.js-dismissable__link{ href: '#' }
-      = t('buttons.dismiss')
+    = govuk_link_to(t('buttons.dismiss'), "#", class: "govuk-link--no-visited-state dismiss-link js-dismissable__link")
   - if render_title_and_body?
     - if content[:title].present?
       .govuk-notification__title= content[:title]
@@ -13,5 +12,4 @@
   - if @links.present?
     %ul.govuk-list.govuk-notification__list
       - @links.each do |link, message|
-        %li
-          %a.govuk-link.govuk-link--no-visited-state{ href: "##{link}"}= message
+        %li= govuk_link_to(message, "##{link}", class: "govuk-link--no-visited-state")
