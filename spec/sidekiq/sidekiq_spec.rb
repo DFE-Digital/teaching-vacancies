@@ -20,6 +20,7 @@ RSpec.describe "Sidekiq configuration" do
       audit_subscription_creation
       google_indexing
       seed_vacancies_from_api
+      send_event_to_data_warehouse
       vacancy_statistics
     ]
   end

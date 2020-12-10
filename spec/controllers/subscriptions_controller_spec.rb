@@ -1,10 +1,6 @@
 require "rails_helper"
 
 RSpec.describe SubscriptionsController, type: :controller do
-  before do
-    ActiveJob::Base.queue_adapter = :test
-  end
-
   describe "#new" do
     subject { get :new, params: { search_criteria: { keyword: "english" } }.symbolize_keys }
 

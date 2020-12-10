@@ -7,10 +7,6 @@ RSpec.describe NqtJobAlertsController, type: :controller do
 
   let(:form_inputs) { { keywords: keywords, location: location, email: email } }
 
-  before do
-    ActiveJob::Base.queue_adapter = :test
-  end
-
   describe "#new" do
     let(:params) { form_inputs }
     let(:subject) { get :new, params: params }

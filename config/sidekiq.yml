@@ -28,6 +28,7 @@
   - [remove_vacancies_that_expired_yesterday, 1]
   - [reset_sessions, 1]
   - [seed_vacancies_from_api, 1]
+  - [send_event_to_data_warehouse, 1]
   - [submit_performance_platform, 1]
   - [update_algolia_index, 1]
   - [update_dsi_users_in_db, 1]

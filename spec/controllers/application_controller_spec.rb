@@ -1,6 +1,15 @@
 require "rails_helper"
 
 RSpec.describe ApplicationController, type: :controller do
+  describe "page_visited events" do
+    it "triggers a `page_visited` event on a request" do
+      expect { get :check }.to have_enqueued_job(SendEventToDataWarehouseJob).with(
+        "events",
+        hash_including(type: :page_visited, request_path: "/check"),
+      )
+    end
+  end
+
   describe "#redirect_to_domain" do
     before do
       allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new("production"))
