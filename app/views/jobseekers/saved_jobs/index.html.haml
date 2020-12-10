@@ -10,8 +10,8 @@
       %table.govuk-table
         %thead.govuk-table__head
           %th.govuk-table__header{ class: "govuk-!-width-one-half" }= t(".headings.job")
-          %th.govuk-table__header= t(".headings.deadline")
-          %th.govuk-table__header= t(".headings.added")
+          %th.govuk-table__header= table_header_sort_by(t(".headings.deadline"), column: "vacancies.expires_at", sort: @sort)
+          %th.govuk-table__header= table_header_sort_by(t(".headings.added"), column: "created_at", sort: @sort)
           %th.govuk-table__header
         - @saved_jobs.each do |saved_job|
           %tr.govuk-table__row{ data: { slug: saved_job.vacancy.slug } }

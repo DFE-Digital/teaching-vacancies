@@ -16,7 +16,8 @@ class Jobseekers::SavedJobsController < Jobseekers::ApplicationController
   end
 
   def index
-    @saved_jobs = current_jobseeker.saved_jobs
+    @sort = SavedJobSort.new.update(column: sort_column, order: sort_order)
+    @saved_jobs = current_jobseeker.saved_jobs.includes(:vacancy).order("#{@sort.column} #{@sort.order}")
   end
 
 private
@@ -34,5 +35,13 @@ private
       return render "/errors/trashed_vacancy_found", status: :not_found
     end
     @saved_job = SavedJob.find_or_initialize_by(jobseeker_id: current_jobseeker.id, vacancy_id: @vacancy.id)
+  end
+
+  def sort_column
+    params[:sort_column]
+  end
+
+  def sort_order
+    params[:sort_order]
   end
 end
