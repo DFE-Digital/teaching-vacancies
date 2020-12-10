@@ -79,4 +79,4 @@ en:
         link_manage: Manage alert
         page_title: Job alerts
         zero_subscriptions_body_html: '<a class="govuk-link" href="/">Find a teaching job</a> and a create a job alert to be made aware of future listings.'
-        zero_subscriptions_title: You have no job alert setup
+        zero_subscriptions_title: You have no job alerts set up
