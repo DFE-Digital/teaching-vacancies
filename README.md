@@ -59,20 +59,23 @@ brew cask install chromedriver
 ### AWS credentials, MFA, and role profiles
 
 When onboarded, you will be provided with an AWS user. You can use it to access the AWS console at:
-https://teaching-vacancies.signin.aws.amazon.com/console.
+[https://teaching-vacancies.signin.aws.amazon.com/console](https://teaching-vacancies.signin.aws.amazon.com/console).
 
-Once you are logged in, go to [My Security Credentials](https://console.aws.amazon.com/iam/home?region=eu-west-2#/security_credentials)
-Choose `Assign MFA device` and set up an authenticator app as a Virtual MFA device.
-If using an Authenticator App, scan the QR code, and when prompted to enter codes, enter the first code, wait 30 seconds until a new code has been generated on your authenticator app, and enter the new code in the second box.
+- Log in to the console and go to [My Security Credentials](https://console.aws.amazon.com/iam/home?region=eu-west-2#/security_credentials).
+- Choose `Assign MFA device` and set up an authenticator app as a Virtual MFA device.
+- If using an Authenticator App, scan the QR code, and when prompted to enter codes, enter the first code, wait 30 seconds until a new code has been generated on your authenticator app, and enter the new code in the second box.
+- Log out, and back in. You should be prompted for an MFA code.
+- Go to [My Security Credentials](https://console.aws.amazon.com/iam/home?region=eu-west-2#/security_credentials).
+- Choose `Create access key`. Note the credentials securely, as you will need these to configure the AWS CLI.
 
-Log out, and back in. You should be prompted for an MFA code.
+### Assuming a role in the console
 
-Again, go to [My Security Credentials](https://console.aws.amazon.com/iam/home?region=eu-west-2#/security_credentials).
-Choose `Create access key`. Note the credentials securely, as you will need these to configure the AWS CLI.
-
-Check you can assume the [ReadOnly](https://signin.aws.amazon.com/switchrole?account=530003481352&roleName=ReadOnly&displayName=TV%20ReadOnly) role
-
-Check if you can see the [Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table)
+- First check that your user account does not have permissions - go to the [Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table)
+- Assume the [ReadOnly](https://signin.aws.amazon.com/switchrole?account=530003481352&roleName=ReadOnly&displayName=TV%20ReadOnly) role
+- You should now be able to see secrets in the [Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table)
+- Edit a secret. When you click the button `Save changes`, you should see an error like
+`User: arn:aws:sts::530003481352:assumed-role/ReadOnly/YOURUSERNAME is not authorized to perform: ssm:PutParameter on resource: arn:aws:ssm:eu-west-2:530003481352:parameter/teaching-vacancies/dev/infra/secrets`
+- If you need to edit a secret, assume the [SecretEditor](https://signin.aws.amazon.com/switchrole?account=530003481352&roleName=SecretEditor&displayName=TV%20SecretEditor) role. 
 
 Install and configure the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html).
 
@@ -92,13 +95,13 @@ You'll be prompted to enter:
 - Default region name (choose `eu-west-2`)
 - Default output format (choose `json`)
 
-To check that everything has been done correctly, checking the contents of the generated files
+To check that everything has been done correctly, check the contents of the generated files
 
 ```bash
 cat ~/.aws/credentials
 ```
 
-should contain a default entry, with your access key and secret key:
+It should contain a default entry, with your access key and secret key:
 
 ```
 [default]
@@ -116,7 +119,7 @@ region = eu-west-2
 output = json
 ```
 
-Extend this by adding to two profiles, replacing `<YOURUSERNAME>`
+Add two profiles to this, replacing `<YOURUSERNAME>`
 
 ```
 [profile readonly]

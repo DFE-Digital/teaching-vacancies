@@ -244,11 +244,12 @@ resource aws_iam_policy allow_assume_role_secreteditor {
 data aws_iam_policy_document parameter_store {
   statement {
     actions = [
-      "ssm:PutParameter",
       "ssm:GetParameterHistory",
       "ssm:GetParametersByPath",
       "ssm:GetParameters",
-      "ssm:GetParameter"
+      "ssm:GetParameter",
+      "ssm:ListTagsForResource",
+      "ssm:PutParameter"
     ]
     resources = [
       "arn:aws:ssm:${var.region}:${data.aws_caller_identity.current.account_id}:parameter/${local.service_name}/*"
