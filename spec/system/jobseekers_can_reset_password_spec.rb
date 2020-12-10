@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Jobseekers can reset password" do
   before do
     allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(true)
-    expect(Jobseeker).to receive(:find_by).at_least(:once).and_return(jobseeker)
+    allow(Jobseeker).to receive(:find_by).and_return(jobseeker)
   end
 
   context "when the password reset token is valid" do
