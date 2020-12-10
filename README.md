@@ -70,12 +70,35 @@ When onboarded, you will be provided with an AWS user. You can use it to access 
 
 ### Assuming a role in the console
 
-- First check that your user account does not have permissions - go to the [Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table)
-- Assume the [ReadOnly](https://signin.aws.amazon.com/switchrole?account=530003481352&roleName=ReadOnly&displayName=TV%20ReadOnly) role
-- You should now be able to see secrets in the [Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table)
-- Edit a secret. When you click the button `Save changes`, you should see an error like
-`User: arn:aws:sts::530003481352:assumed-role/ReadOnly/YOURUSERNAME is not authorized to perform: ssm:PutParameter on resource: arn:aws:ssm:eu-west-2:530003481352:parameter/teaching-vacancies/dev/infra/secrets`
-- If you need to edit a secret, assume the [SecretEditor](https://signin.aws.amazon.com/switchrole?account=530003481352&roleName=SecretEditor&displayName=TV%20SecretEditor) role. 
+- When you log in to AWS you will have permissions to
+  - Change your password
+  - Set up an MFA device
+  - Generate Access Keys
+To carry out more privileged operations, you will need to [switch to a role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-console.html)
+- Choose your user name on the navigation bar in the upper right. It typically looks like this: <YOUR-AWS-USERNAME>@teaching-vacancies.
+- Choose `Switch Roles`. 
+- For Account, enter `530003481352`
+- For Role, enter `ReadOnly`
+- For Display Name, this will be greyed out as `ReadOnly @ 530003481352`
+- Pick a colour for the role display and click `Switch Role`
+- Choose `Switch Roles` again
+- For Account, enter `530003481352`
+- For Role, enter `SecretEditor`
+- For Display Name, this will be greyed out as `SecretEditor @ 530003481352`
+- These two roles should now be listed in your Role History
+### Roles
+
+- `Administrator` can:
+  - administer the AWS account, and all resources, including user and group management
+- `BillingManager` can:
+  - access invoices and other billing information
+  - read all resources
+- `ReadOnly` can:
+  - read all resources
+- `SecretEditor` can:
+  - read and update existing secrets within Parameter Store
+
+### Install AWS CLI
 
 Install and configure the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html).
 
@@ -95,13 +118,13 @@ You'll be prompted to enter:
 - Default region name (choose `eu-west-2`)
 - Default output format (choose `json`)
 
-To check that everything has been done correctly, check the contents of the generated files
+Following this procedure will create two files
 
 ```bash
 cat ~/.aws/credentials
 ```
 
-It should contain a default entry, with your access key and secret key:
+This should contain a default entry, with your access key and secret key:
 
 ```
 [default]
@@ -109,9 +132,11 @@ aws_access_key_id=<AWS_ACCESS_KEY_ID>
 aws_secret_access_key=<AWS_SECRET_ACCESS_KEY>
 ```
 
-Edit `~/.aws/config`
+```bash
+cat ~/.aws/config
+```
 
-It should begin with the region and output defaults:
+This should contain defaults for the region and output format:
 
 ```
 [default]
@@ -119,24 +144,32 @@ region = eu-west-2
 output = json
 ```
 
-Add two profiles to this, replacing `<YOURUSERNAME>`
+Append two profiles to `~/.aws/config`, replacing `<YOUR-AWS-USERNAME>` appropriately:
 
 ```
-[profile readonly]
-role_arn = arn:aws:iam::530003481352:role/readonly
+[profile ReadOnly]
+region = eu-west-2
+role_arn = arn:aws:iam::530003481352:role/ReadOnly
 source_profile = default
-mfa_serial = arn:aws:iam::530003481352:mfa/<YOURUSERNAME>
+mfa_serial = arn:aws:iam::530003481352:mfa/<YOUR-AWS-USERNAME>
 
-[profile secreteditor]
-role_arn = arn:aws:iam::530003481352:role/secreteditor
+[profile SecretEditor]
+region = eu-west-2
+role_arn = arn:aws:iam::530003481352:role/SecretEditor
 source_profile = default
-mfa_serial = arn:aws:iam::530003481352:mfa/<YOURUSERNAME>
+mfa_serial = arn:aws:iam::530003481352:mfa/<YOUR-AWS-USERNAME>
 ```
 
 When using the AWS CLI, you may pass in the profile like so
 
 ```bash
-aws --profile readonly s3 ls
+aws --profile ReadOnly s3 ls
+```
+
+or
+
+```bash
+AWS_PROFILE=SecretEditor aws ssm get-parameters --names "/teaching-vacancies/dev/app/secrets" --with-decryption
 ```
 
 ### Environment Variables
