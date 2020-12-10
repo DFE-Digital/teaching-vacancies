@@ -18,35 +18,35 @@
 
 Teaching Vacancies is evolving the set of features available to its users.
 
-Starting from next year job seekers will be able to apply for jobs directly through the service web site. Delivering this new function to users requires a significant amount of change and opens up the question whether we should opt for a COTS (commercial of the shelf) Application Tracking solution or take on the development effort and build our internal one.
+Starting from next year, jobseekers will be able to apply for jobs directly through the service. Delivering this new functionality requires a significant amount of change and opens up the question of whether we should opt for a COTS (commercial off the shelf) Application Tracking solution, or take on the development effort and build it ourselves.
 
 ## Decision
 
-TVS will build Job Application rather than purchasing an off the shelf solution
+Teaching Vacancies will build Job Application functionality rather than purchasing an off the shelf solution.
 
 ## Considerations and consequences
 
-Both solutions present advantages and disadvantages, and we considered if these are relevant in Teaching Vacancies problem space. 
+Both solutions present advantages and disadvantages, and we considered if these are relevant in the Teaching Vacancies problem space. 
 
 ### Specific user needs
 
-The purchase a third-party ATS solution trades fit for price. If the problem to solve is generic enough, a simple adoption of a COTS product can be cheaper than bespoke software. 
-Teaching Vacancies does not fall in that category, and user research has shown how schools hiring staff and job seekers have very different needs (product, accessibility), and the amount of customisation requested would increase the cost without providing what the service needs.
+The purchase of a third-party ATS solution trades fit for price. If the problem to solve is generic enough, a simple adoption of a COTS product could be cheaper than bespoke software. 
+However, Teaching Vacancies does not fall into that category, and user research has shown that school hiring staff and jobseekers have very different needs (product, accessibility), and the amount of customisation required would increase the cost and still not be able to meet user needs. With any external SaaS product, we would also struggle to meet core requirements of the Service Standard, especially with regards to accessibility.
 
-It's worth mentioning the cost-saving result of purchasing an ATS solution is less effective when compared to building our version, because TVS wouldn't need to scale up the engineering headcount.
+It's worth mentioning the cost-saving result of purchasing an ATS solution is less effective when compared to building our own version, because Teaching Vacancies wouldn't need to scale up the engineering headcount.
 
 ### Cumbersome integration
 
-The integration of an external ATS with pre-existing Teaching Vacancies application is challenging to deliver and even more to maintain in case of change. 
+The integration of an external ATS with the existing Teaching Vacancies application is challenging to deliver and even more to maintain in case of change. 
 
-* **Data:** The engineering team would have to maintain a complex integration with risks in reliability and security. Data would need to be transferred in both direction from TVS to the application tracking system and back
+* **Data:** The engineering team would have to maintain a complex integration with risks in reliability and security. A significant amount of data would need to be transferred in both directions between Teaching Vacancies and the ATS.
 
-* **DSI:** Hiring staff use DfE Sign In to access the service, and we would have to find a way to have either integrate DSI accounts with the external ATS service or ask hiring staff users to use another account to access part of the service
+* **DSI and authorisation:** Hiring staff use DfE Sign In to access the service, and we would have to find a way to either integrate DSI accounts with the external ATS service, or ask hiring staff users to use another account to access part of the service. At the same time, ATS systems are predominantly designed for use by a single organisation (rather than a "white-label" solution for numerous organisations that we need) and authorisation would present a major stumbling block. 
 
-* **Analytical platform:** by adopting an external software, Teaching Vacancies loses control on produced job applications data and its format; the service will require the engineering team to extract and transform information stored in the ATS as needed by our analytical platform
+* **Analytical platform:** By adopting external software, Teaching Vacancies loses control on job application data and its format; the service will require the engineering team to extract and transform information stored in the ATS to meet our analytical needs.
 
 ### Change resistance
-Lack of ownership of the ATS tool and its data correlates directly to a lack of flexibility in being able to change any minor or major component of the application, and the engineering team would have to rework the integration with the ATS, incurring in unnecessary cost 
+Lack of ownership of the ATS tool and its data correlates directly to a lack of flexibility in being able to change any minor or major component of the application, and the engineering team would have to rework the integration with the ATS, incurring unnecessary cost.
 
 ### Relevant Documents:
 
