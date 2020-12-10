@@ -4,11 +4,11 @@
   %table.govuk-table.vacancies{ class: "govuk-!-margin-top-4" }
     %thead.govuk-table__head
       %tr.govuk-table__row
-        %th.govuk-table__header= table_header_sort_by(t("jobs.job_title"), "pending", column: "job_title", sort: sort)
+        %th.govuk-table__header= table_header_sort_by(t("jobs.job_title"), column: "job_title", sort: sort)
         - if organisation.is_a?(SchoolGroup)
-          %th.govuk-table__header= table_header_sort_by(t("jobs.location"), "pending", column: "readable_job_location", sort: sort)
-        %th.govuk-table__header= table_header_sort_by(t("jobs.date_to_be_posted"), "pending", column: "publish_on", sort: sort)
-        %th.govuk-table__header= table_header_sort_by(t("jobs.expires_on"), "pending", column: "expires_on", sort: sort)
+          %th.govuk-table__header= table_header_sort_by(t("jobs.location"), column: "readable_job_location", sort: sort)
+        %th.govuk-table__header= table_header_sort_by(t("jobs.date_to_be_posted"), column: "publish_on", sort: sort)
+        %th.govuk-table__header= table_header_sort_by(t("jobs.expires_on"), column: "expires_on", sort: sort)
         %th.govuk-table__header{ colspan: 3 }= t("jobs.actions")
       %tbody.govuk-table__body
         - vacancies.each do |vacancy|
