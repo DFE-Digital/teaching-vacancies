@@ -14,7 +14,7 @@ en:
       blank: Enter your email address
       invalid: Enter an email address in the correct format, like name@example.com
     password:
-      blank: Enter a password
+      blank: Enter your password
   organisation_errors: &organisation_errors
     website:
       url: Enter a link in the correct format, like http://www.school.ac.uk
