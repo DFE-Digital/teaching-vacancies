@@ -45,7 +45,9 @@ end
 
 def create_ssm_client(mfa_token_code=nil)
   if mfa_token_code
-    sts_client = Aws::STS::Client.new
+    sts_client = Aws::STS::Client.new(
+      region: DEFAULT_AWS_REGION
+    )
     caller_id = sts_client.get_caller_identity()
     serial_number = caller_id.arn.sub("user", "mfa")
     user_name = caller_id.arn.split("/").last
