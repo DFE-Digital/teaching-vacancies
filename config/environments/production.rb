@@ -92,7 +92,10 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_dispatch.trusted_proxies = AWSIpRanges.cloudfront_ips.map { |proxy| IPAddr.new(proxy) }
+  config.action_dispatch.trusted_proxies = [
+    ActionDispatch::RemoteIp::TRUSTED_PROXIES,
+    AWSIpRanges.cloudfront_ips.map { |proxy| IPAddr.new(proxy) },
+  ].flatten
 
   # Ensure browsers don't cache
   config.action_dispatch.default_headers.merge!("Cache-Control" => "no-cache, no-store")
