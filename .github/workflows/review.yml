@@ -110,14 +110,13 @@ jobs:
         timeoutSeconds: 300
         intervalSeconds: 15
 
-    - name: Post PR comment
+    - name: Post Sticky Pull Request Comment
       if: ${{ steps.wait_for_deploy_app.outputs.conclusion == 'success' }}
-      run: |
-        curl --header "Accept: application/vnd.github.v3+json" \
-             --header "Authorization: Bearer ${{ github.token }}" \
-             --request POST \
-             --data '{"body": "Review app deployed to https://teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital"}' \
-             https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/comments
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+        message: |
+          Review app deployed to <https://teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital>
 
     - name: Send job status message to twd_tv_dev channel
       uses: rtCamp/action-slack-notify@v2.1.2
@@ -125,5 +124,5 @@ jobs:
         SLACK_CHANNEL: twd_tv_dev
         SLACK_USERNAME: CI Deployment
         SLACK_TITLE: Deployment ${{ job.status }}
-        SLACK_MESSAGE: 'Review app for PR ${{ github.event.number }} deployed to https://teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital - ${{ job.status }}'
+        SLACK_MESSAGE: 'Review app for https://github.com/DFE-Digital/teaching-vacancies/pull/2516/ deployed to https://teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital - ${{ job.status }}'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
