@@ -2,42 +2,40 @@ require "rails_helper"
 
 RSpec.describe AWSIpRanges do
   describe ".cloudfront_ips" do
-    before(:each) do
-      aws_ip_ranges = File.read(Rails.root.join("spec/fixtures/aws_ip_ranges.json"))
-
-      stub_request(:get, AWSIpRanges::PATH)
-        .to_return(body: aws_ip_ranges, status: 200)
+    before do
+      aws_ip_ranges = file_fixture("aws_ip_ranges.json")
+      stub_request(:get, AWSIpRanges::PATH).to_return(body: aws_ip_ranges, status: 200)
     end
 
     it "returns the CLOUDFRONT ip in the GLOBAL or eu-west-2 area" do
-      expected_result = [
-        "13.32.0.0/15",
-        "13.35.0.0/16",
-        "52.46.0.0/18",
-        "52.56.127.0/25",
-        "52.84.0.0/15",
-        "52.124.128.0/17",
-        "52.222.128.0/17",
-        "54.182.0.0/16",
-        "54.192.0.0/16",
-        "54.230.0.0/16",
-        "54.239.128.0/18",
-        "54.239.192.0/19",
-        "54.240.128.0/18",
-        "64.252.64.0/18",
-        "70.132.0.0/18",
-        "71.152.0.0/17",
-        "143.204.0.0/16",
-        "204.246.164.0/22",
-        "204.246.168.0/22",
-        "204.246.174.0/23",
-        "204.246.176.0/20",
-        "205.251.192.0/19",
-        "205.251.249.0/24",
-        "205.251.250.0/23",
-        "205.251.252.0/23",
-        "205.251.254.0/24",
-        "216.137.32.0/19",
+      expected_result = %w[
+        13.32.0.0/15
+        13.35.0.0/16
+        52.46.0.0/18
+        52.56.127.0/25
+        52.84.0.0/15
+        52.124.128.0/17
+        52.222.128.0/17
+        54.182.0.0/16
+        54.192.0.0/16
+        54.230.0.0/16
+        54.239.128.0/18
+        54.239.192.0/19
+        54.240.128.0/18
+        64.252.64.0/18
+        70.132.0.0/18
+        71.152.0.0/17
+        143.204.0.0/16
+        204.246.164.0/22
+        204.246.168.0/22
+        204.246.174.0/23
+        204.246.176.0/20
+        205.251.192.0/19
+        205.251.249.0/24
+        205.251.250.0/23
+        205.251.252.0/23
+        205.251.254.0/24
+        216.137.32.0/19
       ]
 
       expect(AWSIpRanges.cloudfront_ips).to eql(expected_result)
@@ -94,10 +92,8 @@ RSpec.describe AWSIpRanges do
 
     context "when the response was 403 and not JSON" do
       before(:each) do
-        aws_ip_ranges = File.read(Rails.root.join("spec/fixtures/bad_aws_ip_ranges.xml"))
-
-        stub_request(:get, AWSIpRanges::PATH)
-          .to_return(body: aws_ip_ranges, status: 403)
+        aws_ip_ranges = file_fixture("bad_aws_ip_ranges.xml")
+        stub_request(:get, AWSIpRanges::PATH).to_return(body: aws_ip_ranges, status: 403)
       end
 
       it "returns an empty array" do
