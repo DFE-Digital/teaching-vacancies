@@ -1,0 +1,10 @@
+#!/bin/bash
+set -eu
+
+cf7 api $CF_API_ENDPOINT
+cf7 auth
+
+cf7 target -o $CF_ORG -s $CF_SERVICE_NAME-$CF_TARGET
+cf7 conduit "$CF_SERVICE_NAME-postgres-$CF_TARGET" --app-name $CF_SERVICE_NAME-conduit-$CF_TARGET -- psql < backup.sql
+# The conduit app may have to be deleted explicitly
+cf7 delete -f $CF_SERVICE_NAME-conduit-$CF_TARGET || true
