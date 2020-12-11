@@ -17,7 +17,7 @@ jobs:
 
     - name: Install cf client
       env:
-        CF_CLI_VERSION: 7.1.0
+        CF_CLI_VERSION: 7.2.0
         CF_CLI_URL: https://packages.cloudfoundry.org/stable?release=linux64-binary&version=
       run: |
         curl -sL "${CF_CLI_URL}${CF_CLI_VERSION}" | sudo tar -zx -C /usr/local/bin
@@ -41,10 +41,9 @@ jobs:
         CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
         CF_API_ENDPOINT: ${{ secrets.CF_API_ENDPOINT }}
         CF_ORG: ${{ secrets.CF_ORG }}
-        CF_SPACE_ORIGIN: teaching-vacancies-production
-        CF_SPACE_TARGET: teaching-vacancies-staging
-        CF_POSTGRES_SERVICE_ORIGIN: teaching-vacancies-postgres-production
-        CF_POSTGRES_SERVICE_TARGET: teaching-vacancies-postgres-staging
+        CF_SERVICE_NAME: teaching-vacancies
+        CF_ORIGIN: production
+        CF_TARGET: staging
       run: bin/sync-db
 
     - name: Configure AWS credentials
@@ -65,7 +64,7 @@ jobs:
         SLACK_USERNAME: CI Deployment
         SLACK_ICON_EMOJI: ':rocket:'
         SLACK_TITLE: DB syncing success
-        SLACK_MESSAGE: 'Successful database backup and sync'
+        SLACK_MESSAGE: 'Successful db backup and sync production->staging'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
     - name: Send failure message to twd_tv_dev channel
@@ -76,5 +75,5 @@ jobs:
         SLACK_USERNAME: CI Deployment
         SLACK_ICON_EMOJI: ':cry:'
         SLACK_TITLE: DB syncing failure
-        SLACK_MESSAGE: 'Failed database backup and sync'
+        SLACK_MESSAGE: 'Failed db backup and sync production->staging'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

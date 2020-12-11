@@ -5,12 +5,12 @@ CF_ORG='dfe'
 cf7 api ${CF_API_ENDPOINT}
 cf7 auth
 
-cf7 target -o $CF_ORG -s $CF_SPACE_ORIGIN
-cf7 conduit "$CF_POSTGRES_SERVICE_ORIGIN" --app-name teaching-vacancies-conduit-production -- pg_dump -x --no-owner -c -f backup.sql
+cf7 target -o $CF_ORG -s $CF_SERVICE_NAME-$CF_ORIGIN
+cf7 conduit "$CF_SERVICE_NAME-postgres-$CF_ORIGIN" --app-name $CF_SERVICE_NAME-conduit-$CF_ORIGIN -- pg_dump -x --no-owner -c -f backup.sql
 # The conduit app may have to be deleted explicitly
-cf7 delete -f teaching-vacancies-conduit-production || true
+cf7 delete -f $CF_SERVICE_NAME-conduit-$CF_ORIGIN || true
 
-cf7 target -o $CF_ORG -s $CF_SPACE_TARGET
-cf7 conduit "$CF_POSTGRES_SERVICE_TARGET" --app-name teaching-vacancies-conduit-staging -- psql < backup.sql
+cf7 target -o $CF_ORG -s $CF_SERVICE_NAME-$CF_TARGET
+cf7 conduit "$CF_SERVICE_NAME-postgres-$CF_TARGET" --app-name $CF_SERVICE_NAME-conduit-$CF_TARGET -- psql < backup.sql
 # The conduit app may have to be deleted explicitly
-cf7 delete -f teaching-vacancies-conduit-staging || true
+cf7 delete -f $CF_SERVICE_NAME-conduit-$CF_TARGET || true
