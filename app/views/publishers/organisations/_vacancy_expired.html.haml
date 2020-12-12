@@ -11,13 +11,13 @@
 -#       %li= link_to t('jobs.delete_link'), vacancy.delete_path, class: 'govuk-link', method: :delete, data: { confirm: t('jobs.are_you_sure', job_title: vacancy.job_title) }
 
 
-.card
+.card[vacancy]
   .card__contents
     %dl.card__title
       %dd.govuk-body-l= govuk_link_to(vacancy.job_title, vacancy.preview_path, class: 'view-vacancy-link')
     %dl.card__details
       - if organisation.is_a?(SchoolGroup)
-        %dd= vacancy.readable_job_location
+        %dd.govuk-body= vacancy.readable_job_location
       %dd.govuk-body= t('jobs.publication_date_html', date: vacancy.publish_on)
       %dd.govuk-body= t('jobs.closing_date_html', date: vacancy.expires_on)
       %dd.govuk-body= t('jobs.page_views_html', views: vacancy.page_views)

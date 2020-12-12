@@ -32,19 +32,19 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       let!(:inline_component) { render_inline(subject) }
 
       it "renders the vacancies component" do
-        expect(inline_component.css(".moj-scrollable-pane__wrapper").to_html).not_to be_blank
+        expect(inline_component.css(".moj-filter-layout__content").to_html).not_to be_blank
       end
 
       it "renders the number of jobs in the heading" do
-        expect(inline_component.css(".moj-scrollable-pane__wrapper .govuk-heading-m").to_html).to include("1 published job")
+        expect(inline_component.css("h2.govuk-heading-l").text).to include("Published jobs (1)")
       end
 
       it "renders the vacancy job title in the table" do
-        expect(inline_component.css(".govuk-table.vacancies").to_html).to include(vacancy.job_title)
+        expect(inline_component.css(".vacancies").to_html).to include(vacancy.job_title)
       end
 
       it "does not render the vacancy readable job location in the table" do
-        expect(inline_component.css(".govuk-table.vacancies > tbody > tr > td#vacancy_location").to_html).to be_blank
+        expect(inline_component.css(".card #vacancy_location").to_html).to be_blank
       end
 
       it "does not render the filters sidebar" do
@@ -68,20 +68,20 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       let!(:inline_component) { render_inline(subject) }
 
       it "renders the vacancies component" do
-        expect(inline_component.css(".moj-scrollable-pane__wrapper").to_html).not_to be_blank
+        expect(inline_component.css(".moj-filter-layout__content").to_html).not_to be_blank
       end
 
       it "renders the number of jobs in the heading" do
-        expect(inline_component.css(".moj-scrollable-pane__wrapper .govuk-heading-m").to_html).to include("1 published job")
+        expect(inline_component.css("h2.govuk-heading-l").text).to include("Published jobs (1)")
       end
 
       it "renders the vacancy job title in the table" do
-        expect(inline_component.css(".govuk-table.vacancies").to_html).to include(vacancy.job_title)
+        expect(inline_component.css(".vacancies").to_html).to include(vacancy.job_title)
       end
 
       it "renders the vacancy readable job location in the table" do
         expect(
-          inline_component.css(".govuk-table.vacancies > tbody > tr > td#vacancy_location").to_html,
+          inline_component.css(".card #vacancy_location").to_html,
         ).to include(vacancy.readable_job_location)
       end
 
@@ -120,20 +120,20 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       let!(:inline_component) { render_inline(subject) }
 
       it "renders the vacancies component" do
-        expect(inline_component.css(".moj-scrollable-pane__wrapper").to_html).not_to be_blank
+        expect(inline_component.css(".moj-filter-layout__content").to_html).not_to be_blank
       end
 
       it "renders the number of jobs in the heading" do
-        expect(inline_component.css(".moj-scrollable-pane__wrapper .govuk-heading-m").to_html).to include("1 published job")
+        expect(inline_component.css("h2.govuk-heading-l").text).to include("Published jobs (1)")
       end
 
       it "renders the vacancy job title in the table" do
-        expect(inline_component.css(".govuk-table.vacancies").to_html).to include(vacancy.job_title)
+        expect(inline_component.css(".vacancies").to_html).to include(vacancy.job_title)
       end
 
       it "renders the vacancy readable job location in the table" do
         expect(
-          inline_component.css(".govuk-table.vacancies > tbody > tr > td#vacancy_location").to_html,
+          inline_component.css(".card #vacancy_location").to_html,
         ).to include(vacancy.readable_job_location)
       end
 

@@ -9,14 +9,15 @@
 -#       %li= link_to t('jobs.copy_link'), vacancy.copy_path, class: 'govuk-link', method: :get
 -#       %li= link_to t('jobs.delete_link'), vacancy.delete_path, class: 'govuk-link', method: :delete, data: { confirm: t('jobs.are_you_sure', job_title: vacancy.job_title) }
 
-.card
+.card[vacancy]
   .card__contents
     %dl.card__title
       %dd.govuk-body-l= govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id), class: 'view-vacancy-link')
     %dl.card__details
       - if organisation.is_a?(SchoolGroup)
-        %dd= vacancy.readable_job_location
-      %dd.govuk-bodyvacancy.created_at
+        %dd.govuk-body= vacancy.readable_job_location
+      %dd.govuk-body= t('jobs.created_at_html', date: vacancy.created_at)
+      %dd.govuk-body= t('jobs.updated_at_html', date: vacancy.updated_at)
 
   %dl.card__actions
     %dd
