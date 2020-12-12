@@ -12,4 +12,5 @@
       - vacancies.each do |vacancy|
         = render "publishers/organisations/vacancy_draft", vacancy: vacancy, organisation: organisation
 - else
-  = render(Shared::NotificationComponent.new(content: { body: t("jobs.no_draft_jobs") }, style: 'empty', links: nil, dismiss: false, background: true, alert: false))
+  .vacancies
+    = render(Shared::NotificationComponent.new(content: { body: t("jobs.no_draft_jobs") }, style: 'empty', links: nil, dismiss: false, background: true, alert: false))

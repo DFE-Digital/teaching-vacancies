@@ -85,7 +85,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
             expect(page).to have_content(local_authority.name)
             click_on school.name
 
-            expect(page).to have_content("Jobs at #{school.name}")
+            expect(page).to have_text("Jobs at #{school.name}")
             expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
 
             # Can switch organisations

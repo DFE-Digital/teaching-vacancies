@@ -154,6 +154,7 @@ en:
     important_dates: Important dates and deadlines
     application_deadline: Application deadline
     closing_date_html: '<span class="govuk-!-font-weight-bold">Closing date:</span> %{date}'
+    created_at_html: '<span class="govuk-!-font-weight-bold">Date drafted:</span> %{date}'
     days_to_apply:
       remaining: '%{days_remaining} days remaining to apply'
       today: Deadline is today
@@ -166,6 +167,7 @@ en:
     publish_on: Date listed
     expires_on: Closing date
     time_at: ' at '
+    updated_at_html: '<span class="govuk-!-font-weight-bold">Date last updated:</span> %{date}'
 
     education: Essential educational requirements
     qualifications: Essential qualifications
@@ -294,7 +296,6 @@ en:
     awaiting_feedback_jobs_with_count_html: Jobs awaiting feedback <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
     no_draft_jobs: You currently have no draft jobs
     no_expired_jobs: You currently have no expired jobs
-    no_feedback_jobs: You currently have no jobs awaiting feedback
     no_pending_jobs: You currently have no scheduled jobs
     no_published_jobs: You currently have no published jobs
 

@@ -70,7 +70,7 @@ RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: tru
     scenario "when an option is not selected in a javascript disabled browser", js: false do
       visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
-      within("tr", text: vacancy.job_title) do
+      within(".card", text: vacancy.job_title) do
         select I18n.t("jobs.feedback.hired_status.hired_tvs"), from: "vacancy_hired_status"
         click_on I18n.t("buttons.submit")
       end
@@ -87,7 +87,7 @@ RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: tru
     scenario "when an option is not selected in a javascript enabled browser" do
       visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
-      within("tr", text: vacancy.job_title) do
+      within(".card", text: vacancy.job_title) do
         select I18n.t("jobs.feedback.hired_status.hired_tvs"), from: "vacancy_hired_status"
         click_on I18n.t("buttons.submit")
       end
@@ -104,13 +104,13 @@ RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: tru
     scenario "input error styling only displays on blank selection field(s)" do
       visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
-      within("tr", text: vacancy.job_title) do
+      within(".card", text: vacancy.job_title) do
         click_on I18n.t("buttons.submit")
       end
 
       expect(page).to have_content(I18n.t("messages.jobs.feedback.inline_error"), count: 2)
 
-      within("tr", text: vacancy.job_title) do
+      within(".card", text: vacancy.job_title) do
         select I18n.t("jobs.feedback.hired_status.hired_tvs"), from: "vacancy_hired_status"
         click_on I18n.t("buttons.submit")
 
@@ -160,7 +160,7 @@ RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: tru
   end
 
   def submit_feedback_for(vacancy)
-    within("tr", text: vacancy.job_title) do
+    within(".card", text: vacancy.job_title) do
       select I18n.t("jobs.feedback.hired_status.hired_tvs"), from: "vacancy_hired_status"
       select I18n.t("jobs.feedback.listed_elsewhere.listed_paid"), from: "vacancy_listed_elsewhere"
       click_on I18n.t("buttons.submit")
