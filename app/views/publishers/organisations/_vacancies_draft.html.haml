@@ -1,7 +1,3 @@
-.govuk-grid-row
-  .govuk-grid-column-full
-    %h2.govuk-heading-l= t("jobs.#{selected_type}_jobs_with_count_html", count: vacancies.count)
-
 - if vacancies.any?
   %table.govuk-table.vacancies{ class: "govuk-!-margin-top-4" }
     %thead.govuk-table__head
@@ -16,4 +12,4 @@
       - vacancies.each do |vacancy|
         = render "publishers/organisations/vacancy_draft", vacancy: vacancy, organisation: organisation
 - else
-  = render(Shared::NotificationComponent.new(content: { body: "You currently have no draft jobs" }, style: 'empty', links: nil, dismiss: false, background: true, alert: false))
+  = render(Shared::NotificationComponent.new(content: { body: t("jobs.no_draft_jobs") }, style: 'empty', links: nil, dismiss: false, background: true, alert: false))

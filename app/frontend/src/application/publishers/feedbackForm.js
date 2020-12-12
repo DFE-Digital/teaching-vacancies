@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     Array.from(document.getElementsByTagName('select')).forEach((select) => {
       select.addEventListener('change', () => {
-        Array.from(select.closest('tr').getElementsByTagName('input')).forEach((input) => { input.disabled = false; });
+        Array.from(select.closest('.card').getElementsByTagName('input')).forEach((input) => { input.disabled = false; });
       });
     });
   }

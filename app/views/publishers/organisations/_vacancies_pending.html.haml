@@ -1,8 +1,3 @@
-.govuk-grid-row
-  .govuk-grid-column-full
-    %h2.govuk-heading-l= t("jobs.#{selected_type}_jobs_with_count_html", count: vacancies.count)
-
-<<<<<<< HEAD
 - if vacancies.any?
   %table.govuk-table.vacancies{ class: "govuk-!-margin-top-4" }
     %thead.govuk-table__head
@@ -17,21 +12,4 @@
         - vacancies.each do |vacancy|
           = render "publishers/organisations/vacancy_pending", vacancy: vacancy, organisation: organisation
 - else
-  %p.govuk-body= t("jobs.no_pending_jobs")
-=======
-    - if vacancies.any?
-      %table.govuk-table.vacancies{ class: "govuk-!-margin-top-4" }
-        %thead.govuk-table__head
-          %tr.govuk-table__row
-            %th.govuk-table__header= table_header_sort_by(t("jobs.job_title"), "pending", column: "job_title", sort: sort)
-            - if organisation.is_a?(SchoolGroup)
-              %th.govuk-table__header= table_header_sort_by(t("jobs.location"), "pending", column: "readable_job_location", sort: sort)
-            %th.govuk-table__header= table_header_sort_by(t("jobs.date_to_be_posted"), "pending", column: "publish_on", sort: sort)
-            %th.govuk-table__header= table_header_sort_by(t("jobs.expires_on"), "pending", column: "expires_on", sort: sort)
-            %th.govuk-table__header{ colspan: 3 }= t("jobs.actions")
-          %tbody.govuk-table__body
-            - vacancies.each do |vacancy|
-              = render "publishers/organisations/vacancy_pending", vacancy: vacancy, organisation: organisation
-    - else
-      %p.govuk-body= t("jobs.no_pending_jobs")
->>>>>>> 7af56689... create basic dashboard view component currently for use on jobseeker account and mat dashboard
+  = render(Shared::NotificationComponent.new(content: { body: t("jobs.no_pending_jobs") }, style: 'empty', links: nil, dismiss: false, background: true, alert: false))
