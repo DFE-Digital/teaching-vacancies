@@ -1,5 +1,3 @@
-%h2.govuk-heading-l= t("jobs.#{selected_type}_jobs_with_count_html", count: vacancies.count)
-
 - if vacancies.any?
   %table.govuk-table.vacancies{ class: "govuk-!-margin-top-4" }
     %thead.govuk-table__head
@@ -11,8 +9,8 @@
         %th.govuk-table__header= table_header_sort_by(t("jobs.expires_on"), column: "expires_on", sort: sort)
         %th.govuk-table__header= table_header_sort_by(t("jobs.page_views"), column: "total_pageviews", sort: sort)
         %th.govuk-table__header{ colspan: 3 }= t("jobs.actions")
-    %tbody.govuk-table__body
-      - vacancies.each do |vacancy|
-        = render "publishers/organisations/vacancy_published", vacancy: vacancy, organisation: organisation
+      %tbody.govuk-table__body
+        - vacancies.each do |vacancy|
+          = render "publishers/organisations/vacancy_published", vacancy: vacancy, organisation: organisation
 - else
-  %p.govuk-body= t("jobs.no_published_jobs")
+  = render(Shared::NotificationComponent.new(content: { body: t("jobs.no_published_jobs") }, style: 'empty', links: nil, dismiss: false, background: true, alert: false))

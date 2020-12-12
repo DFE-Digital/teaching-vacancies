@@ -1,5 +1,3 @@
-%h2.govuk-heading-l= t("jobs.#{selected_type}_jobs_with_count_html", count: vacancies.count)
-
 - if vacancies.any?
   %table.govuk-table.vacancies{ class: "govuk-!-margin-top-4" }
     %thead.govuk-table__head
@@ -15,4 +13,4 @@
       - vacancies.each do |vacancy|
         = render "publishers/organisations/vacancy_expired", vacancy: vacancy, organisation: organisation
 - else
-  %p.govuk-body= t("jobs.no_expired_jobs")
+  = render(Shared::NotificationComponent.new(content: { body: t("jobs.no_expired_jobs") }, style: 'empty', links: nil, dismiss: false, background: true, alert: false))

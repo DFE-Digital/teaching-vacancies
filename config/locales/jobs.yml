@@ -153,13 +153,16 @@ en:
 
     important_dates: Important dates and deadlines
     application_deadline: Application deadline
+    closing_date_html: '<span class="govuk-!-font-weight-bold">Closing date:</span> %{date}'
     days_to_apply:
       remaining: '%{days_remaining} days remaining to apply'
       today: Deadline is today
       tomorrow: Deadline is tomorrow
     publication_date: Date job will be listed
+    publication_date_html: '<span class="govuk-!-font-weight-bold">Date to be published:</span> %{date}'
     start_on: Date job starts
     starts_on: Expected start date
+    page_views_html: '<span class="govuk-!-font-weight-bold">Page views:</span> %{views}'
     publish_on: Date listed
     expires_on: Closing date
     time_at: ' at '
@@ -289,10 +292,11 @@ en:
     expired_jobs_with_count_html: Expired jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
     awaiting_feedback_jobs: Jobs awaiting feedback
     awaiting_feedback_jobs_with_count_html: Jobs awaiting feedback <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
-    no_published_jobs: You currently have no published jobs
-    no_expired_jobs: You currently have no expired jobs
     no_draft_jobs: You currently have no draft jobs
+    no_expired_jobs: You currently have no expired jobs
+    no_feedback_jobs: You currently have no jobs awaiting feedback
     no_pending_jobs: You currently have no scheduled jobs
+    no_published_jobs: You currently have no published jobs
 
     awaiting_feedback_intro: >-
       Please tell us if you filled these expired jobs through Teaching Vacancies,

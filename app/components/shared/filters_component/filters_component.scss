@@ -91,6 +91,12 @@
 
     .moj-filter__heading-title {
       display: flex;
+      border-bottom: 2px solid $govuk-border-colour;
+      margin-bottom: govuk-spacing(2);
+
+      .govuk-heading-s {
+        margin-bottom: govuk-spacing(2);
+      }
 
       .filters__heading-title {
         margin-bottom: govuk-spacing(1);

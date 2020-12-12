@@ -28,7 +28,7 @@ class Publishers::VacanciesComponent < ViewComponent::Base
   end
 
   def grid_column_class
-    @organisation.is_a?(SchoolGroup) ? "govuk-grid-column-three-quarters" : "govuk-grid-column-full"
+    @organisation.is_a?(SchoolGroup) ? "govuk-grid-column-two-thirds" : "govuk-grid-column-full"
   end
 
   def filters_applied_text
