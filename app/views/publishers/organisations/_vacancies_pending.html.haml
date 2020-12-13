@@ -1,15 +1,12 @@
 - if vacancies.any?
-  %table.govuk-table.vacancies{ class: "govuk-!-margin-top-4" }
-    %thead.govuk-table__head
-      %tr.govuk-table__row
-        %th.govuk-table__header= table_header_sort_by(t("jobs.job_title"), column: "job_title", sort: sort)
-        - if organisation.is_a?(SchoolGroup)
-          %th.govuk-table__header= table_header_sort_by(t("jobs.location"), column: "readable_job_location", sort: sort)
-        %th.govuk-table__header= table_header_sort_by(t("jobs.date_to_be_posted"), column: "publish_on", sort: sort)
-        %th.govuk-table__header= table_header_sort_by(t("jobs.expires_on"), column: "expires_on", sort: sort)
-        %th.govuk-table__header{ colspan: 3 }= t("jobs.actions")
-      %tbody.govuk-table__body
-        - vacancies.each do |vacancy|
-          = render "publishers/organisations/vacancy_pending", vacancy: vacancy, organisation: organisation
+  %ul.govuk-list{ class: "govuk-!-margin-top-4" }
+    %li= table_header_sort_by(t("jobs.job_title"), column: "job_title", sort: sort)
+    - if organisation.is_a?(SchoolGroup)
+      %li= table_header_sort_by(t("jobs.location"), column: "readable_job_location", sort: sort)
+    %li= table_header_sort_by(t("jobs.date_to_be_posted"), column: "publish_on", sort: sort)
+    %li= table_header_sort_by(t("jobs.expires_on"), column: "expires_on", sort: sort)
+
+  - vacancies.each do |vacancy|
+    = render "publishers/organisations/vacancy_pending", vacancy: vacancy, organisation: organisation
 - else
   = render(Shared::NotificationComponent.new(content: { body: t("jobs.no_pending_jobs") }, style: 'empty', links: nil, dismiss: false, background: true, alert: false))

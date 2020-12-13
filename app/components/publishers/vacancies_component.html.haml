@@ -1,4 +1,4 @@
-= render(Shared::DashboardComponent.new(heading: t('schools.jobs.index_html', organisation: @organisation.name), navigation_items: vacancy_links, panel: true, link: organisation_jobs_path))
+= render(Shared::DashboardComponent.new(heading: t('schools.jobs.index_html', organisation: @organisation.name), navigation_items: vacancy_links, panel: @vacancies&.count.positive?, link: organisation_jobs_path))
 
 .govuk-grid-row{ class: 'govuk-!-margin-top-7' }
   .govuk-grid-column-full
@@ -7,10 +7,10 @@
 .govuk-grid-row
   .govuk-grid-column-full-width
     .moj-filter-sidebar{ class: 'govuk-!-margin-bottom-5' }
-      - if @organisation.is_a?(SchoolGroup)
+      - if @organisation.is_a?(SchoolGroup) && @vacancies&.count.positive?
         .govuk-grid-column-one-third
           = form_for @filters_form, url: organisation_managed_organisations_path(anchor: 'search-results'), html: { method: "patch", data: { 'auto-submit': true } } do |f|
-            = render 'shared/components/filters', form: f, options: { remove_buttons: true, mobile_variant: true }, filters: { total_count: @filters[:managed_school_ids]&.count, title: t('jobs.filters.job_filters') }, items: [{ title: 'Locations', key: 'locations', search: true, scroll: true, attribute: :managed_school_ids, selected: @filters[:managed_school_ids], options: @organisation_options, value_method: :id, text_method: :label, selected_method: :name, small: true }]
+            = render(Shared::FiltersComponent.new(filters: { total_count: @filters[:managed_school_ids]&.count, title: t('jobs.filters.job_filters') }, form: f, items: [{ title: 'Locations', key: 'locations', search: true, scroll: true, attribute: :managed_school_ids, selected: @filters[:managed_school_ids], options: @organisation_options, value_method: :id, text_method: :label, selected_method: :name, small: true }], options: { remove_buttons: true, mobile_variant: true }))
 
             = f.hidden_field :jobs_type, value: @selected_type
 

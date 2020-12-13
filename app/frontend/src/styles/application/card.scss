@@ -1,0 +1,59 @@
+.card {
+  border-bottom: 1px solid $govuk-border-colour;
+  display: flex;
+  margin: 0 0 govuk-spacing(4);
+  padding-bottom: govuk-spacing(3);
+
+  dl {
+    margin: 0;
+  }
+
+  dd {
+    margin: 0;
+  }
+
+  .card__contents {
+    display: flex;
+    flex-basis: 40%;
+    flex-direction: row;
+    flex-grow: 2;
+
+    @include govuk-media-query ($until: desktop) {
+      flex-direction: column;
+      flex-grow: 1;
+    }
+  }
+
+  .card__title {
+    flex-basis: 40%;
+    margin-bottom: govuk-spacing(2);
+  }
+
+  .card__details {
+    flex-grow: 1;
+
+    @include govuk-media-query ($until: desktop) {
+      font-size: 0.85rem;
+    }
+  }
+
+  .card__actions {
+    align-self: flex-start;
+    flex-grow: 1;
+    margin-top: 0;
+    text-align: right;
+
+    .govuk-list {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.govuk-grid-column-two-thirds {
+  .card {
+    .card__contents {
+      flex-direction: column;
+      flex-grow: 1;
+    }
+  }
+}
