@@ -10,9 +10,18 @@
     .dashboard__header .govuk-width-container {
       position: relative;
 
-      a.govuk-button {
+      .moj-action-bar {
         position: absolute;
         right: 0;
+        top: -45px;
+
+        .moj-action-bar__filter {
+          box-shadow: 1px 1px 1px 1px #929191;
+
+          &::after {
+            width: 0;
+          }
+        }
       }
     }
   }
@@ -49,46 +58,6 @@
 
       .moj-primary-navigation__link[aria-current] {
         color: govuk-colour('black');
-      }
-    }
-  }
-
-  .card {
-    border-bottom: 1px solid $govuk-border-colour;
-    display: flex;
-
-    dd {
-      margin: 0;
-    }
-
-    .card__contents {
-      display: flex;
-      flex-direction: row;
-      flex-grow: 2;
-    }
-
-    .card__title {
-      flex-grow: 1;
-      margin-bottom: 0;
-    }
-
-    .card__details {
-      flex-grow: 1;
-    }
-
-    .card__actions {
-      align-self: flex-end;
-      flex-grow: 1;
-      margin-top: 0;
-      text-align: right;
-    }
-  }
-  
-  .govuk-grid-column-two-thirds {
-    .card {
-      .card__contents {
-        flex-direction: column;
-        flex-grow: 1;
       }
     }
   }

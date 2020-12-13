@@ -12,7 +12,7 @@
 .card[vacancy]
   .card__contents
     %dl.card__title
-      %dd.govuk-body-l= govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id), class: 'view-vacancy-link')
+      %dd.govuk-body= govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id), class: 'view-vacancy-link')
     %dl.card__details
       - if organisation.is_a?(SchoolGroup)
         %dd.govuk-body= vacancy.readable_job_location

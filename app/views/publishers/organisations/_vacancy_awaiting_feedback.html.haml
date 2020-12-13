@@ -9,11 +9,11 @@
 -#     %td.govuk-table__cell{ class: 'govuk-!-width-one-quarter' }= select_tag 'vacancy[listed_elsewhere]', options_for_select(listed_elsewhere_options, nil), form: vacancy.id, include_blank: '--', class: 'govuk-select form-control form-control-block govuk-!-width-full'
 -#     %td.govuk-table__cell= submit_tag t('buttons.submit'), form: vacancy.id, class: 'govuk-button govuk-!-margin-bottom-0'
 
-.card[vacancy]
-  = form_for vacancy, url: organisation_job_statistics_path(vacancy.id), html: { id: vacancy.id, method: 'patch', class: 'vacancy-feedback__form', data: { option_not_selected_message: t('messages.jobs.feedback.inline_error') } } do |f|
+= form_for vacancy, url: organisation_job_statistics_path(vacancy.id), html: { id: vacancy.id, method: 'patch', class: 'vacancy-feedback__form', data: { option_not_selected_message: t('messages.jobs.feedback.inline_error') } } do |f|
+  .card[vacancy]
     .card__contents
       %dl.card__title
-        %dd.govuk-body-l= govuk_link_to(vacancy.job_title, vacancy.preview_path, class: 'view-vacancy-link', id: 'job-title')
+        %dd.govuk-body= govuk_link_to(vacancy.job_title, vacancy.preview_path, class: 'view-vacancy-link', id: 'job-title')
       %dl.card__details
         - if organisation.is_a?(SchoolGroup)
           %dd.govuk-body= vacancy.readable_job_location
