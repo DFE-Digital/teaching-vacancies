@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       passwords: "jobseekers/passwords",
       registrations: "jobseekers/registrations",
       sessions: "jobseekers/sessions",
+      unlocks: "jobseekers/unlocks",
     }
 
     get "/jobseekers/saved_jobs", to: "jobseekers/saved_jobs#index", as: :jobseeker_root

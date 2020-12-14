@@ -46,6 +46,12 @@ en:
         body: If you did not make this request, please email %{mail_to}
         heading: Not requested a password reset?
       subject: Reset your password
+    unlock_instructions:
+      heading: Unlock your Teaching Vacancies account
+      instructions: Click the link below to unlock your account and sign in to Teaching Vacancies.
+      intro: You have been locked out of your account because you entered your password incorrectly too many times.
+      link: Unlock your account
+      subject: Unlock your Teaching Vacancies account
 
   subscription_mailer:
     confirmation:

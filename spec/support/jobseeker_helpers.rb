@@ -8,6 +8,13 @@ module JobseekerHelpers
     click_on I18n.t("buttons.resend_email")
   end
 
+  def resend_unlock_instructions_email
+    fill_in "Email address", with: jobseeker.email
+    within(".new_jobseeker") do
+      click_on I18n.t("jobseekers.unlocks.new.form_submit")
+    end
+  end
+
   def sign_up_jobseeker
     fill_in "Email address", with: jobseeker.email
     fill_in "Password", with: jobseeker.password

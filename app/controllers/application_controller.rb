@@ -115,4 +115,9 @@ private
   def trigger_page_visited_event
     request_event.trigger(:page_visited)
   end
+
+  def clear_flash_and_render(view)
+    flash.clear
+    render view
+  end
 end

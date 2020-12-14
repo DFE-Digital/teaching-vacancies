@@ -1,10 +1,10 @@
 module MailerHelpers
-  def last_email
-    ActionMailer::Base.deliveries.last
-  end
-
   def delivered_emails
     ActionMailer::Base.deliveries
+  end
+
+  def last_email
+    delivered_emails.last
   end
 
   def first_link_from_last_mail
