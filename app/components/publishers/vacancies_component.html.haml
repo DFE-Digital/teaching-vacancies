@@ -2,7 +2,7 @@
 
 .govuk-grid-row{ class: 'govuk-!-margin-top-7' }
   .govuk-grid-column-full
-    %h2.govuk-heading-l= t("jobs.#{@selected_type}_jobs_with_count_html", count: @vacancies.count)
+    %h2.govuk-heading-l{ class: 'govuk-!-margin-bottom-2' }= t("jobs.#{@selected_type}_jobs_with_count_html", count: @vacancies.count)
 
 .govuk-grid-row
   .govuk-grid-column-full-width
