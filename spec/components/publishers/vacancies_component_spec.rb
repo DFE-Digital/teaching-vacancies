@@ -40,7 +40,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       end
 
       it "renders the vacancy job title in the table" do
-        expect(inline_component.css(".vacancies").to_html).to include(vacancy.job_title)
+        expect(inline_component.css(".card").to_html).to include(vacancy.job_title)
       end
 
       it "does not render the vacancy readable job location in the table" do
@@ -76,7 +76,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       end
 
       it "renders the vacancy job title in the table" do
-        expect(inline_component.css(".vacancies").to_html).to include(vacancy.job_title)
+        expect(inline_component.css(".card").to_html).to include(vacancy.job_title)
       end
 
       it "renders the vacancy readable job location in the table" do
@@ -128,7 +128,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       end
 
       it "renders the vacancy job title in the table" do
-        expect(inline_component.css(".vacancies").to_html).to include(vacancy.job_title)
+        expect(inline_component.css(".card").to_html).to include(vacancy.job_title)
       end
 
       it "renders the vacancy readable job location in the table" do
