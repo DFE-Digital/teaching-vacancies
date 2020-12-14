@@ -10,6 +10,13 @@ class Organisation < ApplicationRecord
 
   alias_attribute :data, :gias_data
 
+  JOB_SORTING_OPTIONS = [
+    ["Date to be published (Soonest)", "publish_on"],
+    ["Closing date (Soonest)", "expires_on"],
+    ["Job title (A to Z)", "job_title"],
+    ["Location (A to Z)", "readable_job_location"],
+  ].freeze
+
   def all_vacancies
     ids = is_a?(School) ? [id] : [id] + schools.pluck(:id)
     Vacancy.in_organisation_ids(ids)
