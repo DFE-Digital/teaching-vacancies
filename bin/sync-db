@@ -2,7 +2,19 @@
 set -eu
 CF_ORG='dfe'
 
-cf7 api ${CF_API_ENDPOINT}
+if [ $CF_ORIGIN == $CF_TARGET ]
+then
+  echo "CF_ORIGIN should not equal CF_TARGET. They are both set to $CF_TARGET"
+  exit 1
+fi
+
+if [ $CF_TARGET == "production" ]
+then
+  echo "CF_TARGET should not equal production"
+  exit 1
+fi
+
+cf7 api $CF_API_ENDPOINT
 cf7 auth
 
 cf7 target -o $CF_ORG -s $CF_SERVICE_NAME-$CF_ORIGIN

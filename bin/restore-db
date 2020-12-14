@@ -1,6 +1,12 @@
 #!/bin/bash
 set -eu
 
+if [ $CF_TARGET == "production" ]
+then
+  echo "CF_TARGET should not equal production"
+  exit 1
+fi
+
 cf7 api $CF_API_ENDPOINT
 cf7 auth
 
