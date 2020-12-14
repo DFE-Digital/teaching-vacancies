@@ -58,8 +58,8 @@ en:
         expires_at: For example, 9:30 am or 11:59 pm (midnight)
         publish_on: For example, 01 01 2021
         starts_on: For example, 01 09 2021
-      jobseeker:
-        password_html: Your password has to be at least 8 characters long
+      jobseeker_sign_up:
+        password: Your password has to be at least 8 characters long
       job_summary_form:
         about_organisation: >-
           This will appear next to the job details under '%{organisation_type} overview'. Feel free to adapt this text
@@ -131,6 +131,9 @@ en:
       jobseeker:
         email_html: Email address (<span class='text-red'>Required</span>)
         password_html: Password (<span class='text-red'>Required</span>)
+      jobseeker_sign_in_form:
+        email: Email address
+        password: Password
       job_summary_form:
         about_organisation_html: About %{organisation} (<span class='text-red'>Required</span>)
         job_summary_html: Job summary (<span class='text-red'>Required</span>)

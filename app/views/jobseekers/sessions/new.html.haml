@@ -1,0 +1,27 @@
+- content_for :page_title_prefix, t(".title")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    %h1.govuk-heading-xl= t(".title")
+
+    = form_for(resource, as: resource_name, url: new_session_path(resource_name)) do |f|
+      = f.govuk_error_summary
+
+      %p.govuk-body= t(".description")
+
+      = f.govuk_email_field :email, label: { text: t('helpers.label.jobseeker_sign_in_form.email'), size: "s" }, width: "two-thirds"
+      = f.govuk_password_field :password, label: { text: t('helpers.label.jobseeker_sign_in_form.password'), size: "s" }, width: "two-thirds"
+
+      %p.govuk-body= govuk_link_to(t(".forgotten"), new_password_path(resource_name))
+
+      = f.govuk_submit t("buttons.sign_in"), classes: "govuk-!-margin-bottom-0"
+
+    %hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
+    %h2.govuk-heading-m= t(".no_account.heading")
+    %p.govuk-body= t(".no_account.content_html", link_to: govuk_link_to(t(".no_account.link"), new_jobseeker_registration_path))
+
+  .govuk-grid-column-one-third
+    .account-sidebar
+      %h2.account-sidebar__heading= t(".assistance.heading")
+      %p.govuk-body-s= t(".assistance.content_html", link_to: govuk_link_to(t(".assistance.link"), new_identifications_path))
+

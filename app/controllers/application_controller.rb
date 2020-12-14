@@ -105,7 +105,9 @@ private
   end
 
   def replace_devise_notice_flash_with_success!
-    flash[:success] = flash.discard(:notice) if flash[:notice].present?
+    return unless flash[:notice].present?
+
+    flash[:success] = flash.discard(:notice)
   end
 
   def remove_devise_notice_flash!

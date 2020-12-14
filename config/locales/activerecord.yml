@@ -9,6 +9,12 @@ en:
     comment:
       blank: You have not submitted any further feedback.
       too_long: Feedback must not be more than 1,200 characters
+  jobseeker_sign_in_errors: &jobseeker_sign_in_errors
+    email:
+      blank: Enter your email address
+      invalid: Enter an email address in the correct format, like name@example.com
+    password:
+      blank: Enter your password
   organisation_errors: &organisation_errors
     website:
       url: Enter a link in the correct format, like http://www.school.ac.uk
@@ -23,16 +29,6 @@ en:
       inclusion: Tell us why you want to unsubscribe
     other_reason:
       blank: Tell us why you want to unsubscribe
-
-  # Jobseekers
-  sign_up_errors: &sign_up_errors
-    email:
-      blank: Enter your email address
-      invalid: Enter an email address in the correct format, like name@example.com
-      taken: This email seems to already have an account with Teaching Vacancies
-    password:
-      blank: Enter a password
-      too_short: Enter a password that is at least 8 characters long
 
   # Hiring staff journey
   job_location_errors: &job_location_errors
@@ -112,6 +108,9 @@ en:
         job_alert_feedback_form:
           attributes:
             <<: *job_alert_feedback_errors
+        jobseeker_sign_in_form:
+          attributes:
+            <<: *jobseeker_sign_in_errors
         nqt_job_alerts_form:
           attributes:
             keywords:
@@ -169,8 +168,10 @@ en:
       models:
         jobseeker:
           attributes:
-            <<: *sign_up_errors
             email:
+              blank: Enter your email address
+              invalid: Enter an email address in the correct format, like name@example.com
+              taken: This email seems to already have an account with Teaching Vacancies
               not_found: Email address is not valid or the account was not created
             current_password:
               blank: Enter your current password
@@ -178,6 +179,7 @@ en:
             password:
               blank: Enter a password that is at least 8 characters long
               same_as_old: Your new password can't be the same as your old password
+              blank: Enter a password
               too_short: Enter a password that is at least 8 characters long
         vacancy:
           attributes:
