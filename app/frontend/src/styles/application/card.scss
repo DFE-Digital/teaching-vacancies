@@ -33,7 +33,9 @@
     flex-grow: 1;
 
     @include govuk-media-query ($until: desktop) {
-      font-size: 0.85rem;
+      * {
+        font-size: 0.85rem;
+      }
     }
   }
 

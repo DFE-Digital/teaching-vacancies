@@ -55,10 +55,6 @@
             .govuk-width-container
               = render 'shared/components/notification'
 
-        -# .govuk-main-wrapper__notification
-        -#   .govuk-width-container
-        -#     = render(Shared::NotificationComponent.new(content: { body: 'some dashboard notification message' }, style: 'success', links: nil, dismiss: false, background: false, alert: false))
-
         .govuk-width-container
           = yield
 

@@ -16,7 +16,7 @@
         top: -45px;
 
         .moj-action-bar__filter {
-          box-shadow: 1px 1px 1px 1px #929191;
+          box-shadow: 1px 1px 1px 1px $govuk-border-colour;
 
           &::after {
             width: 0;

@@ -7,4 +7,8 @@ class Shared::DashboardComponent < ViewComponent::Base
     @panel = panel
     @link = link
   end
+
+  def display_actions
+    @panel || @link
+  end
 end
