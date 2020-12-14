@@ -2,13 +2,17 @@
 
 - if @multiple_organisations && @organisation.is_a?(School)
   .school.govuk-grid-row
-    .govuk-grid-column-full-width
+    .govuk-grid-column-full
       - if AuthenticationFallback.enabled?
         = govuk_link_to(t('publishers.organisations.change'), auth_email_change_organisation_path)
       - else
         = govuk_link_to(t('publishers.organisations.change'), auth_dfe_callback_path)
 
-= render(Publishers::VacanciesComponent.new(organisation: @organisation, sort: @sort, selected_type: @selected_type, filters: @filters, filters_form: @managed_organisations_form))
-= render(Publishers::NoVacanciesComponent.new(organisation: @organisation))
+.govuk-grid-row
+  .govuk-grid-column-full
+    = render(Publishers::VacanciesComponent.new(organisation: @organisation, sort: @sort, selected_type: @selected_type, filters: @filters, filters_form: @managed_organisations_form))
+    = render(Publishers::NoVacanciesComponent.new(organisation: @organisation))
 
-= render(Publishers::SchoolOverviewComponent.new(organisation: @organisation))
+.govuk-grid-row
+  .govuk-grid-column-full
+    = render(Publishers::SchoolOverviewComponent.new(organisation: @organisation))
