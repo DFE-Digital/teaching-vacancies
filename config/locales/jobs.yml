@@ -46,13 +46,6 @@ en:
     no_jobs:
       heading: Try another search
       intro: 'You may get more results if you:'
-      radius_suggestions:
-        heading:
-          keyword_html: Try browsing for <span class='text-wrap-apostrophe'>%{keyword}</span> in a wider location search
-          no_keyword: Try browsing in a wider location search
-        results:
-          one: (%{count} result)
-          other: (%{count} results)
       suggestions:
         - add more keywords, or try different ones
         - change the radius of your search

@@ -38,7 +38,7 @@ RSpec.describe Search::AlgoliaSearchRequest do
       {
         keyword: "maths",
         coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
-        radius: Search::LocationBuilder.convert_radius_in_miles_to_metres(10),
+        radius: convert_miles_to_metres(10),
         hits_per_page: 10,
         page: 1,
       }
@@ -47,7 +47,7 @@ RSpec.describe Search::AlgoliaSearchRequest do
     let(:arguments_to_algolia) do
       {
         aroundLatLng: Geocoder::DEFAULT_STUB_COORDINATES,
-        aroundRadius: Search::LocationBuilder.convert_radius_in_miles_to_metres(10),
+        aroundRadius: convert_miles_to_metres(10),
         hitsPerPage: 10,
         page: 1,
       }

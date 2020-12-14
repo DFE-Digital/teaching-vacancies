@@ -3,7 +3,7 @@ class Search::SearchBuilder
 
   attr_reader :hits_per_page, :keyword, :location_search, :page, :params_hash,
               :point_coordinates, :search_filters, :search_replica, :sort_by, :stats, :vacancies,
-              :wider_radius_suggestions
+              :wider_search_suggestions
 
   def initialize(form_hash)
     @params_hash = form_hash
@@ -15,8 +15,7 @@ class Search::SearchBuilder
     build_search_filters
     build_search_replica
     call_algolia_search
-
-    build_suggestions if @point_coordinates.present? && @vacancies.empty?
+    build_suggestions if @vacancies.empty?
   end
 
   def only_active_to_hash
@@ -34,7 +33,7 @@ class Search::SearchBuilder
 private
 
   def build_location_search
-    @location_search = Search::LocationBuilder.new(@params_hash[:location], @params_hash[:radius], @params_hash[:location_category])
+    @location_search = Search::LocationBuilder.new(@params_hash[:location], @params_hash[:radius], @params_hash[:location_category], @params_hash[:buffer_radius])
     @point_coordinates = @location_search.location_filter[:point_coordinates]
     @params_hash[:location_category] = @location_search.location_category if @location_search.location_category_search?
     @keyword = [@keyword, @location_search.location].reject(&:blank?).join(" ") if @location_search.missing_polygon
@@ -49,7 +48,11 @@ private
   end
 
   def build_suggestions
-    @wider_radius_suggestions = Search::SuggestionsBuilder.new(search_params, @params_hash[:radius]).radius_suggestions
+    if @point_coordinates.present?
+      @wider_search_suggestions = Search::RadiusSuggestionsBuilder.new(search_params, @params_hash[:radius]).radius_suggestions
+    elsif @location_search.location_polygon.present?
+      @wider_search_suggestions = Search::BufferSuggestionsBuilder.new(@params_hash[:location], search_params).buffer_suggestions
+    end
   end
 
   def call_algolia_search
@@ -63,7 +66,7 @@ private
       keyword: @keyword,
       coordinates: @location_search.location_filter[:point_coordinates],
       radius: @location_search.location_filter[:radius],
-      polygon: @location_search.location_polygon_boundary,
+      polygon: @location_search.search_polygon_boundary,
       filters: @search_filters,
       replica: @search_replica,
       hits_per_page: @hits_per_page,

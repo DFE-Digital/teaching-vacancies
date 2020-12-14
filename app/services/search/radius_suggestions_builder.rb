@@ -1,5 +1,7 @@
-class Search::SuggestionsBuilder
+class Search::RadiusSuggestionsBuilder
   RADIUS_OPTIONS = [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 70, 80, 90, 100, 200].freeze
+
+  include DistanceHelper
 
   attr_reader :radius, :radius_suggestions, :search_params
 
@@ -18,9 +20,7 @@ class Search::SuggestionsBuilder
       unless wider_radius.nil?
         [
           wider_radius,
-          Search::AlgoliaSearchRequest.new(
-            search_params.merge(radius: Search::LocationBuilder.convert_radius_in_miles_to_metres(wider_radius)),
-          ).stats.last,
+          Search::AlgoliaSearchRequest.new(search_params.merge(radius: convert_miles_to_metres(wider_radius))).stats.last,
         ]
       end
     }&.reject(&:nil?)

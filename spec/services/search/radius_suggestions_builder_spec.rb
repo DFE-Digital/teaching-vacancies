@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Search::SuggestionsBuilder do
+RSpec.describe Search::RadiusSuggestionsBuilder do
   let(:subject) { described_class.new(search_params, radius) }
 
   describe "#get_radius_suggestions" do
@@ -8,7 +8,7 @@ RSpec.describe Search::SuggestionsBuilder do
       {
         keyword: "maths",
         coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
-        radius: Search::LocationBuilder.convert_radius_in_miles_to_metres(1),
+        radius: convert_miles_to_metres(1),
         hits_per_page: 10,
         page: 1,
       }
@@ -27,23 +27,23 @@ RSpec.describe Search::SuggestionsBuilder do
       before do
         mock_algolia_search(
           vacancies_1, 1, "maths",
-          arguments_for_algolia.merge(aroundRadius: Search::LocationBuilder.convert_radius_in_miles_to_metres(5))
+          arguments_for_algolia.merge(aroundRadius: convert_miles_to_metres(5))
         )
         mock_algolia_search(
           vacancies_2, 1, "maths",
-          arguments_for_algolia.merge(aroundRadius: Search::LocationBuilder.convert_radius_in_miles_to_metres(10))
+          arguments_for_algolia.merge(aroundRadius: convert_miles_to_metres(10))
         )
         mock_algolia_search(
           vacancies_3, 3, "maths",
-          arguments_for_algolia.merge(aroundRadius: Search::LocationBuilder.convert_radius_in_miles_to_metres(15))
+          arguments_for_algolia.merge(aroundRadius: convert_miles_to_metres(15))
         )
         mock_algolia_search(
           vacancies_4, 4, "maths",
-          arguments_for_algolia.merge(aroundRadius: Search::LocationBuilder.convert_radius_in_miles_to_metres(20))
+          arguments_for_algolia.merge(aroundRadius: convert_miles_to_metres(20))
         )
         mock_algolia_search(
           vacancies_5, 7, "maths",
-          arguments_for_algolia.merge(aroundRadius: Search::LocationBuilder.convert_radius_in_miles_to_metres(25))
+          arguments_for_algolia.merge(aroundRadius: convert_miles_to_metres(25))
         )
       end
 
@@ -60,11 +60,11 @@ RSpec.describe Search::SuggestionsBuilder do
       before do
         mock_algolia_search(
           vacancies_1, 5, "maths",
-          arguments_for_algolia.merge(aroundRadius: Search::LocationBuilder.convert_radius_in_miles_to_metres(100))
+          arguments_for_algolia.merge(aroundRadius: convert_miles_to_metres(100))
         )
         mock_algolia_search(
           vacancies_2, 9, "maths",
-          arguments_for_algolia.merge(aroundRadius: Search::LocationBuilder.convert_radius_in_miles_to_metres(200))
+          arguments_for_algolia.merge(aroundRadius: convert_miles_to_metres(200))
         )
       end
 

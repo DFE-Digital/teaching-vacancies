@@ -135,9 +135,7 @@ RSpec.describe "A job seeker can subscribe to a job alert" do
     end
 
     context "when a location category search is carried out" do
-      before do
-        LocationPolygon.create(name: "london")
-      end
+      let!(:location_polygon) { create(:location_polygon, name: "london") }
 
       scenario "can successfuly subscribe to a new alert" do
         visit jobs_path

@@ -68,6 +68,7 @@ RSpec.configure do |config|
   config.include CapybaraHelper, type: :system
   config.include DatesHelper
   config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include DistanceHelper
   config.include FactoryBot::Syntax::Methods
   config.include MailerHelpers
   config.include OrganisationHelper

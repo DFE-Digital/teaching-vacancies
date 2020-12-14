@@ -9,7 +9,7 @@ RSpec.describe Search::AlertBuilder do
   let(:location) { "SW1A 1AA" }
   let(:date_today) { Date.current.to_time }
   let(:location_point_coordinates) { Geocoder::DEFAULT_STUB_COORDINATES }
-  let(:location_radius) { Search::LocationBuilder.convert_radius_in_miles_to_metres(10) }
+  let(:location_radius) { convert_miles_to_metres(10) }
   let(:location_polygon_boundary) { nil }
   let(:search_replica) { nil }
   let(:max_subscription_results) { 500 }
