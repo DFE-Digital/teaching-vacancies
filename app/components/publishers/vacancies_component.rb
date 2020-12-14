@@ -34,14 +34,8 @@ class Publishers::VacanciesComponent < ViewComponent::Base
     I18n.t("jobs.dashboard_filters.heading", count: @filters[:managed_school_ids]&.count)
   end
 
-  def vacancy_type_tab_link(vacancy_type, is_selected)
-    if vacancy_type == :awaiting_feedback
-      link_to jobs_with_type_organisation_path(vacancy_type), class: "moj-primary-navigation__link" do
-        awaiting_feedback_tab(@organisation.vacancies.awaiting_feedback.count)
-      end
-    else
-      link_to t("jobs.#{vacancy_type}_jobs"), jobs_with_type_organisation_path(vacancy_type), class: "moj-primary-navigation__link", "aria-current": ("page" if is_selected)
-    end
+  def vacancy_type_tab_link(vacancy_type, selected)
+    link_to t("jobs.#{vacancy_type}_jobs"), jobs_with_type_organisation_path(vacancy_type), class: "moj-primary-navigation__link", "aria-current": ("page" if selected)
   end
 
 private

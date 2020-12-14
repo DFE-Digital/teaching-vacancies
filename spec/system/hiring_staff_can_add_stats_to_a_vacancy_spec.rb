@@ -24,12 +24,6 @@ RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: tru
       third_vacancy.organisation_vacancies.create(organisation: school)
     end
 
-    scenario "hiring staff can see notification badge" do
-      visit organisation_path
-
-      expect(page).to have_selector(NOTIFICATION_BADGE_SELECTOR, text: 3)
-    end
-
     scenario "hiring staff can see notice of vacancies awaiting feedback" do
       visit organisation_path
 
