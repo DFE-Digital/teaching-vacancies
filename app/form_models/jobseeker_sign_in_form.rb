@@ -1,12 +1,9 @@
 class JobseekerSignInForm
   include ActiveModel::Model
 
-  AUTHENTICATION_FAILURE_MESSAGES = [
-    I18n.t("devise.failure.invalid"),
-    I18n.t("devise.failure.not_found_in_database"),
-    I18n.t("devise.failure.locked"),
-    I18n.t("devise.failure.last_attempt"),
-  ].freeze
+  AUTHENTICATION_FAILURE_MESSAGES = %w[
+    invalid not_found_in_database locked last_attempt
+  ].map { |error| I18n.t("devise.failure.#{error}") }.freeze
 
   attr_reader :email, :password, :alert
 
