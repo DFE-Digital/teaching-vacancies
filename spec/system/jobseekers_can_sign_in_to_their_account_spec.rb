@@ -20,6 +20,16 @@ RSpec.describe "Jobseekers can sign in to their account" do
     end
   end
 
+  context "with a missing field that triggers form validation errors" do
+    scenario "displays a helpful error message" do
+      sign_in_jobseeker(email: nil, password: jobseeker.password)
+
+      expect(current_path).to eq(jobseeker_session_path)
+      expect(page).not_to have_selector(".govuk-notification")
+      expect(page).to have_content(I18n.t("jobseeker_sign_in_errors.email.blank"))
+    end
+  end
+
   context "with a email that does not exist" do
     scenario "displays a generic error message" do
       sign_in_jobseeker(email: "i-forgot-my@email-address.com", password: jobseeker.password)
