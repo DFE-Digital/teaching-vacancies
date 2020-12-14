@@ -25,7 +25,7 @@ RSpec.describe "Hiring staff can see vacancy statistics" do
     context "page views are nil" do
       scenario "page views show zero" do
         within(".card#organisation_vacancy_presenter_#{vacancy.id}") do
-          expect(page.find("td[4]")).to have_content("0")
+          expect(page.find(".card__details")).to have_content("0")
         end
       end
     end
@@ -35,7 +35,7 @@ RSpec.describe "Hiring staff can see vacancy statistics" do
 
       scenario "page views show the page view count" do
         within(".card#organisation_vacancy_presenter_#{vacancy.id}") do
-          expect(page.find("td[4]")).to have_content(total_pageviews)
+          expect(page.find(".card__details")).to have_content(total_pageviews)
         end
       end
     end
@@ -59,7 +59,7 @@ RSpec.describe "Hiring staff can see vacancy statistics" do
     context "page views are nil" do
       scenario "page views show zero" do
         within(".card#organisation_vacancy_presenter_#{vacancy.id}") do
-          expect(page.find("td[4]")).to have_content("0")
+          expect(page.find(".card__details")).to have_content("0")
         end
       end
     end
@@ -69,7 +69,7 @@ RSpec.describe "Hiring staff can see vacancy statistics" do
 
       scenario "page views show the page view count" do
         within(".card#organisation_vacancy_presenter_#{vacancy.id}") do
-          expect(page.find("td[4]")).to have_content(total_pageviews)
+          expect(page.find(".card__details")).to have_content(total_pageviews)
         end
       end
     end

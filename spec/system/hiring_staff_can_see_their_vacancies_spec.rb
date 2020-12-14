@@ -66,7 +66,7 @@ RSpec.describe "Hiring staff can see their vacancies" do
         click_on(I18n.t("jobs.published_jobs"))
       end
 
-      within("table.vacancies") do
+      within(".moj-filter-layout__content") do
         expect(page).to have_content(I18n.t("jobs.job_title"))
         expect(page).to have_content(I18n.t("jobs.publish_on"))
         expect(page).to have_content(published_vacancy.job_title)
@@ -81,7 +81,7 @@ RSpec.describe "Hiring staff can see their vacancies" do
         click_on(I18n.t("jobs.draft_jobs"))
       end
 
-      within("table.vacancies") do
+      within(".moj-filter-layout__content") do
         expect(page).to have_content(I18n.t("jobs.draft.time_created"))
         expect(page).to have_content(format_date(draft_vacancy.created_at))
         expect(page).to have_content(format_date(draft_vacancy.updated_at))
@@ -97,7 +97,7 @@ RSpec.describe "Hiring staff can see their vacancies" do
         click_on(I18n.t("jobs.pending_jobs"))
       end
 
-      within("table.vacancies") do
+      within(".moj-filter-layout__content") do
         expect(page).to have_content(I18n.t("jobs.date_to_be_posted"))
         expect(page).to have_content(pending_vacancy.job_title)
         expect(page).to have_content(format_date(pending_vacancy.publish_on))
@@ -113,7 +113,7 @@ RSpec.describe "Hiring staff can see their vacancies" do
         click_on(I18n.t("jobs.expired_jobs"))
       end
 
-      within(".vacancies") do
+      within(".moj-filter-layout__content") do
         expect(page).to have_content(I18n.t("jobs.expired_on"))
         expect(page).to have_content(expired_vacancy.job_title)
         expect(page).to have_content(format_date(expired_vacancy.expires_on))
@@ -137,7 +137,7 @@ RSpec.describe "Hiring staff can see their vacancies" do
           click_on(I18n.t("jobs.draft_jobs"))
         end
 
-        within(".vacancies") do
+        within(".moj-filter-layout__content") do
           expect(page).to have_content(format_date(draft_vacancy.created_at))
           expect(page).to have_content(format_date(draft_vacancy.updated_at))
         end

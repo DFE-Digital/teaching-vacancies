@@ -49,7 +49,6 @@ RSpec.describe "Hiring staff can filter vacancies in their dashboard" do
         visit jobs_with_type_organisation_path(:published)
 
         expect(page).to_not have_css(".moj-filter__tag")
-        # expect(page).to have_content("Showing all jobs")
 
         expect(page).to have_content(school_group_vacancy.job_title)
         expect(page).to have_content(school_1_vacancy.job_title)
@@ -65,7 +64,6 @@ RSpec.describe "Hiring staff can filter vacancies in their dashboard" do
           click_on I18n.t("buttons.apply_filters")
 
           expect(page).to have_css(".moj-filter__tag", count: 1)
-          # expect(page).to have_content("1 filter applied")
 
           expect(page).to_not have_content(school_group_vacancy.job_title)
           expect(page).to have_content(school_1_vacancy.job_title)
@@ -80,7 +78,6 @@ RSpec.describe "Hiring staff can filter vacancies in their dashboard" do
         visit jobs_with_type_organisation_path(:draft)
 
         expect(page).to_not have_css(".moj-filter__tag")
-        # expect(page).to have_content("Showing all jobs")
 
         expect(page).to_not have_content(school_group_vacancy.job_title)
         expect(page).to_not have_content(school_1_vacancy.job_title)
@@ -98,7 +95,6 @@ RSpec.describe "Hiring staff can filter vacancies in their dashboard" do
       visit organisation_path
 
       expect(page).to have_css(".moj-filter__tag", count: 1)
-      # expect(page).to have_content("1 filter applied")
 
       expect(page).to have_content(school_group_vacancy.job_title)
       expect(page).to_not have_content(school_1_vacancy.job_title)
@@ -115,7 +111,6 @@ RSpec.describe "Hiring staff can filter vacancies in their dashboard" do
       visit organisation_path
 
       expect(page).to have_css(".moj-filter__tag", count: 2)
-      # expect(page).to have_content("2 filters applied")
 
       expect(page).to_not have_content(school_group_vacancy.job_title)
       expect(page).to have_content(school_1_vacancy.job_title)
