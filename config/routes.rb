@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       resources :saved_jobs, only: %i[new destroy index]
       resources :subscriptions, only: %i[index]
       resource :account, only: %i[show]
+      resource :account_feedback, only: %i[new create]
     end
   end
 

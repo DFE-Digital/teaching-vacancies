@@ -24,3 +24,6 @@
               = OrganisationVacancyPresenter.new(saved_job.vacancy).application_deadline
             %td.govuk-table__cell= saved_job.created_at.strftime("%d %B %Y")
             %td.govuk-table__cell= govuk_link_to(t(".delete"), jobseekers_saved_job_path(saved_job.vacancy.slug, redirect_to_dashboard: true), method: :delete, class: "govuk-link--no-visited-state")
+
+  .govuk-grid-column-full
+    = render(Jobseekers::AccountSurveyLinkComponent.new(back_link: url_for))

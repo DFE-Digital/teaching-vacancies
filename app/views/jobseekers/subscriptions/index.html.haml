@@ -28,3 +28,6 @@
                 %li= govuk_link_to(t('.link_unsubscribe'), unsubscribe_subscription_path(subscription.token))
     - else
       = render(Shared::NotificationComponent.new(content: { title: t('.zero_subscriptions_title'), body: t('.zero_subscriptions_body_html') }, style: 'empty', links: nil, dismiss: false, background: true, alert: false))
+
+  .govuk-grid-column-full
+    = render(Jobseekers::AccountSurveyLinkComponent.new(back_link: url_for))

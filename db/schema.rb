@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_01_154558) do
+ActiveRecord::Schema.define(version: 2020_12_14_171643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -18,6 +18,15 @@ ActiveRecord::Schema.define(version: 2020_12_01_154558) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+
+  create_table "account_feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "rating"
+    t.text "suggestions"
+    t.uuid "jobseeker_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["jobseeker_id"], name: "index_account_feedbacks_on_jobseeker_id"
+  end
 
   create_table "activities", force: :cascade do |t|
     t.uuid "trackable_id"
@@ -320,6 +329,7 @@ ActiveRecord::Schema.define(version: 2020_12_01_154558) do
     t.index ["vacancy_id"], name: "index_vacancy_publish_feedbacks_on_vacancy_id", unique: true
   end
 
+  add_foreign_key "account_feedbacks", "jobseekers"
   add_foreign_key "documents", "vacancies"
   add_foreign_key "emergency_login_keys", "publishers"
   add_foreign_key "job_alert_feedbacks", "subscriptions"

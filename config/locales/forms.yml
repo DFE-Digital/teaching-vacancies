@@ -104,6 +104,14 @@ en:
         additional_info: Any more information you can share will help us to improve the service
 
     label:
+      account_feedback:
+        rating_options:
+          highly_satisfied: Highly satisfied
+          somewhat_satisfied: Somewhat satisfied
+          neither: Neither satisfied nor dissatisfied
+          somewhat_dissatisfied: Somewhat dissatisfied
+          highly_dissatisfied: Highly dissatisfied
+        suggestions: Do you have any suggestions on how we could improve the service?
       applying_for_the_job_form:
         application_link: Link to online application
         contact_email_html: Contact email (<span class='text-red'>Required</span>)
@@ -171,6 +179,8 @@ en:
           other_reason: Another reason
 
     legend:
+      account_feedback:
+        rating_html: How satisfied are you with your experience of using Teaching Vacancies? (<span class='text-red'>Required</span>)
       copy_vacancy_form:
         expires_on_html: Date application is due (<span class='text-red'>Required</span>)
         publish_on_html: Date job will be listed (<span class='text-red'>Required</span>)

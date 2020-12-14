@@ -28,3 +28,6 @@
     .account-sidebar
       %h2.account-sidebar__heading= t(".assistance.heading")
       %p.govuk-body-s= t(".assistance.content_html", link: mail_to(t('help.email'), t(".assistance.link_text"), class: "govuk-link"))
+
+  .govuk-grid-column-full
+    = render(Jobseekers::AccountSurveyLinkComponent.new(back_link: url_for))
