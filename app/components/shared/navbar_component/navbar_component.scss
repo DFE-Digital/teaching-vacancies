@@ -1,6 +1,6 @@
 .govuk-header {
   .govuk-header__navigation {
-    @include govuk-media-query($from: tablet) {
+    @include govuk-media-query($from: desktop) {
       display: flex;
 
       .govuk-header__navigation-spacer {
