@@ -4,7 +4,7 @@
   .govuk-grid-column-two-thirds
     %h1.govuk-heading-xl= t(".title")
 
-    = form_for(@sign_in_form, as: resource_name, url: new_session_path(resource_name)) do |f|
+    = form_for(resource, as: resource_name, url: new_session_path(resource_name)) do |f|
       = f.govuk_error_summary
 
       %p.govuk-body= t(".description")

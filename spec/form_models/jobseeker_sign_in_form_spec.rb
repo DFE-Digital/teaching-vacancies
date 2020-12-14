@@ -5,8 +5,7 @@ RSpec.describe JobseekerSignInForm, type: :model do
   let(:email) { jobseeker.email }
   let(:password) { jobseeker.password }
   let(:params) { { email: email, password: password } }
-  let(:subject) { JobseekerSignInForm.new(alert, params) }
-  let(:alert) { "Click here to win a prize!" }
+  let(:subject) { JobseekerSignInForm.new(params) }
 
   describe "#email" do
     context "when email is blank" do
@@ -41,38 +40,6 @@ RSpec.describe JobseekerSignInForm, type: :model do
         expect(subject.errors.messages[:password]).to include(
           I18n.t("activemodel.errors.models.jobseeker_sign_in_form.attributes.password.blank"),
         )
-      end
-    end
-  end
-
-  describe "#authenticate" do
-    context "when there are no other errors" do
-      context "when Devise adds a flash alert about failed authentication" do
-        let(:alert) { I18n.t("devise.failure.not_found_in_database") }
-
-        it "converts the message into the govuk error summary component and highlights the first field" do
-          expect(subject).not_to be_valid
-          expect(subject.errors.messages[:email]).to include(alert)
-        end
-      end
-
-      context "when there is a different kind of flash message" do
-        it "does not add an authentication error" do
-          expect(subject).to be_valid
-          expect(subject.errors.messages).to be_blank
-        end
-      end
-    end
-
-    context "when there are other errors" do
-      let(:password) { nil }
-
-      it "does not add an authentication error" do
-        expect(subject).not_to be_valid
-        expect(subject.errors.messages[:password]).to include(
-          I18n.t("activemodel.errors.models.jobseeker_sign_in_form.attributes.password.blank"),
-        )
-        expect(subject.errors.messages[:email]).to be_blank
       end
     end
   end
