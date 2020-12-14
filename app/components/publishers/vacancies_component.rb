@@ -18,13 +18,12 @@ class Publishers::VacanciesComponent < ViewComponent::Base
     @organisation.all_vacancies.active.any?
   end
 
-  def is_selected(vacancy_type)
+  def selected(vacancy_type)
     @selected_type == vacancy_type
   end
 
   def vacancy_links
-    @vacancy_links = @vacancy_types
-    @vacancy_links.map { |vacancy_type| vacancy_type_tab_link(vacancy_type, is_selected(vacancy_type)) }
+    @vacancy_types.map { |vacancy_type| vacancy_type_tab_link(vacancy_type, selected(vacancy_type)) }
   end
 
   def grid_column_class
