@@ -17,10 +17,11 @@
           = vacancy_job_location(@vacancy)
     .govuk-grid-row
       .govuk-grid-column-one-third
+        -# The 'origin' param is used both for the back button on the subsequent page and for performance analysis.
         = render(Shared::BannerLinkComponent.new(icon_class: 'alert-blue',
                                                  link_id: 'job-alert-link-from-top-of-job-listing-gtm',
                                                  link_method: :get,
-                                                 link_path: new_subscription_path(search_criteria: @devised_job_alert_search_criteria, origin: request.env['ORIGINAL_FULLPATH']),
+                                                 link_path: new_subscription_path(search_criteria: @devised_job_alert_search_criteria, origin: request.original_fullpath),
                                                  link_text: t('jobs.alert.similar.terse')))
       - if JobseekerAccountsFeature.enabled?
         .govuk-grid-column-one-third
