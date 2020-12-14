@@ -35,7 +35,7 @@ RSpec.describe "School viewing vacancies" do
 
     expect(page).to have_content(school.name)
     expect(page).to have_content(vacancy.job_title)
-    expect(page).to have_content(I18n.t("messages.jobs.view.only_published"))
+    expect(page).to have_content(I18n.t("publishers.vacancies.show.notice"))
   end
 
   scenario "A published vacancy show page should not show a flash message with the status" do

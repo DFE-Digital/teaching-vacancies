@@ -5,10 +5,8 @@ class Publishers::VacanciesController < Publishers::Vacancies::ApplicationContro
   before_action :devise_job_alert_search_criteria, only: %i[show preview]
 
   def show
-    unless @vacancy.published?
-      return redirect_to organisation_job_review_path(@vacancy.id),
-                         notice: I18n.t("messages.jobs.view.only_published")
-    end
+    return redirect_to organisation_job_review_path(@vacancy.id), notice: t(".notice") unless @vacancy.published?
+
     @vacancy = VacancyPresenter.new(@vacancy)
   end
 
@@ -46,7 +44,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::ApplicationContro
     @vacancy.trashed!
     remove_google_index(@vacancy)
     Auditor::Audit.new(@vacancy, "vacancy.delete", current_publisher_oid).log
-    redirect_to organisation_path, success: I18n.t("messages.jobs.delete_html", job_title: @vacancy.job_title)
+    redirect_to organisation_path, success: t(".success_html", job_title: @vacancy.job_title)
   end
 
   def preview

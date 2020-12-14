@@ -31,7 +31,7 @@ RSpec.describe "Vacancy publish feedback" do
 
       visit new_organisation_job_feedback_path(published_job.id)
 
-      expect(page).to have_content(I18n.t("errors.vacancy_publish_feedback.already_submitted"))
+      expect(page).to have_content(I18n.t("publishers.vacancies.vacancy_publish_feedback.new.already_submitted"))
     end
   end
 

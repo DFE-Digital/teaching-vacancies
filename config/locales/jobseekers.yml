@@ -59,8 +59,8 @@ en:
         description: Enter your email address and we will send you a link so that you can reset your password
         title: Reset your password
     saved_jobs:
-      save: Save this job for later
-      saved: Job saved
+      destroy:
+        success: Saved job removed
       index:
         page_title: Saved jobs
         headings:
@@ -69,6 +69,11 @@ en:
           job: Job listing
         deadline_passed: Deadline passed
         delete: Delete
+      save: Save this job for later
+      saved: Job saved
+      success_html: >-
+        You have saved this job. <a href="%{link}" class="govuk-link">View all your saved jobs</a> on your account.
+
     subscriptions:
       index:
         frequency:

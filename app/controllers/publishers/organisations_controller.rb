@@ -14,8 +14,7 @@ class Publishers::OrganisationsController < Publishers::BaseController
 
     render_draft_saved_message if params[:from_review]
 
-    flash.now[:notice] = I18n.t("messages.jobs.feedback.awaiting", count: @awaiting_feedback_count) if
-      @awaiting_feedback_count.positive?
+    flash.now[:notice] = t(".awaiting", count: @awaiting_feedback_count) if @awaiting_feedback_count.positive?
   end
 
 private

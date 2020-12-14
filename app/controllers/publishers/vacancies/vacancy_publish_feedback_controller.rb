@@ -2,10 +2,7 @@ class Publishers::Vacancies::VacancyPublishFeedbackController < Publishers::Vaca
   before_action :set_vacancy, only: %i[new create]
 
   def new
-    if @vacancy.publish_feedback.present?
-      return redirect_to organisation_path,
-                         notice: I18n.t("errors.vacancy_publish_feedback.already_submitted")
-    end
+    return redirect_to organisation_path, notice: t(".already_submitted") if @vacancy.publish_feedback.present?
 
     @feedback = VacancyPublishFeedback.new
   end

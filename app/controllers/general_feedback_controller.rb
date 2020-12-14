@@ -13,7 +13,7 @@ class GeneralFeedbackController < ApplicationController
       redirect_to invalid_recaptcha_path(form_name: @feedback.class.name.underscore.humanize)
     elsif @feedback.valid?
       @feedback.save
-      redirect_to root_path, success: I18n.t("messages.feedback.submitted")
+      redirect_to root_path, success: t(".success")
     else
       render :new
     end
