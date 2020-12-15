@@ -1,3 +1,16 @@
+CREATE TEMP FUNCTION
+  null_unless_date_is_after_we_started_crawling_source(metric ANY TYPE,
+    date DATE,
+    source STRING) AS (
+  IF
+    (date>=CASE
+        WHEN source="TES" THEN DATE('2020-08-01')
+        WHEN source="Guardian Jobs" THEN DATE('2020-12-10')
+        WHEN source="eTeach" THEN DATE('2020-12-15')
+    END
+      ,
+      metric,
+      NULL) );
 WITH
   dates AS ( #the range of dates we're calculating for - later, we could use this to limit the start date so we don't overwrite previously calculated data
   SELECT
@@ -96,6 +109,7 @@ WITH
   SELECT
     dates.date AS date,
     tags.tag AS tag,
+    scraped_vacancies.source AS source,
     COUNTIF(publish_on=date) AS vacancies_published,
     COUNTIF(expires_on=date) AS vacancies_expired,
     COUNTIF(publish_on=date
@@ -178,8 +192,7 @@ WITH
   ON
     scraped_vacancies.school_id=school.id
   WHERE
-    source="TES"
-    AND scraped
+    scraped
     AND NOT expired_before_scrape
     AND (detailed_school_type_in_scope
       OR school.id IS NULL)
@@ -187,75 +200,70 @@ WITH
       OR school_group_id IS NOT NULL)
   GROUP BY
     date,
-    tag )
+    tag,
+    source )
 SELECT
   date,
   tag,
+  source,
   vacancies_published_with_this_tag_on_this_date,
-IF
-  (date>='2020-08-01',
-    benchmark_vacancies_published_with_this_tag_on_this_date,
-    NULL) AS benchmark_vacancies_published_with_this_tag_on_this_date,
+  null_unless_date_is_after_we_started_crawling_source(benchmark_vacancies_published_with_this_tag_on_this_date,
+    date,
+    source) AS benchmark_vacancies_published_with_this_tag_on_this_date,
   total_vacancies_published_on_this_date,
-IF
-  (date>='2020-08-01',
-    benchmark_total_vacancies_published_on_this_date,
-    NULL) AS benchmark_total_vacancies_published_on_this_date,
+  null_unless_date_is_after_we_started_crawling_source(benchmark_total_vacancies_published_on_this_date,
+    date,
+    source) AS benchmark_total_vacancies_published_on_this_date,
   total_live_vacancies,
   live_vacancies_with_this_tag,
-IF
-  (date>='2020-08-01',
-    benchmark_total_live_vacancies,
-    NULL) AS benchmark_total_live_vacancies,
-IF
-  (date>='2020-08-01',
-    live_benchmark_vacancies_with_this_tag,
-    NULL) AS live_benchmark_vacancies_with_this_tag,
+  null_unless_date_is_after_we_started_crawling_source(benchmark_total_live_vacancies,
+    date,
+    source) AS benchmark_total_live_vacancies,
+  null_unless_date_is_after_we_started_crawling_source(live_benchmark_vacancies_with_this_tag,
+    date,
+    source) AS live_benchmark_vacancies_with_this_tag,
   SAFE_DIVIDE(live_vacancies_with_this_tag,
     total_live_vacancies) AS proportion_of_live_vacancies_with_this_tag,
-IF
-  (date>='2020-08-01',
-    SAFE_DIVIDE(live_benchmark_vacancies_with_this_tag,
+  null_unless_date_is_after_we_started_crawling_source(SAFE_DIVIDE(live_benchmark_vacancies_with_this_tag,
       benchmark_total_live_vacancies),
-    NULL) AS proportion_of_live_benchmark_vacancies_with_this_tag,
-IF
-  (date>='2020-08-01',
-    SAFE_DIVIDE(live_vacancies_with_this_tag,
+    date,
+    source) AS proportion_of_live_benchmark_vacancies_with_this_tag,
+  null_unless_date_is_after_we_started_crawling_source(SAFE_DIVIDE(live_vacancies_with_this_tag,
       live_benchmark_vacancies_with_this_tag),
-    NULL) AS live_vacancies_with_this_tag_as_proportion_of_benchmark,
+    date,
+    source) AS live_vacancies_with_this_tag_as_proportion_of_benchmark,
   SAFE_SUBTRACT(SAFE_DIVIDE(live_vacancies_with_this_tag,
       total_live_vacancies),
     SAFE_DIVIDE(live_vacancies_with_this_tag_last_year,
       total_live_vacancies_last_year)) AS change_in_proportion_of_live_vacancies_with_this_tag_since_last_year,
-IF
-  (date>='2021-08-01',
-    #don't calculate this until we have at least a year's worth of data to go on
-    SAFE_SUBTRACT(SAFE_DIVIDE(live_benchmark_vacancies_with_this_tag,
+  null_unless_date_is_after_we_started_crawling_source(SAFE_SUBTRACT(SAFE_DIVIDE(live_benchmark_vacancies_with_this_tag,
         benchmark_total_live_vacancies),
       SAFE_DIVIDE(live_benchmark_vacancies_with_this_tag_last_year,
         benchmark_total_live_vacancies_last_year)),
-    NULL) AS change_in_proportion_of_benchmark_live_vacancies_with_this_tag_since_last_year,
-IF
-  (date>='2021-08-01',
-    SAFE_SUBTRACT(SAFE_DIVIDE(live_vacancies_with_this_tag,
+    DATE_SUB(date, INTERVAL 1 YEAR),
+    #don't calculate this until we have at least a year's worth of data to go on
+    source) AS change_in_proportion_of_benchmark_live_vacancies_with_this_tag_since_last_year,
+  null_unless_date_is_after_we_started_crawling_source(SAFE_SUBTRACT(SAFE_DIVIDE(live_vacancies_with_this_tag,
         live_benchmark_vacancies_with_this_tag),
       SAFE_DIVIDE(live_vacancies_with_this_tag_last_year,
         live_benchmark_vacancies_with_this_tag_last_year)),
-    NULL) AS change_in_live_vacancies_with_this_tag_as_proportion_of_benchmark,
+    DATE_SUB(date, INTERVAL 1 YEAR),
+    #don't calculate this until we have at least a year's worth of data to go on
+    source) AS change_in_live_vacancies_with_this_tag_as_proportion_of_benchmark,
   # test whether there is a >95% probability that the probabilities of a vacancy having this tag on this date and the same date in the previous year are different
   `teacher-vacancy-service.production_dataset.two_proportion_z_test`("95%",
     live_vacancies_with_this_tag,
     total_live_vacancies,
     live_vacancies_with_this_tag_last_year,
     total_live_vacancies_last_year) AS significant_change_in_proportion_of_live_vacancies_with_this_tag_since_last_year,
-IF
-  (date>='2021-08-01',
-    `teacher-vacancy-service.production_dataset.two_proportion_z_test`("95%",
+  null_unless_date_is_after_we_started_crawling_source(`teacher-vacancy-service.production_dataset.two_proportion_z_test`("95%",
       live_benchmark_vacancies_with_this_tag,
       benchmark_total_live_vacancies,
       live_benchmark_vacancies_with_this_tag_last_year,
       benchmark_total_live_vacancies_last_year),
-    NULL) AS significant_change_in_proportion_of_benchmark_live_vacancies_with_this_tag_since_last_year,
+    DATE_SUB(date, INTERVAL 1 YEAR),
+    #don't calculate this until we have at least a year's worth of data to go on
+    source) AS significant_change_in_proportion_of_benchmark_live_vacancies_with_this_tag_since_last_year,
   SAFE_DIVIDE(SAFE_SUBTRACT(live_vacancies_with_this_tag,
       live_vacancies_with_this_tag_last_year),
     live_vacancies_with_this_tag_last_year) AS percentage_change_in_number_of_live_vacancies_with_this_tag_since_last_year,
@@ -266,6 +274,7 @@ FROM (
   SELECT
     dates.date AS date,
     vacancy_metrics.tag AS tag,
+    benchmark_vacancy_metrics.source AS source,
     vacancy_metrics.vacancies_published_with_this_tag AS vacancies_published_with_this_tag_on_this_date,
     benchmark_vacancy_metrics.vacancies_published_with_this_tag AS benchmark_vacancies_published_with_this_tag_on_this_date,
     vacancy_metrics.vacancies_published AS total_vacancies_published_on_this_date,
@@ -293,16 +302,19 @@ FROM (
   WINDOW
     dates_before_today AS (
     PARTITION BY
-      tag
+      tag,
+      source
     ORDER BY
       date ROWS BETWEEN UNBOUNDED PRECEDING
       AND CURRENT ROW),
     dates_before_one_year_ago AS (
     PARTITION BY
-      tag
+      tag,
+      source
     ORDER BY
       date ROWS BETWEEN UNBOUNDED PRECEDING
       AND 365 PRECEDING) )
 ORDER BY
   date ASC,
-  tag ASC
+  tag ASC,
+  source ASC
