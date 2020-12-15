@@ -21,8 +21,8 @@ en:
         title: Your request is no longer valid
     registrations:
       check_your_email:
-        description: We have sent you an email with simple instructions on how to quickly finish creating your account
-        having_trouble_html: Still having trouble? %{mail_to} to our support team
+        description: We have sent you an email with simple instructions on how to quickly finish creating your account.
+        having_trouble_html: Still having trouble? %{mail_to} to our support team.
         report_it: Report it
         title: Check your email
       edit:
@@ -37,7 +37,7 @@ en:
           link: how to create an account
         description: >-
           If you have an account you can save teaching jobs you are interested in, apply for jobs and
-          create job alerts
+          create job alerts.
         existing_account:
           content_html: You can %{link_to} here.
           link: sign in
@@ -45,19 +45,19 @@ en:
         title: Create an account
     passwords:
       check_your_email_password:
-        description: We have sent you an email with instructions on how to reset your password
-        having_trouble_html: Still having trouble? %{mail_to} to our support team
+        description: We have sent you an email with instructions on how to reset your password.
+        having_trouble_html: Still having trouble? %{mail_to} to our support team.
         report_it: Report it
         title: Check your email
       edit:
         new_password: New password
         title: Reset your password
       expired_token:
-        description: The link has expired. You need to request that a new link is sent to your email address (%{email})
+        description: The link has expired. You need to request that a new link is sent to your email address (%{email}).
         new_password: New password
         title: Your request is no longer valid
       new:
-        description: Enter your email address and we will send you a link so that you can reset your password
+        description: Enter your email address and we will send you a link so that you can reset your password.
         title: Reset your password
     saved_jobs:
       destroy:
