@@ -7,7 +7,7 @@
       .interruption-card__body= t('.panel.body', organisation_type: organisation_type_basic(current_organisation))
 
   .govuk-grid-column-two-thirds
-    = form_for @managed_organisations_form, url: organisation_managed_organisations_path, html: { method: "patch" } do |f|
+    = form_for @managed_organisations_form, url: organisation_managed_organisations_path, method: :patch do |f|
       = f.govuk_error_summary
 
       = f.govuk_check_boxes_fieldset :managed_organisations,

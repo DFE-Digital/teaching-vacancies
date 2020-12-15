@@ -6,7 +6,7 @@
   .govuk-grid-column-two-thirds
     %h1.govuk-heading-xl= t(".title")
 
-    = form_for resource, url: jobseeker_registration_path, method: :put do |f|
+    = form_for resource, url: jobseeker_registration_path, method: :patch do |f|
       = f.govuk_error_summary
     
       %p.govuk-body= t(".description", email: resource.email)

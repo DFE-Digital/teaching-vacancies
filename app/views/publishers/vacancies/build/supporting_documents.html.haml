@@ -11,7 +11,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @form, url: wizard_path, method: :put do |f|
+    = form_for @form, url: wizard_path, method: :patch do |f|
       = f.govuk_error_summary
 
       %h2.govuk-heading-l= t("jobs.supporting_documents")
