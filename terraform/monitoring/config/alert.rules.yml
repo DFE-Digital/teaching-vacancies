@@ -1,0 +1,137 @@
+groups:
+- name: CPU-usage
+  rules:
+  - alert: ProdCPUHigh
+    expr: avg by (space) (cpu{space=~"teaching-vacancies-production"}) > 80
+    labels:
+      environment: production
+      severity: high
+    annotations:
+      summary: CPU usage high
+  - alert: ProdCPUMedium
+    expr: avg by (space) (cpu{space=~"teaching-vacancies-production"}) > 50
+    labels:
+      environment: production
+      severity: medium
+    annotations:
+      summary: CPU usage medium
+
+- name: DB-connections
+  rules:
+  - alert: ProdDBConnectionsNone
+    expr: connections{service="teaching-vacancies-postgres-production"} == 0
+    labels:
+      environment: production
+      severity: high
+    annotations:
+      summary: No DB Connections
+  - alert: ProdDBConnectionsElevated
+    expr: connections{service="teaching-vacancies-postgres-production"} > 22
+    labels:
+      environment: production
+      severity: medium
+    annotations:
+      summary: DB connections above 22
+  - alert: ProdDBConnectionsLower
+    expr: connections{service="teaching-vacancies-postgres-production"} < 8
+    labels:
+      environment: production
+      severity: low
+    annotations:
+      summary: DB connections below 8
+
+- name: Disk-utilisation
+  rules:
+  - alert: ProdDiskUtilizationHigh
+    expr: avg by (space) (disk_utilization{space=~"teaching-vacancies-production"}) > 50
+    labels:
+      environment: production
+      severity: medium
+    annotations:
+      summary: Disk Utilization High
+
+- name: Memory-utilisation
+  rules:
+  - alert: ProdWorkerMemoryUtilizationHigh
+    expr: avg by (app) (memory_utilization{app=~"teaching-vacancies-worker-production"}) > 80
+    labels:
+      environment: production
+      severity: high
+    annotations:
+      summary: Worker Memory Utilization High
+  - alert: ProdAppMemoryUtilizationHigh
+    expr: avg by (app) (memory_utilization{app=~"teaching-vacancies-production"}) > 70
+    labels:
+      environment: production
+      severity: high
+    annotations:
+      summary: App Memory Utilization High
+
+- name: Crashed-apps
+  rules:
+  - alert: ProdAppsCrashed
+    expr: sum by (space) (crash{space=~"teaching-vacancies-production"}) > 0
+    labels:
+      environment: production
+      severity: high
+    annotations:
+      summary: Crashed Production Apps non-zero
+  - alert: StagingAppsCrashed
+    expr: sum by (space) (crash{space=~"teaching-vacancies-staging"}) > 0
+    labels:
+      environment: staging
+      severity: high
+    annotations:
+      summary: Crashed Staging Apps non-zero
+  - alert: DevAppsCrashed
+    expr: sum_over_time(crash{space=~"teaching-vacancies-dev"}[5m]) > 0
+    labels:
+      environment: dev
+      severity: low
+    annotations:
+      summary: Crashed Dev Apps non-zero
+
+- name: Wrong-number-of-apps
+  rules:
+  - alert: ProdAppsTooFew
+    expr: count(memory_utilization{space=~"teaching-vacancies-production"}) < 6
+    labels:
+      environment: production
+      severity: high
+    annotations:
+      summary: Fewer than 6 apps in Production    
+  - alert: ProdAppsTooMany
+    expr: count(memory_utilization{space=~"teaching-vacancies-production"}) > 6
+    labels:
+      environment: production
+      severity: medium
+    annotations:
+      summary: More than 6 apps in Production
+  - alert: StagingAppsTooMany
+    expr: count(memory_utilization{space=~"teaching-vacancies-staging"}) > 4
+    labels:
+      environment: staging
+      severity: low
+    annotations:
+      summary: More than 4 apps in Staging
+  - alert: StagingAppsTooFew
+    expr: count(memory_utilization{space=~"teaching-vacancies-production"}) < 6
+    labels:
+      environment: staging
+      severity: high
+    annotations:
+      summary: Fewer than 6 apps in Staging
+  - alert: DevAppsTooMany
+    expr: count(memory_utilization{space=~"teaching-vacancies-dev"}) > 4
+    labels:
+      environment: dev
+      severity: low
+    annotations:
+      summary: More than 4 apps in Dev
+  - alert: DevAppsTooFew
+    expr: count(memory_utilization{space=~"teaching-vacancies-dev"}) < 4
+    labels:
+      environment: dev
+      severity: low
+    annotations:
+      summary: Fewer than 4 apps in Dev

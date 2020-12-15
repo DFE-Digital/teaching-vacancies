@@ -9,7 +9,7 @@ module prometheus_all {
   alertmanager_config        = templatefile("${path.module}/config/alertmanager.yml.tmpl", local.alertmanager_variables)
   grafana_admin_password     = local.secrets["grafana_admin_password"]
   grafana_json_dashboards    = [file("${path.module}/config/paas_dashboard.json")]
-  alert_rules                = file("${path.module}/config/alert.rules")
+  alert_rules                = file("${path.module}/config/alert.rules.yml")
 }
 
 # alert_rules are to configure the alerts within Prometheus
