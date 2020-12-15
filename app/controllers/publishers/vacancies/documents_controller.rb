@@ -32,7 +32,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::Applic
     document = @documents.find(params[:id])
     delete_operation_status = DocumentDelete.new(document).delete
     flash_type = delete_operation_status ? :success : :error
-    flash_message = I18n.t("jobs.file_delete_#{flash_type}_message", filename: document.name)
+    flash_message = t("jobs.file_delete_#{flash_type}_message", filename: document.name)
 
     if request.xhr?
       flash.now[flash_type] = flash_message
@@ -58,11 +58,11 @@ private
   end
 
   def redirect_to_next_step
-    if params[:commit] == I18n.t("buttons.save_and_return_later")
+    if params[:commit] == t("buttons.save_and_return_later")
       redirect_saved_draft_with_message
-    elsif params[:commit] == I18n.t("buttons.update_job")
+    elsif params[:commit] == t("buttons.update_job")
       redirect_updated_job_with_message
-    elsif params[:commit] == I18n.t("buttons.continue")
+    elsif params[:commit] == t("buttons.continue")
       redirect_to organisation_job_build_path(@vacancy.id, :applying_for_the_job)
     end
   end

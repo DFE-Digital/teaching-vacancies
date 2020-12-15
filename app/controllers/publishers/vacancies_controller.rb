@@ -64,7 +64,7 @@ private
   def redirect_if_published
     if @vacancy.published?
       redirect_to organisation_job_path(@vacancy.id),
-                  notice: I18n.t("messages.jobs.already_published")
+                  notice: t("messages.jobs.already_published")
     end
   end
 

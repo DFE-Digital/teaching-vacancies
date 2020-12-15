@@ -15,15 +15,13 @@ module VacanciesOptionsHelper
 
   def mapped_job_location_options(organisation)
     Vacancy.job_locations.keys.map do |job_location|
-      [I18n.t("helpers.options.job_location_form.job_location.#{job_location}",
-              organisation_type: organisation_type_basic(organisation)),
-       job_location]
+      [t("helpers.options.job_location_form.job_location.#{job_location}", organisation_type: organisation_type_basic(organisation)), job_location]
     end
   end
 
   def radius_filter_options
     Search::RadiusSuggestionsBuilder::RADIUS_OPTIONS.inject([]) do |radii, radius|
-      radii << [I18n.t("jobs.filters.number_of_miles", count: radius), radius]
+      radii << [t("jobs.filters.number_of_miles", count: radius), radius]
     end
   end
 end

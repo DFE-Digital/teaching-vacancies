@@ -42,13 +42,13 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::Applicatio
   end
 
   def update
-    if params[:commit] == I18n.t("buttons.save_and_return_later")
+    if params[:commit] == t("buttons.save_and_return_later")
       save_listing_and_return_later
     elsif @form.complete_and_valid?
       update_vacancy
-      if params[:commit] == I18n.t("buttons.update_job")
+      if params[:commit] == t("buttons.update_job")
         update_listing
-      elsif params[:commit] == I18n.t("buttons.continue") && session[:current_step] == :review
+      elsif params[:commit] == t("buttons.continue") && session[:current_step] == :review
         update_incomplete_listing
       else
         render_wizard @vacancy

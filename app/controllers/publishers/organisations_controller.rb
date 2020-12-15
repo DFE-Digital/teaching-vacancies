@@ -39,6 +39,6 @@ private
 
   def render_draft_saved_message
     vacancy = current_organisation.all_vacancies.find(params[:from_review])
-    flash.now[:success] = I18n.t("messages.jobs.draft_saved_html", job_title: vacancy.job_title)
+    flash.now[:success] = t("messages.jobs.draft_saved_html", job_title: vacancy.job_title)
   end
 end

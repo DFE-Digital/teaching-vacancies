@@ -4,7 +4,7 @@ module OrganisationHelper
   OFSTED_REPORT_ENDPOINT = "https://reports.ofsted.gov.uk/oxedu_providers/full/(urn)/".freeze
 
   def age_range(school)
-    return I18n.t("schools.not_given") unless school.minimum_age? && school.maximum_age?
+    return t("schools.not_given") unless school.minimum_age? && school.maximum_age?
 
     "#{school.minimum_age} to #{school.maximum_age}"
   end
@@ -36,9 +36,9 @@ module OrganisationHelper
 
   def managed_organisations_all_label(organisation)
     if organisation.group_type == "local_authority"
-      I18n.t("publishers.organisations.managed_organisations.show.options.all_schools")
+      t("publishers.organisations.managed_organisations.show.options.all_schools")
     else
-      I18n.t("publishers.organisations.managed_organisations.show.options.all")
+      t("publishers.organisations.managed_organisations.show.options.all")
     end
   end
 
