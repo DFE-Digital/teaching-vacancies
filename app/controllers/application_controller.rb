@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
-  before_action :set_headers, :set_root_headers
+  before_action :set_headers
   before_action { strip_nested_param_whitespaces(request.params) }
 
   after_action :trigger_page_visited_event, unless: :request_is_healthcheck?
@@ -77,10 +77,6 @@ private
 
   def request_is_healthcheck?
     ["diego-healthcheck", "Amazon CloudFront"].include?(request.headers["User-Agent"])
-  end
-
-  def set_root_headers
-    response.set_header("X-Robots-Tag", "index, nofollow") if request.path == root_path
   end
 
   def set_headers

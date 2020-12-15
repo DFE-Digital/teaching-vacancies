@@ -2,7 +2,7 @@
   - content_for :page_title_prefix, t('jobs.location_search_heading', location: format_location_name(@vacancies_search.location_search.location_category), keyword: @vacancies_search.keyword)
   - content_for :page_description,  t('jobs.location_description', location: format_location_name(@vacancies_search.location_search.location_category))
 - else
-  - content_for :page_title_prefix, t('pages.home.title')
+  - content_for :page_title_prefix, t('home.index.title')
 
 = render(Shared::BreadcrumbComponent.new(collapse_on_mobile: false, crumbs: [{ link_path: root_path, link_text: t('breadcrumbs.home') }, { link_path: '#', link_text: t('breadcrumbs.jobs') }]))
 

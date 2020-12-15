@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     end
   end
 
-  root "pages#home"
+  root "home#index"
 
   get "check" => "application#check"
   get "sitemap" => "sitemap#show", format: "xml"
