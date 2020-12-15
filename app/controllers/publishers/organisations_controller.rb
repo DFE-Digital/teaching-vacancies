@@ -29,14 +29,6 @@ private
     session[:publisher_multiple_organisations] == true
   end
 
-  def sort_column
-    params[:type] == "draft" ? (params[:sort_column] || "created_at") : params[:sort_column]
-  end
-
-  def sort_order
-    params[:type] == "draft" ? (params[:sort_order] || "desc") : params[:sort_order]
-  end
-
   def render_draft_saved_message
     vacancy = current_organisation.all_vacancies.find(params[:from_review])
     flash.now[:success] = t("messages.jobs.draft_saved_html", job_title: vacancy.job_title)
