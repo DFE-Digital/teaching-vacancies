@@ -16,8 +16,8 @@ module VacanciesHelper
 
   def new_attributes(vacancy)
     attributes = {}
-    attributes[:supporting_documents] = I18n.t("jobs.supporting_documents") unless vacancy.supporting_documents
-    attributes[:contact_number] = I18n.t("jobs.contact_number") unless vacancy.contact_number
+    attributes[:supporting_documents] = t("jobs.supporting_documents") unless vacancy.supporting_documents
+    attributes[:contact_number] = t("jobs.contact_number") unless vacancy.contact_number
     attributes
   end
 
@@ -30,14 +30,14 @@ module VacanciesHelper
   end
 
   def review_page_title_prefix(vacancy, organisation = current_organisation)
-    page_title = I18n.t("jobs.review_page_title", organisation: organisation.name)
+    page_title = t("jobs.review_page_title", organisation: organisation.name)
     "#{vacancy.errors.present? ? 'Error: ' : ''}#{page_title}"
   end
 
   def review_heading(vacancy)
-    return I18n.t("jobs.copy_review_heading") if vacancy.state == "copy"
+    return t("jobs.copy_review_heading") if vacancy.state == "copy"
 
-    I18n.t("jobs.review_heading")
+    t("jobs.review_heading")
   end
 
   def hidden_state_field_value(vacancy, copy = false)
@@ -75,12 +75,10 @@ module VacanciesHelper
 
   def vacancy_about_school_hint_text(vacancy)
     if vacancy.organisations.many?
-      return I18n.t("helpers.hint.job_summary_form.about_schools",
-                    organisation_type: organisation_type_basic(vacancy.parent_organisation))
+      return t("helpers.hint.job_summary_form.about_schools", organisation_type: organisation_type_basic(vacancy.parent_organisation))
     end
 
-    I18n.t("helpers.hint.job_summary_form.about_organisation",
-           organisation_type: organisation_type_basic(vacancy.parent_organisation).capitalize)
+    t("helpers.hint.job_summary_form.about_organisation", organisation_type: organisation_type_basic(vacancy.parent_organisation).capitalize)
   end
 
   def vacancy_about_school_value(vacancy)
@@ -91,22 +89,20 @@ module VacanciesHelper
 
   def vacancy_job_location(vacancy)
     organisation = vacancy.parent_organisation
-    return "#{I18n.t('publishers.organisations.readable_job_location.at_multiple_schools')}, #{organisation.name}" if
+    return "#{t('publishers.organisations.readable_job_location.at_multiple_schools')}, #{organisation.name}" if
       vacancy.job_location == "at_multiple_schools"
 
     address_join([organisation.name, organisation.town, organisation.county])
   end
 
   def vacancy_job_location_heading(vacancy)
-    return I18n.t("school_groups.job_location_heading.#{vacancy.job_location}") unless
-      vacancy.job_location == "at_multiple_schools"
+    return t("school_groups.job_location_heading.#{vacancy.job_location}") unless vacancy.job_location == "at_multiple_schools"
 
-    I18n.t("school_groups.job_location_heading.at_multiple_schools",
-           organisation_type: organisation_type_basic(vacancy.parent_organisation))
+    t("school_groups.job_location_heading.at_multiple_schools", organisation_type: organisation_type_basic(vacancy.parent_organisation))
   end
 
   def vacancy_school_visits_hint(vacancy)
     organisation = organisation_type_basic(vacancy.parent_organisation).tr(" ", "_")
-    I18n.t("helpers.hint.applying_for_the_job_form.#{organisation}_visits")
+    t("helpers.hint.applying_for_the_job_form.#{organisation}_visits")
   end
 end

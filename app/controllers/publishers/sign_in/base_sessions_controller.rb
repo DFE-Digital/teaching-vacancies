@@ -4,9 +4,9 @@ class Publishers::SignIn::BaseSessionsController < Publishers::BaseController
 
   def end_session_and_redirect
     flash_message = if session[:publisher_signing_out_for_inactivity]
-                      { notice: I18n.t("messages.access.publisher_signed_out_for_inactivity", duration: timeout_period_as_string) }
+                      { notice: t("messages.access.publisher_signed_out_for_inactivity", duration: timeout_period_as_string) }
                     else
-                      { success: I18n.t("messages.access.publisher_signed_out") }
+                      { success: t("messages.access.publisher_signed_out") }
                     end
     session.destroy
     redirect_to new_identifications_path, flash_message
