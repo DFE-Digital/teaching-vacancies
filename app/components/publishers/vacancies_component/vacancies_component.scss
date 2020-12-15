@@ -1,0 +1,19 @@
+.vacancies-component {
+  .vacancies-component__header {
+    position: relative;
+
+    .moj-action-bar__filter {
+      @include govuk-media-query($until: desktop) {
+        display: none;
+      }
+
+      &::after {
+        width: 0;
+      }
+
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+  }
+}

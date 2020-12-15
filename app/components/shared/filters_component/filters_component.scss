@@ -219,16 +219,6 @@
 
 .moj-action-bar {
   margin-bottom: govuk-spacing(3);
-
-  .moj-action-bar__filter {
-    @include govuk-media-query($until: desktop) {
-      display: none;
-    }
-  }
-
-  &::after {
-    width: 0;
-  }
 }
 
 .js-enabled .filters__submit {
