@@ -14,9 +14,4 @@ protected
   def after_sending_reset_password_instructions_path_for(_resource)
     jobseekers_check_your_email_password_path
   end
-
-  def after_resetting_password_path_for(resource)
-    sign_in(resource)
-    jobseekers_saved_jobs_path
-  end
 end
