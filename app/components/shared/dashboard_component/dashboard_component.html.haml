@@ -4,14 +4,9 @@
       = @heading
 
   .govuk-width-container
-    - if display_actions
+    - if @link
       .filters-information.moj-action-bar
-        - if @panel
-          %button.govuk-button.govuk-button--secondary{ class: "govuk-!-margin-bottom-0 moj-action-bar__filter", id: "toggle-filters-sidebar" }
-            = t("buttons.hide_filters")
-
-        - if @link
-          = link_to t("buttons.create_job"), @link, method: :post, class: "govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-0 dashboard__link"
+        = link_to t("buttons.create_job"), @link, method: :post, class: "govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-0 dashboard__link"
     .moj-primary-navigation
       .moj-primary-navigation__container
         .moj-primary-navigation__nav{aria: { label: "Account navigation" }}

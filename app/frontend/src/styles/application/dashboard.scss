@@ -11,17 +11,9 @@
       position: relative;
 
       .moj-action-bar {
+        bottom: 0;
         position: absolute;
         right: 0;
-        top: -45px;
-
-        .moj-action-bar__filter {
-          box-shadow: 1px 1px 1px 1px $govuk-border-colour;
-
-          &::after {
-            width: 0;
-          }
-        }
       }
     }
   }
