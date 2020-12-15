@@ -6,7 +6,7 @@
   .govuk-grid-column-two-thirds
     %h1.govuk-heading-l= t(".title")
 
-    = form_for resource, url: jobseeker_registration_path, method: :put do |f|
+    = form_for resource, url: jobseeker_registration_path, method: :patch do |f|
       = f.govuk_error_summary
 
       = f.govuk_password_field :current_password, label: { text: t(".current_password"), size: "s" }, width: "two-thirds"

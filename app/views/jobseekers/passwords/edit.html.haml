@@ -4,7 +4,7 @@
   .govuk-grid-column-two-thirds
     %h1.govuk-heading-l= t(".title")
 
-    = form_for resource, as: resource_name, url: password_path(resource_name), html: { method: :put } do |f|
+    = form_for resource, as: resource_name, url: password_path(resource_name), method: :patch do |f|
       = f.hidden_field :reset_password_token
 
       = f.govuk_error_summary
