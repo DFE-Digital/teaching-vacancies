@@ -2,7 +2,7 @@
   # Also matches vacancies to schools where possible to allow this to be joined to the schools table, and if this is possible matches vacancies to vacancies on Teaching Vacancies.
   # Data for newly discovered vacancies *only* is appended to the CALCULATED_scraped_vacancies table to avoid calculating things more than once.
 WITH
-  stop_words AS (
+  stop_words AS ( 
   SELECT
     *
   FROM
@@ -61,6 +61,10 @@ WITH
             JSON_EXTRACT_SCALAR( JSON_EXTRACT_SCALAR( DATA,
                 '$.json'),
               '$.datePosted') ),
+          SAFE.PARSE_TIMESTAMP("%FT%T", #parse a timestamp like 2020-12-11T00:00:00
+            JSON_EXTRACT_SCALAR( JSON_EXTRACT_SCALAR( DATA,
+                '$.json'),
+              '$.datePosted') ),
           PARSE_TIMESTAMP( "%F %T%Ez", #parse a timestamp like 2020-12-07 16:41:00+00:00
             JSON_EXTRACT_SCALAR( JSON_EXTRACT_SCALAR( DATA,
                 '$.json'),
@@ -98,6 +102,10 @@ WITH
       CAST(COALESCE(SAFE.PARSE_TIMESTAMP("%FT%H:%M:%E*SZ",JSON_EXTRACT_SCALAR(JSON_EXTRACT_SCALAR(DATA,
                 '$.json'),
               '$.validThrough')),
+          SAFE.PARSE_TIMESTAMP("%FT%T",
+            JSON_EXTRACT_SCALAR( JSON_EXTRACT_SCALAR( DATA,
+                '$.json'),
+              '$.validThrough') ),
           PARSE_TIMESTAMP("%F %T%Ez",JSON_EXTRACT_SCALAR(JSON_EXTRACT_SCALAR(DATA,
                 '$.json'),
               '$.validThrough'))) AS DATE) AS expires_on,
@@ -115,7 +123,7 @@ WITH
     SELECT
       scraped_url
     FROM
-      `teacher-vacancy-service.production_dataset.CALCULATED_scraped_vacancies`) ),
+      `teacher-vacancy-service.production_dataset.CALCULATED_scraped_vacancies`)),
   vacancy_to_school_matches AS (
   SELECT
     DISTINCT scraped_vacancy.scraped_url,
