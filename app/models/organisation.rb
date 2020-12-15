@@ -10,11 +10,34 @@ class Organisation < ApplicationRecord
 
   alias_attribute :data, :gias_data
 
-  JOB_SORTING_OPTIONS = [
+  JOB_SORTING_OPTIONS_PUBLISHED = [
+    ["Closing date (Soonest)", "expires_on"],
+    ["Job title (A to Z)", "job_title"],
+    ["Location (A to Z)", "readable_job_location"],
+  ].freeze
+
+  JOB_SORTING_OPTIONS_PENDING = [
     ["Date to be published (Soonest)", "publish_on"],
     ["Closing date (Soonest)", "expires_on"],
     ["Job title (A to Z)", "job_title"],
     ["Location (A to Z)", "readable_job_location"],
+  ].freeze
+
+  JOB_SORTING_OPTIONS_DRAFT = [
+    ["Date to be published (Soonest)", "publish_on"],
+    ["Closing date (Soonest)", "expires_on"],
+    ["Job title (A to Z)", "job_title"],
+    ["Location (A to Z)", "readable_job_location"],
+  ].freeze
+
+  JOB_SORTING_OPTIONS_EXPIRED = [
+    ["Expired (most recent)", "expires_on"],
+    ["Job title (A to Z)", "job_title"],
+    ["Location (A to Z)", "readable_job_location"],
+  ].freeze
+
+  JOB_SORTING_OPTIONS_AWAITING_FEEDBACK = [
+    ["Not sure of options yet", "publish_on"],
   ].freeze
 
   def all_vacancies

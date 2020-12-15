@@ -1,10 +1,19 @@
 - if vacancies.any?
-  %ul.govuk-list{ class: "govuk-!-margin-top-4" }
-    %li= table_header_sort_by(t("jobs.job_title"), column: "job_title", sort: sort)
-    - if organisation.is_a?(SchoolGroup)
-      %li= table_header_sort_by(t("jobs.location"), column: "readable_job_location", sort: sort)
-    %li= table_header_sort_by(t("jobs.date_to_be_posted"), column: "publish_on", sort: sort)
-    %li= table_header_sort_by(t("jobs.expires_on"), column: "expires_on", sort: sort)
+  -# %ul.govuk-list{ class: "govuk-!-margin-top-4" }
+  -#   %li= table_header_sort_by(t("jobs.job_title"), column: "job_title", sort: sort)
+  -#   - if organisation.is_a?(SchoolGroup)
+  -#     %li= table_header_sort_by(t("jobs.location"), column: "readable_job_location", sort: sort)
+  -#   %li= table_header_sort_by(t("jobs.date_to_be_posted"), column: "publish_on", sort: sort)
+  -#   %li= table_header_sort_by(t("jobs.expires_on"), column: "expires_on", sort: sort)
+
+  - if vacancies.count > 1
+    %div{ class: "govuk-!-margin-bottom-4" }
+      = form_for filters_form, as: "", url: organisation_managed_organisations_path, method: :get do |f|
+        = f.govuk_collection_select :jobs_sort,
+          Organisation::JOB_SORTING_OPTIONS_PENDING,
+          :last,
+          :first,
+          label: { text: t("jobs.sort_by.label"), size: "s", class: "govuk-label inline govuk-!-margin-right-2" }
 
   - vacancies.each do |vacancy|
     = render "publishers/organisations/vacancy_pending", vacancy: vacancy, organisation: organisation
