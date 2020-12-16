@@ -345,9 +345,6 @@ en:
     index:
       browse_all: Browse all teaching jobs in England
       title: Find a job in teaching
-      signed_in:
-        manage_link: Manage jobs
-        description: You're signed in as
     signin_jobseekers:
       title: Save and apply for jobs
       description: "You don't need an account to search for a job. If you want to save or apply for a job sign in or "
@@ -357,6 +354,8 @@ en:
       description: Sign in to your Teaching Vacancies account to list a job at your school or Trust.
       signin_link: how you can register
       signin_guidance_html: If you don't have an account yet, you can find out %{link} if you are eligible.
+      manage_link: Manage jobs
+      signed_in_as: You're signed in as
     vacancy_facets:
       cities: Cities and towns with teaching jobs
       counties: Counties with teaching jobs
