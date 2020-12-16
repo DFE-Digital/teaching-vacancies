@@ -34,10 +34,15 @@ en:
         report_it: Report it
         title: Check your email
       edit:
-        description: Password reset for %{email}
-        current_password: Old password
-        new_password: New password
-        title: Change password
+        current_password: Password
+        description: Enter the new email address for your Teaching Vacancies account
+        new_email: New email address
+        title: Update email address
+        update_password:
+          current_password: Old password
+          description: Password reset for %{email}
+          new_password: New password
+          title: Change password
       new:
         assistance:
           content_html: Find out %{link_to} so that you can list teaching jobs at your school or Trust.
@@ -62,7 +67,6 @@ en:
         title: Reset your password
       expired_token:
         description: The link has expired. You need to request that a new link is sent to your email address (%{email}).
-        new_password: New password
         title: Your request is no longer valid
       new:
         description: Enter your email address and we will send you a link so that you can reset your password.

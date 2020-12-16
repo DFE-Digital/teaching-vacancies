@@ -58,7 +58,7 @@ en:
         expires_at: For example, 9:30 am or 11:59 pm (midnight)
         publish_on: For example, 01 01 2021
         starts_on: For example, 01 09 2021
-      jobseeker_sign_up:
+      jobseeker:
         password: Your password has to be at least 8 characters long
       job_summary_form:
         about_organisation: >-
