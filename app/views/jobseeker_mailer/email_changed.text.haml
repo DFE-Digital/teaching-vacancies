@@ -1,0 +1,9 @@
+\# #{t(".heading")}
+\
+= t(".intro")
+\
+\---
+\
+\# #{t(".not_requested.heading")}
+\
+= t(".not_requested.body", mail_to: notify_link("mailto:#{t('help.email')}", t("help.email")))
