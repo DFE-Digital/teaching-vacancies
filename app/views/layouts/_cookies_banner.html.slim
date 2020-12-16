@@ -1,0 +1,6 @@
+.cookies-banner aria-label=t("cookies_preferences.banner.aria.label") role="region"
+  .govuk-width-container
+    h3.govuk-heading-s class="govuk-!-margin-bottom-2" = t("cookies_preferences.banner.heading")
+    p.govuk-body = t("cookies_preferences.banner.body")
+    = link_to t("buttons.accept_all_cookies"), create_cookies_preferences_path(cookies_consent: "yes", **utm_parameters), method: :post, class: "govuk-button govuk-!-margin-bottom-3 govuk-!-margin-right-2"
+    = link_to t("buttons.set_preferences"), cookies_preferences_path(**utm_parameters), class: "govuk-button govuk-button--secondary govuk-!-margin-bottom-3"

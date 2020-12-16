@@ -1,0 +1,35 @@
+section#school-overview class="govuk-!-margin-bottom-5"
+  h3.govuk-heading-l.section-heading
+    = t("school_groups.trust_overview")
+
+  = render GovukComponent::SummaryList.new do |component|
+    - if organisation.group_type != "local_authority"
+      = component.slot(:row, key: I18n.t("school_groups.type"), value: organisation.group_type)
+    - if organisation.website.present? || organisation.url.present?
+      = component.slot(:row,
+                       key: I18n.t("school_groups.website", organisation_type: organisation_type_basic(organisation).humanize),
+                       value: govuk_link_to(I18n.t("schools.website_link_text", organisation_name: organisation.name), organisation.website.presence || organisation.url, class: "link-wrap", target: "_blank"))
+    - if @vacancy.contact_email.present?
+      = component.slot(:row, key: I18n.t("jobs.contact_email"), value: mail_to(@vacancy.contact_email, @vacancy.contact_email, class: "govuk-link link-wrap",
+                                                                               subject: I18n.t("jobs.contact_email_subject", job: @vacancy.job_title),
+                                                                               body: I18n.t("jobs.contact_email_body", url: job_url(@vacancy))))
+    - if @vacancy.contact_number.present?
+      = component.slot(:row, key: I18n.t("jobs.contact_number"), value: govuk_link_to(@vacancy.contact_number, "tel:#{@vacancy.contact_number}"))
+
+  - if vacancy_or_organisation_description(vacancy).present?
+    h4.govuk-heading-s
+      = t("school_groups.info", school_group: organisation.name)
+    p = vacancy_or_organisation_description(vacancy)
+
+  - if vacancy.school_visits.present?
+    h4.govuk-heading-s
+      = t("school_groups.trust_visits", school_group: organisation.name)
+    p = vacancy.school_visits
+
+  section#school-location
+    h3.govuk-heading-l.section-heading = t("school_groups.school_group_location")
+    p = full_address(organisation)
+
+    - if organisation.geolocation
+      div id="map" role="presentation" aria-hidden="true" aria-label=t("school_groups.map_aria_label") data-school=organisation_map_data
+      script defer=true src="https://maps.googleapis.com/maps/api/js?key=#{ENV["GOOGLE_MAPS_API_KEY"]}&callback=initMap"

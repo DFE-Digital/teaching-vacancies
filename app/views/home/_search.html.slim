@@ -1,0 +1,12 @@
+h1.govuk-heading-l = t("jobs.heading")
+p.govuk-caption-m = t("jobs.intro")
+
+= form_for @jobs_search_form, as: "", url: jobs_path, html: { method: "get" } do |f|
+
+  = render "shared/search/keyword", f: f, filters: false
+  = render "shared/search/location", f: f
+  = render "shared/search/radius", f: f, filters: false
+  = render "shared/search/current_location", loaderElement: "location-field"
+  = render "filters", f: f
+
+  = f.govuk_submit t("buttons.search"), classes: "govuk-button--start icon icon--start icon--right govuk-!-margin-0"

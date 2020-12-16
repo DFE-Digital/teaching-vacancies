@@ -29,7 +29,7 @@ RSpec.describe AlertMailer, type: :mailer do
       params: { job_alert_feedback: { relevant_to_user: true,
                                       vacancy_ids: vacancies.pluck(:id),
                                       search_criteria: subscription.search_criteria } },
-    ).gsub("&", "&amp;")
+    )
   end
   let(:irrelevant_job_alert_feedback_url) do
     new_subscription_job_alert_feedback_url(
@@ -37,7 +37,7 @@ RSpec.describe AlertMailer, type: :mailer do
       params: { job_alert_feedback: { relevant_to_user: false,
                                       vacancy_ids: vacancies.pluck(:id),
                                       search_criteria: subscription.search_criteria } },
-    ).gsub("&", "&amp;")
+    )
   end
 
   before do
@@ -62,14 +62,14 @@ RSpec.describe AlertMailer, type: :mailer do
       expect(body).to include("Keyword: English")
       expect(body).to include(I18n.t("alert_mailer.alert.alert_frequency", frequency: subscription.frequency))
       expect(body).to include(I18n.t("alert_mailer.alert.edit_link_text"))
-      expect(body).to include(edit_subscription_url(subscription.token, **campaign_params).gsub("&", "&amp;"))
+      expect(body).to include(edit_subscription_url(subscription.token, **campaign_params))
       expect(body).to include(I18n.t("alert_mailer.alert.feedback.heading"))
       expect(body).to match(/(\[#{I18n.t('alert_mailer.alert.feedback.relevant_link_text')}\]\(.+true)/)
       expect(body).to include(relevant_job_alert_feedback_url)
       expect(body).to match(/(\[#{I18n.t('alert_mailer.alert.feedback.irrelevant_link_text')}\]\(.+false)/)
       expect(body).to include(irrelevant_job_alert_feedback_url)
       expect(body).to include(I18n.t("alert_mailer.alert.feedback.reason"))
-      expect(body).to include(unsubscribe_subscription_url(subscription.token, **campaign_params).gsub("&", "&amp;"))
+      expect(body).to include(unsubscribe_subscription_url(subscription.token, **campaign_params))
     end
   end
 
@@ -92,14 +92,14 @@ RSpec.describe AlertMailer, type: :mailer do
       expect(body).to include("Keyword: English")
       expect(body).to include(I18n.t("alert_mailer.alert.alert_frequency", frequency: subscription.frequency))
       expect(body).to include(I18n.t("alert_mailer.alert.edit_link_text"))
-      expect(body).to include(edit_subscription_url(subscription.token, **campaign_params).gsub("&", "&amp;"))
+      expect(body).to include(edit_subscription_url(subscription.token, **campaign_params))
       expect(body).to include(I18n.t("alert_mailer.alert.feedback.heading"))
       expect(body).to match(/(\[#{I18n.t('alert_mailer.alert.feedback.relevant_link_text')}\]\(.+true)/)
       expect(body).to include(relevant_job_alert_feedback_url)
       expect(body).to match(/(\[#{I18n.t('alert_mailer.alert.feedback.irrelevant_link_text')}\]\(.+false)/)
       expect(body).to include(irrelevant_job_alert_feedback_url)
       expect(body).to include(I18n.t("alert_mailer.alert.feedback.reason"))
-      expect(body).to include(unsubscribe_subscription_url(subscription.token, **campaign_params).gsub("&", "&amp;"))
+      expect(body).to include(unsubscribe_subscription_url(subscription.token, **campaign_params))
     end
   end
 

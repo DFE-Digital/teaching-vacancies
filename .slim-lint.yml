@@ -1,0 +1,7 @@
+exclude:
+  - 'vendor/bundle/**/*.slim'
+  - 'app/views/shared/_checkbox_group.html.slim'
+
+linters:
+  LineLength:
+    enabled: false

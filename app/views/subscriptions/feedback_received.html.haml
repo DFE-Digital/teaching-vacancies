@@ -1,9 +1,0 @@
-- content_for :page_title_prefix, t('.title')
-
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = render GovukComponent::Panel.new(title: t('.header'), body: '')
-
-    %h2.govuk-heading-m= t('.heading')
-
-    %p= t('.new_search_html', link: govuk_link_to(t('.new_search_link'), jobs_path, class: 'govuk-link--no-visited-state'))

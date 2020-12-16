@@ -1,0 +1,22 @@
+.govuk-grid-column-one-third
+  aside.vacancy--metadata
+    - unless @vacancy.expired?
+      h3.govuk-heading-s
+        = OrganisationVacancyPresenter.new(@vacancy).days_to_apply
+    ul.key-dates-timeline class="govuk-!-margin-bottom-0"
+      - if @vacancy.starts_on.present?
+        li.key-dates-timeline__item
+          h3.key-dates-timeline__title.govuk-heading-s
+            = t("jobs.starts_on")
+          p.key-dates-timeline__by
+            = format_date(@vacancy.starts_on)
+      li.key-dates-timeline__item
+        h3.key-dates-timeline__title.govuk-heading-s
+          = t("jobs.application_deadline")
+        p.key-dates-timeline__by
+          = OrganisationVacancyPresenter.new(@vacancy).application_deadline
+      li.key-dates-timeline__item
+        h3.key-dates-timeline__title.govuk-heading-s
+          = t("jobs.publish_on")
+        p.key-dates-timeline__by
+          = format_date(@vacancy.publish_on)

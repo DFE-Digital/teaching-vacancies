@@ -1,0 +1,6 @@
+- content_for :page_title_prefix, "#{@vacancy.job_title} - #{@vacancy.parent_organisation.name}"
+
+- content_for :page_description, strip_tags(@vacancy.job_summary)
+
+.vacancy
+  = render "/shared/vacancy/jobseeker_view"

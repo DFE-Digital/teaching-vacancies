@@ -1,0 +1,27 @@
+- content_for :page_title_prefix, t("feedback.page_title")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @feedback, url: feedback_path do |f|
+      = f.govuk_error_summary
+
+      h2.govuk-heading-xl
+        = t("feedback.heading")
+
+      = f.govuk_radio_buttons_fieldset(:visit_purpose, legend: { size: "m", text: t("general_feedback.visit_purpose_legend_html") }) do
+        - GeneralFeedback.visit_purposes.keys.each_with_index do |visit_purpose, idx|
+          - if visit_purpose == "other_purpose"
+            = f.govuk_radio_button :visit_purpose, visit_purpose, link_errors: idx.zero? do
+              = f.govuk_text_area :visit_purpose_comment,
+                label: { text: t("general_feedback.visit_purpose_legend_html"), hidden: true },
+                hint: { text: t("general_feedback.visit_purpose_hint_text") },
+                rows: 5,
+                max_chars: 1200
+          - else
+            = f.govuk_radio_button :visit_purpose, visit_purpose, link_errors: idx.zero?
+
+      = render "/feedback/form", f: f
+
+      = recaptcha("feedback")
+
+      = f.govuk_submit t("buttons.submit_feedback")

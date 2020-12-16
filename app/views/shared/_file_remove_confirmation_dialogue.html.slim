@@ -1,0 +1,14 @@
+#modal-default.gem-c-modal-dialogue data-module="file-remove-confirmation-dialogue"
+  .gem-c-modal-dialogue__overlay
+  dialog.gem-c-modal-dialogue__box aria-modal="true" role="dialog" tabindex="0"
+    .gem-c-modal-dialogue__content
+      p.govuk-body class="govuk-!-font-weight-bold"
+        = t(".are_you_sure_html")
+      .govuk-error-summary.display-none#js-gem-c-modal-dialogue__error role="alert" tabindex="-1" class="govuk-!-margin-bottom-6"
+        .govuk-error-summary__body
+          = t(".delete_error")
+    .gem-c-modal-dialogue__footer
+      a.govuk-button.gem-c-modal-dialogue__confirm-link#js-gem-c-modal-dialogue__confirm-action href="#" class="govuk-!-margin-right-1" data-method="delete" data-remote=true data-disable_with=t(".yes_remove_file")
+        = t(".yes_remove_file")
+      a.govuk-link.govuk-link--button.govuk-link--no-visited-state.gem-c-modal-dialogue__close-link#js-gem-c-modal-dialogue__cancel-action href="#"
+        = t(".no_keep_file")

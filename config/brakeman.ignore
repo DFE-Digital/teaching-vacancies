@@ -33,36 +33,6 @@
       "note": "Intended behaviour: Only applicable in test enviroment"
     },
     {
-      "warning_type": "Reverse Tabnabbing",
-      "warning_code": 111,
-      "fingerprint": "66a76474e74e1569b584968d8fe0ddb0c3fc89dbe697ac516805c704ff4b2dea",
-      "check_name": "ReverseTabnabbing",
-      "message": "When opening a link in a new tab without setting `rel: \"noopener noreferrer\"`, the new tab can control the parent tab's location. For example, an attacker could redirect to a phishing page.",
-      "file": "app/views/publishers/organisations/schools/_school_group.html.haml",
-      "line": 32,
-      "link": "https://brakemanscanner.org/docs/warning_types/reverse_tabnabbing/",
-      "code": "link_to(current_organisation.url, current_organisation.url, :class => \"govuk-link wordwrap\", :target => \"_blank\", :rel => \"noopener\")",
-      "render_path": [
-        {
-          "type": "template",
-          "name": "publishers/organisations/schools/index",
-          "line": 11,
-          "file": "app/views/publishers/organisations/schools/index.html.haml",
-          "rendered": {
-            "name": "publishers/organisations/schools/_school_group",
-            "file": "app/views/publishers/organisations/schools/_school_group.html.haml"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "publishers/organisations/schools/_school_group"
-      },
-      "user_input": "\"noopener\"",
-      "confidence": "Weak",
-      "note": "Intended behaviour: Noreferrer is undesirable (would stop schools from seeing our traffic in analytics), noopener is good enough to stop tabnabbing."
-    },
-    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "7dd463abaaf914b7009cf96dd2e73b0b0cc1f37f17e4d23df5068e33afffe7b0",
@@ -83,66 +53,6 @@
       "note": "Sorts columns and orders only come from an allowed list of values, so SQL injection risk can be ignored"
     },
     {
-      "warning_type": "Reverse Tabnabbing",
-      "warning_code": 111,
-      "fingerprint": "9be99173469b6739f553286eed3cc920d0f766b6722d3196ea732da050b4f7e0",
-      "check_name": "ReverseTabnabbing",
-      "message": "When opening a link in a new tab without setting `rel: \"noopener noreferrer\"`, the new tab can control the parent tab's location. For example, an attacker could redirect to a phishing page.",
-      "file": "app/views/publishers/organisations/schools/_schools.html.haml",
-      "line": 45,
-      "link": "https://brakemanscanner.org/docs/warning_types/reverse_tabnabbing/",
-      "code": "link_to(school.url, school.url, :class => \"govuk-link wordwrap\", :target => \"_blank\", :rel => \"noopener\")",
-      "render_path": [
-        {
-          "type": "template",
-          "name": "publishers/organisations/schools/index",
-          "line": 17,
-          "file": "app/views/publishers/organisations/schools/index.html.haml",
-          "rendered": {
-            "name": "publishers/organisations/schools/_schools",
-            "file": "app/views/publishers/organisations/schools/_schools.html.haml"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "publishers/organisations/schools/_schools"
-      },
-      "user_input": "\"noopener\"",
-      "confidence": "Weak",
-      "note": "Intended behaviour: Noreferrer is undesirable (would stop schools from seeing our traffic in analytics), noopener is good enough to stop tabnabbing."
-    },
-    {
-      "warning_type": "Reverse Tabnabbing",
-      "warning_code": 111,
-      "fingerprint": "a97d6c633b89af707741f082abc6393dca0714c16e1ba0a27d301c596ab717fc",
-      "check_name": "ReverseTabnabbing",
-      "message": "When opening a link in a new tab without setting `rel: \"noopener noreferrer\"`, the new tab can control the parent tab's location. For example, an attacker could redirect to a phishing page.",
-      "file": "app/views/publishers/organisations/schools/_school_group.html.haml",
-      "line": 30,
-      "link": "https://brakemanscanner.org/docs/warning_types/reverse_tabnabbing/",
-      "code": "link_to(current_organisation.website, current_organisation.website, :class => \"govuk-link wordwrap\", :target => \"_blank\", :rel => \"noopener\")",
-      "render_path": [
-        {
-          "type": "template",
-          "name": "publishers/organisations/schools/index",
-          "line": 11,
-          "file": "app/views/publishers/organisations/schools/index.html.haml",
-          "rendered": {
-            "name": "publishers/organisations/schools/_school_group",
-            "file": "app/views/publishers/organisations/schools/_school_group.html.haml"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "publishers/organisations/schools/_school_group"
-      },
-      "user_input": "\"noopener\"",
-      "confidence": "Weak",
-      "note": "Intended behaviour: Noreferrer is undesirable (would stop schools from seeing our traffic in analytics), noopener is good enough to stop tabnabbing."
-    },
-    {
       "warning_type": "Unscoped Find",
       "warning_code": 82,
       "fingerprint": "c5959d2ec2d9d19a49b2aafe023b3f6647ef30c14c8333449c9344098282bdb5",
@@ -161,36 +71,6 @@
       "user_input": "params.dig(:login_key)",
       "confidence": "Weak",
       "note": "Intended behaviour: No user is available at this point, so cannot scope."
-    },
-    {
-      "warning_type": "Reverse Tabnabbing",
-      "warning_code": 111,
-      "fingerprint": "d28f8f32677960a6755eaadd0570ac277ba5a6ac255f491dd35ca1a141ec2ed5",
-      "check_name": "ReverseTabnabbing",
-      "message": "When opening a link in a new tab without setting `rel: \"noopener noreferrer\"`, the new tab can control the parent tab's location. For example, an attacker could redirect to a phishing page.",
-      "file": "app/views/publishers/organisations/schools/_schools.html.haml",
-      "line": 43,
-      "link": "https://brakemanscanner.org/docs/warning_types/reverse_tabnabbing/",
-      "code": "link_to(school.website, school.website, :class => \"govuk-link wordwrap\", :target => \"_blank\", :rel => \"noopener\")",
-      "render_path": [
-        {
-          "type": "template",
-          "name": "publishers/organisations/schools/index",
-          "line": 17,
-          "file": "app/views/publishers/organisations/schools/index.html.haml",
-          "rendered": {
-            "name": "publishers/organisations/schools/_schools",
-            "file": "app/views/publishers/organisations/schools/_schools.html.haml"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "publishers/organisations/schools/_schools"
-      },
-      "user_input": "\"noopener\"",
-      "confidence": "Weak",
-      "note": "Intended behaviour: Noreferrer is undesirable (would stop schools from seeing our traffic in analytics), noopener is good enough to stop tabnabbing."
     }
   ],
   "updated": "2020-12-10 10:21:42 +0000",

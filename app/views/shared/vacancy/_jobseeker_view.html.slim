@@ -1,0 +1,87 @@
+- if @vacancy.expired?
+  .govuk-grid-row
+    .govuk-grid-column-full
+      .banner-warning = t("jobs.expired")
+
+.jobs-banner
+  .govuk-width-container
+    = render(Shared::BreadcrumbComponent.new(collapse_on_mobile: false,
+                                             crumbs: [{ link_path: root_path, link_text: t("breadcrumbs.home") },
+                                                      { link_path: referred_from_jobs_path? ? request.referrer : jobs_path, link_text: t("breadcrumbs.jobs") },
+                                                      { link_path: "#", link_text: @vacancy.job_title }]))
+    .govuk-grid-row
+      .govuk-grid-column-full
+        h1.govuk-heading-xl class="govuk-!-margin-bottom-2"
+          = @vacancy.job_title
+        h2.govuk-caption-l.job-caption class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
+          = vacancy_job_location(@vacancy)
+    .govuk-grid-row
+      .govuk-grid-column-one-third
+        / The "origin" param is used both for the back button on the subsequent page and for performance analysis.
+        = render(Shared::BannerLinkComponent.new(icon_class: "alert-blue",
+                                                 link_id: "job-alert-link-from-top-of-job-listing-gtm",
+                                                 link_method: :get,
+                                                 link_path: new_subscription_path(search_criteria: @devised_job_alert_search_criteria, origin: request.original_fullpath),
+                                                 link_text: t("jobs.alert.similar.terse")))
+      - if JobseekerAccountsFeature.enabled?
+        .govuk-grid-column-one-third
+          = render(Shared::BannerLinkComponent.new(icon_class: @saved ? "saved" : "save",
+                                                  link_id: "#{@saved ? 'saved' : 'save'}-job-listing",
+                                                  link_method: @saved ? :delete : :get,
+                                                  link_path: @saved ? jobseekers_saved_job_path(@vacancy.slug) : new_jobseekers_saved_job_path(id: @vacancy.slug),
+                                                  link_text: t("jobseekers.saved_jobs.#{@saved ? 'saved' : 'save'}")))
+
+.govuk-grid-row
+
+  = render "/vacancies/key_dates_sidebar"
+
+  .govuk-grid-column-two-thirds
+
+    - if @vacancy.organisations.many?
+      = render(Shared::NotificationComponent.new(content: t("messages.jobs.multi_school_job_notification_html", organisation_type: organisation_type_basic(@vacancy.parent_organisation)), style: "notice", background: true, dismiss: false, alert: true))
+
+    .content-pills class="govuk-!-margin-bottom-6"
+      h3.govuk-heading-s class="govuk-!-margin-bottom-3" = t("jobs.contents")
+      .govuk-grid-row
+        / Up to four half columns in one row so that they automatically wrap depending on how many are present
+        .govuk-grid-column-one-half
+          = render(Shared::PillLinkComponent.new(link_path: "#job-details", link_text: "Job details"))
+        - if @vacancy.documents.any?
+          .govuk-grid-column-one-half
+            = render(Shared::PillLinkComponent.new(link_path: "#supporting-documents", link_text: "Supporting documents"))
+        .govuk-grid-column-one-half
+          - if @vacancy.at_one_school?
+            = render(Shared::PillLinkComponent.new(link_path: "#school-overview", link_text: t("schools.school_overview")))
+          - elsif @vacancy.at_multiple_schools?
+            = render(Shared::PillLinkComponent.new(link_path: "#school-overview", link_text: t("schools.schools_overview")))
+          - elsif @vacancy.central_office?
+            = render(Shared::PillLinkComponent.new(link_path: "#school-overview", link_text: t("school_groups.trust_overview")))
+        .govuk-grid-column-one-half
+          - if @vacancy.at_one_school?
+            = render(Shared::PillLinkComponent.new(link_path: "#school-location", link_text: t("schools.school_location.one")))
+          - elsif @vacancy.at_multiple_schools?
+            = render(Shared::PillLinkComponent.new(link_path: "#school-overview", link_text: t("schools.school_location.many")))
+          - elsif @vacancy.central_office?
+            = render(Shared::PillLinkComponent.new(link_path: "#school-overview", link_text: t("school_groups.school_group_location")))
+
+    = render(Jobseekers::VacancyDetailsComponent.new(vacancy: @vacancy))
+    = render(Jobseekers::OrganisationOverviews::SchoolGroupComponent.new(vacancy: @vacancy))
+    = render(Jobseekers::OrganisationOverviews::SchoolComponent.new(vacancy: @vacancy))
+    = render(Jobseekers::OrganisationOverviews::SchoolsComponent.new(vacancy: @vacancy))
+
+    - if @similar_jobs.present?
+      section#similar-jobs class="govuk-!-margin-bottom-5"
+        h3.govuk-heading-m = t("jobs.similar_jobs")
+        .govuk-grid-row
+          - @similar_jobs.each do |similar_job|
+            .govuk-grid-column-one-half
+              = render(Jobseekers::SimilarJobComponent.new(vacancy: similar_job))
+
+    section
+      p.icon.icon--left.icon--alert-blue
+        = govuk_link_to(t("jobs.alert.similar.verbose.link_text"), new_subscription_path(search_criteria: @devised_job_alert_search_criteria, origin: request.env["ORIGINAL_FULLPATH"]), id: "job-alert-link-from-bottom-of-job-listing-gtm")
+        =< t("jobs.alert.similar.verbose.reminder")
+
+    section class="govuk-!-margin-top-3"
+      h4.govuk-heading-s.share-this-job = t("jobs.share_this_job")
+      = render "/shared/vacancy/share_buttons"

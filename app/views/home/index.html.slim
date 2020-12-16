@@ -1,0 +1,23 @@
+- content_for :page_title_prefix, t(".title")
+
+.search-panel-banner
+  .govuk-width-container
+    .govuk-grid-row
+      .govuk-grid-column-two-thirds
+        .search-panel.location-search = render "search"
+      .govuk-grid-column-one-third
+        .signin
+          - if ReadOnlyFeature.enabled?
+            = render "read_only"
+          - elsif JobseekerAccountsFeature.enabled?
+            = render "signin_jobseekers"
+          - else
+            = render "signin_publishers"
+
+.govuk-grid-row
+  .govuk-grid-column-full
+    = render "vacancy_facets"
+
+.govuk-grid-row class="govuk-!-margin-top-2"
+  .govuk-grid-column-full
+    = govuk_link_to(t(".browse_all"), jobs_path, class: "govuk-!-font-size-19")

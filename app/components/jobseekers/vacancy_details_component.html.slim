@@ -1,0 +1,48 @@
+section#job-details class="govuk-!-margin-bottom-5"
+  h3.govuk-heading-l.section-heading
+    = t("jobs.job_details")
+
+  = render GovukComponent::SummaryList.new do |component|
+    - if @vacancy.job_roles.any?
+      = component.slot(:row, key: I18n.t("jobs.job_roles"), value: @vacancy.show_job_roles)
+    - if @vacancy.subjects.any?
+      = component.slot(:row, key: I18n.t("jobs.subject", count: @vacancy.subjects.count), value: @vacancy.show_subjects)
+    = component.slot(:row, key: I18n.t("jobs.working_patterns"), value: @vacancy.working_patterns)
+    = component.slot(:row, key: I18n.t("jobs.salary"), value: @vacancy.salary)
+
+  h4.govuk-heading-s = t("jobs.job_summary")
+  p = @vacancy.job_summary
+
+  - if @vacancy.documents.none? && @vacancy.any_candidate_specification?
+    - if @vacancy.education?
+      h4.govuk-heading-s = t("jobs.education")
+      p = @vacancy.education
+
+    - if @vacancy.qualifications?
+      h4.govuk-heading-s = t("jobs.qualifications")
+      p = @vacancy.qualifications
+
+    - if @vacancy.experience?
+      h4.govuk-heading-s = t("jobs.experience")
+      p = @vacancy.experience
+
+  - if @vacancy.benefits.present?
+    h4.govuk-heading-s = t("jobs.benefits")
+    p = @vacancy.benefits
+
+  - if @vacancy.how_to_apply.present?
+    h4.govuk-heading-s = t("jobs.applying_for_the_job")
+    p = @vacancy.how_to_apply
+
+  - if @vacancy.application_link.present?
+    = link_to t("jobs.apply"), new_job_interest_path(@vacancy.id), target: "_blank", class: "govuk-button vacancy-apply-link govuk-!-margin-bottom-5", "aria-label": t("jobs.aria_labels.apply_link")
+
+  - if @vacancy.documents.any?
+    section#supporting-documents
+      h3.govuk-heading-l.section-heading = t("jobs.supporting_documents")
+      .supporting-docs
+        ul
+          - @vacancy.documents.each do |document|
+            li.icon.icon--left.icon--document
+              = govuk_link_to(document[:name], document[:download_url], class: "document-link", target: "_blank")
+              ' #{number_with_precision(document[:size] / 1024.0 / 1024.0, precision: 2)} MB
