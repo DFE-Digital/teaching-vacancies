@@ -37,11 +37,6 @@ Rails.application.routes.draw do
     resources :interests, only: %i[new]
   end
 
-  # Backward compatibility after changing routes to 'jobs'
-  resources :vacancies, only: [:show], controller: "vacancies" do
-    resources :interests, only: %i[new]
-  end
-
   resource :feedback, controller: "general_feedback", only: %i[new create]
 
   resources :subscriptions, only: %i[new create edit update] do

@@ -178,35 +178,6 @@ RSpec.describe "Viewing a single published vacancy" do
     end
   end
 
-  context "when the old vacancy URL is used" do
-    scenario "vacancy is viewable" do
-      vacancy = create(:vacancy, :published)
-      vacancy.organisation_vacancies.create(organisation: school)
-      published_vacancy = VacancyPresenter.new(vacancy)
-
-      visit vacancy_path(published_vacancy)
-
-      expect(page).to have_content(published_vacancy.job_title)
-    end
-
-    context "when the vacancy's url changes" do
-      scenario "the user is still able to use the old url" do
-        vacancy = create(:vacancy, :published)
-        vacancy.organisation_vacancies.create(organisation: school)
-        vacancy = VacancyPresenter.new(vacancy)
-        old_path = job_path(vacancy)
-        vacancy.job_title = "A new job title"
-        vacancy.refresh_slug
-        vacancy.save
-        new_path = job_path(vacancy)
-
-        visit old_path
-
-        expect(page.current_path).to eq(new_path)
-      end
-    end
-  end
-
   context "meta tags" do
     include ActionView::Helpers::SanitizeHelper
     scenario "the vacancy's meta data are rendered correctly" do
