@@ -1,0 +1,21 @@
+.account-survey-cta {
+  @include govuk-media-query($until: desktop) {
+    margin: 0 -15px !important
+  }
+
+  position: sticky;
+  display: block;
+  box-sizing: border-box;
+  bottom: 0;
+  margin-bottom: -40px;
+
+  .account-survey-cta__content {
+    background-color: govuk-colour("orange");
+    padding: govuk-spacing(2);
+    color: govuk-colour("black");
+
+    a {
+      color: govuk-colour("black");
+    }
+  }
+}

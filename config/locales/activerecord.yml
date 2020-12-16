@@ -166,6 +166,10 @@ en:
         part_time: Part-time
     errors:
       models:
+        account_feedback:
+          attributes:
+            rating:
+              inclusion: Select how satisfied or dissatisfied you are
         jobseeker:
           attributes:
             email:

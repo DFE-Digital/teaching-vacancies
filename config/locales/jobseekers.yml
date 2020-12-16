@@ -1,6 +1,14 @@
 en:
   jobseekers:
+    account_feedbacks:
+      create:
+        success: Thank you for your feedback
+      new:
+        title: Account survey
     accounts:
+      footer:
+        survey_text_html: Spare some time to %{link} on your account experience with Teaching Vacancies.
+        survey_link: take our quick survey
       header:
         accessible_signed_in_as: You are signed in as
       show:
