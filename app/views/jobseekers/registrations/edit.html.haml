@@ -4,16 +4,20 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    %h1.govuk-heading-xl= t(".title")
+    %h1.govuk-heading-xl= @update_password ? t(".update_password.title") : t(".title")
 
     = form_for resource, url: jobseeker_registration_path, method: :patch do |f|
       = f.govuk_error_summary
-    
-      %p.govuk-body= t(".description", email: resource.email)
 
-      = f.govuk_password_field :current_password, label: { text: t(".current_password"), size: "s" }, width: "two-thirds"
-      = f.govuk_password_field :password, label: { text: t(".new_password"), size: "s" }, hint: { text: t("helpers.hint.jobseeker_sign_up.password") }, width: "two-thirds"
-
-      = f.govuk_submit t("buttons.update_password"), classes: "govuk-!-margin-bottom-0"
+      - if @update_password
+        %p.govuk-body= t(".update_password.description", email: resource.email)
+        = f.govuk_password_field :current_password, label: { text: t(".update_password.current_password"), size: "s" }, width: "two-thirds"
+        = f.govuk_password_field :password, label: { text: t(".update_password.new_password"), size: "s" }, width: "two-thirds"
+        = f.govuk_submit t("buttons.update_password"), classes: "govuk-!-margin-bottom-0"
+      - else
+        %p.govuk-body= t(".description")
+        = f.govuk_password_field :current_password, label: { text: t(".current_password"), size: "s" }, width: "two-thirds"
+        = f.govuk_email_field :email, label: { text: t(".new_email"), size: "s" }, width: "two-thirds", value: nil
+        = f.govuk_submit t("buttons.continue"), classes: "govuk-!-margin-bottom-0"
 
     %hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible

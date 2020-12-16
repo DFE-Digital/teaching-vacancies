@@ -6,7 +6,7 @@ RSpec.describe "Jobseekers can change password" do
   before do
     allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(true)
     login_as(jobseeker, scope: :jobseeker)
-    visit edit_jobseeker_registration_path
+    visit edit_jobseeker_registration_path(update_password: true)
   end
 
   it "changes the password" do
