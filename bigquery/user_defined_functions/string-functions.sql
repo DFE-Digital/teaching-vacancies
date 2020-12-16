@@ -36,8 +36,9 @@ CREATE OR REPLACE FUNCTION
       "Organic - other"
     END
       )
+     WHEN REGEXP_CONTAINS(referrer,"(teaching-jobs.service.gov.uk|teaching-vacancies.service.gov.uk)") THEN "Unknown"
     ELSE
-    "Direct"
+    "Direct or unknown"
   END
     );
   # Converts escaped characters in a URL (like '%20') into their actual characters (like ' '), and converts '+' into ' '.
