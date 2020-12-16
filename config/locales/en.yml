@@ -341,36 +341,37 @@ en:
         precision: 0
         unit: "£"
 
+  home:
+    index:
+      browse_all: Browse all teaching jobs in England
+      title: Find a job in teaching
+    signin_jobseekers:
+      title: Save and apply for jobs
+      description: "You don't need an account to search for a job. If you want to save or apply for a job sign in or "
+      signup_link: create an account
+    signin_publishers:
+      title: List a teaching job
+      description: Sign in to your Teaching Vacancies account to list a job at your school or Trust.
+      signin_link: how you can register
+      signin_guidance_html: If you don't have an account yet, you can find out %{link} if you are eligible.
+      manage_link: Manage jobs
+      signed_in_as: You're signed in as
+    vacancy_facets:
+      cities: Cities and towns with teaching jobs
+      counties: Counties with teaching jobs
+      job_roles: Current teaching jobs by role
+      subjects: Current teaching jobs by subject
+    read_only:
+      title: Sorry, listing a job is unavailable
+      description_html: >-
+        <p>We’re completing planned maintenance on job listings.</p><p>You can search and view vacancies, but you
+        can’t manage them.</p><p>You’ll be able to use the full service again in less than an hour.</p>
+        <p><a href='mailto:teaching.vacancies@education.gov.uk'>Contact our support team</a> if you need help.</p>
+
   pages:
     accessibility:
       page_description:
         Find out which areas of Teaching Vacancies are not yet fully accessible and when we plan to correct each issue.
-    home:
-      browse_all: Browse all teaching jobs in England
-      title: Find a job in teaching
-      read_only:
-        title: Sorry, listing a job is unavailable
-        description_html: >-
-          <p>We’re completing planned maintenance on job listings.</p><p>You can search and view vacancies, but you
-          can’t manage them.</p><p>You’ll be able to use the full service again in less than an hour.</p>
-          <p><a href='mailto:teaching.vacancies@education.gov.uk'>Contact our support team</a> if you need help.</p>
-      signin_jobseekers:
-        title: Save and apply for jobs
-        description: "You don't need an account to search for a job. If you want to save or apply for a job sign in or "
-        signup_link: create an account
-      signin_publishers:
-        title: List a teaching job
-        description: Sign in to your Teaching Vacancies account to list a job at your school or Trust.
-        signin_link: how you can register
-        signin_guidance_html: If you don't have an account yet, you can find out %{link} if you are eligible.
-      signed_in:
-        manage_link: Manage jobs
-        description: You're signed in as
-      vacancy_facets:
-        cities: Cities and towns with teaching jobs
-        counties: Counties with teaching jobs
-        job_roles: Current teaching jobs by role
-        subjects: Current teaching jobs by subject
     privacy-policy:
       page_description: >-
         Find out what personal information Teaching Vacancies collects,

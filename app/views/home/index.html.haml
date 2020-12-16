@@ -4,19 +4,19 @@
   .govuk-width-container
     .govuk-grid-row
       .govuk-grid-column-two-thirds
-        .search-panel.location-search= render 'pages/home/search'
+        .search-panel.location-search= render 'search'
       .govuk-grid-column-one-third
         .signin
           - if ReadOnlyFeature.enabled?
-            = render 'pages/home/read_only'
+            = render 'read_only'
           - elsif JobseekerAccountsFeature.enabled?
-            = render 'pages/home/signin_jobseekers'
+            = render 'signin_jobseekers'
           - else
-            = render 'pages/home/signin_publishers'
+            = render 'signin_publishers'
 
 .govuk-grid-row
   .govuk-grid-column-full
-    = render 'pages/home/vacancy_facets'
+    = render 'vacancy_facets'
 
 .govuk-grid-row{ class: 'govuk-!-margin-top-2'}
   .govuk-grid-column-full

@@ -2,8 +2,8 @@
 
 - if publisher_signed_in?
   %div.manage-vacancies
-    %p= "#{t('pages.home.signed_in.description')} #{current_organisation.name}"
-    = link_to t('pages.home.signed_in.manage_link'), organisation_path, class: 'govuk-button govuk-button--secondary manage-vacancies'
+    %p= "#{t('.signed_in_as')} #{current_organisation.name}"
+    = link_to t('.manage_link'), organisation_path, class: 'govuk-button govuk-button--secondary manage-vacancies'
 
 - else
   %p= t('.description')

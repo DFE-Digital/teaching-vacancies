@@ -18,7 +18,7 @@ RSpec.describe "Hiring staff cannot manage vacancies on maintenance" do
     end
 
     it "shows maintainance message" do
-      expect(page).to have_text(I18n.t("pages.home.read_only.title"))
+      expect(page).to have_text(I18n.t("home.read_only.title"))
     end
   end
 

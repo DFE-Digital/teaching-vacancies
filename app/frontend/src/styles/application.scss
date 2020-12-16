@@ -87,7 +87,7 @@ body {
 
   &.vacancies_index,
   &.vacancies_show,
-  &.pages_home {
+  &.home_index {
     .govuk-main-wrapper {
       > .govuk-width-container {
         margin-top: 0;
@@ -99,7 +99,7 @@ body {
     }
   }
 
-  &.pages_home {
+  &.home_index {
     .govuk-main-wrapper__notification {
       background-color: $govuk-brand-colour;
 

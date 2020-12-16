@@ -9,7 +9,7 @@ RSpec.describe "Hiring staff can manage vacancies from a link on home page" do
     visit root_path
 
     within("div.manage-vacancies") do
-      click_on(I18n.t("pages.home.signed_in.manage_link"))
+      click_on(I18n.t("home.signin_publishers.manage_link"))
     end
 
     expect(find("h1")).to have_content(I18n.t("schools.jobs.index", organisation: school.name))
