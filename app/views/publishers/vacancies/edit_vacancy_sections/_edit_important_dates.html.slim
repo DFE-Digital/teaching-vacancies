@@ -23,5 +23,8 @@ dl.app-check-your-answers.app-check-your-answers--short
 
   .app-check-your-answers__contents
     dt.app-check-your-answers__question#starts_on
-      h4.govuk-heading-s = t("jobs.start_on")
-    dd.app-check-your-answers__answer = format_date @vacancy.starts_on
+      h4.govuk-heading-s = t("jobs.starts_on")
+    - if @vacancy.starts_asap?
+      dd.app-check-your-answers__answer = t("jobs.starts_asap")
+    - else
+      dd.app-check-your-answers__answer = format_date @vacancy.starts_on
