@@ -34,15 +34,18 @@ en:
         report_it: Report it
         title: Check your email
       edit:
-        current_password: Password
-        description: Enter the new email address for your Teaching Vacancies account
-        new_email: New email address
-        title: Update email address
-        update_password:
-          current_password: Old password
-          description: Password reset for %{email}
-          new_password: New password
-          title: Change password
+        edit_email_title: Update email address
+        edit_password_title: Change password
+      edit_email:
+          current_password: Password
+          description: Enter the new email address for your Teaching Vacancies account
+          new_email: New email address
+          title: Update email address
+      edit_password:
+        current_password: Old password
+        description: Password reset for %{email}
+        new_password: New password
+        title: Change password
       new:
         assistance:
           content_html: Find out %{link_to} so that you can list teaching jobs at your school or Trust.
