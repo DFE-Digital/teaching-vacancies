@@ -7,33 +7,22 @@ class JobseekerMailer < Devise::Mailer
     @jobseeker = record
     @token = token
     @confirmation_type = @jobseeker.pending_reconfirmation? ? ".reconfirmation" : ""
+    @to = @jobseeker.pending_reconfirmation? ? @jobseeker.unconfirmed_email : @jobseeker.email
 
-    view_mail(
-      NOTIFY_JOBSEEKER_CONFIRMATION_TEMPLATE,
-      to: @jobseeker.pending_reconfirmation? ? @jobseeker.unconfirmed_email : @jobseeker.email,
-      subject: I18n.t("jobseeker_mailer.confirmation_instructions#{@confirmation_type}.subject"),
-    )
+    view_mail(NOTIFY_JOBSEEKER_CONFIRMATION_TEMPLATE, to: @to, subject: t("#{@confirmation_type}.subject"))
   end
 
   def email_changed(record, _opts = {})
     @jobseeker = record
 
-    view_mail(
-      NOTIFY_JOBSEEKER_EMAIL_CHANGED_TEMPLATE,
-      to: @jobseeker.email,
-      subject: I18n.t("jobseeker_mailer.email_changed.subject"),
-    )
+    view_mail(NOTIFY_JOBSEEKER_EMAIL_CHANGED_TEMPLATE, to: @jobseeker.email, subject: t(".subject"))
   end
 
   def reset_password_instructions(record, token, _opts = {})
     @jobseeker = record
     @token = token
 
-    view_mail(
-      NOTIFY_JOBSEEKER_RESET_PASSWORD_TEMPLATE,
-      to: @jobseeker.email,
-      subject: I18n.t("jobseeker_mailer.reset_password_instructions.subject"),
-    )
+    view_mail(NOTIFY_JOBSEEKER_RESET_PASSWORD_TEMPLATE, to: @jobseeker.email, subject: t(".subject"))
   end
 
   def unlock_instructions(record, token, _opts = {})
