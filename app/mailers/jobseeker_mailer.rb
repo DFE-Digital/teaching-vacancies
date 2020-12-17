@@ -6,11 +6,12 @@ class JobseekerMailer < Devise::Mailer
   def confirmation_instructions(record, token, _opts = {})
     @jobseeker = record
     @token = token
+    @confirmation_type = @jobseeker.pending_reconfirmation? ? ".reconfirmation" : ""
 
     view_mail(
       NOTIFY_JOBSEEKER_CONFIRMATION_TEMPLATE,
       to: @jobseeker.pending_reconfirmation? ? @jobseeker.unconfirmed_email : @jobseeker.email,
-      subject: I18n.t("jobseeker_mailer.confirmation_instructions.subject"),
+      subject: I18n.t("jobseeker_mailer.confirmation_instructions#{@confirmation_type}.subject"),
     )
   end
 

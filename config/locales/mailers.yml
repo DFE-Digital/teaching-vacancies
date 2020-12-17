@@ -38,6 +38,11 @@ en:
         heading: Not requested this?
       subject: Verify your email with Teaching Vacancies
       what_to_do: What to do now
+      reconfirmation:
+        heading: Confirm your new email address for your Teaching Vacancies account
+        intro: You have requested to change your email address to this address
+        link: Confirm new email address
+        subject: Confirm your new email for Teaching Vacancies
     email_changed:
       heading: The email for your Teaching Vacancies account has been updated
       intro: Your email has been successfully updated
