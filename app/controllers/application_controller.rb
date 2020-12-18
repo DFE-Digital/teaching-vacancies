@@ -104,8 +104,9 @@ private
     flash[:success] = flash.discard(:notice) if flash[:notice].present?
   end
 
-  def remove_devise_notice_flash!
+  def remove_devise_flash!
     flash.discard(:notice) if flash[:notice].present?
+    flash.discard(:success) if flash[:success].present?
   end
 
   def request_event

@@ -1,5 +1,5 @@
 class Jobseekers::ConfirmationsController < Devise::ConfirmationsController
-  after_action :remove_devise_notice_flash!, only: %i[create]
+  after_action :remove_devise_flash!, only: %i[create]
   after_action :replace_devise_notice_flash_with_success!, only: %i[show]
 
 protected
