@@ -75,6 +75,7 @@ en:
       before_publish_on: Date job starts must be after date job will be listed
       before_expires_on: Date job starts must be after date application is due
       invalid: Use the correct format for date the job starts
+      multiple_start_dates: Select one option only
   supporting_documents_errors: &supporting_documents_errors
     supporting_documents:
       inclusion: "Please indicate if you'd like to attach supporting documents"
