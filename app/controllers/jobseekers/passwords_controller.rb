@@ -1,6 +1,6 @@
 class Jobseekers::PasswordsController < Devise::PasswordsController
   before_action :ensure_reset_password_period_valid, only: %i[edit update]
-  after_action :remove_devise_notice_flash!, only: %i[create]
+  after_action :remove_devise_flash!, only: %i[create]
 
 protected
 

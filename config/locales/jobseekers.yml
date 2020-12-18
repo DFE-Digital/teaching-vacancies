@@ -29,13 +29,21 @@ en:
         title: Your request is no longer valid
     registrations:
       check_your_email:
-        description: We have sent you an email with simple instructions on how to quickly finish creating your account.
+        description: We have sent you an email with simple instructions on how to verify your email address.
         having_trouble_html: Still having trouble? %{mail_to} to our support team.
         report_it: Report it
         title: Check your email
       edit:
-        description: Password reset for %{email}
+        edit_email_title: Update email address
+        edit_password_title: Change password
+      edit_email:
+          current_password: Password
+          description: Enter the new email address for your Teaching Vacancies account
+          new_email: New email address
+          title: Update email address
+      edit_password:
         current_password: Old password
+        description: Password reset for %{email}
         new_password: New password
         title: Change password
       new:
@@ -62,7 +70,6 @@ en:
         title: Reset your password
       expired_token:
         description: The link has expired. You need to request that a new link is sent to your email address (%{email}).
-        new_password: New password
         title: Your request is no longer valid
       new:
         description: Enter your email address and we will send you a link so that you can reset your password.
