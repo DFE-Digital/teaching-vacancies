@@ -29,7 +29,7 @@ en:
         title: Your request is no longer valid
     registrations:
       check_your_email:
-        description: We have sent you an email with simple instructions on how to quickly finish creating your account.
+        description: We have sent you an email with simple instructions on how to verify your email address.
         having_trouble_html: Still having trouble? %{mail_to} to our support team.
         report_it: Report it
         title: Check your email
