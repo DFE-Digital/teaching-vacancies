@@ -16,6 +16,8 @@ private
       clear_flash_and_render(:new)
     elsif AUTHENTICATION_FAILURE_MESSAGES.include?(flash[:alert])
       resource.errors.add(:email, flash[:alert])
+      resource.errors.add(:password, "")
+
       clear_flash_and_render(:new)
     end
   end
