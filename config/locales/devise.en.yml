@@ -8,7 +8,7 @@ en:
       already_authenticated: You are already signed in.
       inactive: Your account is not activated yet.
       invalid: We did not recognise your sign-in details
-      locked: Your account is locked.
+      locked: You have been locked out of your account because you have made too many attempts to log in.
       last_attempt: You have one more attempt before your account is locked.
       not_found_in_database: We did not recognise your sign-in details
       timeout: You have been signed out because you have been inactive for 60 minutes.
@@ -47,14 +47,14 @@ en:
     unlocks:
       send_instructions: You will receive an email with instructions for how to unlock your account in a few minutes.
       send_paranoid_instructions: If your account exists, you will receive an email with instructions for how to unlock it in a few minutes.
-      unlocked: Your account has been unlocked successfully. Please sign in to continue.
+      unlocked: Your account has been unlocked. Please sign in below.
   errors:
     messages:
       already_confirmed: was already confirmed, please try signing in
       confirmation_period_expired: needs to be confirmed within %{period}, please request a new one
       expired: has expired, please request a new one
       not_found: not found
-      not_locked: was not locked
+      not_locked: This account is not locked.
       not_saved:
         one: "1 error prohibited this %{resource} from being saved:"
         other: "%{count} errors prohibited this %{resource} from being saved:"

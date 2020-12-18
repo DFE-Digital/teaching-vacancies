@@ -19,11 +19,8 @@ RSpec.describe "Jobseekers can reset password" do
 
       expect(page).to have_content I18n.t("jobseekers.passwords.check_your_email_password.title")
 
-      raw_reset_password_token = devise_token_from_last_mail(:reset_password)
-      reset_password_url = edit_jobseeker_password_url(reset_password_token: raw_reset_password_token)
-      expect(last_email.body).to have_content(reset_password_url)
+      visit first_link_from_last_mail
 
-      visit reset_password_url
       click_on I18n.t("buttons.update_password")
 
       expect(page).to have_content("There is a problem")
@@ -41,9 +38,7 @@ RSpec.describe "Jobseekers can reset password" do
       fill_in "jobseeker[email]", with: jobseeker.email
       click_on I18n.t("buttons.continue")
       travel_to(3.hours.from_now) do
-        raw_reset_password_token = devise_token_from_last_mail(:reset_password)
-        reset_password_url = edit_jobseeker_password_url(reset_password_token: raw_reset_password_token)
-        visit reset_password_url
+        visit first_link_from_last_mail
 
         expect(page).to have_content(I18n.t("jobseekers.passwords.expired_token.title"))
 

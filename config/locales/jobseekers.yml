@@ -95,6 +95,13 @@ en:
           heading: Don't have an account yet?
           link: create an account
         title: Teacher sign in
+      locked:
+        description: You have been locked out of your account because you have made too many attempts to log in.
+        having_trouble_html: Still having trouble? %{mail_to} to our support team.
+        heading: Too many password attempts
+        instructions: We have sent an email to your registered email address with instructions on how to unlock your account.
+        report_it: Report it
+        title: Too many password attempts
     subscriptions:
       index:
         frequency:
@@ -109,3 +116,9 @@ en:
         page_title: Job alerts
         zero_subscriptions_body_html: '<a class="govuk-link" href="/">Find a teaching job</a> and a create a job alert to be made aware of future listings.'
         zero_subscriptions_title: You have no job alerts set up
+    unlocks:
+      new:
+        description: This link has already been used or is incorrect. If you still want to unlock your Teaching Vacancies account enter your email below.
+        form_submit: Request a new link
+        heading: Request a new link to unlock your account
+        title: Request a new link to unlock your account
