@@ -3,7 +3,7 @@ class SubscriptionsController < ApplicationController
 
   def new
     @origin = origin_param[:origin]
-    @subscription_form = SubscriptionForm.new(search_criteria_params)
+    @subscription_form = SubscriptionForm.new(params[:search_criteria].present? ? search_criteria_params : email)
     Auditor::Audit.new(nil, "subscription.alert.new", current_publisher_oid).log_without_association
   end
 
@@ -22,7 +22,11 @@ class SubscriptionsController < ApplicationController
       Auditor::Audit.new(subscription, "subscription.#{subscription.frequency}_alert.create", current_publisher_oid).log
       AuditSubscriptionCreationJob.perform_later(@subscription.to_row)
       SubscriptionMailer.confirmation(subscription.id).deliver_later
-      render :confirm
+      if jobseeker_signed_in?
+        redirect_to jobseekers_subscriptions_path, success: t(".success")
+      else
+        render :confirm
+      end
     else
       render :new
     end
@@ -43,7 +47,7 @@ class SubscriptionsController < ApplicationController
       subscription.update(@subscription_form.job_alert_params)
       Auditor::Audit.new(subscription, "subscription.update", current_publisher_oid).log
 
-      if current_jobseeker
+      if jobseeker_signed_in?
         redirect_to jobseekers_subscriptions_path, success: t(".success")
       else
         SubscriptionMailer.update(subscription.id).deliver_later
@@ -79,6 +83,10 @@ class SubscriptionsController < ApplicationController
 
 private
 
+  def email
+    ParameterSanitiser.call(params).permit(:email)
+  end
+
   def origin_param
     params.permit(:origin)
   end
@@ -91,11 +99,11 @@ private
     ParameterSanitiser.call(params.require(:subscription_form).permit(:email, :frequency, :keyword, :location, :radius, job_roles: [], phases: [], working_patterns: []))
   end
 
-  def unsubscribe_feedback_params
-    ParameterSanitiser.call(params.require(:unsubscribe_feedback_form).permit(:reason, :other_reason, :additional_info))
-  end
-
   def token
     ParameterSanitiser.call(params).require(:id)
+  end
+
+  def unsubscribe_feedback_params
+    ParameterSanitiser.call(params.require(:unsubscribe_feedback_form).permit(:reason, :other_reason, :additional_info))
   end
 end
