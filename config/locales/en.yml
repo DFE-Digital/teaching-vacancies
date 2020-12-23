@@ -481,6 +481,8 @@ en:
         - can unsubscribe at any time
         - receive no more than 1 email a day
       title: Subscribers
+    create:
+      success: Your job alert has been created
     confirm:
       back_to_search_results: Return to your search results
       body: We sent an email confirmation to %{email}.
