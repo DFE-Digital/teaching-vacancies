@@ -28,6 +28,10 @@ module NotifyViewHelper
     notify_link(url, text)
   end
 
+  def sign_up_link(subscription)
+    notify_link(new_jobseeker_registration_url(params: utm_params(subscription)), t(".create_account.link"))
+  end
+
   def unsubscribe_link(subscription)
     url = unsubscribe_subscription_url(subscription.token, params: utm_params(subscription))
     notify_link(url, t(".unsubscribe_link_text"))
