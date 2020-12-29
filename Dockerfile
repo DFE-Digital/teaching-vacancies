@@ -1,4 +1,4 @@
-FROM ruby:2.7.2-alpine AS builder
+FROM ruby:3.0.0-alpine AS builder
 
 ARG DEV_PACKAGES="gcc libc-dev make yarn postgresql-dev build-base libxml2-dev libxslt-dev"
 
@@ -29,7 +29,7 @@ RUN rm -rf node_modules log tmp yarn.lock && \
 
 
 # this stage reduces the image size.
-FROM ruby:2.7.2-alpine AS production
+FROM ruby:3.0.0-alpine AS production
 WORKDIR /teacher-vacancy
 
 RUN apk update && apk add --no-cache libxml2 libxslt libpq tzdata nodejs
