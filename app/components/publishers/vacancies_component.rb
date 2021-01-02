@@ -22,6 +22,14 @@ class Publishers::VacanciesComponent < ViewComponent::Base
     @selected_type == vacancy_type
   end
 
+  def heading
+    if @organisation.group_type == "local_authority"
+      t("schools.jobs.local_authority_index_html", organisation: @organisation.name)
+    else
+      t("schools.jobs.index_html", organisation: @organisation.name)
+    end
+  end
+
   def vacancy_links
     @vacancy_types.map { |vacancy_type| vacancy_type_tab_link(vacancy_type, selected(vacancy_type)) }
   end
