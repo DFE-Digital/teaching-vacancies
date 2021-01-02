@@ -5,7 +5,7 @@
     %dl.card__details
       - if organisation.is_a?(SchoolGroup)
         %dd.govuk-body#vacancy_location= vacancy.readable_job_location
-      %dd.govuk-body= t('jobs.publication_date_html', date: vacancy.publish_on)
+      %dd.govuk-body= t('jobs.published_on_html', date: vacancy.publish_on)
       %dd.govuk-body= t('jobs.closing_date_html', date: vacancy.expires_on)
       %dd.govuk-body= t('jobs.page_views_html', views: vacancy.page_views)
 

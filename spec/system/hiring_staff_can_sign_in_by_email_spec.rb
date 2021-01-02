@@ -85,7 +85,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
             expect(page).to have_content(local_authority.name)
             click_on school.name
 
-            expect(page).to have_text("Jobs at #{school.name}")
+            expect(page).to have_content(strip_tags(I18n.t("schools.jobs.index_html", organisation: school.name)))
             expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
 
             # Can switch organisations
@@ -95,7 +95,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
               .and_return(other_login_key)
             click_on I18n.t("publishers.organisations.change")
             click_on(trust.name)
-            expect(page).to have_content("Jobs at #{trust.name}")
+            expect(page).to have_content(strip_tags(I18n.t("schools.jobs.index_html", organisation: trust.name)))
             expect { other_login_key.reload }.to raise_error ActiveRecord::RecordNotFound
 
             # Can sign out
@@ -155,7 +155,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
             visit auth_email_choose_organisation_path(login_key: login_key.id)
 
             expect(page).not_to have_content("Choose your organisation")
-            expect(page).to have_content("Jobs at #{school.name}")
+            expect(page).to have_content(strip_tags(I18n.t("schools.jobs.index_html", organisation: school.name)))
             expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
           end
         end
@@ -186,7 +186,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
             visit auth_email_choose_organisation_path(login_key: login_key.id)
 
             expect(page).not_to have_content("Choose your organisation")
-            expect(page).to have_content("Jobs at #{trust.name}")
+            expect(page).to have_content(strip_tags(I18n.t("schools.jobs.index_html", organisation: trust.name)))
             expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
           end
         end

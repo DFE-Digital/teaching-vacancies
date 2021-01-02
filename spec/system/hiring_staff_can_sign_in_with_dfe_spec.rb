@@ -102,7 +102,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
 
     scenario "it redirects the sign in page to the school page" do
       visit new_identifications_path
-      expect(page).to have_content("Jobs at #{organisation.name}")
+      expect(page).to have_content(strip_tags(I18n.t("schools.jobs.index_html", organisation: organisation.name)))
       expect(current_path).to eql(organisation_path)
     end
 
@@ -110,7 +110,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
       let!(:other_school) { create(:school, urn: "101010") }
 
       scenario "allows the user to switch between organisations" do
-        expect(page).to have_content("Jobs at #{organisation.name}")
+        expect(page).to have_content(strip_tags(I18n.t("schools.jobs.index_html", organisation: organisation.name)))
 
         # Mock switching organisations from within DfE Sign In
         stub_authentication_step(
@@ -121,7 +121,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
                                 fixture_file: "dfe_sign_in_authorisation_for_different_org_response.json")
 
         click_on "Change organisation"
-        expect(page).to have_content("Jobs at #{other_school.name}")
+        expect(page).to have_content(strip_tags(I18n.t("schools.jobs.index_html", organisation: other_school.name)))
       end
     end
   end
@@ -189,7 +189,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
 
       scenario "it redirects the sign in page to the SchoolGroup page" do
         visit new_identifications_path
-        expect(page).to have_content("Jobs at #{organisation.name}")
+        expect(page).to have_content(strip_tags(I18n.t("schools.jobs.index_html", organisation: organisation.name)))
         expect(current_path).to eql(organisation_path)
       end
     end
@@ -233,7 +233,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
 
         scenario "it redirects the sign in page to the SchoolGroup page" do
           visit new_identifications_path
-          expect(page).to have_content("Jobs in #{organisation.name}")
+          expect(page).to have_content(strip_tags(I18n.t("schools.jobs.local_authority_index_html", organisation: organisation.name)))
           expect(current_path).to eql(organisation_path)
         end
       end

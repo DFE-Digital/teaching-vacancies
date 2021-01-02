@@ -164,7 +164,7 @@ en:
     start_on: Date job starts
     starts_on: Expected start date
     page_views_html: '<span class="govuk-!-font-weight-bold">Page views:</span> %{views}'
-    publish_on: Date listed
+    published_on_html: '<span class="govuk-!-font-weight-bold">Date listed:</span> %{date}'
     expires_on: Closing date
     time_at: ' at '
     updated_at_html: '<span class="govuk-!-font-weight-bold">Date last updated:</span> %{date}'

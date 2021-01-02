@@ -1,4 +1,4 @@
-= render(Shared::DashboardComponent.new(heading: t('schools.jobs.index_html', organisation: @organisation.name), navigation_items: vacancy_links, link: organisation_jobs_path))
+= render(Shared::DashboardComponent.new(heading: heading, navigation_items: vacancy_links, link: organisation_jobs_path))
 
 .vacancies-component
   .govuk-grid-row.vacancies-component__header{ class: 'govuk-!-margin-top-7' }

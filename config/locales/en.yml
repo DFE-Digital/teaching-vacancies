@@ -388,7 +388,7 @@ en:
     info: About %{organisation}
     jobs:
       index_html: Jobs at <span class='govuk-!-font-weight-regular'>%{organisation}</span>
-      local_authority_index: Jobs in %{organisation}
+      local_authority_index_html: Jobs in <span class='govuk-!-font-weight-regular'>%{organisation}</span>
     map_aria_label: Interactive map showing school location
     no_information: No information available
     no_jobs:
