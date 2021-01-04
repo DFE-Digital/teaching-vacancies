@@ -1,0 +1,2 @@
+%div{ aria: { hidden: 'true', label: 'Interactive map showing search polygon' }, data: { search_polygon_boundary: search_polygon_boundary }, id: 'map', role: 'presentation' }
+%script{ defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}
