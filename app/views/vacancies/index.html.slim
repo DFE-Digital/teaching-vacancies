@@ -20,6 +20,7 @@
   .govuk-grid-column-one-third class="govuk-!-margin-bottom-4"
     = render "filters"
   .govuk-grid-column-two-thirds
+    = render(Jobseekers::SearchResults::PolygonVisualizerComponent.new(vacancies_search: @vacancies_search, auth: @authenticated_for_map))
     section.sort-results.sortable-links role="search" aria-label="Sort vacancies"
       = render partial: "sorting_options", locals: { search_criteria: @vacancies_search.only_active_to_hash, sort: @vacancies_search.sort_by }
       .govuk-body#vacancies-stats-top aria-label="Number of results"
