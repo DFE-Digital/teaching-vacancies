@@ -33,6 +33,12 @@
 \
 \---
 \
+- unless @jobseeker_subscription
+  \# #{t('.create_account.heading')}
+  = t('.create_account.intro', link_to: sign_up_link(@subscription))
+  \
+  \---
+  \
 = t('.footer', home_page_link: home_page_link(@subscription))
 \
 = t('.unsubscribe', unsubscribe_link: unsubscribe_link(@subscription))

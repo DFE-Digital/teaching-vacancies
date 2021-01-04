@@ -7,6 +7,7 @@ RSpec.describe AlertMailer, type: :mailer do
 
   let(:body) { mail.body.raw_source }
   let(:email) { "an@email.com" }
+  let(:frequency) { :daily }
   let(:search_criteria) { { keyword: "English" }.to_json }
   let(:subscription) do
     subscription = Subscription.create(email: email, frequency: frequency, search_criteria: search_criteria)
@@ -45,8 +46,6 @@ RSpec.describe AlertMailer, type: :mailer do
   end
 
   context "when frequency is daily" do
-    let(:frequency) { :daily }
-
     it "sends a job alert email" do
       expect(mail.subject).to eq(I18n.t("alert_mailer.alert.subject"))
       expect(mail.to).to eq([subscription.email])
@@ -101,6 +100,20 @@ RSpec.describe AlertMailer, type: :mailer do
       expect(body).to include(irrelevant_job_alert_feedback_url)
       expect(body).to include(I18n.t("alert_mailer.alert.feedback.reason"))
       expect(body).to include(unsubscribe_subscription_url(subscription.token, **campaign_params).gsub("&", "&amp;"))
+    end
+  end
+
+  context "when the subscription email matches a jobseeker account" do
+    let!(:jobseeker) { create(:jobseeker, email: email) }
+
+    it "does not display create account section" do
+      expect(body).not_to include(I18n.t("alert_mailer.alert.create_account.heading"))
+    end
+  end
+
+  context "when the subscription email does not match a jobseeker account" do
+    it "displays create account section" do
+      expect(body).to include(I18n.t("alert_mailer.alert.create_account.heading"))
     end
   end
 end

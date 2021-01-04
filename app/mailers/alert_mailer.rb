@@ -4,6 +4,7 @@ class AlertMailer < ApplicationMailer
 
   def alert(subscription_id, vacancy_ids)
     subscription = Subscription.find(subscription_id)
+    @jobseeker_subscription = Jobseeker.exists?(email: subscription.email)
     @subscription = SubscriptionPresenter.new(subscription)
     vacancies = Vacancy.where(id: vacancy_ids).order(:expires_at)
     @vacancies = VacanciesPresenter.new(vacancies)
