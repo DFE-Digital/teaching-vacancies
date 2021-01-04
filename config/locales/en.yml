@@ -506,6 +506,7 @@ en:
       title: Subscription update
       unsubscribe: You can unsubscribe by following the link at the bottom of these emails.
     edit:
+      description: You can change the search criteria you have used by amending the keywords, location or filters.
       edit_link: Edit alert criteria
       filters: Add more filters
       title: Manage your job alert
@@ -525,6 +526,7 @@ en:
     location_radius_text: Within %{radius} miles of %{location}
     manage: Manage your subscription
     new:
+      description: You can change the search criteria you have used by amending the keywords, location or filters before you create your alert.
       title: Create your job alert
     unsubscribe:
       confirmation: You will no longer receive updates for this job alert.
