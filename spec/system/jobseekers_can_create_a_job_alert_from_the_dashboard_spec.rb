@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Jobseekers can create a job alert" do
+RSpec.describe "Jobseekers can create a job alert from the dashboard" do
   let(:jobseeker) { create(:jobseeker) }
   let(:subscription) { build(:subscription) }
   let(:search_criteria) { JSON.parse(subscription.search_criteria) }
