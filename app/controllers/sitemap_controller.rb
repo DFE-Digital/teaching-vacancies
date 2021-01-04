@@ -33,13 +33,13 @@ private
 
   def add_subjects(map)
     SUBJECT_OPTIONS.map(&:first).each do |subject|
-      map.add jobs_path(keyword: subject), period: "hourly"
+      map.add subject_path(subject), period: "hourly"
     end
   end
 
   def add_job_roles(map)
     Vacancy.job_roles.each_key do |job_role|
-      map.add jobs_path(job_roles: job_role), period: "hourly"
+      map.add job_role_path(job_role), period: "hourly"
     end
   end
 
