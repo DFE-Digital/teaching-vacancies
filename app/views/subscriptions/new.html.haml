@@ -2,7 +2,8 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = govuk_back_link(text: t('buttons.back'), href: @origin.present? ? @origin : jobs_path(@subscription_form.search_criteria_hash))
+    = govuk_back_link(text: t('buttons.back'), href: @origin.presence || jobs_path(@subscription_form.search_criteria_hash))
+
     = form_for @subscription_form, url: subscriptions_path do |f|
       = f.govuk_error_summary
 
@@ -18,7 +19,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = govuk_link_to(t('buttons.cancel'), @origin.present? ? @origin : jobs_path(@subscription_form.search_criteria_hash), class: 'govuk-!-font-size-19')
+    = govuk_link_to(t('buttons.cancel'), @origin.presence || jobs_path(@subscription_form.search_criteria_hash), class: 'govuk-!-font-size-19')
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds.govuk-body{ class: 'govuk-!-margin-top-4' }
