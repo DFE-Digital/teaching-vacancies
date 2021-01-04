@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
   helper_method :cookies_preference_set?, :referred_from_jobs_path?, :utm_parameters
 
   include Publishers::AuthenticationConcerns
+  include AbTestable
 
   def check
     render json: { status: "OK" }, status: :ok

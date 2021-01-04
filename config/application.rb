@@ -52,5 +52,7 @@ module TeacherVacancyService
     config.action_mailer.notify_settings = {
       api_key: ENV["NOTIFY_KEY"],
     }
+
+    config.ab_tests = config_for(:ab_tests)
   end
 end

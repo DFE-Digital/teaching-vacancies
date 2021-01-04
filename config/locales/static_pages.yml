@@ -1,5 +1,11 @@
 en:
   static_pages:
+    ab_tests:
+      page_title: A/B Testing
+      introduction: >-
+        From time to time, we run "A/B testing" experiments to improve our service. This page displays
+        which variants you are seeing for each experiment. Some of these experiments may no longer be
+        running.
     accessibility:
       date_reviewed: This statement was prepared on 12 September 2019. It was last updated on 12 September 2019.
       enforcement_procedure:

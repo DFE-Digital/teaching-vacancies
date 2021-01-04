@@ -27,6 +27,7 @@ private
       request_method: request.method,
       request_path: request.path,
       request_query: request.query_string,
+      request_ab_tests: ab_tests,
       response_content_type: response.content_type,
       response_status: response.status,
       user_anonymised_request_identifier: anonymise([user_agent, request.remote_ip].join),
@@ -38,6 +39,10 @@ private
 
   def user_agent
     request.headers["User-Agent"]
+  end
+
+  def ab_tests
+    AbTests.new(session).current_variants.map { |test, variant| { test: test, variant: variant } }
   end
 
   ##
