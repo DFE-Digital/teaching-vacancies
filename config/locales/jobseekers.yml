@@ -111,6 +111,7 @@ en:
         title: Too many password attempts
     subscriptions:
       index:
+        button_create: Create job alert
         frequency:
           daily: Daily, at around 3 pm
           weekly: Weekly (Friday at around 6 pm)
@@ -118,10 +119,11 @@ en:
           actions: Actions
           criteria: Alert criteria
           frequency: When receive alert
-        link_unsubscribe: Unsubscribe
+        link_create: Create a job alert
         link_manage: Manage alert
+        link_unsubscribe: Unsubscribe
         page_title: Job alerts
-        zero_subscriptions_body_html: '<a class="govuk-link" href="/">Find a teaching job</a> and a create a job alert to be made aware of future listings.'
+        zero_subscriptions_body_html: '%{link_to} to be made aware of future listings.'
         zero_subscriptions_title: You have no job alerts set up
     unlocks:
       new:

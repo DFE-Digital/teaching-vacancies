@@ -15,13 +15,6 @@ RSpec.describe "A job seeker can subscribe to a job alert" do
   end
 
   context "A job seeker" do
-    scenario "can access the new subscription page when search criteria have been specified" do
-      expect { visit(new_subscription_path) }.to raise_error(ActionController::ParameterMissing)
-
-      visit new_subscription_path(search_criteria: { some_parameters: "none" })
-      expect(page).to have_content(I18n.t("subscriptions.new.title"))
-    end
-
     context "when carrying out a location category search" do
       scenario "can view the search criteria" do
         visit new_subscription_path(
