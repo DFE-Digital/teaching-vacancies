@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers session timeout" do
   let!(:jobseeker) { create(:jobseeker, email: "jobseeker@example.com") }
-  let(:timeout_period) { 60.minutes }
+  let(:timeout_period) { 2.weeks }
 
   before do
     allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(true)
@@ -17,7 +17,6 @@ RSpec.describe "Jobseekers session timeout" do
       visit jobseekers_saved_jobs_path
 
       expect(current_path).to eq(new_jobseeker_session_path)
-      expect(page).to have_content(I18n.t("devise.failure.timeout"))
     end
   end
 

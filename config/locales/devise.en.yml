@@ -11,7 +11,6 @@ en:
       locked: You have been locked out of your account because you have made too many attempts to log in.
       last_attempt: You have one more attempt before your account is locked.
       not_found_in_database: We did not recognise your sign-in details
-      timeout: You have been signed out because you have been inactive for 60 minutes.
       unauthenticated: You need to sign in or sign up before continuing.
       unconfirmed: You have to confirm your email address before continuing.
     mailer:
