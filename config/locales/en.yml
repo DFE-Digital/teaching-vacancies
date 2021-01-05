@@ -495,6 +495,7 @@ en:
       next_step: What happens next
       title: Subscription confirmation
       unsubscribe: You can unsubscribe by following the link at the bottom of these emails.
+      view_job_alerts: View your job alerts on your account
     confirm_update:
       back_to_search_results: Return to your search results
       body: We sent an email confirmation to %{email}.
@@ -507,6 +508,7 @@ en:
       next_step: What happens next
       title: Subscription update
       unsubscribe: You can unsubscribe by following the link at the bottom of these emails.
+      view_job_alerts: View your job alerts on your account
     edit:
       description: You can change the search criteria you have used by amending the keywords, location or filters.
       edit_link: Edit alert criteria
@@ -520,9 +522,9 @@ en:
     link:
       help_text: whenever a job matching this search is listed
       home_page: Visit %{home_page_link}
-      no_search_results_html: >-
-        Or <a href="%{link_href}" id="job-alert-link-no-search-results-gtm" class="govuk-link">get notified</a>
-        when a job like this gets listed
+      no_search_results:
+        link: get notified
+        text_html: Or %{link_to} when a job like this gets listed
       text: Receive a job alert
     location_category_text: In %{location}
     location_radius_text: Within %{radius} miles of %{location}

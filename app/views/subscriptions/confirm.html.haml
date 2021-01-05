@@ -20,4 +20,7 @@
 
     %p.govuk-body= t('.unsubscribe')
     %p.govuk-body
-      = govuk_link_to(t('.back_to_search_results'), jobs_path(@subscription.search_criteria_to_h))
+      - if JobseekerAccountsFeature.enabled?
+        = govuk_link_to(t('.view_job_alerts'), jobseekers_subscriptions_path)
+      - else
+        = govuk_link_to(t('.back_to_search_results'), jobs_path(@subscription.search_criteria_to_h))
