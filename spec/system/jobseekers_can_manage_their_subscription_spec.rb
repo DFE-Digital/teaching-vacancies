@@ -41,7 +41,7 @@ RSpec.describe "A jobseeker can manage a subscription" do
         subscription.reload
         expect(subscription.email).to eq("jimi@hendrix.com")
         expect(subscription.frequency).to eq("weekly")
-        expect(JSON.parse(subscription.search_criteria).symbolize_keys[:keyword]).to eql("English")
+        expect(JSON.parse(subscription.search_criteria).symbolize_keys[:keyword]).to eq("English")
       end
     end
 
@@ -59,8 +59,8 @@ RSpec.describe "A jobseeker can manage a subscription" do
         subscription.reload
         expect(subscription.email).to eq("bob@dylan.com")
         expect(subscription.frequency).to eq("daily")
-        expect(JSON.parse(subscription.search_criteria).symbolize_keys[:keyword]).to eql("Math")
-        expect(JSON.parse(subscription.search_criteria).symbolize_keys[:location]).to eql("London")
+        expect(JSON.parse(subscription.search_criteria).symbolize_keys[:keyword]).to eq("Math")
+        expect(JSON.parse(subscription.search_criteria).symbolize_keys[:location]).to eq("London")
       end
     end
   end

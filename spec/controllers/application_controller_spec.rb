@@ -49,9 +49,9 @@ RSpec.describe ApplicationController, type: :controller do
     end
 
     it "removes empty checkboxes as expected" do
-      expect(controller.params[:test_form][:nothing_to_remove_field]).to eql(%w[first_box second_box])
-      expect(controller.params[:test_form][:array_field]).to eql(%w[first_box])
-      expect(controller.params[:test_form][:string_field]).to eql("")
+      expect(controller.params[:test_form][:nothing_to_remove_field]).to eq(%w[first_box second_box])
+      expect(controller.params[:test_form][:array_field]).to eq(%w[first_box])
+      expect(controller.params[:test_form][:string_field]).to eq("")
     end
   end
 

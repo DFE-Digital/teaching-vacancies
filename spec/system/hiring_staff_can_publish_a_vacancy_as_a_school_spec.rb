@@ -106,7 +106,7 @@ RSpec.describe "Creating a vacancy" do
         fill_in_job_details_form_fields(vacancy)
         click_on I18n.t("buttons.continue")
 
-        expect(Vacancy.last.state).to eql("create")
+        expect(Vacancy.last.state).to eq("create")
       end
     end
 
@@ -612,7 +612,7 @@ RSpec.describe "Creating a vacancy" do
           fill_in_job_summary_form_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
-          expect(Vacancy.last.state).to eql("review")
+          expect(Vacancy.last.state).to eq("review")
           expect(page).to have_content(I18n.t("jobs.current_step", step: 7, total: 7))
           within("h2.govuk-heading-l") do
             expect(page).to have_content(I18n.t("jobs.review_heading"))
@@ -641,7 +641,7 @@ RSpec.describe "Creating a vacancy" do
           fill_in_job_summary_form_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
-          expect(Vacancy.last.state).to eql("review")
+          expect(Vacancy.last.state).to eq("review")
           expect(page).to have_content(I18n.t("jobs.current_step", step: 7, total: 7))
           within("h2.govuk-heading-l") do
             expect(page).to have_content(I18n.t("jobs.review_heading"))
@@ -652,17 +652,17 @@ RSpec.describe "Creating a vacancy" do
           within("h2.govuk-heading-l") do
             expect(page).to have_content(I18n.t("jobs.applying_for_the_job"))
           end
-          expect(Vacancy.last.state).to eql("review")
+          expect(Vacancy.last.state).to eq("review")
 
           click_on I18n.t("buttons.update_job")
-          expect(Vacancy.last.state).to eql("review")
+          expect(Vacancy.last.state).to eq("review")
 
           click_header_link(I18n.t("jobs.job_details"))
           expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 7))
           within("h2.govuk-heading-l") do
             expect(page).to have_content(I18n.t("jobs.job_details"))
           end
-          expect(Vacancy.last.state).to eql("review")
+          expect(Vacancy.last.state).to eq("review")
         end
       end
 
@@ -958,9 +958,9 @@ RSpec.describe "Creating a vacancy" do
           expect(page).to have_content(I18n.t("jobs.important_dates"))
         end
 
-        expect(find_field("important_dates_form[expires_on(3i)]").value).to eql(yesterday_date.day.to_s)
-        expect(find_field("important_dates_form[expires_on(2i)]").value).to eql(yesterday_date.month.to_s)
-        expect(find_field("important_dates_form[expires_on(1i)]").value).to eql(yesterday_date.year.to_s)
+        expect(find_field("important_dates_form[expires_on(3i)]").value).to eq(yesterday_date.day.to_s)
+        expect(find_field("important_dates_form[expires_on(2i)]").value).to eq(yesterday_date.month.to_s)
+        expect(find_field("important_dates_form[expires_on(1i)]").value).to eq(yesterday_date.year.to_s)
 
         click_on I18n.t("buttons.continue")
 

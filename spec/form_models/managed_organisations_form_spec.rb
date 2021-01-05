@@ -9,8 +9,8 @@ RSpec.describe ManagedOrganisationsForm, type: :model do
 
   describe "#initialize" do
     it "assigns attributes" do
-      expect(subject.managed_organisations).to eql(managed_organisations)
-      expect(subject.managed_school_ids).to eql(managed_school_ids)
+      expect(subject.managed_organisations).to eq(managed_organisations)
+      expect(subject.managed_school_ids).to eq(managed_school_ids)
     end
   end
 

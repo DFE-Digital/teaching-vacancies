@@ -18,7 +18,7 @@ RSpec.describe NqtJobAlertsForm, type: :model do
       end
 
       it "adds location_category to the search criteria" do
-        expect(subject.job_alert_params[:search_criteria]).to eql(expected_hash.to_json)
+        expect(subject.job_alert_params[:search_criteria]).to eq(expected_hash.to_json)
       end
     end
 
@@ -32,7 +32,7 @@ RSpec.describe NqtJobAlertsForm, type: :model do
       end
 
       it "does not add location_category to the search criteria" do
-        expect(subject.job_alert_params[:search_criteria]).to eql(expected_hash.to_json)
+        expect(subject.job_alert_params[:search_criteria]).to eq(expected_hash.to_json)
       end
     end
   end

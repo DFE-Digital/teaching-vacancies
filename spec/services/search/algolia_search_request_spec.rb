@@ -11,14 +11,14 @@ RSpec.describe Search::AlgoliaSearchRequest do
     let(:total_results) { 57 }
 
     it "returns the correct array" do
-      expect(subject.send(:build_stats, page, pages, results_per_page, total_results)).to eql([1, 10, 57])
+      expect(subject.send(:build_stats, page, pages, results_per_page, total_results)).to eq([1, 10, 57])
     end
 
     context "when there are no results" do
       let(:total_results) { 0 }
 
       it "returns the correct array" do
-        expect(subject.send(:build_stats, page, pages, results_per_page, total_results)).to eql([0, 0, 0])
+        expect(subject.send(:build_stats, page, pages, results_per_page, total_results)).to eq([0, 0, 0])
       end
     end
 
@@ -26,7 +26,7 @@ RSpec.describe Search::AlgoliaSearchRequest do
       let(:page) { 5 }
 
       it "returns the correct array" do
-        expect(subject.send(:build_stats, page, pages, results_per_page, total_results)).to eql([51, 57, 57])
+        expect(subject.send(:build_stats, page, pages, results_per_page, total_results)).to eq([51, 57, 57])
       end
     end
   end
@@ -56,7 +56,7 @@ RSpec.describe Search::AlgoliaSearchRequest do
     before { mock_algolia_search(vacancies, 1, "maths", arguments_to_algolia) }
 
     it "carries out search with the correct parameters" do
-      expect(subject.vacancies).to eql(vacancies)
+      expect(subject.vacancies).to eq(vacancies)
     end
   end
 end

@@ -13,7 +13,7 @@ RSpec.describe SchoolsForm, type: :model do
 
         it "requires a school to be selected" do
           expect(subject.valid?).to be false
-          expect(subject.errors.messages[:organisation_ids]).to eql([I18n.t("schools_errors.organisation_ids.blank")])
+          expect(subject.errors.messages[:organisation_ids]).to eq([I18n.t("schools_errors.organisation_ids.blank")])
         end
       end
 
@@ -23,7 +23,7 @@ RSpec.describe SchoolsForm, type: :model do
 
         it "is valid" do
           expect(subject.valid?).to be true
-          expect(subject.organisation_ids).to eql(organisation.id)
+          expect(subject.organisation_ids).to eq(organisation.id)
         end
       end
     end
@@ -37,7 +37,7 @@ RSpec.describe SchoolsForm, type: :model do
 
         it "requires at least 2 schools to be selected" do
           expect(subject.valid?).to be false
-          expect(subject.errors.messages[:organisation_ids]).to eql([I18n.t("schools_errors.organisation_ids.blank")])
+          expect(subject.errors.messages[:organisation_ids]).to eq([I18n.t("schools_errors.organisation_ids.blank")])
         end
       end
 
@@ -47,7 +47,7 @@ RSpec.describe SchoolsForm, type: :model do
 
         it "requires at least 2 schools to be selected" do
           expect(subject.valid?).to be false
-          expect(subject.errors.messages[:organisation_ids]).to eql([I18n.t("schools_errors.organisation_ids.invalid")])
+          expect(subject.errors.messages[:organisation_ids]).to eq([I18n.t("schools_errors.organisation_ids.invalid")])
         end
       end
 
@@ -58,7 +58,7 @@ RSpec.describe SchoolsForm, type: :model do
 
         it "is valid" do
           expect(subject.valid?).to be true
-          expect(subject.organisation_ids).to eql(organisation_ids)
+          expect(subject.organisation_ids).to eq(organisation_ids)
         end
       end
     end

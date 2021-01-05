@@ -55,7 +55,7 @@ RSpec.describe Search::AlertBuilder do
     context "#initialize" do
       context "#keyword" do
         it "adds subject and job_title to the keyword" do
-          expect(subject.keyword).to eql(search_query)
+          expect(subject.keyword).to eq(search_query)
         end
       end
 
@@ -102,7 +102,7 @@ RSpec.describe Search::AlertBuilder do
       end
 
       it "carries out alert search with correct criteria" do
-        expect(subject.vacancies).to eql(vacancies)
+        expect(subject.vacancies).to eq(vacancies)
       end
     end
   end
@@ -130,7 +130,7 @@ RSpec.describe Search::AlertBuilder do
       end
 
       it "carries out alert search with correct criteria" do
-        expect(subject.vacancies).to eql(vacancies)
+        expect(subject.vacancies).to eq(vacancies)
       end
     end
   end

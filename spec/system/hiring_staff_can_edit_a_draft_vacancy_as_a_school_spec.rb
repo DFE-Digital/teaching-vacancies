@@ -235,7 +235,7 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
     scenario "vacancy state is edit" do
       visit organisation_job_review_path(vacancy.id, edit_draft: true)
 
-      expect(Vacancy.last.state).to eql("edit")
+      expect(Vacancy.last.state).to eq("edit")
       within("h2.govuk-heading-l") do
         expect(page).to have_content(I18n.t("jobs.review_heading"))
       end
@@ -249,7 +249,7 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
         expect(page).to have_content(I18n.t("buttons.cancel_and_return"))
 
         click_on I18n.t("buttons.cancel_and_return")
-        expect(page.current_path).to eql(organisation_job_review_path(vacancy.id))
+        expect(page.current_path).to eq(organisation_job_review_path(vacancy.id))
       end
     end
   end

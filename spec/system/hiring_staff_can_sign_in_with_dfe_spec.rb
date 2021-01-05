@@ -103,7 +103,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
     scenario "it redirects the sign in page to the school page" do
       visit new_identifications_path
       expect(page).to have_content("Jobs at #{organisation.name}")
-      expect(current_path).to eql(organisation_path)
+      expect(current_path).to eq(organisation_path)
     end
 
     context "the user can switch between organisations" do
@@ -148,7 +148,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
       let(:school_group) { create(:trust, uid: "14323") }
 
       it "associates the user with the trust instead of the school" do
-        expect(current_path).to eql(organisation_managed_organisations_path)
+        expect(current_path).to eq(organisation_managed_organisations_path)
       end
 
       it "shows the trust name" do
@@ -160,7 +160,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
       let(:school_group) { create(:local_authority, local_authority_code: "323") }
 
       it "associates the user with the local_authority instead of the school" do
-        expect(current_path).to eql(organisation_managed_organisations_path)
+        expect(current_path).to eq(organisation_managed_organisations_path)
       end
 
       it "shows the local_authority name" do
@@ -190,7 +190,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
       scenario "it redirects the sign in page to the SchoolGroup page" do
         visit new_identifications_path
         expect(page).to have_content("Jobs at #{organisation.name}")
-        expect(current_path).to eql(organisation_path)
+        expect(current_path).to eq(organisation_path)
       end
     end
 
@@ -198,7 +198,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
       let(:publisher_preference) { nil }
 
       scenario "it redirects the sign in page to the managed organisations user preference page" do
-        expect(current_path).to eql(organisation_managed_organisations_path)
+        expect(current_path).to eq(organisation_managed_organisations_path)
       end
     end
 
@@ -234,7 +234,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
         scenario "it redirects the sign in page to the SchoolGroup page" do
           visit new_identifications_path
           expect(page).to have_content("Jobs in #{organisation.name}")
-          expect(current_path).to eql(organisation_path)
+          expect(current_path).to eq(organisation_path)
         end
       end
 
@@ -242,7 +242,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
         let(:publisher_preference) { nil }
 
         scenario "it redirects the sign in page to the managed organisations user preference page" do
-          expect(current_path).to eql(organisation_managed_organisations_path)
+          expect(current_path).to eq(organisation_managed_organisations_path)
         end
       end
 

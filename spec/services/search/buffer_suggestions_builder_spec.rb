@@ -60,7 +60,7 @@ RSpec.describe Search::BufferSuggestionsBuilder do
       end
 
       it "suggests the buffer with the smallest radius" do
-        expect(subject.buffer_suggestions).to eql([["5", 1]])
+        expect(subject.buffer_suggestions).to eq([["5", 1]])
       end
     end
 
@@ -89,7 +89,7 @@ RSpec.describe Search::BufferSuggestionsBuilder do
       end
 
       it "suggests the wider buffer radii as well" do
-        expect(subject.buffer_suggestions).to eql([["5", 1], ["10", 2], ["15", 3], ["20", 4], ["25", 5]])
+        expect(subject.buffer_suggestions).to eq([["5", 1], ["10", 2], ["15", 3], ["20", 4], ["25", 5]])
       end
     end
 
@@ -118,7 +118,7 @@ RSpec.describe Search::BufferSuggestionsBuilder do
       end
 
       it "only returns buffer radii that include vacancies" do
-        expect(subject.buffer_suggestions).to eql([["25", 5]])
+        expect(subject.buffer_suggestions).to eq([["25", 5]])
       end
     end
   end

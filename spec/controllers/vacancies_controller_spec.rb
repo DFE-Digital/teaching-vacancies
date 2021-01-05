@@ -73,7 +73,7 @@ RSpec.describe VacanciesController, type: :controller do
 
         it "sets the search replica on Search::SearchBuilder" do
           subject
-          expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql("#{Indexable::INDEX_NAME}_#{sort}")
+          expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eq("#{Indexable::INDEX_NAME}_#{sort}")
         end
       end
 
@@ -82,7 +82,7 @@ RSpec.describe VacanciesController, type: :controller do
 
         it "sets the search replica on Search::SearchBuilder" do
           subject
-          expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql("#{Indexable::INDEX_NAME}_#{sort}")
+          expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eq("#{Indexable::INDEX_NAME}_#{sort}")
         end
       end
 
@@ -91,7 +91,7 @@ RSpec.describe VacanciesController, type: :controller do
 
         it "sets the search replica on Search::SearchBuilder" do
           subject
-          expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql("#{Indexable::INDEX_NAME}_#{sort}")
+          expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eq("#{Indexable::INDEX_NAME}_#{sort}")
         end
       end
 
@@ -106,7 +106,7 @@ RSpec.describe VacanciesController, type: :controller do
 
         it "sets the search replica on Search::SearchBuilder to the default sort strategy: newest listing" do
           subject
-          expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql("#{Indexable::INDEX_NAME}_publish_on_desc")
+          expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eq("#{Indexable::INDEX_NAME}_publish_on_desc")
         end
       end
     end

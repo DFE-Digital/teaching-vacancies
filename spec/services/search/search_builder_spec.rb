@@ -32,11 +32,11 @@ RSpec.describe Search::SearchBuilder do
       before { allow_any_instance_of(Search::LocationBuilder).to receive(:missing_polygon).and_return(true) }
 
       it "appends location to the keyword" do
-        expect(subject.keyword).to eql("maths teacher london")
+        expect(subject.keyword).to eq("maths teacher london")
       end
 
       it "appends location to keyword in the active hash" do
-        expect(subject.only_active_to_hash[:keyword]).to eql("maths teacher london")
+        expect(subject.only_active_to_hash[:keyword]).to eq("maths teacher london")
       end
     end
 
@@ -44,7 +44,7 @@ RSpec.describe Search::SearchBuilder do
       before { allow_any_instance_of(Search::LocationBuilder).to receive(:location_category_search?).and_return(true) }
 
       it "sets location_category in the active params hash" do
-        expect(subject.only_active_to_hash[:location_category]).to eql("london")
+        expect(subject.only_active_to_hash[:location_category]).to eq("london")
       end
     end
   end

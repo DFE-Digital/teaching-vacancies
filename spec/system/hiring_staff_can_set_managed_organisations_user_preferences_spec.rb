@@ -36,13 +36,13 @@ RSpec.describe "Hiring staff can set managed organisations user preferences" do
 
     scenario "it shows the trust head office option" do
       visit organisation_managed_organisations_path
-      expect(page.current_path).to eql(organisation_managed_organisations_path)
+      expect(page.current_path).to eq(organisation_managed_organisations_path)
       expect(page).to have_content(I18n.t("publishers.organisations.managed_organisations.show.options.school_group"))
     end
 
     scenario "it does not show closed school option" do
       visit organisation_managed_organisations_path
-      expect(page.current_path).to eql(organisation_managed_organisations_path)
+      expect(page.current_path).to eq(organisation_managed_organisations_path)
       expect(page).not_to have_content(school_3.name)
     end
 
@@ -59,8 +59,8 @@ RSpec.describe "Hiring staff can set managed organisations user preferences" do
 
       click_on I18n.t("buttons.continue")
 
-      expect(page.current_path).to eql(organisation_path)
-      expect(publisher_preference.managed_school_ids).to eql([school_group.id, school_1.id])
+      expect(page.current_path).to eq(organisation_path)
+      expect(publisher_preference.managed_school_ids).to eq([school_group.id, school_1.id])
     end
 
     scenario "it allows school group users to select to manage all jobs" do
@@ -76,9 +76,9 @@ RSpec.describe "Hiring staff can set managed organisations user preferences" do
 
       click_on I18n.t("buttons.continue")
 
-      expect(page.current_path).to eql(organisation_path)
-      expect(publisher_preference.managed_organisations).to eql("all")
-      expect(publisher_preference.managed_school_ids).to eql([])
+      expect(page.current_path).to eq(organisation_path)
+      expect(publisher_preference.managed_organisations).to eq("all")
+      expect(publisher_preference.managed_school_ids).to eq([])
     end
   end
 
@@ -87,7 +87,7 @@ RSpec.describe "Hiring staff can set managed organisations user preferences" do
 
     scenario "it does not show the trust head office option" do
       visit organisation_managed_organisations_path
-      expect(page.current_path).to eql(organisation_managed_organisations_path)
+      expect(page.current_path).to eq(organisation_managed_organisations_path)
       expect(page).not_to have_content(
         I18n.t("publishers.organisations.managed_organisations.show.options.school_group"),
       )

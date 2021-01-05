@@ -51,7 +51,7 @@ RSpec.describe LocationSuggestion do
 
     context "the request is successful" do
       it "returns the correct response" do
-        expect(subject.send(:get_suggestions_from_google)).to eql(JSON.parse(request_body))
+        expect(subject.send(:get_suggestions_from_google)).to eq(JSON.parse(request_body))
       end
     end
   end
@@ -75,7 +75,7 @@ RSpec.describe LocationSuggestion do
     end
 
     it "returns the parsed data" do
-      expect(subject.suggest_locations).to eql([suggestions, matched_terms])
+      expect(subject.suggest_locations).to eq([suggestions, matched_terms])
     end
   end
 end

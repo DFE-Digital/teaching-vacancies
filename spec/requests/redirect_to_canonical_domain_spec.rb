@@ -14,8 +14,8 @@ RSpec.describe "Redirect to canonical domain", type: :request do
     it "redirects to the canonical domain" do
       get "/", headers: headers
 
-      expect(response.location).to eql("http://#{DOMAIN}/")
-      expect(response.status).to eql(301)
+      expect(response.location).to eq("http://#{DOMAIN}/")
+      expect(response.status).to eq(301)
     end
   end
 
@@ -25,7 +25,7 @@ RSpec.describe "Redirect to canonical domain", type: :request do
     it "does not redirect" do
       get "/", headers: headers
 
-      expect(response.status).to eql(200)
+      expect(response.status).to eq(200)
     end
   end
 end

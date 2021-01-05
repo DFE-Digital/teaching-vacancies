@@ -8,8 +8,8 @@ RSpec.describe OrganisationForm, type: :model do
 
   describe "#initialize" do
     it "assigns attributes" do
-      expect(subject.description).to eql(description)
-      expect(subject.website).to eql(website)
+      expect(subject.description).to eq(description)
+      expect(subject.website).to eq(website)
     end
   end
 
@@ -19,7 +19,7 @@ RSpec.describe OrganisationForm, type: :model do
 
       it "is invalid" do
         expect(subject.valid?).to be false
-        expect(subject.errors.messages[:website].first).to eql(I18n.t("organisation_errors.website.url"))
+        expect(subject.errors.messages[:website].first).to eq(I18n.t("organisation_errors.website.url"))
       end
     end
 

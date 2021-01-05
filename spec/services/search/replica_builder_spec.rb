@@ -18,7 +18,7 @@ RSpec.describe Search::ReplicaBuilder do
 
       context "and a keyword is NOT specified" do
         it "uses the default search replica" do
-          expect(subject.search_replica).to eql("#{Indexable::INDEX_NAME}_publish_on_desc")
+          expect(subject.search_replica).to eq("#{Indexable::INDEX_NAME}_publish_on_desc")
         end
       end
     end
@@ -27,7 +27,7 @@ RSpec.describe Search::ReplicaBuilder do
       let(:job_sort) { "worst_listing" }
 
       it "uses the default search replica" do
-        expect(subject.search_replica).to eql("#{Indexable::INDEX_NAME}_publish_on_desc")
+        expect(subject.search_replica).to eq("#{Indexable::INDEX_NAME}_publish_on_desc")
       end
     end
 
@@ -35,14 +35,14 @@ RSpec.describe Search::ReplicaBuilder do
       let(:job_sort) { "expires_at_desc" }
 
       it "uses the specified search replica" do
-        expect(subject.search_replica).to eql("#{Indexable::INDEX_NAME}_expires_at_desc")
+        expect(subject.search_replica).to eq("#{Indexable::INDEX_NAME}_expires_at_desc")
       end
 
       context "and a keyword is specified" do
         let(:keyword) { "maths teacher" }
 
         it "uses the specified search replica" do
-          expect(subject.search_replica).to eql("#{Indexable::INDEX_NAME}_expires_at_desc")
+          expect(subject.search_replica).to eq("#{Indexable::INDEX_NAME}_expires_at_desc")
         end
       end
     end

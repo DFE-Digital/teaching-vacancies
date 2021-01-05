@@ -9,7 +9,7 @@ RSpec.describe Schools::VacanciesController, type: :controller do
       end
 
       it "should redirect to the first step of the new vacancy process" do
-        expect(response.status).to eql(302)
+        expect(response.status).to eq(302)
       end
     end
 
@@ -19,7 +19,7 @@ RSpec.describe Schools::VacanciesController, type: :controller do
       end
 
       it "should be not found" do
-        expect(response.status).to eql(404)
+        expect(response.status).to eq(404)
       end
     end
   end

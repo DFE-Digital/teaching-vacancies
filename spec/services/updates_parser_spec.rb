@@ -17,7 +17,7 @@ RSpec.describe UpdatesParser do
   describe "#call" do
     it "only adds valid update files to the hash" do
       expect(UpdatesParser.new(update_paths).call[date])
-        .to eql([{ path: "valid_update_title_2020_04_10", name: "Valid update title" }])
+        .to eq([{ path: "valid_update_title_2020_04_10", name: "Valid update title" }])
     end
   end
 end
