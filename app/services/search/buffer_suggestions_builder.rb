@@ -4,14 +4,24 @@ class Search::BufferSuggestionsBuilder
   def initialize(location, search_params)
     @location = location
     @search_params = search_params
-    get_buffers_suggestions
+    @buffer_suggestions = buffers_suggestions
   end
 
-  def get_buffers_suggestions
-    buffer_vacancy_count = LocationPolygon.with_name(location).buffers.map do |buffer|
-      [buffer.first, Search::AlgoliaSearchRequest.new(search_params.merge(polygon: [buffer.last])).stats.last]
-    end
+  def buffers_suggestions
+    if DOWNCASE_COMPOSITE_LOCATIONS.include?(location.downcase)
+      polygons = COMPOSITE_LOCATIONS[location.downcase].map do |component_region_name|
+        LocationPolygon.find_by(name: component_region_name.downcase, location_type: "counties")
+      end
 
-    @buffer_suggestions = buffer_vacancy_count&.uniq(&:last)&.reject { |array| array.last.zero? }
+      buffer_vacancy_count = ImportPolygons::BUFFER_DISTANCES_IN_MILES.map do |distance|
+        buffers = polygons.map { |polygon| polygon.buffers[distance.to_s] }
+        [distance.to_s, Search::AlgoliaSearchRequest.new(search_params.merge(polygons: buffers)).stats.last]
+      end
+    else
+      buffer_vacancy_count = LocationPolygon.with_name(location).buffers.map do |buffer_distance, buffer_polygon|
+        [buffer_distance, Search::AlgoliaSearchRequest.new(search_params.merge(polygons: [buffer_polygon])).stats.last]
+      end
+    end
+    buffer_vacancy_count&.uniq(&:last)&.reject { |array| array.last.zero? }
   end
 end

@@ -3,7 +3,7 @@ class Jobseekers::SearchResults::HeadingComponent < ViewComponent::Base
     @vacancies_search = vacancies_search
     @keyword = @vacancies_search.keyword
     @location = @vacancies_search.location_search.location
-    @polygon_search = @vacancies_search.location_search.location_polygon
+    @polygon_search = @vacancies_search.location_search.polygon_boundaries
     @total_count = @vacancies_search.vacancies.raw_answer["nbHits"]
   end
 

@@ -24,7 +24,7 @@ class Search::AlertBuilder < Search::SearchBuilder
       keyword: @keyword,
       coordinates: @location_search.location_filter[:point_coordinates],
       radius: @location_search.location_filter[:radius],
-      polygon: @location_search.search_polygon_boundary,
+      polygon: @location_search.polygon_boundaries,
       filters: @search_filters,
       replica: @search_replica,
       hits_per_page: MAXIMUM_SUBSCRIPTION_RESULTS,

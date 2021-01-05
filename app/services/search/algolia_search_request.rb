@@ -5,7 +5,7 @@ class Search::AlgoliaSearchRequest
     @keyword = search_params[:keyword]
     @coordinates = search_params[:coordinates]
     @radius = search_params[:radius]
-    @polygon = search_params[:polygon]
+    @polygons = search_params[:polygons]
     @filters = search_params[:filters]
     @replica = search_params[:replica]
     @hits_per_page = search_params[:hits_per_page]
@@ -44,7 +44,7 @@ class Search::AlgoliaSearchRequest
     {
       aroundLatLng: @coordinates,
       aroundRadius: @radius,
-      insidePolygon: @polygon,
+      insidePolygon: @polygons,
       filters: @filters,
       replica: @replica,
       hitsPerPage: @hits_per_page,

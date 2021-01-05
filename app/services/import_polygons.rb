@@ -1,10 +1,11 @@
 class ImportPolygons
   BUFFER_API_URL = "https://tasks.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer/buffer?".freeze
+  BUFFER_DISTANCES_IN_MILES = [5, 10, 15, 20, 25].freeze
   URL_MAXIMUM_LENGTH = 33_000
 
   include DistanceHelper
 
-  attr_reader :location_type
+  attr_reader :location_name, :location_type
 
   def initialize(location_type:)
     @location_type = location_type
@@ -14,9 +15,9 @@ class ImportPolygons
     response = JSON.parse(HTTParty.get(LOCATION_POLYGON_SETTINGS[location_type][:boundary_api]))
 
     response.fetch("features", []).each do |region_response|
-      location_name = region_response.dig("attributes", LOCATION_POLYGON_SETTINGS[location_type][:name_key]).downcase
+      @location_name = region_response.dig("attributes", LOCATION_POLYGON_SETTINGS[location_type][:name_key]).downcase
 
-      next unless location_categories_include?(location_name)
+      next unless location_in_scope?
 
       geometry_rings = region_response.dig("geometry", "rings")
 
@@ -43,17 +44,21 @@ class ImportPolygons
 
   private
 
-  def location_categories_include?(location_name)
+  def location_in_scope?
     location_type == :regions && DOWNCASE_REGIONS.include?(location_name) ||
-      location_type == :counties && DOWNCASE_COUNTIES.include?(location_name) ||
-      location_type == :london_boroughs && DOWNCASE_BOROUGHS.include?(location_name) ||
+      location_type == :counties && DOWNCASE_COUNTIES_AND_UNITARY_AUTHORITIES.include?(location_name) ||
       location_type == :cities && DOWNCASE_CITIES.include?(location_name)
   end
 
   def get_buffers(points)
-    buffer_distances_in_miles = [5, 10, 15, 20, 25]
+    # Skip API call if the points have not changed since last time we used them to calculate the buffers.
+    old_location_polygon = LocationPolygon.find_by(name: location_name, location_type: location_type.to_s)
+    if points == old_location_polygon&.boundary
+      return old_location_polygon.buffers
+    end
+
     buffered_boundaries = {}
-    buffer_distances_in_miles.each do |distance|
+    BUFFER_DISTANCES_IN_MILES.each do |distance|
       # convert 1D array to 2D array for arcgis
       polygon_coords = points.each_slice(2).to_a
       response = HTTParty.get(buffer_api_endpoint(polygon_coords, convert_miles_to_metres(distance)))
@@ -85,7 +90,7 @@ class ImportPolygons
     api_endpoint = BUFFER_API_URL + params
 
     if api_endpoint.length > URL_MAXIMUM_LENGTH
-      # Reduce number of coordinates in order to have fewer than 2000 characters in request url
+      # Reduce number of coordinates in order to have not too many characters in request url
       condensed_coords = take_every_nth_coord(coords, 5)
       api_endpoint = buffer_api_endpoint(condensed_coords, distance)
     end

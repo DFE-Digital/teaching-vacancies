@@ -28,18 +28,6 @@ RSpec.describe Search::SearchBuilder do
   describe "#build_location_search" do
     let(:location) { location_polygon.name }
 
-    context "when a location search polygon is missing" do
-      before { allow_any_instance_of(Search::LocationBuilder).to receive(:missing_polygon).and_return(true) }
-
-      it "appends location to the keyword" do
-        expect(subject.keyword).to eq("maths teacher london")
-      end
-
-      it "appends location to keyword in the active hash" do
-        expect(subject.only_active_to_hash[:keyword]).to eq("maths teacher london")
-      end
-    end
-
     context "when a location_category_search is carried out" do
       before { allow_any_instance_of(Search::LocationBuilder).to receive(:location_category_search?).and_return(true) }
 
@@ -69,7 +57,7 @@ RSpec.describe Search::SearchBuilder do
       let(:search_params) do
         {
           keyword: keyword,
-          polygon: [location_polygon.boundary],
+          polygons: [location_polygon.boundary],
           filters: filter_query,
           hits_per_page: 10,
           page: page,
@@ -138,7 +126,7 @@ RSpec.describe Search::SearchBuilder do
         let(:search_params) do
           {
             keyword: keyword,
-            polygon: [location_polygon.boundary],
+            polygons: [location_polygon.boundary],
             filters: filter_query,
             hits_per_page: 10,
             page: page,

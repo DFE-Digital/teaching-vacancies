@@ -6,8 +6,7 @@ class Search::LocationBuilder
 
   include DistanceHelper
 
-  attr_reader :location, :location_category, :location_filter,
-              :location_polygon, :search_polygon_boundary, :missing_polygon, :radius, :buffer_radius
+  attr_reader :location, :location_category, :location_filter, :polygon_boundaries, :radius, :buffer_radius
 
   def initialize(location, radius, location_category, buffer_radius)
     @location = location || location_category
@@ -21,44 +20,35 @@ class Search::LocationBuilder
                          end
 
     if NATIONWIDE_LOCATIONS.include?(@location&.downcase)
-      initialize_nationwide_search
+      @location = nil
     elsif location_category_search?
-      initialize_location_polygon
+      initialize_polygon_boundaries
     elsif @location.present?
       @location_filter = build_location_filter(@location, @radius)
     end
   end
 
   def location_category_search?
-    (@location_category && LocationCategory.include?(@location_category)) ||
-      (@location && LocationCategory.include?(@location))
+    (location_category && LocationCategory.include?(location_category)) ||
+      (location && LocationCategory.include?(location))
   end
 
   private
 
-  def initialize_location_polygon
-    @location_polygon = LocationPolygon.with_name(@location_category)
-    if @location_polygon.present?
-      @search_polygon_boundary = if @buffer_radius.present?
-                                   [@location_polygon.buffers[@buffer_radius]]
-                                 else
-                                   [@location_polygon.boundary]
-                                 end
+  def initialize_polygon_boundaries
+    location_polygons = [LocationPolygon.with_name(location_category)]
+
+    if location_polygons.none? && DOWNCASE_COMPOSITE_LOCATIONS.include?(location_category.downcase)
+      location_polygons = COMPOSITE_LOCATIONS[location_category.downcase].map do |component_location_name|
+        LocationPolygon.find_by(name: component_location_name.downcase, location_type: "counties")
+      end
     end
 
-    return unless location_polygon.nil? && (DOWNCASE_REGIONS + DOWNCASE_COUNTIES).include?(@location_category.downcase)
-
-    # If a location category that we expect to have a polygon actually does not,
-    # append the location category to the text search as a fallback.
-    # This applies only to regions and counties: large areas for which there is
-    # very little value in using a point coordinate, and for which there is a
-    # low chance of ambiguity (unlike Clapham borough vs Clapham village in Bedfordshire)
-    Rollbar.log(
-      :error,
-      "A location category search was performed as a text search as no LocationPolygon could
-      be found with the name '#{@location_category}'.",
-    )
-    @missing_polygon = true
+    @polygon_boundaries = if buffer_radius.present?
+                            location_polygons&.map { |polygon| polygon.buffers[buffer_radius] }
+                          else
+                            location_polygons&.map(&:boundary)
+                          end
   end
 
   def build_location_filter(location, radius)
@@ -66,9 +56,5 @@ class Search::LocationBuilder
       point_coordinates: Geocoding.new(location).coordinates,
       radius: convert_miles_to_metres(radius),
     }
-  end
-
-  def initialize_nationwide_search
-    @location = nil
   end
 end

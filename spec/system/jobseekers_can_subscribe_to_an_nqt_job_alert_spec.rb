@@ -8,7 +8,7 @@ RSpec.describe "NQT job alerts" do
       expect(page).to have_content(I18n.t("nqt_job_alerts.heading"))
 
       fill_in "jobseekers_nqt_job_alerts_form[keywords]", with: "Maths"
-      fill_in "jobseekers_nqt_job_alerts_form[location]", with: "London"
+      fill_in "jobseekers_nqt_job_alerts_form[location]", with: "Sutton Courtenay"
       fill_in "jobseekers_nqt_job_alerts_form[email]", with: "test@email.com"
 
       message_delivery = instance_double(ActionMailer::MessageDelivery)
@@ -19,7 +19,7 @@ RSpec.describe "NQT job alerts" do
       expect(page).to have_content(I18n.t("nqt_job_alerts.confirm.heading"))
       click_on I18n.t("buttons.go_to_teaching_vacancies")
 
-      expect(page).to have_current_path(jobs_path(keyword: "nqt Maths", location: "London"))
+      expect(page).to have_current_path(jobs_path(keyword: "nqt Maths", location: "Sutton Courtenay"))
     end
   end
 

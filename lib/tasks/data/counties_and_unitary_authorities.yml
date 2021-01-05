@@ -1,12 +1,13 @@
 ---
-# When the ONS API returns multiple rings for a county, some of these are small islands, one is the mainland of
-# the county, and some are cities that are excluded because they are locally governed.
+# Counties, Unitary Authorities, and London boroughs are all sourced from the same dataset/endpoint at ONS' API.
+
+# When the ONS API returns multiple rings for a location, some of these are small islands or similar.
 
 # There is no pattern as to which of the rings is relevant to us, so we have to individually specify which ring is the one
 # we want (generally the largest), using 0-indexing.
 
 # Structure in this file:
-# - [County Name]: [the index of the ring we want]
+# - [Location Name]: [the index of the ring we want]
 
 # The way we import polygons is not sophisticated enough to include all schools for each county. The
 # schools which we are failing to capture are:
@@ -18,44 +19,92 @@
 # https://en.wikipedia.org/wiki/List_of_schools_on_the_Isles_of_Scilly
 
 # This is an interim solution to updating the API, until we decide how best to deal with the omitted island schools.
-# TODO: Deal with the omitted island schools. This will be easier when we are doing requests with multiple polygons
-# e.g. for composite locations.
+# TODO: Deal with the omitted island schools.
 
+- Barking and Dagenham: 0
+- Barnet: 0
+- Barnsley: 0
 - Bath and North East Somerset: 0
+- Bedford: 0
+- Bexley: 0
+- Birmingham: 0
 - Blackburn with Darwen: 0
+- Blackpool: 0
+- Bolton: 0
 - Bournemouth, Christchurch and Poole: 0
 - Bracknell Forest: 0
+- Bradford: 0
+- Brent: 0
+- Brighton and Hove: 0
 - Bristol, City of: 0
+- Bromley: 0
 - Buckinghamshire: 0
+- Buckinghamshire: 0
+- Bury: 0
 - Calderdale: 0
 - Cambridgeshire: 0
+- Camden: 0
 - Central Bedfordshire: 0
 - Cheshire East: 0
 - Cheshire West and Chester: 0
+- City of London: 0
 - Cornwall: 0
 - County Durham: 0
+- Coventry: 0
+- Croydon: 0
 - Cumbria: 1
+- Darlington: 0
+- Derby: 0
 - Derbyshire: 0 # Using the first of two rings
 - Devon: 1
+- Doncaster: 0
 - Dorset: 1
+- Dudley: 0
+- Ealing: 0
 - East Riding of Yorkshire: 0
 - East Sussex: 0
+- Enfield: 0
 - Essex: 9
+- Gateshead: 0
 - Gloucestershire: 0
+- Greenwich: 0
+- Hackney: 0
 - Halton: 0
+- Hammersmith and Fulham: 0
 - Hampshire: 1
+- Haringey: 0
+- Harrow: 0
+- Hartlepool: 0
+- Havering: 0
 - Herefordshire, County of: 0
 - Hertfordshire: 0
+- Hillingdon: 0
+- Hounslow: 0
 - Isle of Wight: 0
 - Isles of Scilly: 1
+- Islington: 0
+- Kensington and Chelsea: 0
 - Kent: 3
 - Kingston upon Hull, City of: 0
+- Kingston upon Thames: 0
 - Kirklees: 0
 - Knowsley: 0
-- Leicestershire: 0 # Using the first of two rings
+- Lambeth: 0
 - Lancashire: 0
+- Leeds: 0
+- Leicester: 0
+- Leicestershire: 0 # Using the first of two rings
+- Lewisham: 0
 - Lincolnshire: 0
+- Liverpool: 0
+- Luton: 0
+- Manchester: 0
 - Medway: 2
+- Merton: 0
+- Middlesbrough: 0
+- Milton Keynes: 0
+- Newcastle upon Tyne: 0
+- Newham: 0
 - Norfolk: 1
 - North East Lincolnshire: 0
 - North Lincolnshire: 1
@@ -64,31 +113,63 @@
 - North Yorkshire: 0
 - Northamptonshire: 0
 - Northumberland: 1
+- Nottingham: 0
 - Nottinghamshire: 0 # Using the first of two rings
+- Oldham: 0
 - Oxfordshire: 0
-# (We don't use Portsmouth currently, but we plan to soon.) Portsmouth: 1
+- Peterborough: 0
+- Plymouth: 0
+- Portsmouth: 1
+- Reading: 0
+- Redbridge: 0
 - Redcar and Cleveland: 0
+- Richmond upon Thames: 0
+- Rochdale: 0
+- Rotherham: 0
 - Rutland: 0
+- Salford: 0
 - Sandwell: 0
 - Sefton: 0
+- Sheffield: 0
 - Shropshire: 0
+- Slough: 0
+- Solihull: 0
 - Somerset: 0
 - South Gloucestershire: 0
 - South Tyneside: 0
+- Southampton: 0
+- Southend-on-Sea: 0
+- Southwark: 0
 - St. Helens: 0
 - Staffordshire: 0 # Using the first of two rings
+- Stockport: 0
+- Stockton-on-Tees: 0
+- Stoke-on-Trent: 0
 - Suffolk: 0
+- Sunderland: 0
 - Surrey: 1
+- Sutton: 0
+- Swindon: 0
 - Tameside: 0
 - Telford and Wrekin: 0
 - Thurrock: 0
 - Torbay: 0
+- Tower Hamlets: 0
 - Trafford: 0
+- Wakefield: 0
+- Walsall: 0
+- Waltham Forest: 0
+- Wandsworth: 0
+- Warrington: 0
 - Warwickshire: 0
 - West Berkshire: 0
 - West Sussex: 1
+- Westminster: 0
+- Wigan: 0
 - Wiltshire: 0
 - Windsor and Maidenhead: 0
 - Wirral: 0
 - Wokingham: 0
+- Wolverhampton: 0
 - Worcestershire: 0
+- York: 0

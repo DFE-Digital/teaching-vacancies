@@ -10,7 +10,7 @@ RSpec.describe Search::AlertBuilder do
   let(:date_today) { Date.current.to_time }
   let(:location_point_coordinates) { Geocoder::DEFAULT_STUB_COORDINATES }
   let(:location_radius) { convert_miles_to_metres(10) }
-  let(:location_polygon_boundary) { nil }
+  let(:location_polygon_boundaries) { nil }
   let(:search_replica) { nil }
   let(:max_subscription_results) { 500 }
 
@@ -18,7 +18,7 @@ RSpec.describe Search::AlertBuilder do
     {
       aroundLatLng: location_point_coordinates,
       aroundRadius: location_radius,
-      insidePolygon: location_polygon_boundary,
+      insidePolygon: location_polygon_boundaries,
       filters: search_filter,
       replica: search_replica,
       hitsPerPage: max_subscription_results,
