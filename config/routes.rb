@@ -133,7 +133,7 @@ Rails.application.routes.draw do
 
   match "teaching-jobs-for-:subject",
         to: "vacancies#index", as: :subject, via: :get,
-        constraints: ->(request) { SUBJECT_OPTIONS.map(&:first).map(&:downcase).include?(request.params[:subject]) },
+        constraints: ->(request) { SUBJECT_OPTIONS.map(&:first).include?(request.params[:subject]) },
         defaults: { pretty: :subject }
 
   match "*path", to: "errors#not_found", via: :all
