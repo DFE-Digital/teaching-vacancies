@@ -21,7 +21,7 @@
     %ul.govuk-list.two-column-list{ aria: { label: "#{t('.subjects')} list" } }
       - @subjects_facets.each do |subject, count|
         %li
-          = govuk_link_to(subject, jobs_path(keyword: subject))
+          = govuk_link_to(subject, subject_path(subject))
           = "(#{count})"
 
   .govuk-grid-column-one-half
@@ -29,5 +29,5 @@
     %ul.govuk-list.two-column-list{ aria: { label: "#{t('.job_roles')} list" } }
       - @job_roles_facets.each do |job_role, count|
         %li
-          = govuk_link_to(t("helpers.label.job_details_form.job_roles_options.#{job_role.to_s}"), jobs_path(job_roles: job_role))
+          = govuk_link_to(t("helpers.label.job_details_form.job_roles_options.#{job_role.to_s}"), job_role_path(job_role))
           = "(#{count})"

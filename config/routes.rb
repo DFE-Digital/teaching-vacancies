@@ -121,8 +121,18 @@ Rails.application.routes.draw do
   match "/422", to: "errors#unprocessable_entity", via: :all
   match "/500", to: "errors#internal_server_error", via: :all
 
-  match "teaching-jobs-in-:location_category", to: "vacancies#index", as: :location_category, via: :get,
-                                               constraints: ->(request) { LocationCategory.include?(request.params[:location_category]) }
+  # If parameters are used that are the same as those in the search form, pagination with kaminari will break
+  match "teaching-jobs-in-:location_category",
+        to: "vacancies#index", as: :location_category, via: :get,
+        constraints: ->(request) { LocationCategory.include?(request.params[:location_category]) }
+
+  match "teaching-jobs-for-:job_role",
+        to: "vacancies#index", as: :job_role, via: :get,
+        constraints: ->(request) { Vacancy.job_roles.key?(request.params[:job_role]) }
+
+  match "teaching-jobs-for-:subject",
+        to: "vacancies#index", as: :subject, via: :get,
+        constraints: ->(request) { SUBJECT_OPTIONS.map(&:first).map(&:downcase).include?(request.params[:subject]) }
 
   match "*path", to: "errors#not_found", via: :all
 end

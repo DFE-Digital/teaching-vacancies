@@ -9,14 +9,14 @@ class VacancyAlgoliaSearchForm
               :total_filters
 
   def initialize(params = {})
-    @keyword = params[:keyword]
+    @keyword = params[:keyword] || params[:subject]
 
     @location = params[:location] || params[:location_category]
     @location_category = params[:location_category]
     @radius = params[:radius] || 10
     @buffer_radius = params[:buffer_radius]
 
-    @job_roles = params[:job_roles]
+    @job_roles = params[:job_roles] || params[:job_role]
     @phases = params[:phases]
     @working_patterns = params[:working_patterns]
 

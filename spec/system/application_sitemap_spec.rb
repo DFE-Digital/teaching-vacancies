@@ -25,12 +25,12 @@ RSpec.describe "Application sitemap", sitemap: true do
       end
 
       SUBJECT_OPTIONS.map(&:first).each do |subject|
-        url = jobs_url(keyword: subject, protocol: "https")
+        url = subject_url(subject, protocol: "https")
         expect(nodes.search("loc:contains('#{url}')").map(&:text)).to include(url)
       end
 
       Vacancy.job_roles.each_key do |job_role|
-        url = jobs_url(job_roles: job_role, protocol: "https")
+        url = job_role_url(job_role, protocol: "https")
         expect(nodes.search("loc:contains('#{url}')").map(&:text)).to include(url)
       end
 
