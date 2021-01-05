@@ -1,8 +1,13 @@
 - if @vacancies_search.location_search.location_category_search?
   - content_for :page_title_prefix, t('jobs.location_search_heading', location: format_location_name(@vacancies_search.location_search.location_category), keyword: @vacancies_search.keyword)
   - content_for :page_description,  t('jobs.location_description', location: format_location_name(@vacancies_search.location_search.location_category))
+- elsif @landing_page.present?
+  - content_for :page_title_prefix, t("landing_pages.heading", landing_page: @landing_page.humanize)
 - else
   - content_for :page_title_prefix, t('home.index.title')
+
+- if @landing_page.present? && I18n.exists?("landing_pages.description.#{@landing_page_translation}")
+  - content_for :page_description, t("landing_pages.description.#{@landing_page_translation}")
 
 = render(Shared::BreadcrumbComponent.new(collapse_on_mobile: false, crumbs: [{ link_path: root_path, link_text: t('breadcrumbs.home') }, { link_path: '#', link_text: t('breadcrumbs.jobs') }]))
 

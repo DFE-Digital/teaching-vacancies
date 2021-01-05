@@ -1,0 +1,48 @@
+en:
+  landing_pages:
+    description:
+      job_role:
+        leadership: >-
+          Find middle and senior leadership jobs at schools and trusts in England. Teaching Vacancies is a free
+          job-listing service from the Department for Education.
+        nqt_suitable: >-
+          Find NQT jobs at schools in England. Teaching Vacancies is a free job-listing service from the Department
+          for Education.
+        sen_specialist: >-
+          Find SEN specialist and SENCO jobs in England. Teaching Vacancies is a free job-listing service from the
+          Department for Education.
+        teacher: >-
+          Find teaching jobs at schools and trusts in England. Teaching Vacancies is a free job-listing service from
+          the Department for Education.
+      subject:
+        design_and_technology: >-
+          Find design and technology teaching jobs in England. Teaching Vacancies is a free job-listing service from
+          the Department for Education.
+        early_years: >-
+          Find early years teaching jobs, including nursery and reception. Teaching Vacancies is a free job-listing
+          service from the Department for Education.
+        english: >-
+          Find English teaching jobs with Teaching Vacancies, a free job-listing service from the Department for
+          Education.
+        humanities: >-
+          Find humanities teaching jobs with Teaching Vacancies. Search for jobs teaching history, geography,
+          religion, philosophy, psychology, sociology and social sciences.
+        ks1: >-
+          Find KS1 teaching jobs with Teaching Vacancies, a free job-listing service from the Department for
+          Education. Search for primary teaching jobs in years 1 and 2.
+        ks2: >-
+          Find KS2 teaching jobs with Teaching Vacancies, a free job-listing service from the Department for
+          Education. Search for primary teaching jobs in years 3, 4, 5 and 6.
+        languages: >-
+          Find modern languages teaching jobs in England. Teaching Vacancies is a free job-listing service from the
+          Department for Education.
+        mathematics: >-
+          Find maths teaching jobs with Teaching Vacancies, a free job-listing service from the Department for
+          Education.
+        primary: >-
+          Find primary teaching jobs with Teaching Vacancies, a free job-listing service from the Department for
+          Education. Search for jobs teaching reception, KS1 or KS2.
+        science: >-
+          Find science teaching jobs with Teaching Vacancies, a free job-listing service from the Department for
+          Education. Search for jobs teaching biology, chemistry or physics.
+    heading: Teaching jobs for %{landing_page}
