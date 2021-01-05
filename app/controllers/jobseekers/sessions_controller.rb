@@ -25,4 +25,9 @@ private
   def check_if_access_locked
     clear_flash_and_render(:locked) if resource_class.find_by(email: sign_in_params[:email])&.access_locked?
   end
+
+  def clear_flash_and_render(view)
+    flash.clear
+    render view
+  end
 end
