@@ -38,7 +38,7 @@ RSpec.describe AWSIpRanges do
         216.137.32.0/19
       ]
 
-      expect(AWSIpRanges.cloudfront_ips).to eql(expected_result)
+      expect(AWSIpRanges.cloudfront_ips).to eq(expected_result)
     end
 
     it "configures a short timeout" do
@@ -59,7 +59,7 @@ RSpec.describe AWSIpRanges do
     context "when there was any connectivity issue" do
       it "returns an empty array" do
         allow_any_instance_of(Net::HTTP).to receive(:start).and_raise(Timeout::Error.new("error"))
-        expect(AWSIpRanges.cloudfront_ips).to eql([])
+        expect(AWSIpRanges.cloudfront_ips).to eq([])
       end
 
       it "logs a warning" do
@@ -84,7 +84,7 @@ RSpec.describe AWSIpRanges do
         context "when #{error} is raised" do
           it "returns an empty array" do
             allow_any_instance_of(Net::HTTP).to receive(:start).and_raise(error.new("error"))
-            expect(AWSIpRanges.cloudfront_ips).to eql([])
+            expect(AWSIpRanges.cloudfront_ips).to eq([])
           end
         end
       end
@@ -97,7 +97,7 @@ RSpec.describe AWSIpRanges do
       end
 
       it "returns an empty array" do
-        expect(AWSIpRanges.cloudfront_ips).to eql([])
+        expect(AWSIpRanges.cloudfront_ips).to eq([])
       end
 
       it "logs a warning" do

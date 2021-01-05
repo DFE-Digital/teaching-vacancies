@@ -37,7 +37,7 @@ RSpec.describe Search::FiltersBuilder do
       let(:to_date) { nil }
 
       it "builds the correct date filter" do
-        expect(subject.send(:build_date_filters)).to eql("publication_date_timestamp >= #{from_date.to_time.to_i}")
+        expect(subject.send(:build_date_filters)).to eq("publication_date_timestamp >= #{from_date.to_time.to_i}")
       end
     end
 
@@ -45,13 +45,13 @@ RSpec.describe Search::FiltersBuilder do
       let(:from_date) { nil }
 
       it "builds the correct date filter" do
-        expect(subject.send(:build_date_filters)).to eql("publication_date_timestamp <= #{to_date.to_time.to_i}")
+        expect(subject.send(:build_date_filters)).to eq("publication_date_timestamp <= #{to_date.to_time.to_i}")
       end
     end
 
     context "when both dates are supplied" do
       it "builds the correct date filter" do
-        expect(subject.send(:build_date_filters)).to eql(
+        expect(subject.send(:build_date_filters)).to eq(
           "publication_date_timestamp >= #{from_date.to_time.to_i} AND " \
           "publication_date_timestamp <= #{to_date.to_time.to_i}",
         )
@@ -97,7 +97,7 @@ RSpec.describe Search::FiltersBuilder do
       after { travel_back }
 
       it "builds the correct query" do
-        expect(subject.filter_query).to eql(
+        expect(subject.filter_query).to eq(
           "(publication_date_timestamp <= #{published_today_filter} AND"\
           " expires_at_timestamp > #{expired_now_filter}) AND "\
           "(publication_date_timestamp >= #{from_date.to_time.to_i} AND" \

@@ -14,7 +14,7 @@ RSpec.describe ApplyingForTheJobForm, type: :model do
 
         it "raises correct error message" do
           subject.valid?
-          expect(subject.errors.messages[:application_link].first).to eql(
+          expect(subject.errors.messages[:application_link].first).to eq(
             I18n.t("applying_for_the_job_errors.application_link.url"),
           )
         end
@@ -31,7 +31,7 @@ RSpec.describe ApplyingForTheJobForm, type: :model do
 
         it "raises correct error message" do
           subject.valid?
-          expect(subject.errors.messages[:contact_email].first).to eql(
+          expect(subject.errors.messages[:contact_email].first).to eq(
             I18n.t("applying_for_the_job_errors.contact_email.blank"),
           )
         end
@@ -46,7 +46,7 @@ RSpec.describe ApplyingForTheJobForm, type: :model do
 
         it "raises correct error message" do
           subject.valid?
-          expect(subject.errors.messages[:contact_email].first).to eql(
+          expect(subject.errors.messages[:contact_email].first).to eq(
             I18n.t("applying_for_the_job_errors.contact_email.invalid"),
           )
         end
@@ -63,7 +63,7 @@ RSpec.describe ApplyingForTheJobForm, type: :model do
 
         it "raises correct error message" do
           subject.valid?
-          expect(subject.errors.messages[:contact_number].first).to eql(
+          expect(subject.errors.messages[:contact_number].first).to eq(
             I18n.t("applying_for_the_job_errors.contact_number.invalid"),
           )
         end
@@ -81,11 +81,11 @@ RSpec.describe ApplyingForTheJobForm, type: :model do
                                                       school_visits: "How you can visit the school")
 
       expect(application_details.valid?).to be true
-      expect(application_details.vacancy.application_link).to eql("http://an.application.link")
-      expect(application_details.vacancy.contact_email).to eql("some@email.com")
-      expect(application_details.vacancy.contact_number).to eql("01234 123456")
-      expect(application_details.vacancy.how_to_apply).to eql("How you can apply for the job")
-      expect(application_details.vacancy.school_visits).to eql("How you can visit the school")
+      expect(application_details.vacancy.application_link).to eq("http://an.application.link")
+      expect(application_details.vacancy.contact_email).to eq("some@email.com")
+      expect(application_details.vacancy.contact_number).to eq("01234 123456")
+      expect(application_details.vacancy.how_to_apply).to eq("How you can apply for the job")
+      expect(application_details.vacancy.school_visits).to eq("How you can visit the school")
     end
   end
 end

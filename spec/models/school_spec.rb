@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe School, type: :model do
   it { expect(subject.attributes).to include("gias_data") }
-  it { expect(described_class.columns_hash["gias_data"].type).to eql(:json) }
+  it { expect(described_class.columns_hash["gias_data"].type).to eq(:json) }
 
   it { should have_many(:school_group_memberships) }
   it { should have_many(:school_groups) }
@@ -53,15 +53,15 @@ RSpec.describe School, type: :model do
           school.easting = 533_498
           school.northing = 181_201
 
-          expect(school.geolocation.x).to eql(51.51396894535262)
-          expect(school.geolocation.y).to eql(-0.07751626505544208)
+          expect(school.geolocation.x).to eq(51.51396894535262)
+          expect(school.geolocation.y).to eq(-0.07751626505544208)
         end
       end
 
       context "when setting just a GB easting" do
         it "should not set a geolocation" do
           school.easting = 533_498
-          expect(school.geolocation).to eql(nil)
+          expect(school.geolocation).to eq(nil)
         end
       end
 
@@ -69,7 +69,7 @@ RSpec.describe School, type: :model do
         it "should not set a geolocation" do
           school.northing = 308_885
 
-          expect(school.geolocation).to eql(nil)
+          expect(school.geolocation).to eq(nil)
         end
       end
     end
@@ -82,8 +82,8 @@ RSpec.describe School, type: :model do
           school.easting = 533_498
           school.northing = 181_201
 
-          expect(school.geolocation.x).to eql(51.51396894535262)
-          expect(school.geolocation.y).to eql(-0.07751626505544208)
+          expect(school.geolocation.x).to eq(51.51396894535262)
+          expect(school.geolocation.y).to eq(-0.07751626505544208)
         end
       end
 
@@ -92,7 +92,7 @@ RSpec.describe School, type: :model do
           school.easting = 533_498
           school.northing = nil
 
-          expect(school.geolocation).to eql(nil)
+          expect(school.geolocation).to eq(nil)
         end
       end
 
@@ -101,7 +101,7 @@ RSpec.describe School, type: :model do
           school.northing = 308_885
           school.easting = nil
 
-          expect(school.geolocation).to eql(nil)
+          expect(school.geolocation).to eq(nil)
         end
       end
     end

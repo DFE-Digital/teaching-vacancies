@@ -14,7 +14,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
       click_on I18n.t("buttons.continue")
       expect(page).to have_content("There is a problem")
       expect { sign_up_jobseeker }.to change { delivered_emails.count }.by(1)
-      expect(current_path).to eql(jobseekers_check_your_email_path)
+      expect(current_path).to eq(jobseekers_check_your_email_path)
     end
   end
 
@@ -27,7 +27,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
     context "when the confirmation token is valid" do
       it "confirms email and redirects to saved jobs page" do
         confirm_email_address
-        expect(current_path).to eql(jobseekers_saved_jobs_path)
+        expect(current_path).to eq(jobseekers_saved_jobs_path)
         expect(page).to have_content(I18n.t("devise.confirmations.confirmed"))
       end
     end
@@ -39,14 +39,14 @@ RSpec.describe "Jobseekers can sign up to an account" do
 
       it "does not confirm email and redirects to resend confirmation page" do
         confirm_email_address
-        expect(current_path).to eql(jobseeker_confirmation_path)
+        expect(current_path).to eq(jobseeker_confirmation_path)
         expect(page).to have_content(I18n.t("jobseekers.confirmations.new.title"))
       end
 
       context "when the confirmation email is resent" do
         it "resends confirmation email and redirects to check your email page" do
           expect { resend_confirmation_email }.to change { delivered_emails.count }.by(1)
-          expect(current_path).to eql(jobseekers_check_your_email_path)
+          expect(current_path).to eq(jobseekers_check_your_email_path)
         end
       end
     end

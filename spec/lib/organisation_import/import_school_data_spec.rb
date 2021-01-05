@@ -62,15 +62,15 @@ RSpec.describe ImportSchoolData do
     end
 
     it "creates Schools" do
-      expect { subject.run! }.to change(School, :count).to eql(9)
+      expect { subject.run! }.to change(School, :count).to eq(9)
     end
 
     it "creates SchoolGroups" do
-      expect { subject.run! }.to change(SchoolGroup, :count).to eql(2)
+      expect { subject.run! }.to change(SchoolGroup, :count).to eq(2)
     end
 
     it "creates SchoolGroupMemberships" do
-      expect { subject.run! }.to change(SchoolGroupMembership, :count).to eql(8)
+      expect { subject.run! }.to change(SchoolGroupMembership, :count).to eq(8)
     end
 
     it "links the correct schools and local authorities" do
@@ -91,15 +91,15 @@ RSpec.describe ImportSchoolData do
       expect(example_school.gias_data).not_to be_blank
       expect(example_school.address3).to be_nil
       expect(example_school.county).to be_nil
-      expect(example_school.detailed_school_type).to eql("Voluntary aided school")
-      expect(example_school.establishment_status).to eql("Open")
-      expect(example_school.locality).to eql("Duke's Place")
-      expect(example_school.local_authority_within).to eql("City of London")
-      expect(example_school.name).to eql("Sir John Cass's Foundation Primary School")
-      expect(example_school.phase).to eql("primary")
-      expect(example_school.region).to eql("London")
-      expect(example_school.school_type).to eql("LA maintained schools")
-      expect(example_school.url).to eql("http://www.sirjohncassprimary.org")
+      expect(example_school.detailed_school_type).to eq("Voluntary aided school")
+      expect(example_school.establishment_status).to eq("Open")
+      expect(example_school.locality).to eq("Duke's Place")
+      expect(example_school.local_authority_within).to eq("City of London")
+      expect(example_school.name).to eq("Sir John Cass's Foundation Primary School")
+      expect(example_school.phase).to eq("primary")
+      expect(example_school.region).to eq("London")
+      expect(example_school.school_type).to eq("LA maintained schools")
+      expect(example_school.url).to eq("http://www.sirjohncassprimary.org")
     end
 
     context "when the CSV contains smart-quotes using Windows 1252 encoding" do
@@ -116,7 +116,7 @@ RSpec.describe ImportSchoolData do
 
       it "should correct convert the file to UTF-8" do
         subject.run!
-        expect(example_school.name).to eql("St John’s School")
+        expect(example_school.name).to eq("St John’s School")
       end
     end
 
@@ -131,7 +131,7 @@ RSpec.describe ImportSchoolData do
                     "Town,Postcode\n" \
                     "100000,St John\x92s School,999,999,ZZZ,test.com,?,?,?")
         subject.run!
-        expect(example_school.url).to eql("http://test.com")
+        expect(example_school.url).to eq("http://test.com")
       end
 
       it "does not return a value if the website is not set" do

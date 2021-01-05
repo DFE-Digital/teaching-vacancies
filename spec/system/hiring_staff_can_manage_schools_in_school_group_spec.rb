@@ -23,7 +23,7 @@ RSpec.shared_examples "a successful edit" do
     expect(page).to have_content("New description of the trust")
     expect(page).to have_content("Details updated for #{school_group.name}")
     expect(page).to have_content("https://www.this-is-a-test-url.tvs")
-    expect(page.current_path).to eql(organisation_schools_path)
+    expect(page.current_path).to eq(organisation_schools_path)
 
     visit edit_organisation_school_path(school_1)
 
@@ -34,7 +34,7 @@ RSpec.shared_examples "a successful edit" do
     expect(page).to have_content("New description of the school")
     expect(page).to have_content("https://www.this-is-a-test-url.tvs")
     expect(page).to have_content("Details updated for #{school_1.name}")
-    expect(page.current_path).to eql(organisation_schools_path)
+    expect(page.current_path).to eq(organisation_schools_path)
   end
 end
 

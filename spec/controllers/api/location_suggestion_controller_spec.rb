@@ -28,7 +28,7 @@ RSpec.describe Api::LocationSuggestionController, type: :controller do
         get :show, params: { api_version: 1 }
 
         expect(response).to have_http_status(:bad_request)
-        expect(json[:error]).to eql("Missing location input")
+        expect(json[:error]).to eq("Missing location input")
       end
     end
 
@@ -39,7 +39,7 @@ RSpec.describe Api::LocationSuggestionController, type: :controller do
         get :show, params: { api_version: 1, location: location }
 
         expect(response).to have_http_status(:bad_request)
-        expect(json[:error]).to eql("Insufficient location input")
+        expect(json[:error]).to eq("Insufficient location input")
       end
     end
 
@@ -55,9 +55,9 @@ RSpec.describe Api::LocationSuggestionController, type: :controller do
         get :show, params: { api_version: 1, location: location }
 
         expect(response).to have_http_status(:ok)
-        expect(json[:query]).to eql(location)
-        expect(json[:suggestions]).to eql(suggestions)
-        expect(json[:matched_terms]).to eql(matched_terms)
+        expect(json[:query]).to eq(location)
+        expect(json[:suggestions]).to eq(suggestions)
+        expect(json[:matched_terms]).to eq(matched_terms)
       end
     end
 
@@ -70,7 +70,7 @@ RSpec.describe Api::LocationSuggestionController, type: :controller do
         get :show, params: { api_version: 1, location: location }
 
         expect(response).to have_http_status(:bad_request)
-        expect(json[:error]).to eql("HTTP error")
+        expect(json[:error]).to eq("HTTP error")
       end
     end
 
@@ -84,7 +84,7 @@ RSpec.describe Api::LocationSuggestionController, type: :controller do
         get :show, params: { api_version: 1, location: location }
 
         expect(response).to have_http_status(:bad_request)
-        expect(json[:error]).to eql("Google error")
+        expect(json[:error]).to eq("Google error")
       end
     end
   end

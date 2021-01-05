@@ -61,8 +61,8 @@ RSpec.describe ImportTrustData do
     context "when coordinates are found" do
       it "sets the coordinates" do
         subject.send(:set_geolocation, trust, "postcode")
-        expect(trust.geolocation.x).to eql(Geocoder::DEFAULT_STUB_COORDINATES[0])
-        expect(trust.geolocation.y).to eql(Geocoder::DEFAULT_STUB_COORDINATES[1])
+        expect(trust.geolocation.x).to eq(Geocoder::DEFAULT_STUB_COORDINATES[0])
+        expect(trust.geolocation.y).to eq(Geocoder::DEFAULT_STUB_COORDINATES[1])
       end
     end
   end
@@ -93,11 +93,11 @@ RSpec.describe ImportTrustData do
     end
 
     it "creates SchoolGroups" do
-      expect { subject.run! }.to change(SchoolGroup, :count).to eql(3)
+      expect { subject.run! }.to change(SchoolGroup, :count).to eq(3)
     end
 
     it "creates SchoolGroupMemberships" do
-      expect { subject.run! }.to change(SchoolGroupMembership, :count).to eql(3)
+      expect { subject.run! }.to change(SchoolGroupMembership, :count).to eq(3)
     end
 
     it "links the correct schools and trusts" do
@@ -111,13 +111,13 @@ RSpec.describe ImportTrustData do
       subject.run!
       expect(trust_1).not_to be_blank
       expect(trust_1.gias_data).not_to be_blank
-      expect(trust_1.name).to eql("Abbey Academies Trust")
-      expect(trust_1.group_type).to eql("Multi-academy trust")
-      expect(trust_1.address).to eql("Abbey Road")
-      expect(trust_1.county).to eql("Not recorded")
-      expect(trust_1.postcode).to eql("PE10 9EP")
-      expect(trust_1.geolocation.x.round(13)).to eql(Geocoder::DEFAULT_STUB_COORDINATES[0].round(13))
-      expect(trust_1.geolocation.y.round(13)).to eql(Geocoder::DEFAULT_STUB_COORDINATES[1].round(13))
+      expect(trust_1.name).to eq("Abbey Academies Trust")
+      expect(trust_1.group_type).to eq("Multi-academy trust")
+      expect(trust_1.address).to eq("Abbey Road")
+      expect(trust_1.county).to eq("Not recorded")
+      expect(trust_1.postcode).to eq("PE10 9EP")
+      expect(trust_1.geolocation.x.round(13)).to eq(Geocoder::DEFAULT_STUB_COORDINATES[0].round(13))
+      expect(trust_1.geolocation.y.round(13)).to eq(Geocoder::DEFAULT_STUB_COORDINATES[1].round(13))
     end
   end
 end

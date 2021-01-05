@@ -2,10 +2,10 @@ require "rails_helper"
 
 RSpec.shared_examples "a search using polygons" do |options|
   it "sets the correct attributes" do
-    expect(subject.location_category).to eql(options&.dig(:location)&.presence || location_polygon.name)
-    expect(subject.location_polygon).to eql(location_polygon)
-    expect(subject.location_filter).to eql({})
-    expect(subject.buffer_radius).to eql(buffer_radius)
+    expect(subject.location_category).to eq(options&.dig(:location)&.presence || location_polygon.name)
+    expect(subject.location_polygon).to eq(location_polygon)
+    expect(subject.location_filter).to eq({})
+    expect(subject.buffer_radius).to eq(buffer_radius)
   end
 end
 
@@ -46,7 +46,7 @@ RSpec.describe Search::LocationBuilder do
         it "missing polygon is true" do
           expect(subject.location_category).to eq "North West"
           expect(subject.location_polygon).to be nil
-          expect(subject.location_filter).to eql({})
+          expect(subject.location_filter).to eq({})
           expect(subject.missing_polygon).to be true
         end
       end
@@ -78,7 +78,7 @@ RSpec.describe Search::LocationBuilder do
         it "sets location filter around the location with the default radius" do
           expect(subject.location_category).to be nil
           expect(subject.location_polygon).to be nil
-          expect(subject.location_filter).to eql({
+          expect(subject.location_filter).to eq({
             point_coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
             radius: expected_radius,
           })
@@ -93,7 +93,7 @@ RSpec.describe Search::LocationBuilder do
         it "carries out geographical search around a coordinate location with the specified radius" do
           expect(subject.location_category).to be nil
           expect(subject.location_polygon).to be nil
-          expect(subject.location_filter).to eql({
+          expect(subject.location_filter).to eq({
             point_coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
             radius: expected_radius,
           })

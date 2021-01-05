@@ -48,7 +48,7 @@ RSpec.describe Search::RadiusSuggestionsBuilder do
       end
 
       it "sets the correct radius suggestions" do
-        expect(subject.radius_suggestions).to eql([[5, 1], [15, 3], [20, 4], [25, 7]])
+        expect(subject.radius_suggestions).to eq([[5, 1], [15, 3], [20, 4], [25, 7]])
       end
     end
 
@@ -69,7 +69,7 @@ RSpec.describe Search::RadiusSuggestionsBuilder do
       end
 
       it "sets the correct radius suggestions" do
-        expect(subject.radius_suggestions).to eql([[100, 5], [200, 9]])
+        expect(subject.radius_suggestions).to eq([[100, 5], [200, 9]])
       end
     end
   end

@@ -84,9 +84,9 @@ RSpec.describe "Viewing a single published vacancy" do
       scenario "can click on the first link to create a job alert" do
         click_on I18n.t("jobs.alert.similar.terse")
         expect(page).to have_content(I18n.t("subscriptions.new.title"))
-        expect(page.find_field("subscription-form-keyword-field").value).to eql("Physics")
-        expect(page.find_field("subscription-form-location-field").value).to eql(school.postcode)
-        expect(page.find_field("subscription-form-radius-field").value).to eql("10")
+        expect(page.find_field("subscription-form-keyword-field").value).to eq("Physics")
+        expect(page.find_field("subscription-form-location-field").value).to eq(school.postcode)
+        expect(page.find_field("subscription-form-radius-field").value).to eq("10")
         click_on I18n.t("buttons.back")
         expect(page).to have_current_path(job_path(vacancy))
       end
@@ -94,9 +94,9 @@ RSpec.describe "Viewing a single published vacancy" do
       scenario "can click on the second link to create a job alert" do
         click_on I18n.t("jobs.alert.similar.verbose.link_text")
         expect(page).to have_content(I18n.t("subscriptions.new.title"))
-        expect(page.find_field("subscription-form-keyword-field").value).to eql("Physics")
-        expect(page.find_field("subscription-form-location-field").value).to eql(school.postcode)
-        expect(page.find_field("subscription-form-radius-field").value).to eql("10")
+        expect(page.find_field("subscription-form-keyword-field").value).to eq("Physics")
+        expect(page.find_field("subscription-form-location-field").value).to eq(school.postcode)
+        expect(page.find_field("subscription-form-radius-field").value).to eq("10")
         click_on I18n.t("buttons.back")
         expect(page).to have_current_path(job_path(vacancy))
       end

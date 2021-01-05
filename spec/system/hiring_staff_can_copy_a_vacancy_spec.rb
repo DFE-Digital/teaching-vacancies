@@ -36,7 +36,7 @@ RSpec.describe "Copying a vacancy" do
 
       click_on(I18n.t("buttons.cancel_copy"), class: "govuk-back-link")
 
-      expect(page.current_path).to eql(organisation_path)
+      expect(page.current_path).to eq(organisation_path)
       expect(page).not_to have_content("A new job title")
     end
 
@@ -58,7 +58,7 @@ RSpec.describe "Copying a vacancy" do
 
       click_on(I18n.t("buttons.cancel_copy"), class: "govuk-link")
 
-      expect(page.current_path).to eql(organisation_path)
+      expect(page.current_path).to eq(organisation_path)
       expect(page).not_to have_content("A new job title")
     end
   end

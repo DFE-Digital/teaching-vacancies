@@ -88,7 +88,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       it "renders the filters sidebar" do
         expect(
           inline_component.css('.new_managed_organisations_form input[type="submit"]').attribute("value").value,
-        ).to eql(I18n.t("buttons.apply_filters"))
+        ).to eq(I18n.t("buttons.apply_filters"))
       end
 
       it "renders the trust head office as a filter option" do
@@ -140,7 +140,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       it "renders the filters sidebar" do
         expect(
           inline_component.css('.new_managed_organisations_form input[type="submit"]').attribute("value").value,
-        ).to eql(I18n.t("buttons.apply_filters"))
+        ).to eq(I18n.t("buttons.apply_filters"))
       end
 
       it "does not render the trust head office as a filter option" do

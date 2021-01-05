@@ -8,7 +8,7 @@ RSpec.describe CookiesPreferencesForm, type: :model do
 
   describe "#initialize" do
     it "assigns attributes" do
-      expect(subject.cookies_consent).to eql(cookies_consent)
+      expect(subject.cookies_consent).to eq(cookies_consent)
     end
   end
 
@@ -23,7 +23,7 @@ RSpec.describe CookiesPreferencesForm, type: :model do
       it "raises correct error message" do
         subject.valid?
 
-        expect(subject.errors.messages[:cookies_consent].first).to eql(
+        expect(subject.errors.messages[:cookies_consent].first).to eq(
           I18n.t("cookies_preferences_errors.cookies_consent.inclusion"),
         )
       end
@@ -39,7 +39,7 @@ RSpec.describe CookiesPreferencesForm, type: :model do
       it "raises correct error message" do
         subject.valid?
 
-        expect(subject.errors.messages[:cookies_consent].first).to eql(
+        expect(subject.errors.messages[:cookies_consent].first).to eq(
           I18n.t("cookies_preferences_errors.cookies_consent.inclusion"),
         )
       end

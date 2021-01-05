@@ -60,10 +60,10 @@ RSpec.describe "Hiring staff can edit a vacancy" do
 
     scenario "vacancy state is edit_published" do
       visit edit_organisation_job_path(vacancy.id)
-      expect(Vacancy.last.state).to eql("edit_published")
+      expect(Vacancy.last.state).to eq("edit_published")
 
       click_header_link(I18n.t("jobs.job_details"))
-      expect(Vacancy.last.state).to eql("edit_published")
+      expect(Vacancy.last.state).to eq("edit_published")
     end
 
     scenario "create a job sidebar is not present" do
@@ -80,7 +80,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         expect(page).to have_content(I18n.t("buttons.cancel_and_return"))
 
         click_on I18n.t("buttons.cancel_and_return")
-        expect(page.current_path).to eql(edit_organisation_job_path(vacancy.id))
+        expect(page.current_path).to eq(edit_organisation_job_path(vacancy.id))
       end
     end
 

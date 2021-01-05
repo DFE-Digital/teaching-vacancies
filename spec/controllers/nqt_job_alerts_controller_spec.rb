@@ -13,7 +13,7 @@ RSpec.describe NqtJobAlertsController, type: :controller do
 
     it "returns 200" do
       subject
-      expect(response.code).to eql("200")
+      expect(response.code).to eq("200")
     end
   end
 
@@ -27,7 +27,7 @@ RSpec.describe NqtJobAlertsController, type: :controller do
 
     it "returns 200" do
       subject
-      expect(response.code).to eql("200")
+      expect(response.code).to eq("200")
     end
 
     it "queues a job to audit the subscription" do

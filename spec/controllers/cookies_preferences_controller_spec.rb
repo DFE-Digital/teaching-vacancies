@@ -11,7 +11,7 @@ RSpec.describe CookiesPreferencesController, type: :controller do
   describe "#create" do
     it "sets cookie value" do
       post :create, params: { cookies_consent: "yes" }
-      expect(response.cookies["consented-to-cookies"]).to eql("yes")
+      expect(response.cookies["consented-to-cookies"]).to eq("yes")
     end
   end
 end

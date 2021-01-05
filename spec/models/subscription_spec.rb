@@ -14,19 +14,19 @@ RSpec.describe Subscription, type: :model do
 
     describe "#daily" do
       it "retrieves all subscriptions with frequency set to :daily" do
-        expect(Subscription.daily.count).to eql(4)
+        expect(Subscription.daily.count).to eq(4)
       end
     end
 
     describe "#weekly" do
       it "retrieves all subscriptions with frequency set to :daily" do
-        expect(Subscription.weekly.count).to eql(5)
+        expect(Subscription.weekly.count).to eq(5)
       end
     end
 
     describe "active" do
       it "retrieves all subscriptions with active set to true" do
-        expect(Subscription.active.count).to eql(8)
+        expect(Subscription.active.count).to eq(8)
       end
     end
   end
@@ -114,7 +114,7 @@ RSpec.describe Subscription, type: :model do
     after { travel_back }
 
     it "calls out to algolia search" do
-      expect(subscription.vacancies_for_range(date_yesterday, date_today)).to eql(vacancies)
+      expect(subscription.vacancies_for_range(date_yesterday, date_today)).to eq(vacancies)
     end
   end
 

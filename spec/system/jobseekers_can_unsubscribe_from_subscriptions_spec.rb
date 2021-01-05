@@ -20,7 +20,7 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
     end
 
     it "updates the subscription status" do
-      expect(subscription.reload.active).to eql(false)
+      expect(subscription.reload.active).to eq(false)
     end
 
     it "audits the unsubscription" do
@@ -55,7 +55,7 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
       end
 
       it "updates the subscription status" do
-        expect(subscription.reload.active).to eql(false)
+        expect(subscription.reload.active).to eq(false)
       end
 
       it "audits the unsubscription" do

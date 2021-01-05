@@ -23,7 +23,7 @@ RSpec.describe JobLocationForm, type: :model do
 
     it "a JobLocationForm can be converted to a vacancy" do
       expect(job_location_form.valid?).to be true
-      expect(job_location_form.vacancy.job_location).to eql("central_office")
+      expect(job_location_form.vacancy.job_location).to eq("central_office")
     end
   end
 end

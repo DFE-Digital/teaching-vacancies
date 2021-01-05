@@ -12,7 +12,7 @@ RSpec.describe SubscriptionForm, type: :model do
       let(:keyword) { nil }
 
       it "is deleted from the hash" do
-        expect(subject.search_criteria_hash).to eql({ job_roles: job_roles })
+        expect(subject.search_criteria_hash).to eq({ job_roles: job_roles })
       end
     end
 
@@ -20,7 +20,7 @@ RSpec.describe SubscriptionForm, type: :model do
       let(:job_roles) { [] }
 
       it "is deleted from the hash" do
-        expect(subject.search_criteria_hash).to eql({ keyword: keyword })
+        expect(subject.search_criteria_hash).to eq({ keyword: keyword })
       end
     end
   end

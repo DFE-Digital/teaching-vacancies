@@ -71,7 +71,7 @@ RSpec.describe Publishers::Vacancies::ApplicationController, type: :controller d
 
       it "converts date params to a Date object" do
         subject.convert_multiparameter_attributes_to_dates(:test_form, [:starts_on])
-        expect(controller.params[:test_form][:starts_on]).to eql(Date.parse("2020-01-01"))
+        expect(controller.params[:test_form][:starts_on]).to eq(Date.parse("2020-01-01"))
       end
     end
 
@@ -79,13 +79,13 @@ RSpec.describe Publishers::Vacancies::ApplicationController, type: :controller d
       let(:dates) { { 'starts_on(3i)': "100", 'starts_on(2i)': "", 'starts_on(1i)': "2020" } }
 
       it "the form object has an invalid date error" do
-        expect(subject.convert_multiparameter_attributes_to_dates(:test_form, [:starts_on])[:starts_on]).to eql(
+        expect(subject.convert_multiparameter_attributes_to_dates(:test_form, [:starts_on])[:starts_on]).to eq(
           I18n.t("activerecord.errors.models.vacancy.attributes.starts_on.invalid"),
         )
       end
 
       it "does not convert date params to a Date object" do
-        expect(controller.params[:test_form][:starts_on]).to eql(nil)
+        expect(controller.params[:test_form][:starts_on]).to eq(nil)
       end
     end
 
@@ -94,7 +94,7 @@ RSpec.describe Publishers::Vacancies::ApplicationController, type: :controller d
 
       it "does not convert date params to a Date object" do
         subject.convert_multiparameter_attributes_to_dates(:test_form, [:starts_on])
-        expect(controller.params[:test_form][:starts_on]).to eql(nil)
+        expect(controller.params[:test_form][:starts_on]).to eq(nil)
       end
     end
   end
