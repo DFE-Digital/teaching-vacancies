@@ -6,8 +6,8 @@ en:
       You can search for a job at a school or Trust in England and set up job alerts.
 
     location_description: >-
-      Find teaching jobs in %{location} on Teaching Vacancies, the free national job site for teachers,
-      with no recruitment fees for schools.
+      Find teaching jobs in %{location} with Teaching Vacancies, a free job-listing service from the Department for
+      Education
     location_search_heading: Teaching jobs in %{location}
 
     filters:

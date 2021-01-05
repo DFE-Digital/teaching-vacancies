@@ -2,6 +2,10 @@ class VacanciesController < ApplicationController
   include ParameterSanitiser
 
   def index
+    if params.key?(:pretty) && params.key?(params[:pretty])
+      @landing_page = params[params[:pretty]]
+      @landing_page_translation = "#{params[:pretty]}.#{@landing_page.parameterize.underscore}"
+    end
     @jobs_search_form = VacancyAlgoliaSearchForm.new(algolia_search_params)
     @vacancies_search = Search::SearchBuilder.new(@jobs_search_form.to_hash)
     @vacancies = VacanciesPresenter.new(@vacancies_search.vacancies)
