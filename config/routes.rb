@@ -58,8 +58,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :stats, only: [:index]
-
   resource :identifications, only: %i[new create], controller: "publishers/identifications"
 
   # Sign in
