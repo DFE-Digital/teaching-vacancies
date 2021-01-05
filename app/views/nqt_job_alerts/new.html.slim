@@ -1,0 +1,36 @@
+- content_for :page_title_prefix, t("nqt_job_alerts.page_title")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl class="govuk-!-margin-bottom-6"
+      = t("nqt_job_alerts.heading")
+
+    p.govuk-body-l = t("nqt_job_alerts.intro.teaching_vacancies")
+    p.govuk-body = t("nqt_job_alerts.intro.content")
+
+    = form_for @nqt_job_alerts_form, url: new_nqt_job_alert_path do |f|
+      = f.govuk_error_summary
+
+      = f.govuk_text_field :keywords,
+        label: { size: "s" },
+        placeholder: t("helpers.placeholder.nqt_job_alerts_form.keywords"),
+        width: "two-thirds",
+        required: true
+
+      = f.govuk_text_field :location,
+        label: { size: "s" },
+        placeholder: t("helpers.placeholder.nqt_job_alerts_form.location"),
+        width: "two-thirds",
+        required: true
+
+      = f.govuk_email_field :email, label: { size: "s" }, width: "two-thirds", required: true
+
+      = recaptcha("subscription")
+
+      = render(Shared::NotificationComponent.new(content: t("nqt_job_alerts.intro.unsubscribe"), style: "notice", background: true, alert: "info", dismiss: false))
+
+      = f.govuk_submit t("buttons.subscribe"), classes: "nqt-job-alert-subscribe-gtm govuk-!-padding-left-8 govuk-!-padding-right-8"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds.govuk-body class="govuk-!-margin-top-4"
+    = t("terms_and_conditions.read_html")

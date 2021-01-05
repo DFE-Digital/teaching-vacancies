@@ -7,10 +7,10 @@ JS and SCSS files are optional
       my_component.js
       my_component.test.js
       my_component.scss
-      my_component.html.haml
+      my_component.html.slim
     my_component.rb
 ```
-### HAML usage
+### Slim usage
 `= render(MyComponent.new()`
 
 ### SCSS usage

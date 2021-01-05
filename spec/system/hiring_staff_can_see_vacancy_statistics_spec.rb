@@ -24,7 +24,7 @@ RSpec.describe "Hiring staff can see vacancy statistics" do
 
     context "page views are nil" do
       scenario "page views show zero" do
-        within("tr#organisation_vacancy_presenter_#{vacancy.id}") do
+        within("tr#vacancy_#{vacancy.id}") do
           expect(page.find("td[4]")).to have_content("0")
         end
       end
@@ -34,7 +34,7 @@ RSpec.describe "Hiring staff can see vacancy statistics" do
       let(:total_pageviews) { 100 }
 
       scenario "page views show the page view count" do
-        within("tr#organisation_vacancy_presenter_#{vacancy.id}") do
+        within("tr#vacancy_#{vacancy.id}") do
           expect(page.find("td[4]")).to have_content(total_pageviews)
         end
       end
@@ -58,7 +58,7 @@ RSpec.describe "Hiring staff can see vacancy statistics" do
 
     context "page views are nil" do
       scenario "page views show zero" do
-        within("tr#organisation_vacancy_presenter_#{vacancy.id}") do
+        within("tr#vacancy_#{vacancy.id}") do
           expect(page.find("td[4]")).to have_content("0")
         end
       end
@@ -68,7 +68,7 @@ RSpec.describe "Hiring staff can see vacancy statistics" do
       let(:total_pageviews) { 100 }
 
       scenario "page views show the page view count" do
-        within("tr#organisation_vacancy_presenter_#{vacancy.id}") do
+        within("tr#vacancy_#{vacancy.id}") do
           expect(page.find("td[4]")).to have_content(total_pageviews)
         end
       end

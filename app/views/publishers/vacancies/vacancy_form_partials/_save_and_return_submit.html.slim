@@ -1,0 +1,2 @@
+- unless @vacancy.published? || %w[copy edit edit_published review].include?(@vacancy.state)
+  = f.govuk_submit t("buttons.save_and_return_later"), secondary: true, classes: "button-link save-and-return-listing-gtm"

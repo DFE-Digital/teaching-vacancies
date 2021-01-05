@@ -1,0 +1,23 @@
+li.vacancy role="listitem" tab-index="0"
+  h2.govuk-heading-m class="govuk-!-margin-bottom-0"
+    = govuk_link_to(@vacancy.job_title, job_path(@vacancy), class: "view-vacancy-link")
+  p.govuk-body
+    = location(@vacancy.parent_organisation, job_location: @vacancy.job_location)
+  dl
+    dt = t("jobs.salary")
+    dd.double
+      = @vacancy.salary
+    dt = @vacancy.job_location == "central_office" ? t("jobs.trust_type") : t("jobs.school_type")
+    dd.double
+      = organisation_types(@vacancy.organisations)
+    - if @vacancy.working_patterns?
+      dt = t("jobs.working_patterns")
+      dd.double
+        = @vacancy.working_patterns
+    dt = t("jobs.expires_on")
+    - if @vacancy.expires_at.nil?
+      dd.double
+        = format_date(@vacancy.expires_on)
+    - else
+      dd.double
+        = expiry_date_and_time(@vacancy)

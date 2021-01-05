@@ -1,0 +1,28 @@
+- content_for :page_title_prefix, t("jobs.confirmation_page.page_title", organisation: current_organisation.name)
+
+.vacancy.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    .govuk-panel.govuk-panel--confirmation.submit-listing-success-gtm
+
+      h1.govuk-panel__title
+        = t("jobs.confirmation_page.submitted")
+
+      .govuk-panel__body
+        - if @vacancy.publish_today?
+          p = link_to t("jobs.confirmation_page.view_posted_job"), job_path(@vacancy), class: "reversed-link"
+        - else
+          p = link_to t("jobs.confirmation_page.view_posted_job"), organisation_job_path(@vacancy.id), class: "reversed-link"
+
+        p class="govuk-!-margin-bottom-0"
+          = t("jobs.confirmation_page.dashboard_link", link: link_to("your dashboard", organisation_path, class: "reversed-link")).html_safe
+
+  .govuk-grid-column-two-thirds
+    h3.govuk-heading-m = t("jobs.confirmation_page.next_step")
+    - if @vacancy.publish_today?
+      p = t("jobs.confirmation_page.date_posted_now")
+    - else
+      p = t("jobs.confirmation_page.date_posted", date: @vacancy.publish_on)
+    p = t("jobs.confirmation_page.date_expires", application_deadline: OrganisationVacancyPresenter.new(@vacancy).application_deadline)
+    p
+      = govuk_link_to(t("jobs.confirmation_page.feedback_link"), new_organisation_job_feedback_path(@vacancy.id))
+      = t("jobs.confirmation_page.feedback_time")

@@ -57,7 +57,7 @@ private
   def delete_vacancy(school, vacancy_id)
     visit organisation_path(school)
 
-    within("tr#organisation_vacancy_presenter_#{vacancy_id}") do
+    within("tr#vacancy_#{vacancy_id}") do
       click_on "Delete"
     end
   end

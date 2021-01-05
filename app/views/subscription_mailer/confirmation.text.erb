@@ -1,0 +1,12 @@
+# <%= t(".title") %>
+<%= t("subscriptions.intro") %>
+
+<%- @subscription.filtered_search_criteria.each_pair do |filter, value| %>
+  <%= "- #{filter.humanize}: #{value}" %>
+<% end %>
+
+<%= t(".next_steps", frequency: t(".frequency.#{@subscription.frequency}")) %>
+
+<%= t(".unsubscribe") %>
+---
+<%= unsubscribe_link(@subscription) %>

@@ -1,0 +1,32 @@
+nav
+  ul.govuk-header__navigation id="navigation" aria-label="Top Level Navigation"
+    - if publisher_signed_in? && !ReadOnlyFeature.enabled?
+      li class=active_link_class(organisation_path)
+        = link_to t("nav.school_page_link"), organisation_path, class: "govuk-header__link"
+      - if current_publisher_is_part_of_school_group?
+        li class=active_link_class(organisation_schools_path)
+        = link_to t("nav.school_group_index_link", organisation_type: organisation_type_basic(current_organisation)), organisation_schools_path, class: "govuk-header__link"
+      li class=active_link_class(root_path)
+        = link_to t("nav.jobseekers_index_link"), root_path, class: "govuk-header__link"
+      li class=active_link_class(sessions_path)
+        = link_to t("nav.sign_out"), sessions_path, method: :delete, class: "govuk-header__link"
+    - else
+      li.govuk-header__navigation-item--left class=active_link_class(root_path)
+        = link_to t("nav.find_job"), root_path, class: "govuk-header__link"
+      - unless ReadOnlyFeature.enabled?
+        - if JobseekerAccountsFeature.enabled?
+          - if jobseeker_signed_in?
+            li.govuk-header__navigation-item--left class=active_link_class(jobseekers_saved_jobs_path)
+              = link_to t("footer.your_account"), jobseekers_saved_jobs_path, class: "govuk-header__link"
+            li.govuk-header__navigation-spacer aria-hidden="true" tab-index="-1"
+            li.govuk-header__navigation-item--right class=active_link_class(destroy_jobseeker_session_path)
+              = link_to t("nav.sign_out"), destroy_jobseeker_session_path, method: :delete, class: "govuk-header__link"
+          - else
+            li.govuk-header__navigation-spacer aria-hidden="true" tab-index="-1"
+            li.govuk-header__navigation-item--right class=active_link_class(new_jobseeker_session_path)
+              = link_to t("buttons.sign_in"), new_jobseeker_session_path, class: "govuk-header__link"
+            li.govuk-header__navigation-item--right class=active_link_class(new_identifications_path)
+              = link_to t("nav.for_schools"), new_identifications_path, class: "govuk-header__link"
+        - else
+          li class=active_link_class(new_identifications_path)
+            = link_to t("nav.sign_in"), new_identifications_path, class: "govuk-header__link"

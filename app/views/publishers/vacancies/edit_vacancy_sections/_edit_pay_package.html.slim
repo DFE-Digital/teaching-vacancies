@@ -1,0 +1,19 @@
+= render "publishers/vacancies/new_attributes_tag", attributes: %i[salary benefits], section: "pay_package"
+= render "publishers/vacancies/error_tag", attributes: %i[salary benefits], section: "pay_package"
+
+h2.govuk-heading-m.app-task-list__section#pay_package_heading
+  span.app-task-list__section-number = edit_vacancy_section_number(:pay_package, current_organisation)
+  = t("jobs.pay_package")
+  = govuk_link_to(t("buttons.change"), organisation_job_build_path(@vacancy.id, :pay_package), class: "change-button", "aria-label": t("jobs.aria_labels.change_pay_package"))
+
+dl.app-check-your-answers.app-check-your-answers--short
+
+  .app-check-your-answers__contents
+    dt.app-check-your-answers__question.first-question#salary
+      h4.govuk-heading-s = t("jobs.salary")
+    dd.app-check-your-answers__answer.first-question = @vacancy.salary
+
+  .app-check-your-answers__contents
+    dt.app-check-your-answers__question#benefits
+      h4.govuk-heading-s = t("jobs.benefits")
+    dd.app-check-your-answers__answer = @vacancy.benefits.presence || t("jobs.not_defined")

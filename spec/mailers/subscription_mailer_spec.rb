@@ -29,7 +29,7 @@ RSpec.describe SubscriptionMailer, type: :mailer do
       expect(body).to include("Keyword: English")
       expect(body).to include(I18n.t("subscription_mailer.confirmation.next_steps", frequency: I18n.t("subscription_mailer.confirmation.frequency.#{subscription.frequency}")))
       expect(body).to include(I18n.t("subscription_mailer.confirmation.unsubscribe_link_text"))
-      expect(body).to include(unsubscribe_subscription_url(subscription.token, **campaign_params).gsub("&", "&amp;"))
+      expect(body).to include(unsubscribe_subscription_url(subscription.token, **campaign_params))
     end
   end
 
@@ -44,7 +44,7 @@ RSpec.describe SubscriptionMailer, type: :mailer do
       expect(body).to include("Keyword: English")
       expect(body).to include(I18n.t("subscription_mailer.update.next_steps", frequency: I18n.t("subscription_mailer.confirmation.frequency.#{subscription.frequency}")))
       expect(body).to include(I18n.t("subscription_mailer.update.unsubscribe_link_text"))
-      expect(body).to include(unsubscribe_subscription_url(subscription.token, **campaign_params).gsub("&", "&amp;"))
+      expect(body).to include(unsubscribe_subscription_url(subscription.token, **campaign_params))
     end
   end
 end

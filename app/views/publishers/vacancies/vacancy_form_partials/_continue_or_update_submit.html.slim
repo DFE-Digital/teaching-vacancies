@@ -1,0 +1,4 @@
+- if @vacancy.published? || %w[copy edit edit_published review].include?(@vacancy.state)
+  = f.govuk_submit t("buttons.update_job"), classes: "update-listing-gtm disabled-on-load"
+- else
+  = f.govuk_submit t("buttons.continue"), classes: "govuk-!-margin-bottom-5 save-listing-gtm"

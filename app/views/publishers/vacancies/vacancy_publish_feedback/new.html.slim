@@ -1,0 +1,13 @@
+- content_for :page_title_prefix, t("feedback.page_title")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @feedback, url: organisation_job_feedback_path do |f|
+      = f.govuk_error_summary
+
+      h2.govuk-heading-l
+        = t("feedback.heading")
+
+      = render "/feedback/form", f: f
+
+      = f.govuk_submit t("buttons.submit_feedback")

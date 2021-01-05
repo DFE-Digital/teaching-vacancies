@@ -128,7 +128,6 @@ GEM
       dotenv (= 2.7.6)
       railties (>= 3.2)
     erubi (1.10.0)
-    erubis (2.7.0)
     et-orbi (1.2.4)
       tzinfo
     factory_bot (6.1.0)
@@ -193,23 +192,9 @@ GEM
       actionview (>= 5.2)
       activemodel (>= 5.2)
       activesupport (>= 5.2)
-    haml (5.2.1)
-      temple (>= 0.8.0)
-      tilt
-    haml-rails (2.0.1)
-      actionpack (>= 5.1)
-      activesupport (>= 5.1)
-      haml (>= 4.0.6, < 6.0)
-      html2haml (>= 1.0.1)
-      railties (>= 5.1)
     hashdiff (1.0.1)
     hashie (4.1.0)
     high_voltage (3.1.2)
-    html2haml (2.2.0)
-      erubis (~> 2.7.0)
-      haml (>= 4.0, < 6)
-      nokogiri (>= 1.6.0)
-      ruby_parser (~> 3.5)
     htmlentities (4.3.4)
     httparty (0.18.1)
       mime-types (~> 3.0)
@@ -450,8 +435,6 @@ GEM
       rubocop (>= 0.87.0)
     ruby-progressbar (1.10.1)
     ruby2_keywords (0.0.2)
-    ruby_parser (3.15.0)
-      sexp_processor (~> 4.9)
     rubyzip (2.3.0)
     sanitize (5.2.1)
       crass (~> 1.0.2)
@@ -461,7 +444,6 @@ GEM
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
     semantic_range (2.3.1)
-    sexp_processor (4.15.1)
     shoulda-matchers (4.4.1)
       activesupport (>= 4.2.0)
     sidekiq (6.1.2)
@@ -485,6 +467,16 @@ GEM
       skylight-core (= 4.3.1)
     skylight-core (4.3.1)
       activesupport (>= 4.2.0)
+    slim (4.1.0)
+      temple (>= 0.7.6, < 0.9)
+      tilt (>= 2.0.6, < 2.1)
+    slim-rails (3.2.0)
+      actionpack (>= 3.1)
+      railties (>= 3.1)
+      slim (>= 3.0, < 5.0)
+    slim_lint (0.20.2)
+      rubocop (>= 0.78.0)
+      slim (>= 3.0, < 5.0)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -575,7 +567,6 @@ DEPENDENCIES
   gov_uk_date_fields
   govuk-components
   govuk_design_system_formbuilder
-  haml-rails
   high_voltage
   httparty
   ipaddr
@@ -616,6 +607,8 @@ DEPENDENCIES
   sidekiq-cron
   simplecov (<= 0.17.1)
   skylight
+  slim-rails
+  slim_lint
   spring
   spring-watcher-listen
   tzinfo-data

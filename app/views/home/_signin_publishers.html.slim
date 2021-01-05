@@ -1,0 +1,16 @@
+h2.govuk-heading-m = t(".title")
+
+- if publisher_signed_in?
+  .manage-vacancies
+    p #{t(".signed_in_as")} #{current_organisation.name}
+    = link_to t(".manage_link"), organisation_path, class: "govuk-button govuk-button--secondary manage-vacancies"
+
+- else
+  p = t(".description")
+  - if AuthenticationFallback.enabled?
+    = link_to t("buttons.sign_in"), new_identifications_path, class: "govuk-button govuk-button--secondary govuk-!-margin-bottom-0 identifications-button"
+  - else
+    = form_for :identifications, url: identifications_path do |f|
+      = f.govuk_submit t("buttons.sign_in"), secondary: true, classes: "identifications-button govuk-!-margin-bottom-0"
+
+  p = t(".signin_guidance_html", link: govuk_link_to(t(".signin_link"), new_identifications_path))

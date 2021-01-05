@@ -1,0 +1,17 @@
+.account-header
+  .govuk-width-container
+    .account-header__user-identifier
+      span.govuk-visually-hidden
+        = t("jobseekers.accounts.header.accessible_signed_in_as")
+      = current_jobseeker.email
+
+    .moj-primary-navigation
+      .moj-primary-navigation__container
+        .moj-primary-navigation__nav aria-label="Account navigation"
+          ul.moj-primary-navigation__list
+            li.moj-primary-navigation__item
+              = link_to t("jobseekers.saved_jobs.index.page_title"), jobseekers_saved_jobs_path, class: "moj-primary-navigation__link", aria: { current: ("page" if current_page?(jobseekers_saved_jobs_path)) }
+            li.moj-primary-navigation__item
+              = link_to t("jobseekers.subscriptions.index.page_title"), jobseekers_subscriptions_path, class: "moj-primary-navigation__link", aria: { current: ("page" if current_page?(jobseekers_subscriptions_path)) }
+            li.moj-primary-navigation__item
+              = link_to t("jobseekers.accounts.show.page_title"), jobseekers_account_path, class: "moj-primary-navigation__link", aria: { current: ("page" if current_page?(jobseekers_account_path)) }

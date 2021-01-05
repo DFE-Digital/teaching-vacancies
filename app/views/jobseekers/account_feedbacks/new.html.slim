@@ -1,0 +1,18 @@
+- content_for :page_title_prefix, t(".title")
+
+= render GovukComponent::BackLink.new(text: t("buttons.back"), href: @account_feedback.back_link)
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @account_feedback, url: jobseekers_account_feedback_path do |f|
+      = f.hidden_field :back_link
+
+      = f.govuk_error_summary
+
+      h1.govuk-heading-xl = t(".title")
+
+      = f.govuk_collection_radio_buttons :rating, AccountFeedback.ratings.keys, :to_s
+
+      = f.govuk_text_area :suggestions, label: { size: "s" }, rows: 10, max_chars: 1200
+
+      = f.govuk_submit t("buttons.submit")
