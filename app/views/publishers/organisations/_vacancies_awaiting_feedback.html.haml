@@ -2,20 +2,6 @@
   %div{ class: "govuk-!-margin-bottom-4" }
     %p.govuk-body#awaiting_feedback_intro=t("jobs.awaiting_feedback_intro")
 
-    -# %ul.govuk-list#awaiting_feedback{ class: "govuk-!-margin-top-4" }
-    -#   %li.job-title-table-header= table_header_sort_by(t("jobs.job_title"), column: "job_title", sort: sort)
-    -#   - if organisation.is_a?(SchoolGroup)
-    -#     %li= table_header_sort_by(t("jobs.location"), column: "readable_job_location", sort: sort)
-    -#   %li= table_header_sort_by(t("jobs.expired_on"), column: "expires_on", sort: sort)
-
-    - if vacancies.count > 1
-      = form_for filters_form, as: "", url: organisation_managed_organisations_path, method: :get do |f|
-        = f.govuk_collection_select :jobs_sort,
-          Organisation::JOB_SORTING_OPTIONS_AWAITING_FEEDBACK,
-          :last,
-          :first,
-          label: { text: t("jobs.sort_by.label"), size: "s", class: "govuk-label inline govuk-!-margin-right-2" }
-
   .expired__vacancy-form
     - vacancies.each do |vacancy|
       = render "publishers/organisations/vacancy_awaiting_feedback", vacancy: vacancy, organisation: organisation

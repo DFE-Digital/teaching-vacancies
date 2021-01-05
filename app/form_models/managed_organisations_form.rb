@@ -2,14 +2,16 @@ class ManagedOrganisationsForm
   include ActiveModel::Model
   include OrganisationHelper
 
-  attr_accessor :managed_organisations, :managed_school_ids, :jobs_sort
+  attr_accessor :managed_organisations, :managed_school_ids
+
+  attr_reader :sort_column
 
   validate :at_least_one_option_selected
 
   def initialize(params = {})
     @managed_organisations = params[:managed_organisations]
     @managed_school_ids = params[:managed_school_ids]
-    @jobs_sort = params[:jobs_sort]
+    @sort_column = params[:sort_column]
   end
 
 private

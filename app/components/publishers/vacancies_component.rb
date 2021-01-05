@@ -22,6 +22,10 @@ class Publishers::VacanciesComponent < ViewComponent::Base
     @selected_type == vacancy_type
   end
 
+  def sortable
+    @vacancies.count > 1 && Organisation::JOB_SORTING_OPTIONS[@selected_type]&.count
+  end
+
   def heading
     if @organisation.group_type == "local_authority"
       t("schools.jobs.local_authority_index_html", organisation: @organisation.name)

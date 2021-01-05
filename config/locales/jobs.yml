@@ -100,13 +100,25 @@ en:
           <span class="govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize">%{location}</span>
 
     sort_by:
-      label: Sort by
-      most_relevant: most relevant first
-      publish_on:
-        descending: newest job listing
+      expires_on:
+        ascending: Closing date (Oldest)
+        descending: Closing date (Soonest)
       expires_at:
         descending: most time to apply
         ascending: least time to apply
+      job_title:
+        ascending: Job title (A to Z)
+        descending: Job title (Z to A)
+      label: Sort by
+      location:
+        ascending: Location (A to Z)
+        descending: Location (Z to A)
+      most_relevant: most relevant first
+      published_date:
+        ascending: Date to be published (Oldest)
+        descending: Date to be published (Soonest)
+      publish_on:
+        descending: newest job listing
       submit: Sort
 
     alert:
@@ -293,7 +305,7 @@ en:
     expired_jobs: Expired jobs
     expired_jobs_with_count_html: Expired jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
     awaiting_feedback_jobs: Jobs awaiting feedback
-    awaiting_feedback_jobs_with_count_html: Jobs awaiting feedback <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
+    awaiting_feedback_jobs_with_count_html: Awaiting feedback <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
     no_draft_jobs: You currently have no draft jobs
     no_expired_jobs: You currently have no expired jobs
     no_pending_jobs: You currently have no scheduled jobs

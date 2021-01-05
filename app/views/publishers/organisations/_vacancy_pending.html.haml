@@ -1,15 +1,3 @@
--# %tr.govuk-table__row.vacancy[vacancy]
--#   %td.govuk-table__cell= link_to vacancy.job_title, vacancy.preview_path, class: 'govuk-link view-vacancy-link'
--#   - if organisation.is_a?(SchoolGroup)
--#     %td.govuk-table__cell#vacancy_location= vacancy.readable_job_location
--#   %td.govuk-table__cell= vacancy.publish_on
--#   %td.govuk-table__cell= vacancy.expires_on
--#   %td.govuk-table__cell 
--#     %ul.govuk-list
--#       %li= link_to t('jobs.edit_link'), vacancy.edit_path, class: 'govuk-link'
--#       %li= link_to t('jobs.copy_link'), vacancy.copy_path, class: 'govuk-link', method: :get
--#       %li= link_to t('jobs.delete_link'), vacancy.delete_path, class: 'govuk-link', method: :delete, data: { confirm: t('jobs.are_you_sure', job_title: vacancy.job_title) }
-
 .card[vacancy]
   .card__contents
     %dl.card__title

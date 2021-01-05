@@ -11,34 +11,37 @@ class Organisation < ApplicationRecord
   alias_attribute :data, :gias_data
 
   JOB_SORTING_OPTIONS_PUBLISHED = [
-    ["Closing date (Soonest)", "expires_on"],
-    ["Job title (A to Z)", "job_title"],
-    ["Location (A to Z)", "readable_job_location"],
+    [I18n.t("jobs.sort_by.expires_on.ascending"), "expires_on"],
+    [I18n.t("jobs.sort_by.job_title.ascending"), "job_title"],
+    [I18n.t("jobs.sort_by.location.ascending"), "readable_job_location"],
   ].freeze
 
   JOB_SORTING_OPTIONS_PENDING = [
-    ["Date to be published (Soonest)", "publish_on"],
-    ["Closing date (Soonest)", "expires_on"],
-    ["Job title (A to Z)", "job_title"],
-    ["Location (A to Z)", "readable_job_location"],
+    [I18n.t("jobs.sort_by.published_date.ascending"), "publish_on"],
+    [I18n.t("jobs.sort_by.expires_on.ascending"), "expires_on"],
+    [I18n.t("jobs.sort_by.job_title.ascending"), "job_title"],
+    [I18n.t("jobs.sort_by.location.ascending"), "readable_job_location"],
   ].freeze
 
   JOB_SORTING_OPTIONS_DRAFT = [
-    ["Date to be published (Soonest)", "publish_on"],
-    ["Closing date (Soonest)", "expires_on"],
-    ["Job title (A to Z)", "job_title"],
-    ["Location (A to Z)", "readable_job_location"],
+    [I18n.t("jobs.sort_by.published_date.ascending"), "publish_on"],
+    [I18n.t("jobs.sort_by.expires_on.ascending"), "expires_on"],
+    [I18n.t("jobs.sort_by.job_title.ascending"), "job_title"],
+    [I18n.t("jobs.sort_by.location.ascending"), "readable_job_location"],
   ].freeze
 
   JOB_SORTING_OPTIONS_EXPIRED = [
-    ["Expired (most recent)", "expires_on"],
-    ["Job title (A to Z)", "job_title"],
-    ["Location (A to Z)", "readable_job_location"],
+    [I18n.t("jobs.sort_by.expires_on.ascending"), "expires_on"],
+    [I18n.t("jobs.sort_by.job_title.ascending"), "job_title"],
+    [I18n.t("jobs.sort_by.location.ascending"), "readable_job_location"],
   ].freeze
 
-  JOB_SORTING_OPTIONS_AWAITING_FEEDBACK = [
-    ["Not sure of options yet", "publish_on"],
-  ].freeze
+  JOB_SORTING_OPTIONS = {
+    published: JOB_SORTING_OPTIONS_PUBLISHED,
+    pending: JOB_SORTING_OPTIONS_PENDING,
+    draft: JOB_SORTING_OPTIONS_DRAFT,
+    expired: JOB_SORTING_OPTIONS_EXPIRED,
+  }.freeze
 
   def all_vacancies
     ids = is_a?(School) ? [id] : [id] + schools.pluck(:id)
