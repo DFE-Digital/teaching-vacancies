@@ -1,15 +1,13 @@
 class ApplicationController < ActionController::Base
   SUSPICIOUS_RECAPTCHA_THRESHOLD = 0.5
 
-  before_action :redirect_to_domain
-
   add_flash_types :success, :danger
 
   protect_from_forgery with: :exception, except: :not_found
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
-  before_action :set_headers
+  before_action :redirect_to_canonical_domain, :set_headers
   before_action { strip_nested_param_whitespaces(request.params) }
 
   after_action :trigger_page_visited_event, unless: :request_is_healthcheck?
@@ -17,7 +15,6 @@ class ApplicationController < ActionController::Base
   helper_method :cookies_preference_set?, :referred_from_jobs_path?, :utm_parameters
 
   include Publishers::AuthenticationConcerns
-  include Ip
 
   def check
     render json: { status: "OK" }, status: :ok
@@ -31,12 +28,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def strip_empty_checkboxes(fields, form_key = nil)
-    params_to_strip = params[form_key].present? ? params[form_key] : params
-    fields.each do |field|
-      params_to_strip[field] = params_to_strip[field]&.reject(&:blank?) if params_to_strip[field].is_a?(Array)
-    end
-  end
+private
 
   def cookies_preference_set?
     cookies["consented-to-cookies"].present?
@@ -51,21 +43,19 @@ class ApplicationController < ActionController::Base
     params.permit(:utm_source, :utm_medium, :utm_campaign, :utm_term, :utm_content)
   end
 
-protected
-
-  def after_sign_out_path_for(_resource)
-    new_jobseeker_session_path
+  def strip_empty_checkboxes(fields, form_key = nil)
+    params_to_strip = params[form_key].present? ? params[form_key] : params
+    fields.each do |field|
+      params_to_strip[field] = params_to_strip[field]&.reject(&:blank?) if params_to_strip[field].is_a?(Array)
+    end
   end
-
-private
 
   def append_info_to_payload(payload)
     super
-    payload[:remote_ip] = request_ip
     payload[:session_id] = "#{session.id.to_s[0..7]}…" if session.id
   end
 
-  def redirect_to_domain
+  def redirect_to_canonical_domain
     if request_host_is_invalid?
       redirect_to status: 301, host: DOMAIN
     end
@@ -100,25 +90,11 @@ private
     object
   end
 
-  def replace_devise_notice_flash_with_success!
-    flash[:success] = flash.discard(:notice) if flash[:notice].present?
-  end
-
-  def remove_devise_flash!
-    flash.discard(:notice) if flash[:notice].present?
-    flash.discard(:success) if flash[:success].present?
-  end
-
   def request_event
     @request_event ||= RequestEvent.new(request, response, session, current_jobseeker, current_publisher_oid)
   end
 
   def trigger_page_visited_event
     request_event.trigger(:page_visited)
-  end
-
-  def clear_flash_and_render(view)
-    flash.clear
-    render view
   end
 end
