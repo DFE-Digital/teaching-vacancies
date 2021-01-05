@@ -103,17 +103,45 @@ RSpec.describe AlertMailer, type: :mailer do
     end
   end
 
-  context "when the subscription email matches a jobseeker account" do
-    let!(:jobseeker) { create(:jobseeker, email: email) }
-
-    it "does not display create account section" do
-      expect(body).not_to include(I18n.t("alert_mailer.alert.create_account.heading"))
+  describe "create account section" do
+    before do
+      allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(jobseeker_accounts_enabled?)
     end
-  end
 
-  context "when the subscription email does not match a jobseeker account" do
-    it "displays create account section" do
-      expect(body).to include(I18n.t("alert_mailer.alert.create_account.heading"))
+    context "when JobseekerAccountsFeature is enabled" do
+      let(:jobseeker_accounts_enabled?) { true }
+
+      context "when the subscription email matches a jobseeker account" do
+        let!(:jobseeker) { create(:jobseeker, email: email) }
+
+        it "does not display create account section" do
+          expect(body).not_to include(I18n.t("alert_mailer.alert.create_account.heading"))
+        end
+      end
+
+      context "when the subscription email does not match a jobseeker account" do
+        it "displays create account section" do
+          expect(body).to include(I18n.t("alert_mailer.alert.create_account.heading"))
+        end
+      end
+    end
+
+    context "when JobseekerAccountsFeature is disabled" do
+      let(:jobseeker_accounts_enabled?) { false }
+
+      context "when the subscription email matches a jobseeker account" do
+        let!(:jobseeker) { create(:jobseeker, email: email) }
+
+        it "does not display create account section" do
+          expect(body).not_to include(I18n.t("alert_mailer.alert.create_account.heading"))
+        end
+      end
+
+      context "when the subscription email does not match a jobseeker account" do
+        it "does not display create account section" do
+          expect(body).not_to include(I18n.t("alert_mailer.alert.create_account.heading"))
+        end
+      end
     end
   end
 end
