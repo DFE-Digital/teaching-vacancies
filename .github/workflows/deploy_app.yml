@@ -15,7 +15,7 @@ env:
 
 jobs:
   deploy-app:
-    name: Deploy app to environment
+    name: Deploy ${{ github.event.inputs.tag }} to ${{ github.event.inputs.environment }}
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
