@@ -33,7 +33,7 @@
 \
 \---
 \
-- unless @jobseeker_subscription
+- if JobseekerAccountsFeature.enabled? && !@jobseeker_subscription
   \# #{t('.create_account.heading')}
   = t('.create_account.intro', link_to: sign_up_link(@subscription))
   \
