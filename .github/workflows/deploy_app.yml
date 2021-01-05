@@ -14,6 +14,17 @@ env:
  DOCKERHUB_REPOSITORY: dfedigital/teaching-vacancies
 
 jobs:
+  turnstyle:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 20
+    steps:
+    - uses: softprops/turnstyle@v1
+      name: Check workflow concurrency
+      with:
+        poll-interval-seconds: 20
+        same-branch-only: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   deploy-app:
     name: Deploy ${{ github.event.inputs.tag }} to ${{ github.event.inputs.environment }}
     runs-on: ubuntu-20.04
