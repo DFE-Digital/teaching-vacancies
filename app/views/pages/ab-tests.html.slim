@@ -1,0 +1,12 @@
+- content_for :page_title_prefix, t("static_pages.ab_tests.page_title")
+
+h1.govuk-heading-l = t("static_pages.ab_tests.page_title")
+
+p.govuk-body = t("static_pages.ab_tests.introduction")
+
+dl.govuk-summary-list
+  - current_ab_variants.each do |test, variant|
+    .govuk-summary-list__row
+      dt.govuk-summary-list__key = test
+      dd.govuk-summary-list__value
+        span.govuk-tag.govuk-tag--blue = variant

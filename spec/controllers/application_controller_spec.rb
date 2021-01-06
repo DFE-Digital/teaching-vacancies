@@ -79,4 +79,33 @@ RSpec.describe ApplicationController, type: :controller do
       expect(controller.params[:test_form][:array_field]).to eq %w[3 4]
     end
   end
+
+  describe "AB testing helpers" do
+    let(:ab_tests) { double(AbTests, current_variants: {}) }
+
+    before do
+      allow(AbTests).to receive(:new).and_return(ab_tests)
+      get :test_action, params: params
+    end
+
+    describe "#ab_variant_for" do
+      context "when no override is given" do
+        let(:params) { {} }
+
+        it "returns the variant as determined by AbTests" do
+          expect(ab_tests).to receive(:variant_for).with(:foo).and_return(:bar)
+          expect(controller.view_context.ab_variant_for(:foo)).to eq(:bar)
+        end
+      end
+
+      context "when an override is given" do
+        let(:params) { { ab_test_override: { foo: :baz } } }
+
+        it "returns the variant as determined by AbTests" do
+          expect(ab_tests).not_to receive(:variant_for).with(:foo)
+          expect(controller.view_context.ab_variant_for(:foo)).to eq(:baz)
+        end
+      end
+    end
+  end
 end

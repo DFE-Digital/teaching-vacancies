@@ -33,6 +33,12 @@ RSpec.describe RequestEvent do
   let(:current_publisher_oid) { 1234 }
   let(:jobseeker) { instance_double(Jobseeker, id: 4321) }
 
+  let(:ab_tests) { double(AbTests, current_variants: { foo: :bar }) }
+
+  before do
+    allow(AbTests).to receive(:new).with(session).and_return(ab_tests)
+  end
+
   describe "#trigger" do
     let(:expected_data) do
       {
@@ -45,6 +51,7 @@ RSpec.describe RequestEvent do
         request_method: "DELETE",
         request_path: "/foo/bar",
         request_query: "foo=bar&baz=bat",
+        request_ab_tests: [{ test: :foo, variant: :bar }],
         response_content_type: "image/gif",
         response_status: 418,
         user_anonymised_request_identifier: "xeben-tocep-fadin-tezyg-rapic-begyn-hiraz-pedus-revuk-fisif-lypeh-tohim-lefyb-zolon-nilyk-sigud-coxux",

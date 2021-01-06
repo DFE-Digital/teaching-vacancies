@@ -1,0 +1,30 @@
+# Describes currently running AB tests
+#
+# A test has a name as its key, and consists of a mapping of variants to weights, e.g.:
+#
+#    2021_01_another_testing_test:
+#      foo: 1
+#      bar: 2
+#
+# In this example, variant `bar` is twice as likely to be selected for any given user
+# as variant `foo`.
+#
+# Things to bear in mind:
+#   - Tests must have unique names, including any past tests
+#   - Weights must be integers, avoid having too big weights as this may become inefficient
+#   - Variants are persisted against a Rails session, so once an AB test has been deployed,
+#     you must not remove/rename any existing variants. If you want a variant to receive no
+#     new participants, set its weight to 0 instead.
+#   - You need to restart your Rails server when changing this file in development
+shared:
+  # A fake test to test (ha!) the AB testing functionality
+  2021_01_testing_test:
+    red: 1
+    blue: 1
+    yellow: 1
+    green: 3
+  # Another fake test with no real consequences
+  2021_01_another_testing_test:
+    foo: 1
+    bar: 1
+    baz: 1
