@@ -124,5 +124,5 @@ jobs:
         SLACK_CHANNEL: twd_tv_dev
         SLACK_USERNAME: CI Deployment
         SLACK_TITLE: Deployment ${{ job.status }}
-        SLACK_MESSAGE: 'Review app for https://github.com/DFE-Digital/teaching-vacancies/pull/2516/ deployed to https://teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital - ${{ job.status }}'
+        SLACK_MESSAGE: 'Review app for https://github.com/DFE-Digital/teaching-vacancies/pull/${{ github.event.number }}/ deployed to https://teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital - ${{ job.status }}'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
