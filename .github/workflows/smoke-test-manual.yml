@@ -7,10 +7,13 @@ on:
         description: 'Environment'
         required: true
         default: 'staging'
+      sha:
+        description: 'GitHub SHA'
+        required: true
 
 jobs:
   smoke-test-manual-job:
-    name: Smoke Test Manual Job
+    name: Smoke Test ${{ github.event.inputs.sha }} on ${{ github.event.inputs.environment }}
 
     runs-on: ubuntu-20.04
 
@@ -42,5 +45,5 @@ jobs:
           SLACK_USERNAME: Smoke Test
           SLACK_ICON_EMOJI: ':cry:'
           SLACK_TITLE: Smoke test failed
-          SLACK_MESSAGE: '${{ github.event.inputs.environment }} website smoke test has failed !channel'
+          SLACK_MESSAGE: 'Smoke Test ${{ github.event.inputs.sha }} on ${{ github.event.inputs.environment }} has failed !channel'
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
