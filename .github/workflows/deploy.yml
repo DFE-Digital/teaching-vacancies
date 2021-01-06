@@ -112,7 +112,7 @@ jobs:
       with:
         workflow: Smoke Test Manual # Workflow name
         token: ${{ secrets.PERSONAL_TOKEN }}
-        inputs: '{"environment": "staging"}, "sha": "${{ github.sha }}"}'
+        inputs: '{"environment": "staging", "sha": "${{ github.sha }}"}'
 
     - name: Wait for smoke test
       id: wait_for_smoke_test
