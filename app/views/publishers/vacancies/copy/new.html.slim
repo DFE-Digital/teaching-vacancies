@@ -5,7 +5,7 @@
 
     h1.govuk-heading-m = t("jobs.copy_job_title", job_title: @copy_form.vacancy.job_title)
 
-    = link_to t("buttons.cancel_copy"), organisation_path, class: "govuk-back-link"
+    = govuk_back_link text: t("buttons.cancel_copy"), href: organisation_path
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds

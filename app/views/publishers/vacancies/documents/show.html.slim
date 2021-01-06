@@ -7,7 +7,7 @@
 - if @vacancy.state != "create"
   = render "publishers/vacancies/vacancy_form_partials/cancel_and_return_link"
 - else
-  = link_to t("buttons.back"), organisation_job_build_path(@vacancy.id, :supporting_documents), class: "govuk-back-link"
+  = govuk_back_link text: t("buttons.back"), href: organisation_job_build_path(@vacancy.id, :supporting_documents)
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
