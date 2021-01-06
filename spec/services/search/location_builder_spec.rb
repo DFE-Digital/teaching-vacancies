@@ -100,5 +100,16 @@ RSpec.describe Search::LocationBuilder do
         end
       end
     end
+
+    context "when a nationwide location is specified" do
+      let(:location) { Search::LocationBuilder::NATIONWIDE_LOCATIONS.sample }
+
+      it "does not set location filters" do
+        expect(subject.location).to be nil
+        expect(subject.location_category).to be nil
+        expect(subject.location_polygon).to be nil
+        expect(subject.location_filter).to eq({})
+      end
+    end
   end
 end
