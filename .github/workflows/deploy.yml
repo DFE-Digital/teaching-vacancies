@@ -112,14 +112,14 @@ jobs:
       with:
         workflow: Smoke Test Manual # Workflow name
         token: ${{ secrets.PERSONAL_TOKEN }}
-        inputs: '{"environment": "staging"}'
+        inputs: '{"environment": "staging"}, "sha": "${{ github.sha }}"}'
 
     - name: Wait for smoke test
       id: wait_for_smoke_test
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
         token: ${{ secrets.PERSONAL_TOKEN }}
-        checkName: Smoke Test Manual Job # Job name within workflow
+        checkName: Smoke Test ${{ github.sha }} on staging # Job name within workflow
         ref: ${{ github.ref }}
         timeoutSeconds: 300
         intervalSeconds: 15
