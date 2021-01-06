@@ -39,7 +39,6 @@ RSpec.describe "Hiring staff can preview a vacancy" do
       click_on I18n.t("buttons.back_to_manage_jobs")
       expect(page).to have_current_path(jobs_with_type_organisation_path("draft", from_review: vacancy.id))
       expect(page).to have_content(I18n.t("schools.jobs.index", organisation: school.name))
-      expect(page).to have_content(I18n.t("buttons.create_job"))
     end
   end
 

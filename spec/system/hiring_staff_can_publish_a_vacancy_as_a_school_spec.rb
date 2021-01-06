@@ -16,7 +16,7 @@ RSpec.describe "Creating a vacancy" do
     expect(page).to have_content(/#{school.address}/)
     expect(page).to have_content(/#{school.town}/)
 
-    click_link "Create a job listing"
+    click_on I18n.t("buttons.create_job")
 
     expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 7))
   end
