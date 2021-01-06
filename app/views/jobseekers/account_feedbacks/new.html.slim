@@ -1,6 +1,6 @@
 - content_for :page_title_prefix, t(".title")
 
-= render GovukComponent::BackLink.new(text: t("buttons.back"), href: @account_feedback.back_link)
+= govuk_back_link text: t("buttons.back"), href: @account_feedback.back_link
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds

@@ -1,6 +1,6 @@
 - content_for :page_title_prefix, @update_password ? t(".edit_password_title") : t(".edit_email_title")
 
-= link_to t("buttons.back"), jobseekers_account_path, class: "govuk-back-link"
+= govuk_back_link text: t("buttons.back"), href: jobseekers_account_path
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds

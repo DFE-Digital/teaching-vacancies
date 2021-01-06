@@ -6,7 +6,7 @@
     h2.govuk-heading-m
       = @organisation.name
 
-    = link_to t("buttons.back"), @redirect_path, class: "govuk-back-link"
+    = govuk_back_link text: t("buttons.back"), href: @redirect_path
 
     = form_for @organisation_form, url: organisation_school_path(@organisation), method: :patch do |f|
       = f.govuk_error_summary
