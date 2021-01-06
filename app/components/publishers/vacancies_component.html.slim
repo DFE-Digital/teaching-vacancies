@@ -14,7 +14,7 @@
           = t("buttons.hide_filters")
         span.govuk-body class="govuk-!-margin-left-3 filters-applied-text"
           = filters_applied_text
-      = link_to t("buttons.create_job"), organisation_jobs_path, method: :post, class: "govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-0 float-right"
+      = govuk_button_to t("buttons.create_job"), organisation_jobs_path, class: "govuk-!-margin-bottom-0 govuk-!-margin-top-0", form_class: "float-right"
   .moj-scrollable-pane.moj-scrollable-pane-shadow
     .moj-scrollable-pane__wrapper
       .govuk-tabs.desktop-container-width
