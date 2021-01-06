@@ -13,6 +13,11 @@ export_tables:
   class: 'ExportTablesToBigQueryJob'
   queue: export_tables
 
+import_polygon_data:
+  cron: '0 23 * * 0'
+  class: 'ImportPolygonDataJob'
+  queue: import_polygon_data
+
 import_school_data:
   cron: '0 07 * * *'
   class: 'ImportSchoolDataJob'
