@@ -32,11 +32,6 @@ jobs:
     - uses: actions/checkout@v2
       name: Checkout Code
 
-    - name: Pin Terraform version
-      uses: hashicorp/setup-terraform@v1.3.2
-      with:
-        terraform_version: 0.13.4
-
     - name: Set environment variables
       id: set_env_vars
       run: |
@@ -56,6 +51,11 @@ jobs:
           && echo Data in /teaching-vacancies/staging looks valid
         bin/run-in-env -t /teaching-vacancies/production -o quiet \
           && echo Data in /teaching-vacancies/production looks valid
+
+    - name: Terraform pin version
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 0.13.5
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
@@ -151,9 +151,9 @@ jobs:
         TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
       run: |
         export TF_VAR_paas_app_docker_image=${{ env.DOCKERHUB_REPOSITORY }}:${{ env.TAG }}
-        cd terraform/monitoring
         terraform init -upgrade=true -reconfigure -input=false
         terraform apply -input=false -auto-approve
+      working-directory: terraform/monitoring
 
     - name: Send job status message to twd_tv_dev channel
       if: ${{ always() && github.ref == 'refs/heads/master' }}

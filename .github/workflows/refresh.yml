@@ -1,4 +1,4 @@
-name: Refresh environment 
+name: Refresh environment
 
 on:
   workflow_dispatch:
@@ -19,9 +19,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Pin Terraform version
-        uses: hashicorp/setup-terraform@v1.3.2
+        uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: 0.13.4
+          terraform_version: 0.13.5
           terraform_wrapper: false
 
       - name: Get current Docker tag from Terraform output
@@ -32,10 +32,10 @@ jobs:
           TF_VAR_paas_user: ${{ secrets.CF_USERNAME }}
           TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
         run: |
-          cd terraform/app
           terraform init -reconfigure -input=false
           terraform workspace select ${{ github.event.inputs.environment }}
           echo ::set-output name=tag::$(terraform output docker_tag)
+        working-directory: terraform/app
 
       - name: Trigger Deploy App Workflow
         uses: benc-uk/workflow-dispatch@v1.1
@@ -53,7 +53,7 @@ jobs:
           ref: ${{ github.ref }}
           timeoutSeconds: 300
           intervalSeconds: 15
-    
+
       - name: Send job status message to twd_tv_dev channel
         if: ${{ always() && github.ref == 'refs/heads/master' }}
         uses: rtCamp/action-slack-notify@v2.1.2

@@ -33,9 +33,9 @@ jobs:
       name: Checkout Code
 
     - name: Pin Terraform version
-      uses: hashicorp/setup-terraform@v1.3.2
+      uses: hashicorp/setup-terraform@v1
       with:
-        terraform_version: 0.13.4
+        terraform_version: 0.13.5
 
     - name: Set environment variables for review
       if: ${{ startsWith(github.event.inputs.environment, 'review') }}
@@ -78,7 +78,7 @@ jobs:
         TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
       run: |
         export TF_VAR_paas_app_docker_image=${{ env.DOCKERHUB_REPOSITORY }}:${{ github.event.inputs.tag }}
-        cd terraform/app
         terraform init -reconfigure -input=false ${{ env.BACKEND_CONFIG }}
         terraform workspace select ${{ github.event.inputs.environment }} || terraform workspace new ${{ github.event.inputs.environment }}
         terraform apply -var-file ../workspace-variables/${{ env.VAR_FILE }}.tfvars -auto-approve -input=false
+      working-directory: terraform/app
