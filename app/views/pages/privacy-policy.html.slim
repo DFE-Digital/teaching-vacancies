@@ -50,7 +50,7 @@
       = t("static_pages.privacy_policy.your_rights.line_3_html", gdpr_url: govuk_link_to(t("static_pages.privacy_policy.your_rights.gdpr"), "https://ico.org.uk/for-organisations/guide-to-the-general-data-protection-regulation-gdpr/", target: "_blank"))
 
     h2.govuk-heading-m = t("static_pages.privacy_policy.withdrawal_of_consent.title")
-    p.govuk-body = t("static_pages.privacy_policy.withdrawal_of_consent.line_1_html", mailto: mail_to(t("help.email"), t("help.email"), class: "govuk-link"))
+    p.govuk-body = t("static_pages.privacy_policy.withdrawal_of_consent.line_1_html", mailto: govuk_mail_to(t("help.email"), t("help.email")))
     p.govuk-body = t("static_pages.privacy_policy.withdrawal_of_consent.line_2_html", ico_url: govuk_link_to(t("static_pages.privacy_policy.withdrawal_of_consent.ico"), "https://ico.org.uk/concerns/", target: "_blank"))
 
     h2.govuk-heading-m = t("static_pages.privacy_policy.last_updated.title")

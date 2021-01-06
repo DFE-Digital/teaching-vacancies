@@ -12,7 +12,7 @@ dl.app-check-your-answers.app-check-your-answers--short
     dt.app-check-your-answers__question.first-question#contact_email
       h4.govuk-heading-s = t("jobs.contact_email")
     dd.app-check-your-answers__answer.first-question
-      = mail_to "Job contact email", @vacancy.contact_email, class: "govuk-link", "aria-label": t("jobs.aria_labels.contact_email_link", email: @vacancy.contact_email)
+      = govuk_mail_to "Job contact email", @vacancy.contact_email, "aria-label": t("jobs.aria_labels.contact_email_link", email: @vacancy.contact_email)
 
   .app-check-your-answers__contents
     dt.app-check-your-answers__question#contact_number

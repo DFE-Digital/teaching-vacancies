@@ -6,4 +6,4 @@ ul.govuk-list.govuk-list--bullet
   - t("error_pages.unauthorised.options").each do |option|
     li = option.html_safe
 p = t("error_pages.unauthorised.footer")
-p You can email #{mail_to t("help.email"), t("help.email"), class: "govuk-link"} if the problem persists.
+p You can email #{govuk_mail_to t("help.email"), t("help.email")} if the problem persists.
