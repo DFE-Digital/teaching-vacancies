@@ -19,6 +19,7 @@
   - [email_feedback_prompt, 1]
   - [export_tables, 1]
   - [export_users, 1]
+  - [import_polygon_data, 1]
   - [import_school_data, 1]
   - [import_trust_data, 1]
   - [refresh_cached_vacancy_statistics, 1]
