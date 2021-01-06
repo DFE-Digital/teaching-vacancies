@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Search::RadiusSuggestionsBuilder do
-  let(:subject) { described_class.new(search_params, radius) }
+  let(:subject) { described_class.new(radius, search_params) }
 
   describe "#get_radius_suggestions" do
     let(:search_params) do
@@ -16,57 +16,29 @@ RSpec.describe Search::RadiusSuggestionsBuilder do
 
     let(:arguments_for_algolia) { { aroundLatLng: Geocoder::DEFAULT_STUB_COORDINATES, hitsPerPage: 10, page: 1 } }
 
-    context "when there are 5 wider radii" do
-      let(:radius) { "1" }
-      let(:vacancies_1) { double("vacancies") }
-      let(:vacancies_2) { double("vacancies") }
-      let(:vacancies_3) { double("vacancies") }
-      let(:vacancies_4) { double("vacancies") }
-      let(:vacancies_5) { double("vacancies") }
-
-      before do
+    before do
+      search_hits.zip(wider_radii).each do |search_hits_count, radius_option|
         mock_algolia_search(
-          vacancies_1, 1, "maths",
-          arguments_for_algolia.merge(aroundRadius: convert_miles_to_metres(5))
-        )
-        mock_algolia_search(
-          vacancies_2, 1, "maths",
-          arguments_for_algolia.merge(aroundRadius: convert_miles_to_metres(10))
-        )
-        mock_algolia_search(
-          vacancies_3, 3, "maths",
-          arguments_for_algolia.merge(aroundRadius: convert_miles_to_metres(15))
-        )
-        mock_algolia_search(
-          vacancies_4, 4, "maths",
-          arguments_for_algolia.merge(aroundRadius: convert_miles_to_metres(20))
-        )
-        mock_algolia_search(
-          vacancies_5, 7, "maths",
-          arguments_for_algolia.merge(aroundRadius: convert_miles_to_metres(25))
+          double("vacancies"), search_hits_count, "maths",
+          arguments_for_algolia.merge(aroundRadius: convert_miles_to_metres(radius_option))
         )
       end
+    end
+
+    context "when there are 5 wider radii" do
+      let(:radius) { "1" }
+      let(:wider_radii) { [5, 10, 15, 20, 25] }
+      let(:search_hits) { [1, 1, 3, 4, 7] }
 
       it "sets the correct radius suggestions" do
         expect(subject.radius_suggestions).to eq([[5, 1], [15, 3], [20, 4], [25, 7]])
       end
     end
 
-    context "when there are less than 5 wider radii" do
+    context "when there are fewer than 5 wider radii" do
       let(:radius) { "90" }
-      let(:vacancies_1) { double("vacancies") }
-      let(:vacancies_2) { double("vacancies") }
-
-      before do
-        mock_algolia_search(
-          vacancies_1, 5, "maths",
-          arguments_for_algolia.merge(aroundRadius: convert_miles_to_metres(100))
-        )
-        mock_algolia_search(
-          vacancies_2, 9, "maths",
-          arguments_for_algolia.merge(aroundRadius: convert_miles_to_metres(200))
-        )
-      end
+      let(:wider_radii) { [100, 200] }
+      let(:search_hits) { [5, 9] }
 
       it "sets the correct radius suggestions" do
         expect(subject.radius_suggestions).to eq([[100, 5], [200, 9]])

@@ -192,7 +192,7 @@ RSpec.describe Search::SearchBuilder do
 
       context "when vacancies is empty" do
         it "calls the radius suggestions builder" do
-          expect(Search::RadiusSuggestionsBuilder).to receive(:new).with(search_params, radius).and_call_original
+          expect(Search::RadiusSuggestionsBuilder).to receive(:new).with(radius, search_params).and_call_original
           subject
         end
       end

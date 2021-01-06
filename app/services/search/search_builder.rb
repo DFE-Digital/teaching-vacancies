@@ -49,7 +49,7 @@ private
 
   def build_suggestions
     if @point_coordinates.present?
-      @wider_search_suggestions = Search::RadiusSuggestionsBuilder.new(search_params, @params_hash[:radius]).radius_suggestions
+      @wider_search_suggestions = Search::RadiusSuggestionsBuilder.new(@params_hash[:radius], search_params).radius_suggestions
     elsif @location_search.location_polygon.present?
       @wider_search_suggestions = Search::BufferSuggestionsBuilder.new(@params_hash[:location], search_params).buffer_suggestions
     end

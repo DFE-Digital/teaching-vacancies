@@ -5,7 +5,7 @@ class Search::RadiusSuggestionsBuilder
 
   attr_reader :radius, :radius_suggestions, :search_params
 
-  def initialize(search_params, radius)
+  def initialize(radius, search_params)
     @radius = radius.to_i
     @search_params = search_params
     get_radius_suggestions
