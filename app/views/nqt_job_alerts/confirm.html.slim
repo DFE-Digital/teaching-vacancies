@@ -3,7 +3,7 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     .nqt-job-alert-success-gtm
-      = render GovukComponent::Panel.new(title: t("nqt_job_alerts.confirm.splash.heading"), body: t("nqt_job_alerts.confirm.splash.message", email: @nqt_job_alerts_form.email))
+      = govuk_panel title: t("nqt_job_alerts.confirm.splash.heading"), body: t("nqt_job_alerts.confirm.splash.message", email: @nqt_job_alerts_form.email)
 
     h2.govuk-heading-l = t("nqt_job_alerts.confirm.heading")
     p.govuk-body = t("nqt_job_alerts.confirm.intro")
