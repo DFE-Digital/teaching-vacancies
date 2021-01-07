@@ -3,7 +3,9 @@ class LocationSuggestion
   NUMBER_OF_SUGGESTIONS = 5
 
   class InsufficientLocationInput < StandardError; end
+
   class MissingLocationInput < StandardError; end
+
   class GooglePlacesAutocompleteError < StandardError; end
 
   attr_accessor :location_input

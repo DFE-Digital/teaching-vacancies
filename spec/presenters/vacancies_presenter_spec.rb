@@ -11,7 +11,8 @@ RSpec.describe VacanciesPresenter do
 
       allow(vacancies_presenter).to receive(:decorated_collection).and_return(decorated_vacancies)
       expect(decorated_vacancies).to receive(:each)
-      vacancies_presenter.each {}
+
+      vacancies_presenter.each
     end
   end
 

@@ -2,8 +2,8 @@ require "rails_helper"
 require "sanitize"
 
 RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: true do
-  NOTIFICATION_BADGE_SELECTOR = "[data-test='expired-vacancies-with-feedback-outstanding']".freeze
-  JOB_TITLE_LINK_SELECTOR = "#job-title.view-vacancy-link".freeze
+  let(:notification_badge_selector) { "[data-test='expired-vacancies-with-feedback-outstanding']" }
+  let(:job_title_link_selector) { "#job-title.view-vacancy-link" }
 
   let(:school) { create(:school) }
 
@@ -27,7 +27,7 @@ RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: tru
     scenario "hiring staff can see notification badge" do
       visit organisation_path
 
-      expect(page).to have_selector(NOTIFICATION_BADGE_SELECTOR, text: 3)
+      expect(page).to have_selector(notification_badge_selector, text: 3)
     end
 
     scenario "hiring staff can see notice of vacancies awaiting feedback" do
@@ -41,10 +41,10 @@ RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: tru
     scenario "continously displays the number of vacancies awaiting feedback" do
       visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
-      expect(page).to have_selector(JOB_TITLE_LINK_SELECTOR, count: 3)
-      expect(page).to have_selector(JOB_TITLE_LINK_SELECTOR, text: vacancy.job_title)
-      expect(page).to have_selector(JOB_TITLE_LINK_SELECTOR, text: another_vacancy.job_title)
-      expect(page).to have_selector(JOB_TITLE_LINK_SELECTOR, text: third_vacancy.job_title)
+      expect(page).to have_selector(job_title_link_selector, count: 3)
+      expect(page).to have_selector(job_title_link_selector, text: vacancy.job_title)
+      expect(page).to have_selector(job_title_link_selector, text: another_vacancy.job_title)
+      expect(page).to have_selector(job_title_link_selector, text: third_vacancy.job_title)
 
       submit_feedback_for(vacancy)
       within("div.govuk-notification--notice") do
@@ -126,14 +126,14 @@ RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: tru
     scenario "when all feedback has been submitted" do
       visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
-      expect(page).to have_selector(JOB_TITLE_LINK_SELECTOR, count: 3)
+      expect(page).to have_selector(job_title_link_selector, count: 3)
 
       submit_feedback_for(vacancy)
       submit_feedback_for(another_vacancy)
       submit_feedback_for(third_vacancy)
 
       expect(page).to_not have_content(I18n.t("jobs.awaiting_feedback_intro"))
-      expect(page).to have_selector(JOB_TITLE_LINK_SELECTOR, count: 0)
+      expect(page).to have_selector(job_title_link_selector, count: 0)
     end
 
     scenario "when adding feedback to an invalid vacancy, it saves the feedback to the model" do
@@ -154,7 +154,7 @@ RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: tru
     scenario "hiring staff can not see notification badge" do
       visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
-      expect(page).to_not have_selector(NOTIFICATION_BADGE_SELECTOR)
+      expect(page).to_not have_selector(notification_badge_selector)
       expect(page).to have_content(I18n.t("jobs.no_awaiting_feedback"))
     end
   end

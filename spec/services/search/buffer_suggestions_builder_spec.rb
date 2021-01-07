@@ -24,11 +24,11 @@ RSpec.describe Search::BufferSuggestionsBuilder do
         "25" => buffer_coordinates_twenty_five_miles,
       }
     end
-    let(:vacancies_1) { double("vacancies") }
-    let(:vacancies_2) { double("vacancies") }
-    let(:vacancies_3) { double("vacancies") }
-    let(:vacancies_4) { double("vacancies") }
-    let(:vacancies_5) { double("vacancies") }
+    let(:vacancies1) { double("vacancies") }
+    let(:vacancies2) { double("vacancies") }
+    let(:vacancies3) { double("vacancies") }
+    let(:vacancies4) { double("vacancies") }
+    let(:vacancies5) { double("vacancies") }
     let(:arguments_for_algolia) { { hitsPerPage: 10 } }
 
     before do
@@ -38,23 +38,23 @@ RSpec.describe Search::BufferSuggestionsBuilder do
     context "when there is only one vacancy in any of the buffer polygons" do
       before do
         mock_algolia_search(
-          vacancies_1, 1, nil,
+          vacancies1, 1, nil,
           arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_five_miles])
         )
         mock_algolia_search(
-          vacancies_2, 1, nil,
+          vacancies2, 1, nil,
           arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_ten_miles])
         )
         mock_algolia_search(
-          vacancies_3, 1, nil,
+          vacancies3, 1, nil,
           arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_fifteen_miles])
         )
         mock_algolia_search(
-          vacancies_4, 1, nil,
+          vacancies4, 1, nil,
           arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_twenty_miles])
         )
         mock_algolia_search(
-          vacancies_5, 1, nil,
+          vacancies5, 1, nil,
           arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_twenty_five_miles])
         )
       end
@@ -67,23 +67,23 @@ RSpec.describe Search::BufferSuggestionsBuilder do
     context "when there are vacancies in the wider buffer polygons not found in the smaller polygons" do
       before do
         mock_algolia_search(
-          vacancies_1, 1, nil,
+          vacancies1, 1, nil,
           arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_five_miles])
         )
         mock_algolia_search(
-          vacancies_2, 2, nil,
+          vacancies2, 2, nil,
           arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_ten_miles])
         )
         mock_algolia_search(
-          vacancies_3, 3, nil,
+          vacancies3, 3, nil,
           arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_fifteen_miles])
         )
         mock_algolia_search(
-          vacancies_4, 4, nil,
+          vacancies4, 4, nil,
           arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_twenty_miles])
         )
         mock_algolia_search(
-          vacancies_5, 5, nil,
+          vacancies5, 5, nil,
           arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_twenty_five_miles])
         )
       end
@@ -96,23 +96,23 @@ RSpec.describe Search::BufferSuggestionsBuilder do
     context "when there are zero vacancies in a buffer polygon" do
       before do
         mock_algolia_search(
-          vacancies_1, 0, nil,
+          vacancies1, 0, nil,
           arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_five_miles])
         )
         mock_algolia_search(
-          vacancies_2, 0, nil,
+          vacancies2, 0, nil,
           arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_ten_miles])
         )
         mock_algolia_search(
-          vacancies_3, 0, nil,
+          vacancies3, 0, nil,
           arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_fifteen_miles])
         )
         mock_algolia_search(
-          vacancies_4, 0, nil,
+          vacancies4, 0, nil,
           arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_twenty_miles])
         )
         mock_algolia_search(
-          vacancies_5, 5, nil,
+          vacancies5, 5, nil,
           arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_twenty_five_miles])
         )
       end

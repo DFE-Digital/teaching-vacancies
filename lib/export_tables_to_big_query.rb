@@ -114,7 +114,7 @@ private
 
     json_record.map do |key, value|
       data = value.presence
-      data = Date.parse(data).to_s(:db) if data.is_a?(String) && data.match?(/^\d{2}[-\/]\d{2}[-\/]\d{4}/)
+      data = Date.parse(data).to_s(:db) if data.is_a?(String) && data.match?(%r{^\d{2}[-/]\d{2}[-/]\d{4}})
       data = data.to_i if data.is_a?(String) && data.match?(/^\d+$/)
       @bigquery_data[data_key_name(key)] = data
     end

@@ -73,8 +73,9 @@ group :development, :test do
   gem "rails-controller-testing"
   gem "rspec-rails"
   gem "rspec-sonarqube-formatter", require: false
-  gem "rubocop-govuk"
   gem "rubocop-performance"
+  gem "rubocop-rails"
+  gem "rubocop-rspec"
   gem "slim_lint", require: false
 end
 

@@ -6,9 +6,10 @@ module ParameterSanitiser
   end
 
   def self.sanitize_params_value(value)
-    if value.is_a?(ActionController::Parameters)
+    case value
+    when ActionController::Parameters
       sanitize_nested_params(value)
-    elsif value.is_a?(Array)
+    when Array
       value.map { |v| Sanitize.fragment(v) }
     else
       Sanitize.fragment(value)

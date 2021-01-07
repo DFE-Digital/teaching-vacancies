@@ -5,7 +5,8 @@ GOOGLE_ANALYTICS_PROFILE_ID = ENV.fetch("GOOGLE_ANALYTICS_PROFILE_ID", "")
 GOOGLE_PLACES_AUTOCOMPLETE_KEY = ENV.fetch("GOOGLE_PLACES_AUTOCOMPLETE_KEY", "")
 
 if GOOGLE_API_JSON_KEY.empty? || JSON.parse(GOOGLE_API_JSON_KEY).empty?
-  return Rails.logger.info("***No GOOGLE_API_JSON_KEY set")
+  Rails.logger.info("***No GOOGLE_API_JSON_KEY set")
+  return
 end
 
 scope = ["https://www.googleapis.com/auth/indexing",

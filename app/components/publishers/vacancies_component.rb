@@ -64,11 +64,12 @@ private
       count = Vacancy.in_organisation_ids(school.id).send(selected_scope).count
       OpenStruct.new({ id: school.id, name: school.name, label: "#{school.name} (#{count})" })
     end
+
+    return if @organisation.group_type == "local_authority"
+
     count = Vacancy.in_organisation_ids(@organisation.id).send(selected_scope).count
-    unless @organisation.group_type == "local_authority"
-      @organisation_options.unshift(
-        OpenStruct.new({ id: @organisation.id, name: "Trust head office", label: "Trust head office (#{count})" }),
-      )
-    end
+    @organisation_options.unshift(
+      OpenStruct.new({ id: @organisation.id, name: "Trust head office", label: "Trust head office (#{count})" }),
+    )
   end
 end

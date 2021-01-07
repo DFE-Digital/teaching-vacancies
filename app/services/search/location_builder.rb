@@ -42,19 +42,20 @@ private
                                    [@location_polygon.boundary]
                                  end
     end
-    if location_polygon.nil? && (DOWNCASE_REGIONS + DOWNCASE_COUNTIES).include?(@location_category.downcase)
-      # If a location category that we expect to have a polygon actually does not,
-      # append the location category to the text search as a fallback.
-      # This applies only to regions and counties: large areas for which there is
-      # very little value in using a point coordinate, and for which there is a
-      # low chance of ambiguity (unlike Clapham borough vs Clapham village in Bedfordshire)
-      Rollbar.log(
-        :error,
-        "A location category search was performed as a text search as no LocationPolygon could
-        be found with the name '#{@location_category}'.",
-      )
-      @missing_polygon = true
-    end
+
+    return unless location_polygon.nil? && (DOWNCASE_REGIONS + DOWNCASE_COUNTIES).include?(@location_category.downcase)
+
+    # If a location category that we expect to have a polygon actually does not,
+    # append the location category to the text search as a fallback.
+    # This applies only to regions and counties: large areas for which there is
+    # very little value in using a point coordinate, and for which there is a
+    # low chance of ambiguity (unlike Clapham borough vs Clapham village in Bedfordshire)
+    Rollbar.log(
+      :error,
+      "A location category search was performed as a text search as no LocationPolygon could
+      be found with the name '#{@location_category}'.",
+    )
+    @missing_polygon = true
   end
 
   def build_location_filter(location, radius)

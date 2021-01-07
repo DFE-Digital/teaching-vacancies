@@ -37,12 +37,13 @@ private
     @organisation_options = current_organisation.schools.not_closed.order(:name).map do |school|
       OpenStruct.new({ id: school.id, name: school.name, address: full_address(school) })
     end
-    unless current_organisation.group_type == "local_authority"
-      @organisation_options.unshift(
-        OpenStruct.new({ id: current_organisation.id,
-                         name: t("publishers.organisations.managed_organisations.show.options.school_group"),
-                         address: full_address(current_organisation) }),
-      )
-    end
+
+    return if current_organisation.group_type == "local_authority"
+
+    @organisation_options.unshift(
+      OpenStruct.new({ id: current_organisation.id,
+                       name: t("publishers.organisations.managed_organisations.show.options.school_group"),
+                       address: full_address(current_organisation) }),
+    )
   end
 end

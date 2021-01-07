@@ -74,12 +74,12 @@ RSpec.describe ImportTrustData do
     let(:links_csv) { File.read(links_file_path) }
     let(:links_file_path) { Rails.root.join("spec/fixtures/example_links_data.csv") }
 
-    let!(:school_1) { create(:academy, urn: "100000") }
-    let!(:school_2) { create(:academy, urn: "100001") }
-    let!(:school_3) { create(:academy, urn: "100002") }
+    let!(:school1) { create(:academy, urn: "100000") }
+    let!(:school2) { create(:academy, urn: "100001") }
+    let!(:school3) { create(:academy, urn: "100002") }
 
-    let(:trust_1) { SchoolGroup.find_by(uid: "2044") }
-    let(:trust_2) { SchoolGroup.find_by(uid: "2070") }
+    let(:trust1) { SchoolGroup.find_by(uid: "2044") }
+    let(:trust2) { SchoolGroup.find_by(uid: "2070") }
 
     before do
       stub_request(
@@ -102,22 +102,22 @@ RSpec.describe ImportTrustData do
 
     it "links the correct schools and trusts" do
       subject.run!
-      expect(trust_1.schools).to include(school_1)
-      expect(trust_1.schools).to include(school_2)
-      expect(trust_2.schools).to include(school_3)
+      expect(trust1.schools).to include(school1)
+      expect(trust1.schools).to include(school2)
+      expect(trust2.schools).to include(school3)
     end
 
     it "stores the expected attributes" do
       subject.run!
-      expect(trust_1).not_to be_blank
-      expect(trust_1.gias_data).not_to be_blank
-      expect(trust_1.name).to eq("Abbey Academies Trust")
-      expect(trust_1.group_type).to eq("Multi-academy trust")
-      expect(trust_1.address).to eq("Abbey Road")
-      expect(trust_1.county).to eq("Not recorded")
-      expect(trust_1.postcode).to eq("PE10 9EP")
-      expect(trust_1.geolocation.x.round(13)).to eq(Geocoder::DEFAULT_STUB_COORDINATES[0].round(13))
-      expect(trust_1.geolocation.y.round(13)).to eq(Geocoder::DEFAULT_STUB_COORDINATES[1].round(13))
+      expect(trust1).not_to be_blank
+      expect(trust1.gias_data).not_to be_blank
+      expect(trust1.name).to eq("Abbey Academies Trust")
+      expect(trust1.group_type).to eq("Multi-academy trust")
+      expect(trust1.address).to eq("Abbey Road")
+      expect(trust1.county).to eq("Not recorded")
+      expect(trust1.postcode).to eq("PE10 9EP")
+      expect(trust1.geolocation.x.round(13)).to eq(Geocoder::DEFAULT_STUB_COORDINATES[0].round(13))
+      expect(trust1.geolocation.y.round(13)).to eq(Geocoder::DEFAULT_STUB_COORDINATES[1].round(13))
     end
   end
 end

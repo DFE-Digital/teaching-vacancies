@@ -70,10 +70,10 @@ private
 
   def set_geolocation(trust, postcode)
     # We don't need to make an API request if the postcode hasn't changed
-    if postcode.present? && (trust.geolocation.blank? || trust.postcode != postcode)
-      trust.postcode = postcode
-      coordinates = Geocoding.new(trust.postcode).coordinates
-      trust.geolocation = coordinates unless coordinates == [0, 0]
-    end
+    return unless postcode.present? && (trust.geolocation.blank? || trust.postcode != postcode)
+
+    trust.postcode = postcode
+    coordinates = Geocoding.new(trust.postcode).coordinates
+    trust.geolocation = coordinates unless coordinates == [0, 0]
   end
 end

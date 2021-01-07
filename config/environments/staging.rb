@@ -77,13 +77,13 @@ Rails.application.configure do
   # Logging
   config.log_level = :info
   config.log_tags = [:request_id] # Prepend all log lines with the following tags.
-  config.logger = ActiveSupport::Logger.new(STDOUT)
+  config.logger = ActiveSupport::Logger.new($stdout)
 
   # Use Lograge for cleaner logging
   config.lograge.enabled = true
   config.lograge.formatter = ColourLogFormatter.new
   config.lograge.ignore_actions = ["ApplicationController#check"]
-  config.lograge.logger = ActiveSupport::Logger.new(STDOUT)
+  config.lograge.logger = ActiveSupport::Logger.new($stdout)
 
   # Include params in logs: https://github.com/roidrage/lograge#what-it-doesnt-do
   config.lograge.custom_options = lambda do |event|

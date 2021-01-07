@@ -20,9 +20,9 @@ class Publishers::OrganisationsController < Publishers::BaseController
 private
 
   def redirect_to_user_preferences
-    if current_organisation.is_a?(SchoolGroup) && current_publisher_preferences.nil?
-      redirect_to organisation_managed_organisations_path
-    end
+    return unless current_organisation.is_a?(SchoolGroup) && current_publisher_preferences.nil?
+
+    redirect_to organisation_managed_organisations_path
   end
 
   def session_has_multiple_organisations?

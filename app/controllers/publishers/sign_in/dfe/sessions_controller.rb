@@ -1,4 +1,10 @@
 class Publishers::SignIn::Dfe::SessionsController < Publishers::SignIn::BaseSessionsController
+  PUBLISHER_CATEGORIES = {
+    "001" => :school,
+    "002" => :local_authority,
+    "010" => :multi_academy_trust,
+  }.freeze
+
   include SignInAuditConcerns
 
   skip_before_action :check_session, only: %i[create new]
@@ -69,38 +75,32 @@ private
   end
 
   def school_urn
-    return "" unless user_category == :school
+    return "" unless publisher_category == :school
 
     auth_hash.dig("extra", "raw_info", "organisation", "urn") || ""
   end
 
   def trust_uid
-    return "" unless user_category == :multi_academy_trust
+    return "" unless publisher_category == :multi_academy_trust
 
     auth_hash.dig("extra", "raw_info", "organisation", "uid") || ""
   end
 
   def local_authority_code
     return unless LocalAuthorityAccessFeature.enabled?
-    return "" unless user_category == :local_authority
+    return "" unless publisher_category == :local_authority
 
     # All organisations have an establishmentNumber, but we only want this for identifying LAs by.
     auth_hash.dig("extra", "raw_info", "organisation", "establishmentNumber") || ""
   end
 
-  def user_category
+  def publisher_category
     # In organisation['category'], DSI provides an 'id' and a 'name' attribute.
     # The mapping is documented in this table:
     # https://github.com/david-mears-dfe/login.dfe.public-api/blob/patch-1/README.md#organisation-categories
     # I am using the id as I imagine that is more stable than the name.
-    case auth_hash.dig("extra", "raw_info", "organisation", "category", "id")
-    when "001"
-      :school
-    when "002"
-      :local_authority
-    when "010"
-      :multi_academy_trust
-    end
+    category_id = auth_hash.dig("extra", "raw_info", "organisation", "category", "id")
+    PUBLISHER_CATEGORIES[category_id]
   end
 
   def organisation_id

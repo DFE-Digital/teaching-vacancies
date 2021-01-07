@@ -25,7 +25,7 @@ RSpec.shared_examples "a successful edit" do
     expect(page).to have_content("https://www.this-is-a-test-url.tvs")
     expect(page.current_path).to eq(organisation_schools_path)
 
-    visit edit_organisation_school_path(school_1)
+    visit edit_organisation_school_path(school1)
 
     fill_in "organisation_form[description]", with: "New description of the school"
     fill_in "organisation_form[website]", with: "https://www.this-is-a-test-url.tvs"
@@ -33,25 +33,25 @@ RSpec.shared_examples "a successful edit" do
 
     expect(page).to have_content("New description of the school")
     expect(page).to have_content("https://www.this-is-a-test-url.tvs")
-    expect(page).to have_content("Details updated for #{school_1.name}")
+    expect(page).to have_content("Details updated for #{school1.name}")
     expect(page.current_path).to eq(organisation_schools_path)
   end
 end
 
 RSpec.describe "Schools in your school group" do
-  let(:school_1) { create(:school) }
-  let(:school_2) { create(:school) }
-  let(:school_3) { create(:school) }
-  let(:school_4) { create(:school, :closed, name: "Closed school") }
+  let(:school1) { create(:school) }
+  let(:school2) { create(:school) }
+  let(:school3) { create(:school) }
+  let(:school4) { create(:school, :closed, name: "Closed school") }
 
   before do
     allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(true)
     allow(ALLOWED_LOCAL_AUTHORITIES).to receive(:include?).with(school_group.local_authority_code).and_return(true)
 
-    SchoolGroupMembership.find_or_create_by(school_id: school_1.id, school_group_id: school_group.id)
-    SchoolGroupMembership.find_or_create_by(school_id: school_2.id, school_group_id: school_group.id)
-    SchoolGroupMembership.find_or_create_by(school_id: school_3.id, school_group_id: school_group.id)
-    SchoolGroupMembership.find_or_create_by(school_id: school_4.id, school_group_id: school_group.id)
+    SchoolGroupMembership.find_or_create_by(school_id: school1.id, school_group_id: school_group.id)
+    SchoolGroupMembership.find_or_create_by(school_id: school2.id, school_group_id: school_group.id)
+    SchoolGroupMembership.find_or_create_by(school_id: school3.id, school_group_id: school_group.id)
+    SchoolGroupMembership.find_or_create_by(school_id: school4.id, school_group_id: school_group.id)
 
     stub_accepted_terms_and_conditions
     OmniAuth.config.test_mode = true

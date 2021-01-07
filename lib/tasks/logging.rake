@@ -1,6 +1,6 @@
 desc "switch rails logger to stdout"
 task verbose: [:environment] do
-  Rails.logger = Logger.new(STDOUT)
+  Rails.logger = Logger.new($stdout)
 end
 
 desc "switch rails logger log level to debug"

@@ -71,19 +71,19 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
 
   context "when vacancy job_location is at_multiple_schools" do
     let(:organisation) { create(:trust) }
-    let(:school_1) { create(:school, :catholic, school_type: "Academy") }
-    let(:school_2) { create(:school, :catholic, school_type: "Academy") }
-    let(:school_3) { create(:school, :catholic, school_type: "Academy", minimum_age: 16) }
+    let(:school1) { create(:school, :catholic, school_type: "Academy") }
+    let(:school2) { create(:school, :catholic, school_type: "Academy") }
+    let(:school3) { create(:school, :catholic, school_type: "Academy", minimum_age: 16) }
     let(:vacancy) do
       create(:vacancy, :at_multiple_schools, organisation_vacancies_attributes: [
-        { organisation: school_1 }, { organisation: school_2 }, { organisation: school_3 }
+        { organisation: school1 }, { organisation: school2 }, { organisation: school3 }
       ])
     end
 
     before do
-      SchoolGroupMembership.find_or_create_by(school_id: school_1.id, school_group_id: organisation.id)
-      SchoolGroupMembership.find_or_create_by(school_id: school_2.id, school_group_id: organisation.id)
-      SchoolGroupMembership.find_or_create_by(school_id: school_3.id, school_group_id: organisation.id)
+      SchoolGroupMembership.find_or_create_by(school_id: school1.id, school_group_id: organisation.id)
+      SchoolGroupMembership.find_or_create_by(school_id: school2.id, school_group_id: organisation.id)
+      SchoolGroupMembership.find_or_create_by(school_id: school3.id, school_group_id: organisation.id)
       render_inline(described_class.new(vacancy: vacancy_presenter))
     end
 

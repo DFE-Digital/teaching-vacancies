@@ -57,9 +57,9 @@ private
   end
 
   def redirect_to_canonical_domain
-    if request_host_is_invalid?
-      redirect_to status: 301, host: DOMAIN
-    end
+    return unless request_host_is_invalid?
+
+    redirect_to status: 301, host: DOMAIN
   end
 
   def request_host_is_invalid?
@@ -80,9 +80,10 @@ private
 
   def strip_nested_param_whitespaces(object)
     # Recursively find strings and strip them of trailing whitespaces
-    if object.is_a?(String)
+    case object
+    when String
       return object.strip
-    elsif object.is_a?(Hash)
+    when Hash
       object.each do |key, value|
         object[key] = strip_nested_param_whitespaces(value)
       end

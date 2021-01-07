@@ -1,6 +1,8 @@
 module DFESignIn
   class ExternalServerError < StandardError; end
+
   class ForbiddenRequestError < StandardError; end
+
   class UnknownResponseError < StandardError; end
 
   class API

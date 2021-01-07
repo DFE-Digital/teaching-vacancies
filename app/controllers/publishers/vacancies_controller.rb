@@ -62,10 +62,10 @@ private
   end
 
   def redirect_if_published
-    if @vacancy.published?
-      redirect_to organisation_job_path(@vacancy.id),
-                  notice: t("messages.jobs.already_published")
-    end
+    return unless @vacancy.published?
+
+    redirect_to organisation_job_path(@vacancy.id),
+                notice: t("messages.jobs.already_published")
   end
 
   def redirect_to_incomplete_step

@@ -51,8 +51,8 @@ RSpec.describe ImportSchoolData do
     let(:temp_file_path) { Rails.root.join("spec/fixtures/temp_schools_data.csv") }
     let(:test_file_path) { Rails.root.join("spec/fixtures/example_schools_data.csv") }
 
-    let(:local_authority_1) { SchoolGroup.find_by(local_authority_code: "201") }
-    let(:local_authority_2) { SchoolGroup.find_by(local_authority_code: "202") }
+    let(:local_authority1) { SchoolGroup.find_by(local_authority_code: "201") }
+    let(:local_authority2) { SchoolGroup.find_by(local_authority_code: "202") }
 
     before do
       stub_request(
@@ -75,14 +75,14 @@ RSpec.describe ImportSchoolData do
 
     it "links the correct schools and local authorities" do
       subject.run!
-      expect(local_authority_1.schools).to include(School.find_by(urn: "100000"))
-      expect(local_authority_1.schools).to include(School.find_by(urn: "100002"))
-      expect(local_authority_1.schools).to include(School.find_by(urn: "100003"))
-      expect(local_authority_2.schools).to include(School.find_by(urn: "100004"))
-      expect(local_authority_2.schools).to include(School.find_by(urn: "100005"))
-      expect(local_authority_2.schools).to include(School.find_by(urn: "100006"))
-      expect(local_authority_2.schools).to include(School.find_by(urn: "100007"))
-      expect(local_authority_2.schools).to include(School.find_by(urn: "100008"))
+      expect(local_authority1.schools).to include(School.find_by(urn: "100000"))
+      expect(local_authority1.schools).to include(School.find_by(urn: "100002"))
+      expect(local_authority1.schools).to include(School.find_by(urn: "100003"))
+      expect(local_authority2.schools).to include(School.find_by(urn: "100004"))
+      expect(local_authority2.schools).to include(School.find_by(urn: "100005"))
+      expect(local_authority2.schools).to include(School.find_by(urn: "100006"))
+      expect(local_authority2.schools).to include(School.find_by(urn: "100007"))
+      expect(local_authority2.schools).to include(School.find_by(urn: "100008"))
     end
 
     it "stores the expected attributes" do

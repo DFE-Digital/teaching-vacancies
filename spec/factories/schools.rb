@@ -1,6 +1,6 @@
 FactoryBot.define do
-  OFSTED_RATINGS = ["Outstanding", "Good", "Requires Improvement", "Inadequate"].freeze
-  RELIGIOUS_CHARACTERS = ["Church of England", "Roman Catholic", "None", "Does not apply"].freeze
+  ofsted_ratings = ["Outstanding", "Good", "Requires Improvement", "Inadequate"].freeze
+  religious_characters = ["Church of England", "Roman Catholic", "None", "Does not apply"].freeze
 
   factory :school do
     address { Faker::Address.street_name.delete("'") }
@@ -16,12 +16,12 @@ FactoryBot.define do
         "HeadPreferredJobTitle": Faker::Name.prefix.delete("."),
         "DateOfLastInspectionVisit": Faker::Date.between(from: 999.days.ago, to: 5.days.ago),
         "NumberOfPupils": Faker::Number.number(digits: 3),
-        "OfstedRating (name)": OFSTED_RATINGS.sample,
+        "OfstedRating (name)": ofsted_ratings.sample,
         "OpenDate": Faker::Date.between(from: 10_000.days.ago, to: 1000.days.ago),
-        "ReligiousCharacter (name)": RELIGIOUS_CHARACTERS.sample,
+        "ReligiousCharacter (name)": religious_characters.sample,
         "SchoolCapacity": Faker::Number.number(digits: 4),
         "TelephoneNum": Faker::Number.number(digits: 11).to_s,
-        "Trusts (name)": Faker::Company.name.delete("'") + " Trust",
+        "Trusts (name)": "#{Faker::Company.name.delete("'")} Trust",
       }
     end
     minimum_age { 11 }
@@ -73,12 +73,12 @@ FactoryBot.define do
           "HeadPreferredJobTitle": Faker::Name.prefix.delete("."),
           "DateOfLastInspectionVisit": Faker::Date.between(from: 999.days.ago, to: 5.days.ago),
           "NumberOfPupils": Faker::Number.number(digits: 3),
-          "OfstedRating (name)": OFSTED_RATINGS.sample,
+          "OfstedRating (name)": ofsted_ratings.sample,
           "OpenDate": Faker::Date.between(from: 10_000.days.ago, to: 1000.days.ago),
           "ReligiousCharacter (name)": "Roman Catholic",
           "SchoolCapacity": Faker::Number.number(digits: 4),
           "TelephoneNum": Faker::Number.number(digits: 11).to_s,
-          "Trusts (name)": Faker::Company.name.delete("'") + " Trust",
+          "Trusts (name)": "#{Faker::Company.name.delete("'")} Trust",
         }
       end
     end

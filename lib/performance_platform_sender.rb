@@ -3,7 +3,7 @@ require "performance_platform"
 module PerformancePlatformSender
   class Base
     def self.by_type(type)
-      const_get("PerformancePlatformSender::" + type.to_s.capitalize).new
+      const_get("PerformancePlatformSender::#{type.to_s.capitalize}").new
     end
 
     def call(date:)

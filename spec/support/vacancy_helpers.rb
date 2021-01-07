@@ -224,8 +224,7 @@ private
     expect(page.find(".vacancy")).to have_content(vacancy.salary)
     expect(page.find(".vacancy")).to have_content(vacancy.working_patterns)
     expect(page.find(".vacancy")).to have_content(vacancy.expires_on)
-    unless vacancy.expires_at.nil?
-      expect(page.find(".vacancy")).to have_content(vacancy.expires_at.strftime("%-l:%M %P"))
-    end
+
+    expect(page.find(".vacancy")).to have_content(vacancy.expires_at.strftime("%-l:%M %P")) unless vacancy.expires_at.nil?
   end
 end

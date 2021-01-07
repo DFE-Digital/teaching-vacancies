@@ -38,7 +38,7 @@ RSpec.describe OrganisationVacancyPresenter do
 
     context "when expiry time present" do
       let(:deadline_time) { Time.current + 5.days }
-      let(:expected_deadline) { format_date(deadline_date) + " at " + format_time(deadline_time) }
+      let(:expected_deadline) { "#{format_date(deadline_date)} at #{format_time(deadline_time)}" }
 
       it "displays the application deadline date" do
         expect(presenter.application_deadline).to eq(expected_deadline)
