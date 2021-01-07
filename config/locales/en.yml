@@ -520,7 +520,7 @@ en:
     info: You can unsubscribe at any time by following the simple instructions at the bottom of the alert.
     intro: 'We’ll email you details of any new jobs that match the following criteria:'
     link:
-      help_text: whenever a job matching this search is listed
+      help_text: "%{link} whenever a job matching this search is listed"
       home_page: Visit %{home_page_link}
       no_search_results:
         link: get notified
