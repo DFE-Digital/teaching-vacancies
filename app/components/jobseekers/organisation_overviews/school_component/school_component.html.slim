@@ -15,9 +15,9 @@ section#school-overview class="govuk-!-margin-bottom-5"
                                                                                   organisation.website.presence || organisation.url,
                                                                                   class: "wordwrap", target: "_blank"))
     - if @vacancy.contact_email.present?
-      = component.slot(:row, key: I18n.t("jobs.contact_email"), value: mail_to(@vacancy.contact_email, @vacancy.contact_email, class: "govuk-link link-wrap",
-                                                                               subject: I18n.t("jobs.contact_email_subject", job: @vacancy.job_title),
-                                                                               body: I18n.t("jobs.contact_email_body", url: job_url(@vacancy))))
+      = component.slot(:row, key: I18n.t("jobs.contact_email"), value: govuk_mail_to(@vacancy.contact_email, @vacancy.contact_email, class: "link-wrap",
+                                                                                     subject: I18n.t("jobs.contact_email_subject", job: @vacancy.job_title),
+                                                                                     body: I18n.t("jobs.contact_email_body", url: job_url(@vacancy))))
     - if @vacancy.contact_number.present?
       = component.slot(:row, key: I18n.t("jobs.contact_number"), value: govuk_link_to(@vacancy.contact_number, "tel:#{@vacancy.contact_number}"))
 

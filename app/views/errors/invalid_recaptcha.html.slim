@@ -3,4 +3,4 @@
 h1.govuk-heading-xl = t("error_pages.invalid_recaptcha.title")
 
 p.govuk-body
-  = t("error_pages.invalid_recaptcha.text_html", mail_to: mail_to(t("help.email"), t("help.email"), class: "govuk-link link-wrap", subject: t("error_pages.invalid_recaptcha.email_subject", form: @form)))
+  = t("error_pages.invalid_recaptcha.text_html", mail_to: govuk_mail_to(t("help.email"), t("help.email"), class: "link-wrap", subject: t("error_pages.invalid_recaptcha.email_subject", form: @form)))

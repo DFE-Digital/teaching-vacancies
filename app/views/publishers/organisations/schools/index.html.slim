@@ -21,4 +21,4 @@
       h3.govuk-heading-m
         = t(".missing_information_title")
       p
-        = t(".missing_information_description_html", organisation_type: organisation_type_basic(current_organisation), mail_to: mail_to(t("help.email"), t(".contact_support"), class: "govuk-link"))
+        = t(".missing_information_description_html", organisation_type: organisation_type_basic(current_organisation), mail_to: govuk_mail_to(t("help.email"), t(".contact_support")))
