@@ -82,6 +82,16 @@ RSpec.describe ImportantDatesForm, type: :model do
         expect(important_dates.errors.messages[:starts_on])
           .to include(I18n.t("activerecord.errors.models.vacancy.attributes.starts_on.before_expires_on"))
       end
+
+      it "must not be present if starts_asap is present" do
+        important_dates = ImportantDatesForm.new(starts_on: Date.current,
+                                                 expires_on: Time.zone.tomorrow,
+                                                 starts_asap: true)
+        expect(important_dates.valid?).to be false
+
+        expect(important_dates.errors.messages[:starts_on])
+          .to include(I18n.t("activerecord.errors.models.vacancy.attributes.starts_on.multiple_start_dates"))
+      end
     end
 
     describe "#expires_at" do

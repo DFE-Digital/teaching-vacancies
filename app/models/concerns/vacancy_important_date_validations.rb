@@ -45,7 +45,7 @@ module VacancyImportantDateValidations
       starts_on && expires_on && starts_on < expires_on
   end
 
-  def starts_on_and_starts_asap_must_not_be_both_given
+  def starts_on_and_starts_asap_must_not_both_be_present
     errors.add(:starts_on, I18n.t("activerecord.errors.models.vacancy.attributes.starts_on.multiple_start_dates")) if
       starts_on && starts_asap
   end

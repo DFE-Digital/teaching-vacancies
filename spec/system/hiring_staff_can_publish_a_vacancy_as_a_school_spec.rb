@@ -675,16 +675,32 @@ RSpec.describe "Creating a vacancy" do
         expect(page).to have_current_path(organisation_job_path(vacancy.id))
       end
 
-      scenario "lists all the vacancy details correctly" do
-        vacancy = create(:vacancy, :complete, :draft)
-        vacancy.organisation_vacancies.create(organisation: school)
+      context "when a start date has been given" do
+        scenario "lists all the vacancy details correctly" do
+          vacancy = create(:vacancy, :complete, :draft)
+          vacancy.organisation_vacancies.create(organisation: school)
 
-        vacancy = VacancyPresenter.new(vacancy)
-        visit organisation_job_review_path(vacancy.id)
+          vacancy = VacancyPresenter.new(vacancy)
+          visit organisation_job_review_path(vacancy.id)
 
-        expect(page).to have_content(I18n.t("jobs.review_heading"))
+          expect(page).to have_content(I18n.t("jobs.review_heading"))
 
-        verify_all_vacancy_details(vacancy)
+          verify_all_vacancy_details(vacancy)
+        end
+      end
+
+      context "when the start date is as soon as possible" do
+        scenario "lists all the vacancy details correctly" do
+          vacancy = create(:vacancy, :complete, :draft, :starts_asap)
+          vacancy.organisation_vacancies.create(organisation: school)
+
+          vacancy = VacancyPresenter.new(vacancy)
+          visit organisation_job_review_path(vacancy.id)
+
+          expect(page).to have_content(I18n.t("jobs.review_heading"))
+
+          verify_all_vacancy_details(vacancy)
+        end
       end
 
       context "when the listing is full-time" do
@@ -882,18 +898,36 @@ RSpec.describe "Creating a vacancy" do
         expect(vacancy.reload.publisher_id).to eq(current_publisher.id)
       end
 
-      scenario "view the published listing as a jobseeker" do
-        vacancy = create(:vacancy, :draft)
-        vacancy.organisation_vacancies.create(organisation: school)
+      context "when a start date has been given" do
+        scenario "view the published listing as a jobseeker" do
+          vacancy = create(:vacancy, :draft)
+          vacancy.organisation_vacancies.create(organisation: school)
 
-        visit organisation_job_review_path(vacancy.id)
+          visit organisation_job_review_path(vacancy.id)
 
-        click_on I18n.t("buttons.submit_job_listing")
-        save_page
+          click_on I18n.t("buttons.submit_job_listing")
+          save_page
 
-        click_on I18n.t("jobs.confirmation_page.view_posted_job")
+          click_on I18n.t("jobs.confirmation_page.view_posted_job")
 
-        verify_vacancy_show_page_details(VacancyPresenter.new(vacancy))
+          verify_vacancy_show_page_details(VacancyPresenter.new(vacancy))
+        end
+      end
+
+      context "when the start date is as soon as possible" do
+        scenario "view the published listing as a jobseeker" do
+          vacancy = create(:vacancy, :draft, :starts_asap)
+          vacancy.organisation_vacancies.create(organisation: school)
+
+          visit organisation_job_review_path(vacancy.id)
+
+          click_on I18n.t("buttons.submit_job_listing")
+          save_page
+
+          click_on I18n.t("jobs.confirmation_page.view_posted_job")
+
+          verify_vacancy_show_page_details(VacancyPresenter.new(vacancy))
+        end
       end
 
       context "when the listing is full-time" do
