@@ -2,7 +2,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = render GovukComponent::Panel.new(title: t(".header"), body: t(".confirmation"))
+    = govuk_panel title: t(".header"), body: t(".confirmation")
 
     = form_for @unsubscribe_feedback_form, url: unsubscribe_feedback_subscription_path(@subscription) do |f|
       = f.govuk_error_summary
