@@ -1,5 +1,5 @@
 module prometheus_all {
-  source = "git::https://github.com/DFE-Digital/bat-platform-building-blocks.git//terraform/modules/prometheus_all"
+  source = "git::https://github.com/DFE-Digital/cf-monitoring.git//prometheus_all"
 
   monitoring_instance_name = local.monitoring_instance_name
   monitoring_org_name      = local.monitoring_org_name
