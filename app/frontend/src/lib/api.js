@@ -1,7 +1,11 @@
 import axios from 'axios';
 import Rollbar from './logging';
 
-export const getGeolocatedCoordinates = (query) => axios.get(`/api/v1/coordinates/${query}?format=json`).then((response) => response.data);
+export const getGeolocatedCoordinates = (query) => axios.get(`/api/v1/coordinates/${query}?format=json`)
+  .then((response) => response.data)
+  .catch((error) => {
+    Rollbar.log(`${error} Geolocation: ${query}`);
+  });
 
 export const getPostcodeFromCoordinates = (latitude, longitude) => axios.get('https://api.postcodes.io/postcodes', {
   params: { latitude, longitude },
