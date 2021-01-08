@@ -11,9 +11,7 @@ class Publishers::Vacancies::ApplicationController < Publishers::BaseController
   def step_valid?(step_form)
     form = step_form.new(@vacancy.attributes)
     form.complete_and_valid?.tap do |valid|
-      form.errors.each do |field, error|
-        @vacancy.errors.add(field, error)
-      end
+      @vacancy.errors.merge!(form.errors)
       session[:current_step] = nil unless valid
     end
   end

@@ -18,6 +18,10 @@ require "view_component/engine"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# These are needed in configuration before autoloading kicks in
+require_relative "../lib/logging/colour_log_formatter"
+require_relative "../lib/modules/aws_ip_ranges"
+
 module TeacherVacancyService
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -41,9 +45,6 @@ module TeacherVacancyService
 
     # Use custom error pages
     config.exceptions_app = routes
-
-    config.autoload_paths += Dir[Rails.root.join("lib/logging")]
-    config.autoload_paths += Dir[Rails.root.join("lib/modules")]
 
     config.active_job.queue_adapter = :sidekiq
 
