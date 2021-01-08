@@ -29,11 +29,9 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::Applicatio
         skip_step
       end
     when :documents
-      if @vacancy.supporting_documents == "no"
-        skip_step
-      else
-        return redirect_to organisation_job_documents_path(@vacancy.id)
-      end
+      return redirect_to(organisation_job_documents_path(@vacancy.id)) unless @vacancy.supporting_documents == "no"
+
+      skip_step
     when :applying_for_the_job
       @applying_for_the_job_back_path = @vacancy.supporting_documents == "no" ? wizard_path(:supporting_documents) : wizard_path(:documents)
     end
@@ -112,9 +110,9 @@ private
   end
 
   def strip_checkbox_params
-    if VACANCY_STRIP_CHECKBOXES.key?(step)
-      strip_empty_checkboxes(VACANCY_STRIP_CHECKBOXES[step], "#{step}_form".to_sym)
-    end
+    return unless VACANCY_STRIP_CHECKBOXES.key?(step)
+
+    strip_empty_checkboxes(VACANCY_STRIP_CHECKBOXES[step], "#{step}_form".to_sym)
   end
 
   def update_incomplete_listing

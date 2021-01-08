@@ -1,18 +1,18 @@
 require "rails_helper"
 
 RSpec.describe "Hiring staff can set managed organisations user preferences" do
-  let(:school_1) { create(:school, name: "Happy Rainbows School") }
-  let(:school_2) { create(:school, name: "Dreary Grey School") }
-  let(:school_3) { create(:school, :closed, name: "Closed School") }
+  let(:school1) { create(:school, name: "Happy Rainbows School") }
+  let(:school2) { create(:school, name: "Dreary Grey School") }
+  let(:school3) { create(:school, :closed, name: "Closed School") }
   let(:publisher_preference) { PublisherPreference.last }
 
   before do
     allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(true)
     allow(ALLOWED_LOCAL_AUTHORITIES).to receive(:include?).with(school_group.local_authority_code).and_return(true)
 
-    SchoolGroupMembership.find_or_create_by(school_id: school_1.id, school_group_id: school_group.id)
-    SchoolGroupMembership.find_or_create_by(school_id: school_2.id, school_group_id: school_group.id)
-    SchoolGroupMembership.find_or_create_by(school_id: school_3.id, school_group_id: school_group.id)
+    SchoolGroupMembership.find_or_create_by(school_id: school1.id, school_group_id: school_group.id)
+    SchoolGroupMembership.find_or_create_by(school_id: school2.id, school_group_id: school_group.id)
+    SchoolGroupMembership.find_or_create_by(school_id: school3.id, school_group_id: school_group.id)
 
     stub_accepted_terms_and_conditions
     OmniAuth.config.test_mode = true
@@ -43,7 +43,7 @@ RSpec.describe "Hiring staff can set managed organisations user preferences" do
     scenario "it does not show closed school option" do
       visit organisation_managed_organisations_path
       expect(page.current_path).to eq(organisation_managed_organisations_path)
-      expect(page).not_to have_content(school_3.name)
+      expect(page).not_to have_content(school3.name)
     end
 
     scenario "it allows school group users to select which organisation's jobs they want to manage" do
@@ -55,12 +55,12 @@ RSpec.describe "Hiring staff can set managed organisations user preferences" do
 
       check I18n.t("publishers.organisations.managed_organisations.show.options.school_group"),
             name: "managed_organisations_form[managed_school_ids][]", visible: false
-      check school_1.name, name: "managed_organisations_form[managed_school_ids][]", visible: false
+      check school1.name, name: "managed_organisations_form[managed_school_ids][]", visible: false
 
       click_on I18n.t("buttons.continue")
 
       expect(page.current_path).to eq(organisation_path)
-      expect(publisher_preference.managed_school_ids).to eq([school_group.id, school_1.id])
+      expect(publisher_preference.managed_school_ids).to eq([school_group.id, school1.id])
     end
 
     scenario "it allows school group users to select to manage all jobs" do
@@ -72,7 +72,7 @@ RSpec.describe "Hiring staff can set managed organisations user preferences" do
 
       check I18n.t("publishers.organisations.managed_organisations.show.options.all"),
             name: "managed_organisations_form[managed_organisations][]", visible: false
-      check school_1.name, name: "managed_organisations_form[managed_school_ids][]", visible: false
+      check school1.name, name: "managed_organisations_form[managed_school_ids][]", visible: false
 
       click_on I18n.t("buttons.continue")
 

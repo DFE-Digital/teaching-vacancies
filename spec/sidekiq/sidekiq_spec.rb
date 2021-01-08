@@ -7,7 +7,7 @@ RSpec.describe "Sidekiq configuration" do
     files_to_exclude = [".", "..", "application_job.rb", "alert_mailer_job.rb", "performance_platform_transactions_queue_job.rb"]
     job_filenames = Dir.entries("./app/jobs/").reject { |filename| files_to_exclude.include?(filename) }
     job_classes = job_filenames.map { |filename| filename.gsub(".rb", "").camelize.constantize }
-    job_classes.reject { |job_class| job_class.class == Module }.map(&:queue_name)
+    job_classes.reject { |job_class| job_class.instance_of?(Module) }.map(&:queue_name)
   end
 
   let(:sidekiq_config) { YAML.load_file("./config/sidekiq.yml") }

@@ -1,13 +1,33 @@
 {
   "ignored_warnings": [
     {
+      "warning_type": "Unscoped Find",
+      "warning_code": 82,
+      "fingerprint": "0154c62f733be2e251649d6eb9d004013037c8c82b10c73704efe4012f2620ba",
+      "check_name": "UnscopedFind",
+      "message": "Unscoped call to `EmergencyLoginKey#find`",
+      "file": "app/controllers/publishers/sign_in/email/sessions_controller.rb",
+      "line": 81,
+      "link": "https://brakemanscanner.org/docs/warning_types/unscoped_find/",
+      "code": "EmergencyLoginKey.find(params[:login_key])",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Publishers::SignIn::Email::SessionsController",
+        "method": "get_key"
+      },
+      "user_input": "params[:login_key]",
+      "confidence": "Weak",
+      "note": "Intended behaviour - we do not have a user available at this point"
+    },
+    {
       "warning_type": "Authentication",
       "warning_code": 101,
       "fingerprint": "1d94226b7d2099d5fbdfc82158f8100f98d20a42e468bc779bf98c2ac77b7c05",
       "check_name": "Secrets",
       "message": "Hardcoded value for `NOTIFY_JOBSEEKER_RESET_PASSWORD_TEMPLATE` in source code",
       "file": "config/initializers/notifications.rb",
-      "line": 3,
+      "line": 5,
       "link": "https://brakemanscanner.org/docs/warning_types/authentication/",
       "code": null,
       "render_path": null,
@@ -39,7 +59,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/controllers/jobseekers/saved_jobs_controller.rb",
-      "line": 20,
+      "line": 22,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "current_jobseeker.saved_jobs.includes(:vacancy).order(\"#{SavedJobSort.new.update(:column => sort_column, :order => sort_order).column} #{SavedJobSort.new.update(:column => sort_column, :order => sort_order).order}\")",
       "render_path": null,
@@ -51,28 +71,8 @@
       "user_input": "SavedJobSort.new.update(:column => sort_column, :order => sort_order).column",
       "confidence": "Weak",
       "note": "Sorts columns and orders only come from an allowed list of values, so SQL injection risk can be ignored"
-    },
-    {
-      "warning_type": "Unscoped Find",
-      "warning_code": 82,
-      "fingerprint": "c5959d2ec2d9d19a49b2aafe023b3f6647ef30c14c8333449c9344098282bdb5",
-      "check_name": "UnscopedFind",
-      "message": "Unscoped call to `EmergencyLoginKey#find`",
-      "file": "app/controllers/publishers/sign_in/email/sessions_controller.rb",
-      "line": 80,
-      "link": "https://brakemanscanner.org/docs/warning_types/unscoped_find/",
-      "code": "EmergencyLoginKey.find(params.dig(:login_key))",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Publishers::SignIn::Email::SessionsController",
-        "method": "get_key"
-      },
-      "user_input": "params.dig(:login_key)",
-      "confidence": "Weak",
-      "note": "Intended behaviour: No user is available at this point, so cannot scope."
     }
   ],
-  "updated": "2020-12-10 10:21:42 +0000",
-  "brakeman_version": "4.10.0"
+  "updated": "2021-01-07 17:32:28 +0000",
+  "brakeman_version": "4.10.1"
 }

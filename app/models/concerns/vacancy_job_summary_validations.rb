@@ -10,11 +10,12 @@ module VacancyJobSummaryValidations
     return if about_school.present?
 
     # Since vacancy is set by VacancyForm.initialize, it can be undefined here.
-    if job_location == "central_office"
+    case job_location
+    when "central_office"
       organisation = "trust"
-    elsif job_location == "at_one_school"
+    when "at_one_school"
       organisation = "school"
-    elsif job_location == "at_multiple_schools"
+    when "at_multiple_schools"
       organisation = "schools"
     end
     errors.add(:about_school,

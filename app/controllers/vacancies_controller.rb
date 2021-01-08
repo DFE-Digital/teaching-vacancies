@@ -40,7 +40,7 @@ private
   def algolia_search_params
     strip_empty_checkboxes(%i[job_roles phases working_patterns])
     %w[job_role job_roles phases working_patterns].each do |facet|
-      params[facet] = params[facet].split(" ") if params[facet].is_a?(String)
+      params[facet] = params[facet].split if params[facet].is_a?(String)
     end
     params.permit(:keyword, :location, :radius, :location_category, :subject, :buffer_radius, :jobs_sort, :page,
                   job_role: [], job_roles: [], phases: [], working_patterns: [])

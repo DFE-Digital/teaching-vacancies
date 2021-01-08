@@ -18,7 +18,7 @@ RSpec.describe JobAlertFeedbackForm, type: :model do
       end
 
       context "when comment is too long" do
-        let(:comment) { (1..1000).to_a.join("") }
+        let(:comment) { (1..1000).to_a.join }
 
         it "returns the correct error" do
           expect(subject).not_to be_valid

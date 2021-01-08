@@ -8,10 +8,11 @@ class JobAlertFeedbacksController < ApplicationController
     @feedback = JobAlertFeedback.new(
       job_alert_feedback_params.merge(subscription: subscription),
     )
-    if @feedback.save
-      Auditor::Audit.new(@feedback, "job_alert_feedback.create", current_publisher_oid).log
-      redirect_to edit_subscription_job_alert_feedback_path(id: @feedback.id), success: t(".success")
-    end
+
+    return unless @feedback.save
+
+    Auditor::Audit.new(@feedback, "job_alert_feedback.create", current_publisher_oid).log
+    redirect_to edit_subscription_job_alert_feedback_path(id: @feedback.id), success: t(".success")
   end
 
   def edit

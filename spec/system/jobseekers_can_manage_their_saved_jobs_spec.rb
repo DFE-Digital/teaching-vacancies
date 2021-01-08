@@ -14,17 +14,17 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
 
     context "when there are saved jobs" do
       let(:school) { create(:school) }
-      let(:vacancy_1) { create(:vacancy) }
-      let(:vacancy_2) { create(:vacancy) }
+      let(:vacancy1) { create(:vacancy) }
+      let(:vacancy2) { create(:vacancy) }
       let(:expired_vacancy) { create(:vacancy, :expired) }
 
       before do
-        vacancy_1.organisation_vacancies.create(organisation: school)
-        vacancy_2.organisation_vacancies.create(organisation: school)
+        vacancy1.organisation_vacancies.create(organisation: school)
+        vacancy2.organisation_vacancies.create(organisation: school)
         expired_vacancy.organisation_vacancies.create(organisation: school)
 
-        jobseeker.saved_jobs.create(vacancy: vacancy_1)
-        jobseeker.saved_jobs.create(vacancy: vacancy_2)
+        jobseeker.saved_jobs.create(vacancy: vacancy1)
+        jobseeker.saved_jobs.create(vacancy: vacancy2)
         jobseeker.saved_jobs.create(vacancy: expired_vacancy)
 
         visit jobseekers_saved_jobs_path
@@ -33,17 +33,17 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
       context "when the jobseeker views saved jobs" do
         it "shows saved jobs" do
           expect(page).to have_content(I18n.t("jobseekers.saved_jobs.index.page_title"))
-          expect(page).to have_content(vacancy_1.job_title)
-          expect(page).to have_content(vacancy_2.job_title)
+          expect(page).to have_content(vacancy1.job_title)
+          expect(page).to have_content(vacancy2.job_title)
           expect(page).to have_content(expired_vacancy.job_title)
         end
 
         it "renders deadline passed label for expired jobs" do
-          within "tr[data-slug='#{vacancy_1.slug}']" do
+          within "tr[data-slug='#{vacancy1.slug}']" do
             expect(page).not_to have_content(I18n.t("jobseekers.saved_jobs.index.deadline_passed"))
           end
 
-          within "tr[data-slug='#{vacancy_2.slug}']" do
+          within "tr[data-slug='#{vacancy2.slug}']" do
             expect(page).not_to have_content(I18n.t("jobseekers.saved_jobs.index.deadline_passed"))
           end
 
@@ -55,7 +55,7 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
 
       context "when the jobseeker deletes a saved job" do
         before do
-          within "tr[data-slug='#{vacancy_1.slug}']" do
+          within "tr[data-slug='#{vacancy1.slug}']" do
             click_on "Delete"
           end
         end
@@ -63,8 +63,8 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
         it "deletes the saved job and redirects to the dashboard" do
           expect(page).to have_content(I18n.t("jobseekers.saved_jobs.index.page_title"))
           expect(page).to have_content(I18n.t("jobseekers.saved_jobs.destroy.success"))
-          expect(page).not_to have_content(vacancy_1.job_title)
-          expect(page).to have_content(vacancy_2.job_title)
+          expect(page).not_to have_content(vacancy1.job_title)
+          expect(page).to have_content(vacancy2.job_title)
           expect(page).to have_content(expired_vacancy.job_title)
         end
       end

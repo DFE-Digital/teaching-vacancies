@@ -9,7 +9,7 @@ module VacanciesHelper
   end
 
   def uncapitalize_words(location_name)
-    array = location_name.split(" ")
+    array = location_name.split
     array.map! { |word| WORD_EXCEPTIONS.include?(word.downcase) ? word.downcase : word }
     array.join(" ")
   end
@@ -40,7 +40,7 @@ module VacanciesHelper
     t("jobs.review_heading")
   end
 
-  def hidden_state_field_value(vacancy, copy = false)
+  def hidden_state_field_value(vacancy, copy: false)
     return "copy" if copy
     return "edit_published" if vacancy.published?
     return vacancy.state if %w[copy review edit].include?(vacancy.state)
@@ -62,7 +62,7 @@ module VacanciesHelper
   end
 
   def expiry_date_and_time(vacancy)
-    format_date(vacancy.expires_on) + " at " + vacancy.expires_at.strftime("%-l:%M %P")
+    "#{format_date(vacancy.expires_on)} at #{vacancy.expires_at.strftime('%-l:%M %P')}"
   end
 
   def vacancy_or_organisation_description(vacancy)

@@ -14,9 +14,10 @@ private
 
   def save_csv_file(url, location)
     request = HTTParty.get(url)
-    if request.code == 200
+    case request.code
+    when 200
       File.write(location, request.body, mode: "wb")
-    elsif request.code == 404
+    when 404
       raise HTTParty::ResponseError, "CSV file not found."
     else
       raise HTTParty::ResponseError, "Unexpected problem downloading CSV file."

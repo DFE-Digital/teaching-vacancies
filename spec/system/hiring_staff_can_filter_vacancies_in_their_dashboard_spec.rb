@@ -2,21 +2,21 @@ require "rails_helper"
 
 RSpec.describe "Hiring staff can filter vacancies in their dashboard" do
   let(:school_group) { create(:trust) }
-  let(:school_1) { create(:school, name: "Happy Rainbows School") }
-  let(:school_2) { create(:school, name: "Dreary Grey School") }
+  let(:school1) { create(:school, name: "Happy Rainbows School") }
+  let(:school2) { create(:school, name: "Dreary Grey School") }
   let!(:school_group_vacancy) { create(:vacancy, :published, :at_central_office) }
-  let!(:school_1_vacancy) { create(:vacancy, :published, :at_one_school) }
-  let!(:school_1_draft_vacancy) { create(:vacancy, :draft, :at_one_school) }
-  let!(:school_2_draft_vacancy) { create(:vacancy, :draft, :at_one_school) }
+  let!(:school1_vacancy) { create(:vacancy, :published, :at_one_school) }
+  let!(:school1_draft_vacancy) { create(:vacancy, :draft, :at_one_school) }
+  let!(:school2_draft_vacancy) { create(:vacancy, :draft, :at_one_school) }
 
   before do
     school_group_vacancy.organisation_vacancies.create(organisation: school_group)
-    school_1_vacancy.organisation_vacancies.create(organisation: school_1)
-    school_1_draft_vacancy.organisation_vacancies.create(organisation: school_1)
-    school_2_draft_vacancy.organisation_vacancies.create(organisation: school_2)
+    school1_vacancy.organisation_vacancies.create(organisation: school1)
+    school1_draft_vacancy.organisation_vacancies.create(organisation: school1)
+    school2_draft_vacancy.organisation_vacancies.create(organisation: school2)
 
-    SchoolGroupMembership.find_or_create_by(school_id: school_1.id, school_group_id: school_group.id)
-    SchoolGroupMembership.find_or_create_by(school_id: school_2.id, school_group_id: school_group.id)
+    SchoolGroupMembership.find_or_create_by(school_id: school1.id, school_group_id: school_group.id)
+    SchoolGroupMembership.find_or_create_by(school_id: school2.id, school_group_id: school_group.id)
 
     stub_accepted_terms_and_conditions
     OmniAuth.config.test_mode = true
@@ -52,9 +52,9 @@ RSpec.describe "Hiring staff can filter vacancies in their dashboard" do
         expect(page).to have_content("Showing all jobs")
 
         expect(page).to have_content(school_group_vacancy.job_title)
-        expect(page).to have_content(school_1_vacancy.job_title)
-        expect(page).to_not have_content(school_1_draft_vacancy.job_title)
-        expect(page).to_not have_content(school_2_draft_vacancy.job_title)
+        expect(page).to have_content(school1_vacancy.job_title)
+        expect(page).to_not have_content(school1_draft_vacancy.job_title)
+        expect(page).to_not have_content(school2_draft_vacancy.job_title)
       end
 
       context "when applying filters" do
@@ -68,9 +68,9 @@ RSpec.describe "Hiring staff can filter vacancies in their dashboard" do
           expect(page).to have_content("1 filter applied")
 
           expect(page).to_not have_content(school_group_vacancy.job_title)
-          expect(page).to have_content(school_1_vacancy.job_title)
-          expect(page).to_not have_content(school_1_draft_vacancy.job_title)
-          expect(page).to_not have_content(school_2_draft_vacancy.job_title)
+          expect(page).to have_content(school1_vacancy.job_title)
+          expect(page).to_not have_content(school1_draft_vacancy.job_title)
+          expect(page).to_not have_content(school2_draft_vacancy.job_title)
         end
       end
     end
@@ -83,9 +83,9 @@ RSpec.describe "Hiring staff can filter vacancies in their dashboard" do
         expect(page).to have_content("Showing all jobs")
 
         expect(page).to_not have_content(school_group_vacancy.job_title)
-        expect(page).to_not have_content(school_1_vacancy.job_title)
-        expect(page).to have_content(school_1_draft_vacancy.job_title)
-        expect(page).to have_content(school_2_draft_vacancy.job_title)
+        expect(page).to_not have_content(school1_vacancy.job_title)
+        expect(page).to have_content(school1_draft_vacancy.job_title)
+        expect(page).to have_content(school2_draft_vacancy.job_title)
       end
     end
   end
@@ -101,15 +101,15 @@ RSpec.describe "Hiring staff can filter vacancies in their dashboard" do
       expect(page).to have_content("1 filter applied")
 
       expect(page).to have_content(school_group_vacancy.job_title)
-      expect(page).to_not have_content(school_1_vacancy.job_title)
-      expect(page).to_not have_content(school_1_draft_vacancy.job_title)
-      expect(page).to_not have_content(school_2_draft_vacancy.job_title)
+      expect(page).to_not have_content(school1_vacancy.job_title)
+      expect(page).to_not have_content(school1_draft_vacancy.job_title)
+      expect(page).to_not have_content(school2_draft_vacancy.job_title)
     end
   end
 
   context "when managed_school_ids is not empty" do
     let(:managed_organisations) { "" }
-    let(:managed_school_ids) { [school_1.id, school_2.id] }
+    let(:managed_school_ids) { [school1.id, school2.id] }
 
     scenario "it shows filtered published vacancies" do
       visit organisation_path
@@ -118,9 +118,9 @@ RSpec.describe "Hiring staff can filter vacancies in their dashboard" do
       expect(page).to have_content("2 filters applied")
 
       expect(page).to_not have_content(school_group_vacancy.job_title)
-      expect(page).to have_content(school_1_vacancy.job_title)
-      expect(page).to_not have_content(school_1_draft_vacancy.job_title)
-      expect(page).to_not have_content(school_2_draft_vacancy.job_title)
+      expect(page).to have_content(school1_vacancy.job_title)
+      expect(page).to_not have_content(school1_draft_vacancy.job_title)
+      expect(page).to_not have_content(school2_draft_vacancy.job_title)
     end
   end
 end

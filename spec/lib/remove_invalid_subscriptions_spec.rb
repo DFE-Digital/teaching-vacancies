@@ -10,8 +10,8 @@ RSpec.describe RemoveInvalidSubscriptions do
        OpenStruct.new({ status: "not-permanent-failure", email_address: "test@tempfailed.com" })]
     end
 
-    let!(:failed_subscription_1) { create(:subscription, email: "first@failed.com") }
-    let!(:failed_subscription_2) { create(:subscription, email: "second@failed.com") }
+    let!(:failed_subscription1) { create(:subscription, email: "first@failed.com") }
+    let!(:failed_subscription2) { create(:subscription, email: "second@failed.com") }
     let!(:temp_failed_subscription) { create(:subscription, email: "test@tempfailed.com") }
 
     let(:notify_client_mock) { instance_double(Notifications::Client) }

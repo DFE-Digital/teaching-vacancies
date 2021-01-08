@@ -1,13 +1,122 @@
 require:
   - rubocop-performance
 
-inherit_gem:
-  rubocop-govuk:
-    - config/default.yml
-
-inherit_mode:
-  merge:
-    - Exclude
-
 AllCops:
   NewCops: enable
+  Exclude:
+    - "bin/**"
+    - "config.ru"
+    - "tmp/**/*"
+    - "db/schema.rb"
+    - "db/migrate/20*"
+    - "vendor/**/*"
+    - "node_modules/**/*"
+
+  DisplayCopNames:
+    Enabled: true
+
+  ExtraDetails:
+    Enabled: true
+
+  DisplayStyleGuide:
+    Enabled: true
+
+##
+# Team Style conventions
+
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/LineLength:
+  Enabled: false
+
+Layout/MultilineMethodCallIndentation:
+  Enabled: false
+
+Style/BlockDelimiters:
+  EnforcedStyle: braces_for_chaining
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: never
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+
+##
+# Temporary rules
+# TODO: These have a lot of warnings, or relate to unfinished stylistic discussions within the team
+
+Layout/AccessModifierIndentation:
+  EnforcedStyle: outdent
+
+Lint/MissingSuper:
+  Enabled: false
+
+Naming/AccessorMethodName:
+  Enabled: false
+
+##
+# Tech Debt
+# TODO: `rubocop-govuk` previously had all these metrics disabled as they are "just heuristics".
+# They're not brilliant metrics, but they *can* point to some degree of accidental complexity.
+# We should consider slowly moving closer to the default settings.
+
+Metrics/AbcSize:
+  Max: 40
+  Exclude:
+    - "config/**/*"
+    - "lib/**/*"
+    - "spec/**/*"
+
+Metrics/BlockLength:
+  Max: 75
+  Exclude:
+    - "config/**/*"
+    - "spec/**/*"
+
+Metrics/ClassLength:
+  Max: 200
+
+Metrics/CyclomaticComplexity:
+  Max: 20
+  Exclude:
+    - "spec/**/*"
+
+Metrics/MethodLength:
+  Max: 25
+  Exclude:
+    - "config/**/*"
+    - "lib/**/*"
+    - "spec/**/*"
+
+Metrics/ModuleLength:
+  Max: 200
+
+Metrics/ParameterLists:
+  Max: 8
+
+Metrics/PerceivedComplexity:
+  Max: 20
+  Exclude:
+    - "spec/**/*"

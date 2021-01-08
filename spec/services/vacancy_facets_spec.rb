@@ -30,12 +30,11 @@ RSpec.describe VacancyFacets do
     let(:subject_count) { SUBJECT_OPTIONS.count }
     let(:city_count) { CITIES.count }
     let(:county_count) { COUNTIES.count }
+    let(:job_roles_subjects_cities_and_counties) { job_role_count + subject_count + city_count + county_count }
 
     it "calls Search::SearchBuilder" do
-      JOB_ROLES_SUBJECTS_CITIES_AND_COUNTIES = job_role_count + subject_count + city_count + county_count
-
       search = instance_double(Search::SearchBuilder, stats: [0, 0, 5])
-      expect(Search::SearchBuilder).to receive(:new).and_return(search).exactly(JOB_ROLES_SUBJECTS_CITIES_AND_COUNTIES).times
+      expect(Search::SearchBuilder).to receive(:new).and_return(search).exactly(job_roles_subjects_cities_and_counties).times
       subject.refresh
     end
   end

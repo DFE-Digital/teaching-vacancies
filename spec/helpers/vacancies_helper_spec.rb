@@ -37,7 +37,7 @@ RSpec.describe VacanciesHelper, type: :helper do
     end
 
     it "returns copy if copy true" do
-      expect(hidden_state_field_value(vacancy, true)).to eq("copy")
+      expect(hidden_state_field_value(vacancy, copy: true)).to eq("copy")
     end
 
     it "returns edit_published if published vacancy" do

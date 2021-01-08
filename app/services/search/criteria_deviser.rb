@@ -30,8 +30,8 @@ private
 
   def get_subjects_from_job_title
     subject_options = SUBJECT_OPTIONS.map(&:first)
-    single_word_subjects = subject_options.select { |subject| subject.split(" ").one? }
-    multi_word_subjects = subject_options.select { |subject| subject.split(" ").many? }
+    single_word_subjects = subject_options.select { |subject| subject.split.one? }
+    multi_word_subjects = subject_options.select { |subject| subject.split.many? }
     keyword = get_strings_from_job_title(single_word_subjects, multi_word_subjects)
     # Hard code synonym 'Maths' for 'Mathematics' - SUBJECT_OPTIONS only contains 'Mathematics'
     keyword << "Mathematics" if normalize(@vacancy.job_title).include?(normalize("Maths"))
@@ -45,7 +45,7 @@ private
   def get_strings_from_job_title(words, phrases)
     words_and_phrases = []
     words.each do |word|
-      if normalize(@vacancy.job_title).split(" ").include?(normalize(word))
+      if normalize(@vacancy.job_title).split.include?(normalize(word))
         words_and_phrases << word
       end
     end

@@ -13,7 +13,7 @@ class Publishers::SignIn::Email::SessionsController < Publishers::SignIn::BaseSe
   def new; end
 
   def create
-    session.update(organisation_urn: get_urn, organisation_uid: get_uid, organisation_la_code: get_la_code)
+    session.update(organisation_urn: params[:urn], organisation_uid: params[:uid], organisation_la_code: params[:la_code])
     Rails.logger.info(updated_session_details)
     redirect_to organisation_path
   end
@@ -41,13 +41,14 @@ class Publishers::SignIn::Email::SessionsController < Publishers::SignIn::BaseSe
     @trusts = information.trusts
     @local_authorities = information.local_authorities
     update_session_except_org_id(information.details_to_update_in_session)
-    unless information.multiple_organisations? || @reason_for_failing_sign_in.present?
-      redirect_to auth_email_create_session_path(
-        urn: @schools&.first&.urn,
-        uid: @trusts&.first&.uid,
-        la_code: @local_authorities&.first&.local_authority_code,
-      )
-    end
+
+    return if information.multiple_organisations? || @reason_for_failing_sign_in.present?
+
+    redirect_to auth_email_create_session_path(
+      urn: @schools&.first&.urn,
+      uid: @trusts&.first&.uid,
+      la_code: @local_authorities&.first&.local_authority_code,
+    )
   end
 
 private
@@ -62,20 +63,8 @@ private
     Rails.logger.warn("Hiring staff signed in via fallback authentication: #{options[:oid]}")
   end
 
-  def get_uid
-    params.dig(:uid)
-  end
-
-  def get_urn
-    params.dig(:urn)
-  end
-
-  def get_la_code
-    params.dig(:la_code)
-  end
-
   def get_key
-    params_login_key = params.dig(:login_key)
+    params_login_key = params[:login_key]
     begin
       EmergencyLoginKey.find(params_login_key)
     rescue StandardError
@@ -104,19 +93,19 @@ private
 
   def publisher_authorised?
     publisher = begin
-                  Publisher.find_by(oid: session.to_h["publisher_oid"])
-                rescue StandardError
-                  nil
-                end
+      Publisher.find_by(oid: session.to_h["publisher_oid"])
+    rescue StandardError
+      nil
+    end
 
     allowed_publisher? &&
-      (publisher&.dsi_data&.dig("la_codes")&.include?(get_la_code) ||
-       publisher&.dsi_data&.dig("trust_uids")&.include?(get_uid) ||
-       publisher&.dsi_data&.dig("school_urns")&.include?(get_urn))
+      (publisher&.dsi_data&.dig("la_codes")&.include?(params[:la_code]) ||
+       publisher&.dsi_data&.dig("trust_uids")&.include?(params[:uid]) ||
+       publisher&.dsi_data&.dig("school_urns")&.include?(params[:urn]))
   end
 
   def allowed_publisher?
-    get_urn.present? || get_uid.present? || (get_la_code.present? &&
-      (Rails.env.staging? || Rails.env.development? || ALLOWED_LOCAL_AUTHORITIES.include?(get_la_code)))
+    params[:urn].present? || params[:uid].present? || (params[:la_code].present? &&
+      (Rails.env.staging? || Rails.env.development? || ALLOWED_LOCAL_AUTHORITIES.include?(params[:la_code])))
   end
 end

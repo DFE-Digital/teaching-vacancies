@@ -38,10 +38,10 @@ class Publishers::BaseController < ApplicationController
     return redirect_to(new_identifications_path) unless current_publisher
     return redirect_to(logout_endpoint) if current_publisher.last_activity_at.blank?
 
-    if Time.current > (current_publisher.last_activity_at + TIMEOUT_PERIOD)
-      session[:publisher_signing_out_for_inactivity] = true
-      redirect_to logout_endpoint
-    end
+    return unless Time.current > (current_publisher.last_activity_at + TIMEOUT_PERIOD)
+
+    session[:publisher_signing_out_for_inactivity] = true
+    redirect_to logout_endpoint
   end
 
   def update_publisher_last_activity_at

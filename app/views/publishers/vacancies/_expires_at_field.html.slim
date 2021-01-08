@@ -10,9 +10,9 @@
     .govuk-date-input
       .govuk-date-input__item.add-colon-positioned-next-to-element
         = f.govuk_number_field :expires_at_hh, width: 2,
-          class: "govuk-input govuk-date-input__input govuk-input--width-2 " + (f.object.errors[:expires_at].present? ? "govuk-input--error" : "")
+          class: "govuk-input govuk-date-input__input govuk-input--width-2 #{f.object.errors[:expires_at].present? ? 'govuk-input--error' : ''}"
       .govuk-date-input__item
         = f.govuk_number_field :expires_at_mm, width: 2,
-          class: "govuk-input govuk-date-input__input govuk-input--width-2 " + (f.object.errors[:expires_at].present? ? "govuk-input--error" : "")
+          class: "govuk-input govuk-date-input__input govuk-input--width-2 #{f.object.errors[:expires_at].present? ? 'govuk-input--error' : ''}"
       .govuk-date-input__item
         = f.govuk_collection_select :expires_at_meridiem, %w[am pm], :itself, :itself

@@ -52,9 +52,9 @@ RSpec.describe SchoolsForm, type: :model do
       end
 
       context "when 2 or more organisations are selected" do
-        let!(:organisation_1) { create(:school) }
-        let!(:organisation_2) { create(:school) }
-        let(:organisation_ids) { [organisation_1.id, organisation_2.id] }
+        let!(:organisation1) { create(:school) }
+        let!(:organisation2) { create(:school) }
+        let(:organisation_ids) { [organisation1.id, organisation2.id] }
 
         it "is valid" do
           expect(subject.valid?).to be true
