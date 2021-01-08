@@ -1,4 +1,13 @@
 class Publishers::SignIn::BaseSessionsController < Publishers::BaseController
+  PUBLISHER_SESSION_KEYS = %i[
+    publisher_id_token
+    publisher_oid
+    publisher_multiple_organisations
+    organisation_urn
+    organisation_uid
+    organisation_la_code
+  ].freeze
+
   skip_before_action :authenticate_publisher!
   before_action :sign_out_jobseeker!, only: %i[create]
 
@@ -8,11 +17,15 @@ class Publishers::SignIn::BaseSessionsController < Publishers::BaseController
                     else
                       { success: t("messages.access.publisher_signed_out") }
                     end
-    session.destroy
+    clear_publisher_session!
     redirect_to new_identifications_path, flash_message
   end
 
 private
+
+  def clear_publisher_session!
+    PUBLISHER_SESSION_KEYS.each { |key| session.delete(key) }
+  end
 
   def sign_out_jobseeker!
     sign_out(:jobseeker)

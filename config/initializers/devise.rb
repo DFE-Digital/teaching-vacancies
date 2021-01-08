@@ -253,7 +253,10 @@ Devise.setup do |config|
 
   # Set this configuration to false if you want /users/sign_out to sign out
   # only the current scope. By default, Devise signs out all scopes.
-  # config.sign_out_all_scopes = true
+  # IMPORTANT: This is needed for us to persist non-user-related data in the session
+  #   when logging out (such as A/B tests which are stored in `session[:ab_tests]`).
+  #   If this were set to true, Warden will nuke the *entire* session on logout.
+  config.sign_out_all_scopes = false
 
   # ==> Navigation configuration
   # Lists the formats that should be treated as navigational. Formats like

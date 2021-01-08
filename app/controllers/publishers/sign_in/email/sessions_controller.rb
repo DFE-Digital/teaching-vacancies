@@ -30,7 +30,7 @@ class Publishers::SignIn::Email::SessionsController < Publishers::SignIn::BaseSe
 
   def change_organisation
     key = generate_login_key(publisher: current_publisher)
-    session.destroy
+    clear_publisher_session!
     redirect_to auth_email_choose_organisation_path(login_key: key.id)
   end
 
