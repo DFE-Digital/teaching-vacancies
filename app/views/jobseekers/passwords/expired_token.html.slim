@@ -6,7 +6,7 @@
 
     p.govuk-body = t(".description", email: resource.email)
 
-    = form_for resource, as: resource_name, url: password_path(resource_name), html: { method: :post } do |f|
+    = form_for resource, url: jobseeker_password_path, method: :post do |f|
       = f.hidden_field :email
 
       = f.govuk_submit t("buttons.resend_email"), classes: "govuk-!-margin-bottom-0"
