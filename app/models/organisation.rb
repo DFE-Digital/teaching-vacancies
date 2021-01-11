@@ -10,21 +10,6 @@ class Organisation < ApplicationRecord
 
   alias_attribute :data, :gias_data
 
-  JOB_SORTING_OPTIONS_BASE = [
-    [I18n.t("jobs.sort_by.expires_on.ascending"), "expires_on"],
-    [I18n.t("jobs.sort_by.job_title.ascending"), "job_title"],
-    [I18n.t("jobs.sort_by.location.ascending"), "readable_job_location"],
-  ].freeze
-
-  JOB_SORTING_OPTIONS_EXTENDED = (JOB_SORTING_OPTIONS_BASE + [I18n.t("jobs.sort_by.published_date.ascending"), "publish_on"]).freeze
-
-  JOB_SORTING_OPTIONS = {
-    published: JOB_SORTING_OPTIONS_BASE,
-    pending: JOB_SORTING_OPTIONS_EXTENDED,
-    draft: JOB_SORTING_OPTIONS_EXTENDED,
-    expired: JOB_SORTING_OPTIONS_BASE,
-  }.freeze
-
   def all_vacancies
     ids = is_a?(School) ? [id] : [id] + schools.pluck(:id)
     Vacancy.in_organisation_ids(ids)
