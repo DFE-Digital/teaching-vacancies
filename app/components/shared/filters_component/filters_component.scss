@@ -70,7 +70,6 @@
     box-shadow: none;
 
     .filters__heading-container {
-      border-bottom: 2px solid $govuk-border-colour;
       margin-bottom: govuk-spacing(2);
 
       .govuk-heading-s {
@@ -81,16 +80,22 @@
     .filters__heading--mobile {
       @media only screen and (max-width: 640px) {
         background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.4444 20.1667V11.9167L20.4538 4.8889C20.558 4.78472 20.6403 4.66079 20.6959 4.52436C20.7516 4.38794 20.7794 4.24178 20.7777 4.09446V3.05557C20.7777 2.89349 20.7133 2.73805 20.5987 2.62345C20.4841 2.50884 20.3287 2.44446 20.1666 2.44446H1.83328C1.6712 2.44446 1.51576 2.50884 1.40116 2.62345C1.28655 2.73805 1.22217 2.89349 1.22217 3.05557V4.07612C1.22228 4.22046 1.25096 4.36335 1.30655 4.49655C1.36214 4.62975 1.44354 4.75064 1.54606 4.85224L8.5555 11.9656V18.1989L13.4444 20.1667Z" ></path></svg>');
-        background-position: top 0 left 10px;
+        background-position: top 0 left;
         background-repeat: no-repeat;
         background-size: 22px 22px;
         border-color: govuk-colour('black');
-        padding-left: govuk-spacing(7);
+        padding-left: govuk-spacing(5);
       }
     }
 
     .moj-filter__heading-title {
       display: flex;
+      border-bottom: 2px solid $govuk-border-colour;
+      margin-bottom: govuk-spacing(2);
+
+      .govuk-heading-s {
+        margin-bottom: govuk-spacing(2);
+      }
 
       .filters__heading-title {
         margin-bottom: govuk-spacing(1);
@@ -211,12 +216,10 @@
   }
 }
 
-.moj-action-bar__filter {
-  &::after {
-    width: 0;
-  }
+.moj-action-bar {
+  margin-bottom: govuk-spacing(3);
 }
 
-.js-enabled .filters__submit{
+.js-enabled .filters__submit {
   display: none;
 }

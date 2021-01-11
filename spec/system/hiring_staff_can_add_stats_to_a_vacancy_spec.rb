@@ -2,7 +2,6 @@ require "rails_helper"
 require "sanitize"
 
 RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: true do
-  let(:notification_badge_selector) { "[data-test='expired-vacancies-with-feedback-outstanding']" }
   let(:job_title_link_selector) { "#job-title.view-vacancy-link" }
 
   let(:school) { create(:school) }
@@ -22,12 +21,6 @@ RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: tru
       vacancy.organisation_vacancies.create(organisation: school)
       another_vacancy.organisation_vacancies.create(organisation: school)
       third_vacancy.organisation_vacancies.create(organisation: school)
-    end
-
-    scenario "hiring staff can see notification badge" do
-      visit organisation_path
-
-      expect(page).to have_selector(notification_badge_selector, text: 3)
     end
 
     scenario "hiring staff can see notice of vacancies awaiting feedback" do
@@ -70,7 +63,7 @@ RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: tru
     scenario "when an option is not selected in a javascript disabled browser", js: false do
       visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
-      within("tr", text: vacancy.job_title) do
+      within(".card", text: vacancy.job_title) do
         select I18n.t("jobs.feedback.hired_status.hired_tvs"), from: "vacancy_hired_status"
         click_on I18n.t("buttons.submit")
       end
@@ -87,7 +80,7 @@ RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: tru
     scenario "when an option is not selected in a javascript enabled browser" do
       visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
-      within("tr", text: vacancy.job_title) do
+      within(".card", text: vacancy.job_title) do
         select I18n.t("jobs.feedback.hired_status.hired_tvs"), from: "vacancy_hired_status"
         click_on I18n.t("buttons.submit")
       end
@@ -104,13 +97,13 @@ RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: tru
     scenario "input error styling only displays on blank selection field(s)" do
       visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
-      within("tr", text: vacancy.job_title) do
+      within(".card", text: vacancy.job_title) do
         click_on I18n.t("buttons.submit")
       end
 
       expect(page).to have_content(I18n.t("messages.jobs.feedback.inline_error"), count: 2)
 
-      within("tr", text: vacancy.job_title) do
+      within(".card", text: vacancy.job_title) do
         select I18n.t("jobs.feedback.hired_status.hired_tvs"), from: "vacancy_hired_status"
         click_on I18n.t("buttons.submit")
 
@@ -127,7 +120,6 @@ RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: tru
       visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
       expect(page).to have_selector(job_title_link_selector, count: 3)
-
       submit_feedback_for(vacancy)
       submit_feedback_for(another_vacancy)
       submit_feedback_for(third_vacancy)
@@ -154,13 +146,12 @@ RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: tru
     scenario "hiring staff can not see notification badge" do
       visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
-      expect(page).to_not have_selector(notification_badge_selector)
       expect(page).to have_content(I18n.t("jobs.no_awaiting_feedback"))
     end
   end
 
   def submit_feedback_for(vacancy)
-    within("tr", text: vacancy.job_title) do
+    within(".card", text: vacancy.job_title) do
       select I18n.t("jobs.feedback.hired_status.hired_tvs"), from: "vacancy_hired_status"
       select I18n.t("jobs.feedback.listed_elsewhere.listed_paid"), from: "vacancy_listed_elsewhere"
       click_on I18n.t("buttons.submit")

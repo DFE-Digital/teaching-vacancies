@@ -1,0 +1,16 @@
+.dashboard__header
+  .govuk-width-container
+    h1.govuk-heading-m class="govuk-!-margin-bottom-2"
+      = heading
+
+  .govuk-width-container
+    - if link.present?
+      .filters-information.moj-action-bar
+        = govuk_button_to link[:text], link[:url], class: "govuk-!-margin-bottom-0 govuk-!-margin-top-0 dashboard__link"
+    .moj-primary-navigation
+      .moj-primary-navigation__container
+        .moj-primary-navigation__nav aria-label="Account navigation"
+          ul.moj-primary-navigation__list
+            - @navigation_items.each do |item|
+              li.moj-primary-navigation__item
+                = item

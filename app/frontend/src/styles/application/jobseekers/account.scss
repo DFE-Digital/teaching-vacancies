@@ -1,18 +1,3 @@
-.account-header {
-  @include dashboard;
-  background-color: govuk-colour('light-grey');
-  padding: govuk-spacing(2) 0;
-
-  @include govuk-media-query ($from: desktop) {
-    padding: govuk-spacing(4) 0 0;
-  }
-}
-
-.account-header__user-identifier {
-  @include govuk-font(24);
-  margin-bottom: govuk-spacing(3);
-}
-
 .account-sidebar {
   border-top: 5px solid $govuk-link-colour;
   margin-top: govuk-spacing(3);

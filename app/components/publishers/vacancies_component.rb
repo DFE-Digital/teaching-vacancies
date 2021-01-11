@@ -1,12 +1,12 @@
 class Publishers::VacanciesComponent < ViewComponent::Base
   delegate :awaiting_feedback_tab, to: :helpers
 
-  def initialize(organisation:, sort:, selected_type:, filters:, filters_form:)
+  def initialize(organisation:, sort:, selected_type:, filters:, filters_form:, sort_form:)
     @organisation = organisation
     @sort = sort
     @filters = filters
     @filters_form = filters_form
-
+    @sort_form = sort_form
     @selected_type = selected_type&.to_sym || :published
     @vacancy_types = %i[published pending draft expired awaiting_feedback]
 
@@ -18,8 +18,28 @@ class Publishers::VacanciesComponent < ViewComponent::Base
     @organisation.all_vacancies.active.any?
   end
 
-  def selected_class(vacancy_type)
-    "govuk-tabs__list-item--selected" if @selected_type == vacancy_type
+  def selected?(vacancy_type)
+    @selected_type == vacancy_type
+  end
+
+  def sortable?
+    @vacancies.count > 1 && vacancy_sort_options.present?
+  end
+
+  def vacancy_sort_options
+    Organisation::JOB_SORTING_OPTIONS[@selected_type]
+  end
+
+  def heading
+    if @organisation.group_type == "local_authority"
+      t("schools.jobs.local_authority_index_html", organisation: @organisation.name)
+    else
+      t("schools.jobs.index_html", organisation: @organisation.name)
+    end
+  end
+
+  def vacancy_links
+    @vacancy_types.map { |vacancy_type| vacancy_type_tab_link(vacancy_type, selected?(vacancy_type)) }
   end
 
   def grid_column_class
@@ -30,14 +50,8 @@ class Publishers::VacanciesComponent < ViewComponent::Base
     I18n.t("jobs.dashboard_filters.heading", count: @filters[:managed_school_ids]&.count)
   end
 
-  def vacancy_type_tab_link(vacancy_type)
-    if vacancy_type == :awaiting_feedback
-      link_to jobs_with_type_organisation_path(vacancy_type), class: "govuk-tabs__tab" do
-        awaiting_feedback_tab(@organisation.vacancies.awaiting_feedback.count)
-      end
-    else
-      link_to t("jobs.#{vacancy_type}_jobs"), jobs_with_type_organisation_path(vacancy_type), class: "govuk-tabs__tab"
-    end
+  def vacancy_type_tab_link(vacancy_type, selected)
+    link_to t("jobs.#{vacancy_type}_jobs"), jobs_with_type_organisation_path(vacancy_type), class: "moj-primary-navigation__link", "aria-current": ("page" if selected)
   end
 
 private

@@ -5,10 +5,11 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
   let(:selected_type) { "published" }
   let(:filters) { {} }
   let(:filters_form) { ManagedOrganisationsForm.new(filters) }
+  let(:sort_form) { VacancySortForm.new }
 
   subject do
     described_class.new(
-      organisation: organisation, sort: sort, selected_type: selected_type, filters: filters, filters_form: filters_form,
+      organisation: organisation, sort: sort, selected_type: selected_type, filters: filters, filters_form: filters_form, sort_form: @sort_form,
     )
   end
 
@@ -32,19 +33,19 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       let!(:inline_component) { render_inline(subject) }
 
       it "renders the vacancies component" do
-        expect(inline_component.css(".govuk-tabs").to_html).not_to be_blank
+        expect(inline_component.css(".moj-filter-layout__content").to_html).not_to be_blank
       end
 
       it "renders the number of jobs in the heading" do
-        expect(inline_component.css("section.govuk-tabs__panel > h2.govuk-heading-m").to_html).to include("1 published job")
+        expect(inline_component.css("h2.govuk-heading-l").text).to include("Published jobs (1)")
       end
 
       it "renders the vacancy job title in the table" do
-        expect(inline_component.css(".govuk-table.vacancies").to_html).to include(vacancy.job_title)
+        expect(inline_component.css(".card").to_html).to include(vacancy.job_title)
       end
 
       it "does not render the vacancy readable job location in the table" do
-        expect(inline_component.css(".govuk-table.vacancies > tbody > tr > td#vacancy_location").to_html).to be_blank
+        expect(inline_component.css(".card #vacancy_location").to_html).to be_blank
       end
 
       it "does not render the filters sidebar" do
@@ -68,20 +69,20 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       let!(:inline_component) { render_inline(subject) }
 
       it "renders the vacancies component" do
-        expect(inline_component.css(".govuk-tabs").to_html).not_to be_blank
+        expect(inline_component.css(".moj-filter-layout__content").to_html).not_to be_blank
       end
 
       it "renders the number of jobs in the heading" do
-        expect(inline_component.css("section.govuk-tabs__panel > h2.govuk-heading-m").to_html).to include("1 published job")
+        expect(inline_component.css("h2.govuk-heading-l").text).to include("Published jobs (1)")
       end
 
       it "renders the vacancy job title in the table" do
-        expect(inline_component.css(".govuk-table.vacancies").to_html).to include(vacancy.job_title)
+        expect(inline_component.css(".card").to_html).to include(vacancy.job_title)
       end
 
       it "renders the vacancy readable job location in the table" do
         expect(
-          inline_component.css(".govuk-table.vacancies > tbody > tr > td#vacancy_location").to_html,
+          inline_component.css(".card #vacancy_location").to_html,
         ).to include(vacancy.readable_job_location)
       end
 
@@ -120,20 +121,20 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       let!(:inline_component) { render_inline(subject) }
 
       it "renders the vacancies component" do
-        expect(inline_component.css(".govuk-tabs").to_html).not_to be_blank
+        expect(inline_component.css(".moj-filter-layout__content").to_html).not_to be_blank
       end
 
       it "renders the number of jobs in the heading" do
-        expect(inline_component.css("section.govuk-tabs__panel > h2.govuk-heading-m").to_html).to include("1 published job")
+        expect(inline_component.css("h2.govuk-heading-l").text).to include("Published jobs (1)")
       end
 
       it "renders the vacancy job title in the table" do
-        expect(inline_component.css(".govuk-table.vacancies").to_html).to include(vacancy.job_title)
+        expect(inline_component.css(".card").to_html).to include(vacancy.job_title)
       end
 
       it "renders the vacancy readable job location in the table" do
         expect(
-          inline_component.css(".govuk-table.vacancies > tbody > tr > td#vacancy_location").to_html,
+          inline_component.css(".card #vacancy_location").to_html,
         ).to include(vacancy.readable_job_location)
       end
 

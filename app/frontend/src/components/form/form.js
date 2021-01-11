@@ -4,6 +4,14 @@ document.addEventListener('DOMContentLoaded', () => {
       checkboxClickHandler(el, event.target.checked);
     });
   });
+
+  Array.from(document.querySelectorAll('[data-auto-submit="true"]')).forEach((el) => {
+    Array.from(el.querySelectorAll('.govuk-select')).forEach((select) => {
+      select.addEventListener('change', (e) => {
+        e.target.closest('form').submit();
+      });
+    });
+  });
 });
 
 export const disableInputs = (inputs) => {
