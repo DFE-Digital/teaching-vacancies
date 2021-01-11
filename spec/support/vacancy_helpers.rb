@@ -122,7 +122,11 @@ module VacancyHelpers
 
     expect(page).to have_content(vacancy.publish_on.to_s.strip)
     expect(page).to have_content(vacancy.expires_on.to_s.strip)
-    expect(page).to have_content(vacancy.starts_on.to_s.strip) if vacancy.starts_on?
+    if vacancy.starts_on?
+      expect(page).to have_content(vacancy.starts_on.to_s.strip)
+    elsif vacancy.starts_asap?
+      expect(page).to have_content(I18n.t("jobs.starts_asap"))
+    end
 
     expect(page).to have_content(I18n.t("jobs.supporting_documents"))
 
@@ -147,7 +151,11 @@ module VacancyHelpers
 
     expect(page).to have_content(vacancy.publish_on.to_s.strip)
     expect(page).to have_content(vacancy.expires_on.to_s.strip)
-    expect(page).to have_content(vacancy.starts_on.to_s.strip) if vacancy.starts_on?
+    if vacancy.starts_on?
+      expect(page).to have_content(vacancy.starts_on.to_s.strip)
+    elsif vacancy.starts_asap?
+      expect(page).to have_content(I18n.t("jobs.starts_asap"))
+    end
 
     expect(page.html).to include(vacancy.school_visits)
     expect(page.html).to include(vacancy.how_to_apply)

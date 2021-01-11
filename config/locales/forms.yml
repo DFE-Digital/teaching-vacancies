@@ -189,6 +189,7 @@ en:
         expires_on_html: Date application is due (<span class='text-red'>Required</span>)
         expires_at_html: Time application is due (<span class='text-red'>Required</span>)
         publish_on_html: Date job will be listed (<span class='text-red'>Required</span>)
+        starts_asap: As soon as possible
         starts_on: Date job starts
       job_location_form:
         job_location_html: Where will the job be based? (<span class='text-red'>Required</span>)

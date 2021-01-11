@@ -71,6 +71,11 @@ FactoryBot.define do
       publish_on { Faker::Time.between(from: Date.current, to: Date.current + 1.day) }
     end
 
+    trait :starts_asap do
+      starts_on { nil }
+      starts_asap { true }
+    end
+
     trait :draft do
       status { :draft }
     end

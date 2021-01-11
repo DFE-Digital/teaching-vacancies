@@ -33,7 +33,16 @@
 
       = render "publishers/vacancies/expires_at_field", f: f
 
-      = f.govuk_date_field :starts_on
+      .clear-form
+        = f.govuk_date_field :starts_on
+
+        .clear-form__checkbox
+          = f.govuk_check_box :starts_asap,
+            true,
+            0,
+            multiple: false,
+            link_errors: false,
+            label: { text: t("helpers.legend.important_dates_form.starts_asap") }
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 

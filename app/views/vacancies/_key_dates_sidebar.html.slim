@@ -7,9 +7,15 @@
       - if @vacancy.starts_on.present?
         li.key-dates-timeline__item
           h3.key-dates-timeline__title.govuk-heading-s
-            = t("jobs.starts_on")
+            = t("jobs.expected_start")
           p.key-dates-timeline__by
             = format_date(@vacancy.starts_on)
+      - elsif @vacancy.starts_asap?
+        li.key-dates-timeline__item
+          h3.key-dates-timeline__title.govuk-heading-s
+            = t("jobs.expected_start")
+          p.key-dates-timeline__by
+            = t("jobs.starts_asap")
       li.key-dates-timeline__item
         h3.key-dates-timeline__title.govuk-heading-s
           = t("jobs.application_deadline")

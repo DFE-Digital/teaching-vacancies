@@ -93,7 +93,7 @@ module Publishers::Wizardable
 
   def important_dates_params(params)
     params.require(:important_dates_form)
-          .permit(:state, :starts_on, :publish_on, :expires_on,
+          .permit(:state, :starts_asap, :starts_on, :publish_on, :expires_on,
                   :expires_at, :expires_at_hh, :expires_at_mm, :expires_at_meridiem).merge(completed_step: STEPS[step])
   end
 
