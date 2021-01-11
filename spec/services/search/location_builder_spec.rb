@@ -63,7 +63,7 @@ RSpec.describe Search::LocationBuilder do
       let(:location) { "Map this location" }
 
       before do
-        allow(MAPPED_LOCATIONS).to receive(:[]).with(location.downcase).and_return(location_polygon.name)
+        allow(MAPPED_POLYGON_LOCATIONS).to receive(:[]).with(location.downcase).and_return(location_polygon.name)
       end
 
       it_behaves_like "a search using polygons", location: "Map this location"

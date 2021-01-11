@@ -31,4 +31,6 @@ LOCATION_POLYGON_SETTINGS = {
   },
 }.freeze
 
-MAPPED_LOCATIONS = YAML.load_file(base_path.join("mapped_locations.yml")).to_h
+MAPPED_POLYGON_LOCATIONS = YAML.load_file(base_path.join("mapped_polygon_locations.yml")).to_h
+
+MAPPED_POINT_LOCATIONS = YAML.load_file(base_path.join("mapped_point_locations.yml")).to_h

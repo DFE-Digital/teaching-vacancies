@@ -5,6 +5,6 @@ class LocationPolygon < ApplicationRecord
   scope :regions, -> { where(location_type: "regions") }
 
   def self.with_name(location)
-    find_by(name: (MAPPED_LOCATIONS[location.downcase].presence || location).downcase)
+    find_by(name: (MAPPED_POLYGON_LOCATIONS[location.downcase].presence || location).downcase)
   end
 end
