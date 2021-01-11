@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe SubscriptionsController, type: :controller do
   describe "#new" do
-    subject { get :new, params: { search_criteria: { keyword: "english" } }.symbolize_keys }
+    subject { get :new, params: { search_criteria: { keyword: "english" } } }
 
     it "returns 200" do
       subject
@@ -17,7 +17,7 @@ RSpec.describe SubscriptionsController, type: :controller do
           email: "foo@email.com",
           frequency: "daily",
           keyword: "english",
-        }.symbolize_keys,
+        },
       }
     end
     let(:subject) { post :create, params: params }
@@ -35,7 +35,7 @@ RSpec.describe SubscriptionsController, type: :controller do
     it "creates a subscription" do
       expect { subject }.to change { Subscription.count }.by(1)
       expect(subscription.email).to eq("foo@email.com")
-      expect(subscription.search_criteria).to eq({ keyword: "english" }.to_json)
+      expect(subscription.search_criteria[:keyword]).to eq "english"
     end
 
     context "with unsafe params" do
@@ -84,7 +84,7 @@ RSpec.describe SubscriptionsController, type: :controller do
 
     it "updates a subscription" do
       expect(subscription.reload.email).to eq("jimi@hendrix.com")
-      expect(subscription.reload.search_criteria).to eq({ keyword: "english" }.to_json)
+      expect(subscription.search_criteria[:keyword]).to eq "english"
     end
 
     context "with unsafe params" do

@@ -8,7 +8,7 @@ RSpec.describe AlertMailer, type: :mailer do
   let(:body) { mail.body.raw_source }
   let(:email) { "an@email.com" }
   let(:frequency) { :daily }
-  let(:search_criteria) { { keyword: "English" }.to_json }
+  let(:search_criteria) { { keyword: "English" } }
   let(:subscription) do
     subscription = Subscription.create(email: email, frequency: frequency, search_criteria: search_criteria)
     # The hashing algorithm uses a random initialization vector to encrypt the token,
