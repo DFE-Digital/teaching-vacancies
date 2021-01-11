@@ -21,5 +21,19 @@
         visibility: hidden;
       }
     }
+
+    .govuk-header__navigation-item {
+      input.govuk-header__link {
+        @include govuk-font(16, $weight: bold);
+
+        background-image: none;
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+        color: govuk-colour('white');
+        cursor: pointer;
+        padding: 0;
+      }
+    }
   }
 }

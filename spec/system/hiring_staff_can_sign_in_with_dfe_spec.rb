@@ -3,8 +3,8 @@ require "message_encryptor"
 
 RSpec.shared_examples "a successful sign in" do
   scenario "it signs in the user successfully" do
-    within(".govuk-header__navigation") { expect(page).to have_content(I18n.t("nav.sign_out")) }
-    within(".govuk-header__navigation") { expect(page).to have_content(I18n.t("nav.school_page_link")) }
+    within(".govuk-header__navigation") { expect(page).to have_selector(:link_or_button, I18n.t("nav.sign_out")) }
+    within(".govuk-header__navigation") { expect(page).to have_selector(:link_or_button, I18n.t("nav.school_page_link")) }
   end
 
   scenario "adds entries in the audit log" do

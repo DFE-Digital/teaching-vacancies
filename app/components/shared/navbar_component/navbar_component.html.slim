@@ -9,7 +9,7 @@ nav
       li class=active_link_class(root_path)
         = link_to t("nav.jobseekers_index_link"), root_path, class: "govuk-header__link"
       li class=active_link_class(sessions_path)
-        = link_to t("nav.sign_out"), sessions_path, method: :delete, class: "govuk-header__link"
+        = button_to t("nav.sign_out"), sessions_path, method: :delete, class: "govuk-header__link"
     - else
       li.govuk-header__navigation-item--left class=active_link_class(root_path)
         = link_to t("nav.find_job"), root_path, class: "govuk-header__link"
@@ -20,7 +20,7 @@ nav
               = link_to t("footer.your_account"), jobseekers_saved_jobs_path, class: "govuk-header__link"
             li.govuk-header__navigation-spacer aria-hidden="true" tab-index="-1"
             li.govuk-header__navigation-item--right class=active_link_class(destroy_jobseeker_session_path)
-              = link_to t("nav.sign_out"), destroy_jobseeker_session_path, method: :delete, class: "govuk-header__link"
+              = button_to t("nav.sign_out"), destroy_jobseeker_session_path, method: :delete, class: "govuk-header__link"
           - else
             li.govuk-header__navigation-spacer aria-hidden="true" tab-index="-1"
             li.govuk-header__navigation-item--right class=active_link_class(new_jobseeker_session_path)

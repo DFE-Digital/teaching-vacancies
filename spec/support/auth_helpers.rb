@@ -94,7 +94,7 @@ module AuthHelpers
 
   def sign_in_publisher
     visit new_identifications_path
-    within("form") { click_on(I18n.t("buttons.sign_in")) }
+    within("form.publisher-sign-in") { click_on I18n.t("buttons.sign_in") }
   end
 
   def sign_out_via_dsi

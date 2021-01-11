@@ -11,7 +11,7 @@ RSpec.describe "Jobseekers can sign out from their account" do
   scenario "signing out takes them to sign in page with banner" do
     visit root_path
     within("nav") do
-      click_link I18n.t("nav.sign_out")
+      click_on I18n.t("nav.sign_out")
     end
 
     expect(current_path).to eq(new_jobseeker_session_path)
