@@ -10,7 +10,7 @@ class Search::LocationBuilder
               :location_polygon, :search_polygon_boundary, :missing_polygon, :radius, :buffer_radius
 
   def initialize(location, radius, location_category, buffer_radius)
-    @location = location || location_category
+    @location = MAPPED_POINT_LOCATIONS[location] || location || location_category
     @radius = (radius || DEFAULT_RADIUS).to_i
     @buffer_radius = buffer_radius
     @location_filter = {}

@@ -59,7 +59,7 @@ RSpec.describe Search::LocationBuilder do
       end
     end
 
-    context "when a mapped location is specified" do
+    context "when a mapped polygon location is specified" do
       let(:location) { "Map this location" }
 
       before do
@@ -67,6 +67,26 @@ RSpec.describe Search::LocationBuilder do
       end
 
       it_behaves_like "a search using polygons", location: "Map this location"
+    end
+
+    context "when a mapped point location is specified" do
+      let(:location) { "ilford" }
+      let(:radius) { 10 }
+      let(:expected_radius) { 16_093 }
+
+      before do
+        stub_const("MAPPED_POINT_LOCATIONS", { "ilford" => "ilford, london" })
+      end
+
+      it "sets location to the new mapped location name" do
+        expect(subject.location_category).to be nil
+        expect(subject.location_polygon).to be nil
+        expect(subject.location).to eq("ilford, london")
+        expect(subject.location_filter).to eq({
+          point_coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
+          radius: expected_radius,
+        })
+      end
     end
 
     context "when a non-polygonable location is specified" do
