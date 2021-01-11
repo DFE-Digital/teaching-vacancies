@@ -12,8 +12,8 @@
             = form_for @sort_form, as: "", url: jobs_with_type_organisation_path(@selected_type), id: "jobs_sort_form", html: { data: { 'auto-submit': true }, class: "sort-inline" }, method: :get do |f|
               = f.govuk_collection_select :sort_column,
                 vacancy_sort_options,
-                :last,
-                :first,
+                :column,
+                :display_name,
                 label: { text: t("jobs.sort_by.label"), size: "s", class: "govuk-label inline govuk-!-margin-right-2" }
 
               = f.govuk_submit t("jobs.sort_by.submit")

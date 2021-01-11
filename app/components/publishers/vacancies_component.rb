@@ -27,7 +27,7 @@ class Publishers::VacanciesComponent < ViewComponent::Base
   end
 
   def vacancy_sort_options
-    Organisation::JOB_SORTING_OPTIONS[@selected_type]
+    Publishers::VacancySortingOptions.new(@organisation, @selected_type)
   end
 
   def heading
