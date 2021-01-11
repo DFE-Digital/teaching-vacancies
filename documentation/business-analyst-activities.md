@@ -11,7 +11,7 @@ This section details the process for updating the search mappings so that a poly
   * This file contains a list of all of the mappings that have been applied, in alphabetical order.
 3. Navigate to the desired row, and input your new mapping in the following format:
   * -['location that is searched by user', 'name of polygon we want to return']
-  * The automated tests are useful for confirming that all rows have been entered correctly. If one of these tests fails check that all "'" and "," have been entered correctly.
+  * The automated tests are useful for confirming that all rows have been entered correctly. If one of these tests fails check that all "'" and "," have been entered correctly. On the PR, in the merging section at the bottom of the page there is a section dedicated to automated checks. This will show any checks that may have failed as part of the changes. ![Automated tests screenshot](https://user-images.githubusercontent.com/72141/103927287-0d570500-5112-11eb-902d-5d36a1c7e10a.png)
   * The polygon names can be found (here)[https://github.com/DFE-Digital/teaching-vacancies/tree/master/lib/tasks/data]
 4. Once all desired mappings have been added, scroll to the bottom of the page and update the fields in the "Commit changes" box. This should include a concise title for the change, and further details of what you have done in the extended desription field.
   * Once you have added this information ensure that the "Create a new branch for this commit and start a pull request." radio button is selected and press "Commit changes".
