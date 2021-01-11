@@ -13,8 +13,8 @@ RSpec.describe "Page availability", js: true, smoke_test: true do
       page.visit "https://staging.teaching-vacancies.service.gov.uk/"
       expect(page).to have_content(I18n.t("jobs.heading"))
 
-      page.fill_in I18n.t("jobs.filters.keyword"), with: "Maths", visible: false
-      page.first(".govuk-button[type=submit]").click
+      page.fill_in I18n.t("jobs.filters.keyword"), with: "Maths"
+      page.click_on I18n.t("buttons.search")
 
       expect(page).to have_content(I18n.t("subscriptions.link.text"))
 
