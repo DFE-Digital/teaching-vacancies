@@ -46,6 +46,7 @@ RSpec.configure do |config|
 
   config.before(:each, type: :system) do
     driven_by :rack_test
+    Capybara.default_host = "http://#{ENV.fetch('DOMAIN', 'localhost:3000')}"
   end
 
   config.before(:each, type: :system, js: true) do

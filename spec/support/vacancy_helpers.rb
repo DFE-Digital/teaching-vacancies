@@ -197,7 +197,7 @@ module VacancyHelpers
           'postalCode': vacancy.parent_organisation.postcode,
         },
       },
-      'url': job_url(vacancy, host: "127.0.0.1"), # TODO: fix system specs to change default host to localhost:3000
+      'url': job_url(vacancy),
       'hiringOrganization': {
         '@type': "School",
         'name': vacancy.parent_organisation.name,

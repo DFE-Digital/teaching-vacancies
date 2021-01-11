@@ -30,8 +30,8 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
-  # Print deprecation notices to the Rails logger.
-  config.active_support.deprecation = :log
+  # Raise an error when encountering deprecated behaviour
+  config.active_support.deprecation = :raise
 
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load

@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby "2.7.2"
 
-gem "rails", "~> 6.0"
+gem "rails", "~> 6.1.1"
 
 gem "activerecord-session_store"
 gem "addressable"
@@ -45,7 +45,7 @@ gem "rollbar"
 gem "sanitize"
 gem "sidekiq"
 gem "sidekiq-cron"
-gem "skylight"
+gem "skylight", ">= 5.0.0.beta4" # TODO: Unpin when 5.0 is out
 gem "slim-rails"
 gem "validate_url"
 gem "view_component"
