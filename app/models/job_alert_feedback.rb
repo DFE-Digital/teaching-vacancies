@@ -1,8 +1,6 @@
 class JobAlertFeedback < ApplicationRecord
   include Auditor::Model
 
-  serialize :search_criteria, JsonbSerializer
-
   belongs_to :subscription
 
   validates :comment, length: { maximum: 1200 }, if: :comment?

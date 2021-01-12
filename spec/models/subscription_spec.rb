@@ -87,7 +87,7 @@ RSpec.describe Subscription, type: :model do
     let!(:expired_now) { Time.current }
     let(:date_yesterday) { Time.zone.yesterday.to_time }
     let(:date_today) { Date.current.to_time }
-    let(:subscription) { create(:subscription, frequency: :daily, search_criteria: { keyword: "english" }) }
+    let(:subscription) { create(:subscription, frequency: :daily, search_criteria: { keyword: "english" }.to_json) }
     let(:vacancies) { double("vacancies") }
     let(:search_filter) do
       "(publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > "\

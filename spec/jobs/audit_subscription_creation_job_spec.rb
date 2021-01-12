@@ -5,7 +5,7 @@ RSpec.describe AuditSubscriptionCreationJob, type: :job do
 
   subject(:job) { described_class.perform_later(data) }
   let(:data) { SubscriptionPresenter.new(subscription).to_row }
-  let(:subscription) { create(:subscription, search_criteria: { keyword: "english" }) }
+  let(:subscription) { create(:subscription, search_criteria: { keyword: "english" }.to_json) }
 
   it "queues the job" do
     expect { job }.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)

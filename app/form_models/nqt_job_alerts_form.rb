@@ -21,7 +21,7 @@ class NqtJobAlertsForm
     {
       email: email,
       frequency: :daily,
-      search_criteria: nqt_job_alert_hash,
+      search_criteria: nqt_job_alert_hash.to_json,
     }
   end
 
