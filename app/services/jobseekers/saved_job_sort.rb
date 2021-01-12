@@ -12,10 +12,4 @@ class Jobseekers::SavedJobSort < RecordSort
       SortOption.new("vacancies.readable_job_location", "asc", I18n.t("jobs.sort_by.location.ascending")),
     ]
   end
-
-private
-
-  def valid_sort_columns
-    %w[created_at vacancies.expires_at vacancies.job_title vacancies.readable_job_location].freeze
-  end
 end

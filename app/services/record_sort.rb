@@ -7,8 +7,8 @@ class RecordSort
   SortOption = Struct.new(:column, :order, :display_name)
 
   def update(column:)
-    @column = column if valid_sort_columns.include?(column)
-    @order = options.detect { |option| option.column == column }.order if valid_sort_columns.include?(column)
+    @column = column if options.map(&:column).include?(column)
+    @order = options.detect { |option| option.column == column }.order if options.map(&:column).include?(column)
     self
   end
 end

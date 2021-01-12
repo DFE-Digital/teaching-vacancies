@@ -10,10 +10,4 @@ class Jobseekers::SubscriptionSort < RecordSort
       SortOption.new("frequency", "asc", I18n.t("jobs.sort_by.frequency.ascending")),
     ]
   end
-
-private
-
-  def valid_sort_columns
-    %w[created_at frequency].freeze
-  end
 end
