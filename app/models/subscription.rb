@@ -3,8 +3,6 @@ class Subscription < ApplicationRecord
 
   enum frequency: { daily: 0, weekly: 1 }
 
-  serialize :search_criteria, JsonbSerializer
-
   has_many :alert_runs, dependent: :destroy
   has_many :job_alert_feedbacks, dependent: :destroy
   has_many :unsubscribe_feedbacks, dependent: :destroy
@@ -27,6 +25,13 @@ class Subscription < ApplicationRecord
     raise ActiveRecord::RecordNotFound
   end
 
+  def search_criteria_to_h
+    parsed_criteria = JSON.parse(search_criteria) if search_criteria.present?
+    parsed_criteria.is_a?(Hash) ? parsed_criteria : {}
+  rescue JSON::ParserError
+    {}
+  end
+
   def token
     token_values = { id: id }
     self.class.encryptor.encrypt_and_sign(token_values)
@@ -37,7 +42,7 @@ class Subscription < ApplicationRecord
   end
 
   def vacancies_for_range(date_from, date_to)
-    Search::AlertBuilder.new(search_criteria.merge(from_date: date_from, to_date: date_to)).vacancies
+    Search::AlertBuilder.new(search_criteria_to_h.symbolize_keys.merge(from_date: date_from, to_date: date_to)).vacancies
   end
 
   def alert_run_today

@@ -8,7 +8,7 @@ FactoryBot.define do
         radius: "10",
         working_patterns: %w[full_time part_time],
         job_roles: %w[nqt_suitable],
-        phases: %w[primary] }
+        phases: %w[primary] }.to_json
     end
 
     factory :daily_subscription do

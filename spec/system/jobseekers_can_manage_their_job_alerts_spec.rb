@@ -14,7 +14,7 @@ RSpec.describe "Jobseekers can manage their job alerts" do
 
     context "when there are job alerts" do
       before do
-        create(:subscription, email: jobseeker.email, search_criteria: { keyword: "Maths" })
+        create(:subscription, email: jobseeker.email, search_criteria: { keyword: "Maths" }.to_json)
         visit jobseekers_subscriptions_path
       end
 

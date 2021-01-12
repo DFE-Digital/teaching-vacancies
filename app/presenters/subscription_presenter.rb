@@ -24,7 +24,7 @@ class SubscriptionPresenter < BasePresenter
 private
 
   def sorted_search_criteria
-    search_criteria.sort_by { |(key, _)|
+    search_criteria_to_h.sort_by { |(key, _)|
       SEARCH_CRITERIA_SORT_ORDER.find_index(key) || SEARCH_CRITERIA_SORT_ORDER.count
     }.to_h
   end
@@ -44,7 +44,7 @@ private
 
     if field.eql?("location")
       return render_location_filter(
-        search_criteria["location_category"], value, search_criteria["radius"]
+        search_criteria_to_h["location_category"], value, search_criteria_to_h["radius"]
       )
     end
     return render_job_roles_filter(value) if field.eql?("job_roles")

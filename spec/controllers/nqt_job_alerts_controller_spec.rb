@@ -19,7 +19,9 @@ RSpec.describe NqtJobAlertsController, type: :controller do
 
   describe "#create" do
     let(:params) { { nqt_job_alerts_form: form_inputs } }
-    let(:search_criteria) { { "keyword" => "nqt #{keywords}", "location" => location, "radius" => 10 } }
+    let(:search_criteria) do
+      { keyword: "nqt #{keywords}", location: location, radius: 10 }.to_json
+    end
     let(:subscription) { Subscription.last }
     let(:subject) { post :create, params: params }
 
