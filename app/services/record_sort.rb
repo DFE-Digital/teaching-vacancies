@@ -1,22 +1,14 @@
 class RecordSort
+  include Enumerable
   attr_reader :column, :order
 
-  def initialize
-    @column = default_column
-    @order = default_order
-  end
+  delegate :each, to: :options
 
-  def update(column:, order:)
+  SortOption = Struct.new(:column, :order, :display_name)
+
+  def update(column:)
     @column = column if valid_sort_columns.include?(column)
-    @order = order if valid_sort_orders.include?(order)
+    @order = options.detect { |option| option.column == column }.order if valid_sort_columns.include?(column)
     self
-  end
-
-  def reverse_order
-    @order == "asc" ? "desc" : "asc"
-  end
-
-  def valid_sort_orders
-    %w[desc asc].freeze
   end
 end

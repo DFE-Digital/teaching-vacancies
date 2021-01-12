@@ -100,12 +100,21 @@ en:
           <span class="govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize">%{location}</span>
 
     sort_by:
+      created_at:
+        descending:
+          saved_job: date added (most recent)
+          subscription: date subscribed (most recent)
+          vacancy: date drafted (most recent)
       expires_on:
         ascending: closing date (oldest)
-        descending: closing date (soonest)
+        descending: expired (most recent)
       expires_at:
+        ascending:
+          saved_job: application deadline (soonest)
+          vacancy: least time to apply
         descending: most time to apply
-        ascending: least time to apply
+      frequency:
+        ascending: receiving frequency (A to Z)
       job_title:
         ascending: job title (A to Z)
         descending: job title (Z to A)
@@ -120,6 +129,8 @@ en:
       publish_on:
         descending: newest job listing
       submit: Sort
+      updated_at:
+        descending: date last updated (most recent)
 
     alert:
       similar:
@@ -165,24 +176,17 @@ en:
 
     important_dates: Important dates and deadlines
     application_deadline: Application deadline
-    closing_date_html: '<span class="govuk-!-font-weight-bold">Closing date:</span> %{date}'
-    created_at_html: '<span class="govuk-!-font-weight-bold">Date drafted:</span> %{date}'
-    date_listed_html: '<span class="govuk-!-font-weight-bold">Date listed:</span> %{date}'
     days_to_apply:
       remaining: '%{days_remaining} days remaining to apply'
       today: Deadline is today
       tomorrow: Deadline is tomorrow
     expected_start: Expected start date
     publication_date: Date job will be listed
-    publication_date_html: '<span class="govuk-!-font-weight-bold">Date to be published:</span> %{date}'
     starts_asap: As soon as possible
     start_on: Date job starts
     starts_on: Expected start date
-    page_views_html: '<span class="govuk-!-font-weight-bold">Page views:</span> %{views}'
-    expired_on_html: '<span class="govuk-!-font-weight-bold">Expired on:</span> %{date}'
     expires_on: Closing date
     time_at: ' at '
-    updated_at_html: '<span class="govuk-!-font-weight-bold">Date last updated:</span> %{date}'
 
     education: Essential educational requirements
     qualifications: Essential qualifications
@@ -313,6 +317,13 @@ en:
     no_expired_jobs: You currently have no expired jobs
     no_pending_jobs: You currently have no scheduled jobs
     no_published_jobs: You currently have no published jobs
+
+    closing_date_html: '<span class="govuk-!-font-weight-bold">Closing date:</span> %{date}'
+    created_at_html: '<span class="govuk-!-font-weight-bold">Date drafted:</span> %{date}'
+    date_listed_html: '<span class="govuk-!-font-weight-bold">Date listed:</span> %{date}'
+    expired_on_html: '<span class="govuk-!-font-weight-bold">Expired on:</span> %{date}'
+    publication_date_html: '<span class="govuk-!-font-weight-bold">Date to be published:</span> %{date}'
+    updated_at_html: '<span class="govuk-!-font-weight-bold">Date last updated:</span> %{date}'
 
     awaiting_feedback_intro: >-
       Please tell us if you filled these expired jobs through Teaching Vacancies,
