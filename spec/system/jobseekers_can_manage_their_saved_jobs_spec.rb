@@ -39,15 +39,15 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
         end
 
         it "renders deadline passed label for expired jobs" do
-          within "tr[data-slug='#{vacancy1.slug}']" do
+          within "div[data-slug='#{vacancy1.slug}']" do
             expect(page).not_to have_content(I18n.t("jobseekers.saved_jobs.index.deadline_passed"))
           end
 
-          within "tr[data-slug='#{vacancy2.slug}']" do
+          within "div[data-slug='#{vacancy2.slug}']" do
             expect(page).not_to have_content(I18n.t("jobseekers.saved_jobs.index.deadline_passed"))
           end
 
-          within "tr[data-slug='#{expired_vacancy.slug}']" do
+          within "div[data-slug='#{expired_vacancy.slug}']" do
             expect(page).to have_content(I18n.t("jobseekers.saved_jobs.index.deadline_passed"))
           end
         end
@@ -55,7 +55,7 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
 
       context "when the jobseeker deletes a saved job" do
         before do
-          within "tr[data-slug='#{vacancy1.slug}']" do
+          within "div[data-slug='#{vacancy1.slug}']" do
             click_on "Delete"
           end
         end

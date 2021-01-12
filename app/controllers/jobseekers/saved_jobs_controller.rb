@@ -1,6 +1,4 @@
 class Jobseekers::SavedJobsController < Jobseekers::ApplicationController
-  include Sortable
-
   before_action :set_up_saved_job, only: %i[new destroy]
 
   def new
@@ -18,7 +16,8 @@ class Jobseekers::SavedJobsController < Jobseekers::ApplicationController
   end
 
   def index
-    @sort = SavedJobSort.new.update(column: sort_column, order: sort_order)
+    @sort = Jobseekers::SavedJobSort.new.update(column: params[:sort_column])
+    @sort_form = SortForm.new(@sort.column)
     @saved_jobs = current_jobseeker.saved_jobs.includes(:vacancy).order("#{@sort.column} #{@sort.order}")
   end
 
