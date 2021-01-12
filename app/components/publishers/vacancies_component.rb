@@ -1,14 +1,12 @@
 class Publishers::VacanciesComponent < ViewComponent::Base
-  delegate :awaiting_feedback_tab, to: :helpers
-
   def initialize(organisation:, sort:, selected_type:, filters:, filters_form:, sort_form:)
     @organisation = organisation
     @sort = sort
     @filters = filters
     @filters_form = filters_form
     @sort_form = sort_form
-    @selected_type = selected_type&.to_sym || :published
-    @vacancy_types = %i[published pending draft expired awaiting_feedback]
+    @vacancy_types = %w[published pending draft expired awaiting_feedback]
+    @selected_type = @vacancy_types.include?(selected_type) ? selected_type : "published"
 
     set_organisation_options if @organisation.is_a?(SchoolGroup)
     set_vacancies
@@ -22,12 +20,8 @@ class Publishers::VacanciesComponent < ViewComponent::Base
     @selected_type == vacancy_type
   end
 
-  def sortable?
-    @vacancies.count > 1 && vacancy_sort_options.present?
-  end
-
   def vacancy_sort_options
-    Publishers::VacancySortingOptions.new(@organisation, @selected_type)
+    Publishers::VacancySort.new(@organisation, @selected_type)
   end
 
   def heading
@@ -70,7 +64,7 @@ private
   end
 
   def selected_scope
-    @selected_type == :published ? :live : @selected_type
+    @selected_type == "published" ? "live" : @selected_type
   end
 
   def set_organisation_options

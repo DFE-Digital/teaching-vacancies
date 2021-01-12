@@ -1,21 +1,21 @@
 class Publishers::OrganisationsController < Publishers::BaseController
-  include Sortable
-
   before_action :redirect_to_user_preferences
 
   def show
     @multiple_organisations = session_has_multiple_organisations?
     @organisation = current_organisation
-    @sort = VacancySort.new.update(column: organisations_sort_column, order: organisations_sort_order)
+    @selected_type = params[:type]
+
     @filters = Publishers::VacancyFilter.new(current_publisher, current_school_group).to_h
     @managed_organisations_form = ManagedOrganisationsForm.new(@filters)
-    @vacancy_sort_form = VacancySortForm.new(organisations_sort_column)
-    @selected_type = params[:type]
+
+    @sort = Publishers::VacancySort.new(@organisation, @selected_type).update(column: params[:sort_column])
+    @sort_form = SortForm.new(@sort.column)
+
     @awaiting_feedback_count = @organisation.vacancies.awaiting_feedback.count
+    flash.now[:notice] = t(".awaiting", count: @awaiting_feedback_count) if @awaiting_feedback_count.positive?
 
     render_draft_saved_message if params[:from_review]
-
-    flash.now[:notice] = t(".awaiting", count: @awaiting_feedback_count) if @awaiting_feedback_count.positive?
   end
 
 private

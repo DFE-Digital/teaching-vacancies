@@ -3,28 +3,39 @@
 = render "account_header"
 
 .govuk-grid-row
-  .govuk-grid-column-full
-    h1.govuk-heading-l = t(".page_title")
+  .govuk-grid-column-one-third
+    h2.govuk-heading-l = t(".page_title")
 
+  .govuk-grid-column-two-thirds
     - if @saved_jobs.any?
-      table.govuk-table
-        thead.govuk-table__head
-          th.govuk-table__header class="govuk-!-width-one-half"
-            = t(".headings.job")
-          th.govuk-table__header = table_header_sort_by(t(".headings.deadline"), column: "vacancies.expires_at", sort: @sort)
-          th.govuk-table__header = table_header_sort_by(t(".headings.added"), column: "created_at", sort: @sort)
-          th.govuk-table__header
+      div class="govuk-!-margin-bottom-4"
+        = form_for @sort_form, as: "", url: jobseekers_saved_jobs_path, id: "jobs_sort_form", class: "sort-inline", data: { 'auto-submit': true }, method: :get do |f|
+          = f.govuk_collection_select :sort_column,
+            @sort,
+            :column,
+            :display_name,
+            label: { text: t("jobs.sort_by.label"), size: "s", class: "govuk-label inline govuk-!-margin-right-2" }
+
+          = f.govuk_submit t("jobs.sort_by.submit")
+
+  .govuk-grid-column-full
+    .moj-filter-layout__content
+      section
         - @saved_jobs.each do |saved_job|
-          tr.govuk-table__row data-slug=saved_job.vacancy.slug
-            td.govuk-table__cell
-              = govuk_link_to(saved_job.vacancy.job_title, job_path(saved_job.vacancy.slug), class: "govuk-link--no-visited-state")
-              p.govuk-body-s class="govuk-!-margin-bottom-2" = location(saved_job.vacancy.parent_organisation, job_location: saved_job.vacancy.job_location)
-            td.govuk-table__cell
-              - if saved_job.vacancy.expires_at.past?
-                .text-red = t(".deadline_passed")
-              = OrganisationVacancyPresenter.new(saved_job.vacancy).application_deadline
-            td.govuk-table__cell = saved_job.created_at.strftime("%d %B %Y")
-            td.govuk-table__cell = govuk_link_to(t(".delete"), jobseekers_saved_job_path(saved_job.vacancy.slug, redirect_to_dashboard: true), method: :delete, class: "govuk-link--no-visited-state")
+          .card data-slug=saved_job.vacancy.slug
+            .card__contents
+              dl.card__title
+                dd.govuk-body = govuk_link_to(saved_job.vacancy.job_title, job_path(saved_job.vacancy.slug), class: "govuk-link--no-visited-state")
+                dd.govuk-body class="govuk-!-margin-bottom-2" = location(saved_job.vacancy.parent_organisation, job_location: saved_job.vacancy.job_location)
+              dl.card__details
+                dd.govuk-body = t(".added_html", date: saved_job.created_at.strftime("%d %B %Y"))
+                - if saved_job.vacancy.expires_at.past?
+                  dd.text-red = t(".deadline_passed")
+                dd.govuk-body = t(".application_deadline_html", date: OrganisationVacancyPresenter.new(saved_job.vacancy).application_deadline)
+            dl.card__actions
+              dd
+                ul.actions.govuk-list
+                  li = govuk_link_to(t(".delete"), jobseekers_saved_job_path(saved_job.vacancy.slug, redirect_to_dashboard: true), method: :delete, class: "govuk-link--no-visited-state")
 
   .govuk-grid-column-full
     = render(Jobseekers::AccountSurveyLinkComponent.new(back_link: url_for))

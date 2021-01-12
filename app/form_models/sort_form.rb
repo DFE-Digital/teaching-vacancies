@@ -1,4 +1,4 @@
-class VacancySortForm
+class SortForm
   include ActiveModel::Model
 
   attr_reader :sort_column

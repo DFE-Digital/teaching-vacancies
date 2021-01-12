@@ -2,7 +2,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-full
-    = render(Publishers::VacanciesComponent.new(organisation: @organisation, sort: @sort, selected_type: @selected_type, filters: @filters, filters_form: @managed_organisations_form, sort_form: @vacancy_sort_form))
+    = render(Publishers::VacanciesComponent.new(organisation: @organisation, sort: @sort, selected_type: @selected_type, filters: @filters, filters_form: @managed_organisations_form, sort_form: @sort_form))
     = render(Publishers::NoVacanciesComponent.new(organisation: @organisation))
 
 .govuk-grid-row

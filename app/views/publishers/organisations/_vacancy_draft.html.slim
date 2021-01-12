@@ -1,12 +1,12 @@
 .card id=dom_id(vacancy)
   .card__contents
     dl.card__title
-      dd.govuk-body = govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id), class: "view-vacancy-link")
-    dl.card__details
+      dd.govuk-body class="govuk-!-margin-bottom-2" = govuk_link_to vacancy.job_title, organisation_job_path(vacancy.id), class: "view-vacancy-link"
       - if organisation.is_a?(SchoolGroup)
-        dd.govuk-body = vacancy.readable_job_location
-      dd.govuk-body = t("jobs.created_at_html", date: vacancy.created_at)
-      dd.govuk-body = t("jobs.updated_at_html", date: vacancy.updated_at)
+        dd.govuk-body class="govuk-!-font-weight-bold" = vacancy.readable_job_location
+    dl.card__details
+      dd.govuk-body = t("jobs.created_at_html", date: format_date(vacancy.created_at.to_date))
+      dd.govuk-body = t("jobs.updated_at_html", date: format_date(vacancy.updated_at.to_date))
 
   dl.card__actions
     dd

@@ -81,8 +81,8 @@ RSpec.describe "Hiring staff can see their vacancies" do
 
       within(".moj-filter-layout__content") do
         expect(page).to have_content(I18n.t("jobs.draft.time_created"))
-        expect(page).to have_content(format_date(draft_vacancy.created_at))
-        expect(page).to have_content(format_date(draft_vacancy.updated_at))
+        expect(page).to have_content(format_date(draft_vacancy.created_at.to_date))
+        expect(page).to have_content(format_date(draft_vacancy.updated_at.to_date))
         expect(page).to have_content(draft_vacancy.job_title)
         expect(page).to have_css(".card", count: 1)
       end
@@ -135,8 +135,8 @@ RSpec.describe "Hiring staff can see their vacancies" do
         end
 
         within(".moj-filter-layout__content") do
-          expect(page).to have_content(format_date(draft_vacancy.created_at))
-          expect(page).to have_content(format_date(draft_vacancy.updated_at))
+          expect(page).to have_content(format_date(draft_vacancy.created_at.to_date))
+          expect(page).to have_content(format_date(draft_vacancy.updated_at.to_date))
         end
       end
     end

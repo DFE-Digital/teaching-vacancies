@@ -2,7 +2,7 @@ require "rails_helper"
 require "sanitize"
 
 RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: true do
-  let(:job_title_link_selector) { "#job-title.view-vacancy-link" }
+  let(:job_title_link_selector) { ".view-vacancy-link" }
 
   let(:school) { create(:school) }
 
