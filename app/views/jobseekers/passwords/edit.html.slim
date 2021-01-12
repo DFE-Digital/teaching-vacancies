@@ -4,11 +4,11 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl = t(".title")
 
-    = form_for resource, as: resource_name, url: password_path(resource_name), method: :patch do |f|
+    = form_for resource, url: jobseeker_password_path, method: :patch do |f|
       = f.hidden_field :reset_password_token
 
       = f.govuk_error_summary
 
-      = f.govuk_password_field :password, label: { text: t(".new_password"), size: "s" }, hint: { text: t("helpers.hint.jobseeker_sign_up.password") }, width: "two-thirds"
+      = f.govuk_password_field :password, label: { text: t(".new_password"), size: "s" }, width: "two-thirds"
 
       = f.govuk_submit t("buttons.update_password"), classes: "govuk-!-margin-bottom-0"

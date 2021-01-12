@@ -4,7 +4,7 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl = t(".heading")
 
-    = form_for(resource, as: resource_name, url: unlock_path(resource_name)) do |f|
+    = form_for resource, url: jobseeker_unlock_path do |f|
 
       p.govuk-body = t(".description")
 
