@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
   let(:search_criteria) { { keyword: "English", location: "SW1A1AA", radius: 20 } }
-  let(:subscription) { create(:subscription, frequency: :daily, search_criteria: search_criteria.to_json) }
+  let(:subscription) { create(:subscription, frequency: :daily, search_criteria: search_criteria) }
 
   before do
     visit unsubscribe_subscription_path(token)

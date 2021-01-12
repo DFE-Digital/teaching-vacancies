@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "A jobseeker can manage a subscription" do
   let(:search_criteria) { { keyword: "Math", location: "London", radius: 10 } }
-  let(:subscription) { create(:subscription, email: "bob@dylan.com", frequency: :daily, search_criteria: search_criteria.to_json) }
+  let(:subscription) { create(:subscription, email: "bob@dylan.com", frequency: :daily, search_criteria: search_criteria) }
 
   before do
     visit edit_subscription_path(token)
@@ -41,7 +41,7 @@ RSpec.describe "A jobseeker can manage a subscription" do
         subscription.reload
         expect(subscription.email).to eq("jimi@hendrix.com")
         expect(subscription.frequency).to eq("weekly")
-        expect(JSON.parse(subscription.search_criteria).symbolize_keys[:keyword]).to eq("English")
+        expect(subscription.search_criteria[:keyword]).to eq("English")
       end
     end
 
@@ -59,8 +59,8 @@ RSpec.describe "A jobseeker can manage a subscription" do
         subscription.reload
         expect(subscription.email).to eq("bob@dylan.com")
         expect(subscription.frequency).to eq("daily")
-        expect(JSON.parse(subscription.search_criteria).symbolize_keys[:keyword]).to eq("Math")
-        expect(JSON.parse(subscription.search_criteria).symbolize_keys[:location]).to eq("London")
+        expect(subscription.search_criteria[:keyword]).to eq("Math")
+        expect(subscription.search_criteria[:location]).to eq("London")
       end
     end
   end

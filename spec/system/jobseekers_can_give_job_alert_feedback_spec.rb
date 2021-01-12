@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "A jobseeker can give feedback on a job alert" do
   let(:search_criteria) { { keyword: "Math", location: "London" } }
-  let(:subscription) { create(:subscription, email: "bob@dylan.com", frequency: :daily, search_criteria: search_criteria.to_json) }
+  let(:subscription) { create(:subscription, email: "bob@dylan.com", frequency: :daily, search_criteria: search_criteria) }
   let(:relevant_to_user) { true }
   let(:vacancies) { create_list(:vacancy, 2, :published) }
 
@@ -12,7 +12,7 @@ RSpec.describe "A jobseeker can give feedback on a job alert" do
       token,
       params: { job_alert_feedback: { relevant_to_user: relevant_to_user,
                                       vacancy_ids: vacancies.pluck(:id),
-                                      search_criteria: subscription.search_criteria } },
+                                      search_criteria: subscription.search_criteria.to_json } },
     )
   end
 

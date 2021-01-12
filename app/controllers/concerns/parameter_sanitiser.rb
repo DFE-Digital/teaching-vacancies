@@ -7,7 +7,7 @@ module ParameterSanitiser
 
   def self.sanitize_params_value(value)
     case value
-    when ActionController::Parameters
+    when ActionController::Parameters, Hash
       sanitize_nested_params(value)
     when Array
       value.map { |v| Sanitize.fragment(v) }
