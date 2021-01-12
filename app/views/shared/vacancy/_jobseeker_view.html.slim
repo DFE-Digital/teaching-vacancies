@@ -70,12 +70,11 @@
     = render(Jobseekers::OrganisationOverviews::SchoolsComponent.new(vacancy: @vacancy))
 
     - if @similar_jobs.present?
-      section#similar-jobs class="govuk-!-margin-bottom-5"
+      section.similar-jobs class="govuk-!-margin-bottom-5"
         h3.govuk-heading-m = t("jobs.similar_jobs")
         .govuk-grid-row
           - @similar_jobs.each do |similar_job|
-            .govuk-grid-column-one-half
-              = render(Jobseekers::SimilarJobComponent.new(vacancy: similar_job))
+            = render(Jobseekers::SimilarJobComponent.new(vacancy: similar_job))
 
     section
       p.icon.icon--left.icon--alert-blue
