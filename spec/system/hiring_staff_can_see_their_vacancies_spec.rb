@@ -67,7 +67,6 @@ RSpec.describe "Hiring staff can see their vacancies" do
       end
 
       within(".moj-filter-layout__content") do
-        expect(page).to have_content(published_vacancy.publish_on)
         expect(page).to have_content(published_vacancy.job_title)
         expect(page).to have_css(".card", count: 1)
       end
