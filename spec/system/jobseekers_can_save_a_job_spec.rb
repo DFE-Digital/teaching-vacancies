@@ -70,7 +70,7 @@ RSpec.describe "Jobseekers can save a job" do
       expect(page).to have_content(I18n.t("messages.jobseekers.saved_jobs.unauthenticated"))
       click_on I18n.t("jobseekers.sessions.new.no_account.link")
       sign_up_jobseeker
-      confirm_email_address
+      visit first_link_from_last_mail
       and_the_job_is_saved
     end
   end

@@ -26,7 +26,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
 
     context "when the confirmation token is valid" do
       it "confirms email and redirects to saved jobs page" do
-        confirm_email_address
+        visit first_link_from_last_mail
         expect(current_path).to eq(jobseekers_saved_jobs_path)
         expect(page).to have_content(I18n.t("devise.confirmations.confirmed"))
       end
@@ -38,7 +38,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
       end
 
       it "does not confirm email and redirects to resend confirmation page" do
-        confirm_email_address
+        visit first_link_from_last_mail
         expect(current_path).to eq(jobseeker_confirmation_path)
         expect(page).to have_content(I18n.t("jobseekers.confirmations.new.title"))
       end
