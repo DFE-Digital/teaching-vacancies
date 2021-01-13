@@ -82,14 +82,14 @@
   &::before {
     content: '\2018';
   }
-  
+
   &::after {
     content: '\2019';
   }
 }
 
 .divider-bottom {
-  border-bottom: 2px solid govuk-colour('light-grey');
+  border-bottom: 3px solid $govuk-border-colour;
   margin-bottom: $govuk-gutter;
 }
 

@@ -1,8 +1,8 @@
-- content_for :page_title_prefix, t(".title")
+- content_for :page_title_prefix, t(".title.#{action_name}")
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = govuk_panel title: t(".header"), body: t(".body", email: @subscription.email)
+    = govuk_panel title: t(".header.#{action_name}"), body: t(".body", email: @subscription.email)
 
     h2.govuk-heading-m = t(".next_step")
     p.govuk-body = t(".next_step_details")
@@ -18,9 +18,10 @@
             = t(".frequency_label")
           = t(".frequency.#{@subscription.frequency}")
 
-    p.govuk-body = t(".unsubscribe")
-    p.govuk-body
-      - if JobseekerAccountsFeature.enabled?
-        = govuk_link_to(t(".view_job_alerts"), jobseekers_subscriptions_path)
-      - else
+    - if JobseekerAccountsFeature.enabled?
+      p.govuk-body.divider-bottom class="govuk-!-padding-bottom-5" = t(".unsubscribe")
+      p.govuk-body
+        = render "jobseeker_account_prompt"
+    - else
+      p.govuk-body
         = govuk_link_to(t(".back_to_search_results"), jobs_path(@subscription.search_criteria_to_h))
