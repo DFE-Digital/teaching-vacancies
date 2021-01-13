@@ -18,5 +18,9 @@
       = f.govuk_submit t("buttons.update_alert"), classes: "govuk-!-padding-left-8 govuk-!-padding-right-8"
 
 .govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = govuk_link_to(t("buttons.cancel"), root_path, class: "govuk-!-font-size-19")
+
+.govuk-grid-row
   .govuk-grid-column-two-thirds.govuk-body class="govuk-!-margin-top-4"
     = t("terms_and_conditions.read_html")
