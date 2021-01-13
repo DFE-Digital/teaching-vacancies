@@ -51,6 +51,11 @@ RSpec.describe "A jobseeker can give feedback on a job alert" do
         expect(feedback.subscription_id).to eq subscription.id
       end
 
+      it "shows a link to edit the job alert" do
+        click_on I18n.t("job_alert_feedbacks.edit.change_alert_link")
+        expect(page).to have_content I18n.t("subscriptions.edit.title")
+      end
+
       it "audits the creation of the feedback" do
         expect(activity.key).to eq("job_alert_feedback.create")
       end
