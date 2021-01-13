@@ -3,11 +3,7 @@
 .govuk-grid-row
   .govuk-grid-column-full
     = render Publishers::VacancyFormPageHeadingComponent.new(@vacancy)
-
-- if @vacancy.state == "create"
-  = govuk_back_link text: t("buttons.back"), href: organisation_job_build_path(@vacancy.id, :supporting_documents)
-- else
-  = render "publishers/vacancies/vacancy_form_partials/cancel_and_return_link"
+    = render Publishers::VacancyWizardBackLinkComponent.new(@vacancy, previous_step_path: organisation_job_build_path(@vacancy.id, :supporting_documents))
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds

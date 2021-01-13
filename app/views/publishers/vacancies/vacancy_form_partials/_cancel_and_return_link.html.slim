@@ -1,4 +1,0 @@
-- if @vacancy.published?
-  = govuk_back_link text: t("buttons.cancel_and_return"), href: edit_organisation_job_path(@vacancy.id)
-- else
-  = govuk_back_link text: t("buttons.cancel_and_return"), href: organisation_job_review_path(@vacancy.id)

@@ -3,9 +3,7 @@
 .govuk-grid-row
   .govuk-grid-column-full
     = render Publishers::VacancyFormPageHeadingComponent.new(@vacancy)
-
-- if @vacancy.state != "create"
-  = render "publishers/vacancies/vacancy_form_partials/cancel_and_return_link"
+    = render Publishers::VacancyWizardBackLinkComponent.new(@vacancy, current_step_is_first_step: true)
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
