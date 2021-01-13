@@ -1,25 +1,33 @@
 {
-  "displayFieldName": "ctyua19cd",
-  "fieldAliases": {
-   "ctyua19nm": "ctyua19nm"
+  "objectIdFieldName": "OBJECTID",
+  "uniqueIdField": {
+    "name": "OBJECTID",
+    "isSystemMaintained": true
+  },
+  "globalIdFieldName": "",
+  "geometryProperties": {
+    "shapeAreaFieldName": "Shape__Area",
+    "shapeLengthFieldName": "Shape__Length",
+    "units": "esriMeters"
   },
   "geometryType": "esriGeometryPolygon",
   "spatialReference": {
-   "wkid": 4326,
-   "latestWkid": 4326
+    "wkid": 4326,
+    "latestWkid": 4326
   },
-  "fields": [
-   {
-    "name": "ctyua19nm",
-    "type": "esriFieldTypeString",
-    "alias": "ctyua19nm",
-    "length": 36
-   }
-  ],
+  "fields":
+  [
+    {
+      "name": "CTYUA19NM",
+      "type": "esriFieldTypeString",
+      "alias": "CTYUA19NM",
+      "sqlType": "sqlTypeOther",
+      "length": 2
+    }],
   "features": [
    {
     "attributes": {
-     "ctyua19nm": "Tower Hamlets"
+     "CTYUA19NM": "Tower Hamlets"
     },
     "geometry": {
      "rings": [
@@ -38,7 +46,7 @@
    },
    {
     "attributes": {
-     "ctyua19nm": "Non-existent London Borough"
+     "CTYUA19NM": "Non-existent London Borough"
     },
     "geometry": {
      "rings": [
