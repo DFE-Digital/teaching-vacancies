@@ -158,8 +158,8 @@ en:
       no_account:
         heading: If you need an account
         text_html: >-
-          If you don’t have an authorised Teaching Vacancies account, you can get one if you work at a publicly
-          funded school or trust providing primary or secondary education in England and have your headteacher or
+          If you don’t have an authorised Teaching Vacancies account, you can get one if you work at a state-funded
+          school or trust providing primary or secondary education in England and have your headteacher or
           CEO’s approval. Just ask them to send your full name and email address to %{mailto_url}. Or email us your
           details directly, copying in your headteacher or CEO.
       title: The email you're signed in with isn't authorised to list jobs for this school
