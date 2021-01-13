@@ -99,7 +99,7 @@ terraform-app-apply: terraform-app-init check-docker-tag ## make passcode=MyPass
 		cd terraform/app && terraform apply -input=false -var-file ../workspace-variables/$(var_file).tfvars -auto-approve
 
 .PHONY: terraform-app-destroy-review
-terraform-app-destroy-review: terraform-app-init ## make CONFIRM_DESTROY=true passcode=MyPasscode pr_id=2086 review terraform-app-destroy-review
+terraform-app-destroy-review: terraform-app-init ## make passcode=MyPasscode CONFIRM_DESTROY=true pr_id=2086 review terraform-app-destroy-review
 		$(if $(CONFIRM_DESTROY), , $(error Can only run with CONFIRM_DESTROY))
 		cd terraform/app && terraform destroy -var-file ../workspace-variables/review.tfvars -auto-approve
 		cd terraform/app && terraform workspace select default && terraform workspace delete $(env)
@@ -127,11 +127,11 @@ terraform-monitoring-init:
 		cd terraform/monitoring && terraform init -upgrade=true -reconfigure -input=false
 
 .PHONY: terraform-monitoring-plan
-terraform-monitoring-plan: terraform-monitoring-init ## make terraform-monitoring-plan passcode=MyPasscode
+terraform-monitoring-plan: terraform-monitoring-init ## make passcode=MyPasscode terraform-monitoring-plan
 		cd terraform/monitoring && terraform plan -input=false
 
 .PHONY: terraform-monitoring-apply
-terraform-monitoring-apply: terraform-monitoring-init ## make terraform-monitoring-apply passcode=MyPasscode
+terraform-monitoring-apply: terraform-monitoring-init ## make passcode=MyPasscode terraform-monitoring-apply
 		cd terraform/monitoring && terraform apply -input=false -auto-approve
 
 ##@ Help

@@ -14,12 +14,12 @@ make passcode=MyPasscode tag=47fd1475376bbfa16a773693133569b794408995 staging te
 
 Production
 ```
-make CONFIRM_PRODUCTION=true passcode=MyPasscode tag=47fd1475376bbfa16a773693133569b794408995 production terraform-app-plan
+make passcode=MyPasscode CONFIRM_PRODUCTION=true tag=47fd1475376bbfa16a773693133569b794408995 production terraform-app-plan
 ```
 
 Review app
 ```
-make pr=2086 passcode=MyPasscode tag=review-pr-2086-e4c2c4afd991161f88808c907b4c66a30e5f3ef4-20201002203641 review terraform-app-plan
+make passcode=MyPasscode pr=2086 tag=review-pr-2086-e4c2c4afd991161f88808c907b4c66a30e5f3ef4-20201002203641 review terraform-app-plan
 ```
 
 ## `terraform plan` with Terraform CLI commands
@@ -60,7 +60,7 @@ terraform show -json dev.plan > dev.json
 Using `jq`, we can query for the specific module and find the before and after changes
 ```
 cat dev.json | jq '.resource_changes[] | select(.address=="module.paas.cloudfoundry_app.web_app") | .change.before.environment' > dev_web_app_before.json
-cat dev.json | jq '.resource_changes[] | select(.address=="module.paas.cloudfoundry_app.web_app") | .change.after.environment' > dev_web_app_after.json 
+cat dev.json | jq '.resource_changes[] | select(.address=="module.paas.cloudfoundry_app.web_app") | .change.after.environment' > dev_web_app_after.json
 ```
 
 Then a simple diff will show the planned changes.
@@ -75,5 +75,5 @@ In usual conditions, the [`destroy.yml`](.github/workflows/destroy.yml) workflow
 
 We can use the Makefile to destroy a review app, by passing a `CONFIRM_DESTROY=true` plus changing the action to `review-destroy`:
 ```
-make pr=2086 CONFIRM_DESTROY=true passcode=MyPasscode review review-destroy
+make passcode=MyPasscode pr=2086 CONFIRM_DESTROY=true review review-destroy
 ```
