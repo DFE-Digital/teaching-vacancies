@@ -1,10 +1,6 @@
 module JobseekerHelpers
-  def confirm_email_address
-    visit jobseeker_confirmation_path(confirmation_token: created_jobseeker.confirmation_token)
-  end
-
   def resend_confirmation_email
-    confirm_email_address
+    visit first_link_from_last_mail
     click_on I18n.t("buttons.resend_email")
   end
 
