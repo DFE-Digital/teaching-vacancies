@@ -174,6 +174,9 @@ en:
     benefits: Employee benefits
     pay_package: Pay package
 
+    school_visits: School visits
+    trust_visits: Trust visits
+
     important_dates: Important dates and deadlines
     application_deadline: Application deadline
     days_to_apply:
@@ -185,6 +188,7 @@ en:
     starts_asap: As soon as possible
     start_on: Date job starts
     starts_on: Expected start date
+    publish_on: Publish on
     expires_on: Closing date
     time_at: ' at '
 
