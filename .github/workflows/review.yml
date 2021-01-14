@@ -100,13 +100,13 @@ jobs:
         workflow: Deploy App to Environment # Workflow name
         inputs: '{"environment": "review-pr-${{ github.event.number }}", "tag": "${{ env.TAG }}"}'
 
-    - name: Wait for Deploy App Workflow
+    - name: Wait for Deploy App Workflow for review
       id: wait_for_deploy_app
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
         token: ${{ secrets.PERSONAL_TOKEN }}
+        checkName: Deploy ${{ env.TAG }} to review # Job name within workflow
         ref: ${{ github.event.pull_request.head.sha || github.ref }}
-        checkName: Deploy app to environment # Job name within workflow
         timeoutSeconds: 300
         intervalSeconds: 15
 
