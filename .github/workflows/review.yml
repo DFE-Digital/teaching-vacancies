@@ -46,11 +46,6 @@ jobs:
         bin/run-in-env -t /teaching-vacancies/dev -o quiet \
           && echo Data in /teaching-vacancies/dev looks valid
 
-    - name: Terraform pin version
-      uses: hashicorp/setup-terraform@v1.3.2
-      with:
-        terraform_version: 0.13.4
-
     - name: Set environment variables
       id: set_env_vars
       run: |
