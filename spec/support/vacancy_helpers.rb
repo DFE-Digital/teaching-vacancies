@@ -38,6 +38,9 @@ module VacancyHelpers
             name: "job_details_form[subjects][]",
             visible: false
     end
+
+    choose I18n.t("helpers.label.job_details_form.contract_type_options.#{vacancy.contract_type}")
+    fill_in "job_details_form[contract_type_duration]", with: vacancy.contract_type_duration
   end
 
   def fill_in_pay_package_form_fields(vacancy)

@@ -10,6 +10,9 @@ module VacancyJobDetailsValidations
     validates :suitable_for_nqt, inclusion: { in: %w[yes no] }
 
     validates :working_patterns, presence: true
+
+    validates :contract_type, inclusion: { in: Vacancy.contract_types.keys }
+    validates :contract_type_duration, presence: true, if: -> { contract_type == "fixed_term" }
   end
 
   def job_title_has_no_tags?

@@ -8,6 +8,8 @@ section#job-details class="govuk-!-margin-bottom-5"
     - if @vacancy.subjects.any?
       = component.slot(:row, key: I18n.t("jobs.subject", count: @vacancy.subjects.count), value: @vacancy.show_subjects)
     = component.slot(:row, key: I18n.t("jobs.working_patterns"), value: @vacancy.working_patterns)
+    - if @vacancy.contract_type
+      = component.slot(:row, key: I18n.t("jobs.contract_type"), value: @vacancy.contract_type_with_duration)
     = component.slot(:row, key: I18n.t("jobs.salary"), value: @vacancy.salary)
 
   h4.govuk-heading-s = t("jobs.job_summary")

@@ -109,4 +109,10 @@ class VacancyPresenter < BasePresenter
   def show_subjects
     model.subjects&.join(", ")
   end
+
+  def contract_type_with_duration
+    type = model.contract_type ? I18n.t("helpers.label.job_details_form.contract_type_options.#{model.contract_type}") : nil
+    duration = model.fixed_term? ? "(#{model.contract_type_duration})" : nil
+    [type, duration].compact.join(" ")
+  end
 end

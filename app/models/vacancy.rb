@@ -20,6 +20,7 @@ class Vacancy < ApplicationRecord
   array_enum job_roles: { teacher: 0, leadership: 1, sen_specialist: 2, nqt_suitable: 3 }
   array_enum working_patterns: { full_time: 0, part_time: 100, job_share: 101 }
   # Legacy vacancies can have these working_pattern options too: { compressed_hours: 102, staggered_hours: 103 }
+  enum contract_type: { permanent: 0, fixed_term: 1 }
   enum status: { published: 0, draft: 1, trashed: 2 }
   enum job_location: { at_one_school: 0, at_multiple_schools: 1, central_office: 2 }
   enum listed_elsewhere: {

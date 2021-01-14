@@ -169,6 +169,7 @@ en:
     working_patterns: Working pattern
     working_patterns_info_one: '%{patterns} only'
     working_patterns_info_many: Will consider %{patterns}
+    contract_type: Contract type
 
     salary: Salary
     benefits: Employee benefits
