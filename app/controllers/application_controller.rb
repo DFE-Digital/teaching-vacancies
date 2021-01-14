@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   before_action :redirect_to_canonical_domain, :set_headers
+  before_action :store_jobseeker_redirect_to!, if: -> { redirect_to_param.present? }
   before_action { strip_nested_param_whitespaces(request.params) }
 
   after_action :trigger_page_visited_event, unless: :request_is_healthcheck?
@@ -98,5 +99,13 @@ class ApplicationController < ActionController::Base
 
   def trigger_page_visited_event
     request_event.trigger(:page_visited)
+  end
+
+  def store_jobseeker_redirect_to!
+    store_location_for(:jobseeker, redirect_to_param)
+  end
+
+  def redirect_to_param
+    params[:redirect_to]
   end
 end

@@ -491,25 +491,15 @@ en:
       frequency:
         daily: daily, at around 3 pm
         weekly: weekly (Friday evening at around 6 pm)
-      header: Your email subscription has started
+      header:
+        create: Your email subscription has started
+        update: Your job alert has been updated
       next_step_details: 'We’ll email you details of any new teaching jobs that match the following criteria:'
       next_step: What happens next
-      title: Subscription confirmation
+      title:
+        create: Subscription confirmation
+        update: Subscription update
       unsubscribe: You can unsubscribe by following the link at the bottom of these emails.
-      view_job_alerts: View your job alerts on your account
-    confirm_update:
-      back_to_search_results: Return to your search results
-      body: We sent an email confirmation to %{email}.
-      frequency_label: 'You will receive alerts '
-      frequency:
-        daily: daily, at around 3 pm
-        weekly: weekly (Friday evening at around 6 pm)
-      header: Your job alert has been updated
-      next_step_details: 'We’ll email you details of any new teaching jobs that match the following criteria:'
-      next_step: What happens next
-      title: Subscription update
-      unsubscribe: You can unsubscribe by following the link at the bottom of these emails.
-      view_job_alerts: View your job alerts on your account
     edit:
       description: You can change the search criteria you have used by amending the keywords, location or filters.
       edit_link: Edit alert criteria
@@ -520,6 +510,16 @@ en:
       no_criteria_selected: Please choose at least one criteria
     info: You can unsubscribe at any time by following the simple instructions at the bottom of the alert.
     intro: 'We’ll email you details of any new jobs that match the following criteria:'
+    jobseeker_account_prompt:
+      body:
+        sign_in: Sign in to see all your job alerts in one place and save the jobs you are interested in.
+        sign_up: Create an account to see all your job alerts in one place and save the jobs you are interested in.
+      heading:
+        sign_in: Sign in to your Teaching Vacancies account
+        sign_up: Create a Teaching Vacancies account
+      link:
+        sign_in: Sign in
+        sign_up: Create an account
     link:
       help_text: "%{link} whenever a job matching this search is listed"
       home_page: Visit %{home_page_link}

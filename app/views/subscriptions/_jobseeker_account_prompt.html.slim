@@ -1,0 +1,10 @@
+- if @jobseeker_account_exists
+  div data-account-prompt="sign-in"
+    h1.govuk-heading-xl class="govuk-!-margin-bottom-5" = t(".heading.sign_in")
+    p.govuk-body = t(".body.sign_in")
+    = govuk_link_to t(".link.sign_in"), new_jobseeker_session_path(redirect_to: jobseekers_subscriptions_path), button: true
+- else
+  div data-account-prompt="sign-up"
+    h1.govuk-heading-xl class="govuk-!-margin-bottom-5" = t(".heading.sign_up")
+    p.govuk-body = t(".body.sign_up")
+    = govuk_link_to t(".link.sign_up"), new_jobseeker_registration_path(redirect_to: jobseekers_subscriptions_path), button: true

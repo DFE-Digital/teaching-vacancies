@@ -22,9 +22,11 @@ class SubscriptionsController < ApplicationController
       Auditor::Audit.new(subscription, "subscription.#{subscription.frequency}_alert.create", current_publisher_oid).log
       AuditSubscriptionCreationJob.perform_later(@subscription.to_row)
       SubscriptionMailer.confirmation(subscription.id).deliver_later
+
       if jobseeker_signed_in?
         redirect_to jobseekers_subscriptions_path, success: t(".success")
       else
+        @jobseeker_account_exists = Jobseeker.exists?(email: subscription.email)
         render :confirm
       end
     else
@@ -46,12 +48,13 @@ class SubscriptionsController < ApplicationController
     if @subscription_form.valid?
       subscription.update(@subscription_form.job_alert_params)
       Auditor::Audit.new(subscription, "subscription.update", current_publisher_oid).log
+      SubscriptionMailer.update(subscription.id).deliver_later
 
       if jobseeker_signed_in?
         redirect_to jobseekers_subscriptions_path, success: t(".success")
       else
-        SubscriptionMailer.update(subscription.id).deliver_later
-        render :confirm_update
+        @jobseeker_account_exists = Jobseeker.exists?(email: subscription.email)
+        render :confirm
       end
     else
       render :edit

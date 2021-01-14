@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Jobseekers can manage their job alerts" do
+RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
   let(:jobseeker) { create(:jobseeker) }
 
   before do
