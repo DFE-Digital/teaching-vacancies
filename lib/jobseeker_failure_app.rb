@@ -12,7 +12,7 @@ class JobseekerFailureApp < Devise::FailureApp
     end
   end
 
-private
+  private
 
   def add_flash_message
     flash_info = UNAUTHENTICATED_FLASH_MESSAGES[request.original_fullpath.split("?").first.to_sym]

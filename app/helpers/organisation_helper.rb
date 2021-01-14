@@ -89,7 +89,7 @@ module OrganisationHelper
     I18n.t("schools.no_information")
   end
 
-private
+  private
 
   def number_of_pupils(school)
     I18n.t("schools.size.enrolled", pupils: pupils, number: school.gias_data["NumberOfPupils"])

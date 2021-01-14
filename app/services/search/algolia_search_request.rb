@@ -23,7 +23,7 @@ class Search::AlgoliaSearchRequest
     )
   end
 
-private
+  private
 
   def build_stats(page, pages, results_per_page, total_results)
     return [0, 0, 0] unless total_results.positive?

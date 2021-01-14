@@ -18,7 +18,7 @@ class VacancyFacets
     store.set(:counties, sort_and_limit(county_facet, 20).to_json)
   end
 
-private
+  private
 
   attr_reader :store
 

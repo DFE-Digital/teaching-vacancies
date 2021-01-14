@@ -16,7 +16,7 @@ class GetInformationFromLoginKey
     @schools&.count.to_i + @trusts&.count.to_i + @local_authorities&.count.to_i > 1
   end
 
-private
+  private
 
   def deny_sign_in
     @reason_for_failing_sign_in = if @key&.expired?

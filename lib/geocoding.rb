@@ -9,7 +9,7 @@ class Geocoding
     Geocoder.coordinates(location) || no_match
   end
 
-private
+  private
 
   def no_match
     [0, 0]

@@ -4,7 +4,7 @@ require "httparty"
 require "open-uri"
 
 class ImportOrganisationData
-private
+  private
 
   def create_organisation(row)
     organisation = convert_to_organisation(row)

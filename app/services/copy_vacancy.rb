@@ -13,7 +13,7 @@ class CopyVacancy
     @new_vacancy
   end
 
-private
+  private
 
   def copy_documents
     @vacancy.documents.each do |document|

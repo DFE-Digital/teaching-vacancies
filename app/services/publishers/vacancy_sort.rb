@@ -14,7 +14,7 @@ class Publishers::VacancySort < RecordSort
     end
   end
 
-private
+  private
 
   def base_options
     case @vacancy_type

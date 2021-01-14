@@ -37,7 +37,7 @@ module NotifyViewHelper
     notify_link(url, t(".unsubscribe_link_text"))
   end
 
-private
+  private
 
   def utm_params(subscription)
     { utm_source: subscription.alert_run_today&.id, utm_medium: "email", utm_campaign: "#{subscription.frequency}_alert" }

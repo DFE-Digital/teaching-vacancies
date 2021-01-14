@@ -15,7 +15,7 @@ class Publishers::VacancyFormPageHeadingComponent < ViewComponent::Base
     %w[copy edit edit_published].exclude?(vacancy.state)
   end
 
-private
+  private
 
   attr_reader :vacancy
 

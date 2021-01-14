@@ -25,7 +25,7 @@ class Event
     Rollbar.error(e)
   end
 
-private
+  private
 
   ##
   # Data to be included with any event (to be overridden as appropriate in subclasses)

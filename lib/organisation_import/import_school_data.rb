@@ -20,7 +20,7 @@ class ImportSchoolData < ImportOrganisationData
     File.delete(csv_file_location)
   end
 
-private
+  private
 
   def column_name_mappings
     {

@@ -5,7 +5,7 @@ module AbTestable
     helper_method :ab_variant_for, :current_ab_variants
   end
 
-private
+  private
 
   def ab_variant_for(test)
     params.dig(:ab_test_override, test)&.to_sym || ab_tests.variant_for(test)

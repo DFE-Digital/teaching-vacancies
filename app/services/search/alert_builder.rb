@@ -13,7 +13,7 @@ class Search::AlertBuilder < Search::SearchBuilder
     call_algolia_search
   end
 
-private
+  private
 
   def build_subscription_keyword(subscription_hash)
     [subscription_hash[:subject], subscription_hash[:job_title]].reject(&:blank?).join(" ")

@@ -7,7 +7,7 @@ module VacancyExpiresAtFieldValidations
     validate :expires_at_meridiem_must_not_be_blank, unless: proc { |v| validate_expires_at?(v) }
   end
 
-private
+  private
 
   def expires_at_must_not_be_blank
     errors.add(:expires_at, I18n.t("activerecord.errors.models.vacancy.attributes.expires_at.blank")) if

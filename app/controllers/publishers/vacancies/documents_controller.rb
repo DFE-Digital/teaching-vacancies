@@ -43,7 +43,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::Applic
     end
   end
 
-private
+  private
 
   def set_documents_form
     @documents_form = DocumentsForm.new

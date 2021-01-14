@@ -19,7 +19,7 @@ class Publishers::Vacancies::VacancyPublishFeedbackController < Publishers::Vaca
     redirect_to organisation_path, success: t("messages.jobs.feedback.submitted_html", job_title: @vacancy.job_title)
   end
 
-private
+  private
 
   def vacancy_publish_feedback_params
     params.require(:vacancy_publish_feedback).permit(:comment, :user_participation_response, :email)

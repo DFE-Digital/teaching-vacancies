@@ -26,7 +26,7 @@ class LocationSuggestion
     [suggestions, matched_terms]
   end
 
-private
+  private
 
   def request_url
     "https://maps.googleapis.com/maps/api/place/autocomplete/json?#{build_google_query.to_query}"

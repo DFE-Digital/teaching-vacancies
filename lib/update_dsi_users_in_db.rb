@@ -7,7 +7,7 @@ class UpdateDsiUsersInDb
     get_response_pages.each { |page| convert_to_users(page) }
   end
 
-private
+  private
 
   def convert_to_users(dsi_users)
     dsi_users.each do |dsi_user|

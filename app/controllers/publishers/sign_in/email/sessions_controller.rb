@@ -51,7 +51,7 @@ class Publishers::SignIn::Email::SessionsController < Publishers::SignIn::BaseSe
     )
   end
 
-private
+  private
 
   def update_session_except_org_id(options)
     return unless options[:oid]

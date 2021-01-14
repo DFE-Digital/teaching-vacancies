@@ -67,9 +67,6 @@ Style/TrailingCommaInHashLiteral:
 # Temporary rules
 # TODO: These have a lot of warnings, or relate to unfinished stylistic discussions within the team
 
-Layout/AccessModifierIndentation:
-  EnforcedStyle: outdent
-
 Lint/MissingSuper:
   Enabled: false
 

@@ -42,7 +42,7 @@ module DatesHelper
     "#{date_time}:#{date_time.strftime('%S')}"
   end
 
-private
+  private
 
   def in_range?(value, min, max)
     number?(value) && value.to_i >= min && value.to_i <= max

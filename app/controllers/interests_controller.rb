@@ -4,7 +4,7 @@ class InterestsController < ApplicationController
     redirect_to(vacancy.application_link)
   end
 
-private
+  private
 
   def audit_click
     VacancyGetMoreInfoClick.new(vacancy).track

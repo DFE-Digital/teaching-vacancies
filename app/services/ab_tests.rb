@@ -26,7 +26,7 @@ class AbTests
     available_ab_tests.to_h { |test| [test, variant_for(test)] }
   end
 
-private
+  private
 
   attr_reader :session, :test_configuration
 

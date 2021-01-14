@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-private
+  private
 
   def cookies_preference_set?
     cookies["consented-to-cookies"].present?

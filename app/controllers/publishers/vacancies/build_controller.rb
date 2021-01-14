@@ -57,7 +57,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::Applicatio
     end
   end
 
-private
+  private
 
   def convert_date_params
     return unless step == :important_dates

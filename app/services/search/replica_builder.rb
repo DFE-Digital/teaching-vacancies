@@ -11,7 +11,7 @@ class Search::ReplicaBuilder
     @search_replica = [Indexable::INDEX_NAME, sort_by].reject(&:blank?).join("_") if sort_by.present?
   end
 
-private
+  private
 
   def valid_sort?(sort)
     Vacancy::JOB_SORTING_OPTIONS.map(&:last).include?(sort)

@@ -21,7 +21,7 @@ class Publishers::Organisations::SchoolsController < Publishers::BaseController
     end
   end
 
-private
+  private
 
   def set_organisation
     @organisation = Organisation.find(params[:id])

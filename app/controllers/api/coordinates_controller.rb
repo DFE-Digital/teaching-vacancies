@@ -12,7 +12,7 @@ class Api::CoordinatesController < Api::ApplicationController
     }
   end
 
-private
+  private
 
   def location
     params[:location]

@@ -33,7 +33,7 @@ class NqtJobAlertsForm
     end
   end
 
-private
+  private
 
   def nqt_job_alert_hash
     {

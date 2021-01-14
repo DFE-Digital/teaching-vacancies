@@ -14,7 +14,7 @@ class RequestEvent < Event
     @current_publisher_oid = current_publisher_oid
   end
 
-private
+  private
 
   attr_reader :request, :response, :session, :current_jobseeker, :current_publisher_oid
 

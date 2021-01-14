@@ -17,7 +17,7 @@ class AlertMailerJob < ActionMailer::MailDeliveryJob
     alert_run.update(status: :sent)
   end
 
-private
+  private
 
   def job_already_run?
     alert_run.sent?

@@ -18,7 +18,7 @@ class Publishers::OrganisationsController < Publishers::BaseController
     render_draft_saved_message if params[:from_review]
   end
 
-private
+  private
 
   def redirect_to_user_preferences
     return unless current_organisation.is_a?(SchoolGroup) && current_publisher_preferences.nil?

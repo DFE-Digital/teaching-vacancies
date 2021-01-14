@@ -125,7 +125,7 @@ class Vacancy < ApplicationRecord
     organisations.map(&:readable_phases).flatten.uniq
   end
 
-private
+  private
 
   def slug_candidates
     [

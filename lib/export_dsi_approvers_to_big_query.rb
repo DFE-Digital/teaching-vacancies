@@ -11,7 +11,7 @@ class ExportDsiApproversToBigQuery < BaseDsiBigQueryExporter
     raise "#{e.message}, while writing data from DSI /approvers endpoint. Flag this to Steven + Comms team"
   end
 
-private
+  private
 
   def present_for_big_query(batch)
     batch.map do |user|

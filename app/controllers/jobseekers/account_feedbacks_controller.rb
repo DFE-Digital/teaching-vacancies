@@ -13,7 +13,7 @@ class Jobseekers::AccountFeedbacksController < Jobseekers::ApplicationController
     end
   end
 
-private
+  private
 
   def account_feedback_params
     params.require(:account_feedback).permit(:rating, :suggestions, :back_link)

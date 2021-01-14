@@ -16,7 +16,7 @@ class CookiesPreferencesController < ApplicationController
     end
   end
 
-private
+  private
 
   def cookies_preferences_params
     (params[:cookies_preferences_form] || params).permit(:cookies_consent)

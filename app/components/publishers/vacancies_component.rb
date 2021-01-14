@@ -48,7 +48,7 @@ class Publishers::VacanciesComponent < ViewComponent::Base
     link_to t("jobs.#{vacancy_type}_jobs"), jobs_with_type_organisation_path(vacancy_type), class: "moj-primary-navigation__link", "aria-current": ("page" if selected)
   end
 
-private
+  private
 
   def set_vacancies
     @vacancies =

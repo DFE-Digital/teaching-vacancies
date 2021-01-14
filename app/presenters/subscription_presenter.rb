@@ -21,7 +21,7 @@ class SubscriptionPresenter < BasePresenter
     full_search_criteria.transform_values! { |value| value.is_a?(Array) ? value.join(", ") : value }
   end
 
-private
+  private
 
   def sorted_search_criteria
     search_criteria_to_h.sort_by { |(key, _)|

@@ -37,7 +37,7 @@ class JobAlertFeedbacksController < ApplicationController
     end
   end
 
-private
+  private
 
   def job_alert_feedback_params
     params.require(:job_alert_feedback).permit(:comment, :relevant_to_user, :search_criteria, vacancy_ids: [])

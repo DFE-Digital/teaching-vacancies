@@ -81,7 +81,7 @@ class SubscriptionsController < ApplicationController
     end
   end
 
-private
+  private
 
   def email
     ParameterSanitiser.call(params).permit(:email)
