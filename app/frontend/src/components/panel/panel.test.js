@@ -1,4 +1,4 @@
-import panel, { toggleButtonText, isPanelClosed, togglePanel } from './panel';
+import panel, { toggleControlText, isPanelClosed, togglePanel } from './panel';
 
 describe('panel', () => {
   document.body.innerHTML = '<div id="panel-container"></div><button id="toggle-button">original text</button>';
@@ -15,7 +15,7 @@ describe('panel', () => {
 
     options = {
       container,
-      toggleButton: button,
+      toggleControl: button,
       hideText: HIDE_BUTTON_TEXT,
       showText: SHOW_BUTTON_TEXT,
       toggleClass: CLOSED_CLASS,
@@ -29,15 +29,15 @@ describe('panel', () => {
     test('calls toggle handler when button is clicked', () => {
       const toggleMock = jest.spyOn(options, 'onToggleHandler');
       togglePanel(options);
-      options.toggleButton.dispatchEvent(new Event('click'));
+      options.toggleControl.dispatchEvent(new Event('click'));
       expect(toggleMock).toHaveBeenCalled();
     });
 
     test('toggles supplied class when button is clicked', () => {
-      options.toggleButton.dispatchEvent(new Event('click'));
+      options.toggleControl.dispatchEvent(new Event('click'));
       expect(container.classList.contains(CLOSED_CLASS)).toBe(true);
 
-      options.toggleButton.dispatchEvent(new Event('click'));
+      options.toggleControl.dispatchEvent(new Event('click'));
       expect(container.classList.contains(CLOSED_CLASS)).toBe(false);
     });
 
@@ -56,15 +56,15 @@ describe('panel', () => {
     });
   });
 
-  describe('toggleButtonText', () => {
+  describe('toggleControlText', () => {
     test('changes button text to hide panel text when panel is visible', () => {
-      toggleButtonText(options);
+      toggleControlText(options);
       expect(button.innerHTML).toBe(HIDE_BUTTON_TEXT);
       expect(isPanelClosed(container, CLOSED_CLASS)).toBe(false);
     });
     test('changes button text to show panel text when panel is hidden', () => {
       container.classList.toggle(CLOSED_CLASS);
-      toggleButtonText(options);
+      toggleControlText(options);
       expect(button.innerHTML).toBe(SHOW_BUTTON_TEXT);
       expect(isPanelClosed(container, CLOSED_CLASS)).toBe(true);
     });
