@@ -124,7 +124,7 @@ jobs:
         timeoutSeconds: 300
         intervalSeconds: 15
 
-    - name: Trigger Deploy App Workflow
+    - name: Trigger Deploy App Workflow for production
       if: ${{ steps.wait_for_smoke_test.outputs.conclusion == 'success' }} && github.ref == 'refs/heads/master'
       uses: benc-uk/workflow-dispatch@v1.1
       with:
@@ -132,7 +132,7 @@ jobs:
         token: ${{ secrets.PERSONAL_TOKEN }}
         inputs: '{"environment": "production", "tag": "${{ env.TAG }}"}'
 
-    - name: Wait for Deploy App Workflow
+    - name: Wait for Deploy App Workflow for production
       id: wait_for_deploy_app_production
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
