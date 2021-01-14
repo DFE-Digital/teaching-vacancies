@@ -5,22 +5,21 @@ class JobAlertFeedbacksController < ApplicationController
     # GET requests. HTTP forbids redirecting from GET to POST.
     subscription = Subscription.find_and_verify_by_token(token)
 
-    @feedback = JobAlertFeedback.new(
-      job_alert_feedback_params.merge(subscription: subscription),
-    )
-
-    return unless @feedback.save
+    @feedback = subscription.job_alert_feedbacks.create(job_alert_feedback_params)
 
     Auditor::Audit.new(@feedback, "job_alert_feedback.create", current_publisher_oid).log
     redirect_to edit_subscription_job_alert_feedback_path(id: @feedback.id), success: t(".success")
   end
 
   def edit
+    @feedback = JobAlertFeedback.find(feedback_id)
+    @subscription = Subscription.find_and_verify_by_token(token)
     @feedback_form = JobAlertFeedbackForm.new
   end
 
   def update
     @feedback = JobAlertFeedback.find(feedback_id)
+    @subscription = Subscription.find_and_verify_by_token(token)
     @feedback_form = JobAlertFeedbackForm.new(form_params)
 
     recaptcha_is_valid = verify_recaptcha(model: @feedback, action: "job_alert_feedback")
