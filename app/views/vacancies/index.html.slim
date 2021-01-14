@@ -14,7 +14,7 @@
 = render(Jobseekers::SearchResults::HeadingComponent.new(vacancies_search: @vacancies_search))
 
 .govuk-grid-row
-  .govuk-grid-column-one-third
+  .govuk-grid-column-one-third class="govuk-!-margin-bottom-4"
     = render "filters"
   .govuk-grid-column-two-thirds
     section.sort-results.sortable-links role="search" aria-label="Sort vacancies"

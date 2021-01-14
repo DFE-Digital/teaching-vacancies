@@ -33,7 +33,6 @@
                 - if group[:selected]&.include?(tag.send(group[:value_method]))
                   li
                     button.moj-filter__tag.icon.icon--left.icon--cross data-group=group[:key] data-key=tag.send(group[:value_method])
-
                       span.govuk-visually-hidden
                         = t("shared.filter_group.remove_filter_hidden")
                       = tag.send(group[:selected_method])

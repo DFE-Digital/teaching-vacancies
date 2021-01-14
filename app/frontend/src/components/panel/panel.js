@@ -13,15 +13,15 @@ export const togglePanel = (options) => {
     );
   }
 
-  if (options.toggleButton) {
+  if (options.toggleControl) {
     panel.isInitialStateOpen(options.componentKey) ? panel.openPanel(options) : panel.closePanel(options);
 
-    toggleButtonText(options);
+    toggleControlText(options);
 
-    options.toggleButton.addEventListener('click', () => {
+    options.toggleControl.addEventListener('click', () => {
       options.container.classList.toggle(options.toggleClass);
       options.onToggleHandler();
-      toggleButtonText(options);
+      toggleControlText(options);
       setState(options.container, options.toggleClass, options.componentKey);
     });
   }
@@ -34,14 +34,14 @@ export const setState = (container, toggleClass, componentKey) => localStorage.s
   JSON.stringify({ [componentKey]: isPanelClosed(container, toggleClass) ? 'closed' : 'open' }),
 );
 
-export const toggleButtonText = ({
+export const toggleControlText = ({
   toggleClass,
-  toggleButton,
+  toggleControl,
   container,
   hideText,
   showText,
 }) => {
-  toggleButton.innerHTML = isPanelClosed(container, toggleClass) ? showText : hideText;
+  toggleControl.innerHTML = isPanelClosed(container, toggleClass) ? showText : hideText;
   return true;
 };
 

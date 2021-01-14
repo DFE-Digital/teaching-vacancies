@@ -1,14 +1,11 @@
 import '../../../frontend/src/lib/polyfill/closest.polyfill';
 import '../../../frontend/src/lib/polyfill/from.polyfill';
 import 'classlist-polyfill';
-import { togglePanel as toggleFilterPanel } from '../../../frontend/src/components/panel/panel';
 
 export const ACCORDION_SECTION_CLASS_SELECTOR = 'govuk-accordion__section';
 export const ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR = 'govuk-accordion__section--expanded';
 export const CHECKBOX_CLASS_SELECTOR = 'govuk-checkboxes__input';
 export const CHECKBOX_GROUP_CLASS_SELECTOR = 'filters__group-checkboxes';
-export const CLOSED_CLASS = 'govuk-grid-column-full';
-export const OPEN_CLASS = 'govuk-grid-column-two-thirds';
 export const CLOSE_ALL_TEXT = 'Close all';
 export const OPEN_ALL_TEXT = 'Open all';
 
@@ -39,30 +36,6 @@ export const init = (groupContainerSelector, removeButtonSelector, clearButtonSe
     );
     document.getElementById(closeButtonSelector).addEventListener('click', openOrCloseAllSectionsHandler);
   }
-
-  const content = document.getElementsByClassName('moj-filter-layout__content')[0];
-
-  toggleFilterPanel({
-    defaultState: 'closed',
-    componentKey: 'dashboard',
-    hideText: 'Hide filters',
-    showText: 'Show filters',
-    container: document.getElementsByClassName('moj-filter-sidebar')[0],
-    toggleClass: 'moj-filter-sidebar__hidden',
-    toggleButton: document.getElementById('toggle-filters-sidebar'),
-    onToggleHandler: () => {
-      content.classList.toggle(OPEN_CLASS);
-      content.classList.toggle(CLOSED_CLASS);
-    },
-    onClosedHandler: () => {
-      content.classList.remove(OPEN_CLASS);
-      content.classList.add(CLOSED_CLASS);
-    },
-    onOpenedHandler: () => {
-      content.classList.add(OPEN_CLASS);
-      content.classList.remove(CLOSED_CLASS);
-    },
-  });
 
   if (document.getElementById(mobileFiltersButtonSelector)) {
     document.getElementById(mobileFiltersButtonSelector).addEventListener('click', () => {
