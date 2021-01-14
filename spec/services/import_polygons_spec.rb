@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe ImportPolygons do
   subject { described_class.new(location_type: location_type) }
   let(:boundary_endpoint) { LOCATION_POLYGON_SETTINGS[location_type][:boundary_api] }
-  let(:boundary_response) { JSON.parse(file_fixture(file_name).read) }
+  let(:boundary_response) { file_fixture(file_name).read }
 
   before do
     allow(HTTParty).to receive(:get).with(boundary_endpoint).and_return(boundary_response)
@@ -39,15 +39,15 @@ RSpec.describe ImportPolygons do
         let(:boundary_points) { [52, 0, 52, 0, 52, 0, 52, 0, 52, 0, 52, 0] }
         let(:file_name) { "ons_counties.json" }
 
-        it "imports Essex county" do
-          expect(LocationPolygon.counties.first.name).to eq("essex")
+        it "imports Cumbria county" do
+          expect(LocationPolygon.counties.first.name).to eq("cumbria")
         end
 
         it "does not import non-existent county" do
           expect(LocationPolygon.counties.count).to eq(1)
         end
 
-        it "imports Essex boundaries" do
+        it "imports Cumbria boundaries" do
           expect(LocationPolygon.counties.first.boundary).to eq(boundary_points)
         end
       end
@@ -107,7 +107,7 @@ RSpec.describe ImportPolygons do
           distances = [5, 10, 15, 20, 25]
           distances.each do |distance|
             allow(HTTParty).to receive(:get).with(
-              "https://ons-inspire.esriuk.com/arcgis/rest/services/Utilities/Geometry/GeometryServer/buffer?"\
+              "https://tasks.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer/buffer?"\
               "bufferSR=3857&distances=#{convert_miles_to_metres(distance)}&f=json&geodesic=f"\
               "alse&geometries=%7B%22geometryType%22%3D%3E%22esriGeometryPolygon%22%2C+%22geometries%22%3D%3E"\
               "%5B%7B%22rings%22%3D%3E%5B%5B%5B55.8110853660943%2C+-2.0343575091738%5D%2C+%5B55.7647624900862%"\
@@ -134,7 +134,7 @@ RSpec.describe ImportPolygons do
           distances = [5, 10, 15, 20, 25]
           distances.each do |distance|
             allow(HTTParty).to receive(:get).with(
-              "https://ons-inspire.esriuk.com/arcgis/rest/services/Utilities/Geometry/GeometryServer/buffer?"\
+              "https://tasks.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer/buffer?"\
               "bufferSR=3857&distances=#{convert_miles_to_metres(distance)}&f"\
               "=json&geodesic=false&geometries=%7B%22geometryType%22%3D%3E%22esriGeometryPolygon%22%2C+%22"\
               "geometries%22%3D%3E%5B%7B%22rings%22%3D%3E%5B%5B%5B52%2C+0%5D%2C+%5B52%2C+0%5D%5D%5D%7D%5D%7D"\

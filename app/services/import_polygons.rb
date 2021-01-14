@@ -1,6 +1,6 @@
 class ImportPolygons
-  BUFFER_API_URL = "https://ons-inspire.esriuk.com/arcgis/rest/services/Utilities/Geometry/GeometryServer/buffer?".freeze
-  URL_MAXIMUM_LENGTH = 2000
+  BUFFER_API_URL = "https://tasks.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer/buffer?".freeze
+  URL_MAXIMUM_LENGTH = 33_000
 
   include DistanceHelper
 
@@ -11,48 +11,50 @@ class ImportPolygons
   end
 
   def call
-    response = HTTParty.get(LOCATION_POLYGON_SETTINGS[location_type][:boundary_api])
+    response = JSON.parse(HTTParty.get(LOCATION_POLYGON_SETTINGS[location_type][:boundary_api]))
 
     response.fetch("features", []).each do |region_response|
-      region_name = region_response.dig("attributes", LOCATION_POLYGON_SETTINGS[location_type][:name_key]).downcase
+      location_name = region_response.dig("attributes", LOCATION_POLYGON_SETTINGS[location_type][:name_key]).downcase
 
-      next unless location_categories_include?(region_name)
+      next unless location_categories_include?(location_name)
 
       geometry_rings = region_response.dig("geometry", "rings")
 
-      # The first ring is the outer boundary and tends to contain far more points than subsequent rings.
-      # All subsequent rings within this outer ring are bodies of water (essentially exclusion rings) and
-      # can therefore be dismissed.
-      # Boundary should be visualised to check how it should be used.
-      # If algolia searches by polygon are slow, these boundaries could be downsampled significantly.
+      # If algolia searches by polygon are slow, (some of) these boundaries could be downsampled significantly.
+
+      ring_index = if location_type == :counties
+                     DOWNCASE_COUNTIES_WITH_RING_INDICES[location_name]
+                   else
+                     0
+                   end
+
       points = []
-      geometry_rings[0].each do |point|
+      geometry_rings[ring_index].each do |point|
         # API returns coords in an unconventional lng,lat order
         # Coordinates rounded as they are stored as double precision floats which have a precision of
-        # 15 decimal digits. All UK coordinates only have a maxium of 2 digits before decimal point.
+        # 15 decimal digits. All UK coordinates only have a maximum of 2 digits before decimal point.
         points.push(*point.reverse.map { |coord| coord.round(13) })
       end
 
-      LocationPolygon.find_or_create_by(name: region_name, location_type: location_type.to_s)
+      LocationPolygon.find_or_create_by(name: location_name, location_type: location_type.to_s)
                      .update(boundary: points, buffers: get_buffers(points))
     end
   end
 
   private
 
-  def location_categories_include?(region_name)
-    location_type == :regions && DOWNCASE_REGIONS.include?(region_name) ||
-      location_type == :counties && DOWNCASE_COUNTIES.include?(region_name) ||
-      location_type == :london_boroughs && DOWNCASE_BOROUGHS.include?(region_name) ||
-      location_type == :cities && DOWNCASE_CITIES.include?(region_name)
+  def location_categories_include?(location_name)
+    location_type == :regions && DOWNCASE_REGIONS.include?(location_name) ||
+      location_type == :counties && DOWNCASE_COUNTIES.include?(location_name) ||
+      location_type == :london_boroughs && DOWNCASE_BOROUGHS.include?(location_name) ||
+      location_type == :cities && DOWNCASE_CITIES.include?(location_name)
   end
 
   def get_buffers(points)
-    # ArcGIS API documentation: https://ons-inspire.esriuk.com/arcgis/sdk/rest/index.html#//02ss0000003z000000
     buffer_distances_in_miles = [5, 10, 15, 20, 25]
     buffered_boundaries = {}
     buffer_distances_in_miles.each do |distance|
-      # convert 1D array, to 2D array for arcgis
+      # convert 1D array to 2D array for arcgis
       polygon_coords = points.each_slice(2).to_a
       response = HTTParty.get(buffer_api_endpoint(polygon_coords, convert_miles_to_metres(distance)))
       # Buffer coordinates are stored as a 1D array
@@ -63,6 +65,8 @@ class ImportPolygons
   end
 
   def buffer_api_endpoint(coords, distance)
+    # Documentation of ArcGIS API: https://developers.arcgis.com/rest/services-reference/buffer.htm
+
     geometries_param = {
       "geometryType" => "esriGeometryPolygon",
       "geometries" => [{ "rings" => [coords] }],

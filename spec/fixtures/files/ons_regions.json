@@ -1,25 +1,33 @@
 {
-  "displayFieldName": "RGN19CD",
-  "fieldAliases": {
-   "rgn19nm": "rgn19nm"
+  "objectIdFieldName": "OBJECTID",
+  "uniqueIdField": {
+    "name": "OBJECTID",
+    "isSystemMaintained": true
+  },
+  "globalIdFieldName": "",
+  "geometryProperties": {
+    "shapeAreaFieldName": "Shape__Area",
+    "shapeLengthFieldName": "Shape__Length",
+    "units": "esriMeters"
   },
   "geometryType": "esriGeometryPolygon",
   "spatialReference": {
-   "wkid": 4326,
-   "latestWkid": 4326
+    "wkid": 4326,
+    "latestWkid": 4326
   },
-  "fields": [
-   {
-    "name": "rgn19nm",
-    "type": "esriFieldTypeString",
-    "alias": "rgn19nm",
-    "length": 24
-   }
-  ],
+  "fields":
+  [
+    {
+      "name": "GOR10NM",
+      "type": "esriFieldTypeString",
+      "alias": "GOR10NM",
+      "sqlType": "sqlTypeOther",
+      "length": 2
+    }],
   "features": [
    {
     "attributes": {
-     "rgn19nm": "North East"
+     "GOR10NM": "North East"
     },
     "geometry": {
      "rings": [
@@ -38,7 +46,7 @@
    },
    {
     "attributes": {
-     "rgn19nm": "Non-existent Region"
+     "GOR10NM": "Non-existent Region"
     },
     "geometry": {
      "rings": [
