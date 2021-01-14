@@ -8,7 +8,7 @@ class HomeController < ApplicationController
     @counties_facets = @vacancy_facets.get(:counties)
   end
 
-private
+  private
 
   def set_headers
     response.set_header("X-Robots-Tag", "index, nofollow")

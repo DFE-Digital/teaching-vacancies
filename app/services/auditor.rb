@@ -18,7 +18,7 @@ module Auditor
       create_without_model
     end
 
-  private
+    private
 
     def create(changes)
       PublicActivity::Activity.create trackable: model, key: key, session_id: session_id, parameters: changes

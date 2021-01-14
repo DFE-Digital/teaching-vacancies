@@ -10,7 +10,7 @@ class ImportTrustData < ImportOrganisationData
     import_data(membership_csv_url, MEMBERSHIP_TEMP_LOCATION, :create_school_group_membership)
   end
 
-private
+  private
 
   def column_name_mappings
     {

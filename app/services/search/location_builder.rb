@@ -34,7 +34,7 @@ class Search::LocationBuilder
       (@location && LocationCategory.include?(@location))
   end
 
-private
+  private
 
   def initialize_location_polygon
     @location_polygon = LocationPolygon.with_name(@location_category)

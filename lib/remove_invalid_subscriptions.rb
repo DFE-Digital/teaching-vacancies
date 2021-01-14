@@ -9,7 +9,7 @@ class RemoveInvalidSubscriptions
     end
   end
 
-private
+  private
 
   def api_response
     Notifications::Client.new(NOTIFY_KEY).get_notifications(args)

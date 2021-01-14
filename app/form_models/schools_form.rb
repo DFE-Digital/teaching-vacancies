@@ -13,7 +13,7 @@ class SchoolsForm < VacancyForm
     super
   end
 
-private
+  private
 
   def more_than_one_school_present_multiple_schools
     errors.add(:organisation_ids, I18n.t("schools_errors.organisation_ids.invalid")) if

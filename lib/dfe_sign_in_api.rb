@@ -17,7 +17,7 @@ module DFESignIn
       perform_request("/users/approvers", page, APPROVERS_PAGE_SIZE)
     end
 
-  private
+    private
 
     def perform_request(endpoint, page, page_size)
       token = generate_jwt_token
@@ -44,7 +44,7 @@ module DFESignIn
     end
   end
 
-private
+  private
 
   def error_message_for(response)
     response["message"] || "failed request"

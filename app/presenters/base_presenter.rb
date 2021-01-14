@@ -1,6 +1,6 @@
 require "delegate"
 class BasePresenter < SimpleDelegator
-private
+  private
 
   def model
     __getobj__

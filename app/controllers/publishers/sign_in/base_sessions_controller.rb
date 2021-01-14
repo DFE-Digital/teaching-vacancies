@@ -21,7 +21,7 @@ class Publishers::SignIn::BaseSessionsController < Publishers::BaseController
     redirect_to new_identifications_path, flash_message
   end
 
-private
+  private
 
   def clear_publisher_session!
     PUBLISHER_SESSION_KEYS.each { |key| session.delete(key) }

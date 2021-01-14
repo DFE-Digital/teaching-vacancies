@@ -224,7 +224,7 @@ module VacancyHelpers
     verify_shared_vacancy_list_page_details(vacancy)
   end
 
-private
+  private
 
   def verify_shared_vacancy_list_page_details(vacancy)
     expect(page.find(".vacancy")).to have_content(vacancy.job_title)

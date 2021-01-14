@@ -52,7 +52,7 @@ RSpec.describe "School deleting vacancies" do
     delete_vacancy(school, vacancy.id)
   end
 
-private
+  private
 
   def delete_vacancy(school, vacancy_id)
     visit organisation_path(school)

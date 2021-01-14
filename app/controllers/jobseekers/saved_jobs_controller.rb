@@ -21,7 +21,7 @@ class Jobseekers::SavedJobsController < Jobseekers::ApplicationController
     @saved_jobs = current_jobseeker.saved_jobs.includes(:vacancy).order("#{@sort.column} #{@sort.order}")
   end
 
-private
+  private
 
   def saved_job_params
     ParameterSanitiser.call(params).permit(:id, :redirect_to_dashboard)

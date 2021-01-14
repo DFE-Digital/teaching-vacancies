@@ -15,7 +15,7 @@ class Publishers::Vacancies::PublishController < Publishers::Vacancies::Applicat
     end
   end
 
-private
+  private
 
   def audit_publish_vacancy
     Auditor::Audit.new(@vacancy, "vacancy.publish", current_publisher_oid).log

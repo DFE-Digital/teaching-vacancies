@@ -52,7 +52,7 @@ class SubscriptionForm
     }.compact.delete_if { |_k, v| v.blank? || v.empty? }
   end
 
-private
+  private
 
   def set_facet_options
     @job_role_options = Vacancy.job_roles.keys.map { |option| [option, I18n.t("helpers.label.job_details_form.job_roles_options.#{option}")] }

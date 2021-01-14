@@ -55,7 +55,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::ApplicationContro
     @vacancy = VacancyPresenter.new(@vacancy)
   end
 
-private
+  private
 
   def devise_job_alert_search_criteria
     @devised_job_alert_search_criteria = Search::CriteriaDeviser.new(@vacancy).criteria

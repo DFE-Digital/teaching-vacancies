@@ -47,7 +47,7 @@ class School < Organisation
     gias_data["ReligiousCharacter (name)"]
   end
 
-private
+  private
 
   def set_geolocation_from_easting_and_northing
     if easting && northing

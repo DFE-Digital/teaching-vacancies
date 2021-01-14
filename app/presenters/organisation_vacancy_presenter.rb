@@ -51,7 +51,7 @@ class OrganisationVacancyPresenter < BasePresenter
     url_helpers.organisation_job_path(id: model.id)
   end
 
-private
+  private
 
   def url_helpers
     Rails.application.routes.url_helpers

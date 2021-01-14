@@ -46,7 +46,7 @@ class Authorisation
     nil
   end
 
-private
+  private
 
   def generate_jwt_token
     payload = {

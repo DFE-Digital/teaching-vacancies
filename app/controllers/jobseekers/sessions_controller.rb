@@ -8,7 +8,7 @@ class Jobseekers::SessionsController < Devise::SessionsController
     invalid not_found_in_database last_attempt
   ].map { |error| I18n.t("devise.failure.#{error}") }.freeze
 
-private
+  private
 
   def render_form_with_errors
     self.resource = JobseekerSignInForm.new(sign_in_params)

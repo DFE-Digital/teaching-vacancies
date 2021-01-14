@@ -23,7 +23,7 @@ class Indexing
     call(:remove)
   end
 
-private
+  private
 
   def call(action)
     notification = API::UrlNotification.new(url: url, type: ACTIONS[action])

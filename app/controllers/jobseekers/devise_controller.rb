@@ -1,11 +1,11 @@
 class Jobseekers::DeviseController < ApplicationController
-protected
+  protected
 
   def after_sign_out_path_for(_resource)
     new_jobseeker_session_path
   end
 
-private
+  private
 
   def replace_devise_notice_flash_with_success!
     flash[:success] = flash.discard(:notice) if flash[:notice].present?

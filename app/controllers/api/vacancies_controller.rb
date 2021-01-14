@@ -22,7 +22,7 @@ class Api::VacanciesController < Api::ApplicationController
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
-private
+  private
 
   def id
     params[:id]

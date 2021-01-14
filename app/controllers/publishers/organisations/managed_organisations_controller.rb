@@ -22,7 +22,7 @@ class Publishers::Organisations::ManagedOrganisationsController < Publishers::Ba
     end
   end
 
-private
+  private
 
   def managed_organisations_params
     strip_empty_checkboxes(%i[managed_organisations managed_school_ids], :managed_organisations_form)

@@ -7,7 +7,7 @@ class Search::CriteriaDeviser
     @criteria = devise_search_criteria
   end
 
-private
+  private
 
   def devise_search_criteria
     {

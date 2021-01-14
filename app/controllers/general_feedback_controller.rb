@@ -19,7 +19,7 @@ class GeneralFeedbackController < ApplicationController
     end
   end
 
-private
+  private
 
   def general_feedback_params
     params.require(:general_feedback)

@@ -241,7 +241,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
     end
   end
 
-private
+  private
 
   def click_sign_in
     within(".signin") { click_on(I18n.t("buttons.sign_in")) }

@@ -86,7 +86,7 @@ class ExportTablesToBigQuery
     Rails.logger.info({ bigquery_export: "finished" }.to_json)
   end
 
-private
+  private
 
   def bigquery_data(record, table)
     @bigquery_data = {}

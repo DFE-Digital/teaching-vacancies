@@ -5,7 +5,7 @@ module ValidatorConcerns
     options.key?(:presence) && options[:presence]
   end
 
-private
+  private
 
   def error_message(record, attribute, message)
     record.errors.add(attribute, message)

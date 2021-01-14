@@ -35,7 +35,7 @@ class VacanciesController < ApplicationController
     @params ||= ParameterSanitiser.call(super)
   end
 
-private
+  private
 
   def algolia_search_params
     strip_empty_checkboxes(%i[job_roles phases working_patterns])

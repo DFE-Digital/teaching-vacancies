@@ -5,7 +5,7 @@ class PagesController < ApplicationController
     not_found
   end
 
-private
+  private
 
   def set_headers
     response.set_header("X-Robots-Tag", "index, nofollow")

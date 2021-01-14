@@ -6,7 +6,7 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
   after_action :replace_devise_notice_flash_with_success!, only: %i[destroy update]
   after_action :remove_devise_flash!, only: %i[create update]
 
-protected
+  protected
 
   def check_password_difference
     return unless @update_password

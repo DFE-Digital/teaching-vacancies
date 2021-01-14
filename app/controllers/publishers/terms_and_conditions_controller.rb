@@ -16,7 +16,7 @@ class Publishers::TermsAndConditionsController < Publishers::BaseController
     end
   end
 
-private
+  private
 
   def terms_params
     (params[:terms_and_conditions_form] || params).permit(:terms)

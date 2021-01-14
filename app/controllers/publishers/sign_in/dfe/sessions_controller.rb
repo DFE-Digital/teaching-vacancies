@@ -27,7 +27,7 @@ class Publishers::SignIn::Dfe::SessionsController < Publishers::SignIn::BaseSess
     end_session_and_redirect
   end
 
-private
+  private
 
   def not_authorised
     Rails.logger.warn(not_authorised_details)

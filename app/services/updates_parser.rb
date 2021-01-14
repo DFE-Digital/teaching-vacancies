@@ -7,7 +7,7 @@ class UpdatesParser
     update_file_paths_to_hash(@update_paths)
   end
 
-private
+  private
 
   def update_file_paths_to_hash(update_paths)
     updates_by_date = {}

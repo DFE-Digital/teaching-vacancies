@@ -13,7 +13,7 @@ class Publishers::VacancyWizardBackLinkComponent < ViewComponent::Base
     govuk_back_link(text: text, href: href)
   end
 
-private
+  private
 
   def text
     if vacancy_is_in_create_state?

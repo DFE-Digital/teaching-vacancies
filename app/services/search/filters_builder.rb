@@ -28,7 +28,7 @@ class Search::FiltersBuilder
     filter_array.reject(&:blank?).join(" AND ")
   end
 
-private
+  private
 
   def build_filters
     @dates_filter = build_date_filters
