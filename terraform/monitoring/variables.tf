@@ -13,8 +13,4 @@ locals {
   secrets                    = yamldecode(data.aws_ssm_parameter.monitoring_secrets.value)
   alertmanager_slack_url     = local.secrets["alertmanager_slack_url"]
   alertmanager_slack_channel = "twd_tv_dev"
-  alertmanager_config = templatefile("${path.module}/config/alertmanager.yml.tmpl", {
-    slack_url     = local.alertmanager_slack_url
-    slack_channel = local.alertmanager_slack_channel
-  })
 }
