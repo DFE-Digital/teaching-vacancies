@@ -80,9 +80,6 @@ en:
       before_expires_on: Date job starts must be after date application is due
       invalid: Use the correct format for date the job starts
       multiple_start_dates: Select one option only
-  supporting_documents_errors: &supporting_documents_errors
-    supporting_documents:
-      inclusion: "Please indicate if you'd like to attach supporting documents"
   applying_for_the_job_errors: &applying_for_the_job_errors
     application_link:
       url: Enter a link in the correct format, like http://www.school.ac.uk
@@ -150,9 +147,6 @@ en:
         important_dates_form:
           attributes:
             <<: *important_dates_errors
-        supporting_documents_form:
-          attributes:
-            <<: *supporting_documents_errors
         applying_for_the_job_form:
           attributes:
             <<: *applying_for_the_job_errors
@@ -197,7 +191,6 @@ en:
             <<: *job_details_errors
             <<: *pay_package_errors
             <<: *important_dates_errors
-            <<: *supporting_documents_errors
             <<: *applying_for_the_job_errors
             <<: *job_summary_errors
         vacancy_publish_feedback:

@@ -203,72 +203,6 @@ RSpec.describe "Creating a vacancy" do
       end
     end
 
-    describe "#supporting_documents" do
-      scenario "is invalid unless all mandatory fields are submitted" do
-        visit organisation_path
-        click_on I18n.t("buttons.create_job")
-
-        fill_in_job_details_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        fill_in_pay_package_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        fill_in_important_dates_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        click_on I18n.t("buttons.continue") # submit empty form
-
-        expect(page)
-          .to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.supporting_documents.inclusion"))
-      end
-
-      scenario "redirects to step 4, application details, when choosing no" do
-        visit organisation_path
-        click_on I18n.t("buttons.create_job")
-
-        fill_in_job_details_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        fill_in_pay_package_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        fill_in_important_dates_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        select_no_for_supporting_documents
-        click_on I18n.t("buttons.continue")
-
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 7))
-        within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.applying_for_the_job"))
-        end
-      end
-
-      scenario "redirects to step 3, upload_documents, when choosing yes" do
-        visit organisation_path
-        click_on I18n.t("buttons.create_job")
-
-        fill_in_job_details_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        fill_in_pay_package_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        fill_in_important_dates_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        choose "Yes"
-        click_on I18n.t("buttons.continue")
-
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 4, total: 7))
-        within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.supporting_documents"))
-        end
-        expect(page).to have_content(I18n.t("jobs.upload_file"))
-      end
-    end
-
     describe "#documents" do
       let(:documents_vacancy) { create(:vacancy) }
 
@@ -296,11 +230,7 @@ RSpec.describe "Creating a vacancy" do
         scenario "displays uploaded file in a table" do
           visit organisation_job_documents_path(documents_vacancy.id)
 
-          upload_document(
-            "new_documents_form",
-            "documents-form-documents-field",
-            "spec/fixtures/files/#{filename}",
-          )
+          upload_document("new_documents_form", "documents-form-documents-field", "spec/fixtures/files/#{filename}")
 
           expect(page).to have_content(filename)
         end
@@ -311,11 +241,7 @@ RSpec.describe "Creating a vacancy" do
           allow_any_instance_of(Publishers::Vacancies::DocumentsController)
             .to receive_message_chain(:valid_content_type?).and_return(false)
 
-          upload_document(
-            "new_documents_form",
-            "documents-form-documents-field",
-            "spec/fixtures/files/#{filename}",
-          )
+          upload_document("new_documents_form", "documents-form-documents-field", "spec/fixtures/files/#{filename}")
 
           expect(page).to have_content(I18n.t("jobs.file_type_error_message", filename: filename))
         end
@@ -324,15 +250,9 @@ RSpec.describe "Creating a vacancy" do
           stub_const("#{Publishers::Vacancies::DocumentsController}::FILE_SIZE_LIMIT", 1.kilobyte)
           visit organisation_job_documents_path(documents_vacancy.id)
 
-          upload_document(
-            "new_documents_form",
-            "documents-form-documents-field",
-            "spec/fixtures/files/#{filename}",
-          )
+          upload_document("new_documents_form", "documents-form-documents-field", "spec/fixtures/files/#{filename}")
 
-          expect(page).to have_content(
-            I18n.t("jobs.file_size_error_message", filename: filename, size_limit: "1 KB"),
-          )
+          expect(page).to have_content(I18n.t("jobs.file_size_error_message", filename: filename, size_limit: "1 KB"))
         end
 
         scenario "displays error message when virus file is uploaded" do
@@ -340,11 +260,7 @@ RSpec.describe "Creating a vacancy" do
 
           allow(document_upload).to receive(:safe_download).and_return(false)
 
-          upload_document(
-            "new_documents_form",
-            "documents-form-documents-field",
-            "spec/fixtures/files/#{filename}",
-          )
+          upload_document("new_documents_form", "documents-form-documents-field", "spec/fixtures/files/#{filename}")
 
           expect(page).to have_content(I18n.t("jobs.file_virus_error_message", filename: filename))
         end
@@ -354,11 +270,7 @@ RSpec.describe "Creating a vacancy" do
 
           allow(document_upload).to receive(:google_error).and_return(true)
 
-          upload_document(
-            "new_documents_form",
-            "documents-form-documents-field",
-            "spec/fixtures/files/#{filename}",
-          )
+          upload_document("new_documents_form", "documents-form-documents-field", "spec/fixtures/files/#{filename}")
 
           expect(page).to have_content(I18n.t("jobs.file_google_error_message", filename: filename))
         end
@@ -414,7 +326,6 @@ RSpec.describe "Creating a vacancy" do
         fill_in_important_dates_fields(vacancy)
         click_on I18n.t("buttons.continue")
 
-        select_no_for_supporting_documents
         click_on I18n.t("buttons.continue")
 
         click_on I18n.t("buttons.continue")
@@ -441,7 +352,6 @@ RSpec.describe "Creating a vacancy" do
         fill_in_important_dates_fields(vacancy)
         click_on I18n.t("buttons.continue")
 
-        select_no_for_supporting_documents
         click_on I18n.t("buttons.continue")
 
         fill_in_applying_for_the_job_form_fields(vacancy)
@@ -468,7 +378,6 @@ RSpec.describe "Creating a vacancy" do
         fill_in_important_dates_fields(vacancy)
         click_on I18n.t("buttons.continue")
 
-        select_no_for_supporting_documents
         click_on I18n.t("buttons.continue")
 
         fill_in_applying_for_the_job_form_fields(vacancy)
@@ -502,7 +411,6 @@ RSpec.describe "Creating a vacancy" do
         fill_in_important_dates_fields(vacancy)
         click_on I18n.t("buttons.continue")
 
-        select_no_for_supporting_documents
         click_on I18n.t("buttons.continue")
 
         fill_in_applying_for_the_job_form_fields(vacancy)
@@ -550,7 +458,6 @@ RSpec.describe "Creating a vacancy" do
           fill_in_important_dates_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
-          select_no_for_supporting_documents
           click_on I18n.t("buttons.continue")
 
           v = Vacancy.find_by(job_title: vacancy.job_title)
@@ -575,7 +482,6 @@ RSpec.describe "Creating a vacancy" do
           fill_in_important_dates_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
-          select_no_for_supporting_documents
           click_on I18n.t("buttons.continue")
 
           fill_in_applying_for_the_job_form_fields(vacancy)
@@ -603,7 +509,6 @@ RSpec.describe "Creating a vacancy" do
           fill_in_important_dates_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
-          select_no_for_supporting_documents
           click_on I18n.t("buttons.continue")
 
           fill_in_applying_for_the_job_form_fields(vacancy)
@@ -632,7 +537,6 @@ RSpec.describe "Creating a vacancy" do
           fill_in_important_dates_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
-          select_no_for_supporting_documents
           click_on I18n.t("buttons.continue")
 
           fill_in_applying_for_the_job_form_fields(vacancy)
@@ -797,7 +701,6 @@ RSpec.describe "Creating a vacancy" do
           fill_in_important_dates_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
-          select_no_for_supporting_documents
           click_on I18n.t("buttons.continue")
 
           fill_in_applying_for_the_job_form_fields(vacancy)

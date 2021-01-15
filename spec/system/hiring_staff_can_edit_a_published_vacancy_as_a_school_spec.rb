@@ -291,26 +291,30 @@ RSpec.describe "Hiring staff can edit a vacancy" do
     end
 
     describe "#supporting_documents" do
-      scenario "can edit documents for a legacy vacancy" do
-        vacancy.supporting_documents = nil
-        vacancy.documents = []
-        vacancy.save
+      let(:document_upload) { double("document_upload") }
+      let(:filename) { "blank_job_spec.pdf" }
 
+      before do
+        allow(DocumentUpload).to receive(:new).and_return(document_upload)
+        allow(document_upload).to receive(:upload)
+        allow(document_upload).to receive_message_chain(:uploaded, :web_content_link).and_return("test_url")
+        allow(document_upload).to receive_message_chain(:uploaded, :id).and_return("test_id")
+        allow(document_upload).to receive(:safe_download).and_return(true)
+        allow(document_upload).to receive(:google_error).and_return(false)
+      end
+
+      scenario "can edit documents" do
         visit edit_organisation_job_path(vacancy.id)
-
-        expect(page).to have_content(I18n.t("jobs.supporting_documents"))
-        expect(page).to have_content(I18n.t("messages.jobs.new_attributes.message"))
-        expect(page).to have_selector(".new--supporting_documents")
 
         click_header_link(I18n.t("jobs.supporting_documents"))
 
         expect(page).to have_content(I18n.t("jobs.upload_file"))
 
+        upload_document("new_documents_form", "documents-form-documents-field", "spec/fixtures/files/#{filename}")
         click_on I18n.t("buttons.update_job")
 
-        expect(page).to have_content(I18n.t("jobs.supporting_documents"))
-        expect(page).to_not have_selector(".new--supporting_documents")
-        expect(page).to_not have_content(I18n.t("messages.jobs.new_attributes.message"))
+        expect(current_path).to eq(edit_organisation_job_path(vacancy.id))
+        expect(page).to have_content(filename)
       end
     end
 

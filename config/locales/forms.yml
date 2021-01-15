@@ -98,9 +98,6 @@ en:
           Where relevant, state if the salary is full-time equivalent
       subscription_form:
         email: Enter your email address. We'll only use it to send you job alerts.
-      supporting_documents_form:
-        supporting_documents: >-
-          These could include, for example, a job description, person specification or application pack
       unsubscribe_feedback_form:
         additional_info: Any more information you can share will help us to improve the service
 
@@ -209,9 +206,6 @@ en:
         organisation_id_html: In which school will the job be based? (<span class='text-red'>Required</span>)
       subscription_form:
         frequency_html: When do you want to receive alerts? (<span class='text-red'>Required</span>)
-      supporting_documents_form:
-        supporting_documents_html: >-
-          Would you like to attach supporting documents? (<span class='text-red'>Required</span>)
       unsubscribe_feedback_form:
         reason_html: Why do you want to unsubscribe from this alert? (<span class='text-red'>Required</span>)
 

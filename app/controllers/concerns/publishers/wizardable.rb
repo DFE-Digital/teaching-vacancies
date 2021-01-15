@@ -5,7 +5,6 @@ module Publishers::Wizardable
     job_details: 2,
     pay_package: 3,
     important_dates: 4,
-    supporting_documents: 5,
     documents: 5,
     applying_for_the_job: 6,
     job_summary: 7,
@@ -18,7 +17,6 @@ module Publishers::Wizardable
     job_details: JobDetailsForm,
     pay_package: PayPackageForm,
     important_dates: ImportantDatesForm,
-    supporting_documents: SupportingDocumentsForm,
     documents: DocumentsForm,
     applying_for_the_job: ApplyingForTheJobForm,
     job_summary: JobSummaryForm,
@@ -30,7 +28,6 @@ module Publishers::Wizardable
     job_details: :job_details_params,
     pay_package: :pay_package_params,
     important_dates: :important_dates_params,
-    supporting_documents: :supporting_documents_params,
     documents: :documents_params,
     applying_for_the_job: :applying_for_the_job_params,
     job_summary: :job_summary_params,
@@ -95,10 +92,6 @@ module Publishers::Wizardable
     params.require(:important_dates_form)
           .permit(:state, :starts_asap, :starts_on, :publish_on, :expires_on,
                   :expires_at, :expires_at_hh, :expires_at_mm, :expires_at_meridiem).merge(completed_step: STEPS[step])
-  end
-
-  def supporting_documents_params(params)
-    params.require(:supporting_documents_form).permit(:state, :supporting_documents).merge(completed_step: STEPS[step])
   end
 
   def applying_for_the_job_params(params)

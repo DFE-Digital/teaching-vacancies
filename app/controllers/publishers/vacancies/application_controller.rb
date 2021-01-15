@@ -5,7 +5,7 @@ class Publishers::Vacancies::ApplicationController < Publishers::BaseController
 
   def all_steps_valid?
     step_valid?(JobDetailsForm) && step_valid?(PayPackageForm) && step_valid?(ImportantDatesForm) &&
-      step_valid?(SupportingDocumentsForm) && step_valid?(ApplyingForTheJobForm) && step_valid?(JobSummaryForm)
+      step_valid?(ApplyingForTheJobForm) && step_valid?(JobSummaryForm)
   end
 
   def step_valid?(step_form)

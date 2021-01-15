@@ -4,9 +4,9 @@ RSpec.describe VacanciesHelper, type: :helper do
   describe "#new_attributes" do
     let(:vacancy) { double("vacancy").as_null_object }
 
-    it "includes supporting_documents for legacy listings" do
-      allow(vacancy).to receive(:supporting_documents).and_return(nil)
-      expect(helper.new_attributes(vacancy)[:supporting_documents]).to eq(I18n.t("jobs.supporting_documents"))
+    it "includes contact_number for legacy listings" do
+      allow(vacancy).to receive(:contact_number).and_return(nil)
+      expect(helper.new_attributes(vacancy)[:contact_number]).to eq(I18n.t("jobs.contact_number"))
     end
   end
 

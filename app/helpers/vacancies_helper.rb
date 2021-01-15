@@ -16,7 +16,6 @@ module VacanciesHelper
 
   def new_attributes(vacancy)
     attributes = {}
-    attributes[:supporting_documents] = t("jobs.supporting_documents") unless vacancy.supporting_documents
     attributes[:contact_number] = t("jobs.contact_number") unless vacancy.contact_number
     attributes
   end

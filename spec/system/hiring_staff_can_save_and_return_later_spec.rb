@@ -136,7 +136,7 @@ RSpec.describe "Hiring staff can save and return later" do
         fill_in_important_dates_fields(@vacancy)
         click_on I18n.t("buttons.continue")
 
-        expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :supporting_documents))
+        expect(current_path).to eq(organisation_job_documents_path(created_vacancy.id))
 
         click_on I18n.t("buttons.save_and_return_later")
 
@@ -145,9 +145,7 @@ RSpec.describe "Hiring staff can save and return later" do
 
         click_on "Edit"
 
-        expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :supporting_documents))
-        expect(find_field("supporting-documents-form-supporting-documents-yes-field").checked?).to eq(false)
-        expect(find_field("supporting-documents-form-supporting-documents-no-field").checked?).to eq(false)
+        expect(current_path).to eq(organisation_job_documents_path(created_vacancy.id))
       end
     end
 
@@ -166,7 +164,6 @@ RSpec.describe "Hiring staff can save and return later" do
         fill_in_important_dates_fields(@vacancy)
         click_on I18n.t("buttons.continue")
 
-        select_no_for_supporting_documents
         click_on I18n.t("buttons.continue")
 
         expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
@@ -199,7 +196,6 @@ RSpec.describe "Hiring staff can save and return later" do
         fill_in_important_dates_fields(@vacancy)
         click_on I18n.t("buttons.continue")
 
-        select_no_for_supporting_documents
         click_on I18n.t("buttons.continue")
 
         fill_in_applying_for_the_job_form_fields(@vacancy)

@@ -31,7 +31,6 @@ FactoryBot.define do
     starts_on { Date.current + 1.year }
     status { :published }
     subjects { SUBJECT_OPTIONS.sample(2).map(&:first).sort! }
-    supporting_documents { "yes" }
     suitable_for_nqt { "no" }
     working_patterns { %w[full_time] }
 

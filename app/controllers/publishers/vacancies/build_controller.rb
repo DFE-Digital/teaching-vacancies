@@ -3,8 +3,8 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::Applicatio
   include Publishers::Wizardable
   include OrganisationHelper
 
-  steps :job_location, :schools, :job_details, :pay_package, :important_dates,
-        :supporting_documents, :documents, :applying_for_the_job, :job_summary
+  steps :job_location, :schools, :job_details, :pay_package, :important_dates, :documents, :applying_for_the_job,
+        :job_summary
 
   before_action :set_vacancy
   before_action :convert_date_params, only: %i[update]
@@ -23,17 +23,8 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::Applicatio
       skip_step if current_organisation.is_a?(School) || job_location == "central_office"
     when :job_details
       @job_details_back_path = @vacancy.central_office? ? wizard_path(:job_location) : wizard_path(:schools)
-    when :supporting_documents
-      if params[:change] == "true"
-        @vacancy.update(supporting_documents: "yes")
-        skip_step
-      end
     when :documents
-      return redirect_to(organisation_job_documents_path(@vacancy.id)) unless @vacancy.supporting_documents == "no"
-
-      skip_step
-    when :applying_for_the_job
-      @applying_for_the_job_back_path = @vacancy.supporting_documents == "no" ? wizard_path(:supporting_documents) : wizard_path(:documents)
+      return redirect_to(organisation_job_documents_path(@vacancy.id))
     end
 
     render_wizard
@@ -117,11 +108,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::Applicatio
 
   def update_incomplete_listing
     @vacancy.save
-    if step == :supporting_documents && @vacancy.supporting_documents == "yes"
-      redirect_to wizard_path(:documents)
-    else
-      redirect_updated_job_with_message
-    end
+    redirect_updated_job_with_message
   end
 
   def update_listing
