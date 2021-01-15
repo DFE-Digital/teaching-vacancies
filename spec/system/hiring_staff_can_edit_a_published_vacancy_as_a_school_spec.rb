@@ -308,7 +308,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
 
         click_header_link(I18n.t("jobs.supporting_documents"))
 
-        expect(page).to have_content(I18n.t("jobs.upload_file"))
+        expect(page).to have_content(I18n.t("helpers.label.documents_form.documents"))
 
         upload_document("new_documents_form", "documents-form-documents-field", "spec/fixtures/files/#{filename}")
         click_on I18n.t("buttons.update_job")

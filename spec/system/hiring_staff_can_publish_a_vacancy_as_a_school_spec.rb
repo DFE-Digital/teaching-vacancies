@@ -714,7 +714,7 @@ RSpec.describe "Creating a vacancy" do
           click_header_link(I18n.t("jobs.supporting_documents"))
 
           expect(page).to have_content(I18n.t("jobs.current_step", step: 4, total: 7))
-          expect(page).to have_content(I18n.t("jobs.upload_file"))
+          expect(page).to have_content(I18n.t("helpers.label.documents_form.documents"))
 
           click_on I18n.t("buttons.update_job")
 
