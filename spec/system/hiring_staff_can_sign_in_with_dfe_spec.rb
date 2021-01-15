@@ -102,7 +102,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
 
     scenario "it redirects the sign in page to the school page" do
       visit new_identifications_path
-      expect(page).to have_content(strip_tags(I18n.t("schools.jobs.index_html", organisation: organisation.name)))
+      expect(page).to have_content(organisation.name)
       expect(current_path).to eq(organisation_path)
     end
   end
@@ -170,7 +170,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
 
       scenario "it redirects the sign in page to the SchoolGroup page" do
         visit new_identifications_path
-        expect(page).to have_content(strip_tags(I18n.t("schools.jobs.index_html", organisation: organisation.name)))
+        expect(page).to have_content(organisation.name)
         expect(current_path).to eq(organisation_path)
       end
     end
@@ -214,7 +214,6 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
 
         scenario "it redirects the sign in page to the SchoolGroup page" do
           visit new_identifications_path
-          expect(page).to have_content(strip_tags(I18n.t("schools.jobs.local_authority_index_html", organisation: organisation.name)))
           expect(current_path).to eq(organisation_path)
         end
       end

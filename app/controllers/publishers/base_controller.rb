@@ -9,6 +9,8 @@ class Publishers::BaseController < ApplicationController
 
   include ActionView::Helpers::DateHelper
 
+  helper_method :current_publisher
+
   def redirect_to_root_if_read_only
     redirect_to root_path if ReadOnlyFeature.enabled?
   end

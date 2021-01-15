@@ -2,10 +2,11 @@ require "rails_helper"
 
 RSpec.describe Publishers::NoVacanciesComponent, type: :component do
   let(:organisation) { build(:school) }
+  let(:email) { "publisher@email.com" }
 
   before do
     allow(Vacancy).to receive_message_chain(:in_organisation_ids, :active, :none?).and_return(no_vacancies)
-    render_inline(described_class.new(organisation: organisation))
+    render_inline(described_class.new(organisation: organisation, email: email))
   end
 
   context "when organisation has active vacancies" do
