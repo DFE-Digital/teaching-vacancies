@@ -78,11 +78,36 @@ RSpec.describe JobDetailsForm, type: :model do
     end
   end
 
+  describe "#contract_type" do
+    let(:subject) { JobDetailsForm.new(contract_type: contract_type, contract_type_duration: contract_type_duration) }
+
+    context "when not included in the list" do
+      let(:contract_type) { "" }
+      let(:contract_type_duration) { "" }
+
+      it "requests to select one of the options" do
+        expect(subject.valid?).to be false
+        expect(subject.errors.messages[:contract_type][0]).to eq I18n.t("job_details_errors.contract_type.inclusion")
+      end
+    end
+
+    context "when fixed_term and empty contract_type_duration" do
+      let(:contract_type) { "fixed_term" }
+      let(:contract_type_duration) { "" }
+
+      it "validates contract_type_duration presence" do
+        expect(subject.valid?).to be false
+        expect(subject.errors.messages[:contract_type_duration][0]).to eq(I18n.t("job_details_errors.contract_type_duration.blank"))
+      end
+    end
+  end
+
   context "when all attributes are valid" do
     it "a JobDetailsForm can be converted to a vacancy" do
       job_details_form = JobDetailsForm.new(state: "create", job_title: "English Teacher",
                                             job_roles: [:teacher], suitable_for_nqt: "no",
-                                            working_patterns: %w[full_time], subjects: %w[Maths])
+                                            working_patterns: %w[full_time], subjects: %w[Maths],
+                                            contract_type: :permanent)
 
       expect(job_details_form.valid?).to be true
       expect(job_details_form.vacancy.job_title).to eq("English Teacher")
@@ -90,6 +115,7 @@ RSpec.describe JobDetailsForm, type: :model do
       expect(job_details_form.vacancy.suitable_for_nqt).to eq("no")
       expect(job_details_form.vacancy.working_patterns).to eq(%w[full_time])
       expect(job_details_form.vacancy.subjects).to include("Maths")
+      expect(job_details_form.vacancy.contract_type).to eq("permanent")
     end
   end
 end

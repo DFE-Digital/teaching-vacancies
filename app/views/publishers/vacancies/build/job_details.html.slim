@@ -39,6 +39,12 @@
 
       = f.govuk_collection_check_boxes :working_patterns, Vacancy.working_patterns.keys, :to_s, :to_s
 
+      = f.govuk_radio_buttons_fieldset :contract_type do
+        = f.govuk_radio_button :contract_type, :permanent, link_errors: true
+
+        = f.govuk_radio_button :contract_type, :fixed_term do
+          = f.govuk_text_field :contract_type_duration, label: { size: "s" }
+
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
   .govuk-grid-column-one-third

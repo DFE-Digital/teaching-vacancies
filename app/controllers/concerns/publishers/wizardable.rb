@@ -83,7 +83,7 @@ module Publishers::Wizardable
       status: @vacancy.status.blank? ? "draft" : nil,
     }
     params.require(:job_details_form)
-          .permit(:state, :job_title, :suitable_for_nqt, job_roles: [], working_patterns: [], subjects: [])
+          .permit(:state, :job_title, :suitable_for_nqt, :contract_type, :contract_type_duration, job_roles: [], working_patterns: [], subjects: [])
           .merge(attributes_to_merge.compact)
   end
 

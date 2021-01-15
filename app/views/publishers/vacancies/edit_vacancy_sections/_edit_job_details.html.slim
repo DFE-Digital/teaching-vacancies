@@ -33,3 +33,8 @@ dl.app-check-your-answers.app-check-your-answers--short
       dt.app-check-your-answers__question#working_patterns
         h4.govuk-heading-s = t("jobs.working_patterns")
       dd.app-check-your-answers__answer = @vacancy.working_patterns
+
+  .app-check-your-answers__contents
+    dt.app-check-your-answers__question#subjects
+      h4.govuk-heading-s = t("jobs.contract_type")
+    dd.app-check-your-answers__answer = @vacancy.contract_type_with_duration

@@ -108,6 +108,28 @@ RSpec.describe VacancyPresenter do
     end
   end
 
+  describe "#contract_type_with_duration" do
+    let(:presenter) { VacancyPresenter.new(create(:vacancy, contract_type: contract_type, contract_type_duration: contract_type_duration)) }
+
+    context "when permanent" do
+      let(:contract_type) { :permanent }
+      let(:contract_type_duration) { nil }
+
+      it "returns Permanent" do
+        expect(presenter.contract_type_with_duration).to eq "Permanent"
+      end
+    end
+
+    context "when fixed term" do
+      let(:contract_type) { :fixed_term }
+      let(:contract_type_duration) { "6 months" }
+
+      it "returns Fixed term (duration)" do
+        expect(presenter.contract_type_with_duration).to eq "Fixed term (6 months)"
+      end
+    end
+  end
+
   describe "#to_row" do
     let!(:vacancy) { create(:vacancy) }
     let!(:school) { create(:school) }

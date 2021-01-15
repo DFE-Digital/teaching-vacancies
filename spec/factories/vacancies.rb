@@ -10,6 +10,8 @@ FactoryBot.define do
     benefits { Faker::Lorem.paragraph(sentence_count: 4) }
     contact_email { Faker::Internet.email }
     contact_number { "01234 123456" }
+    contract_type { :fixed_term }
+    contract_type_duration { "6 months" }
     education { Faker::Lorem.paragraph(sentence_count: 4) }
     experience { Faker::Lorem.paragraph(sentence_count: 4) }
     expires_on { Faker::Time.forward(days: 14) }
