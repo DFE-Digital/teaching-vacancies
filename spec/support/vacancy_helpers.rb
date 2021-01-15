@@ -66,14 +66,6 @@ module VacancyHelpers
     fill_in "important_dates_form[starts_on(1i)]", with: vacancy.starts_on.year
   end
 
-  def fill_in_supporting_documents_form_fields
-    find('label[for="supporting-documents-form-supporting-documents-yes-field"]').click
-  end
-
-  def select_no_for_supporting_documents
-    find('label[for="supporting-documents-form-supporting-documents-no-field"]').click
-  end
-
   def upload_document(form_id, input_name, filepath)
     page.attach_file(input_name, Rails.root.join(filepath))
     # Submit form on file upload without requiring Javascript driver

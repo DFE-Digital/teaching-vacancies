@@ -1,4 +1,6 @@
 class Publishers::VacanciesController < Publishers::Vacancies::ApplicationController
+  include Publishers::Wizardable
+
   before_action :set_vacancy, only: %i[destroy edit preview review show summary]
   before_action :redirect_if_published, only: %i[preview review]
   before_action :redirect_unless_permitted, only: %i[preview summary]
@@ -72,7 +74,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::ApplicationContro
     return redirect_to organisation_job_build_path(@vacancy.id, :job_details) unless step_valid?(JobDetailsForm)
     return redirect_to organisation_job_build_path(@vacancy.id, :pay_package) unless step_valid?(PayPackageForm)
     return redirect_to organisation_job_build_path(@vacancy.id, :important_dates) unless step_valid?(ImportantDatesForm)
-    return redirect_to organisation_job_build_path(@vacancy.id, :supporting_documents) unless step_valid?(SupportingDocumentsForm)
+    return redirect_to organisation_job_build_path(@vacancy.id, :documents) unless @vacancy.completed_step >= STEPS[:documents]
     return redirect_to organisation_job_build_path(@vacancy.id, :applying_for_the_job) unless step_valid?(ApplyingForTheJobForm)
     return redirect_to organisation_job_build_path(@vacancy.id, :job_summary) unless step_valid?(JobSummaryForm)
   end
@@ -106,7 +108,6 @@ class Publishers::VacanciesController < Publishers::Vacancies::ApplicationContro
     step_valid?(JobDetailsForm)
     step_valid?(PayPackageForm)
     step_valid?(ImportantDatesForm)
-    step_valid?(SupportingDocumentsForm)
     step_valid?(ApplyingForTheJobForm)
     step_valid?(JobSummaryForm)
   end

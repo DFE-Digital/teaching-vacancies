@@ -43,7 +43,7 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
         end
       end
 
-      scenario "incomplete supporting documents step" do
+      scenario "documents step not completed" do
         visit edit_organisation_job_path(id: draft_vacancy.id)
 
         draft_vacancy.salary = "Pay scale 1 to Pay scale 2"
@@ -63,58 +63,6 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
         expect(page).to have_content(I18n.t("jobs.current_step", step: 4, total: 7))
         within("h2.govuk-heading-l") do
           expect(page).to have_content(I18n.t("jobs.supporting_documents"))
-        end
-      end
-
-      scenario "documents step if YES selected for supporting documents" do
-        visit edit_organisation_job_path(id: draft_vacancy.id)
-
-        draft_vacancy.salary = "Pay scale 1 to Pay scale 2"
-        draft_vacancy.benefits = "Gym, health insurance"
-
-        fill_in_pay_package_form_fields(draft_vacancy)
-        click_on I18n.t("buttons.continue")
-
-        draft_vacancy.starts_on = 1.year.from_now
-        draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
-        draft_vacancy.expires_at = Time.current
-        draft_vacancy.publish_on = 1.day.from_now
-
-        fill_in_important_dates_fields(draft_vacancy)
-        click_on I18n.t("buttons.continue")
-
-        fill_in_supporting_documents_form_fields
-        click_on I18n.t("buttons.continue")
-
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 4, total: 7))
-        within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.supporting_documents"))
-        end
-      end
-
-      scenario "application details step if NO selected for supporting documents" do
-        visit edit_organisation_job_path(id: draft_vacancy.id)
-
-        draft_vacancy.salary = "Pay scale 1 to Pay scale 2"
-        draft_vacancy.benefits = "Gym, health insurance"
-
-        fill_in_pay_package_form_fields(draft_vacancy)
-        click_on I18n.t("buttons.continue")
-
-        draft_vacancy.starts_on = 1.year.from_now
-        draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
-        draft_vacancy.expires_at = Time.current
-        draft_vacancy.publish_on = 1.day.from_now
-
-        fill_in_important_dates_fields(draft_vacancy)
-        click_on I18n.t("buttons.continue")
-
-        select_no_for_supporting_documents
-        click_on I18n.t("buttons.continue")
-
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 7))
-        within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.applying_for_the_job"))
         end
       end
 
@@ -133,9 +81,6 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
         draft_vacancy.publish_on = 1.day.from_now
 
         fill_in_important_dates_fields(draft_vacancy)
-        click_on I18n.t("buttons.continue")
-
-        fill_in_supporting_documents_form_fields
         click_on I18n.t("buttons.continue")
 
         click_on I18n.t("buttons.continue")
@@ -161,9 +106,6 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
         draft_vacancy.publish_on = 1.day.from_now
 
         fill_in_important_dates_fields(draft_vacancy)
-        click_on I18n.t("buttons.continue")
-
-        fill_in_supporting_documents_form_fields
         click_on I18n.t("buttons.continue")
 
         click_on I18n.t("buttons.continue")
@@ -200,7 +142,6 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
         fill_in_important_dates_fields(draft_vacancy)
         click_on I18n.t("buttons.continue")
 
-        select_no_for_supporting_documents
         click_on I18n.t("buttons.continue")
 
         edit_a_published_vacancy

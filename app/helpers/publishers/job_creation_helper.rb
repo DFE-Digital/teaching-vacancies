@@ -7,7 +7,6 @@ module Publishers::JobCreationHelper
     job_details: { number: 2, title: I18n.t("jobs.job_details") },
     pay_package: { number: 3, title: I18n.t("jobs.pay_package") },
     important_dates: { number: 4, title: I18n.t("jobs.important_dates") },
-    supporting_documents: { number: 5, title: I18n.t("jobs.supporting_documents") },
     documents: { number: 5, title: I18n.t("jobs.supporting_documents") },
     applying_for_the_job: { number: 6, title: I18n.t("jobs.applying_for_the_job") },
     job_summary: { number: 7, title: I18n.t("jobs.job_summary") },

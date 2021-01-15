@@ -3,7 +3,7 @@
 .govuk-grid-row
   .govuk-grid-column-full
     = render Publishers::VacancyFormPageHeadingComponent.new(@vacancy)
-    = render Publishers::VacancyWizardBackLinkComponent.new(@vacancy, previous_step_path: @applying_for_the_job_back_path)
+    = render Publishers::VacancyWizardBackLinkComponent.new(@vacancy, previous_step_path: previous_wizard_path)
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds

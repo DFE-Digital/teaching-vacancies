@@ -1,6 +1,8 @@
 require "google/apis/drive_v3"
 
 class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::ApplicationController
+  include Publishers::Wizardable
+
   CONTENT_TYPES_ALLOWED = %w[ application/pdf
                               image/jpeg
                               image/png
@@ -45,6 +47,10 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::Applic
 
   private
 
+  def step
+    :documents
+  end
+
   def set_documents_form
     @documents_form = DocumentsForm.new
   end
@@ -61,8 +67,10 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::Applic
     if params[:commit] == t("buttons.save_and_return_later")
       redirect_saved_draft_with_message
     elsif params[:commit] == t("buttons.update_job")
+      @vacancy.update(completed_step: STEPS[step])
       redirect_updated_job_with_message
     elsif params[:commit] == t("buttons.continue")
+      @vacancy.update(completed_step: STEPS[step])
       redirect_to organisation_job_build_path(@vacancy.id, :applying_for_the_job)
     end
   end

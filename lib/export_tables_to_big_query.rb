@@ -25,7 +25,6 @@ class ExportTablesToBigQuery
     legacy_job_roles
     qualifications
     readable_phases
-    supporting_documents
   ].freeze
 
   # This is to deal with a gem that automatically maps an integer column to a look up table of strings.
