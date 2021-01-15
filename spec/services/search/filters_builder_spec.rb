@@ -10,6 +10,7 @@ RSpec.describe Search::FiltersBuilder do
       job_roles: job_roles,
       phases: phases,
       working_patterns: working_patterns,
+      subjects: subjects,
       newly_qualified_teacher: newly_qualified_teacher,
     }
   end
@@ -19,6 +20,7 @@ RSpec.describe Search::FiltersBuilder do
   let(:job_roles) { %w[teacher sen_specialist] }
   let(:phases) { %w[secondary primary] }
   let(:working_patterns) { %w[full_time part_time] }
+  let(:subjects) { %w[Science Biology] }
   let(:newly_qualified_teacher) { nil }
   let(:published_today_filter) { Date.current.to_time.to_i }
   let(:expired_now_filter) { Time.current.to_time.to_i }
@@ -104,7 +106,8 @@ RSpec.describe Search::FiltersBuilder do
           " publication_date_timestamp <= #{to_date.to_time.to_i}) AND " \
           "(job_roles:teacher OR job_roles:sen_specialist) AND " \
           "(education_phases:secondary OR education_phases:primary) AND " \
-          "(working_patterns:full_time OR working_patterns:part_time)",
+          "(working_patterns:full_time OR working_patterns:part_time) AND " \
+          "(subjects:Science OR subjects:Biology)",
         )
       end
     end
