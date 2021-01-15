@@ -94,7 +94,7 @@ Rails.application.routes.draw do
 
   get "/auth/dfe/callback", to: "publishers/sign_in/dfe/sessions#create"
   get "/auth/dfe/signout", to: "publishers/sign_in/dfe/sessions#destroy"
-  get "/auth/failure", to: "publishers/sign_in/dfe/sessions#new"
+  get "/auth/failure", to: redirect("/dfe/sessions/new", status: 303)
 
   resource :terms_and_conditions, only: %i[show update], controller: "publishers/terms_and_conditions"
 
