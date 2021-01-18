@@ -10,6 +10,7 @@ class Search::FiltersBuilder
     @job_roles = normalize_array_params(filters_hash[:job_roles])
     @phases = normalize_array_params(filters_hash[:phases])
     @working_patterns = normalize_array_params(filters_hash[:working_patterns])
+    @subjects = normalize_array_params(filters_hash[:subjects])
 
     @suitable_for_nqt = filters_hash[:newly_qualified_teacher]
   end
@@ -23,6 +24,7 @@ class Search::FiltersBuilder
     filter_array << "(#{@job_roles_filter})" if @job_roles_filter.present?
     filter_array << "(#{@phases_filter})" if @phases_filter.present?
     filter_array << "(#{@working_patterns_filter})" if @working_patterns_filter.present?
+    filter_array << "(#{@subjects_filter})" if @subjects_filter.present?
     filter_array << "(#{@suitable_for_nqt_filter})" if @suitable_for_nqt_filter.present?
 
     filter_array.reject(&:blank?).join(" AND ")
@@ -36,6 +38,7 @@ class Search::FiltersBuilder
     @phases_filter = @phases&.map { |phase| build_filter_string("education_phases", phase) }&.join(" OR ")
     @working_patterns_filter = @working_patterns&.map { |pattern| build_filter_string("working_patterns", pattern) }
                                                 &.join(" OR ")
+    @subjects_filter = @subjects&.map { |subject| build_filter_string("subjects", subject) }&.join(" OR ")
     @suitable_for_nqt_filter = build_filter_string("job_roles", "nqt_suitable") if @suitable_for_nqt == "true"
   end
 
