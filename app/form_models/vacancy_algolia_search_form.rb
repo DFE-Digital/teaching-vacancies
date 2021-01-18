@@ -9,6 +9,7 @@ class VacancyAlgoliaSearchForm
               :total_filters
 
   def initialize(params = {})
+    strip_trailing_whitespaces_from_params(params)
     @keyword = params[:keyword] || params[:subject]
 
     @location = params[:location] || params[:location_category]
@@ -43,6 +44,10 @@ class VacancyAlgoliaSearchForm
   end
 
   private
+
+  def strip_trailing_whitespaces_from_params(params)
+    params.each_value { |value| value.strip! if value.respond_to?(:strip!) }
+  end
 
   def set_facet_options
     @job_role_options = Vacancy.job_roles.keys.map { |option| [option, I18n.t("helpers.label.job_details_form.job_roles_options.#{option}")] }

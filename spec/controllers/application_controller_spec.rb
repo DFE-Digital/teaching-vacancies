@@ -55,31 +55,6 @@ RSpec.describe ApplicationController, type: :controller do
     end
   end
 
-  describe "#strip_nested_param_whitespaces" do
-    let(:nested_field) { { array_field: %w[1 2], string_field: "   Buckle my shoe   " } }
-    let(:test_form) { { array_field: %w[3 4], string_field: "   Knock on the door   ", nested_field: nested_field } }
-    let(:params) { { test_form: test_form } }
-
-    before do
-      get :test_action, params: params
-    end
-
-    it "strips any string fields of trailing whitespaces" do
-      expect(controller.params[:test_form][:string_field]).to eq "Knock on the door"
-    end
-
-    it "strips any nested string fields of trailing whitespaces" do
-      expect(controller.params[:test_form][:nested_field][:string_field]).to eq "Buckle my shoe"
-    end
-
-    it "leaves the other fields and params unchanged" do
-      expect(controller.params[:action]).to eq "test_action"
-      expect(controller.params[:controller]).to eq "anonymous"
-      expect(controller.params[:test_form][:nested_field][:array_field]).to eq %w[1 2]
-      expect(controller.params[:test_form][:array_field]).to eq %w[3 4]
-    end
-  end
-
   describe "AB testing helpers" do
     let(:ab_tests) { double(AbTests, current_variants: {}) }
 
