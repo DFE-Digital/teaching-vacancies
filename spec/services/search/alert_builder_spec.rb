@@ -68,19 +68,19 @@ RSpec.describe Search::AlertBuilder do
 
         it "adds working patterns filter" do
           expect(subject.search_filters).to include(
-            "(working_patterns:full_time OR working_patterns:part_time)",
+            "(working_patterns:'full_time' OR working_patterns:'part_time')",
           )
         end
 
         it "adds NQT filter" do
           expect(subject.search_filters).to include(
-            "(job_roles:nqt_suitable)",
+            "(job_roles:'nqt_suitable')",
           )
         end
 
         it "adds school phase filter" do
           expect(subject.search_filters).to include(
-            "(education_phases:secondary OR education_phases:primary)",
+            "(education_phases:'secondary' OR education_phases:'primary')",
           )
         end
       end
@@ -92,9 +92,9 @@ RSpec.describe Search::AlertBuilder do
         "(publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{expired_now.to_time.to_i})"\
         " AND (publication_date_timestamp >= #{date_today.to_i} AND publication_date_timestamp <="\
         " #{date_today.to_i}) AND "\
-        "(education_phases:secondary OR education_phases:primary) AND "\
-        "(working_patterns:full_time OR working_patterns:part_time) AND "\
-        "(job_roles:nqt_suitable)"
+        "(education_phases:'secondary' OR education_phases:'primary') AND "\
+        "(working_patterns:'full_time' OR working_patterns:'part_time') AND "\
+        "(job_roles:'nqt_suitable')"
       end
 
       before do

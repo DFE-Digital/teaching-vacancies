@@ -74,7 +74,7 @@ RSpec.describe Search::FiltersBuilder do
       let(:working_patterns) { ["full_time", nil] }
 
       it "only filters the valid working pattern" do
-        expect(subject.filter_query).to include("(working_patterns:full_time)")
+        expect(subject.filter_query).to include("(working_patterns:'full_time')")
       end
     end
 
@@ -82,7 +82,7 @@ RSpec.describe Search::FiltersBuilder do
       let(:newly_qualified_teacher) { "true" }
 
       it "filters NQT jobs" do
-        expect(subject.filter_query).to match(/job_roles:nqt_suitable/)
+        expect(subject.filter_query).to match(/job_roles:'nqt_suitable'/)
       end
     end
 
@@ -104,10 +104,10 @@ RSpec.describe Search::FiltersBuilder do
           " expires_at_timestamp > #{expired_now_filter}) AND "\
           "(publication_date_timestamp >= #{from_date.to_time.to_i} AND" \
           " publication_date_timestamp <= #{to_date.to_time.to_i}) AND " \
-          "(job_roles:teacher OR job_roles:sen_specialist) AND " \
-          "(education_phases:secondary OR education_phases:primary) AND " \
-          "(working_patterns:full_time OR working_patterns:part_time) AND " \
-          "(subjects:Science OR subjects:Biology)",
+          "(job_roles:'teacher' OR job_roles:'sen_specialist') AND " \
+          "(education_phases:'secondary' OR education_phases:'primary') AND " \
+          "(working_patterns:'full_time' OR working_patterns:'part_time') AND " \
+          "(subjects:'Science' OR subjects:'Biology')",
         )
       end
     end

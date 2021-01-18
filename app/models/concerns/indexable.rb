@@ -71,7 +71,7 @@ module Indexable
         VacancyPresenter.new(self).working_patterns
       end
 
-      attributesForFaceting %i[job_roles working_patterns education_phases]
+      attributesForFaceting %i[job_roles working_patterns education_phases subjects]
 
       add_replica "#{INDEX_NAME}_publish_on_desc", inherit: true do
         ranking ["desc(publication_date_timestamp)"]
