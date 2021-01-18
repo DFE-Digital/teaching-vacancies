@@ -8,11 +8,11 @@
 
 ### Secret lifecycle
 
-With sufficient privileges, these are available under [Settings/Secrets](https://github.com/DFE-Digital/teacher-vacancy-service/settings/secrets)
+With sufficient privileges, these are available under [Settings/Secrets](https://github.com/DFE-Digital/teaching-vacancies/settings/secrets)
 
 Secrets may be:
 - Added
 - Updated
 - Removed
 
-Secrets can not be decrypted/viewed through the web portal, but only through workflows. 
+Secrets can not be decrypted/viewed through the web portal, but only through workflows.

@@ -9,7 +9,7 @@ graph TD
 
 Developer((Developer))
 
-Developer --> |PR to master branch on https://github.com/DFE-Digital/teacher-vacancy-service|GitHubMaster(GitHub master branch)
+Developer --> |PR to master branch on https://github.com/DFE-Digital/teaching-vacancies|GitHubMaster(GitHub master branch)
 GitHubMaster --> |Start GitHub Actions Workflow and Ubuntu Virtual Environment| GitHubVirtualEnv(GitHub virtual environment)
 GitHubVirtualEnv --> |Decode AWS secrets<br />Check for well-formed YAML| AWSSSMParameterStore[AWS SSM Parameter Store]
 GitHubVirtualEnv --> |Initialise Terraform |GitHubVirtualEnvPlusTerraform(Terraform CLI on GitHub virtual environment)
@@ -46,7 +46,7 @@ PaaS -->|https://teaching-vacancies-production.london.cloudapps.digital|Gov.UKPa
 ## Key
 
 - Circle - End user
-- Diamond - Third parties other than AWS and GitHub 
+- Diamond - Third parties other than AWS and GitHub
 - Ellipse - Gov.UK PaaS
 - Rectangle - AWS
 - Rounded rectangle - GitHub
