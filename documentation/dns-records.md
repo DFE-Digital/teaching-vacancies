@@ -25,7 +25,7 @@ The following record types are in use:
 >
 > A records only hold IPv4 addresses. If a website has an IPv6 address, it will instead use an ‘AAAA’ record.
 
-In a TVS hosted zone, [this is set](https://toolbox.googleapps.com/apps/dig/#A/teaching-vacancies.service.gov.uk) as an Alias to the Cloudfront distribution, so responds with multiple IP addresses, e.g.:
+In a Teaching Vacancies hosted zone, [this is set](https://toolbox.googleapps.com/apps/dig/#A/teaching-vacancies.service.gov.uk) as an Alias to the Cloudfront distribution, so responds with multiple IP addresses, e.g.:
 ```
 teaching-vacancies.service.gov.uk. 59 IN A 13.33.242.3
 teaching-vacancies.service.gov.uk. 59 IN A 13.33.242.81
@@ -36,7 +36,7 @@ teaching-vacancies.service.gov.uk. 59 IN A 13.33.242.96
 ### [CNAME record](https://www.cloudflare.com/learning/dns/dns-records/dns-cname-record/)
 > The `canonical name` (CNAME) record is used in lieu of an A record, when a domain or subdomain is an alias of another domain. All CNAME records must point to a domain, never to an IP address. Imagine a scavenger hunt where each clue points to another clue, and the final clue points to the treasure. A domain with a CNAME record is like a clue that can point you to another clue (another domain with a CNAME record) or to the treasure (a domain with an A record).
 
-In a TVS hosted zone, CNAMEs are used for three purposes:
+In a Teaching Vacancies hosted zone, CNAMEs are used for three purposes:
 - verification of Amazon Certificate Manager certificates
 - verification of bing searches
 - [alias to the Cloudfront distribution](https://toolbox.googleapps.com/apps/dig/#CNAME/www.teaching-vacancies.service.gov.uk)
@@ -44,7 +44,7 @@ In a TVS hosted zone, CNAMEs are used for three purposes:
 ### [CAA record](https://letsencrypt.org/docs/caa/)
 > CAA is a type of DNS record that allows site owners to specify which Certificate Authorities (CAs) are allowed to issue certificates containing their domain names. It was standardized in 2013 by RFC 6844 to allow a CA “reduce the risk of unintended certificate mis-issue.” By default, every public CA is allowed to issue certificates for any domain name in the public DNS, provided they validate control of that domain name. That means that if there’s a bug in any one of the many public CAs’ validation processes, every domain name is potentially affected. CAA provides a way for domain holders to reduce that risk.
 
-In a TVS hosted zone, [this is set](https://toolbox.googleapps.com/apps/dig/#CAA/teaching-vacancies.service.gov.uk) to `0 issue "amazon.com"` with a TTL of 300 seconds
+In a Teaching Vacancies hosted zone, [this is set](https://toolbox.googleapps.com/apps/dig/#CAA/teaching-vacancies.service.gov.uk) to `0 issue "amazon.com"` with a TTL of 300 seconds
 
 ### [NS records](https://www.cloudflare.com/learning/dns/dns-records/dns-ns-record/) and [SOA record](https://www.cloudflare.com/learning/dns/dns-records/dns-soa-record/)
 The [Route 53 developer guide](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/SOA-NSrecords.html) has:
@@ -57,7 +57,7 @@ These are used for delegation, so are set in the parent zone for `service.gov.uk
 >
 > Today, two of the most important uses for DNS TXT records are email spam prevention and domain ownership verification, although TXT records were not designed for these uses originally.
 
-In a TVS hosted zone, we set TXT records for DMARC and SPF purposes to indicate *that this domain does not send any email*
+In a Teaching Vacancies hosted zone, we set TXT records for DMARC and SPF purposes to indicate *that this domain does not send any email*
 
 ### DMARC
 
