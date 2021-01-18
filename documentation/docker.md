@@ -19,7 +19,8 @@ It's worth a quick reminder that Containers are created from Images. [Docker's o
 
 For both stages, we:
 
-- Use the [official Docker Ruby image](https://hub.docker.com/_/ruby), based off [Alpine Linux `3.11`, with Ruby `2.7.2` included](https://github.com/docker-library/ruby/blob/a564feaaee4c8647c299ab11d41498468bb9af7b/2.7/alpine3.11/Dockerfile)
+- use the [official Docker Ruby image](https://hub.docker.com/_/ruby), based off [Alpine Linux](https://alpinelinux.org/)
+- use the tag corresponding to the specific version of Ruby, but not of Alpine e.g. `ruby:2.7.2-alpine`, rather than `ruby:2.7.2-alpine3.13`
 - use the [`apk` tool](https://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management) to update and install packages
 - set the timezone to `Europe/London` for consistency in logs
 - set the working directory to `/teacher-vacancy`
@@ -41,9 +42,9 @@ RUN RAILS_ENV=staging bundle exec rake webpacker:compile
 ```
 
 - Name the stage `builder` so that it can be built individually, and allow copying of files to the `production` stage
-- Runs a Ruby bundle command, excluding `development` and `test`
-- Copies any remaining files in the repo that were excluded by the [`.dockerignore`](../.dockerignore) file
-- Runs a Ruby bundle command, first setting `RAILS_ENV` to staging:
+- Run a Ruby bundle command, excluding `development` and `test`
+- Copy any remaining files in the repo that were excluded by the [`.dockerignore`](../.dockerignore) file
+- Run a Ruby bundle command, first setting `RAILS_ENV` to staging:
     - `bundle exec rake webpacker:compile`
 
 Steps from the `production` stage worth highlighting:
@@ -58,11 +59,11 @@ CMD bundle exec rails db:migrate && bundle exec rails s
 ```
 
 - Name the stage `production` so that it can be built individually
-- Copies from the `builder` stage:
+- Copy from the `builder` stage:
     - `/teacher-vacancy`
     - `/usr/local/bundle/`
-- Listens on port 3000
-- Runs two Ruby bundle commands:
+- Listen on port 3000
+- Run two Ruby bundle commands:
     - `bundle exec rails db:migrate`
     - `bundle exec rails s`
 
@@ -70,12 +71,12 @@ CMD bundle exec rails db:migrate && bundle exec rails s
 
 ### Building with `docker` commands
 
-Although it's possible to build a Docker image by typing `docker` commands into a terminal, most images for TVS are built by a [GitHub Actions workflow](../.github/workflows/deploy.yml)
+Although it's possible to build a Docker image by typing `docker` commands into a terminal, most images for teaching vacancies are built by a [GitHub Actions workflow](../.github/workflows/deploy.yml)
 
 ### Building with GitHub Actions workflow
 
 - `docker/setup-buildx-action@v1`
-    - Tell the workflow to use the Docker Buildx CLI plugin
+    - Use the Docker Buildx CLI plugin
 - `docker/login-action@v1`
     - Log in to Docker Hub with username/password stored in GitHub Secrets
 - `docker/build-push-action@v2`
@@ -91,8 +92,8 @@ Although it's possible to build a Docker image by typing `docker` commands into 
     - Check if there's an image tagged `BRANCHNAME`
     - Use the build argument `BUILDKIT_INLINE_CACHE=1` to include cache metadata
     - Build an image from Docker target `production` defined in the Dockerfile
-    - Tag it with `BRANCHNAME`
-    - Tag it with `TAG`
+    - Tag the image with `BRANCHNAME`
+    - Tag the image with `TAG`
     - Push the image to the Docker Hub repository
 
 ### Building with Makefile
@@ -183,12 +184,12 @@ At this point you'll be in the `/teacher-vacancy` directory
 ### Buildx
 
 - [Buildx](https://docs.docker.com/buildx/working-with-buildx/) was introduced in Docker 19.03
-- This is a requirement for the newer GitHub Action
+- This is a requirement for `v2` and newer versions of the GitHub Action [`docker/build-push-action`](https://github.com/docker/build-push-action)
 
 ### Caching
 
-- Pulling an image, or image layer from the Docker Hub repository, is typically much less "expensive" in time than building from source
-- We cache images for the `builder` and `production` targets, across all branches.
+- Pulling an image, or image layer, from the Docker Hub repository is typically much less "expensive" in time than building from source
+- We cache images for the `builder` and `production` targets, across all branches
 
 ### `Builder` stage image tags
 
@@ -235,22 +236,55 @@ The Docker images for Teaching Vacancies are stored in the Docker Hub organisati
 
 The Docker Hub team [`teacherservices`](https://hub.docker.com/orgs/dfedigital/teams/teacherservices) has multiple members, (~35 in October 2020), each of which is a Docker Hub user.
 
+### Docker Hub rate limiting
+
+On 2 November 2020, Docker introduced [rate limits](https://www.docker.com/increase-rate-limits).
+> Anonymous and Free Docker Hub users are limited to 100 and 200 container image pull requests per six hours.
+> Docker Pro and Docker Team accounts continue to have unlimited access to pull container images from Docker Hub.
+
+Therefore we need to log in with Docker Team accounts.
 ### Docker Hub users
 
 #### Individual end-user
 
 To use `docker` commands, either directly, or through the abstraction of the Makefile, you must first be logged in as a Docker user.
 
-- Write access to Docker Hub `dfedigital/teaching-vacancies` repository. Ask in #digital-tools-support should you require it.
+- You will require write access to Docker Hub [`dfedigital/teaching-vacancies`](https://hub.docker.com/r/dfedigital/teaching-vacancies) repository. Ask in #digital-tools-support should you require it.
 - Log in to Docker Hub (with `docker login`)
 
 #### The `teachingjobs` user:
-- is used as a service account, by GitHub Actions to publish images.
+- is used as a service account, by GitHub Actions to pull and/or push images.
 - is registered with the email address `teachingjobs@digital.education.gov.uk`
 
-Credentials for `teachingjobs`:
-- are held in Keybase, under `services.txt`
-- entered into GitHub Actions secrets to be used in workflows. The secrets can not be decrypted through the UI, but can be updated.
+Credentials for `teachingjobs` for pulling images
+- are held in [AWS Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table), per-environment e.g. `/teaching-vacancies/dev/infra/secrets` as a pair of YAML lines:
+```
+docker_password: NotARealPa$5w0rd
+docker_username: username
+```
+These are used within the Gov.UK PaaS web app and worker app [terraform](../terraform/app/modules/paas/main.tf), like so:
+```
+  docker_credentials = {
+    username = var.docker_username
+    password = var.docker_password
+  }
+```
+
+Credentials for `teachingjobs` for pulling and pushing images in workflows
+- entered into [GitHub Actions secrets](https://github.com/DFE-Digital/teaching-vacancies/settings/secrets/actions) as a pair of repository secrets:
+```
+DOCKER_PASSWORD
+DOCKER_USERNAME
+```
+These are used within GitHub workflows like [deploy.yml](../github/workflows/deploy.yml), like so:
+```
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+```
+The secrets can not be decrypted through the UI, but can be updated.
 
 ### Docker Hub repositories
 
