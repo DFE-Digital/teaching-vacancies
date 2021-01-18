@@ -51,7 +51,7 @@ class Search::FiltersBuilder
   end
 
   def build_filter_string(attribute, value)
-    "#{attribute}:#{value}"
+    "#{attribute}:'#{value}'"
   end
 
   def published_today_filter
