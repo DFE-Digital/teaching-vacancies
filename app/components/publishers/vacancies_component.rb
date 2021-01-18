@@ -1,10 +1,11 @@
 class Publishers::VacanciesComponent < ViewComponent::Base
-  def initialize(organisation:, sort:, selected_type:, filters:, filters_form:, sort_form:)
+  def initialize(organisation:, sort:, selected_type:, filters:, filters_form:, sort_form:, email:)
     @organisation = organisation
     @sort = sort
     @filters = filters
     @filters_form = filters_form
     @sort_form = sort_form
+    @email = email
     @vacancy_types = %w[published pending draft expired awaiting_feedback]
     @selected_type = @vacancy_types.include?(selected_type) ? selected_type : "published"
 
@@ -22,14 +23,6 @@ class Publishers::VacanciesComponent < ViewComponent::Base
 
   def vacancy_sort_options
     Publishers::VacancySort.new(@organisation, @selected_type)
-  end
-
-  def heading
-    if @organisation.group_type == "local_authority"
-      t("schools.jobs.local_authority_index_html", organisation: @organisation.name)
-    else
-      t("schools.jobs.index_html", organisation: @organisation.name)
-    end
   end
 
   def vacancy_links

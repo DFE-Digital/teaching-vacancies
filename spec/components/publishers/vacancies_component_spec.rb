@@ -6,10 +6,11 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
   let(:filters) { {} }
   let(:filters_form) { ManagedOrganisationsForm.new(filters) }
   let(:sort_form) { SortForm.new(sort.column) }
+  let(:email) { "publisher@email.com" }
 
   subject do
     described_class.new(
-      organisation: organisation, sort: sort, selected_type: selected_type, filters: filters, filters_form: filters_form, sort_form: sort_form,
+      organisation: organisation, sort: sort, selected_type: selected_type, filters: filters, filters_form: filters_form, sort_form: sort_form, email: email,
     )
   end
 

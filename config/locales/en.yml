@@ -170,6 +170,11 @@ en:
   help:
     email: teaching.vacancies@education.gov.uk
 
+  organisation:
+    show:
+      heading_html: "%{email} <span class='govuk-!-font-weight-regular'>- %{organisation}</span>"
+    view_more_or_change: View more or change
+
   publishers:
     identifications:
       new:
@@ -301,9 +306,6 @@ en:
     update:
       success: Your further feedback on job alerts has been sent to the team
 
-  organisation:
-    view_more_or_change: View more or change
-
   nav:
     find_job: Find a teaching job
     for_schools: For schools
@@ -387,9 +389,6 @@ en:
     age_range: Age range
     description: Description
     info: About %{organisation}
-    jobs:
-      index_html: Jobs at <span class='govuk-!-font-weight-regular'>%{organisation}</span>
-      local_authority_index_html: Jobs in <span class='govuk-!-font-weight-regular'>%{organisation}</span>
     map_aria_label: Interactive map showing school location
     no_information: No information available
     no_jobs:

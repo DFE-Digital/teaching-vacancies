@@ -1,17 +1,10 @@
 class Publishers::NoVacanciesComponent < ViewComponent::Base
-  def initialize(organisation:)
+  def initialize(organisation:, email:)
     @organisation = organisation
+    @email = email
   end
 
   def render?
     @organisation.all_vacancies.active.none?
-  end
-
-  def heading
-    if @organisation.group_type == "local_authority"
-      t("schools.jobs.local_authority_index_html", organisation: @organisation.name)
-    else
-      t("schools.jobs.index_html", organisation: @organisation.name)
-    end
   end
 end

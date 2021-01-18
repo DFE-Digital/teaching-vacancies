@@ -85,7 +85,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
             expect(page).to have_content(local_authority.name)
             click_on school.name
 
-            expect(page).to have_content(strip_tags(I18n.t("schools.jobs.index_html", organisation: school.name)))
+            expect(page).to have_content(school.name)
             expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
 
             # Can sign out
@@ -145,7 +145,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
             visit auth_email_choose_organisation_path(login_key: login_key.id)
 
             expect(page).not_to have_content("Choose your organisation")
-            expect(page).to have_content(strip_tags(I18n.t("schools.jobs.index_html", organisation: school.name)))
+            expect(page).to have_content(school.name)
             expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
           end
         end
@@ -176,7 +176,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
             visit auth_email_choose_organisation_path(login_key: login_key.id)
 
             expect(page).not_to have_content("Choose your organisation")
-            expect(page).to have_content(strip_tags(I18n.t("schools.jobs.index_html", organisation: trust.name)))
+            expect(page).to have_content(trust.name)
             expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
           end
         end
@@ -212,7 +212,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
               visit auth_email_choose_organisation_path(login_key: login_key.id)
 
               expect(page).not_to have_content("Choose your organisation")
-              expect(page).to have_content("Jobs in #{local_authority.name}")
+              expect(page).to have_content(local_authority.name)
               expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
             end
           end

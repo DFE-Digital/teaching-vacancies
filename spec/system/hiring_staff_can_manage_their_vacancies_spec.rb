@@ -12,6 +12,6 @@ RSpec.describe "Hiring staff can manage vacancies from a link on home page" do
       click_on(I18n.t("home.signin_publishers.manage_link"))
     end
 
-    expect(page).to have_content(strip_tags(I18n.t("schools.jobs.index_html", organisation: school.name)))
+    expect(current_path).to eq(organisation_path)
   end
 end
