@@ -135,66 +135,11 @@ cd /teacher-vacancy
 ```bash
 cf run-task <app_name> -c "rails task:name"
 ```
-
-## Deploy to dev via commandline
-
-This builds and deploys a Docker image from local code, then updates the `dev` environment to use that image
-
-```bash
-make passcode=<passcode> <environment> deploy-local-image
-```
-performs these steps:
-
-- Builds and tags a Docker image from local code
-- Pushes the image to Docker Hub
-- Uses Terraform to apply any changes (including providing the tag of the Docker image) to the `dev` environment
-
-You need:
-- Write access to Docker Hub `dfedigital/teaching-vacancies` repository. Ask in #digital-tools-support should you require it.
-- `SpaceDeveloper` role in the PaaS space you want to deploy to
-- Log in to Docker Hub (with `docker login`) and GOV.UK PaaS in your terminal
-- Obtain SSO passcode from https://login.london.cloud.service.gov.uk/passcode
-
-## Update dev with an existing Docker image
-
-This allows you to update the `dev` environment to use a previously-built Docker image
-
-```bash
-make passcode=<passcode> tag=47fd1475376bbfa16a773693133569b794408995 <environment> terraform-app-apply
-```
-performs these steps:
-
-- Uses Terraform to apply any changes (including providing the tag of the Docker image) to the `dev` environment
-
-You need:
-- `SpaceDeveloper` role in the PaaS space you want to deploy to
-- Log in to Docker Hub (with `docker login`) and GOV.UK PaaS in your terminal
-- Obtain SSO passcode from https://login.london.cloud.service.gov.uk/passcode
-
-## Deploy to dev via a commit to GitHub
-
-This builds and deploys a Docker image from code in the `dev` branch.
-
-Push to the `dev` branch.
-The GitHub actions workflow [deploy_branch.yml](/.github/workflows/deploy_branch.yml) performs these steps:
-
-- Builds and tags a Docker image from code in the GitHub branch
-- Pushes the image to Docker Hub
-- Uses Terraform to apply any changes (including providing the tag of the Docker image) to the `dev` environment
-- Sends a Slack notification to the `#twd_tv_dev` channel
-
 ## CI/CD with GitHub Actions
 
 Tests run every time is pushed on a branch.
 
-When a PR is approved and merged into `master` branch, the GitHub actions workflow [deploy.yml](/.github/workflows/deploy) performs these steps:
 
-- Builds and tags a Docker image from code in the GitHub branch
-- Pushes the image to Docker Hub
-- Uses Terraform to apply any changes (including providing the tag of the Docker image) to the `staging` environment
-- Runs a smoke test against the `staging` environment
-- Uses Terraform to apply any changes (including providing the tag of the Docker image) to the `production` environment
-- Sends a Slack notification to the `#twd_tv_dev` channel
 
 ## Maintenance windows for GOV.UK PaaS Postgres and Redis services
 
@@ -262,37 +207,3 @@ cf conduit $CF_POSTGRES_SERVICE_TARGET -- psql < backup.sql
   terraform init
   terraform apply -var-file terraform/workspace-variables/<env>.tfvars
   ```
-
-## Remove a review app environment
-
-In usual circumstances, the review apps lifecycle will be handled via GitHub Actions
-- creation via the [`review.yml`](.github/workflows/review.yml) workflow on PR open or update
-- destruction via the [`destroy.yml`](.github/workflows/destroy.yml) workflow on PR close
-
-We can use the Makefile to destroy a review app, by passing a `CONFIRM_DESTROY=true` plus changing the action to `review-destroy`:
-```
-make pr=2068 CONFIRM_DESTROY=true passcode=MyPasscode review review-destroy
-```
-
-If that still does not work, it's possible to remove the individual resources via the CF command line
-
-Log in to Gov.UK PaaS
-Switch to the review space:
-```
-cf target -s teaching-vacancies-review
-```
-
-List, then delete, apps and routes
-```
-cf apps
-cf delete -r teaching-vacancies-review-pr-2068
-cf delete -r teaching-vacancies-worker-review-pr-2068
-```
-
-List, then delete, services
-```
-cf services
-cf delete-service teaching-vacancies-postgres-review-pr-2068
-cf delete-service teaching-vacancies-redis-review-pr-2068
-cf delete-service teaching-vacancies-papertrail-review-pr-2068
-```

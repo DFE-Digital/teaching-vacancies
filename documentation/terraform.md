@@ -69,22 +69,6 @@ Here we see that it's the addition of a feature flag
 "FEATURE_MULTI_SCHOOL_JOBS": "true",
 ```
 
-## Remove review app
-
-In usual conditions, the [`destroy.yml`](../.github/workflows/destroy.yml) workflow destroys the review app resources on PR close
-
-We can use the Makefile to destroy a review app, by passing a `CONFIRM_DESTROY=true` plus changing the action to `review-destroy`:
-```
-make passcode=MyPasscode pr=2086 CONFIRM_DESTROY=true review review-destroy
-```
-
-If you need to force the deletion of a workspace, this is possible with 
-```
-terraform init -input=false -backend-config="workspace_key_prefix=review:" -reconfigure terraform/app
-terraform workspace select default terraform/app
-terraform workspace delete -force review-pr-2086 terraform/app
-``` 
-
 ## Terraform plan as the GitHub Actions deploy user
 
 Using the principle of least privilege, GitHub Actions uses a separate IAM account for Terraform

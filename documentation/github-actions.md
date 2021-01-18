@@ -2,9 +2,9 @@
 
 ## Secrets
 
-> Secrets are environment variables that are encrypted and only exposed to selected actions. Anyone with collaborator access to this repository can use these secrets in a workflow.
+> [GitHub Actions Encrypted Secrets](https://docs.github.com/en/actions/reference/encrypted-secrets) are environment variables that are encrypted and only exposed to selected actions. Anyone with collaborator access to this repository can use these secrets in a workflow.
 >
-> Secrets are not passed to workflows that are triggered by a pull request from a fork.
+> Secrets are not passed to workflows that are triggered by a Pull Request from a fork.
 
 ### Secret lifecycle
 
