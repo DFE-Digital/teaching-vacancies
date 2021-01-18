@@ -46,17 +46,19 @@ module OrganisationHelper
     OFSTED_REPORT_ENDPOINT + school.urn
   end
 
-  def organisation_type(organisation:, with_age_range: false)
-    return organisation.group_type unless organisation.is_a?(School)
+  def organisation_type(organisation)
+    return organisation.group_type if organisation.is_a?(SchoolGroup)
 
     school_type_details = [organisation.school_type.singularize, organisation.religious_character]
-    school_type_details.push age_range(organisation) if with_age_range
     school_type_details.reject(&:blank?).reject { |str| str == I18n.t("schools.not_given") }.join(", ")
   end
 
   def organisation_types(organisations)
-    organisations.map { |organisation| organisation_type(organisation: organisation, with_age_range: true) }
-                 .uniq.join(", ")
+    organisations.group_by { |org| [org.school_type, org.religious_character] }.map do |type, orgs_by_type|
+      type_for_display = [pluralize(orgs_by_type.count, type.first.downcase.singularize), type.last].reject(&:blank?)
+                                                                                                    .join(", ")
+      "#{type_for_display}, ages #{orgs_by_type.map(&:minimum_age).min} to #{orgs_by_type.map(&:maximum_age).max}"
+    end
   end
 
   def organisation_type_basic(organisation)

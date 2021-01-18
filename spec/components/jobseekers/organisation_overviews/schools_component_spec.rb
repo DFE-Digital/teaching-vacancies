@@ -72,9 +72,7 @@ RSpec.describe Jobseekers::OrganisationOverviews::SchoolsComponent, type: :compo
   end
 
   it "renders all the school types" do
-    [school1, school2, school3].each do |school|
-      expect(rendered_component).to include(organisation_type(organisation: school, with_age_range: false))
-    end
+    [school1, school2, school3].each { |school| expect(rendered_component).to include(organisation_type(school)) }
   end
 
   it "renders all the school education phases" do

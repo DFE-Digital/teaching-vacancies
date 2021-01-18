@@ -9,7 +9,7 @@ class Jobseekers::OrganisationOverviews::SchoolsComponent < Jobseekers::Organisa
       schools.push({ name: school.name,
                      name_link: link_to(school.name, (school.website || school.url)),
                      address: full_address(school),
-                     school_type: organisation_type(organisation: school, with_age_range: false),
+                     school_type: organisation_type(school),
                      lat: school.geolocation.x,
                      lng: school.geolocation.y })
     end
