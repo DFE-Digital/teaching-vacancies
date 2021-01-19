@@ -5,6 +5,7 @@ RSpec.describe Shared::BannerLinkComponent, type: :component do
   let(:link_id) { "test-id" }
   let(:link_path) { "#test" }
   let(:link_text) { "Click this link!" }
+  let(:params) { nil }
 
   before do
     render_inline(described_class.new(
@@ -13,6 +14,7 @@ RSpec.describe Shared::BannerLinkComponent, type: :component do
                     link_method: link_method,
                     link_path: link_path,
                     link_text: link_text,
+                    params: params,
                   ))
   end
 
@@ -21,9 +23,23 @@ RSpec.describe Shared::BannerLinkComponent, type: :component do
 
     it "renders the banner link" do
       expect(rendered_component).to eq(
-        '<a class="banner-link icon icon--left icon--test" id="test-id" data-method="get" href="#test">'\
-        '<div class="banner-link__text">Click this link!</div></a>',
+        '<form class="banner-link-form" method="get" action="#test">'\
+        '<input class="banner-link icon icon--left icon--test" id="test-id" type="submit" value="Click this link!" />'\
+        "</form>",
       )
+    end
+
+    context "when params are provided" do
+      let(:params) { { some_param: "test" } }
+
+      it "renders the banner link" do
+        expect(rendered_component).to eq(
+          '<form class="banner-link-form" method="get" action="#test">'\
+          '<input class="banner-link icon icon--left icon--test" id="test-id" type="submit" value="Click this link!" />'\
+          '<input type="hidden" name="some_param" value="test" />'\
+          "</form>",
+        )
+      end
     end
   end
 
@@ -32,8 +48,9 @@ RSpec.describe Shared::BannerLinkComponent, type: :component do
 
     it "renders the banner link" do
       expect(rendered_component).to eq(
-        '<a class="banner-link icon icon--left icon--test" id="test-id" rel="nofollow" data-method="post" href="#test">'\
-        '<div class="banner-link__text">Click this link!</div></a>',
+        '<form class="banner-link-form" method="post" action="#test">'\
+        '<input class="banner-link icon icon--left icon--test" id="test-id" type="submit" value="Click this link!" />'\
+        "</form>",
       )
     end
   end

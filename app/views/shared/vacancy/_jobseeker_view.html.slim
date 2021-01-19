@@ -21,8 +21,9 @@
         = render(Shared::BannerLinkComponent.new(icon_class: "alert-blue",
                                                  link_id: "job-alert-link-from-top-of-job-listing-gtm",
                                                  link_method: :get,
-                                                 link_path: new_subscription_path(search_criteria: @devised_job_alert_search_criteria, origin: request.original_fullpath),
-                                                 link_text: t("jobs.alert.similar.terse")))
+                                                 link_path: new_subscription_path,
+                                                 link_text: t("jobs.alert.similar.terse"),
+                                                 params: { search_criteria: @devised_job_alert_search_criteria, origin: request.original_fullpath }))
       - if JobseekerAccountsFeature.enabled?
         .govuk-grid-column-one-third
           = render(Shared::BannerLinkComponent.new(icon_class: @saved_job.present? ? "saved" : "save",
