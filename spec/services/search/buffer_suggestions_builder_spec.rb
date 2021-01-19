@@ -15,7 +15,7 @@ RSpec.describe Search::BufferSuggestionsBuilder do
     let(:buffer_coordinates_twenty_miles) { [20.004562496029994090, 56.50833566307333, 20.005710530794815389, 56.5051084208278] }
     let(:buffer_coordinates_twenty_five_miles) { [25.004562496029994090, 56.50833566307333, 25.005710530794815389, 56.5051084208278] }
     let(:buffer_coordinates) do
-      [buffer_coordinates_five_miles, buffer_coordinates_ten_miles, buffer_coordinates_fifteen_miles, buffer_coordinates_twenty_miles, buffer_coordinates_twenty_five_miles]
+      [[buffer_coordinates_five_miles], [buffer_coordinates_ten_miles], [buffer_coordinates_fifteen_miles], [buffer_coordinates_twenty_miles], [buffer_coordinates_twenty_five_miles]]
     end
     let(:buffer_hash) { ImportPolygons::BUFFER_DISTANCES_IN_MILES.map(&:to_s).zip(buffer_coordinates).to_h }
     let(:arguments_for_algolia) { { hitsPerPage: 10 } }
@@ -68,7 +68,7 @@ RSpec.describe Search::BufferSuggestionsBuilder do
           create(:location_polygon, name: name.downcase, location_type: "counties", buffers: buffer_hash)
         end
 
-        search_hits.zip(buffer_coordinates).each do |search_hits_count, buffer_coordinates|
+        search_hits.zip(buffer_coordinates.map(&:first)).each do |search_hits_count, buffer_coordinates|
           buffer_coordinates_for_all_districts = Array.new(component_location_names.length, buffer_coordinates)
           mock_algolia_search(
             double("vacancies"), search_hits_count, nil,

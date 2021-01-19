@@ -1,9 +1,9 @@
 base_path = Rails.root.join("lib/tasks/data")
 
 # ONS API config
-ons_cities = YAML.load_file(base_path.join("cities.yml"))
-ons_counties_and_unitary_authorities = YAML.load_file(base_path.join("counties_and_unitary_authorities.yml"))
-ons_regions = YAML.load_file(base_path.join("regions.yml"))
+ons_cities = YAML.load_file(base_path.join("ons_cities.yml"))
+ons_counties_and_unitary_authorities = YAML.load_file(base_path.join("ons_counties_and_unitary_authorities.yml"))
+ons_regions = YAML.load_file(base_path.join("ons_regions.yml"))
 
 DOWNCASE_ONS_CITIES = ons_cities.map(&:downcase).freeze
 DOWNCASE_ONS_COUNTIES_AND_UNITARY_AUTHORITIES = ons_counties_and_unitary_authorities.map(&:first).map(&:downcase).freeze
@@ -30,24 +30,17 @@ LOCATION_POLYGON_SETTINGS = { # ESMARspQHYMw9BZ9 is not an API key
   },
 }.freeze
 
-DOWNCASE_COUNTIES_WITH_RING_INDICES = YAML.load_file(base_path.join("counties_and_unitary_authorities.yml")).map { |line|
-  { line.first.downcase => line.second }
-}.inject(&:merge).freeze
-
 # Locations with the location type from a human point of view for VacancyFacets
-ons_regions_with_human_friendly_location_types = ons_regions.map { |line|
-  { line.first.downcase => line.second }
-}.inject(&:merge)
-ons_counties_and_unitary_authorities_with_human_friendly_location_types = ons_counties_and_unitary_authorities.map { |line|
-  { line.first.downcase => line.third }
-}.inject(&:merge)
-LOCATIONS_WITH_MAPPING_TO_HUMAN_FRIENDLY_LOCATION_TYPES = ons_counties_and_unitary_authorities_with_human_friendly_location_types
-                                                            .merge(ons_regions_with_human_friendly_location_types).freeze
+LOCATIONS_MAPPED_TO_HUMAN_FRIENDLY_TYPES =
+  [ons_regions, ons_counties_and_unitary_authorities].map { |file|
+    file.map { |line|
+      { line.first.downcase => line.second }
+    }.inject(&:merge)
+  }.inject(&:merge).freeze
 
-# Locations, as categorized by humans, for VacancyFacets
-ons_counties = ons_counties_and_unitary_authorities.select { |line| line.third == "counties" }.map(&:first)
+ons_counties = ons_counties_and_unitary_authorities.select { |line| line.second == "counties" }.map(&:first)
 COUNTIES = composite_locations.keys + ons_counties
-ons_unitary_authority_cities = ons_counties_and_unitary_authorities.select { |line| line.third == "cities" }.map(&:first)
+ons_unitary_authority_cities = ons_counties_and_unitary_authorities.select { |line| line.second == "cities" }.map(&:first)
 CITIES = ons_cities + ons_unitary_authority_cities
 
 # See documentation/business-analyst-activities.md

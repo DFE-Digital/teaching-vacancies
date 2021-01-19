@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.shared_examples "a search using polygons" do |options|
   it "sets the correct attributes" do
     expect(subject.location_category).to eq(options&.dig(:location)&.presence || location_polygon.name)
-    expect(subject.polygon_boundaries).to eq([location_polygon.boundary])
+    expect(subject.polygon_boundaries).to eq(location_polygon.polygons.values)
     expect(subject.location_filter).to eq({})
     expect(subject.buffer_radius).to eq(buffer_radius)
   end
@@ -56,13 +56,13 @@ RSpec.describe Search::LocationBuilder do
     context "when a composite location is specified" do
       let(:location) { "Bedfordshire" }
 
-      let!(:bedford) { create(:location_polygon, name: "bedford", location_type: "counties", boundary: [1, 2]) }
-      let!(:central_bedfordshire) { create(:location_polygon, name: "central bedfordshire", location_type: "counties", boundary: [3, 4]) }
-      let!(:luton) { create(:location_polygon, name: "luton", location_type: "counties", boundary: [5, 6]) }
+      let!(:bedford) { create(:location_polygon, name: "bedford", location_type: "counties", polygons: { "0" => [1, 2] }) }
+      let!(:central_bedfordshire) { create(:location_polygon, name: "central bedfordshire", location_type: "counties", polygons: { "0" => [3, 4] }) }
+      let!(:luton) { create(:location_polygon, name: "luton", location_type: "counties", polygons: { "0" => [5, 6], "1" => [7, 8] }) }
 
       it "sets the correct attributes" do
         expect(subject.location_category).to eq(location)
-        expect(subject.polygon_boundaries).to contain_exactly(bedford.boundary, central_bedfordshire.boundary, luton.boundary)
+        expect(subject.polygon_boundaries).to contain_exactly([1, 2], [3, 4], [5, 6], [7, 8])
         expect(subject.location_filter).to eq({})
         expect(subject.buffer_radius).to eq(buffer_radius)
       end

@@ -21,28 +21,32 @@ class ImportPolygons
 
       geometry_rings = region_response.dig("geometry", "rings")
 
+      # When the ONS API returns multiple rings for a location, some of these are small islands or similar. Some of
+      # these islands are inhabited and have a school on, and others do not. (E.g. Mersea Island in Essex, Hayling Island
+      # in Hampshire, Sheppey Island in Kent, St Mary's in the Isles of Scilly.)
+      #
       # If algolia searches by polygon are slow, (some of) these boundaries could be downsampled significantly.
+      #
+      # Store them in a hash because Postgres doesn't support multidimensional arrays of varying extents.
 
-      ring_index = if api_location_type == :counties
-                     DOWNCASE_COUNTIES_WITH_RING_INDICES[location_name]
-                   else
-                     0
-                   end
-
-      points = []
-      geometry_rings[ring_index].each do |point|
-        # API returns coords in an unconventional lng,lat order
-        # Coordinates rounded as they are stored as double precision floats which have a precision of
-        # 15 decimal digits. All UK coordinates only have a maximum of 2 digits before decimal point.
-        points.push(*point.reverse.map { |coord| coord.round(13) })
+      polygons = {}
+      geometry_rings.each_with_index do |ring, index|
+        points = []
+        ring.each do |point|
+          # API returns coords in an unconventional lng,lat order
+          # Coordinates rounded as they are stored as double precision floats which have a precision of
+          # 15 decimal digits. All UK coordinates only have a maximum of 2 digits before decimal point.
+          points.push(*point.reverse.map { |coord| coord.round(13) })
+        end
+        polygons[index.to_s] = points
       end
 
-      human_friendly_location_type = LOCATIONS_WITH_MAPPING_TO_HUMAN_FRIENDLY_LOCATION_TYPES[location_name] || api_location_type.to_s
+      human_friendly_location_type = LOCATIONS_MAPPED_TO_HUMAN_FRIENDLY_TYPES[location_name] || api_location_type.to_s
 
       location_polygon = LocationPolygon.find_or_create_by(name: location_name, location_type: human_friendly_location_type)
 
-      # Skip API call if the points have not changed since last time we used them to calculate the buffers.
-      location_polygon.update(boundary: points, buffers: get_buffers(points)) unless points == location_polygon.boundary
+      # Skip buffers API call if the points have not changed since last time we used them to calculate the buffers.
+      location_polygon.update(polygons: polygons, buffers: get_buffers(polygons)) unless polygons == location_polygon.polygons
     end
   end
 
@@ -54,17 +58,20 @@ class ImportPolygons
       api_location_type == :cities && DOWNCASE_ONS_CITIES.include?(location_name)
   end
 
-  def get_buffers(points)
-    buffered_boundaries = {}
+  def get_buffers(polygons)
+    buffers = {}
     BUFFER_DISTANCES_IN_MILES.each do |distance|
-      # convert 1D array to 2D array for arcgis
-      polygon_coords = points.each_slice(2).to_a
-      response = HTTParty.get(buffer_api_endpoint(polygon_coords, convert_miles_to_metres(distance)))
-      # Buffer coordinates are stored as a 1D array
-      buffer_coords = response.dig("geometries", 0, "rings").flatten
-      buffered_boundaries[distance.to_s] = buffer_coords
+      buffered_polygon_coords = []
+      polygons.each_value do |polygon|
+        # convert 1D array to 2D array for arcgis
+        polygon_coords = polygon.each_slice(2).to_a
+        response = HTTParty.get(buffer_api_endpoint(polygon_coords, convert_miles_to_metres(distance)))
+        # Buffer coordinates are stored as a 1D array
+        buffered_polygon_coords.push(response.dig("geometries", 0, "rings").flatten)
+      end
+      buffers[distance.to_s] = buffered_polygon_coords
     end
-    buffered_boundaries
+    buffers
   end
 
   def buffer_api_endpoint(coords, distance)

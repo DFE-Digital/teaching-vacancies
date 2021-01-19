@@ -9,8 +9,8 @@ RSpec.shared_examples "a successful import" do
     expect(imported_polygon.location_type).to eq(human_friendly_location_type || api_location_type&.to_s)
   end
 
-  it "imports the boundary" do
-    expect(imported_polygon.boundary).to eq(boundary_points)
+  it "imports the boundary polygons" do
+    expect(imported_polygon.polygons).to eq(boundary_polygons)
   end
 end
 
@@ -36,14 +36,17 @@ RSpec.describe ImportPolygons do
       let(:human_friendly_location_type) { nil }
 
       before do
-        allow(subject).to receive(:get_buffers).with(boundary_points).and_return({ "5" => %w[lat lon], "10" => %w[lat lon] })
+        allow(subject).to receive(:get_buffers).with(boundary_polygons).and_return({ "5" => %w[lat lon], "10" => %w[lat lon] })
         subject.call
       end
 
       context "when using the regions API endpoint" do
         let(:api_location_type) { :regions }
         let(:location_name) { "north east" }
-        let(:boundary_points) { [55.8110853660943, -2.0343575091738, 55.7647624900862, -1.9841097397706] }
+        let(:boundary_polygons) do
+          { "0" => [55.8110853660943, -2.0343575091738, 55.7647624900862, -1.9841097397706],
+            "1" => [52, 0, 53, 1] }
+        end
 
         it_behaves_like "a successful import"
         it_behaves_like "an import that excludes out-of-scope locations"
@@ -59,7 +62,10 @@ RSpec.describe ImportPolygons do
       context "when using the counties and unitary authorities API endpoint" do
         let(:api_location_type) { :counties }
         let(:location_name) { "cumbria" }
-        let(:boundary_points) { [54.6991864051642, -1.1776332863422, 54.6918238899294, -1.1739811767539] }
+        let(:boundary_polygons) do
+          { "0" => [53, 1, 54, 2],
+            "1" => [54.6991864051642, -1.1776332863422, 54.6918238899294, -1.1739811767539] }
+        end
 
         it_behaves_like "a successful import"
         it_behaves_like "an import that excludes out-of-scope locations"
@@ -75,7 +81,7 @@ RSpec.describe ImportPolygons do
       context "when using the cities API endpoint" do
         let(:api_location_type) { :cities }
         let(:location_name) { "bath" }
-        let(:boundary_points) { [51.406361958644, -2.3780576677997, 51.4063596372237, -2.3787764623145] }
+        let(:boundary_polygons) { { "0" => [51.406361958644, -2.3780576677997, 51.4063596372237, -2.3787764623145] } }
 
         it_behaves_like "a successful import"
         it_behaves_like "an import that excludes out-of-scope locations"
@@ -89,20 +95,20 @@ RSpec.describe ImportPolygons do
       let(:buffer_coordinates) { [65.06414131400004, -12.5761721229999353, 65.06185937400005, -12.5761901179999427] }
       let(:imported_buffers) do
         {
-          "5" => buffer_coordinates,
-          "10" => buffer_coordinates,
-          "15" => buffer_coordinates,
-          "20" => buffer_coordinates,
-          "25" => buffer_coordinates,
+          "5" => [buffer_coordinates],
+          "10" => [buffer_coordinates],
+          "15" => [buffer_coordinates],
+          "20" => [buffer_coordinates],
+          "25" => [buffer_coordinates],
         }
       end
 
       context "when the points in the response are the same as the last time the task was run" do
-        let(:boundary_points) { [51.406361958644, -2.3780576677997, 51.4063596372237, -2.3787764623145] }
+        let(:boundary_polygons) { { "0" => [51.406361958644, -2.3780576677997, 51.4063596372237, -2.3787764623145] } }
         let(:original_buffers) { { "5" => "This is a hash that won't be updated" } }
 
         before do
-          LocationPolygon.create(name: location_name, location_type: "cities", boundary: boundary_points, buffers: original_buffers)
+          LocationPolygon.create(name: location_name, location_type: "cities", polygons: boundary_polygons, buffers: original_buffers)
           subject.call
         end
 
@@ -135,16 +141,31 @@ RSpec.describe ImportPolygons do
         context "when the length of the params does not cause the API endpoint length to exceed the maximum" do
           let(:api_location_type) { :regions }
           let(:location_name) { "north east" }
+          let(:imported_buffers) do
+            {
+              "5" => [buffer_coordinates, buffer_coordinates],
+              "10" => [buffer_coordinates, buffer_coordinates],
+              "15" => [buffer_coordinates, buffer_coordinates],
+              "20" => [buffer_coordinates, buffer_coordinates],
+              "25" => [buffer_coordinates, buffer_coordinates],
+            }
+          end
 
           before do
             distances = [5, 10, 15, 20, 25]
             distances.each do |distance|
               allow(HTTParty).to receive(:get).with(
-                "https://tasks.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer/buffer?"\
-                "bufferSR=3857&distances=#{convert_miles_to_metres(distance)}&f=json&geodesic=f"\
-                "alse&geometries=%7B%22geometryType%22%3D%3E%22esriGeometryPolygon%22%2C+%22geometries%22%3D%3E"\
-                "%5B%7B%22rings%22%3D%3E%5B%5B%5B55.8110853660943%2C+-2.0343575091738%5D%2C+%5B55.7647624900862%"\
-                "2C+-1.9841097397706%5D%5D%5D%7D%5D%7D&inSR=4326&outSR=4326&unionResults=true&unit=",
+                "https://tasks.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer/buffer?bufferSR=3857&"\
+                "distances=#{convert_miles_to_metres(distance)}&f=json&geodesic=false&geometries=%7B%22geometryType"\
+                "%22%3D%3E%22esriGeometryPolygon%22%2C+%22geometries%22%3D%3E%5B%7B%22rings%22%3D%3E%5B%5B%5B"\
+                "55.8110853660943%2C+-2.0343575091738%5D%2C+%5B55.7647624900862%2C+-1.9841097397706%5D%5D%5D%7D%5D%7D"\
+                "&inSR=4326&outSR=4326&unionResults=true&unit=",
+              ).and_return(buffer_response)
+              allow(HTTParty).to receive(:get).with(
+                "https://tasks.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer/buffer?bufferSR=3857&"\
+                "distances=#{convert_miles_to_metres(distance)}&f=json&geodesic=false&geometries=%7B%22geometryType"\
+                "%22%3D%3E%22esriGeometryPolygon%22%2C+%22geometries%22%3D%3E%5B%7B%22rings%22%3D%3E%5B%5B%5B52%2C+"\
+                "0%5D%2C+%5B53%2C+1%5D%5D%5D%7D%5D%7D&inSR=4326&outSR=4326&unionResults=true&unit=",
               ).and_return(buffer_response)
             end
             subject.call

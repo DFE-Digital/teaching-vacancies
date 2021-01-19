@@ -57,7 +57,7 @@ RSpec.describe Search::SearchBuilder do
       let(:search_params) do
         {
           keyword: keyword,
-          polygons: [location_polygon.boundary],
+          polygons: location_polygon.polygons.values,
           filters: filter_query,
           hits_per_page: 10,
           page: page,
@@ -104,7 +104,7 @@ RSpec.describe Search::SearchBuilder do
 
         let(:arguments_to_algolia) do
           {
-            insidePolygon: [location_polygon.boundary],
+            insidePolygon: location_polygon.polygons.values,
             filters: filter_query,
             hitsPerPage: 10,
             page: page,
@@ -126,7 +126,7 @@ RSpec.describe Search::SearchBuilder do
         let(:search_params) do
           {
             keyword: keyword,
-            polygons: [location_polygon.boundary],
+            polygons: location_polygon.polygons.values,
             filters: filter_query,
             hits_per_page: 10,
             page: page,

@@ -36,19 +36,21 @@ class Search::LocationBuilder
   private
 
   def initialize_polygon_boundaries
-    location_polygons = [LocationPolygon.with_name(location_category)]
+    locations = [LocationPolygon.with_name(location_category)]
 
-    if location_polygons.none? && DOWNCASE_COMPOSITE_LOCATIONS.key?(location_category.downcase)
-      location_polygons = DOWNCASE_COMPOSITE_LOCATIONS[location_category.downcase].map do |component_location_name|
+    if locations.none? && DOWNCASE_COMPOSITE_LOCATIONS.key?(location_category.downcase)
+      locations = DOWNCASE_COMPOSITE_LOCATIONS[location_category.downcase].map do |component_location_name|
         LocationPolygon.find_by(name: component_location_name.downcase)
       end
     end
 
-    @polygon_boundaries = if buffer_radius.present?
-                            location_polygons&.map { |polygon| polygon.buffers[buffer_radius] }
-                          else
-                            location_polygons&.map(&:boundary)
-                          end
+    @polygon_boundaries = []
+    locations.each do |location|
+      polygons = buffer_radius.present? ? location.buffers[buffer_radius] : location.polygons.values
+      polygons.each do |polygon|
+        @polygon_boundaries.push(polygon)
+      end
+    end
   end
 
   def build_location_filter(location, radius)
