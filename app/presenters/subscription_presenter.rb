@@ -17,10 +17,6 @@ class SubscriptionPresenter < BasePresenter
     }.stringify_keys
   end
 
-  def to_row
-    full_search_criteria.transform_values! { |value| value.is_a?(Array) ? value.join(", ") : value }
-  end
-
   private
 
   def sorted_search_criteria

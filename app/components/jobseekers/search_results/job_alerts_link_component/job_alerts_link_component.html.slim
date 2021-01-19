@@ -2,4 +2,4 @@
   .job-alert-cta__fade
   .job-alert-cta__content class="govuk-heading-s govuk-!-font-weight-regular govuk-!-margin-0" id="job-alert-cta"
     .icon.icon--left.icon--alert-white
-      == t("subscriptions.link.help_text", link: link_to(t("subscriptions.link.text"), new_subscription_path(search_criteria: @vacancies_search.only_active_to_hash), id: "job-alert-link-sticky-gtm"))
+      == t("subscriptions.link.help_text", link: link_to(t("subscriptions.link.text"), new_subscription_path(search_criteria: @vacancies_search.only_active_to_hash, origin: @origin), id: "job-alert-link-sticky-gtm"))

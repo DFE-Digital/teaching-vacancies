@@ -17,8 +17,8 @@ class NqtJobAlertsController < ApplicationController
       redirect_to invalid_recaptcha_path(form_name: @nqt_job_alerts_form.class.name.underscore.humanize)
     elsif @nqt_job_alerts_form.valid?
       subscription.save
-      AuditSubscriptionCreationJob.perform_later(@subscription.to_row)
       SubscriptionMailer.confirmation(subscription.id).deliver_later
+      trigger_subscription_created_event(subscription)
       render :confirm
     else
       render :new
@@ -26,6 +26,17 @@ class NqtJobAlertsController < ApplicationController
   end
 
   private
+
+  def trigger_subscription_created_event(subscription)
+    request_event.trigger(
+      :job_alert_subscription_created,
+      subscription_identifier: StringAnonymiser.new(subscription.id),
+      email_identifier: StringAnonymiser.new(subscription.email),
+      recaptcha_score: subscription.recaptcha_score,
+      frequency: subscription.frequency,
+      search_criteria: subscription.search_criteria,
+    )
+  end
 
   def nqt_job_alerts_params
     ParameterSanitiser.call(params[:nqt_job_alerts_form] || params).permit(:keywords, :location, :email)

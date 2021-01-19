@@ -95,11 +95,6 @@ RSpec.describe "Jobseekers can manage their job alerts from the email" do
         click_on I18n.t("buttons.update_alert")
       end
 
-      it "audits the update" do
-        activity = subscription.activities.last
-        expect(activity.key).to eq("subscription.update")
-      end
-
       it "shows the confirmation page" do
         expect(page).to have_content(I18n.t("subscriptions.confirm.header.update"))
       end
