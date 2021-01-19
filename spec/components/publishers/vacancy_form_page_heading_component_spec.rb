@@ -7,13 +7,22 @@ RSpec.describe Publishers::VacancyFormPageHeadingComponent, type: :component do
   let(:session_job_location) { nil }
   let(:session_readable_job_location) { nil }
   let(:session_vacancy_attributes) { { "job_location" => session_job_location, "readable_job_location" => session_readable_job_location } }
-  let(:current_step) { 99 }
+  let(:current_step) { 1 }
+  let(:current_publisher_is_part_of_school_group?) { true }
+  let(:steps_adjust) { current_publisher_is_part_of_school_group? ? 0 : 1 }
 
-  subject { described_class.new(vacancy) }
+  let(:steps) do
+    {
+      step_one: { number: 1, title: "step 1" },
+      step_two: { number: 2, title: "step 2" },
+    }.freeze
+  end
+
+  let(:service) { ProcessSteps.new({ steps: steps, adjust: steps_adjust, step: :step_one }) }
+
+  subject { described_class.new(vacancy, service.current_step_number, service.total_steps) }
 
   before do
-    allow(subject).to receive(:current_step_number).and_return(current_step)
-    allow(subject).to receive(:total_steps).and_return(100)
     allow(subject).to receive(:current_organisation).and_return(organisation)
     vacancy.organisation_vacancies.create(organisation: organisation) if vacancy.present?
     render_inline(subject)
@@ -24,7 +33,7 @@ RSpec.describe Publishers::VacancyFormPageHeadingComponent, type: :component do
       let(:state) { "create" }
 
       it "shows the current step" do
-        expect(rendered_component).to include(I18n.t("jobs.current_step", step: current_step, total: 100))
+        expect(rendered_component).to include(I18n.t("jobs.current_step", step: current_step, total: 2))
       end
     end
 

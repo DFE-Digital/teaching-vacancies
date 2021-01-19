@@ -90,7 +90,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::ApplicationContro
   end
 
   def set_completed_step
-    @vacancy.update(completed_step: current_step_number)
+    @vacancy.update(completed_step: process_steps.current_step_number)
   end
 
   def update_vacancy_state
