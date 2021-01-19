@@ -1,6 +1,6 @@
 # Hosting
 
-Teaching Vacancies is hosted on GOV.UK PaaS. When onboarded you will be added to the [`dfe-teacher-services` organisation](https://docs.cloud.service.gov.uk/orgs_spaces_users.html#organisations) and the relevant spaces. Note that this is different to GitHub.com where you will be added to the [`DFE-Digital` organization](https://github.com/DFE-Digital)
+Teaching Vacancies is hosted on [GOV.UK PaaS](https://www.cloud.service.gov.uk/). During [onboarding](./onboarding.md) you will be added to the [`dfe-teacher-services` organisation](https://docs.cloud.service.gov.uk/orgs_spaces_users.html#organisations) and the relevant spaces. Note that this is different to GitHub.com where you will be added to the [`DFE-Digital` organization](https://github.com/DFE-Digital)
 
 These are the running applications:
 
@@ -8,11 +8,11 @@ These are the running applications:
 - https://staging.teaching-vacancies.service.gov.uk (Staging)
 - https://teaching-vacancies.service.gov.uk (Production)
 
-Plus all the ephemeral review apps that are created when a PR is created on GitHub, and destroyed when the PR is merged.
+Plus all the ephemeral review apps that are created when a PR is created on GitHub, and destroyed when the PR is merged. These have URLs which contain the Pull Request number, like [https://teaching-vacancies-review-pr-2667.london.cloudapps.digital](https://teaching-vacancies-review-pr-2667.london.cloudapps.digital)
 
-The Dev environment has integration with DSI. It is "user-deployable", in that developers can deploy via:
-- pushing code to the `dev` branch
-- Makefile commands outlined below
+The Dev environment has integration with DSI. It is "user-deployable", in that developers can [deploy](./deployments.md) via:
+- [pushing code to the `dev` branch](./deployments.md#build-and-deploy-to-dev---github-actions)
+- [Makefile commands](./deployments.md#build-and-deploy-to-an-environment---makefile)
 
 The Staging environment is a pre-production environment, to identify issues with code before it's promoted to Production.
 On merging a Pull Request, the same code is deployed first to Staging, and after a successful smoke test, to Production.
