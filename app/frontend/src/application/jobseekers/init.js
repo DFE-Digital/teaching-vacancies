@@ -2,7 +2,6 @@ import '../../components/locationFinder/locationFinder';
 import { renderAutocomplete } from '../../components/autocomplete/autocomplete';
 import { getLocationSuggestions } from '../../lib/api';
 
-import './sort';
 import './location';
 import './map';
 
