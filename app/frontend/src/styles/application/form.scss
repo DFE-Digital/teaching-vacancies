@@ -52,7 +52,7 @@
 }
 
 .js-enabled {
-  form[data-auto-submit='true'] {
+  form[data-auto-submit='true'][data-hide-submit='true'] {
     .govuk-button {
       display: none;
     }
