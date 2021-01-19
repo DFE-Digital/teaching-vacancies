@@ -2,6 +2,9 @@
   = f.hidden_field :keyword, value: @jobs_search_form.keyword
   = f.hidden_field :location, value: @jobs_search_form.location
   = f.hidden_field :radius, value: @jobs_search_form.radius
+  = f.hidden_field :job_roles, value: @jobs_search_form.job_roles
+  = f.hidden_field :phases, value: @jobs_search_form.phases
+  = f.hidden_field :working_patterns, value: @jobs_search_form.working_patterns
 
   = f.govuk_collection_select :jobs_sort,
     Vacancy::JOB_SORTING_OPTIONS,
