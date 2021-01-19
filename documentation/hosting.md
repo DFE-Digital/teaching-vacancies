@@ -141,7 +141,7 @@ cf run-task <app_name> -c "rails task:name"
 This builds and deploys a Docker image from local code, then updates the `dev` environment to use that image
 
 ```bash
-passcode=<passcode> make <environment> deploy-local-image
+make passcode=<passcode> <environment> deploy-local-image
 ```
 performs these steps:
 
@@ -160,7 +160,7 @@ You need:
 This allows you to update the `dev` environment to use a previously-built Docker image
 
 ```bash
-passcode=<passcode> tag=47fd1475376bbfa16a773693133569b794408995 make <environment> terraform-app-apply
+make passcode=<passcode> tag=47fd1475376bbfa16a773693133569b794408995 <environment> terraform-app-apply
 ```
 performs these steps:
 
