@@ -5,17 +5,17 @@ class ImportPolygons
 
   include DistanceHelper
 
-  attr_reader :location_name, :location_type
+  attr_reader :location_name, :api_location_type
 
-  def initialize(location_type:)
-    @location_type = location_type
+  def initialize(api_location_type:)
+    @api_location_type = api_location_type
   end
 
   def call
-    response = JSON.parse(HTTParty.get(LOCATION_POLYGON_SETTINGS[location_type][:boundary_api]))
+    response = JSON.parse(HTTParty.get(LOCATION_POLYGON_SETTINGS[api_location_type][:boundary_api]))
 
     response.fetch("features", []).each do |region_response|
-      @location_name = region_response.dig("attributes", LOCATION_POLYGON_SETTINGS[location_type][:name_key]).downcase
+      @location_name = region_response.dig("attributes", LOCATION_POLYGON_SETTINGS[api_location_type][:name_key]).downcase
 
       next unless location_in_scope?
 
@@ -23,7 +23,7 @@ class ImportPolygons
 
       # If algolia searches by polygon are slow, (some of) these boundaries could be downsampled significantly.
 
-      ring_index = if location_type == :counties
+      ring_index = if api_location_type == :counties
                      DOWNCASE_COUNTIES_WITH_RING_INDICES[location_name]
                    else
                      0
@@ -37,26 +37,24 @@ class ImportPolygons
         points.push(*point.reverse.map { |coord| coord.round(13) })
       end
 
-      LocationPolygon.find_or_create_by(name: location_name, location_type: location_type.to_s)
-                     .update(boundary: points, buffers: get_buffers(points))
+      human_friendly_location_type = LOCATIONS_WITH_MAPPING_TO_HUMAN_FRIENDLY_LOCATION_TYPES[location_name] || api_location_type.to_s
+
+      location_polygon = LocationPolygon.find_or_create_by(name: location_name, location_type: human_friendly_location_type)
+
+      # Skip API call if the points have not changed since last time we used them to calculate the buffers.
+      location_polygon.update(boundary: points, buffers: get_buffers(points)) unless points == location_polygon.boundary
     end
   end
 
   private
 
   def location_in_scope?
-    location_type == :regions && DOWNCASE_REGIONS.include?(location_name) ||
-      location_type == :counties && DOWNCASE_COUNTIES_AND_UNITARY_AUTHORITIES.include?(location_name) ||
-      location_type == :cities && DOWNCASE_CITIES.include?(location_name)
+    api_location_type == :regions && DOWNCASE_ONS_REGIONS.include?(location_name) ||
+      api_location_type == :counties && DOWNCASE_ONS_COUNTIES_AND_UNITARY_AUTHORITIES.include?(location_name) ||
+      api_location_type == :cities && DOWNCASE_ONS_CITIES.include?(location_name)
   end
 
   def get_buffers(points)
-    # Skip API call if the points have not changed since last time we used them to calculate the buffers.
-    old_location_polygon = LocationPolygon.find_by(name: location_name, location_type: location_type.to_s)
-    if points == old_location_polygon&.boundary
-      return old_location_polygon.buffers
-    end
-
     buffered_boundaries = {}
     BUFFER_DISTANCES_IN_MILES.each do |distance|
       # convert 1D array to 2D array for arcgis

@@ -12,23 +12,23 @@
 # to construct these out of their component local authorities. I am also including 'Yorkshire',
 # which is not a ceremonial county, because it's a common search location.
 
-bedfordshire:
+Bedfordshire:
   - Bedford
   - Central Bedfordshire
   - Luton
-berkshire:
+Berkshire:
   - Bracknell Forest
   - Reading
   - Slough
   - West Berkshire
   - Windsor and Maidenhead
   - Wokingham
-cheshire:
+Cheshire:
   - Cheshire East
   - Cheshire West and Chester
   - Halton
   - Warrington
-greater manchester:
+Greater Manchester:
   - Bolton
   - Bury
   - Manchester
@@ -39,25 +39,25 @@ greater manchester:
   - Tameside
   - Trafford
   - Wigan
-merseyside:
+Merseyside:
   - Knowsley
   - St. Helens
   - Sefton
   - Wirral
   - Liverpool
-tyne and wear:
+Tyne and Wear:
   - Newcastle upon Tyne
   - Gateshead
   - South Tyneside
   - North Tyneside
   - Sunderland
-west yorkshire:
+West Yorkshire:
   - Bradford
   - Calderdale
   - Kirklees
   - Leeds
   - Wakefield
-yorkshire:
+Yorkshire:
   - Barnsley
   - Bradford
   - Calderdale

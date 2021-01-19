@@ -1,10 +1,11 @@
 ---
-- London
-- South East
-- Yorkshire and the Humber
-- East of England
-- West Midlands
-- North West
-- North East
-- South West
-- East Midlands
+# - ['Location: 'the location type from a human point of view for VacancyFacets'
+- ['London', 'cities']
+- ['South East', 'regions']
+- ['Yorkshire and the Humber', 'regions']
+- ['East of England', 'regions']
+- ['West Midlands', 'regions']
+- ['North West', 'regions']
+- ['North East', 'regions']
+- ['South West', 'regions']
+- ['East Midlands', 'regions']

@@ -8,9 +8,9 @@ class Search::BufferSuggestionsBuilder
   end
 
   def buffers_suggestions
-    if DOWNCASE_COMPOSITE_LOCATIONS.include?(location.downcase)
-      polygons = COMPOSITE_LOCATIONS[location.downcase].map do |component_region_name|
-        LocationPolygon.find_by(name: component_region_name.downcase, location_type: "counties")
+    if DOWNCASE_COMPOSITE_LOCATIONS.key?(location.downcase)
+      polygons = DOWNCASE_COMPOSITE_LOCATIONS[location.downcase].map do |component_region_name|
+        LocationPolygon.find_by(name: component_region_name.downcase)
       end
 
       buffer_vacancy_count = ImportPolygons::BUFFER_DISTANCES_IN_MILES.map do |distance|

@@ -38,9 +38,9 @@ class Search::LocationBuilder
   def initialize_polygon_boundaries
     location_polygons = [LocationPolygon.with_name(location_category)]
 
-    if location_polygons.none? && DOWNCASE_COMPOSITE_LOCATIONS.include?(location_category.downcase)
-      location_polygons = COMPOSITE_LOCATIONS[location_category.downcase].map do |component_location_name|
-        LocationPolygon.find_by(name: component_location_name.downcase, location_type: "counties")
+    if location_polygons.none? && DOWNCASE_COMPOSITE_LOCATIONS.key?(location_category.downcase)
+      location_polygons = DOWNCASE_COMPOSITE_LOCATIONS[location_category.downcase].map do |component_location_name|
+        LocationPolygon.find_by(name: component_location_name.downcase)
       end
     end
 

@@ -128,7 +128,7 @@ RSpec.describe Search::LocationBuilder do
       it "does not set location filters" do
         expect(subject.location).to be nil
         expect(subject.location_category).to be nil
-        expect(subject.location_polygon).to be nil
+        expect(subject.polygon_boundaries).to be nil
         expect(subject.location_filter).to eq({})
       end
     end
