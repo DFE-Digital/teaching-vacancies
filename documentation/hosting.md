@@ -10,7 +10,7 @@ These are the running applications:
 
 Plus all the ephemeral review apps that are created when a PR is created on GitHub, and destroyed when the PR is merged. These have URLs which contain the Pull Request number, like [https://teaching-vacancies-review-pr-2667.london.cloudapps.digital](https://teaching-vacancies-review-pr-2667.london.cloudapps.digital)
 
-The Dev environment has integration with DSI. It is "user-deployable", in that developers can [deploy](./deployments.md) via:
+The Dev environment has [integration with DSI](./dsi-integration.md). It is "user-deployable", in that developers can [deploy](./deployments.md) via:
 - [pushing code to the `dev` branch](./deployments.md#build-and-deploy-to-dev---github-actions)
 - [Makefile commands](./deployments.md#build-and-deploy-to-an-environment---makefile)
 
