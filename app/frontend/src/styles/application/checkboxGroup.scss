@@ -50,13 +50,6 @@
   }
 }
 
-.tv-checkbox__group.scrollable {
-  .govuk-form-group {
-    max-height: 194px;
-    overflow: auto;
-  }
-}
-
 .accordion-content__group .govuk-accordion__section--expanded {
   border-bottom: 1px solid $govuk-border-colour;
   padding-bottom: govuk-spacing(2);
@@ -113,31 +106,5 @@
 
   .govuk-accordion__controls {
     display: block;
-  }
-}
-
-.search-input {
-  background: govuk-color('white');
-  margin-bottom: govuk-spacing(2);
-  margin-left: govuk-spacing(2);
-  position: relative;
-
-  input {
-    display: block;
-    padding: govuk-spacing(4) govuk-spacing(9) govuk-spacing(4) govuk-spacing(7);
-    width: 100%;
-  }
-
-  button {
-    @include govuk-font(19);
-    background: transparent;
-    border: 0;
-    cursor: pointer;
-    display: inline-block;
-    left: 0;
-    padding: 12px;
-    position: absolute;
-    top: 0;
-    z-index: 2;
   }
 }

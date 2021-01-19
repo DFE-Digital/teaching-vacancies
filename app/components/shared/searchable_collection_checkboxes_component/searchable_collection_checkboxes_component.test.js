@@ -1,4 +1,4 @@
-import { init, substringExistsInString } from './checkboxFilter';
+import { init, substringExistsInString } from './searchable_collection_checkboxes_component';
 
 describe('searchCheckbox', () => {
   beforeEach(() => {

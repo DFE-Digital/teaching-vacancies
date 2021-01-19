@@ -41,7 +41,6 @@
     = form.govuk_submit t("buttons.apply_filters"), classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2 filters__submit-button"
 
   .filters__groups.govuk-accordion id="accordion-default" data-module="govuk-accordion"
-
     - items.each_with_index do |group, index|
       .govuk-accordion__section.accordion-content__group.filters__groups-container
         .govuk-accordion__section-header
@@ -50,12 +49,11 @@
               = group[:title]
 
         .govuk-accordion__section-content.filters__group-checkboxes id="accordion-default-content-#{index}" aria-labelledby="accordion-default-heading-#{index}" data-group=group[:key]
-          = render "shared/checkbox_group", f: form,
-            search: group[:search],
-            scroll: group[:scroll],
-            attribute_name: group[:attribute],
-            options: group[:options],
-            value_method: group[:value_method],
-            text_method: group[:text_method],
-            hint_method: group[:hint_method],
-            small: group[:small]
+          .tv-checkbox__group
+            = form.govuk_collection_check_boxes group[:attribute],
+              group[:options],
+              group[:value_method],
+              group[:text_method],
+              small: true,
+              legend: nil,
+              hint: nil
