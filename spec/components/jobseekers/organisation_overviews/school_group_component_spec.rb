@@ -36,7 +36,7 @@ RSpec.describe Jobseekers::OrganisationOverviews::SchoolGroupComponent, type: :c
   end
 
   it "renders the trust type" do
-    expect(rendered_component).to include(organisation_type(organisation: vacancy.parent_organisation))
+    expect(rendered_component).to include(organisation_type(vacancy.parent_organisation))
   end
 
   it "renders a link to the trust website" do

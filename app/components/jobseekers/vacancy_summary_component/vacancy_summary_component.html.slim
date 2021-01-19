@@ -7,9 +7,13 @@ li.vacancy role="listitem" tab-index="0"
     dt = t("jobs.salary")
     dd.double
       = @vacancy.salary
-    dt = @vacancy.job_location == "central_office" ? t("jobs.trust_type") : t("jobs.school_type")
+    dt = @vacancy.central_office? ? t("jobs.trust_type") : t("jobs.school_type")
     dd.double
-      = organisation_types(@vacancy.organisations)
+      - if @vacancy.central_office?
+        = organisation_type(@vacancy.parent_organisation)
+      - else
+        - organisation_types(@vacancy.organisations).each do |organisation_type|
+          .govuk-body-s class="govuk-!-margin-bottom-0" = organisation_type
     - if @vacancy.working_patterns?
       dt = t("jobs.working_patterns")
       dd.double

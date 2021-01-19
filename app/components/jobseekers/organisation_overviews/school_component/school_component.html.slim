@@ -3,7 +3,7 @@ section#school-overview class="govuk-!-margin-bottom-5"
     = t("schools.school_overview")
 
   = render GovukComponent::SummaryList.new do |component|
-    = component.slot(:row, key: I18n.t("schools.type"), value: organisation_type(organisation: organisation, with_age_range: false))
+    = component.slot(:row, key: I18n.t("schools.type"), value: organisation_type(organisation))
     = component.slot(:row, key: I18n.t("schools.phase"), value: school_phase(organisation))
     = component.slot(:row, key: I18n.t("schools.school_size"), value: school_size(organisation))
     = component.slot(:row, key: I18n.t("schools.age_range"), value: age_range(organisation))

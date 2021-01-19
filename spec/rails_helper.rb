@@ -62,6 +62,7 @@ RSpec.configure do |config|
   end
 
   config.include ActionView::Helpers::NumberHelper
+  config.include ActionView::Helpers::TextHelper
   config.include ActiveSupport::Testing::Assertions # required for ActiveJob::TestHelper#perform_enqueued_jobs
   config.include ActiveSupport::Testing::TimeHelpers
   config.include ApplicationHelpers
