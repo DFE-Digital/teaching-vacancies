@@ -6,17 +6,7 @@
 
     h2.govuk-heading-m = t(".next_step")
     p.govuk-body = t(".next_step_details")
-    .grouped-text-block
-      ul.govuk-list
-        - @subscription.filtered_search_criteria.each_pair do |filter, value|
-          li
-            - if filter.present?
-              span class="govuk-!-font-weight-bold" #{filter.humanize}:
-            = value
-        li class="govuk-!-margin-top-2 govuk-!-margin-bottom-0"
-          span
-            = t(".frequency_label")
-          = t(".frequency.#{@subscription.frequency}")
+    = render Jobseekers::SubscriptionDetailsComponent.new(@subscription)
 
     - if JobseekerAccountsFeature.enabled?
       p.govuk-body.divider-bottom class="govuk-!-padding-bottom-5" = t(".unsubscribe")

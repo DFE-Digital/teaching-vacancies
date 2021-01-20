@@ -62,25 +62,19 @@ class SubscriptionsController < ApplicationController
 
   def unsubscribe
     subscription = Subscription.find_and_verify_by_token(token)
+    raise ActiveRecord::RecordNotFound unless subscription.active?
+
     @subscription = SubscriptionPresenter.new(subscription)
-    trigger_subscription_event(:job_alert_subscription_unsubscribed, subscription)
-    subscription.unsubscribe
-    @unsubscribe_feedback_form = UnsubscribeFeedbackForm.new
   end
 
-  def unsubscribe_feedback
-    @subscription = Subscription.find(token)
-    @unsubscribe_feedback_form = UnsubscribeFeedbackForm.new(unsubscribe_feedback_params)
+  def destroy
+    subscription = Subscription.find_and_verify_by_token(token)
+    raise ActiveRecord::RecordNotFound unless subscription.active?
 
-    if @unsubscribe_feedback_form.valid? && @subscription.unsubscribe_feedbacks.create(unsubscribe_feedback_params)
-      if current_jobseeker
-        redirect_to jobseekers_subscriptions_path, success: t(".success")
-      else
-        render :feedback_received
-      end
-    else
-      render :unsubscribe
-    end
+    trigger_subscription_event(:job_alert_subscription_unsubscribed, subscription)
+    subscription.unsubscribe
+
+    redirect_to new_subscription_unsubscribe_feedback_path(subscription)
   end
 
   private
@@ -115,9 +109,5 @@ class SubscriptionsController < ApplicationController
 
   def token
     ParameterSanitiser.call(params).require(:id)
-  end
-
-  def unsubscribe_feedback_params
-    ParameterSanitiser.call(params.require(:unsubscribe_feedback_form).permit(:reason, :other_reason, :additional_info))
   end
 end

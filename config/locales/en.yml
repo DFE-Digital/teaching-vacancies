@@ -481,15 +481,17 @@ en:
         - can unsubscribe at any time
         - receive no more than 1 email a day
       title: Subscribers
+    frequency_label:
+      current: 'You are receiving these alerts '
+      future: 'You will receive these alerts '
+    frequency:
+      daily: daily, at around 3 pm
+      weekly: weekly (Friday evening at around 6 pm)
     create:
       success: Your job alert has been created
     confirm:
       back_to_search_results: Return to your search results
       body: We sent an email confirmation to %{email}.
-      frequency_label: 'You will receive alerts '
-      frequency:
-        daily: daily, at around 3 pm
-        weekly: weekly (Friday evening at around 6 pm)
       header:
         create: Your email subscription has started
         update: Your job alert has been updated
@@ -533,17 +535,28 @@ en:
       description: You can change the search criteria you have used by amending the keywords, location or filters before you create your alert.
       title: Create your job alert
     unsubscribe:
+      button_text: Unsubscribe
+      description: 'Clicking "Unsubscribe" will unsubscribe you from this job alert:'
+      edit_instead_html: 'You can %{edit_link} instead if you just want to change:'
+      edit_instead_link: edit this job alert
+      edit_instead_options_html: |
+        <ul class="govuk-list govuk-list--bullet">
+          <li>how often you get alerts</li>
+          <li>your alert criteria, for example keywords or location</li>
+        </ul>
+      heading: Unsubscribe from this job alert
+      title: Unsubscribe from this job alert
+    update:
+      success: Your job alert has been updated
+  unsubscribe_feedbacks:
+    new:
       confirmation: You will no longer receive updates for this job alert.
       header: You have been unsubscribed from this alert
       heading: Help us improve job alerts
-      resubscribe_html: If you unsubscribed accidentally, you can %{link}.
-      resubscribe_link_text: resubscribe here
       title: Subscription deleted
-    unsubscribe_feedback:
+    create:
       success: You have successfully unsubscribed from your job alert
-    update:
-      success: Your job alert has been updated
-    feedback_received:
+    confirmation:
       header: Thank you for your feedback
       heading: Create a new alert
       new_search_html: You can create a new job alert by starting a %{link}

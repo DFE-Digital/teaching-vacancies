@@ -1,0 +1,23 @@
+- content_for :page_title_prefix, t(".title")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = govuk_panel title: t(".header"), body: t(".confirmation")
+
+    = form_for @unsubscribe_feedback_form, url: subscription_unsubscribe_feedbacks_path(@subscription) do |f|
+      = f.govuk_error_summary
+
+      h2.govuk-heading-l
+        = t(".heading")
+
+      = f.govuk_radio_buttons_fieldset(:reason) do
+        - UnsubscribeFeedback.reasons.each_key do |reason|
+          - if reason == "other_reason"
+            = f.govuk_radio_button :reason, reason do
+              = f.govuk_text_field :other_reason, label: { size: "s" }
+          - else
+            = f.govuk_radio_button :reason, reason
+
+      = f.govuk_text_area :additional_info, label: { size: "s" }, max_chars: 1200
+
+      = f.govuk_submit t("buttons.submit_feedback")

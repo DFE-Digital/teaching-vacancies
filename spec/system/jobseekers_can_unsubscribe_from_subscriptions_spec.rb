@@ -1,18 +1,18 @@
 require "rails_helper"
 
 RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
-  let(:search_criteria) { { keyword: "English", location: "SW1A1AA", radius: 20 } }
-  let(:subscription) { create(:subscription, frequency: :daily, search_criteria: search_criteria.to_json) }
-
-  before do
-    visit unsubscribe_subscription_path(token)
-  end
+  let(:subscription) { create(:subscription) }
 
   context "with the correct token" do
+    before do
+      visit unsubscribe_subscription_path(token)
+      click_on I18n.t("subscriptions.unsubscribe.button_text")
+    end
+
     let(:token) { subscription.token }
 
     it "unsubscribes successfully" do
-      expect(page).to have_content(I18n.t("subscriptions.unsubscribe.header"))
+      expect(page).to have_content(I18n.t("unsubscribe_feedbacks.new.header"))
     end
 
     it "removes the email from the subscription" do
@@ -23,7 +23,7 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
       expect(subscription.reload.active).to eq(false)
     end
 
-    it "allows me to provide a feeback" do
+    it "allows me to provide feedback" do
       click_on I18n.t("buttons.submit_feedback")
 
       expect(page).to have_content("There is a problem")
@@ -31,46 +31,19 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
       choose "unsubscribe-feedback-form-reason-job-found-field"
       click_on I18n.t("buttons.submit_feedback")
 
-      expect(page).to have_content(I18n.t("subscriptions.feedback_received.header"))
+      expect(page).to have_content(I18n.t("unsubscribe_feedbacks.confirmation.header"))
 
-      click_on I18n.t("subscriptions.feedback_received.new_search_link")
+      click_on I18n.t("unsubscribe_feedbacks.confirmation.new_search_link")
 
       expect(current_path).to eq jobs_path
     end
-
-    context "with deprecated search criteria" do
-      let(:search_criteria) { { keyword: "English", location: "SW1A1AA", radius: 20 } }
-
-      it "unsubscribes successfully" do
-        expect(page).to have_content(I18n.t("subscriptions.unsubscribe.header"))
-      end
-
-      it "removes the email from the subscription" do
-        expect(subscription.reload.email).to be_blank
-      end
-
-      it "updates the subscription status" do
-        expect(subscription.reload.active).to eq(false)
-      end
-
-      it "allows me to provide a feeback" do
-        click_on I18n.t("buttons.submit_feedback")
-
-        expect(page).to have_content("There is a problem")
-
-        choose "unsubscribe-feedback-form-reason-job-found-field"
-        click_on I18n.t("buttons.submit_feedback")
-
-        expect(page).to have_content(I18n.t("subscriptions.feedback_received.header"))
-
-        click_on I18n.t("subscriptions.feedback_received.new_search_link")
-
-        expect(current_path).to eq jobs_path
-      end
-    end
   end
 
-  context "with the incorrect token" do
+  context "with an incorrect token" do
+    before do
+      visit unsubscribe_subscription_path(token)
+    end
+
     let(:token) { subscription.id }
 
     it "returns not found" do
@@ -79,6 +52,10 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
   end
 
   context "with an old token" do
+    before do
+      visit unsubscribe_subscription_path(token)
+    end
+
     let(:token) { subscription.token }
 
     scenario "still returns 200" do
