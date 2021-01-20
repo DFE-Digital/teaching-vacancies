@@ -1,0 +1,17 @@
+- content_for :page_title_prefix, t(".title")
+
+= render(Jobseekers::JobApplicationHeadingComponent.new(vacancy: @vacancy))
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l = t(".title")
+    p.govuk-body = t(".description", job_title: @vacancy.job_title, organisation_name: @vacancy.parent_organisation_name)
+
+    = govuk_button_to t("buttons.start_application"), jobseekers_job_applications_path, class: "govuk-button--start"
+
+    = govuk_link_to t("buttons.cancel"), "#"
+
+  .govuk-grid-column-one-third
+    .account-sidebar
+      h2.account-sidebar__heading = t(".assistance.heading")
+      p.govuk-body-s = t(".assistance.content_html", privacy_html: govuk_link_to(t(".assistance.privacy"), page_path("privacy-policy")), terms_html: govuk_link_to(t(".assistance.terms"), page_path("terms-and-conditions")))
