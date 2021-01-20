@@ -61,7 +61,6 @@ Rails.application.routes.draw do
   namespace :api do
     scope "v:api_version", api_version: /1/ do
       resources :jobs, only: %i[index show], controller: "vacancies"
-      get "/coordinates(/:location)", to: "coordinates#show"
       get "/location_suggestion(/:location)", to: "location_suggestion#show"
     end
   end
