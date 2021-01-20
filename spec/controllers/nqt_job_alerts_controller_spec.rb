@@ -7,16 +7,6 @@ RSpec.describe NqtJobAlertsController, type: :controller do
 
   let(:form_inputs) { { keywords: keywords, location: location, email: email } }
 
-  describe "#new" do
-    let(:params) { form_inputs }
-    let(:subject) { get :new, params: params }
-
-    it "returns 200" do
-      subject
-      expect(response.code).to eq("200")
-    end
-  end
-
   describe "#create" do
     let(:params) { { nqt_job_alerts_form: form_inputs } }
     let(:search_criteria) do
@@ -24,15 +14,6 @@ RSpec.describe NqtJobAlertsController, type: :controller do
     end
     let(:subscription) { Subscription.last }
     let(:subject) { post :create, params: params }
-
-    it "returns 200" do
-      subject
-      expect(response.code).to eq("200")
-    end
-
-    it "queues a job to audit the subscription" do
-      expect { subject }.to have_enqueued_job(AuditSubscriptionCreationJob)
-    end
 
     it "calls SubscriptionMailer" do
       expect(SubscriptionMailer).to receive_message_chain(:confirmation, :deliver_later)
@@ -43,6 +24,16 @@ RSpec.describe NqtJobAlertsController, type: :controller do
       expect { subject }.to change { Subscription.count }.by(1)
       expect(subscription.email).to eq(email)
       expect(subscription.search_criteria).to eq(search_criteria)
+    end
+
+    it "triggers a `job_alert_subscription_created` event" do
+      expect { subject }.to have_triggered_event(:job_alert_subscription_created).with_request_data.and_data(
+        email_identifier: anonymised_form_of("test@gmail.com"),
+        frequency: "daily",
+        subscription_identifier: anything,
+        recaptcha_score: anything,
+        search_criteria: /^{.*}$/,
+      )
     end
 
     context "when parameters include syntax" do

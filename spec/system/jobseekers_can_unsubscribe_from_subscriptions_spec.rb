@@ -23,11 +23,6 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
       expect(subscription.reload.active).to eq(false)
     end
 
-    it "audits the unsubscription" do
-      activity = subscription.activities.last
-      expect(activity.key).to eq("subscription.daily_alert.delete")
-    end
-
     it "allows me to provide a feeback" do
       click_on I18n.t("buttons.submit_feedback")
 
@@ -56,11 +51,6 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
 
       it "updates the subscription status" do
         expect(subscription.reload.active).to eq(false)
-      end
-
-      it "audits the unsubscription" do
-        activity = subscription.activities.last
-        expect(activity.key).to eq("subscription.daily_alert.delete")
       end
 
       it "allows me to provide a feeback" do

@@ -109,11 +109,6 @@ RSpec.describe "Jobseekers can create a job alert from a search" do
         expect(SubscriptionMailer).to receive(:confirmation) { message_delivery }
         expect(message_delivery).to receive(:deliver_later)
         click_on I18n.t("buttons.subscribe")
-
-        activities = PublicActivity::Activity.all
-        keys = activities.pluck(:key)
-        expect(keys).to include("subscription.alert.new")
-        expect(keys).to include("subscription.daily_alert.create")
       end
     end
 
@@ -138,11 +133,6 @@ RSpec.describe "Jobseekers can create a job alert from a search" do
         expect(SubscriptionMailer).to receive(:confirmation) { message_delivery }
         expect(message_delivery).to receive(:deliver_later)
         click_on I18n.t("buttons.subscribe")
-
-        activities = PublicActivity::Activity.all
-        keys = activities.pluck(:key)
-        expect(keys).to include("subscription.alert.new")
-        expect(keys).to include("subscription.daily_alert.create")
       end
     end
   end

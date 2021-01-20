@@ -13,10 +13,7 @@ RSpec.describe ApplicationController, type: :controller do
 
   describe "page_visited events" do
     it "triggers a `page_visited` event on a request" do
-      expect { get :test_action }.to have_enqueued_job(SendEventToDataWarehouseJob).with(
-        "events",
-        hash_including(type: :page_visited, request_path: "/test_action"),
-      )
+      expect { get :test_action }.to have_triggered_event(:page_visited).with_request_data
     end
   end
 

@@ -45,13 +45,7 @@ class RequestEvent < Event
     AbTests.new(session).current_variants.map { |test, variant| { test: test, variant: variant } }
   end
 
-  ##
-  # Hashes potentially identifiable information. Uses "bubblebabble" algorithm to make the
-  # resulting SHA hash more human-readable.
-  #
-  # @param [#to_s] identifier An item of identifiable information to anonymise
-  # @return [String, nil] a human-readable anonymised identifier or nil if the identifier is blank
   def anonymise(identifier)
-    Digest::SHA256.bubblebabble(identifier.to_s) if identifier.present?
+    StringAnonymiser.new(identifier).to_s if identifier.present?
   end
 end

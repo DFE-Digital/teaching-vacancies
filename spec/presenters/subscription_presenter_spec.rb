@@ -116,22 +116,6 @@ RSpec.describe SubscriptionPresenter do
     end
   end
 
-  describe "#to_row" do
-    let(:to_row) { presenter.to_row }
-
-    it "returns the right number of keys" do
-      expect(to_row.count).to eq(described_class::SEARCH_CRITERIA_SORT_ORDER.count)
-    end
-
-    context "when array values in search criteria" do
-      let(:search_criteria) { { phases: %w[primary secondary 16-19] } }
-
-      it "makes them human readable" do
-        expect(to_row[:phases]).to eq("primary, secondary, 16-19")
-      end
-    end
-  end
-
   describe "#search_criteria_field" do
     it "does not return the radius field" do
       expect(presenter.send(:search_criteria_field, "radius", "some radius")).to eq(nil)

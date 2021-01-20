@@ -2,11 +2,16 @@ require "rails_helper"
 
 RSpec.describe SubscriptionsController, type: :controller do
   describe "#new" do
-    subject { get :new, params: { search_criteria: { keyword: "english" } }.symbolize_keys }
+    it "sets the origin in the session so we can track it with subscription events" do
+      get :new, params: { origin: "/foo/bar?baz=bat" }
 
-    it "returns 200" do
-      subject
-      expect(response.code).to eq("200")
+      expect(session[:subscription_origin]).to eq("/foo/bar?baz=bat")
+    end
+
+    it "ignores origin param unless it's a path on our app" do
+      get :new, params: { origin: "https://www.evil.com" }
+
+      expect(session[:subscription_origin]).not_to be_present
     end
   end
 
@@ -23,19 +28,25 @@ RSpec.describe SubscriptionsController, type: :controller do
     let(:subject) { post :create, params: params }
     let(:subscription) { Subscription.last }
 
-    it "returns 200" do
-      subject
-      expect(response.code).to eq("200")
-    end
-
-    it "queues a job to audit the subscription" do
-      expect { subject }.to have_enqueued_job(AuditSubscriptionCreationJob)
+    before do
+      session[:subscription_origin] = "/some/where"
     end
 
     it "creates a subscription" do
       expect { subject }.to change { Subscription.count }.by(1)
       expect(subscription.email).to eq("foo@email.com")
       expect(subscription.search_criteria).to eq({ keyword: "english" }.to_json)
+    end
+
+    it "triggers a `job_alert_subscription_created` event" do
+      expect { subject }.to have_triggered_event(:job_alert_subscription_created).with_request_data.and_data(
+        email_identifier: anonymised_form_of("foo@email.com"),
+        frequency: "daily",
+        subscription_identifier: anything,
+        recaptcha_score: anything,
+        search_criteria: /^{.*}$/,
+        origin: "/some/where",
+      )
     end
 
     context "with unsafe params" do
@@ -55,19 +66,8 @@ RSpec.describe SubscriptionsController, type: :controller do
     end
   end
 
-  describe "#edit" do
-    let(:subscription) { create(:subscription, email: "bob@dylan.com", frequency: :daily) }
-
-    subject { get :edit, params: { id: subscription.token } }
-
-    it "returns 200" do
-      subject
-      expect(response.code).to eq("200")
-    end
-  end
-
   describe "#update" do
-    let(:subscription) { create(:subscription, email: "bob@dylan.com", frequency: :daily) }
+    let!(:subscription) { create(:subscription, email: "bob@dylan.com", frequency: :daily) }
 
     let(:params) do
       {
@@ -76,15 +76,21 @@ RSpec.describe SubscriptionsController, type: :controller do
         keyword: "english",
       }
     end
-    let!(:subject) { put :update, params: { id: subscription.token, subscription_form: params } }
+    let(:subject) { put :update, params: { id: subscription.token, subscription_form: params } }
 
-    it "returns 200" do
-      expect(response.code).to eq("200")
-    end
-
-    it "updates a subscription" do
+    it "updates the subscription" do
+      expect { subject }.not_to(change { Subscription.count })
       expect(subscription.reload.email).to eq("jimi@hendrix.com")
       expect(subscription.reload.search_criteria).to eq({ keyword: "english" }.to_json)
+    end
+
+    it "triggers a `job_alert_subscription_updated` event" do
+      expect { subject }.to have_triggered_event(:job_alert_subscription_updated).with_request_data.and_data(
+        email_identifier: anonymised_form_of("jimi@hendrix.com"),
+        frequency: "weekly",
+        subscription_identifier: anonymised_form_of(subscription.id),
+        search_criteria: /^{.*}$/,
+      )
     end
 
     context "with unsafe params" do
@@ -99,6 +105,21 @@ RSpec.describe SubscriptionsController, type: :controller do
       it "does not update a subscription" do
         expect(subscription.reload.email).to eq("bob@dylan.com")
       end
+    end
+  end
+
+  describe "#unsubscribe" do
+    let!(:subscription) { create(:subscription, email: "bob@dylan.com", frequency: :daily) }
+
+    let(:subject) { get :unsubscribe, params: { id: subscription.token } }
+
+    it "triggers a `job_alert_subscription_unsubscribed` event" do
+      expect { subject }.to have_triggered_event(:job_alert_subscription_unsubscribed).with_request_data.and_data(
+        email_identifier: anonymised_form_of("bob@dylan.com"),
+        frequency: "daily",
+        subscription_identifier: anonymised_form_of(subscription.id),
+        search_criteria: /^{.*}$/,
+      )
     end
   end
 end

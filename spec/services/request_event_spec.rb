@@ -54,10 +54,10 @@ RSpec.describe RequestEvent do
         request_ab_tests: [{ test: :foo, variant: :bar }],
         response_content_type: "image/gif",
         response_status: 418,
-        user_anonymised_request_identifier: "xeben-tocep-fadin-tezyg-rapic-begyn-hiraz-pedus-revuk-fisif-lypeh-tohim-lefyb-zolon-nilyk-sigud-coxux",
-        user_anonymised_session_id: "xiler-ciziv-gytol-bivib-mycam-byvyp-linek-musoh-hutud-cosyc-bubul-kolat-kenyt-dumiz-gikin-zylip-poxex",
-        user_anonymised_jobseeker_id: "xuzid-hugyr-gapol-dezon-lizab-hakog-lyvoh-ryson-soded-roher-nipal-zodes-kypiz-fygob-tynit-bifys-fyxex",
-        user_anonymised_publisher_id: "xebop-senag-dehuz-fomah-satuc-vimep-humih-hesik-lyhyf-kimus-mesym-matyg-helyc-fevol-mihis-mocoz-gaxox",
+        user_anonymised_request_identifier: anonymised_form_of("Mozilla/4.0 (compatible; MSIE 5.5; Windows 95)255.255.255.255"),
+        user_anonymised_session_id: anonymised_form_of("1337"),
+        user_anonymised_jobseeker_id: anonymised_form_of("4321"),
+        user_anonymised_publisher_id: anonymised_form_of("1234"),
         data: [{ key: "foo", value: "Bar" }],
       }
     end
