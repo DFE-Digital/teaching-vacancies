@@ -46,7 +46,7 @@ RSpec.describe Search::LocationBuilder do
 
         it "sets the correct attributes" do
           expect(subject.location_category).to eq(location_polygon.name)
-          expect(subject.polygon_boundaries).to eq([location_polygon.buffers["5"]])
+          expect(subject.polygon_boundaries).to eq(location_polygon.buffers["5"])
           expect(subject.location_filter).to eq({})
           expect(subject.buffer_radius).to eq(buffer_radius)
         end
@@ -56,9 +56,23 @@ RSpec.describe Search::LocationBuilder do
     context "when a composite location is specified" do
       let(:location) { "Bedfordshire" }
 
-      let!(:bedford) { create(:location_polygon, name: "bedford", location_type: "counties", polygons: { "0" => [1, 2] }) }
-      let!(:central_bedfordshire) { create(:location_polygon, name: "central bedfordshire", location_type: "counties", polygons: { "0" => [3, 4] }) }
-      let!(:luton) { create(:location_polygon, name: "luton", location_type: "counties", polygons: { "0" => [5, 6], "1" => [7, 8] }) }
+      before do
+        create(:location_polygon,
+               name: "bedford",
+               location_type: "counties",
+               polygons: { "0" => [1, 2] },
+               buffers: { "5" => [[9, 10], [11, 12]], "10" => [[1, 2]] })
+        create(:location_polygon,
+               name: "central bedfordshire",
+               location_type: "counties",
+               polygons: { "0" => [3, 4] },
+               buffers: { "5" => [[13, 14]], "10" => [[1, 2]] })
+        create(:location_polygon,
+               name: "luton",
+               location_type: "counties",
+               polygons: { "0" => [5, 6], "1" => [7, 8] },
+               buffers: { "5" => [[15, 16]], "10" => [[1, 2]] })
+      end
 
       it "sets the correct attributes" do
         expect(subject.location_category).to eq(location)
@@ -73,7 +87,7 @@ RSpec.describe Search::LocationBuilder do
 
         it "sets the correct attributes" do
           expect(subject.location_category).to eq(location)
-          expect(subject.polygon_boundaries).to contain_exactly(bedford.buffers["5"], central_bedfordshire.buffers["5"], luton.buffers["5"])
+          expect(subject.polygon_boundaries).to contain_exactly([9, 10], [11, 12], [13, 14], [15, 16])
           expect(subject.location_filter).to eq({})
           expect(subject.buffer_radius).to eq(buffer_radius)
         end

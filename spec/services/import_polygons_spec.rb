@@ -154,6 +154,7 @@ RSpec.describe ImportPolygons do
           before do
             distances = [5, 10, 15, 20, 25]
             distances.each do |distance|
+              # These two long strings are different; they depend on the boundaries of each of the regions.
               allow(HTTParty).to receive(:get).with(
                 "https://tasks.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer/buffer?bufferSR=3857&"\
                 "distances=#{convert_miles_to_metres(distance)}&f=json&geodesic=false&geometries=%7B%22geometryType"\
