@@ -8,4 +8,13 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors, debug: Rails.en
              headers: :any,
              methods: :get
   end
+
+  allow do
+    # Only allow our domains access to location suggestions API with HTTP GET
+    origins Rails.application.config.allowed_cors_origin.call
+
+    resource "/api/v1/location_suggestion/*",
+             headers: :any,
+             methods: :get
+  end
 end
