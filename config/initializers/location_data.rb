@@ -5,7 +5,7 @@ ons_cities = YAML.load_file(base_path.join("ons_cities.yml"))
 ons_counties_and_unitary_authorities = YAML.load_file(base_path.join("ons_counties_and_unitary_authorities.yml"))
 ons_regions = YAML.load_file(base_path.join("ons_regions.yml"))
 
-DOWNCASE_ONS_CITIES = ons_cities.map(&:downcase).freeze
+DOWNCASE_ONS_CITIES = ons_cities.map(&:first).map(&:downcase).freeze
 DOWNCASE_ONS_COUNTIES_AND_UNITARY_AUTHORITIES = ons_counties_and_unitary_authorities.map(&:first).map(&:downcase).freeze
 DOWNCASE_ONS_REGIONS = ons_regions.map(&:first).map(&:downcase).freeze
 
@@ -31,12 +31,9 @@ LOCATION_POLYGON_SETTINGS = { # ESMARspQHYMw9BZ9 is not an API key
 }.freeze
 
 # Locations with the location type from a human point of view for VacancyFacets
-LOCATIONS_MAPPED_TO_HUMAN_FRIENDLY_TYPES =
-  [ons_regions, ons_counties_and_unitary_authorities].map { |file|
-    file.map { |line|
-      { line.first.downcase => line.second }
-    }.inject(&:merge)
-  }.inject(&:merge).freeze
+LOCATIONS_MAPPED_TO_HUMAN_FRIENDLY_TYPES = [ons_regions, ons_counties_and_unitary_authorities, ons_cities].map { |file|
+    file.to_h.transform_keys(&:downcase)
+}.inject(&:merge).freeze
 
 ons_counties = ons_counties_and_unitary_authorities.select { |line| line.second == "counties" }.map(&:first)
 COUNTIES = composite_locations.keys + ons_counties

@@ -41,13 +41,11 @@ class ImportPolygons
         polygons[index.to_s] = points
       end
 
-      human_friendly_location_type = LOCATIONS_MAPPED_TO_HUMAN_FRIENDLY_TYPES[location_name] || api_location_type.to_s
-
       location_polygon = LocationPolygon.find_or_create_by(name: location_name)
 
       # Update location_type separately to reduce chance of creating duplicate LocationPolygons for the same location
       # when we change a location's location-type mapping.
-      location_polygon.update(location_type: human_friendly_location_type)
+      location_polygon.update(location_type: LOCATIONS_MAPPED_TO_HUMAN_FRIENDLY_TYPES[location_name])
 
       # Skip buffers API call if the points have not changed since last time we used them to calculate the buffers.
       location_polygon.update(polygons: polygons, buffers: get_buffers(polygons)) unless polygons == location_polygon.polygons

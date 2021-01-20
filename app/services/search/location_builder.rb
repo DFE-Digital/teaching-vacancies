@@ -6,11 +6,11 @@ class Search::LocationBuilder
 
   include DistanceHelper
 
-  attr_reader :location, :location_category, :location_filter, :polygon_boundaries, :radius, :buffer_radius
+  attr_reader :buffer_radius, :location, :location_category, :location_filter, :polygon_boundaries, :radius
 
   def initialize(location, radius, location_category, buffer_radius)
     @location = location || location_category
-    @radius = (radius || DEFAULT_RADIUS).to_i
+    @radius = (radius.to_i || DEFAULT_RADIUS)
     @buffer_radius = buffer_radius
     @location_filter = {}
     @location_category = if @location.present? && LocationCategory.include?(@location)
