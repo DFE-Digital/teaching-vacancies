@@ -10,7 +10,7 @@ RSpec.shared_examples "a successful import" do
   end
 
   it "imports the boundary polygons" do
-    expect(imported_polygon.polygons).to eq(boundary_polygons)
+    expect(imported_polygon.polygons).to eq(polygons)
   end
 end
 
@@ -36,16 +36,15 @@ RSpec.describe ImportPolygons do
       let(:human_friendly_location_type) { nil }
 
       before do
-        allow(subject).to receive(:get_buffers).with(boundary_polygons).and_return({ "5" => %w[lat lon], "10" => %w[lat lon] })
+        allow(subject).to receive(:get_buffers).with(polygons["polygons"]).and_return({ "5" => %w[lat lon], "10" => %w[lat lon] })
         subject.call
       end
 
       context "when using the regions API endpoint" do
         let(:api_location_type) { :regions }
         let(:location_name) { "north east" }
-        let(:boundary_polygons) do
-          { "0" => [55.8110853660943, -2.0343575091738, 55.7647624900862, -1.9841097397706],
-            "1" => [52, 0, 53, 1] }
+        let(:polygons) do
+          { "polygons" => [[55.8110853660943, -2.0343575091738, 55.7647624900862, -1.9841097397706], [52, 0, 53, 1]] }
         end
 
         it_behaves_like "a successful import"
@@ -62,9 +61,8 @@ RSpec.describe ImportPolygons do
       context "when using the counties and unitary authorities API endpoint" do
         let(:api_location_type) { :counties }
         let(:location_name) { "cumbria" }
-        let(:boundary_polygons) do
-          { "0" => [53, 1, 54, 2],
-            "1" => [54.6991864051642, -1.1776332863422, 54.6918238899294, -1.1739811767539] }
+        let(:polygons) do
+          { "polygons" => [[53, 1, 54, 2], [54.6991864051642, -1.1776332863422, 54.6918238899294, -1.1739811767539]] }
         end
 
         it_behaves_like "a successful import"
@@ -81,7 +79,7 @@ RSpec.describe ImportPolygons do
       context "when using the cities API endpoint" do
         let(:api_location_type) { :cities }
         let(:location_name) { "bath" }
-        let(:boundary_polygons) { { "0" => [51.406361958644, -2.3780576677997, 51.4063596372237, -2.3787764623145] } }
+        let(:polygons) { { "polygons" => [[51.406361958644, -2.3780576677997, 51.4063596372237, -2.3787764623145]] } }
 
         it_behaves_like "a successful import"
         it_behaves_like "an import that excludes out-of-scope locations"
@@ -92,23 +90,27 @@ RSpec.describe ImportPolygons do
       let(:api_location_type) { :cities }
       let(:location_name) { "bath" }
       let(:buffer_response) { JSON.parse(file_fixture("buffer_response.json").read) }
-      let(:buffer_coordinates) { [65.06414131400004, -12.5761721229999353, 65.06185937400005, -12.5761901179999427] }
+      let(:buffer_polygon) { [65.06414131400004, -12.5761721229999353, 65.06185937400005, -12.5761901179999427] }
       let(:imported_buffers) do
         {
-          "5" => [buffer_coordinates],
-          "10" => [buffer_coordinates],
-          "15" => [buffer_coordinates],
-          "20" => [buffer_coordinates],
-          "25" => [buffer_coordinates],
+          "5" => [buffer_polygon],
+          "10" => [buffer_polygon],
+          "15" => [buffer_polygon],
+          "20" => [buffer_polygon],
+          "25" => [buffer_polygon],
         }
       end
 
       context "when the points in the response are the same as the last time the task was run" do
-        let(:boundary_polygons) { { "0" => [51.406361958644, -2.3780576677997, 51.4063596372237, -2.3787764623145] } }
+        let(:polygons) { { "polygons" => [[51.406361958644, -2.3780576677997, 51.4063596372237, -2.3787764623145]] } }
         let(:original_buffers) { { "5" => "This is a hash that won't be updated" } }
 
         before do
-          LocationPolygon.create(name: location_name, location_type: "cities", polygons: boundary_polygons, buffers: original_buffers)
+          create(:location_polygon,
+                 name: location_name,
+                 location_type: "cities",
+                 polygons: polygons,
+                 buffers: original_buffers)
           subject.call
         end
 
@@ -143,11 +145,11 @@ RSpec.describe ImportPolygons do
           let(:location_name) { "north east" }
           let(:imported_buffers) do
             {
-              "5" => [buffer_coordinates, buffer_coordinates],
-              "10" => [buffer_coordinates, buffer_coordinates],
-              "15" => [buffer_coordinates, buffer_coordinates],
-              "20" => [buffer_coordinates, buffer_coordinates],
-              "25" => [buffer_coordinates, buffer_coordinates],
+              "5" => [buffer_polygon, buffer_polygon],
+              "10" => [buffer_polygon, buffer_polygon],
+              "15" => [buffer_polygon, buffer_polygon],
+              "20" => [buffer_polygon, buffer_polygon],
+              "25" => [buffer_polygon, buffer_polygon],
             }
           end
 

@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.shared_examples "a search using polygons" do |options|
   it "sets the correct attributes" do
     expect(subject.location_category).to eq(options&.dig(:location)&.presence || location_polygon.name)
-    expect(subject.polygon_boundaries).to eq(location_polygon.polygons.values)
+    expect(subject.polygon_boundaries).to eq(location_polygon.polygons["polygons"])
     expect(subject.location_filter).to eq({})
     expect(subject.buffer_radius).to eq(buffer_radius)
   end
@@ -60,17 +60,17 @@ RSpec.describe Search::LocationBuilder do
         create(:location_polygon,
                name: "bedford",
                location_type: "counties",
-               polygons: { "0" => [1, 2] },
+               polygons: { "polygons" => [[1, 2]] },
                buffers: { "5" => [[9, 10], [11, 12]], "10" => [[1, 2]] })
         create(:location_polygon,
                name: "central bedfordshire",
                location_type: "counties",
-               polygons: { "0" => [3, 4] },
+               polygons: { "polygons" => [[3, 4]] },
                buffers: { "5" => [[13, 14]], "10" => [[1, 2]] })
         create(:location_polygon,
                name: "luton",
                location_type: "counties",
-               polygons: { "0" => [5, 6], "1" => [7, 8] },
+               polygons: { "polygons" => [[5, 6], [7, 8]] },
                buffers: { "5" => [[15, 16]], "10" => [[1, 2]] })
       end
 

@@ -29,17 +29,18 @@ class ImportPolygons
       #
       # Store them in a hash because Postgres doesn't support multidimensional arrays of varying extents.
 
-      polygons = {}
-      geometry_rings.each_with_index do |ring, index|
-        points = []
+      polygons = []
+      geometry_rings.each do |ring|
+        polygon = []
         ring.each do |point|
           # API returns coords in an unconventional lng,lat order
           # Coordinates rounded as they are stored as double precision floats which have a precision of
           # 15 decimal digits. All UK coordinates only have a maximum of 2 digits before decimal point.
-          points.push(*point.reverse.map { |coord| coord.round(13) })
+          polygon.push(*point.reverse.map { |coord| coord.round(13) })
         end
-        polygons[index.to_s] = points
+        polygons.push(polygon)
       end
+      polygons_hash = { "polygons" => polygons }
 
       location_polygon = LocationPolygon.find_or_create_by(name: location_name)
 
@@ -48,7 +49,7 @@ class ImportPolygons
       location_polygon.update(location_type: LOCATIONS_MAPPED_TO_HUMAN_FRIENDLY_TYPES[location_name])
 
       # Skip buffers API call if the points have not changed since last time we used them to calculate the buffers.
-      location_polygon.update(polygons: polygons, buffers: get_buffers(polygons)) unless polygons == location_polygon.polygons
+      location_polygon.update(polygons: polygons_hash, buffers: get_buffers(polygons)) unless polygons_hash == location_polygon.polygons
     end
   end
 
@@ -64,7 +65,7 @@ class ImportPolygons
     buffers = {}
     BUFFER_DISTANCES_IN_MILES.each do |distance|
       buffered_polygon_coords = []
-      polygons.each_value do |polygon|
+      polygons.each do |polygon|
         # convert 1D array to 2D array for arcgis
         polygon_coords = polygon.each_slice(2).to_a
         response = HTTParty.get(buffer_api_endpoint(polygon_coords, convert_miles_to_metres(distance)))

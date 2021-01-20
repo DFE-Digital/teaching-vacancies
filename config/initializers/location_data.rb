@@ -32,7 +32,7 @@ LOCATION_POLYGON_SETTINGS = { # ESMARspQHYMw9BZ9 is not an API key
 
 # Locations with the location type from a human point of view for VacancyFacets
 LOCATIONS_MAPPED_TO_HUMAN_FRIENDLY_TYPES = [ons_regions, ons_counties_and_unitary_authorities, ons_cities].map { |file|
-    file.to_h.transform_keys(&:downcase)
+  file.to_h.transform_keys(&:downcase)
 }.inject(&:merge).freeze
 
 ons_counties = ons_counties_and_unitary_authorities.select { |line| line.second == "counties" }.map(&:first)

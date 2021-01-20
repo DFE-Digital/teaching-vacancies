@@ -4,7 +4,7 @@ FactoryBot.define do
     location_type { "cities" }
     polygons do
       {
-        "0" => [51.466517484391, -0.4919530143329],
+        "polygons" => [[51.466517484391, -0.4919530143329]],
       }
     end
     buffers do

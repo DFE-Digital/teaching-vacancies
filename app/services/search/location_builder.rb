@@ -10,7 +10,7 @@ class Search::LocationBuilder
 
   def initialize(location, radius, location_category, buffer_radius)
     @location = location || location_category
-    @radius = (radius.to_i || DEFAULT_RADIUS)
+    @radius = (radius || DEFAULT_RADIUS).to_i
     @buffer_radius = buffer_radius
     @location_filter = {}
     @location_category = if @location.present? && LocationCategory.include?(@location)
@@ -46,7 +46,7 @@ class Search::LocationBuilder
 
     @polygon_boundaries = []
     locations.each do |location|
-      polygons = buffer_radius.present? ? location.buffers[buffer_radius] : location.polygons.values
+      polygons = buffer_radius.present? ? location.buffers[buffer_radius] : location.polygons["polygons"]
       polygons.each do |polygon|
         @polygon_boundaries.push(polygon)
       end
