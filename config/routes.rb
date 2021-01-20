@@ -24,7 +24,11 @@ Rails.application.routes.draw do
         get :check_your_email_password, to: "passwords#check_your_email_password", as: :check_your_email_password
       end
 
-      resources :saved_jobs, only: %i[new destroy index]
+      scope path: ":job_id" do
+        resources :saved_jobs, only: %i[new destroy]
+      end
+
+      resources :saved_jobs, only: %i[index]
       resources :subscriptions, only: %i[index]
       resource :account, only: %i[show]
       resource :account_feedback, only: %i[new create]

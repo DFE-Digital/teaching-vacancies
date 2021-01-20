@@ -1,6 +1,7 @@
 class Jobseekers::SavedJobsController < Jobseekers::ApplicationController
   before_action :set_up_saved_job, only: %i[new destroy]
 
+  # This action is not 'create' because we need to redirect here when an unauthenticated jobseeker attempts to save a job
   def new
     @saved_job.save
     redirect_to job_path(@vacancy), success: t(".success_html", link: jobseekers_saved_jobs_path)
@@ -24,17 +25,11 @@ class Jobseekers::SavedJobsController < Jobseekers::ApplicationController
   private
 
   def saved_job_params
-    ParameterSanitiser.call(params).permit(:id, :redirect_to_dashboard)
+    ParameterSanitiser.call(params).permit(:job_id, :redirect_to_dashboard)
   end
 
   def set_up_saved_job
-    begin
-      @vacancy = Vacancy.listed.friendly.find(saved_job_params[:id])
-    rescue ActiveRecord::RecordNotFound
-      raise unless Vacancy.trashed.friendly.exists?(saved_job_params[:id])
-
-      return render "/errors/trashed_vacancy_found", status: :not_found
-    end
+    @vacancy = Vacancy.listed.find(saved_job_params[:job_id])
     @saved_job = SavedJob.find_or_initialize_by(jobseeker_id: current_jobseeker.id, vacancy_id: @vacancy.id)
   end
 end

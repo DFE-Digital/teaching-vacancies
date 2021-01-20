@@ -129,6 +129,31 @@
   }
 }
 
+.button_to {
+  .govuk-delete-link {
+    @include govuk-font(19);
+
+    background: none;
+    border: 0;
+    color: $govuk-link-colour;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+  }
+
+  .govuk-delete-link:hover {
+    color: $govuk-link-hover-colour;
+  }
+
+  .govuk-delete-link:focus {
+    background-color: $govuk-focus-colour;
+    box-shadow: 0 -2px $govuk-focus-colour, 0 4px $govuk-focus-text-colour;
+    color: $govuk-focus-text-colour;
+    outline: 3px solid transparent;
+    text-decoration: none;
+  }
+}
+
 .grouped-text-block {
   border: govuk-spacing(1) solid $govuk-border-colour;
   margin-bottom: govuk-spacing(5);

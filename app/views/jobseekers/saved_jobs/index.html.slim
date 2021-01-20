@@ -35,7 +35,7 @@
             dl.card__actions
               dd
                 ul.actions.govuk-list
-                  li = govuk_link_to(t(".delete"), jobseekers_saved_job_path(saved_job.vacancy.slug, redirect_to_dashboard: true), method: :delete, class: "govuk-link--no-visited-state")
+                  li = button_to t(".delete"), jobseekers_saved_job_path(saved_job.vacancy.id, saved_job, redirect_to_dashboard: true), method: :delete, class: "govuk-delete-link"
 
   .govuk-grid-column-full
     = render(Jobseekers::AccountSurveyLinkComponent.new(back_link: url_for))

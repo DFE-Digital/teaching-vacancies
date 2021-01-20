@@ -23,7 +23,7 @@ class VacanciesController < ApplicationController
 
     return redirect_to(job_path(vacancy), status: :moved_permanently) if old_vacancy_path?(vacancy)
 
-    @saved = jobseeker_signed_in? && current_jobseeker.saved_jobs.pluck(:vacancy_id).include?(vacancy.id)
+    @saved_job = current_jobseeker&.saved_jobs&.find_by(vacancy_id: vacancy.id)
     @vacancy = VacancyPresenter.new(vacancy)
     @devised_job_alert_search_criteria = Search::CriteriaDeviser.new(vacancy).criteria
     @similar_jobs = Search::SimilarJobs.new(vacancy).similar_jobs
