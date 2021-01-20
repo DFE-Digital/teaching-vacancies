@@ -2,7 +2,7 @@
 # Counties, Unitary Authorities, and London boroughs are all sourced from the same dataset/endpoint at ONS' API.
 
 # 'other' can refer to a sub-part of a county, e.g. Calderdale which is part of West Yorkshire, or a part of a city,
-# e.g. a London borough, or a unitary authority that doesn't share its name with a city.
+# e.g. a borough of Manchester, or a unitary authority that doesn't share its name with a city.
 
 - ['Barking and Dagenham', 'other']
 - ['Barnet', 'other']
@@ -33,7 +33,7 @@
 - ['Cornwall', 'counties']
 - ['County Durham', 'counties']
 - ['Coventry', 'cities']
-- ['Croydon', 'other']
+- ['Croydon', 'cities']
 - ['Cumbria', 'counties']
 - ['Darlington', 'cities']
 - ['Derby', 'cities']
@@ -45,7 +45,7 @@
 - ['Ealing', 'other']
 - ['East Riding of Yorkshire', 'counties']
 - ['East Sussex', 'other']
-- ['Enfield', 'other']
+- ['Enfield', 'cities']
 - ['Essex', 'counties']
 - ['Gateshead', 'cities']
 - ['Gloucestershire', 'counties']
@@ -55,7 +55,7 @@
 - ['Hammersmith and Fulham', 'other']
 - ['Hampshire', 'counties']
 - ['Haringey', 'other']
-- ['Harrow', 'other']
+- ['Harrow', 'cities']
 - ['Hartlepool', 'cities']
 - ['Havering', 'other']
 - ['Herefordshire, County of', 'counties']
@@ -67,8 +67,8 @@
 - ['Islington', 'other']
 - ['Kensington and Chelsea', 'other']
 - ['Kent', 'counties']
-- ['Kingston upon Hull, City of', 'cities']
-- ['Kingston upon Thames', 'other']
+- ['Kingston upon Hull, City of', 'other']
+- ['Kingston upon Thames', 'cities']
 - ['Kirklees', 'other']
 - ['Knowsley', 'other']
 - ['Lambeth', 'other']
