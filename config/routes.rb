@@ -24,6 +24,18 @@ Rails.application.routes.draw do
         get :check_your_email_password, to: "passwords#check_your_email_password", as: :check_your_email_password
       end
 
+      constraints(-> { JobseekerApplicationsFeature.enabled? }) do
+        scope path: ":job_id" do
+          resources :job_applications, only: %i[new create]
+        end
+
+        resources :job_applications, only: [] do
+          resources :build, only: %i[show update], controller: "job_applications/build"
+          get :review
+          post :submit
+        end
+      end
+
       scope path: ":job_id" do
         resources :saved_jobs, only: %i[new destroy]
       end
