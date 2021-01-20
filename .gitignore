@@ -76,3 +76,6 @@ dump.rdb
 *backup*
 !bin/upload-db-backup
 *dump*
+
+# VSCode 
+.vscode
