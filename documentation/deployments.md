@@ -12,8 +12,8 @@ This builds a Docker image from a feature branch, and then uses Terraform to cre
 The GitHub actions workflow [review.yml](/.github/workflows/review.yml) performs these steps:
 - Builds a Docker image from code in the feature branch
 - Tags the Docker image with the tags:
-    - branch name (e.g. [`TEVA-1797-update-school-type-summary`](https://hub.docker.com/layers/dfedigital/teaching-vacancies/TEVA-1797-update-school-type-summary/images/sha256-dc01451b1486e40a3fb1a32ca577c65ece1a28a2ff27eefbd2455202c93caa71?context=explore)). Review apps often go through several iterations, so it's worth the creation of an image in order to speed up building from cache on subsequent pushes to the branch.
-    - a composite tag containing the PR number and a unique timestamp (e.g. [`review-pr-2664-80dd5f417a0faabfbe3f1a4bf8570eefec07139a-20210118172840`](https://hub.docker.com/layers/dfedigital/teaching-vacancies/review-pr-2664-80dd5f417a0faabfbe3f1a4bf8570eefec07139a-20210118172840/images/sha256-dc01451b1486e40a3fb1a32ca577c65ece1a28a2ff27eefbd2455202c93caa71?context=explore)). This is useful for identifying the image.
+    - branch name (e.g. [TEVA-1797-update-school-type-summary](https://hub.docker.com/layers/dfedigital/teaching-vacancies/TEVA-1797-update-school-type-summary/images/sha256-dc01451b1486e40a3fb1a32ca577c65ece1a28a2ff27eefbd2455202c93caa71?context=explore)). Review apps often go through several iterations, so it's worth the creation of an image in order to speed up building from cache on subsequent pushes to the branch.
+    - a composite tag containing the PR number and a unique timestamp (e.g. [review-pr-2664-80dd5f417a0faabfbe3f1a4bf8570eefec07139a-20210118172840](https://hub.docker.com/layers/dfedigital/teaching-vacancies/review-pr-2664-80dd5f417a0faabfbe3f1a4bf8570eefec07139a-20210118172840/images/sha256-dc01451b1486e40a3fb1a32ca577c65ece1a28a2ff27eefbd2455202c93caa71?context=explore)). This is useful for identifying the image.
 - Logs in to Docker Hub as the service account `teachingjobs`
 - Pushes the image to Docker Hub
 - Calls the [deploy_app.yml](/.github/workflows/deploy_app.yml) workflow to use Terraform to update the `web` and `worker` apps to use the new Docker image, and apply any changes to the review environment
@@ -25,7 +25,7 @@ The GitHub actions workflow [review.yml](/.github/workflows/review.yml) performs
 
 This builds and deploys a Docker image from code in the `dev` branch.
 
-- Push to the [`dev` branch](https://github.com/DFE-Digital/teaching-vacancies/tree/dev).
+- Push to the [dev branch](https://github.com/DFE-Digital/teaching-vacancies/tree/dev).
 
 The GitHub actions workflow [deploy_branch.yml](/.github/workflows/deploy_branch.yml) performs these steps:
 
@@ -65,8 +65,8 @@ performs these steps:
 - Uses Terraform to apply any changes (including providing the tag of the Docker image) to the environment
 
 Requirements:
-- `docker` CLI of at least version `19.03`
-- [`terraform` CLI](https://www.terraform.io/downloads.html) of at least version `0.13.5`
+- docker CLI of at least version `19.03`
+- [terraform CLI](https://www.terraform.io/downloads.html) of at least version `0.13.5`
 - Write access to Docker Hub `dfedigital/teaching-vacancies` repository. Ask in #digital-tools-support should you require it.
 - Log in to Docker Hub (with `docker login`)
 - Log in to GOV.UK PaaS (with `cf login --sso`). You will need a [Passcode](https://login.london.cloud.service.gov.uk/passcode)
@@ -115,7 +115,7 @@ performs these steps:
 - Uses Terraform to apply any changes (including providing the tag of the Docker image) to the `dev` environment
 
 Requirements:
-- [`terraform` CLI](https://www.terraform.io/downloads.html) of at least version `0.13.5`
+- [terraform CLI](https://www.terraform.io/downloads.html) of at least version `0.13.5`
 - Log in to Docker Hub (with `docker login`)
 - Log in to GOV.UK PaaS (with `cf login --sso`). You will need a [Passcode](https://login.london.cloud.service.gov.uk/passcode)
 
@@ -124,8 +124,8 @@ Requirements:
 ### Remove review app - GitHub Actions
 
 In usual circumstances, the review apps lifecycle will be handled via GitHub Actions
-- creation via the [`review.yml`](.github/workflows/review.yml) workflow on PR open or update
-- destruction via the [`destroy.yml`](.github/workflows/destroy.yml) workflow on PR close
+- creation via the [review.yml](.github/workflows/review.yml) workflow on PR open or update
+- destruction via the [destroy.yml](.github/workflows/destroy.yml) workflow on PR close
 
 ### Remove review app - Terraform via Makefile
 
@@ -135,7 +135,7 @@ make passcode=MyPasscode pr=2086 CONFIRM_DESTROY=true review review-destroy
 ```
 
 Requirements:
-- [`terraform` CLI](https://www.terraform.io/downloads.html) of at least version `0.13.5`
+- [terraform CLI](https://www.terraform.io/downloads.html) of at least version `0.13.5`
 - Log in to Docker Hub (with `docker login`)
 - Log in to GOV.UK PaaS (with `cf login --sso`). You will need a [Passcode](https://login.london.cloud.service.gov.uk/passcode)
 

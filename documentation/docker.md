@@ -21,7 +21,7 @@ For both stages, we:
 
 - use the [official Docker Ruby image](https://hub.docker.com/_/ruby), based off [Alpine Linux](https://alpinelinux.org/)
 - use the tag corresponding to the specific version of Ruby, but not of Alpine e.g. `ruby:2.7.2-alpine`, rather than `ruby:2.7.2-alpine3.13`
-- use the [`apk` tool](https://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management) to update and install packages
+- use the [apk tool](https://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management) to update and install packages
 - set the timezone to `Europe/London` for consistency in logs
 - set the working directory to `/teacher-vacancy`
 
@@ -43,7 +43,7 @@ RUN RAILS_ENV=staging bundle exec rake webpacker:compile
 
 - Name the stage `builder` so that it can be built individually, and allow copying of files to the `production` stage
 - Run a Ruby bundle command, excluding `development` and `test`
-- Copy any remaining files in the repo that were excluded by the [`.dockerignore`](../.dockerignore) file
+- Copy any remaining files in the repo that were excluded by the [.dockerignore](../.dockerignore) file
 - Run a Ruby bundle command, first setting `RAILS_ENV` to staging:
     - `bundle exec rake webpacker:compile`
 
@@ -139,7 +139,7 @@ build-local-image:
 
 ## Run a Docker container on Gov.UK PaaS
 
-The GitHub Action workflow [`deploy.yml`](../.github/workflows/deploy.yml):
+The GitHub Action workflow [deploy.yml](../.github/workflows/deploy.yml):
 - builds and tags a Docker image
 - pushes the Docker image to the Docker Hub repository
 - sets the Terraform variable `paas_app_docker_image` to the image tag
@@ -184,7 +184,7 @@ At this point you'll be in the `/teacher-vacancy` directory
 ### Buildx
 
 - [Buildx](https://docs.docker.com/buildx/working-with-buildx/) was introduced in Docker 19.03
-- This is a requirement for `v2` and newer versions of the GitHub Action [`docker/build-push-action`](https://github.com/docker/build-push-action)
+- This is a requirement for `v2` and newer versions of the GitHub Action [docker/build-push-action](https://github.com/docker/build-push-action)
 
 ### Caching
 
@@ -230,11 +230,11 @@ For images built off the `master` branch, we use the [SHA of the GitHub commit](
 
 ### Docker Hub organisation
 
-The Docker images for Teaching Vacancies are stored in the Docker Hub organisation [`dfedigital`](https://hub.docker.com/u/dfedigital).
+The Docker images for Teaching Vacancies are stored in the Docker Hub organisation [dfedigital](https://hub.docker.com/u/dfedigital).
 
 ### Docker Hub team
 
-The Docker Hub team [`teacherservices`](https://hub.docker.com/orgs/dfedigital/teams/teacherservices) has multiple members, (~35 in October 2020), each of which is a Docker Hub user.
+The Docker Hub team [teacherservices](https://hub.docker.com/orgs/dfedigital/teams/teacherservices) has multiple members, (~35 in October 2020), each of which is a Docker Hub user.
 
 ### Docker Hub rate limiting
 
@@ -249,7 +249,7 @@ Therefore we need to log in with Docker Team accounts.
 
 To use `docker` commands, either directly, or through the abstraction of the Makefile, you must first be logged in as a Docker user.
 
-- You will require write access to Docker Hub [`dfedigital/teaching-vacancies`](https://hub.docker.com/r/dfedigital/teaching-vacancies) repository. Ask in #digital-tools-support should you require it.
+- You will require write access to Docker Hub [dfedigital/teaching-vacancies](https://hub.docker.com/r/dfedigital/teaching-vacancies) repository. Ask in #digital-tools-support should you require it.
 - Log in to Docker Hub (with `docker login`)
 
 #### The `teachingjobs` user:

@@ -67,7 +67,7 @@ It replaces the DSI sign in method with one whereby the user is prompted to ente
 Here are the steps to follow to use our contingency fallback sign-in method.
 
 First, decide whether to switch on the fallback authentication. This call should be made by the Product Owner/Manager if they are available.
-   - An alternative to this fallback sign in method could be replacing DSI with a notice to users telling them that they can't access the service. To do this, we would reinstate the environment variable and code which was deleted in commit [`🔥 Remove FEATURE_SIGN_IN_ALERT flag`](https://github.com/DFE-Digital/teaching-vacancies/commit/bc12fb9808c955f86cd87e62648a76786516e2c3).
+   - An alternative to this fallback sign in method could be replacing DSI with a notice to users telling them that they can't access the service. To do this, we would reinstate the environment variable and code which was deleted in commit [🔥 Remove FEATURE_SIGN_IN_ALERT flag](https://github.com/DFE-Digital/teaching-vacancies/commit/bc12fb9808c955f86cd87e62648a76786516e2c3).
 
 ### Toggle Authentication Fallback
 
@@ -78,7 +78,7 @@ First, decide whether to switch on the fallback authentication. This call should
 
 Changing the environment variable within the `<env>_app_env.yml` follows the standard deployment procedure, and allows deployments to production to continue:
 - create a feature branch
-- edit the file [`terraform/workspace-variables/production_app_env.yml`](../terraform/workspace-variables/production_app_env.yml)
+- edit the file [terraform/workspace-variables/production_app_env.yml](../terraform/workspace-variables/production_app_env.yml)
 - set the environment variable `AUTHENTICATION_FALLBACK` to `true` or `false` as required
 - create a Pull Request
 - merge after approval
@@ -126,11 +126,11 @@ This does not end any sessions cached by DSI (assuming DSI is live).
 
 ### Configuration
 
-Adjust the length of time before an EmergencyLoginKey expires with `EMERGENCY_LOGIN_KEY_DURATION` in [`Publishers::SignIn::Email::SessionsController`](app/controllers/publishers/sign_in/email/sessions_controller.rb)
+Adjust the length of time before an EmergencyLoginKey expires with `EMERGENCY_LOGIN_KEY_DURATION` in [Publishers::SignIn::Email::SessionsController](app/controllers/publishers/sign_in/email/sessions_controller.rb)
 
-Adjust the default session duration with `TIMEOUT_PERIOD` in [`Publishers::BaseController`](app/controllers/publishers/base_controller.rb).
+Adjust the default session duration with `TIMEOUT_PERIOD` in [Publishers::BaseController](app/controllers/publishers/base_controller.rb).
 
-Adjust all text involved in the fallback authentication under `temp_login` in [`config/locales/en.yml`](config/locales/en.yml).
+Adjust all text involved in the fallback authentication under `temp_login` in [config/locales/en.yml](config/locales/en.yml).
 
 ### Monitoring
 

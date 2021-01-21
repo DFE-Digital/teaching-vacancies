@@ -6,7 +6,7 @@ The [onboarding](../onboarding.md) document explains the process by which new te
 
 ## Markdown files
 
-We use [`.md` Markdown](https://www.markdownguide.org/cheat-sheet) to write this file and the others in the [documentation](./documentation) directory.
+We use [Markdown](https://www.markdownguide.org/cheat-sheet) to write this file and the others in the [documentation](./documentation) directory.
 
 Go to [HackMD](https://hackmd.cloudapps.digital/) which is hosted on Gov.UK PaaS, and click `New guest note`. You can then learn Markdown while writing a document:
 - enter some text, highlight it
@@ -17,7 +17,7 @@ You'll see an instant preview of your document in the right-hand pane.
 
 ## YAML files
 
-We use [`.yml` YAML](https://rollout.io/blog/yaml-tutorial-everything-you-need-get-started/) for data files.
+We use [YAML](https://rollout.io/blog/yaml-tutorial-everything-you-need-get-started/) for data files.
 
 Go to [yamlchecker.com](https://yamlchecker.com/), and start typing YAML, e.g. the first two lines of [mapped_locations.yml](../lib/tasks/data/mapped_locations.yml):
 ```

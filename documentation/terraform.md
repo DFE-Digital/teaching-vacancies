@@ -72,7 +72,7 @@ Here we see that it's the addition of a feature flag
 ## Terraform plan as the GitHub Actions deploy user
 
 Using the principle of least privilege, GitHub Actions uses a separate IAM account for Terraform
-The `deploy` user is itself created through Terraform, in the [`terraform/common/iam.tf`](../terraform/common/iam.tf) file
+The `deploy` user is itself created through Terraform, in the [terraform/common/iam.tf](../terraform/common/iam.tf) file
 
 ### Deploy user Access key and Secret key
 
@@ -89,7 +89,7 @@ aws_access_key_id = AKIAkeyID
 aws_secret_access_key = Bz7eGsecretkey
 ```
 
-We note that in [`provider.tf`](../terraform/app/provider.tf), we do not specify a profile:
+We note that in [provider.tf](../terraform/app/provider.tf), we do not specify a profile:
 
 ```
 provider aws {

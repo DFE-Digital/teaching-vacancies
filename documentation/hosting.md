@@ -1,6 +1,6 @@
 # Hosting
 
-Teaching Vacancies is hosted on [GOV.UK PaaS](https://www.cloud.service.gov.uk/). During [onboarding](./onboarding.md) you will be added to the [`dfe-teacher-services` organisation](https://docs.cloud.service.gov.uk/orgs_spaces_users.html#organisations) and the relevant spaces. Note that this is different to GitHub.com where you will be added to the [`DFE-Digital` organization](https://github.com/DFE-Digital)
+Teaching Vacancies is hosted on [GOV.UK PaaS](https://www.cloud.service.gov.uk/). During [onboarding](./onboarding.md) you will be added to the [dfe-teacher-services organisation](https://docs.cloud.service.gov.uk/orgs_spaces_users.html#organisations) and the relevant spaces. Note that this is different to GitHub.com where you will be added to the [DFE-Digital organization](https://github.com/DFE-Digital)
 
 These are the running applications:
 
