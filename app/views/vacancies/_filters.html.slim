@@ -1,3 +1,37 @@
+ruby:
+  items = [
+    {
+      title: "Job role",
+      key: "job_roles",
+      attribute: :job_roles,
+      selected: @jobs_search_form.job_roles,
+      options: @jobs_search_form.job_role_options,
+      value_method: :first,
+      text_method: :last,
+      selected_method: :last,
+    },
+    {
+      title: "Education phase",
+      key: "education_phase",
+      attribute: :phases,
+      selected: @jobs_search_form.phases,
+      options: @jobs_search_form.phase_options,
+      value_method: :first,
+      text_method: :last,
+      selected_method: :last,
+    },
+    {
+      title: "Working pattern",
+      key: "working_patterns",
+      attribute: :working_patterns,
+      selected: @jobs_search_form.working_patterns,
+      options: @jobs_search_form.working_pattern_options,
+      value_method: :first,
+      text_method: :last,
+      selected_method: :last,
+    },
+  ]
+
 = form_for @jobs_search_form, as: "", url: jobs_path, method: :get, html: { data: { "auto-submit": true }, class: "filters-form", role: "search", aria: { label: "Search criteria" } } do |f|
   aside.filter-vacancies class="govuk-!-margin-bottom-3"
     h2.govuk-heading-m = t("jobs.filters.title")
@@ -11,4 +45,7 @@
     = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"
 
   aside
-    = render "shared/components/filters", form: f, options: { remove_buttons: true, mobile_variant: true, close_all: true }, filters: { total_count: @jobs_search_form.total_filters, title: "Filter results" }, items: [{ title: "Job role", key: "job_roles", search: false, scroll: false, attribute: :job_roles, selected: @jobs_search_form.job_roles, options: @jobs_search_form.job_role_options, value_method: :first, text_method: :last, selected_method: :last, small: true }, { title: "Education phase", key: "education_phase", search: false, scroll: false, attribute: :phases, selected: @jobs_search_form.phases, options: @jobs_search_form.phase_options, value_method: :first, text_method: :last, selected_method: :last, small: true }, { title: "Working pattern", key: "working_patterns", search: false, scroll: false, attribute: :working_patterns, selected: @jobs_search_form.working_patterns, options: @jobs_search_form.working_pattern_options, value_method: :first, text_method: :last, selected_method: :last, small: true }]
+    = render(Shared::FiltersComponent.new(form: f,
+      filters: { total_count: @jobs_search_form.total_filters, title: "Filter results" },
+      items: items,
+      options: { remove_buttons: true, mobile_variant: true, close_all: true }))
