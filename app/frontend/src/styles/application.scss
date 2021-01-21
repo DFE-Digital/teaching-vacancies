@@ -60,12 +60,13 @@ $govuk-image-url-function: frontend-image-url;
 @import 'publishers/sidebar_component/sidebar_component';
 @import 'publishers/vacancies_component/vacancies_component';
 
+@import 'shared/banner_link_component/banner_link_component';
 @import 'shared/dashboard_component/dashboard_component';
+@import 'shared/filters_component/filters_component';
 @import 'shared/navbar_component/navbar_component';
 @import 'shared/notification_component/notification_component';
-@import 'shared/banner_link_component/banner_link_component';
-@import 'shared/filters_component/filters_component';
 @import 'shared/pill_link_component/pill_link_component';
+@import 'shared/searchable_collection_checkboxes_component/searchable_collection_checkboxes_component';
 
 body {
   .govuk-width-container {

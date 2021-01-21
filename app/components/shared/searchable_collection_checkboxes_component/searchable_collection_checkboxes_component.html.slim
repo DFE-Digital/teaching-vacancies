@@ -1,0 +1,14 @@
+.tv-checkbox__group.scrollable
+  .search-input
+    input.govuk-input.search-input__input.icon.icon--left.icon--search placeholder="Search"
+    button type="submit"
+
+  = form.govuk_collection_check_boxes attribute_name,
+    collection,
+    value_method,
+    text_method,
+    hint_method,
+    small: true,
+    classes: "checkbox-label__bold",
+    legend: nil,
+    hint: nil
