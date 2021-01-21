@@ -10,4 +10,4 @@
             = t("jobs.filters.#{filter_type}")
 
         .checkbox-group__container aria-labelledby="checkbox-group-heading-#{filter_type}"
-          = render "shared/checkbox_group", f: f, search: false, scroll: false, attribute_name: filter_type.to_sym, options: @jobs_search_form.send("#{filter_type.chop}_options".to_sym), value_method: :first, text_method: :last, small: true
+          = render "shared/checkbox_group", f: f, search: false, scroll: false, attribute_name: filter_type.to_sym, options: @jobs_search_form.send("#{filter_type.chop}_options".to_sym), value_method: :first, text_method: :last, hint_method: nil, small: true
