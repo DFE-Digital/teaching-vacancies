@@ -12,4 +12,4 @@
       ul.actions.govuk-list
         li = govuk_link_to(t("jobs.edit_link"), vacancy.edit_path)
         li = govuk_link_to(t("jobs.copy_link"), vacancy.copy_path, method: :get)
-        li = govuk_link_to(t("jobs.delete_link"), vacancy.delete_path, method: :delete, data: { confirm: t("jobs.are_you_sure", job_title: vacancy.job_title) })
+        li = button_to(t("jobs.delete_link"), vacancy.delete_path, method: :delete, data: { confirm: t("jobs.are_you_sure", job_title: vacancy.job_title) }, class: "govuk-delete-link")
