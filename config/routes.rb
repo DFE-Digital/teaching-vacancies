@@ -65,10 +65,11 @@ Rails.application.routes.draw do
 
   resource :feedback, controller: "general_feedback", only: %i[new create]
 
-  resources :subscriptions, only: %i[new create edit update] do
+  resources :subscriptions, except: %i[index show] do
     get :unsubscribe, on: :member
-    post :unsubscribe_feedback, on: :member
+
     resources :job_alert_feedbacks, only: %i[new update edit]
+    resources :unsubscribe_feedbacks, only: %i[new create]
   end
 
   get "sign-up-for-NQT-job-alerts", to: "nqt_job_alerts#new", as: "nqt_job_alerts"

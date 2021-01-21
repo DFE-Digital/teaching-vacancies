@@ -10,6 +10,7 @@ FactoryBot.define do
         job_roles: %w[nqt_suitable],
         phases: %w[primary] }.to_json
     end
+    active { true }
 
     factory :daily_subscription do
       frequency { :daily }

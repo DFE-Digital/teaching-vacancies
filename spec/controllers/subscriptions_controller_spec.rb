@@ -108,10 +108,10 @@ RSpec.describe SubscriptionsController, type: :controller do
     end
   end
 
-  describe "#unsubscribe" do
+  describe "#destroy" do
     let!(:subscription) { create(:subscription, email: "bob@dylan.com", frequency: :daily) }
 
-    let(:subject) { get :unsubscribe, params: { id: subscription.token } }
+    let(:subject) { delete :destroy, params: { id: subscription.token } }
 
     it "triggers a `job_alert_subscription_unsubscribed` event" do
       expect { subject }.to have_triggered_event(:job_alert_subscription_unsubscribed).with_request_data.and_data(
