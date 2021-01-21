@@ -1,32 +1,70 @@
 en:
   jobseekers:
+    accounts:
+      footer:
+        survey_link: take our quick survey
+        survey_text_html: Spare some time to %{link} on your account experience with Teaching Vacancies.
+      header:
+        accessible_signed_in_as: You are signed in as
+      show:
+        assistance:
+          content_html: "%{link} to get help with problems you are having with your account."
+          heading: Need assistance?
+          link_text: Contact our support team
+        delete_account: Delete your account
+        page_title: Account details
+        summary_list:
+          change: Change
+          email: Email address
+          password: Account password
+          password_placeholder: "**************"
     account_feedbacks:
       create:
         success: Thank you for your feedback
       new:
         title: Account survey
-    accounts:
-      footer:
-        survey_text_html: Spare some time to %{link} on your account experience with Teaching Vacancies.
-        survey_link: take our quick survey
-      header:
-        accessible_signed_in_as: You are signed in as
-      show:
-        page_title: Account details
-        summary_list:
-          email: Email address
-          password: Account password
-          password_placeholder: "**************"
-          change: Change
-        delete_account: Delete your account
-        assistance:
-          heading: Need assistance?
-          content_html: "%{link} to get help with problems you are having with your account."
-          link_text: Contact our support team
     confirmations:
       new:
         description: The link has expired. You need to request that a new link is sent to your email address (%{email}).
         title: Your request is no longer valid
+    job_applications:
+      build:
+        personal_details:
+          description: Tell us some basic details about yourself, like how to contact you about this application.
+          title: Personal details
+      heading_component:
+        caption: "%{job_title} at %{organisation_name}"
+        heading: Application
+      new:
+        assistance:
+          content_html: You can find out more about our %{privacy_html} and our %{terms_html}.
+          heading: Terms & Conditions
+          privacy: privacy policy
+          terms: terms and conditions
+        description: >-
+          You can use this form to apply for %{job_title} through Teaching Vacancies. Your application will be sent to
+          %{organisation_name}.
+        title: Before you start
+      review:
+        title: Review your application
+      submit:
+        panel_body: "We have sent an email confirmation to %{email}"
+        title: Your application has been submitted
+    passwords:
+      check_your_email_password:
+        description: We have sent you an email with instructions on how to reset your password.
+        having_trouble_html: Still having trouble? %{mail_to} to our support team.
+        report_it: Report it
+        title: Check your email
+      edit:
+        new_password: New password
+        title: Reset your password
+      expired_token:
+        description: The link has expired. You need to request that a new link is sent to your email address (%{email}).
+        title: Your request is no longer valid
+      new:
+        description: Enter your email address and we will send you a link so that you can reset your password.
+        title: Reset your password
     registrations:
       check_your_email:
         description: We have sent you an email with simple instructions on how to verify your email address.
@@ -59,21 +97,6 @@ en:
           link: sign in
           heading: Already have an account?
         title: Create an account
-    passwords:
-      check_your_email_password:
-        description: We have sent you an email with instructions on how to reset your password.
-        having_trouble_html: Still having trouble? %{mail_to} to our support team.
-        report_it: Report it
-        title: Check your email
-      edit:
-        new_password: New password
-        title: Reset your password
-      expired_token:
-        description: The link has expired. You need to request that a new link is sent to your email address (%{email}).
-        title: Your request is no longer valid
-      new:
-        description: Enter your email address and we will send you a link so that you can reset your password.
-        title: Reset your password
     saved_jobs:
       destroy:
         success: Saved job removed

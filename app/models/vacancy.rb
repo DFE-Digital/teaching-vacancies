@@ -50,6 +50,8 @@ class Vacancy < ApplicationRecord
   has_many :saved_jobs, dependent: :destroy
   has_many :saved_by, through: :saved_jobs, source: :jobseeker
 
+  has_many :job_applications, dependent: :destroy
+
   has_many :organisation_vacancies, dependent: :destroy
   has_many :organisations, through: :organisation_vacancies
   accepts_nested_attributes_for :organisation_vacancies

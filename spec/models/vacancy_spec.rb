@@ -8,6 +8,7 @@ RSpec.describe Vacancy, type: :model do
   it { should have_many(:organisations) }
   it { should have_many(:saved_jobs) }
   it { should have_many(:saved_by) }
+  it { should have_many(:job_applications) }
 
   context "indexing for search" do
     describe "#update_index!" do
