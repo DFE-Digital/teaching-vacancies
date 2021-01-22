@@ -9,8 +9,8 @@
 
       p.govuk-body = t(".description")
 
-      = f.govuk_email_field :email, label: { text: t("helpers.label.jobseekers/sign_in_form.email"), size: "s" }, width: "two-thirds"
-      = f.govuk_password_field :password, label: { text: t("helpers.label.jobseekers/sign_in_form.password"), size: "s" }, hint: nil, width: "two-thirds"
+      = f.govuk_email_field :email, label: { text: t("helpers.label.jobseekers_sign_in_form.email"), size: "s" }, width: "two-thirds"
+      = f.govuk_password_field :password, label: { text: t("helpers.label.jobseekers_sign_in_form.password"), size: "s" }, hint: nil, width: "two-thirds"
 
       p.govuk-body = govuk_link_to(t(".forgotten"), new_jobseeker_password_path)
 

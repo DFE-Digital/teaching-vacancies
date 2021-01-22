@@ -7,7 +7,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @form, as: "job_summary_form", url: wizard_path, method: :patch do |f|
+    = form_for @form, url: wizard_path, method: :patch do |f|
       = f.govuk_error_summary
 
       h2.govuk-heading-l = t("jobs.job_summary")
@@ -17,7 +17,7 @@
       = f.govuk_text_area :job_summary, label: { size: "s" }, rows: 10, required: true
 
       = f.govuk_text_area :about_school,
-        label: { text: t("helpers.label.job_summary_form.about_organisation_html", organisation: vacancy_about_school_label_organisation(@vacancy)), size: "s" },
+        label: { text: t("helpers.label.publishers_job_listing_job_summary_form.about_organisation_html", organisation: vacancy_about_school_label_organisation(@vacancy)), size: "s" },
         hint: { text: vacancy_about_school_hint_text(@vacancy) },
         value: vacancy_about_school_value(@vacancy),
         rows: 10,

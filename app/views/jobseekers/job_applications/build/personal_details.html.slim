@@ -8,7 +8,7 @@
     h1.govuk-heading-l = t(".title")
     p.govuk-body = t(".description")
 
-    = form_for @form, as: "personal_details_form", url: wizard_path, method: :patch do |f|
+    = form_for @form, url: wizard_path, method: :patch do |f|
       = f.govuk_error_summary
       = f.govuk_text_field :first_name, label: { size: "s" }, width: "one-half"
       = f.govuk_submit t("buttons.continue")

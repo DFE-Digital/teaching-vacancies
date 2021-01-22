@@ -7,7 +7,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @form, as: "schools_form", url: wizard_path, method: :patch do |f|
+    = form_for @form, url: wizard_path, method: :patch do |f|
       = f.govuk_error_summary
 
       h2.govuk-heading-l = t("jobs.job_location")
@@ -15,7 +15,7 @@
       = render "publishers/vacancies/vacancy_form_partials/hidden_state_input", f: f
 
       - if @multiple_schools && @school_options.count > 10
-        = f.govuk_fieldset legend: { text: t("helpers.legend.schools_form.organisation_ids_html") } do
+        = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_schools_form.organisation_ids_html") } do
           = render(Shared::SearchableCollectionCheckboxesComponent.new(form: f,
             attribute_name: :organisation_ids,
             collection: @school_options,

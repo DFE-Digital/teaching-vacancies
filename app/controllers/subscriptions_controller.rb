@@ -104,7 +104,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def subscription_params
-    ParameterSanitiser.call(params.require(:subscription_form).permit(:email, :frequency, :keyword, :location, :radius, job_roles: [], phases: [], working_patterns: []))
+    ParameterSanitiser.call(params.require(:jobseekers_subscription_form).permit(:email, :frequency, :keyword, :location, :radius, job_roles: [], phases: [], working_patterns: []))
   end
 
   def token

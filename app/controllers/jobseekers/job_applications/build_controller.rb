@@ -25,7 +25,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::ApplicationCont
   private
 
   def personal_details_params
-    ParameterSanitiser.call(params).require(:personal_details_form).permit(:first_name)
+    ParameterSanitiser.call(params).require(:jobseekers_job_application_personal_details_form).permit(:first_name)
   end
 
   def finish_wizard_path

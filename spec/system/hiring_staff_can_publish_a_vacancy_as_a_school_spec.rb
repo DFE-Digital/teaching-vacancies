@@ -164,17 +164,17 @@ RSpec.describe "Creating a vacancy" do
         end
 
         within_row_for(element: "legend",
-                       text: strip_tags(I18n.t("helpers.legend.important_dates_form.publish_on_html"))) do
+                       text: strip_tags(I18n.t("helpers.legend.publishers_job_listing_important_dates_form.publish_on_html"))) do
           expect(page).to have_content(I18n.t("important_dates_errors.publish_on.blank"))
         end
 
         within_row_for(element: "legend",
-                       text: strip_tags(I18n.t("helpers.legend.important_dates_form.expires_on_html"))) do
+                       text: strip_tags(I18n.t("helpers.legend.publishers_job_listing_important_dates_form.expires_on_html"))) do
           expect(page).to have_content(I18n.t("important_dates_errors.expires_on.blank"))
         end
 
         within_row_for(element: "legend",
-                       text: strip_tags(I18n.t("helpers.legend.important_dates_form.expires_at_html"))) do
+                       text: strip_tags(I18n.t("helpers.legend.publishers_job_listing_important_dates_form.expires_at_html"))) do
           expect(page).to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.expires_at.blank"))
         end
       end
@@ -206,8 +206,8 @@ RSpec.describe "Creating a vacancy" do
 
       scenario "hiring staff can select a file for upload" do
         visit organisation_job_documents_path(documents_vacancy.id)
-        page.attach_file("documents-form-documents-field", Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"))
-        expect(page.find("#documents-form-documents-field").value).to_not be nil
+        page.attach_file("publishers-job-listing-documents-form-documents-field", Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"))
+        expect(page.find("#publishers-job-listing-documents-form-documents-field").value).to_not be nil
       end
 
       context "when uploading files" do
@@ -226,7 +226,11 @@ RSpec.describe "Creating a vacancy" do
         scenario "displays uploaded file in a table" do
           visit organisation_job_documents_path(documents_vacancy.id)
 
-          upload_document("new_documents_form", "documents-form-documents-field", "spec/fixtures/files/#{filename}")
+          upload_document(
+            "new_publishers_job_listing_documents_form",
+            "publishers-job-listing-documents-form-documents-field",
+            "spec/fixtures/files/#{filename}",
+          )
 
           expect(page).to have_content(filename)
         end
@@ -237,7 +241,11 @@ RSpec.describe "Creating a vacancy" do
           allow_any_instance_of(Publishers::Vacancies::DocumentsController)
             .to receive_message_chain(:valid_content_type?).and_return(false)
 
-          upload_document("new_documents_form", "documents-form-documents-field", "spec/fixtures/files/#{filename}")
+          upload_document(
+            "new_publishers_job_listing_documents_form",
+            "publishers-job-listing-documents-form-documents-field",
+            "spec/fixtures/files/#{filename}",
+          )
 
           expect(page).to have_content(I18n.t("jobs.file_type_error_message", filename: filename))
         end
@@ -246,7 +254,11 @@ RSpec.describe "Creating a vacancy" do
           stub_const("#{Publishers::Vacancies::DocumentsController}::FILE_SIZE_LIMIT", 1.kilobyte)
           visit organisation_job_documents_path(documents_vacancy.id)
 
-          upload_document("new_documents_form", "documents-form-documents-field", "spec/fixtures/files/#{filename}")
+          upload_document(
+            "new_publishers_job_listing_documents_form",
+            "publishers-job-listing-documents-form-documents-field",
+            "spec/fixtures/files/#{filename}",
+          )
 
           expect(page).to have_content(I18n.t("jobs.file_size_error_message", filename: filename, size_limit: "1 KB"))
         end
@@ -256,7 +268,11 @@ RSpec.describe "Creating a vacancy" do
 
           allow(document_upload).to receive(:safe_download).and_return(false)
 
-          upload_document("new_documents_form", "documents-form-documents-field", "spec/fixtures/files/#{filename}")
+          upload_document(
+            "new_publishers_job_listing_documents_form",
+            "publishers-job-listing-documents-form-documents-field",
+            "spec/fixtures/files/#{filename}",
+          )
 
           expect(page).to have_content(I18n.t("jobs.file_virus_error_message", filename: filename))
         end
@@ -266,7 +282,11 @@ RSpec.describe "Creating a vacancy" do
 
           allow(document_upload).to receive(:google_error).and_return(true)
 
-          upload_document("new_documents_form", "documents-form-documents-field", "spec/fixtures/files/#{filename}")
+          upload_document(
+            "new_publishers_job_listing_documents_form",
+            "publishers-job-listing-documents-form-documents-field",
+            "spec/fixtures/files/#{filename}",
+          )
 
           expect(page).to have_content(I18n.t("jobs.file_google_error_message", filename: filename))
         end
@@ -330,7 +350,7 @@ RSpec.describe "Creating a vacancy" do
           expect(page).to have_content("There is a problem")
         end
 
-        within_row_for(text: strip_tags(I18n.t("helpers.label.applying_for_the_job_form.contact_email_html"))) do
+        within_row_for(text: strip_tags(I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.contact_email_html"))) do
           expect(page).to have_content(I18n.t("applying_for_the_job_errors.contact_email.blank"))
         end
       end
@@ -657,7 +677,7 @@ RSpec.describe "Creating a vacancy" do
 
           expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 7))
 
-          fill_in "job_details_form[job_title]", with: "An edited job title"
+          fill_in "publishers_job_listing_job_details_form[job_title]", with: "An edited job title"
           click_on I18n.t("buttons.update_job")
 
           expect(page).to have_content(I18n.t("jobs.review_heading"))
@@ -670,12 +690,12 @@ RSpec.describe "Creating a vacancy" do
           visit organisation_job_review_path(vacancy.id)
           click_header_link(I18n.t("jobs.job_details"))
 
-          fill_in "job_details_form[job_title]", with: ""
+          fill_in "publishers_job_listing_job_details_form[job_title]", with: ""
           click_on I18n.t("buttons.update_job")
 
           expect(page).to have_content("Enter a job title")
 
-          fill_in "job_details_form[job_title]", with: "A new job title"
+          fill_in "publishers_job_listing_job_details_form[job_title]", with: "A new job title"
           click_on I18n.t("buttons.update_job")
 
           expect(page).to have_content(I18n.t("jobs.review_heading"))
@@ -710,7 +730,7 @@ RSpec.describe "Creating a vacancy" do
           click_header_link(I18n.t("jobs.supporting_documents"))
 
           expect(page).to have_content(I18n.t("jobs.current_step", step: 4, total: 7))
-          expect(page).to have_content(I18n.t("helpers.label.documents_form.documents"))
+          expect(page).to have_content(I18n.t("helpers.label.publishers_job_listing_documents_form.documents"))
 
           click_on I18n.t("buttons.update_job")
 
@@ -727,12 +747,12 @@ RSpec.describe "Creating a vacancy" do
 
           expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 7))
 
-          fill_in "applying_for_the_job_form[contact_email]", with: "not a valid email"
+          fill_in "publishers_job_listing_applying_for_the_job_form[contact_email]", with: "not a valid email"
           click_on I18n.t("buttons.update_job")
 
           expect(page).to have_content("Enter an email address in the correct format, like name@example.com")
 
-          fill_in "applying_for_the_job_form[contact_email]", with: "a@valid.email"
+          fill_in "publishers_job_listing_applying_for_the_job_form[contact_email]", with: "a@valid.email"
           click_on I18n.t("buttons.update_job")
 
           expect(page).to have_content(I18n.t("jobs.review_heading"))
@@ -747,12 +767,12 @@ RSpec.describe "Creating a vacancy" do
 
           expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 7))
 
-          fill_in "applying_for_the_job_form[application_link]", with: "www invalid.domain.com"
+          fill_in "publishers_job_listing_applying_for_the_job_form[application_link]", with: "www invalid.domain.com"
           click_on I18n.t("buttons.update_job")
 
           expect(page).to have_content(I18n.t("applying_for_the_job_errors.application_link.url"))
 
-          fill_in "applying_for_the_job_form[application_link]", with: "www.valid-domain.com"
+          fill_in "publishers_job_listing_applying_for_the_job_form[application_link]", with: "www.valid-domain.com"
           click_on I18n.t("buttons.update_job")
 
           expect(page).to have_content(I18n.t("jobs.review_heading"))
@@ -767,7 +787,7 @@ RSpec.describe "Creating a vacancy" do
 
           expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 7))
 
-          fill_in "applying_for_the_job_form[contact_email]", with: "an@email.com"
+          fill_in "publishers_job_listing_applying_for_the_job_form[contact_email]", with: "an@email.com"
           click_on I18n.t("buttons.update_job")
 
           expect(page).to have_content(I18n.t("jobs.review_heading"))
@@ -891,9 +911,9 @@ RSpec.describe "Creating a vacancy" do
           expect(page).to have_content(I18n.t("jobs.important_dates"))
         end
 
-        expect(find_field("important_dates_form[expires_on(3i)]").value).to eq(yesterday_date.day.to_s)
-        expect(find_field("important_dates_form[expires_on(2i)]").value).to eq(yesterday_date.month.to_s)
-        expect(find_field("important_dates_form[expires_on(1i)]").value).to eq(yesterday_date.year.to_s)
+        expect(find_field("publishers_job_listing_important_dates_form[expires_on(3i)]").value).to eq(yesterday_date.day.to_s)
+        expect(find_field("publishers_job_listing_important_dates_form[expires_on(2i)]").value).to eq(yesterday_date.month.to_s)
+        expect(find_field("publishers_job_listing_important_dates_form[expires_on(1i)]").value).to eq(yesterday_date.year.to_s)
 
         click_on I18n.t("buttons.continue")
 
@@ -902,15 +922,15 @@ RSpec.describe "Creating a vacancy" do
         end
 
         within_row_for(element: "legend",
-                       text: strip_tags(I18n.t("helpers.legend.important_dates_form.expires_on_html"))) do
+                       text: strip_tags(I18n.t("helpers.legend.publishers_job_listing_important_dates_form.expires_on_html"))) do
           expect(page).to have_content(I18n.t("important_dates_errors.expires_on.before_today"))
         end
 
         expiry_date = Date.current + 1.week
 
-        fill_in "important_dates_form[expires_on(3i)]", with: expiry_date.day
-        fill_in "important_dates_form[expires_on(2i)]", with: expiry_date.month
-        fill_in "important_dates_form[expires_on(1i)]", with: expiry_date.year
+        fill_in "publishers_job_listing_important_dates_form[expires_on(3i)]", with: expiry_date.day
+        fill_in "publishers_job_listing_important_dates_form[expires_on(2i)]", with: expiry_date.month
+        fill_in "publishers_job_listing_important_dates_form[expires_on(1i)]", with: expiry_date.year
         click_on I18n.t("buttons.continue")
 
         click_on I18n.t("buttons.submit_job_listing")

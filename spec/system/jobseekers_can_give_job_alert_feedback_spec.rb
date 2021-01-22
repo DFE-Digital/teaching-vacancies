@@ -70,7 +70,7 @@ RSpec.describe "A jobseeker can give feedback on a job alert" do
       let(:comment) { "Excellent" }
 
       before do
-        fill_in "job_alert_feedback_form[comment]", with: comment
+        fill_in "jobseekers_job_alert_feedback_form[comment]", with: comment
         click_on "Submit"
       end
 

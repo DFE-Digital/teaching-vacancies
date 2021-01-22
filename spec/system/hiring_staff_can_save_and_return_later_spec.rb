@@ -22,7 +22,7 @@ RSpec.describe "Hiring staff can save and return later" do
           expect(page).to have_content(I18n.t("jobs.job_details"))
         end
 
-        fill_in "job_details_form[job_title]", with: @vacancy.job_title
+        fill_in "publishers_job_listing_job_details_form[job_title]", with: @vacancy.job_title
         click_on I18n.t("buttons.save_and_return_later")
         created_vacancy = Vacancy.find_by(job_title: @vacancy.job_title)
 
@@ -32,7 +32,7 @@ RSpec.describe "Hiring staff can save and return later" do
         click_on "Edit"
 
         expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_details))
-        expect(find_field("job_details_form[job_title]").value).to eq(@vacancy.job_title)
+        expect(find_field("publishers_job_listing_job_details_form[job_title]").value).to eq(@vacancy.job_title)
       end
     end
 
@@ -47,7 +47,7 @@ RSpec.describe "Hiring staff can save and return later" do
 
         expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :pay_package))
 
-        fill_in "pay_package_form[benefits]", with: @vacancy.benefits
+        fill_in "publishers_job_listing_pay_package_form[benefits]", with: @vacancy.benefits
         click_on I18n.t("buttons.save_and_return_later")
 
         expect(page.current_path).to eq(jobs_with_type_organisation_path("draft"))
@@ -56,7 +56,7 @@ RSpec.describe "Hiring staff can save and return later" do
         click_on "Edit"
 
         expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :pay_package))
-        expect(find_field("pay_package_form[benefits]").value).to eq(@vacancy.benefits)
+        expect(find_field("publishers_job_listing_pay_package_form[benefits]").value).to eq(@vacancy.benefits)
       end
     end
 
@@ -74,9 +74,9 @@ RSpec.describe "Hiring staff can save and return later" do
 
         expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :important_dates))
 
-        fill_in "important_dates_form[publish_on(3i)]", with: "12"
-        fill_in "important_dates_form[publish_on(2i)]", with: "01"
-        fill_in "important_dates_form[publish_on(1i)]", with: "2010"
+        fill_in "publishers_job_listing_important_dates_form[publish_on(3i)]", with: "12"
+        fill_in "publishers_job_listing_important_dates_form[publish_on(2i)]", with: "01"
+        fill_in "publishers_job_listing_important_dates_form[publish_on(1i)]", with: "2010"
         click_on I18n.t("buttons.save_and_return_later")
 
         expect(page.current_path).to eq(jobs_with_type_organisation_path("draft"))
@@ -85,9 +85,9 @@ RSpec.describe "Hiring staff can save and return later" do
         click_on "Edit"
 
         expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :important_dates))
-        expect(find_field("important_dates_form[publish_on(3i)]").value).to eq("12")
-        expect(find_field("important_dates_form[publish_on(2i)]").value).to eq("1")
-        expect(find_field("important_dates_form[publish_on(1i)]").value).to eq("2010")
+        expect(find_field("publishers_job_listing_important_dates_form[publish_on(3i)]").value).to eq("12")
+        expect(find_field("publishers_job_listing_important_dates_form[publish_on(2i)]").value).to eq("1")
+        expect(find_field("publishers_job_listing_important_dates_form[publish_on(1i)]").value).to eq("2010")
       end
 
       scenario "redirected to important_dates if not valid" do
@@ -104,9 +104,9 @@ RSpec.describe "Hiring staff can save and return later" do
         expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :important_dates))
 
         fill_in_important_dates_fields(@vacancy)
-        fill_in "important_dates_form[publish_on(3i)]", with: "12"
-        fill_in "important_dates_form[publish_on(2i)]", with: "01"
-        fill_in "important_dates_form[publish_on(1i)]", with: "2010"
+        fill_in "publishers_job_listing_important_dates_form[publish_on(3i)]", with: "12"
+        fill_in "publishers_job_listing_important_dates_form[publish_on(2i)]", with: "01"
+        fill_in "publishers_job_listing_important_dates_form[publish_on(1i)]", with: "2010"
         click_on I18n.t("buttons.save_and_return_later")
 
         expect(page.current_path).to eq(jobs_with_type_organisation_path("draft"))
@@ -115,9 +115,9 @@ RSpec.describe "Hiring staff can save and return later" do
         click_on "Edit"
 
         expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :important_dates))
-        expect(find_field("important_dates_form[publish_on(3i)]").value).to eq("12")
-        expect(find_field("important_dates_form[publish_on(2i)]").value).to eq("1")
-        expect(find_field("important_dates_form[publish_on(1i)]").value).to eq("2010")
+        expect(find_field("publishers_job_listing_important_dates_form[publish_on(3i)]").value).to eq("12")
+        expect(find_field("publishers_job_listing_important_dates_form[publish_on(2i)]").value).to eq("1")
+        expect(find_field("publishers_job_listing_important_dates_form[publish_on(1i)]").value).to eq("2010")
       end
     end
 
@@ -168,7 +168,7 @@ RSpec.describe "Hiring staff can save and return later" do
 
         expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
 
-        fill_in "applying_for_the_job_form[application_link]", with: "some link"
+        fill_in "publishers_job_listing_applying_for_the_job_form[application_link]", with: "some link"
         click_on I18n.t("buttons.save_and_return_later")
 
         expect(page.current_path).to eq(jobs_with_type_organisation_path("draft"))
@@ -177,7 +177,7 @@ RSpec.describe "Hiring staff can save and return later" do
         click_on "Edit"
 
         expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
-        expect(find_field("applying_for_the_job_form[application_link]").value).to eq("some link")
+        expect(find_field("publishers_job_listing_applying_for_the_job_form[application_link]").value).to eq("some link")
       end
     end
 
@@ -203,8 +203,8 @@ RSpec.describe "Hiring staff can save and return later" do
 
         expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_summary))
 
-        fill_in "job_summary_form[job_summary]", with: ""
-        fill_in "job_summary_form[about_school]", with: @vacancy.about_school
+        fill_in "publishers_job_listing_job_summary_form[job_summary]", with: ""
+        fill_in "publishers_job_listing_job_summary_form[about_school]", with: @vacancy.about_school
         click_on I18n.t("buttons.save_and_return_later")
 
         expect(page.current_path).to eq(jobs_with_type_organisation_path("draft"))
@@ -213,8 +213,8 @@ RSpec.describe "Hiring staff can save and return later" do
         click_on "Edit"
 
         expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_summary))
-        expect(find_field("job_summary_form[job_summary]").value).to eq("")
-        expect(find_field("job_summary_form[about_school]").value).to eq(@vacancy.about_school)
+        expect(find_field("publishers_job_listing_job_summary_form[job_summary]").value).to eq("")
+        expect(find_field("publishers_job_listing_job_summary_form[about_school]").value).to eq(@vacancy.about_school)
       end
     end
   end

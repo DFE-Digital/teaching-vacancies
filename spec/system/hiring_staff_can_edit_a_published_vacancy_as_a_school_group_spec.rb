@@ -49,8 +49,8 @@ RSpec.describe "Editing a published vacancy" do
       change_job_location(vacancy, "at_multiple_schools")
 
       expect(page.current_path).to eq(organisation_job_build_path(vacancy.id, :schools))
-      check school1.name, name: "schools_form[organisation_ids][]", visible: false
-      check school2.name, name: "schools_form[organisation_ids][]", visible: false
+      check school1.name, name: "publishers_job_listing_schools_form[organisation_ids][]", visible: false
+      check school2.name, name: "publishers_job_listing_schools_form[organisation_ids][]", visible: false
       click_on I18n.t("buttons.update_job")
 
       expect(page.current_path).to eq(edit_organisation_job_path(vacancy.id))

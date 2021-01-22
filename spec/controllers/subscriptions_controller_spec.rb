@@ -18,7 +18,7 @@ RSpec.describe SubscriptionsController, type: :controller do
   describe "#create" do
     let(:params) do
       {
-        subscription_form: {
+        jobseekers_subscription_form: {
           email: "foo@email.com",
           frequency: "daily",
           keyword: "english",
@@ -52,7 +52,7 @@ RSpec.describe SubscriptionsController, type: :controller do
     context "with unsafe params" do
       let(:params) do
         {
-          subscription_form: {
+          jobseekers_subscription_form: {
             email: "<script>foo@email.com</script>",
             frequency: "daily",
             search_criteria: "<body onload=alert('test1')>Text</body>",
@@ -76,7 +76,7 @@ RSpec.describe SubscriptionsController, type: :controller do
         keyword: "english",
       }
     end
-    let(:subject) { put :update, params: { id: subscription.token, subscription_form: params } }
+    let(:subject) { put :update, params: { id: subscription.token, jobseekers_subscription_form: params } }
 
     it "updates the subscription" do
       expect { subject }.not_to(change { Subscription.count })

@@ -16,9 +16,9 @@ RSpec.describe "Editing a School’s details" do
     expect(page).to have_content(school.url)
 
     click_on "Change school description"
-    expect(find_field("organisation_form[website]").value).to eq(school.url)
-    fill_in "organisation_form[description]", with: "Our school prides itself on excellence."
-    fill_in "organisation_form[website]", with: "https://www.this-is-a-test-url.tvs"
+    expect(find_field("publishers_organisation_form[website]").value).to eq(school.url)
+    fill_in "publishers_organisation_form[description]", with: "Our school prides itself on excellence."
+    fill_in "publishers_organisation_form[website]", with: "https://www.this-is-a-test-url.tvs"
     click_on I18n.t("buttons.save_changes")
 
     expect(page).to have_content("Our school prides itself on excellence.")

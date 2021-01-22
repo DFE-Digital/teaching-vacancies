@@ -7,7 +7,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @form, as: "job_details_form", url: wizard_path, method: :patch do |f|
+    = form_for @form, url: wizard_path, method: :patch do |f|
       = f.govuk_error_summary
 
       h2.govuk-heading-l = t("jobs.job_details")
@@ -16,23 +16,23 @@
 
       .govuk-character-count data-module="govuk-character-count" data-maxlength=100
         = f.govuk_text_field :job_title,
-          id: "job_details_form_job_title",
+          id: "publishers_job_listing_job_details_form_job_title",
           label: { size: "s" },
           class: "govuk-input string required govuk-js-character-count",
           required: true
-        span#job_details_form_job_title-info.govuk-hint.govuk-character-count__message aria-live="polite"
+        span#publishers_job_listing_job_details_form_job_title-info.govuk-hint.govuk-character-count__message aria-live="polite"
           | You can enter up to 100 characters
 
       = f.govuk_collection_check_boxes :job_roles, Vacancy.job_roles.except("nqt_suitable").keys, :to_s, :to_s
 
       = f.govuk_collection_radio_buttons :suitable_for_nqt, %w[yes no], :to_s, :capitalize
 
-      = f.govuk_fieldset legend: { text: t("helpers.legend.job_details_form.subjects") } do
+      = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_job_details_form.subjects") } do
 
-        label for="job-details-form-subject-search"
+        label for="publishers-job-listing-job-details-form-subject-search"
           span.govuk-visually-hidden | Subject filter
-        span.govuk-hint#job-details-form-subjects-hint
-          = t("helpers.hint.job_details_form.subjects")
+        span.govuk-hint#publishers-job-listing-job-details-form-subjects-hint
+          = t("helpers.hint.publishers_job_listing_job_details_form.subjects")
 
         div class="govuk-!-margin-bottom-6"
           = render(Shared::SearchableCollectionCheckboxesComponent.new(form: f,

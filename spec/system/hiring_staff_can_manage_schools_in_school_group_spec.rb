@@ -16,8 +16,8 @@ RSpec.shared_examples "a successful edit" do
 
     expect(page).to have_content(school_group.name)
 
-    fill_in "organisation_form[description]", with: "New description of the trust"
-    fill_in "organisation_form[website]", with: "https://www.this-is-a-test-url.tvs"
+    fill_in "publishers_organisation_form[description]", with: "New description of the trust"
+    fill_in "publishers_organisation_form[website]", with: "https://www.this-is-a-test-url.tvs"
     click_button I18n.t("buttons.save_changes")
 
     expect(page).to have_content("New description of the trust")
@@ -27,8 +27,8 @@ RSpec.shared_examples "a successful edit" do
 
     visit edit_organisation_school_path(school1)
 
-    fill_in "organisation_form[description]", with: "New description of the school"
-    fill_in "organisation_form[website]", with: "https://www.this-is-a-test-url.tvs"
+    fill_in "publishers_organisation_form[description]", with: "New description of the school"
+    fill_in "publishers_organisation_form[website]", with: "https://www.this-is-a-test-url.tvs"
     click_button I18n.t("buttons.save_changes")
 
     expect(page).to have_content("New description of the school")

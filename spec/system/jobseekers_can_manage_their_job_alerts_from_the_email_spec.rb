@@ -146,8 +146,8 @@ RSpec.describe "Jobseekers can manage their job alerts from the email" do
   end
 
   def update_subscription_fields
-    fill_in "subscription-form-keyword-field", with: keyword
-    fill_in "subscription-form-location-field", with: location
-    choose I18n.t("helpers.label.subscription_form.frequency_options.#{frequency}")
+    fill_in "jobseekers-subscription-form-keyword-field", with: keyword
+    fill_in "jobseekers-subscription-form-location-field", with: location
+    choose I18n.t("helpers.label.jobseekers_subscription_form.frequency_options.#{frequency}")
   end
 end

@@ -12,14 +12,10 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl = t(".heading")
 
-    = form_for @feedback_form, as: "job_alert_feedback_form", url: subscription_job_alert_feedback_path, method: :patch do |f|
+    = form_for @feedback_form, url: subscription_job_alert_feedback_path, method: :patch do |f|
       = f.govuk_error_summary
 
-      = f.govuk_text_area :comment,
-        label: { text: t(".form.labels.comment"), size: "s" },
-        hint: { text: t(".form.hints.comment") },
-        max_chars: 1200,
-        rows: 11
+      = f.govuk_text_area :comment, label: { size: "s" }, max_chars: 1200, rows: 11
 
       = recaptcha("job_alert_feedback")
 

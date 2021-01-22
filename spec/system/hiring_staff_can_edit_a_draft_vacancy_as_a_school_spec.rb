@@ -158,7 +158,7 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
         visit edit_organisation_job_path(published_vacancy.id)
         click_header_link(I18n.t("jobs.applying_for_the_job"))
 
-        fill_in "applying_for_the_job_form[application_link]", with: "https://example.com"
+        fill_in "publishers_job_listing_applying_for_the_job_form[application_link]", with: "https://example.com"
         click_on I18n.t("buttons.update_job")
 
         expect(page.body).to include(
