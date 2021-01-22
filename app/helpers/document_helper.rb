@@ -6,7 +6,7 @@ module DocumentHelper
                   data: {
                     delete_path: organisation_job_documents_path(id: document.id, job_id: document.vacancy_id),
                     document_id: document.id,
-                    file_name: document[:name],
+                    file_name: document.name,
                     target: "modal-default",
                     toggle: "modal",
                   })

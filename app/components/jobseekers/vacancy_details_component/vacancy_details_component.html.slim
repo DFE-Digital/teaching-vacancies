@@ -42,9 +42,6 @@ section#job-details class="govuk-!-margin-bottom-5"
   - if @vacancy.documents.any?
     section#supporting-documents
       h3.govuk-heading-l.section-heading = t("jobs.supporting_documents")
-      .supporting-docs
-        ul
-          - @vacancy.documents.each do |document|
-            li.icon.icon--left.icon--document
-              = govuk_link_to(document[:name], document[:download_url], class: "document-link", target: "_blank")
-              ' #{number_with_precision(document[:size] / 1024.0 / 1024.0, precision: 2)} MB
+      ul.supporting-docs
+        - @vacancy.documents.in_groups_of(1, false).each do |row|
+          = render Shared::DocumentLinkComponent.with_collection(row)
