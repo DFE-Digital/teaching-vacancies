@@ -22,7 +22,7 @@ On merging a Pull Request, the same code is deployed first to Staging, and after
 
 An [organisation](https://docs.cloud.service.gov.uk/orgs_spaces_users.html#organisations)
 > represents a group of users, applications and environments. Each org shares the same resource, quota and custom domain.
-Teaching Vacancies is in the [dfe-teacher-services organisation](https://docs.cloud.service.gov.uk/orgs_spaces_users.html#organisations)
+Teaching Vacancies is in the [dfe organisation](https://docs.cloud.service.gov.uk/orgs_spaces_users.html#organisations)
 
 An org is divided into one or more [spaces](https://docs.cloud.service.gov.uk/orgs_spaces_users.html#spaces). A space is a shared location for developing, deploying and running apps and backing services.
 
@@ -50,7 +50,7 @@ Senior developers, Tech Leads, and DevOps have the `SpaceManager` role in all re
 
 - [Enable Google SSO for Gov.UK PaaS](https://docs.cloud.service.gov.uk/get_started.html#use-single-sign-on)
 - Log in to GOV.UK PaaS (with `cf login --sso`). You will need a [Passcode](https://login.london.cloud.service.gov.uk/passcode)
-- Once you've selected a space, you should see your user ID (between `API version` and `org: dfe-teacher-services`)
+- Once you've selected a space, you should see your user ID (between `API version` and `org: dfe`)
 - Add your user ID and name to [this SSO Confluence page](https://dfedigital.atlassian.net/wiki/spaces/BaT/pages/1935048705/Single+sign-on+SSO) so that it's easier to identify you.
 - A colleague with the `Space manager` role can [set or unset the Space developer role](#setunset-spacedeveloper-role) as required.
 
@@ -64,7 +64,7 @@ brew install cloudfoundry/tap/cf-cli@7
 
 ```bash
 CF_API_ENDPOINT=https://api.london.cloud.service.gov.uk
-CF_ORG=dfe-teacher-services
+CF_ORG=dfe
 ```
 
 Set `CF_SPACE` to environment(space) you want to deal with, e.g. `teaching-vacancies-dev`

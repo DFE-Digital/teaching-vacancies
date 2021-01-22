@@ -11,7 +11,7 @@ data aws_ssm_parameter app_env_secrets {
 }
 
 data cloudfoundry_org org {
-  name = "dfe-teacher-services"
+  name = "dfe"
 }
 
 data cloudfoundry_space space {

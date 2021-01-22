@@ -26,7 +26,7 @@ The new developer will be added to [teaching-vacancies-developers](https://githu
 
 ## GOV.UK PaaS
 
-`#digital-tools-support` will add the new developer to the [dfe-teacher-services organisation](https://admin.london.cloud.service.gov.uk/organisations/386a9502-d9b6-4aba-b3c3-ebe4fa3f963e) inside the following spaces:
+`#digital-tools-support` will add the new developer to the [dfe organisation](https://admin.london.cloud.service.gov.uk/organisations/386a9502-d9b6-4aba-b3c3-ebe4fa3f963e) inside the following spaces:
 
 * teaching-vacancies-dev
 * teaching-vacancies-staging
