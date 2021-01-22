@@ -190,6 +190,7 @@ en:
     start_on: Date job starts
     starts_on: Expected start date
     publish_on: Publish on
+    date_listed: Date listed
     expires_on: Closing date
     time_at: ' at '
 
@@ -282,7 +283,7 @@ en:
         The listing will appear on the service until %{application_deadline},
         after which it will no longer be visible to jobseekers.
       feedback_link: What did you think of this service?
-      feedback_time: (takes 30 seconds)
+      feedback_link_html: "%{link_to} (takes 30 seconds)"
       next_step: What happens next
       page_title: The job listing for %{organisation} has been completed
       submitted: The job listing has been completed

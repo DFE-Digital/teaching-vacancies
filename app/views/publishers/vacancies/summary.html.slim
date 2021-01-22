@@ -23,6 +23,4 @@
     - else
       p = t("jobs.confirmation_page.date_posted", date: @vacancy.publish_on)
     p = t("jobs.confirmation_page.date_expires", application_deadline: OrganisationVacancyPresenter.new(@vacancy).application_deadline)
-    p
-      = govuk_link_to(t("jobs.confirmation_page.feedback_link"), new_organisation_job_feedback_path(@vacancy.id))
-      = t("jobs.confirmation_page.feedback_time")
+    p = t("jobs.confirmation_page.feedback_link_html", link_to: govuk_link_to(t("jobs.confirmation_page.feedback_link"), new_organisation_job_feedback_path(@vacancy.id)))
