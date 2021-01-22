@@ -19,7 +19,7 @@ RSpec.describe Jobseekers::SimilarJobComponent, type: :component do
     expect(rendered_component).to include(school.name)
   end
 
-  it "renders the vacancy parent organisation name" do
+  it "renders the vacancy parent organisation address" do
     expect(rendered_component).to include(full_address(school))
   end
 end
