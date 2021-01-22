@@ -1,8 +1,3 @@
-Pull Request template
-
-- Fill in or remove sections as necessary
-- Delete this section before submitting your PR
-
 ## Jira ticket URL
 
 - Just add the ticket number to the end:
