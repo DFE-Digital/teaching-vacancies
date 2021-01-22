@@ -2,19 +2,29 @@ import 'classlist-polyfill';
 import './uploadDocuments.scss';
 
 document.addEventListener('DOMContentLoaded', () => {
-  const inputFileUpload = document.getElementsByClassName('govuk-file-upload')[0];
-  const selectFileButton = document.getElementsByClassName('govuk-button--secondary')[0];
-  const uploadFileButton = document.getElementsByClassName('govuk-button--secondary')[1];
-  const saveContinueButton = document.getElementsByName('commit')[1];
+  const inputFileUpload = document.getElementById('documents-form-documents-field');
+  const selectFileButton = document.getElementById('select-files-button');
+  const uploadFileButton = document.getElementsByClassName('upload-files-button')[0];
+  const continueButton = document.getElementsByClassName('save-listing-gtm')[0];
+  const updateButton = document.getElementsByClassName('save-listing-gtm')[0];
+  const saveButton = document.getElementsByClassName('save-and-return-listing-gtm')[0];
 
-  if (inputFileUpload && selectFileButton && uploadFileButton && saveContinueButton) {
+  if (inputFileUpload && selectFileButton && uploadFileButton) {
     selectFileButton.addEventListener('click', (e) => {
       e.preventDefault();
       inputFileUpload.click();
     });
 
     inputFileUpload.addEventListener('change', () => {
-      saveContinueButton.disabled = true;
+      if (continueButton) {
+        continueButton.disabled = true;
+      }
+      if (updateButton) {
+        updateButton.disabled = true;
+      }
+      if (saveButton) {
+        saveButton.disabled = true;
+      }
       injectDocumentsTable(inputFileUpload);
       inputFileUpload.form.submit();
     });

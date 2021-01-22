@@ -23,10 +23,10 @@
         multiple: true,
         enctype: "multipart/form-data"
 
-      button.govuk-button.govuk-button--secondary.display-none class="govuk-!-margin-bottom-3"
+      button.govuk-button.govuk-button--secondary.display-none#select-files-button class="govuk-!-margin-bottom-3"
         = t("buttons.select_file")
 
-      = f.govuk_submit t("buttons.upload_files"), secondary: true
+      = f.govuk_submit t("buttons.upload_files"), secondary: true, classes: "upload-files-button"
 
       .js-documents class=("js-documents--empty" if @documents.none?)
         = render "publishers/vacancies/documents/documents"
