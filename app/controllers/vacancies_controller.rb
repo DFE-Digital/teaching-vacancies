@@ -6,7 +6,7 @@ class VacanciesController < ApplicationController
       @landing_page = params[params[:pretty]]
       @landing_page_translation = "#{params[:pretty]}.#{@landing_page.parameterize.underscore}"
     end
-    @jobs_search_form = VacancyAlgoliaSearchForm.new(algolia_search_params)
+    @jobs_search_form = Jobseekers::SearchForm.new(algolia_search_params)
     @vacancies_search = Search::SearchBuilder.new(@jobs_search_form.to_hash)
     @vacancies = VacanciesPresenter.new(@vacancies_search.vacancies)
     AuditSearchEventJob.perform_later(audit_row) if valid_search?

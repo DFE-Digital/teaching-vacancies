@@ -32,7 +32,7 @@ RSpec.describe "NQT job alerts" do
     scenario "redirects to invalid_recaptcha path" do
       visit nqt_job_alerts_path
       click_on I18n.t("buttons.subscribe")
-      expect(page).to have_current_path(invalid_recaptcha_path(form_name: "Nqt job alerts form"))
+      expect(page).to have_current_path(invalid_recaptcha_path(form_name: "jobseekers/nqt_job_alerts_form"))
     end
   end
 end

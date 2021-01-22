@@ -60,7 +60,7 @@ RSpec.describe "Hiring staff can filter vacancies in their dashboard" do
         scenario "it shows filtered published vacancies" do
           visit jobs_with_type_organisation_path(:published)
 
-          check "Happy Rainbows School (1)", name: "managed_organisations_form[managed_school_ids][]", visible: false
+          check "Happy Rainbows School (1)"
           click_on I18n.t("buttons.apply_filters")
 
           expect(page).to have_css(".moj-filter__tag", count: 1)

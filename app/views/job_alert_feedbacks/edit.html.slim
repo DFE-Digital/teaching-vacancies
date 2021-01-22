@@ -12,7 +12,7 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl = t(".heading")
 
-    = form_for @feedback_form, url: subscription_job_alert_feedback_path, method: :patch do |f|
+    = form_for @feedback_form, as: "job_alert_feedback_form", url: subscription_job_alert_feedback_path, method: :patch do |f|
       = f.govuk_error_summary
 
       = f.govuk_text_area :comment,

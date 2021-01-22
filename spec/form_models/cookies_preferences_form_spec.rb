@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe CookiesPreferencesForm, type: :model do
-  let(:cookies_consent) { "yes" }
+  subject { described_class.new(params) }
 
   let(:params) { { cookies_consent: cookies_consent } }
-  let(:subject) { described_class.new(params) }
+  let(:cookies_consent) { "yes" }
 
   describe "#initialize" do
     it "assigns attributes" do

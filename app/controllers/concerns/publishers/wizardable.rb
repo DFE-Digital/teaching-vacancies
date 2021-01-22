@@ -12,14 +12,14 @@ module Publishers::Wizardable
   }.freeze
 
   VACANCY_FORMS = {
-    job_location: JobLocationForm,
-    schools: SchoolsForm,
-    job_details: JobDetailsForm,
-    pay_package: PayPackageForm,
-    important_dates: ImportantDatesForm,
-    documents: DocumentsForm,
-    applying_for_the_job: ApplyingForTheJobForm,
-    job_summary: JobSummaryForm,
+    job_location: Publishers::JobListing::JobLocationForm,
+    schools: Publishers::JobListing::SchoolsForm,
+    job_details: Publishers::JobListing::JobDetailsForm,
+    pay_package: Publishers::JobListing::PayPackageForm,
+    important_dates: Publishers::JobListing::ImportantDatesForm,
+    documents: Publishers::JobListing::DocumentsForm,
+    applying_for_the_job: Publishers::JobListing::ApplyingForTheJobForm,
+    job_summary: Publishers::JobListing::JobSummaryForm,
   }.freeze
 
   VACANCY_FORM_PARAMS = {

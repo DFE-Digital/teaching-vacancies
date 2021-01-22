@@ -12,7 +12,7 @@ RSpec.shared_examples "a successful edit" do
     )
     expect(page).not_to have_content("Closed school")
 
-    visit edit_organisation_school_path(school_group, school_group: true)
+    visit edit_organisation_school_path(school_group)
 
     expect(page).to have_content(school_group.name)
 

@@ -165,16 +165,12 @@ RSpec.describe "Creating a vacancy" do
 
         within_row_for(element: "legend",
                        text: strip_tags(I18n.t("helpers.legend.important_dates_form.publish_on_html"))) do
-          expect(page).to have_content(
-            I18n.t("activemodel.errors.models.important_dates_form.attributes.publish_on.blank"),
-          )
+          expect(page).to have_content(I18n.t("important_dates_errors.publish_on.blank"))
         end
 
         within_row_for(element: "legend",
                        text: strip_tags(I18n.t("helpers.legend.important_dates_form.expires_on_html"))) do
-          expect(page).to have_content(
-            I18n.t("activemodel.errors.models.important_dates_form.attributes.expires_on.blank"),
-          )
+          expect(page).to have_content(I18n.t("important_dates_errors.expires_on.blank"))
         end
 
         within_row_for(element: "legend",
@@ -907,9 +903,7 @@ RSpec.describe "Creating a vacancy" do
 
         within_row_for(element: "legend",
                        text: strip_tags(I18n.t("helpers.legend.important_dates_form.expires_on_html"))) do
-          expect(page).to have_content(
-            I18n.t("activemodel.errors.models.important_dates_form.attributes.expires_on.before_today"),
-          )
+          expect(page).to have_content(I18n.t("important_dates_errors.expires_on.before_today"))
         end
 
         expiry_date = Date.current + 1.week

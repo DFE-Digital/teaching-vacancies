@@ -4,8 +4,11 @@ class Publishers::Vacancies::ApplicationController < Publishers::BaseController
   include Publishers::JobCreationHelper
 
   def all_steps_valid?
-    step_valid?(JobDetailsForm) && step_valid?(PayPackageForm) && step_valid?(ImportantDatesForm) &&
-      step_valid?(ApplyingForTheJobForm) && step_valid?(JobSummaryForm)
+    step_valid?(Publishers::JobListing::JobDetailsForm) &&
+      step_valid?(Publishers::JobListing::PayPackageForm) &&
+      step_valid?(Publishers::JobListing::ImportantDatesForm) &&
+      step_valid?(Publishers::JobListing::ApplyingForTheJobForm) &&
+      step_valid?(Publishers::JobListing::JobSummaryForm)
   end
 
   def step_valid?(step_form)

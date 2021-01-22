@@ -2,7 +2,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @subscription_form, url: subscription_path(@subscription.token), method: :patch do |f|
+    = form_for @subscription_form, as: "subscription_form", url: subscription_path(@subscription.token), method: :patch do |f|
       = f.govuk_error_summary
 
       h1.govuk-heading-xl class="govuk-!-margin-bottom-4" = t(".title")
