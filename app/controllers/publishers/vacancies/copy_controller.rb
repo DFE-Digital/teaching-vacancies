@@ -25,13 +25,14 @@ class Publishers::Vacancies::CopyController < Publishers::Vacancies::Application
   private
 
   def copy_form_params
-    params.require(:copy_vacancy_form).permit(:state, :job_title, :publish_on, :expires_on, :starts_on,
-                                              :expires_at_hh, :expires_at_mm, :expires_at_meridiem)
+    params.require(:publishers_job_listing_copy_vacancy_form)
+          .permit(:state, :job_title, :publish_on, :expires_on, :starts_on,
+                  :expires_at_hh, :expires_at_mm, :expires_at_meridiem)
   end
 
   def set_up_copy_form
     @date_errors = convert_multiparameter_attributes_to_dates(
-      :copy_vacancy_form, %i[publish_on expires_on starts_on]
+      :publishers_job_listing_copy_vacancy_form, %i[publish_on expires_on starts_on]
     )
     @copy_form = Publishers::JobListing::CopyVacancyForm.new(copy_form_params)
   end

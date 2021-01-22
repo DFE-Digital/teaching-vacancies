@@ -103,7 +103,7 @@ class VacancyPresenter < BasePresenter
   def show_job_roles
     return unless model.job_roles
 
-    model.job_roles.map { |job_role| I18n.t("helpers.label.job_details_form.job_roles_options.#{job_role}") }.join(", ")
+    model.job_roles.map { |job_role| I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{job_role}") }.join(", ")
   end
 
   def show_subjects
@@ -111,7 +111,7 @@ class VacancyPresenter < BasePresenter
   end
 
   def contract_type_with_duration
-    type = model.contract_type ? I18n.t("helpers.label.job_details_form.contract_type_options.#{model.contract_type}") : nil
+    type = model.contract_type ? I18n.t("helpers.label.publishers_job_listing_job_details_form.contract_type_options.#{model.contract_type}") : nil
     duration = model.fixed_term? ? "(#{model.contract_type_duration})" : nil
     [type, duration].compact.join(" ")
   end

@@ -60,7 +60,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::Applic
   end
 
   def documents_form_params
-    params.require(:documents_form).permit(:state, documents: [])
+    params.require(:publishers_job_listing_documents_form).permit(:state, documents: [])
   end
 
   def redirect_to_next_step

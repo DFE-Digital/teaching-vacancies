@@ -27,6 +27,6 @@ class UnsubscribeFeedbacksController < ApplicationController
   end
 
   def unsubscribe_feedback_params
-    ParameterSanitiser.call(params).require(:unsubscribe_feedback_form).permit(:reason, :other_reason, :additional_info)
+    ParameterSanitiser.call(params).require(:jobseekers_unsubscribe_feedback_form).permit(:reason, :other_reason, :additional_info)
   end
 end

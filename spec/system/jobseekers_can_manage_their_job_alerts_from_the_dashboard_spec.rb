@@ -24,7 +24,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
 
       it "allows to edit a job alert" do
         click_on I18n.t("jobseekers.subscriptions.index.link_manage")
-        fill_in "subscription_form[location]", with: "London"
+        fill_in "jobseekers_subscription_form[location]", with: "London"
         click_button I18n.t("buttons.update_alert")
 
         expect(page).to have_content(I18n.t("subscriptions.update.success"))
@@ -33,7 +33,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
       it "allows to unsubscribe from a job alert" do
         click_on I18n.t("jobseekers.subscriptions.index.link_unsubscribe")
         click_on I18n.t("subscriptions.unsubscribe.button_text")
-        choose I18n.t("helpers.label.unsubscribe_feedback_form.reason_options.job_found")
+        choose I18n.t("helpers.label.jobseekers_unsubscribe_feedback_form.reason_options.job_found")
         click_button I18n.t("buttons.submit_feedback")
 
         expect(page).to have_content(I18n.t("unsubscribe_feedbacks.create.success"))

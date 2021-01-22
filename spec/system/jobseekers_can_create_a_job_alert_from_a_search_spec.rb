@@ -152,26 +152,26 @@ RSpec.describe "Jobseekers can create a job alert from a search" do
       if location_category_search?
         select "40 miles", from: "radius"
       end
-      check I18n.t("helpers.label.job_details_form.job_roles_options.teacher")
-      check I18n.t("helpers.label.job_details_form.job_roles_options.nqt_suitable")
-      check I18n.t("helpers.label.job_details_form.working_patterns_options.full_time")
+      check I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.teacher")
+      check I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.nqt_suitable")
+      check I18n.t("helpers.label.publishers_job_listing_job_details_form.working_patterns_options.full_time")
       click_on I18n.t("buttons.search")
     end
   end
 
   def and_the_search_criteria_are_populated
-    expect(page.find_field("subscription-form-keyword-field").value).to eq("english")
-    expect(page.find_field("subscription-form-location-field").value).to eq(location)
+    expect(page.find_field("jobseekers-subscription-form-keyword-field").value).to eq("english")
+    expect(page.find_field("jobseekers-subscription-form-location-field").value).to eq(location)
     if location_category_search?
-      expect(page.find_field("subscription-form-radius-field").value).to eq("40")
+      expect(page.find_field("jobseekers-subscription-form-radius-field").value).to eq("40")
     end
-    expect(page.find_field("subscription-form-job-roles-teacher-field")).to be_checked
-    expect(page.find_field("subscription-form-job-roles-nqt-suitable-field")).to be_checked
-    expect(page.find_field("subscription-form-working-patterns-full-time-field")).to be_checked
+    expect(page.find_field("jobseekers-subscription-form-job-roles-teacher-field")).to be_checked
+    expect(page.find_field("jobseekers-subscription-form-job-roles-nqt-suitable-field")).to be_checked
+    expect(page.find_field("jobseekers-subscription-form-working-patterns-full-time-field")).to be_checked
   end
 
   def fill_in_subscription_fields
-    fill_in "subscription_form[email]", with: jobseeker.email
-    choose I18n.t("helpers.label.subscription_form.frequency_options.daily")
+    fill_in "jobseekers_subscription_form[email]", with: jobseeker.email
+    choose I18n.t("helpers.label.jobseekers_subscription_form.frequency_options.daily")
   end
 end

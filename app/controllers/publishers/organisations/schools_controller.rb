@@ -35,6 +35,6 @@ class Publishers::Organisations::SchoolsController < Publishers::BaseController
   end
 
   def organisation_params
-    params.require(:organisation_form).permit(:description, :website)
+    params.require(:publishers_organisation_form).permit(:description, :website)
   end
 end

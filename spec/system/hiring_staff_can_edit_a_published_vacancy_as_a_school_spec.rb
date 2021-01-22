@@ -93,7 +93,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         end
         click_header_link(I18n.t("jobs.job_details"))
 
-        fill_in "job_details_form[job_title]", with: ""
+        fill_in "publishers_job_listing_job_details_form[job_title]", with: ""
         click_on I18n.t("buttons.update_job")
 
         expect(page).to have_content("Enter a job title")
@@ -103,7 +103,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t("jobs.job_details"))
 
-        fill_in "job_details_form[job_title]", with: "Assistant Head Teacher"
+        fill_in "publishers_job_listing_job_details_form[job_title]", with: "Assistant Head Teacher"
         click_on I18n.t("buttons.update_job")
 
         expect(page.body).to include(I18n.t("messages.jobs.listing_updated", job_title: "Assistant Head Teacher"))
@@ -116,7 +116,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t("jobs.job_details"))
 
-        fill_in "job_details_form[job_title]", with: "Assistant Head Teacher"
+        fill_in "publishers_job_listing_job_details_form[job_title]", with: "Assistant Head Teacher"
         click_on I18n.t("buttons.update_job")
 
         expect(page.body).to include(I18n.t("messages.jobs.listing_updated", job_title: "Assistant Head Teacher"))
@@ -133,7 +133,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t("jobs.job_details"))
 
-        fill_in "job_details_form[job_title]", with: "Assistant Head Teacher"
+        fill_in "publishers_job_listing_job_details_form[job_title]", with: "Assistant Head Teacher"
         click_on I18n.t("buttons.update_job")
       end
     end
@@ -148,7 +148,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
 
         click_header_link(I18n.t("jobs.pay_package"))
 
-        fill_in "pay_package_form[salary]", with: ""
+        fill_in "publishers_job_listing_pay_package_form[salary]", with: ""
         click_on I18n.t("buttons.update_job")
 
         within_row_for(text: I18n.t("jobs.salary")) do
@@ -160,7 +160,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t("jobs.pay_package"))
 
-        fill_in "pay_package_form[salary]", with: "Pay scale 1 to Pay scale 2"
+        fill_in "publishers_job_listing_pay_package_form[salary]", with: "Pay scale 1 to Pay scale 2"
         click_on I18n.t("buttons.update_job")
 
         expect(page.body).to include(I18n.t("messages.jobs.listing_updated", job_title: vacancy.job_title))
@@ -174,16 +174,16 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t("jobs.pay_package"))
 
-        fill_in "pay_package_form[salary]", with: "Pay scale 1 to Pay scale 2"
+        fill_in "publishers_job_listing_pay_package_form[salary]", with: "Pay scale 1 to Pay scale 2"
         click_on I18n.t("buttons.update_job")
       end
     end
 
     describe "#important_dates" do
       def edit_date(date_type, date)
-        fill_in "important_dates_form[#{date_type}(3i)]", with: date&.day.presence || ""
-        fill_in "important_dates_form[#{date_type}(2i)]", with: date&.month.presence || ""
-        fill_in "important_dates_form[#{date_type}(1i)]", with: date&.year.presence || ""
+        fill_in "publishers_job_listing_important_dates_form[#{date_type}(3i)]", with: date&.day.presence || ""
+        fill_in "publishers_job_listing_important_dates_form[#{date_type}(2i)]", with: date&.month.presence || ""
+        fill_in "publishers_job_listing_important_dates_form[#{date_type}(1i)]", with: date&.year.presence || ""
         click_on I18n.t("buttons.update_job")
       end
 
@@ -198,7 +198,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         edit_date("expires_on", nil)
 
         within_row_for(element: "legend",
-                       text: strip_tags(I18n.t("helpers.legend.important_dates_form.expires_on_html"))) do
+                       text: strip_tags(I18n.t("helpers.legend.publishers_job_listing_important_dates_form.expires_on_html"))) do
           expect(page).to have_content(I18n.t("important_dates_errors.expires_on.blank"))
         end
       end
@@ -211,11 +211,11 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         end
         click_header_link(I18n.t("jobs.important_dates"))
 
-        fill_in "important_dates_form[expires_at_hh]", with: "88"
+        fill_in "publishers_job_listing_important_dates_form[expires_at_hh]", with: "88"
         click_on I18n.t("buttons.update_job")
 
         within_row_for(element: "legend",
-                       text: strip_tags(I18n.t("helpers.legend.important_dates_form.expires_at_html"))) do
+                       text: strip_tags(I18n.t("helpers.legend.publishers_job_listing_important_dates_form.expires_at_html"))) do
           expect(page).to have_content(I18n.t("important_dates_errors.expires_at.wrong_format"))
         end
       end
@@ -256,9 +256,9 @@ RSpec.describe "Hiring staff can edit a vacancy" do
             click_header_link(I18n.t("jobs.important_dates"))
             expect(page).to have_content(I18n.t("jobs.publication_date"))
             expect(page).to have_content(format_date(vacancy.publish_on))
-            expect(page).not_to have_css("#important_dates_form_publish_on_dd")
+            expect(page).not_to have_css("#publishers_job_listing_important_dates_form_publish_on_dd")
 
-            fill_in "important_dates_form[expires_on(3i)]", with: vacancy.expires_on.day
+            fill_in "publishers_job_listing_important_dates_form[expires_on(3i)]", with: vacancy.expires_on.day
             click_on I18n.t("buttons.update_job")
 
             expect(page.body).to include(I18n.t("messages.jobs.listing_updated", job_title: vacancy.job_title))
@@ -274,7 +274,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
             visit edit_organisation_job_path(vacancy.id)
             click_header_link(I18n.t("jobs.important_dates"))
 
-            expect(page).to have_css("#important_dates_form_publish_on_3i")
+            expect(page).to have_css("#publishers_job_listing_important_dates_form_publish_on_3i")
 
             publish_on = Date.current + 1.week
             edit_date("publish_on", publish_on)
@@ -306,9 +306,13 @@ RSpec.describe "Hiring staff can edit a vacancy" do
 
         click_header_link(I18n.t("jobs.supporting_documents"))
 
-        expect(page).to have_content(I18n.t("helpers.label.documents_form.documents"))
+        expect(page).to have_content(I18n.t("helpers.label.publishers_job_listing_documents_form.documents"))
 
-        upload_document("new_documents_form", "documents-form-documents-field", "spec/fixtures/files/#{filename}")
+        upload_document(
+          "new_publishers_job_listing_documents_form",
+          "publishers-job-listing-documents-form-documents-field",
+          "spec/fixtures/files/#{filename}",
+        )
         click_on I18n.t("buttons.update_job")
 
         expect(current_path).to eq(edit_organisation_job_path(vacancy.id))
@@ -325,7 +329,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         end
         click_header_link(I18n.t("jobs.applying_for_the_job"))
 
-        fill_in "applying_for_the_job_form[application_link]", with: "some link"
+        fill_in "publishers_job_listing_applying_for_the_job_form[application_link]", with: "some link"
         click_on I18n.t("buttons.update_job")
 
         within_row_for(text: I18n.t("jobs.application_link")) do
@@ -339,7 +343,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         click_header_link(I18n.t("jobs.applying_for_the_job"))
         vacancy.application_link = "https://tvs.com"
 
-        fill_in "applying_for_the_job_form[application_link]", with: vacancy.application_link
+        fill_in "publishers_job_listing_applying_for_the_job_form[application_link]", with: vacancy.application_link
         click_on I18n.t("buttons.update_job")
 
         expect(page.body).to include(I18n.t("messages.jobs.listing_updated", job_title: vacancy.job_title))
@@ -354,7 +358,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t("jobs.applying_for_the_job"))
 
-        fill_in "applying_for_the_job_form[application_link]", with: "https://schooljobs.com"
+        fill_in "publishers_job_listing_applying_for_the_job_form[application_link]", with: "https://schooljobs.com"
         click_on I18n.t("buttons.update_job")
       end
     end
@@ -368,7 +372,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         end
         click_header_link(I18n.t("jobs.job_summary"))
 
-        fill_in "job_summary_form[job_summary]", with: ""
+        fill_in "publishers_job_listing_job_summary_form[job_summary]", with: ""
         click_on I18n.t("buttons.update_job")
 
         within_row_for(text: I18n.t("jobs.job_summary")) do
@@ -380,7 +384,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t("jobs.job_summary"))
 
-        fill_in "job_summary_form[job_summary]", with: "A summary about the job."
+        fill_in "publishers_job_listing_job_summary_form[job_summary]", with: "A summary about the job."
         click_on I18n.t("buttons.update_job")
 
         expect(page.body).to include(I18n.t("messages.jobs.listing_updated", job_title: vacancy.job_title))
@@ -394,7 +398,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t("jobs.job_summary"))
 
-        fill_in "job_summary_form[job_summary]", with: "A summary about the job."
+        fill_in "publishers_job_listing_job_summary_form[job_summary]", with: "A summary about the job."
         click_on I18n.t("buttons.update_job")
       end
     end

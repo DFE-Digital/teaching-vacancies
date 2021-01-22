@@ -56,11 +56,12 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::Applicatio
     publish_in_past = @vacancy.published? && @vacancy.reload.publish_on.past?
     delete_publish_on_params if @vacancy.published? && @vacancy.reload.publish_on.past?
     dates_to_convert = publish_in_past ? %i[starts_on expires_on] : %i[starts_on publish_on expires_on]
-    @date_errors = convert_multiparameter_attributes_to_dates(:important_dates_form, dates_to_convert)
+    @date_errors = convert_multiparameter_attributes_to_dates(:publishers_job_listing_important_dates_form, dates_to_convert)
   end
 
   def delete_publish_on_params
-    params.require(:important_dates_form).extract!("publish_on(3i)", "publish_on(2i)", "publish_on(1i)")
+    params.require(:publishers_job_listing_important_dates_form)
+          .extract!("publish_on(3i)", "publish_on(2i)", "publish_on(1i)")
   end
 
   def finish_wizard_path
@@ -103,7 +104,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::Applicatio
   def strip_checkbox_params
     return unless VACANCY_STRIP_CHECKBOXES.key?(step)
 
-    strip_empty_checkboxes(VACANCY_STRIP_CHECKBOXES[step], "#{step}_form".to_sym)
+    strip_empty_checkboxes(VACANCY_STRIP_CHECKBOXES[step], "publishers_job_listing_#{step}_form".to_sym)
   end
 
   def update_incomplete_listing

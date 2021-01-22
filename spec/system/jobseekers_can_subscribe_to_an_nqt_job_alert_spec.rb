@@ -7,9 +7,9 @@ RSpec.describe "NQT job alerts" do
 
       expect(page).to have_content(I18n.t("nqt_job_alerts.heading"))
 
-      fill_in "nqt_job_alerts_form[keywords]", with: "Maths"
-      fill_in "nqt_job_alerts_form[location]", with: "London"
-      fill_in "nqt_job_alerts_form[email]", with: "test@email.com"
+      fill_in "jobseekers_nqt_job_alerts_form[keywords]", with: "Maths"
+      fill_in "jobseekers_nqt_job_alerts_form[location]", with: "London"
+      fill_in "jobseekers_nqt_job_alerts_form[email]", with: "test@email.com"
 
       message_delivery = instance_double(ActionMailer::MessageDelivery)
       expect(SubscriptionMailer).to receive(:confirmation) { message_delivery }

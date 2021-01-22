@@ -115,7 +115,7 @@ RSpec.describe "Creating a vacancy" do
           expect(page).to have_content(I18n.t("jobs.job_location"))
         end
 
-        check school1.name, name: "schools_form[organisation_ids][]", visible: false
+        check school1.name, name: "publishers_job_listing_schools_form[organisation_ids][]", visible: false
         click_on I18n.t("buttons.continue")
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
@@ -126,8 +126,8 @@ RSpec.describe "Creating a vacancy" do
           expect(page).to have_content(I18n.t("schools_errors.organisation_ids.invalid"))
         end
 
-        check school1.name, name: "schools_form[organisation_ids][]", visible: false
-        check school2.name, name: "schools_form[organisation_ids][]", visible: false
+        check school1.name, name: "publishers_job_listing_schools_form[organisation_ids][]", visible: false
+        check school2.name, name: "publishers_job_listing_schools_form[organisation_ids][]", visible: false
         click_on I18n.t("buttons.continue")
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 8))

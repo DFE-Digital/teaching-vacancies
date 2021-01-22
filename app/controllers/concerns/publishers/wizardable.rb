@@ -39,7 +39,7 @@ module Publishers::Wizardable
   }.freeze
 
   def job_location_params(params)
-    job_location = params[:job_location_form][:job_location]
+    job_location = params[:publishers_job_listing_job_location_form][:job_location]
     readable_job_location = readable_job_location(
       job_location, school_name: current_organisation.name, schools_count: @vacancy.organisation_ids.count
     )
@@ -49,19 +49,20 @@ module Publishers::Wizardable
       organisation_ids: job_location == "central_office" ? current_organisation.id : nil,
     }
     session[:job_location] = job_location
-    params.require(:job_location_form).permit(:state, :job_location).merge(attributes_to_merge.compact)
+    params.require(:publishers_job_listing_job_location_form)
+          .permit(:state, :job_location).merge(attributes_to_merge.compact)
   end
 
   def schools_params(params)
     job_location = session[:job_location].presence || @vacancy.job_location
-    school_name = if params[:schools_form][:organisation_ids].is_a?(String)
-                    School.find(params[:schools_form][:organisation_ids]).name
+    school_name = if params[:publishers_job_listing_schools_form][:organisation_ids].is_a?(String)
+                    School.find(params[:publishers_job_listing_schools_form][:organisation_ids]).name
                   end
-    schools_count = if params[:schools_form][:organisation_ids].is_a?(Array)
-                      params[:schools_form][:organisation_ids].count
+    schools_count = if params[:publishers_job_listing_schools_form][:organisation_ids].is_a?(Array)
+                      params[:publishers_job_listing_schools_form][:organisation_ids].count
                     end
     readable_job_location = readable_job_location(job_location, school_name: school_name, schools_count: schools_count)
-    params.require(:schools_form)
+    params.require(:publishers_job_listing_schools_form)
           .permit(:state, :organisation_ids, organisation_ids: [])
           .merge(completed_step: STEPS[step], job_location: job_location, readable_job_location: readable_job_location)
   end
@@ -69,8 +70,8 @@ module Publishers::Wizardable
   def job_details_params(params)
     job_location = @vacancy.job_location.presence || "at_one_school"
     readable_job_location = @vacancy.readable_job_location.presence || readable_job_location(job_location, school_name: current_organisation.name)
-    if params[:job_details_form][:suitable_for_nqt] == "yes"
-      params[:job_details_form][:job_roles] |= [:nqt_suitable]
+    if params[:publishers_job_listing_job_details_form][:suitable_for_nqt] == "yes"
+      params[:publishers_job_listing_job_details_form][:job_roles] |= [:nqt_suitable]
     end
     attributes_to_merge = {
       completed_step: STEPS[step],
@@ -79,28 +80,30 @@ module Publishers::Wizardable
       organisation_ids: @vacancy.organisation_ids.blank? ? current_organisation.id : nil,
       status: @vacancy.status.blank? ? "draft" : nil,
     }
-    params.require(:job_details_form)
+    params.require(:publishers_job_listing_job_details_form)
           .permit(:state, :job_title, :suitable_for_nqt, :contract_type, :contract_type_duration, job_roles: [], working_patterns: [], subjects: [])
           .merge(attributes_to_merge.compact)
   end
 
   def pay_package_params(params)
-    params.require(:pay_package_form).permit(:state, :salary, :benefits).merge(completed_step: STEPS[step])
+    params.require(:publishers_job_listing_pay_package_form)
+          .permit(:state, :salary, :benefits).merge(completed_step: STEPS[step])
   end
 
   def important_dates_params(params)
-    params.require(:important_dates_form)
+    params.require(:publishers_job_listing_important_dates_form)
           .permit(:state, :starts_asap, :starts_on, :publish_on, :expires_on,
                   :expires_at, :expires_at_hh, :expires_at_mm, :expires_at_meridiem).merge(completed_step: STEPS[step])
   end
 
   def applying_for_the_job_params(params)
-    params.require(:applying_for_the_job_form)
+    params.require(:publishers_job_listing_applying_for_the_job_form)
           .permit(:state, :application_link, :contact_email, :contact_number, :school_visits, :how_to_apply)
           .merge(completed_step: STEPS[step])
   end
 
   def job_summary_params(params)
-    params.require(:job_summary_form).permit(:state, :job_summary, :about_school).merge(completed_step: STEPS[step])
+    params.require(:publishers_job_listing_job_summary_form)
+          .permit(:state, :job_summary, :about_school).merge(completed_step: STEPS[step])
   end
 end

@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // will check with steven legg about this as if needs it need to add tests around it
-  const element = document.querySelector('.new_copy_vacancy_form') || document.body || {};
+  const element = document.querySelector('.new_publishers_job_listing_copy_vacancy_form') || document.body || {};
   const dataset = element.dataset || {};
   dataLayer.push({ vacancy_state: dataset.vacancyState });
 

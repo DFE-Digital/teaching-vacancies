@@ -28,7 +28,7 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
 
       expect(page).to have_content("There is a problem")
 
-      choose "unsubscribe-feedback-form-reason-job-found-field"
+      choose "jobseekers-unsubscribe-feedback-form-reason-job-found-field"
       click_on I18n.t("buttons.submit_feedback")
 
       expect(page).to have_content(I18n.t("unsubscribe_feedbacks.confirmation.header"))

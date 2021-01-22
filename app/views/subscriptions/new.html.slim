@@ -4,7 +4,7 @@
   .govuk-grid-column-two-thirds
     = govuk_back_link(text: t("buttons.back"), href: @origin.presence || jobs_path(@subscription_form.search_criteria_hash))
 
-    = form_for @subscription_form, as: "subscription_form", url: subscriptions_path do |f|
+    = form_for @subscription_form, url: subscriptions_path do |f|
       = f.govuk_error_summary
 
       h1.govuk-heading-xl class="govuk-!-margin-bottom-4" = t(".title")

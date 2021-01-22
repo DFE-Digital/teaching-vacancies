@@ -7,7 +7,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @form, as: "applying_for_the_job_form", url: wizard_path, method: :patch do |f|
+    = form_for @form, url: wizard_path, method: :patch do |f|
       = f.govuk_error_summary
 
       h2.govuk-heading-l = t("jobs.applying_for_the_job")
@@ -19,7 +19,7 @@
       = f.govuk_phone_field :contact_number, label: { size: "s" }, width: "one-third"
 
       = f.govuk_text_area :school_visits,
-        label: { text: t("helpers.label.applying_for_the_job_form.#{school_or_trust_visits(@vacancy.parent_organisation)}"), size: "s" },
+        label: { text: t("helpers.label.publishers_job_listing_applying_for_the_job_form.#{school_or_trust_visits(@vacancy.parent_organisation)}"), size: "s" },
         hint: { text: vacancy_school_visits_hint(@vacancy) },
         rows: 10
 

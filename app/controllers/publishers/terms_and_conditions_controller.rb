@@ -19,7 +19,7 @@ class Publishers::TermsAndConditionsController < Publishers::BaseController
   private
 
   def terms_params
-    (params[:terms_and_conditions_form] || params).permit(:terms)
+    (params[:publishers_terms_and_conditions_form] || params).permit(:terms)
   end
 
   def audit_toc_acceptance

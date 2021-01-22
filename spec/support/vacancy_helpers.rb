@@ -1,7 +1,7 @@
 module VacancyHelpers
   def fill_in_job_location_form_field(vacancy)
     hyphenated_location = vacancy.job_location.split("_").join("-")
-    find("label[for=\"job-location-form-job-location-#{hyphenated_location}-field\"]").click
+    find("label[for=\"publishers-job-listing-job-location-form-job-location-#{hyphenated_location}-field\"]").click
   end
 
   def change_job_location(vacancy, location)
@@ -12,58 +12,58 @@ module VacancyHelpers
   end
 
   def fill_in_school_form_field(school)
-    find("label[for=\"schools-form-organisation-ids-#{school.id}-field\"]").click
+    find("label[for=\"publishers-job-listing-schools-form-organisation-ids-#{school.id}-field\"]").click
   end
 
   def fill_in_job_details_form_fields(vacancy)
-    fill_in "job_details_form[job_title]", with: vacancy.job_title
+    fill_in "publishers_job_listing_job_details_form[job_title]", with: vacancy.job_title
 
     working_patterns = vacancy.try(:model_working_patterns).presence || vacancy.working_patterns
     working_patterns.each do |working_pattern|
       check Vacancy.human_attribute_name("working_patterns.#{working_pattern}"),
-            name: "job_details_form[working_patterns][]",
+            name: "publishers_job_listing_job_details_form[working_patterns][]",
             visible: false
     end
 
     vacancy.job_roles&.each do |job_role|
-      check I18n.t("helpers.label.job_details_form.job_roles_options.#{job_role}"),
-            name: "job_details_form[job_roles][]",
+      check I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{job_role}"),
+            name: "publishers_job_listing_job_details_form[job_roles][]",
             visible: false
     end
 
-    find("label[for='job-details-form-suitable-for-nqt-#{vacancy.suitable_for_nqt}-field']").click
+    find("label[for='publishers-job-listing-job-details-form-suitable-for-nqt-#{vacancy.suitable_for_nqt}-field']").click
 
     vacancy.subjects&.each do |subject|
       check subject,
-            name: "job_details_form[subjects][]",
+            name: "publishers_job_listing_job_details_form[subjects][]",
             visible: false
     end
 
-    choose I18n.t("helpers.label.job_details_form.contract_type_options.#{vacancy.contract_type}")
-    fill_in "job_details_form[contract_type_duration]", with: vacancy.contract_type_duration
+    choose I18n.t("helpers.label.publishers_job_listing_job_details_form.contract_type_options.#{vacancy.contract_type}")
+    fill_in "publishers_job_listing_job_details_form[contract_type_duration]", with: vacancy.contract_type_duration
   end
 
   def fill_in_pay_package_form_fields(vacancy)
-    fill_in "pay_package_form[salary]", with: vacancy.salary
-    fill_in "pay_package_form[benefits]", with: vacancy.benefits
+    fill_in "publishers_job_listing_pay_package_form[salary]", with: vacancy.salary
+    fill_in "publishers_job_listing_pay_package_form[benefits]", with: vacancy.benefits
   end
 
   def fill_in_important_dates_fields(vacancy)
-    fill_in "important_dates_form[publish_on(3i)]", with: vacancy.publish_on.day
-    fill_in "important_dates_form[publish_on(2i)]", with: vacancy.publish_on.strftime("%m")
-    fill_in "important_dates_form[publish_on(1i)]", with: vacancy.publish_on.year
+    fill_in "publishers_job_listing_important_dates_form[publish_on(3i)]", with: vacancy.publish_on.day
+    fill_in "publishers_job_listing_important_dates_form[publish_on(2i)]", with: vacancy.publish_on.strftime("%m")
+    fill_in "publishers_job_listing_important_dates_form[publish_on(1i)]", with: vacancy.publish_on.year
 
-    fill_in "important_dates_form[expires_on(3i)]", with: vacancy.expires_on.day
-    fill_in "important_dates_form[expires_on(2i)]", with: vacancy.expires_on.strftime("%m")
-    fill_in "important_dates_form[expires_on(1i)]", with: vacancy.expires_on.year
+    fill_in "publishers_job_listing_important_dates_form[expires_on(3i)]", with: vacancy.expires_on.day
+    fill_in "publishers_job_listing_important_dates_form[expires_on(2i)]", with: vacancy.expires_on.strftime("%m")
+    fill_in "publishers_job_listing_important_dates_form[expires_on(1i)]", with: vacancy.expires_on.year
 
-    fill_in "important_dates_form[expires_at_hh]", with: vacancy.expires_at.strftime("%-l")
-    fill_in "important_dates_form[expires_at_mm]", with: vacancy.expires_at.strftime("%-M")
-    select vacancy.expires_at.strftime("%P"), from: "important_dates_form[expires_at_meridiem]"
+    fill_in "publishers_job_listing_important_dates_form[expires_at_hh]", with: vacancy.expires_at.strftime("%-l")
+    fill_in "publishers_job_listing_important_dates_form[expires_at_mm]", with: vacancy.expires_at.strftime("%-M")
+    select vacancy.expires_at.strftime("%P"), from: "publishers_job_listing_important_dates_form[expires_at_meridiem]"
 
-    fill_in "important_dates_form[starts_on(3i)]", with: vacancy.starts_on.day
-    fill_in "important_dates_form[starts_on(2i)]", with: vacancy.starts_on.strftime("%m")
-    fill_in "important_dates_form[starts_on(1i)]", with: vacancy.starts_on.year
+    fill_in "publishers_job_listing_important_dates_form[starts_on(3i)]", with: vacancy.starts_on.day
+    fill_in "publishers_job_listing_important_dates_form[starts_on(2i)]", with: vacancy.starts_on.strftime("%m")
+    fill_in "publishers_job_listing_important_dates_form[starts_on(1i)]", with: vacancy.starts_on.year
   end
 
   def upload_document(form_id, input_name, filepath)
@@ -74,36 +74,36 @@ module VacancyHelpers
   end
 
   def fill_in_applying_for_the_job_form_fields(vacancy)
-    fill_in "applying_for_the_job_form[contact_email]", with: vacancy.contact_email
-    fill_in "applying_for_the_job_form[contact_number]", with: vacancy.contact_number
-    fill_in "applying_for_the_job_form[school_visits]", with: vacancy.school_visits
-    fill_in "applying_for_the_job_form[how_to_apply]", with: vacancy.how_to_apply
-    fill_in "applying_for_the_job_form[application_link]", with: vacancy.application_link
+    fill_in "publishers_job_listing_applying_for_the_job_form[contact_email]", with: vacancy.contact_email
+    fill_in "publishers_job_listing_applying_for_the_job_form[contact_number]", with: vacancy.contact_number
+    fill_in "publishers_job_listing_applying_for_the_job_form[school_visits]", with: vacancy.school_visits
+    fill_in "publishers_job_listing_applying_for_the_job_form[how_to_apply]", with: vacancy.how_to_apply
+    fill_in "publishers_job_listing_applying_for_the_job_form[application_link]", with: vacancy.application_link
   end
 
   def fill_in_job_summary_form_fields(vacancy)
-    fill_in "job_summary_form[job_summary]", with: vacancy.job_summary
-    fill_in "job_summary_form[about_school]", with: vacancy.about_school
+    fill_in "publishers_job_listing_job_summary_form[job_summary]", with: vacancy.job_summary
+    fill_in "publishers_job_listing_job_summary_form[about_school]", with: vacancy.about_school
   end
 
   def fill_in_copy_vacancy_form_fields(vacancy)
-    fill_in "copy_vacancy_form[job_title]", with: vacancy.job_title
+    fill_in "publishers_job_listing_copy_vacancy_form[job_title]", with: vacancy.job_title
 
-    fill_in "copy_vacancy_form[expires_on(3i)]", with: vacancy.expires_on&.day
-    fill_in "copy_vacancy_form[expires_on(2i)]", with: vacancy.expires_on&.strftime("%m")
-    fill_in "copy_vacancy_form[expires_on(1i)]", with: vacancy.expires_on&.year
+    fill_in "publishers_job_listing_copy_vacancy_form[expires_on(3i)]", with: vacancy.expires_on&.day
+    fill_in "publishers_job_listing_copy_vacancy_form[expires_on(2i)]", with: vacancy.expires_on&.strftime("%m")
+    fill_in "publishers_job_listing_copy_vacancy_form[expires_on(1i)]", with: vacancy.expires_on&.year
 
-    fill_in "copy_vacancy_form[expires_at_hh]", with: vacancy.expires_at.strftime("%-l")
-    fill_in "copy_vacancy_form[expires_at_mm]", with: vacancy.expires_at.strftime("%-M")
-    select vacancy.expires_at.strftime("%P"), from: "copy_vacancy_form[expires_at_meridiem]"
+    fill_in "publishers_job_listing_copy_vacancy_form[expires_at_hh]", with: vacancy.expires_at.strftime("%-l")
+    fill_in "publishers_job_listing_copy_vacancy_form[expires_at_mm]", with: vacancy.expires_at.strftime("%-M")
+    select vacancy.expires_at.strftime("%P"), from: "publishers_job_listing_copy_vacancy_form[expires_at_meridiem]"
 
-    fill_in "copy_vacancy_form[publish_on(3i)]", with: vacancy.publish_on&.day
-    fill_in "copy_vacancy_form[publish_on(2i)]", with: vacancy.publish_on&.strftime("%m")
-    fill_in "copy_vacancy_form[publish_on(1i)]", with: vacancy.publish_on&.year
+    fill_in "publishers_job_listing_copy_vacancy_form[publish_on(3i)]", with: vacancy.publish_on&.day
+    fill_in "publishers_job_listing_copy_vacancy_form[publish_on(2i)]", with: vacancy.publish_on&.strftime("%m")
+    fill_in "publishers_job_listing_copy_vacancy_form[publish_on(1i)]", with: vacancy.publish_on&.year
 
-    fill_in "copy_vacancy_form[starts_on(3i)]", with: vacancy.starts_on.day if vacancy.starts_on
-    fill_in "copy_vacancy_form[starts_on(2i)]", with: vacancy.starts_on.strftime("%m") if vacancy.starts_on
-    fill_in "copy_vacancy_form[starts_on(1i)]", with: vacancy.starts_on.year if vacancy.starts_on
+    fill_in "publishers_job_listing_copy_vacancy_form[starts_on(3i)]", with: vacancy.starts_on.day if vacancy.starts_on
+    fill_in "publishers_job_listing_copy_vacancy_form[starts_on(2i)]", with: vacancy.starts_on.strftime("%m") if vacancy.starts_on
+    fill_in "publishers_job_listing_copy_vacancy_form[starts_on(1i)]", with: vacancy.starts_on.year if vacancy.starts_on
   end
 
   def verify_all_vacancy_details(vacancy)

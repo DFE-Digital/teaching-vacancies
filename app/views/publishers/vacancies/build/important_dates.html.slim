@@ -7,7 +7,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @form, as: "important_dates_form", url: wizard_path, method: :patch do |f|
+    = form_for @form, url: wizard_path, method: :patch do |f|
       = f.govuk_error_summary
 
       h2.govuk-heading-l = t("jobs.important_dates")
@@ -17,7 +17,7 @@
       - if @form.disable_editing_publish_on?
         #publish_on
           legend.govuk-fieldset__legend.govuk-fieldset__legend--s
-            h1.govuk-fieldset__heading = t("helpers.legend.important_dates_form.publish_on_html")
+            h1.govuk-fieldset__heading = t("helpers.legend.publishers_job_listing_important_dates_form.publish_on_html")
           p = format_date @vacancy.publish_on
         br
         .display-none
@@ -38,7 +38,7 @@
             0,
             multiple: false,
             link_errors: false,
-            label: { text: t("helpers.legend.important_dates_form.starts_asap") }
+            label: { text: t("helpers.legend.publishers_job_listing_important_dates_form.starts_asap") }
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 

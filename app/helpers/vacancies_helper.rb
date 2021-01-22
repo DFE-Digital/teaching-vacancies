@@ -73,11 +73,9 @@ module VacanciesHelper
   end
 
   def vacancy_about_school_hint_text(vacancy)
-    if vacancy.organisations.many?
-      return t("helpers.hint.job_summary_form.about_schools", organisation_type: organisation_type_basic(vacancy.parent_organisation))
-    end
+    return t("helpers.hint.publishers_job_listing_job_summary_form.about_schools", organisation_type: organisation_type_basic(vacancy.parent_organisation)) if vacancy.organisations.many?
 
-    t("helpers.hint.job_summary_form.about_organisation", organisation_type: organisation_type_basic(vacancy.parent_organisation).capitalize)
+    t("helpers.hint.publishers_job_listing_job_summary_form.about_organisation", organisation_type: organisation_type_basic(vacancy.parent_organisation).capitalize)
   end
 
   def vacancy_about_school_value(vacancy)
@@ -102,6 +100,6 @@ module VacanciesHelper
 
   def vacancy_school_visits_hint(vacancy)
     organisation = organisation_type_basic(vacancy.parent_organisation).tr(" ", "_")
-    t("helpers.hint.applying_for_the_job_form.#{organisation}_visits")
+    t("helpers.hint.publishers_job_listing_applying_for_the_job_form.#{organisation}_visits")
   end
 end

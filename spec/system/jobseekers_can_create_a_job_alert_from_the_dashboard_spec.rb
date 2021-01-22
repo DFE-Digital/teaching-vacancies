@@ -51,7 +51,7 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard" do
   end
 
   def and_email_is_prefilled
-    expect(page).to have_field("subscription_form[email]", with: jobseeker.email)
+    expect(page).to have_field("jobseekers_subscription_form[email]", with: jobseeker.email)
   end
 
   def and_the_job_alert_is_on_the_index_page
@@ -66,15 +66,15 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard" do
   end
 
   def fill_in_subscription_fields
-    fill_in "subscription_form[keyword]", with: search_criteria["keyword"]
-    fill_in "subscription_form[location]", with: search_criteria["location"]
+    fill_in "jobseekers_subscription_form[keyword]", with: search_criteria["keyword"]
+    fill_in "jobseekers_subscription_form[location]", with: search_criteria["location"]
     select I18n.t("jobs.filters.number_of_miles", count: search_criteria["radius"])
-    choose I18n.t("helpers.label.subscription_form.frequency_options.#{subscription.frequency}")
+    choose I18n.t("helpers.label.jobseekers_subscription_form.frequency_options.#{subscription.frequency}")
     search_criteria["working_patterns"].each do |working_pattern|
-      check I18n.t("helpers.label.job_details_form.working_patterns_options.#{working_pattern}")
+      check I18n.t("helpers.label.publishers_job_listing_job_details_form.working_patterns_options.#{working_pattern}")
     end
     search_criteria["job_roles"].each do |job_role|
-      check I18n.t("helpers.label.job_details_form.job_roles_options.#{job_role}")
+      check I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{job_role}")
     end
     search_criteria["phases"].each do |phase|
       check I18n.t("jobs.education_phase_options.#{phase}")

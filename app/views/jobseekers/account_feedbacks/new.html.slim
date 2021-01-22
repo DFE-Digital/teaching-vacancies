@@ -4,7 +4,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @account_feedback, as: "account_feedback", url: jobseekers_account_feedback_path do |f|
+    = form_for @account_feedback, url: jobseekers_account_feedback_path do |f|
       = f.hidden_field :back_link
 
       = f.govuk_error_summary

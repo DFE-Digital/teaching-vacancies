@@ -41,7 +41,28 @@ en:
 
   helpers:
     hint:
-      applying_for_the_job_form:
+      jobseeker:
+        password: Your password has to be at least 8 characters long
+
+      jobseekers_job_alert_feedback_form:
+        comment: This is optional, but the information will help us to make improvements.
+      jobseekers_nqt_job_alerts_form:
+        email: Enter your email address. We will only use it to send you job alerts.
+        keywords: >-
+          Tell us what teaching job you’re looking for and what kind of school you’d like to teach in.
+          You can use any keywords that describe your ideal role. This alert is especially for NQT suitable jobs, so you
+          don’t need to add NQT as a keyword.
+        location: >-
+          Tell us where you’re looking for a job and we’ll email you any results within a 10 mile radius.
+      jobseekers_subscription_form:
+        email: Enter your email address. We'll only use it to send you job alerts.
+      jobseekers_unsubscribe_feedback_form:
+        additional_info: Any more information you can share will help us to improve the service
+
+      publishers_organisation_form:
+        description: Jobseekers will see this description of the %{organisation_type} in the job listing
+
+      publishers_job_listing_applying_for_the_job_form:
         application_link: Leave this blank unless candidates can apply directly on the school or council website
         contact_email: This email address will be shown publicly as a point of contact
         contact_number: This phone number will be for any questions applicants may have about the role
@@ -50,7 +71,7 @@ en:
           Explain how a candidate can arrange visits within the local authority (give a phone number if possible)
         school_visits: Explain how a candidate can arrange a visit to the school (give a phone number if possible)
         trust_visits: Explain how a candidate can arrange a visit to the trust (give a phone number if possible)
-      copy_vacancy_form:
+      publishers_job_listing_copy_vacancy_form:
         expires_on: For example, 01 05 2021
         expires_at: For example, 9:30 am or 11:59 pm (midnight)
         job_title: >-
@@ -58,18 +79,27 @@ en:
           level of seniority ('Subject leader for science', for example).
         publish_on: For example, 01 01 2021
         starts_on: For example, 01 09 2021
-      documents_form:
+      publishers_job_listing_documents_form:
         documents: >-
           You can upload pdf, jpeg, png, mp4, word, powerpoint and excel files. You can upload as many files as you
           like, and each file must be smaller than 10 MB.
-      important_dates_form:
+      publishers_job_listing_important_dates_form:
         expires_on: For example, 01 05 2021
         expires_at: For example, 9:30 am or 11:59 pm (midnight)
         publish_on: For example, 01 01 2021
         starts_on: For example, 01 09 2021
-      jobseeker:
-        password: Your password has to be at least 8 characters long
-      job_summary_form:
+      publishers_job_listing_job_details_form:
+        contract_type_duration: >-
+          Contract length should be more than 12 weeks. Short term cover should not be advertised on Teaching Vacancies
+        job_roles: Select all that describe the role
+        job_title: >-
+          For secondary school roles include subject and, if relevant,
+          level of seniority ('Subject leader for science', for example).
+        subjects: What subject(s) will the teacher focus on?
+        working_patterns: >-
+          Select all working patterns you will consider for the role.
+          Flexible working options may attract more candidates.
+      publishers_job_listing_job_summary_form:
         about_organisation: >-
           This will appear next to the job details under '%{organisation_type} overview'. Feel free to adapt this text
         about_schools: >-
@@ -78,37 +108,13 @@ en:
         job_summary: >-
           Give a brief summary of the job that jobseekers can quickly scan.
           This will be the first thing they see on the listing or in search engine results
-      job_details_form:
-        contract_type_duration: Contract length should be more than 12 weeks. Short term cover should not be advertised on Teaching Vacancies
-        job_roles: 'Select all that describe the role'
-        job_title: >-
-          For secondary school roles include subject and, if relevant,
-          level of seniority ('Subject leader for science', for example).
-        subjects: What subject(s) will the teacher focus on?
-        working_patterns: >-
-          Select all working patterns you will consider for the role.
-          Flexible working options may attract more candidates.
-      nqt_job_alerts_form:
-        email: Enter your email address. We will only use it to send you job alerts.
-        keywords: >-
-          Tell us what teaching job you’re looking for and what kind of school you’d like to teach in.
-          You can use any keywords that describe your ideal role. This alert is especially for NQT suitable jobs, so you
-          don’t need to add NQT as a keyword.
-        location: >-
-          Tell us where you’re looking for a job and we’ll email you any results within a 10 mile radius.
-      organisation_form:
-        description: Jobseekers will see this description of the %{organisation_type} in the job listing
-      pay_package_form:
+      publishers_job_listing_pay_package_form:
         benefits: >-
           Include special educational needs (SEN) allowances and teaching and learning responsibility (TLR) payments,
           for example
         salary: >-
           Enter the annual salary or salary range, and/or pay scale range.
           Where relevant, state if the salary is full-time equivalent
-      subscription_form:
-        email: Enter your email address. We'll only use it to send you job alerts.
-      unsubscribe_feedback_form:
-        additional_info: Any more information you can share will help us to improve the service
 
     label:
       account_feedback:
@@ -119,39 +125,65 @@ en:
           somewhat_dissatisfied: Somewhat dissatisfied
           highly_dissatisfied: Highly dissatisfied
         suggestions: Do you have any suggestions on how we could improve the service?
-      applying_for_the_job_form:
+      general_feedback:
+        visit_purpose_options:
+          find_teaching_job: Find a job in teaching
+          list_teaching_job: List a teaching job on the service
+          other_purpose: Something else
+      jobseeker:
+        email_html: Email address (<span class='text-red'>Required</span>)
+        password_html: Password (<span class='text-red'>Required</span>)
+
+      jobseekers_job_alert_feedback_form:
+        comment: Would you like to add any further comments about the relevancy of the job alerts you have received?
+      jobseekers_nqt_job_alerts_form:
+        email_html: Email address (<span class='text-red'>Required</span>)
+        keywords_html: Keywords (<span class='text-red'>Required</span>)
+        location_html: Location (<span class='text-red'>Required</span>)
+      jobseekers_sign_in_form:
+        email: Email address
+        password: Password
+      jobseekers_subscription_form:
+        email_html: Email address (<span class='text-red'>Required</span>)
+        frequency_options:
+          daily: Daily, at around 3 pm
+          weekly: Weekly (Friday evening at around 6 pm)
+      jobseekers_unsubscribe_feedback_form:
+        additional_info: Is there anything else you'd like to tell us?
+        other_reason_html: Briefly, tell us more about that reason
+        reason_options:
+          not_relevant: The alerts I am receiving are not relevant to me
+          job_found: I have found a teaching job
+          circumstances_change: My circumstances have changed
+          other_reason: Another reason
+
+      jobseekers_job_application_personal_details_form:
+        first_name_html: First name (<span class='text-red'>Required</span>)
+        last_name_html: Last name (<span class='text-red'>Required</span>)
+
+      publishers_organisation_form:
+        description: Description of %{organisation_type}
+        website: '%{organisation_type} website'
+
+      publishers_job_listing_applying_for_the_job_form:
         application_link: Link to online application
         contact_email_html: Contact email (<span class='text-red'>Required</span>)
         contact_number: Contact phone number
         how_to_apply: How to apply
         school_visits: School visits
         trust_visits: Trust visits
-      copy_vacancy_form:
+      publishers_job_listing_copy_vacancy_form:
         expires_at_hh: Hour
         expires_at_meridiem: am or pm
         expires_at_mm: Minute
         job_title_html: Job title (<span class='text-red'>Required</span>)
-      documents_form:
+      publishers_job_listing_documents_form:
         documents: Upload files
-      general_feedback:
-        visit_purpose_options:
-          find_teaching_job: Find a job in teaching
-          list_teaching_job: List a teaching job on the service
-          other_purpose: Something else
-      important_dates_form:
+      publishers_job_listing_important_dates_form:
         expires_at_hh: Hour
         expires_at_meridiem: am or pm
         expires_at_mm: Minute
-      organisation_form:
-        description: Description of %{organisation_type}
-        website: '%{organisation_type} website'
-      jobseeker:
-        email_html: Email address (<span class='text-red'>Required</span>)
-        password_html: Password (<span class='text-red'>Required</span>)
-      jobseekers/sign_in_form:
-        email: Email address
-        password: Password
-      job_details_form:
+      publishers_job_listing_job_details_form:
         contract_type_duration: Duration of fixed term contract
         contract_type_options:
           fixed_term: Fixed term
@@ -167,70 +199,54 @@ en:
           full_time: Full-time
           part_time: Part-time
           job_share: Job share
-      job_summary_form:
+      publishers_job_listing_job_summary_form:
         about_organisation_html: About %{organisation} (<span class='text-red'>Required</span>)
         job_summary_html: Job summary (<span class='text-red'>Required</span>)
-      nqt_job_alerts_form:
-        email_html: Email address (<span class='text-red'>Required</span>)
-        keywords_html: Keywords (<span class='text-red'>Required</span>)
-        location_html: Location (<span class='text-red'>Required</span>)
-      pay_package_form:
+      publishers_job_listing_pay_package_form:
         benefits: Employee benefits
         salary_html: Salary (<span class='text-red'>Required</span>)
-      personal_details_form:
-        first_name_html: First name (<span class='text-red'>Required</span>)
-        last_name_html: Last name (<span class='text-red'>Required</span>)
-      subscription_form:
-        email_html: Email address (<span class='text-red'>Required</span>)
-        frequency_options:
-          daily: Daily, at around 3 pm
-          weekly: Weekly (Friday evening at around 6 pm)
-      unsubscribe_feedback_form:
-        additional_info: Is there anything else you'd like to tell us?
-        other_reason_html: Briefly, tell us more about that reason
-        reason_options:
-          not_relevant: The alerts I am receiving are not relevant to me
-          job_found: I have found a teaching job
-          circumstances_change: My circumstances have changed
-          other_reason: Another reason
 
     legend:
       account_feedback:
-        rating_html: How satisfied are you with your experience of using Teaching Vacancies? (<span class='text-red'>Required</span>)
-      copy_vacancy_form:
+        rating_html: >-
+          How satisfied are you with your experience of using Teaching Vacancies?
+          (<span class='text-red'>Required</span>)
+
+      jobseekers_subscription_form:
+        frequency_html: When do you want to receive alerts? (<span class='text-red'>Required</span>)
+      jobseekers_unsubscribe_feedback_form:
+        reason_html: Why do you want to unsubscribe from this alert? (<span class='text-red'>Required</span>)
+
+      publishers_job_listing_copy_vacancy_form:
         expires_on_html: Date application is due (<span class='text-red'>Required</span>)
         publish_on_html: Date job will be listed (<span class='text-red'>Required</span>)
         starts_on: Date job starts
-      important_dates_form:
+      publishers_job_listing_important_dates_form:
         expires_on_html: Date application is due (<span class='text-red'>Required</span>)
         expires_at_html: Time application is due (<span class='text-red'>Required</span>)
         publish_on_html: Date job will be listed (<span class='text-red'>Required</span>)
         starts_asap: As soon as possible
         starts_on: Date job starts
-      job_location_form:
-        job_location_html: Where will the job be based? (<span class='text-red'>Required</span>)
-      job_details_form:
+      publishers_job_listing_job_details_form:
         contract_type_html: Contract type (<span class='text-red'>Required</span>)
         job_roles: Job role
         suitable_for_nqt_html: Is this job suitable for NQTs? (<span class='text-red'>Required</span>)
         subjects: Subject(s)
         working_patterns_html: Working patterns (<span class='text-red'>Required</span>)
-      schools_form:
+      publishers_job_listing_job_location_form:
+        job_location_html: Where will the job be based? (<span class='text-red'>Required</span>)
+      publishers_job_listing_schools_form:
         organisation_ids_html: In which schools will the job be based? (<span class='text-red'>Required</span>)
         organisation_id_html: In which school will the job be based? (<span class='text-red'>Required</span>)
-      subscription_form:
-        frequency_html: When do you want to receive alerts? (<span class='text-red'>Required</span>)
-      unsubscribe_feedback_form:
-        reason_html: Why do you want to unsubscribe from this alert? (<span class='text-red'>Required</span>)
 
     options:
-      job_location_form:
+      publishers_job_listing_job_location_form:
         job_location:
           at_one_school: At one school in the %{organisation_type}
           central_office: At the %{organisation_type}'s head office
           at_multiple_schools: At more than one school in the %{organisation_type}
 
     placeholder:
-      nqt_job_alerts_form:
+      jobseekers_nqt_job_alerts_form:
         keywords: Humanities, KS3, primary teacher, for example
         location: City, town or postcode, for example
