@@ -161,6 +161,9 @@ en:
         first_name_html: First name (<span class='text-red'>Required</span>)
         last_name_html: Last name (<span class='text-red'>Required</span>)
 
+      jobseekers_job_application_personal_statement_form:
+        personal_statement_html: Your personal statement (<span class='text-red'>Required</span>)
+
       publishers_organisation_form:
         description: Description of %{organisation_type}
         website: '%{organisation_type} website'

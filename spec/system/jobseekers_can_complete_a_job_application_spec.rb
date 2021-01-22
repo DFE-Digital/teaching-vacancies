@@ -13,11 +13,23 @@ RSpec.describe "Jobseekers can complete a job application" do
 
   it "allows jobseekers to complete application and go to review page" do
     visit jobseekers_job_application_build_path(job_application, :personal_details)
+
+    expect(page).to have_content(I18n.t("jobseekers.job_applications.build.personal_details.title"))
+    validates_step_complete
+    fill_in_personal_details
     click_on I18n.t("buttons.continue")
-    expect(page).to have_content("There is a problem")
-    fill_in "First name", with: "John"
+
+    expect(page).to have_content(I18n.t("jobseekers.job_applications.build.personal_statement.title"))
+    validates_step_complete
+    fill_in_personal_statement
     click_on I18n.t("buttons.continue")
+
     expect(current_path).to eq(jobseekers_job_application_review_path(job_application))
     expect(page).to have_content("First name: John")
+  end
+
+  def validates_step_complete
+    click_on I18n.t("buttons.continue")
+    expect(page).to have_content("There is a problem")
   end
 end

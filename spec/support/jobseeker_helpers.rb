@@ -24,4 +24,12 @@ module JobseekerHelpers
       click_on I18n.t("buttons.sign_in")
     end
   end
+
+  def fill_in_personal_details
+    fill_in "First name", with: "John"
+  end
+
+  def fill_in_personal_statement
+    fill_in "Your personal statement", with: "A brilliant, glowing statement about your person"
+  end
 end
