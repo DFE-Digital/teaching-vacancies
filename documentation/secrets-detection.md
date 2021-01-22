@@ -1,6 +1,6 @@
 # Secrets detection
 
-[Git secrets](https://github.com/awslabs/git-secrets) (not to be confused with [git-secret](https://git-secret.io/), nor with GitHub Secrets) acts as an extra line of defence to prevent you committing secrets. Once installed, it hooks into the git commit command.
+[Git secrets](https://github.com/awslabs/git-secrets) (not to be confused with [git-secret](https://git-secret.io/), nor with [GitHub Actions Encrypted Secrets](https://docs.github.com/en/actions/reference/encrypted-secrets)) acts as an extra line of defence to prevent you committing secrets. Once installed, it hooks into the `git commit` command.
 
 From your `teaching-vacancies` repo, run:
 

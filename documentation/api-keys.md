@@ -29,7 +29,7 @@ The secret_key_base is used as the input secret to the application's key generat
 In order to generate a new secret key:
 1. Run the `rails secret` task from the repo, it will generate a new secret key
 1. You need to generate a different key per environment
-1. Update `SECRET_KEY_BASE` in in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/secrets` files
+1. Update `SECRET_KEY_BASE` in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/secrets` files
 
 ### ROLLBAR_ACCESS_TOKEN
 Used to report server-side errors to Rollbar.
@@ -113,7 +113,7 @@ __NOTE: Keys with `JSON` in the name are `JSON` objects, not simple strings. The
 1. Click 'CREATE CREDENTIALS' in the toolbar at the top of the page
 1. Choose 'Service Account'
 1. In 'Service account name' give the account a clear, descriptive name including environment details where applicable
-1. Add a concise description of what the service account is for and what enviroments it is to be used in in 'Service account description'.
+1. Add a concise description of what the service account is for and what enviroments it is to be used in 'Service account description'.
 1. Click 'Create'
 1. Add at least one role to restrict the service account to a service. Use the minimum necessary permission(s) for the role.
 1. Click 'Continue'
@@ -128,7 +128,7 @@ To create a new key:
 1. Connect to https://developer.ordnancesurvey.co.uk/
 1. Navigate to My Keys > Add a new key
 1. Enter key name, select `OS Names API` and click `Save Key`
-1. Update `ORDNANCE_SURVEY_API_KEY` in in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/secrets` files
+1. Update `ORDNANCE_SURVEY_API_KEY` in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/secrets` files
 
 ### SKYLIGHT_AUTHENTICATION
 Used by the app to report performance data to [Skylight](https://www.skylight.io/).
@@ -141,4 +141,4 @@ Used to integrate with the GovUK Notify API.
 1. Click `Revoke` on the old key
 1. Click Create an API key
 1. Add a specific name, select the type of key and click `Continue`
-1. Update `NOTIFY_KEY` in in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/secrets` files
+1. Update `NOTIFY_KEY` in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/secrets` files

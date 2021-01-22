@@ -14,11 +14,19 @@ A team member with approver rights in [DfE Sign-in test environment](https://tes
 
 ## GitHub
 
-Digital Tooling will add the new developer to the [DFE-Digital organisation](https://github.com/orgs/DFE-Digital/teams) and to the [Teaching Vacancies team](https://github.com/orgs/DFE-Digital/teams/teaching-vacancies)
+`#digital-tools-support` will add the new team member to the [DFE-Digital organisation](https://github.com/orgs/DFE-Digital/teams). We have three teams:
+* [teaching-vacancies-admins](https://github.com/orgs/DFE-Digital/teams/teaching-vacancies-admins)
+* [teaching-vacancies-developers](https://github.com/orgs/DFE-Digital/teams/teaching-vacancies-developers)
+* [teaching-vacancies-nondev](https://github.com/orgs/DFE-Digital/teams/teaching-vacancies-nondev)
+
+Plus
+* [Teacher Services Infrastructure](https://github.com/orgs/DFE-Digital/teams/teacher-services-infrastructure) who provide the DevOps function across Teacher Services
+
+The new developer will be added to [teaching-vacancies-developers](https://github.com/orgs/DFE-Digital/teams/teaching-vacancies-developers)
 
 ## GOV.UK PaaS
 
-Digital Tooling will add the new developer to the [dfe-teacher-services organisation](https://admin.london.cloud.service.gov.uk/organisations/386a9502-d9b6-4aba-b3c3-ebe4fa3f963e) inside the following spaces:
+`#digital-tools-support` will add the new developer to the [dfe-teacher-services organisation](https://admin.london.cloud.service.gov.uk/organisations/386a9502-d9b6-4aba-b3c3-ebe4fa3f963e) inside the following spaces:
 
 * teaching-vacancies-dev
 * teaching-vacancies-staging
@@ -29,9 +37,9 @@ Digital Tooling will add the new developer to the [dfe-teacher-services organisa
 
 Any team member can invite the new developer to the following services:
 
+* Google Analytics
 * GOV.UK Notify
 * Papertrail
 * Rollbar
 * Skylight
 * Zendesk
-* Google Analytics

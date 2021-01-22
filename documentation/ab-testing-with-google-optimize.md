@@ -3,7 +3,7 @@
 ## Setting up a new redirect experiment
 
 - Open the [Google Optimize console](https://optimize.google.com/optimize/home/?authuser=1#/accounts), make sure you
-- have access to the TVS Google Optimize Account as a first step
+- have access to the Teaching Vacancies Google Optimize Account as a first step
 
 - Select a container for the environment you wish to run an experiment on. You can choose container by clicking on the
 - button in the top left-hand corner.

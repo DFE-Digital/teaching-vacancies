@@ -2,8 +2,10 @@
 
 * [API Documentation](https://docs.teaching-vacancies.service.gov.uk)
 * [API Keys](/documentation/api-keys.md)
-* [Authentication](/documentation/authentication.md)
 * [Continuous delivery](/documentation/continuous-delivery.md)
+* [Deployments](/documentation/deployments.md)
+* [Docker](/documentation/docker.md)
+* [DSI Integration](/documentation/dsi-integration.md)
 * [Hosting](/documentation/hosting.md)
 * [Logging](/documentation/logging.md)
 * [Onboarding](/documentation/onboarding.md)
@@ -76,7 +78,7 @@ When onboarded, you will be provided with an AWS user. You can use it to access 
   - Generate Access Keys
 To carry out more privileged operations, you will need to [switch to a role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-console.html)
 - Choose your user name on the navigation bar in the upper right. It typically looks like this: <YOUR-AWS-USERNAME>@teaching-vacancies.
-- Choose `Switch Roles`. 
+- Choose `Switch Roles`.
 - For Account, enter `530003481352`
 - For Role, enter `ReadOnly`
 - For Display Name, this will be greyed out as `ReadOnly @ 530003481352`
@@ -113,7 +115,7 @@ aws configure
 ```
 
 You'll be prompted to enter:
-- AWS Access Key ID 
+- AWS Access Key ID
 - AWS Secret Access Key
 - Default region name (choose `eu-west-2`)
 - Default output format (choose `json`)

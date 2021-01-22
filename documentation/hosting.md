@@ -1,21 +1,58 @@
 # Hosting
 
-Teaching Vacancies is hosted on GOV.UK PaaS. When onboarded you will be added to the [`dfe-teacher-services` organisation](https://docs.cloud.service.gov.uk/orgs_spaces_users.html#organisations) and the relevant spaces. Note that this is different to GitHub.com where you will be added to the [`DFE-Digital` organization](https://github.com/DFE-Digital)
+Teaching Vacancies is hosted on [GOV.UK PaaS](https://docs.cloud.service.gov.uk/).
 
-These are the running applications:
+## Applications
 
-- https://dev.teaching-vacancies.service.gov.uk (Dev)
-- https://staging.teaching-vacancies.service.gov.uk (Staging)
-- https://teaching-vacancies.service.gov.uk (Production)
+These are the persistent applications:
 
-Plus all the ephemeral review apps that are created when a PR is created on GitHub, and destroyed when the PR is merged.
+- https://dev.teaching-vacancies.service.gov.uk (Dev, from `dev` branch)
+- https://staging.teaching-vacancies.service.gov.uk (Staging, from `staging` branch)
+- https://teaching-vacancies.service.gov.uk (Production, from `master` branch`)
 
-The Dev environment has integration with DSI. It is "user-deployable", in that developers can deploy via:
-- pushing code to the `dev` branch
-- Makefile commands outlined below
+Plus all the ephemeral review apps that are created when a PR is created on GitHub, and destroyed when the PR is merged. These have URLs which contain the Pull Request number, like [https://teaching-vacancies-review-pr-2667.london.cloudapps.digital](https://teaching-vacancies-review-pr-2667.london.cloudapps.digital)
+
+The Dev environment has [integration with DSI](./dsi-integration.md). It is "user-deployable", in that developers can [deploy](./deployments.md) via:
+- [pushing code to the `dev` branch](./deployments.md#build-and-deploy-to-dev---github-actions)
+- [Makefile commands](./deployments.md#build-and-deploy-to-an-environment---makefile)
 
 The Staging environment is a pre-production environment, to identify issues with code before it's promoted to Production.
 On merging a Pull Request, the same code is deployed first to Staging, and after a successful smoke test, to Production.
+## Gov.UK PaaS organisation and permission model
+
+An [organisation](https://docs.cloud.service.gov.uk/orgs_spaces_users.html#organisations)
+> represents a group of users, applications and environments. Each org shares the same resource, quota and custom domain.
+Teaching Vacancies is in the [dfe-teacher-services organisation](https://docs.cloud.service.gov.uk/orgs_spaces_users.html#organisations)
+
+An org is divided into one or more [spaces](https://docs.cloud.service.gov.uk/orgs_spaces_users.html#spaces). A space is a shared location for developing, deploying and running apps and backing services.
+
+Teaching Vacancies has 5 spaces:
+- teaching-vacancies-dev
+- teaching-vacancies-staging
+- teaching-vacancies-production
+- teaching-vacancies-review
+- teaching-vacancies-monitoring
+
+During [onboarding](./onboarding.md) you will have been granted access to selected spaces and [roles](https://docs.cloud.service.gov.uk/orgs_spaces_users.html#users-and-user-roles):
+
+By default, you will have the `SpaceDeveloper` role in the:
+- `Sandbox` space
+- `teaching-vacancies-dev` space
+
+Senior developers, Tech Leads, and DevOps have the `SpaceManager` role in all required spaces.
+
+- Space developer - can deploy, run and manage apps, and create and bind services. This is the default role for any user who is not assigned a manager role.
+- Space manager - grants user roles within a space and can change space properties using the command line. A space manager cannot deploy, run, or manage apps or services.
+- Space auditor - can view apps, users and resources used within a space using the command line, but cannot edit them. This role is useful for viewing app data without modifying it.
+- Billing manager - create and manage billing account and payment information
+
+## Logging on and changing role
+
+- [Enable Google SSO for Gov.UK PaaS](https://docs.cloud.service.gov.uk/get_started.html#use-single-sign-on)
+- Log in to GOV.UK PaaS (with `cf login --sso`). You will need a [Passcode](https://login.london.cloud.service.gov.uk/passcode)
+- Once you've selected a space, you should see your user ID (between `API version` and `org: dfe-teacher-services`)
+- Add your user ID and name to [this SSO Confluence page](https://dfedigital.atlassian.net/wiki/spaces/BaT/pages/1935048705/Single+sign-on+SSO) so that it's easier to identify you.
+- A colleague with the `Space manager` role can [set or unset the Space developer role](#setunset-spacedeveloper-role) as required.
 
 ## Install Cloud Foundry CLI on Mac
 
@@ -30,13 +67,10 @@ CF_API_ENDPOINT=https://api.london.cloud.service.gov.uk
 CF_ORG=dfe-teacher-services
 ```
 
-`$CF_SPACE` is the environment(space) you want to deal with, these are the available ones:
-
-* teaching-vacancies-dev
-* teaching-vacancies-staging
-* teaching-vacancies-production
-* teaching-vacancies-monitoring
-* teaching-vacancies-review
+Set `CF_SPACE` to environment(space) you want to deal with, e.g. `teaching-vacancies-dev`
+```bash
+CF_SPACE=teaching-vacancies-dev
+```
 
 For convenience and for security reasons we recommend to use SSO to login:
 
@@ -68,6 +102,8 @@ cf org-users $CF_ORG -a
 cf set-space-role USER_ID $CF_ORG $CF_SPACE SpaceDeveloper
 cf unset-space-role USER_ID $CF_ORG $CF_SPACE SpaceDeveloper
 ```
+
+- If you have the `SpaceManager` role, note that the safest option is to remove yourself from the Space Developer role when not using it
 
 ## Check running apps
 
@@ -135,66 +171,9 @@ cd /teacher-vacancy
 ```bash
 cf run-task <app_name> -c "rails task:name"
 ```
-
-## Deploy to dev via commandline
-
-This builds and deploys a Docker image from local code, then updates the `dev` environment to use that image
-
-```bash
-make passcode=<passcode> <environment> deploy-local-image
-```
-performs these steps:
-
-- Builds and tags a Docker image from local code
-- Pushes the image to Docker Hub
-- Uses Terraform to apply any changes (including providing the tag of the Docker image) to the `dev` environment
-
-You need:
-- Write access to Docker Hub `dfedigital/teaching-vacancies` repository. Ask in #digital-tools-support should you require it.
-- `SpaceDeveloper` role in the PaaS space you want to deploy to
-- Log in to Docker Hub (with `docker login`) and GOV.UK PaaS in your terminal
-- Obtain SSO passcode from https://login.london.cloud.service.gov.uk/passcode
-
-## Update dev with an existing Docker image
-
-This allows you to update the `dev` environment to use a previously-built Docker image
-
-```bash
-make passcode=<passcode> tag=47fd1475376bbfa16a773693133569b794408995 <environment> terraform-app-apply
-```
-performs these steps:
-
-- Uses Terraform to apply any changes (including providing the tag of the Docker image) to the `dev` environment
-
-You need:
-- `SpaceDeveloper` role in the PaaS space you want to deploy to
-- Log in to Docker Hub (with `docker login`) and GOV.UK PaaS in your terminal
-- Obtain SSO passcode from https://login.london.cloud.service.gov.uk/passcode
-
-## Deploy to dev via a commit to GitHub
-
-This builds and deploys a Docker image from code in the `dev` branch.
-
-Push to the `dev` branch.
-The GitHub actions workflow [deploy_branch.yml](/.github/workflows/deploy_branch.yml) performs these steps:
-
-- Builds and tags a Docker image from code in the GitHub branch
-- Pushes the image to Docker Hub
-- Uses Terraform to apply any changes (including providing the tag of the Docker image) to the `dev` environment
-- Sends a Slack notification to the `#twd_tv_dev` channel
-
 ## CI/CD with GitHub Actions
 
 Tests run every time is pushed on a branch.
-
-When a PR is approved and merged into `master` branch, the GitHub actions workflow [deploy.yml](/.github/workflows/deploy) performs these steps:
-
-- Builds and tags a Docker image from code in the GitHub branch
-- Pushes the image to Docker Hub
-- Uses Terraform to apply any changes (including providing the tag of the Docker image) to the `staging` environment
-- Runs a smoke test against the `staging` environment
-- Uses Terraform to apply any changes (including providing the tag of the Docker image) to the `production` environment
-- Sends a Slack notification to the `#twd_tv_dev` channel
 
 ## Maintenance windows for GOV.UK PaaS Postgres and Redis services
 

@@ -1,6 +1,8 @@
 # Rollback
 
-At the moment there is no automatic rollback option. Here are the manual steps required for each type of failure.
+It is possible to [deploy a specific tag to an environment](deployments.md#deploy-a-specific-tag-to-an-environment---github-actions).
+
+If you need to rollback manually, here are the steps required for each type of failure.
 
 ## Code
 The simplest approach to rollback the code to a working version is to revert a pull request on GitHub. This will create a new PR that once is merged triggers a deploy. If that is not possible you need to manually checkout a working version of the code and deploy from your machine:

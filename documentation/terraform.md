@@ -69,11 +69,44 @@ Here we see that it's the addition of a feature flag
 "FEATURE_MULTI_SCHOOL_JOBS": "true",
 ```
 
-## Remove review app
+## Terraform plan as the GitHub Actions deploy user
 
-In usual conditions, the [`destroy.yml`](.github/workflows/destroy.yml) workflow destroys the review app resources on PR close
+Using the principle of least privilege, GitHub Actions uses a separate IAM account for Terraform
+The `deploy` user is itself created through Terraform, in the [terraform/common/iam.tf](../terraform/common/iam.tf) file
 
-We can use the Makefile to destroy a review app, by passing a `CONFIRM_DESTROY=true` plus changing the action to `review-destroy`:
+### Deploy user Access key and Secret key
+
+These are output by Terraform at the end of a `terraform apply` command, i.e. running `make terraform-common-apply` will output
+Access Key ID, Secret access key for the `bigquery` and `deploy` users
+
+### Configure AWS credentials file
+
+In `~/.aws/credentials`, [create a named profile](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html) like
+
 ```
-make passcode=MyPasscode pr=2086 CONFIRM_DESTROY=true review review-destroy
+[deploy]
+aws_access_key_id = AKIAkeyID
+aws_secret_access_key = Bz7eGsecretkey
+```
+
+We note that in [provider.tf](../terraform/app/provider.tf), we do not specify a profile:
+
+```
+provider aws {
+  region = var.region
+}
+```
+
+Therefore as per [this Gruntwork blog](https://blog.gruntwork.io/authenticating-to-aws-with-the-credentials-file-d16c0fbcbf9e), we can first set the profile with an environment variable
+
+```
+export AWS_PROFILE=deploy
+terraform init -input=false -backend-config="workspace_key_prefix=review:" terraform/app
+terraform workspace select default terraform/app
+terraform workspace delete review-pr-2310 terraform/app
+```
+
+When you've finished, unset the environment variable with
+```
+unset AWS_PROFILE
 ```
