@@ -28,6 +28,9 @@ en:
         description: The link has expired. You need to request that a new link is sent to your email address (%{email}).
         title: Your request is no longer valid
     job_applications:
+      apply: Apply for this job
+      applying_for_the_role_heading: Applying for the role
+      applying_for_the_role_paragraph: Please complete the online application.
       build:
         personal_details:
           description: Tell us some basic details about yourself, like how to contact you about this application.
