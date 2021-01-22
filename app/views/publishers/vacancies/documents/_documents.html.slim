@@ -8,9 +8,7 @@ table.govuk-table.js-documents__table
   tbody#js-documents__table-body.govuk-table__body
     - @documents.each do |document|
       tr.govuk-table__row.js-document-row data-document-id=document.id
-        td.govuk-table__cell scope="row"
-          = govuk_link_to(document[:name], document[:download_url], target: "_blank")
+        td.govuk-table__cell scope="row" = govuk_link_to(document.name, document.download_url, target: "_blank")
         td.govuk-table__cell = t("jobs.upload_documents_table.upload_status.uploaded")
-        td.govuk-table__cell scope="row" #{number_with_precision(document[:size] / 1024.0 / 1024.0, precision: 2)} MB
-        td.govuk-table__cell
-          = document_remove_link(document)
+        td.govuk-table__cell scope="row" = " #{number_with_precision(document.size / 1024.0 / 1024.0, precision: 2)} MB"
+        td.govuk-table__cell = document_remove_link(document)

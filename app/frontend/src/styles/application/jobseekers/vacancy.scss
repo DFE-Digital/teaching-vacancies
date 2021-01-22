@@ -63,37 +63,6 @@
     margin-bottom: 0;
   }
 
-  div.supporting-docs {
-    border: 1px solid $govuk-border-colour;
-    margin-block-end: 1em;
-    padding: govuk-spacing(3);
-
-    ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-
-      li {
-        margin-bottom: govuk-spacing(2);
-
-        &:last-child {
-          margin-bottom: 0;
-        }
-
-        .document-link {
-          text-decoration: none;
-          word-wrap: break-word;
-
-          svg {
-            float: left;
-            margin-right: 0.5rem;
-            margin-top: 0.3rem;
-          }
-        }
-      }
-    }
-  }
-
   .vacancy-apply-link {
     margin-bottom: 0;
     width: auto;
