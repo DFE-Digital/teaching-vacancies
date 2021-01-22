@@ -16,6 +16,14 @@
         h2.govuk-caption-l.job-caption class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
           = vacancy_job_location(@vacancy)
     .govuk-grid-row
+      - if JobseekerApplicationsFeature.enabled?
+        .govuk-grid-column-one-third
+          = render(Shared::BannerLinkComponent.new(icon_class: "apply",
+                                                   link_id: "apply-job-application",
+                                                   link_method: :get,
+                                                   link_path: new_jobseekers_job_application_path(@vacancy.id),
+                                                   link_text: t("jobseekers.job_applications.apply")))
+
       .govuk-grid-column-one-third
         / The "origin" param is used both for the back button on the subsequent page and for performance analysis.
         = render(Shared::BannerLinkComponent.new(icon_class: "alert-blue",

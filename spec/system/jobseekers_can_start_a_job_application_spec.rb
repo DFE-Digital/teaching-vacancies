@@ -3,11 +3,13 @@ require "rails_helper"
 RSpec.describe "Jobseekers can start a job application" do
   let(:jobseeker) { build_stubbed(:jobseeker) }
   let(:vacancy) { create(:vacancy) }
+  let(:school) { create(:school) }
   let(:created_job_application) { JobApplication.first }
 
   before do
     allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(jobseeker_accounts_enabled?)
     allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(jobseeker_applications_enabled?)
+    vacancy.organisation_vacancies.create(organisation: school)
   end
 
   context "when JobseekerAccountsFeature is enabled" do
@@ -25,14 +27,14 @@ RSpec.describe "Jobseekers can start a job application" do
           end
 
           it "starts a job application" do
-            visit new_jobseekers_job_application_path(vacancy.id)
+            apply_on_vacancy
             and_it_starts_a_job_application
           end
         end
 
         context "when the jobseeker is not signed in" do
           it "starts a job application after signing in" do
-            visit new_jobseekers_job_application_path(vacancy.id)
+            apply_on_vacancy
             sign_in_jobseeker
             and_it_starts_a_job_application
           end
@@ -41,7 +43,7 @@ RSpec.describe "Jobseekers can start a job application" do
 
       context "when the jobseeker does not have an account" do
         it "starts a job application after signing up" do
-          visit new_jobseekers_job_application_path(vacancy.id)
+          apply_on_vacancy
           click_on I18n.t("jobseekers.sessions.new.no_account.link")
           sign_up_jobseeker
           visit first_link_from_last_mail
@@ -68,6 +70,11 @@ RSpec.describe "Jobseekers can start a job application" do
       visit new_jobseekers_job_application_path(vacancy.id)
       expect(page.status_code).to eq(404)
     end
+  end
+
+  def apply_on_vacancy
+    visit job_path(vacancy)
+    click_on I18n.t("jobseekers.job_applications.apply")
   end
 
   def start_application
