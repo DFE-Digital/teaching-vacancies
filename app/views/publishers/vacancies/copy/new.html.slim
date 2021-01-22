@@ -9,7 +9,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @copy_form, url: organisation_job_copy_path, data: { vacancy_state: "copy" } do |f|
+    = form_for @copy_form, as: "copy_vacancy_form", url: organisation_job_copy_path, data: { vacancy_state: "copy" } do |f|
       = f.govuk_error_summary
 
       h2.govuk-heading-l = t("jobs.new_job_listing_details")

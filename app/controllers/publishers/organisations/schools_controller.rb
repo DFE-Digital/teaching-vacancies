@@ -2,16 +2,14 @@ class Publishers::Organisations::SchoolsController < Publishers::BaseController
   before_action :set_redirect_path, only: %i[edit update]
   before_action :set_organisation, only: %i[edit update]
 
-  def index; end
-
   def edit
-    @organisation_form = OrganisationForm.new(
+    @organisation_form = Publishers::OrganisationForm.new(
       { description: @organisation.description, website: @organisation.website },
     )
   end
 
   def update
-    @organisation_form = OrganisationForm.new(organisation_params)
+    @organisation_form = Publishers::OrganisationForm.new(organisation_params)
 
     if @organisation_form.valid?
       @organisation.update(organisation_params)
@@ -24,7 +22,12 @@ class Publishers::Organisations::SchoolsController < Publishers::BaseController
   private
 
   def set_organisation
-    @organisation = Organisation.find(params[:id])
+    @organisation = if current_organisation.is_a?(School) ||
+                       (current_organisation.is_a?(SchoolGroup) && current_organisation.id == params[:id])
+                      current_organisation
+                    else
+                      current_organisation.schools.find(params[:id])
+                    end
   end
 
   def set_redirect_path

@@ -2,11 +2,11 @@ class NqtJobAlertsController < ApplicationController
   include ParameterSanitiser
 
   def new
-    @nqt_job_alerts_form = NqtJobAlertsForm.new(nqt_job_alerts_params)
+    @nqt_job_alerts_form = Jobseekers::NqtJobAlertsForm.new(nqt_job_alerts_params)
   end
 
   def create
-    @nqt_job_alerts_form = NqtJobAlertsForm.new(nqt_job_alerts_params)
+    @nqt_job_alerts_form = Jobseekers::NqtJobAlertsForm.new(nqt_job_alerts_params)
     subscription = Subscription.new(@nqt_job_alerts_form.job_alert_params)
     @subscription = SubscriptionPresenter.new(subscription)
 
@@ -14,7 +14,7 @@ class NqtJobAlertsController < ApplicationController
     subscription.recaptcha_score = recaptcha_reply["score"] if recaptcha_is_valid && recaptcha_reply
 
     if recaptcha_is_valid && recaptcha_reply && invalid_recaptcha_score?
-      redirect_to invalid_recaptcha_path(form_name: @nqt_job_alerts_form.class.name.underscore.humanize)
+      redirect_to invalid_recaptcha_path(form_name: @nqt_job_alerts_form.class.name.underscore)
     elsif @nqt_job_alerts_form.valid?
       subscription.save
       SubscriptionMailer.confirmation(subscription.id).deliver_later

@@ -1,1 +1,0 @@
-class DocumentsForm < VacancyForm; end

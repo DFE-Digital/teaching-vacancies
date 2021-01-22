@@ -2,10 +2,7 @@ en:
   cookies_preferences_errors: &cookies_preferences_errors
     cookies_consent:
       inclusion: Please select an option
-  publishers_publisher_preference_errors:
-    managed_organisations:
-      blank: Select which schools' job listings you would like to view
-  job_alert_feedback: &job_alert_feedback_errors
+  job_alert_feedback_errors: &job_alert_feedback_errors
     comment:
       blank: You have not submitted any further feedback.
       too_long: Feedback must not be more than 1,200 characters
@@ -15,9 +12,20 @@ en:
       invalid: Enter an email address in the correct format, like name@example.com
     password:
       blank: Enter your password
+  nqt_job_alert_errors: &nqt_job_alert_errors
+    keywords:
+      blank: Enter keyword(s)
+    location:
+      blank: Enter a location
+    email:
+      blank: Enter your email address
+      invalid: Enter an email address in the correct format, like name@example.com
   organisation_errors: &organisation_errors
     website:
       url: Enter a link in the correct format, like http://www.school.ac.uk
+  publishers_publisher_preference_errors:
+    managed_organisations:
+      blank: Select which schools' job listings you would like to view
   subscription_errors: &subscription_errors
     email:
       blank: Enter your email address
@@ -107,53 +115,47 @@ en:
         cookies_preferences_form:
           attributes:
             <<: *cookies_preferences_errors
-        job_alert_feedback_form:
+        jobseekers/job_alert_feedback_form:
           attributes:
             <<: *job_alert_feedback_errors
-        jobseeker_sign_in_form:
+        jobseekers/sign_in_form:
           attributes:
             <<: *jobseeker_sign_in_errors
-        nqt_job_alerts_form:
+        jobseekers/nqt_job_alerts_form:
           attributes:
-            keywords:
-              blank: Enter keyword(s)
-            location:
-              blank: Enter a location
-            email:
-              blank: Enter your email address
-              invalid: Enter an email address in the correct format, like name@example.com
-        organisation_form:
+            <<: *nqt_job_alert_errors
+        publishers/organisation_form:
           attributes:
             <<: *organisation_errors
-        subscription_form:
+        jobseekers/subscription_form:
           attributes:
             <<: *subscription_errors
-        unsubscribe_feedback_form:
+        jobseekers/unsubscribe_feedback_form:
           attributes:
             <<: *unsubscribe_feedback_errors
         # Hiring staff journey
-        job_location_form:
+        publishers/job_listing/job_location_form:
           attributes:
             <<: *job_location_errors
-        schools_form:
+        publishers/job_listing/schools_form:
           attributes:
             <<: *schools_errors
-        job_details_form:
+        publishers/job_listing/job_details_form:
           attributes:
             <<: *job_details_errors
-        pay_package_form:
+        publishers/job_listing/pay_package_form:
           attributes:
             <<: *pay_package_errors
-        important_dates_form:
+        publishers/job_listing/important_dates_form:
           attributes:
             <<: *important_dates_errors
-        applying_for_the_job_form:
+        publishers/job_listing/applying_for_the_job_form:
           attributes:
             <<: *applying_for_the_job_errors
-        job_summary_form:
+        publishers/job_listing/job_summary_form:
           attributes:
             <<: *job_summary_errors
-        copy_vacancy_form:
+        publishers/job_listing/copy_vacancy_form:
           attributes:
             <<: *job_details_errors
             <<: *important_dates_errors
@@ -190,8 +192,8 @@ en:
               too_short: Enter a password that is at least 8 characters long
         vacancy:
           attributes:
-            <<: *schools_errors
             <<: *job_location_errors
+            <<: *schools_errors
             <<: *job_details_errors
             <<: *pay_package_errors
             <<: *important_dates_errors

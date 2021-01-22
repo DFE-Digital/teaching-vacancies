@@ -71,12 +71,12 @@ class Publishers::VacanciesController < Publishers::Vacancies::ApplicationContro
   end
 
   def redirect_to_incomplete_step
-    return redirect_to organisation_job_build_path(@vacancy.id, :job_details) unless step_valid?(JobDetailsForm)
-    return redirect_to organisation_job_build_path(@vacancy.id, :pay_package) unless step_valid?(PayPackageForm)
-    return redirect_to organisation_job_build_path(@vacancy.id, :important_dates) unless step_valid?(ImportantDatesForm)
+    return redirect_to organisation_job_build_path(@vacancy.id, :job_details) unless step_valid?(Publishers::JobListing::JobDetailsForm)
+    return redirect_to organisation_job_build_path(@vacancy.id, :pay_package) unless step_valid?(Publishers::JobListing::PayPackageForm)
+    return redirect_to organisation_job_build_path(@vacancy.id, :important_dates) unless step_valid?(Publishers::JobListing::ImportantDatesForm)
     return redirect_to organisation_job_build_path(@vacancy.id, :documents) unless @vacancy.completed_step >= STEPS[:documents]
-    return redirect_to organisation_job_build_path(@vacancy.id, :applying_for_the_job) unless step_valid?(ApplyingForTheJobForm)
-    return redirect_to organisation_job_build_path(@vacancy.id, :job_summary) unless step_valid?(JobSummaryForm)
+    return redirect_to organisation_job_build_path(@vacancy.id, :applying_for_the_job) unless step_valid?(Publishers::JobListing::ApplyingForTheJobForm)
+    return redirect_to organisation_job_build_path(@vacancy.id, :job_summary) unless step_valid?(Publishers::JobListing::JobSummaryForm)
   end
 
   def redirect_unless_permitted
@@ -105,10 +105,10 @@ class Publishers::VacanciesController < Publishers::Vacancies::ApplicationContro
   end
 
   def validate_all_steps
-    step_valid?(JobDetailsForm)
-    step_valid?(PayPackageForm)
-    step_valid?(ImportantDatesForm)
-    step_valid?(ApplyingForTheJobForm)
-    step_valid?(JobSummaryForm)
+    step_valid?(Publishers::JobListing::JobDetailsForm)
+    step_valid?(Publishers::JobListing::PayPackageForm)
+    step_valid?(Publishers::JobListing::ImportantDatesForm)
+    step_valid?(Publishers::JobListing::ApplyingForTheJobForm)
+    step_valid?(Publishers::JobListing::JobSummaryForm)
   end
 end

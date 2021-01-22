@@ -199,9 +199,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
 
         within_row_for(element: "legend",
                        text: strip_tags(I18n.t("helpers.legend.important_dates_form.expires_on_html"))) do
-          expect(page).to have_content(
-            I18n.t("activemodel.errors.models.important_dates_form.attributes.expires_on.blank"),
-          )
+          expect(page).to have_content(I18n.t("important_dates_errors.expires_on.blank"))
         end
       end
 
@@ -218,7 +216,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
 
         within_row_for(element: "legend",
                        text: strip_tags(I18n.t("helpers.legend.important_dates_form.expires_at_html"))) do
-          expect(page).to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.expires_at.wrong_format"))
+          expect(page).to have_content(I18n.t("important_dates_errors.expires_at.wrong_format"))
         end
       end
 

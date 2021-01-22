@@ -2,12 +2,12 @@ class UnsubscribeFeedbacksController < ApplicationController
   def new
     subscription = Subscription.find(subscription_id)
     @subscription = SubscriptionPresenter.new(subscription)
-    @unsubscribe_feedback_form = UnsubscribeFeedbackForm.new
+    @unsubscribe_feedback_form = Jobseekers::UnsubscribeFeedbackForm.new
   end
 
   def create
     @subscription = Subscription.find(subscription_id)
-    @unsubscribe_feedback_form = UnsubscribeFeedbackForm.new(unsubscribe_feedback_params)
+    @unsubscribe_feedback_form = Jobseekers::UnsubscribeFeedbackForm.new(unsubscribe_feedback_params)
 
     if @unsubscribe_feedback_form.valid? && @subscription.unsubscribe_feedbacks.create(unsubscribe_feedback_params)
       if current_jobseeker

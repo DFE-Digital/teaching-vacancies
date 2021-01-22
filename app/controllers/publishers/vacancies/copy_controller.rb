@@ -4,7 +4,7 @@ class Publishers::Vacancies::CopyController < Publishers::Vacancies::Application
 
   def new
     reset_date_fields if @vacancy.publish_on.past?
-    @copy_form = CopyVacancyForm.new(@vacancy.attributes.symbolize_keys)
+    @copy_form = Publishers::JobListing::CopyVacancyForm.new(@vacancy.attributes.symbolize_keys)
   end
 
   def create
@@ -33,7 +33,7 @@ class Publishers::Vacancies::CopyController < Publishers::Vacancies::Application
     @date_errors = convert_multiparameter_attributes_to_dates(
       :copy_vacancy_form, %i[publish_on expires_on starts_on]
     )
-    @copy_form = CopyVacancyForm.new(copy_form_params)
+    @copy_form = Publishers::JobListing::CopyVacancyForm.new(copy_form_params)
   end
 
   def reset_date_fields

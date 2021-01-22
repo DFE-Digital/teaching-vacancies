@@ -8,7 +8,7 @@
 
     = govuk_back_link text: t("buttons.back"), href: @redirect_path
 
-    = form_for @organisation_form, url: organisation_school_path(@organisation), method: :patch do |f|
+    = form_for @organisation_form, as: "organisation_form", url: organisation_school_path(@organisation), method: :patch do |f|
       = f.govuk_error_summary
 
       h2.govuk-heading-l = t(".title", organisation_type: organisation_type_basic(@organisation))

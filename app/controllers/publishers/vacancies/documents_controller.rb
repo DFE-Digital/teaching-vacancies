@@ -52,7 +52,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::Applic
   end
 
   def set_documents_form
-    @documents_form = DocumentsForm.new
+    @documents_form = Publishers::JobListing::DocumentsForm.new
   end
 
   def set_documents

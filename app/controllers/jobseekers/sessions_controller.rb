@@ -11,7 +11,7 @@ class Jobseekers::SessionsController < Devise::SessionsController
   private
 
   def render_form_with_errors
-    self.resource = JobseekerSignInForm.new(sign_in_params)
+    self.resource = Jobseekers::SignInForm.new(sign_in_params)
     if params[:action] == "create" && resource.invalid?
       clear_flash_and_render(:new)
     elsif AUTHENTICATION_FAILURE_MESSAGES.include?(flash[:alert])

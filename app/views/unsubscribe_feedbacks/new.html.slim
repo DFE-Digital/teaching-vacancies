@@ -4,7 +4,7 @@
   .govuk-grid-column-two-thirds
     = govuk_panel title: t(".header"), body: t(".confirmation")
 
-    = form_for @unsubscribe_feedback_form, url: subscription_unsubscribe_feedbacks_path(@subscription) do |f|
+    = form_for @unsubscribe_feedback_form, as: "unsubscribe_feedback_form", url: subscription_unsubscribe_feedbacks_path(@subscription) do |f|
       = f.govuk_error_summary
 
       h2.govuk-heading-l

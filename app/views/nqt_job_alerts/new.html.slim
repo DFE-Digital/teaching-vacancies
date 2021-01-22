@@ -8,7 +8,7 @@
     p.govuk-body-l = t("nqt_job_alerts.intro.teaching_vacancies")
     p.govuk-body = t("nqt_job_alerts.intro.content")
 
-    = form_for @nqt_job_alerts_form, url: new_nqt_job_alert_path do |f|
+    = form_for @nqt_job_alerts_form, as: "nqt_job_alerts_form", url: new_nqt_job_alert_path do |f|
       = f.govuk_error_summary
 
       = f.govuk_text_field :keywords,

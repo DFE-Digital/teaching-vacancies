@@ -5,15 +5,15 @@ class Publishers::Organisations::ManagedOrganisationsController < Publishers::Ba
   before_action :set_organisation_options
 
   def show
-    @managed_organisations_form = ManagedOrganisationsForm.new(vacancy_filter.to_h)
+    @managed_organisations_form = Publishers::ManagedOrganisationsForm.new(vacancy_filter.to_h)
   end
 
   def update
-    @managed_organisations_form = ManagedOrganisationsForm.new(managed_organisations_params)
+    @managed_organisations_form = Publishers::ManagedOrganisationsForm.new(managed_organisations_params)
 
     if params[:commit] == t("buttons.apply_filters")
       vacancy_filter.update(managed_organisations_params)
-      redirect_to jobs_with_type_organisation_path(params[:managed_organisations_form][:jobs_type])
+      redirect_to jobs_with_type_organisation_path(params[:publishers_managed_organisations_form][:jobs_type])
     elsif @managed_organisations_form.valid? || params[:commit] == t("buttons.skip_this_step")
       vacancy_filter.update(managed_organisations_params)
       redirect_to organisation_path
@@ -25,8 +25,8 @@ class Publishers::Organisations::ManagedOrganisationsController < Publishers::Ba
   private
 
   def managed_organisations_params
-    strip_empty_checkboxes(%i[managed_organisations managed_school_ids], :managed_organisations_form)
-    params.require(:managed_organisations_form).permit(managed_organisations: [], managed_school_ids: [])
+    strip_empty_checkboxes(%i[managed_organisations managed_school_ids], :publishers_managed_organisations_form)
+    params.require(:publishers_managed_organisations_form).permit(managed_organisations: [], managed_school_ids: [])
   end
 
   def vacancy_filter

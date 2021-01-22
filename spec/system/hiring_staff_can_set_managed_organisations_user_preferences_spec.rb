@@ -53,9 +53,8 @@ RSpec.describe "Hiring staff can set managed organisations user preferences" do
         I18n.t("publishers.organisations.managed_organisations.show.panel.title", organisation: school_group.name),
       )
 
-      check I18n.t("publishers.organisations.managed_organisations.show.options.school_group"),
-            name: "managed_organisations_form[managed_school_ids][]", visible: false
-      check school1.name, name: "managed_organisations_form[managed_school_ids][]", visible: false
+      check I18n.t("publishers.organisations.managed_organisations.show.options.school_group")
+      check school1.name
 
       click_on I18n.t("buttons.continue")
 
@@ -70,9 +69,8 @@ RSpec.describe "Hiring staff can set managed organisations user preferences" do
         I18n.t("publishers.organisations.managed_organisations.show.panel.title", organisation: school_group.name),
       )
 
-      check I18n.t("publishers.organisations.managed_organisations.show.options.all"),
-            name: "managed_organisations_form[managed_organisations][]", visible: false
-      check school1.name, name: "managed_organisations_form[managed_school_ids][]", visible: false
+      check I18n.t("publishers.organisations.managed_organisations.show.options.all")
+      check school1.name
 
       click_on I18n.t("buttons.continue")
 

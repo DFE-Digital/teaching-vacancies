@@ -7,7 +7,7 @@ class Publishers::OrganisationsController < Publishers::BaseController
     @selected_type = params[:type]
 
     @filters = Publishers::VacancyFilter.new(current_publisher, current_school_group).to_h
-    @managed_organisations_form = ManagedOrganisationsForm.new(@filters)
+    @managed_organisations_form = Publishers::ManagedOrganisationsForm.new(@filters)
 
     @sort = Publishers::VacancySort.new(@organisation, @selected_type).update(column: params[:sort_column])
     @sort_form = SortForm.new(@sort.column)

@@ -14,13 +14,13 @@ class JobAlertFeedbacksController < ApplicationController
   def edit
     @feedback = JobAlertFeedback.find(feedback_id)
     @subscription = Subscription.find_and_verify_by_token(token)
-    @feedback_form = JobAlertFeedbackForm.new
+    @feedback_form = Jobseekers::JobAlertFeedbackForm.new
   end
 
   def update
     @feedback = JobAlertFeedback.find(feedback_id)
     @subscription = Subscription.find_and_verify_by_token(token)
-    @feedback_form = JobAlertFeedbackForm.new(form_params)
+    @feedback_form = Jobseekers::JobAlertFeedbackForm.new(form_params)
 
     recaptcha_is_valid = verify_recaptcha(model: @feedback, action: "job_alert_feedback")
     @feedback.recaptcha_score = recaptcha_reply["score"] if recaptcha_is_valid && recaptcha_reply

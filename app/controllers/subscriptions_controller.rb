@@ -5,11 +5,11 @@ class SubscriptionsController < ApplicationController
     @origin = origin_param if origin_param&.start_with?(%r{/\w})
     session[:subscription_origin] = @origin
 
-    @subscription_form = SubscriptionForm.new(params[:search_criteria].present? ? search_criteria_params : email)
+    @subscription_form = Jobseekers::SubscriptionForm.new(params[:search_criteria].present? ? search_criteria_params : email)
   end
 
   def create
-    @subscription_form = SubscriptionForm.new(subscription_params)
+    @subscription_form = Jobseekers::SubscriptionForm.new(subscription_params)
     subscription = Subscription.new(@subscription_form.job_alert_params)
     @subscription = SubscriptionPresenter.new(subscription)
 
@@ -36,12 +36,12 @@ class SubscriptionsController < ApplicationController
 
   def edit
     @subscription = Subscription.find_and_verify_by_token(token)
-    @subscription_form = SubscriptionForm.new(@subscription)
+    @subscription_form = Jobseekers::SubscriptionForm.new(@subscription)
   end
 
   def update
     subscription = Subscription.find_and_verify_by_token(token)
-    @subscription_form = SubscriptionForm.new(subscription_params)
+    @subscription_form = Jobseekers::SubscriptionForm.new(subscription_params)
     @subscription = SubscriptionPresenter.new(subscription)
 
     if @subscription_form.valid?
