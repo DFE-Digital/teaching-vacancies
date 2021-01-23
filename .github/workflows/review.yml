@@ -102,7 +102,7 @@ jobs:
         token: ${{ secrets.PERSONAL_TOKEN }}
         checkName: Deploy ${{ env.TAG }} to review # Job name within workflow
         ref: ${{ github.event.pull_request.head.sha || github.ref }}
-        timeoutSeconds: 300
+        timeoutSeconds: 720
         intervalSeconds: 15
 
     - name: Post Sticky Pull Request Comment
