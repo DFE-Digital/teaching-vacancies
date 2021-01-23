@@ -1,0 +1,31 @@
+#!/bin/bash
+set -eu
+
+CF_ORG='dfe'
+CF_TARGET='review'
+REPOS=( "${CF_SERVICE_NAME}" )
+LIST=( "${CF_SERVICE_NAME}-${CF_TARGET}-pr-"  "${CF_SERVICE_NAME}-worker-${CF_TARGET}-pr-" )
+
+cf api "${CF_API_ENDPOINT}"
+cf auth
+
+cf target -o "${CF_ORG}" "${CF_SERVICE_NAME}-${CF_TARGET}"
+
+ITER=1
+for APP in "${LIST[@]}"; do
+        echo "CHECKING..... ${APP}"
+        APPS=$(cf apps | cut -d ' ' -f1 | grep "${APP}" )
+        for CHECK in $( "${APPS}" ); do
+            PR="${CHECK/${APP}/}"
+            STATE=$(curl -u username:"${token}"  -s -X GET "https://api.github.com/repos/DFE-Digital/${REPOS[$ITER]}/pulls/${PR}" | jq -r '.state ')
+            echo "${REPOS[$ITER]} Checking for PR - ${PR} ${STATE}"
+            if [[ "${STATE}" == "closed" ]]; then
+               cf delete -f -r "${CHECK}"
+               cf delete-service "${CF_SERVICE_NAME}-postgres-${CF_TARGET}-pr-${CHECK}"
+               cf delete-service "${CF_SERVICE_NAME}-redis-${CF_TARGET}-pr-${CHECK}"
+               cf delete-service "${CF_SERVICE_NAME}-papertrail-${CF_TARGET}-pr-${CHECK}"
+            fi
+        done
+        #ITER=$(expr $ITER + 1)
+done
+# cf delete-orphaned-routes -f
