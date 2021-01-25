@@ -12,7 +12,7 @@ DOWNCASE_CITIES = CITIES.map(&:downcase)
 
 ALL_LOCATION_CATEGORIES = (DOWNCASE_REGIONS + DOWNCASE_COUNTIES + DOWNCASE_BOROUGHS + DOWNCASE_CITIES)
 
-# The above duplication will be removed in a subsequent PR ('Step 3').
+# The above duplication will be removed in a subsequent PR ('Step 4').
 
 # ONS API config
 ons_cities = YAML.load_file(base_path.join("ons_cities.yml"))
