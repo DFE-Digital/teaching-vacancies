@@ -2,7 +2,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::ApplicationCont
   include Wicked::Wizard
   include Jobseekers::Wizardable
 
-  steps :personal_details, :personal_statement
+  steps :personal_details, :professional_status, :personal_statement
 
   before_action :set_up_job_application, :set_up_current_step_number
   before_action :set_up_show_form, only: %i[show]

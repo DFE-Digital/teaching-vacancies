@@ -164,6 +164,13 @@ en:
       jobseekers_job_application_personal_statement_form:
         personal_statement_html: Your personal statement (<span class='text-red'>Required</span>)
 
+      jobseekers_job_application_professional_status_form:
+        qualified_teacher_status_year: Year QTS was awarded
+        qualified_teacher_status_options:
+          "no": "No"
+          on_track: I'm on track to receive my QTS
+          "yes": "Yes"
+
       publishers_organisation_form:
         description: Description of %{organisation_type}
         website: '%{organisation_type} website'
@@ -219,6 +226,12 @@ en:
         frequency_html: When do you want to receive alerts? (<span class='text-red'>Required</span>)
       jobseekers_unsubscribe_feedback_form:
         reason_html: Why do you want to unsubscribe from this alert? (<span class='text-red'>Required</span>)
+
+      jobseekers_job_application_professional_status_form:
+        statutory_induction_complete_html: >-
+          Have you completed your statutory induction year? (<span class='text-red'>Required</span>)
+        qualified_teacher_status_html: >-
+          Do you have qualified teacher status (QTS)? (<span class='text-red'>Required</span>)
 
       publishers_job_listing_copy_vacancy_form:
         expires_on_html: Date application is due (<span class='text-red'>Required</span>)

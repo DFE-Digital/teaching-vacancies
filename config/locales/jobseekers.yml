@@ -40,6 +40,8 @@ en:
             Please explain why you are suitable for this role. You may find it useful to refer specifically to the job
             description and any other information that has been provided.
           title: Personal statement
+        professional_status:
+          title: Professional status
         saved_job_application: Your job application was saved
       heading_component:
         caption: "%{job_title} at %{organisation_name}"

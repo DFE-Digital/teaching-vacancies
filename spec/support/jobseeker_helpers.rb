@@ -29,6 +29,12 @@ module JobseekerHelpers
     fill_in "First name", with: "John"
   end
 
+  def fill_in_professional_status
+    choose "Yes", name: "jobseekers_job_application_professional_status_form[qualified_teacher_status]"
+    fill_in "Year QTS was awarded", with: Time.current.year
+    choose "Yes", name: "jobseekers_job_application_professional_status_form[statutory_induction_complete]"
+  end
+
   def fill_in_personal_statement
     fill_in "Your personal statement", with: "A brilliant, glowing statement about your person"
   end
