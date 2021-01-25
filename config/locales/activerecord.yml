@@ -160,6 +160,16 @@ en:
             <<: *job_details_errors
             <<: *important_dates_errors
         # Job application
+        jobseekers/job_application/declarations_form:
+          attributes:
+            banned_or_disqualified:
+              inclusion: Select yes if you are banned from working with children
+            close_relationships:
+              inclusion: Select yes if you have a close relationship with people within the organisation
+            close_relationships_details:
+              blank: Give details about any close relationships with people within the organisation
+            right_to_work_in_uk:
+              inclusion: Select yes if you have the right to work in the UK
         jobseekers/job_application/personal_details_form:
           attributes:
             first_name:

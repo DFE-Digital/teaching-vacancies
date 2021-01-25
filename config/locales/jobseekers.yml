@@ -32,6 +32,8 @@ en:
       applying_for_the_role_heading: Applying for the role
       applying_for_the_role_paragraph: Please complete the online application.
       build:
+        declarations:
+          title: Declarations
         personal_details:
           description: Tell us some basic details about yourself, like how to contact you about this application.
           title: Personal details

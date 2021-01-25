@@ -157,6 +157,12 @@ en:
           circumstances_change: My circumstances have changed
           other_reason: Another reason
 
+      jobseekers_job_application_declarations_form:
+        close_relationships_details: Please give details
+        close_relationships_options:
+          "no": "No"
+          "yes": "Yes"
+
       jobseekers_job_application_personal_details_form:
         first_name_html: First name (<span class='text-red'>Required</span>)
         last_name_html: Last name (<span class='text-red'>Required</span>)
@@ -221,6 +227,16 @@ en:
         rating_html: >-
           How satisfied are you with your experience of using Teaching Vacancies?
           (<span class='text-red'>Required</span>)
+
+      jobseekers_job_application_declarations_form:
+        banned_or_disqualified_html: >-
+          Are you banned or disqualified from working with children or subject to any sanctions or conditions on your
+          employment, imposed by the Independent Safeguarding Authority (ISA), Secretary of State or other regulatory body
+          (e.g. the GTCE)? (<span class='text-red'>Required</span>)
+        close_relationships_html: >-
+          Do you have any family or close relationship with people within %{organisation}?
+          (<span class='text-red'>Required</span>)
+        right_to_work_in_uk_html: Do you have the right to work in the UK? (<span class='text-red'>Required</span>)
 
       jobseekers_subscription_form:
         frequency_html: When do you want to receive alerts? (<span class='text-red'>Required</span>)
