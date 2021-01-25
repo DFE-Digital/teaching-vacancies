@@ -1,7 +1,8 @@
 #!/bin/bash
 set -eu
+CF_ORG='dfe'
 
-cf7 api $CF_API_ENDPOINT
+cf7 api ${CF_API_ENDPOINT}
 cf7 auth
 
 cf7 target -o $CF_ORG -s $CF_SPACE_ORIGIN

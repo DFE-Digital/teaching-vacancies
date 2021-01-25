@@ -6,7 +6,7 @@ locals {
   service_name               = "teaching-vacancies"
   monitoring_instance_name   = local.service_name
   paas_api_url               = "https://api.london.cloud.service.gov.uk"
-  monitoring_org_name        = "dfe-teacher-services"
+  monitoring_org_name        = "dfe"
   space_name                 = "${local.service_name}-monitoring"
   monitoring_space_name      = "${local.service_name}-monitoring"
   aws_region                 = "eu-west-2"
