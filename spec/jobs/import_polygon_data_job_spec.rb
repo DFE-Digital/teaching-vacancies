@@ -20,8 +20,8 @@ RSpec.describe ImportPolygonDataJob, type: :job do
 
     it "executes perform" do
       import_polygon_data = double(:mock)
-      expect(ImportPolygons).to receive(:new).and_return(import_polygon_data).exactly(4).times
-      expect(import_polygon_data).to receive(:call).exactly(4).times
+      expect(ImportPolygons).to receive(:new).and_return(import_polygon_data).exactly(3).times
+      expect(import_polygon_data).to receive(:call).exactly(3).times
 
       perform_enqueued_jobs { job }
     end

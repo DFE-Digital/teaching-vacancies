@@ -4,6 +4,6 @@ class ImportPolygonDataJob < ApplicationJob
   def perform
     return if DisableExpensiveJobs.enabled?
 
-    %i[regions counties london_boroughs cities].each { |location| ImportPolygons.new(location_type: location).call }
+    %i[regions counties cities].each { |api_location_type| ImportPolygons.new(api_location_type: api_location_type).call }
   end
 end

@@ -40,6 +40,6 @@ end
 namespace :ons do
   desc "Import all location polygons"
   task import_location_polygons: :environment do
-    %i[regions counties london_boroughs cities].each { |location| ImportPolygons.new(location_type: location).call }
+    %i[regions counties cities].each { |location| ImportPolygons.new(api_location_type: location).call }
   end
 end

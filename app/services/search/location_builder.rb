@@ -40,7 +40,7 @@ class Search::LocationBuilder
     @location_polygon = LocationPolygon.with_name(@location_category)
     if @location_polygon.present?
       @search_polygon_boundary = if @buffer_radius.present?
-                                   [@location_polygon.buffers[@buffer_radius]]
+                                   buffers_in_correct_format
                                  else
                                    [@location_polygon.boundary]
                                  end
@@ -70,5 +70,18 @@ class Search::LocationBuilder
 
   def initialize_nationwide_search
     @location = nil
+  end
+
+  def buffers_in_correct_format
+    # In this step (2) of the LocationPolygon refactor, the format of buffers will be different
+    # before and after running the import task. Before it's a 1D array; after, it's 2D. So I am temporarily
+    # adding this method to cope with both formats. This will be reverted in step 3.
+    buffer = @location_polygon.buffers[@buffer_radius]
+
+    if buffer.first.is_a?(Float)
+      [buffer]
+    else
+      [buffer.first]
+    end
   end
 end
