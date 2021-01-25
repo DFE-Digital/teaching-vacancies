@@ -2,7 +2,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-full
-    = render Publishers::VacancyFormPageHeadingComponent.new(@vacancy)
+    = render Publishers::VacancyFormPageHeadingComponent.new(@vacancy, process_steps.current_step_number, process_steps.total_steps)
 
 .vacancy.govuk-grid-row
   .govuk-grid-column-two-thirds

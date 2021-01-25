@@ -2,7 +2,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-full
-    = render Publishers::VacancyFormPageHeadingComponent.new(@vacancy)
+    = render Publishers::VacancyFormPageHeadingComponent.new(@vacancy, process_steps.current_step_number, process_steps.total_steps)
 
 .vacancy.govuk-grid-row
   .govuk-grid-column-two-thirds
@@ -37,4 +37,4 @@
     = govuk_link_to t("buttons.back_to_manage_jobs"), jobs_with_type_organisation_path("draft", from_review: @vacancy.id), class: "govuk-link--no-visited-state"
 
   .govuk-grid-column-one-third
-    = render(Publishers::SidebarComponent.new(vacancy: @vacancy))
+    = render(Shared::ProcessStepsComponent.new(process: @vacancy, service: process_steps))

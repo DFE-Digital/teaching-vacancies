@@ -1,17 +1,32 @@
 require "rails_helper"
 
-RSpec.describe Publishers::SidebarComponent, type: :component do
+RSpec.describe Shared::ProcessStepsComponent, type: :component do
   let(:vacancy) { create(:vacancy, completed_step: completed_step) }
   let(:completed_step) { 0 }
-  let(:current_step) { 1 }
+  let(:current_step_number) { 1 }
   let(:current_publisher_is_part_of_school_group?) { true }
+  let(:steps) do
+    {
+      job_location: { number: 1, title: I18n.t("jobs.job_location") },
+      schools: { number: 1, title: I18n.t("jobs.job_location") },
+      job_details: { number: 2, title: I18n.t("jobs.job_details") },
+      pay_package: { number: 3, title: I18n.t("jobs.pay_package") },
+      important_dates: { number: 4, title: I18n.t("jobs.important_dates") },
+      supporting_documents: { number: 5, title: I18n.t("jobs.supporting_documents") },
+      documents: { number: 5, title: I18n.t("jobs.supporting_documents") },
+      applying_for_the_job: { number: 6, title: I18n.t("jobs.applying_for_the_job") },
+      job_summary: { number: 7, title: I18n.t("jobs.job_summary") },
+      review: { number: 8, title: I18n.t("jobs.review_heading") },
+    }.freeze
+  end
+
+  let(:steps_adjust) { current_publisher_is_part_of_school_group? ? 0 : 1 }
 
   before do
-    allow_any_instance_of(Publishers::JobCreationHelper).to receive(:current_step_number).and_return(current_step)
     allow_any_instance_of(Publishers::AuthenticationConcerns).to receive(:current_publisher_is_part_of_school_group?).and_return(current_publisher_is_part_of_school_group?)
   end
 
-  let!(:inline_component) { render_inline(described_class.new(vacancy: vacancy)) }
+  let!(:inline_component) { render_inline(described_class.new(process: vacancy, service: ProcessSteps.new({ steps: steps, adjust: steps_adjust, step: :job_location }))) }
 
   it "renders the sidebar" do
     expect(rendered_component).to include("Create a job listing steps")
@@ -47,6 +62,7 @@ RSpec.describe Publishers::SidebarComponent, type: :component do
 
   context "when a School user creates a job" do
     let(:current_publisher_is_part_of_school_group?) { false }
+    let!(:inline_component) { render_inline(described_class.new(process: vacancy, service: ProcessSteps.new({ steps: steps, adjust: steps_adjust, step: :job_location }))) }
 
     it "does not render the job location step" do
       expect(rendered_component).not_to include(I18n.t("jobs.job_location"))
@@ -61,11 +77,11 @@ RSpec.describe Publishers::SidebarComponent, type: :component do
 
   context "when a step is active" do
     let(:component_active_step) do
-      inline_component.css(".app-step-nav__step--active .app-step-nav__circle-background").to_html
+      inline_component.css(".process-steps__step--active .process-steps__circle-background").to_html
     end
 
     it "renders active class on current_step" do
-      expect(component_active_step).to include(current_step.to_s)
+      expect(component_active_step).to include(current_step_number.to_s)
     end
   end
 
@@ -73,7 +89,7 @@ RSpec.describe Publishers::SidebarComponent, type: :component do
     let(:completed_step) { 1 }
     let(:current_step) { 2 }
     let(:component_completed_step) do
-      inline_component.css(".app-step-nav__step--visited .app-step-nav__circle-background").to_html
+      inline_component.css(".process-steps__step--visited .process-steps__circle-background").to_html
     end
 
     it "renders visited class on completed steps" do
