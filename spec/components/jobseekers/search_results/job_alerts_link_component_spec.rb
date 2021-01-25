@@ -8,28 +8,55 @@ RSpec.describe Jobseekers::SearchResults::JobAlertsLinkComponent, type: :compone
 
   before do
     allow(vacancies_search).to receive(:only_active_to_hash).and_return(active_hash)
-    allow(vacancies_search).to receive(:any?).and_return(search_params_present)
-    allow(ReadOnlyFeature).to receive(:enabled?).and_return(read_only_enabled)
+    allow(vacancies_search).to receive(:any?).and_return(search_params_present?)
+    allow(ReadOnlyFeature).to receive(:enabled?).and_return(read_only_enabled?)
   end
 
   let!(:inline_component) { render_inline(subject) }
 
   context "when a search is carried out" do
-    let(:search_params_present) { true }
+    let(:search_params_present?) { true }
 
     context "when ReadOnlyFeature is disabled" do
-      let(:read_only_enabled) { false }
+      let(:read_only_enabled?) { false }
 
-      it "renders the job alerts link" do
-        expect(inline_component.css(
-          "a#job-alert-link-sticky-gtm[href="\
-          "'#{Rails.application.routes.url_helpers.new_subscription_path(search_criteria: active_hash, origin: '/foo/bar')}']",
-        ).to_html).to include(I18n.t("subscriptions.link.text"))
+      context "when ab testing variant is current" do
+        it "renders the current job alerts link" do
+          expect(inline_component.css(
+            "a#job-alert-link-sticky-gtm[href="\
+            "'#{Rails.application.routes.url_helpers.new_subscription_path(search_criteria: active_hash, origin: '/foo/bar')}']",
+          ).to_html).to include(I18n.t("subscriptions.link.text"))
+        end
+
+        it "does not render the legacy job alerts link" do
+          expect(inline_component.css(
+            "a#job-alert-link-heading-gtm[href="\
+            "'#{Rails.application.routes.url_helpers.new_subscription_path(search_criteria: active_hash, origin: '/foo/bar')}']",
+          ).to_html).to be_blank
+        end
+      end
+
+      context "when ab testing variant is legacy" do
+        subject { described_class.new(vacancies_search: vacancies_search, count: 1, origin: "/foo/bar").with_variant(:legacy) }
+
+        it "renders the legacy job alerts link" do
+          expect(inline_component.css(
+            "a#job-alert-link-heading-gtm[href="\
+            "'#{Rails.application.routes.url_helpers.new_subscription_path(search_criteria: active_hash, origin: '/foo/bar')}']",
+          ).to_html).to include(I18n.t("jobs.legacy_job_alert.link"))
+        end
+
+        it "does not render the current job alerts link" do
+          expect(inline_component.css(
+            "a#job-alert-link-sticky-gtm[href="\
+            "'#{Rails.application.routes.url_helpers.new_subscription_path(search_criteria: active_hash, origin: '/foo/bar')}']",
+          ).to_html).to be_blank
+        end
       end
     end
 
     context "when ReadOnlyFeature is enabled" do
-      let(:read_only_enabled) { true }
+      let(:read_only_enabled?) { true }
 
       it "does not render the job alerts link" do
         expect(rendered_component).to be_blank
@@ -38,9 +65,8 @@ RSpec.describe Jobseekers::SearchResults::JobAlertsLinkComponent, type: :compone
   end
 
   context "when a search is not carried out" do
-    let(:search_params_present) { false }
-    let(:email_alerts_enabled) { false }
-    let(:read_only_enabled) { true }
+    let(:search_params_present?) { false }
+    let(:read_only_enabled?) { true }
 
     it "does not render the job alerts link" do
       expect(rendered_component).to be_blank

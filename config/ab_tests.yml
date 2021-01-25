@@ -28,3 +28,6 @@ shared:
     foo: 1
     bar: 1
     baz: 1
+  2021_01_job_alert_link_test:
+    legacy: 1
+    current: 1
