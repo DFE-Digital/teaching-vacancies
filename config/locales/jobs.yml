@@ -99,6 +99,10 @@ en:
           <span class="govuk-!-font-weight-bold text-wrap-apostrophe">%{keyword}</span> in
           <span class="govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize">%{location}</span>
 
+    legacy_job_alert:
+      link: Receive a job alert
+      link_html: "%{link_to} whenever a job matching this search is published"
+
     sort_by:
       created_at:
         descending:
