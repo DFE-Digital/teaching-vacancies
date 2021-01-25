@@ -1,31 +1,77 @@
 #!/bin/bash
 set -eu
 
+CF_API_ENDPOINT='api.london.cloud.service.gov.uk'
 CF_ORG='dfe'
+CF_SERVICE_NAME='teaching-vacancies'
 CF_TARGET='review'
 REPOS=( "${CF_SERVICE_NAME}" )
 LIST=( "${CF_SERVICE_NAME}-${CF_TARGET}-pr-"  "${CF_SERVICE_NAME}-worker-${CF_TARGET}-pr-" )
+DRY_RUN='true'
+INTERACTIVE_LOGIN='false'
 
-cf api "${CF_API_ENDPOINT}"
-cf auth
+delete_associated_apps_services() {
+  local pr="$1"
+  if [[ -z "${pr}" ]]; then
+    if [[ ${DRY_RUN} = 'true' ]] ; then
+      echo_stdout_verbose "DRY RUN: Not executing cf delete commands"
+    else
+      echo "make changes here"
+    fi
+  fi
+}
 
-cf target -o "${CF_ORG}" "${CF_SERVICE_NAME}-${CF_TARGET}"
+main() {
 
-ITER=1
-for APP in "${LIST[@]}"; do
-        echo "CHECKING..... ${APP}"
-        APPS=$(cf apps | cut -d ' ' -f1 | grep "${APP}" )
-        for CHECK in $( "${APPS}" ); do
-            PR="${CHECK/${APP}/}"
-            STATE=$(curl -u username:"${token}"  -s -X GET "https://api.github.com/repos/DFE-Digital/${REPOS[$ITER]}/pulls/${PR}" | jq -r '.state ')
-            echo "${REPOS[$ITER]} Checking for PR - ${PR} ${STATE}"
-            if [[ "${STATE}" == "closed" ]]; then
-               cf delete -f -r "${CHECK}"
-               cf delete-service "${CF_SERVICE_NAME}-postgres-${CF_TARGET}-pr-${CHECK}"
-               cf delete-service "${CF_SERVICE_NAME}-redis-${CF_TARGET}-pr-${CHECK}"
-               cf delete-service "${CF_SERVICE_NAME}-papertrail-${CF_TARGET}-pr-${CHECK}"
-            fi
-        done
-        #ITER=$(expr $ITER + 1)
-done
-# cf delete-orphaned-routes -f
+  while getopts ":finp:" flag; do
+    case "${flag}" in
+      f) FORCE
+      i)
+        INTERACTIVE_LOGIN='true'
+        ;;
+      n)
+        DRY_RUN='true'
+        echo "DRY_RUN use command-line opt of ${DRY_RUN}" >&2
+        ;;
+      p)
+        PR=$OPTARG
+        ;;
+      \? )
+        echo_stderr "Invalid Option: -${OPTARG}"
+        exit 1
+        ;;
+      : )
+        echo_stderr "Invalid Option: -${OPTARG} requires an argument"
+        exit 1
+        ;;
+    esac
+  done
+
+  cf api "${CF_API_ENDPOINT}"
+  if [[ "${INTERACTIVE_LOGIN}" = 'true' ]]; then
+    cf login --sso
+  else
+    cf auth
+  fi
+
+  cf target -o "${CF_ORG}" "${CF_SERVICE_NAME}-${CF_TARGET}"
+
+  if [[ -z "${PR}" ]]; then
+
+  fi
+
+  ITER=1
+  for APP in "${LIST[@]}"; do
+    echo "CHECKING..... ${APP}"
+    APPS=$(cf apps | cut -d ' ' -f1 | grep "${APP}" )
+    for CHECK in $( "${APPS}" ); do
+      PR="${CHECK/${APP}/}"
+      STATE=$(curl -u username:"${token}"  -s -X GET "https://api.github.com/repos/DFE-Digital/${REPOS[$ITER]}/pulls/${PR}" | jq -r '.state ')
+      echo "${REPOS[$ITER]} Checking for PR - ${PR} ${STATE}"
+      if [[ "${STATE}" == "closed" ]]; then
+        delete_associated_apps_services "${APP}"
+      fi
+    done
+    #ITER=$(expr $ITER + 1)
+  done
+}
