@@ -1,6 +1,5 @@
 class Publishers::ManagedOrganisationsForm
   include ActiveModel::Model
-  include OrganisationHelper
 
   attr_accessor :managed_organisations, :managed_school_ids
 

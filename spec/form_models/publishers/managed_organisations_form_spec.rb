@@ -5,27 +5,15 @@ RSpec.describe Publishers::ManagedOrganisationsForm, type: :model do
 
   let(:params) { { managed_organisations: managed_organisations, managed_school_ids: managed_school_ids } }
 
-  let(:managed_organisations) { %w[school_group] }
-  let(:managed_school_ids) { %w[12345 23456] }
+  context "when managed_organisations and managed_school_ids are blank" do
+    let(:managed_organisations) { "" }
+    let(:managed_school_ids) { [] }
 
-  describe "#initialize" do
-    it "assigns attributes" do
-      expect(subject.managed_organisations).to eq(managed_organisations)
-      expect(subject.managed_school_ids).to eq(managed_school_ids)
-    end
-  end
-
-  describe "#validations" do
-    context "when managed_organisations and managed_school_ids are blank" do
-      let(:managed_organisations) { "" }
-      let(:managed_school_ids) { [] }
-
-      it "validates presence of managed_organisations or managed_school_ids" do
-        expect(subject.valid?).to be(false)
-        expect(subject.errors.messages[:managed_organisations]).to include(
-          I18n.t("publishers_publisher_preference_errors.managed_organisations.blank"),
-        )
-      end
+    it "validates presence of managed_organisations or managed_school_ids" do
+      expect(subject).not_to be_valid
+      expect(subject.errors.messages[:managed_organisations]).to include(
+        I18n.t("publishers_publisher_preference_errors.managed_organisations.blank"),
+      )
     end
   end
 end

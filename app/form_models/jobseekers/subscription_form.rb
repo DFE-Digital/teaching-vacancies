@@ -1,10 +1,10 @@
 class Jobseekers::SubscriptionForm
   include ActiveModel::Model
 
-  attr_reader :email, :frequency,
-              :keyword, :location, :radius,
-              :job_roles, :phases, :working_patterns,
-              :job_role_options, :phase_options, :working_pattern_options
+  attr_accessor :email, :frequency,
+                :keyword, :location, :radius,
+                :job_roles, :phases, :working_patterns,
+                :job_role_options, :phase_options, :working_pattern_options
 
   validates :email, email_address: { presence: true }
   validates :frequency, presence: true
