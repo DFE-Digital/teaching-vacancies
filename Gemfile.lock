@@ -171,12 +171,16 @@ GEM
       signet (~> 0.14)
     google-apis-discovery_v1 (0.1.0)
       google-apis-core (~> 0.1)
+    google-apis-drive_v3 (0.1.0)
+      google-apis-core (~> 0.1)
     google-apis-generator (0.1.2)
       activesupport (>= 5.0)
       gems (~> 1.2)
       google-apis-core (~> 0.1)
       google-apis-discovery_v1 (~> 0.0)
       thor (>= 0.20, < 2.a)
+    google-apis-indexing_v3 (0.1.0)
+      google-apis-core (~> 0.1)
     google-cloud-bigquery (1.25.0)
       concurrent-ruby (~> 1.0)
       google-api-client (~> 0.47)
@@ -573,7 +577,8 @@ DEPENDENCIES
   faker
   friendly_id
   geocoder
-  google-api-client
+  google-apis-drive_v3
+  google-apis-indexing_v3
   google-cloud-bigquery
   google_drive
   gov_uk_date_fields
