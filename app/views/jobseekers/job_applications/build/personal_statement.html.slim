@@ -10,6 +10,6 @@
 
     = form_for @form, url: wizard_path, method: :patch do |f|
       = f.govuk_error_summary
-      = f.govuk_text_field :first_name, label: { size: "s" }, width: "one-half"
+      = f.govuk_text_area :personal_statement, label: { size: "s" }, rows: 15, required: true
       = f.govuk_submit t("buttons.continue") do
         = f.govuk_submit t("buttons.save_as_draft"), secondary: true

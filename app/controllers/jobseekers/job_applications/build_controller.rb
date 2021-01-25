@@ -1,9 +1,10 @@
 class Jobseekers::JobApplications::BuildController < Jobseekers::ApplicationController
   include Wicked::Wizard
+  include Jobseekers::Wizardable
 
-  steps :personal_details
+  steps :personal_details, :personal_statement
 
-  before_action :set_up_job_application
+  before_action :set_up_job_application, :set_up_current_step_number
   before_action :set_up_show_form, only: %i[show]
   before_action :set_up_update_form, only: %i[update]
 
@@ -15,8 +16,12 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::ApplicationCont
     application_data = @job_application.application_data.presence || {}
 
     if @form.valid?
-      @job_application.assign_attributes(application_data: application_data.merge(personal_details_params))
-      render_wizard @job_application
+      @job_application.assign_attributes(application_data: application_data.merge(form_params))
+      if params[:commit] == t("buttons.save_as_draft")
+        save_job_application_as_draft
+      else
+        render_wizard @job_application
+      end
     else
       render_wizard
     end
@@ -24,22 +29,31 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::ApplicationCont
 
   private
 
-  def personal_details_params
-    ParameterSanitiser.call(params).require(:jobseekers_job_application_personal_details_form).permit(:first_name)
+  def form_params
+    send(FORM_PARAMS[step], params)
   end
 
   def finish_wizard_path
     jobseekers_job_application_review_path(@job_application)
   end
 
+  def save_job_application_as_draft
+    @job_application.save
+    redirect_to jobseekers_saved_jobs_path, success: t(".saved_job_application")
+  end
+
+  def set_up_current_step_number
+    @current_step_number = STEPS[step]
+  end
+
   def set_up_show_form
     return if step == "wicked_finish"
 
-    @form = Jobseekers::JobApplication::PersonalDetailsForm.new
+    @form = FORMS[step].new
   end
 
   def set_up_update_form
-    @form = Jobseekers::JobApplication::PersonalDetailsForm.new(personal_details_params)
+    @form = FORMS[step].new(form_params)
   end
 
   def set_up_job_application

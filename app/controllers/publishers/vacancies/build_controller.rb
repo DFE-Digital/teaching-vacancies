@@ -92,19 +92,19 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::Applicatio
   def set_up_show_form
     return if step == "wicked_finish"
 
-    @form = VACANCY_FORMS[step].new(@vacancy.attributes.symbolize_keys.merge(organisation_ids: @vacancy.organisation_ids))
+    @form = FORMS[step].new(@vacancy.attributes.symbolize_keys.merge(organisation_ids: @vacancy.organisation_ids))
   end
 
   def set_up_update_form
-    @form = VACANCY_FORMS[step].new(send(VACANCY_FORM_PARAMS[step], params))
+    @form = FORMS[step].new(send(FORM_PARAMS[step], params))
     @form.id = @vacancy.id
     @form.status = @vacancy.status
   end
 
   def strip_checkbox_params
-    return unless VACANCY_STRIP_CHECKBOXES.key?(step)
+    return unless STRIP_CHECKBOXES.key?(step)
 
-    strip_empty_checkboxes(VACANCY_STRIP_CHECKBOXES[step], "publishers_job_listing_#{step}_form".to_sym)
+    strip_empty_checkboxes(STRIP_CHECKBOXES[step], "publishers_job_listing_#{step}_form".to_sym)
   end
 
   def update_incomplete_listing

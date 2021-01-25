@@ -11,7 +11,7 @@ module Publishers::Wizardable
     review: 8,
   }.freeze
 
-  VACANCY_FORMS = {
+  FORMS = {
     job_location: Publishers::JobListing::JobLocationForm,
     schools: Publishers::JobListing::SchoolsForm,
     job_details: Publishers::JobListing::JobDetailsForm,
@@ -22,7 +22,7 @@ module Publishers::Wizardable
     job_summary: Publishers::JobListing::JobSummaryForm,
   }.freeze
 
-  VACANCY_FORM_PARAMS = {
+  FORM_PARAMS = {
     job_location: :job_location_params,
     schools: :schools_params,
     job_details: :job_details_params,
@@ -33,7 +33,7 @@ module Publishers::Wizardable
     job_summary: :job_summary_params,
   }.freeze
 
-  VACANCY_STRIP_CHECKBOXES = {
+  STRIP_CHECKBOXES = {
     schools: %i[organisation_ids],
     job_details: %i[job_roles subjects working_patterns],
   }.freeze
