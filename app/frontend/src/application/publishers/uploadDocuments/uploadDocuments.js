@@ -2,7 +2,7 @@ import 'classlist-polyfill';
 import './uploadDocuments.scss';
 
 document.addEventListener('DOMContentLoaded', () => {
-  const inputFileUpload = document.getElementById('documents-form-documents-field');
+  const inputFileUpload = document.getElementById('publishers-job-listing-documents-form-documents-field');
   const selectFileButton = document.getElementById('select-files-button');
   const uploadFileButton = document.getElementsByClassName('upload-files-button')[0];
   const continueButton = document.getElementsByClassName('save-listing-gtm')[0];
