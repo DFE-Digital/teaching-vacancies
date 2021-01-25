@@ -30,6 +30,7 @@ class ExportTablesToBigQuery
   # This is to deal with a gem that automatically maps an integer column to a look up table of strings.
   ENUM_ATTRIBUTES = {
     "category" => :string,
+    "contract_type" => :string,
     "frequency" => :string,
     "hired_status" => :string,
     "job_roles" => :string,
