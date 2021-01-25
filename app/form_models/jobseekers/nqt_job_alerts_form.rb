@@ -45,7 +45,7 @@ class Jobseekers::NqtJobAlertsForm
   end
 
   def location_category
-    LocationCategory.include?(location) ? location : false
+    LocationPolygon.include?(location) ? location : false
   end
 
   def unique_job_alert

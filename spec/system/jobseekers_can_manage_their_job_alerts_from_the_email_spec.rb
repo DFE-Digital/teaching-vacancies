@@ -20,7 +20,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the email" do
 
     describe "job alert confirmation page" do
       let(:keyword) { "English" }
-      let(:location) { "Manchester" }
+      let(:location) { "Radley" }
 
       before do
         update_subscription_fields
@@ -83,7 +83,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the email" do
 
     context "when updating the subscription" do
       let(:keyword) { "English" }
-      let(:location) { "Manchester" }
+      let(:location) { "Radley" }
       let(:frequency) { :weekly }
 
       before do
@@ -104,7 +104,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the email" do
         expect(subscription.email).to eq(jobseeker.email)
         expect(subscription.frequency).to eq("weekly")
         expect(JSON.parse(subscription.search_criteria).symbolize_keys[:keyword]).to eq("English")
-        expect(JSON.parse(subscription.search_criteria).symbolize_keys[:location]).to eq("Manchester")
+        expect(JSON.parse(subscription.search_criteria).symbolize_keys[:location]).to eq("Radley")
       end
     end
 

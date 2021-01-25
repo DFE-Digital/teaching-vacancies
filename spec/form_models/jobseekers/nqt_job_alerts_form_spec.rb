@@ -9,13 +9,13 @@ RSpec.describe Jobseekers::NqtJobAlertsForm, type: :model do
   let(:params) { { keywords: keywords, location: location, email: email } }
 
   describe "#job_alert_params" do
-    context "when location is a LocationCategory" do
+    context "when location is a LocationPolygon" do
       let(:expected_hash) do
         { keyword: "nqt #{keywords}", location: location, radius: 10, location_category: location }
       end
 
       before do
-        allow(LocationCategory).to receive(:include?).with(location).and_return(true)
+        allow(LocationPolygon).to receive(:include?).with(location).and_return(true)
       end
 
       it "adds location_category to the search criteria" do
@@ -23,13 +23,13 @@ RSpec.describe Jobseekers::NqtJobAlertsForm, type: :model do
       end
     end
 
-    context "when location is not a LocationCategory" do
+    context "when location is not a LocationPolygon" do
       let(:expected_hash) do
         { keyword: "nqt #{keywords}", location: location, radius: 10 }
       end
 
       before do
-        allow(LocationCategory).to receive(:include?).with(location).and_return(false)
+        allow(LocationPolygon).to receive(:include?).with(location).and_return(false)
       end
 
       it "does not add location_category to the search criteria" do

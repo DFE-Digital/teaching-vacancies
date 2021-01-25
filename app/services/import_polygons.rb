@@ -21,13 +21,14 @@ class ImportPolygons
 
       geometry_rings = region_response.dig("geometry", "rings")
 
-      # When the ONS API returns multiple rings for a location, some of these are small islands or similar. Some of
+      # When the ONS API returns multiple 'rings' for a location, some of these are small islands or similar. Some of
       # these islands are inhabited and have a school on, and others do not. (E.g. Mersea Island in Essex, Hayling Island
       # in Hampshire, Sheppey Island in Kent, St Mary's in the Isles of Scilly.)
       #
+      # Store the 'rings' in a hash because Postgres doesn't support multidimensional arrays of varying extents.
+      #
       # If algolia searches by polygon are slow, (some of) these boundaries could be downsampled significantly.
       #
-      # Store them in a hash because Postgres doesn't support multidimensional arrays of varying extents.
 
       polygons = []
       geometry_rings.each do |ring|

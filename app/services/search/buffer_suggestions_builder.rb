@@ -4,14 +4,25 @@ class Search::BufferSuggestionsBuilder
   def initialize(location, search_params)
     @location = location
     @search_params = search_params
-    get_buffers_suggestions
+    @buffer_suggestions = get_buffers_suggestions
   end
 
   def get_buffers_suggestions
-    buffer_vacancy_count = LocationPolygon.with_name(location).buffers.map do |buffer|
-      [buffer.first, Search::AlgoliaSearchRequest.new(search_params.merge(polygon: [buffer.last.first])).stats.last]
+    locations = if LocationPolygon.composite?(location)
+                  LocationPolygon.component_location_names(location).map do |component_region_name|
+                    LocationPolygon.find_by(name: component_region_name.downcase)
+                  end
+                else
+                  [LocationPolygon.with_name(location)]
+                end
+    buffer_vacancy_count = ImportPolygons::BUFFER_DISTANCES_IN_MILES.map do |distance|
+      buffered_polygons = []
+      locations.each do |location|
+        location.buffers[distance.to_s].each { |buffer| buffered_polygons.push(buffer) }
+      end
+      [distance.to_s, Search::AlgoliaSearchRequest.new(search_params.merge(polygons: buffered_polygons)).stats.last]
     end
 
-    @buffer_suggestions = buffer_vacancy_count&.uniq(&:last)&.reject { |array| array.last.zero? }
+    buffer_vacancy_count&.uniq(&:last)&.reject { |array| array.last.zero? }
   end
 end

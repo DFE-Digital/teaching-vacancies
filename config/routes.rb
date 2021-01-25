@@ -148,7 +148,7 @@ Rails.application.routes.draw do
   # If parameters are used that are the same as those in the search form, pagination with kaminari will break
   match "teaching-jobs-in-:location_category",
         to: "vacancies#index", as: :location_category, via: :get,
-        constraints: ->(request) { LocationCategory.include?(request.params[:location_category]) }
+        constraints: ->(request) { LocationPolygon.include?(request.params[:location_category]) }
 
   match "teaching-jobs-for-:job_role",
         to: "vacancies#index", as: :job_role, via: :get,
