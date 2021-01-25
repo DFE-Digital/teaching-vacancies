@@ -31,6 +31,11 @@ RSpec.describe "Jobseekers can complete a job application" do
     fill_in_personal_statement
     click_on I18n.t("buttons.continue")
 
+    expect(page).to have_content(I18n.t("jobseekers.job_applications.build.ask_for_support.title"))
+    validates_step_complete
+    fill_in_ask_for_support
+    click_on I18n.t("buttons.continue")
+
     expect(page).to have_content(I18n.t("jobseekers.job_applications.build.declarations.title"))
     validates_step_complete
     fill_in_declarations

@@ -32,6 +32,21 @@ en:
       applying_for_the_role_heading: Applying for the role
       applying_for_the_role_paragraph: Please complete the online application.
       build:
+        ask_for_support:
+          adjustments: "This could be:"
+          adjustment_examples:
+            - organising equipment, like an adapted keyboard or a hearing loop
+            - putting you in touch with support staff before the day of your interview
+            - making sure classrooms are wheelchair accessible
+          closing: >-
+            It's against the law to discriminate you if you are disabled. You should not be asked questions about your
+            health or your disability if they are not relevant to your teaching ability or practice. The school should
+            not reject your application if you are disabled.
+          opening: >-
+            When you are attending an interview, you might benefit from extra support if you're disabled have a mental
+            health condition or educational needs. You can ask for the support that you need now. The school can then
+            make adjustments so you can attend an interview.
+          title: Ask for support if you have a disability or other needs
         declarations:
           title: Declarations
         personal_details:

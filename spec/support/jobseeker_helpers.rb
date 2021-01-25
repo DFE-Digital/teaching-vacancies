@@ -25,6 +25,11 @@ module JobseekerHelpers
     end
   end
 
+  def fill_in_ask_for_support
+    choose "Yes", name: "jobseekers_job_application_ask_for_support_form[support_needed]"
+    fill_in "Tell us any information you think is relevant", with: "Some details about support"
+  end
+
   def fill_in_declarations
     choose "Yes", name: "jobseekers_job_application_declarations_form[banned_or_disqualified]"
     choose "Yes", name: "jobseekers_job_application_declarations_form[close_relationships]"
@@ -36,13 +41,13 @@ module JobseekerHelpers
     fill_in "First name", with: "John"
   end
 
+  def fill_in_personal_statement
+    fill_in "Your personal statement", with: "A brilliant, glowing statement about your person"
+  end
+
   def fill_in_professional_status
     choose "Yes", name: "jobseekers_job_application_professional_status_form[qualified_teacher_status]"
     fill_in "Year QTS was awarded", with: Time.current.year
     choose "Yes", name: "jobseekers_job_application_professional_status_form[statutory_induction_complete]"
-  end
-
-  def fill_in_personal_statement
-    fill_in "Your personal statement", with: "A brilliant, glowing statement about your person"
   end
 end
