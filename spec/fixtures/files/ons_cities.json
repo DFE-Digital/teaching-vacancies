@@ -1,74 +1,74 @@
 {
   "objectIdFieldName": "OBJECTID",
   "uniqueIdField": {
-      "name": "OBJECTID",
-      "isSystemMaintained": true
-    },
+    "name": "OBJECTID",
+    "isSystemMaintained": true
+  },
   "globalIdFieldName": "",
   "geometryProperties": {
-      "shapeAreaFieldName": "Shape__Area",
-      "shapeLengthFieldName": "Shape__Length",
-      "units": "esriMeters"
-    },
+    "shapeAreaFieldName": "Shape__Area",
+    "shapeLengthFieldName": "Shape__Length",
+    "units": "esriMeters"
+  },
   "geometryType": "esriGeometryPolygon",
   "spatialReference": {
-      "wkid": 4326,
-      "latestWkid": 4326
-    },
-  "fields":
-    [
-      {
-        "name": "TCITY15NM",
-        "type": "esriFieldTypeString",
-        "alias": "TCITY15NM",
-        "sqlType": "sqlTypeOther",
-        "length": 2
-      },
-      {
-        "name": "FIELD_EXP_0",
-        "type": "esriFieldTypeString",
-        "alias": "FIELD_EXP_0",
-        "sqlType": "sqlTypeOther",
-        "length": 0
-      }],
-  "features": [
-   {
-    "attributes": {
-     "TCITY15NM": "Bath"
-    },
-    "geometry": {
-     "rings": [
-      [
-       [
-        -2.378057667799660,
-        51.40636195864397
-       ],
-       [
-        -2.378776462314479,
-        51.40635963722366
-       ]
-      ]
-    ]
-   }
+    "wkid": 4326,
+    "latestWkid": 4326
   },
-  {
-    "attributes": {
-     "TCITY15NM": "Non-existent City"
+  "fields":
+  [
+    {
+      "name": "TCITY15NM",
+      "type": "esriFieldTypeString",
+      "alias": "TCITY15NM",
+      "sqlType": "sqlTypeOther",
+      "length": 2
     },
-    "geometry": {
-     "rings": [
-      [
-       [
-        -2.378057667799660,
-        51.40636195864397
-       ],
-       [
-        -2.378776462314479,
-        51.40635963722366
-       ]
-      ]
-    ]
-   }
-  }
- ]
+    {
+      "name": "FIELD_EXP_0",
+      "type": "esriFieldTypeString",
+      "alias": "FIELD_EXP_0",
+      "sqlType": "sqlTypeOther",
+      "length": 0
+    }],
+  "features": [
+    {
+      "attributes": {
+        "TCITY15NM": "Bath"
+      },
+      "geometry": {
+        "rings": [
+          [
+            [
+              -2.378057667799660,
+              51.40636195864397
+            ],
+            [
+              -2.378776462314479,
+              51.40635963722366
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "TCITY15NM": "Non-existent City"
+      },
+      "geometry": {
+        "rings": [
+          [
+            [
+              -2.378057667799660,
+              51.40636195864397
+            ],
+            [
+              -2.378776462314479,
+              51.40635963722366
+            ]
+          ]
+        ]
+      }
+    }
+  ]
 }
