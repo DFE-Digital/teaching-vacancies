@@ -7,10 +7,10 @@ RSpec.describe PagesController, type: :controller do
         get :show, params: { id: page }
       end
 
-      it { should respond_with(:success) }
-      it { should render_template(page) }
+      it { is_expected.to respond_with(:success) }
+      it { is_expected.to render_template(page) }
 
-      it "should not have a noindex header" do
+      it "does not have a noindex header" do
         expect(response.headers["X-Robots-Tag"]).to_not include("noindex")
       end
     end

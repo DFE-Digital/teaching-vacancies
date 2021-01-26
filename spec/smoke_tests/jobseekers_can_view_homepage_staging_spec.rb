@@ -3,7 +3,7 @@ require "i18n_helper"
 
 RSpec.describe "Page availability", js: true, smoke_test: true do
   context "Jobseeker visits vacancy page" do
-    it "should ensure users can search and view a job vacancy page" do
+    it "ensures users can search and view a job vacancy page" do
       page = Capybara::Session.new(:selenium_chrome_headless)
 
       page.visit "https://staging.teaching-vacancies.service.gov.uk/404" # you need to be on the domain to set the cookie

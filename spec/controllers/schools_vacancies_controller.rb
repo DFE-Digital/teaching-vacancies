@@ -8,7 +8,7 @@ RSpec.describe Schools::VacanciesController, type: :controller do
         get :new, params: { school_id: @school.id }
       end
 
-      it "should redirect to the first step of the new vacancy process" do
+      it "redirects to the first step of the new vacancy process" do
         expect(response.status).to eq(302)
       end
     end
@@ -18,7 +18,7 @@ RSpec.describe Schools::VacanciesController, type: :controller do
         get :new, params: { school_id: "XXXX" }
       end
 
-      it "should be not found" do
+      it "responds not found" do
         expect(response.status).to eq(404)
       end
     end

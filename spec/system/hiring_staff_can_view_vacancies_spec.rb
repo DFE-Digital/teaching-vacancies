@@ -6,7 +6,7 @@ RSpec.describe "School viewing vacancies" do
     stub_publishers_auth(urn: school.urn)
   end
 
-  scenario "A school should see advisory text when there are no vacancies" do
+  scenario "A school publisher sees advisory text when there are no vacancies" do
     visit organisation_path
 
     expect(page).to have_content(I18n.t("schools.no_jobs.heading"))
@@ -14,7 +14,7 @@ RSpec.describe "School viewing vacancies" do
     expect(page).to have_content(I18n.t("schools.no_jobs.heading"))
   end
 
-  scenario "A school can see a list of vacancies" do
+  scenario "A school publisher can see a list of vacancies" do
     vacancy1 = create(:vacancy)
     vacancy1.organisation_vacancies.create(organisation: school)
     vacancy2 = create(:vacancy)
@@ -27,7 +27,7 @@ RSpec.describe "School viewing vacancies" do
     expect(page).to have_content(vacancy2.job_title)
   end
 
-  scenario "A draft vacancy show page should show a flash message with the status" do
+  scenario "A draft vacancy show page shows a flash message with the status" do
     vacancy = create(:vacancy, status: "draft")
     vacancy.organisation_vacancies.create(organisation: school)
 
@@ -38,7 +38,7 @@ RSpec.describe "School viewing vacancies" do
     expect(page).to have_content(I18n.t("publishers.vacancies.show.notice"))
   end
 
-  scenario "A published vacancy show page should not show a flash message with the status" do
+  scenario "A published vacancy show page does not show a flash message with the status" do
     vacancy = create(:vacancy, status: "published")
     vacancy.organisation_vacancies.create(organisation: school)
 
@@ -48,7 +48,7 @@ RSpec.describe "School viewing vacancies" do
     expect(page).to have_content(vacancy.job_title)
   end
 
-  scenario "clicking on more information should not increment the counter" do
+  scenario "clicking on more information does not increment the counter" do
     vacancy = create(:vacancy, status: "published")
     vacancy.organisation_vacancies.create(organisation: school)
 

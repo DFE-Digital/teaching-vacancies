@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe SubscriptionFinder do
   describe ".new" do
-    it "should be initialised with a hash of params" do
+    it "is initialised with a hash of params" do
       service = described_class.new(email: "foo", search_criteria: "bar", frequency: "daily")
       expect(service).to be_an_instance_of(described_class)
     end
