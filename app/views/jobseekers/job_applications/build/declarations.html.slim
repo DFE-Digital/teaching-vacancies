@@ -1,10 +1,10 @@
 - content_for :page_title_prefix, t(".title")
 
-= render(Jobseekers::JobApplicationHeadingComponent.new(vacancy: @job_application.vacancy))
+= render(Jobseekers::JobApplicationHeadingComponent.new(vacancy: job_application.vacancy, back_path: back_link_path))
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    .govuk-caption-m Step #{@current_step_number} of 9
+    .govuk-caption-m Step #{current_step_number} of 10
     h1.govuk-heading-l = t(".title")
 
     = form_for @form, url: wizard_path, method: :patch do |f|
@@ -12,7 +12,7 @@
 
       = f.govuk_collection_radio_buttons :banned_or_disqualified, %w[yes no], :to_s, :capitalize, inline: true
 
-      = f.govuk_radio_buttons_fieldset :close_relationships, legend: { text: t("helpers.legend.jobseekers_job_application_declarations_form.close_relationships_html", organisation: @job_application.vacancy.organisation.name) } do
+      = f.govuk_radio_buttons_fieldset :close_relationships, legend: { text: t("helpers.legend.jobseekers_job_application_declarations_form.close_relationships_html", organisation: job_application.vacancy.organisation.name) } do
         = f.govuk_radio_button :close_relationships, :yes, link_errors: true do
           = f.govuk_text_field :close_relationships_details
         = f.govuk_radio_button :close_relationships, :no

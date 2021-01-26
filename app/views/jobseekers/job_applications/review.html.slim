@@ -1,13 +1,13 @@
 - content_for :page_title_prefix, t(".title")
 
-= render(Jobseekers::JobApplicationHeadingComponent.new(vacancy: @job_application.vacancy))
+= render(Jobseekers::JobApplicationHeadingComponent.new(vacancy: job_application.vacancy, back_path: jobseekers_job_application_build_path(job_application, :declarations)))
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    .govuk-caption-m Step 8 of 8
+    .govuk-caption-m Step 10 of 10
     h1.govuk-heading-l = t(".title")
 
-    p.govuk-body = "First name: #{@job_application.application_data['first_name']}"
-    p.govuk-body = "Status: #{@job_application.status}"
+    p.govuk-body = "First name: #{job_application.application_data['first_name']}"
+    p.govuk-body = "Status: #{job_application.status}"
 
-    = govuk_button_to t("buttons.submit_application"), jobseekers_job_application_submit_path(@job_application)
+    = govuk_button_to t("buttons.submit_application"), jobseekers_job_application_submit_path(job_application)

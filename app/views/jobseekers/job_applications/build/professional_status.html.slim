@@ -1,10 +1,10 @@
 - content_for :page_title_prefix, t(".title")
 
-= render(Jobseekers::JobApplicationHeadingComponent.new(vacancy: @job_application.vacancy))
+= render(Jobseekers::JobApplicationHeadingComponent.new(vacancy: job_application.vacancy, back_path: back_link_path))
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    .govuk-caption-m Step #{@current_step_number} of 9
+    .govuk-caption-m Step #{current_step_number} of 10
     h1.govuk-heading-l = t(".title")
 
     = form_for @form, url: wizard_path, method: :patch do |f|
