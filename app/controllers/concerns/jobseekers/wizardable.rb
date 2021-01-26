@@ -3,6 +3,7 @@ module Jobseekers::Wizardable
     personal_details: 1,
     professional_status: 3,
     personal_statement: 5,
+    ask_for_support: 8,
     declarations: 9,
   }.freeze
 
@@ -10,6 +11,7 @@ module Jobseekers::Wizardable
     personal_details: Jobseekers::JobApplication::PersonalDetailsForm,
     professional_status: Jobseekers::JobApplication::ProfessionalStatusForm,
     personal_statement: Jobseekers::JobApplication::PersonalStatementForm,
+    ask_for_support: Jobseekers::JobApplication::AskForSupportForm,
     declarations: Jobseekers::JobApplication::DeclarationsForm,
   }.freeze
 
@@ -17,6 +19,7 @@ module Jobseekers::Wizardable
     personal_details: :personal_details_params,
     professional_status: :professional_status_params,
     personal_statement: :personal_statement_params,
+    ask_for_support: :ask_for_support_params,
     declarations: :declarations_params,
   }.freeze
 
@@ -36,6 +39,12 @@ module Jobseekers::Wizardable
     ParameterSanitiser.call(params)
                       .require(:jobseekers_job_application_personal_statement_form)
                       .permit(:personal_statement)
+  end
+
+  def ask_for_support_params(params)
+    ParameterSanitiser.call(params)
+                      .require(:jobseekers_job_application_ask_for_support_form)
+                      .permit(:support_needed, :support_details)
   end
 
   def declarations_params(params)

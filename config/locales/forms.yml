@@ -157,6 +157,12 @@ en:
           circumstances_change: My circumstances have changed
           other_reason: Another reason
 
+      jobseekers_job_application_ask_for_support_form:
+        support_details: Tell us any information you think is relevant
+        support_needed_options:
+          "no": "No"
+          "yes": "Yes"
+
       jobseekers_job_application_declarations_form:
         close_relationships_details: Please give details
         close_relationships_options:
@@ -171,11 +177,11 @@ en:
         personal_statement_html: Your personal statement (<span class='text-red'>Required</span>)
 
       jobseekers_job_application_professional_status_form:
-        qualified_teacher_status_year: Year QTS was awarded
         qualified_teacher_status_options:
           "no": "No"
           on_track: I'm on track to receive my QTS
           "yes": "Yes"
+        qualified_teacher_status_year: Year QTS was awarded
 
       publishers_organisation_form:
         description: Description of %{organisation_type}
@@ -242,6 +248,10 @@ en:
         frequency_html: When do you want to receive alerts? (<span class='text-red'>Required</span>)
       jobseekers_unsubscribe_feedback_form:
         reason_html: Why do you want to unsubscribe from this alert? (<span class='text-red'>Required</span>)
+
+      jobseekers_job_application_ask_for_support_form:
+        support_needed_html: >-
+          Do you want to ask for support so that you can attend an interview? (<span class='text-red'>Required</span>)
 
       jobseekers_job_application_professional_status_form:
         statutory_induction_complete_html: >-

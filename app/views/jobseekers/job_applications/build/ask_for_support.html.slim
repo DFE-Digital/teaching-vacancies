@@ -1,0 +1,26 @@
+- content_for :page_title_prefix, t(".title")
+
+= render(Jobseekers::JobApplicationHeadingComponent.new(vacancy: @job_application.vacancy))
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    .govuk-caption-m Step #{@current_step_number} of 9
+    h1.govuk-heading-l = t(".title")
+
+    p.govuk-body = t(".opening")
+    p.govuk-body = t(".adjustments")
+    ul.govuk-list.govuk-list--bullet
+      - t(".adjustment_examples").each do |example|
+        li = example
+    p.govuk-body = t(".closing")
+
+    = form_for @form, url: wizard_path, method: :patch do |f|
+      = f.govuk_error_summary
+
+      = f.govuk_radio_buttons_fieldset :support_needed do
+        = f.govuk_radio_button :support_needed, :yes, link_errors: true do
+          = f.govuk_text_area :support_details, rows: 10
+        = f.govuk_radio_button :support_needed, :no
+
+      = f.govuk_submit t("buttons.continue") do
+        = f.govuk_submit t("buttons.save_as_draft"), secondary: true

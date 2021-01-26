@@ -160,6 +160,12 @@ en:
             <<: *job_details_errors
             <<: *important_dates_errors
         # Job application
+        jobseekers/job_application/ask_for_support_form:
+          attributes:
+            support_details:
+              blank: Give details about what support you might need
+            support_needed:
+              inclusion: Select an option
         jobseekers/job_application/declarations_form:
           attributes:
             banned_or_disqualified:
