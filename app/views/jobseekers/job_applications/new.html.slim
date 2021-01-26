@@ -1,11 +1,11 @@
 - content_for :page_title_prefix, t(".title")
 
-= render(Jobseekers::JobApplicationHeadingComponent.new(vacancy: @vacancy))
+= render(Jobseekers::JobApplicationHeadingComponent.new(vacancy: vacancy, back_path: job_path(vacancy)))
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     h1.govuk-heading-l = t(".title")
-    p.govuk-body = t(".description.opening", job_title: @vacancy.job_title, organisation_name: @vacancy.parent_organisation_name)
+    p.govuk-body = t(".description.opening", job_title: vacancy.job_title, organisation_name: vacancy.parent_organisation_name)
     p.govuk-body = t(".description.requirements")
     ul.govuk-list.govuk-list--bullet
       - t(".description.requirement_bullets").each do |requirement|
@@ -15,7 +15,7 @@
 
     = govuk_button_to t("buttons.start_application"), jobseekers_job_applications_path, class: "govuk-button--start"
 
-    = govuk_link_to t("buttons.cancel"), job_path(@vacancy)
+    = govuk_link_to t("buttons.cancel"), job_path(vacancy)
 
   .govuk-grid-column-one-third
     .account-sidebar
