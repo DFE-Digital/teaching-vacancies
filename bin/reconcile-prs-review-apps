@@ -1,18 +1,28 @@
-#!/bin/bash
-set -eu
+#!/usr/bin/env bash
+# Exit on error. Append "|| true" if you expect an error.
+set -o errexit
+# Exit on error inside any functions or subshells.
+set -o errtrace
+# Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
+set -o nounset
+# Catch the error in case mysqldump fails (but gzip succeeds) in `mysqldump |gzip`
+set -o pipefail
+# Turn on traces, useful while debugging but commented out by default
+# set -o xtrace
 
 CF_API_ENDPOINT='api.london.cloud.service.gov.uk'
 CF_ORG='dfe'
 CF_SERVICE_NAME='teaching-vacancies'
 CF_TARGET='review'
-REPOS=( "${CF_SERVICE_NAME}" )
-LIST=( "${CF_SERVICE_NAME}-${CF_TARGET}-pr-"  "${CF_SERVICE_NAME}-worker-${CF_TARGET}-pr-" )
+REPO="${CF_SERVICE_NAME}"
+LIST_APP_GREP_PATTERNS=( "${CF_TARGET}-pr" )
 DRY_RUN='true'
 INTERACTIVE_LOGIN='false'
+VERBOSE='false'
 
 delete_associated_apps_services() {
   local pr="$1"
-  if [[ -z "${pr}" ]]; then
+  if [[ -n "${pr}" ]]; then
     if [[ ${DRY_RUN} = 'true' ]] ; then
       echo_stdout_verbose "DRY RUN: Not executing cf delete commands"
     else
@@ -21,20 +31,41 @@ delete_associated_apps_services() {
   fi
 }
 
+echo_stderr() {
+  local message="${*}"
+  echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: ERROR: ${message}" >&2
+}
+
+echo_stdout() {
+  local message="${*}"
+  echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: ${message}" >&1
+}
+
+echo_stdout_verbose() {
+  local message="${*}"
+  if [[ "${VERBOSE}" = 'true' ]]; then
+    echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: VERBOSE: ${message}" >&1
+  fi
+}
+
 main() {
 
-  while getopts ":finp:" flag; do
+  while getopts ":invp:" flag; do
     case "${flag}" in
-      f) FORCE
       i)
         INTERACTIVE_LOGIN='true'
+        echo_stdout "INTERACTIVE_LOGIN use command-line opt of ${INTERACTIVE_LOGIN}"
         ;;
       n)
         DRY_RUN='true'
-        echo "DRY_RUN use command-line opt of ${DRY_RUN}" >&2
+        echo_stdout "DRY_RUN use command-line opt of ${DRY_RUN}"
         ;;
       p)
-        PR=$OPTARG
+        OLDEST_PR=$OPTARG
+        ;;
+      v)
+        VERBOSE='true'
+        echo_stdout "VERBOSE use command-line opt of ${VERBOSE}"
         ;;
       \? )
         echo_stderr "Invalid Option: -${OPTARG}"
@@ -54,24 +85,32 @@ main() {
     cf auth
   fi
 
-  cf target -o "${CF_ORG}" "${CF_SERVICE_NAME}-${CF_TARGET}"
+  echo_stdout_verbose "Setting the target Org to ${CF_ORG} and Space to ${CF_SERVICE_NAME}-${CF_TARGET}"
+  cf target -o "${CF_ORG}" -s "${CF_SERVICE_NAME}-${CF_TARGET}"
 
-  if [[ -z "${PR}" ]]; then
-
-  fi
-
-  ITER=1
-  for APP in "${LIST[@]}"; do
-    echo "CHECKING..... ${APP}"
-    APPS=$(cf apps | cut -d ' ' -f1 | grep "${APP}" )
-    for CHECK in $( "${APPS}" ); do
-      PR="${CHECK/${APP}/}"
-      STATE=$(curl -u username:"${token}"  -s -X GET "https://api.github.com/repos/DFE-Digital/${REPOS[$ITER]}/pulls/${PR}" | jq -r '.state ')
-      echo "${REPOS[$ITER]} Checking for PR - ${PR} ${STATE}"
-      if [[ "${STATE}" == "closed" ]]; then
-        delete_associated_apps_services "${APP}"
-      fi
-    done
-    #ITER=$(expr $ITER + 1)
+  for APP_GREP_PATTERN in "${LIST_APP_GREP_PATTERNS[@]}"; do
+    if [[ -n "${OLDEST_PR}" ]]; then
+      echo_stdout_verbose "Checking apps matching ${APP_GREP_PATTERN} with IDs lower than ${OLDEST_PR}"
+      echo_stdout_verbose "Preparing to delete apps and services without checking GitHub open/closed status"
+      PRS=$(cf apps | cut -d ' ' -f1 | grep "${APP_GREP_PATTERN}" | awk -F '-' -v oldest_pr="${OLDEST_PR}" '$NF < oldest_pr {print $NF}' | sort -n | uniq )
+      for PR in ${PRS}; do
+        echo_stdout_verbose "working with pr ${PR}"
+        delete_associated_apps_services "${PR}"
+      done
+    else
+      echo_stdout_verbose "Checking apps matching ${APP_GREP_PATTERN}"
+      PRS=$(cf apps | cut -d ' ' -f1 | grep "${APP_GREP_PATTERN}" | awk -F '-' '{print $NF}' | sort -n | uniq )
+      for PR in ${PRS}; do
+        #PR="${CHECK/${APP_GREP_PATTERN}/}"
+        #STATE=$(curl -u username:"${token}"  -s -X GET "https://api.github.com/repos/DFE-Digital/${REPO}/pulls/${PR}" | jq -r '.state ')
+        #echo "${REPOS[$ITER]} Checking for PR - ${PR} ${STATE}"
+        echo_stdout_verbose "${REPO} Checking for PR - ${PR} ${STATE}"
+        if [[ "${STATE}" == "closed" ]]; then
+          delete_associated_apps_services "${PR}"
+        fi
+      done
+    fi
   done
 }
+
+main "$@"
