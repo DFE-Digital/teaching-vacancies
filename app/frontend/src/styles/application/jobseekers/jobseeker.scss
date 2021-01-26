@@ -1,7 +1,8 @@
 .jobseeker {
   &.jobseekers_saved_jobs_index,
   &.jobseekers_subscriptions_index,
-  &.jobseekers_accounts_show {
+  &.jobseekers_accounts_show,
+  &[class*='jobseekers_job_applications_'] {
     .govuk-main-wrapper {
       > .govuk-width-container {
         margin-top: 0;
