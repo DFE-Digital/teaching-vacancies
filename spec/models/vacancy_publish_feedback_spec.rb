@@ -1,12 +1,12 @@
 require "rails_helper"
 
 RSpec.describe VacancyPublishFeedback, type: :model do
-  it { should belong_to(:vacancy) }
-  it { should belong_to(:publisher) }
+  it { is_expected.to belong_to(:vacancy) }
+  it { is_expected.to belong_to(:publisher) }
 
   describe "validations" do
-    it { should validate_presence_of(:comment) }
-    it { should validate_length_of(:comment).is_at_most(1200) }
+    it { is_expected.to validate_presence_of(:comment) }
+    it { is_expected.to validate_length_of(:comment).is_at_most(1200) }
   end
 
   describe "#email" do

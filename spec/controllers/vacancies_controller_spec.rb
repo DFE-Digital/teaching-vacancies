@@ -40,19 +40,19 @@ RSpec.describe VacanciesController, type: :controller do
       context "search auditor" do
         let(:params) { { keyword: "Teacher" } }
 
-        it "should call the search auditor" do
+        it "calls the search auditor" do
           expect(AuditSearchEventJob).to receive(:perform_later).with(hash_including(keyword: "Teacher"))
           subject
         end
 
-        it "should not call the search auditor if its a smoke test" do
+        it "does not call the search auditor if its a smoke test" do
           cookies[:smoke_test] = 1
           expect(AuditSearchEventJob).to_not receive(:perform_later)
 
           subject
         end
 
-        it "should not call the search auditor if no search parameters are given" do
+        it "does not call the search auditor if no search parameters are given" do
           expect(AuditSearchEventJob).to_not receive(:perform_later)
           get :index
         end
@@ -152,13 +152,13 @@ RSpec.describe VacanciesController, type: :controller do
         vacancy.organisation_vacancies.create(organisation: school)
       end
 
-      it "should call the track method if cookies not set" do
+      it "calls the track method if cookies not set" do
         expect(VacancyPageView).to receive(:new).with(vacancy).and_return(vacancy_page_view)
         expect(vacancy_page_view).to receive(:track)
         subject
       end
 
-      it "should not call the track method if smoke_test cookies set" do
+      it "does not call the track method if smoke_test cookies set" do
         expect(VacancyPageView).not_to receive(:new).with(vacancy)
         cookies[:smoke_test] = "1"
         subject

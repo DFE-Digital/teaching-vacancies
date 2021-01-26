@@ -114,7 +114,7 @@ RSpec.describe ImportSchoolData do
                     "100000,St John\x92s School,999,999,ZZZ,http://test.com,?,?,?")
       end
 
-      it "should correct convert the file to UTF-8" do
+      it "converts the file to UTF-8" do
         subject.run!
         expect(example_school.name).to eq("St John’s School")
       end

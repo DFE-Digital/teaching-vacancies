@@ -26,7 +26,7 @@ RSpec.describe "School viewing public listings" do
       allow(AuthenticationFallback).to receive(:enabled?) { false }
     end
 
-    scenario "A signed in school should see a link back to their own dashboard when viewing public listings" do
+    scenario "A signed in school publisher sees a link back to their own dashboard when viewing public listings" do
       visit root_path
 
       sign_in_publisher

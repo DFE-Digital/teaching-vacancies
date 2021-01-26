@@ -4,8 +4,8 @@ RSpec.describe School, type: :model do
   it { expect(subject.attributes).to include("gias_data") }
   it { expect(described_class.columns_hash["gias_data"].type).to eq(:json) }
 
-  it { should have_many(:school_group_memberships) }
-  it { should have_many(:school_groups) }
+  it { is_expected.to have_many(:school_group_memberships) }
+  it { is_expected.to have_many(:school_groups) }
 
   describe "#religious_character" do
     let(:religious_character) { "Roman Catholic" }
@@ -49,7 +49,7 @@ RSpec.describe School, type: :model do
 
     describe "#geolocation" do
       context "when setting a GB easting and northing" do
-        it "should set the WGS84 geolocation" do
+        it "sets the WGS84 geolocation" do
           school.easting = 533_498
           school.northing = 181_201
 
@@ -59,14 +59,14 @@ RSpec.describe School, type: :model do
       end
 
       context "when setting just a GB easting" do
-        it "should not set a geolocation" do
+        it "does not set a geolocation" do
           school.easting = 533_498
           expect(school.geolocation).to eq(nil)
         end
       end
 
       context "when setting just a GB northing" do
-        it "should not set a geolocation" do
+        it "does not set a geolocation" do
           school.northing = 308_885
 
           expect(school.geolocation).to eq(nil)
@@ -78,7 +78,7 @@ RSpec.describe School, type: :model do
       let(:school) { create(:school, easting: 100, northing: 200) }
 
       context "when setting a GB easting and northing" do
-        it "should update the WGS84 geolocation" do
+        it "updates the WGS84 geolocation" do
           school.easting = 533_498
           school.northing = 181_201
 
@@ -88,7 +88,7 @@ RSpec.describe School, type: :model do
       end
 
       context "when setting just a GB easting and no northing" do
-        it "should not set a geolocation" do
+        it "does not set a geolocation" do
           school.easting = 533_498
           school.northing = nil
 
@@ -97,7 +97,7 @@ RSpec.describe School, type: :model do
       end
 
       context "when setting just a GB northing and no easting" do
-        it "should not set a geolocation" do
+        it "does not set a geolocation" do
           school.northing = 308_885
           school.easting = nil
 

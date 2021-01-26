@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Subscription, type: :model do
-  it { should have_many(:alert_runs) }
-  it { should have_many(:job_alert_feedbacks) }
-  it { should respond_to(:recaptcha_score) }
+  it { is_expected.to have_many(:alert_runs) }
+  it { is_expected.to have_many(:job_alert_feedbacks) }
+  it { is_expected.to respond_to(:recaptcha_score) }
 
   describe "scopes" do
     before(:each) do

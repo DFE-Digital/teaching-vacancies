@@ -1,19 +1,19 @@
 require "rails_helper"
 
 RSpec.describe Vacancy, type: :model do
-  it { should belong_to(:publisher_organisation).optional }
-  it { should belong_to(:publisher).optional }
-  it { should have_many(:documents) }
-  it { should have_many(:organisation_vacancies) }
-  it { should have_many(:organisations) }
-  it { should have_many(:saved_jobs) }
-  it { should have_many(:saved_by) }
-  it { should have_many(:job_applications) }
+  it { is_expected.to belong_to(:publisher_organisation).optional }
+  it { is_expected.to belong_to(:publisher).optional }
+  it { is_expected.to have_many(:documents) }
+  it { is_expected.to have_many(:organisation_vacancies) }
+  it { is_expected.to have_many(:organisations) }
+  it { is_expected.to have_many(:saved_jobs) }
+  it { is_expected.to have_many(:saved_by) }
+  it { is_expected.to have_many(:job_applications) }
 
   context "indexing for search" do
     describe "#update_index!" do
-      it { should have_db_column(:initially_indexed) }
-      it { should have_db_index(:initially_indexed) }
+      it { is_expected.to have_db_column(:initially_indexed) }
+      it { is_expected.to have_db_index(:initially_indexed) }
 
       it "indexes `live` records where `initially_indexed == false`" do
         allow(described_class).to receive_message_chain(:unindexed, :update_all).with({ initially_indexed: true })
@@ -258,7 +258,7 @@ RSpec.describe Vacancy, type: :model do
   end
 
   describe "when supporting documents are provided" do
-    it "should return the document name" do
+    it "returns the document name" do
       document = create(:document, name: "Test_doc.png")
       vacancy = create(:vacancy, documents: [document])
       expect(vacancy.documents.first.name).to eq("Test_doc.png")

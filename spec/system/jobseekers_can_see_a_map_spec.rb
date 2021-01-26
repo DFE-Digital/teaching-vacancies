@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Viewing a vacancy" do
-  scenario "should display a map when a school has geocoding" do
+  it "displays a map when a school has geocoding" do
     school = create(:school,
                     easting: "537224",
                     northing: "177395",
@@ -12,7 +12,7 @@ RSpec.describe "Viewing a vacancy" do
     expect(page).to have_css("div#map")
   end
 
-  scenario "should not display a map when a school has no geocoding" do
+  it "does not display a map when a school has no geocoding" do
     school = create(:school, easting: nil, northing: nil)
     vacancy = create(:vacancy)
     vacancy.organisation_vacancies.create(organisation: school)
