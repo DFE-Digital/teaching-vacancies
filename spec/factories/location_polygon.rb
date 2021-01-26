@@ -2,7 +2,6 @@ FactoryBot.define do
   factory :location_polygon do
     name { "London" }
     location_type { "cities" }
-    boundary { [51.466517484391, -0.4919530143329] }
     buffers do
       {
         "5" => [[51.46822890300007, -0.564208123999947]],
