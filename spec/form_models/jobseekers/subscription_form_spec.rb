@@ -26,47 +26,20 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
   end
 
   describe "#validations" do
-    let(:params) { { email: email, frequency: frequency, keyword: keyword } }
-    let(:email) { "test@email.com" }
-    let(:frequency) { "daily" }
-    let(:keyword) { "maths" }
+    let(:params) { {} }
 
-    describe "#email" do
-      context "when email is blank" do
-        let(:email) { nil }
-
-        it "validates email presence" do
-          expect(subject.valid?).to be(false)
-          expect(subject.errors.messages[:email]).to include(I18n.t("subscription_errors.email.blank"))
-        end
-      end
-
-      context "when email is invalid" do
-        let(:email) { "invalid_email" }
-
-        it "validates email validity" do
-          expect(subject.valid?).to be(false)
-          expect(subject.errors.messages[:email]).to include(I18n.t("subscription_errors.email.invalid"))
-        end
-      end
-    end
-
-    context "when frequency is blank" do
-      let(:frequency) { nil }
-
-      it "validates email presence" do
-        expect(subject.valid?).to be(false)
-        expect(subject.errors.messages[:frequency]).to include(I18n.t("subscription_errors.frequency.blank"))
-      end
-    end
+    it { is_expected.to validate_presence_of(:email) }
+    it { is_expected.to validate_presence_of(:frequency) }
+    it { is_expected.to allow_value("valid@example.com").for(:email) }
+    it { is_expected.not_to allow_value("invalid_email").for(:email) }
 
     context "when job alert already exists" do
-      before do
-        allow(SubscriptionFinder).to receive_message_chain(:new, :exists?).and_return(true)
-      end
+      let(:params) { { email: "test@email.com", frequency: "daily", keyword: "maths" } }
+
+      before { allow(SubscriptionFinder).to receive_message_chain(:new, :exists?).and_return(true) }
 
       it "validates uniqueness of job alert" do
-        expect(subject.valid?).to be(false)
+        expect(subject).not_to be_valid
         expect(subject.errors.messages[:base]).to include(I18n.t("subscriptions.errors.duplicate_alert"))
       end
     end
@@ -75,7 +48,7 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
       let(:keyword) { nil }
 
       it "validates job alert criteria selected" do
-        expect(subject.valid?).to be(false)
+        expect(subject).not_to be_valid
         expect(subject.errors.messages[:base]).to include(I18n.t("subscriptions.errors.no_criteria_selected"))
       end
     end

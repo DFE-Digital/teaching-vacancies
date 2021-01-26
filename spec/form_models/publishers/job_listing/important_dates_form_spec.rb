@@ -6,71 +6,37 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
   context "validations" do
     let(:params) { {} }
 
-    it { should validate_presence_of(:publish_on).with_message(I18n.t("important_dates_errors.publish_on.blank")) }
-    it { should validate_presence_of(:expires_on).with_message(I18n.t("important_dates_errors.expires_on.blank")) }
-    it { should validate_presence_of(:expires_at).with_message(I18n.t("important_dates_errors.expires_at.blank")) }
+    it { is_expected.to validate_presence_of(:publish_on) }
+    it { is_expected.to validate_presence_of(:expires_on) }
+    it { is_expected.to validate_presence_of(:expires_at) }
 
-    describe "#publish_on" do
-      context "when the date is in the past" do
-        let(:params) { { publish_on: Time.zone.yesterday } }
+    it { is_expected.to allow_value(Time.zone.tomorrow).for(:publish_on) }
+    it { is_expected.not_to allow_value(Time.zone.yesterday).for(:publish_on).with_message(I18n.t("important_dates_errors.publish_on.before_today")) }
 
-        it "must be in the future" do
-          expect(subject.valid?).to be false
-          expect(subject.errors.messages[:publish_on])
-            .to include(I18n.t("important_dates_errors.publish_on.before_today"))
-        end
-      end
-    end
+    it { is_expected.to allow_value(Time.zone.tomorrow).for(:expires_on) }
+    it { is_expected.not_to allow_value(Time.zone.yesterday).for(:expires_on).with_message(I18n.t("important_dates_errors.expires_on.before_today")) }
+
+    it { is_expected.to allow_value(Time.zone.tomorrow).for(:starts_on) }
+    it { is_expected.not_to allow_value(Time.zone.yesterday).for(:starts_on).with_message(I18n.t("important_dates_errors.starts_on.before_today")) }
 
     describe "#expires_on" do
-      context "when the date is in the past" do
-        let(:params) { { expires_on: 1.day.ago } }
-
-        it "must be in the future" do
-          expect(subject.valid?).to be false
-          expect(subject.errors.messages[:expires_on])
-            .to include(I18n.t("important_dates_errors.expires_on.before_today"))
-        end
-      end
-
       context "when the date is before publish_on" do
         let(:params) { { expires_on: Date.current, publish_on: Time.zone.tomorrow } }
 
-        it "must be after publish_on" do
-          expect(subject.valid?).to be false
-          expect(subject.errors.messages[:expires_on])
-            .to include(I18n.t("important_dates_errors.expires_on.before_publish_on"))
+        it "sets an error on expires_on" do
+          expect(subject).not_to be_valid
+          expect(subject.errors.messages[:expires_on]).to include(I18n.t("important_dates_errors.expires_on.before_publish_on"))
         end
       end
     end
 
     describe "#starts_on" do
-      context "when the date is blank" do
-        let(:params) { { starts_on: nil } }
-
-        it "has no error message" do
-          subject.valid?
-          expect(subject.errors.messages[:starts_on]).to be_empty
-        end
-      end
-
-      context "when the date is in the past" do
-        let(:params) { { starts_on: 1.day.ago } }
-
-        it "must be in the future" do
-          expect(subject.valid?).to be false
-          expect(subject.errors.messages[:starts_on])
-            .to include(I18n.t("important_dates_errors.starts_on.before_today"))
-        end
-      end
-
       context "when the date is before publish_on" do
         let(:params) { { starts_on: Date.current, publish_on: Time.zone.tomorrow } }
 
         it "must be after publish_on" do
-          expect(subject.valid?).to be false
-          expect(subject.errors.messages[:starts_on])
-            .to include(I18n.t("important_dates_errors.starts_on.before_publish_on"))
+          expect(subject).not_to be_valid
+          expect(subject.errors.messages[:starts_on]).to include(I18n.t("important_dates_errors.starts_on.before_publish_on"))
         end
       end
 
@@ -78,9 +44,8 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
         let(:params) { { starts_on: Date.current, expires_on: Time.zone.tomorrow } }
 
         it "must be after expires_on" do
-          expect(subject.valid?).to be false
-          expect(subject.errors.messages[:starts_on])
-            .to include(I18n.t("important_dates_errors.starts_on.before_expires_on"))
+          expect(subject).not_to be_valid
+          expect(subject.errors.messages[:starts_on]).to include(I18n.t("important_dates_errors.starts_on.before_expires_on"))
         end
       end
 
@@ -88,9 +53,8 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
         let(:params) { { starts_on: Date.current, starts_asap: true } }
 
         it "must be blank" do
-          expect(subject.valid?).to be false
-          expect(subject.errors.messages[:starts_on])
-            .to include(I18n.t("important_dates_errors.starts_on.multiple_start_dates"))
+          expect(subject).not_to be_valid
+          expect(subject.errors.messages[:starts_on]).to include(I18n.t("important_dates_errors.starts_on.multiple_start_dates"))
         end
       end
     end
@@ -102,7 +66,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
         let(:params) { { expires_at_hh: "", expires_at_mm: "", expires_at_meridiem: "" } }
 
         it "requests an entry in the field" do
-          expect(subject.valid?).to be false
+          expect(subject).not_to be_valid
           expect(subject.errors.messages[:expires_at]).to include(I18n.t("important_dates_errors.expires_at.blank"))
         end
       end
@@ -117,7 +81,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
       validate_expires_at_hours.each do |h|
         it "displays '#{h[:errors][0]}' error when hours field is #{h[:value]}" do
           subject.expires_at_hh = h[:value]
-          subject.valid?
+          expect(subject).not_to be_valid
           expect(subject.errors.messages[:expires_at]).to include(h[:errors])
         end
       end
@@ -132,7 +96,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
       validate_expires_at_minutes.each do |m|
         it "displays '#{m[:errors][0]}' error when minutes field is #{m[:value]}" do
           subject.expires_at_mm = m[:value]
-          subject.valid?
+          expect(subject).not_to be_valid
           expect(subject.errors.messages[:expires_at]).to include(m[:errors])
         end
       end
@@ -141,7 +105,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
         let(:params) { { expires_at_meridiem: "" } }
 
         it "requests an entry in the field" do
-          subject.valid?
+          expect(subject).not_to be_valid
           expect(subject.errors.messages[:expires_at]).to include(I18n.t("important_dates_errors.expires_at.must_be_am_pm"))
         end
       end
@@ -150,7 +114,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
         let(:params) { { expires_at_mm: "66", expires_at_meridiem: "" } }
 
         it "displays wrong format error" do
-          subject.valid?
+          expect(subject).not_to be_valid
           expect(subject.errors.messages[:expires_at]).to include(I18n.t("important_dates_errors.expires_at.wrong_format"))
         end
       end
@@ -193,7 +157,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
     end
 
     it "is valid" do
-      expect(subject.valid?).to be true
+      expect(subject).to be_valid
       expect(subject.vacancy.expires_on).to eq(Date.current + 1.week)
       expect(subject.vacancy.publish_on).to eq(Date.current)
       expect(subject.vacancy.starts_on).to eq(Date.current + 1.month)
