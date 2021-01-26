@@ -26,7 +26,7 @@ class SitemapController < ApplicationController
   end
 
   def add_location_categories(map)
-    ALL_LOCATION_CATEGORIES.each do |location_category|
+    ALL_IMPORTED_LOCATIONS.each do |location_category|
       map.add location_category_path(location_category), period: "hourly"
     end
   end

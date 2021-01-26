@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers can create a job alert from a search" do
   let(:location) { nil }
-  let(:location_category_search?) { false }
+  let(:search_with_polygons?) { false }
   let(:jobseeker_accounts_enabled?) { false }
   let(:jobseeker_signed_in?) { false }
   let(:jobseeker) { build_stubbed(:jobseeker) }
@@ -88,7 +88,7 @@ RSpec.describe "Jobseekers can create a job alert from a search" do
 
   describe "location search" do
     context "when a location category search is carried out" do
-      let(:location_category_search?) { true }
+      let(:search_with_polygons?) { true }
       let(:location) { "London" }
       let!(:location_polygon) { create(:location_polygon, name: "london") }
 
@@ -113,7 +113,7 @@ RSpec.describe "Jobseekers can create a job alert from a search" do
     end
 
     context "when a location search is carried out" do
-      let(:location_category_search?) { false }
+      let(:search_with_polygons?) { false }
       let(:location) { "SW1A 1AA" }
 
       it "successfully creates a job alert" do
@@ -149,7 +149,7 @@ RSpec.describe "Jobseekers can create a job alert from a search" do
     within ".filters-form" do
       fill_in "keyword", with: "english"
       fill_in "location", with: location
-      if location_category_search?
+      if search_with_polygons?
         select "40 miles", from: "radius"
       end
       check I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.teacher")
@@ -162,7 +162,7 @@ RSpec.describe "Jobseekers can create a job alert from a search" do
   def and_the_search_criteria_are_populated
     expect(page.find_field("jobseekers-subscription-form-keyword-field").value).to eq("english")
     expect(page.find_field("jobseekers-subscription-form-location-field").value).to eq(location)
-    if location_category_search?
+    if search_with_polygons?
       expect(page.find_field("jobseekers-subscription-form-radius-field").value).to eq("40")
     end
     expect(page.find_field("jobseekers-subscription-form-job-roles-teacher-field")).to be_checked

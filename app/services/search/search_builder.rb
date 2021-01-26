@@ -35,8 +35,7 @@ class Search::SearchBuilder
   def build_location_search
     @location_search = Search::LocationBuilder.new(@params_hash[:location], @params_hash[:radius], @params_hash[:location_category], @params_hash[:buffer_radius])
     @point_coordinates = @location_search.location_filter[:point_coordinates]
-    @params_hash[:location_category] = @location_search.location_category if @location_search.location_category_search?
-    @keyword = [@keyword, @location_search.location].reject(&:blank?).join(" ") if @location_search.missing_polygon
+    @params_hash[:location_category] = @location_search.location_category if @location_search.search_with_polygons?
   end
 
   def build_search_filters
@@ -50,7 +49,7 @@ class Search::SearchBuilder
   def build_suggestions
     if @point_coordinates.present?
       @wider_search_suggestions = Search::RadiusSuggestionsBuilder.new(@params_hash[:radius], search_params).radius_suggestions
-    elsif @location_search.location_polygon.present?
+    elsif @location_search.polygon_boundaries.present?
       @wider_search_suggestions = Search::BufferSuggestionsBuilder.new(@params_hash[:location], search_params).buffer_suggestions
     end
   end
@@ -66,7 +65,7 @@ class Search::SearchBuilder
       keyword: @keyword,
       coordinates: @location_search.location_filter[:point_coordinates],
       radius: @location_search.location_filter[:radius],
-      polygon: @location_search.search_polygon_boundary,
+      polygons: @location_search.polygon_boundaries,
       filters: @search_filters,
       replica: @search_replica,
       hits_per_page: @hits_per_page,

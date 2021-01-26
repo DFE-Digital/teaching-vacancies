@@ -1,4 +1,4 @@
-- if @vacancies_search.location_search.location_category_search?
+- if @vacancies_search.location_search.search_with_polygons?
   - content_for :page_title_prefix, t("jobs.location_search_heading", location: format_location_name(@vacancies_search.location_search.location_category), keyword: @vacancies_search.keyword)
   - content_for :page_description,  t("jobs.location_description", location: format_location_name(@vacancies_search.location_search.location_category))
 - elsif @landing_page.present?
@@ -49,7 +49,7 @@
               .govuk-heading-m = t(".wider_search_suggestions.heading.no_keyword")
             ul.govuk-list.govuk-list--bullet
               - @vacancies_search.wider_search_suggestions.each do |wider_radius|
-                - if @vacancies_search.location_search.location_polygon.present?
+                - if @vacancies_search.location_search.polygon_boundaries.present?
                   li = t(".wider_search_suggestions.suggestion_html",
                                                         search_link: govuk_link_to(t(".wider_search_suggestions.radius_distance", radius: wider_radius.first), jobs_path(@vacancies_search.params_hash.merge(buffer_radius: wider_radius.first)), class: "wider-radius-gtm"),
                                                         count: t(".wider_search_suggestions.results", count: wider_radius.last))

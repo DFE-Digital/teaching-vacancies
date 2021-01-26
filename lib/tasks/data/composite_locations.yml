@@ -1,0 +1,73 @@
+---
+# The structure of this file is a dictionary where the keys are the names of locations, and
+# the values are lists of the component regions.
+
+# These locations, mostly counties, are often searched, but they are not included in ONS' API
+# for county and unitary authority boundaries, which we use to import most county boundaries.
+# That API concerns local government divisions, rather than what people commonly think of counties,
+# and so excludes what are known as 'ceremonial' or 'geographical' counties:
+# https://en.wikipedia.org/wiki/Ceremonial_counties_of_England
+
+# As of January 2021 I could not find a usable source of ceremonial county boundaries, so I decided
+# to construct these out of their component local authorities. I am also including 'Yorkshire',
+# which is not a ceremonial county, because it's a common search location.
+
+Bedfordshire:
+  - Bedford
+  - Central Bedfordshire
+  - Luton
+Berkshire:
+  - Bracknell Forest
+  - Reading
+  - Slough
+  - West Berkshire
+  - Windsor and Maidenhead
+  - Wokingham
+Cheshire:
+  - Cheshire East
+  - Cheshire West and Chester
+  - Halton
+  - Warrington
+Greater Manchester:
+  - Bolton
+  - Bury
+  - Manchester
+  - Oldham
+  - Rochdale
+  - Salford
+  - Stockport
+  - Tameside
+  - Trafford
+  - Wigan
+Merseyside:
+  - Knowsley
+  - St. Helens
+  - Sefton
+  - Wirral
+  - Liverpool
+Tyne and Wear:
+  - Newcastle upon Tyne
+  - Gateshead
+  - South Tyneside
+  - North Tyneside
+  - Sunderland
+West Yorkshire:
+  - Bradford
+  - Calderdale
+  - Kirklees
+  - Leeds
+  - Wakefield
+Yorkshire:
+  - Barnsley
+  - Bradford
+  - Calderdale
+  - Doncaster
+  - East Riding of Yorkshire
+  - Kingston upon Hull, City of
+  - Kirklees
+  - Leeds
+  - North Yorkshire
+  - Rotherham
+  - Sheffield
+  - Wakefield
+  - York

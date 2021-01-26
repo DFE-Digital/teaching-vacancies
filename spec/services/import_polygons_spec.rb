@@ -16,7 +16,7 @@ end
 
 RSpec.shared_examples "an import that excludes out-of-scope locations" do
   it "does not import out-of-scope locations" do
-    expect(LocationPolygon.send(api_location_type).count).to eq(1)
+    expect(LocationPolygon.where(location_type: human_friendly_location_type).count).to eq(1)
   end
 end
 
@@ -42,6 +42,7 @@ RSpec.describe ImportPolygons do
 
       context "when using the regions API endpoint" do
         let(:api_location_type) { :regions }
+        let(:human_friendly_location_type) { "regions" }
         let(:location_name) { "north east" }
         let(:polygons) do
           { "polygons" => [[55.8110853660943, -2.0343575091738, 55.7647624900862, -1.9841097397706], [52, 0, 53, 1]] }
@@ -60,6 +61,7 @@ RSpec.describe ImportPolygons do
 
       context "when using the counties and unitary authorities API endpoint" do
         let(:api_location_type) { :counties }
+        let(:human_friendly_location_type) { "counties" }
         let(:location_name) { "cumbria" }
         let(:polygons) do
           { "polygons" => [[53, 1, 54, 2], [54.6991864051642, -1.1776332863422, 54.6918238899294, -1.1739811767539]] }
@@ -78,6 +80,7 @@ RSpec.describe ImportPolygons do
 
       context "when using the cities API endpoint" do
         let(:api_location_type) { :cities }
+        let(:human_friendly_location_type) { "cities" }
         let(:location_name) { "bath" }
         let(:polygons) { { "polygons" => [[51.406361958644, -2.3780576677997, 51.4063596372237, -2.3787764623145]] } }
 
