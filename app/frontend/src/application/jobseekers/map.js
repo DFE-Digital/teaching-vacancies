@@ -22,6 +22,13 @@ const getPolygonBoundaries = () => {
   return false;
 };
 
+const getSearchPointCoordinates = () => {
+  if (document.getElementById('map').dataset.search_point_coordinates) {
+    return JSON.parse(document.getElementById('map').dataset.search_point_coordinates);
+  }
+  return false;
+};
+
 window.initMap = () => {
   // Linting: Allow 'google' to be used without defining it.
   // This function is a callback for the Google Maps API, which will define 'google'.
@@ -30,6 +37,7 @@ window.initMap = () => {
   const schools = getSchools();
   const school = getSchool();
   const polygonBoundaries = getPolygonBoundaries();
+  const searchPointCoordinates = getSearchPointCoordinates();
   const mapTypeControlOptions = { mapTypeIds: [] };
   const tvsOrange = '#f47738';
   const tvsBlue = '#1d70b8';
@@ -100,13 +108,8 @@ window.initMap = () => {
       infoWindow.close();
     });
 
-  } else if (polygonBoundaries == "no polygons") {
-    const map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 20,
-      center: { lat: 51.4980138, lng: -0.1298334 }, // Department for Education
-      mapTypeControlOptions,
-    });
   } else if (polygonBoundaries !== false) {
+
     // A map to display the polygons searched in
 
     const bounds = new google.maps.LatLngBounds();
@@ -136,6 +139,18 @@ window.initMap = () => {
 
       visiblePolygon.setMap(map);
     })
+  } else if (searchPointCoordinates !== false) {
+    const map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 14,
+      center: searchPointCoordinates,
+      mapTypeControlOptions, // Removes terrain options section ('map' or 'satellite')
+    });
+
+    const marker = new google.maps.Marker({
+      position: searchPointCoordinates,
+      map,
+      title: 'Your search location',
+    });
   }
 
   /* eslint-enable */

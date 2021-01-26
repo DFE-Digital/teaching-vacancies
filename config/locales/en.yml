@@ -582,7 +582,7 @@ en:
 
   vacancies:
     index:
-      no_polygons: This search didn't use any polygons. (This map doesn't show radiuses.)
+      no_polygons: This search didn't use any polygons.
       wider_search_suggestions:
         heading:
           keyword_html: Try browsing for <span class='text-wrap-apostrophe'>%{keyword}</span> in a wider location search

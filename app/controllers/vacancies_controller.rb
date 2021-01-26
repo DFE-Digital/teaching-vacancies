@@ -1,11 +1,8 @@
 class VacanciesController < ApplicationController
-  SEARCH_AFFIX_FOR_MAP = "+map".freeze
-
   include ParameterSanitiser
 
-  before_action :authenticate_for_map, only: :index
-
   def index
+    set_map_display
     if params.key?(:pretty) && params.key?(params[:pretty])
       @landing_page = params[params[:pretty]]
       @landing_page_translation = "#{params[:pretty]}.#{@landing_page.parameterize.underscore}"
@@ -80,12 +77,9 @@ class VacanciesController < ApplicationController
     @jobs_search_form.to_hash.merge(total_count: @vacancies_search.vacancies.raw_answer["nbHits"])
   end
 
-  def authenticate_for_map
-    return unless params[:location]&.include?(SEARCH_AFFIX_FOR_MAP)
+  def set_map_display
+    @display_map = params[:location]&.include?("+map")
 
-    params[:location].gsub!(SEARCH_AFFIX_FOR_MAP, "")
-    @authenticated_for_map = authenticate_or_request_with_http_basic do |user, password|
-      user == ENV.fetch("MAP_USERNAME") && password == ENV.fetch("MAP_PASSWORD")
-    end
+    params[:location]&.gsub!("+map", "")
   end
 end
