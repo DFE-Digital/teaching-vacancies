@@ -10,14 +10,11 @@ RSpec.describe Search::BufferSuggestionsBuilder do
       }
     end
     let(:location) { "Tower Hamlets" }
-    # In this step (2) of the LocationPolygon refactor, the format of buffers will be different
-    # before and after running the import task. Before it's a 1D array; after, it's 2D. So I include both
-    # formats in this test. This will be reverted in step 3.
     let(:buffer_coordinates_five_miles) { [[5.004562496029994090, 56.50833566307333], [5.005710530794815389, 56.5051084208278]] }
-    let(:buffer_coordinates_ten_miles) { [10.004562496029994090, 56.50833566307333, 10.005710530794815389, 56.5051084208278] }
-    let(:buffer_coordinates_fifteen_miles) { [15.004562496029994090, 56.50833566307333, 15.005710530794815389, 56.5051084208278] }
-    let(:buffer_coordinates_twenty_miles) { [20.004562496029994090, 56.50833566307333, 20.005710530794815389, 56.5051084208278] }
-    let(:buffer_coordinates_twenty_five_miles) { [25.004562496029994090, 56.50833566307333, 25.005710530794815389, 56.5051084208278] }
+    let(:buffer_coordinates_ten_miles) { [[10.004562496029994090, 56.50833566307333], [10.005710530794815389, 56.5051084208278]] }
+    let(:buffer_coordinates_fifteen_miles) { [[15.004562496029994090, 56.50833566307333], [15.005710530794815389, 56.5051084208278]] }
+    let(:buffer_coordinates_twenty_miles) { [[20.004562496029994090, 56.50833566307333], [20.005710530794815389, 56.5051084208278]] }
+    let(:buffer_coordinates_twenty_five_miles) { [[25.004562496029994090, 56.50833566307333], [25.005710530794815389, 56.5051084208278]] }
     let(:buffer_hash) do
       {
         "5" => buffer_coordinates_five_miles,
@@ -46,19 +43,19 @@ RSpec.describe Search::BufferSuggestionsBuilder do
         )
         mock_algolia_search(
           vacancies2, 1, nil,
-          arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_ten_miles])
+          arguments_for_algolia.merge(insidePolygon: [buffer_hash["10"].first])
         )
         mock_algolia_search(
           vacancies3, 1, nil,
-          arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_fifteen_miles])
+          arguments_for_algolia.merge(insidePolygon: [buffer_hash["15"].first])
         )
         mock_algolia_search(
           vacancies4, 1, nil,
-          arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_twenty_miles])
+          arguments_for_algolia.merge(insidePolygon: [buffer_hash["20"].first])
         )
         mock_algolia_search(
           vacancies5, 1, nil,
-          arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_twenty_five_miles])
+          arguments_for_algolia.merge(insidePolygon: [buffer_hash["25"].first])
         )
       end
 
@@ -75,19 +72,19 @@ RSpec.describe Search::BufferSuggestionsBuilder do
         )
         mock_algolia_search(
           vacancies2, 2, nil,
-          arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_ten_miles])
+          arguments_for_algolia.merge(insidePolygon: [buffer_hash["10"].first])
         )
         mock_algolia_search(
           vacancies3, 3, nil,
-          arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_fifteen_miles])
+          arguments_for_algolia.merge(insidePolygon: [buffer_hash["15"].first])
         )
         mock_algolia_search(
           vacancies4, 4, nil,
-          arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_twenty_miles])
+          arguments_for_algolia.merge(insidePolygon: [buffer_hash["20"].first])
         )
         mock_algolia_search(
           vacancies5, 5, nil,
-          arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_twenty_five_miles])
+          arguments_for_algolia.merge(insidePolygon: [buffer_hash["25"].first])
         )
       end
 
@@ -104,19 +101,19 @@ RSpec.describe Search::BufferSuggestionsBuilder do
         )
         mock_algolia_search(
           vacancies2, 0, nil,
-          arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_ten_miles])
+          arguments_for_algolia.merge(insidePolygon: [buffer_hash["10"].first])
         )
         mock_algolia_search(
           vacancies3, 0, nil,
-          arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_fifteen_miles])
+          arguments_for_algolia.merge(insidePolygon: [buffer_hash["15"].first])
         )
         mock_algolia_search(
           vacancies4, 0, nil,
-          arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_twenty_miles])
+          arguments_for_algolia.merge(insidePolygon: [buffer_hash["20"].first])
         )
         mock_algolia_search(
           vacancies5, 5, nil,
-          arguments_for_algolia.merge(insidePolygon: [buffer_coordinates_twenty_five_miles])
+          arguments_for_algolia.merge(insidePolygon: [buffer_hash["25"].first])
         )
       end
 
