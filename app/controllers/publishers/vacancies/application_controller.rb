@@ -1,22 +1,7 @@
 require "indexing"
 
 class Publishers::Vacancies::ApplicationController < Publishers::BaseController
-  helper_method :process_steps, :step_current, :steps_adjust, :steps_config
-
-  def steps_config
-    {
-      job_location: { number: 1, title: I18n.t("jobs.job_location") },
-      schools: { number: 1, title: I18n.t("jobs.job_location") },
-      job_details: { number: 2, title: I18n.t("jobs.job_details") },
-      pay_package: { number: 3, title: I18n.t("jobs.pay_package") },
-      important_dates: { number: 4, title: I18n.t("jobs.important_dates") },
-      supporting_documents: { number: 5, title: I18n.t("jobs.supporting_documents") },
-      documents: { number: 5, title: I18n.t("jobs.supporting_documents") },
-      applying_for_the_job: { number: 6, title: I18n.t("jobs.applying_for_the_job") },
-      job_summary: { number: 7, title: I18n.t("jobs.job_summary") },
-      review: { number: 8, title: I18n.t("jobs.review_heading") },
-    }.freeze
-  end
+  helper_method :process_steps, :step_current, :steps_adjust
 
   def steps_adjust
     current_publisher_is_part_of_school_group? ? 0 : 1

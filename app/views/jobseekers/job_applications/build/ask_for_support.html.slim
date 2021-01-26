@@ -4,7 +4,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    .govuk-caption-m Step #{current_step_number} of 10
+    .govuk-caption-m = t("jobseekers.job_applications.current_step", current: process_steps.current_step_number, total: 10)
     h1.govuk-heading-l = t(".title")
 
     p.govuk-body = t(".opening")
@@ -24,3 +24,6 @@
 
       = f.govuk_submit t("buttons.continue") do
         = f.govuk_submit t("buttons.save_as_draft"), secondary: true
+
+  .govuk-grid-column-one-third
+    = render(Shared::ProcessStepsComponent.new(process: job_application.vacancy, service: process_steps, title: t("jobseekers.job_applications.build.process_title")))
