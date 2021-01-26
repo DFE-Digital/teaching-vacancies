@@ -14,14 +14,35 @@ const getSchool = () => {
   return false;
 };
 
+// For search result map
+const getPolygonBoundaries = () => {
+  if (document.getElementById('map').dataset.polygon_boundaries) {
+    return JSON.parse(document.getElementById('map').dataset.polygon_boundaries);
+  }
+  return false;
+};
+
+const getSearchPointCoordinates = () => {
+  if (document.getElementById('map').dataset.search_point_coordinates) {
+    return JSON.parse(document.getElementById('map').dataset.search_point_coordinates);
+  }
+  return false;
+};
+
 window.initMap = () => {
   // Linting: Allow 'google' to be used without defining it.
   // This function is a callback for the Google Maps API, which will define 'google'.
   /* eslint-disable */
+
   const schools = getSchools();
   const school = getSchool();
+  const polygonBoundaries = getPolygonBoundaries();
+  const searchPointCoordinates = getSearchPointCoordinates();
+  const mapTypeControlOptions = { mapTypeIds: [] };
+  const tvsOrange = '#f47738';
+  const tvsBlue = '#1d70b8';
 
-  if (schools === false) {
+  if (school !== false) {
     // A map for a single location
 
     const myLatLng = { lat: school.lat, lng: school.lng };
@@ -29,7 +50,7 @@ window.initMap = () => {
     const map = new google.maps.Map(document.getElementById('map'), {
       zoom: 14,
       center: myLatLng,
-      mapTypeControlOptions: { mapTypeIds: [] }, // Removes terrain options section ('map' or 'satellite')
+      mapTypeControlOptions, // Removes terrain options section ('map' or 'satellite')
     });
 
     new google.maps.Marker({
@@ -37,7 +58,7 @@ window.initMap = () => {
       map,
       title: '#{name}',
     });
-  } else if (school === false) {
+  } else if (schools !== false) {
     // A map for multiple locations
 
     const bounds = new google.maps.LatLngBounds();
@@ -51,7 +72,7 @@ window.initMap = () => {
     const map = new google.maps.Map(document.getElementById('map'), {
       zoom: 16,
       center: firstLatLng,
-      mapTypeControlOptions: { mapTypeIds: [] }, // Removes terrain options section ('map' or 'satellite')
+      mapTypeControlOptions, // Removes terrain options section ('map' or 'satellite')
     });
 
     // Use one infoWindow for all markers.
@@ -87,7 +108,51 @@ window.initMap = () => {
       infoWindow.close();
     });
 
-    /* eslint-enable */
+  } else if (polygonBoundaries !== false) {
+
+    // A map to display the polygons searched in
+
+    const bounds = new google.maps.LatLngBounds();
+
+    const map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 14,
+      center: polygonBoundaries[0][0],
+      mapTypeControlOptions, // Removes terrain options section ('map' or 'satellite')
+    });
+
+    polygonBoundaries.forEach((polygonBoundary) => {
+      // Construct the polygon
+      const visiblePolygon = new google.maps.Polygon({
+        paths: polygonBoundary,
+        strokeColor: tvsOrange,
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: tvsBlue,
+        fillOpacity: 0.35,
+      });
+
+      polygonBoundary.forEach((latLng) => {
+        bounds.extend(latLng);
+      });
+
+      map.fitBounds(bounds);
+
+      visiblePolygon.setMap(map);
+    })
+  } else if (searchPointCoordinates !== false) {
+    const map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 14,
+      center: searchPointCoordinates,
+      mapTypeControlOptions, // Removes terrain options section ('map' or 'satellite')
+    });
+
+    const marker = new google.maps.Marker({
+      position: searchPointCoordinates,
+      map,
+      title: 'Your search location',
+    });
   }
+
+  /* eslint-enable */
 };
 

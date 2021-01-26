@@ -2,6 +2,7 @@ class VacanciesController < ApplicationController
   include ParameterSanitiser
 
   def index
+    set_map_display
     if params.key?(:pretty) && params.key?(params[:pretty])
       @landing_page = params[params[:pretty]]
       @landing_page_translation = "#{params[:pretty]}.#{@landing_page.parameterize.underscore}"
@@ -74,5 +75,11 @@ class VacanciesController < ApplicationController
 
   def audit_row
     @jobs_search_form.to_hash.merge(total_count: @vacancies_search.vacancies.raw_answer["nbHits"])
+  end
+
+  def set_map_display
+    @display_map = params[:location]&.include?("+map")
+
+    params[:location]&.gsub!("+map", "")
   end
 end
