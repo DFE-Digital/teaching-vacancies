@@ -1,7 +1,7 @@
 class VacancyFacets
   FIELDS = %i[job_roles subjects cities counties].freeze
 
-  def initialize(store: Redis.new(url: REDIS_URL))
+  def initialize(store: Redis.new(url: Rails.configuration.redis_store_url))
     @store = store
   end
 
