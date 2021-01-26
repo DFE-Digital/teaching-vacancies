@@ -10,14 +10,6 @@ RSpec.describe RemoveInvalidSubscriptionsJob, type: :job do
   context "when DisableExpensiveJobs is not enabled" do
     let(:disable_expensive_jobs_enabled?) { false }
 
-    it "queues the job" do
-      expect { job }.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)
-    end
-
-    it "is in the remove_invalid_subscriptions queue" do
-      expect(job.queue_name).to eq("remove_invalid_subscriptions")
-    end
-
     it "executes perform" do
       expect(RemoveInvalidSubscriptions).to receive_message_chain(:new, :run!)
       perform_enqueued_jobs { job }

@@ -10,14 +10,6 @@ RSpec.describe ExportDsiUsersToBigQueryJob, type: :job do
   context "when DisableExpensiveJobs is not enabled" do
     let(:disable_expensive_jobs_enabled?) { false }
 
-    it "queues the job" do
-      expect { job }.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)
-    end
-
-    it "is in the export_users queue" do
-      expect(job.queue_name).to eq("export_users")
-    end
-
     it "invokes the libs to export users and approvers to big query" do
       export_dsi_users_to_big_query = double(:export_dsi_users_to_big_query)
       expect(ExportDsiUsersToBigQuery).to receive(:new) { export_dsi_users_to_big_query }

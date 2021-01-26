@@ -1,6 +1,10 @@
 :max_retries: 5
 
 :queues:
+  - [high, 4]
+  - [default, 2]
+  - [low, 1]
+  # TODO: Remove all below once no more jobs in queues in production
   - [email_alerts, 4]
   - [mailers, 3]
   - [queue_daily_alerts, 3]

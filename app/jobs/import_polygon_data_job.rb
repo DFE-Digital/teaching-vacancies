@@ -1,5 +1,5 @@
 class ImportPolygonDataJob < ApplicationJob
-  queue_as :import_polygon_data
+  queue_as :low
 
   def perform
     return if DisableExpensiveJobs.enabled?

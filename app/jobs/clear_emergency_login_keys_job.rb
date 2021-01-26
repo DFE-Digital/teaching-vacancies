@@ -1,5 +1,5 @@
 class ClearEmergencyLoginKeysJob < ApplicationJob
-  queue_as :clear_emergency_login_keys
+  queue_as :low
 
   def perform
     EmergencyLoginKey.delete_all

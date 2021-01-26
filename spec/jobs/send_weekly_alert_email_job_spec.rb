@@ -18,14 +18,6 @@ RSpec.describe SendWeeklyAlertEmailJob, type: :job do
 
   let(:mail) { double(:mail) }
 
-  it "queues the job" do
-    expect { job }.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)
-  end
-
-  it "is in the queue_daily_alerts queue" do
-    expect(job.queue_name).to eq("queue_weekly_alerts")
-  end
-
   context "with vacancies" do
     before do
       allow_any_instance_of(described_class).to receive(:vacancies_for_subscription) { vacancies }
@@ -34,7 +26,7 @@ RSpec.describe SendWeeklyAlertEmailJob, type: :job do
 
     it "sends an email" do
       expect(AlertMailer).to receive(:alert).with(subscription.id, vacancies.pluck(:id)) { mail }
-      expect(mail).to receive(:deliver_later).with(queue: :email_alerts) { ActionMailer::DeliveryJob.new }
+      expect(mail).to receive(:deliver_later) { ActionMailer::DeliveryJob.new }
       perform_enqueued_jobs { job }
     end
 

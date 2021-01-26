@@ -10,16 +10,6 @@ RSpec.describe SendExpiredVacancyFeedbackEmailJob, type: :job do
     allow(FeedbackPromptMailer).to receive(:prompt_for_feedback) { mail }
   end
 
-  context "when adding job to the queue" do
-    it "queues the job" do
-      expect { job }.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)
-    end
-
-    it "is in the email_feedback_prompt queue" do
-      expect(job.queue_name).to eq("email_feedback_prompt")
-    end
-  end
-
   context "for one hiring staff" do
     let(:user) { create(:publisher, email: email_of_publishers) }
     let(:email_of_publishers) { "email@example.com" }

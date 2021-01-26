@@ -1,5 +1,5 @@
 class SendWeeklyAlertEmailJob < AlertEmail::Base
-  queue_as :queue_weekly_alerts
+  queue_as :default
 
   def subscriptions
     Subscription.active.weekly

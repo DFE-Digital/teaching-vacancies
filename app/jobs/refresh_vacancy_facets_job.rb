@@ -1,5 +1,5 @@
 class RefreshVacancyFacetsJob < ApplicationJob
-  queue_as :refresh_vacancy_facets
+  queue_as :low
 
   def perform
     VacancyFacets.new.refresh

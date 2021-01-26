@@ -1,5 +1,5 @@
 class SendEventToDataWarehouseJob < ApplicationJob
-  queue_as :send_event_to_data_warehouse
+  queue_as :low
 
   # Do not log that this job has been enqueued (as it produces at least one superfluous log per request)
   self.logger = nil

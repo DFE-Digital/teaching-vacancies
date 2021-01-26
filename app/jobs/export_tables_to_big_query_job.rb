@@ -1,7 +1,7 @@
 require "export_tables_to_big_query"
 
 class ExportTablesToBigQueryJob < ApplicationJob
-  queue_as :export_tables
+  queue_as :low
 
   def perform
     return if DisableExpensiveJobs.enabled?

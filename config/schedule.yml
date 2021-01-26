@@ -1,90 +1,89 @@
+clear_emergency_login_keys:
+  cron: '30 0 1 * *'
+  class: 'ClearEmergencyLoginKeysJob'
+  queue: low
+
 email_feedback_prompt:
   cron: '0 09 * * *'
   class: 'SendExpiredVacancyFeedbackEmailJob'
-  queue: email_feedback_prompt
-
-export_users:
-  cron: '0 01 * * *'
-  class: 'ExportDsiUsersToBigQueryJob'
-  queue: export_users
+  queue: low
 
 export_tables:
   cron: '0 03 * * *'
   class: 'ExportTablesToBigQueryJob'
-  queue: export_tables
+  queue: low
+
+export_users:
+  cron: '0 01 * * *'
+  class: 'ExportDsiUsersToBigQueryJob'
+  queue: low
 
 import_polygon_data:
   cron: '0 23 * * 0'
   class: 'ImportPolygonDataJob'
-  queue: import_polygon_data
+  queue: low
 
 import_school_data:
   cron: '0 07 * * *'
   class: 'ImportSchoolDataJob'
-  queue: import_school_data
+  queue: low
 
 import_trust_data:
   cron: '0 22 * * *'
   class: 'ImportTrustDataJob'
-  queue: import_trust_data
+  queue: low
 
 queue_daily_alerts:
   cron: '0 15 * * *'
   class: 'SendDailyAlertEmailJob'
-  queue: queue_daily_alerts
+  queue: default
 
 queue_weekly_alerts:
   cron: '0 18 * * 5'
   class: 'SendWeeklyAlertEmailJob'
-  queue: queue_weekly_alerts
-
-refresh_vacancy_facets:
-  cron: '0 06 * * *'
-  class: 'RefreshVacancyFacetsJob'
-  queue: refresh_vacancy_facets
+  queue: default
 
 refresh_cached_vacancy_statistics:
   cron: '*/15 * * * *'
   class: 'RefreshCachedVacancyStatisticsJob'
-  queue: refresh_cached_vacancy_statistics
+  queue: low
+
+refresh_vacancy_facets:
+  cron: '0 06 * * *'
+  class: 'RefreshVacancyFacetsJob'
+  queue: low
 
 remove_invalid_subscriptions:
   cron: '0 05 * * *'
   class: 'RemoveInvalidSubscriptionsJob'
-  queue: remove_invalid_subscriptions
+  queue: low
 
 remove_stale_vacancies:
   cron: '0 00 * * *'
   class: 'RemoveStaleVacanciesJob'
-  queue: remove_stale_vacancies
+  queue: low
 
 remove_vacancies_that_expired_yesterday:
   cron: '0 03 * * *'
   class: 'RemoveVacanciesThatExpiredYesterday'
-  queue: remove_vacancies_that_expired_yesterday
+  queue: low
 
 reset_sessions:
   cron: '0 02 * * *'
   class: 'ResetSessionsJob'
-  queue: reset_sessions
+  queue: low
 
 submit_performance_platform:
   cron: '0 04 * * *'
   class: 'SubmitPerformancePlatformJob'
-  queue: submit_performance_platform
-
-clear_emergency_login_keys:
-  cron: '30 0 1 * *'
-  class: 'ClearEmergencyLoginKeysJob'
-  queue: clear_emergency_login_keys
+  queue: low
 
 update_algolia_index:
   cron: '*/5 * * * *'
   class: 'UpdateAlgoliaIndex'
-  queue: update_algolia_index
+  queue: low
 
 update_dsi_users_in_db:
   cron: '0 0 * * *'
   class: 'UpdateDsiUsersInDbJob'
-  queue: update_dsi_users_in_db
-
+  queue: low

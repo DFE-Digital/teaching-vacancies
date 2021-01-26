@@ -10,14 +10,6 @@ RSpec.describe ExportTablesToBigQueryJob, type: :job do
   context "when DisableExpensiveJobs is not enabled" do
     let(:disable_expensive_jobs_enabled?) { false }
 
-    it "queues the job" do
-      expect { job }.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)
-    end
-
-    it "is in the export_tables queue" do
-      expect(job.queue_name).to eq("export_tables")
-    end
-
     it "calls the export tables to big query class" do
       export_tables_to_bigquery = double(:export_tables_to_bigquery)
       expect(ExportTablesToBigQuery).to receive(:new) { export_tables_to_bigquery }

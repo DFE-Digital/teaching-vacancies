@@ -1,5 +1,5 @@
 class AuditSearchEventJob < ApplicationJob
-  queue_as :audit_search_event
+  queue_as :low
 
   def perform(data)
     AuditData.create(category: :search_event, data: data)

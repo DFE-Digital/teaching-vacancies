@@ -10,14 +10,6 @@ RSpec.describe ImportTrustDataJob, type: :job do
   context "when DisableExpensiveJobs is not enabled" do
     let(:disable_expensive_jobs_enabled?) { false }
 
-    it "queues the job" do
-      expect { job }.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)
-    end
-
-    it "is in the import_trust_data queue" do
-      expect(job.queue_name).to eq("import_trust_data")
-    end
-
     it "executes perform" do
       import_trust_data = double(:mock)
       expect(ImportTrustData).to receive(:new).and_return(import_trust_data)
