@@ -15,25 +15,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Install cf client
-      env:
-        CF_CLI_VERSION: 7.1.0
-        CF_CLI_URL: https://packages.cloudfoundry.org/stable?release=linux64-binary&version=
-      run: |
-        curl -sL "${CF_CLI_URL}${CF_CLI_VERSION}" | sudo tar -zx -C /usr/local/bin
-        cf7 version
-        cf7 install-plugin conduit -f
-        cf7 plugins
+    - name: Install CF client
+      uses: DFE-Digital/github-actions/install-cf-cli@master
 
     - name: Install postgres client
-      run: |
-        wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-        RELEASE=$(lsb_release -cs)
-        echo "deb http://apt.postgresql.org/pub/repos/apt/ ${RELEASE}"-pgdg main | sudo tee  /etc/apt/sources.list.d/pgdg.list
-        cat /etc/apt/sources.list.d/pgdg.list
-        sudo apt-get update
-        sudo apt-get install -y postgresql-client-11
-        psql --version
+      uses: DFE-Digital/github-actions/install-postgres-client@master
 
     - name: Dump production database to file
       env:
