@@ -35,7 +35,8 @@
           = t("helpers.hint.publishers_job_listing_job_details_form.subjects")
 
         div class="govuk-!-margin-bottom-6"
-          = render(Shared::SearchableCollectionCheckboxesComponent.new(form: f,
+          = render(Shared::Searchable::CollectionCheckboxesComponent.new(form: f,
+            threshold: 10,
             attribute_name: :subjects,
             collection: SUBJECT_OPTIONS,
             value_method: :first,

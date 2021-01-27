@@ -1,9 +1,10 @@
-import '../../../frontend/src/lib/polyfill/closest.polyfill';
-import '../../../frontend/src/lib/polyfill/from.polyfill';
+import '../../lib/polyfill/closest.polyfill';
+import '../../lib/polyfill/from.polyfill';
+import './searchableCollection.scss';
 
 export const init = (container) => {
   const checkboxes = container.getElementsByClassName('govuk-checkboxes__input');
-  const input = container.getElementsByClassName('search-input__input')[0];
+  const input = container.getElementsByClassName('collection-component__search-input')[0];
 
   input.addEventListener('input', (e) => {
     filterCheckboxes(checkboxes, e.target);
@@ -37,8 +38,8 @@ export const checkboxDisplay = (checkbox, input) => {
 };
 
 window.addEventListener('DOMContentLoaded', () => {
-  const groups = document.getElementsByClassName('tv-checkbox__group');
+  const groups = document.getElementsByClassName('collection-component');
   if (groups.length) {
-    Array.from(groups).filter((group) => group.getElementsByClassName('search-input').length).forEach((group) => init(group));
+    Array.from(groups).filter((group) => group.getElementsByClassName('collection-component__search-input').length).forEach((group) => init(group));
   }
 });

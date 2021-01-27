@@ -1,0 +1,45 @@
+.collection-component {
+
+  background-color: #fff;
+  border: 5px solid #f3f2f1;
+  padding: 0;
+
+  .govuk-form-group {
+    margin-bottom: 0;
+  }
+
+  .govuk-checkboxes__item {
+    margin-left: 10px;
+  }
+
+  &.scrollable {
+    .govuk-form-group {
+      max-height: 194px;
+      overflow: auto;
+    }
+  }
+
+  .collection-component__search {
+    background: #fff;
+    margin: 10px;
+    position: relative;
+
+    .collection-component__search-input {
+      display: block;
+      padding: 20px 60px 20px 40px;
+      width: 100%;
+    }
+
+    .collection-component__search-button {
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      display: inline-block;
+      left: 0;
+      padding: 12px;
+      position: absolute;
+      top: 0;
+      z-index: 2;
+    }
+  }
+}

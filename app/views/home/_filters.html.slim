@@ -9,12 +9,11 @@
           h3.govuk-label.govuk-label--s id="checkbox-group-heading-#{filter_type}"
             = t("jobs.filters.#{filter_type}")
 
-        .checkbox-group__container aria-labelledby="checkbox-group-heading-#{filter_type}"
-          .tv-checkbox__group
-            = f.govuk_collection_check_boxes filter_type.to_sym,
-              @jobs_search_form.send("#{filter_type.chop}_options".to_sym),
-              :first,
-              :last,
-              small: true,
-              legend: nil,
-              hint: nil
+        .collection-component aria-labelledby="checkbox-group-heading-#{filter_type}"
+          = f.govuk_collection_check_boxes filter_type.to_sym,
+            @jobs_search_form.send("#{filter_type.chop}_options".to_sym),
+            :first,
+            :last,
+            small: true,
+            legend: nil,
+            hint: nil
