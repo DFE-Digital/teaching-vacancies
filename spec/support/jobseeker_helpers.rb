@@ -39,6 +39,14 @@ module JobseekerHelpers
 
   def fill_in_personal_details
     fill_in "First name", with: "John"
+    fill_in "Last name", with: "Frusciante"
+    fill_in "Building and street", with: "123 Fake Street"
+    fill_in "Town or city", with: "Fakeopolis"
+    fill_in "Postcode", with: "F1 4KE"
+    fill_in "Phone number", with: "01234 123456"
+    fill_in "Email address", with: "funkymonk@example.com"
+    fill_in "Teacher reference number", with: "AB 99/12345"
+    fill_in "National Insurance number", with: "AB 12 12 12 A"
   end
 
   def fill_in_personal_statement
