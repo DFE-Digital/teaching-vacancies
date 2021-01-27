@@ -1,0 +1,17 @@
+#!/bin/bash
+set -eu
+CF_ORG='dfe'
+
+if [[ "${CF_DESTINATION_ENVIRONMENT}" = "production" ]]
+then
+  echo "CF_DESTINATION_ENVIRONMENT should not equal production"
+  exit 1
+fi
+
+cf api "${CF_API_ENDPOINT}"
+cf auth
+
+cf target -o "${CF_ORG}" -s "${CF_SERVICE_NAME}-${CF_DESTINATION_ENVIRONMENT}"
+cf conduit "${CF_SERVICE_NAME}-postgres-${CF_DESTINATION_ENVIRONMENT}" --app-name "${CF_SERVICE_NAME}-conduit-${CF_DESTINATION_ENVIRONMENT}" -- psql < backup.sql
+# The conduit app may have to be deleted explicitly
+cf delete -f "${CF_SERVICE_NAME}-conduit-${CF_DESTINATION_ENVIRONMENT}" || true
