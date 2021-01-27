@@ -281,6 +281,8 @@ en:
       heading: Temporary login
       please_use_email: DfE Sign In is experiencing problems. Please sign in using your email address.
     vacancies:
+      build:
+        process_title: Create a job listing steps
       destroy:
         success_html: >-
           %{job_title} has been <span class="govuk-!-font-weight-bold delete-listing-success-gtm">deleted</span>

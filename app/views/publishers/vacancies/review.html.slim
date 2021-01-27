@@ -37,4 +37,4 @@
     = govuk_link_to t("buttons.back_to_manage_jobs"), jobs_with_type_organisation_path("draft", from_review: @vacancy.id), class: "govuk-link--no-visited-state"
 
   .govuk-grid-column-one-third
-    = render(Shared::ProcessStepsComponent.new(process: @vacancy, service: process_steps))
+    = render(Shared::ProcessStepsComponent.new(process: @vacancy, service: process_steps, title: t("publishers.vacancies.build.process_title")))

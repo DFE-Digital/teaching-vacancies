@@ -74,7 +74,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::ApplicationContro
     return redirect_to organisation_job_build_path(@vacancy.id, :job_details) unless step_valid?(Publishers::JobListing::JobDetailsForm)
     return redirect_to organisation_job_build_path(@vacancy.id, :pay_package) unless step_valid?(Publishers::JobListing::PayPackageForm)
     return redirect_to organisation_job_build_path(@vacancy.id, :important_dates) unless step_valid?(Publishers::JobListing::ImportantDatesForm)
-    return redirect_to organisation_job_build_path(@vacancy.id, :documents) unless @vacancy.completed_step >= STEPS[:documents]
+    return redirect_to organisation_job_build_path(@vacancy.id, :documents) unless @vacancy.completed_step >= steps_config[:documents][:number]
     return redirect_to organisation_job_build_path(@vacancy.id, :applying_for_the_job) unless step_valid?(Publishers::JobListing::ApplyingForTheJobForm)
     return redirect_to organisation_job_build_path(@vacancy.id, :job_summary) unless step_valid?(Publishers::JobListing::JobSummaryForm)
   end

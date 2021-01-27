@@ -1,12 +1,4 @@
 module Jobseekers::Wizardable
-  STEPS = {
-    personal_details: 1,
-    professional_status: 3,
-    personal_statement: 5,
-    ask_for_support: 8,
-    declarations: 9,
-  }.freeze
-
   FORMS = {
     personal_details: Jobseekers::JobApplication::PersonalDetailsForm,
     professional_status: Jobseekers::JobApplication::ProfessionalStatusForm,
@@ -22,6 +14,16 @@ module Jobseekers::Wizardable
     ask_for_support: :ask_for_support_params,
     declarations: :declarations_params,
   }.freeze
+
+  def steps_config
+    {
+      personal_details: { number: 1, title: t(".personal_details.title") },
+      professional_status: { number: 3, title: t(".professional_status.title") },
+      personal_statement: { number: 5, title: t(".personal_statement.title") },
+      ask_for_support: { number: 8, title: t(".ask_for_support.title") },
+      declarations: { number: 9, title: t(".declarations.title") },
+    }.freeze
+  end
 
   def personal_details_params(params)
     ParameterSanitiser.call(params)

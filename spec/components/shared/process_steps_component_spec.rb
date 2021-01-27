@@ -5,6 +5,7 @@ RSpec.describe Shared::ProcessStepsComponent, type: :component do
   let(:completed_step) { 0 }
   let(:current_step_number) { 1 }
   let(:current_publisher_is_part_of_school_group?) { true }
+  let(:process_title) { "Process title" }
   let(:steps) do
     {
       job_location: { number: 1, title: I18n.t("jobs.job_location") },
@@ -26,10 +27,10 @@ RSpec.describe Shared::ProcessStepsComponent, type: :component do
     allow_any_instance_of(Publishers::AuthenticationConcerns).to receive(:current_publisher_is_part_of_school_group?).and_return(current_publisher_is_part_of_school_group?)
   end
 
-  let!(:inline_component) { render_inline(described_class.new(process: vacancy, service: ProcessSteps.new({ steps: steps, adjust: steps_adjust, step: :job_location }))) }
+  let!(:inline_component) { render_inline(described_class.new(process: vacancy, service: ProcessSteps.new({ steps: steps, adjust: steps_adjust, step: :job_location }), title: process_title)) }
 
   it "renders the sidebar" do
-    expect(rendered_component).to include("Create a job listing steps")
+    expect(rendered_component).to include(process_title)
   end
 
   it "renders the job details step" do
@@ -62,7 +63,7 @@ RSpec.describe Shared::ProcessStepsComponent, type: :component do
 
   context "when a School user creates a job" do
     let(:current_publisher_is_part_of_school_group?) { false }
-    let!(:inline_component) { render_inline(described_class.new(process: vacancy, service: ProcessSteps.new({ steps: steps, adjust: steps_adjust, step: :job_location }))) }
+    let!(:inline_component) { render_inline(described_class.new(process: vacancy, service: ProcessSteps.new({ steps: steps, adjust: steps_adjust, step: :job_location }), title: process_title)) }
 
     it "does not render the job location step" do
       expect(rendered_component).not_to include(I18n.t("jobs.job_location"))

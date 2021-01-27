@@ -31,6 +31,7 @@ en:
       apply: Apply for this job
       applying_for_the_role_heading: Applying for the role
       applying_for_the_role_paragraph: Please complete the online application.
+      current_step: Step %{current} of %{total}
       build:
         ask_for_support:
           adjustments: "This could be:"
@@ -57,6 +58,7 @@ en:
             Please explain why you are suitable for this role. You may find it useful to refer specifically to the job
             description and any other information that has been provided.
           title: Personal statement
+        process_title: Application steps
         professional_status:
           title: Professional status
         saved_job_application: Your job application was saved

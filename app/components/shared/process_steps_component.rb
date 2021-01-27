@@ -1,7 +1,8 @@
 class Shared::ProcessStepsComponent < ViewComponent::Base
-  def initialize(process:, service:)
+  def initialize(process:, service:, title:)
     @process = process
     @service = service
+    @title = title
   end
 
   def render?

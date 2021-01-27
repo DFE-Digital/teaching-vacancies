@@ -35,7 +35,7 @@
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
   .govuk-grid-column-one-third
-    = render(Shared::ProcessStepsComponent.new(process: @vacancy, service: process_steps))
+    = render(Shared::ProcessStepsComponent.new(process: @vacancy, service: process_steps, title: t("publishers.vacancies.build.process_title")))
 
 - content_for :after_main do
   = render "shared/file_remove_confirmation_dialogue"

@@ -4,7 +4,11 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::ApplicationCont
 
   steps :personal_details, :professional_status, :personal_statement, :ask_for_support, :declarations
 
-  helper_method :back_link_path, :current_step_number, :job_application
+  helper_method :back_link_path, :job_application, :process_steps
+
+  def process_steps
+    ProcessSteps.new(steps: steps_config, adjust: 0, step: step)
+  end
 
   def show
     @form = FORMS[step].new unless step == "wicked_finish"
@@ -36,10 +40,6 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::ApplicationCont
                         else
                           previous_wizard_path
                         end
-  end
-
-  def current_step_number
-    @current_step_number ||= STEPS[step]
   end
 
   def form_params
