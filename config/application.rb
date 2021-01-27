@@ -52,6 +52,15 @@ module TeacherVacancyService
       api_key: ENV["NOTIFY_KEY"],
     }
 
+    # Set up backing services through Cloudfoundry VCAP_SERVICES if running in production
+    if ENV["VCAP_SERVICES"].present?
+      vcap_services = JSON.parse(ENV["VCAP_SERVICES"])
+
+      config.redis_store_url = vcap_services["redis"][0]["credentials"]["uri"]
+    else
+      config.redis_store_url = ENV.fetch("REDIS_URL", "redis://localhost:6379")
+    end
+
     config.ab_tests = config_for(:ab_tests)
   end
 end
