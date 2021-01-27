@@ -105,6 +105,6 @@ locals {
   postgres_service_name    = "${var.service_name}-postgres-${var.environment}"
   redis_service_name       = "${var.service_name}-redis-${var.environment}"
   web_app_name             = "${var.service_name}-${var.environment}"
-  worker_app_start_command = "bundle exec sidekiq -C config/sidekiq.yml"
+  worker_app_start_command = "MALLOC_ARENA_MAX=2 bundle exec sidekiq -C config/sidekiq.yml"
   worker_app_name          = "${var.service_name}-worker-${var.environment}"
 }
