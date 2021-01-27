@@ -38,7 +38,7 @@ LOCATIONS_MAPPED_TO_HUMAN_FRIENDLY_TYPES = [ons_regions, ons_counties_and_unitar
 ons_counties = ons_counties_and_unitary_authorities.select { |line| line.second == "counties" }.map(&:first)
 COUNTIES = composite_locations.keys + ons_counties
 ons_unitary_authority_cities = ons_counties_and_unitary_authorities.select { |line| line.second == "cities" }.map(&:first)
-CITIES = ons_cities + ons_unitary_authority_cities
+CITIES = ons_cities.map(&:first) + ons_unitary_authority_cities
 
 # See documentation/business-analyst-activities.md
 MAPPED_LOCATIONS = YAML.load_file(base_path.join("mapped_locations.yml")).to_h
