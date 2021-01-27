@@ -2,7 +2,7 @@
 
 h1.govuk-heading-l = t("static_pages.ab_tests.page_title")
 
-p.govuk-body = t("static_pages.ab_tests.introduction")
+= t("static_pages.ab_tests.introduction_html", help_email_link: govuk_mail_to(t("help.email"), t("help.email")))
 
 dl.govuk-summary-list
   - current_ab_variants.each do |test, variant|

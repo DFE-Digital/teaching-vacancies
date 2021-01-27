@@ -2,10 +2,12 @@ en:
   static_pages:
     ab_tests:
       page_title: A/B Testing
-      introduction: >-
-        From time to time, we run "A/B testing" experiments to improve our service. This page displays
-        which variants you are seeing for each experiment. Some of these experiments may no longer be
-        running.
+      introduction_html: >-
+        <p class="govuk-body">We sometimes run A/B and multivariate tests to improve our service.</p>
+        <p class="govuk-body">In an A/B test we create two versions of a webpage and show some website visitors one and some the other. This lets us see which version works better for our users.</p>
+        <p class="govuk-body">Multivariate tests work in the same way, but use three or more versions of the webpage rather than just two.</p>
+        <p class="govuk-body">Below are the versions of webpages that you will see when you browse the Teaching Vacancies website.</p>
+        <p class="govuk-body">For more information on our A/B and multivariate tests email %{help_email_link}.</p>
     accessibility:
       date_reviewed: This statement was prepared on 12 September 2019. It was last updated on 12 September 2019.
       enforcement_procedure:
