@@ -144,23 +144,36 @@ resource aws_iam_user_policy_attachment cloudfront {
   policy_arn = aws_iam_policy.cloudfront.arn
 }
 
-# Upload DB backups to S3
+# DB backups in S3
 
-data aws_iam_policy_document upload_db_backups_to_s3 {
+data aws_iam_policy_document db_backups_in_s3 {
   statement {
-    actions   = ["s3:PutObject"]
+    actions = [
+      "s3:GetBucketAcl",
+      "s3:GetBucketLocation",
+      "s3:ListBucket",
+      "s3:PutBucketAcl",
+      "s3:PutObject"
+    ]
+    resources = [
+      "arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/",
+      "arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/*"
+    ]
+  }
+  statement {
+    actions   = ["s3:ListBucket"]
     resources = ["arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/*"]
   }
 }
 
-resource aws_iam_policy upload_db_backups_to_s3 {
-  name   = "upload_db_backups_to_s3"
-  policy = data.aws_iam_policy_document.upload_db_backups_to_s3.json
+resource aws_iam_policy db_backups_in_s3 {
+  name   = "db_backups_in_s3"
+  policy = data.aws_iam_policy_document.db_backups_in_s3.json
 }
 
-resource aws_iam_user_policy_attachment upload_db_backups_to_s3 {
+resource aws_iam_user_policy_attachment db_backups_in_s3 {
   user       = aws_iam_user.deploy.name
-  policy_arn = aws_iam_policy.upload_db_backups_to_s3.arn
+  policy_arn = aws_iam_policy.db_backups_in_s3.arn
 }
 
 # Cloudfront logs to S3
