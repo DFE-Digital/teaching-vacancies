@@ -1,40 +1,27 @@
-name: Sync staging database
+name: Restore dev/staging db from production backup
 
 on:
-  schedule:
-  # The schedule is in UTC and uses cron syntax
-  # * is a special character in YAML so you have to quote this string
-  - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment'
+        required: true
+        default: 'staging'
 
 jobs:
   sync:
-    name: Sync staging database from production
+    name: Sync ${{ github.event.inputs.environment }} database from production backup
     runs-on: ubuntu-20.04
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Setup cf cli
-      uses: DFE-Digital/github-actions/setup-cf-cli@master
-      with:
-        CF_USERNAME: ${{ secrets.CF_USERNAME }}
-        CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-        CF_SPACE_NAME: teaching-vacancies-production
-        INSTALL_CONDUIT: true
+    - name: Install CF client
+      uses: DFE-Digital/github-actions/install-cf-cli@master
 
     - name: Install postgres client
       uses: DFE-Digital/github-actions/install-postgres-client@master
-
-    - name: Dump production database to file
-      shell: bash
-      run: bin/dump-db
-
-    - name: Restore staging database from dump
-      shell: bash
-      run: bin/restore-db
-      env:
-        CF_DESTINATION_ENVIRONMENT: staging
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -43,8 +30,15 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: eu-west-2
 
-    - name: Upload backup to S3
-      run: bin/upload-db-backup
+    - name: Download backup from S3
+      shell: bash
+      run: bin/download-db-backup
+
+    - name: Restore database from downloaded dump
+      shell: bash
+      run: bin/restore-db
+      env:
+        CF_DESTINATION_ENVIRONMENT: ${{ github.event.inputs.environment }}
 
     - name: Send success message to twd_tv_dev channel
       if: ${{ success() }}
@@ -54,7 +48,7 @@ jobs:
         SLACK_USERNAME: CI Deployment
         SLACK_ICON_EMOJI: ':rocket:'
         SLACK_TITLE: DB syncing success
-        SLACK_MESSAGE: 'Successful db backup and sync production->staging'
+        SLACK_MESSAGE: 'Successful db restore production->${{ github.event.inputs.environment }}'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
     - name: Send failure message to twd_tv_dev channel
@@ -65,5 +59,5 @@ jobs:
         SLACK_USERNAME: CI Deployment
         SLACK_ICON_EMOJI: ':cry:'
         SLACK_TITLE: DB syncing failure
-        SLACK_MESSAGE: 'Failed db backup and sync production->staging'
+        SLACK_MESSAGE: 'Failed db restore production->${{ github.event.inputs.environment }}'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

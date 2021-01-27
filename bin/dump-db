@@ -1,11 +1,9 @@
 #!/bin/bash
 set -eu
-CF_ORG='dfe'
+CF_SERVICE_NAME='teaching-vacancies'
+CF_SOURCE_ENVIRONMENT='production'
+CONDUIT_APP_NAME="${CF_SERVICE_NAME}-conduit-${CF_SOURCE_ENVIRONMENT}"
 
-cf api "${CF_API_ENDPOINT}"
-cf auth
-
-cf target -o "${CF_ORG}" -s "${CF_SERVICE_NAME}-${CF_SOURCE_ENVIRONMENT}"
-cf conduit "${CF_SERVICE_NAME}-postgres-${CF_SOURCE_ENVIRONMENT}" --app-name "${CF_SERVICE_NAME}-conduit-${CF_SOURCE_ENVIRONMENT}" -- pg_dump -x --no-owner -c -f backup.sql
+cf conduit "${CF_SERVICE_NAME}-postgres-${CF_SOURCE_ENVIRONMENT}" --app-name "${CONDUIT_APP_NAME}" -- pg_dump -x --no-owner -c -f backup.sql
 # The conduit app may have to be deleted explicitly
-cf delete -f "${CF_SERVICE_NAME}-conduit-${CF_SOURCE_ENVIRONMENT}" || true
+cf delete -f "${CONDUIT_APP_NAME}" || true
