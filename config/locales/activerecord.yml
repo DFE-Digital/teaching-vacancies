@@ -178,8 +178,28 @@ en:
               inclusion: Select yes if you have the right to work in the UK
         jobseekers/job_application/personal_details_form:
           attributes:
+            building_and_street:
+              blank: Enter your building and street
+            email_address:
+              blank: Enter your email address
+              invalid: Enter an email address in the correct format, like name@example.com
             first_name:
               blank: Enter your first name
+            last_name:
+              blank: Enter your last name
+            national_insurance_number:
+              blank: Enter your National Insurance number
+              invalid: Enter a National Insurance number in the correct format
+            phone_number:
+              blank: Enter your phone number
+              invalid: Enter a phone number in the correct format
+            postcode:
+              blank: Enter your postcode
+            teacher_reference_number:
+              blank: Enter your teacher reference number
+              too_long: Teacher reference number must be 11 digits or fewer
+            town_or_city:
+              blank: Enter your town or city
         jobseekers/job_application/personal_statement_form:
           attributes:
             personal_statement:
