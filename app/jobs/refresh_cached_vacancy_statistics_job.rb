@@ -1,5 +1,5 @@
 class RefreshCachedVacancyStatisticsJob < ApplicationJob
-  queue_as :refresh_cached_vacancy_statistics
+  queue_as :low
 
   def perform
     Rails.application.load_tasks

@@ -1,5 +1,5 @@
 class UpdateAlgoliaIndex < ApplicationJob
-  queue_as :update_algolia_index
+  queue_as :low
 
   def perform
     Vacancy.update_index!

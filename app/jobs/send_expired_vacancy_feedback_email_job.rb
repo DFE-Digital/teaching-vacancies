@@ -1,5 +1,5 @@
 class SendExpiredVacancyFeedbackEmailJob < ApplicationJob
-  queue_as :email_feedback_prompt
+  queue_as :low
 
   def perform
     expired_vacancies.group_by(&:publisher).each do |publisher, publisher_vacancies|

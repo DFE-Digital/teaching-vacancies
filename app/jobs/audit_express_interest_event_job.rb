@@ -1,5 +1,5 @@
 class AuditExpressInterestEventJob < ApplicationJob
-  queue_as :audit_express_interest_event
+  queue_as :low
 
   def perform(data)
     AuditData.create(category: :interest_expression, data: data)

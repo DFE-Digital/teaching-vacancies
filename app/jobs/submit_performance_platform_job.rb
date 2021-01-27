@@ -1,5 +1,5 @@
 class SubmitPerformancePlatformJob < ApplicationJob
-  queue_as :submit_performance_platform
+  queue_as :low
 
   def perform
     Rails.application.load_tasks

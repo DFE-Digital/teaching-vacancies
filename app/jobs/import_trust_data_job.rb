@@ -1,7 +1,7 @@
 require "organisation_import/import_trust_data"
 
 class ImportTrustDataJob < ApplicationJob
-  queue_as :import_trust_data
+  queue_as :low
 
   def perform
     return if DisableExpensiveJobs.enabled?

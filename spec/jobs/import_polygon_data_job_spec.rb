@@ -10,14 +10,6 @@ RSpec.describe ImportPolygonDataJob, type: :job do
   context "when DisableExpensiveJobs is not enabled" do
     let(:disable_expensive_jobs_enabled?) { false }
 
-    it "queues the job" do
-      expect { job }.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)
-    end
-
-    it "is in the import_polygon_data queue" do
-      expect(job.queue_name).to eq("import_polygon_data")
-    end
-
     it "executes perform" do
       import_polygon_data = double(:mock)
       expect(ImportPolygons).to receive(:new).and_return(import_polygon_data).exactly(3).times

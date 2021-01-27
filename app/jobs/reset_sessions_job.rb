@@ -1,5 +1,5 @@
 class ResetSessionsJob < ApplicationJob
-  queue_as :reset_sessions
+  queue_as :low
 
   def perform
     Rails.application.load_tasks

@@ -6,14 +6,6 @@ RSpec.describe PersistVacancyPageViewJob, type: :job do
   let(:id) { SecureRandom.uuid }
   subject(:job) { described_class.perform_later(id) }
 
-  it "queues the job" do
-    expect { job }.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)
-  end
-
-  it "is in the page view collector queue" do
-    expect(job.queue_name).to eq("vacancy_statistics")
-  end
-
   it "executes perform" do
     vacancy_page_view = double(:vacancy_page_view)
     vacancy = double(:vacancy)

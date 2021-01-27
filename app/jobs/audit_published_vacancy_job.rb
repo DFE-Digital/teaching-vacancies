@@ -1,5 +1,5 @@
 class AuditPublishedVacancyJob < ApplicationJob
-  queue_as :audit_published_vacancy
+  queue_as :low
 
   def perform(vacancy_id)
     vacancy = Vacancy.find(vacancy_id)

@@ -1,6 +1,6 @@
 require "indexing"
 class RemoveGoogleIndexQueueJob < ApplicationJob
-  queue_as :google_indexing
+  queue_as :default
 
   def perform(url)
     Indexing.new(url).remove

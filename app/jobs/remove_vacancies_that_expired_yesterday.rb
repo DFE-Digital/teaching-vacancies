@@ -1,5 +1,5 @@
 class RemoveVacanciesThatExpiredYesterday < ApplicationJob
-  queue_as :remove_vacancies_that_expired_yesterday
+  queue_as :low
 
   def perform
     Vacancy.remove_vacancies_that_expired_yesterday!
