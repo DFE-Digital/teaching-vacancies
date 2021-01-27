@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Jobseekers::JobApplicationHeadingComponent, type: :component do
+RSpec.describe Jobseekers::JobApplications::HeadingComponent, type: :component do
   let(:school) { build_stubbed(:school, name: "Test school") }
   let(:vacancy) do
     build_stubbed(:vacancy, :at_one_school, :published_slugged, job_title: "Test job",

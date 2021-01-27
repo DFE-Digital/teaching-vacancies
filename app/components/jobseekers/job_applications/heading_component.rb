@@ -1,4 +1,4 @@
-class Jobseekers::JobApplicationHeadingComponent < ViewComponent::Base
+class Jobseekers::JobApplications::HeadingComponent < ViewComponent::Base
   attr_reader :vacancy, :back_path
 
   def initialize(vacancy:, back_path:)
