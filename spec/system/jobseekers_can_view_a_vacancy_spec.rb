@@ -174,7 +174,7 @@ RSpec.describe "Viewing a single published vacancy" do
       vacancy = create(:vacancy, :published)
       vacancy.organisation_vacancies.create(organisation: school)
 
-      expect { visit job_path(vacancy) }.to change { vacancy.page_view_counter.to_i }.by(1)
+      expect { visit job_path(vacancy) }.to have_enqueued_job(PersistVacancyPageViewJob).with(vacancy.id)
     end
   end
 

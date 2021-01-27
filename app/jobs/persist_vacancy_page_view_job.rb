@@ -3,6 +3,6 @@ class PersistVacancyPageViewJob < ApplicationJob
 
   def perform(vacancy_id)
     vacancy = Vacancy.find(vacancy_id)
-    VacancyPageView.new(vacancy).persist!
+    vacancy.increment!(:total_pageviews)
   end
 end

@@ -7,7 +7,7 @@ class InterestsController < ApplicationController
   private
 
   def audit_click
-    VacancyGetMoreInfoClick.new(vacancy).track
+    PersistVacancyGetMoreInfoClickJob.perform_later(vacancy.id)
     Auditor::Audit.new(vacancy, "vacancy.get_more_information", current_publisher_oid).log
     AuditExpressInterestEventJob.perform_later(
       datestamp: Time.current.iso8601.to_s,

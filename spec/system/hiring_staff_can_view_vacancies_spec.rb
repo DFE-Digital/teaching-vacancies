@@ -54,6 +54,6 @@ RSpec.describe "School viewing vacancies" do
 
     visit organisation_job_path(vacancy.id)
 
-    expect { click_on I18n.t("jobs.apply") }.to change { vacancy.get_more_info_counter.to_i }.by(0)
+    expect { click_on I18n.t("jobs.apply") }.not_to have_enqueued_job(PersistVacancyGetMoreInfoClickJob)
   end
 end

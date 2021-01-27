@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_25_184859) do
+ActiveRecord::Schema.define(version: 2021_01_27_144122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -290,12 +290,8 @@ ActiveRecord::Schema.define(version: 2021_01_25_184859) do
     t.datetime "updated_at", null: false
     t.uuid "reference", default: -> { "gen_random_uuid()" }, null: false
     t.string "application_link"
-    t.integer "weekly_pageviews"
-    t.integer "total_pageviews"
-    t.datetime "weekly_pageviews_updated_at"
-    t.datetime "total_pageviews_updated_at"
-    t.integer "total_get_more_info_clicks"
-    t.datetime "total_get_more_info_clicks_updated_at"
+    t.integer "total_pageviews", default: 0
+    t.integer "total_get_more_info_clicks", default: 0
     t.integer "working_patterns", array: true
     t.integer "listed_elsewhere"
     t.integer "hired_status"
