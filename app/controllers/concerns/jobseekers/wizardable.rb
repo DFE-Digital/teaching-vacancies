@@ -28,7 +28,8 @@ module Jobseekers::Wizardable
   def personal_details_params(params)
     ParameterSanitiser.call(params)
                       .require(:jobseekers_job_application_personal_details_form)
-                      .permit(:first_name)
+                      .permit(:building_and_street, :email_address, :first_name, :last_name, :national_insurance_number,
+                              :phone_number, :previous_names, :postcode, :teacher_reference_number, :town_or_city)
   end
 
   def professional_status_params(params)

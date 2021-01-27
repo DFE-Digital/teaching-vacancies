@@ -44,6 +44,13 @@ en:
       jobseeker:
         password: Your password has to be at least 8 characters long
 
+      jobseekers_job_application_personal_details_form:
+        national_insurance_number: >-
+          It's on your National Insurance card, benefit letter, payslip or P60.
+          For example, 'QQ 12 34 56 C'.
+        phone_number: Please only give a phone number that you are happy to be contacted on.
+        previous_names: For example maiden name or name at birth, if different from the name you have now.
+
       jobseekers_job_alert_feedback_form:
         comment: This is optional, but the information will help us to make improvements.
       jobseekers_nqt_job_alerts_form:
@@ -170,8 +177,16 @@ en:
           "yes": "Yes"
 
       jobseekers_job_application_personal_details_form:
+        your_address_html: Your address (<span class='text-red'>Required</span>)
+        building_and_street: Building and street
+        email_address_html: Email address (<span class='text-red'>Required</span>)
         first_name_html: First name (<span class='text-red'>Required</span>)
         last_name_html: Last name (<span class='text-red'>Required</span>)
+        national_insurance_number_html : National Insurance number (<span class='text-red'>Required</span>)
+        phone_number_html: Phone number (<span class='text-red'>Required</span>)
+        previous_names: Previous names
+        town_or_city: Town or city
+        teacher_reference_number_html: Teacher reference number (<span class='text-red'>Required</span>)
 
       jobseekers_job_application_personal_statement_form:
         personal_statement_html: Your personal statement (<span class='text-red'>Required</span>)
@@ -228,6 +243,17 @@ en:
         benefits: Employee benefits
         salary_html: Salary (<span class='text-red'>Required</span>)
 
+      personal_details_form:
+        building_and_street: Building and street
+        email_address_html: Email address (<span class='text-red'>Required</span>)
+        first_name_html: First name (<span class='text-red'>Required</span>)
+        last_name_html: Last name (<span class='text-red'>Required</span>)
+        national_insurance_number_html: National Insurance number (<span class='text-red'>Required</span>)
+        phone_number_html: Phone number (<span class='text-red'>Required</span>)
+        previous_names: Previous names
+        teacher_reference_number_html: Teacher reference number (TRN) (<span class='text-red'>Required</span>)
+        town_or_city: Town or city
+
     legend:
       account_feedback:
         rating_html: >-
@@ -258,6 +284,9 @@ en:
           Have you completed your statutory induction year? (<span class='text-red'>Required</span>)
         qualified_teacher_status_html: >-
           Do you have qualified teacher status (QTS)? (<span class='text-red'>Required</span>)
+
+      personal_details_form:
+        address_html: Your address (<span class='text-red'>Required</span>)
 
       publishers_job_listing_copy_vacancy_form:
         expires_on_html: Date application is due (<span class='text-red'>Required</span>)

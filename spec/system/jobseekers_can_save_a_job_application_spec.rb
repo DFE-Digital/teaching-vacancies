@@ -22,7 +22,20 @@ RSpec.describe "Jobseekers can save a job application" do
   end
 
   def and_it_saves_the_job_application
-    expect { save_as_draft }.to change { JobApplication.first.application_data }.from(nil).to({ "first_name" => "John" })
+    expect { save_as_draft }.to change { JobApplication.first.application_data }.from(nil).to(
+      {
+        "postcode" => "F1 4KE",
+        "last_name" => "Frusciante",
+        "first_name" => "John",
+        "phone_number" => "01234 123456",
+        "town_or_city" => "Fakeopolis",
+        "email_address" => "funkymonk@example.com",
+        "previous_names" => "",
+        "building_and_street" => "123 Fake Street",
+        "teacher_reference_number" => "AB 99/12345",
+        "national_insurance_number" => "AB 12 12 12 A",
+      },
+    )
     expect(current_path).to eq(jobseekers_saved_jobs_path)
     expect(page).to have_content(I18n.t("jobseekers.job_applications.build.saved_job_application"))
   end
