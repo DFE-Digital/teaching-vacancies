@@ -50,7 +50,9 @@ jobs:
       id: set_env_vars
       run: |
         $(echo "BRANCH=${{ github.head_ref }}" | sed -e 's/\//_/g' >> $GITHUB_ENV)
-        TAG=review-pr-${{ github.event.number }}-${{ github.sha }}-$(date '+%Y%m%d%H%M%S')
+        ENVIRONMENT=review-pr-${{ github.event.number }}
+        TAG=${ENVIRONMENT}-${{ github.sha }}-$(date '+%Y%m%d%H%M%S')
+        echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
         echo "TAG=${TAG}" >> $GITHUB_ENV
 
     - name: Set up Docker Buildx
@@ -93,14 +95,14 @@ jobs:
         token: ${{ secrets.PERSONAL_TOKEN }}
         ref: ${{ github.event.pull_request.head.ref || github.ref }}
         workflow: Deploy App to Environment # Workflow name
-        inputs: '{"environment": "review-pr-${{ github.event.number }}", "tag": "${{ env.TAG }}"}'
+        inputs: '{"environment": "${{ env.ENVIRONMENT }}", "tag": "${{ env.TAG }}"}'
 
     - name: Wait for Deploy App Workflow for review
       id: wait_for_deploy_app
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
         token: ${{ secrets.PERSONAL_TOKEN }}
-        checkName: Deploy ${{ env.TAG }} to review # Job name within workflow
+        checkName: Deploy ${{ env.TAG }} to ${{ env.ENVIRONMENT }} # Job name within workflow
         ref: ${{ github.event.pull_request.head.sha || github.ref }}
         timeoutSeconds: 720
         intervalSeconds: 15
