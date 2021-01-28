@@ -5,6 +5,4 @@ class VacancyPublishFeedback < ApplicationRecord
 
   belongs_to :vacancy
   belongs_to :publisher
-
-  scope :published_on, (->(date) { where(created_at: date.all_day) })
 end
