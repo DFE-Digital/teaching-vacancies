@@ -10,7 +10,7 @@ RSpec.describe SendDailyAlertEmailJob, type: :job do
       subject: "English",
       working_patterns: %w[full_time],
       phases: %w[primary secondary],
-    }.to_json
+    }
   end
 
   let!(:subscription) { create(:subscription, search_criteria: search_criteria, frequency: :daily) }

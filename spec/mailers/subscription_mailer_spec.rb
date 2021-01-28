@@ -4,7 +4,7 @@ RSpec.describe SubscriptionMailer, type: :mailer do
   include ERB::Util
 
   let(:email) { "an@email.com" }
-  let(:search_criteria) { { keyword: "English" }.to_json }
+  let(:search_criteria) { { keyword: "English" } }
   let(:subscription) do
     subscription = Subscription.create(email: email, frequency: "daily", search_criteria: search_criteria)
     # The hashing algorithm uses a random initialization vector to encrypt the token,

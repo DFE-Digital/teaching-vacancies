@@ -20,9 +20,7 @@ class SubscriptionPresenter < BasePresenter
   private
 
   def sorted_search_criteria
-    search_criteria_to_h.sort_by { |(key, _)|
-      SEARCH_CRITERIA_SORT_ORDER.find_index(key) || SEARCH_CRITERIA_SORT_ORDER.count
-    }.to_h
+    search_criteria.sort_by { |(key, _)| SEARCH_CRITERIA_SORT_ORDER.find_index(key) || SEARCH_CRITERIA_SORT_ORDER.count }.to_h
   end
 
   def full_search_criteria
@@ -38,11 +36,7 @@ class SubscriptionPresenter < BasePresenter
     return if field.eql?("location_category")
     return if field.eql?("jobs_sort")
 
-    if field.eql?("location")
-      return render_location_filter(
-        search_criteria_to_h["location_category"], value, search_criteria_to_h["radius"]
-      )
-    end
+    return render_location_filter(search_criteria["location_category"], value, search_criteria["radius"]) if field.eql?("location")
     return render_job_roles_filter(value) if field.eql?("job_roles")
     return render_working_patterns_filter(value) if field.eql?("working_patterns")
     return render_phases_filter(value) if field.eql?("phases")
