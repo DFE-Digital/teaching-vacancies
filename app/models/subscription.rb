@@ -26,6 +26,8 @@ class Subscription < ApplicationRecord
   end
 
   def search_criteria_to_h
+    return search_criteria if search_criteria.is_a?(Hash)
+
     parsed_criteria = JSON.parse(search_criteria) if search_criteria.present?
     parsed_criteria.is_a?(Hash) ? parsed_criteria : {}
   rescue JSON::ParserError

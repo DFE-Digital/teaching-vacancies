@@ -38,7 +38,7 @@ RSpec.describe Jobseekers::NqtJobAlertsForm, type: :model do
       before { allow(LocationPolygon).to receive(:include?).with(location).and_return(true) }
 
       it "adds location_category to the search criteria" do
-        expect(subject.job_alert_params[:search_criteria]).to eq(expected_hash.to_json)
+        expect(subject.job_alert_params[:search_criteria]).to eq(expected_hash)
       end
     end
 
@@ -48,7 +48,7 @@ RSpec.describe Jobseekers::NqtJobAlertsForm, type: :model do
       before { allow(LocationPolygon).to receive(:include?).with(location).and_return(false) }
 
       it "does not add location_category to the search criteria" do
-        expect(subject.job_alert_params[:search_criteria]).to eq(expected_hash.to_json)
+        expect(subject.job_alert_params[:search_criteria]).to eq(expected_hash)
       end
     end
   end

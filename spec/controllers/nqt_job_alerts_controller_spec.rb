@@ -9,9 +9,7 @@ RSpec.describe NqtJobAlertsController, type: :controller do
 
   describe "#create" do
     let(:params) { { jobseekers_nqt_job_alerts_form: form_inputs } }
-    let(:search_criteria) do
-      { keyword: "nqt #{keywords}", location: location, radius: 10 }.to_json
-    end
+    let(:search_criteria) { { keyword: "nqt #{keywords}", location: location, radius: 10 } }
     let(:subscription) { Subscription.last }
     let(:subject) { post :create, params: params }
 
@@ -23,7 +21,7 @@ RSpec.describe NqtJobAlertsController, type: :controller do
     it "creates a subscription" do
       expect { subject }.to change { Subscription.count }.by(1)
       expect(subscription.email).to eq(email)
-      expect(subscription.search_criteria).to eq(search_criteria)
+      expect(subscription.search_criteria.symbolize_keys).to eq(search_criteria)
     end
 
     it "triggers a `job_alert_subscription_created` event" do

@@ -37,7 +37,7 @@ class Jobseekers::SubscriptionForm
     {
       email: email,
       frequency: frequency,
-      search_criteria: search_criteria_hash.to_json,
+      search_criteria: search_criteria_hash,
     }
   end
 

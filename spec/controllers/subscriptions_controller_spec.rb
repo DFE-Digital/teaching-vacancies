@@ -35,7 +35,7 @@ RSpec.describe SubscriptionsController, type: :controller do
     it "creates a subscription" do
       expect { subject }.to change { Subscription.count }.by(1)
       expect(subscription.email).to eq("foo@email.com")
-      expect(subscription.search_criteria).to eq({ keyword: "english" }.to_json)
+      expect(subscription.search_criteria.symbolize_keys).to eq({ keyword: "english" })
     end
 
     it "triggers a `job_alert_subscription_created` event" do
@@ -81,7 +81,7 @@ RSpec.describe SubscriptionsController, type: :controller do
     it "updates the subscription" do
       expect { subject }.not_to(change { Subscription.count })
       expect(subscription.reload.email).to eq("jimi@hendrix.com")
-      expect(subscription.reload.search_criteria).to eq({ keyword: "english" }.to_json)
+      expect(subscription.reload.search_criteria.symbolize_keys).to eq({ keyword: "english" })
     end
 
     it "triggers a `job_alert_subscription_updated` event" do

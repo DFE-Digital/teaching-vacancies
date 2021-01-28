@@ -103,8 +103,8 @@ RSpec.describe "Jobseekers can manage their job alerts from the email" do
         subscription.reload
         expect(subscription.email).to eq(jobseeker.email)
         expect(subscription.frequency).to eq("weekly")
-        expect(JSON.parse(subscription.search_criteria).symbolize_keys[:keyword]).to eq("English")
-        expect(JSON.parse(subscription.search_criteria).symbolize_keys[:location]).to eq("Radley")
+        expect(subscription.search_criteria["keyword"]).to eq("English")
+        expect(subscription.search_criteria["location"]).to eq("Radley")
       end
     end
 
