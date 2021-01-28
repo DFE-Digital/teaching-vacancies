@@ -1,0 +1,90 @@
+{
+  "elasticsearch": [
+    {
+      "binding_name": null,
+      "credentials": {
+        "hostname": "es_host",
+        "password": "es_pass",
+        "port": "es_port",
+        "uri": "es_uri",
+        "username": "es_user"
+      },
+      "instance_name": "es_instance_name",
+      "label": "elasticsearch",
+      "name": "es_name",
+      "plan": "es_plan",
+      "provider": null,
+      "syslog_drain_url": null,
+      "tags": [],
+      "volume_mounts": []
+    }
+  ],
+  "postgres": [
+    {
+      "binding_name": null,
+      "credentials": {
+        "host": "pg_host",
+        "jdbcuri": "pg_jdbc",
+        "name": "pg_name",
+        "password": "pg_pass",
+        "port": "pg_port",
+        "uri": "pg_uri",
+        "username": "pg_user"
+      },
+      "instance_name": "pg_instance_name",
+      "label": "postgres",
+      "name": "pg_name",
+      "plan": "pg_plan",
+      "provider": null,
+      "syslog_drain_url": null,
+      "tags": [
+        "postgres"
+      ],
+      "volume_mounts": []
+    }
+  ],
+  "redis": [
+    {
+      "binding_name": "redis-cache",
+      "credentials": {
+        "host": "redis_cache_host",
+        "name": "redis_cache_name",
+        "password": "redis_cache_pass",
+        "port": "redis_cache_port",
+        "tls_enabled": true,
+        "uri": "redis_cache_uri"
+      },
+      "instance_name": "redis_cache_instance_name",
+      "label": "redis",
+      "name": "redis_cache_name",
+      "plan": "redis_cache_plan",
+      "provider": null,
+      "syslog_drain_url": null,
+      "tags": [
+        "redis"
+      ],
+      "volume_mounts": []
+    },
+    {
+      "binding_name": "redis-sidekiq",
+      "credentials": {
+        "host": "redis_sidekiq_host",
+        "name": "redis_sidekiq_name",
+        "password": "redis_sidekiq_pass",
+        "port": "redis_sidekiq_port",
+        "tls_enabled": true,
+        "uri": "redis_sidekiq_uri"
+      },
+      "instance_name": "redis_sidekiq_instance_name",
+      "label": "redis",
+      "name": "redis_sidekiq_name",
+      "plan": "redis_sidekiq_plan",
+      "provider": null,
+      "syslog_drain_url": null,
+      "tags": [
+        "redis"
+      ],
+      "volume_mounts": []
+    }
+  ]
+}
