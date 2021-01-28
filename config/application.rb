@@ -21,6 +21,7 @@ Bundler.require(*Rails.groups)
 # These are needed in configuration before autoloading kicks in
 require_relative "../lib/logging/colour_log_formatter"
 require_relative "../lib/modules/aws_ip_ranges"
+require_relative "../lib/vcap_services"
 
 module TeacherVacancyService
   class Application < Rails::Application
@@ -52,11 +53,11 @@ module TeacherVacancyService
       api_key: ENV["NOTIFY_KEY"],
     }
 
-    # Set up backing services through Cloudfoundry VCAP_SERVICES if running in production
+    # Set up backing services through VCAP_SERVICES if running on Cloudfoundry (GOV.UK PaaS)
     if ENV["VCAP_SERVICES"].present?
-      vcap_services = JSON.parse(ENV["VCAP_SERVICES"])
+      vcap_services = VcapServices.new(ENV["VCAP_SERVICES"])
 
-      config.redis_store_url = vcap_services["redis"][0]["credentials"]["uri"]
+      config.redis_store_url = vcap_services.service_url(:redis)
     else
       config.redis_store_url = ENV.fetch("REDIS_URL", "redis://localhost:6379")
     end
