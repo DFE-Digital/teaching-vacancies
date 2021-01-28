@@ -12,7 +12,7 @@ class Publishers::Vacancies::ApplicationController < Publishers::BaseController
   end
 
   def process_steps
-    ProcessSteps.new(steps: steps_config, adjust: steps_adjust, step: step_current)
+    @process_steps ||= ProcessSteps.new(steps: steps_config, adjust: steps_adjust, step: step_current)
   end
 
   def all_steps_valid?

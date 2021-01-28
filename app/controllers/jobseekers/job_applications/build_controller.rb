@@ -2,13 +2,9 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::ApplicationCont
   include Wicked::Wizard
   include Jobseekers::Wizardable
 
-  steps :personal_details, :professional_status, :personal_statement, :ask_for_support, :declarations
+  steps :personal_details, :professional_status, :personal_statement, :references, :ask_for_support, :declarations
 
-  helper_method :back_link_path, :job_application, :process_steps
-
-  def process_steps
-    ProcessSteps.new(steps: steps_config, adjust: 0, step: step)
-  end
+  helper_method :back_link_path, :job_application, :process_steps, :reference_info
 
   def show
     @form = FORMS[step].new unless step == "wicked_finish"
@@ -22,7 +18,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::ApplicationCont
     if params[:commit] == t("buttons.save_as_draft")
       job_application.assign_attributes(application_data: application_data.merge(form_params))
       job_application.save
-      redirect_to jobseekers_saved_jobs_path, success: t(".saved_job_application")
+      redirect_to jobseekers_saved_jobs_path, success: t("messages.jobseekers.job_applications.saved")
     elsif @form.valid?
       job_application.assign_attributes(application_data: application_data.merge(form_params))
       render_wizard job_application
@@ -52,5 +48,9 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::ApplicationCont
 
   def job_application
     @job_application ||= current_jobseeker.job_applications.find(params[:job_application_id])
+  end
+
+  def process_steps
+    @process_steps ||= ProcessSteps.new(steps: steps_config, adjust: 0, step: step)
   end
 end

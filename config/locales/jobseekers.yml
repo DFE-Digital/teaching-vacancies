@@ -61,7 +61,22 @@ en:
         process_title: Application steps
         professional_status:
           title: Professional status
-        saved_job_application: Your job application was saved
+        references:
+          no_children: >-
+            If you do not currently work with children, you must include a referee from the last time you did so.
+          no_references: No referees specified
+          references_required_html: >-
+            <span class='text-red'>Two referees are required</span> for this application. One of these must be your
+            current or most recent employer. If you are shortlisted, we will contact your referee before your interview.
+          title: References
+      details:
+        form:
+          references:
+            add_another: Add another referee
+            caption: References
+            description: If you are shortlisted, we will contact your referee before interview.
+            save: Save referee
+            title: Add a referee
       heading_component:
         caption: "%{job_title} at %{organisation_name}"
         heading: Application
@@ -85,6 +100,13 @@ en:
             - two referees
           save_and_return: You can save your application at any point and return to it later.
         title: Before you start
+      references:
+        email_address: Email address
+        job_title: Job title(s)
+        name: Name
+        organisation: Organisation
+        phone_number: Phone number
+        relationship_to_applicant: Relationship to applicant
       review:
         title: Review your application
       submit:

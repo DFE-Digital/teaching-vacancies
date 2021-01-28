@@ -26,6 +26,10 @@ en:
         label: new
         message: Improve your job listing using the new sections and features below
     jobseekers:
+      job_applications:
+        references:
+          deleted: Your reference was deleted
+        saved: Your job application was saved
       saved_jobs:
         unauthenticated: Sign in or create an account to save this job
     subscriptions:

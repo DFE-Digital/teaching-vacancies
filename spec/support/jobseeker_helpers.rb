@@ -37,6 +37,15 @@ module JobseekerHelpers
     choose "Yes", name: "jobseekers_job_application_declarations_form[right_to_work_in_uk]"
   end
 
+  def fill_in_reference
+    fill_in "Name", with: "Jim Referee"
+    fill_in "Job title", with: "Important job"
+    fill_in "Organisation", with: "Important organisation"
+    fill_in "Relationship to applicant", with: "Colleague"
+    fill_in "Email address", with: "test@email.com"
+    fill_in "Phone number", with: "09999 123456"
+  end
+
   def fill_in_personal_details
     fill_in "First name", with: "John"
     fill_in "Last name", with: "Frusciante"

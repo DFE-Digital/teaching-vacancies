@@ -204,6 +204,23 @@ en:
               not_a_number: Enter a year
             statutory_induction_complete:
               inclusion: Select an option
+
+        jobseekers/job_application/details/reference_form:
+          attributes:
+            email_address:
+              blank: Enter the referee's email address
+              invalid: Enter an email address in the correct format, like name@example.com
+            job_title:
+              blank: Enter the referee's job title
+            name:
+              blank: Enter the referee's name
+            organisation:
+              blank: Enter the referee's organisation
+            phone_number:
+              blank: Enter the referee's email address
+              invalid:  Enter a phone number in the corrent format
+            relationship_to_applicant:
+              blank: Enter the referee's relationship to the applicant
   activerecord:
     attributes:
       vacancy/expires_at: Application deadline (time)

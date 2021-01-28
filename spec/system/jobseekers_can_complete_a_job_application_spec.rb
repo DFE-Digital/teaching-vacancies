@@ -2,12 +2,11 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers can complete a job application" do
   let(:jobseeker) { create(:jobseeker) }
-  let(:vacancy) { create(:vacancy) }
+  let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: organisation }]) }
   let(:organisation) { create(:school) }
   let(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
   before do
-    vacancy.organisation_vacancies.create(organisation: organisation)
     allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(true)
     allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true)
     login_as(jobseeker, scope: :jobseeker)
@@ -29,6 +28,17 @@ RSpec.describe "Jobseekers can complete a job application" do
     expect(page).to have_content(I18n.t("jobseekers.job_applications.build.personal_statement.title"))
     validates_step_complete
     fill_in_personal_statement
+    click_on I18n.t("buttons.continue")
+
+    expect(page).to have_content(I18n.t("jobseekers.job_applications.build.references.title"))
+    expect(page).not_to have_content(I18n.t("buttons.continue"))
+    click_on I18n.t("buttons.add_reference")
+    click_on I18n.t("jobseekers.job_applications.details.form.references.save")
+    expect(page).to have_content("There is a problem")
+    fill_in_reference
+    click_on I18n.t("jobseekers.job_applications.details.form.references.add_another")
+    fill_in_reference
+    click_on I18n.t("jobseekers.job_applications.details.form.references.save")
     click_on I18n.t("buttons.continue")
 
     expect(page).to have_content(I18n.t("jobseekers.job_applications.build.ask_for_support.title"))
