@@ -25,13 +25,13 @@ RSpec.describe "Jobseekers can apply for a vacancy" do
     expect(activity.session_id).to eq(nil)
   end
 
-  scenario "it increments the get_more_info_counter" do
+  scenario "it increments the get_more_info_counter in the background" do
     vacancy = create(:vacancy, :published)
     vacancy.organisation_vacancies.create(organisation: school)
 
     visit job_path(vacancy)
 
-    expect { click_on I18n.t("jobs.apply") }.to change { vacancy.get_more_info_counter.to_i }.by(1)
+    expect { click_on I18n.t("jobs.apply") }.to have_enqueued_job(PersistVacancyGetMoreInfoClickJob).with(vacancy.id)
   end
 
   scenario "it triggers a job to write an express_interest_event to the audit table" do

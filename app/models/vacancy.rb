@@ -77,9 +77,6 @@ class Vacancy < ApplicationRecord
 
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
 
-  counter :page_view_counter
-  counter :get_more_info_counter
-
   def organisation
     organisation_vacancies.first&.organisation
   end

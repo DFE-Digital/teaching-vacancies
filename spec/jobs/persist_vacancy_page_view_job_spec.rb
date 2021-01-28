@@ -3,17 +3,13 @@ require "rails_helper"
 RSpec.describe PersistVacancyPageViewJob, type: :job do
   include ActiveJob::TestHelper
 
-  let(:id) { SecureRandom.uuid }
-  subject(:job) { described_class.perform_later(id) }
+  subject(:job) { described_class.perform_later(vacancy.id) }
 
-  it "executes perform" do
-    vacancy_page_view = double(:vacancy_page_view)
-    vacancy = double(:vacancy)
-    allow(Vacancy).to receive(:find).with(id).and_return(vacancy)
+  let(:vacancy) { create(:vacancy, total_pageviews: 99) }
 
-    expect(VacancyPageView).to receive(:new).with(vacancy).and_return(vacancy_page_view)
-    expect(vacancy_page_view).to receive(:persist!)
-
+  it "increments the counter" do
     perform_enqueued_jobs { job }
+
+    expect(vacancy.reload.total_pageviews).to eq(100)
   end
 end

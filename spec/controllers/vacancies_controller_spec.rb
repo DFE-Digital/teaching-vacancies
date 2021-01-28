@@ -153,13 +153,12 @@ RSpec.describe VacanciesController, type: :controller do
       end
 
       it "calls the track method if cookies not set" do
-        expect(VacancyPageView).to receive(:new).with(vacancy).and_return(vacancy_page_view)
-        expect(vacancy_page_view).to receive(:track)
+        expect(PersistVacancyPageViewJob).to receive(:perform_later).with(vacancy.id)
         subject
       end
 
       it "does not call the track method if smoke_test cookies set" do
-        expect(VacancyPageView).not_to receive(:new).with(vacancy)
+        expect(PersistVacancyPageViewJob).not_to receive(:perform_later)
         cookies[:smoke_test] = "1"
         subject
       end

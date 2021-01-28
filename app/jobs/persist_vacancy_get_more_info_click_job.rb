@@ -3,6 +3,6 @@ class PersistVacancyGetMoreInfoClickJob < ApplicationJob
 
   def perform(vacancy_id)
     vacancy = Vacancy.find(vacancy_id)
-    VacancyGetMoreInfoClick.new(vacancy).persist!
+    vacancy.increment!(:total_get_more_info_clicks)
   end
 end

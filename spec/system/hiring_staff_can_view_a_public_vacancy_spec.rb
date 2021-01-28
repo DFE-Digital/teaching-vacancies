@@ -7,6 +7,6 @@ RSpec.describe "Hiring staff can view a public vacancy" do
     vacancy.organisation_vacancies.create(organisation: school)
     stub_publishers_auth(urn: school.urn)
 
-    expect { visit job_path(vacancy) }.to change { vacancy.page_view_counter.to_i }.by(0)
+    expect { visit job_path(vacancy) }.not_to have_enqueued_job(PersistVacancyPageViewJob)
   end
 end

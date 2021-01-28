@@ -66,12 +66,8 @@ RSpec.describe CopyVacancy do
         create(:vacancy,
                job_title: "Maths teacher",
                slug: "maths-teacher",
-               weekly_pageviews: 4,
                total_pageviews: 4,
-               weekly_pageviews_updated_at: Date.current - 5.days,
-               total_pageviews_updated_at: Date.current - 5.days,
-               total_get_more_info_clicks: 6,
-               total_get_more_info_clicks_updated_at: Date.current - 5.days)
+               total_get_more_info_clicks: 6)
       end
       let(:result) { described_class.new(vacancy).call }
 
@@ -79,34 +75,12 @@ RSpec.describe CopyVacancy do
         expect(Vacancy.find(result.id).slug).to_not eq("maths-teacher")
       end
 
-      it "does not copy the weekly page views of a vacancy" do
-        expect(Vacancy.find(result.id).weekly_pageviews).to eq(0)
-      end
-
-      it "does not copy the weekly page views update time of a vacancy" do
-        travel_to(Date.current - 5.days) do
-          expect(Vacancy.find(result.id).weekly_pageviews_updated_at).to eq(Time.current)
-        end
-      end
-
-      it "does not copy the weekly page views of a vacancy" do
+      it "does not copy the total page views of a vacancy" do
         expect(Vacancy.find(result.id).total_pageviews).to eq(0)
       end
 
-      it "does not copy the weekly page views update time of a vacancy" do
-        travel_to(Date.current - 5.days) do
-          expect(Vacancy.find(result.id).total_pageviews_updated_at).to eq(Time.current)
-        end
-      end
-
-      it "does not copy the weekly page views of a vacancy" do
+      it "does not copy the get more info clicks of a vacancy" do
         expect(Vacancy.find(result.id).total_get_more_info_clicks).to eq(0)
-      end
-
-      it "does not copy the weekly page views update time of a vacancy" do
-        travel_to(Date.current - 5.days) do
-          expect(Vacancy.find(result.id).total_get_more_info_clicks_updated_at).to eq(Time.current)
-        end
       end
     end
   end
