@@ -7,7 +7,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the email" do
 
   let(:search_criteria) { { keyword: "Maths", location: "London" } }
   let(:frequency) { :daily }
-  let(:subscription) { create(:subscription, email: jobseeker.email, frequency: frequency, search_criteria: search_criteria.to_json) }
+  let(:subscription) { create(:subscription, email: jobseeker.email, frequency: frequency, search_criteria: search_criteria) }
 
   before do
     allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(jobseeker_accounts_enabled?)
@@ -121,8 +121,8 @@ RSpec.describe "Jobseekers can manage their job alerts from the email" do
         subscription.reload
         expect(subscription.email).to eq(jobseeker.email)
         expect(subscription.frequency).to eq("daily")
-        expect(JSON.parse(subscription.search_criteria).symbolize_keys[:keyword]).to eq("Maths")
-        expect(JSON.parse(subscription.search_criteria).symbolize_keys[:location]).to eq("London")
+        expect(subscription.search_criteria["keyword"]).to eq("Maths")
+        expect(subscription.search_criteria["location"]).to eq("London")
       end
     end
   end

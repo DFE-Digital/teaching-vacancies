@@ -14,4 +14,4 @@
         = render "jobseeker_account_prompt"
     - else
       p.govuk-body
-        = govuk_link_to(t(".back_to_search_results"), jobs_path(@subscription.search_criteria_to_h))
+        = govuk_link_to(t(".back_to_search_results"), jobs_path(@subscription.search_criteria))

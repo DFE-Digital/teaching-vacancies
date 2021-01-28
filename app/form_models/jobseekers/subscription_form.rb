@@ -13,11 +13,7 @@ class Jobseekers::SubscriptionForm
   validate :criteria_selected
 
   def initialize(params = {})
-    search_criteria = if params[:search_criteria].present?
-                        JSON.parse(params[:search_criteria]).symbolize_keys
-                      else
-                        {}
-                      end
+    search_criteria = params[:search_criteria]&.symbolize_keys || {}
 
     @email = params[:email]
     @frequency = params[:frequency]
