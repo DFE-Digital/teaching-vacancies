@@ -69,6 +69,16 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
         end
       end
     end
+
+    context "when there are no saved jobs" do
+      before do
+        visit jobseekers_saved_jobs_path
+      end
+
+      it "shows zero saved jobs" do
+        expect(page).to have_content(I18n.t("jobseekers.saved_jobs.index.zero_saved_jobs_title"))
+      end
+    end
   end
 
   context "when logged out" do

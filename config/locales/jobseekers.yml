@@ -143,9 +143,12 @@ en:
       index:
         added_html: '<span class="govuk-!-font-weight-bold">Added:</span> %{date}'
         application_deadline_html: '<span class="govuk-!-font-weight-bold">Application deadline:</span> %{date}'
+        link_find: Find a teaching job
         page_title: Saved jobs
         deadline_passed: Deadline passed
         delete: Delete
+        zero_saved_jobs_body_html: '%{link_to} and start saving jobs you may want to review and apply for later.'
+        zero_saved_jobs_title: You have no saved teaching jobs
       save: Save this job for later
       saved: Job saved
       success_html: >-
