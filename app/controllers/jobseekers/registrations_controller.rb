@@ -4,6 +4,7 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
   before_action :check_new_password_presence, only: %i[update]
   before_action :check_email_difference, only: %i[update]
   after_action :replace_devise_notice_flash_with_success!, only: %i[destroy update]
+  after_action :set_correct_update_message, only: %i[update]
   after_action :remove_devise_flash!, only: %i[create update]
 
   protected
@@ -40,6 +41,10 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
 
   def set_update_password
     @update_password = params[:update_password] == "true" || params[:commit] == t("buttons.update_password")
+  end
+
+  def set_correct_update_message
+    flash[:notice] = t("devise.passwords.updated") if flash[:notice] && params[:commit] == t("buttons.update_password")
   end
 
   def after_inactive_sign_up_path_for(_resource)
