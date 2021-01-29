@@ -10,8 +10,4 @@
   .govuk-link:not(:focus) {
     color: govuk-colour('white');
   }
-
-  @media screen and (max-width: 524px) {
-    display: none;
-  }
 }
