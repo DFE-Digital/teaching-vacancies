@@ -40,18 +40,4 @@ RSpec.describe VacancyPublishFeedback, type: :model do
       it { is_expected.not_to validate_presence_of(:email) }
     end
   end
-
-  describe "#published_on(date)" do
-    it "retrieves feedback submitted on the given date" do
-      feedback_today = create_list(:vacancy_publish_feedback, 3)
-      feedback_yesterday = create_list(:vacancy_publish_feedback, 2, created_at: 1.day.ago)
-      feedback_the_other_day = create_list(:vacancy_publish_feedback, 4, created_at: 2.days.ago)
-      feedback_some_other_day = create_list(:vacancy_publish_feedback, 6, created_at: 1.month.ago)
-
-      expect(VacancyPublishFeedback.published_on(Date.current).all).to match_array(feedback_today)
-      expect(VacancyPublishFeedback.published_on(1.day.ago)).to match_array(feedback_yesterday)
-      expect(VacancyPublishFeedback.published_on(2.days.ago)).to match_array(feedback_the_other_day)
-      expect(VacancyPublishFeedback.published_on(1.month.ago)).to match_array(feedback_some_other_day)
-    end
-  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_27_144122) do
+ActiveRecord::Schema.define(version: 2021_01_28_111522) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -80,6 +80,29 @@ ActiveRecord::Schema.define(version: 2021_01_27_144122) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["publisher_id"], name: "index_emergency_login_keys_on_publisher_id"
+  end
+
+  create_table "feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "feedback_type"
+    t.integer "rating"
+    t.text "comment"
+    t.float "recaptcha_score"
+    t.boolean "relevant_to_user"
+    t.jsonb "search_criteria"
+    t.uuid "job_alert_vacancy_ids", array: true
+    t.integer "unsubscribe_reason"
+    t.text "other_unsubscribe_reason_comment"
+    t.string "email"
+    t.integer "user_participation_response"
+    t.integer "visit_purpose"
+    t.text "visit_purpose_comment"
+    t.uuid "job_application_id"
+    t.uuid "jobseeker_id"
+    t.uuid "publisher_id"
+    t.uuid "subscription_id"
+    t.uuid "vacancy_id"
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|

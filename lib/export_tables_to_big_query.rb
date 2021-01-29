@@ -48,6 +48,7 @@ class ExportTablesToBigQuery
     activities
     audit_data
     ar_internal_metadata
+    feedbacks
     friendly_id_slugs
     location_polygons
     schema_migrations
