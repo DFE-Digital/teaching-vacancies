@@ -46,6 +46,7 @@ class ExportTablesToBigQuery
 
   EXCLUDE_TABLES = %w[
     activities
+    audit_data
     ar_internal_metadata
     friendly_id_slugs
     location_polygons
@@ -131,8 +132,6 @@ class ExportTablesToBigQuery
         schema.send(column_type, column_name)
       end
     end
-
-    db_table = db_table.where("created_at > ?", 1.month.ago) if db_table == AuditData
 
     record_count = total = db_table.count
     error_count = 0
