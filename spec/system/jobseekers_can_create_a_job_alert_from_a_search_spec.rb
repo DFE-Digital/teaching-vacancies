@@ -171,7 +171,7 @@ RSpec.describe "Jobseekers can create a job alert from a search" do
   end
 
   def fill_in_subscription_fields
-    fill_in "jobseekers_subscription_form[email]", with: jobseeker.email
+    fill_in "jobseekers_subscription_form[email]", with: jobseeker.email unless jobseeker_signed_in?
     choose I18n.t("helpers.label.jobseekers_subscription_form.frequency_options.daily")
   end
 end

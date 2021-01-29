@@ -20,7 +20,6 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard" do
 
     it "creates a job alert and redirects to the subscriptions index page" do
       click_on I18n.t("jobseekers.subscriptions.index.link_create")
-      and_email_is_prefilled
       an_invalid_form_is_rejected
       expect { create_a_job_alert }.to change { Subscription.count }.by(1)
       and_the_job_alert_is_on_the_index_page
@@ -38,7 +37,6 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard" do
 
     it "creates a job alert and redirects to the subscriptions index page" do
       click_on I18n.t("jobseekers.subscriptions.index.button_create")
-      and_email_is_prefilled
       an_invalid_form_is_rejected
       expect { create_a_job_alert }.to change { Subscription.count }.by(1)
       and_the_job_alert_is_on_the_index_page
@@ -48,10 +46,6 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard" do
   def an_invalid_form_is_rejected
     click_on I18n.t("buttons.subscribe")
     expect(page).to have_content("There is a problem")
-  end
-
-  def and_email_is_prefilled
-    expect(page).to have_field("jobseekers_subscription_form[email]", with: jobseeker.email)
   end
 
   def and_the_job_alert_is_on_the_index_page
