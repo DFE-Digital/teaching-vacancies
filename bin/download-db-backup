@@ -1,10 +1,10 @@
 #!/bin/bash
 set -eu
 
-FILENAME=backup.sql
+FILENAME=sanitised-backup.sql
 DATE=$(date +'%F')
 BUCKET=530003481352-tv-db-backups
-S3KEY=$(aws s3api list-objects-v2 --bucket "${BUCKET}" --prefix "${DATE}" --output text --query 'Contents[].{Key: Key}')
+S3KEY=$(aws s3api list-objects-v2 --bucket "${BUCKET}" --prefix "${DATE}-sanitised" --output text --query 'Contents[].{Key: Key}')
 if [ "${S3KEY}" = "None" ]; then
     echo "There are no files found matching the prefix ${DATE} in bucket ${BUCKET}"
 else

@@ -30,15 +30,16 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: eu-west-2
 
-    - name: Download backup from S3
+    - name: Download sanitised backup from S3
       shell: bash
       run: bin/download-db-backup
 
-    - name: Restore database from downloaded dump
+    - name: Restore sanitised database from downloaded dump
       shell: bash
       run: bin/restore-db
       env:
         CF_DESTINATION_ENVIRONMENT: ${{ github.event.inputs.environment }}
+        FILENAME: sanitised-backup.sql
 
     - name: Send success message to twd_tv_dev channel
       if: ${{ success() }}

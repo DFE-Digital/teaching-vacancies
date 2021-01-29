@@ -1,7 +1,6 @@
 #!/bin/bash
 set -eu
 
-FILENAME=backup.sql
 DATE=$(date +'%F')
 BUCKET=530003481352-tv-db-backups
 

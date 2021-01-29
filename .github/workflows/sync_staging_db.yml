@@ -10,7 +10,16 @@ jobs:
   sync:
     name: Sync staging database from production
     runs-on: ubuntu-20.04
-
+    services:
+      postgres:
+        image: postgres:11.6-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -30,11 +39,31 @@ jobs:
       shell: bash
       run: bin/dump-db
 
-    - name: Restore staging database from dump
+    - name: Sanitise the Database backup
+      run: |
+        echo "::group::Restore backup to intermediate database"
+        createdb ${DATABASE_NAME} && psql -f backup.sql -d ${DATABASE_NAME}
+        echo "::endgroup::"
+        echo "::group::Sanitise data"
+        psql -d ${DATABASE_NAME} -f db/scripts/sanitise.sql
+        echo "::endgroup::"
+
+        echo "::group::Backup Sanitised Database"
+        pg_dump --encoding utf8 --clean --no-owner --if-exists -d ${DATABASE_NAME} -f sanitised-backup.sql
+        echo "::endgroup::"
+      env:
+        DATABASE_NAME: teaching-vacancies
+        PGUSER:  postgres
+        PGPASSWORD: postgres
+        PGHOST: localhost
+        PGPORT: 5432
+
+    - name: Restore the sanitised database to staging environment
       shell: bash
       run: bin/restore-db
       env:
         CF_DESTINATION_ENVIRONMENT: staging
+        FILENAME: sanitised-backup.sql
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -45,6 +74,13 @@ jobs:
 
     - name: Upload backup to S3
       run: bin/upload-db-backup
+      env:
+        FILENAME: backup.sql
+
+    - name: Upload sanitised backup to S3
+      run: bin/upload-db-backup
+      env:
+        FILENAME: sanitised-backup.sql
 
     - name: Send success message to twd_tv_dev channel
       if: ${{ success() }}
