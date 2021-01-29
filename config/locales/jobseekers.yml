@@ -116,7 +116,7 @@ en:
         edit_password_title: Change password
       edit_email:
           current_password: Password
-          description: Enter the new email address for your Teaching Vacancies account
+          description: Enter your password and the new email address for your Teaching Vacancies account
           new_email: New email address
           title: Update email address
       edit_password:
@@ -126,8 +126,8 @@ en:
         title: Change password
       new:
         assistance:
-          content_html: Find out %{link_to} so that you can list teaching jobs at your school or Trust.
-          heading: School or Trust accounts
+          content_html: Find out %{link_to} so that you can list teaching jobs at your school or trust.
+          heading: School or trust accounts
           link: how to create an account
         description: >-
           If you have an account you can save teaching jobs you are interested in, apply for jobs and
@@ -156,8 +156,8 @@ en:
     sessions:
       new:
         assistance:
-          content_html: Find out %{link_to} so that you can list teaching jobs at your school or Trust.
-          heading: School or Trust accounts
+          content_html: Find out %{link_to} so that you can list teaching jobs at your school or trust.
+          heading: School or trust accounts
           link: how to create an account
         description: Use your Teaching Vacancies account details to sign in.
         forgotten: Forgotten your password?
@@ -175,7 +175,7 @@ en:
         title: Too many password attempts
     subscriptions:
       index:
-        button_create: Create job alert
+        button_create: Create a job alert
         frequency:
           daily: Daily, at around 3 pm
           weekly: Weekly (Friday at around 6 pm)

@@ -346,8 +346,8 @@ en:
       browse_all: Browse all teaching jobs in England
       title: Find a job in teaching
     signin_jobseekers:
-      title: Save and apply for jobs
-      description: "You don't need an account to search for a job. If you want to save or apply for a job sign in or "
+      title: Save jobs you are interested in
+      description_html: "Sign in or %{link} to save the jobs you are interested in. You don’t need an account to search for a job or set up job alerts."
       signup_link: create an account
     signin_publishers:
       title: List a teaching job
