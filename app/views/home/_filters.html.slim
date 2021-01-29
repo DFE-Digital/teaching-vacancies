@@ -9,7 +9,7 @@
           h3.govuk-label.govuk-label--s id="checkbox-group-heading-#{filter_type}"
             = t("jobs.filters.#{filter_type}")
 
-        .collection-component aria-labelledby="checkbox-group-heading-#{filter_type}"
+        .collection-component.collection-component--border aria-labelledby="checkbox-group-heading-#{filter_type}"
           = f.govuk_collection_check_boxes filter_type.to_sym,
             @jobs_search_form.send("#{filter_type.chop}_options".to_sym),
             :first,

@@ -1,5 +1,5 @@
-class Shared::Searchable::CollectionCheckboxesComponent < ViewComponent::Base
-  attr_accessor :form, :attribute_name, :collection, :value_method, :text_method, :hint_method
+class Shared::SearchableCollectionComponent < ViewComponent::Base
+  attr_accessor :form, :attribute_name, :collection, :value_method, :text_method, :hint_method, :threshold
 
   def initialize(form:, attribute_name:, collection:, value_method:, text_method:, hint_method:, threshold: 10)
     @form = form
@@ -10,11 +10,10 @@ class Shared::Searchable::CollectionCheckboxesComponent < ViewComponent::Base
     @text_method = text_method
     @hint_method = hint_method
 
-    @searchable = searchable
     @small = searchable
   end
 
   def searchable
-    @collection.count > @threshold
+    collection.count >= threshold
   end
 end

@@ -1,15 +1,15 @@
-.collection-component.scrollable
-  - if @searchable
+.collection-component.scrollable class=("collection-component--border" if searchable)
+  - if searchable
     .collection-component__search
       input.govuk-input.collection-component__search-input.icon.icon--left.icon--search placeholder="Search"
       button.collection-component__search-button type="submit"
 
-  = form.govuk_collection_check_boxes attribute_name,
+  = form.govuk_collection_radio_buttons attribute_name,
     collection,
     value_method,
     text_method,
     hint_method,
-    small: @small || @searchable,
-    classes: "checkbox-label__bold",
+    small: @small,
+    classes: "radiobutton-label__bold",
     legend: nil,
     hint: nil
