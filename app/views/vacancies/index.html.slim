@@ -13,9 +13,6 @@
 
 = render(Jobseekers::SearchResults::HeadingComponent.new(vacancies_search: @vacancies_search))
 
-- if ab_variant_for(:"2021_01_job_alert_link_test") == :legacy
-  = render(Jobseekers::SearchResults::JobAlertsLinkComponent.new(vacancies_search: @vacancies_search, count: @vacancies.count, origin: request.original_fullpath).with_variant(:legacy))
-
 .govuk-grid-row
   .govuk-grid-column-one-third class="govuk-!-margin-bottom-4"
     = render "filters"
@@ -76,5 +73,4 @@
         = paginate @vacancies_search.vacancies
       p.govuk-body#vacancies-stats-bottom aria-label="Number of results"
 
-    - if ab_variant_for(:"2021_01_job_alert_link_test") == :current
-      = render(Jobseekers::SearchResults::JobAlertsLinkComponent.new(vacancies_search: @vacancies_search, count: @vacancies.count, origin: request.original_fullpath))
+    = render(Jobseekers::SearchResults::JobAlertsLinkComponent.new(vacancies_search: @vacancies_search, count: @vacancies.count, origin: request.original_fullpath))
