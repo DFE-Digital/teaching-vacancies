@@ -18,6 +18,6 @@ RSpec.describe "Jobseekers can change password" do
     fill_in "jobseeker[password]", with: "4321newpass"
     click_on I18n.t("buttons.update_password")
 
-    expect(page).to have_content I18n.t("devise.registrations.updated")
+    expect(page).to have_content I18n.t("devise.passwords.updated")
   end
 end
