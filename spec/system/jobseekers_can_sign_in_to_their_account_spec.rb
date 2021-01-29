@@ -9,44 +9,63 @@ RSpec.describe "Jobseekers can sign in to their account" do
     within("nav") do
       click_on I18n.t("buttons.sign_in")
     end
+    sign_in_jobseeker(email: email, password: password)
   end
 
-  context "with correct credentials" do
-    scenario "takes them to the saved jobs page with a banner" do
-      sign_in_jobseeker
+  context "when entering correct details" do
+    let(:email) { jobseeker.email }
+    let(:password) { jobseeker.password }
 
+    it "signs in the jobseeker" do
       expect(current_path).to eq(jobseekers_saved_jobs_path)
       expect(page).to have_content(I18n.t("devise.sessions.signed_in"))
     end
   end
 
-  context "with a missing field that triggers form validation errors" do
-    scenario "displays a helpful error message" do
-      sign_in_jobseeker(email: nil, password: jobseeker.password)
+  context "when entering incorrect details" do
+    context "when details are missing" do
+      let(:email) { "" }
+      let(:password) { "" }
 
-      expect(current_path).to eq(jobseeker_session_path)
-      expect(page).not_to have_selector(".govuk-notification")
-      expect(page).to have_content(I18n.t("jobseeker_sign_in_errors.email.blank"))
+      it "does not sign in the jobseeker and displays an error message" do
+        expect(current_path).to eq(jobseeker_session_path)
+        expect(page).not_to have_selector(".govuk-notification")
+        expect(page).to have_content(I18n.t("activerecord.errors.models.jobseeker.attributes.email.blank"))
+        expect(page).to have_content(I18n.t("activerecord.errors.models.jobseeker.attributes.password.blank"))
+      end
+    end
+
+    context "when the account does not exist" do
+      let(:email) { "fake@email.com" }
+      let(:password) { jobseeker.password }
+
+      it "does not sign in the jobseeker and displays a general error message" do
+        expect(current_path).to eq(jobseeker_session_path)
+        expect(page).not_to have_selector(".govuk-notification")
+        expect(page).to have_content(I18n.t("devise.failure.invalid"))
+      end
+    end
+
+    context "when the password is incorrect" do
+      let(:email) { jobseeker.email }
+      let(:password) { "incorrect_password" }
+
+      it "does not sign in the jobseeker and displays a general error message" do
+        expect(current_path).to eq(jobseeker_session_path)
+        expect(page).not_to have_selector(".govuk-notification")
+        expect(page).to have_content(I18n.t("devise.failure.invalid"))
+      end
     end
   end
 
-  context "with a email that does not exist" do
-    scenario "displays a generic error message" do
-      sign_in_jobseeker(email: "i-forgot-my@email-address.com", password: jobseeker.password)
+  context "when entering incorrect details followed by correct detail" do
+    let(:email) { jobseeker.email }
+    let(:password) { "incorrect_password" }
 
-      expect(current_path).to eq(jobseeker_session_path)
-      expect(page).not_to have_selector(".govuk-notification")
-      expect(page).to have_content(I18n.t("devise.failure.invalid"))
-    end
-  end
-
-  context "with incorrect password" do
-    scenario "displays a generic error message" do
-      sign_in_jobseeker(email: jobseeker.email, password: "wrong and bad")
-
-      expect(current_path).to eq(jobseeker_session_path)
-      expect(page).not_to have_selector(".govuk-notification")
-      expect(page).to have_content(I18n.t("devise.failure.invalid"))
+    it "does not sign in the jobseeker, displays error messages, then signs in the jobseeker" do
+      sign_in_jobseeker(email: email, password: jobseeker.password)
+      expect(current_path).to eq(jobseekers_saved_jobs_path)
+      expect(page).to have_content(I18n.t("devise.sessions.signed_in"))
     end
   end
 end
