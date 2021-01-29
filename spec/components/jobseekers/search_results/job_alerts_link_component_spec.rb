@@ -20,38 +20,11 @@ RSpec.describe Jobseekers::SearchResults::JobAlertsLinkComponent, type: :compone
     context "when ReadOnlyFeature is disabled" do
       let(:read_only_enabled?) { false }
 
-      context "when ab testing variant is current" do
-        it "renders the current job alerts link" do
-          expect(inline_component.css(
-            "a#job-alert-link-sticky-gtm[href="\
-            "'#{Rails.application.routes.url_helpers.new_subscription_path(search_criteria: active_hash, origin: '/foo/bar')}']",
-          ).to_html).to include(I18n.t("subscriptions.link.text"))
-        end
-
-        it "does not render the legacy job alerts link" do
-          expect(inline_component.css(
-            "a#job-alert-link-heading-gtm[href="\
-            "'#{Rails.application.routes.url_helpers.new_subscription_path(search_criteria: active_hash, origin: '/foo/bar')}']",
-          ).to_html).to be_blank
-        end
-      end
-
-      context "when ab testing variant is legacy" do
-        subject { described_class.new(vacancies_search: vacancies_search, count: 1, origin: "/foo/bar").with_variant(:legacy) }
-
-        it "renders the legacy job alerts link" do
-          expect(inline_component.css(
-            "a#job-alert-link-heading-gtm[href="\
-            "'#{Rails.application.routes.url_helpers.new_subscription_path(search_criteria: active_hash, origin: '/foo/bar')}']",
-          ).to_html).to include(I18n.t("jobs.legacy_job_alert.link"))
-        end
-
-        it "does not render the current job alerts link" do
-          expect(inline_component.css(
-            "a#job-alert-link-sticky-gtm[href="\
-            "'#{Rails.application.routes.url_helpers.new_subscription_path(search_criteria: active_hash, origin: '/foo/bar')}']",
-          ).to_html).to be_blank
-        end
+      it "renders the job alerts link" do
+        expect(inline_component.css(
+          "a#job-alert-link-sticky-gtm[href="\
+          "'#{Rails.application.routes.url_helpers.new_subscription_path(search_criteria: active_hash, origin: '/foo/bar')}']",
+        ).to_html).to include(I18n.t("subscriptions.link.text"))
       end
     end
 
