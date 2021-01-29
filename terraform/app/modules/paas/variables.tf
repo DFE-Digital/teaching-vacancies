@@ -34,9 +34,10 @@ variable parameter_store_environment {
 variable postgres_service_plan {
 }
 
-variable redis_service_plan {
+variable redis_cache_service_plan {
 }
-
+variable redis_queue_service_plan {
+}
 variable service_name {
 }
 variable space_name {
