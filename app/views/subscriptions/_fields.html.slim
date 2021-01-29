@@ -43,6 +43,9 @@ div class="govuk-!-margin-bottom-7"
     items: items,
     options: { remove_buttons: false, mobile_variant: false, close_all: false }))
 
-= f.govuk_email_field :email, label: { size: "s" }, required: true
+- if jobseeker_signed_in?
+  = f.hidden_field :email, value: current_jobseeker.email
+- else
+  = f.govuk_email_field :email, label: { size: "s" }, required: true
 
 = f.govuk_collection_radio_buttons :frequency, Subscription.frequencies.keys, :to_s
