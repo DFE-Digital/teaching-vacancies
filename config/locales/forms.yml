@@ -126,14 +126,14 @@ en:
           Where relevant, state if the salary is full-time equivalent
 
     label:
-      account_feedback:
+      jobseekers_account_feedback_form:
         rating_options:
           highly_satisfied: Highly satisfied
           somewhat_satisfied: Somewhat satisfied
           neither: Neither satisfied nor dissatisfied
           somewhat_dissatisfied: Somewhat dissatisfied
           highly_dissatisfied: Highly dissatisfied
-        suggestions: Do you have any suggestions on how we could improve the service?
+        comment: Do you have any suggestions on how we could improve the service?
       general_feedback:
         visit_purpose_options:
           find_teaching_job: Find a job in teaching
@@ -261,7 +261,7 @@ en:
         town_or_city: Town or city
 
     legend:
-      account_feedback:
+      jobseekers_account_feedback_form:
         rating_html: >-
           How satisfied are you with your experience of using Teaching Vacancies?
           (<span class='text-red'>Required</span>)

@@ -2,10 +2,6 @@ en:
   cookies_preferences_errors: &cookies_preferences_errors
     cookies_consent:
       inclusion: Please select an option
-  job_alert_feedback_errors: &job_alert_feedback_errors
-    comment:
-      blank: You have not submitted any further feedback.
-      too_long: Feedback must not be more than 1,200 characters
   nqt_job_alert_errors: &nqt_job_alert_errors
     keywords:
       blank: Enter keyword(s)
@@ -31,6 +27,17 @@ en:
       inclusion: Tell us why you want to unsubscribe
     other_reason:
       blank: Tell us why you want to unsubscribe
+
+  # Feedback forms
+  account_feedback_errors: &account_feedback_errors
+    rating:
+      inclusion: Select how satisfied or dissatisfied you are
+    comment:
+      too_long: Feedback must not be more than 1,200 characters
+  job_alert_feedback_errors: &job_alert_feedback_errors
+    comment:
+      blank: You have not submitted any further feedback.
+      too_long: Feedback must not be more than 1,200 characters
 
   # Hiring staff journey
   job_location_errors: &job_location_errors
@@ -109,6 +116,9 @@ en:
         cookies_preferences_form:
           attributes:
             <<: *cookies_preferences_errors
+        jobseekers/account_feedback_form:
+          attributes:
+            <<: *account_feedback_errors
         jobseekers/job_alert_feedback_form:
           attributes:
             <<: *job_alert_feedback_errors
@@ -229,10 +239,6 @@ en:
         part_time: Part-time
     errors:
       models:
-        account_feedback:
-          attributes:
-            rating:
-              inclusion: Select how satisfied or dissatisfied you are
         jobseeker:
           attributes:
             email:
