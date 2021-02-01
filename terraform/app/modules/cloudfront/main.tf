@@ -144,15 +144,6 @@ resource aws_cloudfront_distribution default {
     ssl_support_method  = "sni-only"
   }
 
-  dynamic "logging_config" {
-    for_each = var.cloudfront_enable_standard_logs ? [1] : []
-    content {
-      include_cookies = false
-      bucket          = data.aws_s3_bucket.cloudfront_logs.bucket_domain_name
-      prefix          = var.environment
-    }
-  }
-
   tags = {
     Name        = "${var.service_name}-${var.environment}"
     Environment = var.environment

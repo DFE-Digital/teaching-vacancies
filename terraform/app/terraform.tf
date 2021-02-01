@@ -38,18 +38,17 @@ terraform {
 }
 
 module cloudfront {
-  source                          = "./modules/cloudfront"
-  for_each                        = var.distribution_list
-  environment                     = var.environment
-  service_name                    = local.service_name
-  cloudfront_origin_domain_name   = each.value.cloudfront_origin_domain_name
-  offline_bucket_domain_name      = each.value.offline_bucket_domain_name
-  offline_bucket_origin_path      = each.value.offline_bucket_origin_path
-  cloudfront_enable_standard_logs = each.value.cloudfront_enable_standard_logs
-  route53_zones                   = var.route53_zones
-  is_production                   = local.is_production
-  route53_a_records               = local.route53_a_records
-  route53_cname_record            = local.route53_cname_record
+  source                        = "./modules/cloudfront"
+  for_each                      = var.distribution_list
+  environment                   = var.environment
+  service_name                  = local.service_name
+  cloudfront_origin_domain_name = each.value.cloudfront_origin_domain_name
+  offline_bucket_domain_name    = each.value.offline_bucket_domain_name
+  offline_bucket_origin_path    = each.value.offline_bucket_origin_path
+  route53_zones                 = var.route53_zones
+  is_production                 = local.is_production
+  route53_a_records             = local.route53_a_records
+  route53_cname_record          = local.route53_cname_record
   providers = {
     aws.default       = aws.default
     aws.aws_us_east_1 = aws.aws_us_east_1
