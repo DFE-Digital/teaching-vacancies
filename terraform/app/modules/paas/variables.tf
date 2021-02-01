@@ -34,9 +34,10 @@ variable parameter_store_environment {
 variable postgres_service_plan {
 }
 
-variable redis_service_plan {
+variable redis_cache_service_plan {
 }
-
+variable redis_queue_service_plan {
+}
 variable service_name {
 }
 variable space_name {
@@ -94,6 +95,7 @@ locals {
   )
   app_cloudfoundry_service_instances = [
     cloudfoundry_service_instance.postgres_instance.id,
+    cloudfoundry_service_instance.redis_cache_instance.id,
     cloudfoundry_service_instance.redis_instance.id
   ]
   app_user_provided_service_bindings = var.papertrail_service_binding_enable ? [cloudfoundry_user_provided_service.papertrail.id] : []
@@ -103,7 +105,8 @@ locals {
   )
   papertrail_service_name  = "${var.service_name}-papertrail-${var.environment}"
   postgres_service_name    = "${var.service_name}-postgres-${var.environment}"
-  redis_service_name       = "${var.service_name}-redis-${var.environment}"
+  redis_queue_service_name = "${var.service_name}-redis-queue-${var.environment}"
+  redis_cache_service_name = "${var.service_name}-redis-cache-${var.environment}"
   web_app_name             = "${var.service_name}-${var.environment}"
   worker_app_start_command = "MALLOC_ARENA_MAX=2 bundle exec sidekiq -C config/sidekiq.yml"
   worker_app_name          = "${var.service_name}-worker-${var.environment}"
