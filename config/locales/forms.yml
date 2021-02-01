@@ -2,6 +2,7 @@ en:
   buttons:
     accept_all_cookies: Accept all cookies
     accept_and_continue: Accept and continue
+    add_reference: Add a referee
     apply_filters: Apply filters
     back: Back
     back_to_manage_jobs: Back to manage jobs
@@ -13,6 +14,7 @@ en:
     create_job: Create a job listing
     delete: Delete
     dismiss: Dismiss
+    edit: Edit
     find: Find
     go_to_teaching_vacancies: Go to Teaching Vacancies
     hide_filters: Hide filters
@@ -169,13 +171,11 @@ en:
         support_needed_options:
           "no": "No"
           "yes": "Yes"
-
       jobseekers_job_application_declarations_form:
         close_relationships_details: Please give details
         close_relationships_options:
           "no": "No"
           "yes": "Yes"
-
       jobseekers_job_application_personal_details_form:
         your_address_html: Your address (<span class='text-red'>Required</span>)
         building_and_street: Building and street
@@ -187,16 +187,22 @@ en:
         previous_names: Previous names
         town_or_city: Town or city
         teacher_reference_number_html: Teacher reference number (<span class='text-red'>Required</span>)
-
       jobseekers_job_application_personal_statement_form:
         personal_statement_html: Your personal statement (<span class='text-red'>Required</span>)
-
       jobseekers_job_application_professional_status_form:
         qualified_teacher_status_options:
           "no": "No"
           on_track: I'm on track to receive my QTS
           "yes": "Yes"
         qualified_teacher_status_year: Year QTS was awarded
+
+      jobseekers_job_application_details_reference_form:
+        email_address_html: Email address (<span class='text-red'>Required</span>)
+        job_title_html: Job title (<span class='text-red'>Required</span>)
+        name_html: Name (<span class='text-red'>Required</span>)
+        organisation_html: Organisation (<span class='text-red'>Required</span>)
+        relationship_to_applicant_html: Relationship to applicant (<span class='text-red'>Required</span>)
+        phone_number_html: Phone number (<span class='text-red'>Required</span>)
 
       publishers_organisation_form:
         description: Description of %{organisation_type}

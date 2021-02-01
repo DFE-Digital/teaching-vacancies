@@ -2,8 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers can submit a job application" do
   let(:jobseeker) { create(:jobseeker) }
-  let(:vacancy) { create(:vacancy) }
-  let(:job_application) { create(:job_application, :complete, jobseeker: jobseeker, vacancy: vacancy) }
+  let(:job_application) { create(:job_application, :complete, jobseeker: jobseeker) }
 
   before do
     allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(true)

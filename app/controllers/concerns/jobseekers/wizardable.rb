@@ -3,6 +3,7 @@ module Jobseekers::Wizardable
     personal_details: Jobseekers::JobApplication::PersonalDetailsForm,
     professional_status: Jobseekers::JobApplication::ProfessionalStatusForm,
     personal_statement: Jobseekers::JobApplication::PersonalStatementForm,
+    references: Jobseekers::JobApplication::ReferencesForm,
     ask_for_support: Jobseekers::JobApplication::AskForSupportForm,
     declarations: Jobseekers::JobApplication::DeclarationsForm,
   }.freeze
@@ -11,6 +12,7 @@ module Jobseekers::Wizardable
     personal_details: :personal_details_params,
     professional_status: :professional_status_params,
     personal_statement: :personal_statement_params,
+    references: :references_params,
     ask_for_support: :ask_for_support_params,
     declarations: :declarations_params,
   }.freeze
@@ -20,6 +22,7 @@ module Jobseekers::Wizardable
       personal_details: { number: 1, title: t(".personal_details.title") },
       professional_status: { number: 3, title: t(".professional_status.title") },
       personal_statement: { number: 5, title: t(".personal_statement.title") },
+      references: { number: 6, title: t(".references.title") },
       ask_for_support: { number: 8, title: t(".ask_for_support.title") },
       declarations: { number: 9, title: t(".declarations.title") },
     }.freeze
@@ -44,6 +47,10 @@ module Jobseekers::Wizardable
                       .permit(:personal_statement)
   end
 
+  def references_params(_params)
+    {}
+  end
+
   def ask_for_support_params(params)
     ParameterSanitiser.call(params)
                       .require(:jobseekers_job_application_ask_for_support_form)
@@ -54,5 +61,16 @@ module Jobseekers::Wizardable
     ParameterSanitiser.call(params)
                       .require(:jobseekers_job_application_declarations_form)
                       .permit(:banned_or_disqualified, :close_relationships, :close_relationships_details, :right_to_work_in_uk)
+  end
+
+  def reference_info
+    @reference_info ||= [
+      { attribute: "name", title: t("jobseekers.job_applications.references.name") },
+      { attribute: "job_title", title: t("jobseekers.job_applications.references.job_title") },
+      { attribute: "organisation", title: t("jobseekers.job_applications.references.organisation") },
+      { attribute: "relationship_to_applicant", title: t("jobseekers.job_applications.references.relationship_to_applicant") },
+      { attribute: "email_address", title: t("jobseekers.job_applications.references.email_address") },
+      { attribute: "phone_number", title: t("jobseekers.job_applications.references.phone_number") },
+    ]
   end
 end

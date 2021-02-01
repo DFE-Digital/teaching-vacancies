@@ -141,6 +141,14 @@ ActiveRecord::Schema.define(version: 2021_01_28_111522) do
     t.index ["subscription_id"], name: "index_job_alert_feedbacks_on_subscription_id"
   end
 
+  create_table "job_application_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "details_type"
+    t.uuid "job_application_id"
+    t.jsonb "data"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "job_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "status"
     t.datetime "created_at", precision: 6, null: false

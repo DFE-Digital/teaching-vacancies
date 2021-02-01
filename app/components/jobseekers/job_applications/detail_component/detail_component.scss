@@ -1,0 +1,24 @@
+.detail {
+  background: govuk-colour('white');
+  border: 5px solid govuk-colour('light-grey');
+  box-sizing: border-box;
+
+  .detail__title {
+    h4 {
+      background-color: govuk-colour('light-grey');
+      padding: govuk-spacing(1) govuk-spacing(3) govuk-spacing(2) govuk-spacing(3);
+    }
+  }
+
+  .detail__links {
+    .button_to {
+      vertical-align: bottom;
+    }
+
+    a, input {
+      @include govuk-font(16);
+
+      margin-right: govuk-spacing(3);
+    }
+  }
+}

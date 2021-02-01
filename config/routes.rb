@@ -33,7 +33,9 @@ Rails.application.routes.draw do
         end
 
         resources :job_applications, only: [] do
-          resources :build, only: %i[show update], controller: "job_applications/build"
+          resources :build, only: %i[show update], controller: "job_applications/build" do
+            resources :details, only: %i[new create edit update destroy], controller: "job_applications/details"
+          end
           get :review
           post :submit
         end

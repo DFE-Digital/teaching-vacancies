@@ -1,0 +1,20 @@
+- content_for :page_title_prefix, t(".#{build_step}.title")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = govuk_back_link text: t("buttons.back"), href: back_link_path, classes: "govuk-!-margin-bottom-9"
+
+    .govuk-caption-l = t(".#{build_step}.caption")
+    h1.govuk-heading-xl = t(".#{build_step}.title")
+
+    p.govuk-body = t(".#{build_step}.description")
+
+    = form_for form, url: url, method: method do |f|
+      = f.govuk_error_summary
+
+      = render "#{build_step}_fields", f: f
+
+      = f.govuk_submit t(".#{build_step}.save") do
+        = f.govuk_submit t(".#{build_step}.add_another"), secondary: true
+
+    = govuk_link_to t("buttons.cancel"), back_link_path
