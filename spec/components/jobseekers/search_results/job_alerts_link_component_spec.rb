@@ -9,6 +9,7 @@ RSpec.describe Jobseekers::SearchResults::JobAlertsLinkComponent, type: :compone
   before do
     allow(vacancies_search).to receive(:active_criteria).and_return(active_hash)
     allow(vacancies_search).to receive(:active_criteria?).and_return(search_params_present?)
+    allow(vacancies_search).to receive(:point_coordinates).and_return(true)
   end
 
   let!(:inline_component) { render_inline(subject) }
@@ -19,7 +20,7 @@ RSpec.describe Jobseekers::SearchResults::JobAlertsLinkComponent, type: :compone
     it "renders the job alerts link" do
       expect(inline_component.css(
         "a#job-alert-link-sticky-gtm[href="\
-        "'#{Rails.application.routes.url_helpers.new_subscription_path(search_criteria: active_hash, origin: '/foo/bar')}']",
+        "'#{Rails.application.routes.url_helpers.new_subscription_path(search_criteria: active_hash, origin: '/foo/bar', coordinates_present: true)}']",
       ).to_html).to include(I18n.t("subscriptions.link.text"))
     end
   end
