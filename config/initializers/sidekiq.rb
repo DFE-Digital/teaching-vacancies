@@ -7,12 +7,12 @@ options = {
 # Redis concurrency must be plus 5 https://github.com/mperham/sidekiq/wiki/Using-Redis#complete-control
 Sidekiq.configure_server do |config|
   config.options.merge!(options)
-  config.redis = { url: Rails.configuration.redis_store_url, network_timeout: 5, size: config.options[:concurrency] + 5 }
+  config.redis = { url: Rails.configuration.redis_queue_url, network_timeout: 5, size: config.options[:concurrency] + 5 }
 end
 
 Sidekiq.configure_client do |config|
   config.options.merge!(options)
-  config.redis = { url: Rails.configuration.redis_store_url, network_timeout: 5, size: config.options[:concurrency] + 5 }
+  config.redis = { url: Rails.configuration.redis_queue_url, network_timeout: 5, size: config.options[:concurrency] + 5 }
 end
 
 schedule_file = "config/schedule.yml"
