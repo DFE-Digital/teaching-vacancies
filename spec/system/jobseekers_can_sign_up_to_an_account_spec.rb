@@ -9,11 +9,13 @@ RSpec.describe "Jobseekers can sign up to an account" do
   end
 
   describe "creating an account" do
-    it "validates and submits the form, sends confirmation email and redirects to check your email page" do
+    it "validates and submits the form, triggers account created event, sends confirmation email and redirects to check your email page" do
       visit new_jobseeker_registration_path
       click_on I18n.t("buttons.continue")
       expect(page).to have_content("There is a problem")
-      expect { sign_up_jobseeker }.to change { delivered_emails.count }.by(1)
+      expect { sign_up_jobseeker }.to have_triggered_event(:jobseeker_account_created).with_data(
+        user_anonymised_jobseeker_id: anything,
+      ).and change { delivered_emails.count }.by(1)
       expect(current_path).to eq(jobseekers_check_your_email_path)
     end
   end
@@ -25,8 +27,10 @@ RSpec.describe "Jobseekers can sign up to an account" do
     end
 
     context "when the confirmation token is valid" do
-      it "confirms email and redirects to saved jobs page" do
-        visit first_link_from_last_mail
+      it "confirms email, triggers email confirmed event and redirects to saved jobs page" do
+        expect { visit first_link_from_last_mail }.to have_triggered_event(:jobseeker_email_confirmed).with_base_data(
+          user_anonymised_jobseeker_id: StringAnonymiser.new(created_jobseeker.id).to_s,
+        )
         expect(current_path).to eq(jobseekers_saved_jobs_path)
         expect(page).to have_content(I18n.t("devise.confirmations.confirmed"))
       end

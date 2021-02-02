@@ -6,6 +6,7 @@ class Jobseekers::ConfirmationsController < Devise::ConfirmationsController
 
   def after_confirmation_path_for(resource_name, resource)
     sign_in(resource)
+    request_event.trigger(:jobseeker_email_confirmed)
     stored_location_for(resource_name) || jobseekers_saved_jobs_path
   end
 
