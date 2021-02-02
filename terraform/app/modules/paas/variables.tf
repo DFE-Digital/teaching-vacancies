@@ -38,8 +38,6 @@ variable redis_cache_service_plan {
 }
 variable redis_queue_service_plan {
 }
-variable redis_old_service_plan {
-}
 variable service_name {
 }
 variable space_name {
@@ -99,7 +97,6 @@ locals {
     cloudfoundry_service_instance.postgres_instance.id,
     cloudfoundry_service_instance.redis_cache_instance.id,
     cloudfoundry_service_instance.redis_queue_instance.id,
-    cloudfoundry_service_instance.redis_instance.id
   ]
   app_user_provided_service_bindings = var.papertrail_service_binding_enable ? [cloudfoundry_user_provided_service.papertrail.id] : []
   app_service_bindings = concat(
@@ -108,7 +105,6 @@ locals {
   )
   papertrail_service_name  = "${var.service_name}-papertrail-${var.environment}"
   postgres_service_name    = "${var.service_name}-postgres-${var.environment}"
-  redis_old_service_name   = "${var.service_name}-redis-old-${var.environment}"
   redis_cache_service_name = "${var.service_name}-redis-cache-${var.environment}"
   redis_queue_service_name = "${var.service_name}-redis-queue-${var.environment}"
   web_app_name             = "${var.service_name}-${var.environment}"

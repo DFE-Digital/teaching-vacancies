@@ -26,7 +26,6 @@ paas_api_url                           = "https://api.london.cloud.service.gov.u
 paas_space_name                        = "teaching-vacancies-dev"
 paas_papertrail_service_binding_enable = false
 paas_postgres_service_plan             = "tiny-unencrypted-11"
-paas_redis_old_service_plan            = "micro-5_x"
 paas_redis_cache_service_plan          = "micro-5_x"
 paas_redis_queue_service_plan          = "micro-5_x"
 paas_app_start_timeout                 = "180"
