@@ -6,9 +6,9 @@ resource cloudfoundry_service_instance postgres_instance {
 }
 
 resource cloudfoundry_service_instance redis_instance {
-  name         = local.redis_queue_service_name
+  name         = local.redis_old_service_name
   space        = data.cloudfoundry_space.space.id
-  service_plan = data.cloudfoundry_service.redis.service_plans[var.redis_queue_service_plan]
+  service_plan = data.cloudfoundry_service.redis.service_plans[var.redis_old_service_plan]
 }
 
 resource cloudfoundry_service_instance redis_cache_instance {
