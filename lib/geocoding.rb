@@ -1,6 +1,4 @@
 class Geocoding
-  CACHE_DURATION = 30.days
-
   attr_reader :params, :location
 
   def initialize(location)
@@ -8,9 +6,7 @@ class Geocoding
   end
 
   def coordinates
-    Rails.cache.fetch([:geocoding, location], expires_in: CACHE_DURATION) do
-      Geocoder.coordinates(location) || no_match
-    end
+    Geocoder.coordinates(location) || no_match
   end
 
   private
