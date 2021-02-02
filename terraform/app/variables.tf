@@ -75,6 +75,10 @@ variable paas_redis_cache_service_plan {
   default = "micro-5_x"
 }
 
+variable paas_redis_queue_service_plan {
+  default = "micro-5_x"
+}
+
 variable paas_space_name {
 }
 

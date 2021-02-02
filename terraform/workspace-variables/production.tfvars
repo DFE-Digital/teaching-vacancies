@@ -28,6 +28,7 @@ paas_papertrail_service_binding_enable = true
 paas_postgres_service_plan             = "medium-ha-11"
 paas_redis_old_service_plan            = "small-ha-4_x"
 paas_redis_cache_service_plan          = "tiny-5_x"
+paas_redis_queue_service_plan          = "micro-ha-5_x"
 paas_app_start_timeout                 = "180"
 paas_app_stopped                       = false
 paas_web_app_deployment_strategy       = "blue-green-v2"
