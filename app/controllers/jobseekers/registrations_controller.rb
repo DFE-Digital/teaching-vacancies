@@ -48,7 +48,8 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
     flash[:notice] = t("devise.passwords.updated") if flash[:notice] && params[:commit] == t("buttons.update_password")
   end
 
-  def after_inactive_sign_up_path_for(_resource)
+  def after_inactive_sign_up_path_for(resource)
+    request_event.trigger(:jobseeker_account_created, user_anonymised_jobseeker_id: StringAnonymiser.new(resource.id))
     jobseekers_check_your_email_path
   end
 
