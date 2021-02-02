@@ -9,6 +9,7 @@ resource cloudfoundry_service_instance redis_instance {
   name         = local.redis_queue_service_name
   space        = data.cloudfoundry_space.space.id
   service_plan = data.cloudfoundry_service.redis.service_plans[var.redis_queue_service_plan]
+  json_params  = "{\"maxmemory_policy\": \"noeviction\"}"
 }
 
 resource cloudfoundry_service_instance redis_cache_instance {
