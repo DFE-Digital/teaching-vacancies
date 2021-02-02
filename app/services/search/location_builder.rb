@@ -6,18 +6,13 @@ class Search::LocationBuilder
 
   include DistanceHelper
 
-  attr_reader :buffer_radius, :location, :location_category, :location_filter, :polygon_boundaries, :radius
+  attr_reader :buffer_radius, :location, :location_filter, :polygon_boundaries, :radius
 
-  def initialize(location, radius, location_category, buffer_radius)
-    @location = location || location_category
+  def initialize(location, radius, buffer_radius)
+    @location = location
     @radius = (radius || DEFAULT_RADIUS).to_i
     @buffer_radius = buffer_radius
     @location_filter = {}
-    @location_category = if @location.present? && LocationPolygon.include?(@location)
-                           @location
-                         else
-                           location_category
-                         end
 
     if NATIONWIDE_LOCATIONS.include?(@location&.downcase)
       @location = nil
@@ -29,14 +24,13 @@ class Search::LocationBuilder
   end
 
   def search_with_polygons?
-    (location_category && LocationPolygon.include?(location_category)) ||
-      (location && LocationPolygon.include?(location))
+    location && LocationPolygon.include?(location)
   end
 
   private
 
   def initialize_polygon_boundaries
-    locations = [LocationPolygon.with_name(location_category)]
+    locations = [LocationPolygon.with_name(location)]
 
     if locations.none? && LocationPolygon.composite?(location)
       locations = LocationPolygon.component_location_names(location).map do |component_location_name|

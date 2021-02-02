@@ -26,8 +26,8 @@ class Jobseekers::NqtJobAlertsForm
   end
 
   def location_reference
-    if location.present? && location_category
-      I18n.t("subscriptions.location_category_text", location: location_category)
+    if LocationPolygon.include?(location)
+      I18n.t("subscriptions.location_polygon_text", location: location)
     else
       I18n.t("subscriptions.location_radius_text", location: location, radius: 10)
     end
@@ -40,12 +40,7 @@ class Jobseekers::NqtJobAlertsForm
       keyword: "nqt #{keywords}",
       location: location,
       radius: 10,
-      location_category: location_category.presence,
     }.compact
-  end
-
-  def location_category
-    LocationPolygon.include?(location) ? location : false
   end
 
   def unique_job_alert

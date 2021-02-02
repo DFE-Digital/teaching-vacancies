@@ -33,9 +33,8 @@ class Search::SearchBuilder
   private
 
   def build_location_search
-    @location_search = Search::LocationBuilder.new(@params_hash[:location], @params_hash[:radius], @params_hash[:location_category], @params_hash[:buffer_radius])
+    @location_search = Search::LocationBuilder.new(@params_hash[:location], @params_hash[:radius], @params_hash[:buffer_radius])
     @point_coordinates = @location_search.location_filter[:point_coordinates]
-    @params_hash[:location_category] = @location_search.location_category if @location_search.search_with_polygons?
   end
 
   def build_search_filters

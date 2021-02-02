@@ -31,7 +31,7 @@ RSpec.describe LocationPolygon, type: :model do
     end
 
     context "when location is not included on the list of locations to import" do
-      it "returns true" do
+      it "returns false" do
         expect(described_class.include?("Canterbury")).to be_falsey
       end
     end
