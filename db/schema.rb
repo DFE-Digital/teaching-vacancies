@@ -329,9 +329,9 @@ ActiveRecord::Schema.define(version: 2021_01_28_111522) do
     t.datetime "stats_updated_at"
     t.uuid "publisher_id"
     t.datetime "expires_at"
+    t.string "legacy_job_roles", array: true
     t.string "salary"
     t.integer "completed_step"
-    t.string "legacy_job_roles", array: true
     t.text "about_school"
     t.string "state", default: "create"
     t.string "subjects", array: true

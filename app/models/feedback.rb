@@ -5,6 +5,5 @@ class Feedback < ApplicationRecord
   enum unsubscribe_reason: { not_relevant: 0, job_found: 1, circumstances_change: 2, other_reason: 3 }
   enum visit_purpose: { find_teaching_job: 1, list_teaching_job: 2, other_purpose: 0 }
 
-  validates :comment, length: { maximum: 1200 }, if: :comment?
   validate :feedback_type, :presence
 end

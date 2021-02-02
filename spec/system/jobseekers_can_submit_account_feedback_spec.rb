@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Jobseekers can submit account survey" do
+RSpec.describe "Jobseekers can submit account feedback" do
   let(:jobseeker) { create(:jobseeker) }
 
   before do
@@ -8,20 +8,21 @@ RSpec.describe "Jobseekers can submit account survey" do
   end
 
   context "when logged in" do
+    let(:comment) { "amazing account features!" }
+
     before do
       login_as(jobseeker, scope: :jobseeker)
       visit jobseekers_saved_jobs_path
     end
 
-    it "submits account survey" do
+    it "submits account feedback and triggers a RequestEvent" do
       click_on I18n.t("jobseekers.accounts.footer.survey_link")
-      click_button I18n.t("buttons.submit")
 
-      expect(page).to have_content("There is a problem")
+      choose I18n.t("helpers.label.jobseekers_account_feedback_form.rating_options.somewhat_satisfied")
+      fill_in "jobseekers_account_feedback_form[comment]", with: comment
 
-      choose I18n.t("helpers.label.account_feedback.rating_options.somewhat_satisfied")
-      fill_in "account_feedback[suggestions]", with: "amazing account features!"
-      click_button I18n.t("buttons.submit")
+      expect { click_button I18n.t("buttons.submit") }.to have_triggered_event(:jobseeker_account_feedback_provided)
+        .with_data(comment: comment, rating: "somewhat_satisfied")
 
       expect(current_path).to eq(jobseekers_saved_jobs_path)
       expect(page).to have_content(I18n.t("jobseekers.account_feedbacks.create.success"))

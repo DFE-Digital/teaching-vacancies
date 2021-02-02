@@ -45,4 +45,4 @@
           = render(Shared::NotificationComponent.new(content: { title: t(".zero_subscriptions_title"), body: t(".zero_subscriptions_body_html", link_to: govuk_link_to(t(".link_create"), new_subscription_path(email: current_jobseeker.email, origin: jobseekers_subscriptions_path))) }, style: "empty", dismiss: false, background: true, alert: false))
 
   .govuk-grid-column-full
-    = render(Jobseekers::AccountSurveyLinkComponent.new(back_link: url_for))
+    = render(Jobseekers::AccountSurveyLinkComponent.new(origin: url_for))
