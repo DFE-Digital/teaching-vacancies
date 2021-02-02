@@ -219,6 +219,7 @@ GEM
     hashdiff (1.0.1)
     hashie (4.1.0)
     high_voltage (3.1.2)
+    hiredis (0.6.3)
     htmlentities (4.3.4)
     httparty (0.18.1)
       mime-types (~> 3.0)
@@ -395,8 +396,6 @@ GEM
     recaptcha (5.6.0)
       json
     redis (4.2.5)
-    redis-objects (1.5.0)
-      redis (~> 4.0)
     regexp_parser (1.8.2)
     representable (3.0.4)
       declarative (< 0.1.0)
@@ -589,6 +588,7 @@ DEPENDENCIES
   govuk-components
   govuk_design_system_formbuilder
   high_voltage
+  hiredis
   httparty
   ipaddr
   jbuilder
@@ -615,7 +615,6 @@ DEPENDENCIES
   rails-html-sanitizer
   recaptcha
   redis
-  redis-objects
   rollbar
   rspec-rails
   rspec-sonarqube-formatter
