@@ -6,7 +6,6 @@ class Vacancy < ApplicationRecord
 
   include Auditor::Model
   include Indexable
-  include Redis::Objects
 
   friendly_id :slug_candidates, use: %w[slugged history]
 
