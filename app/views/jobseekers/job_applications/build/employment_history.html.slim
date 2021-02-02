@@ -1,0 +1,27 @@
+- content_for :page_title_prefix, t(".title")
+
+= render(Jobseekers::JobApplications::HeadingComponent.new(vacancy: job_application.vacancy, back_path: back_link_path))
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    .govuk-caption-m = t("jobseekers.job_applications.current_step", current: process_steps.current_step_number, total: 10)
+    h1.govuk-heading-l = t(".title")
+
+    p.govuk-body = t(".description")
+
+    - if job_application.employment_history.none?
+      = render Shared::NotificationComponent.new(content: { title: t(".no_employment_history"), body: govuk_link_to(t("buttons.add_role"), new_jobseekers_job_application_build_detail_path(job_application, :employment_history), button: true, class: "govuk-!-margin-bottom-0") }, style: "empty", dismiss: false, background: true, alert: false)
+    - else
+      = render Jobseekers::JobApplications::DetailComponent.with_collection(job_application.employment_history.order(:created_at), info_to_display: employment_history_info)
+      = govuk_link_to t("buttons.add_role"), new_jobseekers_job_application_build_detail_path(job_application, :employment_history), button: true, class: (job_application.employment_history.count > 1 ? "govuk-button--secondary" : "")
+
+    = form_for @form, url: wizard_path, method: :patch do |f|
+      = f.govuk_error_summary
+
+      = f.govuk_text_area :gaps_in_employment, label: { size: "s" }, rows: 5
+
+      - if job_application.employment_history.any?
+        = f.govuk_submit t("buttons.continue") do
+          = f.govuk_submit t("buttons.save_as_draft"), secondary: true
+      - else
+        = f.govuk_submit t("buttons.save_as_draft"), secondary: true

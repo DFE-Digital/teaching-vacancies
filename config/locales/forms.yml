@@ -3,6 +3,7 @@ en:
     accept_all_cookies: Accept all cookies
     accept_and_continue: Accept and continue
     add_reference: Add a referee
+    add_role: Add a role
     apply_filters: Apply filters
     back: Back
     back_to_manage_jobs: Back to manage jobs
@@ -46,12 +47,21 @@ en:
       jobseeker:
         password: Your password has to be at least 8 characters long
 
+      jobseekers_job_application_employment_history_form:
+        gaps_in_employment: >-
+          If you have had any gaps in employment of 3 months or longer, please provide further detail. We need this
+          information for safeguarding.
       jobseekers_job_application_personal_details_form:
         national_insurance_number: >-
           It's on your National Insurance card, benefit letter, payslip or P60.
           For example, 'QQ 12 34 56 C'.
         phone_number: Please only give a phone number that you are happy to be contacted on.
         previous_names: For example maiden name or name at birth, if different from the name you have now.
+
+      jobseekers_job_application_details_employment_history_form:
+        ended_on: For example, 31 08 2014
+        main_duties: A very brief summary
+        started_on: For example, 31 08 2010
 
       jobseekers_job_alert_feedback_form:
         comment: This is optional, but the information will help us to make improvements.
@@ -176,6 +186,8 @@ en:
         close_relationships_options:
           "no": "No"
           "yes": "Yes"
+      jobseekers_job_application_employment_history_form:
+        gaps_in_employment: Gaps in your employment
       jobseekers_job_application_personal_details_form:
         your_address_html: Your address (<span class='text-red'>Required</span>)
         building_and_street: Building and street
@@ -196,6 +208,16 @@ en:
           "yes": "Yes"
         qualified_teacher_status_year: Year QTS was awarded
 
+      jobseekers_job_application_details_employment_history_form:
+        current_role_options:
+          "no": "No"
+          "yes": "Yes"
+        job_title_html: Job title(s) (<span class='text-red'>Required</span>)
+        main_duties_html: Main duties (<span class='text-red'>Required</span>)
+        organisation_html: School or other organisation (<span class='text-red'>Required</span>)
+        reason_for_leaving_html: Reason for leaving (<span class='text-red'>Required</span>)
+        salary: Salary scale or level
+        subjects: Subjects and key stages taught
       jobseekers_job_application_details_reference_form:
         email_address_html: Email address (<span class='text-red'>Required</span>)
         job_title_html: Job title (<span class='text-red'>Required</span>)
@@ -249,32 +271,11 @@ en:
         benefits: Employee benefits
         salary_html: Salary (<span class='text-red'>Required</span>)
 
-      personal_details_form:
-        building_and_street: Building and street
-        email_address_html: Email address (<span class='text-red'>Required</span>)
-        first_name_html: First name (<span class='text-red'>Required</span>)
-        last_name_html: Last name (<span class='text-red'>Required</span>)
-        national_insurance_number_html: National Insurance number (<span class='text-red'>Required</span>)
-        phone_number_html: Phone number (<span class='text-red'>Required</span>)
-        previous_names: Previous names
-        teacher_reference_number_html: Teacher reference number (TRN) (<span class='text-red'>Required</span>)
-        town_or_city: Town or city
-
     legend:
       account_feedback:
         rating_html: >-
           How satisfied are you with your experience of using Teaching Vacancies?
           (<span class='text-red'>Required</span>)
-
-      jobseekers_job_application_declarations_form:
-        banned_or_disqualified_html: >-
-          Are you banned or disqualified from working with children or subject to any sanctions or conditions on your
-          employment, imposed by the Independent Safeguarding Authority (ISA), Secretary of State or other regulatory body
-          (e.g. the GTCE)? (<span class='text-red'>Required</span>)
-        close_relationships_html: >-
-          Do you have any family or close relationship with people within %{organisation}?
-          (<span class='text-red'>Required</span>)
-        right_to_work_in_uk_html: Do you have the right to work in the UK? (<span class='text-red'>Required</span>)
 
       jobseekers_subscription_form:
         frequency_html: When do you want to receive alerts? (<span class='text-red'>Required</span>)
@@ -284,15 +285,25 @@ en:
       jobseekers_job_application_ask_for_support_form:
         support_needed_html: >-
           Do you want to ask for support so that you can attend an interview? (<span class='text-red'>Required</span>)
-
+      jobseekers_job_application_declarations_form:
+        banned_or_disqualified_html: >-
+          Are you banned or disqualified from working with children or subject to any sanctions or conditions on your
+          employment, imposed by the Independent Safeguarding Authority (ISA), Secretary of State or other regulatory body
+          (e.g. the GTCE)? (<span class='text-red'>Required</span>)
+        close_relationships_html: >-
+          Do you have any family or close relationship with people within %{organisation}?
+          (<span class='text-red'>Required</span>)
+        right_to_work_in_uk_html: Do you have the right to work in the UK? (<span class='text-red'>Required</span>)
       jobseekers_job_application_professional_status_form:
         statutory_induction_complete_html: >-
           Have you completed your statutory induction year? (<span class='text-red'>Required</span>)
         qualified_teacher_status_html: >-
           Do you have qualified teacher status (QTS)? (<span class='text-red'>Required</span>)
 
-      personal_details_form:
-        address_html: Your address (<span class='text-red'>Required</span>)
+      jobseekers_job_application_details_employment_history_form:
+        current_role_html: Is this your current role? (<span class='text-red'>Required</span>)
+        ended_on_html: End date (<span class='text-red'>Required</span>)
+        started_on_html: Start date (<span class='text-red'>Required</span>)
 
       publishers_job_listing_copy_vacancy_form:
         expires_on_html: Date application is due (<span class='text-red'>Required</span>)

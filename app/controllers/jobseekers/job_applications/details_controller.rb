@@ -44,6 +44,8 @@ class Jobseekers::JobApplications::DetailsController < Jobseekers::ApplicationCo
 
   def detail_params
     case build_step
+    when "employment_history"
+      employment_history_params
     when "references"
       reference_params
     end
@@ -51,6 +53,8 @@ class Jobseekers::JobApplications::DetailsController < Jobseekers::ApplicationCo
 
   def form
     case build_step
+    when "employment_history"
+      @form ||= Jobseekers::JobApplication::Details::EmploymentHistoryForm.new(form_attributes)
     when "references"
       @form ||= Jobseekers::JobApplication::Details::ReferenceForm.new(form_attributes)
     end
@@ -69,6 +73,11 @@ class Jobseekers::JobApplications::DetailsController < Jobseekers::ApplicationCo
 
   def job_application
     @job_application ||= current_jobseeker.job_applications.find(params[:job_application_id])
+  end
+
+  def employment_history_params
+    params.require(:jobseekers_job_application_details_employment_history_form)
+          .permit(:organisation, :job_title, :salary, :subjects, :main_duties, :started_on, :current_role, :ended_on, :reason_for_leaving)
   end
 
   def reference_params

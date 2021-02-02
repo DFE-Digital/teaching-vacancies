@@ -50,6 +50,12 @@ en:
           title: Ask for support if you have a disability or other needs
         declarations:
           title: Declarations
+        employment_history:
+          description: >-
+            Tell us about all teaching roles, as well as any other paid or voluntary work you have done that is relevant
+            to your application.
+          no_employment_history: No employment specified
+          title: Current role and employment history
         personal_details:
           description: Tell us some basic details about yourself, like how to contact you about this application.
           title: Personal details
@@ -70,13 +76,30 @@ en:
             current or most recent employer. If you are shortlisted, we will contact your referee before your interview.
           title: References
       details:
+        employment_history: Role
         form:
+          employment_history:
+            add_another: Add another role
+            caption: Current role and employment history
+            save: Save role
+            title: Add a role
           references:
             add_another: Add another referee
             caption: References
             description: If you are shortlisted, we will contact your referee before interview.
             save: Save referee
             title: Add a referee
+        references: Reference
+      employment_history:
+        current_role: Current role
+        ended_on: End date
+        job_title: Job title(s)
+        main_duties: Main duties
+        organisation: Organisation
+        reason_for_leaving: Reason for leaving
+        salary: Salary scale or level
+        subjects: Subjects and key stages taught
+        started_on: Start date
       heading_component:
         caption: "%{job_title} at %{organisation_name}"
         heading: Application

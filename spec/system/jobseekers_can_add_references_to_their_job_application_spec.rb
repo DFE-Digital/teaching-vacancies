@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Jobseekers can add references to their a job application" do
+RSpec.describe "Jobseekers can add references to their job application" do
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: organisation }]) }
   let(:organisation) { create(:school) }

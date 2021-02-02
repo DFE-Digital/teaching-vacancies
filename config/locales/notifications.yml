@@ -27,6 +27,8 @@ en:
         message: Improve your job listing using the new sections and features below
     jobseekers:
       job_applications:
+        employment_history:
+          deleted: Your employment history was deleted
         references:
           deleted: Your reference was deleted
         saved: Your job application was saved
