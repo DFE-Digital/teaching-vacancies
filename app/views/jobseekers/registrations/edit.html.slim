@@ -1,15 +1,15 @@
-- content_for :page_title_prefix, @update_password ? t(".edit_password_title") : t(".edit_email_title")
+- content_for :page_title_prefix, update_password ? t(".edit_password_title") : t(".edit_email_title")
 
 = govuk_back_link text: t("buttons.back"), href: jobseekers_account_path
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl = @update_password ? t(".edit_password_title") : t(".edit_email_title")
+    h1.govuk-heading-xl = update_password ? t(".edit_password_title") : t(".edit_email_title")
 
     = form_for resource, url: jobseeker_registration_path, method: :patch do |f|
       = f.govuk_error_summary
 
-      - if @update_password
+      - if update_password
         = render "edit_password", f: f
       - else
         = render "edit_email", f: f

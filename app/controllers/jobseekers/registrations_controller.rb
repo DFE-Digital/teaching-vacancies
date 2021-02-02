@@ -1,5 +1,6 @@
 class Jobseekers::RegistrationsController < Devise::RegistrationsController
-  before_action :set_update_password, only: %i[edit update]
+  helper_method :update_password
+
   before_action :check_password_difference, only: %i[update]
   before_action :check_new_password_presence, only: %i[update]
   before_action :check_email_difference, only: %i[update]
@@ -10,7 +11,7 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
   protected
 
   def check_password_difference
-    return unless @update_password
+    return unless update_password
     return unless params[resource_name][:password].present?
     return unless params[resource_name][:current_password] == params[resource_name][:password]
 
@@ -18,7 +19,7 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
   end
 
   def check_new_password_presence
-    return unless @update_password
+    return unless update_password
     return unless params[resource_name][:current_password].present?
     return if params[resource_name][:password].present?
 
@@ -26,7 +27,7 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
   end
 
   def check_email_difference
-    return if @update_password
+    return if update_password
     return unless params[resource_name][:email].present?
     return unless params[resource_name][:email] == current_jobseeker.email
 
@@ -39,8 +40,8 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
     render :edit
   end
 
-  def set_update_password
-    @update_password = params[:update_password] == "true" || params[:commit] == t("buttons.update_password")
+  def update_password
+    @update_password ||= params[:update_password] == "true" || params[:commit] == t("buttons.update_password")
   end
 
   def set_correct_update_message
