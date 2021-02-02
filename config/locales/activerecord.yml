@@ -215,6 +215,25 @@ en:
             statutory_induction_complete:
               inclusion: Select an option
 
+        jobseekers/job_application/details/employment_history_form:
+          attributes:
+            current_role:
+              inclusion: Select an option
+            ended_on:
+              before_started_on: End date must be after the start date
+              blank: Enter the end date
+              invalid: Enter a valid end date
+            job_title:
+              blank: Enter the job title
+            main_duties:
+              blank: Enter your main duties
+            organisation:
+              blank: Enter the school or organisation
+            reason_for_leaving:
+              blank: Enter your reason for leaving
+            started_on:
+              blank: Enter the start date
+              invalid: Enter a valid start date
         jobseekers/job_application/details/reference_form:
           attributes:
             email_address:

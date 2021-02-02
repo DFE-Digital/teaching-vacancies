@@ -2,9 +2,9 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::ApplicationCont
   include Wicked::Wizard
   include Jobseekers::Wizardable
 
-  steps :personal_details, :professional_status, :personal_statement, :references, :ask_for_support, :declarations
+  steps :personal_details, :professional_status, :employment_history, :personal_statement, :references, :ask_for_support, :declarations
 
-  helper_method :back_link_path, :job_application, :process_steps, :reference_info
+  helper_method :back_link_path, :employment_history_info, :job_application, :process_steps, :reference_info
 
   def show
     @form = FORMS[step].new unless step == "wicked_finish"

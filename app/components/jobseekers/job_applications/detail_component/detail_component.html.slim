@@ -1,10 +1,10 @@
 .detail class="govuk-!-margin-bottom-5"
   .detail__title
-    h4.govuk-heading-s class="govuk-!-margin-bottom-0" = "#{detail.details_type.singularize.humanize} #{counter}"
+    h4.govuk-heading-s class="govuk-!-margin-bottom-0" = "#{t("jobseekers.job_applications.details.#{detail.details_type}")} #{counter}"
   .detail__content class="govuk-!-padding-3"
     = render GovukComponent::SummaryList.new classes: "govuk-!-margin-bottom-3" do |component|
       - info_to_display.each do |info|
-        = component.slot(:row, key: info[:title], value: detail.data[info[:attribute]])
+        = component.slot(:row, key: info[:title], value: info[:date] ? date_detail(info[:attribute]) : detail.data[info[:attribute]])
     .detail__links
       = govuk_button_to t("buttons.delete"), jobseekers_job_application_build_detail_path(detail.job_application, detail.details_type.to_sym, detail), method: :delete, class: "govuk-delete-link govuk-!-margin-bottom-0", form_class: "inline-block button_to"
       = govuk_link_to t("buttons.edit"), edit_jobseekers_job_application_build_detail_path(detail.job_application, detail.details_type.to_sym, detail), class: "govuk-link--no-visited-state inline-block"

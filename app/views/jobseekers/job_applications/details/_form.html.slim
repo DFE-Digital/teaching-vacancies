@@ -7,7 +7,8 @@
     .govuk-caption-l = t(".#{build_step}.caption")
     h1.govuk-heading-xl = t(".#{build_step}.title")
 
-    p.govuk-body = t(".#{build_step}.description")
+    - if I18n.exists?(".#{build_step}.description")
+      p.govuk-body = t(".#{build_step}.description")
 
     = form_for form, url: url, method: method do |f|
       = f.govuk_error_summary

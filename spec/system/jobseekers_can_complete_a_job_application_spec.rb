@@ -25,6 +25,15 @@ RSpec.describe "Jobseekers can complete a job application" do
     fill_in_professional_status
     click_on I18n.t("buttons.continue")
 
+    expect(page).to have_content(I18n.t("jobseekers.job_applications.build.employment_history.title"))
+    expect(page).not_to have_content(I18n.t("buttons.continue"))
+    click_on I18n.t("buttons.add_role")
+    click_on I18n.t("jobseekers.job_applications.details.form.employment_history.save")
+    expect(page).to have_content("There is a problem")
+    fill_in_employment_history
+    click_on I18n.t("jobseekers.job_applications.details.form.employment_history.save")
+    click_on I18n.t("buttons.continue")
+
     expect(page).to have_content(I18n.t("jobseekers.job_applications.build.personal_statement.title"))
     validates_step_complete
     fill_in_personal_statement
