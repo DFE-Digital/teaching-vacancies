@@ -35,12 +35,13 @@
           = t("helpers.hint.publishers_job_listing_job_details_form.subjects")
 
         div class="govuk-!-margin-bottom-6"
-          = render(Shared::SearchableCollectionCheckboxesComponent.new(form: f,
+          = render Shared::SearchableCollectionComponent.new(form: f,
+            threshold: 10,
             attribute_name: :subjects,
             collection: SUBJECT_OPTIONS,
             value_method: :first,
             text_method: :first,
-            hint_method: :last))
+            hint_method: :last).with_variant(:checkbox)
 
       = f.govuk_collection_check_boxes :working_patterns, Vacancy.working_patterns.keys, :to_s, :to_s
 

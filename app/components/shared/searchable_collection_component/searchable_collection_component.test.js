@@ -1,9 +1,9 @@
-import { init, substringExistsInString } from './searchable_collection_checkboxes_component';
+import { init, substringExistsInString } from './searchable_collection_component';
 
 describe('searchCheckbox', () => {
   beforeEach(() => {
     document.body.innerHTML = `<div class="accordion-content__group">
-<input type="text" class="search-input__input" />
+<input type="text" class="collection-component__search-input" />
 <div class="govuk-checkboxes__item">
 <input type="checkbox" value="abc" class="govuk-checkboxes__input" />
 </div>
@@ -19,8 +19,8 @@ describe('searchCheckbox', () => {
   describe('searching group of checkboxes', () => {
     test('shows elements that match user input', () => {
       init(document.getElementsByClassName('accordion-content__group')[0]);
-      document.getElementsByClassName('search-input__input')[0].value = 'abc';
-      document.getElementsByClassName('search-input__input')[0].dispatchEvent(new Event('input'));
+      document.getElementsByClassName('collection-component__search-input')[0].value = 'abc';
+      document.getElementsByClassName('collection-component__search-input')[0].dispatchEvent(new Event('input'));
 
       expect(document.getElementsByClassName('govuk-checkboxes__input')[0].parentElement.style.display).toBe('block');
       expect(document.getElementsByClassName('govuk-checkboxes__input')[1].parentElement.style.display).toBe('none');

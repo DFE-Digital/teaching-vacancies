@@ -14,22 +14,14 @@
 
       = render "publishers/vacancies/vacancy_form_partials/hidden_state_input", f: f
 
-      - if @multiple_schools && @school_options.count > 10
-        = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_schools_form.organisation_ids_html") } do
-          = render(Shared::SearchableCollectionCheckboxesComponent.new(form: f,
-            attribute_name: :organisation_ids,
-            collection: @school_options,
-            value_method: :id,
-            text_method: :name,
-            hint_method: :address))
-
-      - elsif @multiple_schools && @school_options.count <= 10
-        = f.govuk_collection_check_boxes :organisation_ids, @school_options, :id, :name, :address, classes: "checkbox-label__bold"
-
-      / TODO: Implement Shared::SearchableCollectionRadiobuttonsComponent
-
-      - elsif !@multiple_schools
-        = f.govuk_collection_radio_buttons :organisation_ids, @school_options, :id, :name, :address
+      = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_schools_form.organisation_ids_html") } do
+        = render Shared::SearchableCollectionComponent.new(form: f,
+          threshold: 10,
+          attribute_name: :organisation_ids,
+          collection: @school_options,
+          value_method: :id,
+          text_method: :name,
+          hint_method: :address).with_variant(@multiple_schools ? :checkbox : :radiobutton)
 
       div class="govuk-!-margin-top-6"
         = render "publishers/vacancies/vacancy_form_partials/continue_or_update_submit", f: f
