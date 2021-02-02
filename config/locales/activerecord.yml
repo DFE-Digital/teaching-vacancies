@@ -34,9 +34,32 @@ en:
       inclusion: Select how satisfied or dissatisfied you are
     comment:
       too_long: Feedback must not be more than 1,200 characters
+  general_feedback_errors: &general_feedback_errors
+    user_participation_response:
+      inclusion: Please indicate if you'd like to participate in user research
+    email:
+      blank: Enter your email address
+      invalid: Enter an email address in the correct format, like name@example.com
+    comment:
+      blank: Enter your feedback
+      too_long: Feedback must not be more than 1,200 characters
+    visit_purpose:
+      inclusion: Enter the reason for your visit
+    visit_purpose_comment:
+      blank: Enter the reason for your visit
+      too_long: Purpose of visit must not be more than 1,200 characters
   job_alert_feedback_errors: &job_alert_feedback_errors
     comment:
-      blank: You have not submitted any further feedback.
+      blank: You have not submitted any further feedback
+      too_long: Feedback must not be more than 1,200 characters
+  vacancy_publisher_feedback_errors: &vacancy_publisher_feedback_errors
+    user_participation_response:
+      inclusion: Please indicate if you'd like to participate in user research
+    email:
+      blank: Enter your email address
+      invalid: Enter an email address in the correct format, like name@example.com
+    comment:
+      blank: Enter your feedback
       too_long: Feedback must not be more than 1,200 characters
 
   # Hiring staff journey
@@ -116,6 +139,9 @@ en:
         cookies_preferences_form:
           attributes:
             <<: *cookies_preferences_errors
+        general_feedback_form:
+          attributes:
+            <<: *general_feedback_errors
         jobseekers/account_feedback_form:
           attributes:
             <<: *account_feedback_errors
@@ -160,6 +186,9 @@ en:
           attributes:
             <<: *job_details_errors
             <<: *important_dates_errors
+        publishers/vacancies/vacancy_publisher_feedback_form:
+          attributes:
+            <<: *vacancy_publisher_feedback_errors
         # Job application
         jobseekers/job_application/ask_for_support_form:
           attributes:
@@ -282,30 +311,6 @@ en:
             <<: *important_dates_errors
             <<: *applying_for_the_job_errors
             <<: *job_summary_errors
-        vacancy_publish_feedback:
-          attributes:
-            user_participation_response:
-              blank: Please indicate if you'd like to participate in user research
-            email:
-              blank: Enter your email address
-              invalid: Enter an email address in the correct format, like name@example.com
-            comment:
-              blank: Enter your feedback
-              too_long: Feedback must not be more than 1,200 characters
-        general_feedback:
-          attributes:
-            user_participation_response:
-              blank: Please indicate if you'd like to participate in user research
-            email:
-              blank: Enter your email address
-              invalid: Enter an email address in the correct format, like name@example.com
-            comment:
-              blank: Enter your feedback
-              too_long: Feedback must not be more than 1,200 characters
-            visit_purpose:
-              blank: Enter the reason for your visit
-            visit_purpose_comment:
-              too_long: Purpose of visit must not be more than 1,200 characters
         transaction_auditor:
           attributes:
             task:

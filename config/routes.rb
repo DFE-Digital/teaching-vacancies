@@ -68,7 +68,7 @@ Rails.application.routes.draw do
     resources :interests, only: %i[new]
   end
 
-  resource :feedback, controller: "general_feedback", only: %i[new create]
+  resource :feedback, controller: "general_feedbacks", only: %i[new create]
 
   resources :subscriptions, except: %i[index show] do
     get :unsubscribe, on: :member
@@ -132,7 +132,7 @@ Rails.application.routes.draw do
       get "summary"
       post :publish, to: "publishers/vacancies/publish#create"
       get :publish, to: "publishers/vacancies/publish#create"
-      resource :feedback, controller: "publishers/vacancies/vacancy_publish_feedback", only: %i[new create]
+      resource :feedback, controller: "publishers/vacancies/vacancy_publisher_feedbacks", only: %i[new create]
       resource :statistics, controller: "publishers/vacancies/statistics", only: %i[update]
       resource :copy, only: %i[new create],
                       controller: "publishers/vacancies/copy"

@@ -6,7 +6,8 @@ class Jobseekers::SubscriptionForm
                 :job_roles, :phases, :working_patterns,
                 :job_role_options, :phase_options, :working_pattern_options
 
-  validates :email, email_address: { presence: true }
+  validates :email, presence: true
+  validates :email, format: { with: Devise.email_regexp }
   validates :frequency, presence: true
 
   validate :unique_job_alert

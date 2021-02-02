@@ -8,7 +8,7 @@ class Jobseekers::AccountFeedbacksController < Jobseekers::ApplicationController
 
     if @account_feedback_form.valid?
       Feedback.create(feedback_params.except(:origin))
-      trigger_feedback_created_event
+      trigger_feedback_provided_event
       redirect_to @account_feedback_form.origin, success: t(".success")
     else
       render :new
@@ -20,14 +20,5 @@ class Jobseekers::AccountFeedbacksController < Jobseekers::ApplicationController
   def feedback_params
     params.require(:jobseekers_account_feedback_form).permit(:rating, :comment, :origin)
           .merge(jobseeker_id: current_jobseeker.id, feedback_type: "jobseeker_account")
-  end
-
-  def trigger_feedback_created_event
-    request_event.trigger(
-      :jobseeker_account_feedback_provided,
-      comment: feedback_params[:comment],
-      rating: feedback_params[:rating],
-      origin: feedback_params[:origin],
-    )
   end
 end

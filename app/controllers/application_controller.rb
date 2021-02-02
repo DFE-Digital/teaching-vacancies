@@ -82,6 +82,18 @@ class ApplicationController < ActionController::Base
     @request_event ||= RequestEvent.new(request, response, session, current_jobseeker, current_publisher_oid)
   end
 
+  def trigger_feedback_provided_event
+    anonymise_these_params = %w[jobseeker_id publisher_id]
+    feedback_data = feedback_params.to_h.each_with_object({}) do |(key, value), params|
+      if anonymise_these_params.include?(key)
+        params["anonymised_#{key}"] = StringAnonymiser.new(value)
+      else
+        params[key] = value
+      end
+    end
+    request_event.trigger(:feedback_provided, feedback_data)
+  end
+
   def trigger_page_visited_event
     request_event.trigger(:page_visited)
   end

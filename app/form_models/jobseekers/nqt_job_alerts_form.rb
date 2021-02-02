@@ -6,7 +6,8 @@ class Jobseekers::NqtJobAlertsForm
 
   validates :keywords, presence: true
   validates :location, presence: true
-  validates :email, email_address: { presence: true }
+  validates :email, presence: true
+  validates :email, format: { with: Devise.email_regexp }
 
   validate :unique_job_alert
 
