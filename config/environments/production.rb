@@ -46,8 +46,7 @@ Rails.application.configure do
   config.force_ssl = true
   config.ssl_options = { redirect: { exclude: ->(request) { request.path.include?("check") } } }
 
-  # Use a different cache store in production.
-  # config.cache_store = :mem_cache_store
+  config.cache_store = :redis_cache_store, { url: config.redis_cache_url, pool_size: ENV.fetch("RAILS_MAX_THREADS", 5) }
 
   # Use a real queuing backend for Active Job
   # (and separate queues per environment)

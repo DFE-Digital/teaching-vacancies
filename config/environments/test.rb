@@ -45,6 +45,8 @@ Rails.application.configure do
   config.active_support.deprecation = :raise
   config.i18n.raise_on_missing_translations = true
 
+  config.cache_store = :null_store
+
   config.middleware.use RackSessionAccess::Middleware
 end
 
