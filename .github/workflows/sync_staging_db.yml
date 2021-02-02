@@ -10,42 +10,60 @@ jobs:
   sync:
     name: Sync staging database from production
     runs-on: ubuntu-20.04
-
+    services:
+      postgres:
+        image: postgres:11.6-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Install cf client
-      env:
-        CF_CLI_VERSION: 7.1.0
-        CF_CLI_URL: https://packages.cloudfoundry.org/stable?release=linux64-binary&version=
-      run: |
-        curl -sL "${CF_CLI_URL}${CF_CLI_VERSION}" | sudo tar -zx -C /usr/local/bin
-        cf7 version
-        cf7 install-plugin conduit -f
-        cf7 plugins
-
-    - name: Install postgres client
-      run: |
-        wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-        RELEASE=$(lsb_release -cs)
-        echo "deb http://apt.postgresql.org/pub/repos/apt/ ${RELEASE}"-pgdg main | sudo tee  /etc/apt/sources.list.d/pgdg.list
-        cat /etc/apt/sources.list.d/pgdg.list
-        sudo apt-get update
-        sudo apt-get install -y postgresql-client-11
-        psql --version
-
-    - name: Sync staging from production
-      env:
+    - name: Setup cf cli
+      uses: DFE-Digital/github-actions/setup-cf-cli@master
+      with:
         CF_USERNAME: ${{ secrets.CF_USERNAME }}
         CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-        CF_API_ENDPOINT: ${{ secrets.CF_API_ENDPOINT }}
-        CF_ORG: ${{ secrets.CF_ORG }}
-        CF_SPACE_ORIGIN: teaching-vacancies-production
-        CF_SPACE_TARGET: teaching-vacancies-staging
-        CF_POSTGRES_SERVICE_ORIGIN: teaching-vacancies-postgres-production
-        CF_POSTGRES_SERVICE_TARGET: teaching-vacancies-postgres-staging
-      run: bin/sync-db
+        CF_SPACE_NAME: teaching-vacancies-production
+        INSTALL_CONDUIT: true
+
+    - name: Install postgres client
+      uses: DFE-Digital/github-actions/install-postgres-client@master
+
+    - name: Dump production database to file
+      shell: bash
+      run: bin/dump-db
+
+    - name: Sanitise the Database backup
+      run: |
+        echo "::group::Restore backup to intermediate database"
+        createdb ${DATABASE_NAME} && psql -f backup.sql -d ${DATABASE_NAME}
+        echo "::endgroup::"
+        echo "::group::Sanitise data"
+        psql -d ${DATABASE_NAME} -f db/scripts/sanitise.sql
+        echo "::endgroup::"
+
+        echo "::group::Backup Sanitised Database"
+        pg_dump --encoding utf8 --clean --no-owner --if-exists -d ${DATABASE_NAME} -f sanitised-backup.sql
+        echo "::endgroup::"
+      env:
+        DATABASE_NAME: teaching-vacancies
+        PGUSER:  postgres
+        PGPASSWORD: postgres
+        PGHOST: localhost
+        PGPORT: 5432
+
+    - name: Restore the sanitised database to staging environment
+      shell: bash
+      run: bin/restore-db
+      env:
+        CF_DESTINATION_ENVIRONMENT: staging
+        FILENAME: sanitised-backup.sql
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -56,6 +74,13 @@ jobs:
 
     - name: Upload backup to S3
       run: bin/upload-db-backup
+      env:
+        FILENAME: backup.sql
+
+    - name: Upload sanitised backup to S3
+      run: bin/upload-db-backup
+      env:
+        FILENAME: sanitised-backup.sql
 
     - name: Send success message to twd_tv_dev channel
       if: ${{ success() }}
@@ -65,7 +90,7 @@ jobs:
         SLACK_USERNAME: CI Deployment
         SLACK_ICON_EMOJI: ':rocket:'
         SLACK_TITLE: DB syncing success
-        SLACK_MESSAGE: 'Successful database backup and sync'
+        SLACK_MESSAGE: 'Successful db backup and sync production->staging'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
     - name: Send failure message to twd_tv_dev channel
@@ -76,5 +101,5 @@ jobs:
         SLACK_USERNAME: CI Deployment
         SLACK_ICON_EMOJI: ':cry:'
         SLACK_TITLE: DB syncing failure
-        SLACK_MESSAGE: 'Failed database backup and sync'
+        SLACK_MESSAGE: 'Failed db backup and sync production->staging'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

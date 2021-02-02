@@ -1,0 +1,64 @@
+name: Restore dev/staging db from production backup
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment'
+        required: true
+        default: 'staging'
+
+jobs:
+  sync:
+    name: Sync ${{ github.event.inputs.environment }} database from production backup
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install CF client
+      uses: DFE-Digital/github-actions/install-cf-cli@master
+
+    - name: Install postgres client
+      uses: DFE-Digital/github-actions/install-postgres-client@master
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-west-2
+
+    - name: Download sanitised backup from S3
+      shell: bash
+      run: bin/download-db-backup
+
+    - name: Restore sanitised database from downloaded dump
+      shell: bash
+      run: bin/restore-db
+      env:
+        CF_DESTINATION_ENVIRONMENT: ${{ github.event.inputs.environment }}
+        FILENAME: sanitised-backup.sql
+
+    - name: Send success message to twd_tv_dev channel
+      if: ${{ success() }}
+      uses: rtCamp/action-slack-notify@v2.1.2
+      env:
+        SLACK_CHANNEL: twd_tv_dev
+        SLACK_USERNAME: CI Deployment
+        SLACK_ICON_EMOJI: ':rocket:'
+        SLACK_TITLE: DB syncing success
+        SLACK_MESSAGE: 'Successful db restore production->${{ github.event.inputs.environment }}'
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+    - name: Send failure message to twd_tv_dev channel
+      if: ${{ failure() }}
+      uses: rtCamp/action-slack-notify@v2.1.2
+      env:
+        SLACK_CHANNEL: twd_tv_dev
+        SLACK_USERNAME: CI Deployment
+        SLACK_ICON_EMOJI: ':cry:'
+        SLACK_TITLE: DB syncing failure
+        SLACK_MESSAGE: 'Failed db restore production->${{ github.event.inputs.environment }}'
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
