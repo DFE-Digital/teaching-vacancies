@@ -83,6 +83,7 @@ module paas {
   postgres_service_plan             = var.paas_postgres_service_plan
   redis_old_service_plan            = var.paas_redis_old_service_plan
   redis_cache_service_plan          = var.paas_redis_cache_service_plan
+  redis_queue_service_plan          = var.paas_redis_queue_service_plan
   space_name                        = var.paas_space_name
   web_app_deployment_strategy       = var.paas_web_app_deployment_strategy
   web_app_instances                 = var.paas_web_app_instances
