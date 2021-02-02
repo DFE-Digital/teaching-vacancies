@@ -36,7 +36,7 @@ variable postgres_service_plan {
 
 variable redis_cache_service_plan {
 }
-variable redis_queue_service_plan {
+variable redis_old_service_plan {
 }
 variable service_name {
 }
@@ -105,7 +105,7 @@ locals {
   )
   papertrail_service_name  = "${var.service_name}-papertrail-${var.environment}"
   postgres_service_name    = "${var.service_name}-postgres-${var.environment}"
-  redis_queue_service_name = "${var.service_name}-redis-queue-${var.environment}"
+  redis_old_service_name   = "${var.service_name}-redis-old-${var.environment}"
   redis_cache_service_name = "${var.service_name}-redis-cache-${var.environment}"
   web_app_name             = "${var.service_name}-${var.environment}"
   worker_app_start_command = "MALLOC_ARENA_MAX=2 bundle exec sidekiq -C config/sidekiq.yml"
