@@ -151,6 +151,8 @@ data aws_iam_policy_document db_backups_in_s3 {
     actions = [
       "s3:GetBucketAcl",
       "s3:GetBucketLocation",
+      "s3:GetObject",
+      "s3:GetObjectAcl",
       "s3:ListBucket",
       "s3:PutBucketAcl",
       "s3:PutObject"
@@ -159,10 +161,6 @@ data aws_iam_policy_document db_backups_in_s3 {
       "arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/",
       "arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/*"
     ]
-  }
-  statement {
-    actions   = ["s3:ListBucket"]
-    resources = ["arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/*"]
   }
 }
 
