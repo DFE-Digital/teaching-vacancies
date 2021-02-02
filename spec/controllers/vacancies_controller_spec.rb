@@ -11,54 +11,6 @@ RSpec.describe VacanciesController, type: :controller do
   describe "#index" do
     subject { get :index, params: params }
 
-    context "when parameters include syntax" do
-      context "search params" do
-        let(:expected_safe_values) { { keyword: "Text" } }
-        let(:params) do
-          {
-            keyword: "<body onload=alert('test1')>Text</body>",
-            location: "<img src='http://url.to.file.which/not.exist' onerror=alert(document.cookie);>",
-          }
-        end
-
-        it "passes only safe values to Search::SearchBuilder" do
-          expect(Search::SearchBuilder).to receive(:new).with(expected_safe_values).and_call_original
-          subject
-        end
-      end
-
-      context "sort params" do
-        let(:expected_safe_values) { { jobs_sort: "Text" } }
-        let(:params) { { jobs_sort: "<body onload=alert('test1')>Text</script>" } }
-
-        it "passes sanitised params to Search::SearchBuilder" do
-          expect(Search::SearchBuilder).to receive(:new).with(expected_safe_values).and_call_original
-          subject
-        end
-      end
-
-      context "search auditor" do
-        let(:params) { { keyword: "Teacher" } }
-
-        it "calls the search auditor" do
-          expect(AuditSearchEventJob).to receive(:perform_later).with(hash_including(keyword: "Teacher"))
-          subject
-        end
-
-        it "does not call the search auditor if its a smoke test" do
-          cookies[:smoke_test] = 1
-          expect(AuditSearchEventJob).to_not receive(:perform_later)
-
-          subject
-        end
-
-        it "does not call the search auditor if no search parameters are given" do
-          expect(AuditSearchEventJob).to_not receive(:perform_later)
-          get :index
-        end
-      end
-    end
-
     context "jobs_sort option" do
       let(:params) do
         {

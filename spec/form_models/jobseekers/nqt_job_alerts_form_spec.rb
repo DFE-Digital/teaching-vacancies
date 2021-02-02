@@ -23,7 +23,7 @@ RSpec.describe Jobseekers::NqtJobAlertsForm, type: :model do
   end
 
   context "when job alert already exists" do
-    before { allow(SubscriptionFinder).to receive_message_chain(:new, :exists?).and_return(true) }
+    before { allow(Subscription).to receive_message_chain(:where, :exists?).and_return(true) }
 
     it "validates uniqueness of job alert" do
       expect(subject).not_to be_valid

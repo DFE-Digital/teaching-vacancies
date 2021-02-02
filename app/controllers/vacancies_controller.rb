@@ -1,6 +1,4 @@
 class VacanciesController < ApplicationController
-  include ParameterSanitiser
-
   def index
     set_map_display
     if params.key?(:pretty) && params.key?(params[:pretty])
@@ -30,10 +28,6 @@ class VacanciesController < ApplicationController
     @similar_jobs = Search::SimilarJobs.new(vacancy).similar_jobs
 
     PersistVacancyPageViewJob.perform_later(vacancy.id) unless publisher_signed_in? || smoke_test?
-  end
-
-  def params
-    @params ||= ParameterSanitiser.call(super)
   end
 
   private

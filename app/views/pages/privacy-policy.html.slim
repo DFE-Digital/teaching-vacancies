@@ -13,7 +13,7 @@
       = t("static_pages.privacy_policy.when_we_collect.about")
       ul.govuk-list.govuk-list--bullet
         - t("static_pages.privacy_policy.when_we_collect.list").each do |li|
-          li = li.html_safe
+          li = li
 
     h2.govuk-heading-m = t("static_pages.privacy_policy.what_we_collect.title")
     p.govuk-body

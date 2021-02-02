@@ -25,7 +25,7 @@ class Jobseekers::SavedJobsController < Jobseekers::ApplicationController
   private
 
   def saved_job_params
-    ParameterSanitiser.call(params).permit(:job_id, :redirect_to_dashboard)
+    params.permit(:job_id, :redirect_to_dashboard)
   end
 
   def set_up_saved_job

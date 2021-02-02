@@ -1,4 +1,4 @@
 = render partial: "vacancies/show"
 
 script.jobref type="application/ld+json"
-  = raw(render(partial: "api/vacancies/show", formats: [:json], locals: { vacancy: @vacancy }))
+  == render(partial: "api/vacancies/show", formats: [:json], locals: { vacancy: @vacancy })

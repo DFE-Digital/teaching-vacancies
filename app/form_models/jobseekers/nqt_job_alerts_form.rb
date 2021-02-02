@@ -44,7 +44,8 @@ class Jobseekers::NqtJobAlertsForm
   end
 
   def unique_job_alert
-    errors.add(:base, I18n.t("subscriptions.errors.duplicate_alert")) if
-      SubscriptionFinder.new(job_alert_params).exists?
+    return unless Subscription.where(job_alert_params).exists?
+
+    errors.add(:base, I18n.t("subscriptions.errors.duplicate_alert"))
   end
 end
