@@ -67,10 +67,6 @@ variable paas_postgres_service_plan {
   default = "tiny-unencrypted-11"
 }
 
-variable paas_redis_old_service_plan {
-  default = "micro-5_x"
-}
-
 variable paas_redis_cache_service_plan {
   default = "micro-5_x"
 }

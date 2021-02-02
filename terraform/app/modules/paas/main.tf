@@ -5,12 +5,6 @@ resource cloudfoundry_service_instance postgres_instance {
   json_params  = "{\"enable_extensions\": [\"pgcrypto\", \"fuzzystrmatch\", \"plpgsql\"]}"
 }
 
-resource cloudfoundry_service_instance redis_instance {
-  name         = local.redis_old_service_name
-  space        = data.cloudfoundry_space.space.id
-  service_plan = data.cloudfoundry_service.redis.service_plans[var.redis_old_service_plan]
-}
-
 resource cloudfoundry_service_instance redis_cache_instance {
   name         = local.redis_cache_service_name
   space        = data.cloudfoundry_space.space.id
