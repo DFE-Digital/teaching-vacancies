@@ -69,6 +69,7 @@ $govuk-image-url-function: frontend-image-url;
 @import 'shared/notification_component/notification_component';
 @import 'shared/pill_link_component/pill_link_component';
 @import 'shared/process_steps_component/process_steps_component';
+@import 'shared/searchable_collection_component/searchable_collection_component';
 
 body {
   .govuk-width-container {

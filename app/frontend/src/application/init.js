@@ -2,7 +2,6 @@ import ClipboardJS from 'clipboard';
 import './jobseekers/init';
 import './publishers/init';
 import '../components/form/form';
-import '../components/searchableCollection/searchableCollection';
 
 document.addEventListener('DOMContentLoaded', () => {
   window.dataLayer = window.dataLayer || [];
