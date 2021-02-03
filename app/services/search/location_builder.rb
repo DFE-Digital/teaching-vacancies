@@ -39,7 +39,7 @@ class Search::LocationBuilder
     end
 
     @polygon_boundaries = []
-    locations.each do |location|
+    locations.compact.each do |location|
       polygons = buffer_radius.present? ? location.buffers[buffer_radius] : location.polygons["polygons"]
       polygons.each do |polygon|
         @polygon_boundaries.push(polygon)

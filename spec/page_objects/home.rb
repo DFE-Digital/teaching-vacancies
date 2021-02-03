@@ -1,22 +1,24 @@
 module PageObjects
   class Home < SitePrism::Page
-    class Facet < SitePrism::Section
-      class FacetLink < SitePrism::Section; end
+    class FacetSection < SitePrism::Section
+      class Facet < SitePrism::Section
+        element :link, "a"
 
-      sections :links, FacetLink, "a.govuk-link"
-
-      def go_to(facet_text)
-        links(text: facet_text).first.root_element.click
+        def visit
+          link.click
+        end
       end
+
+      sections :facets, Facet, "li"
     end
 
     set_url "/"
 
     element :search_button, ".govuk-button--start"
-    section :cities, Facet, "div[data-facet-type='cities']"
-    section :counties, Facet, "div[data-facet-type='counties']"
-    section :subjects, Facet, "div[data-facet-type='subjects']"
-    section :job_roles, Facet, "div[data-facet-type='job_roles']"
+    section :cities, FacetSection, "div[data-facet-type='cities']"
+    section :counties, FacetSection, "div[data-facet-type='counties']"
+    section :subjects, FacetSection, "div[data-facet-type='subjects']"
+    section :job_roles, FacetSection, "div[data-facet-type='job_roles']"
 
     def search
       search_button.click

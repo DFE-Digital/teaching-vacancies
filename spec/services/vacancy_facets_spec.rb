@@ -1,41 +1,66 @@
 require "rails_helper"
 
 RSpec.describe VacancyFacets do
-  let(:store) { MockRedis.new }
-  let(:subject) { described_class.new(store: store) }
+  subject { described_class.new }
 
-  describe "#get" do
-    context "when the field is set in redis" do
-      let(:field) { :job_roles }
-      let(:facet) { { teacher: 5 }.to_json }
+  let(:search_builder) { instance_double(Search::SearchBuilder, stats: [42]) }
 
-      before { store.set(field, facet) }
+  before do
+    allow(Rails.application.config.action_controller).to receive(:perform_caching).and_return(true)
+    allow(Search::SearchBuilder).to receive(:new).and_return(search_builder)
+  end
 
-      it "retrieves the relevant facet" do
-        expect(subject.get(field)).to eq({ "teacher" => 5 })
-      end
-    end
-
-    context "when the field is not been set in redis" do
-      let(:field) { :not_set }
-
-      it "returns an empty hash" do
-        expect(subject.get(field)).to eq({})
-      end
+  describe "#job_roles" do
+    it "returns the expected facets" do
+      expect(subject.job_roles.values.uniq).to eq([42])
     end
   end
 
-  describe "#refresh" do
-    let(:job_role_count) { Vacancy.job_roles.count }
-    let(:subject_count) { SUBJECT_OPTIONS.count }
-    let(:city_count) { CITIES.count }
-    let(:county_count) { COUNTIES.count }
-    let(:job_roles_subjects_cities_and_counties) { job_role_count + subject_count + city_count + county_count }
+  describe "#subjects" do
+    it "returns the expected facets" do
+      expect(subject.subjects.values.uniq).to eq([42])
+    end
+  end
 
-    it "calls Search::SearchBuilder" do
-      search = instance_double(Search::SearchBuilder, stats: [0, 0, 5])
-      expect(Search::SearchBuilder).to receive(:new).and_return(search).exactly(job_roles_subjects_cities_and_counties).times
-      subject.refresh
+  describe "#cities" do
+    it "returns the expected facets" do
+      expect(subject.cities.values.uniq).to eq([42])
+    end
+  end
+
+  describe "#counties" do
+    it "returns the expected facets" do
+      expect(subject.counties.values.uniq).to eq([42])
+    end
+  end
+
+  context "when caching is disabled" do
+    before do
+      allow(Rails.application.config.action_controller).to receive(:perform_caching).and_return(false)
+    end
+
+    describe "#job_roles" do
+      it "does not perform a search" do
+        expect(subject.job_roles.values.uniq).to be_empty
+      end
+    end
+
+    describe "#subjects" do
+      it "does not perform a search" do
+        expect(subject.subjects.values.uniq).to be_empty
+      end
+    end
+
+    describe "#cities" do
+      it "does not perform a search" do
+        expect(subject.cities.values.uniq).to be_empty
+      end
+    end
+
+    describe "#counties" do
+      it "does not perform a search" do
+        expect(subject.counties.values.uniq).to be_empty
+      end
     end
   end
 end

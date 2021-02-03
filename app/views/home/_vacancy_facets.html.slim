@@ -2,24 +2,24 @@
   .govuk-grid-column-one-half data={ "facet-type": "cities" }
     h3.govuk-heading-s = t(".cities")
     ul.govuk-list.two-column-list aria-label="#{t(".cities")} list"
-      - @cities_facets.each do |city, count|
+      - @vacancy_facets.cities.each do |city, count|
         li #{govuk_link_to(city, location_path(city))} (#{count})
 
   .govuk-grid-column-one-half data={ "facet-type": "counties" }
     h3.govuk-heading-s = t(".counties")
     ul.govuk-list.two-column-list aria-label="#{t(".counties")} list"
-      - @counties_facets.each do |county, count|
+      - @vacancy_facets.counties.each do |county, count|
         li #{govuk_link_to(county, location_path(county))} (#{count})
 
 .govuk-grid-row
   .govuk-grid-column-one-half data={ "facet-type": "subjects" }
     h3.govuk-heading-s = t(".subjects")
     ul.govuk-list.two-column-list aria-label="#{t(".subjects")} list"
-      - @subjects_facets.each do |subject, count|
+      - @vacancy_facets.subjects.each do |subject, count|
         li #{govuk_link_to(subject, subject_path(subject))} (#{count})
 
   .govuk-grid-column-one-half data={ "facet-type": "job_roles" }
     h3.govuk-heading-s = t(".job_roles")
     ul.govuk-list.two-column-list aria-label="#{t(".job_roles")} list"
-      - @job_roles_facets.each do |job_role, count|
+      - @vacancy_facets.job_roles.each do |job_role, count|
         li #{govuk_link_to(t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{job_role}"), job_role_path(job_role))} (#{count})

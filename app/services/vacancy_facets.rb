@@ -1,29 +1,35 @@
 class VacancyFacets
-  FIELDS = %i[job_roles subjects cities counties].freeze
+  CACHE_DURATION = 24.hours
 
-  def initialize(store: Redis.new(url: Rails.configuration.redis_queue_url))
-    @store = store
+  def job_roles
+    cached(:job_roles) { sort_and_limit(job_role_facet, 4) }
   end
 
-  def get(field)
-    return {} unless FIELDS.include?(field) && store.exists?(field)
-
-    JSON.parse(store.get(field))
+  def subjects
+    cached(:subjects) { sort_and_limit(subject_facet, 10) }
   end
 
-  def refresh
-    store.set(:job_roles, sort_and_limit(job_role_facet, 4).to_json)
-    store.set(:subjects, sort_and_limit(subject_facet, 10).to_json)
-    store.set(:cities, sort_and_limit(city_facet, 20).to_json)
-    store.set(:counties, sort_and_limit(county_facet, 20).to_json)
+  def cities
+    cached(:cities) { sort_and_limit(city_facet, 20) }
+  end
+
+  def counties
+    cached(:counties) { sort_and_limit(county_facet, 20) }
   end
 
   private
 
-  attr_reader :store
+  def cached(facet_name, &block)
+    Rails.cache.fetch([:vacancy_facets, facet_name], expires_in: CACHE_DURATION, &block)
+  end
 
   def sort_and_limit(facet, number_of_results)
-    facet.sort_by { |_, count| -count }.first(number_of_results).sort.to_h
+    facet
+      .reject { |_, count| count.zero? }
+      .sort_by { |_, count| -count }
+      .first(number_of_results)
+      .sort
+      .to_h
   end
 
   def job_role_facet
@@ -43,6 +49,9 @@ class VacancyFacets
   end
 
   def algolia_facet_count(query)
+    # Disable this very expensive operation unless caching is enabled (e.g. in dev, system tests)
+    return 0 unless Rails.application.config.action_controller.perform_caching
+
     Search::SearchBuilder.new(query).stats.last
   end
 end
