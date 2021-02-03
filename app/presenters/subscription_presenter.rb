@@ -45,7 +45,7 @@ class SubscriptionPresenter < BasePresenter
   end
 
   def render_location_filter(location, radius)
-    return if location.empty?
+    return if location.blank?
 
     return { location: I18n.t("subscriptions.location_polygon_text", location: location) } if LocationPolygon.include?(location)
     return { location: I18n.t("subscriptions.location_radius_text", radius: radius, location: location) } if radius
