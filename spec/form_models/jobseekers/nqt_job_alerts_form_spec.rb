@@ -32,22 +32,20 @@ RSpec.describe Jobseekers::NqtJobAlertsForm, type: :model do
   end
 
   describe "#job_alert_params" do
-    context "when location is a LocationPolygon" do
-      let(:expected_hash) { { keyword: "nqt #{keywords}", location: location, radius: 10, location_category: location } }
+    let(:expected_hash) { { keyword: "nqt #{keywords}", location: location, radius: 10 } }
 
-      before { allow(LocationPolygon).to receive(:include?).with(location).and_return(true) }
+    context "when location is not a LocationPolygon" do
+      before { allow(LocationPolygon).to receive(:include?).with(location).and_return(false) }
 
-      it "adds location_category to the search criteria" do
+      it "adds location to the search criteria" do
         expect(subject.job_alert_params[:search_criteria]).to eq(expected_hash)
       end
     end
 
-    context "when location is not a LocationPolygon" do
-      let(:expected_hash) { { keyword: "nqt #{keywords}", location: location, radius: 10 } }
+    context "when location is a LocationPolygon" do
+      before { allow(LocationPolygon).to receive(:include?).with(location).and_return(true) }
 
-      before { allow(LocationPolygon).to receive(:include?).with(location).and_return(false) }
-
-      it "does not add location_category to the search criteria" do
+      it "sets the location paramter in the search criteria to the polygon's name" do
         expect(subject.job_alert_params[:search_criteria]).to eq(expected_hash)
       end
     end

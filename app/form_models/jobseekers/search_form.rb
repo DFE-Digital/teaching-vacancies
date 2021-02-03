@@ -2,7 +2,7 @@ class Jobseekers::SearchForm
   include ActiveModel::Model
 
   attr_reader :keyword,
-              :location, :location_category, :radius,
+              :location, :radius,
               :job_roles, :phases, :working_patterns,
               :jobs_sort, :page,
               :job_role_options, :phase_options, :working_pattern_options,
@@ -12,8 +12,8 @@ class Jobseekers::SearchForm
     strip_trailing_whitespaces_from_params(params)
     @keyword = params[:keyword] || params[:subject]
 
-    @location = params[:location] || params[:location_category]
-    @location_category = params[:location_category]
+    @location = params[:location]
+
     @radius = params[:radius] || 10
     @buffer_radius = params[:buffer_radius]
 
@@ -32,7 +32,6 @@ class Jobseekers::SearchForm
     {
       keyword: @keyword,
       location: @location,
-      location_category: @location_category,
       radius: @radius,
       buffer_radius: @buffer_radius,
       job_roles: @job_roles,

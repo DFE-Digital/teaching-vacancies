@@ -1,8 +1,7 @@
 require "rails_helper"
 
-RSpec.shared_examples "a search using polygons" do |options|
+RSpec.shared_examples "a search using polygons" do
   it "sets the correct attributes" do
-    expect(subject.location_category).to eq(options&.dig(:location)&.presence || location_polygon.name)
     expect(subject.polygon_boundaries).to eq(location_polygon.polygons["polygons"])
     expect(subject.location_filter).to eq({})
     expect(subject.buffer_radius).to eq(buffer_radius)
@@ -10,10 +9,9 @@ RSpec.shared_examples "a search using polygons" do |options|
 end
 
 RSpec.describe Search::LocationBuilder do
-  subject { described_class.new(location, radius, location_category, buffer_radius) }
+  subject { described_class.new(location, radius, buffer_radius) }
 
   let(:location) { nil }
-  let(:location_category) { nil }
   let(:point_location) { "SW1A 1AA" }
   let(:radius) { nil }
   let(:buffer_radius) { nil }
@@ -21,31 +19,16 @@ RSpec.describe Search::LocationBuilder do
 
   describe "#initialize" do
     context "when a polygonable location is specified" do
-      context "by location parameter" do
-        let(:location) { location_polygon.name }
+      let(:location) { location_polygon.name }
 
-        it_behaves_like "a search using polygons"
-      end
-
-      context "by location_category parameter" do
-        let(:location_category) { location_polygon.name }
-
-        it_behaves_like "a search using polygons"
-      end
-
-      context "by location_category parameter and location parameter" do
-        let(:location) { location_polygon.name }
-        let(:location_category) { location_polygon.name }
-
-        it_behaves_like "a search using polygons"
-      end
+      it_behaves_like "a search using polygons"
 
       context "when a buffer radius is present" do
-        let(:location_category) { location_polygon.name }
+        let(:location) { location_polygon.name }
         let(:buffer_radius) { "5" }
 
         it "sets the correct attributes" do
-          expect(subject.location_category).to eq(location_polygon.name)
+          expect(subject.location).to eq(location_polygon.name)
           expect(subject.polygon_boundaries).to eq(location_polygon.buffers["5"])
           expect(subject.location_filter).to eq({})
           expect(subject.buffer_radius).to eq(buffer_radius)
@@ -75,18 +58,17 @@ RSpec.describe Search::LocationBuilder do
       end
 
       it "sets the correct attributes" do
-        expect(subject.location_category).to eq(location)
+        expect(subject.location).to eq(location)
         expect(subject.polygon_boundaries).to contain_exactly([1, 2], [3, 4], [5, 6], [7, 8])
         expect(subject.location_filter).to eq({})
         expect(subject.buffer_radius).to eq(buffer_radius)
       end
 
       context "when a buffer radius is present" do
-        let(:location_category) { location_polygon.name }
         let(:buffer_radius) { "5" }
 
         it "sets the correct attributes" do
-          expect(subject.location_category).to eq(location)
+          expect(subject.location).to eq(location)
           expect(subject.polygon_boundaries).to contain_exactly([9, 10], [11, 12], [13, 14], [15, 16])
           expect(subject.location_filter).to eq({})
           expect(subject.buffer_radius).to eq(buffer_radius)
@@ -111,7 +93,6 @@ RSpec.describe Search::LocationBuilder do
         let(:expected_radius) { 16_093 }
 
         it "sets location filter around the location with the default radius" do
-          expect(subject.location_category).to be_nil
           expect(subject.polygon_boundaries).to be_nil
           expect(subject.location_filter).to eq({
             point_coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
@@ -126,7 +107,6 @@ RSpec.describe Search::LocationBuilder do
         let(:expected_radius) { 48_280 }
 
         it "carries out geographical search around a coordinate location with the specified radius" do
-          expect(subject.location_category).to be_nil
           expect(subject.polygon_boundaries).to be_nil
           expect(subject.location_filter).to eq({
             point_coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
@@ -141,7 +121,6 @@ RSpec.describe Search::LocationBuilder do
 
       it "does not set location filters" do
         expect(subject.location).to be nil
-        expect(subject.location_category).to be nil
         expect(subject.polygon_boundaries).to be nil
         expect(subject.location_filter).to eq({})
       end

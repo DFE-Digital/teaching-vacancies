@@ -6,7 +6,7 @@ RSpec.describe SubscriptionPresenter do
   let(:search_criteria) { { keyword: "english" } }
 
   describe "#formatted_search_criteria" do
-    context "with the location filter" do
+    context "when the location is not a LocationPolygon" do
       let(:search_criteria) { { location: "EC2 9AN", radius: "10" } }
 
       it "formats and returns the search criteria" do
@@ -14,8 +14,8 @@ RSpec.describe SubscriptionPresenter do
       end
     end
 
-    context "with the location category filter" do
-      let(:search_criteria) { { location_category: "Barnet", location: "Barnet" } }
+    context "when the location is a LocationPolygon" do
+      let(:search_criteria) { { location: "Barnet" } }
 
       it "formats and returns the search criteria" do
         expect(presenter.filtered_search_criteria["location"]).to eq("In Barnet")
@@ -119,10 +119,6 @@ RSpec.describe SubscriptionPresenter do
   describe "#search_criteria_field" do
     it "does not return the radius field" do
       expect(presenter.send(:search_criteria_field, "radius", "some radius")).to eq(nil)
-    end
-
-    it "does not return the location_category field" do
-      expect(presenter.send(:search_criteria_field, "location_category", "some location category")).to eq(nil)
     end
 
     it "does not return the jobs_sort field" do

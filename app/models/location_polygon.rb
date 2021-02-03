@@ -16,6 +16,6 @@ class LocationPolygon < ApplicationRecord
   end
 
   def self.mapped_name(location)
-    (MAPPED_LOCATIONS[location.downcase].presence || location).downcase
+    (MAPPED_LOCATIONS[location&.downcase].presence || location)&.downcase
   end
 end

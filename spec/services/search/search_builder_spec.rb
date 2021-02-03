@@ -8,7 +8,6 @@ RSpec.describe Search::SearchBuilder do
       keyword: keyword,
       location: location,
       radius: radius,
-      location_category: location_category,
       jobs_sort: jobs_sort,
       per_page: hits_per_page,
       page: page,
@@ -18,7 +17,6 @@ RSpec.describe Search::SearchBuilder do
   let(:keyword) { "maths teacher" }
   let(:location) { "" }
   let(:radius) { "" }
-  let(:location_category) { nil }
   let(:jobs_sort) { "" }
   let(:hits_per_page) { nil }
   let(:page) { 1 }
@@ -28,11 +26,11 @@ RSpec.describe Search::SearchBuilder do
   describe "#build_location_search" do
     let(:location) { location_polygon.name }
 
-    context "when a location_category_search is carried out" do
+    context "when a polygon search is carried out" do
       before { allow_any_instance_of(Search::LocationBuilder).to receive(:search_with_polygons?).and_return(true) }
 
-      it "sets location_category in the active params hash" do
-        expect(subject.only_active_to_hash[:location_category]).to eq("london")
+      it "sets location in the active params hash to the polygon's name" do
+        expect(subject.only_active_to_hash[:location]).to eq("london")
       end
     end
   end
