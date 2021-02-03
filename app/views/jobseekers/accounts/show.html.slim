@@ -19,7 +19,7 @@
         dt.govuk-summary-list__key = t(".summary_list.password")
         dd.govuk-summary-list__value = t(".summary_list.password_placeholder")
         dd.govuk-summary-list__actions
-          = govuk_link_to edit_jobseeker_registration_path(update_password: true) do
+          = govuk_link_to edit_jobseeker_registration_path(password_update: true) do
             = t(".summary_list.change")
             span.govuk-visually-hidden
               = t(".summary_list.password")
