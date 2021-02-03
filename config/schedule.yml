@@ -43,11 +43,6 @@ queue_weekly_alerts:
   class: 'SendWeeklyAlertEmailJob'
   queue: default
 
-refresh_cached_vacancy_statistics:
-  cron: '*/15 * * * *'
-  class: 'RefreshCachedVacancyStatisticsJob'
-  queue: low
-
 refresh_vacancy_facets:
   cron: '0 06 * * *'
   class: 'RefreshVacancyFacetsJob'
