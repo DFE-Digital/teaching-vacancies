@@ -42,11 +42,12 @@ RSpec.describe ApplicationHelper, type: :helper do
 
     before do
       allow(controller).to receive(:request).and_return(request)
+      allow(controller).to receive(:controller_name).and_return("hello_world")
       allow(helper).to receive(:recaptcha_v3).with(action: "hello_world", nonce: "n0nc3").and_return(captcha)
     end
 
     it "delegates to recaptcha_v3 with the CSP nonce" do
-      expect(helper.recaptcha("hello_world")).to eq(captcha)
+      expect(helper.recaptcha).to eq(captcha)
     end
   end
 end

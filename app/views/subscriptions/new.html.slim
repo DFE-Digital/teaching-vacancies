@@ -15,7 +15,7 @@
 
       = render(Shared::NotificationComponent.new(content: { body: t("subscriptions.info") }, style: "notice", background: true, dismiss: false, alert: "info"))
 
-      = recaptcha("subscription")
+      = recaptcha
 
       = f.govuk_submit t("buttons.subscribe"), classes: "govuk-!-padding-left-8 govuk-!-padding-right-8"
 

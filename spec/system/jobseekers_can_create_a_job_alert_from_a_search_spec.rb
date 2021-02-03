@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Jobseekers can create a job alert from a search" do
+RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: true do
   let(:location) { nil }
   let(:search_with_polygons?) { false }
   let(:jobseeker_accounts_enabled?) { false }
@@ -12,15 +12,15 @@ RSpec.describe "Jobseekers can create a job alert from a search" do
   end
 
   describe "recaptcha" do
-    context "when recaptcha score is invalid" do
+    context "when verify_recaptcha is false" do
       before do
-        allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(true)
-        allow_any_instance_of(ApplicationController).to receive(:recaptcha_reply).and_return({ "score" => 0.1 })
+        allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(false)
       end
 
       it "redirects to invalid_recaptcha path" do
         visit new_subscription_path(search_criteria: { keyword: "test" })
-        click_on "Subscribe"
+        fill_in_subscription_fields
+        click_on I18n.t("buttons.subscribe")
         expect(page).to have_current_path(invalid_recaptcha_path(form_name: "Subscription"))
       end
     end

@@ -30,7 +30,7 @@ module ApplicationHelper
     teaching,assistant,headteacher,class,French,job,vacancy,school,nqt"
   end
 
-  def recaptcha(action)
-    recaptcha_v3(action: action, nonce: request.content_security_policy_nonce)
+  def recaptcha
+    recaptcha_v3(action: controller_name, nonce: request.content_security_policy_nonce)
   end
 end
