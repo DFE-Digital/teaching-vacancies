@@ -10,7 +10,10 @@
           - if ReadOnlyFeature.enabled?
             = render "read_only"
           - elsif JobseekerAccountsFeature.enabled?
-            = render "signin_jobseekers"
+            - if jobseeker_signed_in?
+              = render "signed_in_jobseeker"
+            - else
+              = render "signed_out_jobseeker"
           - else
             = render "signin_publishers"
 

@@ -13,6 +13,7 @@ en:
     change: Change
     continue: Continue
     create_job: Create a job listing
+    create_account: Create an account
     delete: Delete
     dismiss: Dismiss
     edit: Edit
@@ -41,6 +42,7 @@ en:
     update_alert: Update alert
     update_password: Update password
     upload_files: Upload files
+    view_account: View your account
 
   helpers:
     hint:
