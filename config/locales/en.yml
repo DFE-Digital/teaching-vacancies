@@ -345,10 +345,12 @@ en:
     index:
       browse_all: Browse all teaching jobs in England
       title: Find a job in teaching
-    signin_jobseekers:
+    signed_in_jobseeker:
+      description: "See all your saved jobs and job alerts in one place."
+      title: View your saved jobs
+    signed_out_jobseeker:
+      description_html: "%{link} or create an account to save the jobs you are interested in. You don’t need an account to search for a job or set up job alerts."
       title: Save jobs you are interested in
-      description_html: "Sign in or %{link} to save the jobs you are interested in. You don’t need an account to search for a job or set up job alerts."
-      signup_link: create an account
     signin_publishers:
       title: List a teaching job
       description: Sign in to your Teaching Vacancies account to list a job at your school or Trust.
