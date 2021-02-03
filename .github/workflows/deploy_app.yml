@@ -38,7 +38,7 @@ jobs:
         terraform_version: 0.13.5
 
     - name: Set environment variables for review
-      if: ${{ startsWith(github.event.inputs.environment, 'review') }}
+      if: startsWith(github.event.inputs.environment, 'review')
       run: |
         BACKEND_CONFIG=-backend-config="workspace_key_prefix=review:"
         PARAMETER_STORE_ENVIRONMENT=dev
@@ -50,7 +50,7 @@ jobs:
         echo "VAR_FILE=${VAR_FILE}" >> $GITHUB_ENV
 
     - name: Set environment variables for non-review environments
-      if: ${{ !startsWith(github.event.inputs.environment, 'review') }}
+      if: startsWith(github.event.inputs.environment, 'review') != true
       run: |
         PARAMETER_STORE_ENVIRONMENT=${{ github.event.inputs.environment }}
         VAR_FILE=${{ github.event.inputs.environment }}

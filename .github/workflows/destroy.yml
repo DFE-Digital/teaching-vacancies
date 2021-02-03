@@ -61,7 +61,7 @@ jobs:
       working-directory: terraform/app
 
     - name: Send failure message to twd_tv_dev channel
-      if: ${{ failure() }}
+      if: failure()
       uses: rtCamp/action-slack-notify@v2.1.2
       env:
         SLACK_CHANNEL: twd_tv_dev

@@ -38,7 +38,7 @@ jobs:
         run: bundle exec rspec spec/smoke_tests/jobseekers_can_view_homepage_${{ github.event.inputs.environment }}_spec.rb --tag smoke_test
 
       - name: Slack notification
-        if: ${{ failure() }}
+        if: failure()
         uses: rtCamp/action-slack-notify@v2.1.2
         env:
           SLACK_CHANNEL: twd_tv_dev

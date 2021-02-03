@@ -42,7 +42,7 @@ jobs:
         FILENAME: sanitised-backup.sql
 
     - name: Send success message to twd_tv_dev channel
-      if: ${{ success() }}
+      if: success()
       uses: rtCamp/action-slack-notify@v2.1.2
       env:
         SLACK_CHANNEL: twd_tv_dev
@@ -53,7 +53,7 @@ jobs:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
     - name: Send failure message to twd_tv_dev channel
-      if: ${{ failure() }}
+      if: failure()
       uses: rtCamp/action-slack-notify@v2.1.2
       env:
         SLACK_CHANNEL: twd_tv_dev
