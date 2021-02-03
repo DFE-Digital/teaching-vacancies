@@ -39,6 +39,18 @@ jobs:
       shell: bash
       run: bin/dump-db
 
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-west-2
+
+    - name: Upload backup to S3
+      run: bin/upload-db-backup
+      env:
+        FILENAME: backup.sql
+
     - name: Sanitise the Database backup
       run: |
         echo "::group::Restore backup to intermediate database"
@@ -64,18 +76,6 @@ jobs:
       env:
         CF_DESTINATION_ENVIRONMENT: staging
         FILENAME: sanitised-backup.sql
-
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: eu-west-2
-
-    - name: Upload backup to S3
-      run: bin/upload-db-backup
-      env:
-        FILENAME: backup.sql
 
     - name: Upload sanitised backup to S3
       run: bin/upload-db-backup
