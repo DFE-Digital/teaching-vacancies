@@ -102,7 +102,7 @@ jobs:
         token: ${{ secrets.PERSONAL_TOKEN }}
         checkName: Deploy app to environment # Job name within workflow
         ref: ${{ github.ref }}
-        timeoutSeconds: 300
+        timeoutSeconds: 720
         intervalSeconds: 15
 
     - name: Send job status message to twd_tv_dev channel
