@@ -23,6 +23,14 @@
         .govuk-body class="govuk-!-margin-left-2 govuk-!-margin-bottom-2"
           | Or
 
+        / = f.govuk_collection_check_boxes :managed_school_ids,
+        /   @organisation_options,
+        /   :id,
+        /   :name,
+        /   :address,
+        /   legend: { text: t(".labels.select_organisations"), hidden: true },
+        /   classes: "checkbox-label__bold"
+
         = render Shared::SearchableCollectionComponent.new(form: f,
           threshold: 10,
           attribute_name: :managed_school_ids,
