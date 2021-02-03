@@ -1,4 +1,4 @@
-import { init, substringExistsInString } from './searchable_collection_component';
+import { init, substringExistsInString, searchableClassNames } from './searchable_collection_component';
 
 describe('searchCheckbox', () => {
   beforeEach(() => {
@@ -7,8 +7,8 @@ describe('searchCheckbox', () => {
 <div class="govuk-checkboxes__item">
 <input type="checkbox" value="abc" class="govuk-checkboxes__input" />
 </div>
-<div class="govuk-checkboxes__item">
-<input type="checkbox" value="xyz" class="govuk-checkboxes__input" />
+<div class="govuk-radiobuttons__item">
+<input type="radio" value="xyz" class="govuk-radiobuttons__input" />
 </div>
 <div class="govuk-checkboxes__item">
 <input type="checkbox" value="mno" class="govuk-checkboxes__input" /><label>abc</label>
@@ -18,13 +18,13 @@ describe('searchCheckbox', () => {
 
   describe('searching group of checkboxes', () => {
     test('shows elements that match user input', () => {
-      init(document.getElementsByClassName('accordion-content__group')[0]);
+      init(document.getElementsByClassName('accordion-content__group')[0], searchableClassNames);
       document.getElementsByClassName('collection-component__search-input')[0].value = 'abc';
       document.getElementsByClassName('collection-component__search-input')[0].dispatchEvent(new Event('input'));
 
       expect(document.getElementsByClassName('govuk-checkboxes__input')[0].parentElement.style.display).toBe('block');
-      expect(document.getElementsByClassName('govuk-checkboxes__input')[1].parentElement.style.display).toBe('none');
-      expect(document.getElementsByClassName('govuk-checkboxes__input')[2].parentElement.style.display).toBe('block');
+      expect(document.getElementsByClassName('govuk-radiobuttons__input')[0].parentElement.style.display).toBe('none');
+      expect(document.getElementsByClassName('govuk-checkboxes__input')[1].parentElement.style.display).toBe('block');
     });
   });
 

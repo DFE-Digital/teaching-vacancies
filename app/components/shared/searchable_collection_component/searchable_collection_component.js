@@ -1,12 +1,19 @@
 import '../../../frontend/src/lib/polyfill/closest.polyfill';
 import '../../../frontend/src/lib/polyfill/from.polyfill';
 
-export const init = (container) => {
-  const checkboxes = container.getElementsByClassName('govuk-checkboxes__input');
+export const searchableClassNames = ['govuk-checkboxes__input', 'govuk-radiobuttons__input'];
+
+export const init = (container, classNames) => {
+  let collection = [];
+
+  classNames.forEach((className) => {
+    collection = collection.concat(Array.from(container.getElementsByClassName(className)));
+  });
+
   const input = container.getElementsByClassName('collection-component__search-input')[0];
 
   input.addEventListener('input', (e) => {
-    filterCheckboxes(checkboxes, e.target);
+    filterCollection(collection, e.target);
   });
 
   input.addEventListener('click', (e) => {
@@ -14,31 +21,31 @@ export const init = (container) => {
   });
 };
 
-export const filterCheckboxes = (checkboxes, input) => Array.from(checkboxes).forEach((checkbox) => checkboxDisplay(checkbox, input));
+export const filterCollection = (collection, input) => Array.from(collection).forEach((item) => itemDisplay(item, input));
 
 export const substringExistsInString = (original, input) => original.toUpperCase().indexOf(input.toUpperCase()) > -1;
 
-export const getStringForMatch = (checkbox) => {
+export const getStringForMatch = (item) => {
   let matchString = '';
 
-  if (checkbox.nextSibling) {
-    matchString = checkbox.nextSibling.innerHTML;
+  if (item.nextSibling) {
+    matchString = item.nextSibling.innerHTML;
   }
 
-  return `${checkbox.value}${matchString}`;
+  return `${item.value}${matchString}`;
 };
 
-export const checkboxDisplay = (checkbox, input) => {
-  if (substringExistsInString(getStringForMatch(checkbox), input.value)) {
-    checkbox.parentElement.style.display = 'block';
+export const itemDisplay = (item, input) => {
+  if (substringExistsInString(getStringForMatch(item), input.value)) {
+    item.parentElement.style.display = 'block';
   } else {
-    checkbox.parentElement.style.display = 'none';
+    item.parentElement.style.display = 'none';
   }
 };
 
 window.addEventListener('DOMContentLoaded', () => {
   const groups = document.getElementsByClassName('collection-component');
   if (groups.length) {
-    Array.from(groups).filter((group) => group.getElementsByClassName('collection-component__search-input').length).forEach((group) => init(group));
+    Array.from(groups).filter((group) => group.getElementsByClassName('collection-component__search-input').length).forEach((group) => init(group, searchableClassNames));
   }
 });
