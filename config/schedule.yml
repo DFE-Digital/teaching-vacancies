@@ -9,7 +9,7 @@ email_feedback_prompt:
   queue: low
 
 export_tables:
-  cron: '0 03 * * *'
+  cron: '30 04 * * *'
   class: 'ExportTablesToBigQueryJob'
   queue: low
 
