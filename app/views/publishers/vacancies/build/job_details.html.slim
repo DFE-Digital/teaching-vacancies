@@ -37,6 +37,7 @@
         div class="govuk-!-margin-bottom-6"
           = render Shared::SearchableCollectionComponent.new(form: f,
             threshold: 10,
+            scrollable: true,
             attribute_name: :subjects,
             collection: SUBJECT_OPTIONS,
             value_method: :first,

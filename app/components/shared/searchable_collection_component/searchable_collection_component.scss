@@ -3,27 +3,27 @@
     margin-bottom: 0;
   }
 
-  &.scrollable {
+  &.collection-component--scrollable {
     .govuk-form-group {
-      max-height: 194px;
+      max-height: 400px;
       overflow: auto;
     }
   }
 
   &.collection-component--border {
     background-color: #fff;
-    border: 5px solid #f3f2f1;
+    border: 2px solid $govuk-border-colour;
     padding: 0;
 
     .govuk-checkboxes__item,
     .govuk-radios__item {
-      margin-left: 10px;
+      margin-left: govuk-spacing(2);
     }
   }
 
   .collection-component__search {
     background: #fff;
-    margin: 10px;
+    margin: govuk-spacing(2);
     position: relative;
 
     .collection-component__search-input {
