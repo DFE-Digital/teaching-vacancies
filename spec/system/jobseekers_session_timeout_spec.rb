@@ -5,7 +5,6 @@ RSpec.describe "Jobseekers session timeout" do
   let(:timeout_period) { 2.weeks }
 
   before do
-    allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(true)
     login_as(jobseeker, scope: :jobseeker)
   end
 

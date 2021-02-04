@@ -5,7 +5,6 @@ RSpec.describe "Jobseekers can change email" do
   let(:created_jobseeker) { Jobseeker.first }
 
   before do
-    allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(true)
     login_as(jobseeker, scope: :jobseeker)
     visit edit_jobseeker_registration_path
   end

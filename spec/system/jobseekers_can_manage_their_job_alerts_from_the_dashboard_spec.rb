@@ -3,10 +3,6 @@ require "rails_helper"
 RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
   let(:jobseeker) { create(:jobseeker) }
 
-  before do
-    allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(true)
-  end
-
   context "when logged in" do
     before do
       login_as(jobseeker, scope: :jobseeker)

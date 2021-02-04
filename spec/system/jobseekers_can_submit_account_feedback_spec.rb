@@ -3,10 +3,6 @@ require "rails_helper"
 RSpec.describe "Jobseekers can submit account feedback" do
   let(:jobseeker) { create(:jobseeker) }
 
-  before do
-    allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(true)
-  end
-
   context "when logged in" do
     let(:comment) { "amazing account features!" }
 

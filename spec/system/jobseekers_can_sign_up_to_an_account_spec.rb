@@ -4,10 +4,6 @@ RSpec.describe "Jobseekers can sign up to an account" do
   let(:jobseeker) { build(:jobseeker) }
   let(:created_jobseeker) { Jobseeker.first }
 
-  before do
-    allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(true)
-  end
-
   describe "creating an account" do
     it "validates and submits the form, triggers account created event, sends confirmation email and redirects to check your email page" do
       visit new_jobseeker_registration_path

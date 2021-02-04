@@ -10,7 +10,6 @@ RSpec.describe "Users can only be signed in to one type of account" do
   let(:authentication_fallback_enabled?) { false }
 
   before do
-    allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(true)
     allow(AuthenticationFallback).to receive(:enabled?).and_return(authentication_fallback_enabled?)
   end
 

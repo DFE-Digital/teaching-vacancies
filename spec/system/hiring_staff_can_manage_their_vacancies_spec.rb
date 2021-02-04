@@ -8,7 +8,7 @@ RSpec.describe "Hiring staff can manage vacancies from a link on home page" do
 
     visit root_path
 
-    within("div.manage-vacancies") do
+    within(".govuk-header__navigation") do
       click_on(I18n.t("home.signin_publishers.manage_link"))
     end
 

@@ -7,7 +7,6 @@ RSpec.describe "Jobseekers can add employment history to their job application" 
   let(:job_application) { create(:job_application, :complete, jobseeker: jobseeker, vacancy: vacancy) }
 
   before do
-    allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(true)
     allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true)
     login_as(jobseeker, scope: :jobseeker)
   end

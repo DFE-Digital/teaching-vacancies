@@ -4,7 +4,6 @@ RSpec.describe "Jobseekers can unlock their account" do
   let(:jobseeker) { create(:jobseeker) }
 
   before do
-    allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(true)
     visit root_path
     within("nav") do
       click_on I18n.t("buttons.sign_in")

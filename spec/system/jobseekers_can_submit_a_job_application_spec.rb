@@ -5,7 +5,6 @@ RSpec.describe "Jobseekers can submit a job application" do
   let(:job_application) { create(:job_application, :complete, jobseeker: jobseeker) }
 
   before do
-    allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(true)
     allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true)
     login_as(jobseeker, scope: :jobseeker)
   end

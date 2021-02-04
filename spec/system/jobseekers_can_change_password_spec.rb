@@ -4,7 +4,6 @@ RSpec.describe "Jobseekers can change password" do
   let(:jobseeker) { create(:jobseeker, email: "jobseeker@example.com", password: "password1234") }
 
   before do
-    allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(true)
     login_as(jobseeker, scope: :jobseeker)
     visit edit_jobseeker_registration_path(password_update: true)
   end

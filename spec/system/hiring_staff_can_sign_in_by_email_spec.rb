@@ -8,15 +8,15 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
   scenario "can reach email request page by nav-bar link" do
     visit root_path
 
-    within(".govuk-header__navigation") { click_on(I18n.t("nav.sign_in")) }
+    within(".govuk-header__navigation") { click_on(I18n.t("nav.for_schools")) }
     expect(page).to have_content(I18n.t("publishers.temp_login.heading"))
     expect(page).to have_content(I18n.t("publishers.temp_login.please_use_email"))
   end
 
-  scenario "can reach email request page by sign in button" do
+  scenario "can reach email request page by for schools button" do
     visit root_path
 
-    click_sign_in
+    click_for_schools
     expect(page).to have_content(I18n.t("publishers.temp_login.heading"))
     expect(page).to have_content(I18n.t("publishers.temp_login.please_use_email"))
   end
@@ -66,7 +66,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
         scenario "can sign in, choose an org, change org, sign out" do
           freeze_time do
             visit root_path
-            click_sign_in
+            click_for_schools
 
             # Expect to send an email
             expect(message_delivery).to receive(:deliver_later)
@@ -91,7 +91,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
             # Can sign out
             click_on(I18n.t("nav.sign_out"))
 
-            within(".govuk-header__navigation") { expect(page).to have_content(I18n.t("nav.sign_in")) }
+            within(".govuk-header__navigation") { expect(page).to have_content(I18n.t("nav.for_schools")) }
             expect(page).to have_content(I18n.t("messages.access.publisher_signed_out"))
 
             # Login link no longer works
@@ -132,7 +132,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
         scenario "can sign in and bypass choice of org" do
           freeze_time do
             visit root_path
-            click_sign_in
+            click_for_schools
 
             # Expect to send an email
             expect(message_delivery).to receive(:deliver_later)
@@ -163,7 +163,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
         scenario "can sign in and bypass choice of org" do
           freeze_time do
             visit root_path
-            click_sign_in
+            click_for_schools
 
             # Expect to send an email
             expect(message_delivery).to receive(:deliver_later)
@@ -199,7 +199,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
           scenario "can sign in and bypass choice of org" do
             freeze_time do
               visit root_path
-              click_sign_in
+              click_for_schools
 
               # Expect to send an email
               expect(message_delivery).to receive(:deliver_later)
@@ -243,7 +243,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
 
   private
 
-  def click_sign_in
-    within(".signin") { click_on(I18n.t("buttons.sign_in")) }
+  def click_for_schools
+    within(".govuk-header__navigation") { click_on(I18n.t("nav.for_schools")) }
   end
 end
