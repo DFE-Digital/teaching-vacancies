@@ -103,11 +103,24 @@ jobs:
         token: ${{ secrets.PERSONAL_TOKEN }}
         checkName: Deploy ${{ env.TAG }} to staging # Job name within workflow
         ref: ${{ github.ref }}
-        timeoutSeconds: 300
+        timeoutSeconds: 720
         intervalSeconds: 15
 
+    - name: Notify twd_tv_dev channel on staging deployment failure
+      if: steps.wait_for_deploy_app_staging.outputs.conclusion != 'success' && 'refs/heads/master'
+      uses: rtCamp/action-slack-notify@v2.1.2
+      env:
+        SLACK_CHANNEL: twd_tv_dev
+        SLACK_USERNAME: CI Deployment
+        SLACK_TITLE: Deployment failure
+        SLACK_MESSAGE: 'Deployment of Docker tag ${{ env.TAG }} to staging - ${{ job.status }}'
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+    - name: Exit whole workflow if staging deployment was not successful
+      if: steps.wait_for_deploy_app_staging.outputs.conclusion != 'success' && 'refs/heads/master'
+      run: exit 1
+
     - name: Trigger Smoke Test
-      if: ${{ steps.wait_for_deploy_app_staging.outputs.conclusion == 'success' }}
       uses: benc-uk/workflow-dispatch@v1.1
       with:
         workflow: Smoke Test Manual # Workflow name
@@ -124,8 +137,22 @@ jobs:
         timeoutSeconds: 300
         intervalSeconds: 15
 
+    - name: Notify twd_tv_dev channel on staging smoke test failure
+      if: steps.wait_for_smoke_test.outputs.conclusion != 'success' && 'refs/heads/master'
+      uses: rtCamp/action-slack-notify@v2.1.2
+      env:
+        SLACK_CHANNEL: twd_tv_dev
+        SLACK_USERNAME: CI Deployment
+        SLACK_TITLE: Deployment failure
+        SLACK_MESSAGE: 'Smoke test of Docker tag ${{ env.TAG }} on staging - ${{ job.status }}'
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+    - name: Exit whole workflow if staging smoke test was not successful
+      if: steps.wait_for_smoke_test.outputs.conclusion != 'success' && github.ref == 'refs/heads/master'
+      run: exit 1
+
     - name: Trigger Deploy App Workflow for production
-      if: ${{ steps.wait_for_smoke_test.outputs.conclusion == 'success' }} && github.ref == 'refs/heads/master'
+      if: steps.wait_for_smoke_test.outputs.conclusion == 'success' && github.ref == 'refs/heads/master'
       uses: benc-uk/workflow-dispatch@v1.1
       with:
         workflow: Deploy App to Environment # Workflow name
@@ -139,11 +166,24 @@ jobs:
         token: ${{ secrets.PERSONAL_TOKEN }}
         checkName: Deploy ${{ env.TAG }} to production # Job name within workflow
         ref: ${{ github.ref }}
-        timeoutSeconds: 300
+        timeoutSeconds: 720
         intervalSeconds: 15
 
+    - name: Notify twd_tv_dev channel on production deployment failure
+      if: steps.wait_for_deploy_app_production.outputs.conclusion != 'success' && 'refs/heads/master'
+      uses: rtCamp/action-slack-notify@v2.1.2
+      env:
+        SLACK_CHANNEL: twd_tv_dev
+        SLACK_USERNAME: CI Deployment
+        SLACK_TITLE: Deployment failure
+        SLACK_MESSAGE: 'Deployment of Docker tag ${{ env.TAG }} to production - ${{ job.status }}'
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+    - name: Exit whole workflow if production deployment was not successful
+      if: steps.wait_for_deploy_app_production.outputs.conclusion != 'success' && 'refs/heads/master'
+      run: exit 1
+
     - name: Deploy monitoring
-      if: ${{ steps.wait_for_deploy_app_production.outputs.conclusion == 'success' }} && github.ref == 'refs/heads/master'
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -156,11 +196,11 @@ jobs:
       working-directory: terraform/monitoring
 
     - name: Send job status message to twd_tv_dev channel
-      if: ${{ always() && github.ref == 'refs/heads/master' }}
+      if: always() && github.ref == 'refs/heads/master'
       uses: rtCamp/action-slack-notify@v2.1.2
       env:
         SLACK_CHANNEL: twd_tv_dev
         SLACK_USERNAME: CI Deployment
         SLACK_TITLE: Deployment ${{ job.status }}
-        SLACK_MESSAGE: 'Deployment of Docker tag ${{ env.TAG }} to production - ${{ job.status }}'
+        SLACK_MESSAGE: 'Deployment of Docker tag ${{ env.TAG }} to staging and production - ${{ job.status }}'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

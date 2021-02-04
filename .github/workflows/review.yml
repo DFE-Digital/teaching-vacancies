@@ -107,8 +107,11 @@ jobs:
         timeoutSeconds: 720
         intervalSeconds: 15
 
+    - name: Exit whole workflow if deployment was not successful
+      if: steps.wait_for_deploy_app.outputs.conclusion != 'success'
+      run: exit 1
+
     - name: Post Sticky Pull Request Comment
-      if: ${{ steps.wait_for_deploy_app.outputs.conclusion == 'success' }}
       uses: marocchino/sticky-pull-request-comment@v2
       with:
         GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}

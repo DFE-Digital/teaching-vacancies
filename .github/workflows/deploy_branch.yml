@@ -102,11 +102,11 @@ jobs:
         token: ${{ secrets.PERSONAL_TOKEN }}
         checkName: Deploy app to environment # Job name within workflow
         ref: ${{ github.ref }}
-        timeoutSeconds: 300
+        timeoutSeconds: 720
         intervalSeconds: 15
 
     - name: Send job status message to twd_tv_dev channel
-      if: ${{ always() && github.ref == 'refs/heads/master' }}
+      if: always() && github.ref == 'refs/heads/master'
       uses: rtCamp/action-slack-notify@v2.1.2
       env:
         SLACK_CHANNEL: twd_tv_dev
