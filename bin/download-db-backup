@@ -1,14 +1,16 @@
 #!/bin/bash
 set -eu
 
-FILENAME=sanitised-backup.sql
-DATE=$(date +'%F')
 BUCKET=530003481352-tv-db-backups
+DATE=$(date +'%F')
+FILENAME='sanitised-backup.sql'
 S3KEY=$(aws s3api list-objects-v2 --bucket "${BUCKET}" --prefix "${DATE}-sanitised" --output text --query 'Contents[].{Key: Key}')
-if [ "${S3KEY}" = "None" ]; then
-    echo "There are no files found matching the prefix ${DATE} in bucket ${BUCKET}"
+
+if [[ "${S3KEY}" = "None" ]]; then
+  echo "There are no files found matching the prefix ${DATE} in bucket ${BUCKET}"
+  exit 1
 else
-    echo "File ${S3KEY} found in bucket ${BUCKET}. Downloading"
-    aws s3 cp "s3://${BUCKET}/${S3KEY}" "${FILENAME}.gz"
-    gunzip "${FILENAME}.gz"
+  echo "File ${S3KEY} found in bucket ${BUCKET}. Downloading"
+  aws s3 cp "s3://${BUCKET}/${S3KEY}" "${FILENAME}.gz"
+  gunzip "${FILENAME}.gz"
 fi
