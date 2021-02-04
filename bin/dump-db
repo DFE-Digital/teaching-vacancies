@@ -3,7 +3,8 @@ set -eu
 CF_SERVICE_NAME='teaching-vacancies'
 CF_SOURCE_ENVIRONMENT='production'
 CONDUIT_APP_NAME="${CF_SERVICE_NAME}-conduit-${CF_SOURCE_ENVIRONMENT}"
+FILENAME='backup.sql'
 
-cf conduit "${CF_SERVICE_NAME}-postgres-${CF_SOURCE_ENVIRONMENT}" --app-name "${CONDUIT_APP_NAME}" -- pg_dump -x --no-owner -c -f backup.sql
+cf conduit "${CF_SERVICE_NAME}-postgres-${CF_SOURCE_ENVIRONMENT}" --app-name "${CONDUIT_APP_NAME}" -- pg_dump -x --no-owner -c -f "${FILENAME}"
 # The conduit app may have to be deleted explicitly
 cf delete -f "${CONDUIT_APP_NAME}" || true

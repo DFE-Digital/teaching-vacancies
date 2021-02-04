@@ -1,8 +1,14 @@
 #!/bin/bash
 set -eu
 
-DATE=$(date +'%F')
 BUCKET=530003481352-tv-db-backups
+DATE=$(date +'%F')
 
-gzip "$FILENAME"
-aws s3 cp "${FILENAME}.gz" "s3://${BUCKET}/${DATE}-${FILENAME}.gz"
+if [[ ! -f "${FILENAME}" ]]; then
+    echo "${FILENAME} does not exist."
+    exit 1
+else
+    # Use the --keep option as we may use the file to restore to a temporary database
+    gzip --keep "$FILENAME"
+    aws s3 cp "${FILENAME}.gz" "s3://${BUCKET}/${DATE}-${FILENAME}.gz"
+fi
