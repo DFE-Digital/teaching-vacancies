@@ -41,7 +41,7 @@ ruby:
     = render "shared/search/current_location", loaderElement: "location-field"
     = render "shared/search/radius", f: f, filters: true
 
-    = f.hidden_field :jobs_sort, value: @vacancies_search&.sort_by
+    = f.hidden_field :jobs_sort, value: @vacancies_search.sort_by
     = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"
 
   aside

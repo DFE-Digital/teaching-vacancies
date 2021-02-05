@@ -1,5 +1,5 @@
 class Search::ReplicaBuilder
-  attr_reader :search_replica
+  attr_reader :search_replica, :sort_by
 
   def initialize(job_sort, keyword)
     # A blank `sort_by` results in a search on the base index, Indexable::INDEX_NAME
@@ -9,6 +9,7 @@ class Search::ReplicaBuilder
                 job_sort
               end
     @search_replica = [Indexable::INDEX_NAME, sort_by].reject(&:blank?).join("_") if sort_by.present?
+    @sort_by = sort_by
   end
 
   private
