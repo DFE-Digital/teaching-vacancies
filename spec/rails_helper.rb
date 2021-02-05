@@ -14,6 +14,8 @@ require "rack_session_access/capybara"
 require "sidekiq/testing"
 require "view_component/test_helpers"
 require "webmock/rspec"
+require "site_prism"
+require "site_prism/all_there"
 
 Sidekiq::Testing.fake!
 
@@ -26,6 +28,7 @@ Capybara.server = :puma, { Silent: true, Threads: "0:1" }
 WebMock.disable_net_connect! allow: %w[localhost 127.0.0.1]
 
 Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
+Dir[Rails.root.join("spec/page_objects/**/*.rb")].sort.each { |f| require f }
 Dir[Rails.root.join("lib/**/*.rb")].sort.each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
