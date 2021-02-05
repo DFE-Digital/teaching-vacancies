@@ -1,3 +1,4 @@
+TRUNCATE TABLE alert_runs;
 TRUNCATE TABLE audit_data;
 TRUNCATE TABLE emergency_login_keys;
 TRUNCATE TABLE sessions;
