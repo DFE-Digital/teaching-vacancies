@@ -16,5 +16,9 @@
     .govuk-main-wrapper__notification {
       background-color: govuk-colour('light-grey');
     }
+
+    .moj-filter-layout__content {
+      overflow-x: none;
+    }
   }
 }
