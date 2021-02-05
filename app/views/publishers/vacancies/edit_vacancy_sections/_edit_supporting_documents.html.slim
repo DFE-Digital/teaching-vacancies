@@ -1,20 +1,18 @@
 = render "publishers/vacancies/new_attributes_tag", attributes: %i[supporting_documents], section: "supporting_documents"
 
-h2.govuk-heading-m.app-task-list__section#supporting_documents_heading
-  span.app-task-list__section-number = edit_vacancy_section_number(:supporting_documents, current_organisation)
-  = t("jobs.supporting_documents")
-  = govuk_link_to(t("buttons.change"), organisation_job_build_path(@vacancy.id, :documents), class: "change-button", "aria-label": t("jobs.aria_labels.change_supporting_documents"))
+= render Shared::ReviewComponent.new(id: "supporting_documents", title: t("jobs.supporting_documents"), edit_link: organisation_job_build_path(@vacancy.id, :documents))
 
-dl.app-check-your-answers.app-check-your-answers--short
-
-  - if @vacancy.documents.none?
-    .app-check-your-answers__contents
-      dt.app-check-your-answers__question.first-question#supporting_documents class="govuk-!-font-weight-regular"
-        = t("jobs.no_supporting_documents")
-  - else
-    - @vacancy.documents.each_with_index do |document, index|
-      - index_from_one = index + 1
-      .app-check-your-answers__contents
-        dt.app-check-your-answers__question#supporting_documents class=(index.zero? && "first-question")
-          h4.govuk-heading-s = "Document #{index_from_one}"
-        dd.app-check-your-answers__answer class=(index.zero? && "first-question") = document.name
+.review-component
+  .review-component__body
+    dl.govuk-summary-list
+      - if @vacancy.documents.none?
+        .govuk-summary-list__row
+          dt.govuk-summary-list__key#supporting_documents class="govuk-!-font-weight-regular"
+            = t("jobs.no_supporting_documents")
+      - else
+        - @vacancy.documents.each_with_index do |document, index|
+          - index_from_one = index + 1
+          .govuk-summary-list__row
+            dt.govuk-summary-list__key#supporting_documents class=(index.zero? && "first-question")
+              h4.govuk-heading-s = "Document #{index_from_one}"
+            dd.govuk-summary-list__value class=(index.zero? && "first-question") = document.name

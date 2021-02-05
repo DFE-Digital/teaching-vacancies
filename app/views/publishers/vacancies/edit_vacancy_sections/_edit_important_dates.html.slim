@@ -1,30 +1,19 @@
 = render "publishers/vacancies/new_attributes_tag", attributes: %i[publish_on expires_on starts_on], section: "important_dates"
 = render "publishers/vacancies/error_tag", attributes: %i[publish_on expires_on starts_on], section: "important_dates"
 
-h2.govuk-heading-m.app-task-list__section#important_dates_heading
-  span.app-task-list__section-number = edit_vacancy_section_number(:important_dates, current_organisation)
-  = t("jobs.important_dates")
-  = govuk_link_to(t("buttons.change"), organisation_job_build_path(@vacancy.id, :important_dates), class: "change-button", "aria-label": t("jobs.aria_labels.change_important_dates"))
+= render Shared::ReviewComponent.new(id: "important_dates", title: t("jobs.important_dates"), edit_link: organisation_job_build_path(@vacancy.id, :important_dates))
 
-dl.app-check-your-answers.app-check-your-answers--short
+.review-component
+  .review-component__body
+    = render GovukComponent::SummaryList.new do |component|
+      - component.slot(:row,
+        key: t("jobs.publication_date"),
+        value: format_date(@vacancy.publish_on))
 
-  .app-check-your-answers__contents
-    dt.app-check-your-answers__question.first-question#publish_on
-      h4.govuk-heading-s = t("jobs.publication_date")
-    dd.app-check-your-answers__answer.first-question = format_date @vacancy.publish_on
+      - component.slot(:row,
+        key: t("jobs.application_deadline"),
+        value: "#{format_date(@vacancy.expires_on)} #{t('jobs.time_at') unless @vacancy.expires_at.nil?} #{format_time(@vacancy.expires_at)}")
 
-  .app-check-your-answers__contents
-    dt.app-check-your-answers__question#expires_on
-      h4.govuk-heading-s = t("jobs.application_deadline")
-    dd.app-check-your-answers__answer
-      = format_date @vacancy.expires_on
-      = t("jobs.time_at") unless @vacancy.expires_at.nil?
-      = format_time @vacancy.expires_at
-
-  .app-check-your-answers__contents
-    dt.app-check-your-answers__question#starts_on
-      h4.govuk-heading-s = t("jobs.starts_on")
-    - if @vacancy.starts_asap?
-      dd.app-check-your-answers__answer = t("jobs.starts_asap")
-    - else
-      dd.app-check-your-answers__answer = format_date @vacancy.starts_on
+      - component.slot(:row,
+        key: t("jobs.starts_on"),
+        value: @vacancy.starts_asap? ? t("jobs.starts_asap") : format_date(@vacancy.starts_on))

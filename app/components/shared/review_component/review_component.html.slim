@@ -1,0 +1,5 @@
+.review-component
+  .review-component__heading
+    h2.govuk-heading-m.review-component__section id="#{id}_heading"
+      = title
+      = govuk_link_to(t("buttons.change"), edit_link, class: "review-component__section-button", "aria-label": t("jobs.aria_labels.change_#{id}"))

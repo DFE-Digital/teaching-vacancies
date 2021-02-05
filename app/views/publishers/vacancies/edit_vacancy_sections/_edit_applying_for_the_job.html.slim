@@ -1,63 +1,43 @@
 = render "publishers/vacancies/new_attributes_tag", attributes: %i[contact_email contact_number school_visits how_to_apply application_link], section: "applying_for_the_job"
 = render "publishers/vacancies/error_tag", attributes: %i[contact_email contact_number school_visits how_to_apply application_link], section: "applying_for_the_job"
 
-h2.govuk-heading-m.app-task-list__section#applying_for_the_job_heading
-  span.app-task-list__section-number = edit_vacancy_section_number(:applying_for_the_job, current_organisation)
-  = t("jobs.applying_for_the_job")
-  = govuk_link_to(t("buttons.change"), organisation_job_build_path(@vacancy.id, :applying_for_the_job), class: "change-button", "aria-label": t("jobs.aria_labels.change_applying_for_the_job"))
+= render Shared::ReviewComponent.new(id: "applying_for_the_job", title: t("jobs.applying_for_the_job"), edit_link: organisation_job_build_path(@vacancy.id, :applying_for_the_job))
 
-dl.app-check-your-answers.app-check-your-answers--short
+.review-component
+  .review-component__body
+    = render GovukComponent::SummaryList.new do |component|
+      - if JobseekerApplicationsFeature.enabled?
+        - component.slot(:row,
+          key: t("jobs.apply_through_teaching_vacancies"),
+          value: @vacancy.apply_through_teaching_vacancies&.capitalize)
 
-  - if JobseekerApplicationsFeature.enabled?
-    .app-check-your-answers__contents
-      dt.app-check-your-answers__question.first-question#apply_through_teaching_vacancies
-        h4.govuk-heading-s = t("jobs.apply_through_teaching_vacancies")
-      dd.app-check-your-answers__answer.first-question
-        = @vacancy.apply_through_teaching_vacancies&.capitalize
-    - if @vacancy.apply_through_teaching_vacancies == "yes"
-      .app-check-your-answers__contents
-        dt.app-check-your-answers__question.first-question#personal_statement_guidance
-          h4.govuk-heading-s = t("jobs.personal_statement_guidance")
-        dd.app-check-your-answers__answer.first-question
-          = @vacancy.personal_statement
-    - if @vacancy.apply_through_teaching_vacancies == "no"
-      .app-check-your-answers__contents
-        dt.app-check-your-answers__question#application_link
-          h4.govuk-heading-s = t("jobs.application_link")
-        dd.app-check-your-answers__answer
-          - if @vacancy.application_link.present?
-            = govuk_link_to(@vacancy.application_link, @vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link"), target: "_blank", rel: "noopener noreferrer")
-          - else
-            = t("jobs.not_defined")
+        - if @vacancy.apply_through_teaching_vacancies == "yes"
+          - component.slot(:row,
+            key: t("jobs.personal_statement_guidance"),
+            value: @vacancy.personal_statement)
 
-  .app-check-your-answers__contents
-    dt.app-check-your-answers__question.first-question#contact_email
-      h4.govuk-heading-s = t("jobs.contact_email")
-    dd.app-check-your-answers__answer.first-question
-      = govuk_mail_to "Job contact email", @vacancy.contact_email, "aria-label": t("jobs.aria_labels.contact_email_link", email: @vacancy.contact_email)
+        - if @vacancy.apply_through_teaching_vacancies == "no"
+          - component.slot(:row,
+            key: t("jobs.application_link"),
+            value: @vacancy.application_link.present? ? govuk_link_to(@vacancy.application_link, @vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link"), target: "_blank", rel: "noopener noreferrer") : t("jobs.not_defined"))
 
-  .app-check-your-answers__contents
-    dt.app-check-your-answers__question#contact_number
-      h4.govuk-heading-s = t("jobs.contact_number")
-    dd.app-check-your-answers__answer
-      = @vacancy.contact_number.present? ? govuk_link_to(@vacancy.contact_number, "tel:#{@vacancy.contact_number}") : t("jobs.not_defined")
+      - component.slot(:row,
+        key: t("jobs.job_title"),
+        value: govuk_mail_to("Job contact email", @vacancy.contact_email, "aria-label": t("jobs.aria_labels.contact_email_link", email: @vacancy.contact_email)))
 
-  .app-check-your-answers__contents
-    dt.app-check-your-answers__question#school_visits
-      h4.govuk-heading-s = t("jobs.#{school_or_trust_visits(@vacancy.parent_organisation)}")
-    dd.app-check-your-answers__answer = @vacancy.school_visits.presence || t("jobs.not_defined")
+      - component.slot(:row,
+        key: t("jobs.contact_number"),
+        value: @vacancy.contact_number.present? ? govuk_link_to(@vacancy.contact_number, "tel:#{@vacancy.contact_number}") : t("jobs.not_defined"))
 
-  - unless JobseekerApplicationsFeature.enabled?
-    .app-check-your-answers__contents
-      dt.app-check-your-answers__question#how_to_apply
-        h4.govuk-heading-s = t("jobs.how_to_apply")
-      dd.app-check-your-answers__answer = @vacancy.how_to_apply.presence || t("jobs.not_defined")
+      - component.slot(:row,
+        key: t("jobs.#{school_or_trust_visits(@vacancy.parent_organisation)}"),
+        value: @vacancy.school_visits.presence || t("jobs.not_defined"))
 
-    .app-check-your-answers__contents
-      dt.app-check-your-answers__question#application_link
-        h4.govuk-heading-s = t("jobs.application_link")
-      dd.app-check-your-answers__answer
-        - if @vacancy.application_link.present?
-          = govuk_link_to(@vacancy.application_link, @vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link"), target: "_blank", rel: "noopener noreferrer")
-        - else
-          = t("jobs.not_defined")
+      - unless JobseekerApplicationsFeature.enabled?
+        - component.slot(:row,
+          key: t("jobs.how_to_apply"),
+          value: @vacancy.how_to_apply.presence || t("jobs.not_defined"))
+
+        - component.slot(:row,
+          key: t("jobs.application_link"),
+          value: @vacancy.application_link.present? ? govuk_link_to(@vacancy.application_link, @vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link"), target: "_blank", rel: "noopener noreferrer") : t("jobs.not_defined"))

@@ -1,0 +1,71 @@
+.review-component {
+  .review-component__heading {
+    .review-component__section {
+      @include govuk-font($size:24, $weight: bold);
+      display: table;
+    }
+
+    .review-component__section-number {
+      display: table-cell;
+
+      @include govuk-media-query($from: tablet) {
+        min-width: govuk-spacing(6);
+        padding-right: 0;
+      }
+    }
+
+    .review-component__section-button {
+      @include govuk-font($size:16, $weight: bold);
+      @include govuk-media-query($from: desktop) {
+        @include govuk-font($size:19, $weight: bold);
+      }
+      margin-left: govuk-spacing(4);
+    }
+  }
+
+  .review-component__body {
+    margin-bottom: govuk-spacing(8);
+
+    .govuk-summary-list {
+      @include govuk-media-query($until: tablet) {
+        margin-left: -15px;
+      }
+      @include govuk-media-query($from: tablet) {
+        border-top: 1px solid $govuk-border-colour;
+      }
+      @include govuk-media-query($from: desktop) {
+        display: table;
+      }
+
+      @include govuk-font(19);
+      margin-bottom: 0;
+      margin-top: 0;
+    }
+  }
+}
+
+.app-task-list {
+  @include govuk-font($size:24, $weight: bold);
+  margin-bottom: 0;
+  margin-left: govuk-spacing(6);
+  margin-top: 0;
+  padding-left: 0;
+  @include govuk-media-query($from: tablet) {
+    min-width: 550px;
+  }
+
+  @include govuk-media-query($until: desktop) {
+    margin-left: govuk-spacing(4);
+  }
+}
+
+.notification-tag {
+  float: right;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+.action-required-tag {
+  @extend .notification-tag;
+  background-color: govuk-colour('red');
+}
