@@ -117,7 +117,7 @@ en:
       footer: >-
         If you still can’t access this page, or you haven’t yet been authorised, please email
         teaching.vacancies@education.gov.uk
-      options:
+      options_html:
         - checking the URL is correct
         - logging out of Teaching Vacancies and signing in again
         - reloading or refreshing the page
@@ -566,7 +566,7 @@ en:
     intro: >-
       Before listing any role at your school on Teaching Vacancies you must first read our Terms and Conditions and
       agree to abide by them.
-    intro_link: 'Of particular importance is the section %{link} which includes:'
+    intro_link_html: 'Of particular importance is the section %{link} which includes:'
     label: I agree to all of the Terms and Conditions of the Teaching Vacancies service.
     page_title: Terms and Conditions
     please_accept: Please accept the terms and conditions

@@ -1,6 +1,4 @@
 class NqtJobAlertsController < ApplicationController
-  include ParameterSanitiser
-
   def new
     @nqt_job_alerts_form = Jobseekers::NqtJobAlertsForm.new(nqt_job_alerts_params)
   end
@@ -39,6 +37,6 @@ class NqtJobAlertsController < ApplicationController
   end
 
   def nqt_job_alerts_params
-    ParameterSanitiser.call(params[:jobseekers_nqt_job_alerts_form] || params).permit(:keywords, :location, :email)
+    (params[:jobseekers_nqt_job_alerts_form] || params).permit(:keywords, :location, :email)
   end
 end

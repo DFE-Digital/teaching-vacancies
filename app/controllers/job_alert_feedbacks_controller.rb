@@ -48,7 +48,7 @@ class JobAlertFeedbacksController < ApplicationController
   end
 
   def token
-    ParameterSanitiser.call(params).require(:subscription_id)
+    params.require(:subscription_id)
   end
 
   def feedback_id

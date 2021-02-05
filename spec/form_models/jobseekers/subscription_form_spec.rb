@@ -36,7 +36,7 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
     context "when job alert already exists" do
       let(:params) { { email: "test@email.com", frequency: "daily", keyword: "maths" } }
 
-      before { allow(SubscriptionFinder).to receive_message_chain(:new, :exists?).and_return(true) }
+      before { allow(Subscription).to receive_message_chain(:where, :exists?).and_return(true) }
 
       it "validates uniqueness of job alert" do
         expect(subject).not_to be_valid

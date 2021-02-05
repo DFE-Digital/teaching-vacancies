@@ -280,7 +280,7 @@ en:
         provided are, to the best of your knowledge, correct
 
     confirmation_page:
-      dashboard_link: You can also view, amend or delete it on %{link}
+      dashboard_link_html: You can also view, amend or delete it on %{link}
       date_posted: Your job listing will be posted on %{date}.
       date_posted_now: Your job listing has been posted.
       date_expires: >-

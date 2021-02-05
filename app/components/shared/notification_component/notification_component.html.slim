@@ -5,9 +5,9 @@
     - if content[:title].present?
       .govuk-notification__title = content[:title]
     - if content[:body].present?
-      .govuk-notification__body = raw content[:body]
+      .govuk-notification__body == content[:body]
   - else
-    .govuk-notification__body = raw content
+    .govuk-notification__body == content
 
   - if @links.present?
     ul.govuk-list.govuk-notification__list

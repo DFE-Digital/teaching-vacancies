@@ -33,17 +33,5 @@ RSpec.describe NqtJobAlertsController, type: :controller do
         search_criteria: /^{.*}$/,
       )
     end
-
-    context "when parameters include syntax" do
-      let(:keywords) { "<body onload=alert('test1')>Text</script>" }
-      let(:expected_safe_values) { { keywords: "Text", location: location, email: email } }
-
-      it "sanitizes form inputs" do
-        subject
-        expect(controller.send(:nqt_job_alerts_params)).to eq(
-          ActionController::Parameters.new(expected_safe_values).permit(:keywords, :location, :email),
-        )
-      end
-    end
   end
 end

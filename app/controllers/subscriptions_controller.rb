@@ -1,6 +1,4 @@
 class SubscriptionsController < ApplicationController
-  include ParameterSanitiser
-
   def new
     @origin = origin_param if origin_param&.start_with?(%r{/\w})
     session[:subscription_origin] = @origin
@@ -92,7 +90,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def email
-    ParameterSanitiser.call(params).permit(:email)
+    params.permit(:email)
   end
 
   def origin_param
@@ -100,14 +98,16 @@ class SubscriptionsController < ApplicationController
   end
 
   def search_criteria_params
-    ParameterSanitiser.call(params.require(:search_criteria).permit(:keyword, :location, :radius, job_roles: [], phases: [], working_patterns: []))
+    params.require(:search_criteria)
+          .permit(:keyword, :location, :radius, job_roles: [], phases: [], working_patterns: [])
   end
 
   def subscription_params
-    ParameterSanitiser.call(params.require(:jobseekers_subscription_form).permit(:email, :frequency, :keyword, :location, :radius, job_roles: [], phases: [], working_patterns: []))
+    params.require(:jobseekers_subscription_form)
+          .permit(:email, :frequency, :keyword, :location, :radius, job_roles: [], phases: [], working_patterns: [])
   end
 
   def token
-    ParameterSanitiser.call(params).require(:id)
+    params.require(:id)
   end
 end

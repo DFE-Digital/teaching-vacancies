@@ -3,7 +3,7 @@
 ---
 
 <%- @vacancies.each do |vacancy| %>
-  <%= show_link(vacancy, @subscription).html_safe %>
+  <%= show_link(vacancy, @subscription) %>
   <%= location(vacancy.parent_organisation, job_location: vacancy.job_location) %>
 
   <%= t(".salary", salary: vacancy.salary) %>

@@ -65,8 +65,8 @@ class Jobseekers::SubscriptionForm
 
   def unique_job_alert
     return if frequency.blank?
+    return unless Subscription.where(job_alert_params).exists?
 
-    errors.add(:base, I18n.t("subscriptions.errors.duplicate_alert")) if
-      SubscriptionFinder.new(job_alert_params).exists?
+    errors.add(:base, I18n.t("subscriptions.errors.duplicate_alert"))
   end
 end

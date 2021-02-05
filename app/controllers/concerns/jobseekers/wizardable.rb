@@ -32,26 +32,24 @@ module Jobseekers::Wizardable
   end
 
   def personal_details_params(params)
-    ParameterSanitiser.call(params)
-                      .require(:jobseekers_job_application_personal_details_form)
-                      .permit(:building_and_street, :email_address, :first_name, :last_name, :national_insurance_number,
-                              :phone_number, :previous_names, :postcode, :teacher_reference_number, :town_or_city)
+    params.require(:jobseekers_job_application_personal_details_form)
+          .permit(:building_and_street, :email_address, :first_name, :last_name, :national_insurance_number,
+                  :phone_number, :previous_names, :postcode, :teacher_reference_number, :town_or_city)
   end
 
   def professional_status_params(params)
-    ParameterSanitiser.call(params)
-                      .require(:jobseekers_job_application_professional_status_form)
-                      .permit(:qualified_teacher_status, :qualified_teacher_status_year, :statutory_induction_complete)
+    params.require(:jobseekers_job_application_professional_status_form)
+          .permit(:qualified_teacher_status, :qualified_teacher_status_year, :statutory_induction_complete)
   end
 
   def employment_history_params(params)
-    ParameterSanitiser.call(params).require(:jobseekers_job_application_employment_history_form).permit(:gaps_in_employment)
+    params.require(:jobseekers_job_application_employment_history_form)
+          .permit(:gaps_in_employment)
   end
 
   def personal_statement_params(params)
-    ParameterSanitiser.call(params)
-                      .require(:jobseekers_job_application_personal_statement_form)
-                      .permit(:personal_statement)
+    params.require(:jobseekers_job_application_personal_statement_form)
+          .permit(:personal_statement)
   end
 
   def references_params(_params)
@@ -59,15 +57,13 @@ module Jobseekers::Wizardable
   end
 
   def ask_for_support_params(params)
-    ParameterSanitiser.call(params)
-                      .require(:jobseekers_job_application_ask_for_support_form)
-                      .permit(:support_needed, :support_details)
+    params.require(:jobseekers_job_application_ask_for_support_form)
+          .permit(:support_needed, :support_details)
   end
 
   def declarations_params(params)
-    ParameterSanitiser.call(params)
-                      .require(:jobseekers_job_application_declarations_form)
-                      .permit(:banned_or_disqualified, :close_relationships, :close_relationships_details, :right_to_work_in_uk)
+    params.require(:jobseekers_job_application_declarations_form)
+          .permit(:banned_or_disqualified, :close_relationships, :close_relationships_details, :right_to_work_in_uk)
   end
 
   def employment_history_info

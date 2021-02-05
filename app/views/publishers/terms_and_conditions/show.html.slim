@@ -7,7 +7,7 @@
 
       h1.govuk-heading-xl = t("terms_and_conditions.page_title")
       p = t("terms_and_conditions.intro")
-      p = t("terms_and_conditions.intro_link", link: govuk_link_to("Terms and Conditions for Schools", page_path("terms-and-conditions"))).html_safe
+      p = t("terms_and_conditions.intro_link_html", link: govuk_link_to("Terms and Conditions for Schools", page_path("terms-and-conditions")))
       ul.govuk-list.govuk-list--bullet
         - t("terms_and_conditions.summary_list").each do |item|
           li = item
