@@ -49,45 +49,56 @@ RSpec.describe Search::SearchBuilder do
     end
   end
 
-  describe "#call_algolia_search" do
-    context "when location matches a location polygon" do
-      let(:location) { location_polygon.name }
-      let(:search_params) do
-        {
-          keyword: keyword,
-          polygons: location_polygon.polygons["polygons"],
-          filters: filter_query,
-          hits_per_page: 10,
-          page: page,
-        }
+  describe "#call_search" do
+    context "when there is any search criteria" do
+      context "when location matches a location polygon" do
+        let(:location) { location_polygon.name }
+        let(:search_params) do
+          {
+            keyword: keyword,
+            polygons: location_polygon.polygons["polygons"],
+            filters: filter_query,
+            hits_per_page: 10,
+            page: page,
+          }
+        end
+
+        before { allow(Search::BufferSuggestionsBuilder).to receive_message_chain(:new, :buffer_suggestions) }
+
+        it "calls algolia search with the correct parameters" do
+          expect(Search::AlgoliaSearchRequest).to receive(:new).with(search_params).and_call_original
+          subject
+        end
       end
 
-      before { allow(Search::BufferSuggestionsBuilder).to receive_message_chain(:new, :buffer_suggestions) }
+      context "when location does not match a location polygon" do
+        let(:location) { "SW1A 1AA" }
+        let(:radius) { 10 }
+        let(:search_params) do
+          {
+            keyword: keyword,
+            coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
+            radius: convert_miles_to_metres(radius),
+            filters: filter_query,
+            hits_per_page: 10,
+            page: page,
+          }
+        end
 
-      it "calls algolia search with the correct parameters" do
-        expect(Search::AlgoliaSearchRequest).to receive(:new).with(search_params).and_call_original
-        subject
+        before { allow(Search::RadiusSuggestionsBuilder).to receive_message_chain(:new, :radius_suggestions) }
+
+        it "calls algolia search with the correct parameters" do
+          expect(Search::AlgoliaSearchRequest).to receive(:new).with(search_params).and_call_original
+          subject
+        end
       end
     end
 
-    context "when location does not match a location polygon" do
-      let(:location) { "SW1A 1AA" }
-      let(:radius) { 10 }
-      let(:search_params) do
-        {
-          keyword: keyword,
-          coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
-          radius: convert_miles_to_metres(radius),
-          filters: filter_query,
-          hits_per_page: 10,
-          page: page,
-        }
-      end
+    context "when there is not any search criteria" do
+      let(:keyword) { "" }
 
-      before { allow(Search::RadiusSuggestionsBuilder).to receive_message_chain(:new, :radius_suggestions) }
-
-      it "calls algolia search with the correct parameters" do
-        expect(Search::AlgoliaSearchRequest).to receive(:new).with(search_params).and_call_original
+      it "calls `Search::VacancyPaginator` with the correct parameters" do
+        expect(Search::VacancyPaginator).to receive(:new).with(1, 10, "").and_call_original
         subject
       end
     end
