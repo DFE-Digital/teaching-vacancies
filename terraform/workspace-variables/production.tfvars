@@ -7,10 +7,9 @@ parameter_store_environment = "production"
 # CloudFront
 distribution_list = {
   "tvsprod" = {
-    offline_bucket_domain_name      = "tvs-offline.s3.amazonaws.com"
-    offline_bucket_origin_path      = "/school-jobs-offline"
-    cloudfront_origin_domain_name   = "teaching-vacancies-production.london.cloudapps.digital"
-    cloudfront_enable_standard_logs = true
+    offline_bucket_domain_name    = "tvs-offline.s3.amazonaws.com"
+    offline_bucket_origin_path    = "/school-jobs-offline"
+    cloudfront_origin_domain_name = "teaching-vacancies-production.london.cloudapps.digital"
   }
 }
 

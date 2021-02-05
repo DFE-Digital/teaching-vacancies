@@ -4,9 +4,6 @@ variable environment {
 variable service_name {
 }
 
-variable cloudfront_enable_standard_logs {
-}
-
 variable cloudfront_origin_domain_name {
 }
 
