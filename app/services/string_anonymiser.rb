@@ -11,8 +11,9 @@ class StringAnonymiser
   end
 
   def to_s
-    Digest::SHA256.bubblebabble(@raw_string)
+    raw_string.blank? ? "" : Digest::SHA256.bubblebabble(raw_string)
   end
+
   alias to_str to_s
 
   def ==(other)
