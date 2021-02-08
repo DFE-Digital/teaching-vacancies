@@ -35,6 +35,6 @@ dl.app-check-your-answers.app-check-your-answers--short
       h4.govuk-heading-s = t("jobs.application_link")
     dd.app-check-your-answers__answer
       - if @vacancy.application_link.present?
-        = govuk_link_to(@vacancy.application_link, @vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link"), "target": "_blank", rel: "noopener noreferrer")
+        = govuk_link_to(@vacancy.application_link, @vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link"), target: "_blank", rel: "noopener noreferrer")
       - else
         = t("jobs.not_defined")
