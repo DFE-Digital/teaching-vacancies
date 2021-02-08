@@ -101,6 +101,8 @@ en:
         how_to_apply: Explain how to apply for the job, referring to any relevant documents
         local_authority_visits: >-
           Explain how a candidate can arrange visits within the local authority (give a phone number if possible)
+        personal_statement_guidance: >-
+          If there is anything particular you would like candidates to tell you about in the personal statement, like their interests outside teaching, you can amend our standard text:
         school_visits: Explain how a candidate can arrange a visit to the school (give a phone number if possible)
         trust_visits: Explain how a candidate can arrange a visit to the trust (give a phone number if possible)
       publishers_job_listing_copy_vacancy_form:
@@ -272,9 +274,13 @@ en:
 
       publishers_job_listing_applying_for_the_job_form:
         application_link: Link to online application
+        apply_through_teaching_vacancies_options:
+          "no": "Use another service or organisation"
+          "yes": "Apply through Teaching Vacancies"
         contact_email_html: Contact email (<span class='text-red'>Required</span>)
         contact_number: Contact phone number
         how_to_apply: How to apply
+        personal_statement_guidance: Help candidates to write their personal statement
         school_visits: School visits
         trust_visits: Trust visits
       publishers_job_listing_copy_vacancy_form:
@@ -359,6 +365,8 @@ en:
       personal_details_form:
         address_html: Your address (<span class='text-red'>Required</span>)
 
+      publishers_job_listing_applying_for_the_job_form:
+        apply_through_teaching_vacancies_html: How would you like candidates to apply? (<span class='text-red'>Required</span>)
       publishers_job_listing_copy_vacancy_form:
         expires_on_html: Date application is due (<span class='text-red'>Required</span>)
         publish_on_html: Date job will be listed (<span class='text-red'>Required</span>)

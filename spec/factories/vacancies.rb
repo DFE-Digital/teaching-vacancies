@@ -7,6 +7,7 @@ FactoryBot.define do
     job_location { "at_one_school" }
     about_school { Faker::Lorem.paragraph(sentence_count: 4) }
     application_link { Faker::Internet.url }
+    apply_through_teaching_vacancies { "yes" }
     benefits { Faker::Lorem.paragraph(sentence_count: 4) }
     contact_email { Faker::Internet.email }
     contact_number { "01234 123456" }
@@ -22,6 +23,7 @@ FactoryBot.define do
     job_roles { [:teacher] }
     job_title { Faker::Lorem.sentence[1...30].strip }
     listed_elsewhere { nil }
+    personal_statement_guidance { Faker::Lorem.paragraph(sentence_count: 4) }
     publish_on { Date.current }
     qualifications { Faker::Lorem.paragraph(sentence_count: 4) }
     reference { SecureRandom.uuid }

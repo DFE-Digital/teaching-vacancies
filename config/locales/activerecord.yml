@@ -115,6 +115,8 @@ en:
   applying_for_the_job_errors: &applying_for_the_job_errors
     application_link:
       url: Enter a link in the correct format, like http://www.school.ac.uk
+    apply_through_teaching_vacancies:
+      inclusion: Select how you would like candidates to apply
     contact_email:
       blank: Enter a contact email
       invalid: Enter an email address in the correct format, like name@example.com

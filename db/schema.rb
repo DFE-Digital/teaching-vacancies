@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_02_203236) do
+ActiveRecord::Schema.define(version: 2021_02_08_151336) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -330,9 +330,9 @@ ActiveRecord::Schema.define(version: 2021_02_02_203236) do
     t.datetime "stats_updated_at"
     t.uuid "publisher_id"
     t.datetime "expires_at"
-    t.string "legacy_job_roles", array: true
     t.string "salary"
     t.integer "completed_step"
+    t.string "legacy_job_roles", array: true
     t.text "about_school"
     t.string "state", default: "create"
     t.string "subjects", array: true
@@ -348,6 +348,8 @@ ActiveRecord::Schema.define(version: 2021_02_02_203236) do
     t.boolean "starts_asap", default: false
     t.integer "contract_type"
     t.string "contract_type_duration"
+    t.string "apply_through_teaching_vacancies"
+    t.text "personal_statement_guidance"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["initially_indexed"], name: "index_vacancies_on_initially_indexed"
