@@ -6,7 +6,6 @@ RSpec.describe "A visitor to the website can access the support links" do
     click_on "Privacy policy"
 
     expect(page).to have_content("Privacy Notice: Teaching Vacancies")
-    expect(page).to have_content(I18n.t("static_pages.privacy_policy.who_we_are.about"))
   end
 
   scenario "the terms and conditions" do
