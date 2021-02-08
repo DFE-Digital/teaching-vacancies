@@ -4,7 +4,7 @@ class UpdateDsiUsersInDb
   include DFESignIn
 
   def run!
-    get_response_pages.each { |page| convert_to_users(page) }
+    response_pages.each { |page| convert_to_users(page) }
   end
 
   private

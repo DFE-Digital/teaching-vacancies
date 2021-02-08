@@ -5,7 +5,7 @@ class ExportDsiApproversToBigQuery < BaseDsiBigQueryExporter
 
   def run!
     delete_table(TABLE_NAME)
-    get_response_pages.each { |page| insert_table_data(page) }
+    response_pages.each { |page| insert_table_data(page) }
   rescue StandardError => e
     Rails.logger.warn("DSI API /approvers failed to respond with error: #{e.message}")
     raise "#{e.message}, while writing data from DSI /approvers endpoint. Flag this to Steven + Comms team"
