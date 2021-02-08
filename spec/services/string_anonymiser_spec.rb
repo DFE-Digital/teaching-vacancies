@@ -1,11 +1,20 @@
 require "rails_helper"
 
 RSpec.describe StringAnonymiser do
-  subject { described_class.new("Hello world!") }
+  let(:input) { "Hello world!" }
+  subject { described_class.new(input) }
 
   describe "#to_s" do
     it "returns an anonymised form of the input string" do
       expect(subject.to_s).to eq("xubah-fylag-ramor-laluz-tigyd-nigyb-hybek-ryvym-nysog-vodif-zyrus-bulos-zezer-ruzuz-fyket-nenac-pyxyx")
+    end
+
+    context "when input is empty" do
+      let(:input) { nil }
+
+      it "returns blank string if the input is empty" do
+        expect(subject.to_s).to eq("")
+      end
     end
   end
 
