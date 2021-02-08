@@ -52,6 +52,14 @@ RSpec.configure do |config|
     Capybara.default_host = "http://#{ENV.fetch('DOMAIN', 'localhost:3000')}"
   end
 
+  config.before(:each, recaptcha: true) do
+    recaptcha_reply = double("recaptcha_reply")
+    allow(recaptcha_reply).to receive(:dig).with("score").and_return(0.9)
+    allow(recaptcha_reply).to receive(:[]).with("score").and_return(0.9)
+    allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(true)
+    allow_any_instance_of(ApplicationController).to receive(:recaptcha_reply).and_return(recaptcha_reply)
+  end
+
   config.before(:each, type: :system, js: true) do
     driven_by :selenium, using: :headless_chrome
   end

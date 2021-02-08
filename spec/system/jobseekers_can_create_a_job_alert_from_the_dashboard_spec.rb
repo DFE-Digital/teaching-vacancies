@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Jobseekers can create a job alert from the dashboard" do
+RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha: true do
   let(:jobseeker) { create(:jobseeker) }
   let(:subscription) { build(:subscription) }
   let(:search_criteria) { subscription.search_criteria }
@@ -23,6 +23,18 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard" do
       an_invalid_form_is_rejected
       expect { create_a_job_alert }.to change { Subscription.count }.by(1)
       and_the_job_alert_is_on_the_index_page
+    end
+
+    context "when verify_recaptcha is false" do
+      before do
+        allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(false)
+      end
+
+      it "redirects to invalid_recaptcha path" do
+        click_on I18n.t("jobseekers.subscriptions.index.link_create")
+        create_a_job_alert
+        expect(page).to have_current_path(invalid_recaptcha_path(form_name: "Subscription"))
+      end
     end
   end
 

@@ -74,8 +74,8 @@ class ApplicationController < ActionController::Base
     response.set_header("X-Robots-Tag", "noindex, nofollow")
   end
 
-  def invalid_recaptcha_score?
-    recaptcha_reply["score"] < SUSPICIOUS_RECAPTCHA_THRESHOLD
+  def recaptcha_is_invalid?(model)
+    !verify_recaptcha(model: model, action: controller_name, minimum_score: SUSPICIOUS_RECAPTCHA_THRESHOLD) && recaptcha_reply
   end
 
   def request_event
@@ -91,6 +91,7 @@ class ApplicationController < ActionController::Base
         params[key] = value
       end
     end
+    feedback_data[:recaptcha_score] = recaptcha_reply["score"] unless recaptcha_reply&.dig("score").blank?
     request_event.trigger(:feedback_provided, feedback_data)
   end
 

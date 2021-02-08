@@ -21,18 +21,16 @@ class JobAlertFeedbacksController < ApplicationController
     @subscription = Subscription.find_and_verify_by_token(token)
     @feedback_form = Jobseekers::JobAlertFeedbackForm.new(form_params)
 
-    recaptcha_is_valid = verify_recaptcha(model: @feedback, action: "job_alert_feedback")
-    @feedback.recaptcha_score = recaptcha_reply["score"] if recaptcha_is_valid && recaptcha_reply
-    @feedback.save
-
-    if recaptcha_is_valid && recaptcha_reply && invalid_recaptcha_score?
+    if @feedback_form.invalid?
+      render :edit
+    elsif recaptcha_is_invalid?(@feedback)
       redirect_to invalid_recaptcha_path(form_name: @feedback.class.name.underscore.humanize)
-    elsif @feedback_form.valid?
+    else
       @feedback.update(form_params)
+      @feedback.recaptcha_score = recaptcha_reply["score"]
+      @feedback.save
       Auditor::Audit.new(@feedback, "job_alert_feedback.update", current_publisher_oid).log
       redirect_to root_path, success: t(".success")
-    else
-      render :edit
     end
   end
 

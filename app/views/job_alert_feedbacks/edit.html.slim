@@ -17,6 +17,6 @@
 
       = f.govuk_text_area :comment, label: { size: "s" }, max_chars: 1200, rows: 11
 
-      = recaptcha("job_alert_feedback")
+      = recaptcha
 
       = f.govuk_submit t("buttons.submit"), classes: "govuk-!-padding-left-8 govuk-!-padding-right-8"

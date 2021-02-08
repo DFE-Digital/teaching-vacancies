@@ -1,12 +1,14 @@
 require "rails_helper"
 
-RSpec.describe "A jobseeker can give feedback on a job alert" do
+RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true do
   let(:search_criteria) { { keyword: "Math", location: "London" } }
   let(:subscription) { create(:subscription, email: "bob@dylan.com", frequency: :daily, search_criteria: search_criteria) }
   let(:relevant_to_user) { true }
   let(:vacancies) { create_list(:vacancy, 2, :published) }
+  let(:verify_recaptcha) { true }
 
   before do
+    allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(verify_recaptcha)
     # Follow the link in the job alert email
     visit new_subscription_job_alert_feedback_url(
       token,
@@ -83,17 +85,23 @@ RSpec.describe "A jobseeker can give feedback on a job alert" do
       it "audits the update" do
         expect(activity.key).to eq("job_alert_feedback.update")
       end
-    end
 
-    context "when recaptcha score is invalid" do
-      before do
-        allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(true)
-        allow_any_instance_of(ApplicationController).to receive(:recaptcha_reply).and_return({ "score" => 0.1 })
-      end
+      context "when recaptcha is invalid" do
+        let(:verify_recaptcha) { false }
 
-      scenario "redirects to invalid_recaptcha path" do
-        click_on "Submit"
-        expect(page).to have_current_path(invalid_recaptcha_path(form_name: "Job alert feedback"))
+        context "and the form is valid" do
+          scenario "redirects to invalid_recaptcha path" do
+            expect(page).to have_current_path(invalid_recaptcha_path(form_name: "Job alert feedback"))
+          end
+        end
+
+        context "and the form is invalid" do
+          let(:comment) { nil }
+
+          scenario "does not redirect to invalid_recaptcha path" do
+            expect(page).to have_content("There is a problem")
+          end
+        end
       end
     end
   end
