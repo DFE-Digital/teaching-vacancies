@@ -6,7 +6,6 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha
   let(:search_criteria) { subscription.search_criteria }
 
   before do
-    allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(true)
     login_as(jobseeker, scope: :jobseeker)
   end
 

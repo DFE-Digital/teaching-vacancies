@@ -6,7 +6,6 @@ RSpec.describe "Jobseekers can save a job" do
   let(:created_jobseeker) { Jobseeker.first }
 
   before do
-    allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(true)
     vacancy.organisation_vacancies.create(organisation: school)
   end
 

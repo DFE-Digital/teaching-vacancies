@@ -7,7 +7,6 @@ RSpec.describe "Jobseekers can add references to their job application" do
   let(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
   before do
-    allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(true)
     allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true)
     login_as(jobseeker, scope: :jobseeker)
   end

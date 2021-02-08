@@ -6,7 +6,6 @@ RSpec.describe Shared::NavbarComponent, type: :component do
   context "when JobseekerAccountsFeature is enabled" do
     before do
       allow(controller).to receive(:jobseeker_signed_in?).and_return(true)
-      allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(true)
       render_inline(subject)
     end
 
@@ -21,7 +20,6 @@ RSpec.describe Shared::NavbarComponent, type: :component do
     context "when jobseeker is not signed in" do
       before do
         allow(controller).to receive(:jobseeker_signed_in?).and_return(false)
-        allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(true)
         render_inline(subject)
       end
 
@@ -34,6 +32,10 @@ RSpec.describe Shared::NavbarComponent, type: :component do
   end
 
   context "when JobseekerAccountsFeature is not enabled" do
+    before do
+      allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(false)
+    end
+
     context "when publisher is signed in" do
       before do
         allow(controller).to receive(:publisher_signed_in?).and_return(true)

@@ -4,7 +4,6 @@ RSpec.describe "Jobseekers can sign out from their account" do
   let!(:jobseeker) { create(:jobseeker, email: "jobseeker@example.com") }
 
   before do
-    allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(true)
     login_as(jobseeker, scope: :jobseeker)
   end
 
