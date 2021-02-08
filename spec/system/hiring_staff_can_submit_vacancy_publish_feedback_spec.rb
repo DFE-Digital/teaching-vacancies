@@ -2,10 +2,14 @@ require "rails_helper"
 RSpec.describe "Vacancy publish feedback" do
   let(:school) { create(:school) }
   let(:oid) { SecureRandom.uuid }
-  let(:choose_yes_to_participation) { choose("vacancy-publish-feedback-user-participation-response-interested-field") }
-  let(:choose_no_to_participation) do
-    choose("vacancy-publish-feedback-user-participation-response-not-interested-field")
+  let(:choose_yes_to_participation) do
+    choose("publishers-vacancies-vacancy-publisher-feedback-form-user-participation-response-interested-field")
   end
+  let(:choose_no_to_participation) do
+    choose("publishers-vacancies-vacancy-publisher-feedback-form-user-participation-response-uninterested-field")
+  end
+  let(:comment) { "Perfect!" }
+  let(:email) { "my@valid.email" }
 
   before { stub_publishers_auth(urn: school.urn, oid: oid) }
 
@@ -31,7 +35,7 @@ RSpec.describe "Vacancy publish feedback" do
 
       visit new_organisation_job_feedback_path(published_job.id)
 
-      expect(page).to have_content(I18n.t("publishers.vacancies.vacancy_publish_feedback.new.already_submitted"))
+      expect(page).to have_content(I18n.t("publishers.vacancies.vacancy_publisher_feedbacks.new.already_submitted"))
     end
   end
 
@@ -42,7 +46,7 @@ RSpec.describe "Vacancy publish feedback" do
 
     scenario "must have a participation response" do
       visit new_organisation_job_feedback_path(published_job.id)
-      fill_in "vacancy_publish_feedback[comment]", with: "Perfect!"
+      fill_in "publishers_vacancies_vacancy_publisher_feedback_form[comment]", with: comment
 
       click_on I18n.t("buttons.submit_feedback")
 
@@ -61,7 +65,7 @@ RSpec.describe "Vacancy publish feedback" do
     scenario "Can be successfully submitted for a published vacancy" do
       visit new_organisation_job_feedback_path(published_job.id)
 
-      fill_in "vacancy_publish_feedback[comment]", with: "Perfect!"
+      fill_in "publishers_vacancies_vacancy_publisher_feedback_form[comment]", with: comment
       choose_no_to_participation
 
       click_on I18n.t("buttons.submit_feedback")
@@ -73,34 +77,18 @@ RSpec.describe "Vacancy publish feedback" do
     scenario "creates a feedback record" do
       visit new_organisation_job_feedback_path(published_job.id)
 
-      fill_in "vacancy_publish_feedback[comment]", with: "Perfect!"
+      fill_in "publishers_vacancies_vacancy_publisher_feedback_form[comment]", with: comment
       choose_yes_to_participation
-      fill_in "vacancy_publish_feedback[email]", with: "user@email.com"
+      fill_in "publishers_vacancies_vacancy_publisher_feedback_form[email]", with: email
 
-      click_on I18n.t("buttons.submit_feedback")
+      expect { click_on I18n.t("buttons.submit_feedback") }.to have_triggered_event(:feedback_provided)
+        .with_data(comment: comment,
+                   email: email,
+                   feedback_type: "vacancy_publisher",
+                   user_participation_response: "interested",
+                   vacancy_id: published_job.id)
 
-      feedback = VacancyPublishFeedback.last
-
-      expect(feedback).to_not be_nil
-      expect(feedback.comment).to eq("Perfect!")
-      expect(feedback.publisher).to eq(Publisher.find_by(oid: oid))
-      expect(feedback.email).to eq("user@email.com")
-    end
-
-    scenario "logs an audit activity" do
-      visit new_organisation_job_feedback_path(published_job.id)
-
-      fill_in "vacancy_publish_feedback[comment]", with: "Perfect!"
-      choose_no_to_participation
-
-      click_on I18n.t("buttons.submit_feedback")
-      expect(page).to have_content(
-        strip_tags(I18n.t("messages.jobs.feedback.submitted_html", job_title: published_job.job_title)),
-      )
-
-      activity = published_job.activities.last
-      expect(activity.key).to eq("vacancy.publish_feedback.create")
-      expect(activity.session_id).to eq(oid)
+      expect(Feedback.vacancy_publisher.last.comment).to eq(comment)
     end
   end
 end

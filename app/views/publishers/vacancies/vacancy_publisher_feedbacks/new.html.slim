@@ -1,12 +1,12 @@
-- content_for :page_title_prefix, t("feedback.page_title")
+- content_for :page_title_prefix, t(".title")
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @feedback, url: organisation_job_feedback_path do |f|
+    = form_for @vacancy_publisher_feedback_form, url: organisation_job_feedback_path do |f|
       = f.govuk_error_summary
 
       h2.govuk-heading-l
-        = t("feedback.heading")
+        = t(".heading")
 
       = render "/feedback/form", f: f
 

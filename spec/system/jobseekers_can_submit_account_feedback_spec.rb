@@ -21,8 +21,10 @@ RSpec.describe "Jobseekers can submit account feedback" do
       choose I18n.t("helpers.label.jobseekers_account_feedback_form.rating_options.somewhat_satisfied")
       fill_in "jobseekers_account_feedback_form[comment]", with: comment
 
-      expect { click_button I18n.t("buttons.submit") }.to have_triggered_event(:jobseeker_account_feedback_provided)
-        .with_data(comment: comment, rating: "somewhat_satisfied")
+      expect { click_button I18n.t("buttons.submit") }.to have_triggered_event(:feedback_provided)
+        .with_base_data(
+          user_anonymised_jobseeker_id: StringAnonymiser.new(jobseeker.id).to_s,
+        ).and_data(comment: comment, rating: "somewhat_satisfied")
 
       expect(current_path).to eq(jobseekers_saved_jobs_path)
       expect(page).to have_content(I18n.t("jobseekers.account_feedbacks.create.success"))

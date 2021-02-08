@@ -4,7 +4,6 @@ class JobAlertFeedbacksController < ApplicationController
     # This is because it is called from a link in the alert email. Such links can only perform
     # GET requests. HTTP forbids redirecting from GET to POST.
     subscription = Subscription.find_and_verify_by_token(token)
-
     @feedback = subscription.job_alert_feedbacks.create(job_alert_feedback_params)
 
     Auditor::Audit.new(@feedback, "job_alert_feedback.create", current_publisher_oid).log

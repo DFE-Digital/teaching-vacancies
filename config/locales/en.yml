@@ -128,14 +128,6 @@ en:
       title: We were unable to authorise your request.
     unprocessable_entity: We're unable to process your request.
 
-  feedback:
-    comment_hint_text: >-
-      <p>Please do not include any information that could identify you personally
-      (such as your name or the name of your school).</p><p>(Limit is 1,200 characters)</p>
-    comment_label_html: How could we improve this service? (<span class='text-red'>Required</span>)
-    heading: Give feedback
-    page_title: Feedback
-
   footer:
     for_job_seekers: For jobseekers
     for_schools: For schools
@@ -148,24 +140,13 @@ en:
     updates: Updates
     your_account: Your account
 
-  general_feedback:
+  general_feedbacks:
     create:
       success: Your feedback has been successfully submitted
     new:
+      heading: Give feedback
       page_description: Tell us how we can improve Teaching Vacancies and volunteer as a user research participant.
-    visit_purpose_legend_html: What did you come to Teaching Vacancies to do? (<span class='text-red'>Required</span>)
-    user_interested_email_heading_html: What is your email address? (<span class="text-red">Required</span>)
-    user_interested_email_text: >-
-      We'll only use this to tell you about opportunities to take part in user research that helps us improve
-      Department for Education services.
-    user_participation_legend_html: >-
-      Would you like to participate in our research? (<span class='text-red'>Required</span>)
-    user_participation_options:
-      interested: 'Yes'
-      not_interested: 'No'
-    visit_purpose_hint_text: >-
-      Please tell us what you came here to do. Do not include any information that could identify you personally
-      (such as your name or the name of your school).
+      title: Feedback
 
   help:
     email: teaching.vacancies@education.gov.uk
@@ -288,9 +269,11 @@ en:
           %{job_title} has been <span class="govuk-!-font-weight-bold delete-listing-success-gtm">deleted</span>
       show:
         notice: You can only view published jobs
-      vacancy_publish_feedback:
+      vacancy_publisher_feedbacks:
         new:
           already_submitted: Feedback for this job has already been submitted
+          heading: Give feedback
+          title: Feedback
 
   job_alert_feedbacks:
     edit:
