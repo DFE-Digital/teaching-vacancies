@@ -175,7 +175,7 @@ en:
           heading: School or trust accounts
           link: how to create an account
         description: >-
-          If you have an account you can save teaching jobs you are interested in, apply for jobs and
+          If you have an account you can save teaching jobs you are interested in and
           create job alerts.
         existing_account:
           content_html: You can %{link_to} here.
