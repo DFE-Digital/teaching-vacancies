@@ -126,7 +126,7 @@ RSpec.describe SubscriptionPresenter do
     end
 
     it "returns a field:value hash" do
-      expect(presenter.send(:search_criteria_field, "random_field", "value")).to eq({ 'random_field': "value" })
+      expect(presenter.send(:search_criteria_field, "random_field", "value")).to eq({ random_field: "value" })
     end
   end
 end
