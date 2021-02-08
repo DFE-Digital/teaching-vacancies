@@ -1,10 +1,6 @@
 - content_for :page_title_prefix, @organisation.name
 
-.govuk-grid-row
-  .govuk-grid-column-full
-    = render(Publishers::VacanciesComponent.new(organisation: @organisation, sort: @sort, selected_type: @selected_type, filters: @filters, filters_form: @managed_organisations_form, sort_form: @sort_form, email: current_publisher.email))
-    = render(Publishers::NoVacanciesComponent.new(organisation: @organisation, email: current_publisher.email))
+= render(Publishers::VacanciesComponent.new(organisation: @organisation, sort: @sort, selected_type: @selected_type, filters: @filters, filters_form: @managed_organisations_form, sort_form: @sort_form, email: current_publisher.email))
+= render(Publishers::NoVacanciesComponent.new(organisation: @organisation, email: current_publisher.email))
 
-.govuk-grid-row
-  .govuk-grid-column-full
-    = render(Publishers::SchoolOverviewComponent.new(organisation: @organisation))
+= render(Publishers::SchoolOverviewComponent.new(organisation: @organisation))
