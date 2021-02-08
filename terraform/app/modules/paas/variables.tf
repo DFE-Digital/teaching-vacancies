@@ -108,6 +108,6 @@ locals {
   redis_cache_service_name = "${var.service_name}-redis-cache-${var.environment}"
   redis_queue_service_name = "${var.service_name}-redis-queue-${var.environment}"
   web_app_name             = "${var.service_name}-${var.environment}"
-  worker_app_start_command = "MALLOC_ARENA_MAX=2 bundle exec sidekiq -C config/sidekiq.yml"
+  worker_app_start_command = "bundle exec sidekiq -C config/sidekiq.yml"
   worker_app_name          = "${var.service_name}-worker-${var.environment}"
 }
