@@ -21,15 +21,15 @@ RSpec.describe ExportDsiUsersToBigQuery do
 
   let(:successful_api_response) do
     json_response(
-      "users": [user],
-      "numberOfPages": number_of_pages,
+      users: [user],
+      numberOfPages: number_of_pages,
     )
   end
 
   let(:unsuccessful_api_response) do
     json_response(
-      "success": false,
-      "message": "jwt expired",
+      success: false,
+      message: "jwt expired",
     )
   end
 

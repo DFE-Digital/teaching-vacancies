@@ -7,7 +7,7 @@ FactoryBot.define do
 
   trait :complete do
     application_data do
-      { "first_name": "John" }
+      { first_name: "John" }
     end
   end
 end

@@ -11,7 +11,7 @@ RSpec.describe "CORS", type: :request do
     end
 
     context "when domain is defined in configuration" do
-      let(:headers) { { "HTTP_ORIGIN": Rails.application.config.allowed_cors_origin.call } }
+      let(:headers) { { HTTP_ORIGIN: Rails.application.config.allowed_cors_origin.call } }
 
       it "allows the request" do
         expect(response.headers["X-Rack-CORS"]).to eq("hit")
@@ -20,7 +20,7 @@ RSpec.describe "CORS", type: :request do
     end
 
     context "when domain is not defined in configuration" do
-      let(:headers) { { "HTTP_ORIGIN": "https://www.test.com" } }
+      let(:headers) { { HTTP_ORIGIN: "https://www.test.com" } }
 
       it "does not allow the request" do
         expect(response.headers["X-Rack-CORS"]).to include("miss")
@@ -31,7 +31,7 @@ RSpec.describe "CORS", type: :request do
 
   describe "/api/v1/jobs.json" do
     let(:params) { { api_version: 1, format: "json" } }
-    let(:headers) { { "HTTP_ORIGIN": "https://www.test.com" } }
+    let(:headers) { { HTTP_ORIGIN: "https://www.test.com" } }
 
     before do
       get api_jobs_path(params), headers: headers
@@ -46,7 +46,7 @@ RSpec.describe "CORS", type: :request do
   describe "/api/v1/job/:id.json" do
     let(:vacancy) { create(:vacancy) }
     let(:params) { { id: vacancy.slug, api_version: 1, format: "json" } }
-    let(:headers) { { "HTTP_ORIGIN": "https://www.test.com" } }
+    let(:headers) { { HTTP_ORIGIN: "https://www.test.com" } }
 
     before do
       get api_job_path(params), headers: headers

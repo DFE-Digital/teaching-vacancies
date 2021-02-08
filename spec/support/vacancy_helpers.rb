@@ -179,35 +179,35 @@ module VacancyHelpers
     {
       '@context': "http://schema.org",
       '@type': "JobPosting",
-      'title': vacancy.job_title,
-      'salary': vacancy.salary,
-      'jobBenefits': vacancy.benefits,
-      'datePosted': vacancy.publish_on.to_time.iso8601,
-      'description': vacancy.job_summary,
-      'occupationalCategory': vacancy.job_roles&.join(", "),
-      'educationRequirements': vacancy.education,
-      'qualifications': vacancy.qualifications,
-      'experienceRequirements': vacancy.experience,
-      'employmentType': vacancy.working_patterns_for_job_schema,
-      'industry': "Education",
-      'jobLocation': {
+      title: vacancy.job_title,
+      salary: vacancy.salary,
+      jobBenefits: vacancy.benefits,
+      datePosted: vacancy.publish_on.to_time.iso8601,
+      description: vacancy.job_summary,
+      occupationalCategory: vacancy.job_roles&.join(", "),
+      educationRequirements: vacancy.education,
+      qualifications: vacancy.qualifications,
+      experienceRequirements: vacancy.experience,
+      employmentType: vacancy.working_patterns_for_job_schema,
+      industry: "Education",
+      jobLocation: {
         '@type': "Place",
-        'address': {
+        address: {
           '@type': "PostalAddress",
-          'addressLocality': vacancy.parent_organisation.town,
-          'addressRegion': vacancy.parent_organisation.region,
-          'streetAddress': vacancy.parent_organisation.address,
-          'postalCode': vacancy.parent_organisation.postcode,
+          addressLocality: vacancy.parent_organisation.town,
+          addressRegion: vacancy.parent_organisation.region,
+          streetAddress: vacancy.parent_organisation.address,
+          postalCode: vacancy.parent_organisation.postcode,
         },
       },
-      'url': job_url(vacancy),
-      'hiringOrganization': {
+      url: job_url(vacancy),
+      hiringOrganization: {
         '@type': "School",
-        'name': vacancy.parent_organisation.name,
-        'identifier': vacancy.parent_organisation.urn,
-        'description': vacancy.about_school,
+        name: vacancy.parent_organisation.name,
+        identifier: vacancy.parent_organisation.urn,
+        description: vacancy.about_school,
       },
-      'validThrough': vacancy.expires_on.end_of_day.to_time.iso8601,
+      validThrough: vacancy.expires_on.end_of_day.to_time.iso8601,
     }
   end
 

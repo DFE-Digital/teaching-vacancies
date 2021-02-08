@@ -163,7 +163,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
 
           get :show, params: { id: vacancy.id, api_version: 1 }
 
-          expect(json.to_h).to include('employmentType': "FULL_TIME")
+          expect(json.to_h).to include(employmentType: "FULL_TIME")
         end
 
         it "maps part_time working pattern to PART_TIME" do
@@ -171,7 +171,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
 
           get :show, params: { id: vacancy.id, api_version: 1 }
 
-          expect(json.to_h).to include('employmentType': "PART_TIME")
+          expect(json.to_h).to include(employmentType: "PART_TIME")
         end
 
         it "maps job_share working pattern to JOB_SHARE" do
@@ -179,7 +179,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
 
           get :show, params: { id: vacancy.id, api_version: 1 }
 
-          expect(json.to_h).to include('employmentType': "JOB_SHARE")
+          expect(json.to_h).to include(employmentType: "JOB_SHARE")
         end
 
         it "maps multiple values to an array" do
@@ -187,7 +187,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
 
           get :show, params: { id: vacancy.id, api_version: 1 }
 
-          expect(json.to_h).to include('employmentType': "PART_TIME, JOB_SHARE")
+          expect(json.to_h).to include(employmentType: "PART_TIME, JOB_SHARE")
         end
       end
 
@@ -196,11 +196,11 @@ RSpec.describe Api::VacanciesController, type: :controller do
           get :show, params: { id: vacancy.id, api_version: 1 }
 
           hiring_organization = {
-            'hiringOrganization': {
+            hiringOrganization: {
               '@type': "School",
-              'name': vacancy.parent_organisation.name,
-              'identifier': vacancy.parent_organisation.urn,
-              'description': "<p>#{vacancy.about_school}</p>",
+              name: vacancy.parent_organisation.name,
+              identifier: vacancy.parent_organisation.urn,
+              description: "<p>#{vacancy.about_school}</p>",
             },
           }
           expect(json.to_h).to include(hiring_organization)
