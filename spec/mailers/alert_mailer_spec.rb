@@ -27,7 +27,7 @@ RSpec.describe AlertMailer, type: :mailer do
     new_subscription_job_alert_feedback_url(
       subscription.token,
       params: { job_alert_feedback: { relevant_to_user: true,
-                                      vacancy_ids: vacancies.pluck(:id),
+                                      job_alert_vacancy_ids: vacancies.pluck(:id),
                                       search_criteria: subscription.search_criteria } },
     )
   end
@@ -35,7 +35,7 @@ RSpec.describe AlertMailer, type: :mailer do
     new_subscription_job_alert_feedback_url(
       subscription.token,
       params: { job_alert_feedback: { relevant_to_user: false,
-                                      vacancy_ids: vacancies.pluck(:id),
+                                      job_alert_vacancy_ids: vacancies.pluck(:id),
                                       search_criteria: subscription.search_criteria } },
     )
   end

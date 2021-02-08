@@ -16,7 +16,7 @@ RSpec.describe "Giving general feedback for the service", recaptcha: true do
         .with_data(comment: comment,
                    email: email,
                    feedback_type: "general",
-                   recaptcha_score: "0.9",
+                   recaptcha_score: 0.9,
                    user_participation_response: "interested",
                    visit_purpose: "other_purpose",
                    visit_purpose_comment: visit_purpose_comment)

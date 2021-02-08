@@ -37,10 +37,12 @@ class Event
   # For json objects or hashes passed to Event#trigger as values in the `data` param, such as
   # Subscription#search_criteria or Feedback#search_criteria, we should format these as json for BigQuery,
   # rather than strings, for easier data manipulation by Performance Analysis.
-  # Arrays, such as job alert Feedbacks with a vacancy_ids attribute, should remain as arrays.
+  # Floats, Integers and Arrays, such as job alert Feedbacks with a job_alert_vacancy_ids attribute,
+  # should remain as they are.
   # @param [Object] value Any value in the data passed to the event.
   def formatted_value(value)
-    return value if value.is_a?(Array)
+    return value if value.is_a?(Float) || value.is_a?(Integer)
+    return value.map { |item| formatted_value(item) } if value.is_a?(Array)
 
     value.respond_to?(:keys) ? value.to_json : value&.to_s
   end
