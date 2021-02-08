@@ -61,18 +61,16 @@ module DFESignIn
     response["users"].blank? || response["users"].first.blank?
   end
 
-  def get_response_pages
-    response_pages = []
-    (1..number_of_pages).each do |page|
+  def response_pages
+    (1..number_of_pages).lazy.map do |page|
       response = api_response(page: page)
       if users_nil_or_empty?(response)
-        Rollbar.log(:error,
-                    "DfE Sign In API responded with nil users")
+        Rollbar.log(:error, "DfE Sign In API responded with nil users")
         raise error_message_for(response)
       end
-      response_pages.push(response["users"])
+
+      response["users"]
     end
-    response_pages
   end
 
   def la_code(user)
