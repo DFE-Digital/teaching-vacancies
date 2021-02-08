@@ -3,13 +3,13 @@
     h3.govuk-heading-s = t(".cities")
     ul.govuk-list.two-column-list aria-label="#{t(".cities")} list"
       - @cities_facets.each do |city, count|
-        li #{govuk_link_to(city, location_category_path(city))} (#{count})
+        li #{govuk_link_to(city, location_path(city))} (#{count})
 
   .govuk-grid-column-one-half
     h3.govuk-heading-s = t(".counties")
     ul.govuk-list.two-column-list aria-label="#{t(".counties")} list"
       - @counties_facets.each do |county, count|
-        li #{govuk_link_to(county, location_category_path(county))} (#{count})
+        li #{govuk_link_to(county, location_path(county))} (#{count})
 
 .govuk-grid-row
   .govuk-grid-column-one-half

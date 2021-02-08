@@ -24,11 +24,11 @@ RSpec.describe "Using the vacancy facets to search for jobs" do
 
   scenario "cities facets count and link are displayed" do
     expect(page).to have_content("London (10)")
-    expect(page).to have_link("London", href: location_category_path("London"))
+    expect(page).to have_link("London", href: location_path("London"))
   end
 
   scenario "counties facets count and link are displayed" do
     expect(page).to have_content("Devon (15)")
-    expect(page).to have_link("Devon", href: location_category_path("Devon"))
+    expect(page).to have_link("Devon", href: location_path("Devon"))
   end
 end

@@ -19,8 +19,8 @@ RSpec.describe "Application sitemap", sitemap: true do
           .to eq(job_url(job, protocol: "https"))
       end
 
-      ALL_IMPORTED_LOCATIONS.each do |location_category|
-        url = location_category_url(location_category, protocol: "https")
+      ALL_IMPORTED_LOCATIONS.each do |location|
+        url = location_url(location, protocol: "https")
         expect(nodes.search("loc:contains('#{url}')").map(&:text)).to include(url)
       end
 
