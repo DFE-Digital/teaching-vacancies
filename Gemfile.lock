@@ -483,6 +483,11 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
+    site_prism (3.7)
+      addressable (~> 2.5)
+      capybara (~> 3.8)
+      site_prism-all_there (>= 0.3.1, < 1.0)
+    site_prism-all_there (0.3.2)
     skylight (5.0.0.beta4)
       activesupport (>= 5.2.0)
     slim (4.1.0)
@@ -625,6 +630,7 @@ DEPENDENCIES
   sidekiq
   sidekiq-cron
   simplecov (<= 0.17.1)
+  site_prism
   skylight (>= 5.0.0.beta4)
   slim-rails
   slim_lint

@@ -1,21 +1,22 @@
 class Search::SearchBuilder
   DEFAULT_HITS_PER_PAGE = 10
+  DEFAULT_PAGE = 1
 
   attr_reader :hits_per_page, :keyword, :location_search, :page, :params_hash,
-              :point_coordinates, :search_filters, :search_replica, :sort_by, :stats, :vacancies,
+              :point_coordinates, :search_filters, :search_replica, :sort_by, :stats, :total_count, :vacancies,
               :wider_search_suggestions
 
   def initialize(form_hash)
     @params_hash = form_hash
     @keyword = @params_hash[:keyword]
-    @hits_per_page = @params_hash[:per_page] || DEFAULT_HITS_PER_PAGE
-    @page = @params_hash[:page]
+    @hits_per_page = (@params_hash[:per_page] || DEFAULT_HITS_PER_PAGE).to_i
+    @page = (@params_hash[:page] || DEFAULT_PAGE).to_i
 
     build_location_search
     build_search_filters
     build_search_replica
-    call_algolia_search
-    build_suggestions if @vacancies.empty?
+    call_search
+    build_suggestions if @vacancies.empty? && any?
   end
 
   def only_active_to_hash
@@ -42,7 +43,9 @@ class Search::SearchBuilder
   end
 
   def build_search_replica
-    @search_replica = Search::ReplicaBuilder.new(@params_hash[:jobs_sort], @keyword).search_replica
+    replica = Search::ReplicaBuilder.new(@params_hash[:jobs_sort], @keyword)
+    @search_replica = replica.search_replica
+    @sort_by = replica.sort_by
   end
 
   def build_suggestions
@@ -53,10 +56,15 @@ class Search::SearchBuilder
     end
   end
 
-  def call_algolia_search
-    search = Search::AlgoliaSearchRequest.new(search_params)
+  def call_search
+    search = if any?
+               Search::AlgoliaSearchRequest.new(search_params)
+             else
+               Search::VacancyPaginator.new(page, hits_per_page, params_hash[:jobs_sort])
+             end
     @vacancies = search.vacancies
     @stats = search.stats
+    @total_count = search.total_count
   end
 
   def search_params

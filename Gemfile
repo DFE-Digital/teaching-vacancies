@@ -45,6 +45,7 @@ gem "rollbar"
 gem "sanitize"
 gem "sidekiq"
 gem "sidekiq-cron"
+gem "site_prism"
 gem "skylight", ">= 5.0.0.beta4" # TODO: Unpin when 5.0 is out
 gem "slim-rails"
 gem "validate_url"

@@ -10,7 +10,7 @@ class Search::AlertBuilder < Search::SearchBuilder
     build_location_search
     build_search_filters
     build_search_replica
-    call_algolia_search
+    call_search
   end
 
   private

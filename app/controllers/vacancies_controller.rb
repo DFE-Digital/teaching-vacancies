@@ -7,6 +7,7 @@ class VacanciesController < ApplicationController
     end
     @jobs_search_form = Jobseekers::SearchForm.new(algolia_search_params)
     @vacancies_search = Search::SearchBuilder.new(@jobs_search_form.to_hash)
+    @jobs_search_form.jobs_sort = @vacancies_search.sort_by
     @vacancies = VacanciesPresenter.new(@vacancies_search.vacancies)
     AuditSearchEventJob.perform_later(audit_row) if valid_search?
   end
@@ -47,12 +48,6 @@ class VacanciesController < ApplicationController
 
   def id
     params[:id]
-  end
-
-  def page_number
-    return Vacancy.page.total_pages if Vacancy.page(params[:page]).out_of_range?
-
-    params[:page]
   end
 
   def set_headers

@@ -1,5 +1,5 @@
 class Search::AlgoliaSearchRequest
-  attr_reader :vacancies, :stats
+  attr_reader :vacancies, :stats, :total_count
 
   def initialize(search_params)
     @keyword = search_params[:keyword]
@@ -15,6 +15,7 @@ class Search::AlgoliaSearchRequest
     @vacancies = search
     return if @vacancies.nil?
 
+    @total_count = vacancies.raw_answer["nbHits"]
     @stats = build_stats(
       vacancies.raw_answer["page"],
       vacancies.raw_answer["nbPages"],

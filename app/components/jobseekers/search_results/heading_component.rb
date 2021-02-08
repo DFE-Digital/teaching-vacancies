@@ -4,7 +4,7 @@ class Jobseekers::SearchResults::HeadingComponent < ViewComponent::Base
     @keyword = @vacancies_search.keyword
     @location = @vacancies_search.location_search.location
     @polygon_boundaries = @vacancies_search.location_search.polygon_boundaries
-    @total_count = @vacancies_search.vacancies.raw_answer["nbHits"]
+    @total_count = @vacancies_search.total_count
   end
 
   def heading

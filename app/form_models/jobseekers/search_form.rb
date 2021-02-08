@@ -4,9 +4,11 @@ class Jobseekers::SearchForm
   attr_reader :keyword,
               :location, :radius,
               :job_roles, :phases, :working_patterns,
-              :jobs_sort, :page,
+              :page,
               :job_role_options, :phase_options, :working_pattern_options,
               :total_filters
+
+  attr_accessor :jobs_sort
 
   def initialize(params = {})
     strip_trailing_whitespaces_from_params(params)

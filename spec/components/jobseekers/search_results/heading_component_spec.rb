@@ -14,7 +14,7 @@ RSpec.describe Jobseekers::SearchResults::HeadingComponent, type: :component do
     allow(vacancies_search).to receive(:keyword).and_return(keyword)
     allow(vacancies_search).to receive_message_chain(:location_search, :location).and_return(location)
     allow(vacancies_search).to receive_message_chain(:location_search, :polygon_boundaries).and_return(polygon_boundaries)
-    allow(vacancies_search).to receive_message_chain(:vacancies, :raw_answer, :[]).with("nbHits").and_return(count)
+    allow(vacancies_search).to receive_message_chain(:total_count).and_return(count)
     allow(vacancies_search).to receive_message_chain(:location_search, :buffer_radius).and_return(buffer_radius)
     render_inline(subject)
   end
