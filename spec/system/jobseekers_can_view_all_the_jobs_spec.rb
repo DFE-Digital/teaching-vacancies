@@ -1,6 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can view all the jobs" do
+  let(:home_page) { PageObjects::Home.new }
+  let(:jobs_page) { PageObjects::Vacancy::Index.new }
+
   let!(:school) { create(:school) }
   let!(:published_jobs) do
     create_list(
@@ -74,13 +77,5 @@ RSpec.describe "Jobseekers can view all the jobs" do
         expect(jobs_page.jobs.first.job_title).to eq(expires_tomorrow_job.job_title)
       end
     end
-  end
-
-  def home_page
-    @home_page ||= PageObjects::Home.new
-  end
-
-  def jobs_page
-    @jobs_page ||= PageObjects::Vacancy::Index.new
   end
 end
