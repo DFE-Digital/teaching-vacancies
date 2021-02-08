@@ -3,7 +3,7 @@ class SitemapController < ApplicationController
     map = XmlSitemap::Map.new(DOMAIN, secure: true) do |m|
       add_vacancies(m)
       add_new_identifications(m)
-      add_location_categories(m)
+      add_locations(m)
       add_subjects(m)
       add_job_roles(m)
       add_pages(m)
@@ -25,9 +25,9 @@ class SitemapController < ApplicationController
     map.add new_identifications_path, period: "weekly", priority: 0.8
   end
 
-  def add_location_categories(map)
-    ALL_IMPORTED_LOCATIONS.each do |location_category|
-      map.add location_category_path(location_category), period: "hourly"
+  def add_locations(map)
+    ALL_IMPORTED_LOCATIONS.each do |location|
+      map.add location_path(location), period: "hourly"
     end
   end
 
