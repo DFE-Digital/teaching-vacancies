@@ -62,8 +62,8 @@ class Search::SearchBuilder
              else
                Search::VacancyPaginator.new(page, hits_per_page, params_hash[:jobs_sort])
              end
-    @vacancies = search.vacancies
-    @stats = search.stats
+    @vacancies = search.vacancies || []
+    @stats = search.stats || []
     @total_count = search.total_count
   end
 

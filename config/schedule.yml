@@ -43,11 +43,6 @@ queue_weekly_alerts:
   class: 'SendWeeklyAlertEmailJob'
   queue: default
 
-refresh_vacancy_facets:
-  cron: '0 06 * * *'
-  class: 'RefreshVacancyFacetsJob'
-  queue: low
-
 remove_invalid_subscriptions:
   cron: '0 05 * * *'
   class: 'RemoveInvalidSubscriptionsJob'
