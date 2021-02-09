@@ -7,6 +7,11 @@ class ExportTablesToBigQuery
   # This is to allow us to load new tables to the production dataset without disturbing the existing ones.
   BIGQUERY_TABLE_PREFIX = "feb20".freeze
 
+  # How many rows to process at one time, and how many threads at the same time
+  # Deliberately low to prevent memory starvation
+  BATCH_SIZE = 100
+  THREADS = 1
+
   # Attributes with postgres schema types that do not exist in BigQuery.
   CONVERT_THESE_TYPES = { point: :float, text: :string, uuid: :string, json: :string, jsonb: :string }.freeze
 
@@ -137,7 +142,12 @@ class ExportTablesToBigQuery
     record_count = total = db_table.count
     error_count = 0
 
-    inserter = bq_table.insert_async ignore_unknown: true, skip_invalid: true do |result|
+    inserter = bq_table.insert_async(
+      ignore_unknown: true,
+      skip_invalid: true,
+      max_rows: BATCH_SIZE,
+      threads: THREADS,
+    ) do |result|
       if result.error?
         Rails.logger.error({
           table: table_name,
