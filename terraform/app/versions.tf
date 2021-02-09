@@ -10,8 +10,8 @@ terraform {
       version = "~> 0.13.0"
     }
     statuscake = {
-      source  = "terraform-providers/statuscake"
-      version = "~> 1.0.0"
+      source  = "StatusCakeDev/statuscake"
+      version = "~> 1.0.1"
     }
     template = {
       source  = "hashicorp/template"
