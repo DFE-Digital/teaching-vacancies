@@ -7,7 +7,7 @@
   width: 100vw;
 
   @include govuk-media-query ($from: desktop) {
-    .dashboard__header .govuk-width-container {
+    .dashboard-component__header .govuk-width-container {
       position: relative;
 
       .moj-action-bar {
