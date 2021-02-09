@@ -19,10 +19,10 @@ class Shared::SearchableCollectionComponent < ViewComponent::Base
   end
 
   def scrollable_class
-    return "collection-component--scrollable" if scrollable
+    return "searchable-collection-component--scrollable" if scrollable
   end
 
   def border_class
-    return "collection-component--border" if searchable
+    return "searchable-collection-component--border" if searchable
   end
 end

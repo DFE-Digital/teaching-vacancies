@@ -1,16 +1,16 @@
-.collection-component {
+.searchable-collection-component {
   .govuk-form-group {
     margin-bottom: 0;
   }
 
-  &.collection-component--scrollable {
+  &.searchable-collection-component--scrollable {
     .govuk-form-group {
       max-height: 400px;
       overflow: auto;
     }
   }
 
-  &.collection-component--border {
+  &.searchable-collection-component--border {
     background-color: #fff;
     border: 2px solid $govuk-border-colour;
     padding: 0;
@@ -21,18 +21,18 @@
     }
   }
 
-  .collection-component__search {
+  .searchable-collection-component__search {
     background: #fff;
     margin: govuk-spacing(2);
     position: relative;
 
-    .collection-component__search-input {
+    .searchable-collection-component__search-input {
       display: block;
       padding: 20px 60px 20px 40px;
       width: 100%;
     }
 
-    .collection-component__search-button {
+    .searchable-collection-component__search-button {
       background: transparent;
       border: 0;
       cursor: pointer;

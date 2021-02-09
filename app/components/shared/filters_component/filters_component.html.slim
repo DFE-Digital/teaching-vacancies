@@ -49,7 +49,7 @@
               = group[:title]
 
         .govuk-accordion__section-content.filters__group-checkboxes id="accordion-default-content-#{index}" aria-labelledby="accordion-default-heading-#{index}" data-group=group[:key]
-          .collection-component.collection-component--border
+          .searchable-collection-component.searchable-collection-component--border
             = form.govuk_collection_check_boxes group[:attribute],
               group[:options],
               group[:value_method],
