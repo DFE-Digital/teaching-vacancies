@@ -63,116 +63,7 @@ brew cask install chromedriver
 When onboarded, you will be provided with an AWS user. You can use it to access the AWS console at:
 [https://teaching-vacancies.signin.aws.amazon.com/console](https://teaching-vacancies.signin.aws.amazon.com/console).
 
-- Log in to the console and go to [My Security Credentials](https://console.aws.amazon.com/iam/home?region=eu-west-2#/security_credentials).
-- Choose `Assign MFA device` and set up an authenticator app as a Virtual MFA device.
-- If using an Authenticator App, scan the QR code, and when prompted to enter codes, enter the first code, wait 30 seconds until a new code has been generated on your authenticator app, and enter the new code in the second box.
-- Log out, and back in. You should be prompted for an MFA code.
-- Go to [My Security Credentials](https://console.aws.amazon.com/iam/home?region=eu-west-2#/security_credentials).
-- Choose `Create access key`. Note the credentials securely, as you will need these to configure the AWS CLI.
-
-### Assuming a role in the console
-
-- When you log in to AWS you will have permissions to
-  - Change your password
-  - Set up an MFA device
-  - Generate Access Keys
-To carry out more privileged operations, you will need to [switch to a role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-console.html)
-- Choose your user name on the navigation bar in the upper right. It typically looks like this: <YOUR-AWS-USERNAME>@teaching-vacancies.
-- Choose `Switch Roles`.
-- For Account, enter `530003481352`
-- For Role, enter `ReadOnly`
-- For Display Name, this will be greyed out as `ReadOnly @ 530003481352`
-- Pick a colour for the role display and click `Switch Role`
-- Choose `Switch Roles` again
-- For Account, enter `530003481352`
-- For Role, enter `SecretEditor`
-- For Display Name, this will be greyed out as `SecretEditor @ 530003481352`
-- These two roles should now be listed in your Role History
-### Roles
-
-- `Administrator` can:
-  - administer the AWS account, and all resources, including user and group management
-- `BillingManager` can:
-  - access invoices and other billing information
-  - read all resources
-- `ReadOnly` can:
-  - read all resources
-- `SecretEditor` can:
-  - read and update existing secrets within Parameter Store
-
-### Install AWS CLI
-
-Install and configure the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html).
-
-```bash
-brew install awscli
-```
-
-[Configure the CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html) by running
-
-```bash
-aws configure
-```
-
-You'll be prompted to enter:
-- AWS Access Key ID
-- AWS Secret Access Key
-- Default region name (choose `eu-west-2`)
-- Default output format (choose `json`)
-
-Following this procedure will create two files
-
-```bash
-cat ~/.aws/credentials
-```
-
-This should contain a default entry, with your access key and secret key:
-
-```
-[default]
-aws_access_key_id=<AWS_ACCESS_KEY_ID>
-aws_secret_access_key=<AWS_SECRET_ACCESS_KEY>
-```
-
-```bash
-cat ~/.aws/config
-```
-
-This should contain defaults for the region and output format:
-
-```
-[default]
-region = eu-west-2
-output = json
-```
-
-Append two profiles to `~/.aws/config`, replacing `<YOUR-AWS-USERNAME>` appropriately:
-
-```
-[profile ReadOnly]
-region = eu-west-2
-role_arn = arn:aws:iam::530003481352:role/ReadOnly
-source_profile = default
-mfa_serial = arn:aws:iam::530003481352:mfa/<YOUR-AWS-USERNAME>
-
-[profile SecretEditor]
-region = eu-west-2
-role_arn = arn:aws:iam::530003481352:role/SecretEditor
-source_profile = default
-mfa_serial = arn:aws:iam::530003481352:mfa/<YOUR-AWS-USERNAME>
-```
-
-When using the AWS CLI, you may pass in the profile like so
-
-```bash
-aws --profile ReadOnly s3 ls
-```
-
-or
-
-```bash
-AWS_PROFILE=SecretEditor aws ssm get-parameters --names "/teaching-vacancies/dev/app/secrets" --with-decryption
-```
+[Set up MFA and install command-line tools](/documentation/aws-roles-and-cli-tools.md)
 
 ### Environment Variables
 
@@ -182,12 +73,10 @@ Secrets (eg: API keys) are stored in AWS Systems Manager Parameter Store in `/te
 
 Non-secrets (eg: public URLs or feature flags) are stored in the repository in `terraform/workspace-variables/<env>_app_env.yml` files.
 
-Open your Authenticator App, and get the 6-digit MFA code.
-
 Run the following command to fetch all the required environment variables for development and output to a shell environment file:
 
 ```
-make -s local print-env mfa_code=123456 > .env
+aws-vault exec SecretEditor -- make -s local print-env > .env
 ```
 
 To run the command above you need [AWS credentials](#aws-credentials).
