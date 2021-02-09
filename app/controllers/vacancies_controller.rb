@@ -1,6 +1,7 @@
 class VacanciesController < ApplicationController
   def index
     set_map_display
+    params[:location] = params[:location_facet] if params[:location_facet]
     if params.key?(:pretty) && params.key?(params[:pretty])
       @landing_page = params[params[:pretty]]
       @landing_page_translation = "#{params[:pretty]}.#{@landing_page.parameterize.underscore}"
