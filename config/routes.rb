@@ -151,8 +151,8 @@ Rails.application.routes.draw do
   match "/500", to: "errors#internal_server_error", via: :all
 
   # If parameters are used that are the same as those in the search form, pagination with kaminari will break
-  match "teaching-jobs-in-:location",
-        to: "vacancies#index", as: :location, via: :get,
+  match "teaching-jobs-in-:location_facet",
+        to: "vacancies#index", as: :location_facet, via: :get,
         constraints: ->(request) { LocationPolygon.include?(request.params[:location]) }
 
   match "teaching-jobs-for-:job_role",
