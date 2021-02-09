@@ -5,13 +5,13 @@ import 'classlist-polyfill';
 export const ACCORDION_SECTION_CLASS_SELECTOR = 'govuk-accordion__section';
 export const ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR = 'govuk-accordion__section--expanded';
 export const CHECKBOX_CLASS_SELECTOR = 'govuk-checkboxes__input';
-export const CHECKBOX_GROUP_CLASS_SELECTOR = 'filters__group-checkboxes';
+export const CHECKBOX_GROUP_CLASS_SELECTOR = 'filters-component__group-checkboxes';
 export const CLOSE_ALL_TEXT = 'Close all';
 export const OPEN_ALL_TEXT = 'Open all';
 
 window.addEventListener(
   'DOMContentLoaded',
-  () => init('filters__groups-container', 'moj-filter__tag', 'clear-filters-button', 'close-all-groups', 'mobile-filters-button', 'govuk-accordion__section-header'),
+  () => init('filters-component__groups-container', 'moj-filter__tag', 'clear-filters-component-button', 'close-all-groups', 'mobile-filters-component-button', 'govuk-accordion__section-header'),
 );
 
 export const init = (groupContainerSelector, removeButtonSelector, clearButtonSelector, closeButtonSelector, mobileFiltersButtonSelector, accordionButtonsSelector) => {
@@ -39,10 +39,10 @@ export const init = (groupContainerSelector, removeButtonSelector, clearButtonSe
 
   if (document.getElementById(mobileFiltersButtonSelector)) {
     document.getElementById(mobileFiltersButtonSelector).addEventListener('click', () => {
-      document.getElementsByClassName('filters')[0].classList.toggle('filters--show-mobile');
+      document.getElementsByClassName('filters-component')[0].classList.toggle('filters-component--show-mobile');
 
-      if (document.getElementsByClassName('filters--show-mobile').length) {
-        document.getElementsByClassName('filters--show-mobile')[0].closest('form').removeAttribute('data-auto-submit');
+      if (document.getElementsByClassName('filters-component--show-mobile').length) {
+        document.getElementsByClassName('filters-component--show-mobile')[0].closest('form').removeAttribute('data-auto-submit');
       }
     });
   }
@@ -50,7 +50,7 @@ export const init = (groupContainerSelector, removeButtonSelector, clearButtonSe
   if (document.getElementById('return-to-results')) {
     document.getElementById('return-to-results').addEventListener('click', (e) => {
       e.preventDefault();
-      return Array.from(document.getElementsByClassName('filters')).map((element) => element.classList.toggle('filters--show-mobile'));
+      return Array.from(document.getElementsByClassName('filters-component')).map((element) => element.classList.toggle('filters-component--show-mobile'));
     });
   }
 };
@@ -132,7 +132,7 @@ export const addFilterChangeEvent = (groups) => {
 };
 
 export const filterChangeHandler = (el) => {
-  if (el.className === CHECKBOX_CLASS_SELECTOR && isFormAutoSubmitEnabled('filters__groups-container')) {
+  if (el.className === CHECKBOX_CLASS_SELECTOR && isFormAutoSubmitEnabled('filters-component__groups-container')) {
     getSubmitButton(el).click();
   }
 };

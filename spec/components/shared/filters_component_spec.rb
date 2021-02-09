@@ -33,7 +33,7 @@ RSpec.describe Shared::FiltersComponent, type: :component do
     end
 
     it "renders count of number of filters applied" do
-      expect(inline_component.css(".filters__heading-applied").to_html).to include("(2 applied)")
+      expect(inline_component.css(".filters-component__heading-applied").to_html).to include("(2 applied)")
     end
   end
 
@@ -54,7 +54,7 @@ RSpec.describe Shared::FiltersComponent, type: :component do
     it "filters remove UI is not visible" do
       expect(inline_component.css(".moj-filter__content").to_html).to be_blank
       expect(inline_component.css(".moj-filter__content .govuk-heading-s").to_html).to be_blank
-      expect(inline_component.css(".filters__heading-applied").to_html).to be_blank
+      expect(inline_component.css(".filters-component__heading-applied").to_html).to be_blank
     end
   end
 end

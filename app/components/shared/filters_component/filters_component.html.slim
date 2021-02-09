@@ -1,26 +1,26 @@
-.filters class=(options[:mobile_variant] ? "filters--mobile" : "")
-  .filters__heading.moj-filter
+.filters-component class=(options[:mobile_variant] ? "filters-component--mobile" : "")
+  .filters-component__heading.moj-filter
 
-    div class=(options[:close_all] ? "filters__heading-container" : "")
-      .filters__section-heading class=mobile_modifier("filters__heading")
+    div class=(options[:close_all] ? "filters-component__heading-container" : "")
+      .filters-component__section-heading class=mobile_modifier("filters-component__heading")
         .moj-filter__heading-title
-          h2.govuk-heading-s class=mobile_modifier("filters__heading-title") id=(options[:mobile_variant] ? "mobile-filters-button" : "")
+          h2.govuk-heading-s class=mobile_modifier("filters-component__heading-title") id=(options[:mobile_variant] ? "mobile-filters-component-button" : "")
             = filters[:title]
-          span.govuk-body.filters__heading-applied = applied_text
-          button.govuk-link.govuk-link--no-visited-state.filters--show-mobile-open id="return-to-results"
+          span.govuk-body.filters-component__heading-applied = applied_text
+          button.govuk-link.govuk-link--no-visited-state.filters-component--show-mobile-open id="return-to-results"
             = t("shared.filter_group.return_to_results")
         - if options[:close_all]
-          button.govuk-link.govuk-link--no-visited-state.filters__heading-close-all id="close-all-groups" class="close-all"
+          button.govuk-link.govuk-link--no-visited-state.filters-component__heading-close-all id="close-all-groups" class="close-all"
             = t("shared.filter_group.close_all_filter_groups")
 
-  .filters__remove
+  .filters-component__remove
     - if display_remove_buttons
       .moj-filter__content
         .moj-filter__selected
-          .filters__section-heading class="govuk-!-margin-bottom-2"
+          .filters-component__section-heading class="govuk-!-margin-bottom-2"
             .govuk-body class="govuk-!-margin-bottom-0"
               = t("shared.filter_group.current_selected_filters")
-            button.govuk-link.govuk-link--no-visited-state id="clear-filters-button"
+            button.govuk-link.govuk-link--no-visited-state id="clear-filters-component-button"
               = t("shared.filter_group.clear_all_filters")
 
           - items.each do |group|
@@ -37,18 +37,18 @@
                         = t("shared.filter_group.remove_filter_hidden")
                       = tag.send(group[:selected_method])
 
-  .filters__submit
-    = form.govuk_submit t("buttons.apply_filters"), classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2 filters__submit-button"
+  .filters-component__submit
+    = form.govuk_submit t("buttons.apply_filters"), classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2 filters-component__submit-button"
 
-  .filters__groups.govuk-accordion id="accordion-default" data-module="govuk-accordion"
+  .filters-component__groups.govuk-accordion id="accordion-default" data-module="govuk-accordion"
     - items.each_with_index do |group, index|
-      .govuk-accordion__section.accordion-content__group.filters__groups-container
+      .govuk-accordion__section.accordion-content__group.filters-component__groups-container
         .govuk-accordion__section-header
           h3.govuk-accordion__section-heading
             span.govuk-accordion__section-button id="accordion-default-heading-#{index}"
               = group[:title]
 
-        .govuk-accordion__section-content.filters__group-checkboxes id="accordion-default-content-#{index}" aria-labelledby="accordion-default-heading-#{index}" data-group=group[:key]
+        .govuk-accordion__section-content.filters-component__group-checkboxes id="accordion-default-content-#{index}" aria-labelledby="accordion-default-heading-#{index}" data-group=group[:key]
           .searchable-collection-component.searchable-collection-component--border
             = form.govuk_collection_check_boxes group[:attribute],
               group[:options],
