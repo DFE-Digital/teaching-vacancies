@@ -22,11 +22,11 @@ class Shared::ProcessStepsComponent < ViewComponent::Base
   end
 
   def active_step_class(step_number, current_step_number)
-    return "process-steps__step--active" if current_step_number == step_number
+    return "process-steps-component__step--active" if current_step_number == step_number
   end
 
   def visited_step_class(step_number, completed_step)
-    return "process-steps__step--visited" if
+    return "process-steps-component__step--visited" if
       step_number != current_step_number && step_number <= completed_step
   end
 end
