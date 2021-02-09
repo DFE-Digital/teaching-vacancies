@@ -1,7 +1,7 @@
 .banner-link-component {
   display: flex;
 
-  .banner-link-component__button {
+  &__button {
     @include govuk-font(19);
 
     background-color: govuk-colour("light-grey");
