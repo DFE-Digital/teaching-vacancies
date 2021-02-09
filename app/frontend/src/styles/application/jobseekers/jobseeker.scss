@@ -20,5 +20,13 @@
     .moj-filter-layout__content {
       overflow-x: hidden;
     }
+
+    .create-alert__button {
+      text-align: right;
+
+      .govuk-button {
+        margin-bottom: 0;
+      }
+    }
   }
 }

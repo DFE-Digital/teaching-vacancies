@@ -30,7 +30,10 @@
 
   .card__details {
     flex-grow: 1;
+  }
 
+  .card__title,
+  .card__details {
     @include govuk-media-query ($until: desktop) {
       * {
         font-size: 0.85rem;
