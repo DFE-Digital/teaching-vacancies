@@ -48,6 +48,7 @@
 
 .govuk-notification__body {
   @include govuk-font($size: 19);
+  padding-right: govuk-spacing(9);
 
   p {
     @include govuk-responsive-margin(4, 'bottom');
