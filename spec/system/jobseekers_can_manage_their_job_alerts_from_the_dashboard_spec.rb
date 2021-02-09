@@ -32,7 +32,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
         choose I18n.t("helpers.label.jobseekers_unsubscribe_feedback_form.reason_options.job_found")
         click_button I18n.t("buttons.submit_feedback")
 
-        expect(page).to have_content(I18n.t("unsubscribe_feedbacks.create.success"))
+        expect(page).to have_content(I18n.t("jobseekers.unsubscribe_feedbacks.create.success"))
       end
     end
 

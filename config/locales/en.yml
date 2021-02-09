@@ -275,17 +275,6 @@ en:
           heading: Give feedback
           title: Feedback
 
-  job_alert_feedbacks:
-    edit:
-      change_alert_link: Change your job alert criteria
-      change_alert_text: If your job alerts are not relevant, you can change your alert criteria by updating keywords, location, role, education phase or working pattern. %{link}
-      heading: Further feedback
-      title: Job alert feedback
-    new:
-      success: Thank you for your feedback on your job alert
-    update:
-      success: Your further feedback on job alerts has been sent to the team
-
   nav:
     find_job: Find a teaching job
     for_schools: For schools
@@ -530,20 +519,6 @@ en:
       title: Unsubscribe from this job alert
     update:
       success: Your job alert has been updated
-  unsubscribe_feedbacks:
-    new:
-      confirmation: You will no longer receive updates for this job alert.
-      header: You have been unsubscribed from this alert
-      heading: Help us improve job alerts
-      title: Subscription deleted
-    create:
-      success: You have successfully unsubscribed from your job alert
-    confirmation:
-      header: Thank you for your feedback
-      heading: Create a new alert
-      new_search_html: You can create a new job alert by starting a %{link}
-      new_search_link: new search
-      title: Feedback received
 
   terms_and_conditions:
     intro: >-

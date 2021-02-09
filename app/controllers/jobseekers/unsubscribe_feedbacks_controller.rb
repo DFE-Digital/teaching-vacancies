@@ -1,4 +1,4 @@
-class UnsubscribeFeedbacksController < ApplicationController
+class Jobseekers::UnsubscribeFeedbacksController < ApplicationController
   def new
     subscription = Subscription.find(subscription_id)
     @subscription = SubscriptionPresenter.new(subscription)

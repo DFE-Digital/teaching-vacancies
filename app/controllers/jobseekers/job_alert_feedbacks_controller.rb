@@ -1,4 +1,4 @@
-class JobAlertFeedbacksController < ApplicationController
+class Jobseekers::JobAlertFeedbacksController < ApplicationController
   def new
     # This action creates the JobAlertFeedback record.
     # This is because it is called from a link in the alert email. Such links can only perform

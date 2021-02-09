@@ -1,5 +1,5 @@
 require "rails_helper"
-RSpec.describe "Vacancy publish feedback" do
+RSpec.describe "Hiring staff can give vacancy publisher feedback" do
   let(:school) { create(:school) }
   let(:oid) { SecureRandom.uuid }
   let(:choose_yes_to_participation) do
