@@ -1,9 +1,10 @@
-.banner-link-form {
+.banner-link-component {
   display: flex;
 
-  .banner-link {
+  .banner-link-component__button {
     @include govuk-font(19);
 
+    background-color: govuk-colour("light-grey");
     background-position: top 0 left 0;
     background-repeat: no-repeat;
     background-size: 20px 25px;
@@ -21,11 +22,11 @@
     text-decoration: none;
   }
 
-  .banner-link:hover {
+  &:hover {
     color: $govuk-link-hover-colour;
   }
 
-  .banner-link:focus {
+  &:focus {
     background-color: $govuk-focus-colour;
     box-shadow: 0 -2px $govuk-focus-colour, 0 4px $govuk-focus-text-colour;
     color: $govuk-focus-text-colour;

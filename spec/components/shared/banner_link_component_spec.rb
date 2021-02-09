@@ -23,8 +23,8 @@ RSpec.describe Shared::BannerLinkComponent, type: :component do
 
     it "renders the banner link" do
       expect(rendered_component).to eq(
-        '<form class="banner-link-form" method="get" action="#test">'\
-        '<input class="banner-link icon icon--left icon--test" id="test-id" type="submit" value="Click this link!" />'\
+        '<form class="banner-link-component" method="get" action="#test">'\
+        '<input class="banner-link-component__button icon icon--left icon--test" id="test-id" type="submit" value="Click this link!" />'\
         "</form>",
       )
     end
@@ -34,8 +34,8 @@ RSpec.describe Shared::BannerLinkComponent, type: :component do
 
       it "renders the banner link" do
         expect(rendered_component).to eq(
-          '<form class="banner-link-form" method="get" action="#test">'\
-          '<input class="banner-link icon icon--left icon--test" id="test-id" type="submit" value="Click this link!" />'\
+          '<form class="banner-link-component" method="get" action="#test">'\
+          '<input class="banner-link-component__button icon icon--left icon--test" id="test-id" type="submit" value="Click this link!" />'\
           '<input type="hidden" name="some_param" value="test" />'\
           "</form>",
         )
@@ -48,8 +48,8 @@ RSpec.describe Shared::BannerLinkComponent, type: :component do
 
     it "renders the banner link" do
       expect(rendered_component).to eq(
-        '<form class="banner-link-form" method="post" action="#test">'\
-        '<input class="banner-link icon icon--left icon--test" id="test-id" type="submit" value="Click this link!" />'\
+        '<form class="banner-link-component" method="post" action="#test">'\
+        '<input class="banner-link-component__button icon icon--left icon--test" id="test-id" type="submit" value="Click this link!" />'\
         "</form>",
       )
     end
