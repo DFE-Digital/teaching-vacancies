@@ -1,0 +1,119 @@
+en:
+  publishers:
+    identifications:
+      new:
+        assistance:
+          content_html: "%{link} to your account to search for and save jobs"
+          heading: Teachers account
+          link_text: Sign in
+        page_description: If you already have a Teaching Vacancies account you can sign in to the service here.
+        request_account_title: Request an account
+        request_account_html: &request_account_html >-
+          Don't have an account? You can get one if you work at a state-funded school or trust in England.
+          Just send the following details to %{mail_to}:
+          <ul class="govuk-list govuk-list--bullet">
+          <li>your full name</li>
+          <li>your work email address</li>
+          <li>the name of your school or trust</li>
+          <li>your school URN (unique reference number) or trust UID (unique identifier). You can find these details on our <a href="https://www.get-information-schools.service.gov.uk/" class="govuk-link">Get information about schools</a>
+          page.</li>
+          </ul>
+        sign_in:
+          description: You must sign in to your Teaching Vacancies account to list a job.
+          title: Sign in to Teaching Vacancies
+    organisations:
+      aria_change_description: '%{organisation_type} description'
+      aria_change_website: '%{organisation_type} website'
+      managed_organisations:
+        show:
+          hints:
+            select_organisations: You can change this later from your dashboard using the filters
+          labels:
+            select_organisations: Select which schools' job listings you would like to see
+            select_organisations_html: >-
+              Select which schools' job listings you would like to view (<span class='text-red'>Required</span>)
+          options:
+            all: All schools and trust head office
+            all_schools: All schools
+            school_group: Trust head office
+          page_title: Manage your view
+          panel:
+            title: Manage your view for %{organisation}
+            body: >-
+              You can now see job listings from all schools in your %{organisation_type}, or choose to see specific
+              schools' listings
+      schools:
+        index:
+          contact_support: contact our support team
+          description: Jobseekers will see this information in job listings about the schools and job locations within the %{organisation_type}
+          missing_information_title: Is information missing or incorrect?
+          missing_information_description_html: >-
+            If a school in your %{organisation_type} is missing from this list,
+            or the information isn't correct, please %{mail_to}.
+          schools: Schools (%{count})
+          title: Schools in your %{organisation_type}
+        edit:
+          title: Change %{organisation_type} details
+        update:
+          success_html: Details updated for <span class="govuk-!-font-weight-bold">%{organisation}</span>
+      show:
+        awaiting:
+          one: You have %{count} job awaiting feedback
+          other: You have %{count} jobs awaiting feedback
+      readable_job_location:
+        at_multiple_schools: More than one school
+        at_multiple_schools_with_count: More than one school (%{count})
+        central_office: Trust head office
+    sign_in:
+      email:
+        sessions:
+          create:
+            not_authorised: You are not authorised to log in
+          new:
+            title: Sign in to Teaching Vacancies
+            heading: Temporary login
+            body: DfE Sign In is experiencing problems. Please sign in using your email address.
+            description: You must sign in to your Teaching Vacancies account to list a job.
+            request_account_title: Request an account
+            request_account_html: *request_account_html
+    temp_login:
+      check_your_email:
+        check_spam_html: >-
+          If our email doesn’t arrive within 5 minutes, check your spam or junk folder, or %{try_again}.
+        heading: Check your email
+        page_title: Check your email
+        sent: >-
+          If your email address is in our database, we’ve sent you an email.
+          Click on the link to confirm your address and return to this service.
+          You do not need to keep this page open.
+      choose_organisation:
+        denial:
+          title: Sign in unsuccessful
+          expired_html: The login link you used has expired. Please %{try_again}.
+          no_key_html: The login link you used was not recognised. Please %{try_again}.
+          no_orgs_html: >-
+            The login link you used is not associated with any organisations. Unfortunately, we cannot associate your
+            account with an organisation until DfE Sign In is working as normal. Please %{try_again} later.
+        heading: Choose your organisation
+        page_title: Choose your organisation
+        please_select: >-
+          You are associated with more than one organisation. Please select the one you wish to sign in with.
+      email:
+        body: Click the link below to sign in to the Teaching Vacancies service. This link can only be used once.
+        heading: Sign in to Teaching Vacancies
+        subject: Sign in to Teaching Vacancies
+      heading: Temporary login
+      please_use_email: DfE Sign In is experiencing problems. Please sign in using your email address.
+    vacancies:
+      build:
+        process_title: Create a job listing steps
+      destroy:
+        success_html: >-
+          %{job_title} has been <span class="govuk-!-font-weight-bold delete-listing-success-gtm">deleted</span>
+      show:
+        notice: You can only view published jobs
+      vacancy_publisher_feedbacks:
+        new:
+          already_submitted: Feedback for this job has already been submitted
+          heading: Give feedback
+          title: Feedback
