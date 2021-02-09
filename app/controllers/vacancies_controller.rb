@@ -56,7 +56,7 @@ class VacanciesController < ApplicationController
   end
 
   def valid_search?
-    @vacancies_search.any? && !smoke_test?
+    @vacancies_search.any_criteria_given? && !smoke_test?
   end
 
   def smoke_test?

@@ -31,7 +31,7 @@
           - @vacancies.each do |vacancy|
             = render(Jobseekers::VacancySummaryComponent.new(vacancy: vacancy))
 
-      - elsif @vacancies_search.any?
+      - elsif @vacancies_search.any_criteria_given?
         .divider-bottom
           .govuk-heading-m = t("jobs.no_jobs.heading")
           p.govuk-body
