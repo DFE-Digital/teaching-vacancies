@@ -7,7 +7,7 @@ terraform {
     }
     cloudfoundry = {
       source  = "cloudfoundry-community/cloudfoundry"
-      version = ">= 0.12.4"
+      version = ">= 0.13.0"
     }
     statuscake = {
       source  = "terraform-providers/statuscake"
