@@ -105,6 +105,23 @@ jobs:
         timeoutSeconds: 720
         intervalSeconds: 15
 
+    - name: Trigger Smoke Test
+      uses: benc-uk/workflow-dispatch@v1.1
+      with:
+        workflow: Smoke Test
+        token: ${{ secrets.PERSONAL_TOKEN }}
+        inputs: '{"smoke_test_domain": "${{ env.BRANCH }}.teaching-vacancies.service.gov.uk", "sha": "${{ github.sha }}"}'
+
+    - name: Wait for smoke test
+      id: wait_for_smoke_test
+      uses: fountainhead/action-wait-for-check@v1.0.0
+      with:
+        token: ${{ secrets.PERSONAL_TOKEN }}
+        checkName: Smoke Test ${{ env.BRANCH }}.teaching-vacancies.service.gov.uk ${{ github.sha }}
+        ref: ${{ github.ref }}
+        timeoutSeconds: 300
+        intervalSeconds: 15
+
     - name: Send job status message to twd_tv_dev channel
       if: always() && github.ref == 'refs/heads/master'
       uses: rtCamp/action-slack-notify@v2.1.2
