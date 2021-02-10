@@ -23,6 +23,35 @@ RSpec.describe Search::SearchBuilder do
   let(:filter_query) { Search::FiltersBuilder.new(form_hash).filter_query }
   let!(:location_polygon) { create(:location_polygon, name: "london") }
 
+  describe "pagination helpers" do
+    let(:hits_per_page) { 10 }
+    let(:page) { 3 }
+
+    before do
+      mock_algolia_search(double(raw_answer: nil), 50, keyword, anything)
+    end
+
+    it "returns the expected bounds" do
+      expect(subject).not_to be_out_of_bounds
+
+      expect(subject.page_from).to eq(21)
+      expect(subject.page_to).to eq(30)
+    end
+
+    context "when out of bounds" do
+      before do
+        mock_algolia_search(double(raw_answer: nil), 20, keyword, anything)
+      end
+
+      it "returns the expected bounds" do
+        expect(subject).to be_out_of_bounds
+
+        expect(subject.page_from).to eq(21)
+        expect(subject.page_to).to eq(20)
+      end
+    end
+  end
+
   describe "building location search" do
     let(:location) { location_polygon.name }
 

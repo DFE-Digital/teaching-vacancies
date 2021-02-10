@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe VacancyFacets do
   subject { described_class.new }
 
-  let(:search_builder) { instance_double(Search::SearchBuilder, stats: [42]) }
+  let(:search_builder) { instance_double(Search::SearchBuilder, total_count: 42) }
 
   before do
     allow(Rails.application.config.action_controller).to receive(:perform_caching).and_return(true)
