@@ -8,11 +8,11 @@ class Publishers::Vacancies::VacancyPublisherFeedbacksController < Publishers::V
   end
 
   def create
-    @vacancy_publisher_feedback_form = Publishers::Vacancies::VacancyPublisherFeedbackForm.new(feedback_params)
+    @vacancy_publisher_feedback_form =
+      Publishers::Vacancies::VacancyPublisherFeedbackForm.new(vacancy_publisher_feedback_form_params)
 
     if @vacancy_publisher_feedback_form.valid?
-      @feedback = Feedback.create(feedback_params)
-      Auditor::Audit.new(@vacancy, "vacancy.publish_feedback.create", current_publisher_oid).log
+      @feedback = Feedback.create(feedback_attributes)
       trigger_feedback_provided_event
       redirect_to organisation_path, success: t("messages.jobs.feedback.submitted_html", job_title: @vacancy.job_title)
     else
@@ -22,10 +22,14 @@ class Publishers::Vacancies::VacancyPublisherFeedbacksController < Publishers::V
 
   private
 
-  def feedback_params
+  def vacancy_publisher_feedback_form_params
     params.require(:publishers_vacancies_vacancy_publisher_feedback_form)
           .permit(:comment, :user_participation_response, :email)
-          .merge(feedback_type: "vacancy_publisher", vacancy_id: @vacancy.id, publisher_id: current_publisher.id)
+  end
+
+  def feedback_attributes
+    vacancy_publisher_feedback_form_params
+      .merge(feedback_type: "vacancy_publisher", vacancy_id: @vacancy.id, publisher_id: current_publisher.id)
   end
 
   def set_vacancy

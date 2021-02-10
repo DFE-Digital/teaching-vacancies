@@ -76,7 +76,7 @@ en:
         main_duties: A very brief summary
         started_on: For example, 31 08 2010
 
-      jobseekers_job_alert_feedback_form:
+      jobseekers_job_alert_further_feedback_form:
         comment: This is optional, but the information will help us to make improvements.
       jobseekers_nqt_job_alerts_form:
         email: Enter your email address. We will only use it to send you job alerts.
@@ -184,7 +184,7 @@ en:
         email: Email address
         password: Password
 
-      jobseekers_job_alert_feedback_form:
+      jobseekers_job_alert_further_feedback_form:
         comment: Would you like to add any further comments about the relevancy of the job alerts you have received?
       jobseekers_nqt_job_alerts_form:
         email_html: Email address (<span class='text-red'>Required</span>)

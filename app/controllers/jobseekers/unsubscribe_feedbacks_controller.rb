@@ -8,7 +8,7 @@ class Jobseekers::UnsubscribeFeedbacksController < ApplicationController
     @subscription = Subscription.find(subscription_id)
     @unsubscribe_feedback_form = Jobseekers::UnsubscribeFeedbackForm.new(unsubscribe_feedback_form_params)
 
-    if @unsubscribe_feedback_form.valid? && Feedback.create(feedback_params)
+    if @unsubscribe_feedback_form.valid? && Feedback.create(feedback_attributes)
       trigger_feedback_provided_event
       if current_jobseeker
         redirect_to jobseekers_subscriptions_path, success: t(".success")
@@ -26,7 +26,7 @@ class Jobseekers::UnsubscribeFeedbacksController < ApplicationController
     params.require(:subscription_id)
   end
 
-  def feedback_params
+  def feedback_attributes
     unsubscribe_feedback_form_params.merge(feedback_type: "unsubscribe", subscription_id: subscription_id)
   end
 
