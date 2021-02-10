@@ -23,7 +23,7 @@ RSpec.describe Search::SearchBuilder do
   let(:filter_query) { Search::FiltersBuilder.new(form_hash).filter_query }
   let!(:location_polygon) { create(:location_polygon, name: "london") }
 
-  describe "#build_location_search" do
+  describe "building location search" do
     let(:location) { location_polygon.name }
 
     context "when a polygon search is carried out" do
@@ -35,21 +35,21 @@ RSpec.describe Search::SearchBuilder do
     end
   end
 
-  describe "#build_search_filters" do
+  describe "building filters" do
     it "calls the filters builder" do
       expect(Search::FiltersBuilder).to receive(:new).with(form_hash).and_call_original
       subject
     end
   end
 
-  describe "#build_search_replica" do
+  describe "building replica" do
     it "calls the replica builder" do
       expect(Search::ReplicaBuilder).to receive(:new).with(form_hash[:jobs_sort], keyword).and_call_original
       subject
     end
   end
 
-  describe "#call_search" do
+  describe "performing search" do
     context "when there is any search criteria" do
       context "when location matches a location polygon" do
         let(:location) { location_polygon.name }
@@ -104,7 +104,7 @@ RSpec.describe Search::SearchBuilder do
     end
   end
 
-  describe "#build_suggestions" do
+  describe "wider suggestions" do
     context "when location matches a location polygon" do
       let(:location) { location_polygon.name }
 
@@ -127,7 +127,7 @@ RSpec.describe Search::SearchBuilder do
 
         it "does not call the buffer suggestions builder" do
           expect(Search::BufferSuggestionsBuilder).not_to receive(:new)
-          subject
+          subject.wider_search_suggestions
         end
       end
 
@@ -144,7 +144,7 @@ RSpec.describe Search::SearchBuilder do
 
         it "calls the buffer suggestions builder" do
           expect(Search::BufferSuggestionsBuilder).to receive(:new).with(location_polygon.name, search_params).and_call_original
-          subject
+          subject.wider_search_suggestions
         end
       end
     end
@@ -183,14 +183,14 @@ RSpec.describe Search::SearchBuilder do
 
         it "does not call the radius suggestions builder" do
           expect(Search::RadiusSuggestionsBuilder).not_to receive(:new)
-          subject
+          subject.wider_search_suggestions
         end
       end
 
       context "when vacancies is empty" do
         it "calls the radius suggestions builder" do
           expect(Search::RadiusSuggestionsBuilder).to receive(:new).with(radius, search_params).and_call_original
-          subject
+          subject.wider_search_suggestions
         end
       end
     end

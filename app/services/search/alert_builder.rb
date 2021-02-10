@@ -7,9 +7,6 @@ class Search::AlertBuilder < Search::SearchBuilder
     @params_hash = subscription_hash
     @keyword = @params_hash[:keyword] || build_subscription_keyword(@params_hash)
 
-    build_location_search
-    build_search_filters
-    build_search_replica
     call_search
   end
 
@@ -21,12 +18,12 @@ class Search::AlertBuilder < Search::SearchBuilder
 
   def search_params
     {
-      keyword: @keyword,
-      coordinates: @location_search.location_filter[:point_coordinates],
-      radius: @location_search.location_filter[:radius],
-      polygons: @location_search.polygon_boundaries,
-      filters: @search_filters,
-      replica: @search_replica,
+      keyword: keyword,
+      coordinates: location_search.location_filter[:point_coordinates],
+      radius: location_search.location_filter[:radius],
+      polygons: location_search.polygon_boundaries,
+      filters: search_filters,
+      replica: search_replica,
       hits_per_page: MAXIMUM_SUBSCRIPTION_RESULTS,
       typo_tolerance: false,
     }.compact
