@@ -42,8 +42,8 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
         it_behaves_like "a correctly created Feedback"
 
         it "renders the page title and notification" do
-          expect(page.title).to have_content(I18n.t("job_alert_feedbacks.edit.title"))
-          expect(page).to have_content(I18n.t("job_alert_feedbacks.new.success"))
+          expect(page.title).to have_content(I18n.t("jobseekers.job_alert_feedbacks.edit.title"))
+          expect(page).to have_content(I18n.t("jobseekers.job_alert_feedbacks.new.success"))
         end
       end
 
@@ -65,15 +65,15 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
         before { follow_the_link_in_the_job_alert_email }
 
         it "shows a link to edit the job alert" do
-          click_on I18n.t("job_alert_feedbacks.edit.change_alert_link")
+          click_on I18n.t("jobseekers.job_alert_feedbacks.edit.change_alert_link")
           expect(page).to have_content I18n.t("subscriptions.edit.title")
         end
 
         it_behaves_like "a correctly created Feedback"
 
         it "renders the page title and notification" do
-          expect(page.title).to have_content(I18n.t("job_alert_feedbacks.edit.title"))
-          expect(page).to have_content(I18n.t("job_alert_feedbacks.new.success"))
+          expect(page.title).to have_content(I18n.t("jobseekers.job_alert_feedbacks.edit.title"))
+          expect(page).to have_content(I18n.t("jobseekers.job_alert_feedbacks.new.success"))
         end
       end
 
@@ -99,7 +99,7 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
       it "allows the user to submit further feedback" do
         click_button I18n.t("buttons.submit")
         expect(current_path).to eq root_path
-        expect(page).to have_content(I18n.t("job_alert_feedbacks.update.success"))
+        expect(page).to have_content(I18n.t("jobseekers.job_alert_feedbacks.update.success"))
         expect(feedback.comment).to eq comment
       end
 

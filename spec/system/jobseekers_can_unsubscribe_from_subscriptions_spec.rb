@@ -12,7 +12,7 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
     let(:token) { subscription.token }
 
     it "unsubscribes successfully" do
-      expect(page).to have_content(I18n.t("unsubscribe_feedbacks.new.header"))
+      expect(page).to have_content(I18n.t("jobseekers.unsubscribe_feedbacks.new.header"))
     end
 
     it "removes the email from the subscription" do
@@ -31,9 +31,9 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
       choose "jobseekers-unsubscribe-feedback-form-reason-job-found-field"
       click_on I18n.t("buttons.submit_feedback")
 
-      expect(page).to have_content(I18n.t("unsubscribe_feedbacks.confirmation.header"))
+      expect(page).to have_content(I18n.t("jobseekers.unsubscribe_feedbacks.confirmation.header"))
 
-      click_on I18n.t("unsubscribe_feedbacks.confirmation.new_search_link")
+      click_on I18n.t("jobseekers.unsubscribe_feedbacks.confirmation.new_search_link")
 
       expect(current_path).to eq jobs_path
     end

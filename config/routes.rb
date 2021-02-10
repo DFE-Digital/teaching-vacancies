@@ -73,8 +73,8 @@ Rails.application.routes.draw do
   resources :subscriptions, except: %i[index show] do
     get :unsubscribe, on: :member
 
-    resources :job_alert_feedbacks, only: %i[new update edit]
-    resources :unsubscribe_feedbacks, only: %i[new create]
+    resources :job_alert_feedbacks, controller: "jobseekers/job_alert_feedbacks", only: %i[new update edit]
+    resources :unsubscribe_feedbacks, controller: "jobseekers/unsubscribe_feedbacks", only: %i[new create]
   end
 
   get "sign-up-for-NQT-job-alerts", to: "nqt_job_alerts#new", as: "nqt_job_alerts"
