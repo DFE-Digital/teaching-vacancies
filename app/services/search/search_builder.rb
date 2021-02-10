@@ -2,21 +2,22 @@ class Search::SearchBuilder
   DEFAULT_HITS_PER_PAGE = 10
   DEFAULT_PAGE = 1
 
-  attr_reader :params_hash, :keyword, :page, :hits_per_page, :total_count, :vacancies
+  extend Forwardable
+  def_delegators :search_strategy, :vacancies, :total_count
 
-  def initialize(form_hash)
-    @params_hash = form_hash
-    @keyword = @params_hash[:keyword]
-    @hits_per_page = (@params_hash[:per_page] || DEFAULT_HITS_PER_PAGE).to_i
-    @page = (@params_hash[:page] || DEFAULT_PAGE).to_i
+  attr_reader :params, :keyword, :page, :hits_per_page
 
-    call_search
+  def initialize(params)
+    @params = params
+    @keyword = params[:keyword]
+    @hits_per_page = (params[:per_page] || DEFAULT_HITS_PER_PAGE).to_i
+    @page = (params[:page] || DEFAULT_PAGE).to_i
   end
 
   def only_active_to_hash
-    @params_hash
+    params
       .except(:jobs_sort, :page)
-      .reject { |k, v| v.blank? || (k == :radius && @params_hash[:location].blank?) }
+      .reject { |k, v| v.blank? || (k == :radius && params[:location].blank?) }
   end
 
   def any_criteria_given?
@@ -24,7 +25,7 @@ class Search::SearchBuilder
   end
 
   def location_search
-    @location_search ||= Search::LocationBuilder.new(@params_hash[:location], @params_hash[:radius], @params_hash[:buffer_radius])
+    @location_search ||= Search::LocationBuilder.new(params[:location], params[:radius], params[:buffer_radius])
   end
 
   def point_coordinates
@@ -32,7 +33,7 @@ class Search::SearchBuilder
   end
 
   def search_filters
-    @search_filters ||= Search::FiltersBuilder.new(@params_hash).filter_query
+    @search_filters ||= Search::FiltersBuilder.new(params).filter_query
   end
 
   def search_replica
@@ -44,12 +45,12 @@ class Search::SearchBuilder
   end
 
   def wider_search_suggestions
-    return unless @vacancies.empty? && any_criteria_given?
+    return unless vacancies.empty? && any_criteria_given?
 
     @wider_search_suggestions ||= if point_coordinates.present?
-                                    Search::RadiusSuggestionsBuilder.new(@params_hash[:radius], search_params).radius_suggestions
+                                    Search::RadiusSuggestionsBuilder.new(params[:radius], search_params).radius_suggestions
                                   elsif location_search.polygon_boundaries.present?
-                                    Search::BufferSuggestionsBuilder.new(@params_hash[:location], search_params).buffer_suggestions
+                                    Search::BufferSuggestionsBuilder.new(params[:location], search_params).buffer_suggestions
                                   end
   end
 
@@ -68,17 +69,15 @@ class Search::SearchBuilder
   private
 
   def replica_builder
-    @replica_builder ||= Search::ReplicaBuilder.new(@params_hash[:jobs_sort], @keyword)
+    @replica_builder ||= Search::ReplicaBuilder.new(params[:jobs_sort], @keyword)
   end
 
-  def call_search
-    search = if any_criteria_given?
-               Search::AlgoliaSearchRequest.new(search_params)
-             else
-               Search::VacancyPaginator.new(page, hits_per_page, params_hash[:jobs_sort])
-             end
-    @vacancies = search.vacancies || []
-    @total_count = search.total_count
+  def search_strategy
+    @search_strategy ||= if any_criteria_given?
+                           Search::AlgoliaSearchRequest.new(search_params)
+                         else
+                           Search::VacancyPaginator.new(page, hits_per_page, params[:jobs_sort])
+                         end
   end
 
   def search_params
