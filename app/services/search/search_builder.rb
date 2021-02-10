@@ -4,6 +4,7 @@ class Search::SearchBuilder
 
   extend Forwardable
   def_delegators :search_strategy, :vacancies, :total_count
+  def_delegators :location_search, :point_coordinates
 
   attr_reader :params, :keyword, :page, :hits_per_page
 
@@ -14,22 +15,18 @@ class Search::SearchBuilder
     @page = (params[:page] || DEFAULT_PAGE).to_i
   end
 
-  def only_active_to_hash
+  def active_criteria
     params
       .except(:jobs_sort, :page)
       .reject { |k, v| v.blank? || (k == :radius && params[:location].blank?) }
   end
 
-  def any_criteria_given?
-    only_active_to_hash.except(:radius).any?
+  def active_criteria?
+    active_criteria.any?
   end
 
   def location_search
     @location_search ||= Search::LocationBuilder.new(params[:location], params[:radius], params[:buffer_radius])
-  end
-
-  def point_coordinates
-    @point_coordinates ||= location_search.location_filter[:point_coordinates]
   end
 
   def search_filters
@@ -45,7 +42,7 @@ class Search::SearchBuilder
   end
 
   def wider_search_suggestions
-    return unless vacancies.empty? && any_criteria_given?
+    return unless vacancies.empty? && active_criteria?
 
     @wider_search_suggestions ||= if point_coordinates.present?
                                     Search::RadiusSuggestionsBuilder.new(params[:radius], search_params).radius_suggestions
@@ -69,11 +66,11 @@ class Search::SearchBuilder
   private
 
   def replica_builder
-    @replica_builder ||= Search::ReplicaBuilder.new(params[:jobs_sort], @keyword)
+    @replica_builder ||= Search::ReplicaBuilder.new(params[:jobs_sort], keyword)
   end
 
   def search_strategy
-    @search_strategy ||= if any_criteria_given?
+    @search_strategy ||= if active_criteria?
                            Search::AlgoliaSearchRequest.new(search_params)
                          else
                            Search::VacancyPaginator.new(page, hits_per_page, params[:jobs_sort])

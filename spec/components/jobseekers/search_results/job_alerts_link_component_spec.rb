@@ -7,8 +7,8 @@ RSpec.describe Jobseekers::SearchResults::JobAlertsLinkComponent, type: :compone
   let(:active_hash) { { keyword: "maths" } }
 
   before do
-    allow(vacancies_search).to receive(:only_active_to_hash).and_return(active_hash)
-    allow(vacancies_search).to receive(:any_criteria_given?).and_return(search_params_present?)
+    allow(vacancies_search).to receive(:active_criteria).and_return(active_hash)
+    allow(vacancies_search).to receive(:active_criteria?).and_return(search_params_present?)
     allow(ReadOnlyFeature).to receive(:enabled?).and_return(read_only_enabled?)
   end
 

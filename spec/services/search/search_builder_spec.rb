@@ -59,7 +59,7 @@ RSpec.describe Search::SearchBuilder do
       before { allow_any_instance_of(Search::LocationBuilder).to receive(:search_with_polygons?).and_return(true) }
 
       it "sets location in the active params hash to the polygon's name" do
-        expect(subject.only_active_to_hash[:location]).to eq("london")
+        expect(subject.active_criteria[:location]).to eq("london")
       end
     end
   end
