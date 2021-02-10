@@ -123,29 +123,19 @@ jobs:
     - name: Trigger Smoke Test
       uses: benc-uk/workflow-dispatch@v1.1
       with:
-        workflow: Smoke Test Manual # Workflow name
+        workflow: Smoke Test
         token: ${{ secrets.PERSONAL_TOKEN }}
-        inputs: '{"environment": "staging", "sha": "${{ github.sha }}"}'
+        inputs: '{"smoke_test_domain": "staging.teaching-vacancies.service.gov.uk", "sha": "${{ github.sha }}"}'
 
     - name: Wait for smoke test
       id: wait_for_smoke_test
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
         token: ${{ secrets.PERSONAL_TOKEN }}
-        checkName: Smoke Test ${{ github.sha }} on staging # Job name within workflow
+        checkName: Smoke Test staging.teaching-vacancies.service.gov.uk ${{ github.sha }}
         ref: ${{ github.ref }}
         timeoutSeconds: 300
         intervalSeconds: 15
-
-    - name: Notify twd_tv_dev channel on staging smoke test failure
-      if: steps.wait_for_smoke_test.outputs.conclusion != 'success' && 'refs/heads/master'
-      uses: rtCamp/action-slack-notify@v2.1.2
-      env:
-        SLACK_CHANNEL: twd_tv_dev
-        SLACK_USERNAME: CI Deployment
-        SLACK_TITLE: Deployment failure
-        SLACK_MESSAGE: 'Smoke test of Docker tag ${{ env.TAG }} on staging - unsuccessful <!channel>'
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
     - name: Exit whole workflow if staging smoke test was not successful
       if: steps.wait_for_smoke_test.outputs.conclusion != 'success' && github.ref == 'refs/heads/master'

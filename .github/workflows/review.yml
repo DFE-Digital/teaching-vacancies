@@ -118,6 +118,24 @@ jobs:
         message: |
           Review app deployed to <https://teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital>
 
+    - name: Trigger Smoke Test
+      uses: benc-uk/workflow-dispatch@v1.1
+      with:
+        workflow: Smoke Test
+        token: ${{ secrets.PERSONAL_TOKEN }}
+        inputs: '{"smoke_test_domain": "teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital", "sha": "${{ github.sha }}"}'
+        ref: ${{ github.event.pull_request.head.ref }}
+
+    - name: Wait for smoke test
+      id: wait_for_smoke_test
+      uses: fountainhead/action-wait-for-check@v1.0.0
+      with:
+        token: ${{ secrets.PERSONAL_TOKEN }}
+        checkName: Smoke Test teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital ${{ github.sha }}
+        ref: ${{ github.event.pull_request.head.sha || github.sha }}
+        timeoutSeconds: 300
+        intervalSeconds: 15
+
     - name: Send job status message to twd_tv_dev channel
       uses: rtCamp/action-slack-notify@v2.1.2
       env:
