@@ -27,6 +27,10 @@ class Search::LocationBuilder
     location && LocationPolygon.include?(location)
   end
 
+  def point_coordinates
+    location_filter[:point_coordinates]
+  end
+
   private
 
   def initialize_polygon_boundaries

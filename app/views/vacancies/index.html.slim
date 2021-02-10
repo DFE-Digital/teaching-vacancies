@@ -19,7 +19,7 @@
   .govuk-grid-column-two-thirds
     = render(Jobseekers::SearchResults::SearchVisualizerComponent.new(vacancies_search: @vacancies_search, render: @display_map))
     section.sort-results.sortable-links role="search" aria-label="Sort vacancies"
-      = render partial: "sorting_options", locals: { search_criteria: @vacancies_search.only_active_to_hash, sort: @vacancies_search.sort_by }
+      = render partial: "sorting_options", locals: { search_criteria: @vacancies_search.active_criteria, sort: @vacancies_search.sort_by }
       - unless @vacancies_search.out_of_bounds?
         .govuk-body#vacancies-stats-top aria-label="Number of results"
           - if @vacancies_search.total_count <= @vacancies_search.hits_per_page
@@ -32,7 +32,7 @@
           - @vacancies.each do |vacancy|
             = render(Jobseekers::VacancySummaryComponent.new(vacancy: vacancy))
 
-      - elsif @vacancies_search.any_criteria_given?
+      - elsif @vacancies_search.active_criteria?
         .divider-bottom
           .govuk-heading-m = t("jobs.no_jobs.heading")
           p.govuk-body
@@ -57,7 +57,7 @@
                                                         search_link: govuk_link_to(t(".wider_search_suggestions.radius_distance", radius: wider_radius.first), jobs_path(@vacancies_search.params.merge(radius: wider_radius.first)), class: "wider-radius-gtm"),
                                                         count: t(".wider_search_suggestions.results", count: wider_radius.last))
         span.govuk-heading-m
-          = t("subscriptions.link.no_search_results.text_html", link_to: govuk_link_to(t("subscriptions.link.no_search_results.link"), new_subscription_path(search_criteria: @vacancies_search.only_active_to_hash, origin: request.original_fullpath), id: "job-alert-link-no-search-results-gtm"))
+          = t("subscriptions.link.no_search_results.text_html", link_to: govuk_link_to(t("subscriptions.link.no_search_results.link"), new_subscription_path(search_criteria: @vacancies_search.active_criteria, origin: request.original_fullpath), id: "job-alert-link-no-search-results-gtm"))
         p class="govuk-!-margin-1"
           = t("subscriptions.benefits.title")
           ul.govuk-list.govuk-list--bullet

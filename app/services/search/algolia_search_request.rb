@@ -1,6 +1,4 @@
 class Search::AlgoliaSearchRequest
-  attr_reader :vacancies, :total_count
-
   def initialize(search_params)
     @keyword = search_params[:keyword]
     @coordinates = search_params[:coordinates]
@@ -11,21 +9,22 @@ class Search::AlgoliaSearchRequest
     @hits_per_page = search_params[:hits_per_page]
     @page = search_params[:page]
     @typo_tolerance = search_params[:typo_tolerance]
+  end
 
-    @vacancies = search
-    return if @vacancies.nil?
+  def vacancies
+    @vacancies ||= Vacancy.includes(organisation_vacancies: :organisation).search(@keyword, search_arguments)
+  rescue Algolia::AlgoliaProtocolError => e
+    Rollbar.error("Algolia search error", details: e, search_arguments: search_arguments)
+    @vacancies = nil
+  end
 
-    @total_count = vacancies.raw_answer["nbHits"]
+  def total_count
+    return 0 unless vacancies
+
+    vacancies.raw_answer["nbHits"]
   end
 
   private
-
-  def search
-    Vacancy.includes(organisation_vacancies: :organisation).search(@keyword, search_arguments)
-  rescue Algolia::AlgoliaProtocolError => e
-    Rollbar.error("Algolia search error", details: e, search_arguments: search_arguments)
-    nil
-  end
 
   def search_arguments
     {
