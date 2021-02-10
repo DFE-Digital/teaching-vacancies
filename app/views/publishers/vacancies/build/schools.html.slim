@@ -14,7 +14,7 @@
 
       = render "publishers/vacancies/vacancy_form_partials/hidden_state_input", f: f
 
-      = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_schools_form.organisation_ids_html") } do
+      = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_schools_form.organisation_ids") } do
         = render Shared::SearchableCollectionComponent.new(form: f,
           threshold: 10,
           attribute_name: :organisation_ids,

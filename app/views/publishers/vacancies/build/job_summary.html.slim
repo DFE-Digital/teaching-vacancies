@@ -17,7 +17,7 @@
       = f.govuk_text_area :job_summary, label: { size: "s" }, rows: 10, required: true
 
       = f.govuk_text_area :about_school,
-        label: { text: t("helpers.label.publishers_job_listing_job_summary_form.about_organisation_html", organisation: vacancy_about_school_label_organisation(@vacancy)), size: "s" },
+        label: { text: t("helpers.label.publishers_job_listing_job_summary_form.about_organisation", organisation: vacancy_about_school_label_organisation(@vacancy)), size: "s" },
         hint: { text: vacancy_about_school_hint_text(@vacancy) },
         value: vacancy_about_school_value(@vacancy),
         rows: 10,
