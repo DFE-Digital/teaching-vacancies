@@ -1,7 +1,7 @@
 .govuk-form-group class=(f.object.errors[:expires_at].present? ? "govuk-form-group--error" : "")
   fieldset.govuk-fieldset aria-describedby="##{f.object_name}-expiry-time-hint" id=(f.object.errors[:expires_at].present? ? "##{f.object_name}-expity-time-field-error" : "##{f.object_name}-expity-time-field")
     legend.govuk-fieldset__legend.govuk-fieldset__legend--s
-      h1.govuk-fieldset__heading = t("helpers.legend.publishers_job_listing_important_dates_form.expires_at_html")
+      h1.govuk-fieldset__heading = t("helpers.legend.publishers_job_listing_important_dates_form.expires_at")
     span.govuk-hint id="#{f.object_name}-expiry-time-hint"
       = t("helpers.hint.publishers_job_listing_important_dates_form.expires_at")
     - f.object.errors[:expires_at]&.each do |error|

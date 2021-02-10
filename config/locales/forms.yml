@@ -181,8 +181,8 @@ en:
         comment: Do you have any suggestions on how we could improve the service?
 
       jobseeker:
-        email_html: Email address (<span class='text-red'>Required</span>)
-        password_html: Password (<span class='text-red'>Required</span>)
+        email: Email address
+        password: Password
 
       jobseekers_job_alert_feedback_form:
         comment: Would you like to add any further comments about the relevancy of the job alerts you have received?
@@ -273,21 +273,21 @@ en:
         website: '%{organisation_type} website'
 
       publishers_job_listing_applying_for_the_job_form:
-        application_link: Link to online application
+        application_link_html: Link to online application <span class='govuk-!-font-weight-regular'>(optional)</span>
         apply_through_teaching_vacancies_options:
           "no": "Use another service or organisation"
           "yes": "Apply through Teaching Vacancies"
-        contact_email_html: Contact email (<span class='text-red'>Required</span>)
-        contact_number: Contact phone number
-        how_to_apply: How to apply
+        contact_email: Contact email
+        contact_number_html: Contact phone number <span class='govuk-!-font-weight-regular'>(optional)</span>
+        how_to_apply_html: How to apply <span class='govuk-!-font-weight-regular'>(optional)</span>
         personal_statement_guidance: Help candidates to write their personal statement
-        school_visits: School visits
-        trust_visits: Trust visits
+        school_visits_html: School visits <span class='govuk-!-font-weight-regular'>(optional)</span>
+        trust_visits_html: Trust visits <span class='govuk-!-font-weight-regular'>(optional)</span>
       publishers_job_listing_copy_vacancy_form:
         expires_at_hh: Hour
         expires_at_meridiem: am or pm
         expires_at_mm: Minute
-        job_title_html: Job title (<span class='text-red'>Required</span>)
+        job_title: Job title
       publishers_job_listing_documents_form:
         documents: Upload files
       publishers_job_listing_important_dates_form:
@@ -304,18 +304,18 @@ en:
           leadership: Leadership
           sen_specialist: SEN specialist
           nqt_suitable: Suitable for NQTs
-        job_title_html: Job title (<span class='text-red'>Required</span>)
+        job_title: Job title
         suitable_for_nqt_html: Is this job suitable for NQTs? (<span class='text-red'>Required</span>)
         working_patterns_options:
           full_time: Full-time
           part_time: Part-time
           job_share: Job share
       publishers_job_listing_job_summary_form:
-        about_organisation_html: About %{organisation} (<span class='text-red'>Required</span>)
-        job_summary_html: Job summary (<span class='text-red'>Required</span>)
+        about_organisation: About %{organisation}
+        job_summary: Job summary
       publishers_job_listing_pay_package_form:
-        benefits: Employee benefits
-        salary_html: Salary (<span class='text-red'>Required</span>)
+        benefits_html: Employee benefits <span class='govuk-!-font-weight-regular'>(optional)</span>
+        salary: Salary
 
       publishers_vacancies_vacancy_publisher_feedback_form:
         comment_html: How could we improve this service? (<span class='text-red'>Required</span>)
@@ -366,28 +366,28 @@ en:
         address_html: Your address (<span class='text-red'>Required</span>)
 
       publishers_job_listing_applying_for_the_job_form:
-        apply_through_teaching_vacancies_html: How would you like candidates to apply? (<span class='text-red'>Required</span>)
+        apply_through_teaching_vacancies: How would you like candidates to apply?
       publishers_job_listing_copy_vacancy_form:
-        expires_on_html: Date application is due (<span class='text-red'>Required</span>)
-        publish_on_html: Date job will be listed (<span class='text-red'>Required</span>)
+        expires_on: Date application is due
+        publish_on: Date job will be listed
         starts_on: Date job starts
       publishers_job_listing_important_dates_form:
-        expires_on_html: Date application is due (<span class='text-red'>Required</span>)
-        expires_at_html: Time application is due (<span class='text-red'>Required</span>)
-        publish_on_html: Date job will be listed (<span class='text-red'>Required</span>)
+        expires_on: Date application is due
+        expires_at: Time application is due
+        publish_on: Date job will be listed
         starts_asap: As soon as possible
-        starts_on: Date job starts
+        starts_on_html: Date job starts <span class='govuk-!-font-weight-regular'>(optional)</span>
       publishers_job_listing_job_details_form:
-        contract_type_html: Contract type (<span class='text-red'>Required</span>)
-        job_roles: Job role
-        suitable_for_nqt_html: Is this job suitable for NQTs? (<span class='text-red'>Required</span>)
-        subjects: Subject(s)
-        working_patterns_html: Working patterns (<span class='text-red'>Required</span>)
+        contract_type: Contract type
+        job_roles_html: Job role <span class='govuk-!-font-weight-regular'>(optional)</span>
+        suitable_for_nqt: Is this job suitable for NQTs?
+        subjects_html: Subject(s) <span class='govuk-!-font-weight-regular'>(optional)</span>
+        working_patterns: Working patterns
       publishers_job_listing_job_location_form:
-        job_location_html: Where will the job be based? (<span class='text-red'>Required</span>)
+        job_location: Where will the job be based?
       publishers_job_listing_schools_form:
-        organisation_ids_html: In which schools will the job be based? (<span class='text-red'>Required</span>)
-        organisation_id_html: In which school will the job be based? (<span class='text-red'>Required</span>)
+        organisation_ids: In which schools will the job be based?
+        organisation_id: In which school will the job be based?
 
       publishers_vacancies_vacancy_publisher_feedback_form:
         user_participation_response_html: >-

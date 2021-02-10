@@ -30,8 +30,8 @@ en:
             select_organisations: You can change this later from your dashboard using the filters
           labels:
             select_organisations: Select which schools' job listings you would like to see
-            select_organisations_html: >-
-              Select which schools' job listings you would like to view (<span class='text-red'>Required</span>)
+            select_organisations: >-
+              Select which schools' job listings you would like to view
           options:
             all: All schools and trust head office
             all_schools: All schools

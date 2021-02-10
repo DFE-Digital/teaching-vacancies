@@ -27,7 +27,7 @@
       = f.govuk_phone_field :contact_number, label: { size: "s" }, width: "one-third"
 
       = f.govuk_text_area :school_visits,
-        label: { text: t("helpers.label.publishers_job_listing_applying_for_the_job_form.#{school_or_trust_visits(@vacancy.parent_organisation)}"), size: "s" },
+        label: { text: t("helpers.label.publishers_job_listing_applying_for_the_job_form.#{school_or_trust_visits(@vacancy.parent_organisation)}_html"), size: "s" },
         hint: { text: vacancy_school_visits_hint(@vacancy) },
         rows: 10
 

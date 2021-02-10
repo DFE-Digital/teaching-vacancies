@@ -69,7 +69,7 @@ RSpec.describe "Viewing a single published vacancy" do
 
     visit job_path(vacancy)
     expect(page).to have_content(vacancy.job_title)
-    expect(page).to_not have_content(I18n.t("jobs.job_roles"))
+    expect(page).to_not have_content(I18n.t("jobs.job_roles_html"))
   end
 
   context "A user viewing a vacancy" do
@@ -124,7 +124,7 @@ RSpec.describe "Viewing a single published vacancy" do
       expect(page).to_not have_content(I18n.t("jobs.education"))
       expect(page).to_not have_content(I18n.t("jobs.qualifications"))
       expect(page).to_not have_content(I18n.t("jobs.experience"))
-      expect(page).to_not have_content(I18n.t("jobs.benefits"))
+      expect(page).to_not have_content(I18n.t("jobs.benefits_html"))
     end
 
     context "without supporting documents attached but candidate spec" do
