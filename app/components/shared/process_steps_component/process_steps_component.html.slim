@@ -1,18 +1,19 @@
-.process-steps-related.process-steps-related--singular
-  h2.process-steps-related__heading
-    span.process-steps-related__pretitle = @title
+.process-steps-component
+  .process-steps-component-related.process-steps-component-related--singular
+    h2.process-steps-component-related__heading
+      span.process-steps-component-related__pretitle = @title
 
-.process-steps.process-steps--active
-  ol.process-steps__steps
-    - steps_to_display.values.uniq.each do |step|
-      li.process-steps__step.js-step class="#{active_step_class(step[:number], current_step_number)} #{visited_step_class(step[:number], @process.completed_step.presence || 0)}" aria-current="step" dat-show=""
-        .process-steps__header.js-toggle-panel data-position="1"
-          h3.process-steps__title
-            span.process-steps__circle.process-steps__circle--number
-              span.process-steps__circle-inner
-                span.process-steps__circle-background
-                  span.process-steps__circle-step-label.govuk-visually-hidden Step
-                  = step[:number]
-                  span.process-steps__circle-step-colon.govuk-visually-hidden aria-hidden="true"
-            span.js-step-title
-              span.js-step-title-text = step[:title]
+  .process-steps-component.process-steps-component--active
+    ol.process-steps-component__steps
+      - steps_to_display.values.uniq.each do |step|
+        li.process-steps-component__step.js-step class="#{active_step_class(step[:number], current_step_number)} #{visited_step_class(step[:number], @process.completed_step.presence || 0)}" aria-current="step" dat-show=""
+          .process-steps-component__header.js-toggle-panel data-position="1"
+            h3.process-steps-component__title
+              span.process-steps-component__circle.process-steps-component__circle--number
+                span.process-steps-component__circle-inner
+                  span.process-steps-component__circle-background
+                    span.process-steps-component__circle-step-label.govuk-visually-hidden Step
+                    = step[:number]
+                    span.process-steps-component__circle-step-colon.govuk-visually-hidden aria-hidden="true"
+              span.js-step-title
+                span.js-step-title-text = step[:title]

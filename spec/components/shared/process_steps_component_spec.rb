@@ -78,7 +78,7 @@ RSpec.describe Shared::ProcessStepsComponent, type: :component do
 
   context "when a step is active" do
     let(:component_active_step) do
-      inline_component.css(".process-steps__step--active .process-steps__circle-background").to_html
+      inline_component.css(".process-steps-component__step--active .process-steps-component__circle-background").to_html
     end
 
     it "renders active class on current_step" do
@@ -90,7 +90,7 @@ RSpec.describe Shared::ProcessStepsComponent, type: :component do
     let(:completed_step) { 1 }
     let(:current_step) { 2 }
     let(:component_completed_step) do
-      inline_component.css(".process-steps__step--visited .process-steps__circle-background").to_html
+      inline_component.css(".process-steps-component__step--visited .process-steps-component__circle-background").to_html
     end
 
     it "renders visited class on completed steps" do

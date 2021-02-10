@@ -7,6 +7,6 @@ class Shared::PillLinkComponent < ViewComponent::Base
   end
 
   def call
-    link_to link_text, link_path, class: "pill-link"
+    link_to link_text, link_path, class: "pill-link-component"
   end
 end

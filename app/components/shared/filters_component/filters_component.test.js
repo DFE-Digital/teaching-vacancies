@@ -46,17 +46,17 @@ describe('filterGroup', () => {
       const addUpdateOpenOrCloseEventMock = jest.spyOn(filterGroup, 'addUpdateOpenOrCloseEvent');
 
       document.body.innerHTML = `<form data-auto-submit="true"><div>
-<h2 id="mobile-filters-button"></h2>
+<h2 id="mobile-filters-component-button"></h2>
 <button class="moj-filter__tag">remove</button>
 <button class="moj-filter__tag">remove</button>
-<button id="clear-filters-button">remove</button>
+<button id="clear-filters-component-button">remove</button>
 <button id="close-all-groups">remove</button>
 </div>
-<div class="filters__groups-container"><div class="govuk-accordion__section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div></div>
-<div class="filters__groups-container"><div class="govuk-accordion__section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div></div>
+<div class="filters-component__groups-container"><div class="govuk-accordion__section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div></div>
+<div class="filters-component__groups-container"><div class="govuk-accordion__section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div></div>
 </form>`;
 
-      init('filters__groups-container', 'moj-filter__tag', 'clear-filters-button', 'close-all-groups', 'mobile-filters-button', 'govuk-accordion__section-header');
+      init('filters-component__groups-container', 'moj-filter__tag', 'clear-filters-component-button', 'close-all-groups', 'mobile-filters-component-button', 'govuk-accordion__section-header');
 
       expect(addRemoveFilterEventMock).toHaveBeenCalledTimes(2);
       expect(addRemoveAllFiltersEventMock).toHaveBeenCalledTimes(1);
@@ -101,8 +101,8 @@ describe('filterGroup', () => {
       filterGroup.removeAllFiltersHandler = jest.fn();
       const removeAllFiltersMock = jest.spyOn(filterGroup, 'removeAllFiltersHandler');
 
-      document.body.innerHTML = '<a id="remove-filters">remove all</a>';
-      const button = document.getElementById('remove-filters');
+      document.body.innerHTML = '<a id="remove-filters-component">remove all</a>';
+      const button = document.getElementById('remove-filters-component');
       addRemoveAllFiltersEvent(button, onRemove);
       button.dispatchEvent(new Event('click'));
 
@@ -147,7 +147,7 @@ describe('filterGroup', () => {
   });
 
   describe('getFilterGroup', () => {
-    test('finds the container element for a group of filters', () => {
+    test('finds the container element for a group of filters-component', () => {
       document.body.innerHTML = `<div class="${CHECKBOX_GROUP_CLASS_SELECTOR}" data-group="x"></div><div id="should-find" class="${CHECKBOX_GROUP_CLASS_SELECTOR}" data-group="y"></div>`;
       const shouldFind = document.getElementById('should-find');
 
@@ -215,7 +215,7 @@ describe('filterGroup', () => {
   describe('filterChangeHandler', () => {
     test('submits the form only if a filter checkbox is clicked', () => {
       document.body.innerHTML = `<form data-auto-submit="true">
-  <div class="filters__groups-container">
+  <div class="filters-component__groups-container">
   <input type="text" id="should-submit" class="${CHECKBOX_CLASS_SELECTOR}" />
   <span id="should-not-submit">abc</span>
   </div>

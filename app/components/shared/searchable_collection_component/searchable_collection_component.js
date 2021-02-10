@@ -10,7 +10,7 @@ export const init = (container, classNames) => {
     collection = collection.concat(Array.from(container.getElementsByClassName(className)));
   });
 
-  const input = container.getElementsByClassName('collection-component__search-input')[0];
+  const input = container.getElementsByClassName('searchable-collection-component__search-input')[0];
 
   input.addEventListener('input', (e) => {
     filterCollection(collection, e.target);
@@ -44,8 +44,8 @@ export const itemDisplay = (item, input) => {
 };
 
 window.addEventListener('DOMContentLoaded', () => {
-  const groups = document.getElementsByClassName('collection-component');
+  const groups = document.getElementsByClassName('searchable-collection-component');
   if (groups.length) {
-    Array.from(groups).filter((group) => group.getElementsByClassName('collection-component__search-input').length).forEach((group) => init(group, searchableClassNames));
+    Array.from(groups).filter((group) => group.getElementsByClassName('searchable-collection-component__search-input').length).forEach((group) => init(group, searchableClassNames));
   }
 });
