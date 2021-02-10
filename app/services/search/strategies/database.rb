@@ -1,4 +1,4 @@
-class Search::VacancyPaginator
+class Search::Strategies::Database
   DEFAULT_ORDER = "publish_on DESC".freeze
   ORDER_OPTIONS = {
     publish_on_desc: "publish_on DESC",

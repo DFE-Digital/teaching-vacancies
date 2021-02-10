@@ -11,7 +11,7 @@ RSpec.describe Jobseekers::SearchResults::SearchVisualizerComponent, type: :comp
     render_inline(subject)
   end
 
-  let(:vacancies_search) { instance_double(Search::SearchBuilder) }
+  let(:vacancies_search) { instance_double(Search::VacancySearch) }
   let(:polygon_boundaries) { [[1, 2, 1, 2], [3, 4, 3, 4]] }
   let(:point_coordinates) { [1, 2] }
 

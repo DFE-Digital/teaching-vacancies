@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Search::SearchBuilder do
+RSpec.describe Search::VacancySearch do
   let(:subject) { described_class.new(form_hash) }
 
   let(:form_hash) do
@@ -95,7 +95,7 @@ RSpec.describe Search::SearchBuilder do
         before { allow(Search::BufferSuggestionsBuilder).to receive_message_chain(:new, :buffer_suggestions) }
 
         it "calls algolia search with the correct parameters" do
-          expect(Search::AlgoliaSearchRequest).to receive(:new).with(search_params).and_call_original
+          expect(Search::Strategies::Algolia).to receive(:new).with(search_params).and_call_original
           subject.vacancies
         end
       end
@@ -117,7 +117,7 @@ RSpec.describe Search::SearchBuilder do
         before { allow(Search::RadiusSuggestionsBuilder).to receive_message_chain(:new, :radius_suggestions) }
 
         it "calls algolia search with the correct parameters" do
-          expect(Search::AlgoliaSearchRequest).to receive(:new).with(search_params).and_call_original
+          expect(Search::Strategies::Algolia).to receive(:new).with(search_params).and_call_original
           subject.vacancies
         end
       end
@@ -126,8 +126,8 @@ RSpec.describe Search::SearchBuilder do
     context "when there is not any search criteria" do
       let(:keyword) { "" }
 
-      it "calls `Search::VacancyPaginator` with the correct parameters" do
-        expect(Search::VacancyPaginator).to receive(:new).with(1, 10, "").and_call_original
+      it "calls `Search::Strategies::Database` with the correct parameters" do
+        expect(Search::Strategies::Database).to receive(:new).with(1, 10, "").and_call_original
         subject.vacancies
       end
     end

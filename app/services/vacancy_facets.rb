@@ -52,6 +52,6 @@ class VacancyFacets
     # Disable this very expensive operation unless caching is enabled (e.g. in dev, system tests)
     return 0 unless Rails.application.config.action_controller.perform_caching
 
-    Search::SearchBuilder.new(query).total_count || 0
+    Search::VacancySearch.new(query).total_count || 0
   end
 end

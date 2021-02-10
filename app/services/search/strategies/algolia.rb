@@ -1,4 +1,4 @@
-class Search::AlgoliaSearchRequest
+class Search::Strategies::Algolia
   def initialize(search_params)
     @keyword = search_params[:keyword]
     @coordinates = search_params[:coordinates]
