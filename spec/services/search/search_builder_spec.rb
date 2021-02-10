@@ -67,14 +67,14 @@ RSpec.describe Search::SearchBuilder do
   describe "building filters" do
     it "calls the filters builder" do
       expect(Search::FiltersBuilder).to receive(:new).with(form_hash).and_call_original
-      subject
+      subject.search_filters
     end
   end
 
   describe "building replica" do
     it "calls the replica builder" do
       expect(Search::ReplicaBuilder).to receive(:new).with(form_hash[:jobs_sort], keyword).and_call_original
-      subject
+      subject.search_replica
     end
   end
 
@@ -96,7 +96,7 @@ RSpec.describe Search::SearchBuilder do
 
         it "calls algolia search with the correct parameters" do
           expect(Search::AlgoliaSearchRequest).to receive(:new).with(search_params).and_call_original
-          subject
+          subject.vacancies
         end
       end
 
@@ -118,7 +118,7 @@ RSpec.describe Search::SearchBuilder do
 
         it "calls algolia search with the correct parameters" do
           expect(Search::AlgoliaSearchRequest).to receive(:new).with(search_params).and_call_original
-          subject
+          subject.vacancies
         end
       end
     end
@@ -128,7 +128,7 @@ RSpec.describe Search::SearchBuilder do
 
       it "calls `Search::VacancyPaginator` with the correct parameters" do
         expect(Search::VacancyPaginator).to receive(:new).with(1, 10, "").and_call_original
-        subject
+        subject.vacancies
       end
     end
   end
