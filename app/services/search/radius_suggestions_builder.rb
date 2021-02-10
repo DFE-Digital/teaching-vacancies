@@ -20,7 +20,7 @@ class Search::RadiusSuggestionsBuilder
       unless wider_radius.nil?
         [
           wider_radius,
-          Search::AlgoliaSearchRequest.new(search_params.merge(radius: convert_miles_to_metres(wider_radius))).stats.last,
+          Search::AlgoliaSearchRequest.new(search_params.merge(radius: convert_miles_to_metres(wider_radius))).total_count,
         ]
       end
     }&.reject(&:nil?)

@@ -31,10 +31,10 @@ RSpec.describe Search::VacancyPaginator do
     end
   end
 
-  describe "#build_stats" do
+  describe "#total_count" do
     context "when there are no vacancies" do
-      it "builds the correct results stats" do
-        expect(subject.stats).to eq([0, 0, 0])
+      it "returns 0" do
+        expect(subject.total_count).to be_zero
       end
     end
 
@@ -42,26 +42,8 @@ RSpec.describe Search::VacancyPaginator do
       let!(:vacancies) { create_list(:vacancy, 5, :complete) }
       let!(:draft_vacancies) { create_list(:vacancy, 2, :draft) }
 
-      context "when the page is the first page" do
-        it "builds the correct results stats" do
-          expect(subject.stats).to eq([1, 2, 5])
-        end
-      end
-
-      context "when the page is the last page" do
-        let(:page) { 3 }
-
-        it "build the correct results stats" do
-          expect(subject.stats).to eq([5, 5, 5])
-        end
-      end
-
-      context "when the page is out of range" do
-        let(:page) { 4 }
-
-        it "build the correct results stats" do
-          expect(subject.stats).to eq([0, 0, 0])
-        end
+      it "returns the correct count" do
+        expect(subject.total_count).to eq(5)
       end
     end
   end

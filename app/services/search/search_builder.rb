@@ -2,7 +2,7 @@ class Search::SearchBuilder
   DEFAULT_HITS_PER_PAGE = 10
   DEFAULT_PAGE = 1
 
-  attr_reader :params_hash, :keyword, :page, :hits_per_page, :stats, :total_count, :vacancies
+  attr_reader :params_hash, :keyword, :page, :hits_per_page, :total_count, :vacancies
 
   def initialize(form_hash)
     @params_hash = form_hash
@@ -53,6 +53,18 @@ class Search::SearchBuilder
                                   end
   end
 
+  def out_of_bounds?
+    page_from > total_count
+  end
+
+  def page_from
+    (page - 1) * hits_per_page + 1
+  end
+
+  def page_to
+    [(page * hits_per_page), total_count].min
+  end
+
   private
 
   def replica_builder
@@ -66,7 +78,6 @@ class Search::SearchBuilder
                Search::VacancyPaginator.new(page, hits_per_page, params_hash[:jobs_sort])
              end
     @vacancies = search.vacancies || []
-    @stats = search.stats || []
     @total_count = search.total_count
   end
 
