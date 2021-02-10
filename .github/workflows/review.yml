@@ -123,7 +123,7 @@ jobs:
       with:
         workflow: Smoke Test
         token: ${{ secrets.PERSONAL_TOKEN }}
-        inputs: '{"smoke_test_domain": "teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital", "sha": "${{ github.sha }}"}'
+        inputs: '{"sha": "${{ github.sha }}"}'
         ref: ${{ github.event.pull_request.head.ref }}
 
     - name: Wait for smoke test
