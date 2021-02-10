@@ -25,7 +25,7 @@ html.govuk-template.app-html-class lang="en"
       | document.body.className = ((document.body.className) ? document.body.className + " js-enabled" : "js-enabled");
     = render "shared/skip_links"
     = render "layouts/cookies_banner" unless controller_name == "cookies_preferences" || cookies_preference_set?
-    header.govuk-header data-module="govuk-header" role="banner"
+    header.govuk-header.navbar-component data-module="govuk-header" role="banner"
       .govuk-header__container.govuk-width-container
         .govuk-header__logo
           a.govuk-header__link.govuk-header__link--homepage href="https://www.gov.uk"

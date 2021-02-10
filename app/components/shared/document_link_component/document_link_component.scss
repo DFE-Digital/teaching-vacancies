@@ -1,4 +1,4 @@
-ul.supporting-docs {
+.document-link-component {
   border: 1px solid $govuk-border-colour;
   list-style-type: none;
   margin-block-end: 1em;
@@ -11,7 +11,7 @@ ul.supporting-docs {
       margin-bottom: 0;
     }
 
-    .document-link {
+    &__link {
       text-decoration: none;
       word-wrap: break-word;
 
