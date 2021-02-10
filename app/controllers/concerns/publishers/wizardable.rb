@@ -101,7 +101,7 @@ module Publishers::Wizardable
 
   def applying_for_the_job_params(params)
     params.require(:publishers_job_listing_applying_for_the_job_form)
-          .permit(:state, :application_link, :contact_email, :contact_number, :school_visits, :how_to_apply)
+          .permit(:state, :application_link, :apply_through_teaching_vacancies, :contact_email, :contact_number, :personal_statement_guidance, :school_visits, :how_to_apply)
           .merge(completed_step: steps_config[step][:number])
   end
 

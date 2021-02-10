@@ -228,15 +228,16 @@ en:
         removing: Removing...
 
     applying_for_the_job: Applying for the job
+    apply: More on how to apply
+    application_link: Link to online application
+    apply_through_teaching_vacancies: Apply through Teaching Vacancies
     contact_email: Contact email
     contact_email_subject: '%{job} job enquiry'
     contact_email_body: Regarding the job at %{url}
     contact_number: Contact phone number
+    personal_statement_guidance: Personal statement instructions
     school_visits_heading: Arranging a visit to %{school}
     how_to_apply: Application instructions
-    applying_for_the_job: Applying for the job
-    apply: More on how to apply
-    application_link: Link to online application
 
     job_summary: Job summary
     about_school: About %{school}
