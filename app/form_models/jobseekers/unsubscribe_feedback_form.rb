@@ -1,9 +1,9 @@
 class Jobseekers::UnsubscribeFeedbackForm
   include ActiveModel::Model
 
-  attr_accessor :reason, :other_reason, :additional_info
+  attr_accessor :comment, :other_unsubscribe_reason_comment, :unsubscribe_reason
 
-  validates :reason, inclusion: { in: UnsubscribeFeedback.reasons.keys }
-  validates :other_reason, presence: true, if: -> { reason == "other_reason" }
-  validates :additional_info, length: { maximum: 1200 }
+  validates :comment, length: { maximum: 1200 }
+  validates :other_unsubscribe_reason_comment, presence: true, if: -> { unsubscribe_reason == "other_reason" }
+  validates :unsubscribe_reason, inclusion: { in: Feedback.unsubscribe_reasons.keys }
 end

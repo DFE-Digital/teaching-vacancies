@@ -89,7 +89,7 @@ en:
       jobseekers_subscription_form:
         email: Enter your email address. We'll only use it to send you job alerts.
       jobseekers_unsubscribe_feedback_form:
-        additional_info: Any more information you can share will help us to improve the service
+        comment: Any more information you can share will help us to improve the service
 
       publishers_organisation_form:
         description: Jobseekers will see this description of the %{organisation_type} in the job listing
@@ -199,9 +199,9 @@ en:
           daily: Daily, at around 3 pm
           weekly: Weekly (Friday evening at around 6 pm)
       jobseekers_unsubscribe_feedback_form:
-        additional_info: Is there anything else you'd like to tell us?
-        other_reason_html: Briefly, tell us more about that reason
-        reason_options:
+        comment: Is there anything else you'd like to tell us?
+        other_unsubscribe_reason_comment: Briefly, tell us more about that reason
+        unsubscribe_reason_options:
           not_relevant: The alerts I am receiving are not relevant to me
           job_found: I have found a teaching job
           circumstances_change: My circumstances have changed
