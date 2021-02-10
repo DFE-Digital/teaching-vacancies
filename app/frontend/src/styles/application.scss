@@ -49,7 +49,6 @@ $govuk-image-url-function: frontend-image-url;
 @import 'jobseekers/similar_job_component/similar_job_component';
 
 @import 'application/publishers/awaiting-feedback-vacancies';
-@import 'application/publishers/check-your-answers';
 @import 'application/publishers/information-summary';
 @import 'application/publishers/interruption-card';
 @import 'application/publishers/og-preview';
@@ -70,6 +69,7 @@ $govuk-image-url-function: frontend-image-url;
 @import 'shared/pill_link_component/pill_link_component';
 @import 'shared/process_steps_component/process_steps_component';
 @import 'shared/searchable_collection_component/searchable_collection_component';
+@import 'shared/review_component/review_component';
 
 body {
   .govuk-width-container {

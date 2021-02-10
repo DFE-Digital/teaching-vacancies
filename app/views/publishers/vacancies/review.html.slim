@@ -18,6 +18,7 @@
     ol.app-task-list
       - if current_organisation.is_a?(SchoolGroup)
         li = render "publishers/vacancies/edit_vacancy_sections/edit_job_location"
+
       li = render "publishers/vacancies/edit_vacancy_sections/edit_job_details"
       li = render "publishers/vacancies/edit_vacancy_sections/edit_pay_package"
       li = render "publishers/vacancies/edit_vacancy_sections/edit_important_dates"
