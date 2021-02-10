@@ -10,7 +10,6 @@ class VacanciesController < ApplicationController
     @vacancies_search = Search::SearchBuilder.new(@jobs_search_form.to_hash)
     @jobs_search_form.jobs_sort = @vacancies_search.sort_by
     @vacancies = VacanciesPresenter.new(@vacancies_search.vacancies)
-    AuditSearchEventJob.perform_later(audit_row) if valid_search?
   end
 
   def show
@@ -61,10 +60,6 @@ class VacanciesController < ApplicationController
 
   def smoke_test?
     cookies[:smoke_test] != nil
-  end
-
-  def audit_row
-    @jobs_search_form.to_hash.merge(total_count: @vacancies_search.vacancies.raw_answer["nbHits"])
   end
 
   def set_map_display
