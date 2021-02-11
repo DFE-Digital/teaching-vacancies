@@ -13,8 +13,7 @@
     h2.govuk-heading-m = t("publishers.identifications.new.request_account_title")
     p = t("publishers.identifications.new.request_account_html", mail_to: govuk_mail_to(t("help.email"), t("help.email")))
 
-  - if JobseekerAccountsFeature.enabled?
-    .govuk-grid-column-one-third
-      .account-sidebar
-        h2.account-sidebar__heading = t("publishers.identifications.new.assistance.heading")
-        p.govuk-body-s = t("publishers.identifications.new.assistance.content_html", link: govuk_link_to(t("publishers.identifications.new.assistance.link_text"), new_jobseeker_session_path))
+  .govuk-grid-column-one-third
+    .account-sidebar
+      h2.account-sidebar__heading = t("publishers.identifications.new.assistance.heading")
+      p.govuk-body-s = t("publishers.identifications.new.assistance.content_html", link: govuk_link_to(t("publishers.identifications.new.assistance.link_text"), new_jobseeker_session_path))

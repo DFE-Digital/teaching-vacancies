@@ -7,13 +7,10 @@
         .search-panel.location-search = render "search"
       .govuk-grid-column-one-third
         .signin
-          - if JobseekerAccountsFeature.enabled?
-            - if jobseeker_signed_in?
-              = render "signed_in_jobseeker"
-            - else
-              = render "signed_out_jobseeker"
+          - if jobseeker_signed_in?
+            = render "signed_in_jobseeker"
           - else
-            = render "signin_publishers"
+            = render "signed_out_jobseeker"
 
 .govuk-grid-row
   .govuk-grid-column-full

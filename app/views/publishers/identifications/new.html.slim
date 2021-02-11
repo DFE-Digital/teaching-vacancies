@@ -11,8 +11,7 @@
     h2.govuk-heading-m = t(".request_account_title")
     p = t(".request_account_html", mail_to: govuk_mail_to(t("help.email"), t("help.email")))
 
-  - if JobseekerAccountsFeature.enabled?
-    .govuk-grid-column-one-third
-      .account-sidebar
-        h2.account-sidebar__heading = t(".assistance.heading")
-        p.govuk-body-s = t(".assistance.content_html", link: govuk_link_to(t(".assistance.link_text"), new_jobseeker_session_path))
+  .govuk-grid-column-one-third
+    .account-sidebar
+      h2.account-sidebar__heading = t(".assistance.heading")
+      p.govuk-body-s = t(".assistance.content_html", link: govuk_link_to(t(".assistance.link_text"), new_jobseeker_session_path))
