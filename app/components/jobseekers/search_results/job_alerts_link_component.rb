@@ -6,6 +6,6 @@ class Jobseekers::SearchResults::JobAlertsLinkComponent < ViewComponent::Base
   end
 
   def render?
-    @vacancies_search.active_criteria? && !ReadOnlyFeature.enabled? && @count.positive?
+    @vacancies_search.active_criteria? && @count.positive?
   end
 end

@@ -3,17 +3,12 @@ class Publishers::BaseController < ApplicationController
 
   before_action :authenticate_publisher!,
                 :update_publisher_last_activity_at,
-                :redirect_to_root_if_read_only,
                 :check_session,
                 :check_terms_and_conditions
 
   include ActionView::Helpers::DateHelper
 
   helper_method :current_publisher
-
-  def redirect_to_root_if_read_only
-    redirect_to root_path if ReadOnlyFeature.enabled?
-  end
 
   def check_session
     redirect_to new_identifications_path unless

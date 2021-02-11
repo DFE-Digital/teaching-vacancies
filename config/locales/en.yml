@@ -166,7 +166,7 @@ en:
       success: Thank you for your feedback on your job alert
     update:
       success: Your further feedback on job alerts has been sent to the team
-      
+
   nav:
     find_job: Find a teaching job
     for_schools: For schools
@@ -227,12 +227,6 @@ en:
       counties: Counties with teaching jobs
       job_roles: Current teaching jobs by role
       subjects: Current teaching jobs by subject
-    read_only:
-      title: Sorry, listing a job is unavailable
-      description_html: >-
-        <p>We’re completing planned maintenance on job listings.</p><p>You can search and view vacancies, but you
-        can’t manage them.</p><p>You’ll be able to use the full service again in less than an hour.</p>
-        <p><a href='mailto:teaching.vacancies@education.gov.uk'>Contact our support team</a> if you need help.</p>
 
   pages:
     accessibility:
