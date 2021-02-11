@@ -1,3 +1,5 @@
+require "page_objects/search/filters"
+
 module PageObjects
   class Home < SitePrism::Page
     class FacetSection < SitePrism::Section
@@ -15,6 +17,7 @@ module PageObjects
     set_url "/"
 
     element :search_button, ".govuk-button--start"
+    section :filters, PageObjects::Search::Filters, ".search-panel"
     section :cities, FacetSection, "div[data-facet-type='cities']"
     section :counties, FacetSection, "div[data-facet-type='counties']"
     section :subjects, FacetSection, "div[data-facet-type='subjects']"
