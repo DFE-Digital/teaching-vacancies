@@ -26,7 +26,6 @@ FactoryBot.define do
     personal_statement_guidance { Faker::Lorem.paragraph(sentence_count: 4) }
     publish_on { Date.current }
     qualifications { Faker::Lorem.paragraph(sentence_count: 4) }
-    reference { SecureRandom.uuid }
     salary { Faker::Lorem.sentence[1...30].strip }
     school_visits { Faker::Lorem.paragraph(sentence_count: 4) }
     state { "create" }
