@@ -4,6 +4,17 @@
   }
 }
 
+.optional-field {
+  .govuk-label,
+  .govuk-fieldset__heading {
+    &::after {
+      @include govuk-font($size: 16, $weight: regular);
+      content: '(optional)';
+      margin-left: govuk-spacing(1);
+    }
+  }
+}
+
 .button-link {
   background-color: transparent;
   border: 0;

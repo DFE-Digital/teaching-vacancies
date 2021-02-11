@@ -12,7 +12,7 @@
 
       = f.govuk_collection_radio_buttons :banned_or_disqualified, %w[yes no], :to_s, :capitalize, inline: true
 
-      = f.govuk_radio_buttons_fieldset :close_relationships, legend: { text: t("helpers.legend.jobseekers_job_application_declarations_form.close_relationships_html", organisation: job_application.vacancy.organisation.name) } do
+      = f.govuk_radio_buttons_fieldset :close_relationships, legend: { text: t("helpers.legend.jobseekers_job_application_declarations_form.close_relationships", organisation: job_application.vacancy.organisation.name) } do
         = f.govuk_radio_button :close_relationships, :yes, link_errors: true do
           = f.govuk_text_field :close_relationships_details
         = f.govuk_radio_button :close_relationships, :no

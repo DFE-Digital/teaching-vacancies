@@ -1,6 +1,6 @@
 = f.govuk_text_field :organisation, label: { size: "s" }, required: true
 = f.govuk_text_field :job_title, label: { size: "s" }, required: true
-= f.govuk_text_field :salary, label: { size: "s" }
+= f.govuk_text_field :salary, label: { size: "s" }, form_group: { classes: "optional-field" }
 = f.govuk_text_field :subjects, label: { size: "s" }
 = f.govuk_text_area :main_duties, label: { size: "s" }, rows: 5, required: true
 = f.govuk_date_field :started_on
