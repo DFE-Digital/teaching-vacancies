@@ -7,9 +7,7 @@
         .search-panel.location-search = render "search"
       .govuk-grid-column-one-third
         .signin
-          - if ReadOnlyFeature.enabled?
-            = render "read_only"
-          - elsif JobseekerAccountsFeature.enabled?
+          - if JobseekerAccountsFeature.enabled?
             - if jobseeker_signed_in?
               = render "signed_in_jobseeker"
             - else

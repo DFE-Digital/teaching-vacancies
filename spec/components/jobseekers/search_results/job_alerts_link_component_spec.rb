@@ -9,7 +9,6 @@ RSpec.describe Jobseekers::SearchResults::JobAlertsLinkComponent, type: :compone
   before do
     allow(vacancies_search).to receive(:active_criteria).and_return(active_hash)
     allow(vacancies_search).to receive(:active_criteria?).and_return(search_params_present?)
-    allow(ReadOnlyFeature).to receive(:enabled?).and_return(read_only_enabled?)
   end
 
   let!(:inline_component) { render_inline(subject) }
@@ -17,29 +16,16 @@ RSpec.describe Jobseekers::SearchResults::JobAlertsLinkComponent, type: :compone
   context "when a search is carried out" do
     let(:search_params_present?) { true }
 
-    context "when ReadOnlyFeature is disabled" do
-      let(:read_only_enabled?) { false }
-
-      it "renders the job alerts link" do
-        expect(inline_component.css(
-          "a#job-alert-link-sticky-gtm[href="\
-          "'#{Rails.application.routes.url_helpers.new_subscription_path(search_criteria: active_hash, origin: '/foo/bar')}']",
-        ).to_html).to include(I18n.t("subscriptions.link.text"))
-      end
-    end
-
-    context "when ReadOnlyFeature is enabled" do
-      let(:read_only_enabled?) { true }
-
-      it "does not render the job alerts link" do
-        expect(rendered_component).to be_blank
-      end
+    it "renders the job alerts link" do
+      expect(inline_component.css(
+        "a#job-alert-link-sticky-gtm[href="\
+        "'#{Rails.application.routes.url_helpers.new_subscription_path(search_criteria: active_hash, origin: '/foo/bar')}']",
+      ).to_html).to include(I18n.t("subscriptions.link.text"))
     end
   end
 
   context "when a search is not carried out" do
     let(:search_params_present?) { false }
-    let(:read_only_enabled?) { true }
 
     it "does not render the job alerts link" do
       expect(rendered_component).to be_blank
