@@ -1,15 +1,11 @@
 require "capybara/rspec"
 require "i18n_helper"
 
-PRODUCTION_DOMAIN = "teaching-vacancies.service.gov.uk".freeze
+DEFAULT_DOMAIN = "teaching-vacancies.service.gov.uk".freeze
 
 RSpec.describe "Page availability", js: true, smoke_test: true do
   context "Jobseeker visits vacancy page" do
-    let(:smoke_test_domain) do
-      smoke_test_domain = ENV.fetch("SMOKE_TEST_DOMAIN", "")
-      smoke_test_domain = PRODUCTION_DOMAIN if smoke_test_domain.empty?
-      smoke_test_domain
-    end
+    let(:smoke_test_domain) { (ENV.include? "SMOKE_TEST_DOMAIN") && !ENV["SMOKE_TEST_DOMAIN"].empty? ? ENV["SMOKE_TEST_DOMAIN"] : DEFAULT_DOMAIN }
 
     it "ensures users can search and view a job vacancy page" do
       page = Capybara::Session.new(:selenium_chrome_headless)
