@@ -1,21 +1,20 @@
 require "rails_helper"
 
 RSpec.describe Search::VacancySearch do
-  let(:subject) { described_class.new(form_hash, page: page, per_page: per_page) }
+  let(:subject) { described_class.new(form_hash, sort_by: jobs_sort, page: page, per_page: per_page) }
 
   let(:form_hash) do
     {
       keyword: keyword,
       location: location,
       radius: radius,
-      jobs_sort: jobs_sort,
     }.compact
   end
 
   let(:keyword) { "maths teacher" }
   let(:location) { "" }
   let(:radius) { "" }
-  let(:jobs_sort) { "" }
+  let(:jobs_sort) { Search::VacancySearchSort::RELEVANCE }
   let(:per_page) { nil }
   let(:page) { 1 }
   let(:filter_query) { Search::FiltersBuilder.new(form_hash).filter_query }
@@ -69,13 +68,6 @@ RSpec.describe Search::VacancySearch do
     end
   end
 
-  describe "building replica" do
-    it "calls the replica builder" do
-      expect(Search::ReplicaBuilder).to receive(:new).with(form_hash[:jobs_sort], keyword).and_call_original
-      subject.search_replica
-    end
-  end
-
   describe "performing search" do
     context "when there is any search criteria" do
       context "when location matches a location polygon" do
@@ -123,9 +115,10 @@ RSpec.describe Search::VacancySearch do
 
     context "when there is not any search criteria" do
       let(:keyword) { "" }
+      let(:jobs_sort) { Search::VacancySearchSort::PUBLISH_ON_DESC }
 
       it "calls `Search::Strategies::Database` with the correct parameters" do
-        expect(Search::Strategies::Database).to receive(:new).with(1, 10, "").and_call_original
+        expect(Search::Strategies::Database).to receive(:new).with(1, 10, an_instance_of(Search::VacancySearchSort)).and_call_original
         subject.vacancies
       end
     end

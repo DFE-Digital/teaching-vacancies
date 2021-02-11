@@ -9,13 +9,6 @@ class Vacancy < ApplicationRecord
 
   friendly_id :slug_candidates, use: %w[slugged history]
 
-  JOB_SORTING_OPTIONS = [
-    [I18n.t("jobs.sort_by.most_relevant"), ""],
-    [I18n.t("jobs.sort_by.publish_on.descending"), "publish_on_desc"],
-    [I18n.t("jobs.sort_by.expires_at.descending"), "expires_at_desc"],
-    [I18n.t("jobs.sort_by.expires_at.ascending.vacancy"), "expires_at_asc"],
-  ].freeze
-
   array_enum job_roles: { teacher: 0, leadership: 1, sen_specialist: 2, nqt_suitable: 3 }
   array_enum working_patterns: { full_time: 0, part_time: 100, job_share: 101 }
   # Legacy vacancies can have these working_pattern options too: { compressed_hours: 102, staggered_hours: 103 }

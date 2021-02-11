@@ -6,18 +6,19 @@ class Search::VacancySearch
   def_delegators :search_strategy, :vacancies, :total_count
   def_delegators :location_search, :point_coordinates
 
-  attr_reader :search_criteria, :keyword, :page, :per_page
+  attr_reader :search_criteria, :keyword, :sort_by, :page, :per_page
 
-  def initialize(search_criteria, page: nil, per_page: nil)
+  def initialize(search_criteria, sort_by: nil, page: nil, per_page: nil)
     @search_criteria = search_criteria
     @keyword = search_criteria[:keyword]
+
+    @sort_by = sort_by || Search::VacancySearchSort::RELEVANCE
     @per_page = (per_page || DEFAULT_HITS_PER_PAGE).to_i
     @page = (page || DEFAULT_PAGE).to_i
   end
 
   def active_criteria
     search_criteria
-      .except(:jobs_sort)
       .reject { |k, v| v.blank? || (k == :radius && search_criteria[:location].blank?) }
   end
 
@@ -31,14 +32,6 @@ class Search::VacancySearch
 
   def search_filters
     @search_filters ||= Search::FiltersBuilder.new(search_criteria).filter_query
-  end
-
-  def search_replica
-    @search_replica ||= replica_builder.search_replica
-  end
-
-  def sort_by
-    @sort_by ||= replica_builder.sort_by
   end
 
   def wider_search_suggestions
@@ -65,15 +58,11 @@ class Search::VacancySearch
 
   private
 
-  def replica_builder
-    @replica_builder ||= Search::ReplicaBuilder.new(search_criteria[:jobs_sort], keyword)
-  end
-
   def search_strategy
     @search_strategy ||= if active_criteria?
                            Search::Strategies::Algolia.new(algolia_params)
                          else
-                           Search::Strategies::Database.new(page, per_page, search_criteria[:jobs_sort])
+                           Search::Strategies::Database.new(page, per_page, sort_by)
                          end
   end
 
@@ -84,7 +73,7 @@ class Search::VacancySearch
       radius: location_search.location_filter[:radius],
       polygons: location_search.polygon_boundaries,
       filters: search_filters,
-      replica: search_replica,
+      replica: sort_by.algolia_replica,
       per_page: per_page,
       page: page,
     }.compact
