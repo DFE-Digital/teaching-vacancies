@@ -45,7 +45,6 @@ RSpec.describe "Schools in your school group" do
   let(:school4) { create(:school, :closed, name: "Closed school") }
 
   before do
-    allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(true)
     allow(ALLOWED_LOCAL_AUTHORITIES).to receive(:include?).with(school_group.local_authority_code).and_return(true)
 
     SchoolGroupMembership.find_or_create_by(school_id: school1.id, school_group_id: school_group.id)

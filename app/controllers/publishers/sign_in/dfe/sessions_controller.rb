@@ -87,7 +87,6 @@ class Publishers::SignIn::Dfe::SessionsController < Publishers::SignIn::BaseSess
   end
 
   def local_authority_code
-    return unless LocalAuthorityAccessFeature.enabled?
     return "" unless publisher_category == :local_authority
 
     # All organisations have an establishmentNumber, but we only want this for identifying LAs by.

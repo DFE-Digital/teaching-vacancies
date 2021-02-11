@@ -58,8 +58,6 @@ class GetInformationFromLoginKey
   end
 
   def get_local_authorities
-    return [] unless LocalAuthorityAccessFeature.enabled?
-
     scratch = []
     @publisher&.dsi_data&.dig("la_codes")&.each do |la_code|
       school_group_query = SchoolGroup.where(local_authority_code: la_code, group_type: "local_authority")

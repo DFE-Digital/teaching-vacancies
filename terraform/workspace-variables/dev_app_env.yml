@@ -7,7 +7,6 @@ DFE_SIGN_IN_URL: https://test-api.signin.education.gov.uk
 DISABLE_EXPENSIVE_JOBS: true
 DOMAIN: dev.teaching-vacancies.service.gov.uk
 FEATURE_JOBSEEKER_APPLICATIONS: true
-FEATURE_LOCAL_AUTHORITY_ACCESS: true
 GOOGLE_ANALYTICS_PROFILE_ID: ga:171744074
 OPENSSL_CONF: /etc/ssl/
 RACK_ENV: staging
