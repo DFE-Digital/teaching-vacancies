@@ -1,4 +1,4 @@
-class PersistVacancyGetMoreInfoClickJob < ApplicationJob
+class PersistVacancyGetMoreInfoClickJob < ActiveJob::Base
   queue_as :low
 
   def perform(vacancy_id)

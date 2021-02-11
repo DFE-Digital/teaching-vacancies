@@ -1,4 +1,4 @@
-class ClearEmergencyLoginKeysJob < ApplicationJob
+class ClearEmergencyLoginKeysJob < ActiveJob::Base
   queue_as :low
 
   def perform

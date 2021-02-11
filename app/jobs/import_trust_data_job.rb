@@ -1,6 +1,6 @@
 require "organisation_import/import_trust_data"
 
-class ImportTrustDataJob < ApplicationJob
+class ImportTrustDataJob < ActiveJob::Base
   queue_as :low
 
   def perform

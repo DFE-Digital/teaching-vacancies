@@ -1,4 +1,4 @@
-class UpdateAlgoliaIndex < ApplicationJob
+class UpdateAlgoliaIndex < ActiveJob::Base
   queue_as :low
 
   def perform

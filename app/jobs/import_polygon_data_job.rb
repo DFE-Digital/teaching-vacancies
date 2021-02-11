@@ -1,4 +1,4 @@
-class ImportPolygonDataJob < ApplicationJob
+class ImportPolygonDataJob < ActiveJob::Base
   queue_as :low
 
   def perform

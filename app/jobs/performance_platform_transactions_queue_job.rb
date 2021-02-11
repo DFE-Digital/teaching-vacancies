@@ -1,6 +1,6 @@
 require "performance_platform_sender"
 
-class PerformancePlatformTransactionsQueueJob < ApplicationJob
+class PerformancePlatformTransactionsQueueJob < ActiveJob::Base
   queue_as :low
 
   def perform(time_to_s)

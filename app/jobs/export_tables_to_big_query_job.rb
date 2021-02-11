@@ -1,6 +1,6 @@
 require "export_tables_to_big_query"
 
-class ExportTablesToBigQueryJob < ApplicationJob
+class ExportTablesToBigQueryJob < ActiveJob::Base
   queue_as :low
 
   def perform

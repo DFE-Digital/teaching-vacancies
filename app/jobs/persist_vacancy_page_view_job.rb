@@ -1,4 +1,4 @@
-class PersistVacancyPageViewJob < ApplicationJob
+class PersistVacancyPageViewJob < ActiveJob::Base
   queue_as :low
 
   def perform(vacancy_id)

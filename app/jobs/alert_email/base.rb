@@ -1,4 +1,4 @@
-class AlertEmail::Base < ApplicationJob
+class AlertEmail::Base < ActiveJob::Base
   def perform
     return unless Rails.env.production?
 

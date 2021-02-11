@@ -1,4 +1,4 @@
-class RemoveStaleVacanciesJob < ApplicationJob
+class RemoveStaleVacanciesJob < ActiveJob::Base
   queue_as :low
 
   def perform

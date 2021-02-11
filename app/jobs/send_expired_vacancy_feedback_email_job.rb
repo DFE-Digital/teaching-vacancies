@@ -1,4 +1,4 @@
-class SendExpiredVacancyFeedbackEmailJob < ApplicationJob
+class SendExpiredVacancyFeedbackEmailJob < ActiveJob::Base
   queue_as :low
 
   def perform

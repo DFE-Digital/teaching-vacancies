@@ -1,5 +1,5 @@
 require "indexing"
-class UpdateGoogleIndexQueueJob < ApplicationJob
+class UpdateGoogleIndexQueueJob < ActiveJob::Base
   queue_as :default
 
   def perform(url)

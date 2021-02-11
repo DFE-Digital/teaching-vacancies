@@ -5,13 +5,18 @@ RSpec.describe "Sidekiq configuration" do
     # Require all jobs in case autoloading didn't get there
     Rails.root.join("app/jobs").glob("**/*.rb").map { |file| require file }
 
-    ApplicationJob.descendants.map(&:name)
+    ActiveJob::Base.descendants.map(&:name)
   end
 
   let(:scheduled_jobs) { YAML.load_file("./config/schedule.yml").map { |_, v| v["class"] } }
   let(:unscheduled_jobs) do
     %w[
+      ActionMailer::DeliveryJob
+      ActionMailer::MailDeliveryJob
+      ActionMailer::Parameterized::DeliveryJob
+      ActiveRecord::DestroyAssociationAsyncJob
       AlertEmail::Base
+      AlertMailerJob
       AuditExpressInterestEventJob
       AuditPublishedVacancyJob
       AuditSearchEventJob

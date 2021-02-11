@@ -1,4 +1,4 @@
-class SubmitPerformancePlatformJob < ApplicationJob
+class SubmitPerformancePlatformJob < ActiveJob::Base
   queue_as :low
 
   def perform

@@ -1,4 +1,4 @@
-class SendEventToDataWarehouseJob < ApplicationJob
+class SendEventToDataWarehouseJob < ActiveJob::Base
   queue_as :low
 
   # Do not log that this job has been enqueued (as it produces at least one superfluous log per request)

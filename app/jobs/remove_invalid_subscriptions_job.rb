@@ -1,6 +1,6 @@
 require "remove_invalid_subscriptions"
 
-class RemoveInvalidSubscriptionsJob < ApplicationJob
+class RemoveInvalidSubscriptionsJob < ActiveJob::Base
   queue_as :low
 
   def perform

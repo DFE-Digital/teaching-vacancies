@@ -1,4 +1,4 @@
-class AuditPublishedVacancyJob < ApplicationJob
+class AuditPublishedVacancyJob < ActiveJob::Base
   queue_as :low
 
   def perform(vacancy_id)

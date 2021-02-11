@@ -1,4 +1,4 @@
-class RemoveVacanciesThatExpiredYesterday < ApplicationJob
+class RemoveVacanciesThatExpiredYesterday < ActiveJob::Base
   queue_as :low
 
   def perform

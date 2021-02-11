@@ -1,6 +1,6 @@
 require "organisation_import/import_school_data"
 
-class ImportSchoolDataJob < ApplicationJob
+class ImportSchoolDataJob < ActiveJob::Base
   queue_as :low
 
   def perform
