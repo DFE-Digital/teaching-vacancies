@@ -39,7 +39,7 @@ module Publishers::AuthenticationConcerns
   def current_school_group
     if session[:organisation_uid].present?
       @current_school_group ||= SchoolGroup.find_by!(uid: session[:organisation_uid])
-    elsif LocalAuthorityAccessFeature.enabled? && session[:organisation_la_code].present?
+    elsif session[:organisation_la_code].present?
       @current_school_group ||= SchoolGroup.find_by!(local_authority_code: session[:organisation_la_code])
     end
   end

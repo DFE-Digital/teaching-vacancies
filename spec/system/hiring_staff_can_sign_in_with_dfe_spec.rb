@@ -95,11 +95,6 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
 
     it_behaves_like "a successful sign in"
 
-    context "when LocalAuthorityAccessFeature enabled" do
-      before { allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(true) }
-      it_behaves_like "a successful sign in"
-    end
-
     scenario "it redirects the sign in page to the school page" do
       visit new_identifications_path
       expect(page).to have_content(organisation.name)
@@ -113,8 +108,6 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
     let(:school) { create(:school, urn: "246757") }
 
     before do
-      allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(true)
-
       SchoolGroupMembership.create(school_group: school_group, school: school)
 
       stub_authentication_step(school_urn: "246757", email: dsi_email_address)
@@ -182,11 +175,6 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
         expect(current_path).to eq(organisation_managed_organisations_path)
       end
     end
-
-    context "when LocalAuthorityAccessFeature enabled" do
-      before { allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(true) }
-      it_behaves_like "a successful sign in"
-    end
   end
 
   context "with valid credentials that match a Local Authority" do
@@ -194,60 +182,44 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
     let(:publisher_preference) { instance_double(PublisherPreference) }
     let(:la_user_allowed?) { true }
 
-    context "LocalAuthorityAccessFeature enabled" do
-      before do
-        allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(true)
-        allow(ALLOWED_LOCAL_AUTHORITIES)
-          .to receive(:include?).with(organisation.local_authority_code).and_return(la_user_allowed?)
-        allow(PublisherPreference).to receive(:find_by).and_return(publisher_preference)
+    before do
+      allow(ALLOWED_LOCAL_AUTHORITIES)
+        .to receive(:include?).with(organisation.local_authority_code).and_return(la_user_allowed?)
+      allow(PublisherPreference).to receive(:find_by).and_return(publisher_preference)
 
-        stub_authentication_step(school_urn: nil, la_code: organisation.local_authority_code, email: dsi_email_address)
-        stub_authorisation_step
-        stub_sign_in_with_multiple_organisations
+      stub_authentication_step(school_urn: nil, la_code: organisation.local_authority_code, email: dsi_email_address)
+      stub_authorisation_step
+      stub_sign_in_with_multiple_organisations
 
-        visit root_path
-        sign_in_publisher
-      end
+      visit root_path
+      sign_in_publisher
+    end
 
-      context "when user preferences have been set" do
-        it_behaves_like "a successful sign in"
+    context "when user preferences have been set" do
+      it_behaves_like "a successful sign in"
 
-        scenario "it redirects the sign in page to the SchoolGroup page" do
-          visit new_identifications_path
-          expect(current_path).to eq(organisation_path)
-        end
-      end
-
-      context "when user preferences have not been set" do
-        let(:publisher_preference) { nil }
-
-        scenario "it redirects the sign in page to the managed organisations user preference page" do
-          expect(current_path).to eq(organisation_managed_organisations_path)
-        end
-      end
-
-      context "when user_id is not in the allowed list" do
-        let(:dsi_email_address) { "test@email.com" }
-        let(:la_user_allowed?) { false }
-
-        it_behaves_like "a failed sign in", user_id: "161d1f6a-44f1-4a1a-940d-d1088c439da7",
-                                            la_code: "100",
-                                            email: "test@email.com",
-                                            not_authorised_message: "Hiring staff not authorised: 161d1f6a-44f1-4a1a-940d-d1088c439da7 for local authority: 100"
+      scenario "it redirects the sign in page to the SchoolGroup page" do
+        visit new_identifications_path
+        expect(current_path).to eq(organisation_path)
       end
     end
 
-    context "LocalAuthorityAccessFeature disabled" do
-      before do
-        stub_authentication_step(school_urn: nil, trust_uid: nil, la_code: organisation.local_authority_code,
-                                 email: "test@email.com")
-        stub_authorisation_step
+    context "when user preferences have not been set" do
+      let(:publisher_preference) { nil }
+
+      scenario "it redirects the sign in page to the managed organisations user preference page" do
+        expect(current_path).to eq(organisation_managed_organisations_path)
       end
+    end
+
+    context "when la_code is not in the allowed list" do
+      let(:dsi_email_address) { "test@email.com" }
+      let(:la_user_allowed?) { false }
 
       it_behaves_like "a failed sign in", user_id: "161d1f6a-44f1-4a1a-940d-d1088c439da7",
                                           la_code: "100",
                                           email: "test@email.com",
-                                          not_authorised_message: "Hiring staff not authorised: 161d1f6a-44f1-4a1a-940d-d1088c439da7"
+                                          not_authorised_message: "Hiring staff not authorised: 161d1f6a-44f1-4a1a-940d-d1088c439da7 for local authority: 100"
     end
   end
 

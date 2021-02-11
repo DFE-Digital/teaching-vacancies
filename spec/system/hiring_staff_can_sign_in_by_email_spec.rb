@@ -1,11 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "Hiring staff signing in with fallback email authentication" do
-  before do
-    allow(AuthenticationFallback).to receive(:enabled?) { true }
-  end
+  before { allow(AuthenticationFallback).to receive(:enabled?) { true } }
 
-  scenario "can reach email request page by nav-bar link" do
+  it "can reach email request page by nav-bar link" do
     visit root_path
 
     within(".govuk-header__navigation") { click_on(I18n.t("nav.for_schools")) }
@@ -13,7 +11,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
     expect(page).to have_content(I18n.t("publishers.temp_login.please_use_email"))
   end
 
-  scenario "can reach email request page by for schools button" do
+  it "can reach email request page by for schools button" do
     visit root_path
 
     click_for_schools
@@ -48,88 +46,77 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
 
     context "when a publisher has multiple organisations" do
       let(:dsi_data) do
-        { "school_urns" => [school.urn, other_school.urn], "trust_uids" => [trust.uid, "1623"], "la_codes" => [local_authority.local_authority_code] }
+        {
+          "school_urns" => [school.urn, other_school.urn],
+          "trust_uids" => [trust.uid, "1623"],
+          "la_codes" => [local_authority.local_authority_code],
+        }
       end
 
-      context "with LocalAuthorityAccessFeature enabled" do
-        before do
-          allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(true)
-          allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference))
-        end
+      before { allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference)) }
 
-        let(:other_login_key) do
-          publisher.emergency_login_keys.create(
-            not_valid_after: Time.current + Publishers::SignIn::Email::SessionsController::EMERGENCY_LOGIN_KEY_DURATION,
-          )
-        end
+      let(:other_login_key) do
+        publisher.emergency_login_keys.create(
+          not_valid_after: Time.current + Publishers::SignIn::Email::SessionsController::EMERGENCY_LOGIN_KEY_DURATION,
+        )
+      end
 
-        scenario "can sign in, choose an org, change org, sign out" do
-          freeze_time do
-            visit root_path
-            click_for_schools
+      it "can sign in, choose an org, change org, sign out" do
+        freeze_time do
+          visit root_path
+          click_for_schools
 
-            # Expect to send an email
-            expect(message_delivery).to receive(:deliver_later)
-
-            fill_in "publisher[email]", with: publisher.email
-            click_on "commit"
-            expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
-
-            # Expect that the link in the email goes to the landing page
-            visit auth_email_choose_organisation_path(login_key: login_key.id)
-
-            expect(page).to have_content("Choose your organisation")
-            expect(page).not_to have_content(I18n.t("publishers.temp_login.denial.title"))
-            expect(page).to have_content(other_school.name)
-            expect(page).to have_content(trust.name)
-            expect(page).to have_content(local_authority.name)
-            click_on school.name
-
-            expect(page).to have_content(school.name)
-            expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
-
-            # Can sign out
-            click_on(I18n.t("nav.sign_out"))
-
-            within(".govuk-header__navigation") { expect(page).to have_content(I18n.t("nav.for_schools")) }
-            expect(page).to have_content(I18n.t("messages.access.publisher_signed_out"))
-
-            # Login link no longer works
-            visit auth_email_choose_organisation_path(login_key: login_key.id)
-            expect(page).to have_content("used")
-            expect(page).not_to have_content("Choose your organisation")
-          end
-        end
-
-        scenario "cannot sign in if key has expired" do
-          visit new_identifications_path
-          fill_in "publisher[email]", with: publisher.email
+          # Expect to send an email
           expect(message_delivery).to receive(:deliver_later)
+
+          fill_in "publisher[email]", with: publisher.email
           click_on "commit"
-          travel 5.hours do
-            visit auth_email_choose_organisation_path(login_key: login_key.id)
-            expect(page).to have_content("expired")
-            expect(page).not_to have_content("Choose your organisation")
-          end
+          expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
+
+          # Expect that the link in the email goes to the landing page
+          visit auth_email_choose_organisation_path(login_key: login_key.id)
+
+          expect(page).to have_content("Choose your organisation")
+          expect(page).not_to have_content(I18n.t("publishers.temp_login.denial.title"))
+          expect(page).to have_content(other_school.name)
+          expect(page).to have_content(trust.name)
+          expect(page).to have_content(local_authority.name)
+          click_on school.name
+
+          expect(page).to have_content(school.name)
+          expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
+
+          # Can sign out
+          click_on(I18n.t("nav.sign_out"))
+
+          within(".govuk-header__navigation") { expect(page).to have_content(I18n.t("nav.for_schools")) }
+          expect(page).to have_content(I18n.t("messages.access.publisher_signed_out"))
+
+          # Login link no longer works
+          visit auth_email_choose_organisation_path(login_key: login_key.id)
+          expect(page).to have_content("used")
+          expect(page).not_to have_content("Choose your organisation")
         end
       end
 
-      context "with LocalAuthorityAccessFeature disabled" do
-        scenario "the LA does not appear in the list of schools" do
+      it "cannot sign in if key has expired" do
+        visit new_identifications_path
+        fill_in "publisher[email]", with: publisher.email
+        expect(message_delivery).to receive(:deliver_later)
+        click_on "commit"
+        travel 5.hours do
           visit auth_email_choose_organisation_path(login_key: login_key.id)
-          expect(page).to have_content("Choose your organisation")
-          expect(page).not_to have_content(local_authority.name)
+          expect(page).to have_content("expired")
+          expect(page).not_to have_content("Choose your organisation")
         end
       end
     end
 
     context "when a publisher has only one organisation" do
       context "organisation is a School" do
-        let(:dsi_data) do
-          { "school_urns" => [school.urn], "trust_uids" => [], "la_codes" => [] }
-        end
+        let(:dsi_data) { { "school_urns" => [school.urn], "trust_uids" => [], "la_codes" => [] } }
 
-        scenario "can sign in and bypass choice of org" do
+        it "can sign in and bypass choice of org" do
           freeze_time do
             visit root_path
             click_for_schools
@@ -152,15 +139,11 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
       end
 
       context "when the organisation is a Trust" do
-        let(:dsi_data) do
-          { "school_urns" => [], "trust_uids" => [trust.uid], "la_codes" => [] }
-        end
+        let(:dsi_data) { { "school_urns" => [], "trust_uids" => [trust.uid], "la_codes" => [] } }
 
-        before do
-          allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference))
-        end
+        before { allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference)) }
 
-        scenario "can sign in and bypass choice of org" do
+        it "can sign in and bypass choice of org" do
           freeze_time do
             visit root_path
             click_for_schools
@@ -183,57 +166,43 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
       end
 
       context "when the organisation is a Local Authority" do
-        let(:dsi_data) do
-          { "school_urns" => [], "trust_uids" => [], "la_codes" => [local_authority.local_authority_code] }
-        end
+        let(:dsi_data) { { "school_urns" => [], "trust_uids" => [], "la_codes" => [local_authority.local_authority_code] } }
         let(:la_publisher_allowed?) { true }
 
-        context "with LocalAuthorityAccessFeature enabled" do
-          before do
-            allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(true)
-            allow(ALLOWED_LOCAL_AUTHORITIES)
-              .to receive(:include?).with(local_authority.local_authority_code).and_return(la_publisher_allowed?)
-            allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference))
-          end
+        before do
+          allow(ALLOWED_LOCAL_AUTHORITIES)
+            .to receive(:include?).with(local_authority.local_authority_code).and_return(la_publisher_allowed?)
+          allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference))
+        end
 
-          scenario "can sign in and bypass choice of org" do
-            freeze_time do
-              visit root_path
-              click_for_schools
+        it "can sign in and bypass choice of org" do
+          freeze_time do
+            visit root_path
+            click_for_schools
 
-              # Expect to send an email
-              expect(message_delivery).to receive(:deliver_later)
+            # Expect to send an email
+            expect(message_delivery).to receive(:deliver_later)
 
-              fill_in "publisher[email]", with: publisher.email
-              click_on "commit"
-              expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
+            fill_in "publisher[email]", with: publisher.email
+            click_on "commit"
+            expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
-              # Expect that the link in the email goes to the landing page
-              visit auth_email_choose_organisation_path(login_key: login_key.id)
+            # Expect that the link in the email goes to the landing page
+            visit auth_email_choose_organisation_path(login_key: login_key.id)
 
-              expect(page).not_to have_content("Choose your organisation")
-              expect(page).to have_content(local_authority.name)
-              expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
-            end
-          end
-
-          context "when publisher oid is not in the allowed list" do
-            let(:la_publisher_allowed?) { false }
-
-            scenario "cannot sign in" do
-              freeze_time do
-                visit auth_email_choose_organisation_path(login_key: login_key.id)
-                expect(page).to have_content "You are not authorised to log in"
-              end
-            end
+            expect(page).not_to have_content("Choose your organisation")
+            expect(page).to have_content(local_authority.name)
+            expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
           end
         end
 
-        context "with LocalAuthorityAccessFeature disabled" do
-          scenario "cannot sign in" do
+        context "when publisher oid is not in the allowed list" do
+          let(:la_publisher_allowed?) { false }
+
+          it "cannot sign in" do
             freeze_time do
               visit auth_email_choose_organisation_path(login_key: login_key.id)
-              expect(page).to have_content "The login link you used is not associated with any organisations."
+              expect(page).to have_content "You are not authorised to log in"
             end
           end
         end

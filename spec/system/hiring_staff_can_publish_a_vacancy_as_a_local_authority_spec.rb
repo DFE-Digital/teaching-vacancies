@@ -8,7 +8,6 @@ RSpec.describe "Creating a vacancy" do
   let(:vacancy) { build(:vacancy, :at_one_school, :complete) }
 
   before do
-    allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(true)
     SchoolGroupMembership.find_or_create_by(school_id: school1.id, school_group_id: school_group.id)
     SchoolGroupMembership.find_or_create_by(school_id: school2.id, school_group_id: school_group.id)
     allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference))
