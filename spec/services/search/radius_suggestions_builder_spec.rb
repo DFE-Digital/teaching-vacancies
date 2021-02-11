@@ -9,7 +9,7 @@ RSpec.describe Search::RadiusSuggestionsBuilder do
         keyword: "maths",
         coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
         radius: convert_miles_to_metres(1),
-        hits_per_page: 10,
+        per_page: 10,
         page: 1,
       }
     end

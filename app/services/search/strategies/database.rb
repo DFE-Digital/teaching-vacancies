@@ -8,12 +8,12 @@ class Search::Strategies::Database
 
   attr_reader :total_count, :vacancies
 
-  def initialize(page, hits_per_page, jobs_sort)
+  def initialize(page, per_page, jobs_sort)
     @page = page
-    @hits_per_page = hits_per_page
+    @per_page = per_page
     @jobs_sort = jobs_sort
     @order = build_order
-    @vacancies = Vacancy.live.order(@order).page(@page).per(@hits_per_page)
+    @vacancies = Vacancy.live.order(@order).page(@page).per(@per_page)
     @total_count = vacancies.total_count
   end
 

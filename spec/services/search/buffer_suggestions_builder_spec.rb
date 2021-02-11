@@ -6,7 +6,7 @@ RSpec.describe Search::BufferSuggestionsBuilder do
   describe "#get_buffers_suggestions" do
     let(:search_params) do
       {
-        hits_per_page: 10,
+        per_page: 10,
       }
     end
     let(:buffer_coordinates_five_miles) { [[5.004562496029994090, 56.50833566307333], [5.005710530794815389, 56.5051084208278]] }

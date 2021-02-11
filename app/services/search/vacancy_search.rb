@@ -6,19 +6,19 @@ class Search::VacancySearch
   def_delegators :search_strategy, :vacancies, :total_count
   def_delegators :location_search, :point_coordinates
 
-  attr_reader :params, :keyword, :page, :hits_per_page
+  attr_reader :search_criteria, :keyword, :page, :per_page
 
-  def initialize(params)
-    @params = params
-    @keyword = params[:keyword]
-    @hits_per_page = (params[:per_page] || DEFAULT_HITS_PER_PAGE).to_i
-    @page = (params[:page] || DEFAULT_PAGE).to_i
+  def initialize(search_criteria, page: nil, per_page: nil)
+    @search_criteria = search_criteria
+    @keyword = search_criteria[:keyword]
+    @per_page = (per_page || DEFAULT_HITS_PER_PAGE).to_i
+    @page = (page || DEFAULT_PAGE).to_i
   end
 
   def active_criteria
-    params
-      .except(:jobs_sort, :page)
-      .reject { |k, v| v.blank? || (k == :radius && params[:location].blank?) }
+    search_criteria
+      .except(:jobs_sort)
+      .reject { |k, v| v.blank? || (k == :radius && search_criteria[:location].blank?) }
   end
 
   def active_criteria?
@@ -26,11 +26,11 @@ class Search::VacancySearch
   end
 
   def location_search
-    @location_search ||= Search::LocationBuilder.new(params[:location], params[:radius], params[:buffer_radius])
+    @location_search ||= Search::LocationBuilder.new(search_criteria[:location], search_criteria[:radius], search_criteria[:buffer_radius])
   end
 
   def search_filters
-    @search_filters ||= Search::FiltersBuilder.new(params).filter_query
+    @search_filters ||= Search::FiltersBuilder.new(search_criteria).filter_query
   end
 
   def search_replica
@@ -45,9 +45,9 @@ class Search::VacancySearch
     return unless vacancies.empty? && active_criteria?
 
     @wider_search_suggestions ||= if point_coordinates.present?
-                                    Search::RadiusSuggestionsBuilder.new(params[:radius], search_params).radius_suggestions
+                                    Search::RadiusSuggestionsBuilder.new(search_criteria[:radius], algolia_params).radius_suggestions
                                   elsif location_search.polygon_boundaries.present?
-                                    Search::BufferSuggestionsBuilder.new(params[:location], search_params).buffer_suggestions
+                                    Search::BufferSuggestionsBuilder.new(search_criteria[:location], algolia_params).buffer_suggestions
                                   end
   end
 
@@ -56,28 +56,28 @@ class Search::VacancySearch
   end
 
   def page_from
-    (page - 1) * hits_per_page + 1
+    (page - 1) * per_page + 1
   end
 
   def page_to
-    [(page * hits_per_page), total_count].min
+    [(page * per_page), total_count].min
   end
 
   private
 
   def replica_builder
-    @replica_builder ||= Search::ReplicaBuilder.new(params[:jobs_sort], keyword)
+    @replica_builder ||= Search::ReplicaBuilder.new(search_criteria[:jobs_sort], keyword)
   end
 
   def search_strategy
     @search_strategy ||= if active_criteria?
-                           Search::Strategies::Algolia.new(search_params)
+                           Search::Strategies::Algolia.new(algolia_params)
                          else
-                           Search::Strategies::Database.new(page, hits_per_page, params[:jobs_sort])
+                           Search::Strategies::Database.new(page, per_page, search_criteria[:jobs_sort])
                          end
   end
 
-  def search_params
+  def algolia_params
     {
       keyword: keyword,
       coordinates: location_search.location_filter[:point_coordinates],
@@ -85,7 +85,7 @@ class Search::VacancySearch
       polygons: location_search.polygon_boundaries,
       filters: search_filters,
       replica: search_replica,
-      hits_per_page: hits_per_page,
+      per_page: per_page,
       page: page,
     }.compact
   end

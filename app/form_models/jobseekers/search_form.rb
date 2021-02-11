@@ -4,7 +4,6 @@ class Jobseekers::SearchForm
   attr_reader :keyword,
               :location, :radius,
               :job_roles, :phases, :working_patterns,
-              :page,
               :job_role_options, :phase_options, :working_pattern_options,
               :total_filters
 
@@ -24,7 +23,6 @@ class Jobseekers::SearchForm
     @working_patterns = params[:working_patterns]
 
     @jobs_sort = params[:jobs_sort]
-    @page = params[:page]
 
     set_facet_options
     set_total_filters
@@ -40,7 +38,6 @@ class Jobseekers::SearchForm
       phases: @phases,
       working_patterns: @working_patterns,
       jobs_sort: @jobs_sort,
-      page: @page,
     }.delete_if { |k, v| v.blank? || (k.eql?(:radius) && @location.blank?) }
   end
 

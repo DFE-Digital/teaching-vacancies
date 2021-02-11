@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Search::VacancySearch do
-  let(:subject) { described_class.new(form_hash) }
+  let(:subject) { described_class.new(form_hash, page: page, per_page: per_page) }
 
   let(:form_hash) do
     {
@@ -9,8 +9,6 @@ RSpec.describe Search::VacancySearch do
       location: location,
       radius: radius,
       jobs_sort: jobs_sort,
-      per_page: hits_per_page,
-      page: page,
     }.compact
   end
 
@@ -18,13 +16,13 @@ RSpec.describe Search::VacancySearch do
   let(:location) { "" }
   let(:radius) { "" }
   let(:jobs_sort) { "" }
-  let(:hits_per_page) { nil }
+  let(:per_page) { nil }
   let(:page) { 1 }
   let(:filter_query) { Search::FiltersBuilder.new(form_hash).filter_query }
   let!(:location_polygon) { create(:location_polygon, name: "london") }
 
   describe "pagination helpers" do
-    let(:hits_per_page) { 10 }
+    let(:per_page) { 10 }
     let(:page) { 3 }
 
     before do
@@ -87,7 +85,7 @@ RSpec.describe Search::VacancySearch do
             keyword: keyword,
             polygons: location_polygon.polygons["polygons"],
             filters: filter_query,
-            hits_per_page: 10,
+            per_page: 10,
             page: page,
           }
         end
@@ -109,7 +107,7 @@ RSpec.describe Search::VacancySearch do
             coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
             radius: convert_miles_to_metres(radius),
             filters: filter_query,
-            hits_per_page: 10,
+            per_page: 10,
             page: page,
           }
         end
@@ -166,7 +164,7 @@ RSpec.describe Search::VacancySearch do
             keyword: keyword,
             polygons: location_polygon.polygons["polygons"],
             filters: filter_query,
-            hits_per_page: 10,
+            per_page: 10,
             page: page,
           }
         end
@@ -187,7 +185,7 @@ RSpec.describe Search::VacancySearch do
           coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
           radius: convert_miles_to_metres(radius),
           filters: filter_query,
-          hits_per_page: 10,
+          per_page: 10,
           page: page,
         }
       end
