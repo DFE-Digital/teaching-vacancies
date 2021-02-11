@@ -10,7 +10,7 @@ namespace :consolidate_feedback_tables do
       feedback_data = feedback.attributes.map.each { |key, value|
         next if value.blank? || %w[id updated_at].include?(key) # updated_at will be the time this task is run
 
-        if %w[jobseeker_id publisher_id].include?(key)
+        if FeedbackEventConcerns::ANONYMISE_THESE_PARAMS.include?(key)
           ["anonymised_#{key}", StringAnonymiser.new(value)]
         else
           [key, value]

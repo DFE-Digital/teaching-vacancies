@@ -83,7 +83,7 @@ RSpec.describe "Hiring staff can give vacancy publisher feedback" do
 
       expect { click_on I18n.t("buttons.submit_feedback") }.to have_triggered_event(:feedback_provided)
         .with_data(comment: comment,
-                   email: email,
+                   anonymised_email: anything,
                    feedback_type: "vacancy_publisher",
                    user_participation_response: "interested",
                    vacancy_id: published_job.id)
