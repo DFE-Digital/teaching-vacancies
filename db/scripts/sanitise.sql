@@ -6,9 +6,16 @@ TRUNCATE TABLE sessions;
 UPDATE account_feedbacks
        SET suggestions=NULL;
 
+UPDATE feedbacks
+       SET comment=NULL,
+           email=concat('anonymised-feedback-',id,'@example.org'),
+           other_unsubscribe_reason_comment=NULL,
+           visit_purpose_comment=NULL;
+
 UPDATE general_feedbacks
        SET comment=NULL,
-           email=concat('anonymised-feedback-',id,'@example.org')
+           email=concat('anonymised-feedback-',id,'@example.org'),
+           visit_purpose_comment=NULL;
 
 UPDATE jobseekers
        SET email=concat('anonymised-jobseeker-',id,'@example.org'),
