@@ -49,7 +49,11 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
   end
 
   def after_inactive_sign_up_path_for(resource)
-    request_event.trigger(:jobseeker_account_created, user_anonymised_jobseeker_id: StringAnonymiser.new(resource.id))
+    request_event.trigger(
+      :jobseeker_account_created,
+      user_anonymised_jobseeker_id: StringAnonymiser.new(resource.id),
+      email_identifier: StringAnonymiser.new(resource.email),
+    )
     jobseekers_check_your_email_path
   end
 
