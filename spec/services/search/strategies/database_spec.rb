@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Search::VacancyPaginator do
+RSpec.describe Search::Strategies::Database do
   subject { described_class.new(page, hits_per_page, jobs_sort) }
 
   let(:page) { 1 }

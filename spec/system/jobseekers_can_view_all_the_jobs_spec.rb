@@ -24,7 +24,7 @@ RSpec.describe "Jobseekers can view all the jobs" do
 
   describe "pagination" do
     before do
-      stub_const("Search::SearchBuilder::DEFAULT_HITS_PER_PAGE", 2)
+      stub_const("Search::VacancySearch::DEFAULT_HITS_PER_PAGE", 2)
     end
 
     context "when visiting the home page and performing an empty search" do

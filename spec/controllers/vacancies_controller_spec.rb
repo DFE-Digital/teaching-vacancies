@@ -23,7 +23,7 @@ RSpec.describe VacanciesController, type: :controller do
       context "when parameters include the sort by newest listing option" do
         let(:sort) { "publish_on_desc" }
 
-        it "sets the search replica on Search::SearchBuilder" do
+        it "sets the search replica on Search::VacancySearch" do
           subject
           expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eq("#{Indexable::INDEX_NAME}_#{sort}")
         end
@@ -32,7 +32,7 @@ RSpec.describe VacanciesController, type: :controller do
       context "when parameters include the sort by most time to apply option" do
         let(:sort) { "expires_at_desc" }
 
-        it "sets the search replica on Search::SearchBuilder" do
+        it "sets the search replica on Search::VacancySearch" do
           subject
           expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eq("#{Indexable::INDEX_NAME}_#{sort}")
         end
@@ -41,7 +41,7 @@ RSpec.describe VacanciesController, type: :controller do
       context "when parameters include the sort by least time to apply option" do
         let(:sort) { "expires_at_asc" }
 
-        it "sets the search replica on Search::SearchBuilder" do
+        it "sets the search replica on Search::VacancySearch" do
           subject
           expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eq("#{Indexable::INDEX_NAME}_#{sort}")
         end
@@ -56,7 +56,7 @@ RSpec.describe VacanciesController, type: :controller do
           }
         end
 
-        it "sets the search replica on Search::SearchBuilder to the default sort strategy: newest listing" do
+        it "sets the search replica on Search::VacancySearch to the default sort strategy: newest listing" do
           subject
           expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eq("#{Indexable::INDEX_NAME}_publish_on_desc")
         end

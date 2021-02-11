@@ -35,7 +35,7 @@ class Subscription < ApplicationRecord
   end
 
   def vacancies_for_range(date_from, date_to)
-    Search::AlertBuilder.new(search_criteria.symbolize_keys.merge(from_date: date_from, to_date: date_to)).vacancies
+    Search::AlertVacancySearch.new(search_criteria.symbolize_keys.merge(from_date: date_from, to_date: date_to)).vacancies
   end
 
   def alert_run_today

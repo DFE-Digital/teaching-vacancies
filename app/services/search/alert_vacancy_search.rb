@@ -1,4 +1,4 @@
-class Search::AlertBuilder < Search::SearchBuilder
+class Search::AlertVacancySearch < Search::VacancySearch
   MAXIMUM_SUBSCRIPTION_RESULTS = 500
 
   def initialize(params)

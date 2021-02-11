@@ -11,8 +11,8 @@ RSpec.describe Search::SimilarJobs do
     subject
   end
 
-  it "calls Search::SearchBuilder" do
-    expect(Search::SearchBuilder).to receive(:new).and_call_original
+  it "calls Search::VacancySearch" do
+    expect(Search::VacancySearch).to receive(:new).and_call_original
     subject
   end
 end

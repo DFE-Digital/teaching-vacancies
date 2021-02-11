@@ -3,11 +3,11 @@ require "rails_helper"
 RSpec.describe VacancyFacets do
   subject { described_class.new }
 
-  let(:search_builder) { instance_double(Search::SearchBuilder, total_count: 42) }
+  let(:search_builder) { instance_double(Search::VacancySearch, total_count: 42) }
 
   before do
     allow(Rails.application.config.action_controller).to receive(:perform_caching).and_return(true)
-    allow(Search::SearchBuilder).to receive(:new).and_return(search_builder)
+    allow(Search::VacancySearch).to receive(:new).and_return(search_builder)
   end
 
   describe "#job_roles" do

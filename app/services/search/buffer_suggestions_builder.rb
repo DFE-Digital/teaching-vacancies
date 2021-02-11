@@ -20,7 +20,7 @@ class Search::BufferSuggestionsBuilder
       locations.each do |location|
         location.buffers[distance.to_s].each { |buffer| buffered_polygons.push(buffer) }
       end
-      [distance.to_s, Search::AlgoliaSearchRequest.new(search_params.merge(polygons: buffered_polygons)).total_count]
+      [distance.to_s, Search::Strategies::Algolia.new(search_params.merge(polygons: buffered_polygons)).total_count]
     end
 
     buffer_vacancy_count&.uniq(&:last)&.reject { |array| array.last.zero? }

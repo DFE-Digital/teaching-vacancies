@@ -6,6 +6,6 @@ class Search::SimilarJobs
   def initialize(vacancy)
     # For now, similar jobs are retrieved based on the same set of rules that define similar job alerts
     criteria = Search::CriteriaDeviser.new(vacancy).criteria
-    @similar_jobs = Search::SearchBuilder.new(criteria).vacancies.reject { |job| job.id == vacancy.id }.take(NUMBER_OF_SIMILAR_JOBS)
+    @similar_jobs = Search::VacancySearch.new(criteria).vacancies.reject { |job| job.id == vacancy.id }.take(NUMBER_OF_SIMILAR_JOBS)
   end
 end

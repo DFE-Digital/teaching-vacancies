@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Search::AlertBuilder do
+RSpec.describe Search::AlertVacancySearch do
   let(:subject) { described_class.new(subscription_hash) }
 
   let!(:expired_now) { Time.current }

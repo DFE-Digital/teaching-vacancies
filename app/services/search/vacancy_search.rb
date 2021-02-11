@@ -1,4 +1,4 @@
-class Search::SearchBuilder
+class Search::VacancySearch
   DEFAULT_HITS_PER_PAGE = 10
   DEFAULT_PAGE = 1
 
@@ -71,9 +71,9 @@ class Search::SearchBuilder
 
   def search_strategy
     @search_strategy ||= if active_criteria?
-                           Search::AlgoliaSearchRequest.new(search_params)
+                           Search::Strategies::Algolia.new(search_params)
                          else
-                           Search::VacancyPaginator.new(page, hits_per_page, params[:jobs_sort])
+                           Search::Strategies::Database.new(page, hits_per_page, params[:jobs_sort])
                          end
   end
 
