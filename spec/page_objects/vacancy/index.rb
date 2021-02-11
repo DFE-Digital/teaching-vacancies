@@ -1,12 +1,8 @@
+require "page_objects/search/filters"
+
 module PageObjects
   module Vacancy
     class Index < SitePrism::Page
-      class Filters < SitePrism::Section
-        element :keyword, "#keyword-field"
-        element :location, "#location-field"
-        element :teacher, "#job-roles-teacher-field"
-      end
-
       class VacancyRow < SitePrism::Section
         element :link, ".view-vacancy-link"
 
@@ -26,12 +22,18 @@ module PageObjects
       end
 
       set_url "/jobs"
+      set_url_matcher(/jobs/)
 
+      element :search_button, ".govuk-button"
       element :sort_field, "#jobs-sort-field"
       element :stats, "#vacancies-stats-top"
-      section :filters, Filters, ".filters-form"
+      section :filters, PageObjects::Search::Filters, ".filters-form"
       section :pagination, Pagination, "ul.pagination"
       sections :jobs, VacancyRow, "li.vacancy"
+
+      def search
+        search_button.click
+      end
     end
   end
 end
