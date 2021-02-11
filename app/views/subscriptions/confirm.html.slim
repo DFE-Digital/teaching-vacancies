@@ -8,10 +8,6 @@
     p.govuk-body = t(".next_step_details")
     = render Jobseekers::SubscriptionDetailsComponent.new(@subscription)
 
-    - if JobseekerAccountsFeature.enabled?
-      p.govuk-body.divider-bottom class="govuk-!-padding-bottom-5" = t(".unsubscribe")
-      p.govuk-body
-        = render "jobseeker_account_prompt"
-    - else
-      p.govuk-body
-        = govuk_link_to(t(".back_to_search_results"), jobs_path(@subscription.search_criteria))
+    p.govuk-body.divider-bottom class="govuk-!-padding-bottom-5" = t(".unsubscribe")
+    p.govuk-body
+      = render "jobseeker_account_prompt"

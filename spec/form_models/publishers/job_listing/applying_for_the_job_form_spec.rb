@@ -13,7 +13,7 @@ RSpec.describe Publishers::JobListing::ApplyingForTheJobForm, type: :model do
   it { is_expected.to allow_value("").for(:application_link) }
   it { is_expected.not_to allow_value("invalid-01234").for(:contact_number) }
 
-  context "when JobseekerAccountsFeature is enabled" do
+  context "when JobseekerApplicationsFeature is enabled" do
     before { allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true) }
 
     it { is_expected.to validate_inclusion_of(:apply_through_teaching_vacancies).in_array(%w[yes no]) }

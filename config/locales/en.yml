@@ -215,13 +215,6 @@ en:
     signed_out_jobseeker:
       description_html: "%{link} or create an account to save the jobs you are interested in. You don’t need an account to search for a job or set up job alerts."
       title: Save jobs you are interested in
-    signin_publishers:
-      title: List a teaching job
-      description: Sign in to your Teaching Vacancies account to list a job at your school or Trust.
-      signin_link: how you can register
-      signin_guidance_html: If you don't have an account yet, you can find out %{link} if you are eligible.
-      manage_link: Manage jobs
-      signed_in_as: You're signed in as
     vacancy_facets:
       cities: Cities and towns with teaching jobs
       counties: Counties with teaching jobs
