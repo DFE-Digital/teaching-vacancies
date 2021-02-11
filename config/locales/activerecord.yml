@@ -23,9 +23,9 @@ en:
     frequency:
       blank: Select when you want to receive job alert emails
   unsubscribe_feedback_errors: &unsubscribe_feedback_errors
-    reason:
+    unsubscribe_reason:
       inclusion: Tell us why you want to unsubscribe
-    other_reason:
+    other_unsubscribe_reason_comment:
       blank: Tell us why you want to unsubscribe
 
   # Feedback forms

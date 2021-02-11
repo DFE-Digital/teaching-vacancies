@@ -1,8 +1,7 @@
 class GeneralFeedbackForm
   include ActiveModel::Model
 
-  attr_accessor :comment, :email, :feedback_type, :user_participation_response,
-                :visit_purpose, :visit_purpose_comment
+  attr_accessor :comment, :email, :user_participation_response, :visit_purpose, :visit_purpose_comment
 
   validates :comment, presence: true, length: { maximum: 1200 }
   validates :email, presence: true, if: -> { user_participation_response == "interested" }

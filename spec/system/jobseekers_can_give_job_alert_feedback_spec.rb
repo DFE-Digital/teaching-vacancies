@@ -93,7 +93,7 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
 
       before do
         follow_the_link_in_the_job_alert_email
-        fill_in "jobseekers_job_alert_feedback_form[comment]", with: comment
+        fill_in "jobseekers_job_alert_further_feedback_form[comment]", with: comment
       end
 
       it "allows the user to submit further feedback" do
@@ -119,7 +119,7 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
 
         context "and the form is valid" do
           scenario "redirects to invalid_recaptcha path" do
-            expect(page).to have_current_path(invalid_recaptcha_path(form_name: "Jobseekers job alert feedback form"))
+            expect(page).to have_current_path(invalid_recaptcha_path(form_name: "Jobseekers job alert further feedback form"))
           end
         end
 

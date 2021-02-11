@@ -1,11 +1,13 @@
 class GeneralFeedbacksController < ApplicationController
+  include FeedbackEventConcerns
+
   def new
     @general_feedback_form = GeneralFeedbackForm.new
   end
 
   def create
-    @general_feedback_form = GeneralFeedbackForm.new(feedback_params)
-    @feedback = Feedback.new(feedback_params)
+    @general_feedback_form = GeneralFeedbackForm.new(general_feedback_form_params)
+    @feedback = Feedback.new(feedback_attributes)
 
     if @general_feedback_form.invalid?
       render :new
@@ -21,9 +23,12 @@ class GeneralFeedbacksController < ApplicationController
 
   private
 
-  def feedback_params
+  def general_feedback_form_params
     params.require(:general_feedback_form)
           .permit(:comment, :email, :user_participation_response, :visit_purpose, :visit_purpose_comment)
-          .merge(feedback_type: "general")
+  end
+
+  def feedback_attributes
+    general_feedback_form_params.merge(feedback_type: "general")
   end
 end

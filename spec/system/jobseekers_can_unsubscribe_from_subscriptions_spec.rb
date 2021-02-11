@@ -28,14 +28,34 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
 
       expect(page).to have_content("There is a problem")
 
-      choose "jobseekers-unsubscribe-feedback-form-reason-job-found-field"
-      click_on I18n.t("buttons.submit_feedback")
+      choose "jobseekers-unsubscribe-feedback-form-unsubscribe-reason-other-reason-field"
+      fill_in "jobseekers_unsubscribe_feedback_form[other_unsubscribe_reason_comment]", with: "Spam"
+      fill_in "jobseekers_unsubscribe_feedback_form[comment]", with: "Eggs"
 
-      expect(page).to have_content(I18n.t("jobseekers.unsubscribe_feedbacks.confirmation.header"))
+      expect { click_on I18n.t("buttons.submit_feedback") }
+        .to have_triggered_event(:feedback_provided)
+        .with_data(unsubscribe_reason: "other_reason",
+                   other_unsubscribe_reason_comment: "Spam",
+                   comment: "Eggs",
+                   feedback_type: "unsubscribe")
 
       click_on I18n.t("jobseekers.unsubscribe_feedbacks.confirmation.new_search_link")
 
       expect(current_path).to eq jobs_path
+    end
+
+    context "when jobseeker is signed in" do
+      let(:jobseeker) { create(:jobseeker) }
+
+      before { login_as(jobseeker, scope: :jobseeker) }
+
+      it "redirects to the job alerts dashboard after feedback is submitted" do
+        choose "jobseekers-unsubscribe-feedback-form-unsubscribe-reason-job-found-field"
+        click_on I18n.t("buttons.submit_feedback")
+
+        expect(page).to have_content(I18n.t("jobseekers.unsubscribe_feedbacks.create.success"))
+        expect(current_path).to eq jobseekers_subscriptions_path
+      end
     end
   end
 

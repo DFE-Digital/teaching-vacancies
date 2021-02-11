@@ -10,15 +10,11 @@ RSpec.describe Publishers::Vacancies::VacancyPublisherFeedbackForm, type: :model
       comment: "Fancy",
       email: email,
       user_participation_response: user_participation_response,
-      publisher_id: 1,
-      vacancy_id: 1,
     }
   end
 
   it { is_expected.to validate_presence_of(:comment) }
   it { is_expected.to validate_length_of(:comment).is_at_most(1200) }
-  it { is_expected.to validate_presence_of(:publisher_id) }
-  it { is_expected.to validate_presence_of(:vacancy_id) }
   it {
     is_expected.to validate_inclusion_of(:user_participation_response)
                         .in_array(Feedback.user_participation_responses.keys)
