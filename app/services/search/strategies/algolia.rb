@@ -6,7 +6,7 @@ class Search::Strategies::Algolia
     @polygons = search_params[:polygons]
     @filters = search_params[:filters]
     @replica = search_params[:replica]
-    @hits_per_page = search_params[:hits_per_page]
+    @per_page = search_params[:per_page]
     @page = search_params[:page]
     @typo_tolerance = search_params[:typo_tolerance]
   end
@@ -33,7 +33,7 @@ class Search::Strategies::Algolia
       insidePolygon: @polygons,
       filters: @filters,
       replica: @replica,
-      hitsPerPage: @hits_per_page,
+      hitsPerPage: @per_page,
       page: @page,
       typoTolerance: @typo_tolerance,
     }.compact

@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe Search::Strategies::Database do
-  subject { described_class.new(page, hits_per_page, jobs_sort) }
+  subject { described_class.new(page, per_page, jobs_sort) }
 
   let(:page) { 1 }
-  let(:hits_per_page) { 2 }
+  let(:per_page) { 2 }
   let(:jobs_sort) { "" }
 
   describe "#build_order" do

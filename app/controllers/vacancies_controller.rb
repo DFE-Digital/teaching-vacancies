@@ -7,7 +7,7 @@ class VacanciesController < ApplicationController
       @landing_page_translation = "#{params[:pretty]}.#{@landing_page.parameterize.underscore}"
     end
     @jobs_search_form = Jobseekers::SearchForm.new(algolia_search_params)
-    @vacancies_search = Search::VacancySearch.new(@jobs_search_form.to_hash)
+    @vacancies_search = Search::VacancySearch.new(@jobs_search_form.to_hash, page: params[:page])
     @jobs_search_form.jobs_sort = @vacancies_search.sort_by
     @vacancies = VacanciesPresenter.new(@vacancies_search.vacancies)
   end
@@ -38,7 +38,7 @@ class VacanciesController < ApplicationController
     %w[job_role job_roles phases working_patterns].each do |facet|
       params[facet] = params[facet].split if params[facet].is_a?(String)
     end
-    params.permit(:keyword, :location, :radius, :subject, :buffer_radius, :jobs_sort, :page,
+    params.permit(:keyword, :location, :radius, :subject, :buffer_radius, :jobs_sort,
                   job_role: [], job_roles: [], phases: [], working_patterns: [])
   end
 
