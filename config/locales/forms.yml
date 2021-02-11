@@ -220,18 +220,18 @@ en:
       jobseekers_job_application_employment_history_form:
         gaps_in_employment: Gaps in your employment
       jobseekers_job_application_personal_details_form:
-        your_address_html: Your address (<span class='text-red'>Required</span>)
+        your_address: Your address
         building_and_street: Building and street
-        email_address_html: Email address (<span class='text-red'>Required</span>)
-        first_name_html: First name (<span class='text-red'>Required</span>)
-        last_name_html: Last name (<span class='text-red'>Required</span>)
-        national_insurance_number_html : National Insurance number (<span class='text-red'>Required</span>)
-        phone_number_html: Phone number (<span class='text-red'>Required</span>)
+        email_address: Email address
+        first_name: First name
+        last_name: Last name
+        national_insurance_number: National Insurance number
+        phone_number: Phone number
         previous_names: Previous names
         town_or_city: Town or city
-        teacher_reference_number_html: Teacher reference number (<span class='text-red'>Required</span>)
+        teacher_reference_number: Teacher reference number
       jobseekers_job_application_personal_statement_form:
-        personal_statement_html: Your personal statement (<span class='text-red'>Required</span>)
+        personal_statement: Your personal statement
       jobseekers_job_application_professional_status_form:
         qualified_teacher_status_options:
           "no": "No"
@@ -243,19 +243,19 @@ en:
         current_role_options:
           "no": "No"
           "yes": "Yes"
-        job_title_html: Job title(s) (<span class='text-red'>Required</span>)
-        main_duties_html: Main duties (<span class='text-red'>Required</span>)
-        organisation_html: School or other organisation (<span class='text-red'>Required</span>)
-        reason_for_leaving_html: Reason for leaving (<span class='text-red'>Required</span>)
+        job_title: Job title(s)
+        main_duties: Main duties
+        organisation: School or other organisation
+        reason_for_leaving: Reason for leaving
         salary: Salary scale or level
         subjects: Subjects and key stages taught
       jobseekers_job_application_details_reference_form:
-        email_address_html: Email address (<span class='text-red'>Required</span>)
-        job_title_html: Job title (<span class='text-red'>Required</span>)
-        name_html: Name (<span class='text-red'>Required</span>)
-        organisation_html: Organisation (<span class='text-red'>Required</span>)
-        relationship_to_applicant_html: Relationship to applicant (<span class='text-red'>Required</span>)
-        phone_number_html: Phone number (<span class='text-red'>Required</span>)
+        email_address: Email address
+        job_title: Job title
+        name: Name
+        organisation: Organisation
+        relationship_to_applicant: Relationship to applicant
+        phone_number: Phone number
 
       personal_details_form:
         building_and_street: Building and street
@@ -341,26 +341,25 @@ en:
         reason_html: Why do you want to unsubscribe from this alert? (<span class='text-red'>Required</span>)
 
       jobseekers_job_application_ask_for_support_form:
-        support_needed_html: >-
-          Do you want to ask for support so that you can attend an interview? (<span class='text-red'>Required</span>)
+        support_needed: >-
+          Do you want to ask for support so that you can attend an interview?
       jobseekers_job_application_declarations_form:
-        banned_or_disqualified_html: >-
+        banned_or_disqualified: >-
           Are you banned or disqualified from working with children or subject to any sanctions or conditions on your
           employment, imposed by the Independent Safeguarding Authority (ISA), Secretary of State or other regulatory body
-          (e.g. the GTCE)? (<span class='text-red'>Required</span>)
-        close_relationships_html: >-
+          (e.g. the GTCE)?
+        close_relationships: >-
           Do you have any family or close relationship with people within %{organisation}?
-          (<span class='text-red'>Required</span>)
-        right_to_work_in_uk_html: Do you have the right to work in the UK? (<span class='text-red'>Required</span>)
+        right_to_work_in_uk: Do you have the right to work in the UK?
       jobseekers_job_application_details_employment_history_form:
-        current_role_html: Is this your current role? (<span class='text-red'>Required</span>)
-        ended_on_html: End date (<span class='text-red'>Required</span>)
-        started_on_html: Start date (<span class='text-red'>Required</span>)
+        current_role: Is this your current role?
+        ended_on: End date
+        started_on: Start date
       jobseekers_job_application_professional_status_form:
-        statutory_induction_complete_html: >-
-          Have you completed your statutory induction year? (<span class='text-red'>Required</span>)
-        qualified_teacher_status_html: >-
-          Do you have qualified teacher status (QTS)? (<span class='text-red'>Required</span>)
+        statutory_induction_complete: >-
+          Have you completed your statutory induction year?
+        qualified_teacher_status: >-
+          Do you have qualified teacher status (QTS)?
 
       personal_details_form:
         address_html: Your address (<span class='text-red'>Required</span>)
