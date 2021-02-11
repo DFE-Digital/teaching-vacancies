@@ -11,6 +11,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
       expect(page).to have_content("There is a problem")
       expect { sign_up_jobseeker }.to have_triggered_event(:jobseeker_account_created).with_data(
         user_anonymised_jobseeker_id: anything,
+        email_identifier: anything,
       ).and change { delivered_emails.count }.by(1)
       expect(current_path).to eq(jobseekers_check_your_email_path)
     end
