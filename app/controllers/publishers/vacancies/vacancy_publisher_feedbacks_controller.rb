@@ -1,6 +1,8 @@
 class Publishers::Vacancies::VacancyPublisherFeedbacksController < Publishers::Vacancies::ApplicationController
   before_action :set_vacancy, only: %i[new create]
 
+  include FeedbackEventConcerns
+
   def new
     return redirect_to organisation_path, notice: t(".already_submitted") if already_submitted?
 

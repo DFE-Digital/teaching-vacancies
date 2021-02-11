@@ -1,4 +1,6 @@
 class GeneralFeedbacksController < ApplicationController
+  include FeedbackEventConcerns
+
   def new
     @general_feedback_form = GeneralFeedbackForm.new
   end

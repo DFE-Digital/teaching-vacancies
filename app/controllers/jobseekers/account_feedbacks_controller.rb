@@ -1,4 +1,6 @@
 class Jobseekers::AccountFeedbacksController < Jobseekers::ApplicationController
+  include FeedbackEventConcerns
+
   def new
     @account_feedback_form = Jobseekers::AccountFeedbackForm.new(origin: params[:origin])
   end

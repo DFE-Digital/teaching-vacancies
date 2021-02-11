@@ -1,4 +1,6 @@
 class Jobseekers::UnsubscribeFeedbacksController < ApplicationController
+  include FeedbackEventConcerns
+
   def new
     @subscription = Subscription.find(subscription_id)
     @unsubscribe_feedback_form = Jobseekers::UnsubscribeFeedbackForm.new

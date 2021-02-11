@@ -1,4 +1,6 @@
 class Jobseekers::JobAlertFeedbacksController < ApplicationController
+  include FeedbackEventConcerns
+
   def new
     # The `new` action creates the Feedback record because it is called from a link in the alert email.
     # Such links can only perform GET requests. HTTP forbids redirecting from GET to POST.
