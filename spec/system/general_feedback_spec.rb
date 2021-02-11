@@ -14,7 +14,7 @@ RSpec.describe "Giving general feedback for the service", recaptcha: true do
 
       expect { click_button I18n.t("buttons.submit_feedback") }.to have_triggered_event(:feedback_provided)
         .with_data(comment: comment,
-                   email: email,
+                   anonymised_email: anything,
                    feedback_type: "general",
                    recaptcha_score: 0.9,
                    user_participation_response: "interested",
