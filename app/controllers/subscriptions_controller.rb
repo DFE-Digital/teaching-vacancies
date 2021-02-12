@@ -2,7 +2,7 @@ class SubscriptionsController < ApplicationController
   def new
     @origin = origin_param if origin_param&.start_with?(%r{/\w})
     session[:subscription_origin] = @origin
-
+    @point_coordinates = params[:coordinates_present] == "true"
     @subscription_form = Jobseekers::SubscriptionForm.new(params[:search_criteria].present? ? search_criteria_params : email)
   end
 
