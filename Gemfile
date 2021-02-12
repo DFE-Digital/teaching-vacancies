@@ -87,6 +87,7 @@ group :test do
   gem "selenium-webdriver"
   gem "shoulda-matchers"
   gem "simplecov", "<= 0.17.1", require: false # Newer versions of simplecov are not compatible with Sonarqube
+  gem "vcr"
   gem "webmock"
 end
 
