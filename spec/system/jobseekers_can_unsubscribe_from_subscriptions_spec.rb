@@ -34,10 +34,11 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
 
       expect { click_on I18n.t("buttons.submit_feedback") }
         .to have_triggered_event(:feedback_provided)
-        .with_data(unsubscribe_reason: "other_reason",
+        .with_data(comment: "Eggs",
+                   feedback_type: "unsubscribe",
                    other_unsubscribe_reason_comment: "Spam",
-                   comment: "Eggs",
-                   feedback_type: "unsubscribe")
+                   search_criteria: json_including(subscription.search_criteria),
+                   unsubscribe_reason: "other_reason")
 
       click_on I18n.t("jobseekers.unsubscribe_feedbacks.confirmation.new_search_link")
 

@@ -52,7 +52,7 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
           .to have_triggered_event(:feedback_provided)
           .with_data(feedback_type: "job_alert",
                      subscription_id: subscription.id,
-                     search_criteria: search_criteria.to_json,
+                     search_criteria: json_including(subscription.search_criteria),
                      job_alert_vacancy_ids: job_alert_vacancy_ids,
                      relevant_to_user: relevant_to_user.to_s)
       end
@@ -82,7 +82,7 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
           .to have_triggered_event(:feedback_provided)
                 .with_data(feedback_type: "job_alert",
                            subscription_id: subscription.id,
-                           search_criteria: search_criteria.to_json,
+                           search_criteria: json_including(subscription.search_criteria),
                            job_alert_vacancy_ids: job_alert_vacancy_ids,
                            relevant_to_user: relevant_to_user.to_s)
       end
@@ -108,6 +108,7 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
           .to have_triggered_event(:feedback_provided)
                 .with_data(recaptcha_score: 0.9,
                            comment: comment,
+                           search_criteria: json_including(subscription.search_criteria),
                            subscription_id: subscription.id,
                            feedback_type: "job_alert")
       end
