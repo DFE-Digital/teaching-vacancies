@@ -13,8 +13,6 @@ variable statuscake_alerts {
     check_rate    = string
     contact_group = list(string)
     trigger_rate  = string
-    custom_header = string
-    status_codes  = string
     find_string   = string
     do_not_find   = bool
   }))
