@@ -1,65 +1,97 @@
-- content_for :page_title_prefix, t("static_pages.accessibility.page_title")
+- content_for :page_title_prefix do
+  | Accessibility
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl = t("static_pages.accessibility.page_title")
+    h1.govuk-heading-xl Accessibility
 
-    h2.govuk-heading-l = t("static_pages.accessibility.title")
-    p.govuk-body
-      = t("static_pages.accessibility.mission.opening_text")
-      ul.govuk-list.govuk-list--bullet
-        - t("static_pages.accessibility.mission.list").each do |li|
-          li = li
-    p.govuk-body = t("static_pages.accessibility.mission.closing_text")
-
-    h3.govuk-heading-m = t("static_pages.accessibility.how_accessible.title")
-    p.govuk-body = t("static_pages.accessibility.how_accessible.text_html")
-
-    h3.govuk-heading-m = t("static_pages.accessibility.reporting_accessibility_problems.title")
-    p.govuk-body = t("static_pages.accessibility.reporting_accessibility_problems.text_html", help_email: t("help.email"))
-
-    h3.govuk-heading-m = t("static_pages.accessibility.enforcement_procedure.title")
-    p.govuk-body = t("static_pages.accessibility.enforcement_procedure.text_html")
-
-    h2.govuk-heading-l = t("static_pages.accessibility.technical_information.title")
-    - t("static_pages.accessibility.technical_information.text_html").each do |p|
-      p.govuk-body = p
-
-    h3.govuk-heading-m = t("static_pages.accessibility.non_accessible.title")
-    p.govuk-body = t("static_pages.accessibility.non_accessible.text")
-
-    h3.govuk-heading-m = t("static_pages.accessibility.non_compliance.title")
-    p.govuk-body = t("static_pages.accessibility.non_compliance.text")
-
-    h4.govuk-heading-s = t("static_pages.accessibility.non_compliance.perceivable.heading")
-    p.govuk-body = t("static_pages.accessibility.non_compliance.perceivable.principle")
-    - t("static_pages.accessibility.non_compliance.perceivable.issue.text_html").each do |p|
-      p.govuk-body = p
-
-    h4.govuk-heading-s = t("static_pages.accessibility.non_compliance.operable.heading")
-    p.govuk-body = t("static_pages.accessibility.non_compliance.operable.principle")
-    - t("static_pages.accessibility.non_compliance.operable.issue.text_html").each do |p|
-      p.govuk-body = p
-
-    h4.govuk-heading-s = t("static_pages.accessibility.non_compliance.robust.heading")
-    p.govuk-body = t("static_pages.accessibility.non_compliance.robust.principle")
-    p.govuk-body = t("static_pages.accessibility.non_compliance.robust.issue.text_html")
-
-    h4.govuk-heading-s = t("static_pages.accessibility.non_compliance.not_in_scope.heading")
-    p.govuk-body = t("static_pages.accessibility.non_compliance.not_in_scope.text")
-    p.govuk-body = t("static_pages.accessibility.non_compliance.not_in_scope.issue.text_html")
-
-    h3.govuk-heading-m = t("static_pages.accessibility.how_we_tested.title")
-    - t("static_pages.accessibility.how_we_tested.opening_text").each do |p|
-      p.govuk-body = p
-    ul.govuk-list.govuk-list--bullet
-      - t("static_pages.accessibility.how_we_tested.list").each do |li|
-        li = li
+    h2.govuk-heading-l Accessibility statement for Teaching Vacancies
 
     p.govuk-body
-      = t("static_pages.accessibility.how_we_tested.closing_text.text")
+      | Teaching Vacancies is run by the Department for Education. We want as many people as possible to be able to use
+      |  the service. For example, that means users should be able to:
       ul.govuk-list.govuk-list--bullet
-        - t("static_pages.accessibility.how_we_tested.closing_text.list_html").each do |li|
-          li = li
+        li change colours, contrast levels and fonts
 
-    p.govuk-body = t("static_pages.accessibility.date_reviewed")
+        li zoom in up to 300% without the text spilling off the screen
+
+        li navigate most of the service using just a keyboard
+
+        li navigate most of the service using speech recognition software
+
+        li
+          | listen to most of the content on Teaching Vacancies using a screen reader
+          |  (including the most recent versions of JAWS, NVDA and VoiceOver)
+
+    p.govuk-body We’ve also made the text on the service as simple as possible to understand.
+
+    h3.govuk-heading-m How accessible Teaching Vacancies is
+
+    p.govuk-body
+      | Teaching Vacancies is fully compliant with the #{govuk_link_to("Web Content Accessibility Guidelines version (WCAG) 2.1", "https://www.w3.org/TR/WCAG21/")}.
+      |  We are constantly improving the service and run accessibility audits during each new phase of development.
+      |  We last did an accessibility audit in May 2019.
+
+    h3.govuk-heading-m Reporting accessibility problems with Teaching Vacancies
+
+    p.govuk-body
+      | We’re always looking to improve the accessibility of this service. If you find any problems that are not
+      |  listed on this page or think we’re not meeting accessibility requirements, please
+      |  email #{govuk_mail_to(t("help.email"), t("help.email"))} with 'Accessibility issues' in the subject line of the email.
+
+    h3.govuk-heading-m Enforcement procedure
+
+    p.govuk-body
+      | The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies
+      |  (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’).
+      |  If you’re not happy with how we respond to your complaint,
+      |  #{govuk_link_to("contact the Equality Advisory and Support Service (EASS)", "https://www.equalityadvisoryservice.com")}.
+
+    h2.govuk-heading-l Technical information about Teaching Vacancies' accessibility
+
+    p.govuk-body
+      | The Department for Education is committed to making its digital services accessible, in accordance
+      |  with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
+
+    p.govuk-body
+      | This website is at present compliant with the #{govuk_link_to("WCAG 2.1", "https://www.w3.org/TR/WCAG21/")} AA standard.
+
+    h3.govuk-heading-m Non-accessible content
+
+    p.govuk-body
+      | A number of issues related to the accessibility of Teaching Vacancies were raised in an accessibility audit
+      |  conducted in May 2019. All of the issues that fall within the scope of accessibility regulations have been corrected.
+
+    p.govuk-body
+      | The following accessibility issue has been identified but does not
+      |  fall within the scope of the WCAG 2.1 guidelines for the reason stated.
+
+    p.govuk-body
+      b Issue:
+      |  The colour used to indicate when an element such as a radio button has received focus does not meet the
+      |  expected ratio. However, this is a Government Digital Service (GDS) Design System issue, so is not within
+      |  our scope to correct. Note that a subtle movement effect also helps convey the focus state of a button,
+      |  for example, so colour contrast is not the only tactic we use for improving distinguishability.
+
+    p.govuk-body
+      b Criterion failed:
+      |  1.4.11 Distinguishable: Non-text contrast
+
+    h3.govuk-heading-m How we tested this website
+
+    p.govuk-body This website was last tested on 28 May 2019. The test was carried out by the Digital Accessibility Centre (DAC).
+
+    p.govuk-body
+      | DAC tested various combinations of the following for both desktop and mobile/tablet users:
+      ul.govuk-list.govuk-list--bullet
+        li assistive technologies (for example, screen magnifiers, screen readers and speech recognition tools)
+        li different browsers (IE11, Firefox, Safari, Chrome)
+        li accessibility user groups (for example, people with visual impairments, dyslexia, mobility impairments and learning disabilities)
+
+    p.govuk-body
+      | DAC tested:
+      ul.govuk-list.govuk-list--bullet
+        li the hiring staff journey for listing a job on the service, available at #{govuk_link_to(new_identifications_url, new_identifications_url)}
+        li the jobseeker journey for searching for a teaching job and signing up for a job alert, available at #{govuk_link_to(root_url, root_url)}
+
+    p.govuk-body This statement was prepared on 12 September 2019. It was last updated on Thursday 12th  February 2021.

@@ -1,8 +1,19 @@
-- content_for :page_title_prefix, t("static_pages.ab_tests.page_title")
+- content_for :page_title_prefix do
+  | A/B Testing
 
-h1.govuk-heading-l = t("static_pages.ab_tests.page_title")
+h1.govuk-heading-l A/B Testing
 
-= t("static_pages.ab_tests.introduction_html", help_email_link: govuk_mail_to(t("help.email"), t("help.email")))
+p.govuk-body We sometimes run A/B and multivariate tests to improve our service.
+
+p.govuk-body
+  | In an A/B test we create two versions of a webpage and show some website visitors one and some the other.
+  |  This lets us see which version works better for our users.
+
+p.govuk-body Multivariate tests work in the same way, but use three or more versions of the webpage rather than just two.
+
+p.govuk-body Below are the versions of webpages that you will see when you browse the Teaching Vacancies website.
+
+p.govuk-body For more information on our A/B and multivariate tests email #{govuk_mail_to(t("help.email"), t("help.email"))}.
 
 dl.govuk-summary-list
   - current_ab_variants.each do |test, variant|
