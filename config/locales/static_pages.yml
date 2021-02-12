@@ -9,7 +9,7 @@ en:
         <p class="govuk-body">Below are the versions of webpages that you will see when you browse the Teaching Vacancies website.</p>
         <p class="govuk-body">For more information on our A/B and multivariate tests email %{help_email_link}.</p>
     accessibility:
-      date_reviewed: This statement was prepared on 12 September 2019. It was last updated on 12 September 2019.
+      date_reviewed: This statement was prepared on 12 September 2019. It was last updated on 12 February 2021.
       enforcement_procedure:
         text_html: >-
           The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies
@@ -20,10 +20,10 @@ en:
         title: Enforcement procedure
       how_accessible:
         text_html: >-
-          Teaching Vacancies is currently designated as 'partially accessible' according to the
+          Teaching Vacancies is fully compliant with the
           <a href='https://www.w3.org/TR/WCAG21/' target='_blank' class='govuk-link'>Web Content Accessibility
-          Guidelines version (WCAG) 2.1</a> AA standard. All significant issues with accessibility are detailed in the
-          Non-accessible content section, below.
+          Guidelines version (WCAG) 2.1</a> AA standard. We are constantly improving the service and run accessibility 
+          audits during each new phase of development. We last did an accessibility audit in May 2019.
         title: How accessible Teaching Vacancies is
       how_we_tested:
         closing_text:
@@ -36,11 +36,10 @@ en:
               class='govuk-link'>https://teaching-vacancies.service.gov.uk/</a>
           text: "DAC tested:"
         list:
-          - assistive technologies (eg Jaws 16, NVDA, VoiceOver, Dragon Voice Activation, Keyboard, System inverted
-            colours, Screen Magnification, Colour blind checks, Resizing content)
+          - assistive technologies (for example, screen magnifiers, screen readers and speech recognition tools)
           - browser environments (IE11, Firefox, Safari, Chrome)
-          - accessibility user groups (Blind, Deaf, Mobility, Colour blind, Dyslexia, Low Vision, Aspergers,
-            Cognitive Impaired/Panic/Anxiety)
+          - accessibility user groups (for example, people with visual impairments, dyslexia, mobility impairments 
+          and learning disabilities)
         opening_text:
           - This website was last tested on 28 May 2019. The test was carried out by the Digital Accessibility Centre
             (DAC).
@@ -62,9 +61,8 @@ en:
         title: Non-accessible content
         text: >-
           A number of issues related to the accessibility of Teaching Vacancies were raised in an accessibility audit
-          conducted in May 2019. Most of these have been corrected but there are still a number of issues the Teaching
-          Vacancies team is working to resolve. When these issues have been resolved we will update this statement and
-          the compliance status of Teaching Vacancies.
+          conducted in May 2019. All of the issues that fall within the scope of accessibility regulations have been 
+          corrected.
       non_compliance:
         not_in_scope:
           heading: "Content that’s not within the scope of the accessibility regulations"
@@ -79,55 +77,6 @@ en:
           text: >-
             The following accessibility issues have been identified but do not fall within the scope of the WCAG 2.1
             guidelines for the reasons stated.
-        operable:
-          heading: "'Operable'"
-          issue:
-            text_html:
-              - "<strong class='strong'>Issue</strong>: The 'skip to content' link that allows users of assistive
-                technology to skip navigation links and go straight to the main content isn't working in Internet
-                Explorer.<br /><strong class='strong'>Criterion failed</strong>: 2.4.1 Navigable: Bypass Blocks (A)
-                <br /><strong class='strong'>Will be resolved</strong>: October/November 2019"
-              - "<strong class='strong'>Issue</strong>: Some hyperlinks on the service need more useful descriptions
-                for users of screen readers, who require context for each link.<br /><strong class='strong'>Criterion
-                failed</strong>: 2.4.9 Navigable: Link Purpose (Link Only) (AAA)<br /><strong class='strong'>Will be
-                resolved</strong>: October/November 2019"
-              - "<strong class='strong'>Issue</strong>: Header text on the page confirming to a user that they've signed
-                up for a job alert skips a heading level (for example, jumping from an h2 level to an h4 level), which
-                can cause confusion for users navigating pages with a screen reader.<br /><strong class='strong'>
-                Criterion failed</strong>: 2.4.10 Navigable: Section headings (AAA)<br /><strong class='strong'>
-                Will be resolved</strong>: October/November 2019"
-          principle: "Principle: User interface components and navigation must be operable."
-        perceivable:
-          heading: "'Perceivable'"
-          issue:
-            text_html:
-              - "<strong class='strong'>Issue</strong>: Some images don’t have a text alternative, so the information
-                in them isn’t available to people using a screen reader.<br /><strong class='strong'>Criterion failed
-                </strong>: 1.1.1 Text Alternatives: Non-text content (AA)<br /><strong class='strong'>Will be
-                resolved</strong>: October/November 2019"
-              - "<strong class='strong'>Issue</strong>: The colour contrast ratio between text and its background colour
-                on certain pages makes text difficult for visually impaired users to read. Increasing the text size will
-                resolve this issue.<br /><strong class='strong'>Criterion failed</strong>: 1.4.3 Distinguishable:
-                Contrast (Minimum) (AA)<br /><strong class='strong'>Will be resolved</strong>: October/November 2019"
-          principle: >-
-            Principle: Information and user interface components must be presentable to users in ways they can
-            perceive.
-        robust:
-          heading: "'Robust'"
-          issue:
-            text_html: >-
-              <strong class='strong'>Issue</strong>: Users of screen readers aren't reliably notified when a page is
-              loading or when jobs have been sorted by date. This leads to the focus remaining stationary.<br />
-              <strong class='strong'>Criterion failed</strong>:  4.1.3 Compatible: Status messages (AA)<br />
-              <strong class='strong'>Will be resolved</strong>: October/November 2019
-          principle: >-
-            Principle: Content must be robust enough that it can be interpreted by a wide variety of user agents,
-            including assistive technologies.
-        text: >-
-          The following accessibility issues have been identified and are grouped here according to which principle of
-          accessibility criteria they fall under in the WCAG 2.1 guidelines.
-        title: Non-compliance with the accessibility regulations
-
       page_title: Accessibility
       reporting_accessibility_problems:
         text_html: >-
@@ -136,14 +85,6 @@ en:
           <a href='mailto: %{help_email}' class='govuk-link'>%{help_email}</a> with 'Accessibility issues' in the
           subject line of the email.
         title: Reporting accessibility problems with Teaching Vacancies
-      technical_information:
-        text_html:
-          - The Department for Education is committed to making its digital services accessible, in accordance with the
-            Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
-          - This website is at present partially compliant with the
-            <a href='https://www.w3.org/TR/WCAG21/' target='_blank' class='govuk-link'>WCAG 2.1</a> AA standard,
-            due to those non-compliance issues listed below that are marked with (A) or (AA).
-        title: Technical information about Teaching Vacancies' accessibility
       title: Accessibility statement for Teaching Vacancies
 
     not_authorised:
