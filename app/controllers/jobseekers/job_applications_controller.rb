@@ -1,6 +1,10 @@
 class Jobseekers::JobApplicationsController < Jobseekers::ApplicationController
   helper_method :job_application, :vacancy
 
+  def new
+    request_event.trigger(:vacancy_apply_clicked, vacancy_id: vacancy.id)
+  end
+
   def create
     new_job_application = current_jobseeker.job_applications.find_or_initialize_by(vacancy: vacancy)
     new_job_application.draft!
