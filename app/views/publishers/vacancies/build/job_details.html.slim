@@ -28,9 +28,9 @@
       = f.govuk_collection_radio_buttons :suitable_for_nqt, %w[yes no], :to_s, :capitalize
 
       .optional-field
-        = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_job_details_form.subjects")   }  do
+        = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_job_details_form.subjects") } do
 
-          label for="publishers-job-listing-job-details-form-subject-search" 
+          label for="publishers-job-listing-job-details-form-subject-search"
             span.govuk-visually-hidden | Subject filter
           span.govuk-hint#publishers-job-listing-job-details-form-subjects-hint
             = t("helpers.hint.publishers_job_listing_job_details_form.subjects")
