@@ -8,5 +8,7 @@ resource statuscake_test alert {
   trigger_rate  = each.value.trigger_rate
   custom_header = each.value.custom_header
   status_codes  = each.value.status_codes
+  find_string   = each.value.find_string
+  do_not_find   = each.value.do_not_find
   confirmations = 1
 }
