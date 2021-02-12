@@ -273,15 +273,15 @@ en:
         website: '%{organisation_type} website'
 
       publishers_job_listing_applying_for_the_job_form:
-        application_link_html: Link to online application <span class='govuk-!-font-weight-regular'>(optional)</span>
+        application_link: Link to online application
         apply_through_teaching_vacancies_options:
           "no": "Use another service or organisation"
           "yes": "Apply through Teaching Vacancies"
         contact_email: Contact email
-        contact_number_html: Contact phone number <span class='govuk-!-font-weight-regular'>(optional)</span>
+        contact_number: Contact phone number
         how_to_apply_html: How to apply <span class='govuk-!-font-weight-regular'>(optional)</span>
         personal_statement_guidance: Help candidates to write their personal statement
-        school_visits_html: School visits <span class='govuk-!-font-weight-regular'>(optional)</span>
+        school_visits: School visits
         trust_visits_html: Trust visits <span class='govuk-!-font-weight-regular'>(optional)</span>
       publishers_job_listing_copy_vacancy_form:
         expires_at_hh: Hour
@@ -314,7 +314,7 @@ en:
         about_organisation: About %{organisation}
         job_summary: Job summary
       publishers_job_listing_pay_package_form:
-        benefits_html: Employee benefits <span class='govuk-!-font-weight-regular'>(optional)</span>
+        benefits: Employee benefits
         salary: Salary
 
       publishers_vacancies_vacancy_publisher_feedback_form:
@@ -375,12 +375,12 @@ en:
         expires_at: Time application is due
         publish_on: Date job will be listed
         starts_asap: As soon as possible
-        starts_on_html: Date job starts <span class='govuk-!-font-weight-regular'>(optional)</span>
+        starts_on: Date job starts
       publishers_job_listing_job_details_form:
         contract_type: Contract type
-        job_roles_html: Job role <span class='govuk-!-font-weight-regular'>(optional)</span>
+        job_roles: Job role
         suitable_for_nqt: Is this job suitable for NQTs?
-        subjects_html: Subject(s) <span class='govuk-!-font-weight-regular'>(optional)</span>
+        subjects: Subject(s)
         working_patterns: Working patterns
       publishers_job_listing_job_location_form:
         job_location: Where will the job be based?

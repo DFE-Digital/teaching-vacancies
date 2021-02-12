@@ -16,7 +16,7 @@
 
       = f.govuk_text_field :salary, label: { size: "s" }, required: true
 
-      = f.govuk_text_area :benefits, label: { size: "s" }
+      = f.govuk_text_area :benefits, label: { size: "s" }, form_group: { classes: "optional-field" }
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
