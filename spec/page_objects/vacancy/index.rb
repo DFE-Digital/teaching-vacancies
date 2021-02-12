@@ -24,7 +24,7 @@ module PageObjects
       set_url "/jobs"
       set_url_matcher(/jobs/)
 
-      element :search_button, ".govuk-button"
+      element :search_button, "input[value='Search']"
       element :sort_field, "#jobs-sort-field"
       element :stats, "#vacancies-stats-top"
       section :filters, PageObjects::Search::Filters, ".filters-form"
