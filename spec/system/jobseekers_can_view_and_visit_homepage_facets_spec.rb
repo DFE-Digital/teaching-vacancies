@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Jobseekers can view and visit homepage facets" do
+RSpec.describe "Jobseekers can view and visit homepage facets", vcr: { cassette_name: "algoliasearch" } do
   let(:home_page) { PageObjects::Home.new }
   let(:jobs_page) { PageObjects::Vacancy::Index.new }
 
