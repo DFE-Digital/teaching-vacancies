@@ -32,7 +32,7 @@ RSpec.shared_examples "a failed sign in" do |options|
 
     sign_in_publisher
 
-    expect(page).to have_content(I18n.t("static_pages.not_authorised.title"))
+    expect(page).to have_content(/The email you're signed in with isn't authorised to list jobs for this school/i)
     expect(page).to have_content(options[:email])
     within(".govuk-header__navigation") { expect(page).not_to have_content(I18n.t("nav.school_page_link")) }
   end
