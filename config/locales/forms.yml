@@ -160,9 +160,9 @@ en:
 
     label:
       general_feedback_form:
-        comment_html: How could we improve this service? (<span class='text-red'>Required</span>)
-        email_html: What is your email address? (<span class="text-red">Required</span>)
-        visit_purpose: Visit purpose # This text is visually hidden but might be read by screen-readers
+        comment: How could we improve this service?
+        email: What is your email address?
+        visit_purpose: Visit purpose
         visit_purpose_options:
           find_teaching_job: Find a job in teaching
           list_teaching_job: List a teaching job on the service
@@ -187,14 +187,14 @@ en:
       jobseekers_job_alert_further_feedback_form:
         comment: Would you like to add any further comments about the relevancy of the job alerts you have received?
       jobseekers_nqt_job_alerts_form:
-        email_html: Email address (<span class='text-red'>Required</span>)
-        keywords_html: Keywords (<span class='text-red'>Required</span>)
-        location_html: Location (<span class='text-red'>Required</span>)
+        email: Email address
+        keywords: Keywords
+        location: Location
       jobseekers_sign_in_form:
         email: Email address
         password: Password
       jobseekers_subscription_form:
-        email_html: Email address (<span class='text-red'>Required</span>)
+        email: Email address
         frequency_options:
           daily: Daily, at around 3 pm
           weekly: Weekly (Friday evening at around 6 pm)
@@ -258,14 +258,15 @@ en:
         phone_number: Phone number
 
       personal_details_form:
+        address: Your address
         building_and_street: Building and street
-        email_address_html: Email address (<span class='text-red'>Required</span>)
-        first_name_html: First name (<span class='text-red'>Required</span>)
-        last_name_html: Last name (<span class='text-red'>Required</span>)
-        national_insurance_number_html: National Insurance number (<span class='text-red'>Required</span>)
-        phone_number_html: Phone number (<span class='text-red'>Required</span>)
+        email_address: Email address
+        first_name: First name
+        last_name: Last name
+        national_insurance_number: National Insurance number
+        phone_number: Phone number
         previous_names: Previous names
-        teacher_reference_number_html: Teacher reference number (TRN) (<span class='text-red'>Required</span>)
+        teacher_reference_number: Teacher reference number (TRN)
         town_or_city: Town or city
 
       publishers_organisation_form:
@@ -273,16 +274,16 @@ en:
         website: '%{organisation_type} website'
 
       publishers_job_listing_applying_for_the_job_form:
-        application_link_html: Link to online application <span class='govuk-!-font-weight-regular'>(optional)</span>
+        application_link: Link to online application
         apply_through_teaching_vacancies_options:
           "no": "Use another service or organisation"
           "yes": "Apply through Teaching Vacancies"
         contact_email: Contact email
-        contact_number_html: Contact phone number <span class='govuk-!-font-weight-regular'>(optional)</span>
-        how_to_apply_html: How to apply <span class='govuk-!-font-weight-regular'>(optional)</span>
+        contact_number: Contact phone number
+        how_to_apply: How to apply
         personal_statement_guidance: Help candidates to write their personal statement
-        school_visits_html: School visits <span class='govuk-!-font-weight-regular'>(optional)</span>
-        trust_visits_html: Trust visits <span class='govuk-!-font-weight-regular'>(optional)</span>
+        school_visits: School visits
+        trust_visits: Trust visits
       publishers_job_listing_copy_vacancy_form:
         expires_at_hh: Hour
         expires_at_meridiem: am or pm
@@ -305,7 +306,7 @@ en:
           sen_specialist: SEN specialist
           nqt_suitable: Suitable for NQTs
         job_title: Job title
-        suitable_for_nqt_html: Is this job suitable for NQTs? (<span class='text-red'>Required</span>)
+        suitable_for_nqt: Is this job suitable for NQTs?
         working_patterns_options:
           full_time: Full-time
           part_time: Part-time
@@ -314,35 +315,25 @@ en:
         about_organisation: About %{organisation}
         job_summary: Job summary
       publishers_job_listing_pay_package_form:
-        benefits_html: Employee benefits <span class='govuk-!-font-weight-regular'>(optional)</span>
+        benefits: Employee benefits
         salary: Salary
-
-      publishers_vacancies_vacancy_publisher_feedback_form:
-        comment_html: How could we improve this service? (<span class='text-red'>Required</span>)
-        email_html: What is your email address? (<span class="text-red">Required</span>)
-        user_participation_response_options:
-          interested: 'Yes'
-          uninterested: 'No'
 
     legend:
       general_feedback_form:
-        visit_purpose_html: What did you come to Teaching Vacancies to do? (<span class='text-red'>Required</span>)
-        user_participation_response_html: >-
-          Would you like to participate in our research? (<span class='text-red'>Required</span>)
+        visit_purpose: What did you come to Teaching Vacancies to do?
+        user_participation_response: Would you like to participate in our research?
 
       jobseekers_account_feedback_form:
-        rating_html: >-
+        rating: >-
           How satisfied are you with your experience of using Teaching Vacancies?
-          (<span class='text-red'>Required</span>)
 
       jobseekers_subscription_form:
-        frequency_html: When do you want to receive alerts? (<span class='text-red'>Required</span>)
+        frequency: When do you want to receive alerts?
       jobseekers_unsubscribe_feedback_form:
-        reason_html: Why do you want to unsubscribe from this alert? (<span class='text-red'>Required</span>)
+        reason: Why do you want to unsubscribe from this alert?
 
       jobseekers_job_application_ask_for_support_form:
-        support_needed: >-
-          Do you want to ask for support so that you can attend an interview?
+        support_needed: Do you want to ask for support so that you can attend an interview?
       jobseekers_job_application_declarations_form:
         banned_or_disqualified: >-
           Are you banned or disqualified from working with children or subject to any sanctions or conditions on your
@@ -356,13 +347,8 @@ en:
         ended_on: End date
         started_on: Start date
       jobseekers_job_application_professional_status_form:
-        statutory_induction_complete: >-
-          Have you completed your statutory induction year?
-        qualified_teacher_status: >-
-          Do you have qualified teacher status (QTS)?
-
-      personal_details_form:
-        address_html: Your address (<span class='text-red'>Required</span>)
+        statutory_induction_complete: Have you completed your statutory induction year?
+        qualified_teacher_status: Do you have qualified teacher status (QTS)?
 
       publishers_job_listing_applying_for_the_job_form:
         apply_through_teaching_vacancies: How would you like candidates to apply?
@@ -375,22 +361,18 @@ en:
         expires_at: Time application is due
         publish_on: Date job will be listed
         starts_asap: As soon as possible
-        starts_on_html: Date job starts <span class='govuk-!-font-weight-regular'>(optional)</span>
+        starts_on: Date job starts
       publishers_job_listing_job_details_form:
         contract_type: Contract type
-        job_roles_html: Job role <span class='govuk-!-font-weight-regular'>(optional)</span>
+        job_roles: Job role
         suitable_for_nqt: Is this job suitable for NQTs?
-        subjects_html: Subject(s) <span class='govuk-!-font-weight-regular'>(optional)</span>
+        subjects: Subject(s)
         working_patterns: Working patterns
       publishers_job_listing_job_location_form:
         job_location: Where will the job be based?
       publishers_job_listing_schools_form:
         organisation_ids: In which schools will the job be based?
         organisation_id: In which school will the job be based?
-
-      publishers_vacancies_vacancy_publisher_feedback_form:
-        user_participation_response_html: >-
-          Would you like to participate in our research? (<span class='text-red'>Required</span>)
 
     options:
       publishers_job_listing_job_location_form:

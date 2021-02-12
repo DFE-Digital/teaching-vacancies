@@ -29,7 +29,7 @@
 
       = render "publishers/vacancies/expires_at_field", f: f
 
-      .clear-form
+      .clear-form.optional-field
         = f.govuk_date_field :starts_on
 
         .clear-form__checkbox

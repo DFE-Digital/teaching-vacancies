@@ -13,6 +13,15 @@
       margin-left: govuk-spacing(1);
     }
   }
+
+  .govuk-checkboxes__label,
+  .govuk-radios__label,
+  .govuk-date-input__label {
+    &::after {
+      content: '';
+      margin-left: 0;
+    }
+  }
 }
 
 .button-link {
