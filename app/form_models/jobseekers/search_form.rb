@@ -5,9 +5,7 @@ class Jobseekers::SearchForm
               :location, :radius,
               :job_roles, :phases, :working_patterns,
               :job_role_options, :phase_options, :working_pattern_options,
-              :total_filters
-
-  attr_accessor :jobs_sort
+              :total_filters, :jobs_sort
 
   def initialize(params = {})
     strip_trailing_whitespaces_from_params(params)
@@ -22,7 +20,7 @@ class Jobseekers::SearchForm
     @phases = params[:phases]
     @working_patterns = params[:working_patterns]
 
-    @jobs_sort = params[:jobs_sort]
+    @jobs_sort = Search::VacancySearchSort.for(params[:jobs_sort], keyword: @keyword)
 
     set_facet_options
     set_total_filters
@@ -37,7 +35,6 @@ class Jobseekers::SearchForm
       job_roles: @job_roles,
       phases: @phases,
       working_patterns: @working_patterns,
-      jobs_sort: @jobs_sort,
     }.delete_if { |k, v| v.blank? || (k.eql?(:radius) && @location.blank?) }
   end
 
