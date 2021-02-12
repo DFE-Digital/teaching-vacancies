@@ -20,7 +20,7 @@ print-env: ## make -s local print-env mfa_code=123456 > .env
 local: ## local # Same values as the deployed dev environment, adapted for local developmemt
 		$(eval env=dev)
 		$(eval local_override=-y terraform/workspace-variables/local_app_env.yml -y terraform/workspace-variables/my_app_env.yml)
-		$(eval local_filter=| sed -e '/RAILS_ENV=/d' -e '/RACK_ENV=/d' -e '/ROLLBAR_ENV=/d')
+		$(eval local_filter=| sed -e '/RAILS_ENV=/d' -e '/ROLLBAR_ENV=/d')
 		@bin/algolia-prefix > terraform/workspace-variables/my_app_env.yml
 
 .PHONY: dev
