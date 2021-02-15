@@ -99,7 +99,8 @@ RSpec.describe Subscription, type: :model do
     let(:algolia_search_args) do
       {
         filters: search_filter,
-        hitsPerPage: Search::AlertVacancySearch::MAXIMUM_SUBSCRIPTION_RESULTS,
+        hitsPerPage: Subscription::MAXIMUM_RESULTS_PER_RUN,
+        page: 1,
         typoTolerance: false,
       }
     end
@@ -115,6 +116,15 @@ RSpec.describe Subscription, type: :model do
 
     it "calls out to algolia search" do
       expect(subscription.vacancies_for_range(date_yesterday, date_today)).to eq(vacancies)
+    end
+
+    context "when no keyword was given as part of the search" do
+      let(:subscription) { create(:subscription, frequency: :daily, search_criteria: { subject: "potions", job_title: "head of things" }) }
+      let(:algolia_search_query) { "potions head of things" }
+
+      it "performs a search with a generated keyword" do
+        expect(subscription.vacancies_for_range(date_yesterday, date_today)).to eq(vacancies)
+      end
     end
   end
 

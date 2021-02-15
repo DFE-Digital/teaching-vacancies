@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Search::VacancySearch do
-  let(:subject) { described_class.new(form_hash, sort_by: jobs_sort, page: page, per_page: per_page) }
+  subject { described_class.new(form_hash, sort_by: jobs_sort, page: page, per_page: per_page, fuzzy: fuzzy) }
 
   let(:form_hash) do
     {
@@ -17,6 +17,7 @@ RSpec.describe Search::VacancySearch do
   let(:jobs_sort) { Search::VacancySearchSort::RELEVANCE }
   let(:per_page) { nil }
   let(:page) { 1 }
+  let(:fuzzy) { true }
   let(:filter_query) { Search::FiltersBuilder.new(form_hash).filter_query }
   let!(:location_polygon) { create(:location_polygon, name: "london") }
 
@@ -69,6 +70,30 @@ RSpec.describe Search::VacancySearch do
   end
 
   describe "performing search" do
+    describe "fuzziness" do
+      before do
+        mock_algolia_search(double(raw_answer: nil), 50, keyword, anything)
+      end
+
+      context "when enabled" do
+        let(:fuzzy) { true }
+
+        it "sets Algolia typo tolerance to true" do
+          expect(Search::Strategies::Algolia).to receive(:new).with(hash_including(typo_tolerance: true)).and_call_original
+          subject.vacancies
+        end
+      end
+
+      context "when disabled" do
+        let(:fuzzy) { false }
+
+        it "sets Algolia typo tolerance to false" do
+          expect(Search::Strategies::Algolia).to receive(:new).with(hash_including(typo_tolerance: false)).and_call_original
+          subject.vacancies
+        end
+      end
+    end
+
     context "when there is any search criteria" do
       context "when location matches a location polygon" do
         let(:location) { location_polygon.name }
@@ -79,6 +104,7 @@ RSpec.describe Search::VacancySearch do
             filters: filter_query,
             per_page: 10,
             page: page,
+            typo_tolerance: true,
           }
         end
 
@@ -101,6 +127,7 @@ RSpec.describe Search::VacancySearch do
             filters: filter_query,
             per_page: 10,
             page: page,
+            typo_tolerance: true,
           }
         end
 
@@ -137,6 +164,7 @@ RSpec.describe Search::VacancySearch do
             filters: filter_query,
             hitsPerPage: 10,
             page: page,
+            typoTolerance: true,
           }
         end
 
@@ -159,6 +187,7 @@ RSpec.describe Search::VacancySearch do
             filters: filter_query,
             per_page: 10,
             page: page,
+            typo_tolerance: true,
           }
         end
 
@@ -180,6 +209,7 @@ RSpec.describe Search::VacancySearch do
           filters: filter_query,
           per_page: 10,
           page: page,
+          typo_tolerance: true,
         }
       end
 
@@ -193,6 +223,7 @@ RSpec.describe Search::VacancySearch do
             filters: filter_query,
             hitsPerPage: 10,
             page: page,
+            typoTolerance: true,
           }
         end
 

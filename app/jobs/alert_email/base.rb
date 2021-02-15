@@ -13,6 +13,6 @@ class AlertEmail::Base < ApplicationJob
   end
 
   def vacancies_for_subscription(subscription)
-    subscription.vacancies_for_range(from_date, Date.current).limit(Search::AlertVacancySearch::MAXIMUM_SUBSCRIPTION_RESULTS)
+    subscription.vacancies_for_range(from_date, Date.current)
   end
 end
