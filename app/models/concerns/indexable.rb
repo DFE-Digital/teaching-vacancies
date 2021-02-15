@@ -1,7 +1,7 @@
 module Indexable
   extend ActiveSupport::Concern
 
-  INDEX_NAME = [Rails.env.test? ? nil : ENV.fetch("ALGOLIA_INDEX_PREFIX", nil), DOMAIN, Vacancy].compact.join("-").freeze
+  INDEX_NAME = [Rails.configuration.algolia_index_prefix, DOMAIN, Vacancy].compact.join("-").freeze
 
   included do
     include AlgoliaSearch

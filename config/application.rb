@@ -67,5 +67,7 @@ module TeacherVacancyService
     end
 
     config.ab_tests = config_for(:ab_tests)
+
+    config.algolia_index_prefix = ENV.fetch("ALGOLIA_INDEX_PREFIX", nil)
   end
 end
