@@ -2,15 +2,24 @@
 set -eu
 
 BUCKET=530003481352-tv-db-backups
-DATE=$(date +'%F')
-FILENAME='sanitised-backup.sql'
-S3KEY=$(aws s3api list-objects-v2 --bucket "${BUCKET}" --prefix "${DATE}-sanitised" --output text --query 'Contents[].{Key: Key}')
+if [[ -z "${BACKUP_TYPE}" ]]; then
+  echo "BACKUP_TYPE environment variable not set"
+  exit 1
+fi
+if [[ -z "${BACKUP_FILENAME}" ]]; then
+  DATE=$(date +'%F')
+  PREFIX="${BACKUP_TYPE}/${DATE}"
+else
+  PREFIX="${BACKUP_TYPE}/${BACKUP_FILENAME}"
+fi
+
+S3KEY=$(aws s3api list-objects-v2 --bucket "${BUCKET}" --prefix "${PREFIX}" --output text --query 'reverse(sort_by(Contents,&LastModified))[:1].[Key]')
 
 if [[ "${S3KEY}" = "None" ]]; then
-  echo "There are no files found matching the prefix ${DATE} in bucket ${BUCKET}"
+  echo "There are no files found matching the prefix ${PREFIX} in bucket ${BUCKET}"
   exit 1
 else
   echo "File ${S3KEY} found in bucket ${BUCKET}. Downloading"
-  aws s3 cp "s3://${BUCKET}/${S3KEY}" "${FILENAME}.gz"
-  gunzip "${FILENAME}.gz"
+  aws s3 cp "s3://${BUCKET}/${S3KEY}" "${BACKUP_TYPE}.sql.gz"
+  gunzip "${BACKUP_TYPE}.sql.gz"
 fi

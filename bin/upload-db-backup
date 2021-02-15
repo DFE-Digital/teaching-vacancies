@@ -2,13 +2,18 @@
 set -eu
 
 BUCKET=530003481352-tv-db-backups
-DATE=$(date +'%F')
-
+TIMESTAMP=$(date +'%F-%H-%M-%S')
+if [[ -z "${BACKUP_TYPE}" ]]; then
+  echo "BACKUP_TYPE environment variable not set"
+  exit 1
+else
+  FILENAME="${BACKUP_TYPE}.sql"
+fi
 if [[ ! -f "${FILENAME}" ]]; then
-    echo "${FILENAME} does not exist."
-    exit 1
+  echo "${FILENAME} does not exist."
+  exit 1
 else
     # Use the --keep option as we may use the file to restore to a temporary database
-    gzip --keep "$FILENAME"
-    aws s3 cp "${FILENAME}.gz" "s3://${BUCKET}/${DATE}-${FILENAME}.gz"
+    gzip --keep "${BACKUP_TYPE}.sql"
+    aws s3 cp "${BACKUP_TYPE}.sql.gz" "s3://${BUCKET}/${BACKUP_TYPE}/${TIMESTAMP}-${FILENAME}.gz"
 fi

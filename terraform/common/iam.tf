@@ -137,7 +137,7 @@ resource "aws_iam_user_policy_attachment" "cloudfront" {
 
 # DB backups in S3
 
-data "aws_iam_policy_document" "db_backups_in_s3" {
+data "aws_iam_policy_document" "db_backups_in_s3_fullaccess" {
   statement {
     actions = [
       "s3:GetBucketAcl",
@@ -155,12 +155,34 @@ data "aws_iam_policy_document" "db_backups_in_s3" {
   }
 }
 
-resource "aws_iam_policy" "db_backups_in_s3" {
-  name   = "db_backups_in_s3"
-  policy = data.aws_iam_policy_document.db_backups_in_s3.json
+resource "aws_iam_policy" "db_backups_in_s3_fullaccess" {
+  name   = "db_backups_in_s3_fullaccess"
+  policy = data.aws_iam_policy_document.db_backups_in_s3_fullaccess.json
 }
 
-resource "aws_iam_user_policy_attachment" "db_backups_in_s3" {
+resource "aws_iam_user_policy_attachment" "db_backups_in_s3_fullaccess" {
   user       = aws_iam_user.deploy.name
-  policy_arn = aws_iam_policy.db_backups_in_s3.arn
+  policy_arn = aws_iam_policy.db_backups_in_s3_fullaccess.arn
+}
+
+data "aws_iam_policy_document" "deny_sensitive_data_in_s3" {
+  statement {
+    actions = [
+      "s3:GetObject"
+    ]
+    effect = "Deny"
+    resources = [
+      "arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/backups/*"
+    ]
+  }
+}
+
+resource "aws_iam_policy" "deny_sensitive_data_in_s3" {
+  name   = "deny_sensitive_data_in_s3"
+  policy = data.aws_iam_policy_document.deny_sensitive_data_in_s3.json
+}
+
+resource "aws_iam_role_policy_attachment" "deny_sensitive_data_in_s3" {
+  role       = aws_iam_role.readonly.name
+  policy_arn = aws_iam_policy.deny_sensitive_data_in_s3.arn
 }

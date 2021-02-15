@@ -4,7 +4,17 @@ resource "aws_s3_bucket" "db_backups" {
   bucket = "${data.aws_caller_identity.current.account_id}-tv-db-backups"
 
   lifecycle_rule {
-    id      = "backups"
+    id      = "full"
+    prefix  = "full"
+    enabled = true
+
+    expiration {
+      days = 7
+    }
+  }
+  lifecycle_rule {
+    id      = "sanitised"
+    prefix  = "sanitised"
     enabled = true
 
     expiration {

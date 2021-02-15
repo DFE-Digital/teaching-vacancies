@@ -49,19 +49,19 @@ jobs:
     - name: Upload backup to S3
       run: bin/upload-db-backup
       env:
-        FILENAME: backup.sql
+        BACKUP_TYPE: full
 
     - name: Sanitise the Database backup
       run: |
         echo "::group::Restore backup to intermediate database"
-        createdb ${DATABASE_NAME} && psql -f backup.sql -d ${DATABASE_NAME}
+        createdb ${DATABASE_NAME} && psql -f full.sql -d ${DATABASE_NAME}
         echo "::endgroup::"
         echo "::group::Sanitise data"
         psql -d ${DATABASE_NAME} -f db/scripts/sanitise.sql
         echo "::endgroup::"
 
         echo "::group::Backup Sanitised Database"
-        pg_dump --encoding utf8 --clean --no-owner --if-exists -d ${DATABASE_NAME} -f sanitised-backup.sql
+        pg_dump --encoding utf8 --clean --no-owner --if-exists -d ${DATABASE_NAME} -f sanitised.sql
         echo "::endgroup::"
       env:
         DATABASE_NAME: teaching-vacancies
@@ -75,12 +75,12 @@ jobs:
       run: bin/restore-db
       env:
         CF_DESTINATION_ENVIRONMENT: staging
-        FILENAME: sanitised-backup.sql
+        BACKUP_TYPE: sanitised
 
     - name: Upload sanitised backup to S3
       run: bin/upload-db-backup
       env:
-        FILENAME: sanitised-backup.sql
+        BACKUP_TYPE: sanitised
 
     - name: Send success message to twd_tv_dev channel
       if: success()
