@@ -19,7 +19,7 @@ RSpec.describe Search::RadiusSuggestionsBuilder do
     before do
       search_hits.zip(wider_radii).each do |search_hits_count, radius_option|
         mock_algolia_search(
-          double("vacancies"), search_hits_count, "maths",
+          double("vacancies", none?: false), search_hits_count, "maths",
           arguments_for_algolia.merge(aroundRadius: convert_miles_to_metres(radius_option))
         )
       end

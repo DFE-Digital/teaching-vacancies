@@ -27,7 +27,7 @@ RSpec.describe Search::BufferSuggestionsBuilder do
         allow(LocationPolygon).to receive_message_chain(:with_name, :buffers).and_return(buffer_hash)
         search_hits.zip(all_buffer_coordinates).each do |search_hits_count, buffered_polygons|
           mock_algolia_search(
-            double("vacancies"), search_hits_count, nil,
+            double("vacancies", none?: false), search_hits_count, nil,
             arguments_for_algolia.merge(insidePolygon: buffered_polygons)
           )
         end
@@ -72,7 +72,7 @@ RSpec.describe Search::BufferSuggestionsBuilder do
           buffer_coordinates_for_all_districts = []
           districts.length.times { buffered_polygons.each { |polygon| buffer_coordinates_for_all_districts.push(polygon) } }
           mock_algolia_search(
-            double("vacancies"), search_hits_count, nil,
+            double("vacancies", none?: false), search_hits_count, nil,
             arguments_for_algolia.merge(insidePolygon: buffer_coordinates_for_all_districts)
           )
         end
