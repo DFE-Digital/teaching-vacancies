@@ -15,11 +15,11 @@ class Search::Strategies::Algolia
     @vacancies ||= Vacancy.includes(organisation_vacancies: :organisation).search(@keyword, search_arguments)
   rescue Algolia::AlgoliaProtocolError => e
     Rollbar.error("Algolia search error", details: e, search_arguments: search_arguments)
-    @vacancies = nil
+    @vacancies = Vacancy.none
   end
 
   def total_count
-    return 0 unless vacancies
+    return 0 if vacancies.none?
 
     vacancies.raw_answer["nbHits"]
   end

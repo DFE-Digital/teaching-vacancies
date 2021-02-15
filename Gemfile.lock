@@ -529,6 +529,7 @@ GEM
     validate_url (1.0.13)
       activemodel (>= 3.0.0)
       public_suffix
+    vcr (6.0.0)
     view_component (2.24.0)
       activesupport (>= 5.0.0, < 7.0)
     warden (1.2.9)
@@ -638,6 +639,7 @@ DEPENDENCIES
   spring-watcher-listen
   tzinfo-data
   validate_url
+  vcr
   view_component
   web-console
   webmock

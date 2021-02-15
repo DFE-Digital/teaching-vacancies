@@ -51,7 +51,7 @@ trust_one = FactoryBot.create(:trust,
                               town: "Farnham",
                               county: "Not recorded",
                               postcode: "GU9 8UG",
-                              geolocation: "(51.2023732521965,0.814476304733643)")
+                              geolocation: "(51.2023732521965,-0.814476304733643)")
 
 local_authority_one = FactoryBot.create(:local_authority,
                                         name: "Southampton",
@@ -76,6 +76,15 @@ FactoryBot.create(:vacancy,
                   working_patterns: %w[part_time],
                   salary: "£35,000",
                   organisation_vacancies_attributes: [{ organisation: school_two }])
+
+FactoryBot.create(:vacancy,
+                  id: "7bfadb84-cf30-4121-88bd-a9f958440cc9",
+                  job_title: "Maths Teacher 2",
+                  subjects: %w[Maths],
+                  working_patterns: %w[full_time],
+                  salary: "£35,000",
+                  expires_on: Faker::Time.forward(days: 7),
+                  organisation_vacancies_attributes: [{ organisation: school_one }])
 
 FactoryBot.create(:vacancy,
                   id: "9910d184-5686-4ffc-9322-69aa150c19d3",

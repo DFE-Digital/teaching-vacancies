@@ -48,6 +48,9 @@ Rails.application.configure do
   config.cache_store = :null_store
 
   config.middleware.use RackSessionAccess::Middleware
+
+  # Algolia index prefix must be nil in order for VCR system specs to run
+  config.algolia_index_prefix = nil
 end
 
 # Avoid OmniAuth output in tests:

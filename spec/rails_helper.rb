@@ -7,7 +7,6 @@ require File.expand_path("../config/environment", __dir__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
-require "algolia/webmock"
 require "factory_bot_rails"
 require "geocoder"
 require "rack_session_access/capybara"
@@ -25,7 +24,6 @@ Geocoder.configure(lookup: :test)
 Geocoder::Lookup::Test.set_default_stub([{ coordinates: Geocoder::DEFAULT_STUB_COORDINATES }])
 
 Capybara.server = :puma, { Silent: true, Threads: "0:1" }
-WebMock.disable_net_connect! allow: %w[localhost 127.0.0.1]
 
 Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
 Dir[Rails.root.join("spec/page_objects/**/*.rb")].sort.each { |f| require f }
@@ -66,7 +64,6 @@ RSpec.configure do |config|
 
   config.before do
     allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(false)
-    Algolia::WebMock.mock!
     allow(Redis).to receive(:new).and_return(MockRedis.new)
     ActiveJob::Base.queue_adapter = :test
   end
@@ -90,6 +87,13 @@ RSpec.configure do |config|
   config.include VacancyHelpers
   config.include JobseekerHelpers
   config.include ViewComponent::TestHelpers, type: :component
+end
+
+VCR.configure do |config|
+  config.cassette_library_dir = "spec/fixtures/vcr"
+  config.hook_into :webmock
+  config.configure_rspec_metadata!
+  config.ignore_hosts "localhost", "127.0.0.1"
 end
 
 Shoulda::Matchers.configure do |config|

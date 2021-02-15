@@ -1,14 +1,14 @@
 module Indexable
   extend ActiveSupport::Concern
 
-  INDEX_NAME = [ENV["ALGOLIA_INDEX_PREFIX"], DOMAIN, Vacancy].compact.join("-").freeze
+  INDEX_NAME = [Rails.configuration.algolia_index_prefix, DOMAIN, Vacancy].compact.join("-").freeze
 
   included do
     include AlgoliaSearch
 
     scope :unindexed, (-> { live.where(initially_indexed: false) })
 
-    algoliasearch index_name: INDEX_NAME, auto_index: true, auto_remove: true, if: :listed? do
+    algoliasearch index_name: INDEX_NAME, auto_index: !Rails.env.test?, auto_remove: !Rails.env.test?, if: :listed? do
       attributes :education_phases, :job_roles, :job_title, :parent_organisation_name, :salary, :subjects, :working_patterns, :_geoloc
 
       attribute :expires_at do

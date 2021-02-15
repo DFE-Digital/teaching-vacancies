@@ -25,7 +25,7 @@ RSpec.describe Search::VacancySearch do
     let(:page) { 3 }
 
     before do
-      mock_algolia_search(double(raw_answer: nil), 50, keyword, anything)
+      mock_algolia_search(double(none?: false), 50, keyword, anything)
     end
 
     it "returns the expected bounds" do
@@ -37,7 +37,7 @@ RSpec.describe Search::VacancySearch do
 
     context "when out of bounds" do
       before do
-        mock_algolia_search(double(raw_answer: nil), 20, keyword, anything)
+        mock_algolia_search(double(none?: false), 20, keyword, anything)
       end
 
       it "returns the expected bounds" do

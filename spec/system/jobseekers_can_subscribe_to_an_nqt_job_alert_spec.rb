@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "NQT job alerts", recaptcha: true do
+RSpec.describe "NQT job alerts", recaptcha: true, vcr: { cassette_name: "algoliasearch" } do
   before do
     visit nqt_job_alerts_path
   end

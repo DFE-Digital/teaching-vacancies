@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Searching on the home page" do
+RSpec.describe "Searching on the home page", vcr: { cassette_name: "algoliasearch" } do
   let(:home_page) { PageObjects::Home.new }
   let(:jobs_page) { PageObjects::Vacancy::Index.new }
 
