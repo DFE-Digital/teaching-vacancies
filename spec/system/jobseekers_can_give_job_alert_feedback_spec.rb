@@ -50,11 +50,13 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
       it "triggers a RequestEvent of type 'feedback_provided'" do
         expect { follow_the_link_in_the_job_alert_email }
           .to have_triggered_event(:feedback_provided)
-          .with_data(anonymised_subscription_id: anything,
-                     feedback_type: "job_alert",
-                     job_alert_vacancy_ids: job_alert_vacancy_ids,
-                     relevant_to_user: relevant_to_user.to_s,
-                     search_criteria: json_including(subscription.search_criteria))
+          .with_data(
+            feedback_type: "job_alert",
+            job_alert_vacancy_ids: job_alert_vacancy_ids,
+            relevant_to_user: relevant_to_user.to_s,
+            search_criteria: json_including(subscription.search_criteria),
+            subscription_identifier: anything,
+          )
       end
     end
 
@@ -80,11 +82,13 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
       it "triggers a RequestEvent of type 'feedback_provided'" do
         expect { follow_the_link_in_the_job_alert_email }
           .to have_triggered_event(:feedback_provided)
-                .with_data(anonymised_subscription_id: anything,
-                           feedback_type: "job_alert",
-                           job_alert_vacancy_ids: job_alert_vacancy_ids,
-                           relevant_to_user: relevant_to_user.to_s,
-                           search_criteria: json_including(subscription.search_criteria))
+                .with_data(
+                  feedback_type: "job_alert",
+                  job_alert_vacancy_ids: job_alert_vacancy_ids,
+                  relevant_to_user: relevant_to_user.to_s,
+                  search_criteria: json_including(subscription.search_criteria),
+                  subscription_identifier: anything,
+                )
       end
     end
 
@@ -106,11 +110,13 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
       it "triggers a RequestEvent of type 'feedback_provided'" do
         expect { click_button I18n.t("buttons.submit") }
           .to have_triggered_event(:feedback_provided)
-                .with_data(anonymised_subscription_id: anything,
-                           comment: comment,
-                           feedback_type: "job_alert",
-                           recaptcha_score: 0.9,
-                           search_criteria: json_including(subscription.search_criteria))
+                .with_data(
+                  comment: comment,
+                  feedback_type: "job_alert",
+                  recaptcha_score: 0.9,
+                  search_criteria: json_including(subscription.search_criteria),
+                  subscription_identifier: anything,
+                )
       end
 
       context "when recaptcha is invalid" do

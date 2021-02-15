@@ -10,8 +10,8 @@ namespace :consolidate_feedback_tables do
       feedback_data = feedback.attributes.map.each { |key, value|
         next if value.blank? || %w[id updated_at].include?(key) # updated_at will be the time this task is run
 
-        if FeedbackEventConcerns::ANONYMISE_THESE_PARAMS.include?(key)
-          ["anonymised_#{key}", StringAnonymiser.new(value)]
+        if FeedbackEventConcerns::ANONYMISED_ATTRIBUTES.include?(key.to_sym)
+          [attributes[ANONYMISED_ATTRIBUTES[key.to_sym]], StringAnonymiser.new(value)]
         else
           [key, value]
         end

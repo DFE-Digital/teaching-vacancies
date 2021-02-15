@@ -38,7 +38,7 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
                    feedback_type: "unsubscribe",
                    other_unsubscribe_reason_comment: "Spam",
                    search_criteria: json_including(subscription.search_criteria),
-                   anonymised_subscription_id: anything,
+                   subscription_identifier: anything,
                    unsubscribe_reason: "other_reason")
 
       click_on I18n.t("jobseekers.unsubscribe_feedbacks.confirmation.new_search_link")

@@ -1,14 +1,19 @@
 module FeedbackEventConcerns
   extend ActiveSupport::Concern
 
-  ANONYMISE_THESE_PARAMS = %w[email jobseeker_id publisher_id subscription_id].freeze
+  ANONYMISED_ATTRIBUTES = {
+    email: "email_identifier",
+    jobseeker_id: "jobseeker_identifier",
+    publisher_id: "publisher_identifier",
+    subscription_id: "subscription_identifier",
+  }.freeze
 
   def trigger_feedback_provided_event
-    feedback_data = feedback_attributes.to_h.each_with_object({}) do |(key, value), params|
-      if ANONYMISE_THESE_PARAMS.include?(key.to_s)
-        params["anonymised_#{key}"] = StringAnonymiser.new(value)
+    feedback_data = feedback_attributes.to_h.each_with_object({}) do |(key, value), attributes|
+      if ANONYMISED_ATTRIBUTES.include?(key.to_sym)
+        attributes[ANONYMISED_ATTRIBUTES[key.to_sym]] = StringAnonymiser.new(value)
       else
-        params[key] = value
+        attributes[key] = value
       end
     end
     feedback_data[:recaptcha_score] = recaptcha_reply["score"] unless recaptcha_reply&.dig("score").blank?
