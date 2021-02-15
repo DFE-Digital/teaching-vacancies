@@ -74,14 +74,5 @@ RSpec.describe SendDailyAlertEmailJob, type: :job do
       expect(subscription).to receive(:vacancies_for_range).with(Time.zone.yesterday, Date.current) { Vacancy.none }
       job.vacancies_for_subscription(subscription)
     end
-
-    it "limits the number of vacancies" do
-      relation = Vacancy.none
-
-      allow(subscription).to receive(:vacancies_for_range) { relation }
-      expect(relation).to receive(:limit).with(500)
-
-      job.vacancies_for_subscription(subscription)
-    end
   end
 end

@@ -6,15 +6,16 @@ class Search::VacancySearch
   def_delegators :search_strategy, :vacancies, :total_count
   def_delegators :location_search, :point_coordinates
 
-  attr_reader :search_criteria, :keyword, :sort_by, :page, :per_page
+  attr_reader :search_criteria, :keyword, :sort_by, :page, :per_page, :fuzzy
 
-  def initialize(search_criteria, sort_by: nil, page: nil, per_page: nil)
+  def initialize(search_criteria, sort_by: nil, page: nil, per_page: nil, fuzzy: true)
     @search_criteria = search_criteria
     @keyword = search_criteria[:keyword]
 
     @sort_by = sort_by || Search::VacancySearchSort::RELEVANCE
     @per_page = (per_page || DEFAULT_HITS_PER_PAGE).to_i
     @page = (page || DEFAULT_PAGE).to_i
+    @fuzzy = fuzzy
   end
 
   def active_criteria
@@ -76,6 +77,7 @@ class Search::VacancySearch
       replica: sort_by.algolia_replica,
       per_page: per_page,
       page: page,
+      typo_tolerance: fuzzy,
     }.compact
   end
 end
