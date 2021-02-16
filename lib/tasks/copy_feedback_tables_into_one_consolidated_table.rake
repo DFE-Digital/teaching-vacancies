@@ -4,14 +4,18 @@ namespace :consolidate_feedback_tables do
   desc "Copy data from old feedback tables into one table \
         and send old feedback data to BigQuery as Events"
   task consolidate_feedback_tables: :environment do
+    def anonymised_attributes
+      FeedbackEventConcerns::ANONYMISED_ATTRIBUTES
+    end
+
     def trigger_event(feedback)
-      # Based on ApplicationController#trigger_feedback_provided_event created in https://github.com/DFE-Digital/teaching-vacancies/pull/2772
+      # Based on FeedbackEventConcerns#trigger_feedback_provided_event
 
       feedback_data = feedback.attributes.map.each { |key, value|
         next if value.blank? || %w[id updated_at].include?(key) # updated_at will be the time this task is run
 
-        if FeedbackEventConcerns::ANONYMISED_ATTRIBUTES.include?(key.to_sym)
-          [attributes[ANONYMISED_ATTRIBUTES[key.to_sym]], StringAnonymiser.new(value)]
+        if anonymised_attributes.include?(key.to_sym)
+          [anonymised_attributes[key.to_sym], StringAnonymiser.new(value)]
         else
           [key, value]
         end
