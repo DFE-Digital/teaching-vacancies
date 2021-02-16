@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe RemoveInvalidSubscriptions do
-  let(:subject) { described_class.new }
+  subject { described_class.new }
 
   describe "#run!" do
     let(:notify_api_response) do

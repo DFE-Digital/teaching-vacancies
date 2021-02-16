@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe ImportSchoolData do
-  let(:subject) { described_class.new }
+  subject { described_class.new }
 
   describe "#save_csv_file" do
     let(:csv_url) { "https://csv_endpoint.csv/magic_endpoint/test.csv" }

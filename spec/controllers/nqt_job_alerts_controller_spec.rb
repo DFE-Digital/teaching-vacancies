@@ -11,7 +11,7 @@ RSpec.describe NqtJobAlertsController, type: :controller, recaptcha: true do
     let(:params) { { jobseekers_nqt_job_alerts_form: form_inputs } }
     let(:search_criteria) { { keyword: "nqt #{keywords}", location: location, radius: 10 } }
     let(:subscription) { Subscription.last }
-    let(:subject) { post :create, params: params }
+    subject { post :create, params: params }
 
     it "calls SubscriptionMailer" do
       expect(SubscriptionMailer).to receive_message_chain(:confirmation, :deliver_later)

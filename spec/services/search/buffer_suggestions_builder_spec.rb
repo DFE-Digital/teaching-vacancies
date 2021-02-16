@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Search::BufferSuggestionsBuilder do
-  let(:subject) { described_class.new(location, search_params) }
+  subject { described_class.new(location, search_params) }
 
   describe "#get_buffers_suggestions" do
     let(:search_params) do
