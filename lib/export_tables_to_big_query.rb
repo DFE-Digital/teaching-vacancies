@@ -51,6 +51,7 @@ class ExportTablesToBigQuery
 
   EXCLUDE_TABLES = %w[
     activities
+    alert_runs
     audit_data
     ar_internal_metadata
     feedbacks
