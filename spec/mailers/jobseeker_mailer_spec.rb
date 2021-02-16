@@ -31,7 +31,7 @@ RSpec.describe JobseekerMailer, type: :mailer do
         expect(mail.body.encoded).to include(jobseeker_confirmation_path(confirmation_token: token))
       end
 
-      it "triggers a `confirmation_instructions` email event" do
+      it "triggers a `jobseeker_confirmation_instructions` email event" do
         expect { mail.deliver_now }
           .to have_triggered_event(:jobseeker_confirmation_instructions)
           .with_base_data(expected_base_data)
@@ -42,14 +42,14 @@ RSpec.describe JobseekerMailer, type: :mailer do
     context "when the jobseeker is not pending reconfirmation" do
       before { allow(jobseeker).to receive(:pending_reconfirmation?).and_return(false) }
 
-      it "sends a `confirmation_instructions` email" do
+      it "sends a `jobseeker_confirmation_instructions` email" do
         expect(mail.subject).to eq(I18n.t("jobseeker_mailer.confirmation_instructions.subject"))
         expect(mail.to).to eq(["test@email.com"])
         expect(mail.body.encoded).to include(I18n.t("jobseeker_mailer.confirmation_instructions.heading"))
         expect(mail.body.encoded).to include(jobseeker_confirmation_path(confirmation_token: token))
       end
 
-      it "triggers a `confirmation_instructions` email event" do
+      it "triggers a `jobseeker_confirmation_instructions` email event" do
         expect { mail.deliver_now }
           .to have_triggered_event(:jobseeker_confirmation_instructions)
           .with_base_data(expected_base_data)
@@ -61,13 +61,13 @@ RSpec.describe JobseekerMailer, type: :mailer do
     let(:mail) { described_class.email_changed(jobseeker) }
     let(:notify_template) { NOTIFY_JOBSEEKER_EMAIL_CHANGED_TEMPLATE }
 
-    it "sends a `email_changed` email" do
+    it "sends a `jobseeker_email_changed` email" do
       expect(mail.subject).to eq(I18n.t("jobseeker_mailer.email_changed.subject"))
       expect(mail.to).to eq(["test@email.com"])
       expect(mail.body.encoded).to include(I18n.t("jobseeker_mailer.email_changed.heading"))
     end
 
-    it "triggers a `email_changed` email event" do
+    it "triggers a `jobseeker_email_changed` email event" do
       expect { mail.deliver_now }
         .to have_triggered_event(:jobseeker_email_changed)
         .with_base_data(expected_base_data)
@@ -78,14 +78,14 @@ RSpec.describe JobseekerMailer, type: :mailer do
     let(:mail) { described_class.reset_password_instructions(jobseeker, token) }
     let(:notify_template) { NOTIFY_JOBSEEKER_RESET_PASSWORD_TEMPLATE }
 
-    it "sends a `reset_password_instructions` email" do
+    it "sends a `jobseeker_reset_password_instructions` email" do
       expect(mail.subject).to eq(I18n.t("jobseeker_mailer.reset_password_instructions.subject"))
       expect(mail.to).to eq(["test@email.com"])
       expect(mail.body.encoded).to include(I18n.t("jobseeker_mailer.reset_password_instructions.heading"))
       expect(mail.body.encoded).to include(edit_jobseeker_password_path(reset_password_token: token))
     end
 
-    it "triggers a `reset_passwords_instructions` email event" do
+    it "triggers a `jobseeker_reset_passwords_instructions` email event" do
       expect { mail.deliver_now }
         .to have_triggered_event(:jobseeker_reset_password_instructions)
         .with_base_data(expected_base_data)
@@ -96,14 +96,14 @@ RSpec.describe JobseekerMailer, type: :mailer do
     let(:mail) { described_class.unlock_instructions(jobseeker, token) }
     let(:notify_template) { NOTIFY_JOBSEEKER_LOCKED_ACCOUNT_TEMPLATE }
 
-    it "sends a `unlock_instructions` email" do
+    it "sends a `jobseeker_unlock_instructions` email" do
       expect(mail.subject).to eq(I18n.t("jobseeker_mailer.unlock_instructions.subject"))
       expect(mail.to).to eq(["test@email.com"])
       expect(mail.body.encoded).to include(I18n.t("jobseeker_mailer.unlock_instructions.heading"))
       expect(mail.body.encoded).to include(jobseeker_unlock_path(unlock_token: token))
     end
 
-    it "triggers a `unlock_instructions` email event" do
+    it "triggers a `jobseeker_unlock_instructions` email event" do
       expect { mail.deliver_now }
         .to have_triggered_event(:jobseeker_unlock_instructions)
         .with_base_data(expected_base_data)
