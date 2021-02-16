@@ -60,4 +60,10 @@ class Event
            end
     time.iso8601(6)
   end
+
+  ##
+  # Personally identifiable information (PII) should be anonymised before the data is sent to BigQuery
+  def anonymise(identifier)
+    StringAnonymiser.new(identifier).to_s if identifier.present?
+  end
 end
