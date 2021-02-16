@@ -55,6 +55,13 @@ namespace :consolidate_feedback_tables do
       trigger_event(feedback)
     end
 
+    # Convert a low-double-digits number of existing Feedback records to events because
+    # many of them will have failed to export due to the BigQuery array error dealt with in this commit.
+    # Choose not to worry about very low numbers of duplicates in analytics.
+    Feedback.where(feedback_type: "job_alert").find_each(batch_size: 100) do |job_alert_feedback|
+      trigger_event(job_alert_feedback)
+    end
+
     JobAlertFeedback.find_each(batch_size: 100) do |job_alert_feedback|
       feedback = Feedback.find_or_create_by(
         feedback_type: "job_alert",

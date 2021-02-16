@@ -10,7 +10,7 @@ RSpec.describe Event do
         data: [
           { key: "foo", value: "Bar" },
           { key: "pi", value: 3.14 },
-          { key: "baz", value: [1, "string", 0.5] },
+          { key: "baz", value: [1, "string", 0.5].to_s },
           { key: "params", value: { foo: "bar" }.to_json },
         ],
       )
