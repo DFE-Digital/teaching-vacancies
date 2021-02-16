@@ -13,7 +13,6 @@ class Event
   #
   # @param [Symbol, String] event_type The type of event (e.g. `:page_visited`) to trigger
   # @param [Hash{Symbol => Object}] data An optional hash of data to include with the event
-  #   (Important: if present, values will be coerced into Strings)
   def trigger(event_type, data = {})
     data = base_data.merge(
       type: event_type,
