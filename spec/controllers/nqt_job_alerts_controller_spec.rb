@@ -29,7 +29,7 @@ RSpec.describe NqtJobAlertsController, type: :controller, recaptcha: true do
         email_identifier: anonymised_form_of("test@gmail.com"),
         frequency: "daily",
         subscription_identifier: anything,
-        recaptcha_score: anything,
+        recaptcha_score: 0.9,
         search_criteria: /^{.*}$/,
       )
     end

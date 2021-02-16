@@ -43,7 +43,7 @@ RSpec.describe SubscriptionsController, type: :controller, recaptcha: true do
         email_identifier: anonymised_form_of("foo@email.com"),
         frequency: "daily",
         subscription_identifier: anything,
-        recaptcha_score: anything,
+        recaptcha_score: 0.9,
         search_criteria: /^{.*}$/,
         origin: "/some/where",
       )

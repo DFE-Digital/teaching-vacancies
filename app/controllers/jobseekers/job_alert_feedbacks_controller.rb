@@ -40,13 +40,16 @@ class Jobseekers::JobAlertFeedbacksController < ApplicationController
     # `trigger_feedback_provided_event`, which we use to create Events, relies on feedback_attributes.
     # This method allows events to be created for either type of action. Here felt like the best place for this logic,
     # since job alert feedback is the only feedback type that has >1 action.
-    attributes = case action_name
-                 when "new"
-                   job_alert_email_link_params
-                 when "update"
-                   further_feedback_form_params
-                 end
-    attributes.merge(feedback_type: "job_alert", subscription_id: @subscription.id)
+    case action_name
+    when "new"
+      feedback_attributes_base.merge(job_alert_email_link_params)
+    when "update"
+      feedback_attributes_base.merge(further_feedback_form_params)
+    end
+  end
+
+  def feedback_attributes_base
+    { feedback_type: "job_alert", search_criteria: @subscription.search_criteria, subscription_id: @subscription.id }
   end
 
   def job_alert_email_link_params
