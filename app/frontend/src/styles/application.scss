@@ -71,6 +71,8 @@ $govuk-image-url-function: frontend-image-url;
 @import 'shared/searchable_collection_component/searchable_collection_component';
 @import 'shared/review_component/review_component';
 
+@import 'ab_test/cookies_banner_component/cookies_banner_component';
+
 body {
   .govuk-width-container {
     @include govuk-media-query($from: desktop) {
