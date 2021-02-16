@@ -28,11 +28,12 @@ RSpec.describe "Hiring staff can give vacancy publisher feedback" do
   context "The feedback page can not be accessed for a vacancy that has already received feedback" do
     let(:published_job) { create(:vacancy, :complete) }
 
-    before { published_job.organisation_vacancies.create(organisation: school) }
+    before do
+      published_job.organisation_vacancies.create(organisation: school)
+      create(:feedback, feedback_type: "vacancy_publisher", vacancy_id: published_job.id)
+    end
 
     scenario "can not be accessed for non-published vacancies" do
-      create(:vacancy_publish_feedback, vacancy: published_job)
-
       visit new_organisation_job_feedback_path(published_job.id)
 
       expect(page).to have_content(I18n.t("publishers.vacancies.vacancy_publisher_feedbacks.new.already_submitted"))
