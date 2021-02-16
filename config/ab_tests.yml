@@ -28,3 +28,9 @@ shared:
     foo: 1
     bar: 1
     baz: 1
+  2021_02_cookie_consent_test:
+    none: 1
+    default: 1
+    top: 1
+    bottom: 1
+    modal: 1

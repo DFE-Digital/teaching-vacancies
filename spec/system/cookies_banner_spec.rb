@@ -9,7 +9,7 @@ RSpec.describe "Cookies banner" do
   end
 
   scenario "displays cookies banner" do
-    within ".cookies-banner" do
+    within ".cookies-banner-component" do
       expect(page).to have_content(I18n.t("cookies_preferences.banner.heading"))
     end
   end

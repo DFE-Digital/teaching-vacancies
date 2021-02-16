@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 
   after_action :trigger_page_visited_event, unless: :request_is_healthcheck?
 
-  helper_method :cookies_preference_set?, :referred_from_jobs_path?, :utm_parameters
+  helper_method :cookies_preference_set?, :referred_from_jobs_path?, :utm_parameters, :show_test_variant, :cookie_preferences_hidden?
 
   include Publishers::AuthenticationConcerns
   include AbTestable
@@ -33,6 +33,10 @@ class ApplicationController < ActionController::Base
 
   def cookies_preference_set?
     cookies["consented-to-cookies"].present?
+  end
+
+  def cookie_preferences_hidden?
+    controller_name == "cookies_preferences" || cookies_preference_set?
   end
 
   def referred_from_jobs_path?
