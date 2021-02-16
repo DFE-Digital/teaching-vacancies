@@ -4,4 +4,4 @@
 
 # <%= t(".instructions") %>
 
-<%= notify_link(unlock_url(@jobseeker, unlock_token: @token), t(".link")) %>
+<%= notify_link(jobseeker_unlock_url(unlock_token: @token), t(".link")) %>
