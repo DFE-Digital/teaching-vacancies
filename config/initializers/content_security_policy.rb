@@ -53,7 +53,5 @@ Rails.application.config.content_security_policy_nonce_generator = ->(_) { Secur
 # Set the nonce only to `script-src` directive (because of Google Maps issue detailed above)
 Rails.application.config.content_security_policy_nonce_directives = %w[script-src]
 
-# Report CSP violations to a specified URI
-# For further information see the following documentation:
-# https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy-Report-Only
-Rails.application.config.content_security_policy_report_only = true
+# Make the CSP report only (default is `false`, commented out to make it enforce)
+# Rails.application.config.content_security_policy_report_only = true
