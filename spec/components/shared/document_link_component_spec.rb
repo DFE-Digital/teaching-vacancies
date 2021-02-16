@@ -1,14 +1,14 @@
 require "rails_helper"
 
 RSpec.describe Shared::DocumentLinkComponent, type: :component do
-  let(:document) { build_stubbed(:document, size: 100_000) }
+  let(:document) { create(:document, size: 100_000) }
 
   before do
     render_inline(described_class.new(document: document))
   end
 
   it "renders the document link" do
-    expect(rendered_component).to include("href=\"#{document.download_url}\"")
+    expect(rendered_component).to include("href=\"#{Rails.application.routes.url_helpers.document_path(document)}\"")
   end
 
   it "renders the document name" do
