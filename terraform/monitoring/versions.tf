@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">= 0.13.1"
+  required_version = "~> 0.13.1"
   required_providers {
     archive = {
       source  = "hashicorp/archive"
@@ -11,7 +11,7 @@ terraform {
     }
     cloudfoundry = {
       source  = "cloudfoundry-community/cloudfoundry"
-      version = ">= 0.13.0"
+      version = "~> 0.13.0"
     }
   }
 }
