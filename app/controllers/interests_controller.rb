@@ -1,6 +1,7 @@
 class InterestsController < ApplicationController
   def new
     audit_click unless publisher_signed_in?
+    request_event.trigger(:vacancy_get_more_info_clicked, vacancy_id: vacancy.id)
     redirect_to(vacancy.application_link)
   end
 

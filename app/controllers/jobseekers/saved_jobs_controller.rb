@@ -4,6 +4,7 @@ class Jobseekers::SavedJobsController < Jobseekers::ApplicationController
   # This action is not 'create' because we need to redirect here when an unauthenticated jobseeker attempts to save a job
   def new
     @saved_job.save
+    request_event.trigger(:vacancy_save_to_account_clicked, vacancy_id: @vacancy.id)
     redirect_to job_path(@vacancy), success: t(".success_html", link: jobseekers_saved_jobs_path)
   end
 

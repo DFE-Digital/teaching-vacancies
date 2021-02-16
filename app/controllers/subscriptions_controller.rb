@@ -1,7 +1,7 @@
 class SubscriptionsController < ApplicationController
+  before_action :track_origin_and_trigger_event, only: :new
+
   def new
-    @origin = origin_param if origin_param&.start_with?(%r{/\w})
-    session[:subscription_origin] = @origin
     @point_coordinates = params[:coordinates_present] == "true"
     @subscription_form = Jobseekers::SubscriptionForm.new(params[:search_criteria].present? ? search_criteria_params : email)
   end
@@ -74,6 +74,17 @@ class SubscriptionsController < ApplicationController
   end
 
   private
+
+  def track_origin_and_trigger_event
+    return unless origin_param&.start_with?(%r{/\w})
+
+    @origin = origin_param
+    session[:subscription_origin] = @origin
+    vacancy = Vacancy.find_by_slug(origin_param.split("/").last)
+    return unless vacancy
+
+    request_event.trigger(:vacancy_create_job_alert_clicked, vacancy_id: vacancy.id)
+  end
 
   def trigger_subscription_event(type, subscription)
     request_event.trigger(
