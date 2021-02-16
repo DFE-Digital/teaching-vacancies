@@ -1,11 +1,21 @@
 class FeedbackPromptMailer < ApplicationMailer
-  def prompt_for_feedback(email, vacancies)
+  def prompt_for_feedback(publisher, vacancies)
+    @template = NOTIFY_PROMPT_FEEDBACK_FOR_EXPIRED_VACANCIES
+    @publisher = publisher
+    @to = publisher.email
+
     @vacancies = vacancies
 
-    view_mail(
-      NOTIFY_PROMPT_FEEDBACK_FOR_EXPIRED_VACANCIES,
-      to: [email],
-      subject: "Teaching Vacancies needs your feedback on expired job listings",
-    )
+    view_mail(@template, to: @to, subject: "Teaching Vacancies needs your feedback on expired job listings")
+  end
+
+  private
+
+  def email_event
+    @email_event ||= EmailEvent.new(@template, @to, publisher: @publisher)
+  end
+
+  def email_event_prefix
+    "publisher"
   end
 end

@@ -18,7 +18,7 @@ RSpec.describe SendExpiredVacancyFeedbackEmailJob, type: :job do
       let!(:expired_vacancy) { create(:vacancy, :expired, publisher: user, expires_on: Date.current) }
 
       it "sends an email" do
-        expect(FeedbackPromptMailer).to receive(:prompt_for_feedback).with(email_of_publishers, [expired_vacancy])
+        expect(FeedbackPromptMailer).to receive(:prompt_for_feedback).with(user, [expired_vacancy])
         expect(mail).to receive(:deliver_later)
         send_expired_vacancy_feedback_emails
       end
@@ -52,7 +52,7 @@ RSpec.describe SendExpiredVacancyFeedbackEmailJob, type: :job do
 
       it "sends an email with both vacancies" do
         expect(FeedbackPromptMailer).to receive(:prompt_for_feedback).with(
-          email_of_publishers,
+          user,
           a_collection_containing_exactly(*expired_vacancies),
         )
         send_expired_vacancy_feedback_emails
@@ -86,14 +86,8 @@ RSpec.describe SendExpiredVacancyFeedbackEmailJob, type: :job do
       end
 
       it "sends one email for each hiring staff" do
-        expect(FeedbackPromptMailer).to receive(:prompt_for_feedback).with(
-          first_publisher.email,
-          [first_expired_vacancy],
-        )
-        expect(FeedbackPromptMailer).to receive(:prompt_for_feedback).with(
-          second_publisher.email,
-          [second_expired_vacancy],
-        )
+        expect(FeedbackPromptMailer).to receive(:prompt_for_feedback).with(first_publisher, [first_expired_vacancy])
+        expect(FeedbackPromptMailer).to receive(:prompt_for_feedback).with(second_publisher, [second_expired_vacancy])
         send_expired_vacancy_feedback_emails
       end
     end
