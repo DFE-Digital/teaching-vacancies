@@ -40,7 +40,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
         .with(publisher: publisher)
         .and_return(login_key)
       allow(AuthenticationFallbackMailer).to receive(:sign_in_fallback)
-        .with(login_key: login_key, email: publisher.email)
+        .with(login_key: login_key, publisher: publisher)
         .and_return(message_delivery)
     end
 
