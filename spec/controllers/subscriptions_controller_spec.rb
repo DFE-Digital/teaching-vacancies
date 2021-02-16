@@ -25,7 +25,7 @@ RSpec.describe SubscriptionsController, type: :controller, recaptcha: true do
         }.symbolize_keys,
       }
     end
-    let(:subject) { post :create, params: params }
+    subject { post :create, params: params }
     let(:created_subscription) { Subscription.last }
 
     before do
@@ -159,7 +159,7 @@ RSpec.describe SubscriptionsController, type: :controller, recaptcha: true do
         keyword: "english",
       }
     end
-    let(:subject) { put :update, params: { id: subscription.token, jobseekers_subscription_form: params } }
+    subject { put :update, params: { id: subscription.token, jobseekers_subscription_form: params } }
 
     it "updates the subscription" do
       expect { subject }.not_to(change { Subscription.count })
@@ -194,7 +194,7 @@ RSpec.describe SubscriptionsController, type: :controller, recaptcha: true do
   describe "#destroy" do
     let!(:subscription) { create(:subscription, email: "bob@dylan.com", frequency: :daily) }
 
-    let(:subject) { delete :destroy, params: { id: subscription.token } }
+    subject { delete :destroy, params: { id: subscription.token } }
 
     it "triggers a `job_alert_subscription_unsubscribed` event" do
       expect { subject }.to have_triggered_event(:job_alert_subscription_unsubscribed).with_request_data.and_data(

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Search::Strategies::Algolia do
-  let(:subject) { described_class.new(search_params) }
+  subject { described_class.new(search_params) }
 
   let(:vacancies) { double("vacancies", none?: false) }
 

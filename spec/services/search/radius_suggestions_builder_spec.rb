@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Search::RadiusSuggestionsBuilder do
-  let(:subject) { described_class.new(radius, search_params) }
+  subject { described_class.new(radius, search_params) }
 
   describe "#get_radius_suggestions" do
     let(:search_params) do

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe GeneralFeedbackForm, type: :model do
-  let(:subject) { described_class.new(params) }
+  subject { described_class.new(params) }
   let(:email) { "helpful@user.com" }
   let(:user_participation_response) { "uninterested" }
   let(:visit_purpose) { "find_teaching_job" }
