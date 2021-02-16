@@ -35,9 +35,6 @@ class Vacancy < ApplicationRecord
   belongs_to :publisher, optional: true
   belongs_to :publisher_organisation, class_name: "Organisation", optional: true
 
-  # TODO: remove when VacancyPublishFeedback class is removed
-  has_one :publish_feedback, class_name: "VacancyPublishFeedback"
-
   has_many :documents, dependent: :destroy
 
   has_many :saved_jobs, dependent: :destroy

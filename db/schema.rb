@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_10_123010) do
+ActiveRecord::Schema.define(version: 2021_02_16_154508) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -18,15 +18,6 @@ ActiveRecord::Schema.define(version: 2021_02_10_123010) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
-
-  create_table "account_feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.integer "rating"
-    t.text "suggestions"
-    t.uuid "jobseeker_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["jobseeker_id"], name: "index_account_feedbacks_on_jobseeker_id"
-  end
 
   create_table "activities", force: :cascade do |t|
     t.uuid "trackable_id"
@@ -116,30 +107,6 @@ ActiveRecord::Schema.define(version: 2021_02_10_123010) do
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
-  end
-
-  create_table "general_feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.integer "rating"
-    t.text "comment"
-    t.integer "visit_purpose"
-    t.text "visit_purpose_comment"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "email"
-    t.integer "user_participation_response"
-    t.float "recaptcha_score"
-  end
-
-  create_table "job_alert_feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.boolean "relevant_to_user"
-    t.text "comment"
-    t.jsonb "search_criteria"
-    t.uuid "vacancy_ids", array: true
-    t.uuid "subscription_id", null: false
-    t.float "recaptcha_score"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["subscription_id"], name: "index_job_alert_feedbacks_on_subscription_id"
   end
 
   create_table "job_application_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -294,16 +261,6 @@ ActiveRecord::Schema.define(version: 2021_02_10_123010) do
     t.index ["task", "date"], name: "index_transaction_auditors_on_task_and_date", unique: true
   end
 
-  create_table "unsubscribe_feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.integer "reason"
-    t.string "other_reason"
-    t.text "additional_info"
-    t.uuid "subscription_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["subscription_id"], name: "index_unsubscribe_feedbacks_on_subscription_id"
-  end
-
   create_table "vacancies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "job_title"
     t.string "slug", null: false
@@ -356,25 +313,9 @@ ActiveRecord::Schema.define(version: 2021_02_10_123010) do
     t.index ["publisher_organisation_id"], name: "index_vacancies_on_publisher_organisation_id"
   end
 
-  create_table "vacancy_publish_feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "vacancy_id"
-    t.integer "rating"
-    t.text "comment"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "publisher_id"
-    t.string "email"
-    t.integer "user_participation_response"
-    t.index ["publisher_id"], name: "index_vacancy_publish_feedbacks_on_publisher_id"
-    t.index ["vacancy_id"], name: "index_vacancy_publish_feedbacks_on_vacancy_id", unique: true
-  end
-
-  add_foreign_key "account_feedbacks", "jobseekers"
   add_foreign_key "documents", "vacancies"
   add_foreign_key "emergency_login_keys", "publishers"
-  add_foreign_key "job_alert_feedbacks", "subscriptions"
   add_foreign_key "publisher_preferences", "publishers"
-  add_foreign_key "unsubscribe_feedbacks", "subscriptions"
   add_foreign_key "vacancies", "organisations", column: "publisher_organisation_id"
   add_foreign_key "vacancies", "publishers"
 end

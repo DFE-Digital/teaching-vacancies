@@ -39,7 +39,6 @@ class Publishers::Vacancies::VacancyPublisherFeedbacksController < Publishers::V
   end
 
   def already_submitted?
-    # TODO: remove the first part of the disjunction when VacancyPublishFeedback class is removed
-    @vacancy.publish_feedback.present? || Feedback.find_by(vacancy_id: @vacancy.id)&.vacancy_publisher?
+    Feedback.find_by(vacancy_id: @vacancy.id)&.vacancy_publisher?
   end
 end
