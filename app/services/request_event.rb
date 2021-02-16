@@ -1,5 +1,3 @@
-require "digest/bubblebabble"
-
 ##
 # Represents events occurring as part of the Rails request lifecycle
 #
@@ -43,9 +41,5 @@ class RequestEvent < Event
 
   def ab_tests
     AbTests.new(session).current_variants.map { |test, variant| { test: test, variant: variant } }
-  end
-
-  def anonymise(identifier)
-    StringAnonymiser.new(identifier).to_s if identifier.present?
   end
 end
