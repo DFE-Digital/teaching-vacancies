@@ -1,0 +1,70 @@
+.cookies-banner-component {
+
+  @include govuk-responsive-padding(3, 'top');
+  @include govuk-responsive-padding(0, 'bottom');
+  z-index: 1000;
+
+  &--top {
+    background-color: govuk-colour("white");
+    position: sticky;
+    top: 0;
+    width: 100%;
+
+    &:after {
+      height: 6px;
+      background: linear-gradient(transparent, govuk-colour("mid-grey"));
+      content: '';
+      width: 100%;
+      display: block;
+    }
+  }
+
+  &--bottom {
+    background-color: govuk-colour("black");
+    position: fixed;
+    bottom: 0;
+    padding-top: 0;
+    width: 100%;
+    * {
+      color: govuk-colour("white");
+    }
+
+    .govuk-width-container {
+      padding-top: 15px;
+    }
+
+    &:before {
+      height: 6px;
+      background: linear-gradient(#b1b4b6, rgba($color: govuk-colour('black'), $alpha: 0));
+      content: '';
+      width: 100%;
+      display: block;
+    }
+  }
+
+  &--modal {
+    background-color: govuk-colour("white");
+    position: absolute;
+    width: 40em;
+    height: 12em;
+    margin: 0 auto;
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    margin-left: -20em;
+    margin-top: -8em;
+  }
+}
+
+.modal {
+  overflow: hidden;
+  .modal-container {
+    z-index: 999;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    content: '';
+    background-color: rgba($color: govuk-colour('black'), $alpha: 0.5);
+  }
+}
