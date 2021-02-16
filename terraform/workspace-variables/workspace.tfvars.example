@@ -38,12 +38,13 @@ paas_worker_app_memory              = 512
 statuscake_alerts = {
   "tvsstg" = {
     website_name  = "teaching-vacancies-staging"
-    website_url   = "https://teaching-vacancies-staging.london.cloudapps.digital/check"
-    test_type     = "HTTP"
-    check_rate    = "300"
-    contact_group = [123456]
-    trigger_rate  = "0"
-    find_string   = null
-    do_not_find   = false
+    website_url   = "https://staging.teaching-vacancies.service.gov.uk/check"
+    contact_group = [183741]
+  }
+  "stringmatch" = {
+    website_name  = "teaching-vacancies-staging"
+    website_url   = "https://staging.teaching-vacancies.service.gov.uk"
+    contact_group = [183741]
+    find_string   = "create an account"
   }
 }

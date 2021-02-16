@@ -41,30 +41,18 @@ statuscake_alerts = {
   "tvsprod" = {
     website_name  = "teaching-vacancies-production"
     website_url   = "https://teaching-vacancies.service.gov.uk/check"
-    test_type     = "HTTP"
-    check_rate    = "30"
     contact_group = [183741]
-    trigger_rate  = "0"
-    find_string   = ""
-    do_not_find   = false
   }
   "stringmatch" = {
     website_name  = "teaching-vacancies-production"
     website_url   = "https://teaching-vacancies.service.gov.uk"
-    test_type     = "HTTP"
-    check_rate    = "30"
     contact_group = [183741]
-    trigger_rate  = "0"
     find_string   = "create an account"
-    do_not_find   = false
   }
   "PaaS500String" = {
     website_name  = "teaching-vacancies-production"
     website_url   = "https://teaching-vacancies.service.gov.uk"
-    test_type     = "HTTP"
-    check_rate    = "30"
     contact_group = [183741]
-    trigger_rate  = "0"
     find_string   = "500 Internal Server Error"
     do_not_find   = true
   }
