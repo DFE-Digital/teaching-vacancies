@@ -143,10 +143,14 @@ en:
       review:
         title: Review your application
       submit:
+        notice:
+          title: Apply quicker next time
+          body: We have saved your information so you can use it to quickly apply for other jobs on Teaching Vacancies.
         panel:
           title: Your application has been submitted
           body: "We have sent an email confirmation to %{email}"
         title: Application submitted
+        next_step: What happens next
     passwords:
       check_your_email_password:
         description: We have sent you an email with instructions on how to reset your password.

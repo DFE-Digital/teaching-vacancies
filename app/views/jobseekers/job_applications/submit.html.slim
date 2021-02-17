@@ -6,3 +6,11 @@
                   body: t(".panel.body", email: current_jobseeker.email),
                   classes: ["govuk-panel--confirmation"]
 
+  .govuk-grid-column-two-thirds
+    h2.govuk-heading-l = t(".next_step")
+
+    = render Shared::NotificationComponent.new style: "notice",
+      content: { title: t(".notice.title"), body: t(".notice.body") },
+      background: true,
+      alert: "info",
+      dismiss: false

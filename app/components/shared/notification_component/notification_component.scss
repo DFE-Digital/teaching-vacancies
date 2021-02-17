@@ -30,11 +30,11 @@
     outline: $govuk-focus-width solid $govuk-focus-colour;
   }
 
-  &.icon--left .govuk-notification__body {
+  &.icon--left .govuk-notification__content {
     padding-left: govuk-spacing(5);
   }
 
-  &.icon--right .govuk-notification__body {
+  &.icon--right .govuk-notification__content {
     padding-right: govuk-spacing(5);
   }
 }

@@ -1,13 +1,14 @@
 .govuk-notification.js-dismissable *@html_attributes class=notification_classes
-  - if @dismiss
-    = govuk_link_to(t("buttons.dismiss"), "#", class: "govuk-link--no-visited-state dismiss-link js-dismissable__link")
-  - if render_title_and_body?
-    - if content[:title].present?
-      .govuk-notification__title = content[:title]
-    - if content[:body].present?
-      .govuk-notification__body == content[:body]
-  - else
-    .govuk-notification__body == content
+  .govuk-notification__content
+    - if @dismiss
+      = govuk_link_to(t("buttons.dismiss"), "#", class: "govuk-link--no-visited-state dismiss-link js-dismissable__link")
+    - if render_title_and_body?
+      - if content[:title].present?
+        .govuk-notification__title = content[:title]
+      - if content[:body].present?
+        .govuk-notification__body == content[:body]
+    - else
+      .govuk-notification__body == content
 
   - if @links.present?
     ul.govuk-list.govuk-notification__list
