@@ -183,7 +183,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
     let(:la_user_allowed?) { true }
 
     before do
-      allow(ALLOWED_LOCAL_AUTHORITIES)
+      allow(Rails.configuration.allowed_local_authorities)
         .to receive(:include?).with(organisation.local_authority_code).and_return(la_user_allowed?)
       allow(PublisherPreference).to receive(:find_by).and_return(publisher_preference)
 

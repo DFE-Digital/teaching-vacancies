@@ -136,7 +136,7 @@ class Publishers::SignIn::Dfe::SessionsController < Publishers::SignIn::BaseSess
 
   def allowed_user?
     school_urn.present? || trust_uid.present? || (local_authority_code.present? &&
-      (Rails.env.staging? || Rails.env.development? || ALLOWED_LOCAL_AUTHORITIES.include?(local_authority_code)))
+      (Rails.env.staging? || Rails.env.development? || Rails.configuration.allowed_local_authorities.include?(local_authority_code)))
   end
 
   def use_school_group_if_available
