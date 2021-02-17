@@ -46,6 +46,8 @@ RSpec.describe AlertMailer, type: :mailer do
   end
 
   context "when frequency is daily" do
+    let(:notify_template) { NOTIFY_SUBSCRIPTION_DAILY_TEMPLATE }
+
     it "sends a job alert email" do
       expect(mail.subject).to eq(I18n.t("alert_mailer.alert.subject"))
       expect(mail.to).to eq([subscription.email])
@@ -71,9 +73,47 @@ RSpec.describe AlertMailer, type: :mailer do
       expect(body).to include(I18n.t("alert_mailer.alert.feedback.reason"))
       expect(body).to include(unsubscribe_subscription_url(subscription.token, **campaign_params))
     end
+
+    context "when the subscription email matches a jobseeker account" do
+      let(:jobseeker) { create(:jobseeker, email: email) }
+      let(:expected_base_data) do
+        {
+          notify_template: notify_template,
+          email_identifier: anonymised_form_of(email),
+          user_anonymised_jobseeker_id: anonymised_form_of(jobseeker.id),
+          user_anonymised_publisher_id: nil,
+        }
+      end
+
+      it "triggers a `jobseeker_subscription_alert` email event with the anonymised jobseeker id" do
+        expect { mail.deliver_now }
+          .to have_triggered_event(:jobseeker_subscription_alert)
+          .with_base_data(expected_base_data)
+          .and_data({ subscription_identifier: anonymised_form_of(subscription.id), subscription_frequency: "daily" })
+      end
+    end
+
+    context "when the subscription email does not match a jobseeker account" do
+      let(:expected_base_data) do
+        {
+          notify_template: notify_template,
+          email_identifier: anonymised_form_of(email),
+          user_anonymised_jobseeker_id: nil,
+          user_anonymised_publisher_id: nil,
+        }
+      end
+
+      it "triggers a `jobseeker_subscription_alert` email event without the anonymised jobseeker id" do
+        expect { mail.deliver_now }
+          .to have_triggered_event(:jobseeker_subscription_alert)
+          .with_base_data(expected_base_data)
+          .and_data({ subscription_identifier: anonymised_form_of(subscription.id), subscription_frequency: "daily" })
+      end
+    end
   end
 
   context "when frequency is weekly" do
+    let(:notify_template) { NOTIFY_SUBSCRIPTION_WEEKLY_TEMPLATE }
     let(:frequency) { :weekly }
 
     it "sends a job alert email" do
@@ -100,6 +140,43 @@ RSpec.describe AlertMailer, type: :mailer do
       expect(body).to include(irrelevant_job_alert_feedback_url)
       expect(body).to include(I18n.t("alert_mailer.alert.feedback.reason"))
       expect(body).to include(unsubscribe_subscription_url(subscription.token, **campaign_params))
+    end
+
+    context "when the subscription email matches a jobseeker account" do
+      let(:jobseeker) { create(:jobseeker, email: email) }
+      let(:expected_base_data) do
+        {
+          notify_template: notify_template,
+          email_identifier: anonymised_form_of(email),
+          user_anonymised_jobseeker_id: anonymised_form_of(jobseeker.id),
+          user_anonymised_publisher_id: nil,
+        }
+      end
+
+      it "triggers a `jobseeker_subscription_alert` email event with the anonymised jobseeker id" do
+        expect { mail.deliver_now }
+          .to have_triggered_event(:jobseeker_subscription_alert)
+          .with_base_data(expected_base_data)
+          .and_data({ subscription_identifier: anonymised_form_of(subscription.id), subscription_frequency: "weekly" })
+      end
+    end
+
+    context "when the subscription email does not match a jobseeker account" do
+      let(:expected_base_data) do
+        {
+          notify_template: notify_template,
+          email_identifier: anonymised_form_of(email),
+          user_anonymised_jobseeker_id: nil,
+          user_anonymised_publisher_id: nil,
+        }
+      end
+
+      it "triggers a `jobseeker_subscription_alert` email event without the anonymised jobseeker id" do
+        expect { mail.deliver_now }
+          .to have_triggered_event(:jobseeker_subscription_alert)
+          .with_base_data(expected_base_data)
+          .and_data({ subscription_identifier: anonymised_form_of(subscription.id), subscription_frequency: "weekly" })
+      end
     end
   end
 

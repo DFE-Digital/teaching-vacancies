@@ -4,7 +4,7 @@ class SendExpiredVacancyFeedbackEmailJob < ApplicationJob
   def perform
     expired_vacancies.group_by(&:publisher).each do |publisher, publisher_vacancies|
       unless publisher.email.nil?
-        FeedbackPromptMailer.prompt_for_feedback(publisher.email, publisher_vacancies).deliver_later
+        FeedbackPromptMailer.prompt_for_feedback(publisher, publisher_vacancies).deliver_later
         Rails.logger.info("Sidekiq: Sending feedback prompt emails for #{publisher_vacancies.count} vacancies")
       end
     end

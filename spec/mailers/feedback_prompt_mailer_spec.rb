@@ -6,19 +6,35 @@ RSpec.describe FeedbackPromptMailer, type: :mailer do
   let(:body) { mail.body.raw_source }
 
   describe "prompt_for_feedback" do
-    let(:email_address) { "dummy@dum.com" }
-    let(:mail) { described_class.prompt_for_feedback(email_address, vacancies) }
+    let(:email) { "dummy@dum.com" }
+    let(:publisher) { create(:publisher, email: email) }
+    let(:mail) { described_class.prompt_for_feedback(publisher, vacancies) }
+    let(:notify_template) { NOTIFY_PROMPT_FEEDBACK_FOR_EXPIRED_VACANCIES }
     let(:vacancies) { create_list(:vacancy, 2, :published) }
+    let(:expected_base_data) do
+      {
+        notify_template: notify_template,
+        email_identifier: anonymised_form_of(email),
+        user_anonymised_jobseeker_id: nil,
+        user_anonymised_publisher_id: anonymised_form_of(publisher.oid),
+      }
+    end
 
     context "with two vacancies" do
       it "shows both vacancies" do
         expect(mail.subject).to eq("Teaching Vacancies needs your feedback on expired job listings")
-        expect(mail.to).to eq([email_address])
+        expect(mail.to).to eq([email])
 
         expect(body).to match(/Dear vacancy publisher/)
 
         expect(body).to match(/\* #{vacancies.first.job_title}/)
         expect(body).to match(/\* #{vacancies.second.job_title}/)
+      end
+
+      it "triggers a `publisher_prompt_for_feedback` email event" do
+        expect { mail.deliver_now }
+          .to have_triggered_event(:publisher_prompt_for_feedback)
+          .with_base_data(expected_base_data)
       end
     end
   end

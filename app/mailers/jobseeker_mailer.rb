@@ -1,9 +1,6 @@
-class JobseekerMailer < Devise::Mailer
-  helper NotifyViewHelper
+class JobseekerMailer < ApplicationMailer
   include Devise::Controllers::UrlHelpers
   default template_path: "jobseeker_mailer"
-
-  after_action :trigger_email_event
 
   def confirmation_instructions(record, token, _opts = {})
     @template = NOTIFY_JOBSEEKER_CONFIRMATION_TEMPLATE
@@ -50,14 +47,16 @@ class JobseekerMailer < Devise::Mailer
     @email_event ||= EmailEvent.new(@template, @to, jobseeker: @jobseeker)
   end
 
-  def trigger_email_event
-    data = case action_name
-           when "confirmation_instructions"
-             { previous_email_identifier: StringAnonymiser.new(@jobseeker.email) }
-           else
-             {}
-           end
+  def email_event_data
+    case action_name
+    when "confirmation_instructions"
+      @jobseeker.pending_reconfirmation? ? { previous_email_identifier: StringAnonymiser.new(@jobseeker.email) } : {}
+    else
+      {}
+    end
+  end
 
-    email_event.trigger("jobseeker_#{action_name}".to_sym, data)
+  def email_event_prefix
+    "jobseeker"
   end
 end

@@ -1,9 +1,9 @@
-# <%= t(".summary.#{@subscription.frequency}", count: @vacancies.count) %>
+# <%= t(".summary.#{subscription.frequency}", count: @vacancies.count) %>
 
 ---
 
 <%- @vacancies.each do |vacancy| %>
-  <%= show_link(vacancy, @subscription) %>
+  <%= show_link(vacancy, subscription) %>
   <%= location(vacancy.parent_organisation, job_location: vacancy.job_location) %>
 
   <%= t(".salary", salary: vacancy.salary) %>
@@ -19,31 +19,31 @@
 # <%= t(".title") %>
 <%= t("subscriptions.intro") %>
 
-<%- @subscription.filtered_search_criteria.each_pair do |filter, value| %>
+<%- subscription.filtered_search_criteria.each_pair do |filter, value| %>
   <%= "- #{filter.humanize}: #{value}" %>
 <% end %>
 
-<%= [t(".alert_frequency", frequency: @subscription.frequency), t(".edit_alert", edit_link: edit_link(@subscription))].join(" ") %>
+<%= [t(".alert_frequency", frequency: subscription.frequency), t(".edit_alert", edit_link: edit_link(subscription))].join(" ") %>
 
 ---
 
 # <%= t(".feedback.heading") %>
 
-<%= notify_link(job_alert_feedback_url(true, @subscription, @vacancies), t(".feedback.relevant_link_text")) %>
-<%= notify_link(job_alert_feedback_url(false, @subscription, @vacancies), t(".feedback.irrelevant_link_text")) %>
+<%= notify_link(job_alert_feedback_url(true, subscription, @vacancies), t(".feedback.relevant_link_text")) %>
+<%= notify_link(job_alert_feedback_url(false, subscription, @vacancies), t(".feedback.irrelevant_link_text")) %>
 
 <%= t(".feedback.reason") %>
 
 ---
 
-<%- unless @jobseeker_subscription %>
+<%- unless jobseeker.present? %>
   # <%= t(".create_account.heading") %>
-  <%= t(".create_account.intro", link_to: sign_up_link(@subscription)) %>
+  <%= t(".create_account.intro", link_to: sign_up_link(subscription)) %>
 
   ---
 
 <% end %>
 
-<%= t(".footer", home_page_link: home_page_link(@subscription)) %>
+<%= t(".footer", home_page_link: home_page_link(subscription)) %>
 
-<%= t(".unsubscribe", unsubscribe_link: unsubscribe_link(@subscription)) %>
+<%= t(".unsubscribe", unsubscribe_link: unsubscribe_link(subscription)) %>
