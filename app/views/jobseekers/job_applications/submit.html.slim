@@ -2,4 +2,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = govuk_panel title: t(".title"), body: t(".panel_body", email: current_jobseeker.email)
+    = govuk_panel title: t(".panel.title"),
+                  body: t(".panel.body", email: current_jobseeker.email),
+                  classes: ["govuk-panel--confirmation"]
+

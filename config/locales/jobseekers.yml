@@ -143,8 +143,10 @@ en:
       review:
         title: Review your application
       submit:
-        panel_body: "We have sent an email confirmation to %{email}"
-        title: Your application has been submitted
+        panel:
+          title: Your application has been submitted
+          body: "We have sent an email confirmation to %{email}"
+        title: Application submitted
     passwords:
       check_your_email_password:
         description: We have sent you an email with instructions on how to reset your password.
