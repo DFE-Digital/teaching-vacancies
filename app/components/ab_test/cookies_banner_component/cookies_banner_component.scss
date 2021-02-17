@@ -51,14 +51,25 @@
   }
 
   &--modal {
+    @include govuk-media-query($until: tablet) {
+      margin-left: -40vw;
+      margin-top: -8vw;
+      width: 80vw;
+      height: auto;
+
+      form {
+        display: flex;
+      }
+    }
+
     background-color: govuk-colour("white");
-    width: 40em;
-    height: 12em;
+    width: 40vw;
+    height: 12vw;
     position: absolute;
     left: 50%;
     top: 40%;
-    margin-left: -20em;
-    margin-top: -8em;
+    margin-left: -20vw;
+    margin-top: -8vw;
   }
 }
 
