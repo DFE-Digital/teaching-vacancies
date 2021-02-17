@@ -5,10 +5,6 @@ RSpec.describe Jobseekers::JobApplication::PersonalDetailsForm, type: :model do
   it { is_expected.to validate_presence_of(:postcode) }
   it { is_expected.to validate_presence_of(:town_or_city) }
 
-  it { is_expected.to validate_presence_of(:email_address) }
-  it { is_expected.to allow_value("jacknifedjuggernaut@example.com").for(:email_address) }
-  it { is_expected.not_to allow_value("invalidemail").for(:email_address) }
-
   it { is_expected.to validate_presence_of(:first_name) }
   it { is_expected.to validate_presence_of(:last_name) }
 
