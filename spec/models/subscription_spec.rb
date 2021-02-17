@@ -116,15 +116,6 @@ RSpec.describe Subscription, type: :model do
     it "calls out to algolia search" do
       expect(subscription.vacancies_for_range(date_yesterday, date_today)).to eq(vacancies)
     end
-
-    context "when no keyword was given as part of the search" do
-      let(:subscription) { create(:subscription, frequency: :daily, search_criteria: { subject: "potions", job_title: "head of things" }) }
-      let(:algolia_search_query) { "potions head of things" }
-
-      it "performs a search with a generated keyword" do
-        expect(subscription.vacancies_for_range(date_yesterday, date_today)).to eq(vacancies)
-      end
-    end
   end
 
   describe "alert_run_today?" do

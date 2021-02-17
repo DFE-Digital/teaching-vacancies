@@ -35,14 +35,8 @@ class Subscription < ApplicationRecord
   end
 
   def vacancies_for_range(date_from, date_to)
-    criteria = search_criteria.symbolize_keys.merge(from_date: date_from, to_date: date_to, keyword: keyword)
+    criteria = search_criteria.symbolize_keys.merge(from_date: date_from, to_date: date_to)
     Search::VacancySearch.new(criteria, per_page: MAXIMUM_RESULTS_PER_RUN, fuzzy: false).vacancies
-  end
-
-  def keyword
-    # Generate a meaningful keyword for this alert if one hasn't been specified as part of the search criteria
-    search_criteria["keyword"].presence ||
-      [search_criteria["subject"], search_criteria["job_title"]].reject(&:blank?).join(" ")
   end
 
   def alert_run_today
