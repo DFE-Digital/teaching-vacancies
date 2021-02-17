@@ -20,6 +20,13 @@
     }
   }
 
+  &--gds {
+    .govuk-button {
+      margin-bottom: 0;
+      vertical-align: middle;
+    }
+  }
+
   &--bottom {
     background-color: govuk-colour("black");
     position: fixed;

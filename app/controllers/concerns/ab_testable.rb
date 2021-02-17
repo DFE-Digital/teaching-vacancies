@@ -5,6 +5,10 @@ module AbTestable
     helper_method :ab_variant_for, :current_ab_variants
   end
 
+  def current_variant?(name_of_test, variant_name)
+    ab_variant_for(name_of_test) == variant_name
+  end
+
   private
 
   def ab_variant_for(test)

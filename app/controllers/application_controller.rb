@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 
   after_action :trigger_page_visited_event, unless: :request_is_healthcheck?
 
-  helper_method :cookies_preference_set?, :referred_from_jobs_path?, :utm_parameters
+  helper_method :cookies_preference_set?, :referred_from_jobs_path?, :utm_parameters, :current_variant?
 
   include Publishers::AuthenticationConcerns
   include AbTestable
