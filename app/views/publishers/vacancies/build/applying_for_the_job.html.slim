@@ -33,9 +33,9 @@
         form_group: { classes: "optional-field" }
 
       - unless JobseekerApplicationsFeature.enabled?
-        = f.govuk_text_area :how_to_apply, label: { size: "s" }, rows: 10
+        = f.govuk_text_area :how_to_apply, label: { size: "s" }, rows: 10, form_group: { classes: "optional-field" }
 
-        = f.govuk_url_field :application_link, label: { size: "s" }
+        = f.govuk_url_field :application_link, label: { size: "s" }, form_group: { classes: "optional-field" }
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
