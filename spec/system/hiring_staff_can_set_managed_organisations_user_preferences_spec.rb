@@ -7,7 +7,8 @@ RSpec.describe "Hiring staff can set managed organisations user preferences" do
   let(:publisher_preference) { PublisherPreference.last }
 
   before do
-    allow(ALLOWED_LOCAL_AUTHORITIES).to receive(:include?).with(school_group.local_authority_code).and_return(true)
+    allow(Rails.configuration.allowed_local_authorities)
+      .to receive(:include?).with(school_group.local_authority_code).and_return(true)
 
     SchoolGroupMembership.find_or_create_by(school_id: school1.id, school_group_id: school_group.id)
     SchoolGroupMembership.find_or_create_by(school_id: school2.id, school_group_id: school_group.id)

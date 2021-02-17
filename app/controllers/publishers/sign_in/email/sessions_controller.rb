@@ -106,6 +106,6 @@ class Publishers::SignIn::Email::SessionsController < Publishers::SignIn::BaseSe
 
   def allowed_publisher?
     params[:urn].present? || params[:uid].present? || (params[:la_code].present? &&
-      (Rails.env.staging? || Rails.env.development? || ALLOWED_LOCAL_AUTHORITIES.include?(params[:la_code])))
+      (Rails.env.staging? || Rails.env.development? || Rails.configuration.allowed_local_authorities.include?(params[:la_code])))
   end
 end

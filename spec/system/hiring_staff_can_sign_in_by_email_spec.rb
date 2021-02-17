@@ -170,7 +170,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
         let(:la_publisher_allowed?) { true }
 
         before do
-          allow(ALLOWED_LOCAL_AUTHORITIES)
+          allow(Rails.configuration.allowed_local_authorities)
             .to receive(:include?).with(local_authority.local_authority_code).and_return(la_publisher_allowed?)
           allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference))
         end
