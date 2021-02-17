@@ -14,7 +14,7 @@ RSpec.describe "Documents", type: :request do
     it "triggers a `vacancy_document_downloaded` event" do
       expect { get document_path(document) }
         .to have_triggered_event(:vacancy_document_downloaded)
-        .and_data(vacancy_id: vacancy.id)
+        .and_data(vacancy_id: vacancy.id, document_id: document.id, filename: document.name)
     end
   end
 end
