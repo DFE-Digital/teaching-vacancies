@@ -20,7 +20,7 @@
     "jquery": "^3.5.0",
     "jsdom": "^16.2.2",
     "rails-ujs": "^5.2.3",
-    "rollbar": "^2.17.0"
+    "rollbar": "^2.21.0"
   },
   "devDependencies": {
     "concurrently": "^5.2.0",
