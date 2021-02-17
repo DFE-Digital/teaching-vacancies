@@ -19,6 +19,7 @@ class Event
       occurred_at: occurred_at(data),
       data: data.map { |key, value| { key: key.to_s, value: formatted_value(value) } },
     )
+    Rails.logger.info("jobseeker_reset_password_instructions email event triggered") if event_type == :jobseeker_reset_password_instructions
     SendEventToDataWarehouseJob.perform_later(TABLE_NAME, data)
   rescue StandardError => e
     Rollbar.error(e)
