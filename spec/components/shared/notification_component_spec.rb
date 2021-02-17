@@ -40,6 +40,10 @@ RSpec.describe Shared::NotificationComponent, type: :component do
 
   describe "dismiss" do
     context "when dismiss is true" do
+      it "applies correct class" do
+        expect(inline_component.css(".js-dismissible")).to_not be_blank
+      end
+
       it "renders the dismiss link" do
         expect(inline_component.css(".dismiss-link").to_html).to include(I18n.t("buttons.dismiss"))
       end
@@ -47,6 +51,10 @@ RSpec.describe Shared::NotificationComponent, type: :component do
 
     context "when dismiss is false" do
       let(:dismiss) { false }
+
+      it "applies correct class" do
+        expect(inline_component.css(".js-dismissible")).to be_blank
+      end
 
       it "does not render the dismiss link" do
         expect(rendered_component).to_not include(I18n.t("buttons.dismiss"))

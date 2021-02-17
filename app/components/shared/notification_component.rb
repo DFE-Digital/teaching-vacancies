@@ -18,6 +18,7 @@ class Shared::NotificationComponent < ViewComponent::Base
     applied_class = "govuk-notification--#{@style}"
     applied_class += " govuk-notification__background" if @background
     applied_class += " icon icon--left icon--#{@alert}" if @alert
+    applied_class += " js-dismissible" if @dismiss
     applied_class
   end
 
