@@ -143,14 +143,25 @@ en:
       review:
         title: Review your application
       submit:
+        feedback:
+          heading: Have time to share some feedback?
+          description: >-
+            Your feedback can help us improve the service to better support you as well as schools around England.
+        next_step:
+          heading: What happens next
+          school_communication: >-
+            %{organisation} will get in touch with you before or after %{deadline}. They will let you know whether you
+            have been shortlisted for an interview, or whether you have been unsuccessful.
+          shortlisted: >-
+            If you are shortlisted for an interview, %{organisation} will be in touch to let you know.
+          view_applications: View your applications
         notice:
           title: Apply quicker next time
           body: We have saved your information so you can use it to quickly apply for other jobs on Teaching Vacancies.
         panel:
           title: Your application has been submitted
-          body: "We have sent an email confirmation to %{email}"
+          body: We have sent an email confirmation to %{email}
         title: Application submitted
-        next_step: What happens next
     passwords:
       check_your_email_password:
         description: We have sent you an email with instructions on how to reset your password.

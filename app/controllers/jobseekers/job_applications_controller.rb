@@ -22,6 +22,10 @@ class Jobseekers::JobApplicationsController < Jobseekers::ApplicationController
   end
 
   def vacancy
-    @vacancy ||= Vacancy.live.find(params[:job_id])
+    @vacancy ||= if params[:job_id].present?
+                   Vacancy.live.find(params[:job_id])
+                 else
+                   job_application.vacancy
+                 end
   end
 end

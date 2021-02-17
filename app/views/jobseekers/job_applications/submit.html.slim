@@ -2,15 +2,27 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = govuk_panel title: t(".panel.title"),
-                  body: t(".panel.body", email: current_jobseeker.email),
-                  classes: ["govuk-panel--confirmation"]
+    = govuk_panel title: t(".panel.title"), body: t(".panel.body", email: current_jobseeker.email)
 
   .govuk-grid-column-two-thirds
-    h2.govuk-heading-l = t(".next_step")
+    h2.govuk-heading-l = t(".next_step.heading")
 
     = render Shared::NotificationComponent.new style: "notice",
       content: { title: t(".notice.title"), body: t(".notice.body") },
       background: true,
       alert: "info",
-      dismiss: false
+      dismiss: false,
+      html_attributes: {}
+
+    p = t(".next_step.school_communication", organisation: vacancy.parent_organisation.name, deadline: format_date(vacancy.expires_on))
+    p = t(".next_step.shortlisted", organisation: vacancy.parent_organisation.name)
+
+    - if Rails.env.development?
+      p style="color: red; font-weight: bold" = "This link doesn't point to the 'my applications' page, because that page hasn't been made yet."
+
+    = govuk_link_to t(".next_step.view_applications"), jobseeker_root_path, class: "govuk-button--secondary govuk-!-margin-bottom-3", button: true
+
+    hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
+
+    h2.govuk-heading-m = t(".feedback.heading")
+    p = t(".feedback.description")
