@@ -3,18 +3,10 @@ TRUNCATE TABLE audit_data;
 TRUNCATE TABLE emergency_login_keys;
 TRUNCATE TABLE sessions;
 
-UPDATE account_feedbacks
-       SET suggestions=NULL;
-
 UPDATE feedbacks
        SET comment=NULL,
            email=concat('anonymised-feedback-',id,'@example.org'),
            other_unsubscribe_reason_comment=NULL,
-           visit_purpose_comment=NULL;
-
-UPDATE general_feedbacks
-       SET comment=NULL,
-           email=concat('anonymised-feedback-',id,'@example.org'),
            visit_purpose_comment=NULL;
 
 UPDATE jobseekers
@@ -28,9 +20,6 @@ UPDATE jobseekers
            unlock_token='34567CDEFGHIJ'
        WHERE email NOT LIKE '%education.gov.uk';
 
-UPDATE job_alert_feedbacks
-        SET comment=NULL;
-
 UPDATE publishers
        SET email=concat('anonymised-publisher-',id,'@example.org'),
            family_name='anon',
@@ -38,7 +27,3 @@ UPDATE publishers
 
 UPDATE subscriptions
        SET email=concat('anonymised-subscription-',id,'@example.org');
-
-UPDATE unsubscribe_feedbacks
-       SET other_reason=NULL,
-           additional_info=NULL;
