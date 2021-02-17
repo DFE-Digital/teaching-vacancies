@@ -1,0 +1,14 @@
+.govuk-cookie-banner.cookies-banner-component--gds role="region" aria-label = t("cookies_preferences.banner.aria.label")
+  .govuk-cookie-banner__message.govuk-width-container
+    .govuk-grid-row
+      .govuk-grid-column-two-thirds
+        h2.govuk-cookie-banner__heading.govuk-heading-m Cookies on Teaching Vacancies
+
+        .govuk-cookie-banner__content
+          p We use some essential cookies to make this service work.
+          p We’d like to set additional cookies so we can remember your settings, understand how people use the service and make improvements.
+
+    .govuk-button-group
+      = govuk_button_to "Accept all cookies", create_path
+
+      = govuk_link_to t("buttons.set_preferences"), preferences_path, class: "govuk-!-margin-top-1"

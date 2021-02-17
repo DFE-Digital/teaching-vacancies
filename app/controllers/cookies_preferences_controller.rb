@@ -16,6 +16,10 @@ class CookiesPreferencesController < ApplicationController
     end
   end
 
+  def cookies_preference_set?
+    true
+  end
+
   private
 
   def cookies_preferences_params

@@ -5,8 +5,8 @@ module AbTestable
     helper_method :ab_variant_for, :current_ab_variants
   end
 
-  def show_test_variant(name_of_test, variant_name)
-    Rails.env.production? && ab_variant_for(name_of_test) == variant_name
+  def current_variant?(name_of_test, variant_name)
+    ab_variant_for(name_of_test) == variant_name
   end
 
   private

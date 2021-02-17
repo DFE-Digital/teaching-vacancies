@@ -1,5 +1,5 @@
 doctype html
-html.govuk-template.app-html-class class=("modal" if show_test_variant(:"2021_02_cookie_consent_test", :modal) && !cookie_preferences_hidden?) lang="en"
+html.govuk-template.app-html-class class=("modal" if current_variant?(:"2021_02_cookie_consent_test", :modal) && !cookies_preference_set?) lang="en"
   head
     = render partial: "shared/google_tag_manager_head" if cookies["consented-to-cookies"] == "yes"
     = render partial: "shared/open_graph"
@@ -20,15 +20,14 @@ html.govuk-template.app-html-class class=("modal" if show_test_variant(:"2021_02
     meta content=asset_pack_path("media/images/govuk-opengraph-image.png") property="og:image"
     = csrf_meta_tags
   body class=body_class data-vacancy_state=(@vacancy.present? ? @vacancy.state : "create")
-    - if show_test_variant(:"2021_02_cookie_consent_test", :modal) && !cookie_preferences_hidden?
+    - if current_variant?(:"2021_02_cookie_consent_test", :modal) && !cookies_preference_set?
       .modal-container
     = render partial: "shared/google_tag_manager_body" if cookies["consented-to-cookies"] == "yes"
     = javascript_tag(nonce: true) do
       | document.body.className = ((document.body.className) ? document.body.className + " js-enabled" : "js-enabled");
     = render "shared/skip_links"
-    = render(AbTest::CookiesBannerComponent.new(create_path: create_cookies_preferences_path(cookies_consent: "yes", **utm_parameters), preferences_path: cookies_preferences_path(**utm_parameters)).with_variant(:bottom)) if show_test_variant(:"2021_02_cookie_consent_test", :bottom) && !cookie_preferences_hidden?
-    = render(AbTest::CookiesBannerComponent.new(create_path: create_cookies_preferences_path(cookies_consent: "yes", **utm_parameters), preferences_path: cookies_preferences_path(**utm_parameters)).with_variant(:modal)) if show_test_variant(:"2021_02_cookie_consent_test", :modal) && !cookie_preferences_hidden?
-    = render(AbTest::CookiesBannerComponent.new(create_path: create_cookies_preferences_path(cookies_consent: "yes", **utm_parameters), preferences_path: cookies_preferences_path(**utm_parameters)).with_variant(:default)) if (!Rails.env.production? || !ab_variant_for(:"2021_02_cookie_consent_test") || ab_variant_for(:"2021_02_cookie_consent_test") == :default) && !cookie_preferences_hidden?
+    - unless cookies_preference_set? || %i[top none].include?(ab_variant_for(:"2021_02_cookie_consent_test"))
+      = render(AbTest::CookiesBannerComponent.new(create_path: create_cookies_preferences_path(cookies_consent: "yes", **utm_parameters), preferences_path: cookies_preferences_path(**utm_parameters)).with_variant(ab_variant_for(:"2021_02_cookie_consent_test")))
     header.govuk-header.navbar-component data-module="govuk-header" role="banner"
       .govuk-header__container.govuk-width-container
         .govuk-header__logo
@@ -53,7 +52,7 @@ html.govuk-template.app-html-class class=("modal" if show_test_variant(:"2021_02
             | This is a new service - #{govuk_link_to "your feedback", new_feedback_path} will help us to improve it.
 
       .govuk-main-wrapper
-        = render(AbTest::CookiesBannerComponent.new(create_path: create_cookies_preferences_path(cookies_consent: "yes", **utm_parameters), preferences_path: cookies_preferences_path(**utm_parameters)).with_variant(:top)) if show_test_variant(:"2021_02_cookie_consent_test", :top) && !cookie_preferences_hidden?
+        = render(AbTest::CookiesBannerComponent.new(create_path: create_cookies_preferences_path(cookies_consent: "yes", **utm_parameters), preferences_path: cookies_preferences_path(**utm_parameters)).with_variant(:top)) if current_variant?(:"2021_02_cookie_consent_test", :top) && !cookies_preference_set?
 
         main#main-content role="main"
 
