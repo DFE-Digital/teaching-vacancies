@@ -1,11 +1,17 @@
 class Shared::NotificationComponent < ViewComponent::Base
-  def initialize(content:, style:, links: nil, dismiss: true, background: false, alert: "warning")
+  def initialize(content:, style:,
+                 links: nil,
+                 dismiss: true,
+                 background: false,
+                 alert: "warning",
+                 html_attributes: { role: "alert", tabindex: "-1" })
     @content = content
     @style = style
     @links = links
     @dismiss = style == "danger" ? false : dismiss
     @background = background
     @alert = %w[danger success].include?(style) ? false : alert
+    @html_attributes = html_attributes
   end
 
   def notification_classes
