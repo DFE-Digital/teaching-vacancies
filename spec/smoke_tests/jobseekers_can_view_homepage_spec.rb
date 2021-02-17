@@ -13,6 +13,7 @@ RSpec.describe "Page availability", js: true, smoke_test: true do
       page.visit "https://#{smoke_test_domain}/404" # you need to be on the domain to set the cookie
 
       page.driver.browser.manage.add_cookie(name: "smoke_test", value: "1", domain: smoke_test_domain)
+      page.driver.browser.manage.add_cookie(name: "consented-to-cookies", value: "no", domain: smoke_test_domain)
 
       page.visit "https://#{smoke_test_domain}/"
       expect(page).to have_content(I18n.t("jobs.heading"))
