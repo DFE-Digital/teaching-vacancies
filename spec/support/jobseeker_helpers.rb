@@ -12,15 +12,17 @@ module JobseekerHelpers
   end
 
   def sign_up_jobseeker(email: jobseeker.email, password: jobseeker.password)
-    fill_in "Email address", with: email
-    fill_in "Password", with: password
-    click_on I18n.t("buttons.create_account")
+    within(".new_jobseeker") do
+      fill_in "Email address", with: email
+      fill_in "Password", with: password
+      click_on I18n.t("buttons.create_account")
+    end
   end
 
   def sign_in_jobseeker(email: jobseeker.email, password: jobseeker.password)
-    fill_in "Email address", with: email
-    fill_in "Password", with: password
     within(".new_jobseeker") do
+      fill_in "Email address", with: email
+      fill_in "Password", with: password
       click_on I18n.t("buttons.sign_in")
     end
   end

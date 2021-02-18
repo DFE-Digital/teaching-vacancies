@@ -11,5 +11,5 @@
     .divider-bottom class="govuk-!-padding-bottom-5"
       p.govuk-body = t(".unsubscribe")
       = govuk_link_to t(".back_to_search_results"), jobs_path(@subscription.search_criteria), class: "govuk-!-font-size-19"
-    p.govuk-body
-      = render "jobseeker_account_prompt"
+
+    = render "jobseeker_account_prompt"

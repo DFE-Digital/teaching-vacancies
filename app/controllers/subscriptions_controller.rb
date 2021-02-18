@@ -24,7 +24,7 @@ class SubscriptionsController < ApplicationController
       if jobseeker_signed_in?
         redirect_to jobseekers_subscriptions_path, success: t(".success")
       else
-        @jobseeker_account_exists = Jobseeker.exists?(email: subscription.email)
+        @jobseeker = Jobseeker.find_by(email: subscription.email)
         render :confirm
       end
     end
@@ -48,7 +48,7 @@ class SubscriptionsController < ApplicationController
       if jobseeker_signed_in?
         redirect_to jobseekers_subscriptions_path, success: t(".success")
       else
-        @jobseeker_account_exists = Jobseeker.exists?(email: subscription.email)
+        @jobseeker = Jobseeker.find_by(email: subscription.email)
         render :confirm
       end
     else
