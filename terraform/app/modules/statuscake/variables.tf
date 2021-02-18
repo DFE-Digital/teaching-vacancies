@@ -1,9 +1,9 @@
-variable environment {
+variable "environment" {
 }
 
-variable service_name {
+variable "service_name" {
 }
 
-variable statuscake_alerts {
+variable "statuscake_alerts" {
   description = "Define Statuscake alerts with the attributes below"
 }

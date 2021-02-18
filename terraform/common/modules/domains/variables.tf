@@ -1,10 +1,10 @@
-variable primary_zone_name {
+variable "primary_zone_name" {
   description = "Primary DNS zone name and Common Name for certificate"
   type        = string
   default     = ""
 }
 
-variable secondary_zone_name {
+variable "secondary_zone_name" {
   description = "Secondary DNS zone name"
   type        = string
   default     = ""

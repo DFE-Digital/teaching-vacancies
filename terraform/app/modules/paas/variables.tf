@@ -1,83 +1,83 @@
-variable environment {
+variable "environment" {
 }
 
-variable app_docker_image {
+variable "app_docker_image" {
 }
 
-variable app_env_values {
+variable "app_env_values" {
 }
 
-variable app_start_timeout {
+variable "app_start_timeout" {
   default = 300
 }
 
-variable app_stopped {
+variable "app_stopped" {
   default = false
 }
 
-variable docker_username {
+variable "docker_username" {
 }
 
-variable docker_password {
+variable "docker_password" {
 }
 
-variable papertrail_service_binding_enable {
+variable "papertrail_service_binding_enable" {
 }
 
-variable papertrail_url {
+variable "papertrail_url" {
 }
 
-variable parameter_store_environment {
+variable "parameter_store_environment" {
   default = "dev"
 }
 
-variable postgres_service_plan {
+variable "postgres_service_plan" {
 }
 
-variable redis_cache_service_plan {
+variable "redis_cache_service_plan" {
 }
-variable redis_queue_service_plan {
+variable "redis_queue_service_plan" {
 }
-variable service_name {
+variable "service_name" {
 }
-variable space_name {
-}
-
-variable web_app_deployment_strategy {
+variable "space_name" {
 }
 
-variable web_app_instances {
+variable "web_app_deployment_strategy" {
+}
+
+variable "web_app_instances" {
   default = 1
 }
 
-variable web_app_memory {
+variable "web_app_memory" {
   default = 512
 }
 
-variable web_app_start_command {
+variable "web_app_start_command" {
 }
 
-variable worker_app_deployment_strategy {
+variable "worker_app_deployment_strategy" {
 }
 
-variable worker_app_instances {
+variable "worker_app_instances" {
   default = 1
 }
 
-variable worker_app_memory {
+variable "worker_app_memory" {
   default = 512
 }
 
-variable route53_zones {
-  type = list
+variable "route53_zones" {
+  type = list(any)
 }
 
-variable route53_a_records {
-  type = list
+variable "route53_a_records" {
+  type = list(any)
 }
 
-variable hostname_domain_map {
-  type = map
+variable "hostname_domain_map" {
+  type = map(any)
 }
 
 locals {

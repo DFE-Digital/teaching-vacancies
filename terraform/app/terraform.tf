@@ -7,7 +7,7 @@ For SSO authentication
 - store_tokens_path = /path/to/local/file
 */
 
-provider cloudfoundry {
+provider "cloudfoundry" {
   api_url           = var.paas_api_url
   password          = var.paas_password != "" ? var.paas_password : null
   sso_passcode      = var.paas_sso_passcode != "" ? var.paas_sso_passcode : null
@@ -16,12 +16,12 @@ provider cloudfoundry {
 
 }
 
-provider statuscake {
+provider "statuscake" {
   username = local.infra_secrets.statuscake_username
   apikey   = local.infra_secrets.statuscake_apikey
 }
 
-provider template {}
+provider "template" {}
 
 /*
 Store infrastructure state in a remote store (instead of local machine):
@@ -37,7 +37,7 @@ terraform {
   }
 }
 
-module cloudfront {
+module "cloudfront" {
   source                        = "./modules/cloudfront"
   for_each                      = var.distribution_list
   environment                   = var.environment
@@ -55,7 +55,7 @@ module cloudfront {
   }
 }
 
-module cloudwatch {
+module "cloudwatch" {
   source            = "./modules/cloudwatch"
   for_each          = var.channel_list
   environment       = var.environment
@@ -65,7 +65,7 @@ module cloudwatch {
   ops_genie_api_key = local.infra_secrets.cloudwatch_ops_genie_api_key
 }
 
-module paas {
+module "paas" {
   source = "./modules/paas"
 
   environment                       = var.environment
@@ -95,7 +95,7 @@ module paas {
   hostname_domain_map               = local.hostname_domain_map
 }
 
-module statuscake {
+module "statuscake" {
   source = "./modules/statuscake"
 
   environment       = var.environment

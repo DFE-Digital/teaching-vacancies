@@ -1,19 +1,19 @@
-resource aws_iam_group administrators {
+resource "aws_iam_group" "administrators" {
   name = "Administrators"
   path = "/${local.service_name}/"
 }
 
-resource aws_iam_group billingmanagers {
+resource "aws_iam_group" "billingmanagers" {
   name = "BillingManagers"
   path = "/${local.service_name}/"
 }
 
-resource aws_iam_group developers {
+resource "aws_iam_group" "developers" {
   name = "Developers"
   path = "/${local.service_name}/"
 }
 
-data aws_iam_policy_document manage_own_security {
+data "aws_iam_policy_document" "manage_own_security" {
 
   statement {
     sid = "AllowUsersToCreateEnableResyncTheirOwnVirtualMFADevice"
@@ -125,12 +125,12 @@ data aws_iam_policy_document manage_own_security {
   }
 }
 
-resource aws_iam_policy manage_own_security {
+resource "aws_iam_policy" "manage_own_security" {
   name        = "manage_own_security"
   description = "Allow managing own MFA, keys, passwords"
   policy      = data.aws_iam_policy_document.manage_own_security.json
 }
-data aws_iam_policy_document assume_role_if_mfa_present {
+data "aws_iam_policy_document" "assume_role_if_mfa_present" {
 
   statement {
     actions = ["sts:AssumeRole"]
@@ -147,25 +147,25 @@ data aws_iam_policy_document assume_role_if_mfa_present {
     }
   }
 }
-resource aws_iam_role administrator {
+resource "aws_iam_role" "administrator" {
   name               = "Administrator"
   assume_role_policy = data.aws_iam_policy_document.assume_role_if_mfa_present.json
 }
 
-data aws_iam_policy_document allow_assume_role_administrator {
+data "aws_iam_policy_document" "allow_assume_role_administrator" {
   statement {
     actions   = ["sts:AssumeRole"]
     resources = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${aws_iam_role.administrator.name}"]
   }
 }
 
-resource aws_iam_policy allow_assume_role_administrator {
+resource "aws_iam_policy" "allow_assume_role_administrator" {
   name        = "allow_assume_role_administrator"
   description = "Allow assuming administrator role"
   policy      = data.aws_iam_policy_document.allow_assume_role_administrator.json
 }
 
-resource aws_iam_role_policy_attachment administrator_role_policies {
+resource "aws_iam_role_policy_attachment" "administrator_role_policies" {
   for_each = toset([
     "arn:aws:iam::aws:policy/AdministratorAccess"
   ])
@@ -173,25 +173,25 @@ resource aws_iam_role_policy_attachment administrator_role_policies {
   role       = aws_iam_role.administrator.name
   policy_arn = each.value
 }
-resource aws_iam_role billingmanager {
+resource "aws_iam_role" "billingmanager" {
   name               = "BillingManager"
   assume_role_policy = data.aws_iam_policy_document.assume_role_if_mfa_present.json
 }
 
-data aws_iam_policy_document allow_assume_role_billingmanager {
+data "aws_iam_policy_document" "allow_assume_role_billingmanager" {
   statement {
     actions   = ["sts:AssumeRole"]
     resources = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${aws_iam_role.billingmanager.name}"]
   }
 }
 
-resource aws_iam_policy allow_assume_role_billingmanager {
+resource "aws_iam_policy" "allow_assume_role_billingmanager" {
   name        = "allow_assume_role_billingmanager"
   description = "Allow assuming billingmanager role"
   policy      = data.aws_iam_policy_document.allow_assume_role_billingmanager.json
 }
 
-resource aws_iam_role_policy_attachment billingmanager_role_policies {
+resource "aws_iam_role_policy_attachment" "billingmanager_role_policies" {
   for_each = toset([
     "arn:aws:iam::aws:policy/job-function/Billing",
     "arn:aws:iam::aws:policy/ReadOnlyAccess"
@@ -200,48 +200,48 @@ resource aws_iam_role_policy_attachment billingmanager_role_policies {
   role       = aws_iam_role.billingmanager.name
   policy_arn = each.value
 }
-resource aws_iam_role readonly {
+resource "aws_iam_role" "readonly" {
   name               = "ReadOnly"
   assume_role_policy = data.aws_iam_policy_document.assume_role_if_mfa_present.json
 }
 
-data aws_iam_policy_document allow_assume_role_readonly {
+data "aws_iam_policy_document" "allow_assume_role_readonly" {
   statement {
     actions   = ["sts:AssumeRole"]
     resources = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${aws_iam_role.readonly.name}"]
   }
 }
 
-resource aws_iam_policy allow_assume_role_readonly {
+resource "aws_iam_policy" "allow_assume_role_readonly" {
   name        = "allow_assume_role_readonly"
   description = "Allow assuming readonly role"
   policy      = data.aws_iam_policy_document.allow_assume_role_readonly.json
 }
 
-resource aws_iam_role_policy_attachment readonly_role_policies {
+resource "aws_iam_role_policy_attachment" "readonly_role_policies" {
   role       = aws_iam_role.readonly.name
   policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
 }
 
-resource aws_iam_role secreteditor {
+resource "aws_iam_role" "secreteditor" {
   name               = "SecretEditor"
   assume_role_policy = data.aws_iam_policy_document.assume_role_if_mfa_present.json
 }
 
-data aws_iam_policy_document allow_assume_role_secreteditor {
+data "aws_iam_policy_document" "allow_assume_role_secreteditor" {
   statement {
     actions   = ["sts:AssumeRole"]
     resources = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${aws_iam_role.secreteditor.name}"]
   }
 }
 
-resource aws_iam_policy allow_assume_role_secreteditor {
+resource "aws_iam_policy" "allow_assume_role_secreteditor" {
   name        = "allow_assume_role_secreteditor"
   description = "Allow assuming secreteditor role"
   policy      = data.aws_iam_policy_document.allow_assume_role_secreteditor.json
 }
 
-data aws_iam_policy_document parameter_store {
+data "aws_iam_policy_document" "parameter_store" {
   statement {
     actions = [
       "ssm:GetParameterHistory",
@@ -264,48 +264,48 @@ data aws_iam_policy_document parameter_store {
   }
 }
 
-resource aws_iam_policy parameter_store {
+resource "aws_iam_policy" "parameter_store" {
   name   = "parameter_store"
   policy = data.aws_iam_policy_document.parameter_store.json
 }
 
 
-resource aws_iam_role_policy_attachment secreteditor_role_policies {
+resource "aws_iam_role_policy_attachment" "secreteditor_role_policies" {
   role       = aws_iam_role.secreteditor.name
   policy_arn = aws_iam_policy.parameter_store.arn
 }
 
 # Allow group members to manage own MFA, access keys, passwords
 
-resource aws_iam_group_policy_attachment permit_administrators_group_manage_own_security {
+resource "aws_iam_group_policy_attachment" "permit_administrators_group_manage_own_security" {
   group      = aws_iam_group.administrators.name
   policy_arn = aws_iam_policy.manage_own_security.arn
 }
 
-resource aws_iam_group_policy_attachment permit_billingmanagers_group_manage_own_security {
+resource "aws_iam_group_policy_attachment" "permit_billingmanagers_group_manage_own_security" {
   group      = aws_iam_group.billingmanagers.name
   policy_arn = aws_iam_policy.manage_own_security.arn
 }
-resource aws_iam_group_policy_attachment permit_developers_group_manage_own_security {
+resource "aws_iam_group_policy_attachment" "permit_developers_group_manage_own_security" {
   group      = aws_iam_group.developers.name
   policy_arn = aws_iam_policy.manage_own_security.arn
 }
 # Allow group members to assume roles
 
-resource aws_iam_group_policy_attachment permit_administrators_group_assume_role_administrator {
+resource "aws_iam_group_policy_attachment" "permit_administrators_group_assume_role_administrator" {
   group      = aws_iam_group.administrators.name
   policy_arn = aws_iam_policy.allow_assume_role_administrator.arn
 }
-resource aws_iam_group_policy_attachment permit_billingmanagers_group_assume_role_billingmanager {
+resource "aws_iam_group_policy_attachment" "permit_billingmanagers_group_assume_role_billingmanager" {
   group      = aws_iam_group.billingmanagers.name
   policy_arn = aws_iam_policy.allow_assume_role_billingmanager.arn
 }
-resource aws_iam_group_policy_attachment permit_developers_group_assume_role_readonly {
+resource "aws_iam_group_policy_attachment" "permit_developers_group_assume_role_readonly" {
   group      = aws_iam_group.developers.name
   policy_arn = aws_iam_policy.allow_assume_role_readonly.arn
 }
 
-resource aws_iam_group_policy_attachment permit_developers_group_assume_role_secreteditor {
+resource "aws_iam_group_policy_attachment" "permit_developers_group_assume_role_secreteditor" {
   group      = aws_iam_group.developers.name
   policy_arn = aws_iam_policy.allow_assume_role_secreteditor.arn
 }

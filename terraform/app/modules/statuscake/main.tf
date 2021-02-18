@@ -1,4 +1,4 @@
-resource statuscake_test alert {
+resource "statuscake_test" "alert" {
   for_each      = var.statuscake_alerts
   website_name  = each.value.website_name
   website_url   = each.value.website_url

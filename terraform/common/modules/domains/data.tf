@@ -1,8 +1,8 @@
-data aws_route53_zone zone {
+data "aws_route53_zone" "zone" {
   for_each = local.route53_zones
   name     = each.value
 }
 
-data aws_iam_user deploy {
+data "aws_iam_user" "deploy" {
   user_name = "deploy"
 }
