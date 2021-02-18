@@ -13,6 +13,6 @@
 
       = f.govuk_collection_radio_buttons :rating, Feedback.ratings.keys, :to_s
 
-      = f.govuk_text_area :comment, label: { size: "s" }, rows: 10, max_chars: 1200
+      = f.govuk_text_area :comment, label: { size: "s" }, rows: 10, max_chars: 1200, form_group: { classes: "optional-field" }
 
       = f.govuk_submit t("buttons.submit")
