@@ -16,7 +16,7 @@ class SubscriptionsController < ApplicationController
     elsif recaptcha_is_invalid?(subscription)
       redirect_to invalid_recaptcha_path(form_name: subscription.class.name.underscore.humanize)
     else
-      subscription.recaptcha_score = recaptcha_reply["score"]
+      subscription.recaptcha_score = recaptcha_reply&.dig("score")
       subscription.save
       SubscriptionMailer.confirmation(subscription.id).deliver_later
       trigger_subscription_event(:job_alert_subscription_created, subscription)
