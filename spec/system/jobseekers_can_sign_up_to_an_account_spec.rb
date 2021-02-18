@@ -7,7 +7,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
   describe "creating an account" do
     it "validates and submits the form, triggers account created event, sends confirmation email and redirects to check your email page" do
       visit new_jobseeker_registration_path
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.create_account")
       expect(page).to have_content("There is a problem")
       expect { sign_up_jobseeker }.to have_triggered_event(:jobseeker_account_created).with_data(
         user_anonymised_jobseeker_id: anything,
