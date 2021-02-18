@@ -1,17 +1,18 @@
 require "rails_helper"
 
-RSpec.describe PagesController, type: :controller do
+RSpec.describe "Pages", type: :request do
   HighVoltage.page_ids.each do |page|
-    context "on GET to /pages/#{page}" do
-      before do
-        get :show, params: { id: page }
-      end
+    context "GET /pages/#{page}" do
+      before { get page_path(page) }
 
-      it { is_expected.to respond_with(:success) }
       it { is_expected.to render_template(page) }
 
       it "does not have a noindex header" do
         expect(response.headers["X-Robots-Tag"]).to_not include("noindex")
+      end
+
+      it "responds with success" do
+        expect(response).to have_http_status(:success)
       end
     end
   end

@@ -7,7 +7,7 @@ RSpec.describe "CORS", type: :request do
 
     before do
       allow_any_instance_of(LocationSuggestion).to receive(:suggest_locations).and_return([[], []])
-      get api_path(params), headers: headers
+      get api_location_suggestion_path(params), headers: headers
     end
 
     context "when domain is defined in configuration" do

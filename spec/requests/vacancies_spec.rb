@@ -1,15 +1,15 @@
 require "rails_helper"
 
-RSpec.describe VacanciesController, type: :controller do
-  describe "sets headers" do
-    it "robots are asked to index but not to follow" do
-      get :index
+RSpec.describe "Vacancies", type: :request do
+  describe "GET #index" do
+    it "sets headers robots are asked to index but not to follow" do
+      get jobs_path
       expect(response.headers["X-Robots-Tag"]).to eq("noarchive")
     end
   end
 
-  describe "#show" do
-    subject { get :show, params: params }
+  describe "GET #show" do
+    subject { get job_path(vacancy), params: params }
 
     context "when vacancy is trashed" do
       let(:vacancy) { create(:vacancy, :trashed) }
@@ -26,6 +26,8 @@ RSpec.describe VacanciesController, type: :controller do
     end
 
     context "when vacancy does not exist" do
+      let(:vacancy) { "missing-id" }
+
       let(:params) { { id: "missing-id" } }
 
       it "renders errors/not_found" do
