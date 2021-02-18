@@ -16,6 +16,7 @@ class Geocoding
   private
 
   def no_match
-    [0, 0]
+    Rails.logger.info("The Geocoder API returned no match (0, 0) for '#{location}'. This was then cached.")
+    return [0, 0]
   end
 end
