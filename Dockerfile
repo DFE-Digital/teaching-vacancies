@@ -17,7 +17,7 @@ RUN yarn install --check-files
 
 COPY . .
 
-RUN RAILS_ENV=staging SECRET_KEY_BASE=required-to-run-but-not-used bundle exec rake webpacker:compile
+RUN RAILS_ENV=production SECRET_KEY_BASE=required-to-run-but-not-used bundle exec rake webpacker:compile
 
 RUN rm -rf node_modules log tmp yarn.lock && \
       rm -rf /usr/local/bundle/cache && \

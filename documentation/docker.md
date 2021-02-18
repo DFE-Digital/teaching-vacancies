@@ -38,7 +38,7 @@ RUN yarn install --check-files
 
 COPY . .
 
-RUN RAILS_ENV=staging bundle exec rake webpacker:compile
+RUN RAILS_ENV=production bundle exec rake webpacker:compile
 ```
 
 - Name the stage `builder` so that it can be built individually, and allow copying of files to the `production` stage

@@ -1,7 +1,6 @@
 default_domains = {
   test: "localhost:3000",
   development: "localhost:3000",
-  staging: "staging.teaching-vacancies.service.gov.uk",
   production: "teaching-vacancies.service.gov.uk",
 }
 
