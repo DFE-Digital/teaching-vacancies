@@ -23,6 +23,7 @@ class Jobseekers::JobApplications::FeedbacksController < Jobseekers::JobApplicat
     feedback_form_params.merge(
       application_id: job_application.id,
       feedback_type: "application",
-      jobseeker_id: current_jobseeker.id)
+      jobseeker_id: current_jobseeker.id,
+    )
   end
 end
