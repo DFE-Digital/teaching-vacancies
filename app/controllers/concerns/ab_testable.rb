@@ -2,7 +2,7 @@ module AbTestable
   extend ActiveSupport::Concern
 
   included do
-    helper_method :ab_variant_for, :current_ab_variants
+    helper_method :ab_variant_for, :current_ab_variants, :current_variant?
   end
 
   def current_variant?(name_of_test, variant_name)
