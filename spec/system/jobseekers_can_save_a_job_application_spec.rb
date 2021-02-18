@@ -27,7 +27,6 @@ RSpec.describe "Jobseekers can save a job application" do
         "first_name" => "John",
         "phone_number" => "01234 123456",
         "town_or_city" => "Fakeopolis",
-        "email_address" => "funkymonk@example.com",
         "previous_names" => "",
         "building_and_street" => "123 Fake Street",
         "teacher_reference_number" => "AB 99/12345",
