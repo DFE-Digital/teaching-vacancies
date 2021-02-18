@@ -18,6 +18,16 @@ RSpec.describe SubscriptionMailer, type: :mailer do
   let(:campaign_params) { { utm_source: nil, utm_medium: "email", utm_campaign: "daily_alert" } }
   let(:body) { mail.body }
 
+  let(:expected_data) do
+    {
+      notify_template: notify_template,
+      email_identifier: anonymised_form_of(email),
+      user_anonymised_jobseeker_id: user_anonymised_jobseeker_id,
+      user_anonymised_publisher_id: nil,
+      subscription_identifier: anonymised_form_of(subscription.id),
+    }
+  end
+
   describe "#confirmation" do
     let(:mail) { described_class.confirmation(subscription.id) }
     let(:notify_template) { NOTIFY_SUBSCRIPTION_CONFIRMATION_TEMPLATE }
@@ -35,38 +45,18 @@ RSpec.describe SubscriptionMailer, type: :mailer do
 
     context "when the subscription email matches a jobseeker account" do
       let(:jobseeker) { create(:jobseeker, email: email) }
-      let(:expected_base_data) do
-        {
-          notify_template: notify_template,
-          email_identifier: anonymised_form_of(email),
-          user_anonymised_jobseeker_id: anonymised_form_of(jobseeker.id),
-          user_anonymised_publisher_id: nil,
-        }
-      end
+      let(:user_anonymised_jobseeker_id) { anonymised_form_of(jobseeker.id) }
 
       it "triggers a `jobseeker_subscription_confirmation` email event with the anonymised jobseeker id" do
-        expect { mail.deliver_now }
-          .to have_triggered_event(:jobseeker_subscription_confirmation)
-          .with_base_data(expected_base_data)
-          .and_data({ subscription_identifier: anonymised_form_of(subscription.id) })
+        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_confirmation).with_data(expected_data)
       end
     end
 
     context "when the subscription email does not match a jobseeker account" do
-      let(:expected_base_data) do
-        {
-          notify_template: notify_template,
-          email_identifier: anonymised_form_of(email),
-          user_anonymised_jobseeker_id: nil,
-          user_anonymised_publisher_id: nil,
-        }
-      end
+      let(:user_anonymised_jobseeker_id) { nil }
 
       it "triggers a `jobseeker_subscription_confirmation` email event without the anonymised jobseeker id" do
-        expect { mail.deliver_now }
-          .to have_triggered_event(:jobseeker_subscription_confirmation)
-          .with_base_data(expected_base_data)
-          .and_data({ subscription_identifier: anonymised_form_of(subscription.id) })
+        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_confirmation).with_data(expected_data)
       end
     end
   end
@@ -88,38 +78,18 @@ RSpec.describe SubscriptionMailer, type: :mailer do
 
     context "when the subscription email matches a jobseeker account" do
       let(:jobseeker) { create(:jobseeker, email: email) }
-      let(:expected_base_data) do
-        {
-          notify_template: notify_template,
-          email_identifier: anonymised_form_of(email),
-          user_anonymised_jobseeker_id: anonymised_form_of(jobseeker.id),
-          user_anonymised_publisher_id: nil,
-        }
-      end
+      let(:user_anonymised_jobseeker_id) { anonymised_form_of(jobseeker.id) }
 
       it "triggers a `jobseeker_subscription_update` email event with the anonymised jobseeker id" do
-        expect { mail.deliver_now }
-          .to have_triggered_event(:jobseeker_subscription_update)
-          .with_base_data(expected_base_data)
-          .and_data({ subscription_identifier: anonymised_form_of(subscription.id) })
+        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_update).with_data(expected_data)
       end
     end
 
     context "when the subscription email does not match a jobseeker account" do
-      let(:expected_base_data) do
-        {
-          notify_template: notify_template,
-          email_identifier: anonymised_form_of(email),
-          user_anonymised_jobseeker_id: nil,
-          user_anonymised_publisher_id: nil,
-        }
-      end
+      let(:user_anonymised_jobseeker_id) { nil }
 
       it "triggers a `jobseeker_subscription_update` email event without the anonymised jobseeker id" do
-        expect { mail.deliver_now }
-          .to have_triggered_event(:jobseeker_subscription_update)
-          .with_base_data(expected_base_data)
-          .and_data({ subscription_identifier: anonymised_form_of(subscription.id) })
+        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_update).with_data(expected_data)
       end
     end
   end

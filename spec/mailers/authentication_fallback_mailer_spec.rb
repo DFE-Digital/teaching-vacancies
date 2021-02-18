@@ -6,7 +6,7 @@ RSpec.describe AuthenticationFallbackMailer, type: :mailer do
     let(:login_key) { publisher.emergency_login_keys.create(not_valid_after: Time.current + 10.minutes) }
     let(:mail) { described_class.sign_in_fallback(login_key: login_key, publisher: publisher) }
     let(:notify_template) { "2f37ec1d-58ef-4cd9-9d0a-4272723dda3d" }
-    let(:expected_base_data) do
+    let(:expected_data) do
       {
         notify_template: notify_template,
         email_identifier: anonymised_form_of(publisher.email),
@@ -27,9 +27,7 @@ RSpec.describe AuthenticationFallbackMailer, type: :mailer do
     end
 
     it "triggers a `publisher_sign_in_fallback` email event" do
-      expect { mail.deliver_now }
-        .to have_triggered_event(:publisher_sign_in_fallback)
-        .with_base_data(expected_base_data)
+      expect { mail.deliver_now }.to have_triggered_event(:publisher_sign_in_fallback).with_data(expected_data)
     end
   end
 end

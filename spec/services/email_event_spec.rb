@@ -13,11 +13,13 @@ RSpec.describe EmailEvent do
       {
         type: :best_ever_email_event,
         occurred_at: "1999-12-31T23:59:59.000000Z",
-        notify_template: notify_template,
-        email_identifier: anonymised_form_of("test@email.com"),
-        user_anonymised_jobseeker_id: anonymised_form_of("1234"),
-        user_anonymised_publisher_id: anonymised_form_of("4321"),
-        data: [{ key: "foozy", value: "barzy" }],
+        data: [
+          { key: "notify_template", value: notify_template },
+          { key: "email_identifier", value: anonymised_form_of("test@email.com") },
+          { key: "user_anonymised_jobseeker_id", value: anonymised_form_of("1234") },
+          { key: "user_anonymised_publisher_id", value: anonymised_form_of("4321") },
+          { key: "foozy", value: "barzy" },
+        ],
       }
     end
 

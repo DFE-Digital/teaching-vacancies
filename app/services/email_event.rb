@@ -14,12 +14,12 @@ class EmailEvent < Event
 
   attr_reader :notify_template, :email, :jobseeker, :publisher
 
-  def base_data
-    @base_data ||= super.merge(
-      notify_template: notify_template,
-      email_identifier: anonymise(email),
-      user_anonymised_jobseeker_id: anonymise(jobseeker&.id),
-      user_anonymised_publisher_id: anonymise(publisher&.oid),
+  def data
+    @data ||= super.push(
+      { key: "notify_template", value: notify_template },
+      { key: "email_identifier", value: anonymise(email) },
+      { key: "user_anonymised_jobseeker_id", value: anonymise(jobseeker&.id) },
+      { key: "user_anonymised_publisher_id", value: anonymise(publisher&.oid) },
     )
   end
 end

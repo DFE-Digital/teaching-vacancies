@@ -12,14 +12,14 @@ class Event
   # Asynchronously sends an event and its metadata to the data warehouse
   #
   # @param [Symbol, String] event_type The type of event (e.g. `:page_visited`) to trigger
-  # @param [Hash{Symbol => Object}] data An optional hash of data to include with the event
-  def trigger(event_type, data = {})
-    data = base_data.merge(
+  # @param [Hash{Symbol => Object}] event_data An optional hash of data to include with the event
+  def trigger(event_type, event_data = {})
+    event_data = base_data.merge(
       type: event_type,
-      occurred_at: occurred_at(data),
-      data: data.map { |key, value| { key: key.to_s, value: formatted_value(value) } },
+      occurred_at: occurred_at(event_data),
+      data: data.push(*event_data.map { |key, value| { key: key.to_s, value: formatted_value(value) } }),
     )
-    SendEventToDataWarehouseJob.perform_later(TABLE_NAME, data)
+    SendEventToDataWarehouseJob.perform_later(TABLE_NAME, event_data)
   rescue StandardError => e
     Rollbar.error(e)
   end
@@ -30,6 +30,12 @@ class Event
   # Data to be included with any event (to be overridden as appropriate in subclasses)
   def base_data
     {}
+  end
+
+  ##
+  # Data to be included in the data struct for any event (to be overridden as appropriate in subclasses)
+  def data
+    []
   end
 
   ##

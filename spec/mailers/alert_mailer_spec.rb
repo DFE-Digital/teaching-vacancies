@@ -40,6 +40,17 @@ RSpec.describe AlertMailer, type: :mailer do
     )
   end
 
+  let(:expected_data) do
+    {
+      notify_template: notify_template,
+      email_identifier: anonymised_form_of(email),
+      user_anonymised_jobseeker_id: user_anonymised_jobseeker_id,
+      user_anonymised_publisher_id: nil,
+      subscription_identifier: anonymised_form_of(subscription.id),
+      subscription_frequency: frequency,
+    }
+  end
+
   before do
     vacancies.each { |vacancy| vacancy.organisation_vacancies.create(organisation: school) }
     subscription.create_alert_run
@@ -47,6 +58,7 @@ RSpec.describe AlertMailer, type: :mailer do
 
   context "when frequency is daily" do
     let(:notify_template) { NOTIFY_SUBSCRIPTION_DAILY_TEMPLATE }
+    let(:frequency) { "daily" }
 
     it "sends a job alert email" do
       expect(mail.subject).to eq(I18n.t("alert_mailer.alert.subject"))
@@ -76,45 +88,25 @@ RSpec.describe AlertMailer, type: :mailer do
 
     context "when the subscription email matches a jobseeker account" do
       let(:jobseeker) { create(:jobseeker, email: email) }
-      let(:expected_base_data) do
-        {
-          notify_template: notify_template,
-          email_identifier: anonymised_form_of(email),
-          user_anonymised_jobseeker_id: anonymised_form_of(jobseeker.id),
-          user_anonymised_publisher_id: nil,
-        }
-      end
+      let(:user_anonymised_jobseeker_id) { anonymised_form_of(jobseeker.id) }
 
       it "triggers a `jobseeker_subscription_alert` email event with the anonymised jobseeker id" do
-        expect { mail.deliver_now }
-          .to have_triggered_event(:jobseeker_subscription_alert)
-          .with_base_data(expected_base_data)
-          .and_data({ subscription_identifier: anonymised_form_of(subscription.id), subscription_frequency: "daily" })
+        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_alert).with_data(expected_data)
       end
     end
 
     context "when the subscription email does not match a jobseeker account" do
-      let(:expected_base_data) do
-        {
-          notify_template: notify_template,
-          email_identifier: anonymised_form_of(email),
-          user_anonymised_jobseeker_id: nil,
-          user_anonymised_publisher_id: nil,
-        }
-      end
+      let(:user_anonymised_jobseeker_id) { nil }
 
       it "triggers a `jobseeker_subscription_alert` email event without the anonymised jobseeker id" do
-        expect { mail.deliver_now }
-          .to have_triggered_event(:jobseeker_subscription_alert)
-          .with_base_data(expected_base_data)
-          .and_data({ subscription_identifier: anonymised_form_of(subscription.id), subscription_frequency: "daily" })
+        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_alert).with_data(expected_data)
       end
     end
   end
 
   context "when frequency is weekly" do
     let(:notify_template) { NOTIFY_SUBSCRIPTION_WEEKLY_TEMPLATE }
-    let(:frequency) { :weekly }
+    let(:frequency) { "weekly" }
 
     it "sends a job alert email" do
       expect(mail.subject).to eq(I18n.t("alert_mailer.alert.subject"))
@@ -144,38 +136,18 @@ RSpec.describe AlertMailer, type: :mailer do
 
     context "when the subscription email matches a jobseeker account" do
       let(:jobseeker) { create(:jobseeker, email: email) }
-      let(:expected_base_data) do
-        {
-          notify_template: notify_template,
-          email_identifier: anonymised_form_of(email),
-          user_anonymised_jobseeker_id: anonymised_form_of(jobseeker.id),
-          user_anonymised_publisher_id: nil,
-        }
-      end
+      let(:user_anonymised_jobseeker_id) { anonymised_form_of(jobseeker.id) }
 
       it "triggers a `jobseeker_subscription_alert` email event with the anonymised jobseeker id" do
-        expect { mail.deliver_now }
-          .to have_triggered_event(:jobseeker_subscription_alert)
-          .with_base_data(expected_base_data)
-          .and_data({ subscription_identifier: anonymised_form_of(subscription.id), subscription_frequency: "weekly" })
+        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_alert).with_data(expected_data)
       end
     end
 
     context "when the subscription email does not match a jobseeker account" do
-      let(:expected_base_data) do
-        {
-          notify_template: notify_template,
-          email_identifier: anonymised_form_of(email),
-          user_anonymised_jobseeker_id: nil,
-          user_anonymised_publisher_id: nil,
-        }
-      end
+      let(:user_anonymised_jobseeker_id) { nil }
 
       it "triggers a `jobseeker_subscription_alert` email event without the anonymised jobseeker id" do
-        expect { mail.deliver_now }
-          .to have_triggered_event(:jobseeker_subscription_alert)
-          .with_base_data(expected_base_data)
-          .and_data({ subscription_identifier: anonymised_form_of(subscription.id), subscription_frequency: "weekly" })
+        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_alert).with_data(expected_data)
       end
     end
   end

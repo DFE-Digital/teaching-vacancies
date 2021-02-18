@@ -5,7 +5,7 @@ RSpec.describe JobseekerMailer, type: :mailer do
   let(:email) { "test@email.com" }
   let(:token) { "some-special-token" }
 
-  let(:expected_base_data) do
+  let(:expected_data) do
     {
       notify_template: notify_template,
       email_identifier: anonymised_form_of(email),
@@ -32,10 +32,8 @@ RSpec.describe JobseekerMailer, type: :mailer do
       end
 
       it "triggers a `jobseeker_confirmation_instructions` email event" do
-        expect { mail.deliver_now }
-          .to have_triggered_event(:jobseeker_confirmation_instructions)
-          .with_base_data(expected_base_data)
-          .and_data(previous_email_identifier: anonymised_form_of("test@email.com"))
+        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_confirmation_instructions)
+          .with_data(expected_data.merge(previous_email_identifier: anonymised_form_of("test@email.com")))
       end
     end
 
@@ -50,9 +48,7 @@ RSpec.describe JobseekerMailer, type: :mailer do
       end
 
       it "triggers a `jobseeker_confirmation_instructions` email event" do
-        expect { mail.deliver_now }
-          .to have_triggered_event(:jobseeker_confirmation_instructions)
-          .with_base_data(expected_base_data)
+        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_confirmation_instructions).with_data(expected_data)
       end
     end
   end
@@ -68,9 +64,7 @@ RSpec.describe JobseekerMailer, type: :mailer do
     end
 
     it "triggers a `jobseeker_email_changed` email event" do
-      expect { mail.deliver_now }
-        .to have_triggered_event(:jobseeker_email_changed)
-        .with_base_data(expected_base_data)
+      expect { mail.deliver_now }.to have_triggered_event(:jobseeker_email_changed).with_data(expected_data)
     end
   end
 
@@ -86,9 +80,7 @@ RSpec.describe JobseekerMailer, type: :mailer do
     end
 
     it "triggers a `jobseeker_reset_passwords_instructions` email event" do
-      expect { mail.deliver_now }
-        .to have_triggered_event(:jobseeker_reset_password_instructions)
-        .with_base_data(expected_base_data)
+      expect { mail.deliver_now }.to have_triggered_event(:jobseeker_reset_password_instructions).with_data(expected_data)
     end
   end
 
@@ -104,9 +96,7 @@ RSpec.describe JobseekerMailer, type: :mailer do
     end
 
     it "triggers a `jobseeker_unlock_instructions` email event" do
-      expect { mail.deliver_now }
-        .to have_triggered_event(:jobseeker_unlock_instructions)
-        .with_base_data(expected_base_data)
+      expect { mail.deliver_now }.to have_triggered_event(:jobseeker_unlock_instructions).with_data(expected_data)
     end
   end
 end

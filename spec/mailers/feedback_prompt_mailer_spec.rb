@@ -11,7 +11,7 @@ RSpec.describe FeedbackPromptMailer, type: :mailer do
     let(:mail) { described_class.prompt_for_feedback(publisher, vacancies) }
     let(:notify_template) { NOTIFY_PROMPT_FEEDBACK_FOR_EXPIRED_VACANCIES }
     let(:vacancies) { create_list(:vacancy, 2, :published) }
-    let(:expected_base_data) do
+    let(:expected_data) do
       {
         notify_template: notify_template,
         email_identifier: anonymised_form_of(email),
@@ -32,9 +32,7 @@ RSpec.describe FeedbackPromptMailer, type: :mailer do
       end
 
       it "triggers a `publisher_prompt_for_feedback` email event" do
-        expect { mail.deliver_now }
-          .to have_triggered_event(:publisher_prompt_for_feedback)
-          .with_base_data(expected_base_data)
+        expect { mail.deliver_now }.to have_triggered_event(:publisher_prompt_for_feedback).with_data(expected_data)
       end
     end
   end
