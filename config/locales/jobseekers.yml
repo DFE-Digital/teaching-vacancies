@@ -147,9 +147,9 @@ en:
         title: Review your application
       submit:
         feedback:
-          heading: Have time to share some feedback?
           description: >-
             Your feedback can help us improve the service to better support you as well as schools around England.
+          heading: Have time to share some feedback?
         next_step:
           heading: What happens next
           school_communication: >-
@@ -159,11 +159,11 @@ en:
             If you are shortlisted for an interview, %{organisation} will be in touch to let you know.
           view_applications: View your applications
         notice:
-          title: Apply quicker next time
           body: We have saved your information so you can use it to quickly apply for other jobs on Teaching Vacancies.
+          title: Apply quicker next time
         panel:
-          title: Your application has been submitted
           body: We have sent an email confirmation to %{email}
+          title: Your application has been submitted
         title: Application submitted
     passwords:
       check_your_email_password:
