@@ -16,7 +16,7 @@ class SubscriptionsController < ApplicationController
     elsif recaptcha_is_invalid?(subscription)
       redirect_to invalid_recaptcha_path(form_name: subscription.class.name.underscore.humanize)
     else
-      subscription.recaptcha_score = recaptcha_reply["score"]
+      subscription.recaptcha_score = recaptcha_reply&.dig("score")
       subscription.save
       SubscriptionMailer.confirmation(subscription.id).deliver_later
       trigger_subscription_event(:job_alert_subscription_created, subscription)
@@ -24,7 +24,7 @@ class SubscriptionsController < ApplicationController
       if jobseeker_signed_in?
         redirect_to jobseekers_subscriptions_path, success: t(".success")
       else
-        @jobseeker_account_exists = Jobseeker.exists?(email: subscription.email)
+        @jobseeker = Jobseeker.find_by(email: subscription.email)
         render :confirm
       end
     end
@@ -48,7 +48,7 @@ class SubscriptionsController < ApplicationController
       if jobseeker_signed_in?
         redirect_to jobseekers_subscriptions_path, success: t(".success")
       else
-        @jobseeker_account_exists = Jobseeker.exists?(email: subscription.email)
+        @jobseeker = Jobseeker.find_by(email: subscription.email)
         render :confirm
       end
     else
