@@ -1,4 +1,4 @@
-class Jobseekers::AccountFeedbacksController < Jobseekers::ApplicationController
+class Jobseekers::AccountFeedbacksController < Jobseekers::BaseController
   include FeedbackEventConcerns
 
   def new

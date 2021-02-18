@@ -1,4 +1,4 @@
-class Jobseekers::JobApplications::BuildController < Jobseekers::ApplicationController
+class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
   include Wicked::Wizard
   include Jobseekers::Wizardable
 

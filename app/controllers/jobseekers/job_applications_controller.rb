@@ -1,4 +1,4 @@
-class Jobseekers::JobApplicationsController < Jobseekers::ApplicationController
+class Jobseekers::JobApplicationsController < Jobseekers::BaseController
   helper_method :job_application, :vacancy
 
   def new
