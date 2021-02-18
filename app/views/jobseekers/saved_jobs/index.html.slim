@@ -23,20 +23,20 @@
       section
         - if @saved_jobs.any?
           - @saved_jobs.each do |saved_job|
-            .card data-slug=saved_job.vacancy.slug
-              .card__contents
-                dl.card__title
-                  dd.govuk-body = govuk_link_to(saved_job.vacancy.job_title, job_path(saved_job.vacancy.slug), class: "govuk-link--no-visited-state")
-                  dd.govuk-body class="govuk-!-margin-bottom-2" = location(saved_job.vacancy.parent_organisation, job_location: saved_job.vacancy.job_location)
-                dl.card__details
-                  dd.govuk-body = t(".added_html", date: saved_job.created_at.strftime("%d %B %Y"))
-                  - if saved_job.vacancy.expires_at.past?
-                    dd.text-red = t(".deadline_passed")
-                  dd.govuk-body = t(".application_deadline_html", date: OrganisationVacancyPresenter.new(saved_job.vacancy).application_deadline)
-              dl.card__actions
-                dd
-                  ul.actions.govuk-list
-                    li = button_to t(".delete"), jobseekers_saved_job_path(saved_job.vacancy.id, saved_job, redirect_to_dashboard: true), method: :delete, class: "govuk-delete-link"
+            = render Shared::CardComponent.new(html_attributes: { "data-slug": saved_job.vacancy.slug }) do |card|
+              - card.header_item(value: govuk_link_to(saved_job.vacancy.job_title, job_path(saved_job.vacancy.slug)))
+              - card.header_item(value: location(saved_job.vacancy.parent_organisation, job_location: saved_job.vacancy.job_location))
+
+              - card.body_item(label: t(".added"), value: saved_job.created_at.strftime("%d %B %Y"))
+              - if saved_job.vacancy.expires_at.past?
+                - card.body_item(value: t(".deadline_passed"))
+              - card.body_item(label: t(".application_deadline"), value: OrganisationVacancyPresenter.new(saved_job.vacancy).application_deadline)
+
+              - card.action_item(text: t(".delete"),
+                action: jobseekers_saved_job_path(saved_job.vacancy.id, saved_job, redirect_to_dashboard: true),
+                method: :delete,
+                classes: "govuk-delete-link")
+
         - else
           = render(Shared::NotificationComponent.new(content: { title: t(".zero_saved_jobs_title"), body: t(".zero_saved_jobs_body_html", link_to: govuk_link_to(t(".link_find"), root_path)) }, style: "empty", dismiss: false, background: true, alert: false))
 

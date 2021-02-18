@@ -216,8 +216,8 @@ en:
       destroy:
         success: Saved job removed
       index:
-        added_html: '<span class="govuk-!-font-weight-bold">Added:</span> %{date}'
-        application_deadline_html: '<span class="govuk-!-font-weight-bold">Application deadline:</span> %{date}'
+        added: Added
+        application_deadline: Application deadline
         link_find: Find a teaching job
         page_title: Saved jobs
         deadline_passed: Deadline passed
@@ -262,7 +262,7 @@ en:
         link_manage: Manage alert
         link_unsubscribe: Unsubscribe
         page_title: Job alerts
-        receiving_html: '<span class="govuk-!-font-weight-bold">Receiving:</span> %{frequency}'
+        receiving: Receiving
         zero_subscriptions_body_html: '%{link_to} to be made aware of future listings.'
         zero_subscriptions_title: You have no job alerts set up
     unlocks:
