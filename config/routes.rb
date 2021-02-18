@@ -37,6 +37,7 @@ Rails.application.routes.draw do
         end
         get :review
         post :submit
+        resource :feedback, only: %i[create], controller: "job_applications/feedbacks"
       end
     end
 

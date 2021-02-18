@@ -2,6 +2,7 @@ module FeedbackEventConcerns
   extend ActiveSupport::Concern
 
   ANONYMISED_ATTRIBUTES = {
+    application_id: "application_identifier",
     email: "email_identifier",
     jobseeker_id: "jobseeker_identifier",
     publisher_id: "publisher_identifier",

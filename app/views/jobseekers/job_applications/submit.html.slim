@@ -18,11 +18,20 @@
     p = t(".next_step.shortlisted", organisation: vacancy.parent_organisation.name)
 
     - if Rails.env.development?
-      p style="color: red; font-weight: bold" = "This link doesn't point to the 'my applications' page, because that page hasn't been made yet."
+      p style="color: red; font-weight: bold" = "TODO: This link doesn't point to the 'my applications' page, because that page hasn't been made yet. Also, the feedback form should redirect to that page on submit."
 
     = govuk_link_to t(".next_step.view_applications"), jobseeker_root_path, class: "govuk-button--secondary govuk-!-margin-bottom-3", button: true
 
     hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
 
-    h2.govuk-heading-m = t(".feedback.heading")
-    p = t(".feedback.description")
+    = form_for @application_feedback_form, url: jobseekers_job_application_feedback_path(anchor: "new_jobseekers_job_application_feedback_form") do |f|
+      = f.govuk_error_summary
+
+      h2.govuk-heading-m = t(".feedback.heading")
+      p = t(".feedback.description")
+
+      = f.govuk_collection_radio_buttons :rating, Feedback.ratings.keys, :to_s
+
+      = f.govuk_text_area :comment, label: { size: "s" }, rows: 10, max_chars: 1200, form_group: { classes: "optional-field" }
+
+      = f.govuk_submit t("buttons.submit_feedback")

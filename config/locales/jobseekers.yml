@@ -110,6 +110,9 @@ en:
         salary: Salary scale or level
         subjects: Subjects and key stages taught
         started_on: Start date
+      feedbacks:
+        create:
+          success: Thank you for your feedback
       heading_component:
         caption: "%{job_title} at %{organisation_name}"
         heading: Application

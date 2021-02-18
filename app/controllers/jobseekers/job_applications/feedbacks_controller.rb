@@ -16,11 +16,11 @@ class Jobseekers::JobApplications::FeedbacksController < Jobseekers::JobApplicat
   private
 
   def feedback_form_params
-    params.require(:jobseekers_job_applications_feedback_form).permit(:rating, :comment)
+    params.require(:jobseekers_job_application_feedback_form).permit(:rating, :comment)
   end
 
   def feedback_attributes
-    application_feedback_form_params.merge(
+    feedback_form_params.merge(
       application_id: job_application.id,
       feedback_type: "application",
       jobseeker_id: current_jobseeker.id)

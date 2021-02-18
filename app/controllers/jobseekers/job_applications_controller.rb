@@ -13,6 +13,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
 
   def submit
     job_application.update(status: :submitted)
+    @application_feedback_form = Jobseekers::JobApplication::FeedbackForm.new
   end
 
   private
