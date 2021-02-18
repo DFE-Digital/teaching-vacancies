@@ -1,6 +1,6 @@
-variable region { default = "eu-west-2" }
+variable "region" { default = "eu-west-2" }
 
-variable s3_bucket_name { default = "terraform-state-002" }
+variable "s3_bucket_name" { default = "terraform-state-002" }
 
 locals {
   # awslogsdelivery ID from https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html#AccessLogsBucketAndFileOwnership

@@ -1,11 +1,11 @@
-resource aws_route53_zone zones {
+resource "aws_route53_zone" "zones" {
   for_each      = local.route53_zones
   name          = each.value
   comment       = "DNS Zone for Teaching Vacancies"
   force_destroy = false
 }
 
-resource aws_route53_record CAA {
+resource "aws_route53_record" "CAA" {
   for_each = local.route53_zones
   zone_id  = aws_route53_zone.zones[each.value].zone_id
   name     = each.value
@@ -14,7 +14,7 @@ resource aws_route53_record CAA {
   type     = "CAA"
 }
 
-resource aws_route53_record SPF {
+resource "aws_route53_record" "SPF" {
   for_each = local.route53_zones
   zone_id  = aws_route53_zone.zones[each.value].zone_id
   name     = each.value
@@ -23,7 +23,7 @@ resource aws_route53_record SPF {
   type     = "TXT"
 }
 
-resource aws_route53_record DMARC {
+resource "aws_route53_record" "DMARC" {
   for_each = local.route53_zones
   zone_id  = aws_route53_zone.zones[each.value].zone_id
   name     = "_dmarc.${each.value}"
@@ -32,7 +32,7 @@ resource aws_route53_record DMARC {
   type     = "TXT"
 }
 
-resource aws_route53_record bing {
+resource "aws_route53_record" "bing" {
   zone_id = aws_route53_zone.zones[var.secondary_zone_name].zone_id
   name    = "${local.secondary_zone_bing_validation_record_name}.${var.secondary_zone_name}"
   records = ["verify.bing.com."]

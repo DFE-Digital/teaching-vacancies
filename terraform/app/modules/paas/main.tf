@@ -1,31 +1,31 @@
-resource cloudfoundry_service_instance postgres_instance {
+resource "cloudfoundry_service_instance" "postgres_instance" {
   name         = local.postgres_service_name
   space        = data.cloudfoundry_space.space.id
   service_plan = data.cloudfoundry_service.postgres.service_plans[var.postgres_service_plan]
   json_params  = "{\"enable_extensions\": [\"pgcrypto\", \"fuzzystrmatch\", \"plpgsql\"]}"
 }
 
-resource cloudfoundry_service_instance redis_cache_instance {
+resource "cloudfoundry_service_instance" "redis_cache_instance" {
   name         = local.redis_cache_service_name
   space        = data.cloudfoundry_space.space.id
   service_plan = data.cloudfoundry_service.redis.service_plans[var.redis_cache_service_plan]
   json_params  = "{\"maxmemory_policy\": \"allkeys-lru\"}"
 }
 
-resource cloudfoundry_service_instance redis_queue_instance {
+resource "cloudfoundry_service_instance" "redis_queue_instance" {
   name         = local.redis_queue_service_name
   space        = data.cloudfoundry_space.space.id
   service_plan = data.cloudfoundry_service.redis.service_plans[var.redis_queue_service_plan]
   json_params  = "{\"maxmemory_policy\": \"noeviction\"}"
 }
 
-resource cloudfoundry_user_provided_service papertrail {
+resource "cloudfoundry_user_provided_service" "papertrail" {
   name             = local.papertrail_service_name
   space            = data.cloudfoundry_space.space.id
   syslog_drain_url = var.papertrail_url
 }
 
-resource cloudfoundry_app web_app {
+resource "cloudfoundry_app" "web_app" {
   name                       = local.web_app_name
   command                    = var.web_app_start_command
   docker_image               = var.app_docker_image
@@ -65,26 +65,26 @@ resource cloudfoundry_app web_app {
   environment = local.app_environment
 }
 
-resource cloudfoundry_route web_app_route {
+resource "cloudfoundry_route" "web_app_route" {
   domain   = data.cloudfoundry_domain.cloudapps_digital.id
   space    = data.cloudfoundry_space.space.id
   hostname = local.web_app_name
 }
 
-resource cloudfoundry_route web_app_route_cloudfront_apex {
+resource "cloudfoundry_route" "web_app_route_cloudfront_apex" {
   for_each = toset(var.route53_a_records)
   domain   = data.cloudfoundry_domain.cloudfront[each.key].id
   space    = data.cloudfoundry_space.space.id
 }
 
-resource cloudfoundry_route web_app_route_cloudfront_subdomain {
+resource "cloudfoundry_route" "web_app_route_cloudfront_subdomain" {
   for_each = var.hostname_domain_map
   domain   = data.cloudfoundry_domain.cloudfront[each.value["domain"]].id
   space    = data.cloudfoundry_space.space.id
   hostname = each.value["hostname"]
 }
 
-resource cloudfoundry_app worker_app {
+resource "cloudfoundry_app" "worker_app" {
   name              = local.worker_app_name
   command           = local.worker_app_start_command
   docker_image      = var.app_docker_image

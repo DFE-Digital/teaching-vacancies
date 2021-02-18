@@ -1,4 +1,4 @@
-provider aws {
+provider "aws" {
   region = var.region
 }
 
@@ -13,7 +13,7 @@ terraform {
 }
 
 
-module domains {
+module "domains" {
   source = "./modules/domains"
 
   primary_zone_name   = local.primary_zone_name

@@ -5,7 +5,7 @@
 
 # Route53 all zones
 
-data aws_iam_policy_document route53_all {
+data "aws_iam_policy_document" "route53_all" {
   statement {
     actions   = ["route53:ListHostedZones"]
     resources = ["*"]
@@ -17,19 +17,19 @@ data aws_iam_policy_document route53_all {
   }
 }
 
-resource aws_iam_policy route53_all {
+resource "aws_iam_policy" "route53_all" {
   name   = "route53_all"
   policy = data.aws_iam_policy_document.route53_all.json
 }
 
-resource aws_iam_user_policy_attachment route53_all {
+resource "aws_iam_user_policy_attachment" "route53_all" {
   user       = data.aws_iam_user.deploy.user_name
   policy_arn = aws_iam_policy.route53_all.arn
 }
 
 # Route53 specific hosted zones
 
-data aws_iam_policy_document route53_hosted_zones {
+data "aws_iam_policy_document" "route53_hosted_zones" {
 
   statement {
     actions = [
@@ -50,12 +50,12 @@ data aws_iam_policy_document route53_hosted_zones {
   }
 }
 
-resource aws_iam_policy route53_hosted_zones {
+resource "aws_iam_policy" "route53_hosted_zones" {
   name   = "route53_hosted_zones"
   policy = data.aws_iam_policy_document.route53_hosted_zones.json
 }
 
-resource aws_iam_user_policy_attachment route53_hosted_zones {
+resource "aws_iam_user_policy_attachment" "route53_hosted_zones" {
   user       = data.aws_iam_user.deploy.user_name
   policy_arn = aws_iam_policy.route53_hosted_zones.arn
 }

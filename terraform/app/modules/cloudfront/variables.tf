@@ -1,20 +1,20 @@
-variable environment {
+variable "environment" {
 }
 
-variable service_name {
+variable "service_name" {
 }
 
-variable cloudfront_origin_domain_name {
+variable "cloudfront_origin_domain_name" {
 }
 
-variable offline_bucket_domain_name {
+variable "offline_bucket_domain_name" {
 }
 
-variable offline_bucket_origin_path {
+variable "offline_bucket_origin_path" {
 }
 
 
-variable default_header_list {
+variable "default_header_list" {
   default = [
     "Authorization",
     "Origin",
@@ -30,13 +30,13 @@ variable default_header_list {
   ]
 }
 
-variable route53_zones {
-  type = list
+variable "route53_zones" {
+  type = list(any)
 }
 
-variable is_production {}
-variable route53_cname_record {}
-variable route53_a_records {}
+variable "is_production" {}
+variable "route53_cname_record" {}
+variable "route53_a_records" {}
 
 locals {
   route53_zones                = toset(var.route53_zones)

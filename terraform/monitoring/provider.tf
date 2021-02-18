@@ -1,4 +1,4 @@
-provider cloudfoundry {
+provider "cloudfoundry" {
   store_tokens_path = "./tokens"
   api_url           = local.paas_api_url
   user              = var.paas_user
@@ -6,6 +6,6 @@ provider cloudfoundry {
   sso_passcode      = var.paas_sso_passcode
 }
 
-provider aws {
+provider "aws" {
   region = local.aws_region
 }

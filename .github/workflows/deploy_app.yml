@@ -35,7 +35,7 @@ jobs:
     - name: Pin Terraform version
       uses: hashicorp/setup-terraform@v1
       with:
-        terraform_version: 0.13.5
+        terraform_version: 0.14.7
 
     - name: Set environment variables for review
       if: startsWith(github.event.inputs.environment, 'review')

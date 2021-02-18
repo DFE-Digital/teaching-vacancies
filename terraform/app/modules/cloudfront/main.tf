@@ -1,4 +1,4 @@
-resource aws_cloudfront_distribution default {
+resource "aws_cloudfront_distribution" "default" {
   origin {
     domain_name = var.cloudfront_origin_domain_name
     origin_id   = "${var.service_name}-${var.environment}-default-origin"
@@ -150,7 +150,7 @@ resource aws_cloudfront_distribution default {
   }
 }
 
-resource aws_route53_record cloudfront-a-records {
+resource "aws_route53_record" "cloudfront-a-records" {
   for_each = local.route53_zones_with_a_records
   zone_id  = data.aws_route53_zone.zones[each.value].zone_id
   name     = each.value
@@ -163,7 +163,7 @@ resource aws_route53_record cloudfront-a-records {
   }
 }
 
-resource aws_route53_record cloudfront-cnames {
+resource "aws_route53_record" "cloudfront-cnames" {
   for_each = local.route53_zones_with_cnames
   zone_id  = data.aws_route53_zone.zones[each.value].zone_id
   name     = "${var.route53_cname_record}.${each.value}"

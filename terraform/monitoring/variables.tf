@@ -1,6 +1,6 @@
-variable paas_sso_passcode { default = null }
-variable paas_user { default = null }
-variable paas_password { default = null }
+variable "paas_sso_passcode" { default = null }
+variable "paas_user" { default = null }
+variable "paas_password" { default = null }
 
 locals {
   service_name               = "teaching-vacancies"

@@ -1,4 +1,4 @@
-resource aws_acm_certificate cert {
+resource "aws_acm_certificate" "cert" {
   provider                  = aws.aws_us_east_1
   domain_name               = var.primary_zone_name
   subject_alternative_names = local.subject_alternative_names
@@ -13,7 +13,7 @@ resource aws_acm_certificate cert {
   }
 }
 
-resource aws_acm_certificate_validation cert {
+resource "aws_acm_certificate_validation" "cert" {
   provider        = aws.aws_us_east_1
   certificate_arn = aws_acm_certificate.cert.arn
   # We use an explicit dependency and pass this directly from the
@@ -28,7 +28,7 @@ resource aws_acm_certificate_validation cert {
   ]
 }
 
-resource aws_route53_record cert_validation {
+resource "aws_route53_record" "cert_validation" {
   for_each = local.route53_zones
   zone_id  = data.aws_route53_zone.zone[each.key].zone_id
   name     = local.validations[each.key].resource_record_name
