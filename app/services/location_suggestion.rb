@@ -45,11 +45,12 @@ class LocationSuggestion
 
   def build_google_query
     {
-      key: GOOGLE_LOCATION_SEARCH_API_KEY,
+      key: GOOGLE_PLACES_AUTOCOMPLETE_KEY,
       language: "en",
       input: location_input,
-      components: "country:GB",
+      components: "country:uk",
       type: "geocode",
+      region: "uk",
     }
   end
 end
