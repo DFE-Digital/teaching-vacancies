@@ -4,11 +4,8 @@ RSpec.describe Publishers::Vacancies::ApplicationController, type: :controller d
   describe "#update_google_index" do
     let!(:vacancy) { create(:vacancy) }
 
-    context "when in production" do
-      before(:each) do
-        allow(Rails).to receive(:env)
-          .and_return(ActiveSupport::StringInquirer.new("production"))
-      end
+    context "when DisableExpensiveJobs is not enabled" do
+      before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false) }
 
       it "does perform the task" do
         expect(UpdateGoogleIndexQueueJob).to receive(:perform_later)
@@ -16,11 +13,8 @@ RSpec.describe Publishers::Vacancies::ApplicationController, type: :controller d
       end
     end
 
-    context "when NOT in production" do
-      before(:each) do
-        allow(Rails).to receive(:env)
-          .and_return(ActiveSupport::StringInquirer.new("staging"))
-      end
+    context "when DisableExpensiveJobs is enabled" do
+      before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(true) }
 
       it "does NOT perform the task" do
         expect(UpdateGoogleIndexQueueJob).not_to receive(:perform_later)
@@ -32,11 +26,8 @@ RSpec.describe Publishers::Vacancies::ApplicationController, type: :controller d
   describe "#remove_google_index" do
     let!(:vacancy) { create(:vacancy) }
 
-    context "when in production" do
-      before(:each) do
-        allow(Rails).to receive(:env)
-          .and_return(ActiveSupport::StringInquirer.new("production"))
-      end
+    context "when DisableExpensiveJobs is not enabled" do
+      before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false) }
 
       it "does perform the task" do
         expect(RemoveGoogleIndexQueueJob).to receive(:perform_later)
@@ -44,11 +35,8 @@ RSpec.describe Publishers::Vacancies::ApplicationController, type: :controller d
       end
     end
 
-    context "when NOT in production" do
-      before(:each) do
-        allow(Rails).to receive(:env)
-          .and_return(ActiveSupport::StringInquirer.new("staging"))
-      end
+    context "when DisableExpensiveJobs is enabled" do
+      before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(true) }
 
       it "does NOT perform the task" do
         expect(RemoveGoogleIndexQueueJob).not_to receive(:perform_later)

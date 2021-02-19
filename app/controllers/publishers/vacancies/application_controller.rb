@@ -74,7 +74,7 @@ class Publishers::Vacancies::ApplicationController < Publishers::BaseController
   end
 
   def remove_google_index(job)
-    return unless Rails.env.production?
+    return if DisableExpensiveJobs.enabled?
 
     url = job_url(job)
     RemoveGoogleIndexQueueJob.perform_later(url)
@@ -101,7 +101,7 @@ class Publishers::Vacancies::ApplicationController < Publishers::BaseController
   end
 
   def update_google_index(job)
-    return unless Rails.env.production?
+    return if DisableExpensiveJobs.enabled?
 
     url = job_url(job)
     UpdateGoogleIndexQueueJob.perform_later(url)
