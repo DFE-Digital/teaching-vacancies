@@ -9,7 +9,7 @@ class Geocoding
 
   def coordinates
     Rails.cache.fetch([:geocoding, location], expires_in: CACHE_DURATION) do
-      Geocoder.coordinates(location, components: "country:GB") || no_match
+      Geocoder.coordinates(location) || no_match
     end
   end
 
