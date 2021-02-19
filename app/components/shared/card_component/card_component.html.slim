@@ -3,12 +3,12 @@ dl.card-component id=id class=classes *html_attributes
     dt.card-component__header
       ul.govuk-list
         - header_items.each do |item|
-          li == render(item)
+          li == item
 
     dd.card-component__body
       ul.govuk-list
         - body_items.each do |item|
-          li == render(item)
+          li == item
 
   dd.card-component__actions
     ul.govuk-list

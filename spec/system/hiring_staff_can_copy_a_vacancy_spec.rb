@@ -28,7 +28,7 @@ RSpec.describe "Copying a vacancy" do
 
       visit organisation_path
 
-      within("ul.actions") do
+      within(".card-component__actions") do
         click_on I18n.t("jobs.copy_link")
       end
 
@@ -50,7 +50,7 @@ RSpec.describe "Copying a vacancy" do
 
       visit organisation_path
 
-      within("ul.actions") do
+      within(".card-component__actions") do
         click_on I18n.t("jobs.copy_link")
       end
 
@@ -77,7 +77,7 @@ RSpec.describe "Copying a vacancy" do
 
     visit organisation_path
 
-    within("ul.actions") do
+    within(".card-component__actions") do
       click_on I18n.t("jobs.copy_link")
     end
 
@@ -123,7 +123,7 @@ RSpec.describe "Copying a vacancy" do
       new_vacancy.publish_on = 0.days.from_now
       new_vacancy.expires_at = new_vacancy.expires_on = 30.days.from_now
 
-      within("ul.actions") do
+      within(".card-component__actions") do
         click_on I18n.t("jobs.copy_link")
       end
 
@@ -172,7 +172,7 @@ RSpec.describe "Copying a vacancy" do
       visit organisation_path
 
       click_on I18n.t("jobs.pending_jobs")
-      within("ul.actions") do
+      within(".card-component__actions") do
         click_on I18n.t("jobs.copy_link")
       end
 
@@ -202,7 +202,7 @@ RSpec.describe "Copying a vacancy" do
       visit organisation_path
 
       click_on I18n.t("jobs.expired_jobs")
-      within("ul.actions") do
+      within(".card-component__actions") do
         click_on I18n.t("jobs.copy_link")
       end
 
@@ -232,7 +232,7 @@ RSpec.describe "Copying a vacancy" do
 
       visit organisation_path
 
-      within("ul.actions") do
+      within(".card-component__actions") do
         click_on I18n.t("jobs.copy_link")
       end
 
@@ -260,7 +260,7 @@ RSpec.describe "Copying a vacancy" do
     before do
       visit organisation_path
 
-      within("ul.actions") do
+      within(".card-component__actions") do
         click_on I18n.t("jobs.copy_link")
       end
 

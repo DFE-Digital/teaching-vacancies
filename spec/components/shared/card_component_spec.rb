@@ -6,7 +6,7 @@ RSpec.describe Shared::CardComponent, type: :component do
       render_inline(described_class.new(id: "cosmic-id", classes: "cosmic-class", html_attributes: { "data-test": "cosmic" })) do |card|
         card.header_item(label: "header title", value: "header value")
         card.body_item(label: "body title", value: "body value")
-        card.action_item(text: "action text", action: "/action/path")
+        card.action_item(action: "action")
       end
     end
 
@@ -27,7 +27,7 @@ RSpec.describe Shared::CardComponent, type: :component do
     end
 
     it "renders the actions" do
-      expect(inline_component.css(".card-component__actions .govuk-list li").text).to include("action text")
+      expect(inline_component.css(".card-component__actions .govuk-list li").text).to include("action")
       expect(inline_component.css(".card-component__actions .govuk-list li").count).to eq(1)
     end
   end

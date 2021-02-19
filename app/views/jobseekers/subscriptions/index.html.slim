@@ -35,9 +35,8 @@
 
               - card.body_item(label: t(".receiving"), value: t(".frequency.#{subscription.frequency}"))
 
-              - card.action_item(text: t(".link_manage"), action: edit_subscription_path(subscription.token))
-              - card.action_item(text: t(".link_unsubscribe"), action: unsubscribe_subscription_path(subscription.token))
-
+              - card.action_item(action: govuk_link_to(t(".link_manage"), edit_subscription_path(subscription.token)))
+              - card.action_item(action: govuk_link_to(t(".link_unsubscribe"), unsubscribe_subscription_path(subscription.token)))
         - else
           = render(Shared::NotificationComponent.new(content: { title: t(".zero_subscriptions_title"), body: t(".zero_subscriptions_body_html", link_to: govuk_link_to(t(".link_create"), new_subscription_path(email: current_jobseeker.email, origin: jobseekers_subscriptions_path))) }, style: "empty", dismiss: false, background: true, alert: false))
 
