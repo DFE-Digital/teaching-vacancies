@@ -1,4 +1,4 @@
-raise if Rails.env.production?
+raise "Aborting seeds - running in production with existing vacancies" if Rails.env.production? && Vacancy.any?
 
 require "faker"
 require "factory_bot_rails"
