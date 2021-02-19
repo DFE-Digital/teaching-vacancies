@@ -1,5 +1,7 @@
 .govuk-panel {
   &.govuk-panel--confirmation {
+    margin-bottom: govuk-spacing(6);
+
     &::before {
       background-color: rgba(255, 255, 255, 0.1);
       background-image: url('../../images/svg/icon-check.svg');

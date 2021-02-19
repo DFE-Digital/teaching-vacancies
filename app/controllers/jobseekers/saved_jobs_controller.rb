@@ -1,4 +1,4 @@
-class Jobseekers::SavedJobsController < Jobseekers::ApplicationController
+class Jobseekers::SavedJobsController < Jobseekers::BaseController
   before_action :set_up_saved_job, only: %i[new destroy]
 
   # This action is not 'create' because we need to redirect here when an unauthenticated jobseeker attempts to save a job

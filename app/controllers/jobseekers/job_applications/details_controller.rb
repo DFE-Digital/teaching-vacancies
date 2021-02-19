@@ -1,4 +1,4 @@
-class Jobseekers::JobApplications::DetailsController < Jobseekers::ApplicationController
+class Jobseekers::JobApplications::DetailsController < Jobseekers::BaseController
   helper_method :back_link_path, :build_step, :detail, :form, :job_application
 
   def create

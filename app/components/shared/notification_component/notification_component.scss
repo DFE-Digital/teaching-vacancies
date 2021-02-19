@@ -12,7 +12,7 @@
   }
 }
 
-.js-dismissable {
+.js-dismissible {
   transition: opacity 0.6s;
 }
 
@@ -30,12 +30,16 @@
     outline: $govuk-focus-width solid $govuk-focus-colour;
   }
 
-  &.icon--left .govuk-notification__body {
+  &.icon--left .govuk-notification__content {
     padding-left: govuk-spacing(5);
   }
 
-  &.icon--right .govuk-notification__body {
+  &.icon--right .govuk-notification__content {
     padding-right: govuk-spacing(5);
+  }
+
+  &.js-dismissible .govuk-notification__content {
+    padding-right: govuk-spacing(9);
   }
 }
 
@@ -48,7 +52,6 @@
 
 .govuk-notification__body {
   @include govuk-font($size: 19);
-  padding-right: govuk-spacing(9);
 
   p {
     @include govuk-responsive-margin(4, 'bottom');

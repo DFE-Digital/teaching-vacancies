@@ -52,6 +52,11 @@ en:
     comment:
       blank: You have not submitted any further feedback
       too_long: Feedback must not be more than 1,200 characters
+  jobseekers_job_application_feedback_form: &jobseekers_job_application_feedback_form_errors
+    rating:
+      inclusion: Select how satisfied or dissatisfied you are
+    comment:
+      too_long: Feedback must not be more than 1,200 characters
   vacancy_publisher_feedback_errors: &vacancy_publisher_feedback_errors
     user_participation_response:
       inclusion: Please indicate if you'd like to participate in user research
@@ -150,6 +155,9 @@ en:
         jobseekers/job_alert_feedback_form:
           attributes:
             <<: *job_alert_feedback_errors
+        jobseekers/job_application/feedback_form:
+          attributes:
+            <<: *jobseekers_job_application_feedback_form_errors
         jobseekers/nqt_job_alerts_form:
           attributes:
             <<: *nqt_job_alert_errors

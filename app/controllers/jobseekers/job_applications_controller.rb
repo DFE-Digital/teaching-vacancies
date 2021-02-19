@@ -1,4 +1,4 @@
-class Jobseekers::JobApplicationsController < Jobseekers::ApplicationController
+class Jobseekers::JobApplicationsController < Jobseekers::BaseController
   helper_method :job_application, :vacancy
 
   def new
@@ -13,6 +13,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::ApplicationController
 
   def submit
     job_application.update(status: :submitted)
+    @application_feedback_form = Jobseekers::JobApplication::FeedbackForm.new
   end
 
   private
@@ -22,6 +23,10 @@ class Jobseekers::JobApplicationsController < Jobseekers::ApplicationController
   end
 
   def vacancy
-    @vacancy ||= Vacancy.live.find(params[:job_id])
+    @vacancy ||= if params[:job_id].present?
+                   Vacancy.live.find(params[:job_id])
+                 else
+                   job_application.vacancy
+                 end
   end
 end

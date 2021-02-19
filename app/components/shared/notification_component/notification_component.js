@@ -1,8 +1,8 @@
 import '../../../frontend/src/lib/polyfill/closest.polyfill';
 import '../../../frontend/src/lib/polyfill/remove.polyfill';
 
-const CTA_LINK_CLASS = 'js-dismissable__link';
-const DISMISSIBLE_ELEMENT_SELECTOR = '.js-dismissable';
+const CTA_LINK_CLASS = 'js-dismissible__link';
+const DISMISSIBLE_ELEMENT_SELECTOR = '.js-dismissible';
 
 document.addEventListener('click', (e) => {
   if (e.target.classList.contains(CTA_LINK_CLASS)) {

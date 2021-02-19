@@ -171,6 +171,10 @@ en:
           interested: 'Yes'
           uninterested: 'No'
 
+      jobseeker:
+        email: Email address
+        password: Password
+
       jobseekers_account_feedback_form:
         rating_options:
           highly_satisfied: Highly satisfied
@@ -179,13 +183,64 @@ en:
           somewhat_dissatisfied: Somewhat dissatisfied
           highly_dissatisfied: Highly dissatisfied
         comment: Do you have any suggestions on how we could improve the service?
-
-      jobseeker:
-        email: Email address
-        password: Password
-
       jobseekers_job_alert_further_feedback_form:
         comment: Would you like to add any further comments about the relevancy of the job alerts you have received?
+
+      jobseekers_job_application_ask_for_support_form:
+        support_details: Tell us any information you think is relevant
+        support_needed_options:
+          "no": "No"
+          "yes": "Yes"
+      jobseekers_job_application_declarations_form:
+        close_relationships_details: Please give details
+        close_relationships_options:
+          "no": "No"
+          "yes": "Yes"
+      jobseekers_job_application_employment_history_form:
+        gaps_in_employment: Gaps in your employment
+      jobseekers_job_application_feedback_form:
+        rating_options:
+          highly_satisfied: Highly satisfied
+          somewhat_satisfied: Somewhat satisfied
+          neither: Neither satisfied nor dissatisfied
+          somewhat_dissatisfied: Somewhat dissatisfied
+          highly_dissatisfied: Highly dissatisfied
+        comment: Do you have any suggestions on how we could improve the service?
+      jobseekers_job_application_personal_details_form:
+        your_address: Your address
+        building_and_street: Building and street
+        first_name: First name
+        last_name: Last name
+        national_insurance_number: National Insurance number
+        phone_number: Phone number
+        previous_names: Previous names
+        town_or_city: Town or city
+        teacher_reference_number: Teacher reference number
+      jobseekers_job_application_personal_statement_form:
+        personal_statement: Your personal statement
+      jobseekers_job_application_professional_status_form:
+        qualified_teacher_status_options:
+          "no": "No"
+          on_track: I'm on track to receive my QTS
+          "yes": "Yes"
+        qualified_teacher_status_year: Year QTS was awarded
+      jobseekers_job_application_details_employment_history_form:
+        current_role_options:
+          "no": "No"
+          "yes": "Yes"
+        job_title: Job title(s)
+        main_duties: Main duties
+        organisation: School or other organisation
+        reason_for_leaving: Reason for leaving
+        salary: Salary scale or level
+        subjects: Subjects and key stages taught
+      jobseekers_job_application_details_reference_form:
+        email_address: Email address
+        job_title: Job title
+        name: Name
+        organisation: Organisation
+        relationship_to_applicant: Relationship to applicant
+        phone_number: Phone number
       jobseekers_nqt_job_alerts_form:
         email: Email address
         keywords: Keywords
@@ -206,67 +261,6 @@ en:
           job_found: I have found a teaching job
           circumstances_change: My circumstances have changed
           other_reason: Another reason
-
-      jobseekers_job_application_ask_for_support_form:
-        support_details: Tell us any information you think is relevant
-        support_needed_options:
-          "no": "No"
-          "yes": "Yes"
-      jobseekers_job_application_declarations_form:
-        close_relationships_details: Please give details
-        close_relationships_options:
-          "no": "No"
-          "yes": "Yes"
-      jobseekers_job_application_employment_history_form:
-        gaps_in_employment: Gaps in your employment
-      jobseekers_job_application_personal_details_form:
-        your_address: Your address
-        building_and_street: Building and street
-        first_name: First name
-        last_name: Last name
-        national_insurance_number: National Insurance number
-        phone_number: Phone number
-        previous_names: Previous names
-        town_or_city: Town or city
-        teacher_reference_number: Teacher reference number
-      jobseekers_job_application_personal_statement_form:
-        personal_statement: Your personal statement
-      jobseekers_job_application_professional_status_form:
-        qualified_teacher_status_options:
-          "no": "No"
-          on_track: I'm on track to receive my QTS
-          "yes": "Yes"
-        qualified_teacher_status_year: Year QTS was awarded
-
-      jobseekers_job_application_details_employment_history_form:
-        current_role_options:
-          "no": "No"
-          "yes": "Yes"
-        job_title: Job title(s)
-        main_duties: Main duties
-        organisation: School or other organisation
-        reason_for_leaving: Reason for leaving
-        salary: Salary scale or level
-        subjects: Subjects and key stages taught
-      jobseekers_job_application_details_reference_form:
-        email_address: Email address
-        job_title: Job title
-        name: Name
-        organisation: Organisation
-        relationship_to_applicant: Relationship to applicant
-        phone_number: Phone number
-
-      personal_details_form:
-        address: Your address
-        building_and_street: Building and street
-        email_address: Email address
-        first_name: First name
-        last_name: Last name
-        national_insurance_number: National Insurance number
-        phone_number: Phone number
-        previous_names: Previous names
-        teacher_reference_number: Teacher reference number (TRN)
-        town_or_city: Town or city
 
       publishers_organisation_form:
         description: Description of %{organisation_type}
@@ -326,11 +320,6 @@ en:
         rating: >-
           How satisfied are you with your experience of using Teaching Vacancies?
 
-      jobseekers_subscription_form:
-        frequency: When do you want to receive alerts?
-      jobseekers_unsubscribe_feedback_form:
-        reason: Why do you want to unsubscribe from this alert?
-
       jobseekers_job_application_ask_for_support_form:
         support_needed: Do you want to ask for support so that you can attend an interview?
       jobseekers_job_application_declarations_form:
@@ -345,9 +334,17 @@ en:
         current_role: Is this your current role?
         ended_on: End date
         started_on: Start date
+      jobseekers_job_application_feedback_form:
+        rating: >-
+          How satisfied are you with your experience of using Teaching Vacancies?
       jobseekers_job_application_professional_status_form:
         statutory_induction_complete: Have you completed your statutory induction year?
         qualified_teacher_status: Do you have qualified teacher status (QTS)?
+
+      jobseekers_subscription_form:
+        frequency: When do you want to receive alerts?
+      jobseekers_unsubscribe_feedback_form:
+        reason: Why do you want to unsubscribe from this alert?
 
       publishers_job_listing_applying_for_the_job_form:
         apply_through_teaching_vacancies: How would you like candidates to apply?

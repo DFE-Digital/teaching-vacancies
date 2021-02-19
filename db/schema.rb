@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_16_154508) do
+ActiveRecord::Schema.define(version: 2021_02_18_135747) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_154508) do
     t.uuid "publisher_id"
     t.uuid "subscription_id"
     t.uuid "vacancy_id"
+    t.uuid "application_id"
     t.index ["vacancy_id"], name: "index_feedbacks_on_vacancy_id"
   end
 

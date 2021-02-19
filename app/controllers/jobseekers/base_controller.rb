@@ -1,4 +1,4 @@
-class Jobseekers::ApplicationController < ApplicationController
+class Jobseekers::BaseController < ApplicationController
   before_action :store_jobseeker_location!, if: :storable_location?
   before_action :authenticate_jobseeker!
 

@@ -1,4 +1,4 @@
-class Jobseekers::SubscriptionsController < Jobseekers::ApplicationController
+class Jobseekers::SubscriptionsController < Jobseekers::BaseController
   def index
     @sort = Jobseekers::SubscriptionSort.new.update(column: params[:sort_column])
     @sort_form = SortForm.new(@sort.column)

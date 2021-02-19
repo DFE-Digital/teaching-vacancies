@@ -18,7 +18,7 @@ RSpec.describe Shared::NotificationComponent, type: :component do
                   ))
   end
 
-  describe "#content" do
+  describe "content" do
     context "when content is a string" do
       it "renders content in the body" do
         expect(inline_component.css(".govuk-notification__body").to_html).to include("This is content")
@@ -38,8 +38,12 @@ RSpec.describe Shared::NotificationComponent, type: :component do
     end
   end
 
-  describe "#dismiss" do
+  describe "dismiss" do
     context "when dismiss is true" do
+      it "applies correct class" do
+        expect(inline_component.css(".js-dismissible")).to_not be_blank
+      end
+
       it "renders the dismiss link" do
         expect(inline_component.css(".dismiss-link").to_html).to include(I18n.t("buttons.dismiss"))
       end
@@ -48,13 +52,17 @@ RSpec.describe Shared::NotificationComponent, type: :component do
     context "when dismiss is false" do
       let(:dismiss) { false }
 
+      it "applies correct class" do
+        expect(inline_component.css(".js-dismissible")).to be_blank
+      end
+
       it "does not render the dismiss link" do
         expect(rendered_component).to_not include(I18n.t("buttons.dismiss"))
       end
     end
   end
 
-  describe "#style" do
+  describe "style" do
     context "when style is notice" do
       it "applies correct class" do
         expect(inline_component.css(".govuk-notification--notice")).to_not be_blank
@@ -106,7 +114,7 @@ RSpec.describe Shared::NotificationComponent, type: :component do
     end
   end
 
-  describe "#background" do
+  describe "background" do
     context "when background is true" do
       let(:background) { true }
 
@@ -122,7 +130,7 @@ RSpec.describe Shared::NotificationComponent, type: :component do
     end
   end
 
-  describe "#links" do
+  describe "links" do
     context "when links are supplied" do
       let(:links) { { first: "This is a test link", second: "This is another link" } }
 
@@ -140,6 +148,37 @@ RSpec.describe Shared::NotificationComponent, type: :component do
         expect(inline_component.css(".govuk-notification__list").to_html).to include(
           '<a class="govuk-link govuk-link--no-visited-state" href="#second">This is another link</a>',
         )
+      end
+    end
+  end
+
+  describe "html_attributes" do
+    subject { inline_component.css(".govuk-notification").to_html }
+
+    context "when no html attributes are specified" do
+      it "has the default role and tab-index" do
+        expect(subject).to include('role="alert"')
+        expect(subject).to include('tabindex="-1"')
+      end
+    end
+
+    context "when html attributes are specified" do
+      let!(:inline_component) do
+        render_inline(described_class.new(
+                        content: content,
+                        style: style,
+                        links: links,
+                        dismiss: dismiss,
+                        background: background,
+                        alert: alert,
+                        html_attributes: { role: "fake-role" },
+                      ))
+      end
+
+      it "does not have the default role and tab-index" do
+        expect(subject).not_to include('role="alert"')
+        expect(subject).not_to include('tabindex="-1"')
+        expect(subject).to include('role="fake-role"')
       end
     end
   end
