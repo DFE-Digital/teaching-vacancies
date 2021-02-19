@@ -4,14 +4,14 @@ class Shared::NotificationComponent < ViewComponent::Base
                  dismiss: true,
                  background: false,
                  alert: "warning",
-                 html_attributes: { role: "alert", tabindex: "-1" })
+                 html_attributes: nil)
     @content = content
     @style = style
     @links = links
     @dismiss = style == "danger" ? false : dismiss
     @background = background
     @alert = %w[danger success].include?(style) ? false : alert
-    @html_attributes = html_attributes
+    @html_attributes = html_attributes || default_html_attributes
   end
 
   def notification_classes
@@ -24,5 +24,13 @@ class Shared::NotificationComponent < ViewComponent::Base
 
   def render_title_and_body?
     @content.is_a?(Hash) && @content[:body].present?
+  end
+
+  def default_html_attributes
+    if @style == "empty"
+      {}
+    else
+      { role: "alert", tabindex: "-1" }
+    end
   end
 end
