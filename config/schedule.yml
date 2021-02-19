@@ -63,11 +63,6 @@ reset_sessions:
   class: 'ResetSessionsJob'
   queue: low
 
-submit_performance_platform:
-  cron: '0 04 * * *'
-  class: 'SubmitPerformancePlatformJob'
-  queue: low
-
 update_algolia_index:
   cron: '*/5 * * * *'
   class: 'UpdateAlgoliaIndex'
