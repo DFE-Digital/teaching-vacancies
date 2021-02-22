@@ -43,7 +43,7 @@ RSpec.describe AlertMailerJob, type: :job do
     allow_any_instance_of(AlertMailerJob).to receive(:provider_job_id) { job_id }
 
     allow_any_instance_of(AlertMailerJob).to receive(:subscription) { subscription }
-    expect(AlertMailerJob.queue_adapter).to receive(:enqueue).ordered
+    expect(AlertMailerJob.queue_adapter).to receive(:enqueue).twice.ordered
     expect(subscription).to receive(:alert_run_today) { alert_run }
     expect(alert_run).to receive(:update).with(job_id: job_id).ordered
     job

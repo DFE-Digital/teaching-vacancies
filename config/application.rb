@@ -69,6 +69,10 @@ module TeacherVacancyService
     config.ab_tests = config_for(:ab_tests)
 
     config.allowed_local_authorities = config_for(:allowed_local_authorities)
+
+    config.analytics = config_for(:analytics)
+    config.analytics_pii = config_for(:analytics_pii)
+
     config.enforce_local_authority_allowlist = ActiveModel::Type::Boolean.new.cast(ENV["ENFORCE_LOCAL_AUTHORITY_ALLOWLIST"])
 
     config.algolia_index_prefix = ENV.fetch("ALGOLIA_INDEX_PREFIX", nil)
