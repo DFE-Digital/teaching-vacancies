@@ -160,6 +160,15 @@ RSpec.describe Shared::NotificationComponent, type: :component do
         expect(subject).to include('role="alert"')
         expect(subject).to include('tabindex="-1"')
       end
+
+      context "when the style is empty" do
+        let(:style) { "empty" }
+
+        it "has no html_attributes" do
+          expect(subject).not_to include('role="alert"')
+          expect(subject).not_to include('tabindex="-1"')
+        end
+      end
     end
 
     context "when html attributes are specified" do
@@ -175,10 +184,20 @@ RSpec.describe Shared::NotificationComponent, type: :component do
                       ))
       end
 
-      it "does not have the default role and tab-index" do
+      it "has the specified html_attributes and does not have the default role and tab-index" do
         expect(subject).not_to include('role="alert"')
         expect(subject).not_to include('tabindex="-1"')
         expect(subject).to include('role="fake-role"')
+      end
+
+      context "when the style is empty" do
+        let(:style) { "empty" }
+
+        it "has the specified html_attributes and does not have the default role and tab-index" do
+          expect(subject).not_to include('role="alert"')
+          expect(subject).not_to include('tabindex="-1"')
+          expect(subject).to include('role="fake-role"')
+        end
       end
     end
   end
