@@ -63,6 +63,12 @@ To update
 brew update --cask chromedriver
 ```
 
+On macOS you might need to "un-quarantine" chromedriver too
+```bash
+which chromedriver
+xattr -d com.apple.quarantine /path/to/chromedriver
+```
+
 ### AWS credentials, MFA, and role profiles
 
 When onboarded, you will be provided with an AWS user. You can use it to access the AWS console at:
