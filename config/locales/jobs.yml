@@ -327,12 +327,13 @@ en:
     no_pending_jobs: You currently have no scheduled jobs.
     no_published_jobs: You currently have no published jobs.
 
+    closing_date: Closing date
     closing_date_html: '<span class="govuk-!-font-weight-bold">Closing date:</span> %{date}'
-    created_at_html: '<span class="govuk-!-font-weight-bold">Date drafted:</span> %{date}'
-    date_listed_html: '<span class="govuk-!-font-weight-bold">Date listed:</span> %{date}'
-    expired_on_html: '<span class="govuk-!-font-weight-bold">Expired on:</span> %{date}'
+    created_at: Date drafted
+    date_listed: Date listed
+    expired_on: Expired on
     publication_date_html: '<span class="govuk-!-font-weight-bold">Date to be published:</span> %{date}'
-    updated_at_html: '<span class="govuk-!-font-weight-bold">Date last updated:</span> %{date}'
+    updated_at: Date last updated
 
     awaiting_feedback_intro: >-
       Please tell us if you filled these expired jobs through Teaching Vacancies,

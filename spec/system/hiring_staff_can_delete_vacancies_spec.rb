@@ -16,7 +16,7 @@ RSpec.describe "School deleting vacancies" do
 
     delete_vacancy(school, vacancy.id)
 
-    within(".actions") do
+    within(".card-component__actions") do
       expect(page).not_to have_content(vacancy.job_title)
     end
     expect(page).to have_content(vacancy2.job_title)
@@ -57,7 +57,7 @@ RSpec.describe "School deleting vacancies" do
   def delete_vacancy(school, vacancy_id)
     visit organisation_path(school)
 
-    within(".card#vacancy_#{vacancy_id}") do
+    within(".card-component#vacancy_#{vacancy_id}") do
       click_on "Delete"
     end
   end

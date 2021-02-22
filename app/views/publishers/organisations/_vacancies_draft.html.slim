@@ -1,5 +1,15 @@
 - if vacancies.any?
   - vacancies.each do |vacancy|
-    = render "publishers/organisations/vacancy_draft", vacancy: vacancy, organisation: organisation
+    = render Shared::CardComponent.new(id: dom_id(vacancy)) do |card|
+      - card.header_item(value: govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id)))
+      - card.header_item(value: vacancy.readable_job_location)
+
+      - card.body_item(label: t("jobs.created_at"), value: format_date(vacancy.created_at.to_date))
+      - card.body_item(label: t("jobs.updated_at"), value: format_date(vacancy.updated_at.to_date))
+
+      - card.action_item(action: govuk_link_to(t("jobs.edit_link"), vacancy.edit_path))
+      - card.action_item(action: govuk_link_to(t("jobs.copy_link"), vacancy.copy_path, method: :get))
+
+      - card.action_item(action: button_to(t("jobs.delete_link"), vacancy.delete_path, method: :delete, data: { confirm: t("jobs.are_you_sure", job_title: vacancy.job_title) }, class: "govuk-delete-link"))
 - else
   = render(Shared::NotificationComponent.new(content: { body: t("jobs.no_draft_jobs") }, style: "empty", links: nil, dismiss: false, background: true, alert: false))

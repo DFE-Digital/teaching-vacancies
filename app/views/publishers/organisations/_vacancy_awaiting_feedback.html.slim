@@ -1,20 +1,20 @@
 = form_for vacancy, url: organisation_job_statistics_path(vacancy.id), html: { id: vacancy.id, method: "patch", class: "vacancy-feedback__form", data: { option_not_selected_message: t("messages.jobs.feedback.inline_error") } }
-  .card id=dom_id(vacancy)
-    .card__contents
-      dl.card__title
-        dd.govuk-body class="govuk-!-margin-bottom-1" = govuk_link_to vacancy.job_title, organisation_job_path(vacancy.id), class: "view-vacancy-link"
-        - if organisation.is_a?(SchoolGroup)
-          dd.govuk-body#vacancy_location class="govuk-!-font-weight-bold" = vacancy.readable_job_location
-      dl.card__details
-        dd.govuk-body = t("jobs.closing_date_html", date: vacancy.application_deadline)
-
-    dl.card__actions class="vacancy__feedback"
-      dd
+  .card-component id=dom_id(vacancy)
+    .card-component__content
+      dt.card-component__header
         ul.govuk-list
-          li class="govuk-!-width-full-width" = select_tag "vacancy[hired_status]", options_for_select(hired_status_options, nil), form: vacancy.id, include_blank: "--", class: "govuk-select form-control form-control-block govuk-!-width-full"
-          li class="govuk-!-width-full-width" = select_tag "vacancy[listed_elsewhere]", options_for_select(listed_elsewhere_options, nil), form: vacancy.id, include_blank: "--", class: "govuk-select form-control form-control-block govuk-!-width-full"
+          li.govuk-body class="govuk-!-margin-bottom-1" = govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id), class: "view-vacancy-link")
+          - if organisation.is_a?(SchoolGroup)
+            li.govuk-body#vacancy_location class="govuk-!-font-weight-bold" = vacancy.readable_job_location
+      dd.card-component__body
+        ul.govuk-list
+          li.govuk-body = t("jobs.closing_date_html", date: vacancy.application_deadline)
 
-    dl.card__actions
-      dd
-        ul.actions.govuk-list
-          li = submit_tag t("buttons.submit"), form: vacancy.id, class: "govuk-button govuk-!-margin-bottom-0"
+    dd.card-component__body class="vacancy__feedback"
+      ul.govuk-list
+        li class="govuk-!-width-full-width" = select_tag "vacancy[hired_status]", options_for_select(hired_status_options, nil), form: vacancy.id, include_blank: "--", class: "govuk-select form-control form-control-block govuk-!-width-full"
+        li class="govuk-!-width-full-width" = select_tag "vacancy[listed_elsewhere]", options_for_select(listed_elsewhere_options, nil), form: vacancy.id, include_blank: "--", class: "govuk-select form-control form-control-block govuk-!-width-full"
+
+    dd.card-component__actions
+      ul.actions.govuk-list
+        li = submit_tag t("buttons.submit"), form: vacancy.id, class: "govuk-button govuk-!-margin-bottom-0"
