@@ -53,9 +53,14 @@ Make sure you have the following services configured and running on your develop
 
 ### ChromeDriver
 
+To install
 ```bash
-brew tap homebrew/cask
-brew cask install chromedriver
+brew install --cask chromedriver
+```
+
+To update
+```bash
+brew update --cask chromedriver
 ```
 
 ### AWS credentials, MFA, and role profiles
