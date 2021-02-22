@@ -59,7 +59,7 @@ class Search::FiltersBuilder
   end
 
   def expired_now_filter
-    Time.current.to_time.to_i
+    Time.current.to_time.beginning_of_hour.to_i
   end
 
   def normalize_array_params(params)
