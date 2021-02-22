@@ -15,8 +15,8 @@ class Shared::CardComponent < GovukComponent::Base
   renders_many :header_items, ->(value:, label: "") { item(value, label) }
 
   def item(value, label)
-    return value unless label
+    return value if label.blank?
 
-    content_tag(:span, "#{label}: ", { class: "govuk-!-font-weight-bold" }) + value
+    content_tag(:span, label, { class: "card-component__item-label govuk-!-font-weight-bold" }) + value
   end
 end

@@ -62,7 +62,7 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha
   def and_the_job_alert_is_on_the_index_page
     expect(current_path).to eq(jobseekers_subscriptions_path)
     expect(page).to have_content(I18n.t("subscriptions.create.success"))
-    expect(page).to have_content("Keyword: #{search_criteria['keyword']}")
+    expect(page).to have_content("Keyword#{search_criteria['keyword']}")
   end
 
   def create_a_job_alert

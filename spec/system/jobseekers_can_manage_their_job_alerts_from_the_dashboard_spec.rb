@@ -15,7 +15,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
       end
 
       it "shows their job alerts" do
-        expect(page).to have_content("Keyword: Maths")
+        expect(page).to have_content("KeywordMaths")
       end
 
       it "allows to edit a job alert" do

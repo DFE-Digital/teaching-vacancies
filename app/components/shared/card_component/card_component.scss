@@ -42,6 +42,13 @@
     }
   }
 
+  &__item-label {
+    &:after {
+      content: ":";
+      margin-right: govuk-spacing(1);
+    }
+  }
+
   &__actions {
     align-self: flex-start;
     flex-grow: 1;
