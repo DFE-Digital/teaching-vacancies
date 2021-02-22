@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
 
   before_action :redirect_to_canonical_domain, :set_headers
   before_action :store_jobseeker_redirect_to!, if: -> { redirect_to_param.present? }
+  before_action { EventContext.request_event = request_event }
 
   after_action :trigger_page_visited_event, unless: :request_is_healthcheck?
 
