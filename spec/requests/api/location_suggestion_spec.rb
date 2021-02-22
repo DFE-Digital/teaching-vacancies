@@ -1,16 +1,12 @@
 require "rails_helper"
 
-RSpec.describe Api::LocationSuggestionController, type: :controller do
+RSpec.describe "Api::LocationSuggestion", type: :request do
   let(:json) { JSON.parse(response.body, symbolize_names: true) }
   let(:location) { "pla" }
 
-  before(:each, :json) do
-    request.accept = "application/json"
-  end
-
   describe "GET /api/v1/location_suggestion/lon?format=html" do
     it "returns status :not_found as only JSON format is allowed" do
-      get :show, params: { api_version: 1, location: location }, format: :html
+      get api_location_suggestion_path(api_version: 1), params: { location: location, format: :html }
 
       expect(response).to have_http_status(:not_found)
     end
@@ -25,7 +21,7 @@ RSpec.describe Api::LocationSuggestionController, type: :controller do
 
     context "location is nil" do
       it "returns status :bad_request" do
-        get :show, params: { api_version: 1 }
+        get api_location_suggestion_path(api_version: 1), params: { format: :json }
 
         expect(response).to have_http_status(:bad_request)
         expect(json[:error]).to eq("Missing location input")
@@ -36,7 +32,7 @@ RSpec.describe Api::LocationSuggestionController, type: :controller do
       let(:location) { "pl" }
 
       it "returns status :bad_request" do
-        get :show, params: { api_version: 1, location: location }
+        get api_location_suggestion_path(api_version: 1), params: { format: :json, location: location }
 
         expect(response).to have_http_status(:bad_request)
         expect(json[:error]).to eq("Insufficient location input")
@@ -52,7 +48,7 @@ RSpec.describe Api::LocationSuggestionController, type: :controller do
       end
 
       it "returns status :ok" do
-        get :show, params: { api_version: 1, location: location }
+        get api_location_suggestion_path(api_version: 1), params: { format: :json, location: location }
 
         expect(response).to have_http_status(:ok)
         expect(json[:query]).to eq(location)
@@ -67,7 +63,7 @@ RSpec.describe Api::LocationSuggestionController, type: :controller do
       end
 
       it "returns status :bad_request" do
-        get :show, params: { api_version: 1, location: location }
+        get api_location_suggestion_path(api_version: 1), params: { format: :json, location: location }
 
         expect(response).to have_http_status(:bad_request)
         expect(json[:error]).to eq("HTTP error")
@@ -81,7 +77,7 @@ RSpec.describe Api::LocationSuggestionController, type: :controller do
       end
 
       it "returns status :bad_request" do
-        get :show, params: { api_version: 1, location: location }
+        get api_location_suggestion_path(api_version: 1), params: { format: :json, location: location }
 
         expect(response).to have_http_status(:bad_request)
         expect(json[:error]).to eq("Google error")

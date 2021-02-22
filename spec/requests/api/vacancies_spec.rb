@@ -1,46 +1,39 @@
 require "rails_helper"
 
-RSpec.describe Api::VacanciesController, type: :controller do
+RSpec.describe "Api::Vacancies", type: :request do
   let(:json) { JSON.parse(response.body, symbolize_names: true) }
   let(:school) { create(:school) }
 
-  before(:each, :json) do
-    request.host = "127.0.0.1"
-    request.accept = "application/json"
-  end
-
   describe "GET /api/v1/jobs.html" do
     it "returns status :not_found as only JSON format is allowed" do
-      get :index, params: { api_version: 1 }, format: :html
+      get api_jobs_path(api_version: 1), params: { format: :html }
 
       expect(response.status).to eq(Rack::Utils.status_code(:not_found))
     end
   end
 
   describe "GET /api/v1/jobs.json", json: true do
-    render_views
-
     context "sets headers" do
-      before(:each) { get :index, params: { api_version: 1 } }
+      before(:each) { get api_jobs_path(api_version: 1), params: { format: :json } }
 
       it_behaves_like "X-Robots-Tag"
       it_behaves_like "Content-Type JSON"
     end
 
     it "returns status :not_found if the request format is not JSON" do
-      get :index, params: { api_version: 1 }, format: :html
+      get api_jobs_path(api_version: 1), params: { format: :html }
 
       expect(response.status).to eq(Rack::Utils.status_code(:not_found))
     end
 
     it "returns the API's openapi version" do
-      get :index, params: { api_version: 1 }
+      get api_jobs_path(api_version: 1), params: { format: :json }
 
       expect(json[:openapi]).to eq("3.0.0")
     end
 
     it "returns the API's info" do
-      get :index, params: { api_version: 1 }
+      get api_jobs_path(api_version: 1), params: { format: :json }
 
       info_object = json[:info]
       expect(info_object[:title]).to eq("GOV UK - #{I18n.t('app.title')}")
@@ -51,7 +44,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
     end
 
     it "returns a links object" do
-      get :index, params: { api_version: 1 }
+      get api_jobs_path(api_version: 1), params: { format: :json }
 
       expect(json[:links].keys).to include(:self, :first, :last, :prev, :next)
     end
@@ -63,7 +56,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
       expired_vacancy.organisation_vacancies.create(organisation: school)
       vacancies = [published_vacancy, expired_vacancy]
 
-      get :index, params: { api_version: 1 }
+      get api_jobs_path(api_version: 1), params: { format: :json }
 
       expect(response.status).to eq(Rack::Utils.status_code(:ok))
       expect(json[:data].count).to eq(2)
@@ -77,7 +70,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
         stub_const("Api::VacanciesController::MAX_API_RESULTS_PER_PAGE", per_page)
         create_list(:vacancy, 16)
 
-        get :index, params: { api_version: 1, page: 2 }
+        get api_jobs_path(api_version: 1), params: { page: 2, format: :json }
       end
 
       let(:per_page) { 5 }
@@ -107,7 +100,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
       create(:vacancy, :trashed)
       create(:vacancy, :future_publish)
 
-      get :index, params: { api_version: 1 }
+      get api_jobs_path(api_version: 1), params: { format: :json }
 
       expect(response.status).to eq(Rack::Utils.status_code(:ok))
       expect(json[:data].count).to eq(0)
@@ -115,44 +108,42 @@ RSpec.describe Api::VacanciesController, type: :controller do
   end
 
   describe "GET /api/v1/jobs/:id.json", json: true do
-    render_views
     let(:vacancy) { create(:vacancy) }
 
     before { vacancy.organisation_vacancies.create(organisation: school) }
 
     it "returns status :not_found if the request format is not JSON" do
-      get :show, params: { id: vacancy.slug, api_version: 1 }, format: :html
+      get api_job_path(vacancy.slug, api_version: 1), params: { format: :html }
 
       expect(response.status).to eq(Rack::Utils.status_code(:not_found))
     end
 
     context "sets headers" do
-      before(:each) { get :show, params: { id: vacancy.slug, api_version: 1 } }
+      before(:each) { get api_job_path(vacancy.slug, api_version: 1), params: { format: :json } }
 
       it_behaves_like "X-Robots-Tag"
       it_behaves_like "Content-Type JSON"
     end
 
     it "returns status code :ok" do
-      get :show, params: { id: vacancy.slug, api_version: 1 }
+      get api_job_path(vacancy.slug, api_version: 1), params: { format: :json }
 
       expect(response.status).to eq(Rack::Utils.status_code(:ok))
     end
 
     it "never redirects to latest url" do
       vacancy = create(:vacancy, :published)
-      old_slug = vacancy.slug
       vacancy.job_title = "A new job title"
       vacancy.refresh_slug
       vacancy.save
 
-      get :show, params: { id: old_slug, api_version: 1 }
+      get api_job_path(vacancy.slug, api_version: 1), params: { format: :json }
       expect(response.status).to eq(Rack::Utils.status_code(:ok))
     end
 
     context "format" do
       it "maps vacancy to the JobPosting schema" do
-        get :show, params: { id: vacancy.id, api_version: 1 }
+        get api_job_path(vacancy.slug, api_version: 1), params: { format: :json }
 
         expect(json.to_h).to eq(vacancy_json_ld(VacancyPresenter.new(vacancy)))
       end
@@ -161,7 +152,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
         it "maps full_time working pattern to FULL_TIME" do
           vacancy = create(:vacancy, working_patterns: %w[full_time])
 
-          get :show, params: { id: vacancy.id, api_version: 1 }
+          get api_job_path(vacancy.slug, api_version: 1), params: { format: :json }
 
           expect(json.to_h).to include(employmentType: "FULL_TIME")
         end
@@ -169,7 +160,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
         it "maps part_time working pattern to PART_TIME" do
           vacancy = create(:vacancy, working_patterns: %w[part_time])
 
-          get :show, params: { id: vacancy.id, api_version: 1 }
+          get api_job_path(vacancy.slug, api_version: 1), params: { format: :json }
 
           expect(json.to_h).to include(employmentType: "PART_TIME")
         end
@@ -177,7 +168,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
         it "maps job_share working pattern to JOB_SHARE" do
           vacancy = create(:vacancy, working_patterns: %w[job_share])
 
-          get :show, params: { id: vacancy.id, api_version: 1 }
+          get api_job_path(vacancy.slug, api_version: 1), params: { format: :json }
 
           expect(json.to_h).to include(employmentType: "JOB_SHARE")
         end
@@ -185,7 +176,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
         it "maps multiple values to an array" do
           vacancy = create(:vacancy, working_patterns: %w[part_time job_share])
 
-          get :show, params: { id: vacancy.id, api_version: 1 }
+          get api_job_path(vacancy.slug, api_version: 1), params: { format: :json }
 
           expect(json.to_h).to include(employmentType: "PART_TIME, JOB_SHARE")
         end
@@ -193,7 +184,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
 
       describe "#hiringOrganization" do
         it "sets the school's details" do
-          get :show, params: { id: vacancy.id, api_version: 1 }
+          get api_job_path(vacancy.slug, api_version: 1), params: { format: :json }
 
           hiring_organization = {
             hiringOrganization: {

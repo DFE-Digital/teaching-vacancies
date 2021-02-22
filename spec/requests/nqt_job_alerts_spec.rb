@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe NqtJobAlertsController, type: :controller, recaptcha: true do
+RSpec.describe "NqtJobAlerts", type: :request, recaptcha: true do
   let(:keywords) { "something" }
   let(:location) { "some place" }
   let(:email) { "test@gmail.com" }
@@ -11,7 +11,7 @@ RSpec.describe NqtJobAlertsController, type: :controller, recaptcha: true do
     let(:params) { { jobseekers_nqt_job_alerts_form: form_inputs } }
     let(:search_criteria) { { keyword: "nqt #{keywords}", location: location, radius: 10 } }
     let(:subscription) { Subscription.last }
-    subject { post :create, params: params }
+    subject { post new_nqt_job_alert_path, params: params }
 
     it "calls SubscriptionMailer" do
       expect(SubscriptionMailer).to receive_message_chain(:confirmation, :deliver_later)
@@ -25,7 +25,7 @@ RSpec.describe NqtJobAlertsController, type: :controller, recaptcha: true do
     end
 
     it "triggers a `job_alert_subscription_created` event" do
-      expect { subject }.to have_triggered_event(:job_alert_subscription_created).with_request_data.and_data(
+      expect { subject }.to have_triggered_event(:job_alert_subscription_created).and_data(
         email_identifier: anonymised_form_of("test@gmail.com"),
         frequency: "daily",
         subscription_identifier: anything,

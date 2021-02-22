@@ -83,7 +83,7 @@ Rails.application.routes.draw do
   namespace :api do
     scope "v:api_version", api_version: /1/ do
       resources :jobs, only: %i[index show], controller: "vacancies"
-      get "/location_suggestion(/:location)", to: "location_suggestion#show"
+      get "/location_suggestion(/:location)", to: "location_suggestion#show", as: :location_suggestion
     end
   end
 
@@ -145,10 +145,10 @@ Rails.application.routes.draw do
 
   post "/errors/csp_violation", to: "errors#csp_violation"
   get "/invalid-recaptcha", to: "errors#invalid_recaptcha", as: "invalid_recaptcha"
-  match "/401", to: "errors#unauthorised", via: :all
-  match "/404", to: "errors#not_found", via: :all
-  match "/422", to: "errors#unprocessable_entity", via: :all
-  match "/500", to: "errors#internal_server_error", via: :all
+  match "/401", as: :unauthorised, to: "errors#unauthorised", via: :all
+  match "/404", as: :not_found, to: "errors#not_found", via: :all
+  match "/422", as: :unprocessable_entity, to: "errors#unprocessable_entity", via: :all
+  match "/500", as: :internal_server_error, to: "errors#internal_server_error", via: :all
 
   # If parameters are used that are the same as those in the search form, pagination with kaminari will break
   match "teaching-jobs-in-:location_facet",
