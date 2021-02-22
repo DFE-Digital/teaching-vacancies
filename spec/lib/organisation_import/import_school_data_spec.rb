@@ -48,7 +48,6 @@ RSpec.describe ImportSchoolData do
     let(:csv) { File.read(test_file_path) }
     let(:datestring) { Time.current.strftime("%Y%m%d") }
     let(:example_school) { School.find_by(urn: "100000") }
-    let(:temp_file_path) { Rails.root.join("spec/fixtures/temp_schools_data.csv") }
     let(:test_file_path) { Rails.root.join("spec/fixtures/example_schools_data.csv") }
 
     let(:local_authority1) { SchoolGroup.find_by(local_authority_code: "201") }
