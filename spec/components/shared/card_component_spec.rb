@@ -4,7 +4,7 @@ RSpec.describe Shared::CardComponent, type: :component do
   describe "renders correctly" do
     let!(:inline_component) do
       render_inline(described_class.new(id: "cosmic-id", classes: "cosmic-class", html_attributes: { "data-test": "cosmic" })) do |card|
-        card.header_item(label: "header title", value: "header value")
+        card.header_item(value: "no label header value")
         card.body_item(label: "body title", value: "body value")
         card.action_item(action: "action")
       end
@@ -17,12 +17,14 @@ RSpec.describe Shared::CardComponent, type: :component do
     end
 
     it "renders the heading" do
-      expect(inline_component.css(".card-component__header .govuk-list li").text).to include("header title: header value")
+      expect(inline_component.css(".card-component__header .govuk-list li").text).to eq("no label header value")
       expect(inline_component.css(".card-component__header .govuk-list li").count).to eq(1)
     end
 
     it "renders the body" do
-      expect(inline_component.css(".card-component__body .govuk-list li").text).to include("body title: body value")
+      expect(inline_component.css(".card-component__body .govuk-list li").text).to include("body value")
+      expect(inline_component.css(".card-component__body .govuk-list li").text).to include("body title")
+      expect(inline_component.css(".card-component__body .govuk-list li .card-component__item-label")).to_not be_blank
       expect(inline_component.css(".card-component__body .govuk-list li").count).to eq(1)
     end
 

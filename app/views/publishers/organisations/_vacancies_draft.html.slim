@@ -2,7 +2,8 @@
   - vacancies.each do |vacancy|
     = render Shared::CardComponent.new(id: dom_id(vacancy)) do |card|
       - card.header_item(value: govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id)))
-      - card.header_item(value: vacancy.readable_job_location)
+      - if organisation.is_a?(SchoolGroup)
+        - card.header_item(value: vacancy.readable_job_location || "")
 
       - card.body_item(label: t("jobs.created_at"), value: format_date(vacancy.created_at.to_date))
       - card.body_item(label: t("jobs.updated_at"), value: format_date(vacancy.updated_at.to_date))

@@ -3,7 +3,7 @@
     = render Shared::CardComponent.new(id: dom_id(vacancy)) do |card|
       - card.header_item(value: govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id)))
       - if organisation.is_a?(SchoolGroup)
-        - card.header_item(value: vacancy.readable_job_location)
+        - card.header_item(value: vacancy.readable_job_location || "")
 
       - card.body_item(label: t("jobs.closing_date"), value: vacancy.application_deadline)
 
