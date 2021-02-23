@@ -70,5 +70,7 @@ module TeacherVacancyService
     config.allowed_local_authorities = config_for(:allowed_local_authorities)
 
     config.algolia_index_prefix = ENV.fetch("ALGOLIA_INDEX_PREFIX", nil)
+
+    config.geocoder_lookup = :default
   end
 end
