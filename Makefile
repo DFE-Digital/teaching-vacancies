@@ -10,7 +10,7 @@ LOCAL_TAG			:=dev-$(LOCAL_BRANCH)-$(LOCAL_SHA)
 .PHONY: print-env
 print-env: ## make -s local print-env > .env
 		$(if $(env), , $(error Usage: make <env> print-env))
-		@bin/run-in-env -t /teaching-vacancies/dev/app -y terraform/workspace-variables/$(env)_app_env.yml \
+		@bin/run-in-env -t /teaching-vacancies/$(env)/app -y terraform/workspace-variables/$(env)_app_env.yml \
 			$(local_override) -o env_stdout $(local_filter)
 
 ##@ Set environment and corresponding configuration
