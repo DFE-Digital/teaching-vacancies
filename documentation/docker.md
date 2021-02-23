@@ -23,7 +23,7 @@ For both stages, we:
 - use the tag corresponding to the specific version of Ruby, but not of Alpine e.g. `ruby:2.7.2-alpine`, rather than `ruby:2.7.2-alpine3.13`
 - use the [apk tool](https://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management) to update and install packages
 - set the timezone to `Europe/London` for consistency in logs
-- set the working directory to `/teacher-vacancy`
+- set the working directory to `/app`
 
 Steps from the `builder` stage worth highlighting:
 
@@ -51,7 +51,7 @@ Steps from the `production` stage worth highlighting:
 
 ```
 FROM ruby:2.7.2-alpine AS production
-COPY --from=builder /teacher-vacancy /teacher-vacancy
+COPY --from=builder /app /app
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
 
 EXPOSE 3000
@@ -60,7 +60,7 @@ CMD bundle exec rails db:migrate && bundle exec rails s
 
 - Name the stage `production` so that it can be built individually
 - Copy from the `builder` stage:
-    - `/teacher-vacancy`
+    - `/app`
     - `/usr/local/bundle/`
 - Listen on port 3000
 - Run two Ruby bundle commands:
@@ -172,7 +172,7 @@ This passes the options:
 - `--rm` - tells the Docker engine to remove the container (but not the image) when it exits
 - `/bin/sh` - starts a shell (as the image is based off Alpine Linux, you'll get an error if you try to start `/bin/bash`)
 
-At this point you'll be in the `/teacher-vacancy` directory
+At this point you'll be in the `/app` directory
 
 ## Advanced features
 

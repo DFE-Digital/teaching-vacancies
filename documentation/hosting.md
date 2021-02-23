@@ -162,7 +162,7 @@ cf ssh <app_name>
 
 ```bash
 cf ssh <app_name>
-cd /teacher-vacancy
+cd /app
 /usr/local/bin/bundle exec rails console
 ```
 
