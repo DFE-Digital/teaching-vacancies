@@ -136,6 +136,10 @@ jobs:
         timeoutSeconds: 300
         intervalSeconds: 15
 
+    - name: Exit whole workflow if review smoke test was not successful
+      if: steps.wait_for_smoke_test.outputs.conclusion != 'success'
+      run: exit 1
+
     - name: Send job status message to twd_tv_dev channel
       uses: rtCamp/action-slack-notify@v2.1.2
       env:
