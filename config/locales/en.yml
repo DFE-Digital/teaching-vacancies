@@ -1,4 +1,8 @@
 en:
+  account_creation_cta:
+    help_text_html: "%{link} or create an account to save the jobs you are interested in. You don’t need an account to search for a job or set up job alerts."
+    sign_in: Sign in
+    
   app:
     description: >-
       On Teaching Vacancies, NQTs, experienced teachers and leaders can search for a job at a school or Trust in England
