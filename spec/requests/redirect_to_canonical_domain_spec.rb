@@ -5,7 +5,6 @@ RSpec.describe "Redirect to canonical domain", type: :request do
 
   before do
     allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new("production"))
-    stub_const("DOMAIN", "localhost")
   end
 
   context "when request.host_with_port is different to the canonical domain" do
@@ -14,8 +13,10 @@ RSpec.describe "Redirect to canonical domain", type: :request do
     it "redirects to the canonical domain" do
       get "/", headers: headers
 
-      expect(response.location).to eq("http://#{DOMAIN}/")
       expect(response.status).to eq(301)
+
+      domain_minus_port = DOMAIN.split(":").first
+      expect(response.location).to eq("http://#{domain_minus_port}/")
     end
   end
 
