@@ -53,9 +53,20 @@ Make sure you have the following services configured and running on your develop
 
 ### ChromeDriver
 
+To install
 ```bash
-brew tap homebrew/cask
-brew cask install chromedriver
+brew install --cask chromedriver
+```
+
+To update
+```bash
+brew update --cask chromedriver
+```
+
+On macOS you might need to "un-quarantine" chromedriver too
+```bash
+which chromedriver
+xattr -d com.apple.quarantine /path/to/chromedriver
 ```
 
 ### AWS credentials, MFA, and role profiles
