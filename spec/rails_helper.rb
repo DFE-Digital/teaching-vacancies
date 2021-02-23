@@ -20,8 +20,6 @@ Sidekiq::Testing.fake!
 
 # Stub Geocoder HTTP requests in specs
 Geocoder::DEFAULT_STUB_COORDINATES = [51.67014192630465, -1.2809649516211556].freeze
-Geocoder.configure(lookup: :test)
-Geocoder::Lookup::Test.set_default_stub([{ coordinates: Geocoder::DEFAULT_STUB_COORDINATES }])
 
 Capybara.server = :puma, { Silent: true, Threads: "0:1" }
 
@@ -62,6 +60,10 @@ RSpec.configure do |config|
     allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(false)
     allow(Redis).to receive(:new).and_return(MockRedis.new)
     ActiveJob::Base.queue_adapter = :test
+  end
+
+  config.before(:each, geocode: true) do
+    allow(Rails.application.config).to receive(:geocoder_lookup).and_return(:default)
   end
 
   config.include ActionView::Helpers::NumberHelper

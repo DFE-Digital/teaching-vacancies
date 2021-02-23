@@ -1,0 +1,114 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/geocode/json?address=TS14%206RD&components=country:gb&key=placeholder_key&language=en&sensor=false
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Mon, 22 Feb 2021 17:38:46 GMT
+      Pragma:
+      - no-cache
+      Expires:
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - mafe
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Server-Timing:
+      - gfet4t7; dur=24
+      Alt-Svc:
+      - h3-29=":443"; ma=2592000,h3-T051=":443"; ma=2592000,h3-Q050=":443"; ma=2592000,h3-Q046=":443";
+        ma=2592000,h3-Q043=":443"; ma=2592000,quic=":443"; ma=2592000; v="46,43"
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "results" : [
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "TS14 6RD",
+                       "short_name" : "TS14 6RD",
+                       "types" : [ "postal_code" ]
+                    },
+                    {
+                       "long_name" : "Guisborough",
+                       "short_name" : "Guisborough",
+                       "types" : [ "postal_town" ]
+                    },
+                    {
+                       "long_name" : "Redcar and Cleveland",
+                       "short_name" : "Redcar and Cleveland",
+                       "types" : [ "administrative_area_level_2", "political" ]
+                    },
+                    {
+                       "long_name" : "England",
+                       "short_name" : "England",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "United Kingdom",
+                       "short_name" : "GB",
+                       "types" : [ "country", "political" ]
+                    }
+                 ],
+                 "formatted_address" : "Guisborough TS14 6RD, UK",
+                 "geometry" : {
+                    "bounds" : {
+                       "northeast" : {
+                          "lat" : 54.5418866,
+                          "lng" : -1.0387088
+                       },
+                       "southwest" : {
+                          "lat" : 54.5386824,
+                          "lng" : -1.0461214
+                       }
+                    },
+                    "location" : {
+                       "lat" : 54.5399146,
+                       "lng" : -1.0435559
+                    },
+                    "location_type" : "APPROXIMATE",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 54.5418866,
+                          "lng" : -1.0387088
+                       },
+                       "southwest" : {
+                          "lat" : 54.5386824,
+                          "lng" : -1.0461214
+                       }
+                    }
+                 },
+                 "place_id" : "ChIJ7cn_ZI3lfkgRd7rKuzvYZWM",
+                 "types" : [ "postal_code" ]
+              }
+           ],
+           "status" : "OK"
+        }
+  recorded_at: Mon, 22 Feb 2021 17:38:46 GMT
+recorded_with: VCR 6.0.0

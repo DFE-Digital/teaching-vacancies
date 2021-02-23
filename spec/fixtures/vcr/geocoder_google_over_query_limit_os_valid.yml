@@ -1,0 +1,2357 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/geocode/json?address=TS14%206RD&components=country:gb&key=placeholder_key&language=en&sensor=false
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Mon, 22 Feb 2021 17:38:44 GMT
+      Pragma:
+      - no-cache
+      Expires:
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - mafe
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Server-Timing:
+      - gfet4t7; dur=43
+      Alt-Svc:
+      - h3-29=":443"; ma=2592000,h3-T051=":443"; ma=2592000,h3-Q050=":443"; ma=2592000,h3-Q046=":443";
+        ma=2592000,h3-Q043=":443"; ma=2592000,quic=":443"; ma=2592000; v="46,43"
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "status" : "OVER_QUERY_LIMIT"
+        }
+  recorded_at: Mon, 22 Feb 2021 17:38:44 GMT
+
+- request:
+    method: get
+    uri: https://api.ordnancesurvey.co.uk/opennames/v1/find?fq=local_type:City%20local_type:Hamlet%20local_type:Other_Settlement%20local_type:Town%20local_type:Village%20local_type:Postcode&key=placeholder_key&query=TS14%206RD
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 22 Feb 2021 17:53:32 GMT
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - Apache-Coyote/1.1
+      Tx-Id:
+      - 1614016412597:597
+      Status:
+      - success
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "header" : {
+            "uri" : "https://api.ordnancesurvey.co.uk/opennames/v1/find?fq=local_type%3ACity%20local_type%3AHamlet%20local_type%3AOther_Settlement%20local_type%3ATown%20local_type%3AVillage%20local_type%3APostcode&query=TS14%206RD",
+            "query" : "TS14 6RD",
+            "format" : "JSON",
+            "maxresults" : 100,
+            "offset" : 0,
+            "totalresults" : 1282,
+            "filter" : "fq=local_type:City local_type:Hamlet local_type:Other_Settlement local_type:Town local_type:Village local_type:Postcode"
+          },
+          "results" : [ {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146RD",
+              "NAME1" : "TS14 6RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 461879.0,
+              "GEOMETRY_Y" : 516623.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Guisborough",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074577394",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TA146RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TA146RD",
+              "NAME1" : "TA14 6RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 346614.0,
+              "GEOMETRY_Y" : 117705.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "DISTRICT_BOROUGH" : "South Somerset",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010495",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Somerset",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010578",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South West",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041427",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146GD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146GD",
+              "NAME1" : "TS14 6GD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 461448.0,
+              "GEOMETRY_Y" : 516715.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Guisborough",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074577394",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146FD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146FD",
+              "NAME1" : "TS14 6FD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 461171.0,
+              "GEOMETRY_Y" : 515942.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Guisborough",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074577394",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146TD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146TD",
+              "NAME1" : "TS14 6TD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 461229.0,
+              "GEOMETRY_Y" : 516555.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Guisborough",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074577394",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146RW",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146RW",
+              "NAME1" : "TS14 6RW",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 456727.0,
+              "GEOMETRY_Y" : 515771.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146RQ",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146RQ",
+              "NAME1" : "TS14 6RQ",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 460398.0,
+              "GEOMETRY_Y" : 519877.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146RF",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146RF",
+              "NAME1" : "TS14 6RF",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 462004.0,
+              "GEOMETRY_Y" : 517045.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146RS",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146RS",
+              "NAME1" : "TS14 6RS",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 457986.0,
+              "GEOMETRY_Y" : 515945.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146RT",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146RT",
+              "NAME1" : "TS14 6RT",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 458496.0,
+              "GEOMETRY_Y" : 517029.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146RU",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146RU",
+              "NAME1" : "TS14 6RU",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 460349.0,
+              "GEOMETRY_Y" : 515819.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Guisborough",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074577394",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146RR",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146RR",
+              "NAME1" : "TS14 6RR",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 457205.0,
+              "GEOMETRY_Y" : 516384.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146RJ",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146RJ",
+              "NAME1" : "TS14 6RJ",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 460624.0,
+              "GEOMETRY_Y" : 518848.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Dunsdale",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074574732",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146RL",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146RL",
+              "NAME1" : "TS14 6RL",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 460338.0,
+              "GEOMETRY_Y" : 515753.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Guisborough",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074577394",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146RP",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146RP",
+              "NAME1" : "TS14 6RP",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 455979.0,
+              "GEOMETRY_Y" : 515702.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "LS146RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/LS146RD",
+              "NAME1" : "LS14 6RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 434945.0,
+              "GEOMETRY_Y" : 435408.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Leeds",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074572682",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#city",
+              "DISTRICT_BOROUGH" : "Leeds",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000016675",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict",
+              "REGION" : "Yorkshire and the Humber",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041430",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146RG",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146RG",
+              "NAME1" : "TS14 6RG",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 461791.0,
+              "GEOMETRY_Y" : 517656.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146RE",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146RE",
+              "NAME1" : "TS14 6RE",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 461900.0,
+              "GEOMETRY_Y" : 516784.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Guisborough",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074577394",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146RH",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146RH",
+              "NAME1" : "TS14 6RH",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 460683.0,
+              "GEOMETRY_Y" : 518941.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Dunsdale",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074574732",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146RB",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146RB",
+              "NAME1" : "TS14 6RB",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 461570.0,
+              "GEOMETRY_Y" : 516615.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Guisborough",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074577394",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146RA",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146RA",
+              "NAME1" : "TS14 6RA",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 460671.0,
+              "GEOMETRY_Y" : 517240.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146QD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146QD",
+              "NAME1" : "TS14 6QD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 461425.0,
+              "GEOMETRY_Y" : 515925.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Guisborough",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074577394",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146PD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146PD",
+              "NAME1" : "TS14 6PD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 460935.0,
+              "GEOMETRY_Y" : 515907.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Guisborough",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074577394",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146LD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146LD",
+              "NAME1" : "TS14 6LD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 460548.0,
+              "GEOMETRY_Y" : 515893.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Guisborough",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074577394",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146ND",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146ND",
+              "NAME1" : "TS14 6ND",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 460948.0,
+              "GEOMETRY_Y" : 515778.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Guisborough",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074577394",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146JD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146JD",
+              "NAME1" : "TS14 6JD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 461121.0,
+              "GEOMETRY_Y" : 516257.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Guisborough",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074577394",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146ED",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146ED",
+              "NAME1" : "TS14 6ED",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 461232.0,
+              "GEOMETRY_Y" : 516012.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Guisborough",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074577394",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146BD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146BD",
+              "NAME1" : "TS14 6BD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 461366.0,
+              "GEOMETRY_Y" : 515965.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Guisborough",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074577394",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146DD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146DD",
+              "NAME1" : "TS14 6DD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 461524.0,
+              "GEOMETRY_Y" : 516558.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Guisborough",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074577394",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS146AD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS146AD",
+              "NAME1" : "TS14 6AD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 461465.0,
+              "GEOMETRY_Y" : 516049.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Guisborough",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074577394",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "BD146RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/BD146RD",
+              "NAME1" : "BD14 6RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 411803.0,
+              "GEOMETRY_Y" : 431688.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Bradford",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074540943",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#city",
+              "DISTRICT_BOROUGH" : "Bradford",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000016726",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict",
+              "REGION" : "Yorkshire and the Humber",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041430",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "BA146RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/BA146RD",
+              "NAME1" : "BA14 6RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 386459.0,
+              "GEOMETRY_Y" : 161910.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Holt",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074571814",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "COUNTY_UNITARY" : "Wiltshire",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000043925",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "South West",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041427",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "BS166RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/BS166RD",
+              "NAME1" : "BS16 6RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 366012.0,
+              "GEOMETRY_Y" : 177385.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Mangotsfield",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074569792",
+              "COUNTY_UNITARY" : "South Gloucestershire",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025559",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "South West",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041427",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "LS146ZD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/LS146ZD",
+              "NAME1" : "LS14 6ZD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 434905.0,
+              "GEOMETRY_Y" : 435608.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Leeds",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074572682",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#city",
+              "DISTRICT_BOROUGH" : "Leeds",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000016675",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict",
+              "REGION" : "Yorkshire and the Humber",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041430",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TA146TD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TA146TD",
+              "NAME1" : "TA14 6TD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 347548.0,
+              "GEOMETRY_Y" : 115690.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Norton sub Hamdon",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074574217",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "DISTRICT_BOROUGH" : "South Somerset",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010495",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Somerset",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010578",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South West",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041427",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TA146RW",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TA146RW",
+              "NAME1" : "TA14 6RW",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 347646.0,
+              "GEOMETRY_Y" : 117022.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Stoke sub Hamdon",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074574739",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "DISTRICT_BOROUGH" : "South Somerset",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010495",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Somerset",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010578",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South West",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041427",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TA146RQ",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TA146RQ",
+              "NAME1" : "TA14 6RQ",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 348118.0,
+              "GEOMETRY_Y" : 117480.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Stoke sub Hamdon",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074574739",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "DISTRICT_BOROUGH" : "South Somerset",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010495",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Somerset",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010578",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South West",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041427",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TA146SD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TA146SD",
+              "NAME1" : "TA14 6SD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 347249.0,
+              "GEOMETRY_Y" : 116001.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Norton sub Hamdon",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074574217",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "DISTRICT_BOROUGH" : "South Somerset",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010495",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Somerset",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010578",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South West",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041427",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TA146RF",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TA146RF",
+              "NAME1" : "TA14 6RF",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 347634.0,
+              "GEOMETRY_Y" : 117705.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Stoke sub Hamdon",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074574739",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "DISTRICT_BOROUGH" : "South Somerset",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010495",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Somerset",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010578",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South West",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041427",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TA146RJ",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TA146RJ",
+              "NAME1" : "TA14 6RJ",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 347238.0,
+              "GEOMETRY_Y" : 117413.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Stoke sub Hamdon",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074574739",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "DISTRICT_BOROUGH" : "South Somerset",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010495",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Somerset",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010578",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South West",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041427",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TA146RL",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TA146RL",
+              "NAME1" : "TA14 6RL",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 347498.0,
+              "GEOMETRY_Y" : 117294.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Stoke sub Hamdon",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074574739",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "DISTRICT_BOROUGH" : "South Somerset",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010495",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Somerset",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010578",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South West",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041427",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TA146RN",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TA146RN",
+              "NAME1" : "TA14 6RN",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 347420.0,
+              "GEOMETRY_Y" : 117272.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Stoke sub Hamdon",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074574739",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "DISTRICT_BOROUGH" : "South Somerset",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010495",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Somerset",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010578",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South West",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041427",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TA146RG",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TA146RG",
+              "NAME1" : "TA14 6RG",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 347583.0,
+              "GEOMETRY_Y" : 117612.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Stoke sub Hamdon",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074574739",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "DISTRICT_BOROUGH" : "South Somerset",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010495",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Somerset",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010578",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South West",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041427",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TA146RE",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TA146RE",
+              "NAME1" : "TA14 6RE",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 347496.0,
+              "GEOMETRY_Y" : 117545.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Stoke sub Hamdon",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074574739",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "DISTRICT_BOROUGH" : "South Somerset",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010495",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Somerset",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010578",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South West",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041427",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TA146RH",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TA146RH",
+              "NAME1" : "TA14 6RH",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 348288.0,
+              "GEOMETRY_Y" : 117460.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Stoke sub Hamdon",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074574739",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "DISTRICT_BOROUGH" : "South Somerset",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010495",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Somerset",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010578",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South West",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041427",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TA146RA",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TA146RA",
+              "NAME1" : "TA14 6RA",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 347312.0,
+              "GEOMETRY_Y" : 118306.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "DISTRICT_BOROUGH" : "South Somerset",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010495",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Somerset",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010578",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South West",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041427",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TA146QD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TA146QD",
+              "NAME1" : "TA14 6QD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 347210.0,
+              "GEOMETRY_Y" : 117528.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Stoke sub Hamdon",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074574739",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "DISTRICT_BOROUGH" : "South Somerset",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010495",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Somerset",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010578",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South West",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041427",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TA146PD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TA146PD",
+              "NAME1" : "TA14 6PD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 347328.0,
+              "GEOMETRY_Y" : 117774.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Stoke sub Hamdon",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074574739",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "DISTRICT_BOROUGH" : "South Somerset",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010495",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Somerset",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010578",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South West",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041427",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TD145RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TD145RD",
+              "NAME1" : "TD14 5RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 392947.0,
+              "GEOMETRY_Y" : 661551.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Ayton",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074559790",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "COUNTY_UNITARY" : "Scottish Borders",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000036552",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "Scotland",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041429",
+              "COUNTRY" : "Scotland",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/scotland"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS160RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS160RD",
+              "NAME1" : "TS16 0RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 441892.0,
+              "GEOMETRY_Y" : 515247.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "COUNTY_UNITARY" : "Stockton-on-Tees",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025587",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "S141RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/S141RD",
+              "NAME1" : "S14 1RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 437606.0,
+              "GEOMETRY_Y" : 383649.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Sheffield",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074569935",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#city",
+              "DISTRICT_BOROUGH" : "Sheffield",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000009113",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict",
+              "REGION" : "Yorkshire and the Humber",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041430",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS116ND",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS116ND",
+              "NAME1" : "TS11 6ND",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 462549.0,
+              "GEOMETRY_Y" : 522697.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Marske-by-the-Sea",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074577157",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "LS146GD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/LS146GD",
+              "NAME1" : "LS14 6GD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 435472.0,
+              "GEOMETRY_Y" : 435711.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Leeds",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074572682",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#city",
+              "DISTRICT_BOROUGH" : "Leeds",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000016675",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict",
+              "REGION" : "Yorkshire and the Humber",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041430",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS134RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS134RD",
+              "NAME1" : "TS13 4RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 471772.0,
+              "GEOMETRY_Y" : 518226.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Loftus",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074576387",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TW140RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TW140RD",
+              "NAME1" : "TW14 0RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 510939.0,
+              "GEOMETRY_Y" : 174706.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Feltham",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074549619",
+              "DISTRICT_BOROUGH" : "Hounslow",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000011489",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/LondonBorough",
+              "COUNTY_UNITARY" : "Greater London",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041441",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/GreaterLondonAuthority",
+              "REGION" : "London",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041428",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS116ED",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS116ED",
+              "NAME1" : "TS11 6ED",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 462624.0,
+              "GEOMETRY_Y" : 522353.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Marske-by-the-Sea",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074577157",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS116DR",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS116DR",
+              "NAME1" : "TS11 6DR",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 463049.0,
+              "GEOMETRY_Y" : 521924.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Marske-by-the-Sea",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074577157",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS116BD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS116BD",
+              "NAME1" : "TS11 6BD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 463124.0,
+              "GEOMETRY_Y" : 522603.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Marske-by-the-Sea",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074577157",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS116DD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS116DD",
+              "NAME1" : "TS11 6DD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 463327.0,
+              "GEOMETRY_Y" : 521833.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Marske-by-the-Sea",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074577157",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS159RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS159RD",
+              "NAME1" : "TS15 9RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 443261.0,
+              "GEOMETRY_Y" : 512271.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Yarm",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074559320",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Stockton-on-Tees",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025587",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TW149RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TW149RD",
+              "NAME1" : "TW14 9RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 508839.0,
+              "GEOMETRY_Y" : 174616.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "London",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074813508",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#city",
+              "DISTRICT_BOROUGH" : "Hounslow",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000011489",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/LondonBorough",
+              "COUNTY_UNITARY" : "Greater London",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041441",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/GreaterLondonAuthority",
+              "REGION" : "London",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041428",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "LS146UD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/LS146UD",
+              "NAME1" : "LS14 6UD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 435505.0,
+              "GEOMETRY_Y" : 435924.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Leeds",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074572682",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#city",
+              "DISTRICT_BOROUGH" : "Leeds",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000016675",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict",
+              "REGION" : "Yorkshire and the Humber",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041430",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TN146RB",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TN146RB",
+              "NAME1" : "TN14 6RB",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 552969.0,
+              "GEOMETRY_Y" : 150908.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Sevenoaks Weald",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074575813",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "DISTRICT_BOROUGH" : "Sevenoaks",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000018593",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Kent",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000018210",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041421",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "WS149RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/WS149RD",
+              "NAME1" : "WS14 9RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 411753.0,
+              "GEOMETRY_Y" : 307246.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "DISTRICT_BOROUGH" : "Lichfield",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000014797",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Staffordshire",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000015052",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "West Midlands",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041426",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TN147RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TN147RD",
+              "NAME1" : "TN14 7RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 545031.0,
+              "GEOMETRY_Y" : 162131.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Hazelwood",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074564241",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "DISTRICT_BOROUGH" : "Bromley",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000010772",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/LondonBorough",
+              "COUNTY_UNITARY" : "Greater London",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041441",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/GreaterLondonAuthority",
+              "REGION" : "London",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041428",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "LS146FD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/LS146FD",
+              "NAME1" : "LS14 6FD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 434337.0,
+              "GEOMETRY_Y" : 434506.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Leeds",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074572682",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#city",
+              "DISTRICT_BOROUGH" : "Leeds",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000016675",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict",
+              "REGION" : "Yorkshire and the Humber",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041430",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TN146QD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TN146QD",
+              "NAME1" : "TN14 6QD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 553069.0,
+              "GEOMETRY_Y" : 150717.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Sevenoaks Weald",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074575813",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "DISTRICT_BOROUGH" : "Sevenoaks",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000018593",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Kent",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000018210",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041421",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TN146PD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TN146PD",
+              "NAME1" : "TN14 6PD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 553020.0,
+              "GEOMETRY_Y" : 151038.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Sevenoaks Weald",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074575813",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "DISTRICT_BOROUGH" : "Sevenoaks",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000018593",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Kent",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000018210",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041421",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "BS140RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/BS140RD",
+              "NAME1" : "BS14 0RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 360078.0,
+              "GEOMETRY_Y" : 168844.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Bristol",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074573839",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#city",
+              "COUNTY_UNITARY" : "City of Bristol",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025523",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "South West",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041427",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TN146LD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TN146LD",
+              "NAME1" : "TN14 6LD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 549581.0,
+              "GEOMETRY_Y" : 149464.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Winkhurst Green",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074571421",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#hamlet",
+              "DISTRICT_BOROUGH" : "Sevenoaks",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000018593",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Kent",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000018210",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041421",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TN146ND",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TN146ND",
+              "NAME1" : "TN14 6ND",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 551476.0,
+              "GEOMETRY_Y" : 150116.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "DISTRICT_BOROUGH" : "Sevenoaks",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000018593",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Kent",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000018210",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041421",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "ST147RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/ST147RD",
+              "NAME1" : "ST14 7RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 407563.0,
+              "GEOMETRY_Y" : 334220.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Uttoxeter",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074549395",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "DISTRICT_BOROUGH" : "East Staffordshire",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000015064",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Staffordshire",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000015052",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "West Midlands",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041426",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "SS140RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/SS140RD",
+              "NAME1" : "SS14 0RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 570558.0,
+              "GEOMETRY_Y" : 188641.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Basildon",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074573659",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "DISTRICT_BOROUGH" : "Basildon",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000019739",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Essex",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000019687",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "Eastern",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041425",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "LS146RZ",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/LS146RZ",
+              "NAME1" : "LS14 6RZ",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 434560.0,
+              "GEOMETRY_Y" : 435604.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Leeds",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074572682",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#city",
+              "DISTRICT_BOROUGH" : "Leeds",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000016675",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict",
+              "REGION" : "Yorkshire and the Humber",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041430",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TN146JD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TN146JD",
+              "NAME1" : "TN14 6JD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 549274.0,
+              "GEOMETRY_Y" : 151831.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Goathurst Common",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074568150",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "DISTRICT_BOROUGH" : "Sevenoaks",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000018593",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Kent",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000018210",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041421",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TN146HD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TN146HD",
+              "NAME1" : "TN14 6HD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 550057.0,
+              "GEOMETRY_Y" : 157920.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "DISTRICT_BOROUGH" : "Sevenoaks",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000018593",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Kent",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000018210",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041421",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TQ148RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TQ148RD",
+              "NAME1" : "TQ14 8RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 294235.0,
+              "GEOMETRY_Y" : 74511.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Teignmouth",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074556203",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "DISTRICT_BOROUGH" : "Teignbridge",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000022881",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Devon",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000023147",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South West",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041427",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "ST148RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/ST148RD",
+              "NAME1" : "ST14 8RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 408961.0,
+              "GEOMETRY_Y" : 329968.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Scounslow Green",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074579682",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#hamlet",
+              "DISTRICT_BOROUGH" : "East Staffordshire",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000015064",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Staffordshire",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000015052",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "West Midlands",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041426",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TN146ED",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TN146ED",
+              "NAME1" : "TN14 6ED",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 549617.0,
+              "GEOMETRY_Y" : 155740.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "DISTRICT_BOROUGH" : "Sevenoaks",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000018593",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Kent",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000018210",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041421",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TQ149RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TQ149RD",
+              "NAME1" : "TQ14 9RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 290811.0,
+              "GEOMETRY_Y" : 73680.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Bishopsteignton",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074556936",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "DISTRICT_BOROUGH" : "Teignbridge",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000022881",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Devon",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000023147",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South West",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041427",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TN146DR",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TN146DR",
+              "NAME1" : "TN14 6DR",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 548246.0,
+              "GEOMETRY_Y" : 155231.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Sundridge",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074568461",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "DISTRICT_BOROUGH" : "Sevenoaks",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000018593",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Kent",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000018210",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041421",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TN146BD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TN146BD",
+              "NAME1" : "TN14 6BD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 547693.0,
+              "GEOMETRY_Y" : 152918.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "DISTRICT_BOROUGH" : "Sevenoaks",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000018593",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Kent",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000018210",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041421",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "LS146TD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/LS146TD",
+              "NAME1" : "LS14 6TD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 434982.0,
+              "GEOMETRY_Y" : 435117.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Leeds",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074572682",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#city",
+              "DISTRICT_BOROUGH" : "Leeds",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000016675",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict",
+              "REGION" : "Yorkshire and the Humber",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041430",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TN146DD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TN146DD",
+              "NAME1" : "TN14 6DD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 548617.0,
+              "GEOMETRY_Y" : 154844.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Sundridge",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074568461",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "DISTRICT_BOROUGH" : "Sevenoaks",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000018593",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Kent",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000018210",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041421",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS122RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS122RD",
+              "NAME1" : "TS12 2RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 468273.0,
+              "GEOMETRY_Y" : 520285.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Brotton",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074576669",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "LS146RY",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/LS146RY",
+              "NAME1" : "LS14 6RY",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 434629.0,
+              "GEOMETRY_Y" : 435628.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Leeds",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074572682",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#city",
+              "DISTRICT_BOROUGH" : "Leeds",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000016675",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict",
+              "REGION" : "Yorkshire and the Humber",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041430",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS121RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS121RD",
+              "NAME1" : "TS12 1RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 465052.0,
+              "GEOMETRY_Y" : 521125.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Saltburn-by-the-Sea",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074577155",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Redcar and Cleveland",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025588",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS247RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS247RD",
+              "NAME1" : "TS24 7RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 450854.0,
+              "GEOMETRY_Y" : 532425.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Hartlepool",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074576671",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Hartlepool",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025589",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "BS149RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/BS149RD",
+              "NAME1" : "BS14 9RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 360509.0,
+              "GEOMETRY_Y" : 167882.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Bristol",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074573839",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#city",
+              "COUNTY_UNITARY" : "City of Bristol",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025523",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "South West",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041427",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TN146AD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TN146AD",
+              "NAME1" : "TN14 6AD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 548306.0,
+              "GEOMETRY_Y" : 155507.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Sundridge",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074568461",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#village",
+              "DISTRICT_BOROUGH" : "Sevenoaks",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000018593",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+              "COUNTY_UNITARY" : "Kent",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000018210",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+              "REGION" : "South East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041421",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "LS146RW",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/LS146RW",
+              "NAME1" : "LS14 6RW",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 435334.0,
+              "GEOMETRY_Y" : 435911.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Leeds",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074572682",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#city",
+              "DISTRICT_BOROUGH" : "Leeds",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000016675",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict",
+              "REGION" : "Yorkshire and the Humber",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041430",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS248RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS248RD",
+              "NAME1" : "TS24 8RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 450764.0,
+              "GEOMETRY_Y" : 534176.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Hartlepool",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074576671",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Hartlepool",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025589",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "LS146RQ",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/LS146RQ",
+              "NAME1" : "LS14 6RQ",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 434934.0,
+              "GEOMETRY_Y" : 436299.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Leeds",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074572682",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#city",
+              "DISTRICT_BOROUGH" : "Leeds",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000016675",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict",
+              "REGION" : "Yorkshire and the Humber",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041430",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "LS146RX",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/LS146RX",
+              "NAME1" : "LS14 6RX",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 434538.0,
+              "GEOMETRY_Y" : 435626.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Leeds",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074572682",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#city",
+              "DISTRICT_BOROUGH" : "Leeds",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000016675",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict",
+              "REGION" : "Yorkshire and the Humber",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041430",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "LS146SD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/LS146SD",
+              "NAME1" : "LS14 6SD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 434391.0,
+              "GEOMETRY_Y" : 435759.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Leeds",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074572682",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#city",
+              "DISTRICT_BOROUGH" : "Leeds",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000016675",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict",
+              "REGION" : "Yorkshire and the Humber",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041430",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "TS249RD",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/TS249RD",
+              "NAME1" : "TS24 9RD",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 448371.0,
+              "GEOMETRY_Y" : 536088.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Hartlepool",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074576671",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#town",
+              "COUNTY_UNITARY" : "Hartlepool",
+              "COUNTY_UNITARY_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000025589",
+              "COUNTY_UNITARY_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority",
+              "REGION" : "North East",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041422",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "LS146RF",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/LS146RF",
+              "NAME1" : "LS14 6RF",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 434563.0,
+              "GEOMETRY_Y" : 436223.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Leeds",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074572682",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#city",
+              "DISTRICT_BOROUGH" : "Leeds",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000016675",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict",
+              "REGION" : "Yorkshire and the Humber",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041430",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "LS146RS",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/LS146RS",
+              "NAME1" : "LS14 6RS",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 434922.0,
+              "GEOMETRY_Y" : 435778.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Leeds",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074572682",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#city",
+              "DISTRICT_BOROUGH" : "Leeds",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000016675",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict",
+              "REGION" : "Yorkshire and the Humber",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041430",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "LS146RT",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/LS146RT",
+              "NAME1" : "LS14 6RT",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 435003.0,
+              "GEOMETRY_Y" : 435754.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Leeds",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074572682",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#city",
+              "DISTRICT_BOROUGH" : "Leeds",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000016675",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict",
+              "REGION" : "Yorkshire and the Humber",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041430",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          }, {
+            "GAZETTEER_ENTRY" : {
+              "ID" : "LS146RU",
+              "NAMES_URI" : "http://data.ordnancesurvey.co.uk/id/postcodeunit/LS146RU",
+              "NAME1" : "LS14 6RU",
+              "TYPE" : "other",
+              "LOCAL_TYPE" : "Postcode",
+              "GEOMETRY_X" : 434871.0,
+              "GEOMETRY_Y" : 435808.0,
+              "MOST_DETAIL_VIEW_RES" : 3500,
+              "LEAST_DETAIL_VIEW_RES" : 18000,
+              "POPULATED_PLACE" : "Leeds",
+              "POPULATED_PLACE_URI" : "http://data.ordnancesurvey.co.uk/id/4000000074572682",
+              "POPULATED_PLACE_TYPE" : "http://www.ordnancesurvey.co.uk/xml/codelists/localtype.xml#city",
+              "DISTRICT_BOROUGH" : "Leeds",
+              "DISTRICT_BOROUGH_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000016675",
+              "DISTRICT_BOROUGH_TYPE" : "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict",
+              "REGION" : "Yorkshire and the Humber",
+              "REGION_URI" : "http://data.ordnancesurvey.co.uk/id/7000000000041430",
+              "COUNTRY" : "England",
+              "COUNTRY_URI" : "http://data.ordnancesurvey.co.uk/id/country/england"
+            }
+          } ]
+        }
+  recorded_at: Mon, 22 Feb 2021 17:53:32 GMT
+recorded_with: VCR 6.0.0
