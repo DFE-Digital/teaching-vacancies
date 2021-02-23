@@ -21,7 +21,7 @@ RSpec.describe SendWeeklyAlertEmailJob, type: :job do
   context "with vacancies" do
     before do
       allow_any_instance_of(described_class).to receive(:vacancies_for_subscription) { vacancies }
-      allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new("production"))
+      allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false)
     end
 
     it "sends an email" do
