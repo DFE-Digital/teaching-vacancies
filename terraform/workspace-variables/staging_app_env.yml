@@ -6,6 +6,7 @@ DFE_SIGN_IN_REDIRECT_URL: https://staging.teaching-vacancies.service.gov.uk/auth
 DFE_SIGN_IN_URL: https://pp-api.signin.education.gov.uk
 DISABLE_EXPENSIVE_JOBS: true
 DOMAIN: staging.teaching-vacancies.service.gov.uk
+ENFORCE_LOCAL_AUTHORITY_ALLOWLIST: true
 FEATURE_JOBSEEKER_APPLICATIONS: false
 GOOGLE_ANALYTICS_PROFILE_ID: ga:171744074
 MALLOC_ARENA_MAX: 2

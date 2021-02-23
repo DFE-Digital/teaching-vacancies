@@ -105,7 +105,12 @@ class Publishers::SignIn::Email::SessionsController < Publishers::SignIn::BaseSe
   end
 
   def allowed_publisher?
-    params[:urn].present? || params[:uid].present? || (params[:la_code].present? &&
-      (Rails.env.development? || Rails.configuration.allowed_local_authorities.include?(params[:la_code])))
+    params[:urn].present? || params[:uid].present? || (params[:la_code].present? && allowed_la_publisher?)
+  end
+
+  def allowed_la_publisher?
+    return true unless Rails.configuration.enforce_local_authority_allowlist
+
+    Rails.configuration.allowed_local_authorities.include?(params[:la_code])
   end
 end

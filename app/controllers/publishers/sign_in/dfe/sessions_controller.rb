@@ -135,8 +135,13 @@ class Publishers::SignIn::Dfe::SessionsController < Publishers::SignIn::BaseSess
   end
 
   def allowed_user?
-    school_urn.present? || trust_uid.present? || (local_authority_code.present? &&
-      (Rails.env.development? || Rails.configuration.allowed_local_authorities.include?(local_authority_code)))
+    school_urn.present? || trust_uid.present? || (local_authority_code.present? && allowed_la_user?)
+  end
+
+  def allowed_la_user?
+    return true unless Rails.configuration.enforce_local_authority_allowlist
+
+    Rails.configuration.allowed_local_authorities.include?(local_authority_code)
   end
 
   def use_school_group_if_available
