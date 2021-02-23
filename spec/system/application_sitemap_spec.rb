@@ -1,10 +1,9 @@
 require "rails_helper"
-RSpec.describe "Application sitemap", sitemap: true do
+RSpec.describe "Application sitemap" do
   context "sitemap.xml" do
     scenario "generates a sitemap of the application" do
       published_jobs = create_list(:vacancy, 4, :published)
       build_list(:vacancy, 2, :expired).each { |j| j.save(validate: false) }
-      stub_const("DOMAIN", "localhost:3000")
 
       visit sitemap_path(format: :xml)
       document = Nokogiri::XML::Document.parse(body)

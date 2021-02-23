@@ -41,10 +41,6 @@ RSpec.configure do |config|
 
   config.use_transactional_fixtures = true
 
-  config.before(:each, :sitemap) do
-    default_url_options[:host] = DOMAIN.to_s
-  end
-
   config.before(:each, type: :system) do
     driven_by :rack_test
     Capybara.default_host = "http://#{ENV.fetch('DOMAIN', 'localhost:3000')}"
