@@ -5,7 +5,7 @@ RSpec.describe Geocoding, geocode: true do
 
   let(:location) { "TS14 6RD" }
   let(:google_coordinates) { [54.5399146, -1.0435559] }
-  let(:os_coordinates) { [54.541100016011036, -1.0450613899134777] }
+  let(:os_coordinates) { [54.5411000, -1.0450614] }
   let(:no_match) { [0, 0] }
 
   describe "#coordinates" do
@@ -39,7 +39,7 @@ RSpec.describe Geocoding, geocode: true do
 
       context "when Geocoder with `lookup: :uk_ordnance_survey_names` returns a valid response" do
         it "returns the coordinates" do
-          expect(subject.coordinates).to eq(os_coordinates)
+          expect(subject.coordinates.map { |coord| coord.round(7) }).to eq(os_coordinates)
         end
 
         it "caches the result" do
