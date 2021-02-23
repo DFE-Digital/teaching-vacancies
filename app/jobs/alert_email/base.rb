@@ -1,6 +1,6 @@
 class AlertEmail::Base < ApplicationJob
   def perform
-    return unless Rails.env.production?
+    return if DisableExpensiveJobs.enabled?
 
     subscriptions.each do |subscription|
       next if subscription.alert_run_today?
