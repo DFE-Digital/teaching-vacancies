@@ -15,7 +15,7 @@ env:
 jobs:
   turnstyle:
     runs-on: ubuntu-20.04
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
     - uses: softprops/turnstyle@v1
       name: Check workflow concurrency
@@ -103,7 +103,7 @@ jobs:
         token: ${{ secrets.PERSONAL_TOKEN }}
         checkName: Deploy ${{ env.TAG }} to staging # Job name within workflow
         ref: ${{ github.ref }}
-        timeoutSeconds: 720
+        timeoutSeconds: 1440
         intervalSeconds: 15
 
     - name: Notify twd_tv_dev channel on staging deployment failure
@@ -156,7 +156,7 @@ jobs:
         token: ${{ secrets.PERSONAL_TOKEN }}
         checkName: Deploy ${{ env.TAG }} to production # Job name within workflow
         ref: ${{ github.ref }}
-        timeoutSeconds: 720
+        timeoutSeconds: 1440
         intervalSeconds: 15
 
     - name: Notify twd_tv_dev channel on production deployment failure
