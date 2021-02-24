@@ -13,27 +13,6 @@ RSpec.shared_examples "a successful sign in" do
     within(".govuk-header__navigation") { expect(page).to have_selector(:link_or_button, I18n.t("nav.sign_out")) }
     within(".govuk-header__navigation") { expect(page).to have_selector(:link_or_button, I18n.t("nav.school_page_link")) }
   end
-
-  scenario "adds entries in the audit log" do
-    visit root_path
-    sign_in_publisher
-
-    activity = PublicActivity::Activity.last
-    expect(activity.key).to eq("dfe-sign-in.authorisation.success")
-    if activity.trackable.is_a?(School)
-      expect(activity.trackable.urn).to eq(organisation.urn)
-    else
-      expect(activity.trackable.uid).to eq(organisation.uid)
-    end
-
-    authorisation = PublicActivity::Activity.last
-    expect(authorisation.key).to eq("dfe-sign-in.authorisation.success")
-    if authorisation.trackable.is_a?(School)
-      expect(authorisation.trackable.urn).to eq(organisation.urn)
-    else
-      expect(authorisation.trackable.uid).to eq(organisation.uid)
-    end
-  end
 end
 
 RSpec.shared_examples "a failed sign in" do |options|
@@ -47,30 +26,6 @@ RSpec.shared_examples "a failed sign in" do |options|
     expect(page).to have_content(/The email you're signed in with isn't authorised to list jobs for this school/i)
     expect(page).to have_content(options[:email])
     within(".govuk-header__navigation") { expect(page).not_to have_content(I18n.t("nav.school_page_link")) }
-  end
-
-  scenario "adds entries in the audit log" do
-    visit root_path
-    sign_in_publisher
-
-    authentication = PublicActivity::Activity.first
-    expect(authentication.key).to eq("dfe-sign-in.authentication.success")
-
-    authorisation = PublicActivity::Activity.last
-    expect(authorisation.key).to eq("dfe-sign-in.authorisation.failure")
-  end
-
-  scenario "logs a partially anonymised identifier so we can lookup any legitimate users who may be genuinley stuck" do
-    expect(Rails.logger)
-      .to receive(:warn)
-      .with("Hiring staff signed in: #{options[:user_id]}")
-
-    expect(Rails.logger)
-      .to receive(:warn)
-      .with(options[:not_authorised_message])
-
-    visit root_path
-    sign_in_publisher
   end
 end
 

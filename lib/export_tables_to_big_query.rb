@@ -50,9 +50,7 @@ class ExportTablesToBigQuery
   }.freeze
 
   EXCLUDE_TABLES = %w[
-    activities
     alert_runs
-    audit_data
     ar_internal_metadata
     feedbacks
     friendly_id_slugs
@@ -71,9 +69,6 @@ class ExportTablesToBigQuery
     @dataset = bigquery.dataset(BIGQUERY_DATASET)
     @runtime = Time.current.to_s(:db).parameterize
     # This ensures that new tables are automatically added to the BigQuery dataset.
-    #
-    # `#singularize` must come *after* `#camelize` in `#map` for the AuditData inflection rule to work correctly. The
-    # inflector wasn't correctly picking up the snake cased version.
     @tables = ApplicationRecord.connection.tables
       .reject { |table| EXCLUDE_TABLES.include?(table) }
       .sort

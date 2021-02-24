@@ -1,10 +1,7 @@
-require "auditor"
-
 class Vacancy < ApplicationRecord
   extend FriendlyId
   extend ArrayEnum
 
-  include Auditor::Model
   include Indexable
 
   friendly_id :slug_candidates, use: %w[slugged history]

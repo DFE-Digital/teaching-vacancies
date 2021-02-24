@@ -37,14 +37,6 @@ RSpec.describe "School deleting vacancies" do
     expect(page).to have_content(I18n.t("schools.no_jobs.heading"))
   end
 
-  scenario "Audits the vacancy deletion" do
-    delete_vacancy(school, vacancy.id)
-
-    activity = vacancy.activities.last
-    expect(activity.session_id).to eq(oid)
-    expect(activity.key).to eq("vacancy.delete")
-  end
-
   scenario "Notifies the Google index service" do
     expect_any_instance_of(Publishers::Vacancies::ApplicationController)
       .to receive(:remove_google_index).with(vacancy)

@@ -45,7 +45,6 @@ class Publishers::VacanciesController < Publishers::Vacancies::ApplicationContro
     @vacancy.delete_documents
     @vacancy.trashed!
     remove_google_index(@vacancy)
-    Auditor::Audit.new(@vacancy, "vacancy.delete", current_publisher_oid).log
     redirect_to organisation_path, success: t(".success_html", job_title: @vacancy.job_title)
   end
 

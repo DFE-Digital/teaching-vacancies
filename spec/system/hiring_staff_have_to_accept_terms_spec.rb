@@ -30,19 +30,6 @@ RSpec.describe "Hiring staff accepts terms and conditions" do
       expect(current_publisher).to be_accepted_terms_and_conditions
     end
 
-    scenario "an audit entry is logged when they accept" do
-      visit terms_and_conditions_path
-
-      expect(current_publisher).not_to be_accepted_terms_and_conditions
-
-      check I18n.t("terms_and_conditions.label")
-      click_on I18n.t("buttons.accept_and_continue")
-
-      activity = current_publisher.activities.last
-      expect(activity.key).to eq("user.terms_and_conditions.accept")
-      expect(activity.session_id).to eq(oid)
-    end
-
     scenario "an error is shown if they don’t accept" do
       visit terms_and_conditions_path
 

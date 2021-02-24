@@ -1,8 +1,6 @@
 require "breasal"
 
 class School < Organisation
-  include Auditor::Model
-
   has_many :school_group_memberships
   has_many :school_groups, through: :school_group_memberships
 
