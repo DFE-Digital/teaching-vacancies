@@ -120,8 +120,10 @@ class Publishers::SignIn::Dfe::SessionsController < Publishers::SignIn::BaseSess
     if authorisation_permissions.authorised? && organisation_id_present? && allowed_user?
       update_session(authorisation_permissions)
       update_publisher_last_activity_at
+      trigger_sign_in_event(:success, :dsi)
       redirect_to organisation_path
     else
+      trigger_sign_in_event(:failure, :dsi, user_id)
       not_authorised
     end
   end

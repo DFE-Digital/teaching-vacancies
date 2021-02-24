@@ -81,7 +81,10 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
           expect(page).to have_content(other_school.name)
           expect(page).to have_content(trust.name)
           expect(page).to have_content(local_authority.name)
-          click_on school.name
+          expect { click_on school.name }
+            .to have_triggered_event(:publisher_sign_in_attempt)
+            .with_base_data(user_anonymised_publisher_id: anonymised_form_of(publisher.oid))
+            .and_data(success: "true", sign_in_type: "email")
 
           expect(page).to have_content(school.name)
           expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
@@ -129,7 +132,10 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
             expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
             # Expect that the link in the email goes to the landing page
-            visit auth_email_choose_organisation_path(login_key: login_key.id)
+            expect { visit auth_email_choose_organisation_path(login_key: login_key.id) }
+              .to have_triggered_event(:publisher_sign_in_attempt)
+              .with_base_data(user_anonymised_publisher_id: anonymised_form_of(publisher.oid))
+              .and_data(success: "true", sign_in_type: "email")
 
             expect(page).not_to have_content("Choose your organisation")
             expect(page).to have_content(school.name)
@@ -156,7 +162,10 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
             expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
             # Expect that the link in the email goes to the landing page
-            visit auth_email_choose_organisation_path(login_key: login_key.id)
+            expect { visit auth_email_choose_organisation_path(login_key: login_key.id) }
+              .to have_triggered_event(:publisher_sign_in_attempt)
+              .with_base_data(user_anonymised_publisher_id: anonymised_form_of(publisher.oid))
+              .and_data(success: "true", sign_in_type: "email")
 
             expect(page).not_to have_content("Choose your organisation")
             expect(page).to have_content(trust.name)
@@ -189,7 +198,10 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
             expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
             # Expect that the link in the email goes to the landing page
-            visit auth_email_choose_organisation_path(login_key: login_key.id)
+            expect { visit auth_email_choose_organisation_path(login_key: login_key.id) }
+              .to have_triggered_event(:publisher_sign_in_attempt)
+              .with_base_data(user_anonymised_publisher_id: anonymised_form_of(publisher.oid))
+              .and_data(success: "true", sign_in_type: "email")
 
             expect(page).not_to have_content("Choose your organisation")
             expect(page).to have_content(local_authority.name)
@@ -202,7 +214,11 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
 
           it "cannot sign in" do
             freeze_time do
-              visit auth_email_choose_organisation_path(login_key: login_key.id)
+              expect { visit auth_email_choose_organisation_path(login_key: login_key.id) }
+                .to have_triggered_event(:publisher_sign_in_attempt)
+                .with_base_data(user_anonymised_publisher_id: anonymised_form_of(publisher.oid))
+                .and_data(success: "false", sign_in_type: "email")
+
               expect(page).to have_content "You are not authorised to log in"
             end
           end

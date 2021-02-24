@@ -15,6 +15,7 @@ class Publishers::SignIn::Email::SessionsController < Publishers::SignIn::BaseSe
   def create
     session.update(organisation_urn: params[:urn], organisation_uid: params[:uid], organisation_la_code: params[:la_code])
     Rails.logger.info(updated_session_details)
+    trigger_sign_in_event(:success, :email)
     redirect_to organisation_path
   end
 
@@ -88,7 +89,10 @@ class Publishers::SignIn::Email::SessionsController < Publishers::SignIn::BaseSe
   end
 
   def redirect_unauthorised_publishers
-    redirect_to new_auth_email_path, notice: t(".not_authorised") unless publisher_authorised?
+    return if publisher_authorised?
+
+    trigger_sign_in_event(:failure, :email)
+    redirect_to new_auth_email_path, notice: t(".not_authorised")
   end
 
   def publisher_authorised?
