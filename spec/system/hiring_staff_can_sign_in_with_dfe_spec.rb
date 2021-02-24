@@ -3,11 +3,21 @@ require "message_encryptor"
 
 RSpec.shared_examples "a successful sign in" do
   scenario "it signs in the user successfully" do
+    visit root_path
+
+    expect { sign_in_publisher }
+      .to have_triggered_event(:publisher_sign_in_attempt)
+      .with_base_data(user_anonymised_publisher_id: anonymised_form_of(user_oid))
+      .and_data(success: "true", sign_in_type: "dsi")
+
     within(".govuk-header__navigation") { expect(page).to have_selector(:link_or_button, I18n.t("nav.sign_out")) }
     within(".govuk-header__navigation") { expect(page).to have_selector(:link_or_button, I18n.t("nav.school_page_link")) }
   end
 
   scenario "adds entries in the audit log" do
+    visit root_path
+    sign_in_publisher
+
     activity = PublicActivity::Activity.last
     expect(activity.key).to eq("dfe-sign-in.authorisation.success")
     if activity.trackable.is_a?(School)
@@ -30,7 +40,9 @@ RSpec.shared_examples "a failed sign in" do |options|
   scenario "it does not sign-in the user, and tells the user what to do" do
     visit root_path
 
-    sign_in_publisher
+    expect { sign_in_publisher }
+      .to have_triggered_event(:publisher_sign_in_attempt)
+      .with_data(success: "false", sign_in_type: "dsi", user_anonymised_publisher_id: anonymised_form_of(user_oid))
 
     expect(page).to have_content(/The email you're signed in with isn't authorised to list jobs for this school/i)
     expect(page).to have_content(options[:email])
@@ -39,7 +51,6 @@ RSpec.shared_examples "a failed sign in" do |options|
 
   scenario "adds entries in the audit log" do
     visit root_path
-
     sign_in_publisher
 
     authentication = PublicActivity::Activity.first
@@ -59,7 +70,6 @@ RSpec.shared_examples "a failed sign in" do |options|
       .with(options[:not_authorised_message])
 
     visit root_path
-
     sign_in_publisher
   end
 end
@@ -68,13 +78,13 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
   let(:user_oid) { "161d1f6a-44f1-4a1a-940d-d1088c439da7" }
   let(:dsi_email_address) { Faker::Internet.email }
 
-  before(:each) do
+  before do
     allow(AuthenticationFallback).to receive(:enabled?) { false }
     stub_accepted_terms_and_conditions
     OmniAuth.config.test_mode = true
   end
 
-  after(:each) do
+  after do
     OmniAuth.config.mock_auth[:default] = nil
     OmniAuth.config.mock_auth[:dfe] = nil
     OmniAuth.config.test_mode = false
@@ -83,20 +93,19 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
   context "with valid credentials that match a school" do
     let!(:organisation) { create(:school, urn: "110627") }
 
-    before(:each) do
+    before do
       stub_authentication_step email: dsi_email_address
       stub_authorisation_step
       stub_sign_in_with_multiple_organisations
-
-      visit root_path
-
-      sign_in_publisher
     end
 
     it_behaves_like "a successful sign in"
 
     scenario "it redirects the sign in page to the school page" do
+      visit root_path
+      sign_in_publisher
       visit new_identifications_path
+
       expect(page).to have_content(organisation.name)
       expect(current_path).to eq(organisation_path)
     end
@@ -153,15 +162,15 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
       stub_authentication_step(school_urn: nil, trust_uid: organisation.uid, email: dsi_email_address)
       stub_authorisation_step
       stub_sign_in_with_multiple_organisations
-
-      visit root_path
-      sign_in_publisher
     end
 
     context "when user preferences have been set" do
       it_behaves_like "a successful sign in"
 
       scenario "it redirects the sign in page to the SchoolGroup page" do
+        visit root_path
+        sign_in_publisher
+
         visit new_identifications_path
         expect(page).to have_content(organisation.name)
         expect(current_path).to eq(organisation_path)
@@ -172,6 +181,9 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
       let(:publisher_preference) { nil }
 
       scenario "it redirects the sign in page to the managed organisations user preference page" do
+        visit root_path
+        sign_in_publisher
+
         expect(current_path).to eq(organisation_managed_organisations_path)
       end
     end
@@ -191,15 +203,15 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
       stub_authentication_step(school_urn: nil, la_code: organisation.local_authority_code, email: dsi_email_address)
       stub_authorisation_step
       stub_sign_in_with_multiple_organisations
-
-      visit root_path
-      sign_in_publisher
     end
 
     context "when user preferences have been set" do
       it_behaves_like "a successful sign in"
 
       scenario "it redirects the sign in page to the SchoolGroup page" do
+        visit root_path
+        sign_in_publisher
+
         visit new_identifications_path
         expect(current_path).to eq(organisation_path)
       end
@@ -209,6 +221,9 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
       let(:publisher_preference) { nil }
 
       scenario "it redirects the sign in page to the managed organisations user preference page" do
+        visit root_path
+        sign_in_publisher
+
         expect(current_path).to eq(organisation_managed_organisations_path)
       end
     end
@@ -225,7 +240,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
   end
 
   context "with valid credentials but no authorisation" do
-    before(:each) do
+    before do
       stub_authentication_step(email: "another_email@example.com")
       stub_authorisation_step_with_not_found
     end
@@ -237,7 +252,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
   end
 
   context "when there is was an error with DfE Sign-in" do
-    before(:each) do
+    before do
       stub_authentication_step
       stub_authorisation_step_with_external_error
     end
