@@ -39,18 +39,18 @@ paas_worker_app_memory                 = 1536
 
 statuscake_alerts = {
   "tvsprod" = {
-    website_name  = "teaching-vacancies-production"
+    website_name  = "Teaching Vacancies - /check"
     website_url   = "https://teaching-vacancies.service.gov.uk/check"
     contact_group = [183741]
   }
   "stringmatch" = {
-    website_name  = "teaching-vacancies-production"
+    website_name  = "Teaching Vacancies - homepage string"
     website_url   = "https://teaching-vacancies.service.gov.uk"
     contact_group = [183741]
     find_string   = "create an account"
   }
   "PaaS500String" = {
-    website_name  = "teaching-vacancies-production"
+    website_name  = "Teaching Vacancies - PaaS 500 error"
     website_url   = "https://teaching-vacancies.service.gov.uk"
     contact_group = [183741]
     find_string   = "500 Internal Server Error"
