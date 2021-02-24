@@ -125,6 +125,7 @@ ActiveRecord::Schema.define(version: 2021_02_24_161051) do
     t.uuid "jobseeker_id"
     t.uuid "vacancy_id"
     t.jsonb "application_data"
+    t.integer "completed_steps", array: true
   end
 
   create_table "jobseekers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
