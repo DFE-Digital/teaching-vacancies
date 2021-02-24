@@ -1,12 +1,11 @@
 class Api::VacanciesController < Api::ApplicationController
   before_action :verify_json_request, only: %i[show index]
 
-  MAX_API_RESULTS_PER_PAGE = 50
+  MAX_API_RESULTS_PER_PAGE = 100
 
   def index
     records = Vacancy.includes(organisation_vacancies: :organisation)
-                     .listed
-                     .published
+                     .live
                      .page(page_number)
                      .per(MAX_API_RESULTS_PER_PAGE)
                      .order(publish_on: :desc)
