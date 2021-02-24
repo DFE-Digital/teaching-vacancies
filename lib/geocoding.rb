@@ -13,7 +13,7 @@ class Geocoding
     geocoded_location = begin
       Geocoder.coordinates(location, lookup: :google, components: "country:gb")
     rescue Geocoder::OverQueryLimitError
-      Rollbar.log(:error, "Google Geocoding API responded with OVER_QUERY_LIMIT")
+      Rails.logger.error("Google Geocoding API responded with OVER_QUERY_LIMIT")
       Geocoder.coordinates(location, lookup: :uk_ordnance_survey_names)
     end
 
