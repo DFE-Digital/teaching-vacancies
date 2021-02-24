@@ -49,20 +49,17 @@ RSpec.describe "Api::Vacancies", type: :request do
       expect(json[:links].keys).to include(:self, :first, :last, :prev, :next)
     end
 
-    it "retrieves all available vacancies" do
+    it "retrieves all live vacancies" do
       published_vacancy = create(:vacancy)
       published_vacancy.organisation_vacancies.create(organisation: school)
       expired_vacancy = create(:vacancy, :expired)
       expired_vacancy.organisation_vacancies.create(organisation: school)
-      vacancies = [published_vacancy, expired_vacancy]
 
       get api_jobs_path(api_version: 1), params: { format: :json }
 
       expect(response.status).to eq(Rack::Utils.status_code(:ok))
-      expect(json[:data].count).to eq(2)
-      vacancies.each do |v|
-        expect(json[:data]).to include(vacancy_json_ld(VacancyPresenter.new(v)))
-      end
+      expect(json[:data].count).to eq(1)
+      expect(json[:data]).to include(vacancy_json_ld(VacancyPresenter.new(published_vacancy)))
     end
 
     context "when there are more vacancies than the per-page limit" do
