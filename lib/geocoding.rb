@@ -10,18 +10,12 @@ class Geocoding
   def coordinates
     return Geocoder::DEFAULT_STUB_COORDINATES if Rails.application.config.geocoder_lookup == :test
 
-    geocoded_location = begin
+    Rails.cache.fetch([:geocoding, location], expires_in: CACHE_DURATION, skip_nil: true) do
       Geocoder.coordinates(location, lookup: :google, components: "country:gb")
     rescue Geocoder::OverQueryLimitError
-      Rollbar.log(:error, "Google Geocoding API responded with OVER_QUERY_LIMIT")
+      Rails.logger.error("Google Geocoding API responded with OVER_QUERY_LIMIT")
       Geocoder.coordinates(location, lookup: :uk_ordnance_survey_names)
-    end
-
-    return no_match if geocoded_location.blank?
-
-    Rails.cache.fetch([:geocoding, location], expires_in: CACHE_DURATION) do
-      geocoded_location
-    end
+    end || no_match
   end
 
   private
