@@ -8,11 +8,11 @@ RSpec.describe Search::SimilarJobs do
 
   it "calls Search::CriteriaDeviser" do
     expect(Search::CriteriaDeviser).to receive(:new).with(vacancy).and_call_original
-    subject
+    subject.similar_jobs
   end
 
   it "calls Search::VacancySearch" do
     expect(Search::VacancySearch).to receive(:new).and_call_original
-    subject
+    subject.similar_jobs
   end
 end
