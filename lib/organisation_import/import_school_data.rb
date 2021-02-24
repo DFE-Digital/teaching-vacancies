@@ -1,26 +1,25 @@
 require "organisation_import/import_organisation_data"
 
 class ImportSchoolData < ImportOrganisationData
-  READABLE_PHASE_MAPPINGS = School::READABLE_PHASE_MAPPINGS
+  private
 
-  def run!
-    save_csv_file(csv_url, csv_file_location)
-    CSV.foreach(csv_file_location, headers: true, encoding: "windows-1252:utf-8").each do |row|
-      Organisation.transaction do
-        school = create_organisation(row)
-
-        next unless school_in_local_authority_scope?(row)
-
-        local_authority = SchoolGroup.find_or_create_by(local_authority_code: row["LA (code)"],
-                                                        name: row["LA (name)"],
-                                                        group_type: "local_authority")
-        SchoolGroupMembership.find_or_create_by(school_id: school.id, school_group_id: local_authority.id)
-      end
-    end
-    File.delete(csv_file_location)
+  def csv_metadata
+    [{ csv_url: "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv",
+       csv_file_location: "./tmp/#{datestring}-schools-data.csv",
+       method: :create_school_and_local_authority }]
   end
 
-  private
+  def create_school_and_local_authority(row)
+    school = create_organisation(row)
+
+    return unless school_in_local_authority_scope?(row)
+
+    local_authority = SchoolGroup.find_or_create_by(local_authority_code: row["LA (code)"],
+                                                    name: row["LA (name)"],
+                                                    group_type: "local_authority")
+    membership = SchoolGroupMembership.find_or_create_by(school_id: school.id, school_group_id: local_authority.id)
+    membership.update!(do_not_delete: true)
+  end
 
   def column_name_mappings
     {
@@ -53,7 +52,7 @@ class ImportSchoolData < ImportOrganisationData
   end
 
   def set_readable_phases(school)
-    school.readable_phases = READABLE_PHASE_MAPPINGS[school.phase.to_sym]
+    school.readable_phases = School::READABLE_PHASE_MAPPINGS[school.phase.to_sym]
   end
 
   def convert_to_organisation(row)
@@ -62,18 +61,6 @@ class ImportSchoolData < ImportOrganisationData
     set_gias_data_as_json(school, row)
     set_readable_phases(school)
     school
-  end
-
-  def csv_file_location
-    "./tmp/#{datestring}-schools-data.csv"
-  end
-
-  def csv_url
-    "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv"
-  end
-
-  def datestring
-    Time.current.strftime("%Y%m%d")
   end
 
   def school_in_local_authority_scope?(row)

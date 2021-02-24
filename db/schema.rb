@@ -231,6 +231,7 @@ ActiveRecord::Schema.define(version: 2021_02_24_161051) do
   create_table "school_group_memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "school_id"
     t.uuid "school_group_id"
+    t.boolean "do_not_delete"
   end
 
   create_table "sessions", force: :cascade do |t|
