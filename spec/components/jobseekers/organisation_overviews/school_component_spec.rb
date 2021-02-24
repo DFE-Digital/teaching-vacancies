@@ -6,7 +6,7 @@ RSpec.describe Jobseekers::OrganisationOverviews::SchoolComponent, type: :compon
   let(:vacancy) { create(:vacancy, :at_one_school) }
   let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
 
-  before do
+  let!(:inline_component) do
     vacancy.organisation_vacancies.create(organisation: organisation)
     render_inline(described_class.new(vacancy: vacancy_presenter))
   end
@@ -106,7 +106,7 @@ RSpec.describe Jobseekers::OrganisationOverviews::SchoolComponent, type: :compon
     end
 
     it "shows the map element for Google Maps API to populate" do
-      expect(rendered_component).to include("map")
+      expect(inline_component.css("#map").count).to eq(1)
     end
   end
 
@@ -118,7 +118,7 @@ RSpec.describe Jobseekers::OrganisationOverviews::SchoolComponent, type: :compon
     end
 
     it "does not show the map" do
-      expect(rendered_component).not_to include("map")
+      expect(inline_component.css("#map").count).to eq(0)
     end
   end
 
