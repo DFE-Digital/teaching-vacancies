@@ -237,14 +237,6 @@ You can use conduit to create a dump of production data. See [this section](/doc
 psql tvs_development < backup.sql
 ```
 
-### Calculating and storing homepage vacancy facets for local development
-
-Inside the rails console:
-
-```ruby
-VacancyFacets.new.refresh
-```
-
 ### Integration between Jira and Github
 
 The integration allows to see the status of development from within the jira issue. You can see the
