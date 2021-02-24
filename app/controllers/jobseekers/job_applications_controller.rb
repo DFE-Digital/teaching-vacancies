@@ -1,5 +1,5 @@
 class Jobseekers::JobApplicationsController < Jobseekers::BaseController
-  helper_method :job_application, :vacancy
+  helper_method :job_application, :review_form, :vacancy
 
   def new
     request_event.trigger(:vacancy_apply_clicked, vacancy_id: vacancy.id)
@@ -12,14 +12,38 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
   end
 
   def submit
-    job_application.update(status: :submitted)
-    @application_feedback_form = Jobseekers::JobApplication::FeedbackForm.new
+    if params[:commit] == t("buttons.save_as_draft")
+      redirect_to jobseeker_root_path, notice: "Application saved as draft"
+    elsif review_form.valid?
+      job_application.update(status: :submitted)
+      @application_feedback_form = Jobseekers::JobApplication::FeedbackForm.new
+    else
+      render :review
+    end
   end
 
   private
 
   def job_application
     @job_application ||= current_jobseeker.job_applications.find(params[:job_application_id])
+  end
+
+  def review_form
+    @review_form ||= Jobseekers::JobApplication::ReviewForm.new(review_form_attributes)
+  end
+
+  def review_form_attributes
+    case action_name
+    when "review"
+      {}
+    when "submit"
+      review_form_params
+    end
+  end
+
+  def review_form_params
+    params.require(:jobseekers_job_application_review_form).permit(:confirm_data_accurate, :confirm_data_usage)
+          .merge(completed_steps: job_application.completed_steps)
   end
 
   def vacancy

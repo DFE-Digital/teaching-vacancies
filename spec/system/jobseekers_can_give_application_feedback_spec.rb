@@ -15,6 +15,9 @@ RSpec.describe "Jobseekers can give job application feedback after submitting th
   it "allows jobseekers to give job application feedback after submitting the application" do
     visit jobseekers_job_application_review_path(job_application)
 
+    check "Confirm data accurate"
+    check "Confirm data usage"
+
     click_on I18n.t("buttons.submit_application")
     choose I18n.t("helpers.label.jobseekers_job_application_feedback_form.rating_options.somewhat_satisfied")
     fill_in "jobseekers_job_application_feedback_form[comment]", with: comment

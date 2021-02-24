@@ -20,7 +20,7 @@ RSpec.describe "Jobseekers can save a job application" do
   end
 
   def and_it_saves_the_job_application
-    expect { save_as_draft }.to change { JobApplication.first.application_data }.from(nil).to(
+    expect { save_as_draft }.to change { JobApplication.first.application_data }.from({}).to(
       {
         "postcode" => "F1 4KE",
         "last_name" => "Frusciante",
