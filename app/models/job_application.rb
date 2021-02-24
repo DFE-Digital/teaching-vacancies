@@ -1,4 +1,16 @@
 class JobApplication < ApplicationRecord
+  extend ArrayEnum
+
+  array_enum completed_steps: {
+    personal_details: 0,
+    professional_status: 2,
+    employment_history: 3,
+    personal_statement: 4,
+    references: 5,
+    ask_for_support: 7,
+    declarations: 8,
+  }
+
   enum status: { draft: 0, submitted: 1 }
 
   belongs_to :jobseeker

@@ -21,7 +21,5 @@
       = f.govuk_text_area :gaps_in_employment, label: { size: "s" }, rows: 5, form_group: { classes: "optional-field" }
 
       - if job_application.employment_history.any?
-        = f.govuk_submit t("buttons.continue") do
-          = f.govuk_submit t("buttons.save_as_draft"), secondary: true
-      - else
-        = f.govuk_submit t("buttons.save_as_draft"), secondary: true
+        = f.govuk_submit t("buttons.continue")
+      = f.govuk_submit t("buttons.save_as_draft"), secondary: true, classes: "button-link"

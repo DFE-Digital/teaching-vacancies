@@ -4,10 +4,22 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    .govuk-caption-m Step 10 of 10
-    h1.govuk-heading-l = t(".title")
+    = form_for review_form, url: jobseekers_job_application_submit_path(job_application), method: :post do |f|
+      = f.govuk_error_summary
 
-    p.govuk-body = "First name: #{job_application.application_data['first_name']}"
-    p.govuk-body = "Status: #{job_application.status}"
+      .govuk-caption-m Step 10 of 10
+      h1.govuk-heading-l = t(".title")
 
-    = govuk_button_to t("buttons.submit_application"), jobseekers_job_application_submit_path(job_application)
+      p.govuk-body = "First name: #{job_application.application_data['first_name']}"
+      p.govuk-body = "Status: #{job_application.status}"
+
+      h3.govuk-heading-l Confirmation
+
+      = f.govuk_check_boxes_fieldset :confirm_data_accurate, multiple: false, legend: nil do
+        = f.govuk_check_box :confirm_data_accurate, 1, 0, multiple: false, link_errors: true, label: { text: "Confirm data accurate" }
+
+      = f.govuk_check_boxes_fieldset :confirm_data_usage, multiple: false, legend: nil do
+        = f.govuk_check_box :confirm_data_usage, 1, 0, multiple: false, link_errors: true, label: { text: "Confirm data usage" }
+
+      = f.govuk_submit t("buttons.submit_application")
+      = f.govuk_submit t("buttons.save_as_draft"), secondary: true, classes: "button-link"
