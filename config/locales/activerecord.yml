@@ -318,7 +318,3 @@ en:
             <<: *important_dates_errors
             <<: *applying_for_the_job_errors
             <<: *job_summary_errors
-        transaction_auditor:
-          attributes:
-            task:
-              taken: must have a unique entry for a date
