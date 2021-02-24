@@ -1,0 +1,19 @@
+#!/bin/bash
+set -eu
+
+RELEASE=3.11.0
+GOVUK_FRONTEND_PREFIX=https://github.com/alphagov/govuk-frontend/releases/download/v${RELEASE}/
+GOVUK_FRONTEND_ARCHIVE_NAME=release-v${RELEASE}.zip
+GOVUK_FRONTEND_URL="${GOVUK_FRONTEND_PREFIX}${GOVUK_FRONTEND_ARCHIVE_NAME}"
+
+wget ${GOVUK_FRONTEND_URL}
+if [[ ! -f "${GOVUK_FRONTEND_ARCHIVE_NAME}" ]]; then
+  echo "${GOVUK_FRONTEND_ARCHIVE_NAME} does not exist."
+  exit 1
+else
+  unzip ${GOVUK_FRONTEND_ARCHIVE_NAME} -d ./offline
+fi
+mv ./offline/govuk-frontend-${RELEASE}.min.css ./offline/govuk-frontend.min.css
+rm ./offline/govuk-frontend-ie8-${RELEASE}.min.css
+rm ./offline/govuk-frontend-${RELEASE}.min.js
+cp ./public/favicon.ico ./offline/favicon.ico
