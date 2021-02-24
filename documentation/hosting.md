@@ -169,8 +169,9 @@ cd /app
 ## Run task
 
 ```bash
-cf run-task <app_name> -c "rails task:name"
+cf run-task <app_name> "rails task:name"
 ```
+
 ## CI/CD with GitHub Actions
 
 Tests run every time is pushed on a branch.
