@@ -19,8 +19,8 @@
 
       = f.govuk_collection_radio_buttons :right_to_work_in_uk, %w[yes no], :to_s, :capitalize, inline: true
 
-      = f.govuk_submit t("buttons.continue") do
-        = f.govuk_submit t("buttons.save_as_draft"), secondary: true
+      = f.govuk_submit t("buttons.continue")
+      = f.govuk_submit t("buttons.save_as_draft"), secondary: true, classes: "button-link"
 
   .govuk-grid-column-one-third
     = render(Shared::ProcessStepsComponent.new(process: job_application.vacancy, service: process_steps, title: t("jobseekers.job_applications.build.process_title")))
