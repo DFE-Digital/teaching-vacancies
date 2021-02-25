@@ -1,4 +1,13 @@
 .jobseeker {
+  &.jobseekers_sessions_new {
+    .govuk-main-wrapper {
+      > .govuk-width-container {
+        margin-top: govuk-spacing(4);
+      }
+    }
+  }
+
+  &.publishers_identifications_new,
   &.jobseekers_saved_jobs_index,
   &.jobseekers_subscriptions_index,
   &.jobseekers_accounts_show,
@@ -8,7 +17,7 @@
         margin-top: 0;
 
         > .govuk-grid-row {
-          margin-top: govuk-spacing(7);
+          margin-top: govuk-spacing(4);
         }
       }
     }

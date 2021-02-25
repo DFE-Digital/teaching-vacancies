@@ -91,11 +91,6 @@ body {
 
   .govuk-main-wrapper {
     @include dashboard;
-
-    > .govuk-width-container {
-      margin-bottom: govuk-spacing(7);
-      margin-top: govuk-spacing(4);
-    }
   }
 
   &.vacancies_index,
@@ -103,10 +98,11 @@ body {
   &.home_index {
     .govuk-main-wrapper {
       > .govuk-width-container {
+        margin-bottom: govuk-spacing(6);
         margin-top: 0;
 
         > .govuk-grid-row {
-          margin-top: govuk-spacing(7);
+          margin-top: govuk-spacing(4);
         }
       }
     }

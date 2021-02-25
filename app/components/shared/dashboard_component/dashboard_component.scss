@@ -3,11 +3,7 @@
     @include dashboard;
     background-color: govuk-colour('light-grey');
 
-    padding: govuk-spacing(2) 0;
-
-    @include govuk-media-query ($from: desktop) {
-      padding: govuk-spacing(4) 0 0;
-    }
+    padding: govuk-spacing(3) 0 0;
 
     .filters-information {
       display: block;
