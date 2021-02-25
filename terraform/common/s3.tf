@@ -21,3 +21,7 @@ resource "aws_s3_bucket_public_access_block" "db_backups" {
   ignore_public_acls      = true
   restrict_public_buckets = true
 }
+
+resource "aws_s3_bucket" "offline_site" {
+  bucket = "${data.aws_caller_identity.current.account_id}-offline-site"
+}
