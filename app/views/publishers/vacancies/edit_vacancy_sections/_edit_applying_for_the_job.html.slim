@@ -19,7 +19,7 @@
           value: @vacancy.application_link.present? ? govuk_link_to(@vacancy.application_link, @vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link"), target: "_blank", rel: "noopener noreferrer") : t("jobs.not_defined"))
 
     - component.slot(:row,
-      key: t("jobs.job_title"),
+      key: t("jobs.contact_email"),
       value: govuk_mail_to("Job contact email", @vacancy.contact_email, "aria-label": t("jobs.aria_labels.contact_email_link", email: @vacancy.contact_email)))
 
     - component.slot(:row,
