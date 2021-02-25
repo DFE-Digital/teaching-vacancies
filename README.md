@@ -90,7 +90,7 @@ Run the following command to fetch all the required environment variables for de
 aws-vault exec SecretEditor -- make -s local print-env > .env
 ```
 
-To run the command above you need [AWS credentials](#aws-credentials).
+To run the command above you need [AWS credentials](#aws-credentials-mfa-and-role-profiles).
 
 [Git secrets](/documentation/secrets-detection.md) offers an easy way to defend against accidentally publishing these secrets.
 
