@@ -49,6 +49,11 @@ RSpec.describe "Jobseekers can complete a job application" do
     click_on I18n.t("jobseekers.job_applications.details.form.references.save")
     click_on I18n.t("buttons.continue")
 
+    expect(page).to have_content(I18n.t("jobseekers.job_applications.build.equal_opportunities.heading"))
+    validates_step_complete
+    fill_in_equal_opportunities
+    click_on I18n.t("buttons.continue")
+
     expect(page).to have_content(I18n.t("jobseekers.job_applications.build.ask_for_support.title"))
     validates_step_complete
     fill_in_ask_for_support

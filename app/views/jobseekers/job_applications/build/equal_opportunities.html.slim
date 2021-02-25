@@ -1,0 +1,67 @@
+- content_for :page_title_prefix, t(".title")
+
+= render(Jobseekers::JobApplications::HeadingComponent.new(vacancy: job_application.vacancy, back_path: back_link_path))
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    .govuk-caption-m = t("jobseekers.job_applications.current_step", current: process_steps.current_step_number, total: 10)
+    h1.govuk-heading-l = t(".heading")
+
+    p.govuk-body = t(".explanation")
+    p.govuk-body = t(".anonymity")
+    p.govuk-body = t(".optional")
+
+    = form_for @form, url: wizard_path, method: :patch do |f|
+      = f.govuk_error_summary
+
+      = f.govuk_radio_buttons_fieldset :disability do
+        = f.govuk_radio_button :disability, :yes, link_errors: true
+        = f.govuk_radio_button :disability, :no
+        = f.govuk_radio_divider
+        = f.govuk_radio_button :disability, :prefer_not_to_say
+
+      = f.govuk_radio_buttons_fieldset :gender do
+        = f.govuk_radio_button :gender, :man, link_errors: true
+        = f.govuk_radio_button :gender, :woman
+        = f.govuk_radio_button :gender, :other do
+          = f.govuk_text_field :gender_description
+        = f.govuk_radio_divider
+        = f.govuk_radio_button :gender, :prefer_not_to_say
+
+      = f.govuk_radio_buttons_fieldset :orientation do
+        = f.govuk_radio_button :orientation, :heterosexual, link_errors: true
+        = f.govuk_radio_button :orientation, :gay_or_lesbian
+        = f.govuk_radio_button :orientation, :bisexual
+        = f.govuk_radio_button :orientation, :other do
+          = f.govuk_text_field :orientation_description
+        = f.govuk_radio_divider
+        = f.govuk_radio_button :orientation, :prefer_not_to_say
+
+      = f.govuk_radio_buttons_fieldset :ethnicity do
+        = f.govuk_radio_button :ethnicity, :white, link_errors: true
+        = f.govuk_radio_button :ethnicity, :mixed
+        = f.govuk_radio_button :ethnicity, :asian
+        = f.govuk_radio_button :ethnicity, :black
+        = f.govuk_radio_button :ethnicity, :other do
+          = f.govuk_text_field :ethnicity_description
+        = f.govuk_radio_divider
+        = f.govuk_radio_button :ethnicity, :prefer_not_to_say
+
+      = f.govuk_radio_buttons_fieldset :religion do
+        = f.govuk_radio_button :religion, :buddhist, link_errors: true
+        = f.govuk_radio_button :religion, :christian
+        = f.govuk_radio_button :religion, :hindu
+        = f.govuk_radio_button :religion, :jewish
+        = f.govuk_radio_button :religion, :muslim
+        = f.govuk_radio_button :religion, :sikh
+        = f.govuk_radio_button :religion, :none
+        = f.govuk_radio_button :religion, :other do
+          = f.govuk_text_field :religion_description
+        = f.govuk_radio_divider
+        = f.govuk_radio_button :religion, :prefer_not_to_say
+
+      = f.govuk_submit t("buttons.continue")
+      = f.govuk_submit t("buttons.save_as_draft"), secondary: true, classes: "button-link"
+
+  .govuk-grid-column-one-third
+    = render(Shared::ProcessStepsComponent.new(process: job_application.vacancy, service: process_steps, title: t("jobseekers.job_applications.build.process_title")))

@@ -2,7 +2,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
   include Wicked::Wizard
   include Jobseekers::Wizardable
 
-  steps :personal_details, :professional_status, :employment_history, :personal_statement, :references, :ask_for_support, :declarations
+  steps :personal_details, :professional_status, :employment_history, :personal_statement, :references, :equal_opportunities, :ask_for_support, :declarations
 
   helper_method :back_link_path, :employment_history_info, :job_application, :process_steps, :reference_info
 
