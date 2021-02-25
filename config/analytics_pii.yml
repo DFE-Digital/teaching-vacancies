@@ -1,0 +1,54 @@
+shared:
+  documents:
+    - id
+    - vacancy_id
+  feedbacks:
+    - id
+    - email
+    - job_application_id
+    - jobseeker_id
+    - publisher_id
+    - subscription_id
+    - vacancy_id
+    - application_id
+  job_applications:
+    - id
+    - jobseeker_id
+    - vacancy_id
+  jobseekers:
+    - id
+    - email
+    - unconfirmed_email
+  organisations:
+    - id
+  organisation_vacancies:
+    - id
+    - organisation_id
+    - vacancy_id
+  publishers:
+    - id
+    - oid
+    - email
+    - family_name
+    - given_name
+  publisher_preferences:
+    - id
+    - publisher_id
+    - school_group_id
+    - managed_school_ids
+  saved_jobs:
+    - id
+    - jobseeker_id
+    - vacancy_id
+  school_group_memberships:
+    - id
+    - school_id
+    - school_group_id
+  subscriptions:
+    - id
+    - email
+  vacancies:
+    - id
+    - contact_email
+    - publisher_id
+    - publisher_organisation_id
