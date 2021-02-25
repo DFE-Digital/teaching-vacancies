@@ -260,7 +260,7 @@ en:
       message: See how this job listing will appear to jobseekers on Teaching Vacancies
       page_title: Preview job listing for %{organisation}
       summary:
-        heading_html: Preview of &#8216;%{title}&#8217;
+        heading: Preview of ‘%{title}’
         body_html:
           zero: >-
             This is how your job listing will appear to jobseekers visiting Teaching Vacancies.
