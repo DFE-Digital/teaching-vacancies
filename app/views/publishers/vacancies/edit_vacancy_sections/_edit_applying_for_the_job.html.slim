@@ -1,43 +1,40 @@
 = render "publishers/vacancies/new_attributes_tag", attributes: %i[contact_email contact_number school_visits how_to_apply application_link], section: "applying_for_the_job"
 = render "publishers/vacancies/error_tag", attributes: %i[contact_email contact_number school_visits how_to_apply application_link], section: "applying_for_the_job"
 
-= render Shared::ReviewComponent.new(id: "applying_for_the_job", title: t("jobs.applying_for_the_job"), edit_link: organisation_job_build_path(@vacancy.id, :applying_for_the_job))
+= render Shared::ReviewComponent.new(id: "applying_for_the_job", title: t("jobs.applying_for_the_job"), edit_link: organisation_job_build_path(@vacancy.id, :applying_for_the_job)) do
+  = govuk_summary_list do |component|
+    - if JobseekerApplicationsFeature.enabled?
+      - component.slot(:row,
+        key: t("jobs.apply_through_teaching_vacancies"),
+        value: @vacancy.apply_through_teaching_vacancies&.capitalize)
 
-.review-component
-  .review-component__body
-    = render GovukComponent::SummaryList.new do |component|
-      - if JobseekerApplicationsFeature.enabled?
+      - if @vacancy.apply_through_teaching_vacancies == "yes"
         - component.slot(:row,
-          key: t("jobs.apply_through_teaching_vacancies"),
-          value: @vacancy.apply_through_teaching_vacancies&.capitalize)
+          key: t("jobs.personal_statement_guidance"),
+          value: @vacancy.personal_statement_guidance)
 
-        - if @vacancy.apply_through_teaching_vacancies == "yes"
-          - component.slot(:row,
-            key: t("jobs.personal_statement_guidance"),
-            value: @vacancy.personal_statement)
-
-        - if @vacancy.apply_through_teaching_vacancies == "no"
-          - component.slot(:row,
-            key: t("jobs.application_link"),
-            value: @vacancy.application_link.present? ? govuk_link_to(@vacancy.application_link, @vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link"), target: "_blank", rel: "noopener noreferrer") : t("jobs.not_defined"))
-
-      - component.slot(:row,
-        key: t("jobs.job_title"),
-        value: govuk_mail_to("Job contact email", @vacancy.contact_email, "aria-label": t("jobs.aria_labels.contact_email_link", email: @vacancy.contact_email)))
-
-      - component.slot(:row,
-        key: t("jobs.contact_number"),
-        value: @vacancy.contact_number.present? ? govuk_link_to(@vacancy.contact_number, "tel:#{@vacancy.contact_number}") : t("jobs.not_defined"))
-
-      - component.slot(:row,
-        key: t("jobs.#{school_or_trust_visits(@vacancy.parent_organisation)}"),
-        value: @vacancy.school_visits.presence || t("jobs.not_defined"))
-
-      - unless JobseekerApplicationsFeature.enabled?
-        - component.slot(:row,
-          key: t("jobs.how_to_apply"),
-          value: @vacancy.how_to_apply.presence || t("jobs.not_defined"))
-
+      - if @vacancy.apply_through_teaching_vacancies == "no"
         - component.slot(:row,
           key: t("jobs.application_link"),
           value: @vacancy.application_link.present? ? govuk_link_to(@vacancy.application_link, @vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link"), target: "_blank", rel: "noopener noreferrer") : t("jobs.not_defined"))
+
+    - component.slot(:row,
+      key: t("jobs.job_title"),
+      value: govuk_mail_to("Job contact email", @vacancy.contact_email, "aria-label": t("jobs.aria_labels.contact_email_link", email: @vacancy.contact_email)))
+
+    - component.slot(:row,
+      key: t("jobs.contact_number"),
+      value: @vacancy.contact_number.present? ? govuk_link_to(@vacancy.contact_number, "tel:#{@vacancy.contact_number}") : t("jobs.not_defined"))
+
+    - component.slot(:row,
+      key: t("jobs.#{school_or_trust_visits(@vacancy.parent_organisation)}"),
+      value: @vacancy.school_visits.presence || t("jobs.not_defined"))
+
+    - unless JobseekerApplicationsFeature.enabled?
+      - component.slot(:row,
+        key: t("jobs.how_to_apply"),
+        value: @vacancy.how_to_apply.presence || t("jobs.not_defined"))
+
+      - component.slot(:row,
+        key: t("jobs.application_link"),
+        value: @vacancy.application_link.present? ? govuk_link_to(@vacancy.application_link, @vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link"), target: "_blank", rel: "noopener noreferrer") : t("jobs.not_defined"))

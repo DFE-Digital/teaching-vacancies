@@ -24,6 +24,7 @@ Geocoder::DEFAULT_STUB_COORDINATES = [51.67014192630465, -1.2809649516211556].fr
 Capybara.server = :puma, { Silent: true, Threads: "0:1" }
 
 Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
+Dir[Rails.root.join("spec/components/shared_examples/*.rb")].sort.each { |f| require f }
 Dir[Rails.root.join("spec/page_objects/**/*.rb")].sort.each { |f| require f }
 Dir[Rails.root.join("lib/**/*.rb")].sort.each { |f| require f }
 

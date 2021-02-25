@@ -1,16 +1,13 @@
 = render "publishers/vacancies/new_attributes_tag", attributes: %i[job_location organisation_id organisation_ids], section: "job_location"
 = render "publishers/vacancies/error_tag", attributes: %i[job_location organisation_id organisation_ids], section: "job_location"
 
-= render Shared::ReviewComponent.new(id: "job_location", title: t("jobs.job_location"), edit_link: organisation_job_build_path(@vacancy.id, :job_location))
+= render Shared::ReviewComponent.new(id: "job_location", title: t("jobs.job_location"), edit_link: organisation_job_build_path(@vacancy.id, :job_location)) do
+  dl.govuk-summary-list
+    .govuk-summary-list__row
+      dt.govuk-summary-list__key
+        h4.govuk-heading-s = vacancy_job_location_heading(@vacancy)
 
-.review-component
-  .review-component__body
-    dl.govuk-summary-list
-      .govuk-summary-list__row
-        dt.govuk-summary-list__key
-          h4.govuk-heading-s = vacancy_job_location_heading(@vacancy)
-
-        - @vacancy.organisations.each do |organisation|
-          dd.govuk-summary-list__value
-            div class="govuk-!-font-weight-bold" = organisation.name
-            = full_address(organisation)
+      - @vacancy.organisations.each do |organisation|
+        dd.govuk-summary-list__value
+          div class="govuk-!-font-weight-bold" = organisation.name
+          = full_address(organisation)

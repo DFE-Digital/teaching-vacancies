@@ -1,15 +1,12 @@
 = render "publishers/vacancies/new_attributes_tag", attributes: %i[salary benefits], section: "pay_package"
 = render "publishers/vacancies/error_tag", attributes: %i[salary benefits], section: "pay_package"
 
-= render Shared::ReviewComponent.new(id: "pay_package", title: t("jobs.pay_package"), edit_link: organisation_job_build_path(@vacancy.id, :pay_package))
+= render Shared::ReviewComponent.new(id: "pay_package", title: t("jobs.pay_package"), edit_link: organisation_job_build_path(@vacancy.id, :pay_package)) do
+  = govuk_summary_list do |component|
+    - component.slot(:row,
+      key: t("jobs.salary"),
+      value: @vacancy.salary)
 
-.review-component
-  .review-component__body
-    = render GovukComponent::SummaryList.new classes: "review-component__body" do |component|
-      - component.slot(:row,
-        key: t("jobs.salary"),
-        value: @vacancy.salary)
-
-      - component.slot(:row,
-        key: t("jobs.benefits"),
-        value: @vacancy.benefits.presence || t("jobs.not_defined"))
+    - component.slot(:row,
+      key: t("jobs.benefits"),
+      value: @vacancy.benefits.presence || t("jobs.not_defined"))
