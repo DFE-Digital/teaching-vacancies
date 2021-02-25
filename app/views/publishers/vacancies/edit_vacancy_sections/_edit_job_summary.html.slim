@@ -1,15 +1,12 @@
 = render "publishers/vacancies/new_attributes_tag", attributes: %i[job_summary about_school], section: "job_summary"
 = render "publishers/vacancies/error_tag", attributes: %i[job_summary about_school], section: "job_summary"
 
-= render Shared::ReviewComponent.new(id: "job_summary", title: t("jobs.job_summary"), edit_link: organisation_job_build_path(@vacancy.id, :job_summary))
+= render Shared::ReviewComponent.new(id: "job_summary", title: t("jobs.job_summary"), edit_link: organisation_job_build_path(@vacancy.id, :job_summary)) do
+  = govuk_summary_list do |component|
+    - component.slot(:row,
+      key: t("jobs.job_summary"),
+      value: @vacancy.job_summary)
 
-.review-component
-  .review-component__body
-    = render GovukComponent::SummaryList.new classes: "review-component__body" do |component|
-      - component.slot(:row,
-        key: t("jobs.job_summary"),
-        value: @vacancy.job_summary)
-
-      - component.slot(:row,
-        key: t("jobs.about_school", school: vacancy_about_school_label_organisation(@vacancy)),
-        value: @vacancy.about_school)
+    - component.slot(:row,
+      key: t("jobs.about_school", school: vacancy_about_school_label_organisation(@vacancy)),
+      value: @vacancy.about_school)
