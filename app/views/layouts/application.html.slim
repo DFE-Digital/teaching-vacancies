@@ -51,10 +51,8 @@ html.govuk-template.app-html-class class=("modal" if current_variant?(:"2021_02_
           span.govuk-phase-banner__text
             | This is a new service - #{govuk_link_to "your feedback", new_feedback_path} will help us to improve it.
 
-      .govuk-main-wrapper
+      main.govuk-main-wrapper#main-content role="main"
         = render(AbTest::CookiesBannerComponent.new(create_path: create_cookies_preferences_path(cookies_consent: "yes", **utm_parameters), preferences_path: cookies_preferences_path(**utm_parameters)).with_variant(:top)) if current_variant?(:"2021_02_cookie_consent_test", :top) && !cookies_preference_set?
-
-        main#main-content role="main"
 
         - unless flash.empty?
           .govuk-main-wrapper__notification
