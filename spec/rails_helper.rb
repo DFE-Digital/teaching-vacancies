@@ -63,7 +63,6 @@ RSpec.configure do |config|
 
   config.before do
     allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(false)
-    allow(Redis).to receive(:new).and_return(MockRedis.new)
     ActiveJob::Base.queue_adapter = :test
   end
 
