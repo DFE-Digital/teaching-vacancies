@@ -240,6 +240,7 @@ en:
     description: Description
     info: About %{organisation}
     map_aria_label: Interactive map showing school location
+    map_link_aria_label: Open in Google Maps
     no_information: No information available
     no_jobs:
       bullets:
