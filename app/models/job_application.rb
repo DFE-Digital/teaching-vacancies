@@ -7,6 +7,7 @@ class JobApplication < ApplicationRecord
     employment_history: 3,
     personal_statement: 4,
     references: 5,
+    equal_opportunities: 6,
     ask_for_support: 7,
     declarations: 8,
   }

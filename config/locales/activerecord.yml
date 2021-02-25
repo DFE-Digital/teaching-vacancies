@@ -216,6 +216,26 @@ en:
               blank: Give details about any close relationships with people within the organisation
             right_to_work_in_uk:
               inclusion: Select yes if you have the right to work in the UK
+        jobseekers/job_application/equal_opportunities_form:
+          attributes:
+            disability:
+              inclusion: Select yes if you consider yourself to have a disability
+            ethnicity:
+              inclusion: Select an ethnic group or ‘Prefer not to say’
+            ethnicity_description:
+              blank: Can't be blank (placeholder awaiting content)
+            gender:
+              inclusion: Select a gender or ‘Prefer not to say’
+            gender_description:
+              blank: Can't be blank (placeholder awaiting content)
+            orientation:
+              inclusion: Select an orientation or ‘Prefer not to say’
+            orientation_description:
+              blank: Can't be blank (placeholder awaiting content)
+            religion:
+              inclusion: Select a religion or ‘Prefer not to say’
+            religion_description:
+              blank: Can't be blank (placeholder awaiting content)
         jobseekers/job_application/personal_details_form:
           attributes:
             building_and_street:

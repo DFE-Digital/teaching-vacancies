@@ -70,12 +70,21 @@ en:
           For example, 'QQ 12 34 56 C'.
         phone_number: Please only give a phone number that you are happy to be contacted on.
         previous_names: For example maiden name or name at birth, if different from the name you have now.
-
       jobseekers_job_application_details_employment_history_form:
         ended_on: For example, 31 08 2014
         main_duties: A very brief summary
         started_on: For example, 31 08 2010
-
+      jobseekers_job_application_equal_opportunities_form:
+        gender: If the options below do not reflect how you identify, please select ‘Other’.
+        ethnicity: If the options below do not reflect how you identify, please select ‘Other’.
+        ethnicity_options:
+          asian: Includes Indian, Pakistani, Bangladeshi or Chinese
+          mixed: Includes White and Black Caribbean, White and Black African or White and Asian
+          white: Includes English, Welsh, Scottish, Northern Irish, British, Irish Gypsy or Irish Traveller
+        orientation: If the options below do not reflect how you identify, please select ‘Other’.
+        religion: >-
+          Tell us about your religion or faith. You can select ‘Other’ if your beliefs are not represented by one of the
+          given options.
       jobseekers_job_alert_further_feedback_form:
         comment: This is optional, but the information will help us to make improvements.
       jobseekers_nqt_job_alerts_form:
@@ -198,6 +207,43 @@ en:
           "yes": "Yes"
       jobseekers_job_application_employment_history_form:
         gaps_in_employment: Gaps in your employment
+      jobseekers_job_application_equal_opportunities_form:
+        disability_options:
+          "no": "No"
+          "yes": "Yes"
+          prefer_not_to_say: Prefer not to say
+        ethnicity_description: Describe your ethnic group
+        ethnicity_options:
+          asian: Asian or Asian British
+          black: Black African, Caribbean or Black British
+          mixed: Mixed or multiple ethnic group
+          other: Other
+          prefer_not_to_say: Prefer not to say
+          white: White
+        gender_description: Describe your gender identity
+        gender_options:
+          man: Man
+          other: Other
+          prefer_not_to_say: Prefer not to say
+          woman: Woman
+        orientation_description: Describe your sexual orientation
+        orientation_options:
+          bisexual: Bisexual
+          gay_or_lesbian: Gay or lesbian
+          heterosexual: Heterosexual
+          other: Other
+          prefer_not_to_say: Prefer not to say
+        religion_description: Describe your religion or belief
+        religion_options:
+          buddhist: Buddhist
+          christian: Christian
+          hindu: Hindu
+          jewish: Jewish
+          muslim: Muslim
+          none: Placeholder for content for no religion
+          other: Other
+          prefer_not_to_say: Prefer not to say
+          sikh: Sikh
       jobseekers_job_application_feedback_form:
         rating_options:
           highly_satisfied: Highly satisfied
@@ -330,6 +376,12 @@ en:
         close_relationships: >-
           Do you have any family or close relationship with people within %{organisation}?
         right_to_work_in_uk: Do you have the right to work in the UK?
+      jobseekers_job_application_equal_opportunities_form:
+        disability: Do you consider yourself to have a disability as defined by the Equality Act 2010?
+        ethnicity: What is your ethnic group?
+        gender: How would you describe your gender?
+        orientation: How would you describe your sexual orientation?
+        religion: What is your religion or belief?
       jobseekers_job_application_details_employment_history_form:
         current_role: Is this your current role?
         ended_on: End date

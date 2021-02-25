@@ -66,6 +66,17 @@ en:
             to your application.
           no_employment_history: No employment specified
           title: Current role and employment history
+        equal_opportunities:
+          anonymity: >-
+            This will not be used as part of your application. It will only be used anonymously to monitor the
+            inclusivity of the shortlisting process.
+          explanation: >-
+            We believe that students receive a better education when our staff reflect the full range of backgrounds and
+            experiences in society. To help achieve this we are asking you to provide us with some basic information
+            about your identity.
+          heading: Equal opportunities and recruitment monitoring
+          optional: You can select ‘prefer not to say’ if you would rather not answer any question.
+          title: Equal opportunities and recruitment monitoring
         personal_details:
           description: Tell us some basic details about yourself, like how to contact you about this application.
           title: Personal details

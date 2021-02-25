@@ -63,6 +63,15 @@ module JobseekerHelpers
     fill_in "Reason for leaving", with: "Some details about the reason for leaving"
   end
 
+  def fill_in_equal_opportunities
+    choose "Prefer not to say", name: "jobseekers_job_application_equal_opportunities_form[disability]"
+    choose "Man", name: "jobseekers_job_application_equal_opportunities_form[gender]"
+    choose "Bisexual", name: "jobseekers_job_application_equal_opportunities_form[orientation]"
+    choose "Mixed", name: "jobseekers_job_application_equal_opportunities_form[ethnicity]"
+    choose "Other", name: "jobseekers_job_application_equal_opportunities_form[religion]"
+    fill_in I18n.t("helpers.label.jobseekers_job_application_equal_opportunities_form.religion_description"), with: "Jainism"
+  end
+
   def fill_in_personal_details
     fill_in "First name", with: "John"
     fill_in "Last name", with: "Frusciante"

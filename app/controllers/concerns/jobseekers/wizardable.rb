@@ -5,6 +5,7 @@ module Jobseekers::Wizardable
     employment_history: Jobseekers::JobApplication::EmploymentHistoryForm,
     personal_statement: Jobseekers::JobApplication::PersonalStatementForm,
     references: Jobseekers::JobApplication::ReferencesForm,
+    equal_opportunities: Jobseekers::JobApplication::EqualOpportunitiesForm,
     ask_for_support: Jobseekers::JobApplication::AskForSupportForm,
     declarations: Jobseekers::JobApplication::DeclarationsForm,
   }.freeze
@@ -15,6 +16,7 @@ module Jobseekers::Wizardable
     employment_history: :employment_history_params,
     personal_statement: :personal_statement_params,
     references: :references_params,
+    equal_opportunities: :equal_opportunities_params,
     ask_for_support: :ask_for_support_params,
     declarations: :declarations_params,
   }.freeze
@@ -26,6 +28,7 @@ module Jobseekers::Wizardable
       employment_history: { number: 4, title: t(".employment_history.title") },
       personal_statement: { number: 5, title: t(".personal_statement.title") },
       references: { number: 6, title: t(".references.title") },
+      equal_opportunities: { number: 7, title: t(".equal_opportunities.title") },
       ask_for_support: { number: 8, title: t(".ask_for_support.title") },
       declarations: { number: 9, title: t(".declarations.title") },
     }.freeze
@@ -54,6 +57,12 @@ module Jobseekers::Wizardable
 
   def references_params(_params)
     {}
+  end
+
+  def equal_opportunities_params(params)
+    params.require(:jobseekers_job_application_equal_opportunities_form)
+          .permit(:disability, :gender, :gender_description, :orientation, :orientation_description,
+                  :ethnicity, :ethnicity_description, :religion, :religion_description)
   end
 
   def ask_for_support_params(params)
