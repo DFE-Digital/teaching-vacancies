@@ -180,7 +180,7 @@ Log in and switch to the `ReadOnly` role:
 aws-vault login ReadOnly
 ```
 
-You should be prompted:
+You should be prompted for an MFA code:
 ```
 Enter token for arn:aws:iam::530003481352:mfa/<YOUR-AWS-USERNAME>:
 ```
