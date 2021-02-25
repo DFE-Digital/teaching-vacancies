@@ -1,8 +1,6 @@
 class Subscription < ApplicationRecord
   MAXIMUM_RESULTS_PER_RUN = 500
 
-  include Auditor::Model
-
   enum frequency: { daily: 0, weekly: 1 }
 
   has_many :alert_runs, dependent: :destroy

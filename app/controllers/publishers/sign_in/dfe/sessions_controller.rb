@@ -5,8 +5,6 @@ class Publishers::SignIn::Dfe::SessionsController < Publishers::SignIn::BaseSess
     "010" => :multi_academy_trust,
   }.freeze
 
-  include SignInAuditConcerns
-
   skip_before_action :check_session, only: %i[create new]
   skip_before_action :check_terms_and_conditions, only: %i[create new destroy]
   skip_before_action :verify_authenticity_token, only: %i[create new destroy]
@@ -18,8 +16,6 @@ class Publishers::SignIn::Dfe::SessionsController < Publishers::SignIn::BaseSess
   end
 
   def create
-    Rails.logger.warn("Hiring staff signed in: #{user_id}")
-    audit_successful_authentication
     perform_dfe_sign_in_authorisation
   end
 
@@ -31,7 +27,6 @@ class Publishers::SignIn::Dfe::SessionsController < Publishers::SignIn::BaseSess
 
   def not_authorised
     Rails.logger.warn(not_authorised_details)
-    audit_failed_authorisation
     @identifier = identifier
     render "user-not-authorised"
   end
@@ -59,7 +54,6 @@ class Publishers::SignIn::Dfe::SessionsController < Publishers::SignIn::BaseSess
     )
     use_school_group_if_available
     Rails.logger.info(updated_session_details)
-    audit_successful_authorisation
   end
 
   def auth_hash

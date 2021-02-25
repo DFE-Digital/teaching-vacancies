@@ -962,18 +962,6 @@ RSpec.describe "Creating a vacancy" do
         )
       end
 
-      scenario "tracks publishing information" do
-        vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow)
-        vacancy.organisation_vacancies.create(organisation: school)
-
-        visit organisation_job_review_path(vacancy.id)
-        click_on "Confirm and submit job"
-
-        activity = vacancy.activities.last
-        expect(activity.session_id).to eq(oid)
-        expect(activity.key).to eq("vacancy.publish")
-      end
-
       scenario "a published vacancy cannot be republished" do
         vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow)
         vacancy.organisation_vacancies.create(organisation: school)
@@ -1003,18 +991,6 @@ RSpec.describe "Creating a vacancy" do
 
           expect_any_instance_of(Publishers::Vacancies::ApplicationController)
             .to receive(:update_google_index).with(vacancy)
-
-          visit organisation_job_review_path(vacancy.id)
-          click_on I18n.t("buttons.submit_job_listing")
-        end
-      end
-
-      context "updates the published vacancy audit table" do
-        scenario "when the vacancy is published" do
-          vacancy = create(:vacancy, :draft, publish_on: Date.current)
-          vacancy.organisation_vacancies.create(organisation: school)
-
-          expect(AuditPublishedVacancyJob).to receive(:perform_later).with(vacancy.id)
 
           visit organisation_job_review_path(vacancy.id)
           click_on I18n.t("buttons.submit_job_listing")

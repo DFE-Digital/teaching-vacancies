@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_24_161051) do
+ActiveRecord::Schema.define(version: 2021_02_24_164158) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -18,23 +18,6 @@ ActiveRecord::Schema.define(version: 2021_02_24_161051) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
-
-  create_table "activities", force: :cascade do |t|
-    t.uuid "trackable_id"
-    t.string "trackable_type"
-    t.string "session_id"
-    t.string "key"
-    t.text "parameters"
-    t.uuid "owner_id"
-    t.string "owner_type"
-    t.uuid "recipient_id"
-    t.string "recipient_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type"
-    t.index ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type"
-    t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
-  end
 
   create_table "alert_runs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "subscription_id"
@@ -44,13 +27,6 @@ ActiveRecord::Schema.define(version: 2021_02_24_161051) do
     t.datetime "updated_at", null: false
     t.integer "status", default: 0
     t.index ["subscription_id"], name: "index_alert_runs_on_subscription_id"
-  end
-
-  create_table "audit_data", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.integer "category"
-    t.json "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -280,9 +256,9 @@ ActiveRecord::Schema.define(version: 2021_02_24_161051) do
     t.datetime "stats_updated_at"
     t.uuid "publisher_id"
     t.datetime "expires_at"
+    t.string "legacy_job_roles", array: true
     t.string "salary"
     t.integer "completed_step"
-    t.string "legacy_job_roles", array: true
     t.text "about_school"
     t.string "state", default: "create"
     t.string "subjects", array: true

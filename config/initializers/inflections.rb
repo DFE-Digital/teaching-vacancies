@@ -17,5 +17,4 @@
 
 ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular "is", "are"
-  inflect.uncountable "AuditData"
 end
