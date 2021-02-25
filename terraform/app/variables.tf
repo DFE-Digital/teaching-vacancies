@@ -9,8 +9,6 @@ variable "environment" {}
 variable "distribution_list" {
   description = "Define Cloudfront distributions with the attributes below"
   type = map(object({
-    offline_bucket_domain_name    = string
-    offline_bucket_origin_path    = string
     cloudfront_origin_domain_name = string
   }))
   default = {}

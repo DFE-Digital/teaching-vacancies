@@ -7,13 +7,6 @@ variable "service_name" {
 variable "cloudfront_origin_domain_name" {
 }
 
-variable "offline_bucket_domain_name" {
-}
-
-variable "offline_bucket_origin_path" {
-}
-
-
 variable "default_header_list" {
   default = [
     "Authorization",

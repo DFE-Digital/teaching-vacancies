@@ -43,8 +43,6 @@ module "cloudfront" {
   environment                   = var.environment
   service_name                  = local.service_name
   cloudfront_origin_domain_name = each.value.cloudfront_origin_domain_name
-  offline_bucket_domain_name    = each.value.offline_bucket_domain_name
-  offline_bucket_origin_path    = each.value.offline_bucket_origin_path
   route53_zones                 = var.route53_zones
   is_production                 = local.is_production
   route53_a_records             = local.route53_a_records

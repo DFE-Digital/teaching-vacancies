@@ -12,7 +12,7 @@ resource "aws_cloudfront_distribution" "default" {
   }
 
   origin {
-    domain_name = var.offline_bucket_domain_name
+    domain_name = "${data.aws_caller_identity.current.account_id}-offline-site.s3.amazonaws.com"
     origin_id   = "${var.service_name}-${var.environment}-offline"
   }
 
@@ -30,14 +30,14 @@ resource "aws_cloudfront_distribution" "default" {
     error_code            = "503"
     error_caching_min_ttl = "60"
     response_code         = "503"
-    response_page_path    = "${var.offline_bucket_origin_path}/index.html"
+    response_page_path    = "/index.html"
   }
 
   custom_error_response {
     error_code            = "502"
     error_caching_min_ttl = "60"
     response_code         = "502"
-    response_page_path    = "${var.offline_bucket_origin_path}/index.html"
+    response_page_path    = "/index.html"
   }
 
   enabled = true
@@ -68,7 +68,7 @@ resource "aws_cloudfront_distribution" "default" {
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = "${var.service_name}-${var.environment}-offline"
 
-    path_pattern = "${var.offline_bucket_origin_path}/*"
+    path_pattern = "/*"
 
     forwarded_values {
       query_string = false
