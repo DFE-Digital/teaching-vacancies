@@ -13,11 +13,11 @@ RSpec::Matchers.define :have_triggered_event do |event_type|
   end
 
   chain :with_request_data do
-    # An event with request data will include (at least) the IP field in the base data. We don't check _all_ fields
+    # An event with request data will include (at least) the request method in the base data. We don't check _all_ fields
     # so we don't need to keep amending this matcher when the set of base data in `RequestEvent` changes.
     # Note: This chain should not be used in conjunction with the more lower-level `with_base_data`, and cannot be used
     #       outside of tests that have request data accessible (e.g. model or job specs)
-    @expected_base_data = { request_ip: request.remote_ip }
+    @expected_base_data = { request_method: request.method }
   end
 
   chain :with_base_data, :expected_base_data

@@ -45,7 +45,6 @@ RSpec.describe RequestEvent do
         type: :reticulated_splines,
         occurred_at: "1999-12-31T23:59:59.000000Z",
         request_uuid: "00000000-0000-0000-0000-000000000000",
-        request_ip: "255.255.255.255",
         request_user_agent: "Mozilla/4.0 (compatible; MSIE 5.5; Windows 95)",
         request_referer: "ukonline.gov.uk",
         request_method: "DELETE",
