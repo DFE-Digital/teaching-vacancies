@@ -57,6 +57,7 @@ class ExportTablesToBigQuery
     location_polygons
     schema_migrations
     sessions
+    spatial_ref_sys
   ].freeze
 
   TYPES_TO_CONVERT_FROM_DATE = %i[datetime date].freeze
