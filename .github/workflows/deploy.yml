@@ -32,6 +32,13 @@ jobs:
     - uses: actions/checkout@v2
       name: Checkout Code
 
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-west-2
+
     - name: Set environment variables
       id: set_env_vars
       run: |
@@ -40,19 +47,21 @@ jobs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
 
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: eu-west-2
+    - name: Download fetch_config.rb
+      shell: bash
+      run: |
+        echo "::group:: Download fetch_config.rb script"
+        curl -s https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/scripts/fetch_config/fetch_config.rb -o bin/fetch_config.rb
+        chmod +x bin/fetch_config.rb
+        echo "::endgroup::"
 
     - name: Validate secrets
+      shell: bash
       run: |
         gem install aws-sdk-ssm --no-document
-        bin/run-in-env -t /teaching-vacancies/staging -o quiet \
+        bin/fetch_config.rb -s aws-ssm-parameter-path:/teaching-vacancies/staging/app -d quiet \
           && echo Data in /teaching-vacancies/staging looks valid
-        bin/run-in-env -t /teaching-vacancies/production -o quiet \
+        bin/fetch_config.rb -s aws-ssm-parameter-path:/teaching-vacancies/production/app -d quiet \
           && echo Data in /teaching-vacancies/production looks valid
 
     - name: Terraform pin version
@@ -178,8 +187,6 @@ jobs:
 
     - name: Deploy monitoring
       env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         TF_VAR_paas_user: ${{ secrets.CF_USERNAME }}
         TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
       run: |
