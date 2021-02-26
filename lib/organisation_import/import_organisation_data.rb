@@ -14,7 +14,7 @@ class ImportOrganisationData
 
   def self.delete_marked_school_group_memberships!
     memberships_to_delete = SchoolGroupMembership.where(do_not_delete: false)
-    raise SuspiciouslyHighNumberOfRecordsToDelete, memberships_to_delete.count if memberships_to_delete.count > 128 # 2^7
+    raise SuspiciouslyHighNumberOfRecordsToDelete, memberships_to_delete.count if memberships_to_delete.count > 10
 
     memberships_to_delete.delete_all
   end
