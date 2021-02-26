@@ -77,5 +77,8 @@ dump.rdb
 !bin/upload-db-backup
 *dump*
 
-# VSCode 
+# VSCode
 .vscode
+
+# Scripts and content from a shared source. Ensures we always download the latest from source
+/bin/fetch_config.rb

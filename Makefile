@@ -7,18 +7,27 @@ LOCAL_TAG			:=dev-$(LOCAL_BRANCH)-$(LOCAL_SHA)
 
 ##@ Query parameter store to display environment variables. Requires AWS credentials
 
+.PHONY: install-fetch-config
+install-fetch-config:
+	[ ! -f bin/fetch_config.rb ] \
+		&& curl -s https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/scripts/fetch_config/fetch_config.rb -o bin/fetch_config.rb \
+		&& chmod +x bin/fetch_config.rb \
+		|| true
+
 .PHONY: print-env
-print-env: ## make -s local print-env > .env
+print-env: install-fetch-config ## make -s local print-env > .env
 		$(if $(env), , $(error Usage: make <env> print-env))
-		@bin/run-in-env -t /teaching-vacancies/$(env)/app -y terraform/workspace-variables/$(env)_app_env.yml \
-			$(local_override) -o env_stdout $(local_filter)
+		@bin/fetch_config.rb -s aws-ssm-parameter-path:/teaching-vacancies/$(env)/app \
+			-s yaml-file:terraform/workspace-variables/$(env)_app_env.yml \
+			-f shell-env-var \
+			$(local_override) -d stdout $(local_filter)
 
 ##@ Set environment and corresponding configuration
 
 .PHONY: local
 local: ## local # Same values as the deployed dev environment, adapted for local developmemt
 		$(eval env=dev)
-		$(eval local_override=-y terraform/workspace-variables/local_app_env.yml -y terraform/workspace-variables/my_app_env.yml)
+		$(eval local_override=-d file:terraform/workspace-variables/local_app_env.yml -d file:terraform/workspace-variables/my_app_env.yml)
 		$(eval local_filter=| sed -e '/RAILS_ENV=/d' -e '/ROLLBAR_ENV=/d')
 		@bin/algolia-prefix > terraform/workspace-variables/my_app_env.yml
 
