@@ -10,8 +10,15 @@
       .govuk-caption-m Step 10 of 10
       h1.govuk-heading-l = t(".title")
 
-      p.govuk-body = "First name: #{job_application.application_data['first_name']}"
-      p.govuk-body = "Status: #{job_application.status}"
+      ol.app-task-list
+        li = render "jobseekers/job_applications/review/personal_details"
+        li = render "jobseekers/job_applications/review/professional_status"
+        li = render "jobseekers/job_applications/review/employment_history"
+        li = render "jobseekers/job_applications/review/personal_statement"
+        li = render "jobseekers/job_applications/review/references"
+        li = render "jobseekers/job_applications/review/equal_opportunities"
+        li = render "jobseekers/job_applications/review/ask_for_support"
+        li = render "jobseekers/job_applications/review/declarations"
 
       h3.govuk-heading-l Confirmation
 

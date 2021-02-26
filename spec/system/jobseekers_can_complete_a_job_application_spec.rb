@@ -65,8 +65,6 @@ RSpec.describe "Jobseekers can complete a job application" do
     click_on I18n.t("buttons.continue")
 
     expect(current_path).to eq(jobseekers_job_application_review_path(job_application))
-    # TODO: Once review page is complete, verify that application data details are correct
-    expect(page).to have_content("First name: John")
   end
 
   def validates_step_complete

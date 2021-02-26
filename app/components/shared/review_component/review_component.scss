@@ -41,6 +41,14 @@
       margin-bottom: 0;
       margin-top: 0;
     }
+
+    .govuk-accordion__section, .review-component__body--border {
+      border-bottom: 1px solid $govuk-border-colour;
+    }
+
+    .govuk-accordion__section--expanded {
+      border-bottom: none;
+    }
   }
 }
 

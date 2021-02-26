@@ -1,0 +1,29 @@
+= render Shared::ReviewComponent.new(id: "references", title: t("jobseekers.job_applications.build.references.title"), edit_link: jobseekers_job_application_build_path(job_application, :references)) do
+  = govuk_accordion do |accordion|
+    - job_application.references.order(:created_at).each_with_index do |reference, index|
+      - accordion.add_section(title: reference.data["name"], html_attributes: { id: "reference_#{index}" }) do
+        = govuk_summary_list do |component|
+          - component.slot(:row,
+            key: t("helpers.label.jobseekers_job_application_details_reference_form.job_title"),
+            value: reference.data["job_title"],
+            html_attributes: { id: "reference_job_title" })
+
+          - component.slot(:row,
+            key: t("helpers.label.jobseekers_job_application_details_reference_form.organisation"),
+            value: reference.data["organisation"],
+            html_attributes: { id: "reference_organisation" })
+
+          - component.slot(:row,
+            key: t("helpers.label.jobseekers_job_application_details_reference_form.relationship_to_applicant"),
+            value: reference.data["relationship_to_applicant"],
+            html_attributes: { id: "reference_relationship_to_applicant" })
+
+          - component.slot(:row,
+            key: t("helpers.label.jobseekers_job_application_details_reference_form.email_address"),
+            value: reference.data["email_address"],
+            html_attributes: { id: "reference_email_address" })
+
+          - component.slot(:row,
+            key: t("helpers.label.jobseekers_job_application_details_reference_form.phone_number"),
+            value: reference.data["phone_number"],
+            html_attributes: { id: "reference_phone_number" })

@@ -1,0 +1,45 @@
+= render Shared::ReviewComponent.new(id: "employment_history", title: t("jobseekers.job_applications.build.employment_history.title"), edit_link: jobseekers_job_application_build_path(job_application, :employment_history)) do
+  = govuk_accordion do |accordion|
+    - job_application.employment_history.order(:created_at).each_with_index do |role, index|
+      - accordion.add_section(title: role.data["job_title"], html_attributes: { id: "employment_history_#{index}" }) do
+        = govuk_summary_list do |component|
+          - component.slot(:row,
+            key: t("helpers.label.jobseekers_job_application_details_employment_history_form.organisation"),
+            value: role.data["organisation"],
+            html_attributes: { id: "employment_history_organisation" })
+
+          - component.slot(:row,
+            key: t("helpers.label.jobseekers_job_application_details_employment_history_form.salary"),
+            value: role.data["salary"] || t("jobs.not_defined"),
+            html_attributes: { id: "employment_history_salary" })
+
+          - component.slot(:row,
+            key: t("helpers.label.jobseekers_job_application_details_employment_history_form.subjects"),
+            value: role.data["subjects"],
+            html_attributes: { id: "employment_history_subjects" })
+
+          - component.slot(:row,
+            key: t("helpers.label.jobseekers_job_application_details_employment_history_form.main_duties"),
+            value: role.data["main_duties"],
+            html_attributes: { id: "employment_history_main_duties" })
+
+          - component.slot(:row,
+            key: t("helpers.legend.jobseekers_job_application_details_employment_history_form.started_on"),
+            value: role.data["started_on"],
+            html_attributes: { id: "employment_history_started_on" })
+
+          - component.slot(:row,
+            key: t("helpers.legend.jobseekers_job_application_details_employment_history_form.current_role"),
+            value: role.data["current_role"]&.capitalize,
+            html_attributes: { id: "employment_history_current_role" })
+
+          - if role.data["current_role"] == "no"
+            - component.slot(:row,
+              key: t("helpers.legend.jobseekers_job_application_details_employment_history_form.ended_on"),
+              value: role.data["ended_on"],
+              html_attributes: { id: "employment_history_ended_on" })
+
+            - component.slot(:row,
+              key: t("helpers.label.jobseekers_job_application_details_employment_history_form.reason_for_leaving"),
+              value: role.data["reason_for_leaving"],
+              html_attributes: { id: "employment_history_reason_for_leaving" })
