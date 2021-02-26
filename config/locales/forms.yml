@@ -81,10 +81,17 @@ en:
           asian: Includes Indian, Pakistani, Bangladeshi or Chinese
           mixed: Includes White and Black Caribbean, White and Black African or White and Asian
           white: Includes English, Welsh, Scottish, Northern Irish, British, Irish Gypsy or Irish Traveller
+          other: Please use your own words.
+        gender_options:
+          other: Please use your own words.
         orientation: If the options below do not reflect how you identify, please select ‘Other’.
+        orientation_options:
+          other: Please use your own words.
         religion: >-
           Tell us about your religion or faith. You can select ‘Other’ if your beliefs are not represented by one of the
           given options.
+        religion_options:
+          other: Please use your own words.
       jobseekers_job_alert_further_feedback_form:
         comment: This is optional, but the information will help us to make improvements.
       jobseekers_nqt_job_alerts_form:
@@ -240,7 +247,7 @@ en:
           hindu: Hindu
           jewish: Jewish
           muslim: Muslim
-          none: Placeholder for content for no religion
+          none: No religion, atheist or agnostic
           other: Other
           prefer_not_to_say: Prefer not to say
           sikh: Sikh

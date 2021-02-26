@@ -223,19 +223,19 @@ en:
             ethnicity:
               inclusion: Select an ethnic group or ‘Prefer not to say’
             ethnicity_description:
-              blank: Can't be blank (placeholder awaiting content)
+              blank: Describe your ethnic group
             gender:
               inclusion: Select a gender or ‘Prefer not to say’
             gender_description:
-              blank: Can't be blank (placeholder awaiting content)
+              blank: Describe your gender identity
             orientation:
               inclusion: Select an orientation or ‘Prefer not to say’
             orientation_description:
-              blank: Can't be blank (placeholder awaiting content)
+              blank: Describe your sexual orientation
             religion:
               inclusion: Select a religion or ‘Prefer not to say’
             religion_description:
-              blank: Can't be blank (placeholder awaiting content)
+              blank: Describe your religion or belief
         jobseekers/job_application/personal_details_form:
           attributes:
             building_and_street:
