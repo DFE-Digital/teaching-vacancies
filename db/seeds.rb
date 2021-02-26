@@ -61,13 +61,13 @@ local_authority_one = FactoryBot.create(:local_authority,
 SchoolGroupMembership.create(school_group: trust_one, school: school_one)
 SchoolGroupMembership.create(school_group: local_authority_one, school: school_two)
 
-FactoryBot.create(:vacancy,
-                  id: "20cc99ff-4fdb-4637-851a-68cf5f8fea9f",
-                  job_title: "Physics Teacher",
-                  subjects: %w[Physics],
-                  working_patterns: %w[full_time],
-                  salary: "£35,000",
-                  organisation_vacancies_attributes: [{ organisation: school_one }])
+physics_job = FactoryBot.create(:vacancy,
+                                id: "20cc99ff-4fdb-4637-851a-68cf5f8fea9f",
+                                job_title: "Physics Teacher",
+                                subjects: %w[Physics],
+                                working_patterns: %w[full_time],
+                                salary: "£35,000",
+                                organisation_vacancies_attributes: [{ organisation: school_one }])
 
 FactoryBot.create(:vacancy,
                   id: "67991ea9-431d-4d9d-9c99-a78b80108fe1",
@@ -226,6 +226,11 @@ Publisher.create(oid: "7AEC8E8D-6036-4E6E-92A4-800E381A12E0",
                  family_name: "Mackworth-Young",
                  given_name: "Rose")
 
-Jobseeker.create(email: "jobseeker@example.com",
-                 password: "password",
-                 confirmed_at: Time.zone.now)
+jobseeker = Jobseeker.create(email: "jobseeker@example.com",
+                             password: "password",
+                             confirmed_at: Time.zone.now)
+
+FactoryBot.create(:job_application, :complete,
+                  id: "6683c564-15e6-41af-ab44-7adf125f4c84",
+                  jobseeker: jobseeker,
+                  vacancy: physics_job)

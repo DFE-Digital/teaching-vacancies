@@ -1,0 +1,2 @@
+= render Shared::ReviewComponent.new(id: "personal_statement", title: t("jobseekers.job_applications.build.personal_statement.title"), edit_link: jobseekers_job_application_build_path(job_application, :personal_statement)) do
+  p.govuk-body.review-component__body--border class="govuk-!-padding-bottom-3" = job_application.application_data["personal_statement"]

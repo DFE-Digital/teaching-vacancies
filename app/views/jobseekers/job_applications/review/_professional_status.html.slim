@@ -1,0 +1,18 @@
+= render Shared::ReviewComponent.new(id: "professional_status", title: t("jobseekers.job_applications.build.professional_status.title"), edit_link: jobseekers_job_application_build_path(job_application, :professional_status))
+  = govuk_summary_list do |component|
+    - if job_application.application_data["qualified_teacher_status"] == "yes"
+      - component.slot(:row,
+        key: t("helpers.legend.jobseekers_job_application_professional_status_form.qualified_teacher_status"),
+        value: safe_join([tag.div(job_application.application_data["qualified_teacher_status"].capitalize, class: "govuk-body"),
+                          tag.p(job_application.application_data["qualified_teacher_status_year"], class: "govuk-body")]),
+        html_attributes: { id: "professional_status_qualified_teacher_status" })
+    - else
+      - component.slot(:row,
+        key: t("helpers.legend.jobseekers_job_application_professional_status_form.qualified_teacher_status"),
+        value: job_application.application_data["qualified_teacher_status"],
+        html_attributes: { id: "professional_status_qualified_teacher_status" })
+
+    - component.slot(:row,
+      key: t("helpers.legend.jobseekers_job_application_professional_status_form.statutory_induction_complete"),
+      value: job_application.application_data["statutory_induction_complete"]&.capitalize,
+      html_attributes: { id: "professional_status_statutory_induction_complete" })

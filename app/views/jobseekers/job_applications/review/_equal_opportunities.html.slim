@@ -1,0 +1,30 @@
+= render Shared::ReviewComponent.new(id: "equal_opportunities", title: t("jobseekers.job_applications.build.equal_opportunities.title"), edit_link: jobseekers_job_application_build_path(job_application, :equal_opportunities)) do
+  = govuk_summary_list do |component|
+    - component.slot(:row,
+      key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.disability"),
+      value: job_application.application_data["disability"]&.capitalize,
+      html_attributes: { id: "equal_opportunities_disability" })
+
+    - component.slot(:row,
+      key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.gender"),
+      value: safe_join([tag.div(job_application.application_data["gender"]&.capitalize, class: "govuk-body"),
+                        tag.div(job_application.application_data["gender_description"], class: "govuk-body")]),
+      html_attributes: { id: "equal_opportunities_gender" })
+
+    - component.slot(:row,
+      key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.orientation"),
+      value: safe_join([tag.div(job_application.application_data["orientation"]&.capitalize, class: "govuk-body"),
+                        tag.div(job_application.application_data["orientation_description"], class: "govuk-body")]),
+      html_attributes: { id: "equal_opportunities_orientation" })
+
+    - component.slot(:row,
+      key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.ethnicity"),
+      value: safe_join([tag.div(job_application.application_data["ethnicity"]&.capitalize, class: "govuk-body"),
+                        tag.div(job_application.application_data["ethnicity_description"], class: "govuk-body")]),
+      html_attributes: { id: "equal_opportunities_ethnicity" })
+
+    - component.slot(:row,
+      key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.religion"),
+      value: safe_join([tag.div(job_application.application_data["religion"]&.capitalize, class: "govuk-body"),
+                        tag.div(job_application.application_data["religion_description"], class: "govuk-body")]),
+      html_attributes: { id: "equal_opportunities_religion" })
