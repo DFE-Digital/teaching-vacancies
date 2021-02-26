@@ -11,14 +11,14 @@
       h1.govuk-heading-l = t(".title")
 
       ol.app-task-list
-        li = render "jobseekers/job_applications/review/personal_details"
-        li = render "jobseekers/job_applications/review/professional_status"
-        li = render "jobseekers/job_applications/review/employment_history"
-        li = render "jobseekers/job_applications/review/personal_statement"
-        li = render "jobseekers/job_applications/review/references"
-        li = render "jobseekers/job_applications/review/equal_opportunities"
-        li = render "jobseekers/job_applications/review/ask_for_support"
-        li = render "jobseekers/job_applications/review/declarations"
+        li = render "jobseekers/job_applications/review/personal_details", allow_edit: true
+        li = render "jobseekers/job_applications/review/professional_status", allow_edit: true
+        li = render "jobseekers/job_applications/review/employment_history", allow_edit: true
+        li = render "jobseekers/job_applications/review/personal_statement", allow_edit: true
+        li = render "jobseekers/job_applications/review/references", allow_edit: true
+        li = render "jobseekers/job_applications/review/equal_opportunities", allow_edit: true
+        li = render "jobseekers/job_applications/review/ask_for_support", allow_edit: true
+        li = render "jobseekers/job_applications/review/declarations", allow_edit: true
 
       h3.govuk-heading-l Confirmation
 

@@ -156,6 +156,13 @@ en:
         relationship_to_applicant: Relationship to applicant
       review:
         title: Review your application
+      show:
+        assistance:
+          heading: Timeline
+        heading: View submitted application
+        title: View submitted application
+      steps:
+        application_submitted: Application submitted
       submit:
         feedback:
           description: >-
@@ -296,4 +303,3 @@ en:
         new_search_html: You can create a new job alert by starting a %{link}
         new_search_link: new search
         title: Feedback received
-

@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     end
 
     constraints(-> { JobseekerApplicationsFeature.enabled? }) do
-      resources :job_applications, only: %i[index] do
+      resources :job_applications, only: %i[index show] do
         resources :build, only: %i[show update], controller: "job_applications/build" do
           resources :details, only: %i[new create edit update destroy], controller: "job_applications/details"
         end
@@ -36,7 +36,7 @@ Rails.application.routes.draw do
         resource :feedback, only: %i[create], controller: "job_applications/feedbacks"
       end
 
-      scope path: ":job_id" do
+      scope as: :job, path: ":job_id" do
         resource :job_application, only: %i[new create]
       end
     end

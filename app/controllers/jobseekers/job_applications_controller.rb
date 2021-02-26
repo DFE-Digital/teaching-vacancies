@@ -1,8 +1,6 @@
 class Jobseekers::JobApplicationsController < Jobseekers::BaseController
   helper_method :job_application, :review_form, :vacancy
 
-  def index; end
-
   def new
     request_event.trigger(:vacancy_apply_clicked, vacancy_id: vacancy.id)
   end
@@ -27,7 +25,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
   private
 
   def job_application
-    @job_application ||= current_jobseeker.job_applications.find(params[:job_application_id])
+    @job_application ||= current_jobseeker.job_applications.find(params[:job_application_id] || params[:id])
   end
 
   def review_form

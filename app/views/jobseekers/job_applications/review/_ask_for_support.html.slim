@@ -1,4 +1,4 @@
-= render Shared::ReviewComponent.new(id: "ask_for_support", title: t("jobseekers.job_applications.build.ask_for_support.title"), edit_link: jobseekers_job_application_build_path(job_application, :ask_for_support)) do
+= render Shared::ReviewComponent.new(id: "ask_for_support", title: t("jobseekers.job_applications.build.ask_for_support.title"), edit_link: (jobseekers_job_application_build_path(job_application, :ask_for_support) if allow_edit)) do
   = govuk_summary_list do |component|
     - component.slot(:row,
       key: t("helpers.legend.jobseekers_job_application_ask_for_support_form.support_needed"),
