@@ -5,7 +5,7 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     .govuk-caption-m = t("jobseekers.job_applications.current_step", current: process_steps.current_step_number, total: 10)
-    h1.govuk-heading-l = t(".title")
+    h1.govuk-heading-l = t(".heading")
 
     = form_for @form, url: wizard_path, method: :patch do |f|
       = f.govuk_error_summary
