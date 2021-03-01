@@ -27,17 +27,17 @@ Rails.application.routes.draw do
     end
 
     constraints(-> { JobseekerApplicationsFeature.enabled? }) do
-      scope path: ":job_id" do
-        resources :job_applications, only: %i[new create]
-      end
-
-      resources :job_applications, only: [] do
+      resources :job_applications, only: %i[index] do
         resources :build, only: %i[show update], controller: "job_applications/build" do
           resources :details, only: %i[new create edit update destroy], controller: "job_applications/details"
         end
         get :review
         post :submit
         resource :feedback, only: %i[create], controller: "job_applications/feedbacks"
+      end
+
+      scope path: ":job_id" do
+        resource :job_application, only: %i[new create]
       end
     end
 
@@ -68,13 +68,13 @@ Rails.application.routes.draw do
     resources :interests, only: %i[new]
   end
 
-  resource :feedback, controller: "general_feedbacks", only: %i[new create]
+  resource :feedback, only: %i[new create], controller: "general_feedbacks"
 
   resources :subscriptions, except: %i[index show] do
     get :unsubscribe, on: :member
 
-    resources :job_alert_feedbacks, controller: "jobseekers/job_alert_feedbacks", only: %i[new update edit]
-    resources :unsubscribe_feedbacks, controller: "jobseekers/unsubscribe_feedbacks", only: %i[new create]
+    resources :job_alert_feedbacks, only: %i[new update edit], controller: "jobseekers/job_alert_feedbacks"
+    resources :unsubscribe_feedbacks, only: %i[new create], controller: "jobseekers/unsubscribe_feedbacks"
   end
 
   get "sign-up-for-NQT-job-alerts", to: "nqt_job_alerts#new", as: "nqt_job_alerts"
@@ -132,15 +132,13 @@ Rails.application.routes.draw do
       get "summary"
       post :publish, to: "publishers/vacancies/publish#create"
       get :publish, to: "publishers/vacancies/publish#create"
-      resource :feedback, controller: "publishers/vacancies/vacancy_publisher_feedbacks", only: %i[new create]
-      resource :statistics, controller: "publishers/vacancies/statistics", only: %i[update]
-      resource :copy, only: %i[new create],
-                      controller: "publishers/vacancies/copy"
+      resource :feedback, only: %i[new create], controller: "publishers/vacancies/vacancy_publisher_feedbacks"
+      resource :statistics, only: %i[update], controller: "publishers/vacancies/statistics"
+      resource :copy, only: %i[new create], controller: "publishers/vacancies/copy"
     end
 
     resources :schools, only: %i[index edit update], controller: "publishers/organisations/schools"
-    resource :managed_organisations, only: %i[show update],
-                                     controller: "publishers/organisations/managed_organisations"
+    resource :managed_organisations, only: %i[show update], controller: "publishers/organisations/managed_organisations"
   end
 
   post "/errors/csp_violation", to: "errors#csp_violation"
