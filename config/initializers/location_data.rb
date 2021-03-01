@@ -44,9 +44,8 @@ COUNTIES = (composite_locations.keys + ons_counties).reject do |county|
   MAPPED_LOCATIONS.include?(county.downcase)
 end
 
-ons_region_cities = ons_regions.select { |line| line.second == "cities" }.map(&:first)
 ons_unitary_authority_cities = ons_counties_and_unitary_authorities.select { |line| line.second == "cities" }.map(&:first)
-CITIES = (ons_cities.map(&:first) + ons_region_cities + ons_unitary_authority_cities).reject do |city|
+CITIES = (ons_cities.map(&:first) + ons_unitary_authority_cities).reject do |city|
   # Reject duplicates caused by mapping locations, e.g. use Telford & Wrekin instead of Telford as location facets, rather than both.
   MAPPED_LOCATIONS.include?(city.downcase)
 end
