@@ -1,6 +1,8 @@
 class Jobseekers::JobApplicationsController < Jobseekers::BaseController
   helper_method :job_application, :review_form, :vacancy
 
+  def index; end
+
   def new
     request_event.trigger(:vacancy_apply_clicked, vacancy_id: vacancy.id)
   end
