@@ -40,11 +40,14 @@ jobs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
 
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-west-2
+
     - name: Validate secrets
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: eu-west-2
       run: |
         gem install aws-sdk-ssm --no-document
         bin/run-in-env -t /teaching-vacancies/staging -o quiet \
@@ -184,6 +187,14 @@ jobs:
         terraform init -upgrade=true -reconfigure -input=false
         terraform apply -input=false -auto-approve
       working-directory: terraform/monitoring
+
+    - name: Download and extract Gov.UK frontend archive
+      shell: bash
+      run: bin/regenerate-offline
+
+    - name: Sync offline S3 bucket
+      shell: bash
+      run: aws s3 sync ./offline s3://tvs-offline/offline
 
     - name: Send job status message to twd_tv_dev channel
       if: always() && github.ref == 'refs/heads/master'
