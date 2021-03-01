@@ -41,11 +41,12 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :saved_jobs, only: %i[index]
+
     scope path: ":job_id" do
-      resources :saved_jobs, only: %i[new destroy]
+      resource :saved_job, only: %i[new destroy]
     end
 
-    resources :saved_jobs, only: %i[index]
     resources :subscriptions, only: %i[index]
     resource :account, only: %i[show]
     resource :account_feedback, only: %i[new create]
