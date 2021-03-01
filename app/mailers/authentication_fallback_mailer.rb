@@ -1,9 +1,6 @@
 class AuthenticationFallbackMailer < ApplicationMailer
-  # This is not a key, it is the uid of a template.
-  NOTIFY_GENERIC_EMAIL_TEMPLATE = "2f37ec1d-58ef-4cd9-9d0a-4272723dda3d".freeze
-
   def sign_in_fallback(login_key:, publisher:)
-    @template = NOTIFY_GENERIC_EMAIL_TEMPLATE
+    @template = NOTIFY_PUBLISHER_AUTHENTICATION_FALLBACK_TEMPLATE
     @publisher = publisher
     @to = publisher.email
 

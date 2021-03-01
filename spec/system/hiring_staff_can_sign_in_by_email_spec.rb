@@ -77,7 +77,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
           visit auth_email_choose_organisation_path(login_key: login_key.id)
 
           expect(page).to have_content("Choose your organisation")
-          expect(page).not_to have_content(I18n.t("publishers.temp_login.denial.title"))
+          expect(page).not_to have_content(I18n.t("publishers.temp_login.choose_organisation.denial.title"))
           expect(page).to have_content(other_school.name)
           expect(page).to have_content(trust.name)
           expect(page).to have_content(local_authority.name)

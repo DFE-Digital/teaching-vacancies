@@ -24,6 +24,7 @@ RSpec.describe "Jobseekers can submit a job application" do
 
       expect { click_on I18n.t("buttons.submit_application") }
         .to change { JobApplication.first.status }.from("draft").to("submitted")
+        .and change { number of emails }.by(1)
       expect(page).to have_content(I18n.t("jobseekers.job_applications.submit.panel.title"))
     end
   end
