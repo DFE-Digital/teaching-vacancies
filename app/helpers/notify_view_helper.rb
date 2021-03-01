@@ -3,6 +3,10 @@ module NotifyViewHelper
     "[#{text}](#{url})"
   end
 
+  def notify_mail_to(mail_to, text = mail_to)
+    notify_link("mailto:#{mail_to}", text)
+  end
+
   def edit_link(subscription)
     url = edit_subscription_url(subscription.token, params: utm_params(subscription))
     notify_link(url, t(".edit_link_text"))
