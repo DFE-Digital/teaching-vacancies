@@ -3,7 +3,7 @@
 .vacancies-component
   .govuk-grid-row.vacancies-component__header class="govuk-!-margin-top-7"
     .govuk-grid-column-full
-      h2.govuk-heading-l class="govuk-!-margin-bottom-4" = t("jobs.#{@selected_type}_jobs_with_count_html", count: @vacancies.count)
+      h1.govuk-heading-l class="govuk-!-margin-bottom-4" = t("jobs.#{@selected_type}_jobs_with_count_html", count: @vacancies.count)
 
   .govuk-grid-row
     .moj-filter-sidebar class="govuk-!-margin-bottom-5"
