@@ -5,7 +5,7 @@ RSpec.describe "Editing a published vacancy" do
   let(:school1) { create(:school, name: "First school") }
   let(:school2) { create(:school, name: "Second school") }
   let(:oid) { SecureRandom.uuid }
-  let(:vacancy) { create(:vacancy, :at_central_office, :published) }
+  let(:vacancy) { create(:vacancy, :central_office, :published) }
 
   before do
     vacancy.organisation_vacancies.create(organisation: school_group)

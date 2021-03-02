@@ -6,7 +6,7 @@ RSpec.describe "Creating a vacancy" do
   let(:school2) { create(:school, name: "Second school") }
   let(:school3) { create(:school, :closed, name: "Closed school") }
   let(:oid) { SecureRandom.uuid }
-  let(:vacancy) { build(:vacancy, :at_central_office, :complete) }
+  let(:vacancy) { build(:vacancy, :central_office, :complete) }
 
   before do
     SchoolGroupMembership.find_or_create_by(school_id: school1.id, school_group_id: school_group.id)
@@ -29,7 +29,7 @@ RSpec.describe "Creating a vacancy" do
   end
 
   context "when job is located at trust central office" do
-    let(:vacancy) { build(:vacancy, :at_central_office, :complete) }
+    let(:vacancy) { build(:vacancy, :central_office, :complete) }
 
     describe "#job_location" do
       scenario "redirects to job details when submitted successfully" do

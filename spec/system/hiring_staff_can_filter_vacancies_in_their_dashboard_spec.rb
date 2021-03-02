@@ -4,7 +4,7 @@ RSpec.describe "Hiring staff can filter vacancies in their dashboard" do
   let(:school_group) { create(:trust) }
   let(:school1) { create(:school, name: "Happy Rainbows School") }
   let(:school2) { create(:school, name: "Dreary Grey School") }
-  let!(:school_group_vacancy) { create(:vacancy, :published, :at_central_office) }
+  let!(:school_group_vacancy) { create(:vacancy, :published, :central_office) }
   let!(:school1_vacancy) { create(:vacancy, :published, :at_one_school) }
   let!(:school1_draft_vacancy) { create(:vacancy, :draft, :at_one_school) }
   let!(:school2_draft_vacancy) { create(:vacancy, :draft, :at_one_school) }

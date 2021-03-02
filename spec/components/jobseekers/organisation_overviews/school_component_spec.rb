@@ -14,7 +14,7 @@ RSpec.describe Jobseekers::OrganisationOverviews::SchoolComponent, type: :compon
   describe "#render?" do
     context "when vacancy is at a trust head office" do
       let(:organisation) { create(:trust) }
-      let(:vacancy) { create(:vacancy, :at_central_office) }
+      let(:vacancy) { create(:vacancy, :central_office) }
 
       it "does not render the component" do
         expect(rendered_component).to be_blank

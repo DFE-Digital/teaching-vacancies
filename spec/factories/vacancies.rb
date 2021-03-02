@@ -35,7 +35,7 @@ FactoryBot.define do
     suitable_for_nqt { "no" }
     working_patterns { %w[full_time] }
 
-    trait :at_central_office do
+    trait :central_office do
       job_location { "central_office" }
       readable_job_location { I18n.t("publishers.organisations.readable_job_location.central_office") }
     end

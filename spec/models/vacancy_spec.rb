@@ -279,7 +279,7 @@ RSpec.describe Vacancy, type: :model do
     context "when vacancy has a school_group" do
       it "returns the school_group name for the vacancy" do
         trust = create(:trust)
-        vacancy = create(:vacancy, :at_central_office)
+        vacancy = create(:vacancy, :central_office)
         vacancy.organisation_vacancies.create(organisation: trust)
 
         expect(vacancy.parent_organisation_name).to eq(trust.name)
