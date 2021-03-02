@@ -199,6 +199,10 @@ en:
         publishers/vacancies/vacancy_publisher_feedback_form:
           attributes:
             <<: *vacancy_publisher_feedback_errors
+        publishers/terms_and_conditions_form:
+          attributes:
+            terms:
+              blank: Tick the box to agree to the Terms and Conditions
         # Job application
         jobseekers/job_application/ask_for_support_form:
           attributes:
