@@ -44,14 +44,26 @@ jobs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
 
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-west-2
+
+    - name: Download fetch_config.rb
+      shell: bash
+      run: |
+        echo "::group:: Download fetch_config.rb script"
+        curl -s https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/scripts/fetch_config/fetch_config.rb -o bin/fetch_config.rb
+        chmod +x bin/fetch_config.rb
+        echo "::endgroup::"
+
     - name: Validate secrets
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: eu-west-2
+      shell: bash
       run: |
         gem install aws-sdk-ssm --no-document
-        bin/run-in-env -t "/teaching-vacancies/${BRANCH}" -o quiet \
+        bin/fetch_config.rb -s aws-ssm-parameter-path:/teaching-vacancies/${BRANCH}/app -d quiet \
           && echo Data in "/teaching-vacancies/${BRANCH}" looks valid
 
     - name: Set up Docker Buildx
