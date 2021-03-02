@@ -38,13 +38,15 @@ jobs:
     - name: Download sanitised backup from S3
       shell: bash
       run: bin/download-db-backup
+      env:
+        BACKUP_TYPE: sanitised
 
     - name: Restore sanitised database from downloaded dump
       shell: bash
       run: bin/restore-db
       env:
         CF_DESTINATION_ENVIRONMENT: ${{ github.event.inputs.environment }}
-        FILENAME: sanitised-backup.sql
+        BACKUP_TYPE: sanitised
 
     - name: Send job status message to twd_tv_dev channel
       if: always() && github.ref == 'refs/heads/master'
