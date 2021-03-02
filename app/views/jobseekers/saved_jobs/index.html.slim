@@ -3,36 +3,41 @@
 = render "jobseekers/dashboard/account_header"
 
 .govuk-grid-row
-  .govuk-grid-column-one-third
-    h2.govuk-heading-l = t(".page_title")
+  .govuk-grid-column-full
+    h1.govuk-heading-l = t(".page_title")
 
-  .govuk-grid-column-two-thirds
+.govuk-grid-row class="govuk-!-margin-top-0"
+  .govuk-grid-column-full
     - if @saved_jobs.any?
-      div class="govuk-!-margin-bottom-4"
-        = form_for @sort_form, as: "", url: jobseekers_saved_jobs_path, id: "jobs_sort_form", class: "sort-inline", data: { 'auto-submit': true, "hide-submit": true }, method: :get do |f|
-          = f.govuk_collection_select :sort_column,
-            @sort,
-            :column,
-            :display_name,
-            label: { text: t("jobs.sort_by.label"), size: "s", class: "govuk-label inline govuk-!-margin-right-2" }
+      = form_for @sort_form, as: "", url: jobseekers_saved_jobs_path, method: :get, data: { 'auto-submit': true, "hide-submit": true } do |f|
+        = f.govuk_collection_select :sort_column,
+          @sort,
+          :column,
+          :display_name,
+          label: { text: t("jobs.sort_by.label"), size: "s", class: "govuk-label inline govuk-!-margin-right-2" },
+          form_group: { classes: "govuk-!-margin-bottom-2" }
 
-          = f.govuk_submit t("jobs.sort_by.submit")
+        = f.govuk_submit t("jobs.sort_by.submit")
 
+.govuk-grid-row
   .govuk-grid-column-full
     .moj-filter-layout__content
       section
         - if @saved_jobs.any?
           - @saved_jobs.each do |saved_job|
             = render Shared::CardComponent.new(html_attributes: { "data-slug": saved_job.vacancy.slug }) do |card|
-              - card.header_item(value: govuk_link_to(saved_job.vacancy.job_title, job_path(saved_job.vacancy.slug)))
-              - card.header_item(value: location(saved_job.vacancy.parent_organisation, job_location: saved_job.vacancy.job_location))
+              - card.header do
+                = tag.div(govuk_link_to(saved_job.vacancy.job_title, job_path(saved_job.vacancy), class: "govuk-link--no-visited-state"))
+                = tag.div(location(saved_job.vacancy.parent_organisation, job_location: saved_job.vacancy.job_location))
 
-              - card.body_item(label: t(".added"), value: saved_job.created_at.strftime("%d %B %Y"))
-              - if saved_job.vacancy.expires_at.past?
-                - card.body_item(value: t(".deadline_passed"))
-              - card.body_item(label: t(".application_deadline"), value: OrganisationVacancyPresenter.new(saved_job.vacancy).application_deadline)
+              - card.body do
+                = tag.div(card.labelled_item(t(".added"), saved_job.created_at.strftime("%d %B %Y")))
+                - if saved_job.vacancy.expires_at.past?
+                  = tag.div(t(".deadline_passed"), class: "govuk-!-font-weight-bold text-red")
+                = tag.div(card.labelled_item(t(".application_deadline"), OrganisationVacancyPresenter.new(saved_job.vacancy).application_deadline))
 
-              - card.action_item(action: button_to(t(".delete"), jobseekers_saved_job_path(saved_job.vacancy.id, saved_job, redirect_to_dashboard: true), method: :delete, class: "govuk-delete-link"))
+              - card.actions do
+                = tag.div(button_to(t(".delete"), jobseekers_saved_job_path(saved_job.vacancy.id, saved_job, redirect_to_dashboard: true), method: :delete, class: "govuk-delete-link"))
 
         - else
           = render(Shared::NotificationComponent.new(content: { title: t(".zero_saved_jobs_title"), body: t(".zero_saved_jobs_body_html", link_to: govuk_link_to(t(".link_find"), root_path)) }, style: "empty", dismiss: false, background: true, alert: false))

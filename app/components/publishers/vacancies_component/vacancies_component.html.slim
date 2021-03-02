@@ -16,14 +16,13 @@
 
     .moj-filter-layout__content class=grid_column_class
       - if @vacancies.any?
-        div class="govuk-!-margin-bottom-4"
-          = form_for @sort_form, as: "", url: jobs_with_type_organisation_path(@selected_type), id: "jobs_sort_form", class: "sort-inline", data: { 'auto-submit': true, "hide-submit": true }, method: :get do |f|
-            = f.govuk_collection_select :sort_column,
-              vacancy_sort_options,
-              :column,
-              :display_name,
-              label: { text: t("jobs.sort_by.label"), size: "s", class: "govuk-label inline govuk-!-margin-right-2" }
+        = form_for @sort_form, as: "", url: jobs_with_type_organisation_path(@selected_type), method: :get, data: { 'auto-submit': true, "hide-submit": true } do |f|
+          = f.govuk_collection_select :sort_column,
+            vacancy_sort_options,
+            :column,
+            :display_name,
+            label: { text: t("jobs.sort_by.label"), size: "s", class: "govuk-label inline govuk-!-margin-right-2" }
 
-            = f.govuk_submit t("jobs.sort_by.submit")
+          = f.govuk_submit t("jobs.sort_by.submit")
       section
         = render "publishers/organisations/vacancies_#{@selected_type}", selected_type: @selected_type, organisation: @organisation, vacancies: @vacancies, sort: @sort, filters_form: @filters_form
