@@ -36,7 +36,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
   def back_link_path
     @back_link_path ||= case step
                         when :personal_details
-                          new_jobseekers_job_application_path(job_application.vacancy.id)
+                          new_jobseekers_job_job_application_path(job_application.vacancy.id)
                         else
                           previous_wizard_path
                         end

@@ -1,4 +1,4 @@
-= render Shared::ReviewComponent.new(id: "declarations", title: t("jobseekers.job_applications.build.declarations.title"), edit_link: jobseekers_job_application_build_path(job_application, :declarations)) do
+= render Shared::ReviewComponent.new(id: "declarations", title: t("jobseekers.job_applications.build.declarations.title"), edit_link: (jobseekers_job_application_build_path(job_application, :declarations) if allow_edit)) do
   = govuk_summary_list do |component|
     - component.slot(:row,
       key: t("helpers.legend.jobseekers_job_application_declarations_form.banned_or_disqualified"),

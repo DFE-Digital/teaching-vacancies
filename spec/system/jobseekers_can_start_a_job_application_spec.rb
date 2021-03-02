@@ -51,7 +51,7 @@ RSpec.describe "Jobseekers can start a job application" do
       let(:jobseeker_applications_enabled?) { false }
 
       it "returns not found" do
-        visit new_jobseekers_job_application_path(vacancy.id)
+        visit new_jobseekers_job_job_application_path(vacancy.id)
         expect(page.status_code).to eq(404)
       end
     end

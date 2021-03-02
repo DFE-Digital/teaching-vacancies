@@ -13,7 +13,7 @@
     p.govuk-body = t(".description.closing")
     p.govuk-body = t(".description.save_and_return")
 
-    = govuk_button_to t("buttons.start_application"), jobseekers_job_application_path(vacancy.id), class: "govuk-button--start"
+    = govuk_button_to t("buttons.start_application"), jobseekers_job_job_application_path(vacancy.id), class: "govuk-button--start"
 
     = govuk_link_to t("buttons.cancel"), job_path(vacancy)
 

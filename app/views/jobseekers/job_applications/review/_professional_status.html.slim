@@ -1,4 +1,4 @@
-= render Shared::ReviewComponent.new(id: "professional_status", title: t("jobseekers.job_applications.build.professional_status.title"), edit_link: jobseekers_job_application_build_path(job_application, :professional_status))
+= render Shared::ReviewComponent.new(id: "professional_status", title: t("jobseekers.job_applications.build.professional_status.title"), edit_link: (jobseekers_job_application_build_path(job_application, :professional_status) if allow_edit))
   = govuk_summary_list do |component|
     - if job_application.application_data["qualified_teacher_status"] == "yes"
       - component.slot(:row,

@@ -11,7 +11,7 @@ RSpec.describe "Job applications", type: :request do
 
   describe "GET #new" do
     it "triggers a `vacancy_apply_clicked` event" do
-      expect { get new_jobseekers_job_application_path(vacancy.id) }
+      expect { get new_jobseekers_job_job_application_path(vacancy.id) }
         .to have_triggered_event(:vacancy_apply_clicked)
         .and_data(vacancy_id: vacancy.id)
     end

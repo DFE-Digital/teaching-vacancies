@@ -42,7 +42,7 @@ section#job-details class="govuk-!-margin-bottom-5"
   - elsif JobseekerApplicationsFeature.enabled?
     h4.govuk-heading-s = t("jobseekers.job_applications.applying_for_the_role_heading")
     p = t("jobseekers.job_applications.applying_for_the_role_paragraph")
-    = govuk_button_to t("jobseekers.job_applications.apply"), new_jobseekers_job_application_path(@vacancy.id), method: :get
+    = govuk_button_to t("jobseekers.job_applications.apply"), new_jobseekers_job_job_application_path(@vacancy.id), method: :get
 
   - if @vacancy.documents.any?
     section#supporting-documents
