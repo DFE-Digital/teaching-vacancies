@@ -308,7 +308,7 @@ en:
 
   shared:
     file_remove_confirmation_dialogue:
-      are_you_sure_html: Are you sure you want to remove '<span id="js-gem-c-modal-dialogue__file-name"></span>'?
+      are_you_sure_html: Are you sure you want to remove ‘<span id="js-gem-c-modal-dialogue__file-name"></span>’?
       delete_error: An error occurred while removing the file.
       no_keep_file: No, keep file
       yes_remove_file: Yes, remove file
