@@ -1,16 +1,10 @@
 .card-component {
+  @include govuk-font(16);
   border-bottom: 1px solid $govuk-border-colour;
+  color: $govuk-secondary-text-colour;
   display: flex;
   margin: 0 0 govuk-spacing(4);
   padding-bottom: govuk-spacing(3);
-
-  dl {
-    margin: 0;
-  }
-
-  dd {
-    margin: 0;
-  }
 
   &__content {
     display: flex;
@@ -22,41 +16,37 @@
       flex-direction: column;
       flex-grow: 1;
     }
+
+    div {
+      margin-bottom: govuk-spacing(1);
+    }
   }
 
   &__header {
     flex-basis: 40%;
+    margin-bottom: govuk-spacing(2);
+    margin-right: govuk-spacing(2);
+
+    .govuk-link {
+      @include govuk-font(19);
+    }
   }
 
   &__body {
     flex-grow: 1;
+    margin-bottom: govuk-spacing(2);
+    margin-left: 0;
+    margin-right: govuk-spacing(2);
   }
 
-  &__header,
-  &__body,
   &__actions {
-    @include govuk-media-query ($until: desktop) {
-      * {
-        font-size: 0.85rem;
-      }
-    }
+    margin-left: 0;
   }
 
   &__item-label {
     &:after {
       content: ":";
       margin-right: govuk-spacing(1);
-    }
-  }
-
-  &__actions {
-    align-self: flex-start;
-    flex-grow: 1;
-    margin-top: 0;
-    text-align: right;
-
-    .govuk-list {
-      margin-bottom: 0;
     }
   }
 }

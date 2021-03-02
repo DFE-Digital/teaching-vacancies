@@ -1,22 +1,21 @@
 class Shared::CardComponent < GovukComponent::Base
   include ViewComponent::SlotableV2
 
-  attr_accessor :html_attributes, :id
+  renders_one :header
+  renders_one :body
+  renders_one :actions
 
-  def initialize(id: nil, classes: [], html_attributes: {})
+  def initialize(classes: [], html_attributes: {})
     super(classes: classes, html_attributes: html_attributes)
-    @id = id
   end
 
-  renders_many :action_items, ->(action:) { action }
+  def labelled_item(label, value)
+    tag.span(label, class: "card-component__item-label govuk-!-font-weight-bold") + value
+  end
 
-  renders_many :body_items, ->(value:, label: "") { item(value, label) }
+  private
 
-  renders_many :header_items, ->(value:, label: "") { item(value, label) }
-
-  def item(value, label)
-    return value if label.blank?
-
-    content_tag(:span, label, { class: "card-component__item-label govuk-!-font-weight-bold" }) + value
+  def default_classes
+    %w[card-component]
   end
 end

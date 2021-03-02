@@ -1,16 +1,10 @@
-dl.card-component id=id class=classes *html_attributes
+dl class=classes *html_attributes
   .card-component__content
     dt.card-component__header
-      ul.govuk-list
-        - header_items.each do |item|
-          li == item
+      == header
 
     dd.card-component__body
-      ul.govuk-list
-        - body_items.each do |item|
-          li == item
+      == body
 
-  dd.card-component__actions
-    ul.govuk-list
-      - action_items.each do |action|
-        li == action
+    dd.card-component__actions
+      == actions
