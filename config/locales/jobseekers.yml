@@ -53,19 +53,22 @@ en:
             It's against the law to discriminate against you if you are disabled. You should not be asked questions
             about your health or your disability if they are not relevant to your teaching ability or practice. The
             school should not reject your application if you are disabled.
+          heading: Ask for support if you have a disability or other needs
           opening: >-
             When you are attending an interview, you might benefit from extra support if you're disabled have a mental
             health condition or educational needs. You can ask for the support that you need now. The school can then
             make adjustments so you can attend an interview.
-          title: Ask for support if you have a disability or other needs
+          title: Ask for support if you have a disability – Application
         declarations:
-          title: Declarations
+          heading: Declarations
+          title: Declarations – Application
         employment_history:
           description: >-
             Tell us about all teaching roles, as well as any other paid or voluntary work you have done that is relevant
             to your application.
+          heading: Current role and employment history
           no_employment_history: No employment specified
-          title: Current role and employment history
+          title: Current role and employment history — Application
         equal_opportunities:
           anonymity: >-
             This will not be used as part of your application. It will only be used anonymously to monitor the
@@ -76,26 +79,30 @@ en:
             about your identity.
           heading: Equal opportunities and recruitment monitoring
           optional: You can select ‘prefer not to say’ if you would rather not answer any question.
-          title: Equal opportunities and recruitment monitoring
+          title: Equal opportunities — Application
         personal_details:
           description: Tell us some basic details about yourself, like how to contact you about this application.
-          title: Personal details
+          heading: Personal details
+          title: Personal details — Application
         personal_statement:
           description: >-
             Please explain why you are suitable for this role. You may find it useful to refer specifically to the job
             description and any other information that has been provided.
-          title: Personal statement
+          heading: Personal statement
+          title: Personal statement — Application
         process_title: Application steps
         professional_status:
-          title: Professional status
+          heading: Professional status
+          title: Professional status — Application
         references:
+          heading: References
           no_children: >-
             If you do not currently work with children, you must include a referee from the last time you did so.
           no_references: No referees specified
           references_required_html: >-
             <span class='text-red'>Two referees are required</span> for this application. One of these must be your
             current or most recent employer. If you are shortlisted, we will contact your referee before your interview.
-          title: References
+          title: References — Application
       details:
         employment_history: Role
         form:
@@ -146,7 +153,8 @@ en:
             - a personal statement
             - two referees
           save_and_return: You can save your application at any point and return to it later.
-        title: Before you start
+        heading: Before you start
+        title: Application
       references:
         email_address: Email address
         job_title: Job title(s)
@@ -155,6 +163,7 @@ en:
         phone_number: Phone number
         relationship_to_applicant: Relationship to applicant
       review:
+        heading: Review your application – Application
         title: Review your application
       submit:
         feedback:
@@ -175,7 +184,7 @@ en:
         panel:
           body: We have sent an email confirmation to %{email}
           title: Your application has been submitted
-        title: Application submitted
+        title: Application submitted – Application
     passwords:
       check_your_email_password:
         description: We have sent you an email with instructions on how to reset your password.
