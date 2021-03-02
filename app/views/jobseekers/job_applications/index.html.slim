@@ -1,0 +1,47 @@
+- content_for :page_title_prefix, t(".page_title")
+
+= render "jobseekers/dashboard/account_header"
+
+.govuk-grid-row
+  .govuk-grid-column-full
+    h1.govuk-heading-l = t(".page_title")
+
+.govuk-grid-row class="govuk-!-margin-top-0"
+  .govuk-grid-column-full
+    .moj-filter-layout__content
+      section
+        - unless current_jobseeker.job_applications.exists?
+          = render Shared::NotificationComponent.new(content: { title: t(".no_job_applications"), body: t(".no_job_applications_body_html", link_to: govuk_link_to(t(".find_and_apply"), jobs_path)) }, style: "empty", dismiss: false, background: true, alert: false)
+
+        - current_jobseeker.job_applications.draft.order(updated_at: :desc).each do |draft_application|
+          = render Shared::CardComponent.new do |card|
+            - card.header do
+              = tag.div(govuk_link_to(draft_application.vacancy.job_title, job_path(draft_application.vacancy), class: "govuk-link--no-visited-state"))
+              = tag.div(location(draft_application.vacancy.parent_organisation, job_location: draft_application.vacancy.job_location))
+
+            - card.body do
+              = govuk_tag(text: draft_application.status, colour: "pink", classes: "govuk-!-margin-bottom-2")
+              = tag.div(card.labelled_item(t(".last_edited"), format_date(draft_application.updated_at.to_date) + I18n.t("jobs.time_at") + format_time(draft_application.updated_at)))
+              = tag.div(card.labelled_item(t(".closing_date"), OrganisationVacancyPresenter.new(draft_application.vacancy).application_deadline))
+
+            - card.actions do
+              = tag.div(govuk_link_to(t(".continue_application"), jobseekers_job_application_review_path(draft_application)))
+              = tag.div(govuk_link_to(t("buttons.delete"), "#"))
+
+        - current_jobseeker.job_applications.submitted.order(submitted_at: :desc).each do |submitted_application|
+          = render Shared::CardComponent.new do |card|
+            - card.header do
+              = tag.div(govuk_link_to(submitted_application.vacancy.job_title, job_path(submitted_application.vacancy), class: "govuk-link--no-visited-state"))
+              = tag.div(location(submitted_application.vacancy.parent_organisation, job_location: submitted_application.vacancy.job_location))
+
+            - card.body do
+              = govuk_tag(text: submitted_application.status, colour: "blue", classes: "govuk-!-margin-bottom-2")
+              = tag.div(card.labelled_item(t(".submitted"), format_date(submitted_application.submitted_at.to_date) + I18n.t("jobs.time_at") + format_time(submitted_application.submitted_at)))
+              = tag.div(card.labelled_item(t(".closing_date"), OrganisationVacancyPresenter.new(submitted_application.vacancy).application_deadline))
+
+            - card.actions do
+              = tag.div(govuk_link_to(t(".view_application"), jobseekers_job_application_path(submitted_application)))
+              = tag.div(govuk_link_to(t(".withdraw"), "#"))
+
+  .govuk-grid-column-full
+    = render(Jobseekers::AccountSurveyLinkComponent.new(origin: url_for))

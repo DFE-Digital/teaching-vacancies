@@ -134,6 +134,17 @@ en:
       heading_component:
         caption: "%{job_title} at %{organisation_name}"
         heading: Application
+      index:
+        continue_application: Continue application
+        closing_date: Closing date
+        find_and_apply: Find and apply
+        last_edited: Last edited
+        no_job_applications: You have not applied for any teaching jobs
+        no_job_applications_body_html: "%{link_to} for a teaching job"
+        page_title: My applications
+        submitted: Submitted
+        view_application: View application
+        withdraw: Withdraw
       new:
         assistance:
           content_html: You can find out more about our %{privacy_html} and our %{terms_html}.
