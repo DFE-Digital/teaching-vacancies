@@ -194,7 +194,6 @@ en:
     start_on: Date job starts
     starts_on: Expected start date
     publish_on: Publish on
-    date_listed: Date listed
     expires_on: Closing date
     time_at: ' at '
 
@@ -331,7 +330,6 @@ en:
     closing_date_html: '<span class="govuk-!-font-weight-bold">Closing date:</span> %{date}'
     created_at: Date drafted
     date_listed: Date listed
-    expired_on: Expired on
     publication_date_html: '<span class="govuk-!-font-weight-bold">Date to be published:</span> %{date}'
     updated_at: Date last updated
 
