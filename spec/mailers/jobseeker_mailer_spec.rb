@@ -14,6 +14,28 @@ RSpec.describe JobseekerMailer, type: :mailer do
     }
   end
 
+  describe "#application_submitted" do
+    let(:organisation) { build(:school) }
+    let(:vacancy) { build(:vacancy, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+    let(:contact_email) { vacancy.contact_email }
+    let(:job_application) { build(:job_application, :complete, jobseeker: jobseeker, vacancy: vacancy) }
+    let(:mail) { described_class.application_submitted(job_application) }
+    let(:notify_template) { NOTIFY_APPLICATION_SUBMITTED_CONFIRMATION_TEMPLATE }
+
+    it "sends a `jobseeker_application_submitted` email" do
+      expect(mail.subject).to eq(I18n.t("jobseeker_mailer.application_submitted.subject"))
+      expect(mail.to).to eq(["test@email.com"])
+      expect(mail.body.encoded).to include(I18n.t("jobseeker_mailer.application_submitted.heading",
+                                                  organisation_name: organisation.name))
+                               .and include(I18n.t("jobseeker_mailer.application_submitted.more_info.description",
+                                                   email: "[#{contact_email}](mailto:#{contact_email})"))
+    end
+
+    it "triggers a `jobseeker_application_submitted` email event" do
+      expect { mail.deliver_now }.to have_triggered_event(:jobseeker_application_submitted).with_data(expected_data)
+    end
+  end
+
   describe "#confirmation_instructions" do
     let(:mail) { described_class.confirmation_instructions(jobseeker, token) }
     let(:notify_template) { NOTIFY_JOBSEEKER_CONFIRMATION_TEMPLATE }
@@ -28,12 +50,12 @@ RSpec.describe JobseekerMailer, type: :mailer do
         expect(mail.subject).to eq(I18n.t("jobseeker_mailer.confirmation_instructions.reconfirmation.subject"))
         expect(mail.to).to eq(["unconfirmed@email.com"])
         expect(mail.body.encoded).to include(I18n.t("jobseeker_mailer.confirmation_instructions.reconfirmation.heading"))
-        expect(mail.body.encoded).to include(jobseeker_confirmation_path(confirmation_token: token))
+                                 .and include(jobseeker_confirmation_path(confirmation_token: token))
       end
 
       it "triggers a `jobseeker_confirmation_instructions` email event" do
         expect { mail.deliver_now }.to have_triggered_event(:jobseeker_confirmation_instructions)
-          .with_data(expected_data.merge(previous_email_identifier: anonymised_form_of("test@email.com")))
+          .with_data(expected_data).and_data(previous_email_identifier: anonymised_form_of("test@email.com"))
       end
     end
 
@@ -44,7 +66,7 @@ RSpec.describe JobseekerMailer, type: :mailer do
         expect(mail.subject).to eq(I18n.t("jobseeker_mailer.confirmation_instructions.subject"))
         expect(mail.to).to eq(["test@email.com"])
         expect(mail.body.encoded).to include(I18n.t("jobseeker_mailer.confirmation_instructions.heading"))
-        expect(mail.body.encoded).to include(jobseeker_confirmation_path(confirmation_token: token))
+                                 .and include(jobseeker_confirmation_path(confirmation_token: token))
       end
 
       it "triggers a `jobseeker_confirmation_instructions` email event" do
@@ -76,7 +98,7 @@ RSpec.describe JobseekerMailer, type: :mailer do
       expect(mail.subject).to eq(I18n.t("jobseeker_mailer.reset_password_instructions.subject"))
       expect(mail.to).to eq(["test@email.com"])
       expect(mail.body.encoded).to include(I18n.t("jobseeker_mailer.reset_password_instructions.heading"))
-      expect(mail.body.encoded).to include(edit_jobseeker_password_path(reset_password_token: token))
+                               .and include(edit_jobseeker_password_path(reset_password_token: token))
     end
 
     it "triggers a `jobseeker_reset_passwords_instructions` email event" do
@@ -92,7 +114,7 @@ RSpec.describe JobseekerMailer, type: :mailer do
       expect(mail.subject).to eq(I18n.t("jobseeker_mailer.unlock_instructions.subject"))
       expect(mail.to).to eq(["test@email.com"])
       expect(mail.body.encoded).to include(I18n.t("jobseeker_mailer.unlock_instructions.heading"))
-      expect(mail.body.encoded).to include(jobseeker_unlock_path(unlock_token: token))
+                               .and include(jobseeker_unlock_path(unlock_token: token))
     end
 
     it "triggers a `jobseeker_unlock_instructions` email event" do

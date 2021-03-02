@@ -279,6 +279,12 @@ en:
               not_a_number: Enter the year your QTS was awarded
             statutory_induction_complete:
               inclusion: Select yes if you have completed your statutory induction year
+        jobseekers/job_application/review_form:
+          attributes:
+            confirm_data_accurate:
+              accepted: must be accepted / Placeholder for content
+            confirm_data_usage:
+              accepted: must be accepted / Placeholder for content
 
         jobseekers/job_application/details/employment_history_form:
           attributes:
