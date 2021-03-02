@@ -21,8 +21,8 @@
           = render(Shared::BannerLinkComponent.new(icon_class: "apply",
                                                    link_id: "apply-job-application",
                                                    link_method: :get,
-                                                   link_path: new_jobseekers_job_job_application_path(@vacancy.id),
-                                                   link_text: t("jobseekers.job_applications.apply")))
+                                                   link_path: application_link_path,
+                                                   link_text: t("jobseekers.job_applications.banner_links.#{application_link_text}")))
 
       .govuk-grid-column-one-third
         / The "origin" param is used both for the back button on the subsequent page and for performance analysis.
@@ -32,12 +32,13 @@
                                                  link_path: new_subscription_path,
                                                  link_text: t("jobs.alert.similar.terse"),
                                                  params: { search_criteria: @devised_job_alert_search_criteria, origin: request.original_fullpath }))
-      .govuk-grid-column-one-third
-        = render(Shared::BannerLinkComponent.new(icon_class: @saved_job.present? ? "saved" : "save",
-                                                 link_id: "#{@saved_job.present? ? 'saved' : 'save'}-job-listing",
-                                                 link_method: @saved_job.present? ? :delete : :get,
-                                                 link_path: @saved_job.present? ? jobseekers_saved_job_path(@vacancy.id, @saved_job) : new_jobseekers_saved_job_path(@vacancy.id),
-                                                 link_text: t("jobseekers.saved_jobs.#{@saved_job.present? ? 'saved' : 'save'}")))
+      - unless jobseeker_has_applied?
+        .govuk-grid-column-one-third
+          = render(Shared::BannerLinkComponent.new(icon_class: @saved_job.present? ? "saved" : "save",
+                                                  link_id: "#{@saved_job.present? ? 'saved' : 'save'}-job-listing",
+                                                  link_method: @saved_job.present? ? :delete : :get,
+                                                  link_path: @saved_job.present? ? jobseekers_saved_job_path(@vacancy.id, @saved_job) : new_jobseekers_saved_job_path(@vacancy.id),
+                                                  link_text: t("jobseekers.saved_jobs.#{@saved_job.present? ? 'saved' : 'save'}")))
 
 .govuk-grid-row
 

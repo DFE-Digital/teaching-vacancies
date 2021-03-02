@@ -42,6 +42,10 @@ en:
       applying_for_the_role_heading: Applying for the role
       applying_for_the_role_paragraph: Please complete the online application.
       current_step: Step %{current} of %{total}
+      banner_links:
+        apply: Apply for this job
+        draft: Started - continue application
+        submitted: Submitted - view application
       build:
         ask_for_support:
           adjustments: "This could be:"

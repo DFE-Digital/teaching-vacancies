@@ -59,7 +59,7 @@ RSpec.describe "Jobseekers can start a job application" do
 
   def apply_on_vacancy
     visit job_path(vacancy)
-    click_on I18n.t("jobseekers.job_applications.apply")
+    click_on I18n.t("jobseekers.job_applications.banner_links.apply")
   end
 
   def start_application
