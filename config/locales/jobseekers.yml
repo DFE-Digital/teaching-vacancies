@@ -143,8 +143,8 @@ en:
         description:
           closing: >-
             You should read the job description and application pack before beginning your application.
-          opening: >-
-            You can use this form to apply for %{job_title} through Teaching Vacancies. Your application will be sent to
+          opening_html: >-
+            You can use this form to apply for %{job_link} through Teaching Vacancies. Your application will be sent to
             %{organisation_name}.
           requirements: "You will need to provide:"
           requirement_bullets:
@@ -154,6 +154,7 @@ en:
             - two referees
           save_and_return: You can save your application at any point and return to it later.
         heading: Before you start
+        privacy_info: We will store your information so you can use it to quickly apply for other jobs on Teaching Vacancies
         title: Application
       references:
         email_address: Email address
