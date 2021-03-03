@@ -1,4 +1,4 @@
-= render Shared::ReviewComponent.new(id: "references", title: t("jobseekers.job_applications.build.references.title"), edit_link: (jobseekers_job_application_build_path(job_application, :references) if allow_edit)) do
+= render Shared::ReviewComponent.new(id: "references", title: t("jobseekers.job_applications.build.references.heading"), edit_link: (jobseekers_job_application_build_path(job_application, :references) if allow_edit)) do
   = govuk_accordion do |accordion|
     - job_application.references.order(:created_at).each_with_index do |reference, index|
       - accordion.add_section(title: reference.data["name"], html_attributes: { id: "reference_#{index}" }) do
