@@ -1,36 +1,38 @@
 require "rails_helper"
 
 RSpec.describe Shared::CardComponent, type: :component do
-  describe "renders correctly" do
-    let!(:inline_component) do
-      render_inline(described_class.new(id: "cosmic-id", classes: "cosmic-class", html_attributes: { "data-test": "cosmic" })) do |card|
-        card.header_item(value: "no label header value")
-        card.body_item(label: "body title", value: "body value")
-        card.action_item(action: "action")
+  let(:kwargs) { {} }
+
+  subject! { render_inline(described_class.new(**kwargs)) }
+
+  it_behaves_like "a component that accepts custom classes"
+  it_behaves_like "a component that accepts custom HTML attributes"
+
+  context "when header, body and action blocks slots are defined" do
+    subject! do
+      render_inline(described_class.new) do |card|
+        card.header { tag.h2 "Hello" }
+        card.body { tag.p "World!" }
+        card.actions { tag.a "Click this", href: "/test-url" }
       end
     end
 
-    it "adds HTML attributes, classes and id to the component container" do
-      expect(inline_component.css(".card-component[data-test='cosmic']")).to_not be_blank
-      expect(inline_component.css(".card-component.cosmic-class")).to_not be_blank
-      expect(inline_component.css(".card-component#cosmic-id")).to_not be_blank
+    it "renders header" do
+      expect(page).to have_css("dt", class: "card-component__header") do |header|
+        expect(header).to have_css("h2", text: "Hello")
+      end
     end
 
-    it "renders the heading" do
-      expect(inline_component.css(".card-component__header .govuk-list li").text).to eq("no label header value")
-      expect(inline_component.css(".card-component__header .govuk-list li").count).to eq(1)
+    it "renders body" do
+      expect(page).to have_css("dd", class: "card-component__body") do |body|
+        expect(body).to have_css("p", text: "World!")
+      end
     end
 
-    it "renders the body" do
-      expect(inline_component.css(".card-component__body .govuk-list li").text).to include("body value")
-      expect(inline_component.css(".card-component__body .govuk-list li").text).to include("body title")
-      expect(inline_component.css(".card-component__body .govuk-list li .card-component__item-label")).to_not be_blank
-      expect(inline_component.css(".card-component__body .govuk-list li").count).to eq(1)
-    end
-
-    it "renders the actions" do
-      expect(inline_component.css(".card-component__actions .govuk-list li").text).to include("action")
-      expect(inline_component.css(".card-component__actions .govuk-list li").count).to eq(1)
+    it "renders actions" do
+      expect(page).to have_css("dd", class: "card-component__actions") do |actions|
+        expect(actions).to have_css("a[href='/test-url']", text: "Click this")
+      end
     end
   end
 end

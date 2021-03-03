@@ -5,6 +5,10 @@
 
     padding: govuk-spacing(3) 0 0;
 
+    h2 {
+      word-wrap: break-word;
+    }
+
     .filters-information {
       display: block;
 

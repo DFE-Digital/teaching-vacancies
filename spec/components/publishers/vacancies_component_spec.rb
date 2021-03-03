@@ -38,7 +38,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       end
 
       it "renders the number of jobs in the heading" do
-        expect(inline_component.css("h2.govuk-heading-l").text).to include("Published jobs (1)")
+        expect(inline_component.css("h1.govuk-heading-l").text).to include("Published jobs (1)")
       end
 
       it "renders the vacancy job title in the table" do
@@ -74,7 +74,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       end
 
       it "renders the number of jobs in the heading" do
-        expect(inline_component.css("h2.govuk-heading-l").text).to include("Published jobs (1)")
+        expect(inline_component.css("h1.govuk-heading-l").text).to include("Published jobs (1)")
       end
 
       it "renders the vacancy job title in the table" do
@@ -126,7 +126,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       end
 
       it "renders the number of jobs in the heading" do
-        expect(inline_component.css("h2.govuk-heading-l").text).to include("Published jobs (1)")
+        expect(inline_component.css("h1.govuk-heading-l").text).to include("Published jobs (1)")
       end
 
       it "renders the vacancy job title in the table" do

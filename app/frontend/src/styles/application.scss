@@ -18,7 +18,6 @@ $govuk-image-url-function: frontend-image-url;
 
 @import 'application/accordion';
 @import 'application/banners';
-@import 'application/card';
 @import 'application/dashboard';
 @import 'application/form';
 @import 'application/icons';
@@ -49,7 +48,6 @@ $govuk-image-url-function: frontend-image-url;
 @import 'jobseekers/search_results/search_visualizer_component/search_visualizer_component';
 @import 'jobseekers/similar_job_component/similar_job_component';
 
-@import 'application/publishers/awaiting-feedback-vacancies';
 @import 'application/publishers/information-summary';
 @import 'application/publishers/interruption-card';
 @import 'application/publishers/og-preview';

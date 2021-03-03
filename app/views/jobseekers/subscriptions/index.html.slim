@@ -4,20 +4,20 @@
 
 .govuk-grid-row
   .govuk-grid-column-full
-    h2.govuk-heading-l = t(".page_title")
+    h1.govuk-heading-l = t(".page_title")
 
 .govuk-grid-row class="govuk-!-margin-top-0"
   .govuk-grid-column-two-thirds
     - if @subscriptions.any?
-      div class="govuk-!-margin-bottom-0"
-        = form_for @sort_form, as: "", url: jobseekers_subscriptions_path, id: "jobs_sort_form", class: "sort-inline", data: { 'auto-submit': true, "hide-submit": true }, method: :get do |f|
-          = f.govuk_collection_select :sort_column,
-            @sort,
-            :column,
-            :display_name,
-            label: { text: t("jobs.sort_by.label"), size: "s", class: "govuk-label inline govuk-!-margin-right-2" }
+      = form_for @sort_form, as: "", url: jobseekers_subscriptions_path, method: :get, data: { 'auto-submit': true, "hide-submit": true } do |f|
+        = f.govuk_collection_select :sort_column,
+          @sort,
+          :column,
+          :display_name,
+          label: { text: t("jobs.sort_by.label"), size: "s", class: "govuk-label inline govuk-!-margin-right-2" },
+          form_group: { classes: "govuk-!-margin-bottom-2" }
 
-          = f.govuk_submit t("jobs.sort_by.submit")
+        = f.govuk_submit t("jobs.sort_by.submit")
 
   - if @subscriptions.any?
     .govuk-grid-column-one-third.create-alert__button
@@ -30,13 +30,16 @@
         - if @subscriptions.any?
           - @subscriptions.each do |subscription|
             = render Shared::CardComponent.new do |card|
-              - subscription.filtered_search_criteria.each_pair do |filter, value|
-                - card.header_item(label: filter.humanize, value: value)
+              - card.header do
+                - subscription.filtered_search_criteria.each_pair do |filter, value|
+                  = tag.div(card.labelled_item(filter.humanize, value))
 
-              - card.body_item(label: t(".receiving"), value: t(".frequency.#{subscription.frequency}"))
+              - card.body do
+                = tag.div(card.labelled_item(t(".receiving"), t(".frequency.#{subscription.frequency}")))
 
-              - card.action_item(action: govuk_link_to(t(".link_manage"), edit_subscription_path(subscription.token)))
-              - card.action_item(action: govuk_link_to(t(".link_unsubscribe"), unsubscribe_subscription_path(subscription.token)))
+              - card.actions do
+                = tag.div(govuk_link_to(t(".link_manage"), edit_subscription_path(subscription.token)))
+                = tag.div(govuk_link_to(t(".link_unsubscribe"), unsubscribe_subscription_path(subscription.token)))
         - else
           = render(Shared::NotificationComponent.new(content: { title: t(".zero_subscriptions_title"), body: t(".zero_subscriptions_body_html", link_to: govuk_link_to(t(".link_create"), new_subscription_path(email: current_jobseeker.email, origin: jobseekers_subscriptions_path))) }, style: "empty", dismiss: false, background: true, alert: false))
 

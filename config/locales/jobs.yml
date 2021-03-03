@@ -110,7 +110,7 @@ en:
           subscription: date subscribed (most recent)
           vacancy: date drafted (most recent)
       expires_on:
-        ascending: closing date (oldest)
+        ascending: closing date (soonest)
         descending: expired (most recent)
       expires_at:
         ascending:
