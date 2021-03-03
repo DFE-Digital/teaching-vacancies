@@ -1,4 +1,4 @@
-= render Shared::ReviewComponent.new id: "personal_details", title: t("jobseekers.job_applications.build.personal_details.title"), edit_link: (jobseekers_job_application_build_path(job_application, :personal_details) if allow_edit) do
+= render Shared::ReviewComponent.new id: "personal_details", title: t("jobseekers.job_applications.build.personal_details.heading"), edit_link: (jobseekers_job_application_build_path(job_application, :personal_details) if allow_edit) do
   = govuk_summary_list do |component|
     - component.slot(:row,
       key: t("helpers.label.jobseekers_job_application_personal_details_form.first_name"),

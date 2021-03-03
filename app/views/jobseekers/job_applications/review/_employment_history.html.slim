@@ -1,4 +1,4 @@
-= render Shared::ReviewComponent.new(id: "employment_history", title: t("jobseekers.job_applications.build.employment_history.title"), edit_link: (jobseekers_job_application_build_path(job_application, :employment_history) if allow_edit)) do
+= render Shared::ReviewComponent.new(id: "employment_history", title: t("jobseekers.job_applications.build.employment_history.heading"), edit_link: (jobseekers_job_application_build_path(job_application, :employment_history) if allow_edit)) do
   = govuk_accordion do |accordion|
     - job_application.employment_history.order(:created_at).each_with_index do |role, index|
       - accordion.add_section(title: role.data["job_title"], html_attributes: { id: "employment_history_#{index}" }) do
