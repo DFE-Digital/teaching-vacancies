@@ -260,6 +260,7 @@ en:
       index:
         added: Added
         application_deadline: Application deadline
+        apply: Apply for this job
         link_find: Find a teaching job
         page_title: Saved jobs
         deadline_passed: Deadline passed

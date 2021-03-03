@@ -1,36 +1,45 @@
 class Jobseekers::SavedJobsController < Jobseekers::BaseController
-  before_action :set_up_saved_job, only: %i[new destroy]
+  helper_method :saved_jobs, :sort, :sort_form
 
   # This action is not 'create' because we need to redirect here when an unauthenticated jobseeker attempts to save a job
   def new
-    @saved_job.save
-    request_event.trigger(:vacancy_save_to_account_clicked, vacancy_id: @vacancy.id)
-    redirect_to job_path(@vacancy), success: t(".success_html", link: jobseekers_saved_jobs_path)
+    saved_job.save
+    request_event.trigger(:vacancy_save_to_account_clicked, vacancy_id: vacancy.id)
+    redirect_to job_path(vacancy), success: t(".success_html", link: jobseekers_saved_jobs_path)
   end
 
   def destroy
-    @saved_job.destroy
+    saved_job.destroy
     if saved_job_params[:redirect_to_dashboard] == "true"
       redirect_to jobseekers_saved_jobs_path, success: t(".success")
     else
-      redirect_to job_path(@vacancy)
+      redirect_to job_path(vacancy)
     end
   end
 
-  def index
-    @sort = Jobseekers::SavedJobSort.new.update(column: params[:sort_column])
-    @sort_form = SortForm.new(@sort.column)
-    @saved_jobs = current_jobseeker.saved_jobs.includes(:vacancy).order("#{@sort.column} #{@sort.order}")
+  private
+
+  def saved_job
+    @saved_job ||= SavedJob.find_or_initialize_by(jobseeker_id: current_jobseeker.id, vacancy_id: vacancy.id)
   end
 
-  private
+  def saved_jobs
+    @saved_jobs ||= current_jobseeker.saved_jobs.includes(:vacancy).order("#{sort.column} #{sort.order}")
+  end
 
   def saved_job_params
     params.permit(:job_id, :redirect_to_dashboard)
   end
 
-  def set_up_saved_job
-    @vacancy = Vacancy.listed.find(saved_job_params[:job_id])
-    @saved_job = SavedJob.find_or_initialize_by(jobseeker_id: current_jobseeker.id, vacancy_id: @vacancy.id)
+  def sort
+    @sort ||= Jobseekers::SavedJobSort.new.update(column: params[:sort_column])
+  end
+
+  def sort_form
+    @sort_form ||= SortForm.new(@sort.column)
+  end
+
+  def vacancy
+    @vacancy ||= Vacancy.listed.find(saved_job_params[:job_id])
   end
 end
