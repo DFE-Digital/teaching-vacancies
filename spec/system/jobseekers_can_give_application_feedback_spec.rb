@@ -22,7 +22,7 @@ RSpec.describe "Jobseekers can give job application feedback after submitting th
     choose I18n.t("helpers.label.jobseekers_job_application_feedback_form.rating_options.somewhat_satisfied")
     fill_in "jobseekers_job_application_feedback_form[comment]", with: comment
 
-    expect { click_button I18n.t("buttons.submit") }.to have_triggered_event(:feedback_provided)
+    expect { click_on I18n.t("buttons.submit_feedback") }.to have_triggered_event(:feedback_provided)
       .with_base_data(
         user_anonymised_jobseeker_id: StringAnonymiser.new(jobseeker.id).to_s,
       ).and_data(comment: comment,

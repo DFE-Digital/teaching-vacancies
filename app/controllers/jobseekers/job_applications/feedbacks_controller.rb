@@ -1,4 +1,4 @@
-class Jobseekers::JobApplications::FeedbacksController < Jobseekers::JobApplicationsController
+class Jobseekers::JobApplications::FeedbacksController < Jobseekers::BaseController
   include FeedbackEventConcerns
 
   def create
@@ -25,5 +25,9 @@ class Jobseekers::JobApplications::FeedbacksController < Jobseekers::JobApplicat
       feedback_type: "application",
       jobseeker_id: current_jobseeker.id,
     )
+  end
+
+  def job_application
+    @job_application ||= current_jobseeker.job_applications.find(params[:job_application_id])
   end
 end
