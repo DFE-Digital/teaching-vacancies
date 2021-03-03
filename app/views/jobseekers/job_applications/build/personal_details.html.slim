@@ -19,7 +19,7 @@
         = f.govuk_text_field :postcode, width: "one-third"
       = f.govuk_number_field :phone_number, label: { size: "s" }, width: "one-half", aria: { required: true }
       = f.govuk_text_field :teacher_reference_number, label: { size: "s" }, width: "one-half", aria: { required: true }
-      = f.govuk_text_field :national_insurance_number, label: { size: "s" }, width: "one-half", aria: { required: true }
+      = f.govuk_text_field :national_insurance_number, label: { size: "s" }, width: "one-half", form_group: { classes: "optional-field" }
       = f.govuk_submit t("buttons.continue")
       = f.govuk_submit t("buttons.save_as_draft"), secondary: true, classes: "button-link"
 
