@@ -222,7 +222,7 @@ en:
         uploading: Uploading...
         uploaded: Uploaded
       actions:
-        are_you_sure: Are you sure you want to remove '%{filename}'?
+        are_you_sure: Are you sure you want to remove ‘%{filename}’?
         cancel: Cancel
         remove: Remove
         removing: Removing...
@@ -305,7 +305,7 @@ en:
     edit_link: Edit listing
     copy_link: Copy listing
     delete_link: Delete
-    are_you_sure: Are you sure you want to delete the '%{job_title}' job?
+    are_you_sure: Are you sure you want to delete the ‘%{job_title}’ job?
     draft:
       time_created: Date drafted
       time_updated: Date last updated
