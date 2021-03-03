@@ -8,6 +8,18 @@
     h1.govuk-heading-l = t(".heading")
     p.govuk-body = t(".description")
 
+    - if job_application.vacancy.documents.any?
+      = govuk_notification_banner(title: t(".banner_title")) do |banner|
+        / added the following line because we need at least one heading for the component to be rendered
+        - banner.add_heading
+        = t(".banner_description_html", job_link: govuk_link_to(job_application.vacancy.job_title, job_path(job_application.vacancy), target: "_blank"))
+        ul.hide-bullet-points class="govuk-!-padding-0"
+          = render Shared::DocumentLinkComponent.with_collection(job_application.vacancy.documents)
+
+    - if job_application.vacancy.personal_statement_guidance.present?
+      h3.govuk-heading-s = t(".additional_instructions")
+      = govuk_inset_text text: job_application.vacancy.personal_statement_guidance
+
     = form_for @form, url: wizard_path, method: :patch do |f|
       = f.govuk_error_summary
       = f.govuk_text_area :personal_statement, label: { size: "s" }, rows: 15, required: true, aria: { required: true }

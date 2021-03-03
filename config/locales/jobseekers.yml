@@ -85,9 +85,12 @@ en:
           heading: Personal details
           title: Personal details — Application
         personal_statement:
+          additional_instructions: Additional instructions from the school hiring staff
+          banner_title: Job listing and supporting documents
+          banner_description_html: Documents supplied with ‘%{job_link}’ listing that may be of some help with your personal statement.
           description: >-
-            Please explain why you are suitable for this role. You may find it useful to refer specifically to the job
-            description and any other information that has been provided.
+            Please explain why you are suitable for this role. You should refer to the person specification in the job description,
+            and include any relevant personal qualities and experiences.
           heading: Personal statement
           title: Personal statement — Application
         process_title: Application steps
