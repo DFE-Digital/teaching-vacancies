@@ -266,13 +266,15 @@ en:
               blank: Enter your personal statement
         jobseekers/job_application/professional_status_form:
           attributes:
+            no_qualified_teacher_status_details:
+              blank: Explain why you do not have QTS
             qualified_teacher_status:
-              inclusion: Select an option
+              inclusion: Select yes if you have qualified teacher status
             qualified_teacher_status_year:
               less_than_or_equal_to: Enter a valid year
-              not_a_number: Enter a year
+              not_a_number: Enter the year your QTS was awarded
             statutory_induction_complete:
-              inclusion: Select an option
+              inclusion: Select yes if you have completed your statutory induction year
 
         jobseekers/job_application/details/employment_history_form:
           attributes:
