@@ -6,8 +6,8 @@
       = f.govuk_error_summary
 
       h1.govuk-heading-xl = t("terms_and_conditions.page_title")
-      p = t("terms_and_conditions.intro")
-      p = t("terms_and_conditions.intro_link_html", link: govuk_link_to("Terms and Conditions for Schools", page_path("terms-and-conditions")))
+      p = t("terms_and_conditions.intro_html", link: govuk_link_to(t("terms_and_conditions.intro_link_text"), page_path("terms-and-conditions")))
+      p = t("terms_and_conditions.schools_section_html", link: govuk_link_to(t("terms_and_conditions.schools_section_link_text"), page_path("terms-and-conditions", anchor: "terms-and-conditions-for-schools-trusts-and-local-authorities-las")))
       ul.govuk-list.govuk-list--bullet
         - t("terms_and_conditions.summary_list").each do |item|
           li = item

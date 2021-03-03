@@ -2,13 +2,13 @@
   .card-component id=dom_id(vacancy)
     .card-component__content
       dt.card-component__header
-        ul.govuk-list
-          li.govuk-body class="govuk-!-margin-bottom-1" = govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id), class: "view-vacancy-link")
-          - if organisation.is_a?(SchoolGroup)
-            li.govuk-body#vacancy_location class="govuk-!-font-weight-bold" = vacancy.readable_job_location
+        div = govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id))
+        - if organisation.is_a?(SchoolGroup)
+          div = vacancy.readable_job_location
       dd.card-component__body
-        ul.govuk-list
-          li.govuk-body = t("jobs.closing_date_html", date: vacancy.application_deadline)
+        div
+          span class="card-component__item-label govuk-!-font-weight-bold" = t("jobs.closing_date")
+          = vacancy.application_deadline
 
     dd.card-component__body class="vacancy__feedback"
       ul.govuk-list

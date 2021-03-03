@@ -402,13 +402,15 @@ en:
       success: Your job alert has been updated
 
   terms_and_conditions:
-    intro: >-
-      Before listing any role at your school on Teaching Vacancies you must first read our Terms and Conditions and
+    intro_html: >-
+      Before listing any role at your school on Teaching Vacancies you must first read our %{link} and
       agree to abide by them.
-    intro_link_html: 'Of particular importance is the section %{link} which includes:'
+    intro_link_text: Terms and Conditions
+    schools_section_html: 'Of particular importance is the section %{link} which includes:'
+    schools_section_link_text: ‘terms and conditions for schools, trusts and local authorities’
     label: I agree to all of the Terms and Conditions of the Teaching Vacancies service.
     page_title: Terms and Conditions
-    please_accept: Please accept the terms and conditions
+    please_accept: Please accept the Terms and Conditions
     read_html: >-
       Read our <a href='/pages/terms-and-conditions' class='govuk-link' target='blank'>terms and conditions</a>
     summary_list:

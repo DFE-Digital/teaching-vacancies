@@ -31,13 +31,12 @@ RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: tru
       end
     end
 
-    scenario "continously displays the number of vacancies awaiting feedback" do
+    scenario "displays the vacancies awaiting feedback" do
       visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
-      expect(page).to have_selector(job_title_link_selector, count: 3)
-      expect(page).to have_selector(job_title_link_selector, text: vacancy.job_title)
-      expect(page).to have_selector(job_title_link_selector, text: another_vacancy.job_title)
-      expect(page).to have_selector(job_title_link_selector, text: third_vacancy.job_title)
+      expect(page).to have_link(vacancy.job_title, href: organisation_job_path(vacancy.id))
+      expect(page).to have_link(another_vacancy.job_title, href: organisation_job_path(another_vacancy.id))
+      expect(page).to have_link(third_vacancy.job_title, href: organisation_job_path(third_vacancy.id))
 
       submit_feedback_for(vacancy)
       within("div.govuk-notification--notice") do
@@ -119,13 +118,18 @@ RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: tru
     scenario "when all feedback has been submitted" do
       visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
-      expect(page).to have_selector(job_title_link_selector, count: 3)
+      expect(page).to have_link(vacancy.job_title, href: organisation_job_path(vacancy.id))
+      expect(page).to have_link(another_vacancy.job_title, href: organisation_job_path(another_vacancy.id))
+      expect(page).to have_link(third_vacancy.job_title, href: organisation_job_path(third_vacancy.id))
+
       submit_feedback_for(vacancy)
       submit_feedback_for(another_vacancy)
       submit_feedback_for(third_vacancy)
 
-      expect(page).to_not have_content(I18n.t("jobs.awaiting_feedback_intro"))
-      expect(page).to have_selector(job_title_link_selector, count: 0)
+      expect(page).not_to have_content(I18n.t("jobs.awaiting_feedback_intro"))
+      expect(page).not_to have_link(vacancy.job_title, href: organisation_job_path(vacancy.id))
+      expect(page).not_to have_link(another_vacancy.job_title, href: organisation_job_path(another_vacancy.id))
+      expect(page).not_to have_link(third_vacancy.job_title, href: organisation_job_path(third_vacancy.id))
     end
 
     scenario "when adding feedback to an invalid vacancy, it saves the feedback to the model" do

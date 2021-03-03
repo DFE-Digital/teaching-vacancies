@@ -54,7 +54,7 @@ en:
       too_long: Feedback must not be more than 1,200 characters
   jobseekers_job_application_feedback_form: &jobseekers_job_application_feedback_form_errors
     rating:
-      inclusion: Select how satisfied or dissatisfied you are
+      inclusion: Choose how satisfied you are with the application process
     comment:
       too_long: Feedback must not be more than 1,200 characters
   vacancy_publisher_feedback_errors: &vacancy_publisher_feedback_errors
@@ -199,6 +199,10 @@ en:
         publishers/vacancies/vacancy_publisher_feedback_form:
           attributes:
             <<: *vacancy_publisher_feedback_errors
+        publishers/terms_and_conditions_form:
+          attributes:
+            terms:
+              blank: Tick the box to agree to the Terms and Conditions
         # Job application
         jobseekers/job_application/ask_for_support_form:
           attributes:
@@ -245,7 +249,6 @@ en:
             last_name:
               blank: Enter your last name
             national_insurance_number:
-              blank: Enter your National Insurance number
               invalid: Enter a National Insurance number in the correct format
             phone_number:
               blank: Enter your phone number
@@ -293,19 +296,19 @@ en:
         jobseekers/job_application/details/reference_form:
           attributes:
             email_address:
-              blank: Enter the referee's email address
+              blank: Enter your referee's email address
               invalid: Enter an email address in the correct format, like name@example.com
             job_title:
-              blank: Enter the referee's job title
+              blank: Enter your referee's job title
             name:
-              blank: Enter the referee's name
+              blank: Enter the name of your referee
             organisation:
-              blank: Enter the referee's organisation
+              blank: Enter the organisation where your referee works
             phone_number:
-              blank: Enter the referee's email address
-              invalid:  Enter a phone number in the corrent format
+              blank: Enter your referee's phone number
+              invalid:  Enter a phone number in the correct format
             relationship_to_applicant:
-              blank: Enter the referee's relationship to the applicant
+              blank: Enter the referee's relationship to you, for example line manager
   activerecord:
     attributes:
       vacancy/expires_at: Application deadline (time)

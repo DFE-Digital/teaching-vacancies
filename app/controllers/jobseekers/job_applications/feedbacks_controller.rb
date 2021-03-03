@@ -7,7 +7,7 @@ class Jobseekers::JobApplications::FeedbacksController < Jobseekers::JobApplicat
     if @application_feedback_form.valid?
       Feedback.create(feedback_attributes)
       trigger_feedback_provided_event
-      redirect_to jobseeker_root_path, success: t(".success")
+      redirect_to jobseekers_job_applications_path, success: t(".success")
     else
       render :submit
     end

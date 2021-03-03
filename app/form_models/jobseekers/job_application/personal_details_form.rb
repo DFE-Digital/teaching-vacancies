@@ -4,10 +4,10 @@ class Jobseekers::JobApplication::PersonalDetailsForm
   attr_accessor :building_and_street, :first_name, :last_name, :national_insurance_number,
                 :phone_number, :previous_names, :postcode, :teacher_reference_number, :town_or_city
 
-  validates :building_and_street, :first_name, :last_name, :national_insurance_number,
+  validates :building_and_street, :first_name, :last_name,
             :phone_number, :postcode, :teacher_reference_number, :town_or_city, presence: true
 
-  validates :national_insurance_number, format: { with: /\A\s*[a-zA-Z]{2}(?:\s*\d\s*){6}[a-zA-Z]?\s*\z/.freeze }
+  validates :national_insurance_number, format: { with: /\A\s*[a-zA-Z]{2}(?:\s*\d\s*){6}[a-zA-Z]?\s*\z/.freeze }, allow_blank: true
 
   validates :phone_number, format: { with: /\A\+?(?:\d\s?){10,12}\z/.freeze }
 

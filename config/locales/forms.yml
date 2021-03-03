@@ -66,14 +66,16 @@ en:
           information for safeguarding.
       jobseekers_job_application_personal_details_form:
         national_insurance_number: >-
-          It's on your National Insurance card, benefit letter, payslip or P60.
-          For example, ‘QQ 12 34 56 C’.
+          If you have a National Insurance number you should enter it here. It's on your National Insurance card,
+          benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
         phone_number: Please only give a phone number that you are happy to be contacted on.
         previous_names: For example maiden name or name at birth, if different from the name you have now.
       jobseekers_job_application_details_employment_history_form:
         ended_on: For example, 31 08 2014
         main_duties: A very brief summary
         started_on: For example, 31 08 2010
+      jobseekers_job_application_details_reference_form:
+        phone_number: Please only give a phone number that your referee is happy to be contacted on.
       jobseekers_job_application_equal_opportunities_form:
         gender: If the options below do not reflect how you identify, please select ‘Other’.
         ethnicity: If the options below do not reflect how you identify, please select ‘Other’.

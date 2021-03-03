@@ -1,14 +1,17 @@
 - if vacancies.any?
   - vacancies.each do |vacancy|
-    = render Shared::CardComponent.new(id: dom_id(vacancy)) do |card|
-      - card.header_item(value: govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id)))
-      - if organisation.is_a?(SchoolGroup)
-        - card.header_item(value: vacancy.readable_job_location || "")
+    = render Shared::CardComponent.new(html_attributes: { id: dom_id(vacancy) }) do |card|
+      - card.header do
+        = tag.div(govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id)))
+        - if organisation.is_a?(SchoolGroup)
+          = tag.div(vacancy.readable_job_location)
 
-      - card.body_item(label: t("jobs.date_listed"), value: vacancy.publish_on)
-      - card.body_item(label: t("jobs.expired_on"), value: vacancy.application_deadline)
+      - card.body do
+        = tag.div(card.labelled_item(t("jobs.date_listed"), vacancy.publish_on))
+        = tag.div(card.labelled_item(t("jobs.expired_on"), vacancy.application_deadline))
 
-      - card.action_item(action: govuk_link_to(t("jobs.copy_link"), vacancy.copy_path, method: :get))
-      - card.action_item(action: button_to(t("jobs.delete_link"), vacancy.delete_path, method: :delete, data: { confirm: t("jobs.are_you_sure", job_title: vacancy.job_title) }, class: "govuk-delete-link"))
+      - card.actions do
+        = tag.div(govuk_link_to(t("jobs.copy_link"), vacancy.copy_path))
+        = tag.div(button_to(t("jobs.delete_link"), vacancy.delete_path, method: :delete, data: { confirm: t("jobs.are_you_sure", job_title: vacancy.job_title) }, class: "govuk-delete-link"))
 - else
   = render(Shared::NotificationComponent.new(content: { body: t("jobs.no_expired_jobs") }, style: "empty", links: nil, dismiss: false, background: true, alert: false))
