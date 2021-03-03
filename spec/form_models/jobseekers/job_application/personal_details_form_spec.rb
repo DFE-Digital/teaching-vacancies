@@ -8,7 +8,6 @@ RSpec.describe Jobseekers::JobApplication::PersonalDetailsForm, type: :model do
   it { is_expected.to validate_presence_of(:first_name) }
   it { is_expected.to validate_presence_of(:last_name) }
 
-  it { is_expected.to validate_presence_of(:national_insurance_number) }
   it { is_expected.to allow_value("AB 12 12 12 A").for(:national_insurance_number) }
   it { is_expected.not_to allow_value("AB 12 12 12 A 12").for(:national_insurance_number) }
 

@@ -249,7 +249,6 @@ en:
             last_name:
               blank: Enter your last name
             national_insurance_number:
-              blank: Enter your National Insurance number
               invalid: Enter a National Insurance number in the correct format
             phone_number:
               blank: Enter your phone number
