@@ -23,14 +23,14 @@ module Jobseekers::Wizardable
 
   def steps_config
     {
-      personal_details: { number: 1, title: t(".personal_details.title") },
-      professional_status: { number: 3, title: t(".professional_status.title") },
-      employment_history: { number: 4, title: t(".employment_history.title") },
-      personal_statement: { number: 5, title: t(".personal_statement.title") },
-      references: { number: 6, title: t(".references.title") },
-      equal_opportunities: { number: 7, title: t(".equal_opportunities.title") },
-      ask_for_support: { number: 8, title: t(".ask_for_support.title") },
-      declarations: { number: 9, title: t(".declarations.title") },
+      personal_details: { number: 1, title: t(".personal_details.heading") },
+      professional_status: { number: 3, title: t(".professional_status.heading") },
+      employment_history: { number: 4, title: t(".employment_history.heading") },
+      personal_statement: { number: 5, title: t(".personal_statement.heading") },
+      references: { number: 6, title: t(".references.heading") },
+      equal_opportunities: { number: 7, title: t(".equal_opportunities.heading") },
+      ask_for_support: { number: 8, title: t(".ask_for_support.heading") },
+      declarations: { number: 9, title: t(".declarations.heading") },
     }.freeze
   end
 
