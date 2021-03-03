@@ -8,7 +8,7 @@ RSpec.describe "Jobseekers can give account feedback" do
 
     before do
       login_as(jobseeker, scope: :jobseeker)
-      visit jobseekers_saved_jobs_path
+      visit jobseeker_root_path
     end
 
     it "submits account feedback and triggers a RequestEvent" do
@@ -22,7 +22,7 @@ RSpec.describe "Jobseekers can give account feedback" do
           user_anonymised_jobseeker_id: StringAnonymiser.new(jobseeker.id).to_s,
         ).and_data(comment: comment, rating: "somewhat_satisfied", feedback_type: "jobseeker_account")
 
-      expect(current_path).to eq(jobseekers_saved_jobs_path)
+      expect(current_path).to eq(jobseeker_root_path)
       expect(page).to have_content(I18n.t("jobseekers.account_feedbacks.create.success"))
     end
   end

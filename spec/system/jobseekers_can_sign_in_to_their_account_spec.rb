@@ -25,7 +25,7 @@ RSpec.describe "Jobseekers can sign in to their account" do
 
     it "signs in the jobseeker" do
       sign_in_jobseeker(email: email, password: password)
-      expect(current_path).to eq(jobseekers_saved_jobs_path)
+      expect(current_path).to eq(jobseeker_root_path)
       expect(page).to have_content(I18n.t("devise.sessions.signed_in"))
     end
 
@@ -103,7 +103,7 @@ RSpec.describe "Jobseekers can sign in to their account" do
     it "does not sign in the jobseeker, displays error messages, then signs in the jobseeker" do
       sign_in_jobseeker(email: email, password: password)
       sign_in_jobseeker(email: email, password: jobseeker.password)
-      expect(current_path).to eq(jobseekers_saved_jobs_path)
+      expect(current_path).to eq(jobseeker_root_path)
       expect(page).to have_content(I18n.t("devise.sessions.signed_in"))
     end
   end

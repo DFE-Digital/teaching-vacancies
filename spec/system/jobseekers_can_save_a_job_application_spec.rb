@@ -33,7 +33,7 @@ RSpec.describe "Jobseekers can save a job application" do
         "national_insurance_number" => "AB 12 12 12 A",
       },
     )
-    expect(current_path).to eq(jobseekers_saved_jobs_path)
+    expect(current_path).to eq(jobseeker_root_path)
     expect(page).to have_content(I18n.t("messages.jobseekers.job_applications.saved"))
   end
 end
