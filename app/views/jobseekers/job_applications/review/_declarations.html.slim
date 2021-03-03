@@ -6,7 +6,7 @@
       html_attributes: { id: "declarations_banned_or_disqualified" })
 
     - component.slot(:row,
-      key: t("helpers.legend.jobseekers_job_application_declarations_form.close_relationships", organisation: job_application.vacancy.organisation.name),
+      key: t("helpers.legend.jobseekers_job_application_declarations_form.close_relationships", organisation: vacancy.organisation.name),
       value: safe_join([tag.div(job_application.application_data["close_relationships"]&.capitalize, class: "govuk-body"),
                         tag.div(job_application.application_data["close_relationships_details"], class: "govuk-body")]),
       html_attributes: { id: "declarations_close_relationships" })

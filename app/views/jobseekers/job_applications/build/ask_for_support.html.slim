@@ -1,6 +1,6 @@
 - content_for :page_title_prefix, t(".title")
 
-= render(Jobseekers::JobApplications::HeadingComponent.new(vacancy: job_application.vacancy, back_path: back_link_path))
+= render(Jobseekers::JobApplications::HeadingComponent.new(vacancy: vacancy, back_path: back_link_path))
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
@@ -26,4 +26,4 @@
       = f.govuk_submit t("buttons.save_as_draft"), secondary: true, classes: "button-link"
 
   .govuk-grid-column-one-third
-    = render(Shared::ProcessStepsComponent.new(process: job_application.vacancy, service: process_steps, title: t("jobseekers.job_applications.build.process_title")))
+    = render(Shared::ProcessStepsComponent.new(process: vacancy, service: process_steps, title: t("jobseekers.job_applications.build.process_title")))
