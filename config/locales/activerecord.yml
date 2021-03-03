@@ -54,7 +54,7 @@ en:
       too_long: Feedback must not be more than 1,200 characters
   jobseekers_job_application_feedback_form: &jobseekers_job_application_feedback_form_errors
     rating:
-      inclusion: Select how satisfied or dissatisfied you are
+      inclusion: Choose how satisfied you are with the application process
     comment:
       too_long: Feedback must not be more than 1,200 characters
   vacancy_publisher_feedback_errors: &vacancy_publisher_feedback_errors
