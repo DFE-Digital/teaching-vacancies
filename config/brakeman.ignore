@@ -7,7 +7,7 @@
       "check_name": "UnscopedFind",
       "message": "Unscoped call to `EmergencyLoginKey#find`",
       "file": "app/controllers/publishers/sign_in/email/sessions_controller.rb",
-      "line": 69,
+      "line": 70,
       "link": "https://brakemanscanner.org/docs/warning_types/unscoped_find/",
       "code": "EmergencyLoginKey.find(params[:login_key])",
       "render_path": null,
@@ -37,6 +37,26 @@
       "note": ""
     },
     {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "28a605b685b3304875c4e468575bd9fe0660146602c24c3a1a90b74cd349c706",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/jobseekers/saved_jobs_controller.rb",
+      "line": 27,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "current_jobseeker.saved_jobs.includes(:vacancy).order(\"#{sort.column} #{sort.order}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Jobseekers::SavedJobsController",
+        "method": "saved_jobs"
+      },
+      "user_input": "sort.column",
+      "confidence": "Weak",
+      "note": "Sort columns and orders come from an allowed list of values, so SQL injection risk can be ignored"
+    },
+    {
       "warning_type": "Authentication",
       "warning_code": 101,
       "fingerprint": "3fd6c02eaf08f8589806b4e13e635949f395519d1c3c68884f627224aa99a4d8",
@@ -51,26 +71,6 @@
       "user_input": null,
       "confidence": "Medium",
       "note": "Intended behaviour: Only applicable in test enviroment"
-    },
-    {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "5ce23d55916102af9bcd86a011fffa96432b36647ed83e4766956f5e2b32b8e7",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/controllers/jobseekers/saved_jobs_controller.rb",
-      "line": 23,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "current_jobseeker.saved_jobs.includes(:vacancy).order(\"#{Jobseekers::SavedJobSort.new.update(:column => params[:sort_column]).column} #{Jobseekers::SavedJobSort.new.update(:column => params[:sort_column]).order}\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Jobseekers::SavedJobsController",
-        "method": "index"
-      },
-      "user_input": "params[:sort_column]",
-      "confidence": "Medium",
-      "note": "Sorts columns and orders only come from an allowed list of values, so SQL injection risk can be ignored"
     },
     {
       "warning_type": "Unscoped Find",
@@ -113,6 +113,6 @@
       "note": ""
     }
   ],
-  "updated": "2021-02-16 16:04:54 +0000",
+  "updated": "2021-03-03 15:36:12 +0000",
   "brakeman_version": "5.0.0"
 }
