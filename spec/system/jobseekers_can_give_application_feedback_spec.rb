@@ -4,7 +4,7 @@ RSpec.describe "Jobseekers can give job application feedback after submitting th
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: organisation }]) }
   let(:organisation) { create(:school) }
-  let(:job_application) { create(:job_application, :complete, jobseeker: jobseeker, vacancy: vacancy) }
+  let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
   let(:comment) { "I will never use any other website again" }
 
   before do
@@ -29,8 +29,7 @@ RSpec.describe "Jobseekers can give job application feedback after submitting th
                  feedback_type: "application",
                  rating: "somewhat_satisfied")
 
-    # TODO: Update this expectation when the 'my applications' page has been created.
-    expect(current_path).to be_a(String)
+    expect(current_path).to eq(jobseekers_job_applications_path)
 
     expect(page).to have_content(I18n.t("jobseekers.job_applications.feedbacks.create.success"))
   end
