@@ -14,17 +14,17 @@ RSpec.describe "Jobseekers can complete a job application" do
   it "allows jobseekers to complete application and go to review page" do
     visit jobseekers_job_application_build_path(job_application, :personal_details)
 
-    expect(page).to have_content(I18n.t("jobseekers.job_applications.build.personal_details.title"))
+    expect(page).to have_content(I18n.t("jobseekers.job_applications.build.personal_details.heading"))
     validates_step_complete
     fill_in_personal_details
     click_on I18n.t("buttons.continue")
 
-    expect(page).to have_content(I18n.t("jobseekers.job_applications.build.professional_status.title"))
+    expect(page).to have_content(I18n.t("jobseekers.job_applications.build.professional_status.heading"))
     validates_step_complete
     fill_in_professional_status
     click_on I18n.t("buttons.continue")
 
-    expect(page).to have_content(I18n.t("jobseekers.job_applications.build.employment_history.title"))
+    expect(page).to have_content(I18n.t("jobseekers.job_applications.build.employment_history.heading"))
     expect(page).not_to have_content(I18n.t("buttons.continue"))
     click_on I18n.t("buttons.add_role")
     click_on I18n.t("jobseekers.job_applications.details.form.employment_history.save")
@@ -33,12 +33,12 @@ RSpec.describe "Jobseekers can complete a job application" do
     click_on I18n.t("jobseekers.job_applications.details.form.employment_history.save")
     click_on I18n.t("buttons.continue")
 
-    expect(page).to have_content(I18n.t("jobseekers.job_applications.build.personal_statement.title"))
+    expect(page).to have_content(I18n.t("jobseekers.job_applications.build.personal_statement.heading"))
     validates_step_complete
     fill_in_personal_statement
     click_on I18n.t("buttons.continue")
 
-    expect(page).to have_content(I18n.t("jobseekers.job_applications.build.references.title"))
+    expect(page).to have_content(I18n.t("jobseekers.job_applications.build.references.heading"))
     expect(page).not_to have_content(I18n.t("buttons.continue"))
     click_on I18n.t("buttons.add_reference")
     click_on I18n.t("jobseekers.job_applications.details.form.references.save")
@@ -54,12 +54,12 @@ RSpec.describe "Jobseekers can complete a job application" do
     fill_in_equal_opportunities
     click_on I18n.t("buttons.continue")
 
-    expect(page).to have_content(I18n.t("jobseekers.job_applications.build.ask_for_support.title"))
+    expect(page).to have_content(I18n.t("jobseekers.job_applications.build.ask_for_support.heading"))
     validates_step_complete
     fill_in_ask_for_support
     click_on I18n.t("buttons.continue")
 
-    expect(page).to have_content(I18n.t("jobseekers.job_applications.build.declarations.title"))
+    expect(page).to have_content(I18n.t("jobseekers.job_applications.build.declarations.heading"))
     validates_step_complete
     fill_in_declarations
     click_on I18n.t("buttons.continue")
