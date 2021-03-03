@@ -28,21 +28,6 @@ shared:
     foo: 1
     bar: 1
     baz: 1
-  2021_02_cookie_consent_test:
-    none: 1
-    default: 1
-    top: 1
-    bottom: 1
-    modal: 1
-    gds: 1
   2021_02_job_alert_account_creation_test:
     link: 1
     form: 1
-test:
-  2021_02_cookie_consent_test:
-    none: 0
-    default: 1
-    top: 0
-    bottom: 0
-    modal: 0
-    gds: 0
