@@ -74,6 +74,8 @@ en:
         ended_on: For example, 31 08 2014
         main_duties: A very brief summary
         started_on: For example, 31 08 2010
+      jobseekers_job_application_details_reference_form:
+        phone_number: Please only give a phone number that your referee is happy to be contacted on.
       jobseekers_job_application_equal_opportunities_form:
         gender: If the options below do not reflect how you identify, please select ‘Other’.
         ethnicity: If the options below do not reflect how you identify, please select ‘Other’.
