@@ -220,6 +220,10 @@ en:
               blank: Give details about any close relationships with people within the organisation
             right_to_work_in_uk:
               inclusion: Select yes if you have the right to work in the UK
+        jobseekers/job_application/employment_history_form:
+          attributes:
+            gaps_in_employment:
+              inclusion: Select yes if you have had any gaps in employment
         jobseekers/job_application/equal_opportunities_form:
           attributes:
             disability:
@@ -279,21 +283,21 @@ en:
         jobseekers/job_application/details/employment_history_form:
           attributes:
             current_role:
-              inclusion: Select an option
+              inclusion: Select yes if this is your current role
             ended_on:
               before_started_on: End date must be after the start date
-              blank: Enter the end date
+              blank: Enter the date you left this school or organisation
               invalid: Enter a valid end date
             job_title:
-              blank: Enter the job title
+              blank: Enter your job title
             main_duties:
-              blank: Enter your main duties
+              blank: Tell us briefly what your main duties were
             organisation:
-              blank: Enter the school or organisation
+              blank: Enter a school or other organisation
             reason_for_leaving:
-              blank: Enter your reason for leaving
+              blank: Tell us why you left
             started_on:
-              blank: Enter the start date
+              blank: Enter the date you started at this school or organisation
               invalid: Enter a valid start date
         jobseekers/job_application/details/reference_form:
           attributes:

@@ -7,21 +7,24 @@
     .govuk-caption-m = t("jobseekers.job_applications.current_step", current: process_steps.current_step_number, total: 10)
     h1.govuk-heading-l = t(".heading")
 
-    p.govuk-body = t(".description")
+    p.govuk-body = t(".description1")
+    p.govuk-body = t(".description2")
 
-    - if job_application.employment_history.none?
-      = render Shared::NotificationComponent.new(content: { title: t(".no_employment_history"), body: govuk_link_to(t("buttons.add_role"), new_jobseekers_job_application_build_detail_path(job_application, :employment_history), button: true, class: "govuk-!-margin-bottom-0") }, style: "empty", dismiss: false, background: true, alert: false)
+    - if job_application.employment_history.any?
+      = render Jobseekers::JobApplications::DetailComponent.with_collection(job_application.employment_history.order(created_at: :desc), title_attribute: "job_title", info_to_display: employment_history_info)
+      = govuk_link_to t("buttons.add_another_role"), new_jobseekers_job_application_build_detail_path(job_application, :employment_history), button: true, class: "govuk-button--secondary"
     - else
-      = render Jobseekers::JobApplications::DetailComponent.with_collection(job_application.employment_history.order(:created_at), info_to_display: employment_history_info)
-      = govuk_link_to t("buttons.add_role"), new_jobseekers_job_application_build_detail_path(job_application, :employment_history), button: true, class: (job_application.employment_history.count > 1 ? "govuk-button--secondary" : "")
+      = render Shared::NotificationComponent.new(content: { title: t(".no_employment_history"), body: govuk_link_to(t("buttons.add_role"), new_jobseekers_job_application_build_detail_path(job_application, :employment_history), button: true, class: "govuk-button--secondary govuk-!-margin-bottom-0") }, style: "empty", dismiss: false, background: true, alert: false)
 
     = form_for @form, url: wizard_path, method: :patch do |f|
       = f.govuk_error_summary
 
-      = f.govuk_text_area :gaps_in_employment, label: { size: "s" }, rows: 5, form_group: { classes: "optional-field" }
+      = f.govuk_radio_buttons_fieldset :gaps_in_employment do
+        = f.govuk_radio_button :gaps_in_employment, :yes, link_errors: true do
+          = f.govuk_text_area :gaps_in_employment_details, form_group: { classes: "optional-field" }
+        = f.govuk_radio_button :gaps_in_employment, :no
 
-      - if job_application.employment_history.any?
-        = f.govuk_submit t("buttons.continue")
+      = f.govuk_submit t("buttons.continue")
       = f.govuk_submit t("buttons.save_as_draft"), secondary: true, classes: "button-link"
 
   .govuk-grid-column-one-third

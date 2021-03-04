@@ -63,9 +63,12 @@ en:
           heading: Declarations
           title: Declarations – Application
         employment_history:
-          description: >-
-            Tell us about all teaching roles, as well as any other paid or voluntary work you have done that is relevant
-            to your application.
+          description1: >-
+            Tell us about all jobs you have had since you left full-time education. This should include all teaching
+            roles, as well as any other paid or voluntary work you have done that is relevant to your application.
+          description2: >-
+            Schools need a complete picture of your work history, including time out of the workplace, in order to
+            safeguard children.
           heading: Current role and employment history
           no_employment_history: No employment specified
           title: Current role and employment history — Application
@@ -98,33 +101,35 @@ en:
           heading: Professional status
           title: Professional status — Application
         references:
-          heading: References
-          no_children: >-
-            If you do not currently work with children, you must include a referee from the last time you did so.
-          no_references: No referees specified
-          references_required_html: >-
+          description1_html: >-
             <span class='text-red'>Two referees are required</span> for this application. One of these must be your
-            current or most recent employer. If you are shortlisted, we will contact your referee before your interview.
+            current or most recent employer. If you are shortlisted, the school will contact your referees before your
+            interview.
+          description2: >-
+            If you do not currently work with children, but have done so in the past, you must include a referee from
+            the last time you did so.
+          heading: References
+          no_references: No referees specified
           title: References — Application
       details:
         employment_history: Role
         form:
           employment_history:
-            add_another: Add another role
             caption: Current role and employment history
+            heading: Add a role
             save: Save role
-            title: Add a role
+            title: Add a role - Current role and employment history - Application
           references:
-            add_another: Add another referee
             caption: References
-            description: If you are shortlisted, we will contact your referee before interview.
+            description: If you are shortlisted, the school will contact your referee before your interview.
+            heading: Add a referee
             save: Save referee
-            title: Add a referee
+            title: Add a referee - References - Application
         references: Reference
       employment_history:
         current_role: Current role
         ended_on: End date
-        job_title: Job title(s)
+        job_title: Job title
         main_duties: Main duties
         organisation: Organisation
         reason_for_leaving: Reason for leaving
@@ -172,7 +177,7 @@ en:
         title: Application
       references:
         email_address: Email address
-        job_title: Job title(s)
+        job_title: Job title
         name: Name
         organisation: Organisation
         phone_number: Phone number

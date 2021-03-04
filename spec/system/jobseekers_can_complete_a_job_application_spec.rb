@@ -25,12 +25,14 @@ RSpec.describe "Jobseekers can complete a job application" do
     click_on I18n.t("buttons.continue")
 
     expect(page).to have_content(I18n.t("jobseekers.job_applications.build.employment_history.heading"))
-    expect(page).not_to have_content(I18n.t("buttons.continue"))
+    validates_step_complete
     click_on I18n.t("buttons.add_role")
     click_on I18n.t("jobseekers.job_applications.details.form.employment_history.save")
     expect(page).to have_content("There is a problem")
     fill_in_employment_history
     click_on I18n.t("jobseekers.job_applications.details.form.employment_history.save")
+    validates_step_complete
+    choose "No", name: "jobseekers_job_application_employment_history_form[gaps_in_employment]"
     click_on I18n.t("buttons.continue")
 
     expect(page).to have_content(I18n.t("jobseekers.job_applications.build.personal_statement.heading"))
@@ -44,7 +46,8 @@ RSpec.describe "Jobseekers can complete a job application" do
     click_on I18n.t("jobseekers.job_applications.details.form.references.save")
     expect(page).to have_content("There is a problem")
     fill_in_reference
-    click_on I18n.t("jobseekers.job_applications.details.form.references.add_another")
+    click_on I18n.t("jobseekers.job_applications.details.form.references.save")
+    click_on I18n.t("buttons.add_another_reference")
     fill_in_reference
     click_on I18n.t("jobseekers.job_applications.details.form.references.save")
     click_on I18n.t("buttons.continue")

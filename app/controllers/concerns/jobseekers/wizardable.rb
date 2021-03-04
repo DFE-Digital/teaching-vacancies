@@ -47,7 +47,7 @@ module Jobseekers::Wizardable
 
   def employment_history_params(params)
     params.require(:jobseekers_job_application_employment_history_form)
-          .permit(:gaps_in_employment)
+          .permit(:gaps_in_employment, :gaps_in_employment_details)
   end
 
   def personal_statement_params(params)
@@ -78,20 +78,18 @@ module Jobseekers::Wizardable
   def employment_history_info
     @employment_history_info ||= [
       { attribute: "organisation", title: t("jobseekers.job_applications.employment_history.organisation") },
-      { attribute: "job_title", title: t("jobseekers.job_applications.employment_history.job_title") },
       { attribute: "salary", title: t("jobseekers.job_applications.employment_history.salary") },
       { attribute: "subjects", title: t("jobseekers.job_applications.employment_history.subjects") },
-      { attribute: "main_duties", title: t("jobseekers.job_applications.employment_history.main_duties") },
       { attribute: "started_on", title: t("jobseekers.job_applications.employment_history.started_on"), date: true },
       { attribute: "current_role", title: t("jobseekers.job_applications.employment_history.current_role") },
       { attribute: "ended_on", title: t("jobseekers.job_applications.employment_history.ended_on"), date: true },
       { attribute: "reason_for_leaving", title: t("jobseekers.job_applications.employment_history.reason_for_leaving") },
+      { attribute: "main_duties", title: t("jobseekers.job_applications.employment_history.main_duties") },
     ]
   end
 
   def reference_info
     @reference_info ||= [
-      { attribute: "name", title: t("jobseekers.job_applications.references.name") },
       { attribute: "job_title", title: t("jobseekers.job_applications.references.job_title") },
       { attribute: "organisation", title: t("jobseekers.job_applications.references.organisation") },
       { attribute: "relationship_to_applicant", title: t("jobseekers.job_applications.references.relationship_to_applicant") },
