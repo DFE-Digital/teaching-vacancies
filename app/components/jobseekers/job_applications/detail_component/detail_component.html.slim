@@ -1,6 +1,6 @@
 .detail class="govuk-!-margin-bottom-5"
   .detail__title
-    h4.govuk-heading-s class="govuk-!-margin-bottom-0" = "#{t("jobseekers.job_applications.details.#{detail.details_type}")} #{counter}"
+    h4.govuk-heading-s class="govuk-!-margin-bottom-0" = detail.data[title_attribute]
   .detail__content class="govuk-!-padding-3"
     = render GovukComponent::SummaryList.new classes: "govuk-!-margin-bottom-3" do |component|
       - info_to_display.each do |info|

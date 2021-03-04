@@ -17,7 +17,7 @@ RSpec.describe Jobseekers::JobApplications::DetailComponent, type: :component do
   end
 
   let!(:inline_component) do
-    render_inline(described_class.new(detail: detail, detail_counter: 1, info_to_display: info_to_display))
+    render_inline(described_class.new(detail: detail, title_attribute: "name", info_to_display: info_to_display))
   end
 
   it "renders the name" do
@@ -35,8 +35,8 @@ RSpec.describe Jobseekers::JobApplications::DetailComponent, type: :component do
     expect(inline_component.css(".govuk-summary-list__row")[2].to_html).to include(Date.new(2021, 0o1, 0o1).to_s)
   end
 
-  it "renders the heading" do
-    expect(inline_component.css(".govuk-heading-s").to_html).to include("Reference 1")
+  it "renders the title" do
+    expect(inline_component.css(".govuk-heading-s").to_html).to include("John")
   end
 
   it "renders the edit link" do
