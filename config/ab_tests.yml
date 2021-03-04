@@ -28,9 +28,6 @@ shared:
     foo: 1
     bar: 1
     baz: 1
-  2021_02_job_alert_account_creation_test:
-    link: 1
-    form: 1
   2012_02_jobseeker_account_cta_test:
     default: 1
     colour: 1

@@ -24,7 +24,6 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
 
   describe "job alert confirmation page" do
     before do
-      page.set_rack_session(ab_tests: { "2021_02_job_alert_account_creation_test": jobseeker_account_prompt_variant })
       login_as(jobseeker, scope: :jobseeker) if jobseeker_signed_in?
       visit jobs_path
       and_perform_a_search
@@ -46,84 +45,47 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
       end
 
       context "when jobseeker is signed out" do
-        context "when current_variant?(:'2021_02_job_alert_account_creation_test', :link) is true" do
-          let(:jobseeker_account_prompt_variant) { :link }
-
-          it "renders a sign in prompt link that redirects to job alerts dashboard" do
-            within "div[data-account-prompt='sign-in']" do
-              expect(page).to have_content(I18n.t("subscriptions.jobseeker_account_prompt.heading.sign_in"))
-              click_on I18n.t("subscriptions.jobseeker_account_prompt.link.sign_in")
-            end
-            expect(current_path).to eq(new_jobseeker_session_path)
-            sign_in_jobseeker
-            expect(current_path).to eq(jobseekers_subscriptions_path)
-          end
-        end
-
-        context "when current_variant?(:'2021_02_job_alert_account_creation_test', :form) is true" do
-          let(:jobseeker_account_prompt_variant) { :form }
-
-          it "renders a sign in prompt form that redirects to job alerts dashboard" do
-            within "div[data-account-prompt='sign-in']" do
-              expect(page).to have_content(I18n.t("subscriptions.jobseeker_account_prompt.heading.sign_in"))
-              fill_in "Password", with: jobseeker.password
-              within(".edit_jobseeker") do
-                click_on I18n.t("buttons.sign_in")
-              end
-            end
-            expect(current_path).to eq(jobseekers_subscriptions_path)
-          end
-
-          it "renders a sign in prompt form that redirects to sign in page on error then redirects to job alerts dashboard" do
-            within "div[data-account-prompt='sign-in']" do
-              expect(page).to have_content(I18n.t("subscriptions.jobseeker_account_prompt.heading.sign_in"))
+        it "renders a sign in prompt form that redirects to job alerts dashboard" do
+          within "div[data-account-prompt='sign-in']" do
+            expect(page).to have_content(I18n.t("subscriptions.jobseeker_account_prompt.heading.sign_in"))
+            fill_in "Password", with: jobseeker.password
+            within(".edit_jobseeker") do
               click_on I18n.t("buttons.sign_in")
             end
-            sign_in_jobseeker
-            expect(current_path).to eq(jobseekers_subscriptions_path)
           end
+          expect(current_path).to eq(jobseekers_subscriptions_path)
+        end
+
+        it "renders a sign in prompt form that redirects to sign in page on error then redirects to job alerts dashboard" do
+          within "div[data-account-prompt='sign-in']" do
+            expect(page).to have_content(I18n.t("subscriptions.jobseeker_account_prompt.heading.sign_in"))
+            click_on I18n.t("buttons.sign_in")
+          end
+          sign_in_jobseeker
+          expect(current_path).to eq(jobseekers_subscriptions_path)
         end
       end
     end
 
     context "when jobseeker does not have an account" do
-      context "when current_variant?(:'2021_02_job_alert_account_creation_test', :link) is true" do
-        let(:jobseeker_account_prompt_variant) { :link }
-
-        it "renders a create account prompt link that redirects to job alerts dashboard" do
-          within "div[data-account-prompt='sign-up']" do
-            expect(page).to have_content(I18n.t("subscriptions.jobseeker_account_prompt.heading.sign_up"))
-            click_on I18n.t("subscriptions.jobseeker_account_prompt.link.sign_up")
-          end
-          expect(current_path).to eq(new_jobseeker_registration_path)
-          sign_up_jobseeker
-          visit first_link_from_last_mail
-          expect(current_path).to eq(jobseekers_subscriptions_path)
+      it "renders a create an account prompt form that redirects to job alerts dashboard" do
+        within "div[data-account-prompt='sign-up']" do
+          expect(page).to have_content(I18n.t("subscriptions.jobseeker_account_prompt.heading.sign_up"))
+          fill_in "Password", with: jobseeker.password
+          click_on I18n.t("buttons.create_account")
         end
+        visit first_link_from_last_mail
+        expect(current_path).to eq(jobseekers_subscriptions_path)
       end
 
-      context "when current_variant?(:'2021_02_job_alert_account_creation_test', :form) is true" do
-        let(:jobseeker_account_prompt_variant) { :form }
-
-        it "renders a create an account prompt form that redirects to job alerts dashboard" do
-          within "div[data-account-prompt='sign-up']" do
-            expect(page).to have_content(I18n.t("subscriptions.jobseeker_account_prompt.heading.sign_up"))
-            fill_in "Password", with: jobseeker.password
-            click_on I18n.t("buttons.create_account")
-          end
-          visit first_link_from_last_mail
-          expect(current_path).to eq(jobseekers_subscriptions_path)
+      it "renders a create an account prompt form that redirects to sign up page on error then redirects to job alerts dashboard" do
+        within "div[data-account-prompt='sign-up']" do
+          expect(page).to have_content(I18n.t("subscriptions.jobseeker_account_prompt.heading.sign_up"))
+          click_on I18n.t("buttons.create_account")
         end
-
-        it "renders a create an account prompt form that redirects to sign up page on error then redirects to job alerts dashboard" do
-          within "div[data-account-prompt='sign-up']" do
-            expect(page).to have_content(I18n.t("subscriptions.jobseeker_account_prompt.heading.sign_up"))
-            click_on I18n.t("buttons.create_account")
-          end
-          sign_up_jobseeker
-          visit first_link_from_last_mail
-          expect(current_path).to eq(jobseekers_subscriptions_path)
-        end
+        sign_up_jobseeker
+        visit first_link_from_last_mail
+        expect(current_path).to eq(jobseekers_subscriptions_path)
       end
     end
   end

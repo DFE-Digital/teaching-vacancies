@@ -3,36 +3,30 @@
     h1.govuk-heading-l class="govuk-!-margin-bottom-5" = t(".heading.sign_in")
     p.govuk-body = t(".body.sign_in")
 
-    - if current_variant?(:"2021_02_job_alert_account_creation_test", :link)
-      = govuk_link_to t(".link.sign_in"), new_jobseeker_session_path(redirect_to: jobseekers_subscriptions_path), button: true
-    - elsif current_variant?(:"2021_02_job_alert_account_creation_test", :form)
-      = form_for @jobseeker, url: jobseeker_session_path, method: :post do |f|
-        = f.govuk_email_field :email,
-          label: { text: t("helpers.label.jobseekers_sign_in_form.email"), size: "s" },
-          width: "two-thirds",
-          value: @jobseeker.email
+    = form_for @jobseeker, url: jobseeker_session_path, method: :post do |f|
+      = f.govuk_email_field :email,
+        label: { text: t("helpers.label.jobseekers_sign_in_form.email"), size: "s" },
+        width: "two-thirds",
+        value: @jobseeker.email
 
-        = f.govuk_password_field :password, label: { text: t("helpers.label.jobseekers_sign_in_form.password"), size: "s" }, hint: nil, width: "two-thirds"
+      = f.govuk_password_field :password, label: { text: t("helpers.label.jobseekers_sign_in_form.password"), size: "s" }, hint: nil, width: "two-thirds"
 
-        = hidden_field_tag :redirect_to, jobseekers_subscriptions_path
-        = f.govuk_submit t("buttons.sign_in")
+      = hidden_field_tag :redirect_to, jobseekers_subscriptions_path
+      = f.govuk_submit t("buttons.sign_in")
 
 - else
   div data-account-prompt="sign-up"
     h1.govuk-heading-l class="govuk-!-margin-bottom-5" = t(".heading.sign_up")
     p.govuk-body = t(".body.sign_up")
 
-    - if current_variant?(:"2021_02_job_alert_account_creation_test", :link)
-      = govuk_link_to t(".link.sign_up"), new_jobseeker_registration_path(redirect_to: jobseekers_subscriptions_path), button: true
-    - elsif current_variant?(:"2021_02_job_alert_account_creation_test", :form)
-      = form_for Jobseeker.new, as: :jobseeker, url: jobseeker_registration_path, method: :post do |f|
-        = f.govuk_email_field :email,
-          label: { text: t("helpers.label.jobseekers_sign_in_form.email"), size: "s" },
-          width: "two-thirds",
-          value: @subscription.email,
-          readonly: true
+    = form_for Jobseeker.new, as: :jobseeker, url: jobseeker_registration_path, method: :post do |f|
+      = f.govuk_email_field :email,
+        label: { text: t("helpers.label.jobseekers_sign_in_form.email"), size: "s" },
+        width: "two-thirds",
+        value: @subscription.email,
+        readonly: true
 
-        = f.govuk_password_field :password, label: { size: "s" }, width: "two-thirds"
+      = f.govuk_password_field :password, label: { size: "s" }, width: "two-thirds"
 
-        = hidden_field_tag :redirect_to, jobseekers_subscriptions_path
-        = f.govuk_submit t("buttons.create_account"), classes: "govuk-!-margin-bottom-0"
+      = hidden_field_tag :redirect_to, jobseekers_subscriptions_path
+      = f.govuk_submit t("buttons.create_account"), classes: "govuk-!-margin-bottom-0"
