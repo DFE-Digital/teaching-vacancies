@@ -1,41 +1,22 @@
 .jobseeker {
-  &.jobseekers_sessions_new {
+  &[class*='subscriptions_'],
+  &[class*='vacancies_'] {
     .govuk-main-wrapper {
-      > .govuk-width-container {
-        margin-top: govuk-spacing(4);
-      }
+      background-color: govuk-colour('white');
     }
   }
 
-  &.publishers_sessions_new,
-  &.jobseekers_saved_jobs_index,
-  &.jobseekers_subscriptions_index,
-  &.jobseekers_accounts_show,
-  &[class*='jobseekers_job_applications_'] {
+  &.jobseekers_subscriptions_index {
     .govuk-main-wrapper {
-      > .govuk-width-container {
-        margin-top: 0;
-
-        > .govuk-grid-row {
-          margin-top: govuk-spacing(4);
-        }
-      }
-    }
-
-    .govuk-main-wrapper__notification {
       background-color: govuk-colour('light-grey');
     }
+  }
 
-    .moj-filter-layout__content {
-      overflow-x: hidden;
-    }
-
-    .create-alert__button {
-      text-align: right;
-
-      .govuk-button {
-        margin-bottom: 0;
-      }
-    }
+  .create-alert__button {
+    text-align: right;
+  }
+  
+  .moj-filter-layout__content {
+    overflow-x: hidden;
   }
 }

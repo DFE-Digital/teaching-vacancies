@@ -10,6 +10,10 @@ document.addEventListener('click', (e) => {
     dismissibleEl.style.opacity = '0';
 
     dismissibleEl.addEventListener('transitionend', () => {
+      if (dismissibleEl.closest('.govuk-main-wrapper__notification')) {
+        dismissibleEl.closest('.govuk-main-wrapper__notification').remove();
+      }
+
       dismissibleEl.remove();
     });
   }

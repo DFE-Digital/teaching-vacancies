@@ -18,7 +18,7 @@ $govuk-image-url-function: frontend-image-url;
 
 @import 'application/accordion';
 @import 'application/banners';
-@import 'application/dashboard';
+@import 'application/full-width-mast';
 @import 'application/form';
 @import 'application/icons';
 @import 'application/modal';
@@ -65,21 +65,18 @@ body {
   }
 
   .govuk-main-wrapper {
-    @include dashboard;
-  }
+    background-color: govuk-colour('light-grey');
+    margin-bottom: govuk-spacing(6);
+    padding-bottom: 0;
+    padding-top: 0;
 
-  &.vacancies_index,
-  &.vacancies_show,
-  &.home_index {
-    .govuk-main-wrapper {
-      > .govuk-width-container {
-        margin-bottom: govuk-spacing(6);
-        margin-top: 0;
+    .content-wrapper {
+      background-color: govuk-colour('white');
+    }
 
-        > .govuk-grid-row {
-          margin-top: govuk-spacing(4);
-        }
-      }
+    h1,
+    .govuk-heading-xl {
+      margin-top: govuk-spacing(4);
     }
   }
 
@@ -111,8 +108,4 @@ p {
 strong,
 b {
   font-weight: bold;
-}
-
-.govuk-back-link {
-  margin-top: 0;
 }

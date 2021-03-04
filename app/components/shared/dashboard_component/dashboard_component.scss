@@ -1,23 +1,28 @@
 @import 'base_component';
-@import '../../../frontend/src/styles/application/dashboard';
+@import '../../../frontend/src/styles/application/full-width-mast';
 
 .dashboard-component {
-  &__header {
-    @include dashboard;
-    background-color: govuk-colour('light-grey');
+  @include full-width-mast;
+  background-color: govuk-colour('light-grey');
+  padding: govuk-spacing(3) 0 0;
 
-    padding: govuk-spacing(3) 0 0;
+  h2 {
+    word-wrap: break-word;
+  }
 
-    h2 {
-      word-wrap: break-word;
+  &__link {
+    float: right;
+
+    .govuk-button {
+      margin-bottom: 0;
     }
+  }
 
-    .filters-information {
-      display: block;
+  .filters-information {
+    display: block;
 
-      .filters-applied-text {
-        line-height: 2em;
-      }
+    .filters-applied-text {
+      line-height: 2em;
     }
   }
 }
