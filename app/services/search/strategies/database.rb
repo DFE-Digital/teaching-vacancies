@@ -6,7 +6,10 @@ class Search::Strategies::Database
   end
 
   def vacancies
-    @vacancies ||= Vacancy.live.order(@sort_by.column => @sort_by.order).page(@page).per(@per_page)
+    @vacancies ||= Vacancy.live
+                          .includes(:organisations)
+                          .order(@sort_by.column => @sort_by.order)
+                          .page(@page).per(@per_page)
   end
 
   def total_count
