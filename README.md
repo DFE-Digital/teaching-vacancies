@@ -60,7 +60,7 @@ brew install --cask chromedriver
 
 To update
 ```bash
-brew update --cask chromedriver
+brew upgrade --cask chromedriver
 ```
 
 On macOS you might need to "un-quarantine" chromedriver too
