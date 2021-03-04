@@ -4,11 +4,7 @@ class Jobseekers::JobApplications::DetailsController < Jobseekers::BaseControlle
   def create
     if form.valid?
       job_application.job_application_details.create(details_type: build_step, data: detail_params)
-      if params[:commit] == t("jobseekers.job_applications.details.form.#{build_step}.add_another")
-        redirect_to new_jobseekers_job_application_build_detail_path(job_application, build_step)
-      else
-        redirect_to back_link_path
-      end
+      redirect_to back_link_path
     else
       render :new
     end

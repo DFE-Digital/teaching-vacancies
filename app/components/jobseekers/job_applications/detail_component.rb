@@ -1,9 +1,9 @@
 class Jobseekers::JobApplications::DetailComponent < ViewComponent::Base
-  attr_reader :detail, :counter, :info_to_display
+  attr_reader :detail, :title_attribute, :info_to_display
 
-  def initialize(detail:, detail_counter:, info_to_display:)
+  def initialize(detail:, title_attribute:, info_to_display:)
     @detail = detail
-    @counter = detail_counter
+    @title_attribute = title_attribute
     @info_to_display = info_to_display
   end
 

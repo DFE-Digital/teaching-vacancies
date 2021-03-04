@@ -5,9 +5,9 @@
     = govuk_back_link text: t("buttons.back"), href: back_link_path, classes: "govuk-!-margin-bottom-9"
 
     .govuk-caption-l = t(".#{build_step}.caption")
-    h1.govuk-heading-xl = t(".#{build_step}.title")
+    h1.govuk-heading-xl = t(".#{build_step}.heading")
 
-    - if I18n.exists?(".#{build_step}.description")
+    - if I18n.exists?("jobseekers.job_applications.details.form.#{build_step}.description")
       p.govuk-body = t(".#{build_step}.description")
 
     = form_for form, url: url, method: method do |f|
@@ -15,7 +15,6 @@
 
       = render "#{build_step}_fields", f: f
 
-      = f.govuk_submit t(".#{build_step}.save") do
-        = f.govuk_submit t(".#{build_step}.add_another"), secondary: true
+      = f.govuk_submit t(".#{build_step}.save")
 
     = govuk_link_to t("buttons.cancel"), back_link_path

@@ -2,6 +2,8 @@ en:
   buttons:
     accept_all_cookies: Accept all cookies
     accept_and_continue: Accept and continue
+    add_another_reference: Add another referee
+    add_another_role: Add another role
     add_reference: Add a referee
     add_role: Add a role
     apply_filters: Apply filters
@@ -62,8 +64,8 @@ en:
 
       jobseekers_job_application_employment_history_form:
         gaps_in_employment: >-
-          If you have had any gaps in employment of 3 months or longer, please provide further detail. We need this
-          information for safeguarding.
+          Select yes if you have had any gaps in employment since you left full-time education. For example, if you've
+          taken 3 months or more off for parental leave, illness or study.
       jobseekers_job_application_personal_details_form:
         national_insurance_number: >-
           If you have a National Insurance number you should enter it here. It's on your National Insurance card,
@@ -71,9 +73,9 @@ en:
         phone_number: Please only give a phone number that you are happy to be contacted on.
         previous_names: For example maiden name or name at birth, if different from the name you have now.
       jobseekers_job_application_details_employment_history_form:
-        ended_on: For example, 31 08 2014
+        ended_on: For example, 01 01 2020
         main_duties: A very brief summary
-        started_on: For example, 31 08 2010
+        started_on: For example, 01 01 2020
       jobseekers_job_application_details_reference_form:
         phone_number: Please only give a phone number that your referee is happy to be contacted on.
       jobseekers_job_application_equal_opportunities_form:
@@ -215,7 +217,10 @@ en:
           "no": "No"
           "yes": "Yes"
       jobseekers_job_application_employment_history_form:
-        gaps_in_employment: Gaps in your employment
+        gaps_in_employment_details: Please provide details
+        gaps_in_employment_options:
+          "no": "No"
+          "yes": "Yes"
       jobseekers_job_application_equal_opportunities_form:
         disability_options:
           "no": "No"
@@ -284,7 +289,7 @@ en:
         current_role_options:
           "no": "No"
           "yes": "Yes"
-        job_title: Job title(s)
+        job_title: Job title
         main_duties: Main duties
         organisation: School or other organisation
         reason_for_leaving: Reason for leaving
@@ -386,6 +391,8 @@ en:
         close_relationships: >-
           Do you have any family or close relationship with people within %{organisation}?
         right_to_work_in_uk: Do you have the right to work in the UK?
+      jobseekers_job_application_employment_history_form:
+        gaps_in_employment: Have you had any gaps in employment?
       jobseekers_job_application_equal_opportunities_form:
         disability: Do you consider yourself to have a disability as defined by the Equality Act 2010?
         ethnicity: What is your ethnic group?

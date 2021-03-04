@@ -20,7 +20,6 @@ RSpec.describe "Jobseekers can add references to their job application" do
         fill_in_reference
         expect { click_on I18n.t("jobseekers.job_applications.details.form.references.save") }
           .to change { job_application.references.count }.by(1)
-        expect(page).to have_content("Reference 1")
         expect(page).to have_content("Jim Referee")
       end
 
@@ -42,7 +41,7 @@ RSpec.describe "Jobseekers can add references to their job application" do
         it "allows jobseekers to delete references" do
           expect { click_on "Delete" }.to change { job_application.references.count }.by(-1)
           expect(page).to have_content(I18n.t("messages.jobseekers.job_applications.references.deleted"))
-          expect(page).not_to have_content("Reference 1")
+          expect(page).not_to have_content("John")
         end
 
         it "allows jobseekers to edit references" do

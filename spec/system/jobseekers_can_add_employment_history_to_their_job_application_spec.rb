@@ -20,7 +20,6 @@ RSpec.describe "Jobseekers can add employment history to their job application" 
         fill_in_current_role
         expect { click_on I18n.t("jobseekers.job_applications.details.form.employment_history.save") }
           .to change { job_application.employment_history.count }.by(1)
-        expect(page).to have_content("Role 1")
         expect(page).to have_content("The Best Teacher")
       end
 
@@ -31,16 +30,17 @@ RSpec.describe "Jobseekers can add employment history to their job application" 
         fill_in_employment_history
         expect { click_on I18n.t("jobseekers.job_applications.details.form.employment_history.save") }
           .to change { job_application.employment_history.count }.by(1)
-        expect(page).to have_content("Role 1")
         expect(page).to have_content("The Best Teacher")
         expect(page).to have_content(Date.new(2020, 0o7, 30).to_s)
       end
 
       it "allows jobseekers to add gaps in employment" do
         visit jobseekers_job_application_build_path(job_application, :employment_history)
-        fill_in "Gaps in your employment", with: "Some details about gaps in employment"
+        choose "Yes", name: "jobseekers_job_application_employment_history_form[gaps_in_employment]"
+        fill_in "jobseekers_job_application_employment_history_form[gaps_in_employment_details]", with: "Some details about gaps in employment"
         click_on I18n.t("buttons.save_as_draft")
-        expect(job_application.reload.application_data["gaps_in_employment"]).to eq("Some details about gaps in employment")
+        expect(job_application.reload.application_data["gaps_in_employment"]).to eq("yes")
+        expect(job_application.reload.application_data["gaps_in_employment_details"]).to eq("Some details about gaps in employment")
       end
 
       context "when there is at least one role" do
@@ -62,7 +62,7 @@ RSpec.describe "Jobseekers can add employment history to their job application" 
         it "allows jobseekers to delete employment history" do
           expect { click_on "Delete" }.to change { job_application.employment_history.count }.by(-1)
           expect(page).to have_content(I18n.t("messages.jobseekers.job_applications.employment_history.deleted"))
-          expect(page).not_to have_content("Role 1")
+          expect(page).not_to have_content("Teacher")
         end
 
         it "allows jobseekers to edit employment history" do
