@@ -31,7 +31,7 @@ en:
           draft_html: >-
             You have already started an application for %{job_title}.
             <a href="%{link}" class="govuk-link">Continue application</a>
-          submitted: You have applied for %{job_title}
+          submitted: You have already applied for %{job_title}.
         employment_history:
           deleted: Your employment history was deleted
         references:
