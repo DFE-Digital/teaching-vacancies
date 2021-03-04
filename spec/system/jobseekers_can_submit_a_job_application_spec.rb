@@ -23,15 +23,15 @@ RSpec.describe "Jobseekers can submit a job application" do
 
       check "Confirm data accurate"
       check "Confirm data usage"
+
       expect { perform_enqueued_jobs { click_on I18n.t("buttons.submit_application") } }
         .to change { JobApplication.first.status }.from("draft").to("submitted")
         .and change { delivered_emails.count }.by(1)
 
       expect(page).to have_content(I18n.t("jobseekers.job_applications.submit.panel.title"))
 
-      # TODO: expect that the first link goes to the view your application path, once that page has been created
-      # visit first_link_from_last_mail
-      # expect(current_path).to eq()
+      visit first_link_from_last_mail
+      expect(current_path).to eq(jobseekers_job_applications_path)
     end
   end
 

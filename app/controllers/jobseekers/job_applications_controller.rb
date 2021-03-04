@@ -17,7 +17,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
     if params[:commit] == t("buttons.save_as_draft")
       redirect_to jobseeker_root_path, notice: "Application saved as draft"
     elsif review_form.valid?
-      job_application.update(status: :submitted)
+      job_application.update(status: :submitted, submitted_at: Time.zone.now)
       JobseekerMailer.application_submitted(job_application).deliver_later
       @application_feedback_form = Jobseekers::JobApplication::FeedbackForm.new
     else

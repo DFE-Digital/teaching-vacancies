@@ -8,7 +8,7 @@ class JobseekerMailer < ApplicationMailer
     @contact_email = @vacancy.contact_email
     @jobseeker = job_application.jobseeker
 
-    @template = NOTIFY_APPLICATION_SUBMITTED_CONFIRMATION_TEMPLATE
+    @template = NOTIFY_JOBSEEKER_APPLICATION_SUBMITTED_CONFIRMATION_TEMPLATE
     @to = job_application.jobseeker.email
 
     view_mail(@template, to: @to, subject: I18n.t("jobseeker_mailer.application_submitted.subject"))

@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe RemoveInvalidSubscriptionsJob, type: :job do
-  include ActiveJob::TestHelper
-
   subject(:job) { described_class.perform_later }
 
   before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(disable_expensive_jobs_enabled?) }

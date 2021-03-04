@@ -2,8 +2,6 @@ require "rails_helper"
 require "update_dsi_users_in_db_job"
 
 RSpec.describe UpdateDsiUsersInDbJob, type: :job do
-  include ActiveJob::TestHelper
-
   subject(:job) { described_class.perform_later }
 
   it "executes perform" do

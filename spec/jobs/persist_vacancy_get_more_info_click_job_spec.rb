@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe PersistVacancyGetMoreInfoClickJob, type: :job do
-  include ActiveJob::TestHelper
-
   subject(:job) { described_class.perform_later(vacancy.id) }
 
   let(:vacancy) { create(:vacancy, total_get_more_info_clicks: 66) }

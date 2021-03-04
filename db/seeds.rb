@@ -21,7 +21,7 @@ school_one = FactoryBot.create(:school,
                                readable_phases: %w[secondary],
                                detailed_school_type: "Academy sponsor led",
                                school_type: "Academy",
-                               gias_data: { 'ReligiousCharacter (name)': "None" })
+                               gias_data: { "ReligiousCharacter (name)": "None" })
 
 school_two = FactoryBot.create(:school,
                                name: "Upton Cross ACE Academy",
@@ -41,7 +41,7 @@ school_two = FactoryBot.create(:school,
                                readable_phases: %w[primary],
                                detailed_school_type: "Academy converter",
                                school_type: "Academy",
-                               gias_data: { 'ReligiousCharacter (name)': "None" })
+                               gias_data: { "ReligiousCharacter (name)": "None" })
 
 # A second school at the local authority to enable seeding a vacancy at multiple schools.
 school_three = FactoryBot.create(:school,

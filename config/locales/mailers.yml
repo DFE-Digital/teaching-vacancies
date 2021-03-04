@@ -44,7 +44,7 @@ en:
         description: >-
           You can %{link} on your account. If you are shortlisted for an interview, %{organisation_name} will be in
           touch to let you know.
-        link_text: view your application (TODO - update this link to point to the right place once that page has been created)
+        link_text: view your application
       search:
         intro: Search and apply for more teaching jobs on Teaching Vacancies
         link_text: Go to Teaching Vacancies

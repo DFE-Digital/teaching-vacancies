@@ -20,7 +20,7 @@ RSpec.describe JobseekerMailer, type: :mailer do
     let(:contact_email) { vacancy.contact_email }
     let(:job_application) { build(:job_application, :complete, jobseeker: jobseeker, vacancy: vacancy) }
     let(:mail) { described_class.application_submitted(job_application) }
-    let(:notify_template) { NOTIFY_APPLICATION_SUBMITTED_CONFIRMATION_TEMPLATE }
+    let(:notify_template) { NOTIFY_JOBSEEKER_APPLICATION_SUBMITTED_CONFIRMATION_TEMPLATE }
 
     it "sends a `jobseeker_application_submitted` email" do
       expect(mail.subject).to eq(I18n.t("jobseeker_mailer.application_submitted.subject"))

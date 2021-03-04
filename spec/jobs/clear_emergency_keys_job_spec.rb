@@ -2,8 +2,6 @@ require "rails_helper"
 require "clear_emergency_login_keys_job"
 
 RSpec.describe ClearEmergencyLoginKeysJob, type: :job do
-  include ActiveJob::TestHelper
-
   subject(:job) { described_class.perform_later }
 
   it "deletes all EmergencyLoginKeys" do
