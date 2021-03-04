@@ -42,7 +42,8 @@ module Jobseekers::Wizardable
 
   def professional_status_params(params)
     params.require(:jobseekers_job_application_professional_status_form)
-          .permit(:qualified_teacher_status, :qualified_teacher_status_year, :statutory_induction_complete)
+          .permit(:qualified_teacher_status, :qualified_teacher_status_year,
+                  :no_qualified_teacher_status_details, :statutory_induction_complete)
   end
 
   def employment_history_params(params)
