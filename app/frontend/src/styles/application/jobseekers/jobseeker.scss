@@ -7,7 +7,7 @@
     }
   }
 
-  &.publishers_identifications_new,
+  &.publishers_sessions_new,
   &.jobseekers_saved_jobs_index,
   &.jobseekers_subscriptions_index,
   &.jobseekers_accounts_show,
@@ -21,7 +21,7 @@
         }
       }
     }
-    
+
     .govuk-main-wrapper__notification {
       background-color: govuk-colour('light-grey');
     }

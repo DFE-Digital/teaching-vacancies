@@ -8,7 +8,8 @@ module AuthHelpers
       page.set_rack_session(organisation_urn: "", organisation_uid: "", organisation_la_code: la_code)
     end
     page.set_rack_session(publisher_oid: oid)
-    create(:publisher, oid: oid, email: email, last_activity_at: Time.current)
+    publisher = create(:publisher, oid: oid, email: email, last_activity_at: Time.current)
+    login_as(publisher, scope: :publisher)
   end
 
   def stub_authentication_step(organisation_id: "939eac36-0777-48c2-9c2c-b87c948a9ee0",
@@ -93,15 +94,8 @@ module AuthHelpers
   end
 
   def sign_in_publisher
-    visit new_identifications_path
+    visit new_publisher_session_path
     within("form.publisher-sign-in") { click_on I18n.t("buttons.sign_in") }
-  end
-
-  def sign_out_via_dsi
-    # A request to logout is sent to DfE Sign-in system. On success DSI comes back at auth_dfe_signout_path
-    expect(current_url).to include "#{ENV['DFE_SIGN_IN_ISSUER']}/session/end"
-    expect(current_url).to include CGI.escape(auth_dfe_signout_url)
-    visit auth_dfe_signout_path
   end
 
   def stub_accepted_terms_and_conditions

@@ -1,6 +1,6 @@
 en:
   publishers:
-    identifications:
+    sessions:
       new:
         assistance:
           content_html: "%{link} to your account to search for and save jobs"

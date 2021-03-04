@@ -22,6 +22,7 @@ module Publishers::AuthenticationConcerns
       publisher_multiple_organisations
       publisher_oid
     ].each { |key| session.delete(key) }
+    sign_out(:publisher)
   end
 
   def current_publisher_oid

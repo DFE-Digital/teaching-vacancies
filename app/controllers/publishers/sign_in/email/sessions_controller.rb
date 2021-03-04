@@ -1,20 +1,14 @@
-class Publishers::SignIn::Email::SessionsController < Publishers::SignIn::BaseSessionsController
+class Publishers::SignIn::Email::SessionsController < Publishers::BaseController
   EMERGENCY_LOGIN_KEY_DURATION = 10.minutes
 
-  skip_before_action :check_session
+  skip_before_action :authenticate_publisher!
   skip_before_action :check_terms_and_conditions
-
-  before_action :redirect_signed_in_publishers,
-                only: %i[new create check_your_email choose_organisation]
-  before_action :redirect_for_dsi_authentication,
-                only: %i[new create check_your_email change_organisation choose_organisation]
+  before_action :redirect_signed_in_publishers, only: %i[new create check_your_email choose_organisation]
+  before_action :redirect_for_dsi_authentication, only: %i[new create check_your_email change_organisation choose_organisation]
   before_action :redirect_unauthorised_publishers, only: %i[create]
-
-  def new; end
 
   def create
     session.update(organisation_urn: params[:urn], organisation_uid: params[:uid], organisation_la_code: params[:la_code])
-    Rails.logger.info(updated_session_details)
     trigger_sign_in_event(:success, :email)
     redirect_to organisation_path
   end
@@ -54,8 +48,22 @@ class Publishers::SignIn::Email::SessionsController < Publishers::SignIn::BaseSe
 
   private
 
+  def end_session_and_redirect
+    flash_message = if session[:publisher_signing_out_for_inactivity]
+                      { notice: t("messages.access.publisher_signed_out_for_inactivity", duration: timeout_period_as_string) }
+                    else
+                      { success: t("messages.access.publisher_signed_out") }
+                    end
+    clear_publisher_session!
+    redirect_to root_path, flash_message
+  end
+
   def update_session_except_org_id(options)
     return unless options[:oid]
+
+    publisher = Publisher.find_by(oid: options[:oid])
+    sign_in(publisher)
+    sign_out(:jobseeker)
 
     session.update(
       publisher_oid: options[:oid],
@@ -85,7 +93,7 @@ class Publishers::SignIn::Email::SessionsController < Publishers::SignIn::BaseSe
   end
 
   def redirect_for_dsi_authentication
-    redirect_to new_identifications_path unless AuthenticationFallback.enabled?
+    redirect_to new_publisher_session_path unless AuthenticationFallback.enabled?
   end
 
   def redirect_unauthorised_publishers
@@ -116,5 +124,18 @@ class Publishers::SignIn::Email::SessionsController < Publishers::SignIn::BaseSe
     return true unless Rails.configuration.enforce_local_authority_allowlist
 
     Rails.configuration.allowed_local_authorities.include?(params[:la_code])
+  end
+
+  def clear_publisher_session!
+    Publishers::SessionsController::PUBLISHER_SESSION_KEYS.each { |key| session.delete(key) }
+  end
+
+  def trigger_sign_in_event(success_or_failure, sign_in_type, publisher_oid = nil)
+    request_event.trigger(
+      :publisher_sign_in_attempt,
+      user_anonymised_publisher_id: StringAnonymiser.new(publisher_oid),
+      success: success_or_failure == :success,
+      sign_in_type: sign_in_type,
+    )
   end
 end

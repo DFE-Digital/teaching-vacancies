@@ -93,7 +93,8 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
           click_on(I18n.t("nav.sign_out"))
 
           within(".govuk-header__navigation") { expect(page).to have_content(I18n.t("nav.for_schools")) }
-          expect(page).to have_content(I18n.t("messages.access.publisher_signed_out"))
+
+          expect(page).to have_content(I18n.t("devise.sessions.signed_out"))
 
           # Login link no longer works
           visit auth_email_choose_organisation_path(login_key: login_key.id)
@@ -103,7 +104,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
       end
 
       it "cannot sign in if key has expired" do
-        visit new_identifications_path
+        visit new_auth_email_path
         fill_in "publisher[email]", with: publisher.email
         expect(message_delivery).to receive(:deliver_later)
         click_on "commit"
