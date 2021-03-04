@@ -54,6 +54,12 @@ Rails.application.configure do
 
   # Use test geocoder lookup, unless otherwise specified
   config.geocoder_lookup = :test
+
+  # Bullet gem configuration
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.raise = true
+  end
 end
 
 # Avoid OmniAuth output in tests:
