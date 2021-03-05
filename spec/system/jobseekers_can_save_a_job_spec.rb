@@ -40,7 +40,6 @@ RSpec.describe "Jobseekers can save a job" do
       context "when the job is not already saved" do
         it "saves the job after signing in" do
           save_job
-          expect(page).to have_content(I18n.t("messages.jobseekers.saved_jobs.unauthenticated"))
           sign_in_jobseeker
           and_the_job_is_saved
         end
@@ -53,7 +52,6 @@ RSpec.describe "Jobseekers can save a job" do
 
         it "does nothing after signing in" do
           save_job
-          expect(page).to have_content(I18n.t("messages.jobseekers.saved_jobs.unauthenticated"))
           sign_in_jobseeker
           and_the_job_is_saved
         end
@@ -66,7 +64,6 @@ RSpec.describe "Jobseekers can save a job" do
 
     it "saves the job after signing up" do
       save_job
-      expect(page).to have_content(I18n.t("messages.jobseekers.saved_jobs.unauthenticated"))
       click_on I18n.t("jobseekers.sessions.new.no_account.link")
       sign_up_jobseeker
       visit first_link_from_last_mail

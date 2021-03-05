@@ -11,7 +11,7 @@ en:
       locked: You have been locked out of your account because you have made too many attempts to log in.
       last_attempt: You have one more attempt before your account is locked.
       not_found_in_database: We did not recognise your sign-in details
-      unauthenticated: You need to sign in or sign up before continuing.
+      unauthenticated: You need to sign in or create an account before continuing.
       unconfirmed: You have to confirm your email address before continuing.
     mailer:
       confirmation_instructions:

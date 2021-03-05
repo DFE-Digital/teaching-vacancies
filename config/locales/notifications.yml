@@ -37,8 +37,6 @@ en:
         references:
           deleted: Your reference was deleted
         saved: Your job application was saved
-      saved_jobs:
-        unauthenticated: Sign in or create an account to save this job
     subscriptions:
       created: Email subscription created successfully.
 
