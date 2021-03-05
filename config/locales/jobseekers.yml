@@ -212,6 +212,15 @@ en:
           body: We have sent an email confirmation to %{email}
           title: Your application has been submitted
         title: Application submitted – Application
+      confirm_destroy:
+        title: Delete draft
+        heading: Delete draft
+        confirmation_heading: Are you sure you want to delete your draft application?
+        confirmation_details: |
+          Your draft application will be permanently deleted. After this if you want to apply
+          for this job you will need to start a new application.
+        confirm: Delete draft
+        cancel: Keep draft
     passwords:
       check_your_email_password:
         description: We have sent you an email with instructions on how to reset your password.
