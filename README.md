@@ -69,8 +69,6 @@ which chromedriver
 xattr -d com.apple.quarantine /path/to/chromedriver
 ```
 
-If this has no effect, you may need to try another path, for example: `/usr/local/bin/chromedriver`
-
 ### AWS credentials, MFA, and role profiles
 
 When onboarded, you will be provided with an AWS user. You can use it to access the AWS console at:
