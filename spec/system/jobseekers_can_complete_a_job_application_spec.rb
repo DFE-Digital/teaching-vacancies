@@ -4,15 +4,17 @@ RSpec.describe "Jobseekers can complete a job application" do
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: organisation }]) }
   let(:organisation) { create(:school) }
-  let(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
   before do
     allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true)
     login_as(jobseeker, scope: :jobseeker)
   end
 
-  it "allows jobseekers to complete application and go to review page" do
-    visit jobseekers_job_application_build_path(job_application, :personal_details)
+  it "allows jobseekers to complete an application and go to review page" do
+    visit job_path(vacancy)
+
+    click_on I18n.t("jobseekers.job_applications.apply")
+    click_on I18n.t("buttons.start_application")
 
     expect(page).to have_content(I18n.t("jobseekers.job_applications.build.personal_details.heading"))
     validates_step_complete
@@ -67,7 +69,51 @@ RSpec.describe "Jobseekers can complete a job application" do
     fill_in_declarations
     click_on I18n.t("buttons.continue")
 
-    expect(current_path).to eq(jobseekers_job_application_review_path(job_application))
+    expect(current_path).to eq(jobseekers_job_application_review_path(jobseeker.job_applications.last))
+  end
+
+  context "when the listing expires during the application process" do
+    context "when the controller is the BuildController" do
+      it "redirects to the expiry page" do
+        visit new_jobseekers_job_job_application_path(vacancy.id)
+
+        click_on I18n.t("buttons.start_application")
+        fill_in_personal_details
+
+        redirects_to_expired_page
+      end
+    end
+
+    context "when the controller is the DetailsController" do
+      let(:job_application) do
+        create(:job_application,
+               completed_steps: %i[personal_details professional_status],
+               jobseeker: jobseeker,
+               vacancy: vacancy)
+      end
+
+      it "redirects to the expiry page" do
+        visit jobseekers_job_application_build_path(job_application, :employment_history)
+        redirects_to_expired_page
+      end
+    end
+
+    context "when the controller is the JobApplicationsController" do
+      context "when the next step is the review step" do
+        let(:job_application) do
+          create(:job_application,
+                 completed_steps: JobApplication.completed_steps.keys.without(:declarations),
+                 jobseeker: jobseeker,
+                 vacancy: vacancy)
+        end
+
+        it "redirects to the expiry page" do
+          visit jobseekers_job_application_build_path(job_application, :declarations)
+
+          redirects_to_expired_page
+        end
+      end
+    end
   end
 
   def validates_step_complete

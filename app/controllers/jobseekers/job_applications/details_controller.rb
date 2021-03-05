@@ -1,6 +1,8 @@
 class Jobseekers::JobApplications::DetailsController < Jobseekers::BaseController
   helper_method :back_link_path, :build_step, :detail, :form, :job_application
 
+  before_action :redirect_if_vacancy_has_expired, only: %i[create update destroy]
+
   def create
     if form.valid?
       job_application.job_application_details.create(details_type: build_step, data: detail_params)
@@ -79,5 +81,9 @@ class Jobseekers::JobApplications::DetailsController < Jobseekers::BaseControlle
   def reference_params
     params.require(:jobseekers_job_application_details_reference_form)
           .permit(:name, :job_title, :organisation, :relationship_to_applicant, :email_address, :phone_number)
+  end
+
+  def vacancy
+    @vacancy ||= job_application.vacancy
   end
 end

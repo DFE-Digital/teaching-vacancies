@@ -58,10 +58,10 @@ en:
             When you are attending an interview, you might benefit from extra support if you're disabled have a mental
             health condition or educational needs. You can ask for the support that you need now. The school can then
             make adjustments so you can attend an interview.
-          title: Ask for support if you have a disability – Application
+          title: Ask for support if you have a disability — Application
         declarations:
           heading: Declarations
-          title: Declarations – Application
+          title: Declarations — Application
         employment_history:
           description1: >-
             Tell us about all jobs you have had since you left full-time education. This should include all teaching
@@ -136,6 +136,12 @@ en:
         salary: Salary scale or level
         subjects: Subjects and key stages taught
         started_on: Start date
+      expired:
+        deadline: The deadline was %{deadline}.
+        heading: You have missed the application deadline
+        prompt: >-
+          View your account to apply for other jobs you have saved, or to complete any applications you have started.
+        title: Missed application deadline
       feedbacks:
         create:
           success: Thank you for your feedback
@@ -173,7 +179,7 @@ en:
             - two referees
           save_and_return: You can save your application at any point and return to it later.
         heading: Before you start
-        privacy_info: We will store your information so you can use it to quickly apply for other jobs on Teaching Vacancies
+        privacy_info: We will store your information so you can use it to quickly apply for other jobs on Teaching Vacancies.
         title: Application
       references:
         email_address: Email address
@@ -183,8 +189,8 @@ en:
         phone_number: Phone number
         relationship_to_applicant: Relationship to applicant
       review:
-        heading: Review your application – Application
-        title: Review your application
+        heading: Review your application
+        title: Review your application — Application
       show:
         assistance:
           heading: Timeline

@@ -1,7 +1,8 @@
 class Jobseekers::JobApplicationsController < Jobseekers::BaseController
-  helper_method :job_application, :review_form, :vacancy
-
   before_action :redirect_if_job_application_exists, only: %i[new create]
+  before_action :redirect_if_vacancy_has_expired, only: %i[new create review submit]
+
+  helper_method :job_application, :review_form, :vacancy
 
   def new
     request_event.trigger(:vacancy_apply_clicked, vacancy_id: vacancy.id)
@@ -66,7 +67,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
 
   def vacancy
     @vacancy ||= if params[:job_id].present?
-                   Vacancy.live.find(params[:job_id])
+                   Vacancy.find(params[:job_id])
                  else
                    job_application.vacancy
                  end

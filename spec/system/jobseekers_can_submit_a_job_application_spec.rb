@@ -10,14 +10,13 @@ RSpec.describe "Jobseekers can submit a job application" do
   before do
     allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true)
     login_as(jobseeker, scope: :jobseeker)
+    visit jobseekers_job_application_review_path(job_application)
   end
 
   context "when the application is complete" do
     let(:job_application) { create(:job_application, :complete, jobseeker: jobseeker, vacancy: vacancy) }
 
     it "allows jobseekers to submit application and receive confirmation email" do
-      visit jobseekers_job_application_review_path(job_application)
-
       click_on I18n.t("buttons.submit_application")
       expect(page).to have_content("There is a problem")
 
@@ -39,8 +38,6 @@ RSpec.describe "Jobseekers can submit a job application" do
     let(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
     it "does not allow jobseekers to submit application and go to confirmation page" do
-      visit jobseekers_job_application_review_path(job_application)
-
       check "Confirm data accurate"
       check "Confirm data usage"
 
@@ -51,13 +48,19 @@ RSpec.describe "Jobseekers can submit a job application" do
     end
 
     it "allows jobseekers to save application and go to dashboard" do
-      visit jobseekers_job_application_review_path(job_application)
-
       click_on I18n.t("buttons.save_as_draft")
 
       expect(JobApplication.first.status).to eq("draft")
       expect(page).to have_content("Application saved as draft")
       expect(current_path).to eq(jobseeker_root_path)
+    end
+  end
+
+  context "when the job listing is expired" do
+    let(:job_application) { create(:job_application, :complete, jobseeker: jobseeker, vacancy: vacancy) }
+
+    it "redirects to the correct page" do
+      redirects_to_expired_page(button: I18n.t("buttons.submit_application"))
     end
   end
 end
