@@ -12,7 +12,7 @@ class Search::Strategies::Algolia
   end
 
   def vacancies
-    @vacancies ||= Vacancy.includes(organisation_vacancies: :organisation).search(@keyword, search_arguments)
+    @vacancies ||= Vacancy.includes(:organisations).search(@keyword, search_arguments)
   rescue Algolia::AlgoliaProtocolError => e
     Rollbar.error("Algolia search error", details: e, search_arguments: search_arguments)
     @vacancies = Vacancy.none

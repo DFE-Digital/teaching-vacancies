@@ -11,7 +11,7 @@
     .moj-filter-layout__content
       section
         - if current_jobseeker.job_applications.any?
-          - current_jobseeker.job_applications.draft.order(updated_at: :desc).each do |draft_application|
+          - current_jobseeker.job_applications.includes(:vacancy).order(updated_at: :desc).draft.each do |draft_application|
             = render Shared::CardComponent.new do |card|
               - card.header do
                 = tag.div(govuk_link_to(draft_application.vacancy.job_title, job_path(draft_application.vacancy), class: "govuk-link--no-visited-state"))
@@ -26,7 +26,7 @@
                 = tag.div(govuk_link_to(t(".continue_application"), jobseekers_job_application_review_path(draft_application)))
                 = tag.div(govuk_link_to(t("buttons.delete"), "#"))
 
-          - current_jobseeker.job_applications.submitted.order(submitted_at: :desc).each do |submitted_application|
+          - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).submitted.each do |submitted_application|
             = render Shared::CardComponent.new do |card|
               - card.header do
                 = tag.div(govuk_link_to(submitted_application.vacancy.job_title, job_path(submitted_application.vacancy), class: "govuk-link--no-visited-state"))
