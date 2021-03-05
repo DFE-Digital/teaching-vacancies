@@ -214,6 +214,12 @@ Publisher.create(oid: "EC3312BA-E33B-4791-A815-4D1907DD578E",
                  family_name: "Malde",
                  given_name: "Mili")
 
+Publisher.create(oid: "EB38B29A-3BA8-45D5-9CEC-89CE5C3BC14D",
+                 email: "molly.capstick@digital.education.gov.uk",
+                 dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
+                 family_name: "Capstick",
+                 given_name: "Molly")
+
 Publisher.create(oid: "B5ECCE49-634C-4212-AC55-07F5C7BE74C2",
                  email: "nick.romney@digital.education.gov.uk",
                  dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
