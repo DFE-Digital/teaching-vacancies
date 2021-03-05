@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe SendDailyAlertEmailJob, type: :job do
-  include ActiveJob::TestHelper
-
   subject(:job) { described_class.perform_later }
 
   let(:search_criteria) do

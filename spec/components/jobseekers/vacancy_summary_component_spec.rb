@@ -89,7 +89,7 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
   context "when vacancy job_location is central_office" do
     let(:organisation) { create(:trust) }
     let(:vacancy) do
-      create(:vacancy, :at_central_office, organisation_vacancies_attributes: [{ organisation: organisation }])
+      create(:vacancy, :central_office, organisation_vacancies_attributes: [{ organisation: organisation }])
     end
 
     before do

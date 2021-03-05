@@ -21,7 +21,7 @@ school_one = FactoryBot.create(:school,
                                readable_phases: %w[secondary],
                                detailed_school_type: "Academy sponsor led",
                                school_type: "Academy",
-                               gias_data: { 'ReligiousCharacter (name)': "None" })
+                               gias_data: { "ReligiousCharacter (name)": "None" })
 
 school_two = FactoryBot.create(:school,
                                name: "Upton Cross ACE Academy",
@@ -41,7 +41,28 @@ school_two = FactoryBot.create(:school,
                                readable_phases: %w[primary],
                                detailed_school_type: "Academy converter",
                                school_type: "Academy",
-                               gias_data: { 'ReligiousCharacter (name)': "None" })
+                               gias_data: { "ReligiousCharacter (name)": "None" })
+
+# A second school at the local authority to enable seeding a vacancy at multiple schools.
+school_three = FactoryBot.create(:school,
+                                 name: "Townhill Junior School",
+                                 urn: "116134",
+                                 phase: :primary,
+                                 url: "http://www.townhilljuniorschool.co.uk",
+                                 minimum_age: 7,
+                                 maximum_age: 11,
+                                 address: "Benhams Road",
+                                 town: "Southampton",
+                                 county: "Hampshire",
+                                 postcode: "SO18 2NX",
+                                 region: "London",
+                                 easting: "445283",
+                                 northing: "114779",
+                                 geolocation: "(50.9306936449461,-1.3569968052135)",
+                                 readable_phases: %w[primary],
+                                 detailed_school_type: "Foundation school",
+                                 school_type: "Local authority maintained schools",
+                                 gias_data: { 'ReligiousCharacter (name)': "Does not apply" })
 
 trust_one = FactoryBot.create(:trust,
                               name: "Weydon Multi Academy Trust",
@@ -60,6 +81,7 @@ local_authority_one = FactoryBot.create(:local_authority,
 
 SchoolGroupMembership.create(school_group: trust_one, school: school_one)
 SchoolGroupMembership.create(school_group: local_authority_one, school: school_two)
+SchoolGroupMembership.create(school_group: local_authority_one, school: school_three)
 
 physics_job = FactoryBot.create(:vacancy,
                                 id: "20cc99ff-4fdb-4637-851a-68cf5f8fea9f",
@@ -77,16 +99,18 @@ FactoryBot.create(:vacancy,
                   salary: "£35,000",
                   organisation_vacancies_attributes: [{ organisation: school_two }])
 
-FactoryBot.create(:vacancy,
+# vacancy at a trust central office
+FactoryBot.create(:vacancy, :central_office,
                   id: "7bfadb84-cf30-4121-88bd-a9f958440cc9",
-                  job_title: "Maths Teacher 2",
-                  subjects: %w[Maths],
+                  job_title: "Trust Executive Officer",
+                  subjects: %w[],
                   working_patterns: %w[full_time],
                   salary: "£35,000",
                   expires_on: Faker::Time.forward(days: 7),
-                  organisation_vacancies_attributes: [{ organisation: school_one }])
+                  organisation_vacancies_attributes: [{ organisation: trust_one }])
 
-FactoryBot.create(:vacancy,
+# vacancy at multiple schools in a local authority
+FactoryBot.create(:vacancy, :at_multiple_schools,
                   id: "9910d184-5686-4ffc-9322-69aa150c19d3",
                   job_title: "PE Teacher",
                   subjects: ["Physical Education"],
@@ -94,7 +118,7 @@ FactoryBot.create(:vacancy,
                   salary: "£30,000",
                   total_pageviews: 4,
                   total_get_more_info_clicks: 2,
-                  organisation_vacancies_attributes: [{ organisation: school_one }])
+                  organisation_vacancies_attributes: [{ organisation: school_two }, { organisation: school_three }])
 
 FactoryBot.create(:vacancy,
                   id: "3bf67da6-039c-4ee1-bf59-8475672a0d2b",

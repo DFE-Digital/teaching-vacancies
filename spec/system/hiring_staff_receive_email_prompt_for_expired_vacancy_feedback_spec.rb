@@ -1,6 +1,7 @@
 require "rails_helper"
 RSpec.describe "Creating a vacancy" do
   include ActiveJob::TestHelper
+
   let(:school) { create(:school) }
   let(:oid) { SecureRandom.uuid }
 

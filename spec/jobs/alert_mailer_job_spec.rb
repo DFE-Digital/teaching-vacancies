@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe AlertMailerJob, type: :job do
-  include ActiveJob::TestHelper
-
   let(:school) { create(:school) }
   let(:vacancies) { create_list(:vacancy, 5) }
   let(:subscription) { create(:daily_subscription) }

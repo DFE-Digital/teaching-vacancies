@@ -58,7 +58,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       let(:organisation) { create(:trust) }
       let(:open_school) { create(:school, name: "Open school") }
       let(:closed_school) { create(:school, :closed, name: "Closed school") }
-      let!(:vacancy) { create(:vacancy, :published, :at_central_office) }
+      let!(:vacancy) { create(:vacancy, :published, :central_office) }
       let(:filters) { { managed_school_ids: [], managed_organisations: "all" } }
 
       before do

@@ -33,6 +33,22 @@ en:
       working_pattern: "Working pattern: %{working_pattern}"
 
   jobseeker_mailer:
+    application_submitted:
+      heading: Your application has been sent to %{organisation_name}
+      intro: Your application for %{job_title} at %{organisation_name}
+      more_info:
+        heading: Still have questions?
+        description: If you would like more information you can contact the school at %{email}.
+      next_steps:
+        heading: Next steps
+        description: >-
+          You can %{link} on your account. If you are shortlisted for an interview, %{organisation_name} will be in
+          touch to let you know.
+        link_text: view your application
+      search:
+        intro: Search and apply for more teaching jobs on Teaching Vacancies
+        link_text: Go to Teaching Vacancies
+      subject: Your job application has been submitted
     confirmation_instructions:
       heading: Verify your email to create an account with Teaching Vacancies
       intro: You have requested to create an account with this email address.

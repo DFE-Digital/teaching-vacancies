@@ -40,7 +40,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
         .with(publisher: publisher)
         .and_return(login_key)
       allow(AuthenticationFallbackMailer).to receive(:sign_in_fallback)
-        .with(login_key: login_key, publisher: publisher)
+        .with(login_key_id: login_key.id, publisher: publisher)
         .and_return(message_delivery)
     end
 
@@ -77,7 +77,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
           visit auth_email_choose_organisation_path(login_key: login_key.id)
 
           expect(page).to have_content("Choose your organisation")
-          expect(page).not_to have_content(I18n.t("publishers.temp_login.denial.title"))
+          expect(page).not_to have_content(I18n.t("publishers.temp_login.choose_organisation.denial.title"))
           expect(page).to have_content(other_school.name)
           expect(page).to have_content(trust.name)
           expect(page).to have_content(local_authority.name)

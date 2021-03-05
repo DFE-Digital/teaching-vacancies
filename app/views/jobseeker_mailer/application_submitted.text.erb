@@ -1,0 +1,16 @@
+<%= t(".intro", job_title: @vacancy.job_title, organisation_name: @organisation_name) %>
+
+# <%= t(".heading", organisation_name: @organisation_name) %>
+
+# <%= t(".next_steps.heading") %>
+
+<%= t(".next_steps.description",
+      organisation_name: @organisation_name,
+      link: notify_link(jobseekers_job_applications_url, t(".next_steps.link_text"))) %>
+
+# <%= t(".more_info.heading") %>
+
+<%= t(".more_info.description", email: notify_mail_to(@contact_email)) %>
+
+<%= t(".search.intro") %>
+<%= notify_link(root_url, t(".search.link_text")) %>

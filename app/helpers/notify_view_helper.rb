@@ -1,4 +1,8 @@
 module NotifyViewHelper
+  def notify_mail_to(mail_to, text = mail_to)
+    notify_link("mailto:#{mail_to}", text)
+  end
+
   def notify_link(url, text = url)
     "[#{text}](#{url})"
   end

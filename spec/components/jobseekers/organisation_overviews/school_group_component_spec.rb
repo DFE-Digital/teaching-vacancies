@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Jobseekers::OrganisationOverviews::SchoolGroupComponent, type: :component do
   let(:organisation) { create(:trust) }
-  let(:vacancy) { create(:vacancy, :at_central_office) }
+  let(:vacancy) { create(:vacancy, :central_office) }
   let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
 
   before do

@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe UpdateAlgoliaIndex, type: :job do
-  include ActiveJob::TestHelper
-
   subject(:job) { described_class.perform_later }
 
   it "invokes Vacancy#update_index!" do
