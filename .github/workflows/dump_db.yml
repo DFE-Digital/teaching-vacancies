@@ -1,0 +1,50 @@
+name: Dump production database to S3 bucket
+
+on:
+  workflow_dispatch:
+
+jobs:
+  sync:
+    name: Dump production database to S3 bucket
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-west-2
+
+    - name: Setup cf cli
+      uses: DFE-Digital/github-actions/setup-cf-cli@master
+      with:
+        CF_USERNAME: ${{ secrets.CF_USERNAME }}
+        CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+        CF_SPACE_NAME: teaching-vacancies-production
+        INSTALL_CONDUIT: true
+
+    - name: Install postgres client
+      uses: DFE-Digital/github-actions/install-postgres-client@master
+
+    - name: Dump production database to file
+      shell: bash
+      run: bin/dump-db
+
+    - name: Upload backup to S3
+      run: bin/upload-db-backup
+      env:
+        BACKUP_TYPE: full
+
+    - name: Send job status message to twd_tv_dev channel
+      if: always() && github.ref == 'refs/heads/master'
+      uses: rtCamp/action-slack-notify@v2.1.2
+      env:
+        SLACK_CHANNEL: twd_tv_dev
+        SLACK_USERNAME: CI Deployment
+        SLACK_TITLE: Deployment ${{ job.status }}
+        SLACK_MESSAGE: 'Dump production database to S3 bucket - ${{ job.status }}'
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

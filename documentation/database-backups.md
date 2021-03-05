@@ -61,7 +61,8 @@ Rationale
 
 Steps
 
-- Run the GitHub Actions workflow
+- Run the GitHub Actions workflow [Dump production database to S3 bucket](https://github.com/DFE-Digital/teaching-vacancies/actions/workflows/dump_db.yml)
+- Click `Run workflow`
 
 ## Work with backups interactively with cf conduit
 
