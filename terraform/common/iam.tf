@@ -150,7 +150,9 @@ data "aws_iam_policy_document" "db_backups_in_s3_fullaccess" {
     ]
     resources = [
       "arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/",
-      "arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/*"
+      "arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/*",
+      "arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/full/*",
+      "arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/sanitised/*"
     ]
   }
 }

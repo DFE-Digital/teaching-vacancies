@@ -1,18 +1,11 @@
-name: Restore dev/staging db from production backup
+name: Dump production database to S3 bucket
 
 on:
   workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Environment'
-        required: true
-        default: 'dev'
-      backup_filename:
-        description: 'Filename to restore'
-        required: true
+
 jobs:
   sync:
-    name: Sync ${{ github.event.inputs.environment }} database from production backup
+    name: Dump production database to S3 bucket
     runs-on: ubuntu-20.04
 
     steps:
@@ -31,25 +24,20 @@ jobs:
       with:
         CF_USERNAME: ${{ secrets.CF_USERNAME }}
         CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-        CF_SPACE_NAME: teaching-vacancies-${{ github.event.inputs.environment }}
+        CF_SPACE_NAME: teaching-vacancies-production
         INSTALL_CONDUIT: true
 
     - name: Install postgres client
       uses: DFE-Digital/github-actions/install-postgres-client@master
 
-    - name: Download sanitised backup from S3
+    - name: Dump production database to file
       shell: bash
-      run: bin/download-db-backup
-      env:
-        BACKUP_TYPE: sanitised
-        BACKUP_FILENAME: ${{ github.event.inputs.backup_filename }}
+      run: bin/dump-db
 
-    - name: Restore sanitised database from downloaded dump
-      shell: bash
-      run: bin/restore-db
+    - name: Upload backup to S3
+      run: bin/upload-db-backup
       env:
-        CF_DESTINATION_ENVIRONMENT: ${{ github.event.inputs.environment }}
-        BACKUP_TYPE: sanitised
+        BACKUP_TYPE: full
 
     - name: Send job status message to twd_tv_dev channel
       if: always() && github.ref == 'refs/heads/master'
@@ -58,5 +46,5 @@ jobs:
         SLACK_CHANNEL: twd_tv_dev
         SLACK_USERNAME: CI Deployment
         SLACK_TITLE: Deployment ${{ job.status }}
-        SLACK_MESSAGE: 'Restore sanitised production DB to ${{ github.event.inputs.environment }} - ${{ job.status }}'
+        SLACK_MESSAGE: 'Dump production database to S3 bucket - ${{ job.status }}'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
