@@ -177,7 +177,7 @@ GEM
       et-orbi (~> 1.1, >= 1.1.8)
       raabro (~> 1.4)
     gems (1.2.0)
-    geocoder (1.6.5)
+    geocoder (1.6.6)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     google-api-client (0.53.0)
