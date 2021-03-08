@@ -17,6 +17,13 @@ RSpec.describe ApplicationController, type: :controller do
     end
   end
 
+  describe "click_event events" do
+    it "triggers a `click_event` event on a request" do
+      expect { get :test_action, params: { click_event: "this_event" } }
+        .to have_triggered_event(:this_event).with_request_data
+    end
+  end
+
   describe "sets headers" do
     it "robots are asked not to index or to follow" do
       get :test_action
