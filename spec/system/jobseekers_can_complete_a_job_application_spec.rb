@@ -11,9 +11,8 @@ RSpec.describe "Jobseekers can complete a job application" do
     login_as(jobseeker, scope: :jobseeker)
   end
 
-  it "allows jobseekers to complete application and go to review page" do
+  it "allows jobseekers to complete an application and go to review page" do
     visit jobseekers_job_application_build_path(job_application, :personal_details)
-
     expect(page).to have_content(I18n.t("jobseekers.job_applications.build.personal_details.heading"))
     validates_step_complete
     fill_in_personal_details

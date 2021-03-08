@@ -1,7 +1,7 @@
 class Jobseekers::JobApplicationsController < Jobseekers::BaseController
-  helper_method :job_application, :review_form, :vacancy
-
   before_action :redirect_if_job_application_exists, only: %i[new create]
+
+  helper_method :job_application, :review_form, :vacancy
 
   def new
     request_event.trigger(:vacancy_apply_clicked, vacancy_id: vacancy.id)
@@ -14,6 +14,8 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
   end
 
   def submit
+    return redirect_to expired_jobseekers_job_job_application_path(vacancy.id) unless vacancy.listed?
+
     if params[:commit] == t("buttons.save_as_draft")
       redirect_to jobseeker_root_path, notice: "Application saved as draft"
     elsif review_form.valid?

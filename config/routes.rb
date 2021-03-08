@@ -38,7 +38,9 @@ Rails.application.routes.draw do
       end
 
       scope as: :job, path: ":job_id" do
-        resource :job_application, only: %i[new create]
+        resource :job_application, only: %i[new create] do
+          get :expired
+        end
       end
     end
 
