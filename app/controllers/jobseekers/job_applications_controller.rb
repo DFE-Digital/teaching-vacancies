@@ -1,6 +1,5 @@
 class Jobseekers::JobApplicationsController < Jobseekers::BaseController
   before_action :redirect_if_job_application_exists, only: %i[new create]
-  before_action :redirect_if_vacancy_has_expired, only: %i[new create review submit]
 
   helper_method :job_application, :review_form, :vacancy
 
@@ -15,6 +14,8 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
   end
 
   def submit
+    return redirect_to expired_jobseekers_job_job_application_path(vacancy.id) unless vacancy.listed?
+
     if params[:commit] == t("buttons.save_as_draft")
       redirect_to jobseeker_root_path, notice: "Application saved as draft"
     elsif review_form.valid?
@@ -67,7 +68,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
 
   def vacancy
     @vacancy ||= if params[:job_id].present?
-                   Vacancy.find(params[:job_id])
+                   Vacancy.live.find(params[:job_id])
                  else
                    job_application.vacancy
                  end

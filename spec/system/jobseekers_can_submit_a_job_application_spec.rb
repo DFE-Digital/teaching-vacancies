@@ -59,8 +59,13 @@ RSpec.describe "Jobseekers can submit a job application" do
   context "when the job listing is expired" do
     let(:job_application) { create(:job_application, :complete, jobseeker: jobseeker, vacancy: vacancy) }
 
-    it "redirects to the correct page" do
-      redirects_to_expired_page(button: I18n.t("buttons.submit_application"))
+    it "does not submit and redirects to the expired page" do
+      travel_to(vacancy.expires_at + 1.second) do
+        click_on I18n.t("buttons.submit_application")
+
+        expect(current_path).to eq(expired_jobseekers_job_job_application_path(vacancy.id))
+        expect(job_application.status).to eq("draft")
+      end
     end
   end
 end

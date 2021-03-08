@@ -101,12 +101,4 @@ module JobseekerHelpers
     fill_in "Email address", with: "test@email.com"
     fill_in "Phone number", with: "09999 123456"
   end
-
-  def redirects_to_expired_page(button: I18n.t("buttons.continue"))
-    travel_to(vacancy.expires_at + 1.second) do
-      click_on button
-
-      expect(current_path).to eq(expired_jobseekers_job_job_application_path(vacancy.id))
-    end
-  end
 end
