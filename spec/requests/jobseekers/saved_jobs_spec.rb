@@ -7,10 +7,31 @@ RSpec.describe "Saved jobs", type: :request do
   before { sign_in(jobseeker, scope: :jobseeker) }
 
   describe "GET #new" do
-    it "triggers a `vacancy_save_to_account_clicked` event" do
-      expect { get new_jobseekers_saved_job_path(vacancy.id) }
-        .to have_triggered_event(:vacancy_save_to_account_clicked)
-        .and_data(vacancy_id: vacancy.id)
+    it "saves a job" do
+      expect { get new_jobseekers_saved_job_path(vacancy.id) }.to change { SavedJob.count }.by(1)
+    end
+
+    it "redirects to `job_path`" do
+      expect(get(new_jobseekers_saved_job_path(vacancy.id))).to redirect_to(job_path(vacancy))
+    end
+  end
+
+  describe "DELETE #destroy" do
+    let!(:saved_job) { create(:saved_job, jobseeker: jobseeker, vacancy: vacancy) }
+
+    context "when `redirect_to_dashboard` param is true" do
+      it "redirects to `jobseekers_saved_jobs_path`" do
+        expect(delete(jobseekers_saved_job_path(vacancy.id, saved_job), params: { redirect_to_dashboard: "true" }))
+          .to redirect_to(jobseekers_saved_jobs_path)
+      end
+    end
+
+    context "when `redirect_to_dashboard` param is not true" do
+      let(:params) { { redirect_to_dashboard: "true" } }
+
+      it "redirects to `job_path`" do
+        expect(delete(jobseekers_saved_job_path(vacancy.id, saved_job))).to redirect_to(job_path(vacancy))
+      end
     end
   end
 end
