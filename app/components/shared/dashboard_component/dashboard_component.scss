@@ -1,3 +1,6 @@
+@import '~govuk-frontend/govuk/base';
+@import '../../../frontend/src/styles/application/dashboard';
+
 .dashboard-component {
   &__header {
     @include dashboard;
