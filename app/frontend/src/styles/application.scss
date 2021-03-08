@@ -42,12 +42,6 @@ $govuk-image-url-function: frontend-image-url;
 @import 'application/jobseekers/vacancies';
 @import 'application/jobseekers/vacancy';
 
-@import 'jobseekers/account_survey_link_component/account_survey_link_component';
-@import 'jobseekers/job_applications/detail_component/detail_component';
-@import 'jobseekers/search_results/job_alerts_link_component/job_alerts_link_component';
-@import 'jobseekers/search_results/search_visualizer_component/search_visualizer_component';
-@import 'jobseekers/similar_job_component/similar_job_component';
-
 @import 'application/publishers/information-summary';
 @import 'application/publishers/interruption-card';
 @import 'application/publishers/og-preview';
@@ -56,22 +50,6 @@ $govuk-image-url-function: frontend-image-url;
 @import 'application/publishers/scrollable-panel';
 @import 'application/publishers/share-url';
 @import 'application/publishers/statistics';
-
-@import 'publishers/vacancies_component/vacancies_component';
-
-@import 'shared/banner_link_component/banner_link_component';
-@import 'shared/card_component/card_component';
-@import 'shared/dashboard_component/dashboard_component';
-@import 'shared/document_link_component/document_link_component';
-@import 'shared/filters_component/filters_component';
-@import 'shared/navbar_component/navbar_component';
-@import 'shared/notification_component/notification_component';
-@import 'shared/pill_link_component/pill_link_component';
-@import 'shared/process_steps_component/process_steps_component';
-@import 'shared/searchable_collection_component/searchable_collection_component';
-@import 'shared/review_component/review_component';
-
-@import 'ab_test/cookies_banner_component/cookies_banner_component';
 
 body {
   .govuk-width-container {
