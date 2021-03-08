@@ -37,6 +37,7 @@
                                                  link_id: "#{@saved_job.present? ? 'saved' : 'save'}-job-listing",
                                                  link_method: @saved_job.present? ? :delete : :get,
                                                  link_path: @saved_job.present? ? jobseekers_saved_job_path(@vacancy.id, @saved_job) : new_jobseekers_saved_job_path(@vacancy.id),
+                                                 params: { click_event: "vacancy_save_to_account_clicked" },
                                                  link_text: t("jobseekers.saved_jobs.#{@saved_job.present? ? 'saved' : 'save'}")))
 
 .govuk-grid-row
