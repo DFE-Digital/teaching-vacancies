@@ -5,17 +5,13 @@ RSpec.describe "Jobseekers can save a job" do
   let(:vacancy) { create(:vacancy, :published) }
   let(:created_jobseeker) { Jobseeker.first }
 
-  before do
-    vacancy.organisation_vacancies.create(organisation: school)
-  end
+  before { vacancy.organisation_vacancies.create(organisation: school) }
 
   context "when a jobseeker has an account" do
     let(:jobseeker) { create(:jobseeker) }
 
     context "when they are signed in to their account" do
-      before do
-        login_as(jobseeker, scope: :jobseeker)
-      end
+      before { login_as(jobseeker, scope: :jobseeker) }
 
       context "when the job is not already saved" do
         it "saves the job" do
@@ -25,9 +21,7 @@ RSpec.describe "Jobseekers can save a job" do
       end
 
       context "when the job is already saved" do
-        before do
-          SavedJob.find_or_create_by(jobseeker_id: jobseeker.id, vacancy_id: vacancy.id)
-        end
+        let!(:saved_job) { create(:saved_job, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "unsaves the job" do
           unsave_job
@@ -46,9 +40,7 @@ RSpec.describe "Jobseekers can save a job" do
       end
 
       context "when the job is already saved" do
-        before do
-          SavedJob.find_or_create_by(jobseeker_id: jobseeker.id, vacancy_id: vacancy.id)
-        end
+        let!(:saved_job) { create(:saved_job, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "does nothing after signing in" do
           save_job
