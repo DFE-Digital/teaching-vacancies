@@ -24,7 +24,7 @@
 
               - card.actions do
                 = tag.div(govuk_link_to(t(".continue_application"), jobseekers_job_application_review_path(draft_application)))
-                = tag.div(govuk_link_to(t("buttons.delete"), "#"))
+                = tag.div(govuk_link_to(t("buttons.delete"), jobseekers_job_application_confirm_destroy_path(draft_application)))
 
           - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).submitted.each do |submitted_application|
             = render Shared::CardComponent.new do |card|

@@ -25,6 +25,18 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
     end
   end
 
+  def confirm_destroy
+    raise ActionController::RoutingError, "Cannot delete non-draft application" unless job_application.draft?
+  end
+
+  def destroy
+    raise ActionController::RoutingError, "Cannot delete non-draft application" unless job_application.draft?
+
+    job_application.destroy
+    redirect_to jobseekers_job_applications_path,
+                success: t("messages.jobseekers.job_applications.draft_deleted", job_title: vacancy.job_title)
+  end
+
   private
 
   def job_application

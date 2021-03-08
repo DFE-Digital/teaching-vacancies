@@ -34,4 +34,45 @@ RSpec.describe "Job applications", type: :request do
       end
     end
   end
+
+  describe "GET #confirm_destroy" do
+    context "when the application is a draft" do
+      let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+
+      it "shows a confirmation page" do
+        expect(get(jobseekers_job_application_confirm_destroy_path(job_application.id))).to render_template(:confirm_destroy)
+      end
+    end
+
+    context "when the application is not a draft" do
+      let!(:job_application) { create(:job_application, status: :submitted, jobseeker: jobseeker, vacancy: vacancy) }
+
+      it "raises an error" do
+        expect { get(jobseekers_job_application_confirm_destroy_path(job_application.id)) }.to raise_error(ActionController::RoutingError, /non-draft/)
+      end
+    end
+  end
+
+  describe "DELETE #destroy" do
+    context "when the application is a draft" do
+      let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+
+      it "deletes the application" do
+        expect { delete(jobseekers_job_application_path(job_application.id)) }.to change { JobApplication.count }.by(-1)
+      end
+
+      it "redirects back to the index of applications" do
+        expect(delete(jobseekers_job_application_path(job_application.id))).to redirect_to(jobseekers_job_applications_path)
+      end
+    end
+
+    context "when the application is not a draft" do
+      let!(:job_application) { create(:job_application, status: :submitted, jobseeker: jobseeker, vacancy: vacancy) }
+
+      it "raises an error and does not delete the application" do
+        expect { delete(jobseekers_job_application_path(job_application.id)) }.to raise_error(ActionController::RoutingError, /non-draft/)
+        expect(JobApplication.count).to eq(1)
+      end
+    end
+  end
 end

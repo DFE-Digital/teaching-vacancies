@@ -37,6 +37,7 @@ en:
         references:
           deleted: Your reference was deleted
         saved: Your job application was saved
+        draft_deleted: Your draft application for %{job_title} has been deleted
     subscriptions:
       created: Email subscription created successfully.
 
