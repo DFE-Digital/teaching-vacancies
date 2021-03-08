@@ -1,4 +1,4 @@
-# Preview all emails at http://localhost:3000/rails/mailers
+# Documentation: app/mailers/previewing_emails.md
 class FeedbackPromptPreview < ActionMailer::Preview
   def prompt_for_feedback
     unless Publisher.any? && Vacancy.count > 1

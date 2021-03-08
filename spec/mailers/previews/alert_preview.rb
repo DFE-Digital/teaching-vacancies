@@ -1,4 +1,4 @@
-# Preview all emails at http://localhost:3000/rails/mailers
+# Documentation: app/mailers/previewing_emails.md
 class AlertPreview < ActionMailer::Preview
   def alert
     unless Subscription.any? && Vacancy.count > 1

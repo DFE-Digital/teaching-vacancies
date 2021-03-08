@@ -1,4 +1,4 @@
-# Preview all emails at http://localhost:3000/rails/mailers
+# Documentation: app/mailers/previewing_emails.md
 class JobseekerPreview < ActionMailer::Preview
   def application_submitted_at_central_office
     application_submitted("7bfadb84-cf30-4121-88bd-a9f958440cc9")
