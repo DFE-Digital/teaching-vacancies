@@ -1,6 +1,6 @@
 - content_for :page_title_prefix, t(".title")
 
-= render(Jobseekers::JobApplications::HeadingComponent.new(vacancy: job_application.vacancy, back_path: jobseekers_job_application_build_path(job_application, :declarations)))
+= render(Jobseekers::JobApplications::HeadingComponent.new(vacancy: vacancy, back_path: jobseekers_job_application_build_path(job_application, :declarations)))
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds

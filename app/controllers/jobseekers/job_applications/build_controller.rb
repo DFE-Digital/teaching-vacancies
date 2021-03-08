@@ -4,7 +4,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
 
   steps :personal_details, :professional_status, :employment_history, :personal_statement, :references, :equal_opportunities, :ask_for_support, :declarations
 
-  helper_method :back_link_path, :employment_history_info, :job_application, :process_steps, :reference_info
+  helper_method :back_link_path, :employment_history_info, :job_application, :process_steps, :reference_info, :vacancy
 
   def show
     @form = FORMS[step].new unless step == "wicked_finish"
@@ -19,7 +19,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
     if params[:commit] == t("buttons.save_as_draft")
       job_application.assign_attributes(application_data: application_data.merge(form_params))
       job_application.save
-      redirect_to jobseekers_saved_jobs_path, success: t("messages.jobseekers.job_applications.saved")
+      redirect_to jobseeker_root_path, success: t("messages.jobseekers.job_applications.saved")
     elsif @form.valid?
       job_application.assign_attributes(
         application_data: application_data.merge(form_params),
@@ -36,7 +36,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
   def back_link_path
     @back_link_path ||= case step
                         when :personal_details
-                          new_jobseekers_job_job_application_path(job_application.vacancy.id)
+                          new_jobseekers_job_job_application_path(vacancy.id)
                         else
                           previous_wizard_path
                         end
@@ -56,5 +56,9 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
 
   def process_steps
     @process_steps ||= ProcessSteps.new(steps: steps_config, adjust: 0, step: step)
+  end
+
+  def vacancy
+    @vacancy ||= job_application.vacancy
   end
 end

@@ -24,7 +24,7 @@ RSpec.describe "Jobseekers can change email" do
       visit first_link_from_last_mail
 
       expect(created_jobseeker.reload.email).to eq("new@email.com")
-      expect(current_path).to eq(jobseekers_saved_jobs_path)
+      expect(current_path).to eq(jobseeker_root_path)
       expect(page).to have_content(I18n.t("devise.confirmations.confirmed"))
     end
   end
