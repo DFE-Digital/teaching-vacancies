@@ -1,5 +1,3 @@
-@import '~govuk-frontend/govuk/base';
-
 .card-component {
   @include govuk-font(16);
   border-bottom: 1px solid $govuk-border-colour;
