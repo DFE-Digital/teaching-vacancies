@@ -59,6 +59,22 @@ RSpec.describe SubscriptionMailer, type: :mailer do
         expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_confirmation).with_data(expected_data)
       end
     end
+
+    describe "create account section" do
+      context "when the subscription email matches a jobseeker account" do
+        let!(:jobseeker) { create(:jobseeker, email: email) }
+
+        it "does not display create account section" do
+          expect(body).not_to include(I18n.t("subscription_mailer.confirmation.create_account.heading"))
+        end
+      end
+
+      context "when the subscription email does not match a jobseeker account" do
+        it "displays create account section" do
+          expect(body).to include(I18n.t("subscription_mailer.confirmation.create_account.heading"))
+        end
+      end
+    end
   end
 
   describe "#update" do

@@ -1,5 +1,5 @@
 class SubscriptionMailer < ApplicationMailer
-  helper_method :subscription
+  helper_method :subscription, :jobseeker
 
   def confirmation(subscription_id)
     @subscription_id = subscription_id
