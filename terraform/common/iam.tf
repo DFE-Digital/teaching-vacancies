@@ -188,3 +188,26 @@ resource "aws_iam_role_policy_attachment" "deny_sensitive_data_in_s3" {
   role       = aws_iam_role.readonly.name
   policy_arn = aws_iam_policy.deny_sensitive_data_in_s3.arn
 }
+
+# Offline site S3
+
+data "aws_iam_policy_document" "offline_site_full_access" {
+  statement {
+    actions   = ["s3:GetObject", "s3:GetObjectAcl", "s3:DeleteObject", "s3:PutObject"]
+    resources = ["arn:aws:s3:::${aws_s3_bucket.offline_site.bucket}/teaching-vacancies-offline/*"]
+  }
+  statement {
+    actions   = ["s3:GetBucketAcl", "s3:GetBucketLocation", "s3:ListBucket", "s3:PutBucketAcl"]
+    resources = ["arn:aws:s3:::${aws_s3_bucket.offline_site.bucket}"]
+  }
+}
+
+resource "aws_iam_policy" "offline_site_full_access" {
+  name   = "offline_site_full_access"
+  policy = data.aws_iam_policy_document.offline_site_full_access.json
+}
+
+resource "aws_iam_user_policy_attachment" "offline_site_full_access" {
+  user       = aws_iam_user.deploy.name
+  policy_arn = aws_iam_policy.offline_site_full_access.arn
+}
