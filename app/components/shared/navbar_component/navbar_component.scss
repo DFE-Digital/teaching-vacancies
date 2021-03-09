@@ -1,5 +1,3 @@
-@import '~govuk-frontend/govuk/base';
-
 .navbar-component {
   .navbar-component__navigation {
     @include govuk-media-query($from: desktop) {
