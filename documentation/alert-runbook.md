@@ -5,9 +5,13 @@
 Alerts when `teaching-vacancies-production` app has more than 25 failed requests for a 5-minute period.
 Failed requests are defined as those with HTTP status codes matching the patterns `0xx`, `4xx` or `5xx`.
 
-## ProdCPUHigh
+## ProdAppCPUHigh
 
-Alerts when either the `teaching-vacancies-production` or `teaching-vacancies-worker-production` app has an average CPU usage above 60% for a 5-minute period.
+Alerts when the `teaching-vacancies-production` app has an average CPU usage above 60% for a 5-minute period.
+
+## ProdWorkerCPUHigh
+
+Alerts when the `teaching-vacancies-worker-production` app has an average CPU usage above 75% for a 10-minute period.
 
 ## ProdDiskUtilisationHigh
 
