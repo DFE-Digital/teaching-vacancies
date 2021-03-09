@@ -2,7 +2,7 @@ en:
   account_creation_cta:
     help_text_html: "%{link} or create an account to save the jobs you are interested in. You don’t need an account to search for a job or set up job alerts."
     sign_in: Sign in
-    
+
   app:
     description: >-
       On Teaching Vacancies, NQTs, experienced teachers and leaders can search for a job at a school or Trust in England
@@ -157,8 +157,6 @@ en:
     email: teaching.vacancies@education.gov.uk
 
   organisation:
-    show:
-      heading_html: "%{email} <span class='govuk-!-font-weight-regular'>- %{organisation}</span>"
     view_more_or_change: View more or change
 
   job_alert_feedbacks:
@@ -247,29 +245,6 @@ en:
     map_aria_label: Interactive map showing school location
     map_link_aria_label: Open in Google Maps
     no_information: No information available
-    no_jobs:
-      bullets:
-        required:
-          - job title
-          - job role
-          - working pattern
-          - salary
-          - date job will be listed
-          - date application is due
-          - time application is due
-          - contact email
-          - job summary
-          - information about the school
-        optional:
-          - subject
-          - employee benefits
-          - date job starts
-          - supporting documents to attach
-          - how to arrange a school visit
-          - how to apply
-          - link to online application
-      heading: You have no job listings to manage
-      intro: 'To create a job listing for your school, you will need the following information:'
     not_given: Not given
     ofsted_report: Ofsted report
     phase: Education phase

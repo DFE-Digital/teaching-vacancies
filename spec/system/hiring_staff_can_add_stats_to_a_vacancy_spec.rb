@@ -126,7 +126,7 @@ RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: tru
       submit_feedback_for(another_vacancy)
       submit_feedback_for(third_vacancy)
 
-      expect(page).not_to have_content(I18n.t("jobs.awaiting_feedback_intro"))
+      expect(page).not_to have_content(I18n.t("jobs.manage.awaiting_feedback.intro"))
       expect(page).not_to have_link(vacancy.job_title, href: organisation_job_path(vacancy.id))
       expect(page).not_to have_link(another_vacancy.job_title, href: organisation_job_path(another_vacancy.id))
       expect(page).not_to have_link(third_vacancy.job_title, href: organisation_job_path(third_vacancy.id))
@@ -150,7 +150,7 @@ RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: tru
     scenario "hiring staff can not see notification badge" do
       visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
-      expect(page).to have_content(I18n.t("jobs.no_awaiting_feedback"))
+      expect(page).to have_content(I18n.t("jobs.manage.awaiting_feedback.no_jobs"))
     end
   end
 

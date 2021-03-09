@@ -8,11 +8,11 @@
 
       - card.body do
         = tag.div(card.labelled_item(t("jobs.publication_date"), vacancy.publish_on))
-        = tag.div(card.labelled_item(t("jobs.closing_date"), vacancy.application_deadline))
+        = tag.div(card.labelled_item(t("jobs.manage.closing_date"), vacancy.application_deadline))
 
       - card.actions do
-        = tag.div(govuk_link_to(t("jobs.edit_link"), vacancy.edit_path))
-        = tag.div(govuk_link_to(t("jobs.copy_link"), vacancy.copy_path))
-        = tag.div(button_to(t("jobs.delete_link"), vacancy.delete_path, method: :delete, data: { confirm: t("jobs.are_you_sure", job_title: vacancy.job_title) }, class: "govuk-delete-link"))
+        = tag.div(govuk_link_to(t("jobs.manage.edit_link_text"), vacancy.edit_path))
+        = tag.div(govuk_link_to(t("jobs.manage.copy_link_text"), vacancy.copy_path))
+        = tag.div(button_to(t("jobs.manage.delete_link_text"), vacancy.delete_path, method: :delete, data: { confirm: t("jobs.manage.are_you_sure", job_title: vacancy.job_title) }, class: "govuk-delete-link"))
 - else
-  = render(Shared::NotificationComponent.new(content: { body: t("jobs.no_pending_jobs") }, style: "empty", links: nil, dismiss: false, background: true, alert: false))
+  = render(Shared::NotificationComponent.new(content: { body: t("jobs.manage.pending.no_jobs") }, style: "empty", links: nil, dismiss: false, background: true, alert: false))

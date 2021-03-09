@@ -29,7 +29,7 @@ RSpec.describe "Copying a vacancy" do
       visit organisation_path
 
       within(".card-component__actions") do
-        click_on I18n.t("jobs.copy_link")
+        click_on I18n.t("jobs.manage.copy_link_text")
       end
 
       fill_in_copy_vacancy_form_fields(new_vacancy)
@@ -51,7 +51,7 @@ RSpec.describe "Copying a vacancy" do
       visit organisation_path
 
       within(".card-component__actions") do
-        click_on I18n.t("jobs.copy_link")
+        click_on I18n.t("jobs.manage.copy_link_text")
       end
 
       fill_in_copy_vacancy_form_fields(new_vacancy)
@@ -78,7 +78,7 @@ RSpec.describe "Copying a vacancy" do
     visit organisation_path
 
     within(".card-component__actions") do
-      click_on I18n.t("jobs.copy_link")
+      click_on I18n.t("jobs.manage.copy_link_text")
     end
 
     within("h1.govuk-heading-m") do
@@ -112,7 +112,7 @@ RSpec.describe "Copying a vacancy" do
       new_vacancy.expires_at = new_vacancy.expires_on = 30.days.from_now
 
       within(".card-component__actions") do
-        click_on I18n.t("jobs.copy_link")
+        click_on I18n.t("jobs.manage.copy_link_text")
       end
 
       within("h1.govuk-heading-m") do
@@ -157,9 +157,9 @@ RSpec.describe "Copying a vacancy" do
 
       visit organisation_path
 
-      click_on I18n.t("jobs.pending_jobs")
+      click_on I18n.t("publishers.vacancies_component.pending.tab_heading")
       within(".card-component__actions") do
-        click_on I18n.t("jobs.copy_link")
+        click_on I18n.t("jobs.manage.copy_link_text")
       end
 
       within("h1.govuk-heading-m") do
@@ -187,9 +187,9 @@ RSpec.describe "Copying a vacancy" do
 
       visit organisation_path
 
-      click_on I18n.t("jobs.expired_jobs")
+      click_on I18n.t("publishers.vacancies_component.expired.tab_heading")
       within(".card-component__actions") do
-        click_on I18n.t("jobs.copy_link")
+        click_on I18n.t("jobs.manage.copy_link_text")
       end
 
       within("h1.govuk-heading-m") do
@@ -219,7 +219,7 @@ RSpec.describe "Copying a vacancy" do
       visit organisation_path
 
       within(".card-component__actions") do
-        click_on I18n.t("jobs.copy_link")
+        click_on I18n.t("jobs.manage.copy_link_text")
       end
 
       within("h1.govuk-heading-m") do
@@ -247,7 +247,7 @@ RSpec.describe "Copying a vacancy" do
       visit organisation_path
 
       within(".card-component__actions") do
-        click_on I18n.t("jobs.copy_link")
+        click_on I18n.t("jobs.manage.copy_link_text")
       end
 
       expect(page).to have_content(I18n.t("jobs.copy_job_title", job_title: original_vacancy.job_title))

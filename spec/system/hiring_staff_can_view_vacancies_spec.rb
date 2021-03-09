@@ -9,9 +9,8 @@ RSpec.describe "School viewing vacancies" do
   scenario "A school publisher sees advisory text when there are no vacancies" do
     visit organisation_path
 
-    expect(page).to have_content(I18n.t("schools.no_jobs.heading"))
+    expect(page).to have_content(I18n.t("publishers.no_vacancies_component.heading"))
     expect(page).not_to have_css(".vacancies")
-    expect(page).to have_content(I18n.t("schools.no_jobs.heading"))
   end
 
   scenario "A school publisher can see a list of vacancies" do

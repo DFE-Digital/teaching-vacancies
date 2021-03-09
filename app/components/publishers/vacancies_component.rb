@@ -6,7 +6,7 @@ class Publishers::VacanciesComponent < ViewComponent::Base
     @filters_form = filters_form
     @sort_form = sort_form
     @email = email
-    @vacancy_types = %w[published pending draft expired awaiting_feedback]
+    @vacancy_types = %w[published expired pending draft awaiting_feedback]
     @selected_type = @vacancy_types.include?(selected_type) ? selected_type : "published"
 
     set_organisation_options if @organisation.is_a?(SchoolGroup)
@@ -34,11 +34,11 @@ class Publishers::VacanciesComponent < ViewComponent::Base
   end
 
   def filters_applied_text
-    I18n.t("jobs.dashboard_filters.heading", count: @filters[:managed_school_ids]&.count)
+    I18n.t("jobs.manage.dashboard_filters.heading", count: @filters[:managed_school_ids]&.count)
   end
 
   def vacancy_type_tab_link(vacancy_type, selected)
-    link_to t("jobs.#{vacancy_type}_jobs"), jobs_with_type_organisation_path(vacancy_type), class: "moj-primary-navigation__link", "aria-current": ("page" if selected)
+    link_to t(".#{vacancy_type}.tab_heading"), jobs_with_type_organisation_path(vacancy_type), class: "moj-primary-navigation__link", "aria-current": ("page" if selected)
   end
 
   private
