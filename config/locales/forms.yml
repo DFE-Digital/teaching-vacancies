@@ -202,7 +202,7 @@ en:
           neither: Neither satisfied nor dissatisfied
           somewhat_dissatisfied: Somewhat dissatisfied
           highly_dissatisfied: Highly dissatisfied
-        comment: Do you have any suggestions on how we could improve the service?
+        comment: Do you have any suggestions on how we should improve the service?
       jobseekers_job_alert_further_feedback_form:
         comment: Would you like to add any further comments about the relevancy of the job alerts you have received?
 
@@ -265,7 +265,7 @@ en:
           neither: Neither satisfied nor dissatisfied
           somewhat_dissatisfied: Somewhat dissatisfied
           highly_dissatisfied: Highly dissatisfied
-        comment: Do you have any suggestions on how we could improve the service?
+        comment: Do you have any suggestions on how we should improve the service?
       jobseekers_job_application_personal_details_form:
         your_address: Your address
         building_and_street: Building and street
@@ -345,6 +345,14 @@ en:
         job_title: Job title
       publishers_job_listing_documents_form:
         documents: Upload files
+      publishers_job_listing_feedback_form:
+        rating_options:
+          highly_satisfied: Highly satisfied
+          somewhat_satisfied: Somewhat satisfied
+          neither: Neither satisfied nor dissatisfied
+          somewhat_dissatisfied: Somewhat dissatisfied
+          highly_dissatisfied: Highly dissatisfied
+        comment: Do you have any suggestions on how we should improve the service?
       publishers_job_listing_important_dates_form:
         expires_at_hh: Hour
         expires_at_meridiem: am or pm
@@ -378,8 +386,7 @@ en:
         user_participation_response: Would you like to participate in our research?
 
       jobseekers_account_feedback_form:
-        rating: >-
-          How satisfied are you with your experience of using Teaching Vacancies?
+        rating: How satisfied are you with your experience of using Teaching Vacancies?
 
       jobseekers_job_application_ask_for_support_form:
         support_needed: Do you want to ask for support so that you can attend an interview?
@@ -388,8 +395,7 @@ en:
           Are you banned or disqualified from working with children or subject to any sanctions or conditions on your
           employment, imposed by the Independent Safeguarding Authority (ISA), Secretary of State or other regulatory body
           (e.g. the GTCE)?
-        close_relationships: >-
-          Do you have any family or close relationship with people within %{organisation}?
+        close_relationships: Do you have any family or close relationship with people within %{organisation}?
         right_to_work_in_uk: Do you have the right to work in the UK?
       jobseekers_job_application_employment_history_form:
         gaps_in_employment: Have you had any gaps in employment?
@@ -404,8 +410,7 @@ en:
         ended_on: End date
         started_on: Start date
       jobseekers_job_application_feedback_form:
-        rating: >-
-          How satisfied are you with your experience of using Teaching Vacancies?
+        rating: How satisfied are you with your experience of using Teaching Vacancies?
       jobseekers_job_application_professional_status_form:
         statutory_induction_complete: Have you completed your statutory induction year?
         qualified_teacher_status: Do you have qualified teacher status (QTS)?
@@ -421,6 +426,8 @@ en:
         expires_on: Date application is due
         publish_on: Date job will be listed
         starts_on: Date job starts
+      publishers_job_listing_feedback_form:
+        rating: How satisfied are you with the job listing process on Teaching Vacancies?
       publishers_job_listing_important_dates_form:
         expires_on: Date application is due
         expires_at: Time application is due

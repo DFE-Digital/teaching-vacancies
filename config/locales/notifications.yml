@@ -15,6 +15,7 @@ en:
         error_body: Please make sure you have submitted an answer for both questions
         inline_error: Please select an option
         submitted_html: <span class="govuk-!-font-weight-bold">Feedback submitted</span> for %{job_title}
+        success: Thank you for your feedback
       listing_updated: Listing updated for %{job_title}
       manage_jobs_html: Back to <a href="%{link}" class="govuk-link govuk-link--no-visited-state">manage jobs</a>
       multi_school_job_notification_html: >-

@@ -1,26 +1,32 @@
-- content_for :page_title_prefix, t("jobs.confirmation_page.page_title", organisation: current_organisation.name)
+- content_for :page_title_prefix, t(".page_title", organisation: current_organisation.name)
 
-.vacancy.govuk-grid-row
+.govuk-grid-row
   .govuk-grid-column-two-thirds
-    .govuk-panel.govuk-panel--confirmation.submit-listing-success-gtm
+    = govuk_panel title: t(".success"), body: ""
 
-      h1.govuk-panel__title
-        = t("jobs.confirmation_page.submitted")
+    h3.govuk-heading-m = t(".what_happens_next")
 
-      .govuk-panel__body
-        - if @vacancy.publish_today?
-          p = link_to t("jobs.confirmation_page.view_posted_job"), job_path(@vacancy), class: "reversed-link"
-        - else
-          p = link_to t("jobs.confirmation_page.view_posted_job"), organisation_job_path(@vacancy.id), class: "reversed-link"
-
-        p class="govuk-!-margin-bottom-0"
-          = t("jobs.confirmation_page.dashboard_link_html", link: link_to("your dashboard", organisation_path, class: "reversed-link"))
-
-  .govuk-grid-column-two-thirds
-    h3.govuk-heading-m = t("jobs.confirmation_page.next_step")
     - if @vacancy.publish_today?
-      p = t("jobs.confirmation_page.date_posted_now")
+      p.govuk-body = t(".date_posted_now")
     - else
-      p = t("jobs.confirmation_page.date_posted", date: @vacancy.publish_on)
-    p = t("jobs.confirmation_page.date_expires", application_deadline: OrganisationVacancyPresenter.new(@vacancy).application_deadline)
-    p = t("jobs.confirmation_page.feedback_link_html", link_to: govuk_link_to(t("jobs.confirmation_page.feedback_link"), new_organisation_job_feedback_path(@vacancy.id)))
+      p.govuk-body = t(".date_posted", date: @vacancy.publish_on)
+
+    p.govuk-body
+      = t(".date_expires", application_deadline: OrganisationVacancyPresenter.new(@vacancy).application_deadline)
+
+    = govuk_link_to t(".view_jobs"), jobs_with_type_organisation_path(:published), button: true, class: "govuk-button--secondary"
+
+    .divider-bottom
+      h4.govuk-heading-s.share-this-job class="govuk-!-margin-top-0" = t("jobs.share_this_job")
+      = render "/shared/vacancy/share_buttons"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h3.govuk-heading-m = t(".feedback.heading")
+    p.govuk-body = t(".feedback.description")
+
+    = form_for @feedback_form, url: organisation_job_feedback_path(@vacancy.id) do |f|
+      = f.govuk_error_summary
+      = f.govuk_collection_radio_buttons :rating, Feedback.ratings.keys, :to_s
+      = f.govuk_text_area :comment, label: { size: "s" }, rows: 10, form_group: { classes: "optional-field" }
+      = f.govuk_submit t("buttons.submit_feedback")

@@ -93,19 +93,7 @@ RSpec.describe "Copying a vacancy" do
     end
     click_on I18n.t("buttons.submit_job_listing")
 
-    expect(page).to have_content(I18n.t("jobs.confirmation_page.submitted"))
-    click_on I18n.t("jobs.confirmation_page.view_posted_job")
-
-    expect(page).to have_content(new_vacancy.job_title)
-    expect(page).to have_content(new_vacancy.starts_on.to_s.strip)
-    expect(page).to have_content(new_vacancy.publish_on.to_s.strip)
-    expect(page).not_to have_content(original_vacancy.job_title)
-    expect(page).not_to have_content(original_vacancy.starts_on)
-    expect(page).not_to have_content(original_vacancy.publish_on)
-    expect(page).not_to have_content(original_vacancy.expires_on)
-
-    new_application_deadline = "#{format_date(new_vacancy.expires_on)} at #{format_time(new_vacancy.expires_at)}"
-    expect(page).to have_content(new_application_deadline)
+    expect(page).to have_content(I18n.t("publishers.vacancies.summary.success"))
   end
 
   context "when the original job is now invalid" do
@@ -157,10 +145,8 @@ RSpec.describe "Copying a vacancy" do
       expect(page).to have_content("Some description about the school")
 
       click_on I18n.t("buttons.submit_job_listing")
-      expect(page).to have_content(I18n.t("jobs.confirmation_page.submitted"))
 
-      click_on I18n.t("jobs.confirmation_page.view_posted_job")
-      expect(page).to have_content("Some description about the school")
+      expect(page).to have_content(I18n.t("publishers.vacancies.summary.success"))
     end
   end
 
