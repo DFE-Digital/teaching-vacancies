@@ -110,6 +110,11 @@ en:
       destroy:
         success_html: >-
           %{job_title} has been <span class="govuk-!-font-weight-bold delete-listing-success-gtm">deleted</span>
+      job_applications:
+        show:
+          page_title: Application
+          status_heading: Applicant status
+          timeline: Timeline
       show:
         notice: You can only view published jobs
       summary:
