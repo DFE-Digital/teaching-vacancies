@@ -150,7 +150,7 @@ RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: tru
     scenario "hiring staff can not see notification badge" do
       visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
-      expect(page).to have_content(I18n.t("jobs.manage.awaiting_feedback.no_jobs"))
+      expect(page).to have_content(I18n.t("jobs.manage.awaiting_feedback.no_jobs.no_filters"))
     end
   end
 

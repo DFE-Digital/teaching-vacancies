@@ -285,23 +285,33 @@ en:
         intro: >-
           Please tell us if you filled these expired jobs through Teaching Vacancies,
           and whether you listed them elsewhere. Your feedback will help us improve the service.
-        no_jobs: There are no jobs waiting for your feedback at the moment.
+        no_jobs:
+          no_filters: There are no jobs waiting for your feedback at the moment.
+          with_filters: There are no jobs waiting for your feedback for the schools you have selected.
       closing_date: Closing date
       copy_link_text: Copy listing
       delete_link_text: Delete
       draft:
-        no_jobs: You currently have no draft jobs.
+        no_jobs:
+          no_filters: You currently have no draft jobs.
+          with_filters: There are no draft jobs for the schools you have selected.
         time_created: Date drafted
         time_updated: Date last updated
       edit_link_text: Edit listing
       heading_html: "%{email} <span class='govuk-!-font-weight-regular'>- %{organisation}</span>"
       expired:
         expired_on: Expired on
-        no_jobs: You currently have no jobs that have passed the deadline.
+        no_jobs:
+          no_filters: You currently have no jobs that have passed the deadline.
+          with_filters: There are no jobs that have passed the deadline for the schools you have selected.
       pending:
-        no_jobs: You currently have no scheduled jobs.
+        no_jobs:
+          no_filters: You currently have no scheduled jobs.
+          with_filters: There are no scheduled jobs for the schools you have selected.
       published:
-        no_jobs: You currently have no published jobs.
+        no_jobs:
+          no_filters: You currently have no published jobs.
+          with_filters: There are no published jobs for the schools you have selected.
 
     date_listed: Date listed
     job_filled: Job filled on Teaching Vacancies?

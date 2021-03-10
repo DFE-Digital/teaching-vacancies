@@ -14,15 +14,15 @@ class Publishers::VacanciesComponent < ViewComponent::Base
   end
 
   def render?
-    @organisation.all_vacancies.active.any?
+    organisation.all_vacancies.active.any?
   end
 
   def selected?(vacancy_type)
-    @selected_type == vacancy_type
+    selected_type == vacancy_type
   end
 
   def vacancy_sort_options
-    Publishers::VacancySort.new(@organisation, @selected_type)
+    Publishers::VacancySort.new(organisation, selected_type)
   end
 
   def vacancy_links
@@ -30,47 +30,49 @@ class Publishers::VacanciesComponent < ViewComponent::Base
   end
 
   def grid_column_class
-    @organisation.is_a?(SchoolGroup) ? "govuk-grid-column-two-thirds" : "govuk-grid-column-full"
-  end
-
-  def filters_applied_text
-    I18n.t("jobs.manage.dashboard_filters.heading", count: @filters[:managed_school_ids]&.count)
+    organisation.is_a?(SchoolGroup) ? "govuk-grid-column-two-thirds" : "govuk-grid-column-full"
   end
 
   def vacancy_type_tab_link(vacancy_type, selected)
     link_to t(".#{vacancy_type}.tab_heading"), jobs_with_type_organisation_path(vacancy_type), class: "moj-primary-navigation__link", "aria-current": ("page" if selected)
   end
 
+  def no_jobs_text
+    I18n.t("jobs.manage.#{selected_type}.no_jobs.#{filters[:managed_school_ids]&.any? ? 'with' : 'no'}_filters")
+  end
+
   private
+
+  attr_reader :filters, :organisation, :selected_type, :sort, :vacancies
 
   def set_vacancies
     @vacancies =
-      if @filters[:managed_school_ids]&.any?
-        Vacancy.in_organisation_ids(@filters[:managed_school_ids])
+      if filters[:managed_school_ids]&.any?
+        Vacancy.in_organisation_ids(filters[:managed_school_ids])
       else
-        @organisation.all_vacancies
+        organisation.all_vacancies
       end
-    @vacancies = @vacancies.send(selected_scope)
-                           .order(@sort.column => @sort.order)
-                           .reject { |vacancy| vacancy.job_title.blank? }
-                           .map { |v| OrganisationVacancyPresenter.new(v) }
+    @vacancies = vacancies.send(selected_scope)
+                          .order(sort.column => sort.order)
+                          .reject { |vacancy| vacancy.job_title.blank? }
+                          .map { |v| OrganisationVacancyPresenter.new(v) }
   end
 
   def selected_scope
-    @selected_type == "published" ? "live" : @selected_type
+    @selected_type == "published" ? "live" : selected_type
   end
 
   def set_organisation_options
-    @organisation_options = @organisation.schools.not_closed.order(:name).map do |school|
+    @organisation_options = organisation.schools.not_closed.order(:name).map do |school|
       count = Vacancy.in_organisation_ids(school.id).send(selected_scope).count
       OpenStruct.new({ id: school.id, name: school.name, label: "#{school.name} (#{count})" })
     end
 
-    return if @organisation.group_type == "local_authority"
+    return if organisation.group_type == "local_authority"
 
-    count = Vacancy.in_organisation_ids(@organisation.id).send(selected_scope).count
+    count = Vacancy.in_organisation_ids(organisation.id).send(selected_scope).count
     @organisation_options.unshift(
-      OpenStruct.new({ id: @organisation.id, name: "Trust head office", label: "Trust head office (#{count})" }),
+      OpenStruct.new({ id: organisation.id, name: "Trust head office", label: "Trust head office (#{count})" }),
     )
   end
 end
