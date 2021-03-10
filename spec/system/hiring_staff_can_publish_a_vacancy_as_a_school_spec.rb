@@ -795,108 +795,17 @@ RSpec.describe "Creating a vacancy" do
         end
       end
 
-      scenario "redirects to the school vacancy page when published" do
+      scenario "redirects to the summary page when published" do
         vacancy = create(:vacancy, :draft)
         vacancy.organisation_vacancies.create(organisation: school)
         visit organisation_job_review_path(vacancy.id)
         click_on I18n.t("buttons.submit_job_listing")
 
-        expect(page).to have_content(I18n.t("jobs.confirmation_page.view_posted_job"))
+        expect(current_path).to eq(organisation_job_summary_path(vacancy.id))
       end
     end
 
     describe "#publish" do
-      scenario "adds the current user as a contact for feedback on the published vacancy" do
-        current_publisher = Publisher.find_by(oid: oid)
-        vacancy = create(:vacancy, :draft)
-        vacancy.organisation_vacancies.create(organisation: school)
-
-        visit organisation_job_review_path(vacancy.id)
-        click_on I18n.t("buttons.submit_job_listing")
-
-        expect(vacancy.reload.publisher_id).to eq(current_publisher.id)
-      end
-
-      context "when a start date has been given" do
-        scenario "view the published listing as a jobseeker" do
-          vacancy = create(:vacancy, :draft)
-          vacancy.organisation_vacancies.create(organisation: school)
-
-          visit organisation_job_review_path(vacancy.id)
-
-          click_on I18n.t("buttons.submit_job_listing")
-          save_page
-
-          click_on I18n.t("jobs.confirmation_page.view_posted_job")
-
-          verify_vacancy_show_page_details(VacancyPresenter.new(vacancy))
-        end
-      end
-
-      context "when the start date is as soon as possible" do
-        scenario "view the published listing as a jobseeker" do
-          vacancy = create(:vacancy, :draft, :starts_asap)
-          vacancy.organisation_vacancies.create(organisation: school)
-
-          visit organisation_job_review_path(vacancy.id)
-
-          click_on I18n.t("buttons.submit_job_listing")
-          save_page
-
-          click_on I18n.t("jobs.confirmation_page.view_posted_job")
-
-          verify_vacancy_show_page_details(VacancyPresenter.new(vacancy))
-        end
-      end
-
-      context "when the listing is full-time" do
-        scenario "view the full-time published listing as a job seeker" do
-          vacancy = create(:vacancy, :draft, working_patterns: %w[full_time])
-          vacancy.organisation_vacancies.create(organisation: school)
-
-          visit organisation_job_review_path(vacancy.id)
-
-          click_on I18n.t("buttons.submit_job_listing")
-          save_page
-
-          click_on I18n.t("jobs.confirmation_page.view_posted_job")
-
-          verify_vacancy_show_page_details(VacancyPresenter.new(vacancy))
-        end
-      end
-
-      context "when the listing is part-time" do
-        scenario "view the part-time published listing as a job seeker" do
-          vacancy = create(:vacancy, :draft, working_patterns: %w[part_time])
-          vacancy.organisation_vacancies.create(organisation: school)
-
-          visit organisation_job_review_path(vacancy.id)
-
-          click_on I18n.t("buttons.submit_job_listing")
-          save_page
-
-          click_on I18n.t("jobs.confirmation_page.view_posted_job")
-
-          verify_vacancy_show_page_details(VacancyPresenter.new(vacancy))
-        end
-      end
-
-      context "when the listing is both full- and part-time" do
-        scenario "view the full- and part-time published listing as a job seeker" do
-          vacancy = create(:vacancy, :draft, working_patterns: %w[full_time part_time])
-          vacancy.organisation_vacancies.create(organisation: school)
-
-          visit organisation_job_review_path(vacancy.id)
-
-          click_on I18n.t("buttons.submit_job_listing")
-          save_page
-
-          click_on I18n.t("jobs.confirmation_page.view_posted_job")
-
-          verify_vacancy_show_page_details(VacancyPresenter.new(vacancy))
-        end
-      end
-
       scenario "cannot be published unless the details are valid" do
         yesterday_date = Time.zone.yesterday
         vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow)
@@ -934,7 +843,7 @@ RSpec.describe "Creating a vacancy" do
         click_on I18n.t("buttons.continue")
 
         click_on I18n.t("buttons.submit_job_listing")
-        expect(page).to have_content(I18n.t("jobs.confirmation_page.submitted"))
+        expect(current_path).to eq(organisation_job_summary_path(vacancy.id))
       end
 
       scenario "can be published at a later date" do
@@ -955,11 +864,9 @@ RSpec.describe "Creating a vacancy" do
         visit organisation_job_review_path(vacancy.id)
         click_on I18n.t("buttons.submit_job_listing")
 
-        expect(page).to have_content(
-          "The listing will appear on the service until " \
-          "#{format_date(vacancy.expires_on)} at #{format_time(vacancy.expires_at)}, " \
-          "after which it will no longer be visible to jobseekers.",
-        )
+        expect(page)
+          .to have_content(I18n.t("publishers.vacancies.summary.date_expires",
+                                  application_deadline: OrganisationVacancyPresenter.new(vacancy).application_deadline))
       end
 
       scenario "a published vacancy cannot be republished" do
