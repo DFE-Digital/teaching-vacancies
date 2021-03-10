@@ -30,9 +30,5 @@
     .account-sidebar
       h2.account-sidebar__heading = t(".assistance.heading")
 
-    aside
-      ul.key-dates-timeline class="govuk-!-margin-bottom-0"
-        li.key-dates-timeline__item
-          h3.key-dates-timeline__title.govuk-heading-s = t("jobseekers.job_applications.steps.application_submitted")
-          p.key-dates-timeline__by
-            = format_date(job_application.submitted_at.to_date) + I18n.t("jobs.time_at") + format_time(job_application.submitted_at)
+    = render Shared::TimelineComponent.new do |timeline|
+      - timeline.date(key: t("jobseekers.job_applications.steps.application_submitted"), value: format_date(job_application.submitted_at.to_date) + I18n.t("jobs.time_at") + format_time(job_application.submitted_at))
