@@ -8,9 +8,7 @@ import 'src/styles/application.scss';
 
 import 'src/application/init';
 
-import 'shared/filters_component/filters_component';
-import 'shared/notification_component/notification_component';
-import 'shared/searchable_collection_component/searchable_collection_component';
+import 'src/components';
 
 Rails.start();
 

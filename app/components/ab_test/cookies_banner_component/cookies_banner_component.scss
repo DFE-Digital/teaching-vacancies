@@ -1,5 +1,6 @@
-.cookies-banner-component {
+@import 'base_component';
 
+.cookies-banner-component {
   @include govuk-responsive-padding(3, 'top');
   @include govuk-responsive-padding(0, 'bottom');
   background-color: rgba($color: govuk-colour('light-blue'), $alpha: 0.2);
