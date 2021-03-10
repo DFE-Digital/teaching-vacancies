@@ -1,3 +1,5 @@
+@import 'base_component';
+
 .job-alert-cta {
 
   @include govuk-media-query($until: desktop) {
@@ -16,7 +18,6 @@
   }
 
   .job-alert-cta__content {
-
     background-color: $govuk-brand-colour;
     padding: govuk-spacing(2);
     color: govuk-colour('white');

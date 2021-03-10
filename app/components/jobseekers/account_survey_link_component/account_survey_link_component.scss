@@ -1,3 +1,5 @@
+@import 'base_component';
+
 .account-survey-cta {
   @include govuk-media-query($until: desktop) {
     margin: 0 -15px !important
