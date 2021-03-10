@@ -131,12 +131,12 @@ Rails.application.routes.draw do
     resources :jobs, only: %i[create edit destroy delete show], controller: "publishers/vacancies" do
       resources :build, only: %i[show update], controller: "publishers/vacancies/build"
       resource :documents, only: %i[create destroy show], controller: "publishers/vacancies/documents"
-      get "review"
-      get "preview"
-      get "summary"
+      get :review
+      get :preview
+      get :summary
       post :publish, to: "publishers/vacancies/publish#create"
       get :publish, to: "publishers/vacancies/publish#create"
-      resource :feedback, only: %i[new create], controller: "publishers/vacancies/vacancy_publisher_feedbacks"
+      resource :feedback, only: %i[create], controller: "publishers/vacancies/feedbacks"
       resource :statistics, only: %i[update], controller: "publishers/vacancies/statistics"
       resource :copy, only: %i[new create], controller: "publishers/vacancies/copy"
     end

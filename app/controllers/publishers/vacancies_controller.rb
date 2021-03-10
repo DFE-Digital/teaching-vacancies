@@ -53,7 +53,10 @@ class Publishers::VacanciesController < Publishers::Vacancies::ApplicationContro
   end
 
   def summary
+    return redirect_to organisation_job_review_path(@vacancy.id) unless @vacancy.published?
+
     @vacancy = VacancyPresenter.new(@vacancy)
+    @feedback_form = Publishers::JobListing::FeedbackForm.new
   end
 
   private
@@ -65,8 +68,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::ApplicationContro
   def redirect_if_published
     return unless @vacancy.published?
 
-    redirect_to organisation_job_path(@vacancy.id),
-                notice: t("messages.jobs.already_published")
+    redirect_to organisation_job_path(@vacancy.id), notice: t("messages.jobs.already_published")
   end
 
   def redirect_to_incomplete_step

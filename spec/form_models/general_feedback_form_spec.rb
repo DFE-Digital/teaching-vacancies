@@ -47,7 +47,7 @@ RSpec.describe GeneralFeedbackForm, type: :model do
 
           it "ensures a valid email address is used" do
             expect(subject).to be_invalid
-            expect(subject.errors[:email]).to include(I18n.t("vacancy_publisher_feedback_errors.email.invalid"))
+            expect(subject.errors[:email]).to include(I18n.t("general_feedback_errors.email.invalid"))
           end
         end
       end
