@@ -8,8 +8,8 @@ nav
           = link_to t("nav.school_group_index_link", organisation_type: organisation_type_basic(current_organisation)), organisation_schools_path, class: "govuk-header__link"
       li class=active_link_class(root_path)
         = link_to t("nav.jobseekers_index_link"), root_path, class: "govuk-header__link"
-      li class=active_link_class(sessions_path)
-        = button_to t("nav.sign_out"), sessions_path, method: :delete, class: "govuk-header__link"
+      li class=active_link_class(destroy_publisher_session_path)
+        = button_to t("nav.sign_out"), destroy_publisher_session_path, method: :delete, class: "govuk-header__link"
     - else
       li.navbar-component__navigation-item--left class=active_link_class(root_path)
         = link_to t("nav.find_job"), root_path, class: "govuk-header__link"
@@ -23,5 +23,8 @@ nav
         li.navbar-component__navigation-spacer aria-hidden="true" tab-index="-1"
         li.navbar-component__navigation-item--right class=active_link_class(new_jobseeker_session_path)
           = link_to t("buttons.sign_in"), new_jobseeker_session_path, class: "govuk-header__link"
-        li.navbar-component__navigation-item--right class=active_link_class(new_identifications_path)
-          = link_to t("nav.for_schools"), new_identifications_path, class: "govuk-header__link"
+        li.navbar-component__navigation-item--right class=active_link_class(new_publisher_session_path)
+          - if AuthenticationFallback.enabled?
+            = link_to t("nav.for_schools"), new_auth_email_path, class: "govuk-header__link"
+          - else
+            = link_to t("nav.for_schools"), new_publisher_session_path, class: "govuk-header__link"

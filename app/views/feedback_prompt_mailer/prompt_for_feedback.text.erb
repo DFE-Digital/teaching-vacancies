@@ -8,7 +8,7 @@ We’re constantly working to improve #{t('app.title')}. You can help us do so b
   <%="* #{vacancy.job_title}" %>
 <% end %>
 
-It should only take a minute or 2 of your time. Just <%= notify_link(new_identifications_url, "sign into your Teaching Vacancies account") %> and select the ‘Jobs awaiting feedback’ tab.
+It should only take a minute or 2 of your time. Just <%= notify_link(new_publisher_session_url, "sign into your Teaching Vacancies account") %> and select the ‘Jobs awaiting feedback’ tab.
 
 If you are already signed in to your Teaching Vacancies account you can access the expired jobs awaiting your feedback by clicking <%= notify_link(jobs_with_type_organisation_url(type: 'awaiting_feedback') , "here") %>.
 

@@ -55,6 +55,32 @@ Rails.application.routes.draw do
     resource :account_feedback, only: %i[new create]
   end
 
+  devise_for :publishers, controllers: {
+    omniauth_callbacks: "publishers/omniauth_callbacks",
+    sessions: "publishers/sessions",
+  }
+
+  scope :publishers do
+    devise_scope :publisher do
+      get "sign_in", to: "publishers/sessions#new", as: :new_publisher_session
+      delete "sign_out", to: "publishers/sessions#destroy", as: :destroy_publisher_session
+    end
+
+    # Authentication fallback with emailed magic link
+    get "auth/email/sessions/new", to: "publishers/sign_in/email/sessions#new",
+                                   as: "new_auth_email"
+    post "auth/email/sessions/check-your-email", to: "publishers/sign_in/email/sessions#check_your_email",
+                                                 as: "auth_email_check_your_email"
+    get "auth/email/sessions/choose-organisation", to: "publishers/sign_in/email/sessions#choose_organisation",
+                                                   as: "auth_email_choose_organisation"
+    get "auth/email/sessions/sign-in", to: "publishers/sign_in/email/sessions#create",
+                                       as: "auth_email_create_session"
+    get "auth/email/sessions/sign-out", to: "publishers/sign_in/email/sessions#destroy",
+                                        as: "auth_email_sign_out"
+    get "auth/email/sessions/change-organisation", to: "publishers/sign_in/email/sessions#change_organisation",
+                                                   as: "auth_email_change_organisation"
+  end
+
   root "home#index"
 
   get "check" => "application#check"
@@ -90,36 +116,6 @@ Rails.application.routes.draw do
       get "/location_suggestion(/:location)", to: "location_suggestion#show", as: :location_suggestion
     end
   end
-
-  resource :identifications, only: %i[new create], controller: "publishers/identifications"
-
-  # Sign in
-  resource :sessions, only: %i[destroy], controller: "publishers/sessions"
-
-  # Authentication fallback with emailed magic link
-  get "auth/email/sessions/new", to: "publishers/sign_in/email/sessions#new",
-                                 as: "new_auth_email"
-  post "auth/email/sessions/check-your-email", to: "publishers/sign_in/email/sessions#check_your_email",
-                                               as: "auth_email_check_your_email"
-  get "auth/email/sessions/choose-organisation", to: "publishers/sign_in/email/sessions#choose_organisation",
-                                                 as: "auth_email_choose_organisation"
-  get "auth/email/sessions/sign-in", to: "publishers/sign_in/email/sessions#create",
-                                     as: "auth_email_create_session"
-  get "auth/email/sessions/sign-out", to: "publishers/sign_in/email/sessions#destroy",
-                                      as: "auth_email_sign_out"
-  get "auth/email/sessions/change-organisation", to: "publishers/sign_in/email/sessions#change_organisation",
-                                                 as: "auth_email_change_organisation"
-
-  # DfE Sign In
-  resource :sessions,
-           only: %i[create new],
-           as: :dfe,
-           path: "/dfe/sessions",
-           controller: "publishers/sign_in/dfe/sessions"
-
-  get "/auth/dfe/callback", to: "publishers/sign_in/dfe/sessions#create"
-  get "/auth/dfe/signout", to: "publishers/sign_in/dfe/sessions#destroy"
-  get "/auth/failure", to: redirect("/dfe/sessions/new", status: 303)
 
   resource :terms_and_conditions, only: %i[show update], controller: "publishers/terms_and_conditions"
 

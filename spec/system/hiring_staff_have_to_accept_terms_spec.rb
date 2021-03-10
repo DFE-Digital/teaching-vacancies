@@ -50,7 +50,7 @@ RSpec.describe "Hiring staff accepts terms and conditions" do
         visit terms_and_conditions_path
         click_on(I18n.t("nav.sign_out"))
 
-        expect(page).to have_content(I18n.t("messages.access.publisher_signed_out"))
+        expect(page).to have_content(I18n.t("devise.sessions.signed_out"))
       end
 
       scenario "without authentication fallback" do
@@ -60,9 +60,7 @@ RSpec.describe "Hiring staff accepts terms and conditions" do
 
         click_on(I18n.t("nav.sign_out"))
 
-        sign_out_via_dsi
-
-        expect(page).to have_content(I18n.t("messages.access.publisher_signed_out"))
+        expect(page).to have_content(I18n.t("devise.sessions.signed_out"))
       end
     end
   end

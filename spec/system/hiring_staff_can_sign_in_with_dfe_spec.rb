@@ -59,7 +59,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
     scenario "it redirects the sign in page to the school page" do
       visit root_path
       sign_in_publisher
-      visit new_identifications_path
+      visit new_publisher_session_path
 
       expect(page).to have_content(organisation.name)
       expect(current_path).to eq(organisation_path)
@@ -126,7 +126,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
         visit root_path
         sign_in_publisher
 
-        visit new_identifications_path
+        visit new_publisher_session_path
         expect(page).to have_content(organisation.name)
         expect(current_path).to eq(organisation_path)
       end
@@ -167,7 +167,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
         visit root_path
         sign_in_publisher
 
-        visit new_identifications_path
+        visit new_publisher_session_path
         expect(current_path).to eq(organisation_path)
       end
     end

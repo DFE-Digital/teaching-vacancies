@@ -20,10 +20,7 @@ RSpec.describe "Hiring staff session" do
     travel(Publishers::BaseController::TIMEOUT_PERIOD + 1.minute) do
       click_on I18n.t("buttons.continue")
 
-      sign_out_via_dsi
-
-      expect(page).to have_content("signed out")
-      expect(page).to have_content("inactive")
+      expect(page).to have_content(I18n.t("devise.failure.timeout"))
     end
   end
 
