@@ -6,31 +6,6 @@
     overflow-wrap: break-word;
   }
 
-  &--metadata {
-    background-color: govuk-colour('light-grey');
-
-    margin-bottom: $govuk-gutter;
-    padding: $govuk-gutter-half;
-    @include govuk-media-query($until: tablet) {
-      margin-top: $govuk-gutter;
-    }
-
-    dl {
-      dt {
-        @include govuk-font(19, $weight: bold);
-      }
-
-      dd {
-        margin-bottom: $govuk-gutter-half;
-        margin-left: 0;
-
-        &:last-of-type {
-          margin-bottom: 0;
-        }
-      }
-    }
-  }
-
   #map {
     height: 500px;
     margin-top: govuk-spacing(6);

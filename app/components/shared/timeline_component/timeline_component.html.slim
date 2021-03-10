@@ -1,0 +1,7 @@
+= tag.aside(class: classes, **html_attributes) do
+  - if heading.present?
+    == heading
+  - if dates.present?
+    ul.timeline-component__dates
+      - dates.each do |date|
+        == date

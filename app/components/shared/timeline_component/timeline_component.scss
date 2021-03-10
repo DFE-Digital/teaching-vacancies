@@ -1,0 +1,65 @@
+@import 'base_component';
+
+.timeline-component {
+  background-color: govuk-colour('light-grey');
+  margin-bottom: $govuk-gutter;
+  padding: $govuk-gutter-half;
+
+  @include govuk-media-query($until: tablet) {
+    margin-top: $govuk-gutter;
+  }
+
+  ul.timeline-component__dates {
+    list-style-type: none;
+    margin: 0 0 15px;
+    overflow: hidden;
+    padding-left: 0;
+    position: relative;
+
+    li:first-of-type {
+      &::before {
+        top: 10px;
+      }
+    }
+
+    li:last-of-type {
+      &::before {
+        height: 10px;
+      }
+    }
+
+    .timeline-component__date {
+      margin-bottom: 10px;
+      padding-left: 20px;
+      position: relative;
+
+      &::before {
+        background-color: $govuk-brand-colour;
+        content: '';
+        height: 130%;
+        left: 0;
+        position: absolute;
+        width: 5px;
+      }
+
+      &__key {
+        display: inline;
+        line-height: 1.31579;
+
+        &::before {
+          background-color: $govuk-brand-colour;
+          content: '';
+          height: 5px;
+          left: 0;
+          position: absolute;
+          top: 10px;
+          width: 15px;
+        }
+      }
+
+      &__value {
+        margin: 0;
+      }
+    }
+  }
+}
