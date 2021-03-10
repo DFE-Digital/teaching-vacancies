@@ -1,0 +1,32 @@
+- content_for :page_title_prefix, t(".page_title")
+
+.jobs-banner
+  .govuk-width-container
+    .govuk-grid-row
+      .govuk-grid-column-full
+        = govuk_breadcrumbs breadcrumbs: { "#{t("jobs.published_jobs")}": jobs_with_type_organisation_path(:published),
+                                           "#{vacancy.job_title}": "",
+                                           "#{job_application.application_data["first_name"]} #{job_application.application_data["last_name"]}": "" }
+        .govuk-caption-l class="govuk-!-margin-top-5"
+          = t("jobseekers.job_applications.heading_component.caption",
+              job_title: vacancy.job_title, organisation_name: vacancy.parent_organisation_name)
+        h2.govuk-heading-xl class="govuk-!-margin-bottom-5"
+          = "TV12345 - #{job_application.application_data['first_name']} #{job_application.application_data['last_name']}"
+
+        div
+          span.govuk-body class="govuk-!-margin-right-5" = t(".status_heading")
+          = govuk_tag text: "review", colour: "blue"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = govuk_link_to t("buttons.shortlist"), "#", button: true, class: "govuk-!-margin-right-3"
+    = govuk_link_to t("buttons.reject"), "#", button: true, class: "govuk-button--warning govuk-!-margin-right-3"
+    = govuk_link_to t("buttons.download_application"), "#", button: true, class: "govuk-button--secondary"
+
+  .govuk-grid-column-one-third
+    .account-sidebar
+      h2.account-sidebar__heading = t(".timeline")
+
+    = render Shared::TimelineComponent.new do |timeline|
+      - timeline.date(key: t("jobseekers.job_applications.steps.application_submitted"),
+                      value: format_date(job_application.submitted_at.to_date) + I18n.t("jobs.time_at") + format_time(job_application.submitted_at))
