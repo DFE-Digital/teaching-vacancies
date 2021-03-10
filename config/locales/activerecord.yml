@@ -57,15 +57,9 @@ en:
       inclusion: Choose how satisfied you are with the application process
     comment:
       too_long: Feedback must not be more than 1,200 characters
-  vacancy_publisher_feedback_errors: &vacancy_publisher_feedback_errors
-    user_participation_response:
-      inclusion: Please indicate if you'd like to participate in user research
-    email:
-      blank: Enter your email address
-      invalid: Enter an email address in the correct format, like name@example.com
-    comment:
-      blank: Enter your feedback
-      too_long: Feedback must not be more than 1,200 characters
+  publisher_job_listing_feedback_form: &publisher_job_listing_feedback_form_errors
+    rating:
+      inclusion: Choose how satisfied you are with the job listing process
 
   # Hiring staff journey
   job_location_errors: &job_location_errors
@@ -161,15 +155,13 @@ en:
         jobseekers/nqt_job_alerts_form:
           attributes:
             <<: *nqt_job_alert_errors
-        publishers/organisation_form:
-          attributes:
-            <<: *organisation_errors
         jobseekers/subscription_form:
           attributes:
             <<: *subscription_errors
         jobseekers/unsubscribe_feedback_form:
           attributes:
             <<: *unsubscribe_feedback_errors
+
         # Hiring staff journey
         publishers/job_listing/job_location_form:
           attributes:
@@ -196,13 +188,17 @@ en:
           attributes:
             <<: *job_details_errors
             <<: *important_dates_errors
-        publishers/vacancies/vacancy_publisher_feedback_form:
+        publishers/job_listing/feedback_form:
           attributes:
-            <<: *vacancy_publisher_feedback_errors
+            <<: *publisher_job_listing_feedback_form_errors
+        publishers/organisation_form:
+          attributes:
+            <<: *organisation_errors
         publishers/terms_and_conditions_form:
           attributes:
             terms:
               blank: Tick the box to agree to the Terms and Conditions
+
         # Job application
         jobseekers/job_application/ask_for_support_form:
           attributes:

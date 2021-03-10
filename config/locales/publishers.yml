@@ -112,6 +112,21 @@ en:
           %{job_title} has been <span class="govuk-!-font-weight-bold delete-listing-success-gtm">deleted</span>
       show:
         notice: You can only view published jobs
+      summary:
+        date_expires: >-
+          The listing will appear on the service until %{application_deadline}, after which it will no longer be
+          visible to jobseekers
+        date_posted: Your job listing will be posted on %{date}.
+        date_posted_now: Your job listing has been posted.
+        feedback:
+          description: >-
+            Your feedback can help us improve the service to better support you as well as schools around England.
+          heading: Have time to share some feedback?
+        page_title: The job listing for %{organisation} has been completed
+        success: The job listing has been completed
+        view_jobs: View your job listings
+        what_happens_next: What happens next
+
       vacancy_publisher_feedbacks:
         new:
           already_submitted: Feedback for this job has already been submitted
