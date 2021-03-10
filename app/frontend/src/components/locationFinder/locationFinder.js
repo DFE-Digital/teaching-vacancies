@@ -15,7 +15,7 @@ export const ERROR_MESSAGE = 'Unable to find your location';
 export const LOGGING_MESSAGE = '[Module: locationFinder]: Unable to find user location';
 
 export const DEFAULT_PLACEHOLDER = 'City, town or postcode';
-export const LOADING_PLACEHOLDER = 'Finding Location...';
+export const LOADING_PLACEHOLDER = 'Requesting location...';
 
 export const startLoading = (container, input) => {
   input.disabled = true;
