@@ -19,6 +19,11 @@ RSpec.describe "Jobseekers can give job application feedback after submitting th
     check "Confirm data usage"
 
     click_on I18n.t("buttons.submit_application")
+
+    click_on I18n.t("buttons.submit_feedback")
+
+    expect(page).to have_content("There is a problem")
+
     choose I18n.t("helpers.label.jobseekers_job_application_feedback_form.rating_options.somewhat_satisfied")
     fill_in "jobseekers_job_application_feedback_form[comment]", with: comment
 
