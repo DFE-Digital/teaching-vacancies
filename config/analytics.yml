@@ -87,6 +87,12 @@ shared:
     - group_type
     - local_authority_within
     - establishment_status
+  organisation_publishers:
+    - id
+    - organisation_id
+    - publisher_id
+    - created_at
+    - updated_at
   organisation_vacancies:
     - id
     - organisation_id

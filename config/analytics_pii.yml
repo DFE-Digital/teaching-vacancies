@@ -21,6 +21,10 @@ shared:
     - unconfirmed_email
   organisations:
     - id
+  organisation_publishers:
+    - id
+    - organisation_id
+    - publisher_id
   organisation_vacancies:
     - id
     - organisation_id
