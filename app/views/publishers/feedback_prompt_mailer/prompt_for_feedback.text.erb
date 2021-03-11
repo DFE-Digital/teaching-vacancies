@@ -2,7 +2,7 @@
 
 Dear vacancy publisher,
 
-We’re constantly working to improve #{t('app.title')}. You can help us do so by answering a couple of quick questions about the following expired job listings for your school:
+We’re constantly working to improve <%= t('app.title') %>. You can help us do so by answering a couple of quick questions about the following expired job listings for your school:
 
 <%- @vacancies.each do |vacancy| %>
   <%="* #{vacancy.job_title}" %>

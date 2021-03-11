@@ -25,7 +25,7 @@ Devise.setup do |config|
   # config.mailer_sender = "please-change-me-at-config-initializers-devise@example.com"
 
   # Configure the class responsible to send e-mails.
-  config.mailer = "JobseekerMailer"
+  config.mailer = "Jobseekers::AccountMailer"
 
   # Configure the parent class responsible to send e-mails.
   config.parent_mailer = "Mail::Notify::Mailer"

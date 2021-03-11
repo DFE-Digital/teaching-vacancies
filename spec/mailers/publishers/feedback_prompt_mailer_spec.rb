@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe FeedbackPromptMailer, type: :mailer do
+RSpec.describe Publishers::FeedbackPromptMailer, type: :mailer do
   include DatesHelper
 
   let(:body) { mail.body.raw_source }
