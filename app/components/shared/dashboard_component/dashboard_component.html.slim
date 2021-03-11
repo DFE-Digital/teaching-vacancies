@@ -1,4 +1,4 @@
-.dashboard-component__header
+.dashboard-component
   .govuk-width-container
     h2.govuk-heading-m class="govuk-!-margin-bottom-2"
       = heading
@@ -6,7 +6,7 @@
   .govuk-width-container
     - if link.present?
       .filters-information.moj-action-bar
-        = govuk_button_to link[:text], link[:url], class: "govuk-!-margin-bottom-0 govuk-!-margin-top-0 dashboard__link"
+        = govuk_button_to link[:text], link[:url], class: "govuk-!-margin-bottom-0 govuk-!-margin-top-0 dashboard-component__link"
     .moj-primary-navigation
       .moj-primary-navigation__container
         .moj-primary-navigation__nav aria-label="Account navigation"
