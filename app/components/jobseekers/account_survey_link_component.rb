@@ -5,7 +5,7 @@ class Jobseekers::AccountSurveyLinkComponent < ViewComponent::Base
 
   def link_to_survey
     link_to(
-      I18n.t("jobseekers.accounts.footer.survey_link"),
+      t(".survey_link"),
       new_jobseekers_account_feedback_path(origin: @origin),
       id: "account-survey-link-sticky-gtm",
     )

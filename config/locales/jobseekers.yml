@@ -1,9 +1,6 @@
 en:
   jobseekers:
     accounts:
-      footer:
-        survey_link: take our quick survey
-        survey_text_html: Spare some time to %{link} on your account experience with Teaching Vacancies.
       header:
         accessible_signed_in_as: You are signed in as
       show:
@@ -23,6 +20,9 @@ en:
         success: Thank you for your feedback
       new:
         title: Account survey
+    account_survey_link_component:
+      survey_link: take our quick survey
+      survey_text_html: Spare some time to %{link} on your account experience with Teaching Vacancies.
     confirmations:
       new:
         description: The link has expired. You need to request that a new link is sent to your email address (%{email}).
