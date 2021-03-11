@@ -110,7 +110,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
         fill_in_subscription_fields
 
         message_delivery = instance_double(ActionMailer::MessageDelivery)
-        expect(SubscriptionMailer).to receive(:confirmation) { message_delivery }
+        expect(Jobseekers::SubscriptionMailer).to receive(:confirmation) { message_delivery }
         expect(message_delivery).to receive(:deliver_later)
         click_on I18n.t("buttons.subscribe")
       end
@@ -134,7 +134,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
         fill_in_subscription_fields
 
         message_delivery = instance_double(ActionMailer::MessageDelivery)
-        expect(SubscriptionMailer).to receive(:confirmation) { message_delivery }
+        expect(Jobseekers::SubscriptionMailer).to receive(:confirmation) { message_delivery }
         expect(message_delivery).to receive(:deliver_later)
         click_on I18n.t("buttons.subscribe")
       end

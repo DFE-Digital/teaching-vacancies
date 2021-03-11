@@ -8,7 +8,7 @@ class AlertEmail::Base < ApplicationJob
       vacancies = vacancies_for_subscription(subscription)
       next if vacancies.blank?
 
-      AlertMailer.alert(subscription.id, vacancies.pluck(:id)).deliver_later
+      Jobseekers::AlertMailer.alert(subscription.id, vacancies.pluck(:id)).deliver_later
     end
   end
 

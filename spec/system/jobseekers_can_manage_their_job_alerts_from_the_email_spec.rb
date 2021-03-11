@@ -94,7 +94,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the email" do
 
       before do
         message_delivery = instance_double(ActionMailer::MessageDelivery)
-        expect(SubscriptionMailer).to receive(:update) { message_delivery }
+        expect(Jobseekers::SubscriptionMailer).to receive(:update) { message_delivery }
         expect(message_delivery).to receive(:deliver_later)
 
         update_subscription_fields

@@ -23,7 +23,7 @@ RSpec.describe SendWeeklyAlertEmailJob, type: :job do
     end
 
     it "sends an email" do
-      expect(AlertMailer).to receive(:alert).with(subscription.id, vacancies.pluck(:id)) { mail }
+      expect(Jobseekers::AlertMailer).to receive(:alert).with(subscription.id, vacancies.pluck(:id)) { mail }
       expect(mail).to receive(:deliver_later) { ActionMailer::DeliveryJob.new }
       perform_enqueued_jobs { job }
     end
@@ -32,7 +32,7 @@ RSpec.describe SendWeeklyAlertEmailJob, type: :job do
       let!(:run) { subscription.alert_runs.create(run_on: Date.current) }
 
       it "does not send another email" do
-        expect(AlertMailer).to_not receive(:alert)
+        expect(Jobseekers::AlertMailer).to_not receive(:alert)
         perform_enqueued_jobs { job }
       end
     end
@@ -43,7 +43,7 @@ RSpec.describe SendWeeklyAlertEmailJob, type: :job do
       end
 
       it "does not send an email" do
-        expect(AlertMailer).to_not receive(:alert)
+        expect(Jobseekers::AlertMailer).to_not receive(:alert)
         perform_enqueued_jobs { job }
       end
 
