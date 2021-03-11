@@ -393,6 +393,10 @@ en:
         benefits: Employee benefits
         salary: Salary
 
+      publishers_vacancy_statistics_form:
+        hired_status: Job filled on Teaching Vacancies?
+        listed_elsewhere: Listed elsewhere?
+
     legend:
       general_feedback_form:
         visit_purpose: What did you come to Teaching Vacancies to do?
