@@ -15,7 +15,7 @@ class NqtJobAlertsController < ApplicationController
     else
       subscription.recaptcha_score = recaptcha_reply["score"]
       subscription.save
-      SubscriptionMailer.confirmation(subscription.id).deliver_later
+      Jobseekers::SubscriptionMailer.confirmation(subscription.id).deliver_later
       trigger_subscription_created_event(subscription)
       render :confirm
     end

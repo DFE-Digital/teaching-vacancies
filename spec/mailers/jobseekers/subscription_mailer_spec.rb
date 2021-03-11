@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe SubscriptionMailer, type: :mailer do
+RSpec.describe Jobseekers::SubscriptionMailer, type: :mailer do
   include ERB::Util
 
   let(:email) { "an@email.com" }
@@ -33,13 +33,14 @@ RSpec.describe SubscriptionMailer, type: :mailer do
     let(:notify_template) { NOTIFY_SUBSCRIPTION_CONFIRMATION_TEMPLATE }
 
     it "sends a confirmation email" do
-      expect(mail.subject).to eq(I18n.t("subscription_mailer.confirmation.subject"))
+      expect(mail.subject).to eq(I18n.t("jobseekers.subscription_mailer.confirmation.subject"))
       expect(mail.to).to eq([subscription.email])
-      expect(body).to include(I18n.t("subscription_mailer.confirmation.title"))
+      expect(body).to include(I18n.t("jobseekers.subscription_mailer.confirmation.title"))
                   .and include(I18n.t("subscriptions.intro"))
                   .and include("Keyword: English")
-                  .and include(I18n.t("subscription_mailer.confirmation.next_steps", frequency: I18n.t("subscription_mailer.confirmation.frequency.#{subscription.frequency}")))
-                  .and include(I18n.t("subscription_mailer.confirmation.unsubscribe_link_text"))
+                  .and include(I18n.t("jobseekers.subscription_mailer.confirmation.next_steps",
+                                      frequency: I18n.t("jobseekers.subscription_mailer.confirmation.frequency.#{subscription.frequency}")))
+                  .and include(I18n.t("jobseekers.subscription_mailer.confirmation.unsubscribe_link_text"))
                   .and include(unsubscribe_subscription_url(subscription.token, **campaign_params))
     end
 
@@ -65,13 +66,13 @@ RSpec.describe SubscriptionMailer, type: :mailer do
         let!(:jobseeker) { create(:jobseeker, email: email) }
 
         it "does not display create account section" do
-          expect(body).not_to include(I18n.t("subscription_mailer.confirmation.create_account.heading"))
+          expect(body).not_to include(I18n.t("jobseekers.subscription_mailer.confirmation.create_account.heading"))
         end
       end
 
       context "when the subscription email does not match a jobseeker account" do
         it "displays create account section" do
-          expect(body).to include(I18n.t("subscription_mailer.confirmation.create_account.heading"))
+          expect(body).to include(I18n.t("jobseekers.subscription_mailer.confirmation.create_account.heading"))
         end
       end
     end
@@ -82,13 +83,14 @@ RSpec.describe SubscriptionMailer, type: :mailer do
     let(:notify_template) { NOTIFY_SUBSCRIPTION_UPDATE_TEMPLATE }
 
     it "sends a confirmation email" do
-      expect(mail.subject).to eq(I18n.t("subscription_mailer.update.subject"))
+      expect(mail.subject).to eq(I18n.t("jobseekers.subscription_mailer.update.subject"))
       expect(mail.to).to eq([subscription.email])
-      expect(body).to include(I18n.t("subscription_mailer.update.title"))
+      expect(body).to include(I18n.t("jobseekers.subscription_mailer.update.title"))
                   .and include(I18n.t("subscriptions.intro"))
                   .and include("Keyword: English")
-                  .and include(I18n.t("subscription_mailer.update.next_steps", frequency: I18n.t("subscription_mailer.confirmation.frequency.#{subscription.frequency}")))
-                  .and include(I18n.t("subscription_mailer.update.unsubscribe_link_text"))
+                  .and include(I18n.t("jobseekers.subscription_mailer.update.next_steps",
+                                      frequency: I18n.t("jobseekers.subscription_mailer.confirmation.frequency.#{subscription.frequency}")))
+                  .and include(I18n.t("jobseekers.subscription_mailer.update.unsubscribe_link_text"))
                   .and include(unsubscribe_subscription_url(subscription.token, **campaign_params))
     end
 

@@ -15,9 +15,9 @@ RSpec.describe "Jobseekers can change email" do
       expect(page).to have_content("There is a problem")
 
       expect { update_jobseeker_email("new@email.com", jobseeker.password) }.to change { delivered_emails.count }.by(2)
-      expect(delivered_emails.first.subject).to eq(I18n.t("jobseeker_mailer.email_changed.subject"))
+      expect(delivered_emails.first.subject).to eq(I18n.t("jobseekers.account_mailer.email_changed.subject"))
       expect(delivered_emails.first.to.first).to eq(jobseeker.email)
-      expect(delivered_emails.second.subject).to eq(I18n.t("jobseeker_mailer.confirmation_instructions.reconfirmation.subject"))
+      expect(delivered_emails.second.subject).to eq(I18n.t("jobseekers.account_mailer.confirmation_instructions.reconfirmation.subject"))
       expect(delivered_emails.second.to.first).to eq("new@email.com")
       expect(current_path).to eq(jobseekers_check_your_email_path)
 

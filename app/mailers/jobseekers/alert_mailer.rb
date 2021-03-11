@@ -1,4 +1,4 @@
-class AlertMailer < ApplicationMailer
+class Jobseekers::AlertMailer < Jobseekers::BaseMailer
   self.delivery_job = AlertMailerJob
   helper DatesHelper
 
@@ -12,14 +12,10 @@ class AlertMailer < ApplicationMailer
 
     @vacancies = VacanciesPresenter.new(Vacancy.where(id: vacancy_ids).order(:expires_at))
 
-    view_mail(@template, to: @to, subject: I18n.t("alert_mailer.alert.subject"))
+    view_mail(@template, to: @to, subject: I18n.t("jobseekers.alert_mailer.alert.subject"))
   end
 
   private
-
-  def email_event
-    @email_event ||= EmailEvent.new(@template, @to, jobseeker: jobseeker)
-  end
 
   def email_event_data
     { subscription_identifier: StringAnonymiser.new(subscription.id), subscription_frequency: subscription.frequency }

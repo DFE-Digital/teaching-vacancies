@@ -82,7 +82,7 @@ class Publishers::SignIn::Email::SessionsController < Publishers::BaseController
   end
 
   def send_login_key(publisher:)
-    AuthenticationFallbackMailer.sign_in_fallback(
+    Publishers::AuthenticationFallbackMailer.sign_in_fallback(
       login_key_id: generate_login_key(publisher: publisher).id,
       publisher: publisher,
     ).deliver_later

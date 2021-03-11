@@ -7,6 +7,14 @@
 
 <%= t(".next_steps", frequency: t(".frequency.#{subscription.frequency}")) %>
 
-<%= t(".unsubscribe") %>
 ---
-<%= unsubscribe_link(subscription) %>
+
+<%- unless jobseeker.present? %>
+  # <%= t(".create_account.heading") %>
+  <%= t(".create_account.intro", link_to: sign_up_link(subscription)) %>
+
+  ---
+
+<% end %>
+
+<%= t(".unsubscribe", unsubscribe_link: unsubscribe_link(subscription)) %>

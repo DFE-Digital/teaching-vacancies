@@ -12,7 +12,7 @@ RSpec.describe "NQT job alerts", recaptcha: true, vcr: { cassette_name: "algolia
       fill_in_nqt_job_alert_form
 
       message_delivery = instance_double(ActionMailer::MessageDelivery)
-      expect(SubscriptionMailer).to receive(:confirmation) { message_delivery }
+      expect(Jobseekers::SubscriptionMailer).to receive(:confirmation) { message_delivery }
       expect(message_delivery).to receive(:deliver_later)
       click_on I18n.t("buttons.subscribe")
 

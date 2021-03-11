@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe AuthenticationFallbackMailer, type: :mailer do
+RSpec.describe Publishers::AuthenticationFallbackMailer, type: :mailer do
   describe "the user receives the sign in email containing the magic link" do
     let(:publisher) { create(:publisher) }
     let(:login_key) { publisher.emergency_login_keys.create(not_valid_after: Time.current + 10.minutes) }

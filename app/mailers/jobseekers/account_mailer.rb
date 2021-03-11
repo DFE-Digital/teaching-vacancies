@@ -1,19 +1,4 @@
-class JobseekerMailer < ApplicationMailer
-  include Devise::Controllers::UrlHelpers
-  default template_path: "jobseeker_mailer"
-
-  def application_submitted(job_application)
-    @vacancy = job_application.vacancy
-    @organisation_name = @vacancy.parent_organisation.name
-    @contact_email = @vacancy.contact_email
-    @jobseeker = job_application.jobseeker
-
-    @template = NOTIFY_JOBSEEKER_APPLICATION_SUBMITTED_CONFIRMATION_TEMPLATE
-    @to = job_application.jobseeker.email
-
-    view_mail(@template, to: @to, subject: I18n.t("jobseeker_mailer.application_submitted.subject"))
-  end
-
+class Jobseekers::AccountMailer < Jobseekers::BaseMailer
   def confirmation_instructions(record, token, _opts = {})
     @template = NOTIFY_JOBSEEKER_CONFIRMATION_TEMPLATE
     @jobseeker = record
@@ -55,10 +40,6 @@ class JobseekerMailer < ApplicationMailer
 
   private
 
-  def email_event
-    @email_event ||= EmailEvent.new(@template, @to, jobseeker: @jobseeker)
-  end
-
   def email_event_data
     case action_name
     when "confirmation_instructions"
@@ -66,9 +47,5 @@ class JobseekerMailer < ApplicationMailer
     else
       {}
     end
-  end
-
-  def email_event_prefix
-    "jobseeker"
   end
 end
