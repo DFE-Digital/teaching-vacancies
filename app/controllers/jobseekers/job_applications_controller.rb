@@ -17,7 +17,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
     return redirect_to expired_jobseekers_job_job_application_path(vacancy.id) unless vacancy.listed?
 
     if params[:commit] == t("buttons.save_as_draft")
-      redirect_to jobseeker_root_path, notice: "Application saved as draft"
+      redirect_to jobseekers_job_applications_path, success: t("messages.jobseekers.job_applications.saved")
     elsif review_form.valid?
       job_application.update(status: :submitted, submitted_at: Time.zone.now)
       JobseekerMailer.application_submitted(job_application).deliver_later
