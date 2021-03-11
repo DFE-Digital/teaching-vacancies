@@ -21,6 +21,29 @@ en:
         sign_in:
           description: You must sign in to your Teaching Vacancies account to list a job.
           title: Sign in to Teaching Vacancies
+    no_vacancies_component:
+      bullets:
+        required:
+          - job title
+          - job role
+          - working pattern
+          - salary
+          - date job will be listed
+          - date application is due
+          - time application is due
+          - contact email
+          - job summary
+          - information about the school
+        optional:
+          - subject
+          - employee benefits
+          - date job starts
+          - supporting documents to attach
+          - how to arrange a school visit
+          - how to apply
+          - link to online application
+      heading: You have no job listings to manage
+      intro: 'To create a job listing for your school, you will need the following information:'
     organisations:
       aria_change_description: '%{organisation_type} description'
       aria_change_website: '%{organisation_type} website'
@@ -104,6 +127,22 @@ en:
         subject: Sign in to Teaching Vacancies
       heading: Temporary login
       please_use_email: DfE Sign In is experiencing problems. Please sign in using your email address.
+    vacancies_component:
+      awaiting_feedback:
+        tab_heading: Jobs awaiting feedback
+        with_count_html: Awaiting feedback <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
+      draft:
+        tab_heading: Draft jobs
+        with_count_html: Draft jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
+      expired:
+        tab_heading: Passed deadline
+        with_count_html: Passed deadline <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
+      pending:
+        tab_heading: Scheduled jobs
+        with_count_html: Scheduled jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
+      published:
+        tab_heading: Published jobs
+        with_count_html: Published jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
     vacancies:
       build:
         process_title: Create a job listing steps

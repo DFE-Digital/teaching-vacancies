@@ -34,7 +34,7 @@ RSpec.describe "School deleting vacancies" do
   scenario "The last vacancy is deleted" do
     delete_vacancy(school, vacancy.id)
 
-    expect(page).to have_content(I18n.t("schools.no_jobs.heading"))
+    expect(page).to have_content(I18n.t("publishers.no_vacancies_component.heading"))
   end
 
   scenario "Notifies the Google index service" do

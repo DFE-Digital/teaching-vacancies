@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Hiring staff can see their vacancies" do
+RSpec.describe "Hiring staff can see the vacancies dashboard" do
   scenario "school with geolocation" do
     school = create(:school, northing: "1", easting: "2")
 
@@ -23,7 +23,7 @@ RSpec.describe "Hiring staff can see their vacancies" do
       stub_publishers_auth(urn: school.urn)
       visit organisation_path
 
-      expect(page).to have_content(I18n.t("schools.no_jobs.heading"))
+      expect(page).to have_content(I18n.t("publishers.no_vacancies_component.heading"))
     end
   end
 
@@ -53,17 +53,18 @@ RSpec.describe "Hiring staff can see their vacancies" do
 
       visit organisation_path
 
-      expect(page).to have_content(I18n.t("jobs.published_jobs"))
-      expect(page).to have_content(I18n.t("jobs.draft_jobs"))
-      expect(page).to have_content(I18n.t("jobs.pending_jobs"))
-      expect(page).to have_content(I18n.t("jobs.expired_jobs"))
+      expect(page).to have_content(I18n.t("publishers.vacancies_component.published.tab_heading"))
+      expect(page).to have_content(I18n.t("publishers.vacancies_component.draft.tab_heading"))
+      expect(page).to have_content(I18n.t("publishers.vacancies_component.pending.tab_heading"))
+      expect(page).to have_content(I18n.t("publishers.vacancies_component.expired.tab_heading"))
+      expect(page).to have_content(I18n.t("publishers.vacancies_component.awaiting_feedback.tab_heading"))
     end
 
     scenario "with published vacancies" do
       visit organisation_path
 
       within(".moj-primary-navigation__list") do
-        click_on(I18n.t("jobs.published_jobs"))
+        click_on(I18n.t("publishers.vacancies_component.published.tab_heading"))
       end
 
       within(".moj-filter-layout__content") do
@@ -76,11 +77,11 @@ RSpec.describe "Hiring staff can see their vacancies" do
       visit organisation_path
 
       within(".moj-primary-navigation__list") do
-        click_on(I18n.t("jobs.draft_jobs"))
+        click_on(I18n.t("publishers.vacancies_component.draft.tab_heading"))
       end
 
       within(".moj-filter-layout__content") do
-        expect(page).to have_content(I18n.t("jobs.draft.time_created"))
+        expect(page).to have_content(I18n.t("jobs.manage.draft.time_created"))
         expect(page).to have_content(format_date(draft_vacancy.created_at.to_date))
         expect(page).to have_content(format_date(draft_vacancy.updated_at.to_date))
         expect(page).to have_content(draft_vacancy.job_title)
@@ -92,7 +93,7 @@ RSpec.describe "Hiring staff can see their vacancies" do
       visit organisation_path
 
       within(".moj-primary-navigation__list") do
-        click_on(I18n.t("jobs.pending_jobs"))
+        click_on(I18n.t("publishers.vacancies_component.pending.tab_heading"))
       end
 
       within(".moj-filter-layout__content") do
@@ -108,7 +109,7 @@ RSpec.describe "Hiring staff can see their vacancies" do
       visit organisation_path
 
       within(".moj-primary-navigation__list") do
-        click_on(I18n.t("jobs.expired_jobs"))
+        click_on(I18n.t("publishers.vacancies_component.expired.tab_heading"))
       end
 
       within(".moj-filter-layout__content") do
@@ -131,7 +132,7 @@ RSpec.describe "Hiring staff can see their vacancies" do
         visit organisation_path
 
         within(".moj-primary-navigation__list") do
-          click_on(I18n.t("jobs.draft_jobs"))
+          click_on(I18n.t("publishers.vacancies_component.draft.tab_heading"))
         end
 
         within(".moj-filter-layout__content") do

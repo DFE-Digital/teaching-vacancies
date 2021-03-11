@@ -1,9 +1,9 @@
-= render(Shared::DashboardComponent.new(heading: t("organisation.show.heading_html", organisation: @organisation.name, email: @email), navigation_items: vacancy_links, link: { url: organisation_jobs_path, text: t("buttons.create_job") }))
+= render(Shared::DashboardComponent.new(heading: t("jobs.manage.heading_html", organisation: @organisation.name, email: @email), navigation_items: vacancy_links, link: { url: organisation_jobs_path, text: t("buttons.create_job") }))
 
 .vacancies-component
   .govuk-grid-row.vacancies-component__header class="govuk-!-margin-top-7"
     .govuk-grid-column-full
-      h1.govuk-heading-l class="govuk-!-margin-bottom-4" = t("jobs.#{@selected_type}_jobs_with_count_html", count: @vacancies.count)
+      h1.govuk-heading-l class="govuk-!-margin-bottom-4" = t(".#{@selected_type}.with_count_html", count: @vacancies.count)
 
   .govuk-grid-row
     .moj-filter-sidebar class="govuk-!-margin-bottom-5"
