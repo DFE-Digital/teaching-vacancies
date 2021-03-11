@@ -12,7 +12,7 @@ RSpec.describe "Jobseekers can give account feedback" do
     end
 
     it "submits account feedback and triggers a RequestEvent" do
-      click_on I18n.t("jobseekers.accounts.footer.survey_link")
+      click_on I18n.t("jobseekers.account_survey_link_component.survey_link")
 
       choose I18n.t("helpers.label.jobseekers_account_feedback_form.rating_options.somewhat_satisfied")
       fill_in "jobseekers_account_feedback_form[comment]", with: comment
