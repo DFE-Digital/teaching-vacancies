@@ -172,6 +172,18 @@ expired_two.save(validate: false)
 Vacancy.index.clear_index
 Vacancy.reindex!
 
+Publisher.create(oid: "999908EB-A038-5779-B11B-1147B9AB78C1",
+                 email: "nzfc8t+j3iygjxomd4ontwjqx450@grr.la",
+                 dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
+                 family_name: "PenTest",
+                 given_name: "User1")
+
+Publisher.create(oid: "888888EB-A038-5779-B11B-1147B9AB78C1",
+                 email: "nzfhhl+dfhyvxpdazmviqfmlgqlw@grr.la",
+                 dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
+                 family_name: "PenTest",
+                 given_name: "User2")
+
 Publisher.create(oid: "899808DB-9038-4779-A20A-9E47B9DB99F9",
                  email: "alex.bowen@digital.education.gov.uk",
                  dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },

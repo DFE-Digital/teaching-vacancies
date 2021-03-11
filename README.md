@@ -248,4 +248,4 @@ To enable this, the following formatting must be used:
 - Pull request: Prefix with the issue id between square bracket. If the branch was prefixed correctly,
 this should be automatically added for you. Ex: `[TEVA-1155] Document Jira-Github integration`
 
-The branch, commit or pull request will then appear in the `Development` side panel within the issue. 
+The branch, commit or pull request will then appear in the `Development` side panel within the issue.
