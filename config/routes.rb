@@ -145,6 +145,9 @@ Rails.application.routes.draw do
     resource :managed_organisations, only: %i[show update], controller: "publishers/organisations/managed_organisations"
   end
 
+  # Legacy publisher sign in path (users may still have this bookmarked)
+  get "/identifications/new", to: redirect("/publishers/sign_in")
+
   post "/errors/csp_violation", to: "errors#csp_violation"
   get "/invalid-recaptcha", to: "errors#invalid_recaptcha", as: "invalid_recaptcha"
   match "/401", as: :unauthorised, to: "errors#unauthorised", via: :all
