@@ -23,7 +23,7 @@ RSpec.describe "Jobseekers can start a job application" do
           before { login_as(jobseeker, scope: :jobseeker) }
 
           context "when clicking apply on the job page" do
-            before { click_on I18n.t("jobseekers.job_applications.apply") }
+            before { click_on I18n.t("jobseekers.job_applications.banner_links.apply") }
 
             it "starts a job application" do
               expect(current_path).to eq(new_jobseekers_job_job_application_path(vacancy.id))
@@ -38,7 +38,7 @@ RSpec.describe "Jobseekers can start a job application" do
 
         context "when the jobseeker is not signed in" do
           context "when clicking apply on the job page" do
-            before { click_on I18n.t("jobseekers.job_applications.apply") }
+            before { click_on I18n.t("jobseekers.job_applications.banner_links.apply") }
 
             it "starts a job application after signing in" do
               expect(current_path).not_to eq(new_jobseekers_job_job_application_path(vacancy.id))
@@ -58,7 +58,7 @@ RSpec.describe "Jobseekers can start a job application" do
 
       context "when the jobseeker does not have an account" do
         context "when clicking apply on the job page" do
-          before { click_on I18n.t("jobseekers.job_applications.apply") }
+          before { click_on I18n.t("jobseekers.job_applications.banner_links.apply") }
 
           it "starts a job application after signing up" do
             expect(current_path).not_to eq(new_jobseekers_job_job_application_path(vacancy.id))
@@ -85,7 +85,7 @@ RSpec.describe "Jobseekers can start a job application" do
 
         before do
           login_as(jobseeker, scope: :jobseeker)
-          click_on I18n.t("jobseekers.job_applications.apply")
+          click_on I18n.t("jobseekers.job_applications.banner_links.apply")
         end
 
         it "redirects to job applications dashboard with correct message" do
@@ -105,7 +105,7 @@ RSpec.describe "Jobseekers can start a job application" do
 
         before do
           login_as(jobseeker, scope: :jobseeker)
-          click_on I18n.t("jobseekers.job_applications.apply")
+          click_on I18n.t("jobseekers.job_applications.banner_links.apply")
         end
 
         it "redirects to job applications dashboard with correct message" do
