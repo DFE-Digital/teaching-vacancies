@@ -4,12 +4,13 @@ RSpec.describe "Hiring staff accepts terms and conditions" do
   let(:school) { create(:school) }
   let(:oid) { "a-valid-oid" }
   let(:current_publisher) { Publisher.find_by(oid: oid) }
-  before do
-    stub_publishers_auth(urn: school.urn, oid: oid)
-  end
 
   context "the user has not accepted the terms and conditions" do
-    before { current_publisher.update(accepted_terms_at: nil) }
+    before do
+      page.set_rack_session(organisation_urn: school.urn)
+      publisher = create(:publisher, oid: oid, accepted_terms_at: nil)
+      login_as(publisher, scope: :publisher)
+    end
 
     scenario "they will see the terms and conditions" do
       visit organisation_path
@@ -66,6 +67,10 @@ RSpec.describe "Hiring staff accepts terms and conditions" do
   end
 
   context "the user has accepted the terms and conditions" do
+    before do
+      stub_publishers_auth(urn: school.urn, oid: oid)
+    end
+
     scenario "they will not see the terms and conditions" do
       current_publisher.update(accepted_terms_at: Time.current)
 

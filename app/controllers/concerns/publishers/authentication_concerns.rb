@@ -2,15 +2,10 @@ module Publishers::AuthenticationConcerns
   extend ActiveSupport::Concern
 
   included do
-    helper_method :publisher_signed_in?
     helper_method :current_organisation
     helper_method :current_school
     helper_method :current_school_group
     helper_method :current_publisher_is_part_of_school_group?
-  end
-
-  def publisher_signed_in?
-    session.key?(:publisher_oid)
   end
 
   def sign_out_publisher!
@@ -20,13 +15,8 @@ module Publishers::AuthenticationConcerns
       organisation_urn
       publisher_id_token
       publisher_multiple_organisations
-      publisher_oid
     ].each { |key| session.delete(key) }
     sign_out(:publisher)
-  end
-
-  def current_publisher_oid
-    session.to_h["publisher_oid"]
   end
 
   def current_organisation

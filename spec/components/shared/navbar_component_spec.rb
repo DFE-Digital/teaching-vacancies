@@ -5,6 +5,7 @@ RSpec.describe Shared::NavbarComponent, type: :component do
 
   before do
     allow(controller).to receive(:jobseeker_signed_in?).and_return(true)
+    allow(controller).to receive(:publisher_signed_in?).and_return(false)
     render_inline(subject)
   end
 

@@ -81,7 +81,7 @@ class ApplicationController < ActionController::Base
   end
 
   def request_event
-    RequestEvent.new(request, response, session, current_jobseeker, current_publisher_oid)
+    RequestEvent.new(request, response, session, current_jobseeker, current_publisher)
   end
 
   def trigger_page_visited_event

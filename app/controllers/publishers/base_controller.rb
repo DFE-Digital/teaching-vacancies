@@ -9,13 +9,7 @@ class Publishers::BaseController < ApplicationController
   helper_method :current_publisher
 
   def check_terms_and_conditions
-    redirect_to terms_and_conditions_path unless current_publisher&.accepted_terms_and_conditions?
-  end
-
-  def current_publisher
-    return if current_publisher_oid.blank?
-
-    @current_publisher ||= Publisher.find_or_create_by(oid: current_publisher_oid)
+    redirect_to terms_and_conditions_path unless current_publisher.accepted_terms_and_conditions?
   end
 
   def current_publisher_preferences

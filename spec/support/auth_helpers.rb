@@ -7,7 +7,6 @@ module AuthHelpers
     else
       page.set_rack_session(organisation_urn: "", organisation_uid: "", organisation_la_code: la_code)
     end
-    page.set_rack_session(publisher_oid: oid)
     publisher = create(:publisher, oid: oid, email: email, last_activity_at: Time.current)
     login_as(publisher, scope: :publisher)
   end
