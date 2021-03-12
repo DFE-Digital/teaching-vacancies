@@ -10,15 +10,15 @@
       p = t("publishers.temp_login.choose_organisation.please_select")
 
       - @local_authorities.each do |la|
-        = govuk_link_to(la.name, auth_email_create_session_path(la_code: la.local_authority_code))
+        = govuk_link_to(la.name, auth_email_create_session_path(organisation_id: la.id))
         br
       br
 
       - @trusts.each do |trust|
-        = govuk_link_to(trust.name, auth_email_create_session_path(uid: trust.uid))
+        = govuk_link_to(trust.name, auth_email_create_session_path(organisation_id: trust.id))
         br
       br
 
       - @schools.each do |school|
-        = govuk_link_to(location(school), auth_email_create_session_path(urn: school.urn))
+        = govuk_link_to(location(school), auth_email_create_session_path(organisation_id: school.id))
         br
