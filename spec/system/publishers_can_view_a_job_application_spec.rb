@@ -7,9 +7,9 @@ RSpec.describe "Publishers can view a job application" do
   let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
 
   before do
-    login_publisher(publisher: publisher, organisation: organisation)
     allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true)
-    visit organisation_job_job_application_path(vacancy.id, job_application.id)
+    login_publisher(publisher: publisher, organisation: organisation)
+    show_page.load(job_id: vacancy.id, id: job_application.id)
   end
 
   it "shows the job application page" do
