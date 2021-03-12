@@ -90,6 +90,16 @@ body {
     }
   }
 
+  &[class*='_sessions_new'] {
+    .govuk-main-wrapper {
+      background-color: govuk-colour('white');
+
+      .content-wrapper {
+        padding-top: govuk-spacing(4);
+      }
+    }
+  }
+
   &.vacancies_show {
     .govuk-main-wrapper__notification {
       background-color: govuk-colour('light-grey');
