@@ -42,7 +42,6 @@ class Publishers::OmniauthCallbacksController < Devise::OmniauthCallbacksControl
 
   def update_session(authorisation_permissions)
     session.update(
-      publisher_oid: user_id,
       organisation_urn: school_urn,
       organisation_uid: trust_uid,
       organisation_la_code: local_authority_code,

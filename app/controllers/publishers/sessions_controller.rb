@@ -1,7 +1,6 @@
 class Publishers::SessionsController < Devise::SessionsController
   PUBLISHER_SESSION_KEYS = %i[
     publisher_id_token
-    publisher_oid
     publisher_multiple_organisations
     organisation_urn
     organisation_uid

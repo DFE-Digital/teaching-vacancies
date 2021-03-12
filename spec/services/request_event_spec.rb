@@ -7,7 +7,7 @@ RSpec.describe RequestEvent do
       response,
       session,
       jobseeker,
-      current_publisher_oid,
+      publisher,
     )
   end
 
@@ -30,7 +30,7 @@ RSpec.describe RequestEvent do
     instance_double(ActionDispatch::Request::Session, id: "1337")
   end
 
-  let(:current_publisher_oid) { 1234 }
+  let(:publisher) { instance_double(Publisher, oid: 1234) }
   let(:jobseeker) { instance_double(Jobseeker, id: 4321) }
 
   let(:ab_tests) { double(AbTests, current_variants: { foo: :bar }) }
