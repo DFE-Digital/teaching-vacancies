@@ -9,9 +9,7 @@
     p.govuk-body = t(".description")
 
     - if job_application.vacancy.documents.any?
-      = govuk_notification_banner(title: t(".banner_title")) do |banner|
-        / added the following line because we need at least one heading for the component to be rendered
-        - banner.add_heading
+      = govuk_notification_banner(title: t(".banner_title")) do
         = t(".banner_description_html", job_link: govuk_link_to(job_application.vacancy.job_title, job_path(job_application.vacancy), target: "_blank"))
         ul.hide-bullet-points class="govuk-!-padding-0"
           = render Shared::DocumentLinkComponent.with_collection(job_application.vacancy.documents)
