@@ -250,6 +250,12 @@ Publisher.create(oid: "B5ECCE49-634C-4212-AC55-07F5C7BE74C2",
                  family_name: "Romney",
                  given_name: "Nick")
 
+Publisher.create(oid: "5787504B-3D6F-4374-A0CB-7b00CBED01BA",
+                 email: "rajeev.aggarwal@digital.education.gov.uk",
+                 dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
+                 family_name: "Aggarwal",
+                 given_name: "Rajeev")
+
 Publisher.create(oid: "7AEC8E8D-6036-4E6E-92A4-800E381A12E0",
                  email: "rose.mackworth-young@digital.education.gov.uk",
                  dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
