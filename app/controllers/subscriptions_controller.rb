@@ -18,7 +18,7 @@ class SubscriptionsController < ApplicationController
     else
       subscription.recaptcha_score = recaptcha_reply&.dig("score")
       subscription.save
-      SubscriptionMailer.confirmation(subscription.id).deliver_later
+      Jobseekers::SubscriptionMailer.confirmation(subscription.id).deliver_later
       trigger_subscription_event(:job_alert_subscription_created, subscription)
 
       if jobseeker_signed_in?
@@ -42,7 +42,7 @@ class SubscriptionsController < ApplicationController
 
     if @subscription_form.valid?
       subscription.update(@subscription_form.job_alert_params)
-      SubscriptionMailer.update(subscription.id).deliver_later
+      Jobseekers::SubscriptionMailer.update(subscription.id).deliver_later
       trigger_subscription_event(:job_alert_subscription_updated, subscription)
 
       if jobseeker_signed_in?

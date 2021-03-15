@@ -19,7 +19,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
     if params[:commit] == t("buttons.save_as_draft")
       job_application.assign_attributes(application_data: application_data.merge(form_params))
       job_application.save
-      redirect_to jobseeker_root_path, success: t("messages.jobseekers.job_applications.saved")
+      redirect_to jobseekers_job_applications_path, success: t("messages.jobseekers.job_applications.saved")
     elsif @form.valid?
       job_application.assign_attributes(
         application_data: application_data.merge(form_params),

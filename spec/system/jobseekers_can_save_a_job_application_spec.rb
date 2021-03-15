@@ -2,7 +2,9 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers can save a job application" do
   let(:jobseeker) { create(:jobseeker) }
-  let(:job_application) { create(:job_application, jobseeker: jobseeker) }
+  let(:organisation) { create(:school) }
+  let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+  let(:job_application) { create(:job_application, vacancy: vacancy, jobseeker: jobseeker) }
 
   before do
     allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true)
@@ -33,7 +35,7 @@ RSpec.describe "Jobseekers can save a job application" do
         "national_insurance_number" => "AB 12 12 12 A",
       },
     )
-    expect(current_path).to eq(jobseeker_root_path)
+    expect(current_path).to eq(jobseekers_job_applications_path)
     expect(page).to have_content(I18n.t("messages.jobseekers.job_applications.saved"))
   end
 end

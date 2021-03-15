@@ -13,8 +13,8 @@ RSpec.describe "NqtJobAlerts", type: :request, recaptcha: true do
     let(:subscription) { Subscription.last }
     subject { post new_nqt_job_alert_path, params: params }
 
-    it "calls SubscriptionMailer" do
-      expect(SubscriptionMailer).to receive_message_chain(:confirmation, :deliver_later)
+    it "calls Jobseekers::SubscriptionMailer" do
+      expect(Jobseekers::SubscriptionMailer).to receive_message_chain(:confirmation, :deliver_later)
       subject
     end
 

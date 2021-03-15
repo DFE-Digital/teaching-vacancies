@@ -7,12 +7,12 @@
           = tag.div(vacancy.readable_job_location)
 
       - card.body do
-        = tag.div(card.labelled_item(t("jobs.created_at"), format_date(vacancy.created_at.to_date)))
-        = tag.div(card.labelled_item(t("jobs.updated_at"), format_date(vacancy.updated_at.to_date)))
+        = tag.div(card.labelled_item(t("jobs.manage.draft.time_created"), format_date(vacancy.created_at.to_date)))
+        = tag.div(card.labelled_item(t("jobs.manage.draft.time_updated"), format_date(vacancy.updated_at.to_date)))
 
       - card.actions do
-        = tag.div(govuk_link_to(t("jobs.edit_link"), vacancy.edit_path))
-        = tag.div(govuk_link_to(t("jobs.copy_link"), vacancy.copy_path))
-        = tag.div(button_to(t("jobs.delete_link"), vacancy.delete_path, method: :delete, data: { confirm: t("jobs.are_you_sure", job_title: vacancy.job_title) }, class: "govuk-delete-link"))
+        = tag.div(govuk_link_to(t("jobs.manage.edit_link_text"), vacancy.edit_path))
+        = tag.div(govuk_link_to(t("jobs.manage.copy_link_text"), vacancy.copy_path))
+        = tag.div(button_to(t("jobs.manage.delete_link_text"), vacancy.delete_path, method: :delete, data: { confirm: t("jobs.manage.are_you_sure", job_title: vacancy.job_title) }, class: "govuk-delete-link"))
 - else
-  = render(Shared::NotificationComponent.new(content: { body: t("jobs.no_draft_jobs") }, style: "empty", links: nil, dismiss: false, background: true, alert: false))
+  = render(Shared::NotificationComponent.new(content: { body: no_jobs_text }, style: "empty", links: nil, dismiss: false, background: true, alert: false))

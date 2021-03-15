@@ -147,7 +147,7 @@ en:
     similar_jobs: Similar jobs
     school_type: School type
     trust_type: Trust type
-    expired: This job post has expired
+    listing_expired: This job post has expired
 
     create_a_job_title: Create a job listing for %{organisation}
     create_a_job_title_no_org: Create a job listing
@@ -279,50 +279,41 @@ en:
         class='govuk-link' target='blank'>terms and conditions</a>  for schools and confirm that the details you have
         provided are, to the best of your knowledge, correct
 
-    dashboard_filters:
-      heading:
-        zero: Showing all jobs
-        one: 1 filter applied
-        other: '%{count} filters applied'
+    manage:
+      are_you_sure: Are you sure you want to delete the ‘%{job_title}’ job?
+      awaiting_feedback:
+        intro: >-
+          Please tell us if you filled these expired jobs through Teaching Vacancies,
+          and whether you listed them elsewhere. Your feedback will help us improve the service.
+        no_jobs:
+          no_filters: There are no jobs waiting for your feedback at the moment.
+          with_filters: There are no jobs waiting for your feedback for the schools you have selected.
+      closing_date: Closing date
+      copy_link_text: Copy listing
+      delete_link_text: Delete
+      draft:
+        no_jobs:
+          no_filters: You currently have no draft jobs.
+          with_filters: There are no draft jobs for the schools you have selected.
+        time_created: Date drafted
+        time_updated: Date last updated
+      edit_link_text: Edit listing
+      heading_html: "%{email} <span class='govuk-!-font-weight-regular'>- %{organisation}</span>"
+      expired:
+        expired_on: Expired on
+        no_jobs:
+          no_filters: You currently have no jobs that have passed the deadline.
+          with_filters: There are no jobs that have passed the deadline for the schools you have selected.
+      pending:
+        no_jobs:
+          no_filters: You currently have no scheduled jobs.
+          with_filters: There are no scheduled jobs for the schools you have selected.
+      published:
+        no_jobs:
+          no_filters: You currently have no published jobs.
+          with_filters: There are no published jobs for the schools you have selected.
 
-    actions: Actions
-    date_to_be_posted: Date to be published
-    edit_link: Edit listing
-    copy_link: Copy listing
-    delete_link: Delete
-    are_you_sure: Are you sure you want to delete the ‘%{job_title}’ job?
-    draft:
-      time_created: Date drafted
-      time_updated: Date last updated
-    expired_on: Expired on
-    page_views: Total views
-
-    published_jobs: Published jobs
-    published_jobs_with_count_html: Published jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
-    pending_jobs: Scheduled jobs
-    pending_jobs_with_count_html: Scheduled jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
-    draft_jobs: Draft jobs
-    draft_jobs_with_count_html: Draft jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
-    expired_jobs: Expired jobs
-    expired_jobs_with_count_html: Expired jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
-    awaiting_feedback_jobs: Jobs awaiting feedback
-    awaiting_feedback_jobs_with_count_html: Awaiting feedback <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
-    no_draft_jobs: You currently have no draft jobs.
-    no_expired_jobs: You currently have no expired jobs.
-    no_pending_jobs: You currently have no scheduled jobs.
-    no_published_jobs: You currently have no published jobs.
-
-    closing_date: Closing date
-    closing_date_html: '<span class="govuk-!-font-weight-bold">Closing date:</span> %{date}'
-    created_at: Date drafted
     date_listed: Date listed
-    publication_date_html: '<span class="govuk-!-font-weight-bold">Date to be published:</span> %{date}'
-    updated_at: Date last updated
-
-    awaiting_feedback_intro: >-
-      Please tell us if you filled these expired jobs through Teaching Vacancies,
-      and whether you listed them elsewhere. Your feedback will help us improve the service.
-    no_awaiting_feedback: There are no jobs waiting for your feedback at the moment.
     job_filled: Job filled on Teaching Vacancies?
     listed_elsewhere: Listed elsewhere?
 

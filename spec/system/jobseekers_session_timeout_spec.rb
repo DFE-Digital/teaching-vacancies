@@ -4,9 +4,7 @@ RSpec.describe "Jobseekers session timeout" do
   let!(:jobseeker) { create(:jobseeker, email: "jobseeker@example.com") }
   let(:timeout_period) { 2.weeks }
 
-  before do
-    login_as(jobseeker, scope: :jobseeker)
-  end
+  before { login_as(jobseeker, scope: :jobseeker) }
 
   it "expires after the desired timeout period" do
     visit jobseeker_root_path
@@ -23,7 +21,7 @@ RSpec.describe "Jobseekers session timeout" do
     visit jobseeker_root_path
     expect(page).to have_content(jobseeker.email)
 
-    travel(timeout_period - 10.seconds) do
+    travel(timeout_period - 1.day) do
       visit jobseeker_root_path
 
       expect(current_path).to eq(jobseeker_root_path)

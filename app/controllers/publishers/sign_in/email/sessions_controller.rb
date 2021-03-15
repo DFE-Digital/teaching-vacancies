@@ -14,7 +14,7 @@ class Publishers::SignIn::Email::SessionsController < Publishers::BaseController
   end
 
   def destroy
-    Rails.logger.info("Hiring staff clicked sign out via fallback authentication: #{session[:publisher_oid]}")
+    Rails.logger.info("Hiring staff clicked sign out via fallback authentication: #{current_publisher.oid}")
     end_session_and_redirect
   end
 
@@ -55,6 +55,7 @@ class Publishers::SignIn::Email::SessionsController < Publishers::BaseController
                       { success: t("messages.access.publisher_signed_out") }
                     end
     clear_publisher_session!
+    sign_out(:publisher)
     redirect_to root_path, flash_message
   end
 
@@ -66,7 +67,6 @@ class Publishers::SignIn::Email::SessionsController < Publishers::BaseController
     sign_out(:jobseeker)
 
     session.update(
-      publisher_oid: options[:oid],
       publisher_multiple_organisations: options[:multiple_organisations],
     )
     Rails.logger.warn("Hiring staff signed in via fallback authentication: #{options[:oid]}")
@@ -82,7 +82,7 @@ class Publishers::SignIn::Email::SessionsController < Publishers::BaseController
   end
 
   def send_login_key(publisher:)
-    AuthenticationFallbackMailer.sign_in_fallback(
+    Publishers::AuthenticationFallbackMailer.sign_in_fallback(
       login_key_id: generate_login_key(publisher: publisher).id,
       publisher: publisher,
     ).deliver_later
@@ -104,16 +104,10 @@ class Publishers::SignIn::Email::SessionsController < Publishers::BaseController
   end
 
   def publisher_authorised?
-    publisher = begin
-      Publisher.find_by(oid: session.to_h["publisher_oid"])
-    rescue StandardError
-      nil
-    end
-
     allowed_publisher? &&
-      (publisher&.dsi_data&.dig("la_codes")&.include?(params[:la_code]) ||
-       publisher&.dsi_data&.dig("trust_uids")&.include?(params[:uid]) ||
-       publisher&.dsi_data&.dig("school_urns")&.include?(params[:urn]))
+      (current_publisher&.dsi_data&.dig("la_codes")&.include?(params[:la_code]) ||
+       current_publisher&.dsi_data&.dig("trust_uids")&.include?(params[:uid]) ||
+       current_publisher&.dsi_data&.dig("school_urns")&.include?(params[:urn]))
   end
 
   def allowed_publisher?

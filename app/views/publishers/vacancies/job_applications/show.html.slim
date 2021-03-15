@@ -4,7 +4,7 @@
   .govuk-width-container
     .govuk-grid-row
       .govuk-grid-column-full
-        = govuk_breadcrumbs breadcrumbs: { "#{t("jobs.published_jobs")}": jobs_with_type_organisation_path(:published),
+        = govuk_breadcrumbs breadcrumbs: { "#{t("publishers.vacancies_component.published.tab_heading")}": jobs_with_type_organisation_path(:published),
                                            "#{vacancy.job_title}": "",
                                            "#{job_application.application_data["first_name"]} #{job_application.application_data["last_name"]}": "" }
         .govuk-caption-l class="govuk-!-margin-top-5"

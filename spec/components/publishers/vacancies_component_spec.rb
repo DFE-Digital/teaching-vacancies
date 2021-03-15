@@ -15,7 +15,8 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
   end
 
   context "when organisation has no active vacancies" do
-    let(:organisation) { create(:school, name: "A school with no jobs") }
+    let(:organisation) { create(:school, name: "A school with no published or draft jobs") }
+    let!(:vacancy) { create(:vacancy, :trashed, organisation_vacancies_attributes: [{ organisation: organisation }]) }
 
     before { render_inline(subject) }
 
@@ -52,19 +53,29 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       it "does not render the filters sidebar" do
         expect(inline_component.css('.new_publishers_managed_organisations_form input[type="submit"]')).to be_blank
       end
+
+      context "when there are no jobs within the selected vacancy type" do
+        let(:selected_type) { "draft" }
+
+        it "uses the correct 'no jobs' text ('no filters')" do
+          expect(rendered_component).to include(I18n.t("jobs.manage.draft.no_jobs.no_filters"))
+        end
+      end
     end
 
     context "when organisation is a trust" do
       let(:organisation) { create(:trust) }
       let(:open_school) { create(:school, name: "Open school") }
       let(:closed_school) { create(:school, :closed, name: "Closed school") }
-      let!(:vacancy) { create(:vacancy, :published, :central_office) }
+      let!(:vacancy) do
+        create(:vacancy, :published, :central_office,
+               organisation_vacancies_attributes: [{ organisation: organisation }])
+      end
       let(:filters) { { managed_school_ids: [], managed_organisations: "all" } }
 
       before do
         organisation.school_group_memberships.create(school: open_school)
         organisation.school_group_memberships.create(school: closed_school)
-        vacancy.organisation_vacancies.create(organisation: organisation)
       end
 
       let!(:inline_component) { render_inline(subject) }
@@ -110,13 +121,15 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       let(:organisation) { create(:local_authority) }
       let(:open_school) { create(:school, name: "Open school") }
       let(:closed_school) { create(:school, :closed, name: "Closed school") }
-      let!(:vacancy) { create(:vacancy, :published, :at_one_school) }
+      let!(:vacancy) do
+        create(:vacancy, :published, :at_one_school,
+               organisation_vacancies_attributes: [{ organisation: open_school }])
+      end
       let(:filters) { { managed_school_ids: [], managed_organisations: "all" } }
 
       before do
         organisation.school_group_memberships.create(school: open_school)
         organisation.school_group_memberships.create(school: closed_school)
-        vacancy.organisation_vacancies.create(organisation: open_school)
       end
 
       let!(:inline_component) { render_inline(subject) }
@@ -156,6 +169,14 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       it "does not render the closed school as a filter option" do
         expect(inline_component.css(".new_publishers_managed_organisations_form").to_html).not_to include("Closed school")
       end
+
+      context "when there are no jobs within the selected vacancy type" do
+        let(:selected_type) { "draft" }
+
+        it "uses the correct 'no jobs' text ('no filters')" do
+          expect(rendered_component).to include(I18n.t("jobs.manage.draft.no_jobs.no_filters"))
+        end
+      end
     end
   end
 
@@ -163,28 +184,37 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
     let(:organisation) { create(:trust) }
     let(:school_oxford) { create(:school, name: "Oxford") }
     let(:school_cambridge) { create(:school, name: "Cambridge") }
-    let(:vacancy_oxford) do
-      create(:vacancy, :published, :at_one_school, readable_job_location: school_oxford.name)
-    end
-    let(:vacancy_cambridge) do
-      create(:vacancy, :published, :at_one_school, readable_job_location: school_cambridge.name)
-    end
     let(:filters) { { managed_school_ids: [school_oxford.id], managed_organisations: "" } }
-
-    before do
-      vacancy_oxford.organisation_vacancies.create(organisation: school_oxford)
-      vacancy_cambridge.organisation_vacancies.create(organisation: organisation)
-      vacancy_cambridge.organisation_vacancies.create(organisation: school_cambridge)
+    let!(:vacancy_cambridge) do
+      create(:vacancy, :published, :at_one_school,
+             organisation_vacancies_attributes: [{ organisation: organisation }, { organisation: school_cambridge }],
+             readable_job_location: school_cambridge.name)
     end
 
-    let!(:inline_component) { render_inline(subject) }
+    context "when a relevant job exists" do
+      let!(:vacancy_oxford) do
+        create(:vacancy, :published, :at_one_school,
+               organisation_vacancies_attributes: [{ organisation: school_oxford }],
+               readable_job_location: school_oxford.name)
+      end
 
-    it "renders the vacancy in Oxford" do
-      expect(rendered_component).to include(school_oxford.name)
+      let!(:inline_component) { render_inline(subject) }
+
+      it "renders the vacancy in Oxford" do
+        expect(rendered_component).to include(school_oxford.name)
+      end
+
+      it "does not render the vacancy in Cambridge" do
+        expect(rendered_component).not_to include(school_cambridge.name)
+      end
     end
 
-    it "does not render the vacancy in Cambridge" do
-      expect(rendered_component).not_to include(school_cambridge.name)
+    context "when there are no jobs within the selected filters" do
+      let!(:inline_component) { render_inline(subject) }
+
+      it "uses the correct no jobs text ('with filters')" do
+        expect(rendered_component).to include(I18n.t("jobs.manage.published.no_jobs.with_filters"))
+      end
     end
   end
 end

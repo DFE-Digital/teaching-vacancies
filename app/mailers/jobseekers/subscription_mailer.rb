@@ -1,4 +1,4 @@
-class SubscriptionMailer < ApplicationMailer
+class Jobseekers::SubscriptionMailer < Jobseekers::BaseMailer
   helper_method :subscription, :jobseeker
 
   def confirmation(subscription_id)
@@ -7,7 +7,7 @@ class SubscriptionMailer < ApplicationMailer
     @template = NOTIFY_SUBSCRIPTION_CONFIRMATION_TEMPLATE
     @to = subscription.email
 
-    view_mail(@template, to: @to, subject: I18n.t("subscription_mailer.confirmation.subject"))
+    view_mail(@template, to: @to, subject: I18n.t("jobseekers.subscription_mailer.confirmation.subject"))
   end
 
   def update(subscription_id)
@@ -16,14 +16,10 @@ class SubscriptionMailer < ApplicationMailer
     @template = NOTIFY_SUBSCRIPTION_UPDATE_TEMPLATE
     @to = subscription.email
 
-    view_mail(@template, to: @to, subject: I18n.t("subscription_mailer.update.subject"))
+    view_mail(@template, to: @to, subject: I18n.t("jobseekers.subscription_mailer.update.subject"))
   end
 
   private
-
-  def email_event
-    @email_event ||= EmailEvent.new(@template, @to, jobseeker: jobseeker)
-  end
 
   def email_event_data
     { subscription_identifier: StringAnonymiser.new(subscription.id) }

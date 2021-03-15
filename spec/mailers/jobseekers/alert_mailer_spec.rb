@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe AlertMailer, type: :mailer do
+RSpec.describe Jobseekers::AlertMailer, type: :mailer do
   include DatesHelper
   include OrganisationHelper
   include ERB::Util
@@ -61,29 +61,29 @@ RSpec.describe AlertMailer, type: :mailer do
     let(:frequency) { "daily" }
 
     it "sends a job alert email" do
-      expect(mail.subject).to eq(I18n.t("alert_mailer.alert.subject"))
+      expect(mail.subject).to eq(I18n.t("jobseekers.alert_mailer.alert.subject"))
       expect(mail.to).to eq([subscription.email])
-      expect(body).to include(I18n.t("alert_mailer.alert.summary.daily", count: 1))
-      expect(body).to include(vacancies.first.job_title)
-      expect(body).to include(vacancies.first.job_title)
-      expect(body).to include(job_url(vacancies.first, **campaign_params))
-      expect(body).to include(location(vacancies.first.organisation))
-      expect(body).to include(I18n.t("alert_mailer.alert.salary", salary: vacancies.first.salary))
-      expect(body).to include(I18n.t("alert_mailer.alert.working_pattern", working_pattern: vacancies.first.working_patterns))
-      expect(body).to include(I18n.t("alert_mailer.alert.closing_date", closing_date: format_date(vacancies.first.expires_on)))
-      expect(body).to include(I18n.t("alert_mailer.alert.title"))
-      expect(body).to include(I18n.t("subscriptions.intro"))
-      expect(body).to include("Keyword: English")
-      expect(body).to include(I18n.t("alert_mailer.alert.alert_frequency", frequency: subscription.frequency))
-      expect(body).to include(I18n.t("alert_mailer.alert.edit_link_text"))
-      expect(body).to include(edit_subscription_url(subscription.token, **campaign_params))
-      expect(body).to include(I18n.t("alert_mailer.alert.feedback.heading"))
-      expect(body).to match(/(\[#{I18n.t('alert_mailer.alert.feedback.relevant_link_text')}\]\(.+true)/)
-      expect(body).to include(relevant_job_alert_feedback_url)
-      expect(body).to match(/(\[#{I18n.t('alert_mailer.alert.feedback.irrelevant_link_text')}\]\(.+false)/)
-      expect(body).to include(irrelevant_job_alert_feedback_url)
-      expect(body).to include(I18n.t("alert_mailer.alert.feedback.reason"))
-      expect(body).to include(unsubscribe_subscription_url(subscription.token, **campaign_params))
+      expect(body).to include(I18n.t("jobseekers.alert_mailer.alert.summary.daily", count: 1))
+                  .and include(vacancies.first.job_title)
+                  .and include(vacancies.first.job_title)
+                  .and include(job_url(vacancies.first, **campaign_params))
+                  .and include(location(vacancies.first.organisation))
+                  .and include(I18n.t("jobseekers.alert_mailer.alert.salary", salary: vacancies.first.salary))
+                  .and include(I18n.t("jobseekers.alert_mailer.alert.working_pattern", working_pattern: vacancies.first.working_patterns))
+                  .and include(I18n.t("jobseekers.alert_mailer.alert.closing_date", closing_date: format_date(vacancies.first.expires_on)))
+                  .and include(I18n.t("jobseekers.alert_mailer.alert.title"))
+                  .and include(I18n.t("subscriptions.intro"))
+                  .and include("Keyword: English")
+                  .and include(I18n.t("jobseekers.alert_mailer.alert.alert_frequency", frequency: subscription.frequency))
+                  .and include(I18n.t("jobseekers.alert_mailer.alert.edit_link_text"))
+                  .and include(edit_subscription_url(subscription.token, **campaign_params))
+                  .and include(I18n.t("jobseekers.alert_mailer.alert.feedback.heading"))
+                  .and match(/(\[#{I18n.t('jobseekers.alert_mailer.alert.feedback.relevant_link_text')}\]\(.+true)/)
+                  .and include(relevant_job_alert_feedback_url)
+                  .and match(/(\[#{I18n.t('jobseekers.alert_mailer.alert.feedback.irrelevant_link_text')}\]\(.+false)/)
+                  .and include(irrelevant_job_alert_feedback_url)
+                  .and include(I18n.t("jobseekers.alert_mailer.alert.feedback.reason"))
+                  .and include(unsubscribe_subscription_url(subscription.token, **campaign_params))
     end
 
     context "when the subscription email matches a jobseeker account" do
@@ -109,30 +109,30 @@ RSpec.describe AlertMailer, type: :mailer do
     let(:frequency) { "weekly" }
 
     it "sends a job alert email" do
-      expect(mail.subject).to eq(I18n.t("alert_mailer.alert.subject"))
+      expect(mail.subject).to eq(I18n.t("jobseekers.alert_mailer.alert.subject"))
       expect(mail.to).to eq([subscription.email])
-      expect(body).to include(I18n.t("alert_mailer.alert.summary.weekly", count: 1))
+      expect(body).to include(I18n.t("jobseekers.alert_mailer.alert.summary.weekly", count: 1))
                   .and include(vacancies.first.job_title)
                   .and include(vacancies.first.job_title)
                   .and include(job_url(vacancies.first, **campaign_params))
                   .and include(location(vacancies.first.organisation))
-                  .and include(I18n.t("alert_mailer.alert.salary", salary: vacancies.first.salary))
-                  .and include(I18n.t("alert_mailer.alert.working_pattern",
+                  .and include(I18n.t("jobseekers.alert_mailer.alert.salary", salary: vacancies.first.salary))
+                  .and include(I18n.t("jobseekers.alert_mailer.alert.working_pattern",
                                       working_pattern: vacancies.first.working_patterns))
-                  .and include(I18n.t("alert_mailer.alert.closing_date",
+                  .and include(I18n.t("jobseekers.alert_mailer.alert.closing_date",
                                       closing_date: format_date(vacancies.first.expires_on)))
-                  .and include(I18n.t("alert_mailer.alert.title"))
+                  .and include(I18n.t("jobseekers.alert_mailer.alert.title"))
                   .and include(I18n.t("subscriptions.intro"))
                   .and include("Keyword: English")
-                  .and include(I18n.t("alert_mailer.alert.alert_frequency", frequency: subscription.frequency))
-                  .and include(I18n.t("alert_mailer.alert.edit_link_text"))
+                  .and include(I18n.t("jobseekers.alert_mailer.alert.alert_frequency", frequency: subscription.frequency))
+                  .and include(I18n.t("jobseekers.alert_mailer.alert.edit_link_text"))
                   .and include(edit_subscription_url(subscription.token, **campaign_params))
-                  .and include(I18n.t("alert_mailer.alert.feedback.heading"))
-                  .and match(/(\[#{I18n.t('alert_mailer.alert.feedback.relevant_link_text')}\]\(.+true)/)
+                  .and include(I18n.t("jobseekers.alert_mailer.alert.feedback.heading"))
+                  .and match(/(\[#{I18n.t('jobseekers.alert_mailer.alert.feedback.relevant_link_text')}\]\(.+true)/)
                   .and include(relevant_job_alert_feedback_url)
-                  .and match(/(\[#{I18n.t('alert_mailer.alert.feedback.irrelevant_link_text')}\]\(.+false)/)
+                  .and match(/(\[#{I18n.t('jobseekers.alert_mailer.alert.feedback.irrelevant_link_text')}\]\(.+false)/)
                   .and include(irrelevant_job_alert_feedback_url)
-                  .and include(I18n.t("alert_mailer.alert.feedback.reason"))
+                  .and include(I18n.t("jobseekers.alert_mailer.alert.feedback.reason"))
                   .and include(unsubscribe_subscription_url(subscription.token, **campaign_params))
     end
 
@@ -159,13 +159,13 @@ RSpec.describe AlertMailer, type: :mailer do
       let!(:jobseeker) { create(:jobseeker, email: email) }
 
       it "does not display create account section" do
-        expect(body).not_to include(I18n.t("alert_mailer.alert.create_account.heading"))
+        expect(body).not_to include(I18n.t("jobseekers.alert_mailer.alert.create_account.heading"))
       end
     end
 
     context "when the subscription email does not match a jobseeker account" do
       it "displays create account section" do
-        expect(body).to include(I18n.t("alert_mailer.alert.create_account.heading"))
+        expect(body).to include(I18n.t("jobseekers.alert_mailer.alert.create_account.heading"))
       end
     end
   end

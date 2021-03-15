@@ -5,7 +5,7 @@ RSpec.describe "Jobseekers can unlock their account" do
 
   before do
     visit root_path
-    within("nav") do
+    within(".navbar-component") do
       click_on I18n.t("buttons.sign_in")
     end
   end

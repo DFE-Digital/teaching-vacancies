@@ -1,112 +1,119 @@
 en:
-  alert_mailer:
-    alert:
-      alert_frequency: >-
-        You have set to receive this job alert %{frequency} when any jobs matching your criteria are listed.
-      closing_date: "Closing date: %{closing_date}"
-      create_account:
-        heading: Create a Teaching Vacancies account
-        intro: "%{link_to} to see all your job alerts in one place, and save the jobs you are interested in"
-        link: Create an account
-      edit_alert: You can %{edit_link} here.
-      edit_link_text: manage your alert
-      feedback:
-        heading: Are these job listings relevant to your search?
-        irrelevant_link_text: No, they are not relevant
-        relevant_link_text: Yes, they are relevant
-        reason: This feedback helps us improve our service.
-      footer: >-
-        %{home_page_link} is a free job-listing service from the Department for Education. It helps schools to save money
-        on recruitment and you to take the next step in your career.
-      salary: "Salary: %{salary}"
-      subject: Your job alert from Teaching Vacancies
-      summary:
-        daily:
-          one: A new job matching your search criteria was listed in the last day
-          other: "%{count} new jobs matching your search criteria were listed in the last day"
-        weekly:
-          one: A new job matching your search criteria was listed in the last week
-          other: "%{count} new jobs matching your search criteria were listed in the last week"
-      title: This job alert
-      unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
-      unsubscribe_link_text: Unsubscribe here
-      working_pattern: "Working pattern: %{working_pattern}"
+  jobseekers:
+    account_mailer:
+      confirmation_instructions:
+        heading: Verify your email to create an account with Teaching Vacancies
+        intro: You have requested to create an account with this email address.
+        link: Verify email and create account
+        not_requested:
+          body: If you did not make this request, please email %{mail_to}
+          heading: Not requested this?
+        subject: Verify your email with Teaching Vacancies
+        what_to_do: What to do now
+        reconfirmation:
+          heading: Confirm your new email address for your Teaching Vacancies account
+          intro: You have requested to change your email address to this address
+          link: Confirm new email address
+          subject: Confirm your new email for Teaching Vacancies
+      email_changed:
+        heading: The email for your Teaching Vacancies account has been updated
+        intro: Your email has been successfully updated
+        not_requested:
+          body: If you did not make this request, please email %{mail_to}
+          heading: Not requested this?
+        subject: Email updated
+      reset_password_instructions:
+        heading: Reset your password for your Teaching Vacancies account
+        intro: You have requested to reset your password
+        link: Reset your password
+        not_requested:
+          body: If you did not make this request, please email %{mail_to}
+          heading: Not requested a password reset?
+        subject: Reset your password
+      unlock_instructions:
+        heading: Unlock your Teaching Vacancies account
+        instructions: Click the link below to unlock your account and sign in to Teaching Vacancies.
+        intro: You have been locked out of your account because you entered your password incorrectly too many times.
+        link: Unlock your account
+        subject: Unlock your Teaching Vacancies account
 
-  jobseeker_mailer:
-    application_submitted:
-      heading: Your application has been sent to %{organisation_name}
-      intro: Your application for %{job_title} at %{organisation_name}
-      more_info:
-        heading: Still have questions?
-        description: If you would like more information you can contact the school at %{email}.
-      next_steps:
-        heading: Next steps
-        description: >-
-          You can %{link} on your account. If you are shortlisted for an interview, %{organisation_name} will be in
-          touch to let you know.
-        link_text: view your application
-      search:
-        intro: Search and apply for more teaching jobs on Teaching Vacancies
-        link_text: Go to Teaching Vacancies
-      subject: Your job application has been submitted
-    confirmation_instructions:
-      heading: Verify your email to create an account with Teaching Vacancies
-      intro: You have requested to create an account with this email address.
-      link: Verify email and create account
-      not_requested:
-        body: If you did not make this request, please email %{mail_to}
-        heading: Not requested this?
-      subject: Verify your email with Teaching Vacancies
-      what_to_do: What to do now
-      reconfirmation:
-        heading: Confirm your new email address for your Teaching Vacancies account
-        intro: You have requested to change your email address to this address
-        link: Confirm new email address
-        subject: Confirm your new email for Teaching Vacancies
-    email_changed:
-      heading: The email for your Teaching Vacancies account has been updated
-      intro: Your email has been successfully updated
-      not_requested:
-        body: If you did not make this request, please email %{mail_to}
-        heading: Not requested this?
-      subject: Email updated
-    reset_password_instructions:
-      heading: Reset your password for your Teaching Vacancies account
-      intro: You have requested to reset your password
-      link: Reset your password
-      not_requested:
-        body: If you did not make this request, please email %{mail_to}
-        heading: Not requested a password reset?
-      subject: Reset your password
-    unlock_instructions:
-      heading: Unlock your Teaching Vacancies account
-      instructions: Click the link below to unlock your account and sign in to Teaching Vacancies.
-      intro: You have been locked out of your account because you entered your password incorrectly too many times.
-      link: Unlock your account
-      subject: Unlock your Teaching Vacancies account
+    alert_mailer:
+      alert:
+        alert_frequency: >-
+          You have set to receive this job alert %{frequency} when any jobs matching your criteria are listed.
+        closing_date: "Closing date: %{closing_date}"
+        create_account:
+          heading: Create a Teaching Vacancies account
+          intro: "%{link_to} to see all your job alerts in one place, and save the jobs you are interested in"
+          link: Create an account
+        edit_alert: You can %{edit_link} here.
+        edit_link_text: manage your alert
+        feedback:
+          heading: Are these job listings relevant to your search?
+          irrelevant_link_text: No, they are not relevant
+          relevant_link_text: Yes, they are relevant
+          reason: This feedback helps us improve our service.
+        footer: >-
+          %{home_page_link} is a free job-listing service from the Department for Education. It helps schools to save money
+          on recruitment and you to take the next step in your career.
+        salary: "Salary: %{salary}"
+        subject: Your job alert from Teaching Vacancies
+        summary:
+          daily:
+            one: A new job matching your search criteria was listed in the last day
+            other: "%{count} new jobs matching your search criteria were listed in the last day"
+          weekly:
+            one: A new job matching your search criteria was listed in the last week
+            other: "%{count} new jobs matching your search criteria were listed in the last week"
+        title: This job alert
+        unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
+        unsubscribe_link_text: Unsubscribe here
+        working_pattern: "Working pattern: %{working_pattern}"
 
-  subscription_mailer:
-    confirmation:
-      create_account:
-        heading: Create a Teaching Vacancies account
-        intro: "%{link_to} to see all your job alerts in one place, and save the jobs you are interested in"
-        link: Create an account
-      frequency:
-        daily: at the end of the day (at around 3 pm)
-        weekly: weekly (at around 6 pm on Friday evening)
-      next_steps: >-
-        You’ll receive a job alert %{frequency} when a job matching your criteria is listed.
-      subject: Teaching Vacancies job alert confirmation
-      title: You have subscribed to a job alert from Teaching Vacancies
-      unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
-      unsubscribe_link_text: Unsubscribe here
-    update:
-      frequency:
-        daily: at the end of the day (at around 3 pm)
-        weekly: weekly (at around 6 pm on Friday evening)
-      next_steps: >-
-        You’ll receive a job alert %{frequency} when a job matching your criteria is listed.
-      subject: Teaching Vacancies job alert update
-      title: You have updated a job alert from Teaching Vacancies
-      unsubscribe: You can unsubscribe by following the link at the bottom of these emails.
-      unsubscribe_link_text: Unsubscribe here
+    job_application_mailer:
+      application_submitted:
+        heading: Your application has been sent to %{organisation_name}
+        intro: Your application for %{job_title} at %{organisation_name}
+        more_info:
+          heading: Still have questions?
+          description: If you would like more information you can contact the school at %{email}.
+        next_steps:
+          heading: Next steps
+          description: >-
+            You can %{link} on your account. If you are shortlisted for an interview, %{organisation_name} will be in
+            touch to let you know.
+          link_text: view your application
+        search:
+          intro: Search and apply for more teaching jobs on Teaching Vacancies
+          link_text: Go to Teaching Vacancies
+        subject: Your job application has been submitted
+
+    subscription_mailer:
+      confirmation:
+        create_account:
+          heading: Create a Teaching Vacancies account
+          intro: "%{link_to} to see all your job alerts in one place, and save the jobs you are interested in"
+          link: Create an account
+        frequency:
+          daily: at the end of the day (at around 3 pm)
+          weekly: weekly (at around 6 pm on Friday evening)
+        next_steps: >-
+          You’ll receive a job alert %{frequency} when a job matching your criteria is listed.
+        subject: Teaching Vacancies job alert confirmation
+        title: You have subscribed to a job alert from Teaching Vacancies
+        unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
+        unsubscribe_link_text: Unsubscribe here
+      update:
+        create_account:
+          heading: Create a Teaching Vacancies account
+          intro: "%{link_to} to see all your job alerts in one place, and save the jobs you are interested in"
+          link: Create an account
+        frequency:
+          daily: at the end of the day (at around 3 pm)
+          weekly: weekly (at around 6 pm on Friday evening)
+        next_steps: >-
+          You’ll receive a job alert %{frequency} when a job matching your criteria is listed.
+        subject: Teaching Vacancies job alert update
+        title: You have updated a job alert from Teaching Vacancies
+        unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
+        unsubscribe_link_text: Unsubscribe here
