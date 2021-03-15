@@ -97,6 +97,8 @@ shared:
     - id
     - organisation_id
     - vacancy_id
+    - created_at
+    - updated_at
   publishers:
     - id
     - oid
@@ -106,12 +108,16 @@ shared:
     - last_activity_at
     - family_name
     - given_name
+    - created_at
+    - updated_at
   publisher_preferences:
     - id
     - managed_organisations
     - publisher_id
     - school_group_id
     - managed_school_ids
+    - created_at
+    - updated_at
   saved_jobs:
     - id
     - jobseeker_id
@@ -122,6 +128,8 @@ shared:
     - id
     - school_id
     - school_group_id
+    - created_at
+    - updated_at
   subscriptions:
     - id
     - email
