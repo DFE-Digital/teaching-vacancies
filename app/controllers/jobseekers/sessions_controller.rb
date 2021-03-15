@@ -5,7 +5,7 @@ class Jobseekers::SessionsController < Devise::SessionsController
   before_action :replace_devise_alert_flash_with_notice!, only: %i[new]
   after_action :replace_devise_notice_flash_with_success!, only: %i[create destroy]
   after_action only: %i[create] do
-    trigger_sign_in_event(:success)
+    trigger_jobseeker_sign_in_event(:success)
   end
 
   AUTHENTICATION_FAILURE_MESSAGES = %w[
@@ -19,12 +19,12 @@ class Jobseekers::SessionsController < Devise::SessionsController
     form = Jobseekers::SignInForm.new(sign_in_params)
     if params[:action] == "create" && form.invalid?
       form.errors.each { |error| resource.errors.add(error.attribute, error.type) }
-      trigger_sign_in_event(:failure, resource.errors)
+      trigger_jobseeker_sign_in_event(:failure, resource.errors)
       clear_flash_and_render(:new)
     elsif AUTHENTICATION_FAILURE_MESSAGES.include?(flash[:alert])
       resource.errors.add(:email, flash[:alert])
       resource.errors.add(:password, "")
-      trigger_sign_in_event(:failure, resource.errors)
+      trigger_jobseeker_sign_in_event(:failure, resource.errors)
       clear_flash_and_render(:new)
     end
   end
@@ -38,7 +38,7 @@ class Jobseekers::SessionsController < Devise::SessionsController
     render view
   end
 
-  def trigger_sign_in_event(success_or_failure, errors = nil)
+  def trigger_jobseeker_sign_in_event(success_or_failure, errors = nil)
     request_event.trigger(
       :jobseeker_sign_in_attempt,
       email_identifier: StringAnonymiser.new(params[:jobseeker][:email]),

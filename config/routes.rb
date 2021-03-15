@@ -75,10 +75,6 @@ Rails.application.routes.draw do
                                                    as: "auth_email_choose_organisation"
     get "auth/email/sessions/sign-in", to: "publishers/sign_in/email/sessions#create",
                                        as: "auth_email_create_session"
-    get "auth/email/sessions/sign-out", to: "publishers/sign_in/email/sessions#destroy",
-                                        as: "auth_email_sign_out"
-    get "auth/email/sessions/change-organisation", to: "publishers/sign_in/email/sessions#change_organisation",
-                                                   as: "auth_email_change_organisation"
   end
 
   root "home#index"

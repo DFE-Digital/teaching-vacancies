@@ -24,7 +24,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
     let(:other_school) { create(:school, name: "Some other school") }
     let(:trust) { create(:trust) }
     let(:local_authority) { create(:local_authority, local_authority_code: "100") }
-    let(:publisher) { create(:publisher, dsi_data: dsi_data, accepted_terms_at: 1.day.ago) }
+    let(:publisher) { create(:publisher, organisation_publishers_attributes: organisation_publishers, accepted_terms_at: 1.day.ago) }
 
     let(:login_key) do
       publisher.emergency_login_keys.create(
@@ -45,12 +45,13 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
     end
 
     context "when a publisher has multiple organisations" do
-      let(:dsi_data) do
-        {
-          "school_urns" => [school.urn, other_school.urn],
-          "trust_uids" => [trust.uid, "1623"],
-          "la_codes" => [local_authority.local_authority_code],
-        }
+      let(:organisation_publishers) do
+        [
+          { organisation: school },
+          { organisation: other_school },
+          { organisation: trust },
+          { organisation: local_authority },
+        ]
       end
 
       before { allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference)) }
@@ -118,7 +119,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
 
     context "when a publisher has only one organisation" do
       context "organisation is a School" do
-        let(:dsi_data) { { "school_urns" => [school.urn], "trust_uids" => [], "la_codes" => [] } }
+        let(:organisation_publishers) { [{ organisation: school }] }
 
         it "can sign in and bypass choice of org" do
           freeze_time do
@@ -146,7 +147,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
       end
 
       context "when the organisation is a Trust" do
-        let(:dsi_data) { { "school_urns" => [], "trust_uids" => [trust.uid], "la_codes" => [] } }
+        let(:organisation_publishers) { [{ organisation: trust }] }
 
         before { allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference)) }
 
@@ -176,7 +177,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
       end
 
       context "when the organisation is a Local Authority" do
-        let(:dsi_data) { { "school_urns" => [], "trust_uids" => [], "la_codes" => [local_authority.local_authority_code] } }
+        let(:organisation_publishers) { [{ organisation: local_authority }] }
         let(:la_publisher_allowed?) { true }
 
         before do
@@ -217,8 +218,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
             freeze_time do
               expect { visit auth_email_choose_organisation_path(login_key: login_key.id) }
                 .to have_triggered_event(:publisher_sign_in_attempt)
-                .with_base_data(user_anonymised_publisher_id: anonymised_form_of(publisher.oid))
-                .and_data(success: "false", sign_in_type: "email")
+                .and_data(success: "false", sign_in_type: "email", user_anonymised_publisher_id: anonymised_form_of(publisher.oid))
 
               expect(page).to have_content "You are not authorised to log in"
             end
