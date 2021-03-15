@@ -61,7 +61,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
         )
       end
 
-      it "can sign in, choose an org, change org, sign out" do
+      it "can sign in, choose an org, sign out" do
         freeze_time do
           visit root_path
           click_for_schools
