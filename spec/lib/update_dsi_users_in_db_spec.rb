@@ -21,6 +21,13 @@ RSpec.describe UpdateDsiUsersInDb do
           )
       end
 
+      school = create(:school, urn: "111111")
+      local_authority = create(:school_group, local_authority_code: "813")
+      create(:school, urn: "333333")
+      create(:school, urn: "555555")
+      create(:school_group, uid: "222222")
+      create(:school_group, uid: "444444")
+
       expect { update_dfe_sign_in_users.run! }.to change { Publisher.all.size }.by(3)
 
       user_with_one_school = Publisher.find_by(email: "foo@example.com")
@@ -29,6 +36,7 @@ RSpec.describe UpdateDsiUsersInDb do
       expect(user_with_one_school.dsi_data["la_codes"]).to eq([])
       expect(user_with_one_school.given_name).to eq("Roger")
       expect(user_with_one_school.family_name).to eq("Johnson")
+      expect(user_with_one_school.organisations.first).to eq(school)
 
       user_with_multiple_orgs = Publisher.find_by(email: "bar@example.com")
       expect(user_with_multiple_orgs.dsi_data["school_urns"]).to eq(%w[333333 555555])
@@ -36,6 +44,7 @@ RSpec.describe UpdateDsiUsersInDb do
       expect(user_with_one_school.dsi_data["la_codes"]).to eq([])
       expect(user_with_multiple_orgs.given_name).to eq("Alice")
       expect(user_with_multiple_orgs.family_name).to eq("Robertson")
+      expect(user_with_multiple_orgs.organisations.count).to be(4)
 
       local_authority_user = Publisher.find_by(email: "baz@example.com")
       expect(local_authority_user.dsi_data["school_urns"]).to eq([])
@@ -43,6 +52,7 @@ RSpec.describe UpdateDsiUsersInDb do
       expect(local_authority_user.dsi_data["la_codes"]).to eq(%w[813])
       expect(local_authority_user.given_name).to eq("Barry")
       expect(local_authority_user.family_name).to eq("Scott")
+      expect(local_authority_user.organisations.first).to eq(local_authority)
     end
 
     it "raises an error when it finds no users in the response" do

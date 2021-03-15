@@ -24,17 +24,37 @@ class UpdateDsiUsersInDb
         uid = dsi_user.dig("organisation", "UID")
         la_code = la_code(dsi_user)
 
-        school_urns = user.dsi_data&.[]("school_urns") || []
-        trust_uids = user.dsi_data&.[]("trust_uids") || []
-        la_codes = user.dsi_data&.[]("la_codes") || []
+        set_dsi_data(user, urn, uid, la_code)
 
-        user.dsi_data = {
-          school_urns: (school_urns | [urn]).compact,
-          trust_uids: (trust_uids | [uid]).compact,
-          la_codes: (la_codes | [la_code]).compact,
-        }
         user.save
+
+        create_organisation_publisher(user, urn, uid, la_code)
       end
+    end
+  end
+
+  def set_dsi_data(user, urn, uid, la_code)
+    school_urns = user.dsi_data&.[]("school_urns") || []
+    trust_uids = user.dsi_data&.[]("trust_uids") || []
+    la_codes = user.dsi_data&.[]("la_codes") || []
+
+    user.dsi_data = {
+      school_urns: (school_urns | [urn]).compact,
+      trust_uids: (trust_uids | [uid]).compact,
+      la_codes: (la_codes | [la_code]).compact,
+    }
+  end
+
+  def create_organisation_publisher(user, urn, uid, la_code)
+    if urn
+      organisation = Organisation.find_by(urn: urn)
+      user.organisation_publishers.find_or_create_by(organisation_id: organisation.id) if organisation
+    elsif uid
+      organisation = Organisation.find_by(uid: uid)
+      user.organisation_publishers.find_or_create_by(organisation_id: organisation.id) if organisation
+    elsif la_code
+      organisation = Organisation.find_by(local_authority_code: la_code)
+      user.organisation_publishers.find_or_create_by(organisation_id: organisation.id) if organisation
     end
   end
 
