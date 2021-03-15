@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_11_145934) do
+ActiveRecord::Schema.define(version: 2021_03_15_133432) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -149,6 +149,8 @@ ActiveRecord::Schema.define(version: 2021_03_11_145934) do
   create_table "organisation_vacancies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "organisation_id"
     t.uuid "vacancy_id"
+    t.datetime "created_at", precision: 6
+    t.datetime "updated_at", precision: 6
   end
 
   create_table "organisations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -191,6 +193,8 @@ ActiveRecord::Schema.define(version: 2021_03_11_145934) do
     t.uuid "publisher_id"
     t.uuid "school_group_id"
     t.string "managed_school_ids", array: true
+    t.datetime "created_at", precision: 6
+    t.datetime "updated_at", precision: 6
     t.index ["publisher_id"], name: "index_publisher_preferences_on_publisher_id"
     t.index ["school_group_id"], name: "index_publisher_preferences_on_school_group_id"
   end
@@ -203,6 +207,8 @@ ActiveRecord::Schema.define(version: 2021_03_11_145934) do
     t.datetime "last_activity_at"
     t.string "family_name"
     t.string "given_name"
+    t.datetime "created_at", precision: 6
+    t.datetime "updated_at", precision: 6
     t.index ["oid"], name: "index_publishers_on_oid", unique: true
   end
 
@@ -217,6 +223,8 @@ ActiveRecord::Schema.define(version: 2021_03_11_145934) do
     t.uuid "school_id"
     t.uuid "school_group_id"
     t.boolean "do_not_delete"
+    t.datetime "created_at", precision: 6
+    t.datetime "updated_at", precision: 6
   end
 
   create_table "sessions", force: :cascade do |t|
