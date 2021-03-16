@@ -1,16 +1,13 @@
-.govuk-notification *@html_attributes class=notification_classes
-  - if @dismiss
+= tag.div(class: classes, **html_attributes) do
+  - if dismiss
     = govuk_link_to(t("buttons.dismiss"), "#", class: "govuk-link--no-visited-state dismiss-link js-dismissible__link")
   .govuk-notification__content
-    - if render_title_and_body?
-      - if content[:title].present?
-        .govuk-notification__title = content[:title]
-      - if content[:body].present?
-        .govuk-notification__body == content[:body]
-    - else
-      .govuk-notification__body == content
+    - if title.present?
+      .govuk-notification__title = title
+    - if body.present?
+      .govuk-notification__body == body
 
-  - if @links.present?
+  - if links.present?
     ul.govuk-list.govuk-notification__list
-      - @links.each do |link, message|
+      - links.each do |link, message|
         li = govuk_link_to(message, "##{link}", class: "govuk-link--no-visited-state")

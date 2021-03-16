@@ -19,7 +19,7 @@
   .govuk-grid-column-two-thirds
 
     - if job_application.shortlisted?
-      = render Shared::NotificationComponent.new style: "notice", content: { title: t(".shortlist_alert.title"), body: t(".shortlist_alert.body", organisation: vacancy.parent_organisation_name) }, alert: "info", dismiss: false, background: true
+      = render Shared::NotificationComponent.new variant: "notice", title: t(".shortlist_alert.title"), body: t(".shortlist_alert.body", organisation: vacancy.parent_organisation_name), icon: true, dismiss: false, background: true
 
     // TODO: Complete in later ticket
     .grey-border-box
