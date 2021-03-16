@@ -82,7 +82,7 @@ There's an excellent guide to [managing password with GPG, the command line and 
 ```bash
 gpg --full-generate-key
 ```
-Answer the interactive quetsions. I chose
+Answer the interactive questions. I chose
 ```
 Please select what kind of key you want:
    (1) RSA and RSA (default)
@@ -205,6 +205,8 @@ aws-vault exec ReadOnly -- aws s3 ls
 
 ## Use the AWS CLI without AWS Vault
 
+In this example you will use your personal Access Key and Secret key in the `[teaching-vacancies]` profile
+
 If for any reason you had issues with the AWS Vault tool, you could use the AWS CLI directly by:
 
 ```bash
@@ -221,5 +223,80 @@ Default output format [None]:
 
 And then running e.g.
 ```bash
-aws s3 ls --profile teaching-vacancies
+aws s3 ls --profile ReadOnly
+```
+
+## Assuming an AWS role without AWS Vault
+
+In this example you will use your personal Access Key and Secret key in the `[default]` profile, and are able to use third-party tools which do not understand the AWS `--profile` option, such as Terraform.
+
+
+```bash
+aws configure
+```
+
+You'll be prompted:
+```
+AWS Access Key ID [None]: AKIA
+AWS Secret Access Key [None]: GXdB
+Default region name [eu-west-2]:
+Default output format [None]:
+```
+
+There is a useful [Gruntwork](https://blog.gruntwork.io/authenticating-to-aws-with-environment-variables-e793d6f6d02e) blog
+
+Generate an MFA token in your Authenticator App, then use it in this command
+
+```bash
+aws sts get-session-token --serial-number arn:aws:iam::530003481352:mfa/<YOUR-AWS-USERNAME> --token-code <MFA-token>
+```
+
+```bash
+aws sts assume-role \
+  --role-arn arn:aws:iam::530003481352:role/ReadOnly \
+  --role-session-name <YOUR-AWS-USERNAME> \
+  --serial-number arn:aws:iam::530003481352:mfa/<YOUR-AWS-USERNAME> \
+  --token-code <MFA-token>
+```
+
+You will see temporary session credentials, which have a duration of one hour
+```
+{
+    "Credentials": {
+        "AccessKeyId": "AKIAIOSFODNN7EXAMPLE",
+        "SecretAccessKey": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYzEXAMPLEKEY",
+        "SessionToken": "AQoEXAMPLEH4aoAH0gNCAPyJxz4BlCFFxWNE1OPTgk5TthT+FvwqnKwRcOIfrRh3c/LTo6UDdyJwOOvEVPvLXCrrrUtdnniCEXAMPLE/IvU1dYUg2RVAJBanLiHb4IgRmpRV3zrkuWJOgQs8IZZaIv2BXIa2R4OlgkBN9bkUDNCJiBeb/AXlzBBko7b15fjrBs2+cTQtpZ3CYWFXG8C5zqx37wnOE49mRl/+OtkIKGO7fAE",
+        "Expiration": "2021-03-16T19:23:20+00:00"
+    },
+    "AssumedRoleUser": {
+        "AssumedRoleId": "AROAXWZVLKMEK2POASFO6:<YOUR-AWS-USERNAME>",
+        "Arn": "arn:aws:sts::530003481352:assumed-role/ReadOnly/<YOUR-AWS-USERNAME>"
+    }
+}
+```
+
+Using the examples above, set these as environment variables:
+
+```bash
+export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+export AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYzEXAMPLEKEY
+export AWS_SESSION_TOKEN=AQoEXAMPLEH4aoAH0gNCAPyJxz4BlCFFxWNE1OPTgk5TthT+FvwqnKwRcOIfrRh3c/LTo6UDdyJwOOvEVPvLXCrrrUtdnniCEXAMPLE/IvU1dYUg2RVAJBanLiHb4IgRmpRV3zrkuWJOgQs8IZZaIv2BXIa2R4OlgkBN9bkUDNCJiBeb/AXlzBBko7b15fjrBs2+cTQtpZ3CYWFXG8C5zqx37wnOE49mRl/+OtkIKGO7fAE
+```
+
+It may be easier to copy and paste without the examples, like so:
+```bash
+export AWS_ACCESS_KEY_ID=
+export AWS_SECRET_ACCESS_KEY=
+export AWS_SESSION_TOKEN=
+```
+
+If you need to renew your session, you'll need to first unset the environment variables (starting a new terminal will usually have the same effect)
+
+If generating these sessions is a regular activity, then you may find this snippet helpful. It uses `jq` to extract the three values, before setting them as environment variables:
+
+```bash
+sessionInfo="$(aws sts assume-role --role-arn arn:aws:iam::530003481352:role/ReadOnly --role-session-name <YOUR-AWS-USERNAME> --serial-number arn:aws:iam::530003481352:mfa/<YOUR-AWS-USERNAME> --token-code 123456)"
+export AWS_ACCESS_KEY_ID="$(echo $sessionInfo | jq '.Credentials.AccessKeyId' | tr -d '"')"
+export AWS_SECRET_ACCESS_KEY="$(echo $sessionInfo | jq '.Credentials.SecretAccessKey' | tr -d '"')"
+export AWS_SESSION_TOKEN="$(echo $sessionInfo | jq '.Credentials.SessionToken' | tr -d '"')"
 ```
