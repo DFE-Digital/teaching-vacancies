@@ -11,7 +11,7 @@ export const OPEN_ALL_TEXT = 'Open all';
 
 window.addEventListener(
   'DOMContentLoaded',
-  () => init('filters-component__groups-container', 'moj-filter__tag', 'clear-filters-component-button', 'close-all-groups', 'mobile-filters-component-button', 'govuk-accordion__section-header'),
+  () => init('govuk-accordion__section', 'moj-filter__tag', 'clear-filters-component-button', 'close-all-groups', 'mobile-filters-component-button', 'govuk-accordion__section-header'),
 );
 
 export const init = (groupContainerSelector, removeButtonSelector, clearButtonSelector, closeButtonSelector, mobileFiltersButtonSelector, accordionButtonsSelector) => {
@@ -27,7 +27,6 @@ export const init = (groupContainerSelector, removeButtonSelector, clearButtonSe
   }
 
   addFilterChangeEvent(document.getElementsByClassName(groupContainerSelector));
-
   if (document.getElementById(closeButtonSelector)) {
     displayOpenOrCloseText(
       document.getElementById(closeButtonSelector),
