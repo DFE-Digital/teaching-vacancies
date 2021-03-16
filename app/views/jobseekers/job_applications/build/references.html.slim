@@ -24,4 +24,4 @@
       = f.govuk_submit t("buttons.save_as_draft"), secondary: true, classes: "button-link"
 
   .govuk-grid-column-one-third
-    = render(Shared::ProcessStepsComponent.new(process: vacancy, service: process_steps, title: t("jobseekers.job_applications.build.process_title")))
+    = render(Shared::ProcessStepsComponent.new(process: job_application, service: process_steps, title: t("jobseekers.job_applications.build.process_title")))
