@@ -87,7 +87,11 @@
   }
 }
 
+<<<<<<< HEAD
 .govuk-notification--warning {
+=======
+.govuk-notification--danger {
+>>>>>>> 72a5268ff... refactor notification component
   border-color: govuk-colour('red');
 
   .govuk-notification__list a {
