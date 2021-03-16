@@ -1,0 +1,11 @@
+h2.govuk-heading-l = t("heading.options")
+
+.govuk-form-group
+  - @preview_interactive_options.each do |option|
+    .govuk-grid-column-one-third
+      = form.govuk_check_box option,
+        "true",
+        label: { text: option }
+
+.govuk-form-group
+  = form.govuk_submit t("heading.update")

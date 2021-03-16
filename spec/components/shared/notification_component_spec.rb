@@ -68,13 +68,13 @@ RSpec.describe Shared::NotificationComponent, type: :component do
     end
   end
 
-  describe "style" do
-    context "when style is notice" do
+  describe "variant" do
+    context "when variant is notice" do
       it "applies correct class" do
         expect(subject.css(".govuk-notification--notice")).to_not be_blank
       end
 
-      context "when alert is true" do
+      context "when icon is true" do
         let(:icon) { true }
 
         it "applies the icon class" do
@@ -82,14 +82,14 @@ RSpec.describe Shared::NotificationComponent, type: :component do
         end
       end
 
-      context "when alert is false" do
+      context "when icon is false" do
         it "does not apply the icon class" do
           expect(subject.css(".icon")).to be_blank
         end
       end
     end
 
-    context "when style is success" do
+    context "when variant is success" do
       let(:variant) { "success" }
 
       it "applies correct class" do
@@ -101,7 +101,7 @@ RSpec.describe Shared::NotificationComponent, type: :component do
       end
     end
 
-    context "when style is warning" do
+    context "when variant is warning" do
       let(:variant) { "warning" }
 
       it "does not render the dismiss link" do
@@ -114,6 +114,19 @@ RSpec.describe Shared::NotificationComponent, type: :component do
 
       it "does not apply the icon class" do
         expect(subject.css(".icon")).to_not be_blank
+      end
+    end
+
+    context "when variant is empty" do
+      let(:variant) { "empty" }
+      let(:dismiss) { true }
+
+      it "does not render the dismiss link" do
+        expect(subject).to_not include(I18n.t("buttons.dismiss"))
+      end
+
+      it "applies correct class" do
+        expect(subject.css(".govuk-notification--empty")).to_not be_blank
       end
     end
   end

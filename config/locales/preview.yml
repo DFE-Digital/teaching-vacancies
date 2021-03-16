@@ -1,0 +1,32 @@
+en:
+  heading:
+    options: "Options"
+    examples: "Examples"
+    update: "Update"
+    code: "Code"
+    component:
+      notification:
+        title: "Notification Component"
+        description: "Displays a notification of a specified variant to the user. With dismiss option, when clicked will fade in 600ms and be removed from the DOM."
+  text:
+    short: "Lorem ipsum."
+    medium: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porttitor tortor ac lobortis commodo. Curabitur condimentum ligula in leo pharetra."
+    long: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae lorem tortor. Phasellus nec ante commodo, rhoncus lectus nec, blandit diam. Vestibulum accumsan nisi id dui ornare, in congue mauris convallis. Sed in vulputate turpis. Integer ac diam id odio luctus ullamcorper. Fusce bibendum sagittis interdum. Vivamus leo ligula, euismod pharetra ornare in, eleifend at urna. Nunc at nisi eget mauris rutrum iaculis et id lorem. Pellentesque finibus, mi at pellentesque lacinia, eros mauris auctor lorem, et interdum urna ex."
+  component:
+    notification:
+      success:
+        name: "Success"
+        title: "Success"
+        description: "Optionally dismissable. Always displays icon."
+      warning:
+        name: "Warning"
+        title: "Warning"
+        description: "This is a warning message or something potentially bad for the user. Never dismissable. Always displays icon."
+      notice:
+        name: "Notice"
+        title: "Notice"
+        description: "General information. Optionally dismissable."
+      empty:
+        name: "Empty"
+        title: "Empty"
+        description: "Basic inline emphasis. Never dismissable."

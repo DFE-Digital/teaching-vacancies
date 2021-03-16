@@ -1,61 +1,17 @@
-= form_for @preview_form, url: "/components/shared/notification_component/default", html: { method: "get" } do |f|
+= form_for @preview_form, url: preview_view_component_path("#{@preview.preview_name}/#{@example_name}"), html: { method: "get" } do |f|
   .govuk-grid-column-three-quarters
 
-    h1.govuk-heading-l = t("heading.component.notification.title")
-    p.govuk-body = t("heading.component.notification.description")
+    = render "design_system/header", preview_name: @preview_name
 
-    h2.govuk-heading-m = t("heading.options")
-    ul.govuk-list
-      li = t("heading.component.notification.options")
+    - @preview_variants.each do |variant|
+      div class="govuk-!-margin-bottom-9"
+        h3.govuk-heading-m = t("component.#{@preview_name}.#{variant}.title")
+        p.govuk-body = t("component.#{@preview_name}.#{variant}.description")
+        = render(@preview_class.new(icon: @preview_form.icon, title: t("text.short"), body: t("text.medium"), variant: variant, background: @preview_form.background, dismiss: @preview_form.dismiss, links: [["/", "link"]]))
 
-    h2.govuk-heading-m = t("heading.examples")
+        h3.govuk-heading-s = t("heading.code")
+        pre
+          code = "render(#{@preview_class.name}.new(\n\ttitle: '#{t('text.short')}',\n\tbody: '#{t('text.short')}',\n\tlinks: [['/url', 'link']]\n\tvariant: '#{variant}',\n\tbackground: #{@preview_form.background},\n\tdismiss: #{@preview_form.dismiss},\n\ticon: #{@preview_form.icon}\n))"
 
-    - variants.each do |variant|
-      h3.govuk-heading-s = variant.title
-      p.govuk-body = variant.description
-      = render(Shared::NotificationComponent.new(icon: @preview_form.icon, title: @preview_form.title, body: @preview_form.body, variant: variant.id, background: @preview_form.background, dismiss: @preview_form.dismiss))
-
-      .govuk-tabs data={ "module": "govuk-tabs" }
-        ul.govuk-tabs__list
-          li.govuk-tabs__list-item.govuk-tabs__list-item--selected
-            a.govuk-tabs__tab href="#slim"
-              = t("heading.templates.slim")
-
-        .govuk-tabs__panel id="slim"
-          table.govuk-table
-            tbody.govuk-table__body
-              tr.govuk-table__row
-                td.govuk-table__cell
-                  pre
-                    code = "render(Shared::NotificationComponent.new(\n\t\ttitle: '#{@preview_form.title}',\n\t\tbody: '#{@preview_form.body}'\n\t},\n\tvariant: '#{@preview_form.variant}',\n\tbackground: #{@preview_form.background},\n\tdismiss: #{@preview_form.dismiss}\n))"
-
-    h2.govuk-heading-m = t("heading.interactive")
-
-    .govuk-form-group
-      .govuk-grid-column-one-half
-        = f.govuk_text_field :title,
-          width: "three-quarters",
-          label: { text: "Title", hidden: true }
-
-        = f.govuk_text_field :body,
-          width: "three-quarters",
-          label: { text: "Body", hidden: true }
-
-      .govuk-grid-column-one-half
-        = f.govuk_check_box :background,
-          "true",
-          label: { text: "background color" },
-          link_errors: false
-
-        = f.govuk_check_box :dismiss,
-          "true",
-          label: { text: "dismiss CTA" },
-          link_errors: false
-
-        = f.govuk_check_box :icon,
-          "true",
-          label: { text: "icon" },
-          link_errors: false
-
-    .govuk-form-group
-      = f.govuk_submit t("heading.update")
+    - if @preview_interactive_options
+      = render "design_system/option_controls", form: f

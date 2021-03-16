@@ -13,6 +13,7 @@ require "action_view/railtie"
 # require 'sprockets/railtie'
 # require "rails/test_unit/railtie"
 require "view_component/engine"
+require "view_component/compile_cache"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -80,5 +81,10 @@ module TeacherVacancyService
     config.algolia_index_prefix = ENV.fetch("ALGOLIA_INDEX_PREFIX", nil)
 
     config.geocoder_lookup = :default
+
+    config.view_component.preview_paths << "#{Rails.root}/app/components"
+    config.view_component.preview_route = "/components"
+    config.view_component.preview_controller = "PreviewController"
+    config.view_component.show_previews = true
   end
 end
