@@ -7,13 +7,14 @@ Teaching Vacancies is hosted on [GOV.UK PaaS](https://docs.cloud.service.gov.uk/
 These are the persistent applications:
 
 - https://dev.teaching-vacancies.service.gov.uk (Dev, from `dev` branch)
-- https://staging.teaching-vacancies.service.gov.uk (Staging, from `staging` branch)
+- https://qa.teaching-vacancies.service.gov.uk (QA, from `qa` branch)
+- https://staging.teaching-vacancies.service.gov.uk (Staging, from `master` branch)
 - https://teaching-vacancies.service.gov.uk (Production, from `master` branch`)
 
 Plus all the ephemeral review apps that are created when a PR is created on GitHub, and destroyed when the PR is merged. These have URLs which contain the Pull Request number, like [https://teaching-vacancies-review-pr-2667.london.cloudapps.digital](https://teaching-vacancies-review-pr-2667.london.cloudapps.digital)
 
-The Dev environment has [integration with DSI](./dsi-integration.md). It is "user-deployable", in that developers can [deploy](./deployments.md) via:
-- [pushing code to the `dev` branch](./deployments.md#build-and-deploy-to-dev---github-actions)
+The Dev and QA environments have [integration with DSI](./dsi-integration.md). They are "user-deployable", in that developers can [deploy](./deployments.md) via:
+- [pushing code to the `dev` or `qa` branches](./deployments.md#build-and-deploy-to-dev---github-actions)
 - [Makefile commands](./deployments.md#build-and-deploy-to-an-environment---makefile)
 
 The Staging environment is a pre-production environment, to identify issues with code before it's promoted to Production.
@@ -26,12 +27,13 @@ Teaching Vacancies is in the [dfe organisation](https://docs.cloud.service.gov.u
 
 An org is divided into one or more [spaces](https://docs.cloud.service.gov.uk/orgs_spaces_users.html#spaces). A space is a shared location for developing, deploying and running apps and backing services.
 
-Teaching Vacancies has 5 spaces:
+Teaching Vacancies has 6 spaces:
 - teaching-vacancies-dev
-- teaching-vacancies-staging
-- teaching-vacancies-production
-- teaching-vacancies-review
 - teaching-vacancies-monitoring
+- teaching-vacancies-production
+- teaching-vacancies-prototype
+- teaching-vacancies-review
+- teaching-vacancies-staging
 
 During [onboarding](./onboarding.md) you will have been granted access to selected spaces and [roles](https://docs.cloud.service.gov.uk/orgs_spaces_users.html#users-and-user-roles):
 
