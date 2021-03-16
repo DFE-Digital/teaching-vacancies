@@ -6,11 +6,25 @@ class Shared::ProcessStepsComponent < ViewComponent::Base
   end
 
   def render?
-    @process.blank? || %w[create review].include?(@process.state)
+    @process.blank? || %w[create draft review].include?(process_state)
   end
 
   def current_step_number
     @service.current_step_number
+  end
+
+  def completed_step_number
+    if @process.is_a?(JobApplication)
+      @process.completed_steps.map { |step| @service.steps[step.to_sym][:number] }.max
+    else
+      @process.completed_step
+    end
+  end
+
+  def process_state
+    return @process.status if @process.is_a?(JobApplication)
+
+    @process.state
   end
 
   def steps_to_display

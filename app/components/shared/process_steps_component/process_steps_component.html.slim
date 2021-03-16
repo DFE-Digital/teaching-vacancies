@@ -6,7 +6,7 @@
   .process-steps-component.process-steps-component--active
     ol.process-steps-component__steps
       - steps_to_display.values.uniq.each do |step|
-        li.process-steps-component__step.js-step class="#{active_step_class(step[:number], current_step_number)} #{visited_step_class(step[:number], @process.completed_step.presence || 0)}" aria-current="step" dat-show=""
+        li.process-steps-component__step.js-step class="#{active_step_class(step[:number], current_step_number)} #{visited_step_class(step[:number], completed_step_number.presence || 0)}" aria-current="step" dat-show=""
           .process-steps-component__header.js-toggle-panel data-position="1"
             h3.process-steps-component__title
               span.process-steps-component__circle.process-steps-component__circle--number

@@ -1,4 +1,6 @@
 class ProcessSteps
+  attr_reader :steps
+
   def initialize(steps:, step:, adjust:)
     @steps = steps
     @step = step
