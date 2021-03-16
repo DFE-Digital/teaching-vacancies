@@ -103,6 +103,10 @@ ActiveRecord::Schema.define(version: 2021_03_15_133432) do
     t.jsonb "application_data"
     t.integer "completed_steps", array: true
     t.datetime "submitted_at"
+    t.datetime "draft_at"
+    t.datetime "shortlisted_at"
+    t.datetime "unsuccessful_at"
+    t.datetime "withdrawn_at"
   end
 
   create_table "jobseekers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

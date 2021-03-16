@@ -34,6 +34,11 @@ shared:
     - status
     - created_at
     - updated_at
+    - submitted_at
+    - draft_at
+    - shortlisted_at
+    - unsuccessful_at
+    - withdrawn_at
     - jobseeker_id
     - vacancy_id
     - application_data

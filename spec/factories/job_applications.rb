@@ -33,38 +33,65 @@ JOB_APPLICATION_DATA = {
   close_relationships: "yes",
   close_relationships_details: Faker::Lorem.paragraph(sentence_count: 1),
   right_to_work_in_uk: "yes",
+
+  # From publisher
+  further_instructions: Faker::Lorem.paragraph(sentence_count: 2),
+  rejection_reasons: Faker::Lorem.paragraph(sentence_count: 1),
 }.freeze
 
 FactoryBot.define do
   factory :job_application do
+    transient do
+      draft_at { 2.weeks.ago }
+      shortlisted_at { 2.days.ago }
+      submitted_at { 3.days.ago }
+      unsuccessful_at { 1.day.ago }
+      withdrawn_at { 1.week.ago }
+    end
+
     status { :draft }
-    completed_steps { [] }
-    application_data { {} }
     jobseeker
     vacancy
-  end
 
-  trait :complete do
     application_data { JOB_APPLICATION_DATA }
     completed_steps { JobApplication.completed_steps.keys }
 
-    after :create do |job_application|
-      # TODO: education
-      create_list :job_application_detail, 3, :employment_history, job_application: job_application
-      create_list :job_application_detail, 2, :reference, job_application: job_application
+    after :create do |job_application, options|
+      unless job_application.draft?
+        # TODO: education
+        create_list :job_application_detail, 3, :employment_history, job_application: job_application
+        create_list :job_application_detail, 2, :reference, job_application: job_application
+      end
+
+      job_application.update_columns(
+        draft_at: options.draft_at,
+        shortlisted_at: options.shortlisted_at,
+        submitted_at: options.submitted_at,
+        unsuccessful_at: options.unsuccessful_at,
+        withdrawn_at: options.withdrawn_at,
+      )
     end
+  end
+
+  trait :status_draft do
+    status { :draft }
+    application_data { {} }
+    completed_steps { [] }
+  end
+
+  trait :status_shortlisted do
+    status { :shortlisted }
   end
 
   trait :status_submitted do
     status { :submitted }
-    application_data { JOB_APPLICATION_DATA }
-    completed_steps { JobApplication.completed_steps.keys }
-    submitted_at { 1.day.ago }
+  end
 
-    after :create do |job_application|
-      # TODO: education
-      create_list :job_application_detail, 3, :employment_history, job_application: job_application
-      create_list :job_application_detail, 2, :reference, job_application: job_application
-    end
+  trait :status_unsuccessful do
+    status { :unsuccessful }
+  end
+
+  trait :status_withdrawn do
+    status { :withdrawn }
   end
 end
