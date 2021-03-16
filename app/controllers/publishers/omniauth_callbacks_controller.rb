@@ -73,10 +73,10 @@ class Publishers::OmniauthCallbacksController < Devise::OmniauthCallbacksControl
   def check_authorisation(authorisation_permissions)
     if authorisation_permissions.authorised? && allowed_user?
       sign_in_publisher
-      trigger_sign_in_event(:success, :dsi, user_id)
+      trigger_publisher_sign_in_event(:success, :dsi)
       redirect_to organisation_path
     else
-      trigger_sign_in_event(:failure, :dsi, user_id)
+      trigger_publisher_sign_in_event(:failure, :dsi, user_id)
       @identifier = identifier
       render "not_authorised"
     end
@@ -104,10 +104,6 @@ class Publishers::OmniauthCallbacksController < Devise::OmniauthCallbacksControl
     end
   end
 
-  def redirect_for_fallback_authentication
-    redirect_to new_auth_email_path if AuthenticationFallback.enabled?
-  end
-
   def allowed_user?
     school_urn.present? || trust_uid.present? || (local_authority_code.present? && allowed_la_user?)
   end
@@ -128,15 +124,7 @@ class Publishers::OmniauthCallbacksController < Devise::OmniauthCallbacksControl
     school_group = school&.school_groups&.first
     return unless school_group
 
-    session.update(publisher_organisation_id: school_group.id) if publisher_trusts.include?(school_group.uid) || publisher_local_authorities.include?(school_group.local_authority_code)
-  end
-
-  def trigger_sign_in_event(success_or_failure, sign_in_type, publisher_oid = nil)
-    request_event.trigger(
-      :publisher_sign_in_attempt,
-      user_anonymised_publisher_id: StringAnonymiser.new(publisher_oid),
-      success: success_or_failure == :success,
-      sign_in_type: sign_in_type,
-    )
+    session.update(publisher_organisation_id: school_group.id) if
+      publisher_trusts.include?(school_group.uid) || publisher_local_authorities.include?(school_group.local_authority_code)
   end
 end

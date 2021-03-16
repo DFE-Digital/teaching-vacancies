@@ -1,22 +1,17 @@
 require "rails_helper"
 
 RSpec.describe "Users can only be signed in to one type of account" do
-  let(:jobseeker) { create(:jobseeker) }
-  let!(:publisher) { create(:publisher, dsi_data: dsi_data) }
-
   let(:school) { create(:school, urn: "110627") }
-  let(:dsi_data) { { "school_urns" => [school.urn], "trust_uids" => [], "la_codes" => [] } }
+
+  let(:jobseeker) { create(:jobseeker) }
+  let!(:publisher) { create(:publisher, organisation_publishers_attributes: [{ organisation: school }]) }
 
   let(:authentication_fallback_enabled?) { false }
 
-  before do
-    allow(AuthenticationFallback).to receive(:enabled?).and_return(authentication_fallback_enabled?)
-  end
+  before { allow(AuthenticationFallback).to receive(:enabled?).and_return(authentication_fallback_enabled?) }
 
   context "when a jobseeker is signed in" do
-    before do
-      login_as(jobseeker, scope: :jobseeker)
-    end
+    before { login_as(jobseeker, scope: :jobseeker) }
 
     context "when email fallback is disabled" do
       let(:dsi_email_address) { Faker::Internet.email }

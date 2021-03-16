@@ -2,13 +2,22 @@ class Publishers::SignIn::Email::SessionsController < ApplicationController
   EMERGENCY_LOGIN_KEY_DURATION = 10.minutes
 
   before_action :redirect_signed_in_publishers, only: %i[new create check_your_email choose_organisation]
-  before_action :redirect_for_dsi_authentication, only: %i[new create check_your_email change_organisation choose_organisation]
-  before_action :redirect_unauthorised_publishers, only: %i[create]
+  before_action :redirect_for_dsi_authentication, only: %i[new create check_your_email choose_organisation]
 
   def create
-    session.update(publisher_organisation_id: params[:organisation_id])
-    trigger_sign_in_event(:success, :email)
-    redirect_to organisation_path
+    publisher = Publisher.find(session[:publisher_id])
+    organisation = publisher.organisations.find(params[:organisation_id])
+
+    if publisher.organisations.include?(organisation) && allowed_la_publisher?(organisation)
+      sign_in(publisher)
+      sign_out(:jobseeker)
+      session.update(publisher_organisation_id: organisation.id)
+      trigger_publisher_sign_in_event(:success, :email)
+      redirect_to organisation_path
+    else
+      trigger_publisher_sign_in_event(:failure, :email, publisher.oid)
+      redirect_to new_auth_email_path, notice: t(".not_authorised")
+    end
   end
 
   def check_your_email
@@ -17,18 +26,13 @@ class Publishers::SignIn::Email::SessionsController < ApplicationController
   end
 
   def choose_organisation
-    information = GetInformationFromLoginKey.new(get_key)
-    @reason_for_failing_sign_in = information.reason_for_failing_sign_in
-    @schools = information.schools
-    @trusts = information.trusts
-    @local_authorities = information.local_authorities
-    sign_in_publisher(information.details_to_update_in_session)
+    process_login_key
+    session.update(publisher_id: @publisher.id) if @publisher
 
-    return if information.multiple_organisations? || @reason_for_failing_sign_in.present?
+    @reason_for_failing_sign_in = "no_orgs" if @publisher&.organisations&.none?
+    return if @publisher&.organisations&.many? || @reason_for_failing_sign_in.present?
 
-    redirect_to auth_email_create_session_path(
-      organisation_id: (@schools&.first&.presence || @trusts&.first&.presence || @local_authorities&.first&.presence).id,
-    )
+    redirect_to auth_email_create_session_path(organisation_id: @publisher.organisations.first.id)
   end
 
   private
@@ -37,20 +41,19 @@ class Publishers::SignIn::Email::SessionsController < ApplicationController
     redirect_to organisation_path if current_organisation.present?
   end
 
-  def sign_in_publisher(options)
-    return unless options[:oid]
-
-    publisher = Publisher.find_by(oid: options[:oid])
-    sign_in(publisher)
-    sign_out(:jobseeker)
+  def redirect_for_dsi_authentication
+    redirect_to new_publisher_session_path unless AuthenticationFallback.enabled?
   end
 
-  def get_key
-    params_login_key = params[:login_key]
-    begin
-      EmergencyLoginKey.find(params_login_key)
-    rescue StandardError
-      nil
+  def process_login_key
+    login_key = EmergencyLoginKey.find_by(id: params[:login_key])
+    return @reason_for_failing_sign_in = "no_key" unless login_key
+
+    if login_key.expired?
+      @reason_for_failing_sign_in = "expired"
+    else
+      @publisher = Publisher.find(login_key.publisher_id)
+      login_key.destroy
     end
   end
 
@@ -65,38 +68,10 @@ class Publishers::SignIn::Email::SessionsController < ApplicationController
     publisher.emergency_login_keys.create(not_valid_after: Time.current + EMERGENCY_LOGIN_KEY_DURATION)
   end
 
-  def redirect_for_dsi_authentication
-    redirect_to new_publisher_session_path unless AuthenticationFallback.enabled?
-  end
-
-  def redirect_unauthorised_publishers
-    return if publisher_authorised? && allowed_la_publisher?
-
-    trigger_sign_in_event(:failure, :email)
-    redirect_to new_auth_email_path, notice: t(".not_authorised")
-  end
-
-  def publisher_authorised?
-    @organisation = Organisation.find_by(id: params[:organisation_id])
-
-    current_publisher.dsi_data&.dig("la_codes")&.include?(@organisation.local_authority_code) ||
-      current_publisher.dsi_data&.dig("trust_uids")&.include?(@organisation.uid) ||
-      current_publisher.dsi_data&.dig("school_urns")&.include?(@organisation.urn)
-  end
-
-  def allowed_la_publisher?
+  def allowed_la_publisher?(organisation)
     return true unless Rails.configuration.enforce_local_authority_allowlist
-    return true unless @organisation.local_authority_code
+    return true unless organisation.local_authority_code.present?
 
-    Rails.configuration.allowed_local_authorities.include?(@organisation.local_authority_code)
-  end
-
-  def trigger_sign_in_event(success_or_failure, sign_in_type, publisher_oid = nil)
-    request_event.trigger(
-      :publisher_sign_in_attempt,
-      user_anonymised_publisher_id: StringAnonymiser.new(publisher_oid),
-      success: success_or_failure == :success,
-      sign_in_type: sign_in_type,
-    )
+    Rails.configuration.allowed_local_authorities.include?(organisation.local_authority_code)
   end
 end
