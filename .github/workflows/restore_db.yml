@@ -1,4 +1,4 @@
-name: Restore dev/staging db from production backup
+name: Restore sanitised backup to non-prod environment
 
 on:
   workflow_dispatch:
@@ -12,7 +12,7 @@ on:
         required: true
 jobs:
   sync:
-    name: Sync ${{ github.event.inputs.environment }} database from production backup
+    name: Restore sanitised backup to ${{ github.event.inputs.environment }}
     runs-on: ubuntu-20.04
 
     steps:
@@ -26,12 +26,17 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: eu-west-2
 
+    - name: Set PaaS space name
+      shell: bash
+      run: |
+        PAAS_SPACE_NAME=$(grep paas_space_name terraform/workspace-variables/${{ github.event.inputs.environment }}.tfvars | awk -F'= ' '{print $2}' | cut -d '"' -f 2)
+
     - name: Setup cf cli
       uses: DFE-Digital/github-actions/setup-cf-cli@master
       with:
         CF_USERNAME: ${{ secrets.CF_USERNAME }}
         CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-        CF_SPACE_NAME: teaching-vacancies-${{ github.event.inputs.environment }}
+        CF_SPACE_NAME: ${PAAS_SPACE_NAME}
         INSTALL_CONDUIT: true
 
     - name: Install postgres client
@@ -49,6 +54,7 @@ jobs:
       run: bin/restore-db
       env:
         CF_DESTINATION_ENVIRONMENT: ${{ github.event.inputs.environment }}
+        CF_SPACE_NAME: ${PAAS_SPACE_NAME}
         BACKUP_TYPE: sanitised
 
     - name: Send job status message to twd_tv_dev channel
