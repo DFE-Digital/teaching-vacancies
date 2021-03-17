@@ -144,8 +144,8 @@ en:
         tab_heading: Scheduled jobs
         with_count_html: Scheduled jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
       published:
-        tab_heading: Published jobs
-        with_count_html: Published jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
+        tab_heading: Active jobs
+        with_count_html: Active jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
     vacancies:
       build:
         process_title: Create a job listing steps
@@ -169,7 +169,7 @@ en:
           unsuccessful: "%{name} has been sent an email telling them their application has not been successful"
           shortlisted: "%{name} has been sent an email telling them that they have been shortlisted"
       show:
-        notice: You can only view published jobs
+        notice: You can only view active jobs
       summary:
         date_expires: >-
           The listing will appear on the service until %{application_deadline}, after which it will no longer be

@@ -26,7 +26,7 @@ RSpec.describe "Hiring staff can filter vacancies in their dashboard" do
   end
 
   context "when no organisations have been previously selected" do
-    context "when viewing published jobs tab" do
+    context "when viewing active jobs tab" do
       scenario "it shows all published vacancies" do
         visit jobs_with_type_organisation_path(:published)
 
