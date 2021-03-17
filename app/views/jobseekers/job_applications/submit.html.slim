@@ -1,34 +1,35 @@
 - content_for :page_title_prefix, t(".title")
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = govuk_panel title: t(".panel.title"), body: t(".panel.body", email: current_jobseeker.email)
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = govuk_panel title: t(".panel.title"), body: t(".panel.body", email: current_jobseeker.email)
 
-  .govuk-grid-column-two-thirds
-    h2.govuk-heading-l = t(".next_step.heading")
+    .govuk-grid-column-two-thirds
+      h2.govuk-heading-l = t(".next_step.heading")
 
-    = render Shared::NotificationComponent.new style: "notice",
-      content: { title: t(".notice.title"), body: t(".notice.body") },
-      background: true,
-      alert: "info",
-      dismiss: false,
-      html_attributes: {}
+      = render Shared::NotificationComponent.new style: "notice",
+        content: { title: t(".notice.title"), body: t(".notice.body") },
+        background: true,
+        alert: "info",
+        dismiss: false,
+        html_attributes: {}
 
-    p = t(".next_step.school_communication", organisation: vacancy.parent_organisation.name, deadline: format_date(vacancy.expires_on))
-    p = t(".next_step.shortlisted", organisation: vacancy.parent_organisation.name)
+      p = t(".next_step.school_communication", organisation: vacancy.parent_organisation.name, deadline: format_date(vacancy.expires_on))
+      p = t(".next_step.shortlisted", organisation: vacancy.parent_organisation.name)
 
-    = govuk_link_to t(".next_step.view_applications"), jobseekers_job_applications_path, class: "govuk-button--secondary govuk-!-margin-bottom-3", button: true
+      = govuk_link_to t(".next_step.view_applications"), jobseekers_job_applications_path, class: "govuk-button--secondary govuk-!-margin-bottom-3", button: true
 
-    hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
+      hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
 
-    = form_for @application_feedback_form, url: jobseekers_job_application_feedback_path(anchor: "new_jobseekers_job_application_feedback_form") do |f|
-      = f.govuk_error_summary
+      = form_for @application_feedback_form, url: jobseekers_job_application_feedback_path(anchor: "new_jobseekers_job_application_feedback_form") do |f|
+        = f.govuk_error_summary
 
-      h2.govuk-heading-m = t(".feedback.heading")
-      p = t(".feedback.description")
+        h2.govuk-heading-m = t(".feedback.heading")
+        p = t(".feedback.description")
 
-      = f.govuk_collection_radio_buttons :rating, Feedback.ratings.keys, :to_s
+        = f.govuk_collection_radio_buttons :rating, Feedback.ratings.keys, :to_s
 
-      = f.govuk_text_area :comment, label: { size: "s" }, rows: 10, max_chars: 1200, form_group: { classes: "optional-field" }
+        = f.govuk_text_area :comment, label: { size: "s" }, rows: 10, max_chars: 1200, form_group: { classes: "optional-field" }
 
-      = f.govuk_submit t("buttons.submit_feedback")
+        = f.govuk_submit t("buttons.submit_feedback")

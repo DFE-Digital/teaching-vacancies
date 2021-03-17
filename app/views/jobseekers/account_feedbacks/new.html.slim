@@ -1,18 +1,19 @@
 - content_for :page_title_prefix, t(".title")
 
-= govuk_back_link text: t("buttons.back"), href: @account_feedback_form.origin
+.govuk-main-wrapper
+  = govuk_back_link text: t("buttons.back"), href: @account_feedback_form.origin
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_for @account_feedback_form, url: jobseekers_account_feedback_path do |f|
-      = f.hidden_field :origin
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form_for @account_feedback_form, url: jobseekers_account_feedback_path do |f|
+        = f.hidden_field :origin
 
-      = f.govuk_error_summary
+        = f.govuk_error_summary
 
-      h1.govuk-heading-xl = t(".title")
+        h1.govuk-heading-xl = t(".title")
 
-      = f.govuk_collection_radio_buttons :rating, Feedback.ratings.keys, :to_s
+        = f.govuk_collection_radio_buttons :rating, Feedback.ratings.keys, :to_s
 
-      = f.govuk_text_area :comment, label: { size: "s" }, rows: 10, max_chars: 1200, form_group: { classes: "optional-field" }
+        = f.govuk_text_area :comment, label: { size: "s" }, rows: 10, max_chars: 1200, form_group: { classes: "optional-field" }
 
-      = f.govuk_submit t("buttons.submit")
+        = f.govuk_submit t("buttons.submit")

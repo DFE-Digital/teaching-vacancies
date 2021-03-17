@@ -1,24 +1,25 @@
 - content_for :page_title_prefix, page_title_prefix(@vacancy, @form, t("jobs.pay_package"))
 
-.govuk-grid-row
-  .govuk-grid-column-full
-    = render Publishers::VacancyFormPageHeadingComponent.new(@vacancy, process_steps.current_step_number, process_steps.total_steps)
-    = render Publishers::VacancyWizardBackLinkComponent.new(@vacancy, previous_step_path: previous_wizard_path)
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-full
+      = render Publishers::VacancyFormPageHeadingComponent.new(@vacancy, process_steps.current_step_number, process_steps.total_steps)
+      = render Publishers::VacancyWizardBackLinkComponent.new(@vacancy, previous_step_path: previous_wizard_path)
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_for @form, url: wizard_path, method: :patch do |f|
-      = f.govuk_error_summary
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form_for @form, url: wizard_path, method: :patch do |f|
+        = f.govuk_error_summary
 
-      h2.govuk-heading-l = t("jobs.pay_package")
+        h2.govuk-heading-l = t("jobs.pay_package")
 
-      = render "publishers/vacancies/vacancy_form_partials/hidden_state_input", f: f
+        = render "publishers/vacancies/vacancy_form_partials/hidden_state_input", f: f
 
-      = f.govuk_text_field :salary, label: { size: "s" }, required: true
+        = f.govuk_text_field :salary, label: { size: "s" }, required: true
 
-      = f.govuk_text_area :benefits, label: { size: "s" }, form_group: { classes: "optional-field" }
+        = f.govuk_text_area :benefits, label: { size: "s" }, form_group: { classes: "optional-field" }
 
-      = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+        = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
-  .govuk-grid-column-one-third
-    = render(Shared::ProcessStepsComponent.new(process: @vacancy, service: process_steps, title: t("publishers.vacancies.build.process_title")))
+    .govuk-grid-column-one-third
+      = render(Shared::ProcessStepsComponent.new(process: @vacancy, service: process_steps, title: t("publishers.vacancies.build.process_title")))

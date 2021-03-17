@@ -2,27 +2,26 @@
 
 = render "jobseekers/dashboard/account_header"
 
-.govuk-grid-row
-  .govuk-grid-column-full
-    h1.govuk-heading-l = t(".page_title")
-
-- if saved_jobs.any?
-  .govuk-grid-row class="govuk-!-margin-top-0"
+.govuk-main-wrapper class="govuk-!-padding-bottom-0"
+  .govuk-grid-row
     .govuk-grid-column-full
-      = form_for sort_form, as: "", url: jobseekers_saved_jobs_path, method: :get, data: { 'auto-submit': true, "hide-submit": true } do |f|
-        = f.govuk_collection_select :sort_column,
-          sort,
-          :column,
-          :display_name,
-          label: { text: t("jobs.sort_by.label"), size: "s", class: "govuk-label inline govuk-!-margin-right-2" },
-          form_group: { classes: "govuk-!-margin-bottom-2" }
+      h1.govuk-heading-l = t(".page_title")
 
-        = f.govuk_submit t("jobs.sort_by.submit")
+  - if saved_jobs.any?
+    .govuk-grid-row class="govuk-!-margin-top-0"
+      .govuk-grid-column-full
+        = form_for sort_form, as: "", url: jobseekers_saved_jobs_path, method: :get, data: { 'auto-submit': true, "hide-submit": true } do |f|
+          = f.govuk_collection_select :sort_column,
+            sort,
+            :column,
+            :display_name,
+            label: { text: t("jobs.sort_by.label"), size: "s", class: "govuk-label inline govuk-!-margin-right-2" },
+            form_group: { classes: "govuk-!-margin-bottom-2" }
 
-.govuk-grid-row
-  .govuk-grid-column-full
-    .moj-filter-layout__content
-      section
+          = f.govuk_submit t("jobs.sort_by.submit")
+
+  .govuk-grid-row
+    .govuk-grid-column-full
         - if saved_jobs.any?
           - saved_jobs.each do |saved_job|
             = render Shared::CardComponent.new do |card|
@@ -42,5 +41,6 @@
         - else
           = render(Shared::NotificationComponent.new(content: { title: t(".zero_saved_jobs_title"), body: t(".zero_saved_jobs_body_html", link_to: govuk_link_to(t(".link_find"), root_path)) }, style: "empty", dismiss: false, background: true, alert: false))
 
+.govuk-grid-row
   .govuk-grid-column-full
     = render(Jobseekers::AccountSurveyLinkComponent.new(origin: url_for))
