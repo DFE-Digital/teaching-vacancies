@@ -66,7 +66,7 @@ performs these steps:
 
 Requirements:
 - docker CLI of at least version `19.03`
-- [terraform CLI](https://www.terraform.io/downloads.html) of at least version `0.13.5`
+- [terraform CLI](https://www.terraform.io/downloads.html) of at least version `0.14.7`
 - Write access to Docker Hub `dfedigital/teaching-vacancies` repository. Ask in #digital-tools-support should you require it.
 - Log in to Docker Hub (with `docker login`)
 - Log in to GOV.UK PaaS (with `cf login --sso`). You will need a [Passcode](https://login.london.cloud.service.gov.uk/passcode)
@@ -115,7 +115,7 @@ performs these steps:
 - Uses Terraform to apply any changes (including providing the tag of the Docker image) to the `dev` environment
 
 Requirements:
-- [terraform CLI](https://www.terraform.io/downloads.html) of at least version `0.13.5`
+- [terraform CLI](https://www.terraform.io/downloads.html) of at least version `0.14.7`
 - Log in to Docker Hub (with `docker login`)
 - Log in to GOV.UK PaaS (with `cf login --sso`). You will need a [Passcode](https://login.london.cloud.service.gov.uk/passcode)
 
@@ -135,7 +135,7 @@ make passcode=MyPasscode pr=2086 CONFIRM_DESTROY=true review review-destroy
 ```
 
 Requirements:
-- [terraform CLI](https://www.terraform.io/downloads.html) of at least version `0.13.5`
+- [terraform CLI](https://www.terraform.io/downloads.html) of at least version `0.14.7`
 - Log in to Docker Hub (with `docker login`)
 - Log in to GOV.UK PaaS (with `cf login --sso`). You will need a [Passcode](https://login.london.cloud.service.gov.uk/passcode)
 
