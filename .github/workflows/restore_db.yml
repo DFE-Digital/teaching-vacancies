@@ -30,13 +30,14 @@ jobs:
       shell: bash
       run: |
         PAAS_SPACE_NAME=$(grep paas_space_name terraform/workspace-variables/${{ github.event.inputs.environment }}.tfvars | awk -F'= ' '{print $2}' | cut -d '"' -f 2)
+        echo "PAAS_SPACE_NAME=${PAAS_SPACE_NAME}" >> $GITHUB_ENV
 
     - name: Setup cf cli
       uses: DFE-Digital/github-actions/setup-cf-cli@master
       with:
         CF_USERNAME: ${{ secrets.CF_USERNAME }}
         CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-        CF_SPACE_NAME: ${PAAS_SPACE_NAME}
+        CF_SPACE_NAME: ${{ env.PAAS_SPACE_NAME }}
         INSTALL_CONDUIT: true
 
     - name: Install postgres client
@@ -54,7 +55,7 @@ jobs:
       run: bin/restore-db
       env:
         CF_DESTINATION_ENVIRONMENT: ${{ github.event.inputs.environment }}
-        CF_SPACE_NAME: ${PAAS_SPACE_NAME}
+        CF_SPACE_NAME: ${{ env.PAAS_SPACE_NAME }}
         BACKUP_TYPE: sanitised
 
     - name: Send job status message to twd_tv_dev channel
