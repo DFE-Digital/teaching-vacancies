@@ -235,12 +235,23 @@ cf conduit $CF_POSTGRES_SERVICE_TARGET -- psql < backup.sql
   - `/teaching-vacancies/<env>/app/GOOGLE_API_JSON_KEY`
   - `/teaching-vacancies/<env>/app/secrets`
   - `/teaching-vacancies/<env>/infra/secrets`
+- Add a target to the Makefile
+```
+.PHONY: <env>
+<env>: ## <env>
+		$(eval env=<env>)
+		$(eval var_file=<env>)
+```
 - Run:
   ```shell
-  cd terraform/app
-  export TF_VAR_paas_sso_passcode=<passcode obtained from https://login.london.cloud.service.gov.uk/passcode>
-  export TF_WORKSPACE=<env>
-  export TF_VAR_paas_app_docker_image=dfedigital/teaching-vacancies:<tag>
-  terraform init
-  terraform apply -var-file terraform/workspace-variables/<env>.tfvars
+  make passcode=MyPasscode tag=47fd1475376bbfa16a773693133569b794408995 <env> terraform-app-apply
   ```
+- If you want to have a deployment triggered by a push to a branch, add a trigger to [deploy_branch.yml](../.github/workflows/deploy_branch.yml)
+```
+on:
+  push:
+    branches:
+      - dev
+      - <env>
+```
+- Optionally, [refresh the database](database-backups.md) with a sanitised copy of the production data
