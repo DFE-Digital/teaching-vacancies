@@ -47,7 +47,7 @@ class Publishers::OmniauthCallbacksController < Devise::OmniauthCallbacksControl
   end
 
   def organisation_from_request
-    # https://github.com/david-mears-dfe/login.dfe.public-api/blob/patch-1/README.md#organisation-categories
+    # https://github.com/DFE-Digital/login.dfe.public-api#how-do-ids-map-to-categories-and-types
     case auth_hash.dig("extra", "raw_info", "organisation", "category", "id")
     when "001"
       School.find_by!(urn: auth_hash.dig("extra", "raw_info", "organisation", "urn"))
