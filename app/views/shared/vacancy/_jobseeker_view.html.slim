@@ -16,7 +16,7 @@
         h2.govuk-caption-l.job-caption class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
           = vacancy_job_location(@vacancy)
     .govuk-grid-row
-      - if JobseekerApplicationsFeature.enabled? && @vacancy.apply_through_teaching_vacancies&.downcase == "yes"
+      - if JobseekerApplicationsFeature.enabled? && @vacancy.apply_through_teaching_vacancies&.downcase == "yes" && @vacancy.expires_at.future?
         - case current_jobseeker&.job_applications&.find_by(vacancy_id: @vacancy.id)&.status
         - when "submitted"
             .govuk-grid-column-one-third
