@@ -1,6 +1,6 @@
 ---
 APP_ROLE: production
-AUTHENTICATION_FALLBACK: true
+AUTHENTICATION_FALLBACK: false
 BIG_QUERY_DATASET: production_dataset
 DFE_SIGN_IN_ISSUER: https://oidc.signin.education.gov.uk
 DFE_SIGN_IN_REDIRECT_URL: https://teaching-vacancies.service.gov.uk/publishers/auth/dfe/callback
