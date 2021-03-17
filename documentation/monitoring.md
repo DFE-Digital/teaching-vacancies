@@ -12,10 +12,6 @@
 
 - [Check the GitHub Deploy workflow](https://github.com/DFE-Digital/teaching-vacancies/actions?query=workflow%3ADeploy) to see recent deployments.
 
-### Cloudfront
-
-- [Cloudfront log dashboard](https://console.aws.amazon.com/cloudfront/v2/home#/logs/E37BGF9R499RSE). When standard logging is enabled, this goes to a [logging S3 bucket](https://console.aws.amazon.com/s3/buckets/530003481352-tv-cloudfront-logs?region=eu-west-2&prefix=production/&showversions=false) recording logs in gzipped format
-
 ## Monitoring, Metrics and Usage
 
 ### Grafana, Prometheus, and AlertManager
