@@ -16,6 +16,7 @@ RSpec.describe "Sidekiq configuration" do
       PersistVacancyGetMoreInfoClickJob
       PersistVacancyPageViewJob
       RemoveGoogleIndexQueueJob
+      SendEntityImportedEventsToDataWarehouseJob
       SendEventToDataWarehouseJob
       UpdateGoogleIndexQueueJob
     ]
