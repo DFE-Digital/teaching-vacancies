@@ -10,7 +10,7 @@ en:
     govuk: GOV.UK
     menu: Menu
     title: Teaching Vacancies
-    environment_html: You are viewing the <strong>%{environment}</strong> Teaching Vacancies environment.
+    environment_html: This is not the live Teaching Vacancies website. You are currently viewing the <strong>%{environment}</strong> version of the site.
 
   breadcrumbs:
     home: Home
