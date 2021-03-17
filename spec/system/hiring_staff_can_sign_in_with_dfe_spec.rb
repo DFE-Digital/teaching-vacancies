@@ -67,12 +67,13 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
   end
 
   context "with DSI data including a school group (trust or local authority) that the school belongs to" do
-    let(:dsi_data) { { "trust_uids" => %w[14323], "school_urns" => %w[246757 953341 122792], "la_codes" => %w[323] } }
-    let!(:user) { create(:publisher, email: dsi_email_address, dsi_data: dsi_data) }
+    let(:publisher) { Publisher.find_by(oid: user_oid) }
     let(:school) { create(:school, urn: "246757") }
 
     before do
       SchoolGroupMembership.create(school_group: school_group, school: school)
+      OrganisationPublisher.create(organisation: school, publisher: publisher)
+      OrganisationPublisher.create(organisation: school_group, publisher: publisher)
 
       stub_authentication_step(school_urn: "246757", email: dsi_email_address)
       stub_authorisation_step

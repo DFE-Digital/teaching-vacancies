@@ -109,7 +109,6 @@ shared:
     - oid
     - accepted_terms_at
     - email
-    - dsi_data
     - last_activity_at
     - family_name
     - given_name
