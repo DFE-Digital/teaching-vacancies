@@ -1,0 +1,47 @@
+@import 'base_component';
+
+@mixin striped-banner($background-color, $tint: 10) {
+  $stripe-color: govuk-tint($background-color, $tint);
+
+  @include govuk-font(16);
+
+  background-image: linear-gradient(45deg, $background-color 25%, $stripe-color 25%, $stripe-color 50%, $background-color 50%, $background-color 75%, $stripe-color 75%, $stripe-color 100%);
+  background-size: govuk-spacing(9) govuk-spacing(9);
+
+  padding: govuk-spacing(2);
+
+  .govuk-tag {
+    background-color: govuk-colour('white');
+    color: govuk-shade($background-color, 25);
+
+    margin-right: govuk-spacing(2);
+  }
+}
+
+.environment-banner-component {
+  @include striped-banner(govuk-colour('yellow'), 25);
+
+  &--qa {
+    @include striped-banner(govuk-colour('purple'));
+    color: govuk-colour('white');
+  }
+
+  &--staging {
+    @include striped-banner(govuk-colour('red'));
+    color: govuk-colour('white');
+  }
+
+  &--review {
+    @include striped-banner(govuk-colour('yellow', 25));
+  }
+
+  &--dev {
+    @include striped-banner(govuk-colour('green', 25));
+    color: govuk-colour('white');
+  }
+
+  &--user-testing {
+    @include striped-banner(govuk-colour('turquoise'), 10);
+    color: govuk-colour('white');
+  }
+}

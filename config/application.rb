@@ -66,6 +66,8 @@ module TeacherVacancyService
       config.redis_cache_url = "#{redis_url}/1"
     end
 
+    config.app_role = ActiveSupport::StringInquirer.new(ENV.fetch("APP_ROLE", "unknown"))
+
     config.ab_tests = config_for(:ab_tests)
 
     config.allowed_local_authorities = config_for(:allowed_local_authorities)

@@ -10,6 +10,7 @@ en:
     govuk: GOV.UK
     menu: Menu
     title: Teaching Vacancies
+    environment_html: You are viewing the <strong>%{environment}</strong> Teaching Vacancies environment.
 
   breadcrumbs:
     home: Home

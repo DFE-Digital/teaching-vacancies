@@ -1,0 +1,4 @@
+.environment-banner-component class="environment-banner-component--#{Rails.configuration.app_role}"
+  .govuk-width-container
+    strong.govuk-tag.govuk-tag--environment = Rails.configuration.app_role.upcase
+    = t("app.environment_html", environment: Rails.configuration.app_role)

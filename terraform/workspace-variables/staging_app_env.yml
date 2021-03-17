@@ -1,4 +1,5 @@
 ---
+APP_ROLE: staging
 AUTHENTICATION_FALLBACK: false
 BIG_QUERY_DATASET: staging_dataset
 DFE_SIGN_IN_ISSUER: https://pp-oidc.signin.education.gov.uk

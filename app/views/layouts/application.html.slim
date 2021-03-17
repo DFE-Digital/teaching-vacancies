@@ -26,6 +26,8 @@ html.govuk-template.app-html-class lang="en"
       | document.body.className = ((document.body.className) ? document.body.className + " js-enabled" : "js-enabled");
     = render "shared/skip_links"
 
+    = render Shared::EnvironmentBannerComponent.new
+
     = render AbTest::CookiesBannerComponent.new(create_path: create_cookies_preferences_path(cookies_consent: "yes", **utm_parameters), preferences_path: cookies_preferences_path(**utm_parameters)).with_variant(:default) unless cookies_preference_set?
 
     - if current_variant?(:"2021_02_jobseeker_account_cta_test", :sticky) && controller_name == "home" && !jobseeker_signed_in?
