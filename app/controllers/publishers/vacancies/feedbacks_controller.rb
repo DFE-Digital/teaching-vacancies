@@ -1,4 +1,4 @@
-class Publishers::Vacancies::FeedbacksController < Publishers::Vacancies::ApplicationController
+class Publishers::Vacancies::FeedbacksController < Publishers::Vacancies::BaseController
   include FeedbackEventConcerns
 
   def create

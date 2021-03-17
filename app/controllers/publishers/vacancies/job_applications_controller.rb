@@ -1,4 +1,4 @@
-class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::ApplicationController
+class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::BaseController
   helper_method :form, :job_application, :vacancy
 
   def reject
