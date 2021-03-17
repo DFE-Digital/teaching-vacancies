@@ -2,14 +2,15 @@
 
 Teaching Vacancies is hosted on [GOV.UK PaaS](https://docs.cloud.service.gov.uk/).
 
-## Applications
+## Environments
 
-These are the persistent applications:
-
-- https://dev.teaching-vacancies.service.gov.uk (Dev, from `dev` branch)
-- https://qa.teaching-vacancies.service.gov.uk (QA, from `qa` branch)
-- https://staging.teaching-vacancies.service.gov.uk (Staging, from `master` branch)
-- https://teaching-vacancies.service.gov.uk (Production, from `master` branch`)
+| Environment | URL                                                                                                    | Code branch | CI/CD workflow      | Gov.UK PaaS space             |
+| ----------- | ------------------------------------------------------------------------------------------------------ | ----------- | ------------------- | ----------------------------- |
+| Production  | [https://teaching-vacancies.service.gov.uk](https://teaching-vacancies.service.gov.uk)                 | `master`    | [deploy.yml](../.github/workflows/deploy.yml)        | teaching-vacancies-production |
+| Staging     | [https://staging.teaching-vacancies.service.gov.uk](https://staging.teaching-vacancies.service.gov.uk) | `master`    | [deploy.yml](../.github/workflows/deploy.yml)        | teaching-vacancies-staging    |
+| Dev         | [https://dev.teaching-vacancies.service.gov.uk](https://dev.teaching-vacancies.service.gov.uk)         | `dev`       | [deploy_branch.yml](../.github/workflows/deploy_branch.yml) | teaching-vacancies-dev        |
+| QA          | [https://qa.teaching-vacancies.service.gov.uk](https://qa.teaching-vacancies.service.gov.uk)           | `qa`        | [deploy_branch.yml](../.github/workflows/deploy_branch.yml) | teaching-vacancies-dev        |
+| Prototype   | [https://teaching-vacancies-prototype.london.cloudapps.digital](https://teaching-vacancies-prototype.london.cloudapps.digital/) |   |    | teaching-vacancies-prototype |
 
 Plus all the ephemeral review apps that are created when a PR is created on GitHub, and destroyed when the PR is merged. These have URLs which contain the Pull Request number, like [https://teaching-vacancies-review-pr-2667.london.cloudapps.digital](https://teaching-vacancies-review-pr-2667.london.cloudapps.digital)
 
