@@ -1,0 +1,35 @@
+en:
+  heading:
+    options: "Options"
+    examples: "Examples"
+    interactive: "Interactive"
+    update: "Update"
+    templates:
+      slim: "slim template"
+    component:
+      notification:
+        title: "Notification Component"
+        options: "title, body, background, icon, dismiss"
+        description: "Displays a notification."
+  text:
+    short: "Lorem ipsum."
+    medium: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porttitor tortor ac lobortis commodo. Curabitur condimentum ligula in leo pharetra."
+    long: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae lorem tortor. Phasellus nec ante commodo, rhoncus lectus nec, blandit diam. Vestibulum accumsan nisi id dui ornare, in congue mauris convallis. Sed in vulputate turpis. Integer ac diam id odio luctus ullamcorper. Fusce bibendum sagittis interdum. Vivamus leo ligula, euismod pharetra ornare in, eleifend at urna. Nunc at nisi eget mauris rutrum iaculis et id lorem. Pellentesque finibus, mi at pellentesque lacinia, eros mauris auctor lorem, et interdum urna ex."
+  component:
+    notification:
+      success:
+        name: "Success"
+        title: "Success alert"
+        description: "Sometimes dismissable."
+      danger:
+        name: "Danger"
+        title: "Warnings to user"
+        description: "Never dismissable. This is a warning message or something potentially bad for the user."
+      notice:
+        name: "Notice"
+        title: "General information alert"
+        description: "Sometimes dismissable."
+      empty:
+        name: "Empty"
+        title: "Inline emphasis"
+        description: "Basic inline emphasis."

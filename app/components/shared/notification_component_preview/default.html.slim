@@ -10,10 +10,10 @@
 
     h2.govuk-heading-m = t("heading.examples")
 
-    - variants.each do |variant|
-      h3.govuk-heading-s = variant.title
-      p.govuk-body = variant.description
-      = render(Shared::NotificationComponent.new(icon: @preview_form.icon, title: @preview_form.title, body: @preview_form.body, variant: variant.id, background: @preview_form.background, dismiss: @preview_form.dismiss))
+    - @variants.each do |variant|
+      h3.govuk-heading-s = t("component.notification.#{variant}.title")
+      p.govuk-body = t("component.notification.#{variant}.description")
+      = render(Shared::NotificationComponent.new(icon: @preview_form.icon, title: t("text.short") , body: t("text.medium"), variant: variant, background: @preview_form.background, dismiss: @preview_form.dismiss))
 
       .govuk-tabs data={ "module": "govuk-tabs" }
         ul.govuk-tabs__list
@@ -27,31 +27,24 @@
               tr.govuk-table__row
                 td.govuk-table__cell
                   pre
-                    code = "render(Shared::NotificationComponent.new(\n\t\ttitle: '#{@preview_form.title}',\n\t\tbody: '#{@preview_form.body}'\n\t},\n\tvariant: '#{@preview_form.variant}',\n\tbackground: #{@preview_form.background},\n\tdismiss: #{@preview_form.dismiss}\n))"
+                    code = "render(Shared::NotificationComponent.new(\n\ttitle: '#{t("text.short")}',\n\tbody: '#{t("text.short")}',\n\tvariant: '#{variant}',\n\tbackground: #{@preview_form.background},\n\tdismiss: #{@preview_form.dismiss}\n\ticon: #{@preview_form.icon}\n))"
 
     h2.govuk-heading-m = t("heading.interactive")
 
     .govuk-form-group
-      .govuk-grid-column-one-half
-        = f.govuk_text_field :title,
-          width: "three-quarters",
-          label: { text: "Title", hidden: true }
-
-        = f.govuk_text_field :body,
-          width: "three-quarters",
-          label: { text: "Body", hidden: true }
-
-      .govuk-grid-column-one-half
+      .govuk-grid-column-one-third
         = f.govuk_check_box :background,
           "true",
           label: { text: "background color" },
           link_errors: false
 
+      .govuk-grid-column-one-third
         = f.govuk_check_box :dismiss,
           "true",
           label: { text: "dismiss CTA" },
           link_errors: false
 
+      .govuk-grid-column-one-third
         = f.govuk_check_box :icon,
           "true",
           label: { text: "icon" },
