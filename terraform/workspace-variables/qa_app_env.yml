@@ -1,0 +1,20 @@
+---
+APP_ROLE: qa
+AUTHENTICATION_FALLBACK: false
+BIG_QUERY_DATASET: staging_dataset
+DFE_SIGN_IN_ISSUER: https://test-oidc.signin.education.gov.uk
+DFE_SIGN_IN_REDIRECT_URL: https://qa.teaching-vacancies.service.gov.uk/publishers/auth/dfe/callback
+DFE_SIGN_IN_URL: https://test-api.signin.education.gov.uk
+DISABLE_EXPENSIVE_JOBS: true
+DOMAIN: qa.teaching-vacancies.service.gov.uk
+ENFORCE_LOCAL_AUTHORITY_ALLOWLIST: false
+FEATURE_JOBSEEKER_APPLICATIONS: true
+GOOGLE_ANALYTICS_PROFILE_ID: ga:171744074
+RAILS_ENV: production
+RAILS_LOG_TO_STDOUT: true
+RAILS_MAX_THREADS: 5
+RAILS_SERVE_STATIC_FILES: true
+ROLLBAR_ENV: dev
+SKYLIGHT_ENABLED: true
+SKYLIGHT_ENV: dev
+SKYLIGHT_IGNORED_ENDPOINTS: ApplicationController#check
