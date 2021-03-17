@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - dev
+      - qa
     paths-ignore:
     - 'bigquery/**'
     - 'documentation/**'

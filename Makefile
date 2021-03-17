@@ -55,6 +55,11 @@ production: ## production # Requires `CONFIRM_PRODUCTION=true`
 		$(eval env=production)
 		$(eval var_file=production)
 
+.PHONY: qa
+qa: ## qa
+		$(eval env=qa)
+		$(eval var_file=qa)
+
 ##@ Docker - build, tag, and push an image from local code. Requires Docker CLI
 
 .PHONY: build-local-image
