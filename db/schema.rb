@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_15_133432) do
+ActiveRecord::Schema.define(version: 2021_03_17_104739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -207,7 +207,6 @@ ActiveRecord::Schema.define(version: 2021_03_15_133432) do
     t.string "oid"
     t.datetime "accepted_terms_at"
     t.string "email"
-    t.jsonb "dsi_data"
     t.datetime "last_activity_at"
     t.string "family_name"
     t.string "given_name"

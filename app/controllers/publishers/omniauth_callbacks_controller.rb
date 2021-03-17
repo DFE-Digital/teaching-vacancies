@@ -90,7 +90,7 @@ class Publishers::OmniauthCallbacksController < Devise::OmniauthCallbacksControl
     sign_in(publisher)
     sign_out(:jobseeker)
     session.update(publisher_dsi_token: id_token, publisher_organisation_id: organisation.id)
-    use_school_group_if_available
+    use_school_group_if_available(publisher, organisation)
   end
 
   def organisation_from_request
@@ -114,17 +114,10 @@ class Publishers::OmniauthCallbacksController < Devise::OmniauthCallbacksControl
     Rails.configuration.allowed_local_authorities.include?(local_authority_code)
   end
 
-  def use_school_group_if_available
-    publisher = Publisher.find_by(email: identifier)
-    publisher_trusts = publisher&.dsi_data&.fetch("trust_uids", [])
-    publisher_local_authorities = publisher&.dsi_data&.fetch("la_codes", [])
-    return unless publisher_trusts&.any? || publisher_local_authorities&.any?
+  def use_school_group_if_available(publisher, organisation)
+    return unless organisation.is_a?(School)
 
-    school = School.find_by(urn: school_urn)
-    school_group = school&.school_groups&.first
-    return unless school_group
-
-    session.update(publisher_organisation_id: school_group.id) if
-      publisher_trusts.include?(school_group.uid) || publisher_local_authorities.include?(school_group.local_authority_code)
+    publisher_organisation = publisher.organisations.school_groups.find { |school_group| school_group.schools.include?(organisation) }
+    session.update(publisher_organisation_id: publisher_organisation.id) if publisher_organisation
   end
 end
