@@ -102,13 +102,8 @@ RSpec.describe Shared::NotificationComponent, type: :component do
       end
     end
 
-<<<<<<< HEAD
     context "when style is warning" do
       let(:variant) { "warning" }
-=======
-    context "when style is danger" do
-      let(:variant) { "danger" }
->>>>>>> 72a5268ff... refactor notification component
       let(:icon) { true }
 
       it "does not render the dismiss link" do
@@ -116,11 +111,7 @@ RSpec.describe Shared::NotificationComponent, type: :component do
       end
 
       it "applies correct class" do
-<<<<<<< HEAD
         expect(subject.css(".govuk-notification--warning")).to_not be_blank
-=======
-        expect(subject.css(".govuk-notification--danger")).to_not be_blank
->>>>>>> 72a5268ff... refactor notification component
       end
 
       it "does not apply the icon class" do
