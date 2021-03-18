@@ -1,26 +1,27 @@
 - content_for :page_title_prefix, t(".title")
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_for @subscription_form, url: subscription_path(@subscription.token), method: :patch do |f|
-      = f.govuk_error_summary
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form_for @subscription_form, url: subscription_path(@subscription.token), method: :patch do |f|
+        = f.govuk_error_summary
 
-      h1.govuk-heading-xl class="govuk-!-margin-bottom-4" = t(".title")
+        h1.govuk-heading-xl class="govuk-!-margin-bottom-4" = t(".title")
 
-      p.govuk-body-m class="govuk-!-margin-bottom-4" = t(".description")
+        p.govuk-body-m class="govuk-!-margin-bottom-4" = t(".description")
 
-      .location-search = render "fields", f: f
+        .location-search = render "fields", f: f
 
-      = render(Shared::NotificationComponent.new(content: { body: t("subscriptions.info") }, style: "notice", background: true, dismiss: false, alert: "info"))
+        = render(Shared::NotificationComponent.new(content: { body: t("subscriptions.info") }, style: "notice", background: true, dismiss: false, alert: "info"))
 
-      = f.hidden_field :token, value: @subscription.token
+        = f.hidden_field :token, value: @subscription.token
 
-      = f.govuk_submit t("buttons.update_alert"), classes: "govuk-!-padding-left-8 govuk-!-padding-right-8"
+        = f.govuk_submit t("buttons.update_alert"), classes: "govuk-!-padding-left-8 govuk-!-padding-right-8"
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = govuk_link_to(t("buttons.cancel"), root_path, class: "govuk-!-font-size-19")
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = govuk_link_to(t("buttons.cancel"), root_path, class: "govuk-!-font-size-19")
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds.govuk-body class="govuk-!-margin-top-4"
-    = t("terms_and_conditions.read_html")
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds.govuk-body class="govuk-!-margin-top-4"
+      = t("terms_and_conditions.read_html")

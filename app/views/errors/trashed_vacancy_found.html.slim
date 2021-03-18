@@ -1,4 +1,5 @@
 - content_for :page_title_prefix, t("error_pages.trashed_vacancy_found")
 
-h1.govuk-heading-xl = t("error_pages.trashed_vacancy_found")
-p The job you are looking for is no longer listed on Teaching Vacancies. Try #{govuk_link_to("searching again", "/")}.
+.govuk-main-wrapper
+  h1.govuk-heading-xl = t("error_pages.trashed_vacancy_found")
+  p.govuk-body The job you are looking for is no longer listed on Teaching Vacancies. Try #{govuk_link_to("searching again", "/")}.

@@ -1,30 +1,31 @@
 - content_for :page_title_prefix, page_title_prefix(@vacancy, @form, t("jobs.job_location"))
 
-.govuk-grid-row
-  .govuk-grid-column-full
-    = render Publishers::VacancyFormPageHeadingComponent.new(@vacancy, process_steps.current_step_number, process_steps.total_steps)
-    = render Publishers::VacancyWizardBackLinkComponent.new(@vacancy, previous_step_path: previous_wizard_path)
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-full
+      = render Publishers::VacancyFormPageHeadingComponent.new(@vacancy, process_steps.current_step_number, process_steps.total_steps)
+      = render Publishers::VacancyWizardBackLinkComponent.new(@vacancy, previous_step_path: previous_wizard_path)
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_for @form, url: wizard_path, method: :patch do |f|
-      = f.govuk_error_summary
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form_for @form, url: wizard_path, method: :patch do |f|
+        = f.govuk_error_summary
 
-      h2.govuk-heading-l = t("jobs.job_location")
+        h2.govuk-heading-l = t("jobs.job_location")
 
-      = render "publishers/vacancies/vacancy_form_partials/hidden_state_input", f: f
+        = render "publishers/vacancies/vacancy_form_partials/hidden_state_input", f: f
 
-      = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_schools_form.organisation_ids") } do
-        = render Shared::SearchableCollectionComponent.new(form: f,
-          threshold: 10,
-          attribute_name: :organisation_ids,
-          collection: @school_options,
-          value_method: :id,
-          text_method: :name,
-          hint_method: :address).with_variant(@multiple_schools ? :checkbox : :radiobutton)
+        = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_schools_form.organisation_ids") } do
+          = render Shared::SearchableCollectionComponent.new(form: f,
+            threshold: 10,
+            attribute_name: :organisation_ids,
+            collection: @school_options,
+            value_method: :id,
+            text_method: :name,
+            hint_method: :address).with_variant(@multiple_schools ? :checkbox : :radiobutton)
 
-      div class="govuk-!-margin-top-6"
-        = render "publishers/vacancies/vacancy_form_partials/continue_or_update_submit", f: f
+        div class="govuk-!-margin-top-6"
+          = render "publishers/vacancies/vacancy_form_partials/continue_or_update_submit", f: f
 
-  .govuk-grid-column-one-third
-    = render(Shared::ProcessStepsComponent.new(process: @vacancy, service: process_steps, title: t("publishers.vacancies.build.process_title")))
+    .govuk-grid-column-one-third
+      = render(Shared::ProcessStepsComponent.new(process: @vacancy, service: process_steps, title: t("publishers.vacancies.build.process_title")))

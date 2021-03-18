@@ -1,43 +1,44 @@
 - content_for :page_title_prefix, page_title_prefix(@vacancy, @form, t("jobs.applying_for_the_job"))
 
-.govuk-grid-row
-  .govuk-grid-column-full
-    = render Publishers::VacancyFormPageHeadingComponent.new(@vacancy, process_steps.current_step_number, process_steps.total_steps)
-    = render Publishers::VacancyWizardBackLinkComponent.new(@vacancy, previous_step_path: previous_wizard_path)
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-full
+      = render Publishers::VacancyFormPageHeadingComponent.new(@vacancy, process_steps.current_step_number, process_steps.total_steps)
+      = render Publishers::VacancyWizardBackLinkComponent.new(@vacancy, previous_step_path: previous_wizard_path)
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_for @form, url: wizard_path, method: :patch do |f|
-      = f.govuk_error_summary
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form_for @form, url: wizard_path, method: :patch do |f|
+        = f.govuk_error_summary
 
-      h2.govuk-heading-l = t("jobs.applying_for_the_job")
+        h2.govuk-heading-l = t("jobs.applying_for_the_job")
 
-      = render "publishers/vacancies/vacancy_form_partials/hidden_state_input", f: f
+        = render "publishers/vacancies/vacancy_form_partials/hidden_state_input", f: f
 
-      - if JobseekerApplicationsFeature.enabled?
-        = f.govuk_radio_buttons_fieldset :apply_through_teaching_vacancies do
-          = f.govuk_radio_button :apply_through_teaching_vacancies, :yes, link_errors: true do
-            = f.govuk_text_area :personal_statement_guidance, label: { size: "s" }
+        - if JobseekerApplicationsFeature.enabled?
+          = f.govuk_radio_buttons_fieldset :apply_through_teaching_vacancies do
+            = f.govuk_radio_button :apply_through_teaching_vacancies, :yes, link_errors: true do
+              = f.govuk_text_area :personal_statement_guidance, label: { size: "s" }
 
-          = f.govuk_radio_button :apply_through_teaching_vacancies, :no do
-            = f.govuk_url_field :application_link, label: { size: "s" }, form_group: { classes: "optional-field" }
+            = f.govuk_radio_button :apply_through_teaching_vacancies, :no do
+              = f.govuk_url_field :application_link, label: { size: "s" }, form_group: { classes: "optional-field" }
 
-      = f.govuk_email_field :contact_email, label: { size: "s" }, required: true, width: "two-thirds"
+        = f.govuk_email_field :contact_email, label: { size: "s" }, required: true, width: "two-thirds"
 
-      = f.govuk_phone_field :contact_number, label: { size: "s" }, width: "one-third", form_group: { classes: "optional-field" }
+        = f.govuk_phone_field :contact_number, label: { size: "s" }, width: "one-third", form_group: { classes: "optional-field" }
 
-      = f.govuk_text_area :school_visits,
-        label: { text: t("helpers.label.publishers_job_listing_applying_for_the_job_form.#{school_or_trust_visits(@vacancy.parent_organisation)}"), size: "s" },
-        hint: { text: vacancy_school_visits_hint(@vacancy) },
-        rows: 10,
-        form_group: { classes: "optional-field" }
+        = f.govuk_text_area :school_visits,
+          label: { text: t("helpers.label.publishers_job_listing_applying_for_the_job_form.#{school_or_trust_visits(@vacancy.parent_organisation)}"), size: "s" },
+          hint: { text: vacancy_school_visits_hint(@vacancy) },
+          rows: 10,
+          form_group: { classes: "optional-field" }
 
-      - unless JobseekerApplicationsFeature.enabled?
-        = f.govuk_text_area :how_to_apply, label: { size: "s" }, rows: 10, form_group: { classes: "optional-field" }
+        - unless JobseekerApplicationsFeature.enabled?
+          = f.govuk_text_area :how_to_apply, label: { size: "s" }, rows: 10, form_group: { classes: "optional-field" }
 
-        = f.govuk_url_field :application_link, label: { size: "s" }, form_group: { classes: "optional-field" }
+          = f.govuk_url_field :application_link, label: { size: "s" }, form_group: { classes: "optional-field" }
 
-      = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+        = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
-  .govuk-grid-column-one-third
-    = render(Shared::ProcessStepsComponent.new(process: @vacancy, service: process_steps, title: t("publishers.vacancies.build.process_title")))
+    .govuk-grid-column-one-third
+      = render(Shared::ProcessStepsComponent.new(process: @vacancy, service: process_steps, title: t("publishers.vacancies.build.process_title")))

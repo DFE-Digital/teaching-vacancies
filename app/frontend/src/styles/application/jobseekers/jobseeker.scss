@@ -1,21 +1,8 @@
 .jobseeker {
-  &[class*='subscriptions_'],
-  &[class*='vacancies_'] {
-    .govuk-main-wrapper {
-      background-color: govuk-colour('white');
-    }
-  }
-
-  &.jobseekers_subscriptions_index {
-    .govuk-main-wrapper {
-      background-color: govuk-colour('light-grey');
-    }
-  }
-
   .create-alert__button {
     text-align: right;
   }
-  
+
   .moj-filter-layout__content {
     overflow-x: hidden;
   }

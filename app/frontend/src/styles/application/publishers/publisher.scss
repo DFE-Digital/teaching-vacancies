@@ -6,26 +6,4 @@ $desktop-container-width: 1200px;
       width: $desktop-container-width;
     }
   }
-
-  &.publishers_vacancies_index,
-  &.publishers_vacancies_show,
-  &.publishers_vacancies_preview {
-    .govuk-main-wrapper {
-      > .govuk-width-container {
-        margin-top: govuk-spacing(4);
-      }
-    }
-  }
-
-  &.publishers_organisations_show {
-    .govuk-main-wrapper {
-      > .govuk-width-container {
-        margin-top: 0;
-      }
-    }
-
-    .govuk-main-wrapper__notification {
-      background-color: govuk-colour('light-grey');
-    }
-  }
 }

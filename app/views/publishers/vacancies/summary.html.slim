@@ -1,32 +1,33 @@
 - content_for :page_title_prefix, t(".page_title", organisation: current_organisation.name)
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = govuk_panel title: t(".success"), body: ""
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = govuk_panel title: t(".success"), body: ""
 
-    h3.govuk-heading-m = t(".what_happens_next")
+      h3.govuk-heading-m = t(".what_happens_next")
 
-    - if @vacancy.publish_today?
-      p.govuk-body = t(".date_posted_now")
-    - else
-      p.govuk-body = t(".date_posted", date: @vacancy.publish_on)
+      - if @vacancy.publish_today?
+        p.govuk-body = t(".date_posted_now")
+      - else
+        p.govuk-body = t(".date_posted", date: @vacancy.publish_on)
 
-    p.govuk-body
-      = t(".date_expires", application_deadline: OrganisationVacancyPresenter.new(@vacancy).application_deadline)
+      p.govuk-body
+        = t(".date_expires", application_deadline: OrganisationVacancyPresenter.new(@vacancy).application_deadline)
 
-    = govuk_link_to t(".view_jobs"), jobs_with_type_organisation_path(:published), button: true, class: "govuk-button--secondary"
+      = govuk_link_to t(".view_jobs"), jobs_with_type_organisation_path(:published), button: true, class: "govuk-button--secondary"
 
-    .divider-bottom
-      h4.govuk-heading-s.share-this-job class="govuk-!-margin-top-0" = t("jobs.share_this_job")
-      = render "/shared/vacancy/share_buttons"
+      .divider-bottom
+        h4.govuk-heading-s.share-this-job class="govuk-!-margin-top-0" = t("jobs.share_this_job")
+        = render "/shared/vacancy/share_buttons"
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    h3.govuk-heading-m = t(".feedback.heading")
-    p.govuk-body = t(".feedback.description")
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h3.govuk-heading-m = t(".feedback.heading")
+      p.govuk-body = t(".feedback.description")
 
-    = form_for @feedback_form, url: organisation_job_feedback_path(@vacancy.id) do |f|
-      = f.govuk_error_summary
-      = f.govuk_collection_radio_buttons :rating, Feedback.ratings.keys, :to_s
-      = f.govuk_text_area :comment, label: { size: "s" }, rows: 10, form_group: { classes: "optional-field" }
-      = f.govuk_submit t("buttons.submit_feedback")
+      = form_for @feedback_form, url: organisation_job_feedback_path(@vacancy.id) do |f|
+        = f.govuk_error_summary
+        = f.govuk_collection_radio_buttons :rating, Feedback.ratings.keys, :to_s
+        = f.govuk_text_area :comment, label: { size: "s" }, rows: 10, form_group: { classes: "optional-field" }
+        = f.govuk_submit t("buttons.submit_feedback")

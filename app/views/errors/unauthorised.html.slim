@@ -1,9 +1,10 @@
 - content_for :page_title_prefix, t("error_pages.unauthorised.title")
 
-h1.govuk-heading-xl = t("error_pages.unauthorised.title")
-p = t("error_pages.unauthorised.text_html")
-ul.govuk-list.govuk-list--bullet
-  - t("error_pages.unauthorised.options_html").each do |option|
-    li = option
-p = t("error_pages.unauthorised.footer")
-p You can email #{govuk_mail_to t("help.email"), t("help.email")} if the problem persists.
+.govuk-main-wrapper
+  h1.govuk-heading-xl = t("error_pages.unauthorised.title")
+  p.govuk-body = t("error_pages.unauthorised.text_html")
+  ul.govuk-list.govuk-list--bullet
+    - t("error_pages.unauthorised.options_html").each do |option|
+      li = option
+  p.govuk-body = t("error_pages.unauthorised.footer")
+  p.govuk-body You can email #{govuk_mail_to t("help.email"), t("help.email")} if the problem persists.

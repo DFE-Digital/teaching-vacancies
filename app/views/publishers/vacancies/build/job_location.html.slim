@@ -1,22 +1,23 @@
 - content_for :page_title_prefix, page_title_prefix(@vacancy, @form, t("jobs.job_details"))
 
-.govuk-grid-row
-  .govuk-grid-column-full
-    = render Publishers::VacancyFormPageHeadingComponent.new(@vacancy, process_steps.current_step_number, process_steps.total_steps)
-    = render Publishers::VacancyWizardBackLinkComponent.new(@vacancy, current_step_is_first_step: true)
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-full
+      = render Publishers::VacancyFormPageHeadingComponent.new(@vacancy, process_steps.current_step_number, process_steps.total_steps)
+      = render Publishers::VacancyWizardBackLinkComponent.new(@vacancy, current_step_is_first_step: true)
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_for @form, url: wizard_path, method: :patch do |f|
-      = f.govuk_error_summary
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form_for @form, url: wizard_path, method: :patch do |f|
+        = f.govuk_error_summary
 
-      h2.govuk-heading-l = t("jobs.job_location")
+        h2.govuk-heading-l = t("jobs.job_location")
 
-      = render "publishers/vacancies/vacancy_form_partials/hidden_state_input", f: f
+        = render "publishers/vacancies/vacancy_form_partials/hidden_state_input", f: f
 
-      = f.govuk_collection_radio_buttons :job_location, job_location_options(current_organisation), :last, :first
+        = f.govuk_collection_radio_buttons :job_location, job_location_options(current_organisation), :last, :first
 
-      = render "publishers/vacancies/vacancy_form_partials/continue_or_update_submit", f: f
+        = render "publishers/vacancies/vacancy_form_partials/continue_or_update_submit", f: f
 
-  .govuk-grid-column-one-third
-    = render(Shared::ProcessStepsComponent.new(process: @vacancy, service: process_steps, title: t("publishers.vacancies.build.process_title")))
+    .govuk-grid-column-one-third
+      = render(Shared::ProcessStepsComponent.new(process: @vacancy, service: process_steps, title: t("publishers.vacancies.build.process_title")))

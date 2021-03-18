@@ -2,32 +2,34 @@
 
 = render "jobseekers/dashboard/account_header"
 
+.govuk-main-wrapper class="govuk-!-padding-bottom-0"
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-l = t(".page_title")
+
+      dl.govuk-summary-list
+        .govuk-summary-list__row
+          dt.govuk-summary-list__key = t(".summary_list.email")
+          dd.govuk-summary-list__value = current_jobseeker.email
+          dd.govuk-summary-list__actions
+            = govuk_link_to edit_jobseeker_registration_path do
+              = t(".summary_list.change")
+              span.govuk-visually-hidden
+                = t(".summary_list.email")
+        .govuk-summary-list__row
+          dt.govuk-summary-list__key = t(".summary_list.password")
+          dd.govuk-summary-list__value = t(".summary_list.password_placeholder")
+          dd.govuk-summary-list__actions
+            = govuk_link_to edit_jobseeker_registration_path(password_update: true) do
+              = t(".summary_list.change")
+              span.govuk-visually-hidden
+                = t(".summary_list.password")
+
+    .govuk-grid-column-one-third
+      .account-sidebar
+        h2.account-sidebar__heading = t(".assistance.heading")
+        p.govuk-body-s = t(".assistance.content_html", link: govuk_mail_to(t("help.email"), t(".assistance.link_text")))
+
 .govuk-grid-row
-  .govuk-grid-column-two-thirds
-    h1.govuk-heading-l = t(".page_title")
-
-    dl.govuk-summary-list
-      .govuk-summary-list__row
-        dt.govuk-summary-list__key = t(".summary_list.email")
-        dd.govuk-summary-list__value = current_jobseeker.email
-        dd.govuk-summary-list__actions
-          = govuk_link_to edit_jobseeker_registration_path do
-            = t(".summary_list.change")
-            span.govuk-visually-hidden
-              = t(".summary_list.email")
-      .govuk-summary-list__row
-        dt.govuk-summary-list__key = t(".summary_list.password")
-        dd.govuk-summary-list__value = t(".summary_list.password_placeholder")
-        dd.govuk-summary-list__actions
-          = govuk_link_to edit_jobseeker_registration_path(password_update: true) do
-            = t(".summary_list.change")
-            span.govuk-visually-hidden
-              = t(".summary_list.password")
-
-  .govuk-grid-column-one-third
-    .account-sidebar
-      h2.account-sidebar__heading = t(".assistance.heading")
-      p.govuk-body-s = t(".assistance.content_html", link: govuk_mail_to(t("help.email"), t(".assistance.link_text")))
-
   .govuk-grid-column-full
     = render(Jobseekers::AccountSurveyLinkComponent.new(origin: url_for))

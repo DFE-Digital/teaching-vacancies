@@ -1,38 +1,39 @@
 - content_for :page_title_prefix, "#{@copy_form.errors.present? ? 'Error: ' : ''}Copy a job for #{current_organisation.name}"
 
-.govuk-grid-row class="govuk-!-margin-top-7 govuk-!-margin-bottom-5"
-  .govuk-grid-column-full
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-full
 
-    h1.govuk-heading-m = t("jobs.copy_job_title", job_title: @copy_form.vacancy.job_title)
+      h1.govuk-heading-m = t("jobs.copy_job_title", job_title: @copy_form.vacancy.job_title)
 
-    = govuk_back_link text: t("buttons.cancel_copy"), href: organisation_path
+      = govuk_back_link text: t("buttons.cancel_copy"), href: organisation_path
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_for @copy_form, url: organisation_job_copy_path, data: { vacancy_state: "copy" } do |f|
-      = f.govuk_error_summary
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form_for @copy_form, url: organisation_job_copy_path, data: { vacancy_state: "copy" } do |f|
+        = f.govuk_error_summary
 
-      h2.govuk-heading-l = t("jobs.new_job_listing_details")
+        h2.govuk-heading-l = t("jobs.new_job_listing_details")
 
-      = render "publishers/vacancies/vacancy_form_partials/hidden_state_input", f: f, copy: true
+        = render "publishers/vacancies/vacancy_form_partials/hidden_state_input", f: f, copy: true
 
-      .govuk-character-count data-module="govuk-character-count" data-maxlength=100
-        = f.govuk_text_field :job_title,
-          id: "publishers_job_listing_copy_form_job_title",
-          label: { size: "s" },
-          class: "govuk-input string required govuk-js-character-count",
-          required: true
-        span#publishers_job_listing_copy_form_job_title-info.govuk-hint.govuk-character-count__message aria-live="polite"
-          | You can enter up to 100 characters
+        .govuk-character-count data-module="govuk-character-count" data-maxlength=100
+          = f.govuk_text_field :job_title,
+            id: "publishers_job_listing_copy_form_job_title",
+            label: { size: "s" },
+            class: "govuk-input string required govuk-js-character-count",
+            required: true
+          span#publishers_job_listing_copy_form_job_title-info.govuk-hint.govuk-character-count__message aria-live="polite"
+            | You can enter up to 100 characters
 
-      = f.govuk_date_field :publish_on
+        = f.govuk_date_field :publish_on
 
-      = f.govuk_date_field :expires_on
+        = f.govuk_date_field :expires_on
 
-      = render "publishers/vacancies/expires_at_field", f: f
+        = render "publishers/vacancies/expires_at_field", f: f
 
-      = f.govuk_date_field :starts_on
+        = f.govuk_date_field :starts_on
 
-      = f.govuk_submit classes: "govuk-!-margin-bottom-5"
+        = f.govuk_submit classes: "govuk-!-margin-bottom-5"
 
-    = govuk_link_to(t("buttons.cancel_copy"), organisation_path, class: "govuk-link--no-visited-state govuk-!-font-size-19")
+      = govuk_link_to(t("buttons.cancel_copy"), organisation_path, class: "govuk-link--no-visited-state govuk-!-font-size-19")

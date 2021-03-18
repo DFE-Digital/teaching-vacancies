@@ -1,26 +1,27 @@
 - content_for :page_title_prefix, "#{@vacancy.job_title} - #{@vacancy.parent_organisation.name}"
 
-.vacancy
-  .share-url-info
-    .govuk-grid-row
-      .govuk-grid-column-one-half
-        .share-url.display-none class="govuk-!-margin-bottom-6"
-          h2.govuk-heading-m class="govuk-!-margin-top-0" | Share this job
-          = govuk_link_to(t("jobs.view_public_link"), @vacancy.share_url, "aria-label": t("jobs.view_public_link"))
-          | , or
-          = govuk_link_to(t("jobs.copy_public_url"), "#", class: "copy-to-clipboard", "data-clipboard-text": @vacancy.share_url, "aria-label": t("jobs.copy_public_url"))
-        .share-url-no-js class="govuk-!-margin-bottom-6"
-          h2.govuk-heading-s class="govuk-!-margin-top-0" | Share this job
-          = govuk_link_to("#{t('jobs.view_public_link')} (#{@vacancy.share_url})", job_path(@vacancy))
-        = render partial: "/shared/vacancy/share_buttons"
-      .govuk-grid-column-one-half
-        .og-preview
-          .og_image = image_pack_tag "og_image.jpg"
-          .og_text
-            .og_url = t("app.title")
-            .og_title #{@vacancy.job_title} - #{@vacancy.parent_organisation.name}
-            .og_description = truncate(strip_tags(@vacancy.job_summary), length: 76, separator: " ")
-        .og-caption
-          | Your job listing will appear on Facebook in a format similar to the above.
+.govuk-main-wrapper
+  .vacancy
+    .share-url-info
+      .govuk-grid-row
+        .govuk-grid-column-one-half
+          .share-url.display-none class="govuk-!-margin-bottom-6"
+            h2.govuk-heading-m class="govuk-!-margin-top-0" | Share this job
+            = govuk_link_to(t("jobs.view_public_link"), @vacancy.share_url, "aria-label": t("jobs.view_public_link"))
+            | , or
+            = govuk_link_to(t("jobs.copy_public_url"), "#", class: "copy-to-clipboard", "data-clipboard-text": @vacancy.share_url, "aria-label": t("jobs.copy_public_url"))
+          .share-url-no-js class="govuk-!-margin-bottom-6"
+            h2.govuk-heading-s class="govuk-!-margin-top-0" | Share this job
+            = govuk_link_to("#{t('jobs.view_public_link')} (#{@vacancy.share_url})", job_path(@vacancy))
+          = render partial: "/shared/vacancy/share_buttons"
+        .govuk-grid-column-one-half
+          .og-preview
+            .og_image = image_pack_tag "og_image.jpg"
+            .og_text
+              .og_url = t("app.title")
+              .og_title #{@vacancy.job_title} - #{@vacancy.parent_organisation.name}
+              .og_description = truncate(strip_tags(@vacancy.job_summary), length: 76, separator: " ")
+          .og-caption
+            | Your job listing will appear on Facebook in a format similar to the above.
 
-  = render "/shared/vacancy/jobseeker_view"
+    = render "/shared/vacancy/jobseeker_view"

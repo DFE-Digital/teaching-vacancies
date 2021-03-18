@@ -1,41 +1,42 @@
 - content_for :page_title_prefix, page_title_prefix(@vacancy, @documents_form, t("jobs.supporting_documents"))
 
-.govuk-grid-row
-  .govuk-grid-column-full
-    = render Publishers::VacancyFormPageHeadingComponent.new(@vacancy, process_steps.current_step_number, process_steps.total_steps)
-    = render Publishers::VacancyWizardBackLinkComponent.new(@vacancy, previous_step_path: organisation_job_build_path(@vacancy.id, :important_dates))
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-full
+      = render Publishers::VacancyFormPageHeadingComponent.new(@vacancy, process_steps.current_step_number, process_steps.total_steps)
+      = render Publishers::VacancyWizardBackLinkComponent.new(@vacancy, previous_step_path: organisation_job_build_path(@vacancy.id, :important_dates))
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_for @documents_form, url: organisation_job_documents_path(@vacancy.id) do |f|
-      = f.govuk_error_summary
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form_for @documents_form, url: organisation_job_documents_path(@vacancy.id) do |f|
+        = f.govuk_error_summary
 
-      h2.govuk-heading-l
-        = t("jobs.supporting_documents")
+        h2.govuk-heading-l
+          = t("jobs.supporting_documents")
 
-      = render "publishers/vacancies/vacancy_form_partials/hidden_state_input", f: f
+        = render "publishers/vacancies/vacancy_form_partials/hidden_state_input", f: f
 
-      #js-xhr-flashes
+        #js-xhr-flashes
 
-      = f.govuk_file_field :documents,
-        label: { size: "s" },
-        accept: ".doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, image/jpeg, image/png, video/mp4",
-        multiple: true,
-        enctype: "multipart/form-data"
+        = f.govuk_file_field :documents,
+          label: { size: "s" },
+          accept: ".doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, image/jpeg, image/png, video/mp4",
+          multiple: true,
+          enctype: "multipart/form-data"
 
-      button.govuk-button.govuk-button--secondary.display-none#select-files-button class="govuk-!-margin-bottom-3"
-        = t("buttons.select_file")
+        button.govuk-button.govuk-button--secondary.display-none#select-files-button class="govuk-!-margin-bottom-3"
+          = t("buttons.select_file")
 
-      = f.govuk_submit t("buttons.upload_files"), secondary: true, classes: "upload-files-button"
+        = f.govuk_submit t("buttons.upload_files"), secondary: true, classes: "upload-files-button"
 
-      .js-documents class=("js-documents--empty" if @documents.none?)
-        = render "publishers/vacancies/documents/documents"
-        p.js-documents__no-files = t("jobs.no_files_message")
+        .js-documents class=("js-documents--empty" if @documents.none?)
+          = render "publishers/vacancies/documents/documents"
+          p.js-documents__no-files = t("jobs.no_files_message")
 
-      = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+        = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
-  .govuk-grid-column-one-third
-    = render(Shared::ProcessStepsComponent.new(process: @vacancy, service: process_steps, title: t("publishers.vacancies.build.process_title")))
+    .govuk-grid-column-one-third
+      = render(Shared::ProcessStepsComponent.new(process: @vacancy, service: process_steps, title: t("publishers.vacancies.build.process_title")))
 
-- content_for :after_main do
-  = render "shared/file_remove_confirmation_dialogue"
+  - content_for :after_main do
+    = render "shared/file_remove_confirmation_dialogue"

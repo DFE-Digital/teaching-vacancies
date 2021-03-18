@@ -1,26 +1,27 @@
 - content_for :page_title_prefix, t(".title")
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_for @general_feedback_form, url: feedback_path do |f|
-      = f.govuk_error_summary
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form_for @general_feedback_form, url: feedback_path do |f|
+        = f.govuk_error_summary
 
-      h2.govuk-heading-xl
-        = t(".heading")
+        h2.govuk-heading-xl
+          = t(".heading")
 
-      = f.govuk_radio_buttons_fieldset(:visit_purpose, legend: { size: "m" }) do
-        - Feedback.visit_purposes.keys.each_with_index do |visit_purpose, idx|
-          - if visit_purpose == "other_purpose"
-            = f.govuk_radio_button :visit_purpose, visit_purpose, link_errors: idx.zero? do
-              = f.govuk_text_area :visit_purpose_comment,
-                label: { hidden: true },
-                rows: 5,
-                max_chars: 1200
-          - else
-            = f.govuk_radio_button :visit_purpose, visit_purpose, link_errors: idx.zero?
+        = f.govuk_radio_buttons_fieldset(:visit_purpose, legend: { size: "m" }) do
+          - Feedback.visit_purposes.keys.each_with_index do |visit_purpose, idx|
+            - if visit_purpose == "other_purpose"
+              = f.govuk_radio_button :visit_purpose, visit_purpose, link_errors: idx.zero? do
+                = f.govuk_text_area :visit_purpose_comment,
+                  label: { hidden: true },
+                  rows: 5,
+                  max_chars: 1200
+            - else
+              = f.govuk_radio_button :visit_purpose, visit_purpose, link_errors: idx.zero?
 
-      = render "/feedback/form", f: f
+        = render "/feedback/form", f: f
 
-      = recaptcha
+        = recaptcha
 
-      = f.govuk_submit t("buttons.submit_feedback")
+        = f.govuk_submit t("buttons.submit_feedback")

@@ -1,22 +1,23 @@
 - content_for :page_title_prefix, t(".title")
 
-.govuk-grid-row
-  .govuk-grid-column-full
-    - unless @feedback.relevant_to_user
-      = render Shared::NotificationComponent.new style: "notice",
-        content: t(".change_alert_text", link: govuk_link_to(t(".change_alert_link"), edit_subscription_path(@subscription.token))),
-        background: true,
-        alert: "info",
-        dismiss: false
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-full
+      - unless @feedback.relevant_to_user
+        = render Shared::NotificationComponent.new style: "notice",
+          content: t(".change_alert_text", link: govuk_link_to(t(".change_alert_link"), edit_subscription_path(@subscription.token))),
+          background: true,
+          alert: "info",
+          dismiss: false
 
-  .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl = t(".heading")
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl = t(".heading")
 
-    = form_for @feedback_form, url: subscription_job_alert_feedback_path, method: :patch do |f|
-      = f.govuk_error_summary
+      = form_for @feedback_form, url: subscription_job_alert_feedback_path, method: :patch do |f|
+        = f.govuk_error_summary
 
-      = f.govuk_text_area :comment, label: { size: "s" }, max_chars: 1200, rows: 11
+        = f.govuk_text_area :comment, label: { size: "s" }, max_chars: 1200, rows: 11
 
-      = recaptcha
+        = recaptcha
 
-      = f.govuk_submit t("buttons.submit"), classes: "govuk-!-padding-left-8 govuk-!-padding-right-8"
+        = f.govuk_submit t("buttons.submit"), classes: "govuk-!-padding-left-8 govuk-!-padding-right-8"
