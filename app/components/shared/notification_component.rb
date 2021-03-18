@@ -51,11 +51,10 @@ class Shared::NotificationComponent < GovukComponent::Base
   private
 
   def default_classes
-    applied_classes = %w[notification-component govuk-notification]
-    applied_classes.push(variant_class)
-    applied_classes.push(background_class) if @background
-    applied_classes.push(icon_class) if @icon
-    applied_classes.push(dismissable_class) if @dismiss
-    applied_classes
+    ["notification-component", "govuk-notification", variant_class].tap do |applied_classes|
+      applied_classes.push(background_class) if @background
+      applied_classes.push(icon_class) if @icon
+      applied_classes.push(dismissable_class) if @dismiss
+    end
   end
 end
