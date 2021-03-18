@@ -16,7 +16,7 @@ class Shared::NotificationComponent < GovukComponent::Base
     @title = title
     @variant = variant
     @links = links
-    @dismiss = variant == "danger" ? false : dismiss
+    @dismiss = variant == "warning" ? false : dismiss
     @background = background
     @icon = icon
 

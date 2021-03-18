@@ -48,6 +48,6 @@ class Publishers::Organisations::ManagedOrganisationsController < Publishers::Ba
   end
 
   def verify_school_group
-    redirect_to organisation_path, danger: "You are not allowed" unless current_organisation.is_a?(SchoolGroup)
+    redirect_to organisation_path, warning: "You are not allowed" unless current_organisation.is_a?(SchoolGroup)
   end
 end

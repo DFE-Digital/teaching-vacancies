@@ -87,7 +87,7 @@
   }
 }
 
-.govuk-notification--danger {
+.govuk-notification--warning {
   border-color: govuk-colour('red');
 
   .govuk-notification__list a {
@@ -107,6 +107,6 @@
   background-color: rgba($color: govuk-colour('green'), $alpha: 0.1);
 }
 
-.govuk-notification--danger.govuk-notification__background {
+.govuk-notification--warning.govuk-notification__background {
   background-color: rgba($color: govuk-colour('red'), $alpha: 0.1);
 }

@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   SUSPICIOUS_RECAPTCHA_THRESHOLD = 0.5
 
-  add_flash_types :success, :danger
+  add_flash_types :success, :warning
 
   protect_from_forgery with: :exception, except: :not_found
 
