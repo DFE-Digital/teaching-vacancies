@@ -12,8 +12,6 @@ class ImportSchoolData < ImportOrganisationData
   def create_school_and_local_authority(row)
     school = create_organisation(row)
 
-    return unless school_in_local_authority_scope?(row)
-
     local_authority = SchoolGroup.find_or_create_by(local_authority_code: row["LA (code)"],
                                                     name: row["LA (name)"],
                                                     group_type: "local_authority")
@@ -61,17 +59,5 @@ class ImportSchoolData < ImportOrganisationData
     set_gias_data_as_json(school, row)
     set_readable_phases(school)
     school
-  end
-
-  def school_in_local_authority_scope?(row)
-    school_is_local_authority_maintained?(row) || school_is_community_or_foundation_special_school?(row)
-  end
-
-  def school_is_local_authority_maintained?(row)
-    row["EstablishmentTypeGroup (code)"].to_i == 4
-  end
-
-  def school_is_community_or_foundation_special_school?(row)
-    row["EstablishmentTypeGroup (code)"].to_i == 5 && [7, 12].include?(row["TypeOfEstablishment (code)"].to_i)
   end
 end
