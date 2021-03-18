@@ -6,7 +6,7 @@ class Shared::NotificationComponentPreview < ViewComponent::Preview
   end
 
   def self.variants
-    %w[success danger notice empty]
+    %w[success warning notice empty]
   end
 
   def default

@@ -21,8 +21,8 @@ en:
         name: "Success"
         title: "Success alert"
         description: "Sometimes dismissable."
-      danger:
-        name: "Danger"
+      warning:
+        name: "Warning"
         title: "Warnings to user"
         description: "Never dismissable. This is a warning message or something potentially bad for the user."
       notice:
