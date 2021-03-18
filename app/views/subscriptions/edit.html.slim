@@ -12,8 +12,7 @@
 
         .location-search = render "fields", f: f
 
-        = render(Shared::NotificationComponent.new(content: { body: t("subscriptions.info") }, style: "notice", background: true, dismiss: false, alert: "info"))
-
+        = render(Shared::NotificationComponent.new(body: t("subscriptions.info"), variant: "notice", background: true, dismiss: false, icon: true))
         = f.hidden_field :token, value: @subscription.token
 
         = f.govuk_submit t("buttons.update_alert"), classes: "govuk-!-padding-left-8 govuk-!-padding-right-8"

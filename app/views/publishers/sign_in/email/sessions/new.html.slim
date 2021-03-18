@@ -3,7 +3,7 @@
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-full
-      = render(Shared::NotificationComponent.new(content: { title: t("publishers.temp_login.heading"), body: t("publishers.temp_login.please_use_email") }, style: "danger"))
+      = render(Shared::NotificationComponent.new(title: t("publishers.temp_login.heading"), body: t("publishers.temp_login.please_use_email"), variant: "warning"))
 
     .govuk-grid-column-two-thirds
       h1.govuk-heading-l = t("publishers.sessions.new.sign_in.title")

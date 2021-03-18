@@ -50,12 +50,12 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
 
     if job_application.submitted?
       redirect_to jobseekers_job_applications_path,
-                  danger: t("messages.jobseekers.job_applications.already_exists.submitted",
-                            job_title: vacancy.job_title)
+                  warning: t("messages.jobseekers.job_applications.already_exists.submitted",
+                             job_title: vacancy.job_title)
     elsif job_application.draft?
       redirect_to jobseekers_job_applications_path,
-                  danger: t("messages.jobseekers.job_applications.already_exists.draft_html",
-                            job_title: vacancy.job_title, link: jobseekers_job_application_review_path(job_application))
+                  warning: t("messages.jobseekers.job_applications.already_exists.draft_html",
+                             job_title: vacancy.job_title, link: jobseekers_job_application_review_path(job_application))
     end
   end
 

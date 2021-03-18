@@ -36,7 +36,8 @@
   background-image: url('../../images/svg/icon-document.svg');
 }
 
-.icon--info {
+.icon--info,
+.icon--notice {
   background-image: url('../../images/svg/icon-info.svg');
 }
 
@@ -63,4 +64,9 @@
 
 .icon--green-tick {
   background-image: url('../../images/svg/icon-green-tick.svg');
+
+}
+
+.icon--success {
+  background-image: url('../../images/svg/icon-success.svg');
 }

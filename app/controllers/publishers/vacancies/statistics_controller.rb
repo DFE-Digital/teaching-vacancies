@@ -9,7 +9,7 @@ class Publishers::Vacancies::StatisticsController < Publishers::Vacancies::BaseC
       redirect_to jobs_with_type_organisation_path(type: :awaiting_feedback),
                   success: t("messages.jobs.feedback.submitted_html", job_title: vacancy.job_title)
     else
-      redirect_to jobs_with_type_organisation_path(type: :awaiting_feedback), danger: {
+      redirect_to jobs_with_type_organisation_path(type: :awaiting_feedback), warning: {
         title: t("messages.jobs.feedback.error_title"),
         body: t("messages.jobs.feedback.error_body"),
       }
