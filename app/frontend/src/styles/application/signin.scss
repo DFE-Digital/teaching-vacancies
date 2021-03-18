@@ -58,13 +58,14 @@
       }
 
       &-button {
-        display: inline;
+        display: block;
         justify-content: flex-start;
         left: 2px;
         margin-bottom: govuk-spacing(1);
         margin-right: govuk-spacing(4);
         position: relative;
         top: 2px;
+        white-space: nowrap;
 
         @include govuk-media-query($until: tablet) {
           margin-bottom: govuk-spacing(2);
