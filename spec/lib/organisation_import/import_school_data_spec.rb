@@ -69,12 +69,13 @@ RSpec.describe ImportSchoolData do
     end
 
     it "creates SchoolGroupMemberships" do
-      expect { subject.run! }.to change(SchoolGroupMembership, :count).to eq(8)
+      expect { subject.run! }.to change(SchoolGroupMembership, :count).to eq(9)
     end
 
     it "links the correct schools and local authorities" do
       subject.run!
       expect(local_authority1.schools).to include(School.find_by(urn: "100000"))
+      expect(local_authority1.schools).to include(School.find_by(urn: "100001"))
       expect(local_authority1.schools).to include(School.find_by(urn: "100002"))
       expect(local_authority1.schools).to include(School.find_by(urn: "100003"))
       expect(local_authority2.schools).to include(School.find_by(urn: "100004"))
