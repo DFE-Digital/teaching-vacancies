@@ -219,4 +219,20 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
       expect { sign_in_publisher }.to raise_error(Authorisation::ExternalServerError)
     end
   end
+
+  context "when there is an Omniauth error" do
+    before do
+      OmniAuth.config.mock_auth[:dfe] = :invalid_client
+    end
+
+    it "logs an error to Rollbar and takes the user to the sign in page with an error message" do
+      # OmniAuth doesn't mock the error being present, so allow `anything`
+      expect(Rollbar).to receive(:error).with(anything, strategy: :dfe)
+
+      sign_in_publisher
+
+      expect(current_path).to eq(new_publisher_session_path)
+      expect(page).to have_content(I18n.t("publishers.omniauth_callbacks.failure.message"))
+    end
+  end
 end

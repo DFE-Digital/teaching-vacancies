@@ -17,7 +17,11 @@ class Publishers::OmniauthCallbacksController < Devise::OmniauthCallbacksControl
   end
 
   def failure
-    redirect_to root_path
+    omniauth_error = request.respond_to?(:get_header) ? request.get_header("omniauth.error") : request.env["omniauth.error"]
+    Rollbar.error(omniauth_error, strategy: failed_strategy.name)
+    Rails.logger.error("DSI failure - strategy: #{failed_strategy.name}, reason: #{omniauth_error.inspect}")
+
+    redirect_to new_publisher_session_path, flash: { warning: t(".message") }
   end
 
   private
