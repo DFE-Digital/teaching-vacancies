@@ -7,7 +7,7 @@
     - if body.present?
       .govuk-notification__body == body
 
-  - if links.present?
-    ul.govuk-list.govuk-notification__list
-      - links.each do |link, message|
-        li = govuk_link_to(message, "##{link}", class: "govuk-link--no-visited-state")
+    - if links.present?
+      ul.govuk-list.govuk-notification__list
+        - links.each do |link, message|
+          li = govuk_link_to(message, "##{link}", class: "govuk-link--no-visited-state")

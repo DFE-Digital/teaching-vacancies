@@ -1,0 +1,5 @@
+nav.design-system-nav
+  ul.govuk-list.design-system-nav-side
+    - @previews.each do |preview|
+      - preview.examples.each do |preview_example|
+        li.govuk-body-s = link_to preview.preview_name.titleize, preview_view_component_path("#{preview.preview_name}/#{preview_example}")

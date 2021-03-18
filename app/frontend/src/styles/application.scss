@@ -50,6 +50,8 @@ $govuk-image-url-function: frontend-image-url;
 @import 'application/publishers/share-url';
 @import 'application/publishers/statistics';
 
+@import 'design-system';
+
 body {
   .govuk-width-container {
     @include govuk-media-query($from: desktop) {
@@ -76,21 +78,4 @@ p {
 strong,
 b {
   font-weight: bold;
-}
-
-pre {
-  background: govuk-colour('light-grey');
-  border: 1px solid #ddd;
-  border-left: 3px solid govuk-colour('red');
-  color: govuk-colour('dark-grey');
-  display: block;
-  font-family: monospace;
-  font-size: 15px;
-  line-height: 1.6;
-  margin-bottom: 1.6em;
-  max-width: 100%;
-  overflow: auto;
-  padding: 1em 1.5em;
-  page-break-inside: avoid;
-  word-wrap: break-word;
 }

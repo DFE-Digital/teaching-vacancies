@@ -9,7 +9,7 @@ en:
     component:
       notification:
         title: "Notification Component"
-        options: "title, body, background, icon, dismiss"
+        options: "title, body, background, icon, dismiss, links"
         description: "Displays a notification."
   text:
     short: "Lorem ipsum."

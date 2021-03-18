@@ -21,14 +21,16 @@ html.govuk-template.app-html-class lang="en"
         p.govuk-phase-banner__content
           strong.govuk-tag.govuk-phase-banner__content__tag = "beta"
           span.govuk-phase-banner__text == "This is a new service - #{link_to 'your feedback', new_feedback_path, class: 'govuk-link'} will help us to improve it."
+    
+    .top-nav
+      .govuk-width-container
+        = render 'design_system/nav_top'
 
+    .govuk-width-container class='govuk-!-margin-top-6' 
       main.app-main-class role="main"
-        .govuk-grid-row class='govuk-!-margin-top-8' 
+        .govuk-grid-row
           .govuk-grid-column-one-quarter
-            - @previews.each do |preview|
-              ul.govuk-list
-                - preview.examples.each do |preview_example|
-                  li.govuk-body-s = link_to preview.preview_name.titleize, preview_view_component_path("#{preview.preview_name}/#{preview_example}")
+            = render 'design_system/nav_side'
           = yield
 
         = content_for :after_main
@@ -45,4 +47,3 @@ html.govuk-template.app-html-class lang="en"
             a.govuk-footer__link.govuk-footer__copyright-logo href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/" = "© Crown copyright"
 
   = javascript_pack_tag 'application'
-  

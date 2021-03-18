@@ -13,7 +13,7 @@
     - @variants.each do |variant|
       h3.govuk-heading-s = t("component.notification.#{variant}.title")
       p.govuk-body = t("component.notification.#{variant}.description")
-      = render(Shared::NotificationComponent.new(icon: @preview_form.icon, title: t("text.short") , body: t("text.medium"), variant: variant, background: @preview_form.background, dismiss: @preview_form.dismiss))
+      = render(Shared::NotificationComponent.new(icon: @preview_form.icon, title: t("text.short") , body: t("text.medium"), variant: variant, background: @preview_form.background, dismiss: @preview_form.dismiss, links: { message: "link" }))
 
       .govuk-tabs data={ "module": "govuk-tabs" }
         ul.govuk-tabs__list
@@ -52,3 +52,4 @@
 
     .govuk-form-group
       = f.govuk_submit t("heading.update")
+      

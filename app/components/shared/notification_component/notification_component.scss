@@ -87,15 +87,7 @@
   }
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 .govuk-notification--warning {
-=======
-.govuk-notification--danger {
->>>>>>> 72a5268ff... refactor notification component
-=======
-.govuk-notification--warning {
->>>>>>> 12b6b8ef4... rename notification variant danger -> warning to align with design system
   border-color: govuk-colour('red');
 
   .govuk-notification__list a {
