@@ -2,7 +2,7 @@ h2.govuk-heading-m = t(".title")
 
 p.govuk-body = t(".description")
 
-- if current_variant?(:"2021_02_jobseeker_account_cta_test", :colour)
+- if current_variant?(:"2021_03_jobseeker_account_cta_test", :colour)
   = govuk_link_to t("buttons.view_account"), jobseeker_root_path, class: "govuk-!-margin-bottom-0", button: true
 - else
   = govuk_link_to t("buttons.view_account"), jobseeker_root_path, class: "govuk-button--secondary govuk-!-margin-bottom-0", button: true
