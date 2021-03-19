@@ -81,7 +81,7 @@ __NOTE: Keys with `JSON` in the name are `JSON` objects, not simple strings. The
 1. Click 'ADD AN ITEM' under 'Website restrictions' and put in desired URL pattern.
 1. Under 'API restrictions' choose 'Restrict key'
 1. Select the API and access level for the key
-1. Create one key per API and enviroment and use the minimum necessary permission(s) for that key
+1. Create one key per API and environment and use the minimum necessary permission(s) for that key
 1. Click 'Save'
 1. Copy your new key from the table and update it in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/secrets` files
 1. Do a rolling restart on the updated environment for the application
@@ -114,7 +114,7 @@ __NOTE: Keys with `JSON` in the name are `JSON` objects, not simple strings. The
 1. Click 'CREATE CREDENTIALS' in the toolbar at the top of the page
 1. Choose 'Service Account'
 1. In 'Service account name' give the account a clear, descriptive name including environment details where applicable
-1. Add a concise description of what the service account is for and what enviroments it is to be used in 'Service account description'.
+1. Add a concise description of what the service account is for and what environments it is to be used in 'Service account description'.
 1. Click 'Create'
 1. Add at least one role to restrict the service account to a service. Use the minimum necessary permission(s) for the role.
 1. Click 'Continue'

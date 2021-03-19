@@ -48,10 +48,10 @@ Before making a change, you can check how a search currently works by using the 
   - ['barking', 'barking and dagenham']
   ```
   * The polygon names can be found in the directory [lib/tasks/data](../lib/tasks/data)
-3. Once all desired mappings have been added, scroll to the bottom of the page and update the fields in the "Commit changes" box. This should include a concise title for the change, and further details of what you have done in the extended desription field.
+3. Once all desired mappings have been added, scroll to the bottom of the page and update the fields in the "Commit changes" box. This should include a concise title for the change, and further details of what you have done in the extended description field.
   * Once you have added this information ensure that the "Create a new branch for this commit and start a pull request." radio button is selected and press "Commit changes".
 4. Automated tests will run on your new branch to confirm that all rows have been entered correctly. If one of these tests fails check that all `'` and `,` have been entered correctly. On the PR, in the merging section at the bottom of the page there is a section dedicated to automated checks. This will show any checks that may have failed as part of the changes. ![Automated tests screenshot](https://user-images.githubusercontent.com/72141/103927287-0d570500-5112-11eb-902d-5d36a1c7e10a.png)
-5. Before the change can commited to the `master` branch it must be approved by another member of the team and pass a set of automated tests. Once these steps have been completed press "Merge pull request" and your change will be:
+5. Before the change can be committed to the `master` branch it must be approved by another member of the team and pass a set of automated tests. Once these steps have been completed press "Merge pull request" and your change will be:
   * merged to the `master` branch
   * deployed to the `staging` environment
   * smoke-tested on the `staging` environment
@@ -69,4 +69,3 @@ This will display a polygon for polygon searches, or a marker for location point
 
 * If the mapping has been unsuccessful:
 <img width="928" alt="Screenshot 2021-01-27 at 16 10 46" src="https://user-images.githubusercontent.com/60350599/106019158-3ee04200-60ba-11eb-921f-b222cdfbca9b.png">
-

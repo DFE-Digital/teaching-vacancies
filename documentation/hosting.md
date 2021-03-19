@@ -2,18 +2,20 @@
 
 Teaching Vacancies is hosted on [GOV.UK PaaS](https://docs.cloud.service.gov.uk/).
 
-## Applications
+## Environments
 
-These are the persistent applications:
-
-- https://dev.teaching-vacancies.service.gov.uk (Dev, from `dev` branch)
-- https://staging.teaching-vacancies.service.gov.uk (Staging, from `staging` branch)
-- https://teaching-vacancies.service.gov.uk (Production, from `master` branch`)
+| Environment | URL                                                                                                    | Code branch | CI/CD workflow      | Gov.UK PaaS space             |
+| ----------- | ------------------------------------------------------------------------------------------------------ | ----------- | ------------------- | ----------------------------- |
+| Production  | [https://teaching-vacancies.service.gov.uk](https://teaching-vacancies.service.gov.uk)                 | `master`    | [deploy.yml](../.github/workflows/deploy.yml)        | teaching-vacancies-production |
+| Staging     | [https://staging.teaching-vacancies.service.gov.uk](https://staging.teaching-vacancies.service.gov.uk) | `master`    | [deploy.yml](../.github/workflows/deploy.yml)        | teaching-vacancies-staging    |
+| Dev         | [https://dev.teaching-vacancies.service.gov.uk](https://dev.teaching-vacancies.service.gov.uk)         | `dev`       | [deploy_branch.yml](../.github/workflows/deploy_branch.yml) | teaching-vacancies-dev        |
+| QA          | [https://qa.teaching-vacancies.service.gov.uk](https://qa.teaching-vacancies.service.gov.uk)           | `qa`        | [deploy_branch.yml](../.github/workflows/deploy_branch.yml) | teaching-vacancies-dev        |
+| Prototype   | [https://teaching-vacancies-prototype.london.cloudapps.digital](https://teaching-vacancies-prototype.london.cloudapps.digital/) |   |    | teaching-vacancies-prototype |
 
 Plus all the ephemeral review apps that are created when a PR is created on GitHub, and destroyed when the PR is merged. These have URLs which contain the Pull Request number, like [https://teaching-vacancies-review-pr-2667.london.cloudapps.digital](https://teaching-vacancies-review-pr-2667.london.cloudapps.digital)
 
-The Dev environment has [integration with DSI](./dsi-integration.md). It is "user-deployable", in that developers can [deploy](./deployments.md) via:
-- [pushing code to the `dev` branch](./deployments.md#build-and-deploy-to-dev---github-actions)
+The Dev and QA environments have [integration with DSI](./dsi-integration.md). They are "user-deployable", in that developers can [deploy](./deployments.md) via:
+- [pushing code to the `dev` or `qa` branches](./deployments.md#build-and-deploy-to-dev---github-actions)
 - [Makefile commands](./deployments.md#build-and-deploy-to-an-environment---makefile)
 
 The Staging environment is a pre-production environment, to identify issues with code before it's promoted to Production.
@@ -26,12 +28,13 @@ Teaching Vacancies is in the [dfe organisation](https://docs.cloud.service.gov.u
 
 An org is divided into one or more [spaces](https://docs.cloud.service.gov.uk/orgs_spaces_users.html#spaces). A space is a shared location for developing, deploying and running apps and backing services.
 
-Teaching Vacancies has 5 spaces:
+Teaching Vacancies has 6 spaces:
 - teaching-vacancies-dev
-- teaching-vacancies-staging
-- teaching-vacancies-production
-- teaching-vacancies-review
 - teaching-vacancies-monitoring
+- teaching-vacancies-production
+- teaching-vacancies-prototype
+- teaching-vacancies-review
+- teaching-vacancies-staging
 
 During [onboarding](./onboarding.md) you will have been granted access to selected spaces and [roles](https://docs.cloud.service.gov.uk/orgs_spaces_users.html#users-and-user-roles):
 
@@ -232,12 +235,23 @@ cf conduit $CF_POSTGRES_SERVICE_TARGET -- psql < backup.sql
   - `/teaching-vacancies/<env>/app/GOOGLE_API_JSON_KEY`
   - `/teaching-vacancies/<env>/app/secrets`
   - `/teaching-vacancies/<env>/infra/secrets`
+- Add a target to the Makefile
+```
+.PHONY: <env>
+<env>: ## <env>
+		$(eval env=<env>)
+		$(eval var_file=<env>)
+```
 - Run:
   ```shell
-  cd terraform/app
-  export TF_VAR_paas_sso_passcode=<passcode obtained from https://login.london.cloud.service.gov.uk/passcode>
-  export TF_WORKSPACE=<env>
-  export TF_VAR_paas_app_docker_image=dfedigital/teaching-vacancies:<tag>
-  terraform init
-  terraform apply -var-file terraform/workspace-variables/<env>.tfvars
+  make passcode=MyPasscode tag=47fd1475376bbfa16a773693133569b794408995 <env> terraform-app-apply
   ```
+- If you want to have a deployment triggered by a push to a branch, add a trigger to [deploy_branch.yml](../.github/workflows/deploy_branch.yml)
+```
+on:
+  push:
+    branches:
+      - dev
+      - <env>
+```
+- Optionally, [refresh the database](database-backups.md) with a sanitised copy of the production data

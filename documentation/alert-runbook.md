@@ -13,7 +13,7 @@ Alerts when the `teaching-vacancies-production` app has an average CPU usage abo
 
 Alerts when the `teaching-vacancies-worker-production` app has an average CPU usage above 75% for a 10-minute period.
 
-## ProdDiskUtilisationHigh
+## ProdDiskUtilizationHigh
 
 Alerts when either the `teaching-vacancies-production` or `teaching-vacancies-worker-production` app has an average Disk utilization above 60% for a 5-minute period.
 
