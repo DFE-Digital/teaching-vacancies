@@ -26,16 +26,6 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
     let(:feedback) { Feedback.where(subscription_id: subscription.id).first }
 
     context "when the user selects Yes" do
-      context "and follows a link from an old job alert email with different parameter names/formats" do
-        # TODO: Remove this context after e.g. 30 days.
-
-        let(:search_criteria) { { keyword: "Math", location: "London" }.to_json }
-
-        before { follow_a_link_from_an_old_job_alert_email }
-
-        it_behaves_like "a correctly created Feedback"
-      end
-
       context "and follows the link in the job alert email" do
         before { follow_the_link_in_the_job_alert_email }
 
@@ -168,17 +158,6 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
       token,
       params: { job_alert_feedback: { relevant_to_user: relevant_to_user,
                                       job_alert_vacancy_ids: job_alert_vacancy_ids,
-                                      search_criteria: search_criteria } },
-    )
-  end
-
-  def follow_a_link_from_an_old_job_alert_email
-    # TODO: Remove this method after e.g. 30 days.
-
-    visit new_subscription_job_alert_feedback_url(
-      token,
-      params: { job_alert_feedback: { relevant_to_user: relevant_to_user,
-                                      vacancy_ids: job_alert_vacancy_ids,
                                       search_criteria: search_criteria } },
     )
   end

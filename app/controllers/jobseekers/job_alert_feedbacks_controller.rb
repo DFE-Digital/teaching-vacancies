@@ -53,12 +53,8 @@ class Jobseekers::JobAlertFeedbacksController < ApplicationController
   end
 
   def job_alert_email_link_params
-    # The duplication here is because of the old-style params provided in links in emails that
-    # have already been sent.
-    # TODO: drop the left-most version of each duplication after e.g. 30 days, and the transformation.
     params.require(:job_alert_feedback)
-          .permit(:relevant_to_user, :search_criteria, search_criteria: {}, vacancy_ids: [], job_alert_vacancy_ids: [])
-          .transform_keys { |key| key == "vacancy_ids" ? "job_alert_vacancy_ids" : key }
+          .permit(:relevant_to_user, search_criteria: {}, job_alert_vacancy_ids: [])
   end
 
   def further_feedback_form_params
