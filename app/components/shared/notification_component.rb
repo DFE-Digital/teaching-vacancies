@@ -18,7 +18,7 @@ class Shared::NotificationComponent < GovukComponent::Base
     @links = links
     @dismiss = variant == "warning" ? false : dismiss
     @background = background
-    @icon = icon
+    @icon = %w[warning success].include?(variant) ? true : icon
 
     super(classes: classes, html_attributes: html_attributes.merge(default_html_attributes))
   end

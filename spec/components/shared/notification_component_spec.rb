@@ -91,7 +91,6 @@ RSpec.describe Shared::NotificationComponent, type: :component do
 
     context "when style is success" do
       let(:variant) { "success" }
-      let(:icon) { true }
 
       it "applies correct class" do
         expect(subject.css(".govuk-notification--success")).to_not be_blank
@@ -104,7 +103,6 @@ RSpec.describe Shared::NotificationComponent, type: :component do
 
     context "when style is warning" do
       let(:variant) { "warning" }
-      let(:icon) { true }
 
       it "does not render the dismiss link" do
         expect(subject).to_not include(I18n.t("buttons.dismiss"))
