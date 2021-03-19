@@ -1,4 +1,5 @@
 class Publisher < ApplicationRecord
+  has_many :publisher_preferences, dependent: :destroy
   has_many :emergency_login_keys
 
   has_many :organisation_publishers, dependent: :destroy

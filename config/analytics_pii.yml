@@ -21,6 +21,10 @@ shared:
     - unconfirmed_email
   organisations:
     - id
+  organisation_publisher_preferences:
+    - id
+    - organisation_id
+    - publisher_preference_id
   organisation_publishers:
     - id
     - organisation_id
@@ -38,8 +42,7 @@ shared:
   publisher_preferences:
     - id
     - publisher_id
-    - school_group_id
-    - managed_school_ids
+    - organisation_id
   saved_jobs:
     - id
     - jobseeker_id

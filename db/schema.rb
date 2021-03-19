@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_17_104739) do
+ActiveRecord::Schema.define(version: 2021_03_18_163755) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -143,6 +143,13 @@ ActiveRecord::Schema.define(version: 2021_03_17_104739) do
     t.jsonb "polygons"
   end
 
+  create_table "organisation_publisher_preferences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "organisation_id"
+    t.uuid "publisher_preference_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "organisation_publishers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "organisation_id"
     t.uuid "publisher_id"
@@ -193,14 +200,12 @@ ActiveRecord::Schema.define(version: 2021_03_17_104739) do
   end
 
   create_table "publisher_preferences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "managed_organisations"
     t.uuid "publisher_id"
-    t.uuid "school_group_id"
-    t.string "managed_school_ids", array: true
+    t.uuid "organisation_id"
     t.datetime "created_at", precision: 6
     t.datetime "updated_at", precision: 6
+    t.index ["organisation_id"], name: "index_publisher_preferences_on_organisation_id"
     t.index ["publisher_id"], name: "index_publisher_preferences_on_publisher_id"
-    t.index ["school_group_id"], name: "index_publisher_preferences_on_school_group_id"
   end
 
   create_table "publishers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -275,9 +280,9 @@ ActiveRecord::Schema.define(version: 2021_03_17_104739) do
     t.datetime "stats_updated_at"
     t.uuid "publisher_id"
     t.datetime "expires_at"
-    t.string "legacy_job_roles", array: true
     t.string "salary"
     t.integer "completed_step"
+    t.string "legacy_job_roles", array: true
     t.text "about_school"
     t.string "state", default: "create"
     t.string "subjects", array: true
