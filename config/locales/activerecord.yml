@@ -13,9 +13,6 @@ en:
   organisation_errors: &organisation_errors
     website:
       url: Enter a link in the correct format, like http://www.school.ac.uk
-  publishers_publisher_preference_errors:
-    managed_organisations:
-      blank: Select which schools' job listings you would like to view
   subscription_errors: &subscription_errors
     email:
       blank: Enter your email address

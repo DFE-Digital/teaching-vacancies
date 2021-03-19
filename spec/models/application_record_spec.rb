@@ -17,21 +17,5 @@ RSpec.describe ApplicationRecord, type: :model do
         expect(model.send(:event_data)).to eq(anonymised_data)
       end
     end
-
-    context "when model needs to anonymise an array field" do
-      let(:model) { create(:publisher_preference, managed_school_ids: %w[id1 id2]) }
-
-      let(:anonymised_data) do
-        model.attributes.merge(table_name: "publisher_preferences",
-                               "id" => StringAnonymiser.new(model.id).to_s,
-                               "publisher_id" => StringAnonymiser.new(model.publisher_id).to_s,
-                               "school_group_id" => StringAnonymiser.new(model.school_group_id).to_s,
-                               "managed_school_ids" => [StringAnonymiser.new("id1").to_s, StringAnonymiser.new("id2").to_s])
-      end
-
-      it "anonymises data" do
-        expect(model.send(:event_data)).to eq(anonymised_data)
-      end
-    end
   end
 end

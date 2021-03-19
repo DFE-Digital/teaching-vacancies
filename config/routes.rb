@@ -75,6 +75,8 @@ Rails.application.routes.draw do
                                                    as: "auth_email_choose_organisation"
     get "auth/email/sessions/sign-in", to: "publishers/sign_in/email/sessions#create",
                                        as: "auth_email_create_session"
+
+    resources :publisher_preferences, only: %i[update], controller: "publishers/publisher_preferences"
   end
 
   root "home#index"
@@ -142,7 +144,6 @@ Rails.application.routes.draw do
     end
 
     resources :schools, only: %i[index edit update], controller: "publishers/organisations/schools"
-    resource :managed_organisations, only: %i[show update], controller: "publishers/organisations/managed_organisations"
   end
 
   # Legacy publisher sign in path (users may still have this bookmarked)

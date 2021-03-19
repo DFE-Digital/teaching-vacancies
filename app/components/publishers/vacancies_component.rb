@@ -1,9 +1,8 @@
 class Publishers::VacanciesComponent < ViewComponent::Base
-  def initialize(organisation:, sort:, selected_type:, filters:, filters_form:, sort_form:, email:)
+  def initialize(organisation:, sort:, selected_type:, publisher_preference:, sort_form:, email:)
     @organisation = organisation
     @sort = sort
-    @filters = filters
-    @filters_form = filters_form
+    @publisher_preference = publisher_preference
     @sort_form = sort_form
     @email = email
     @vacancy_types = %w[published expired pending draft awaiting_feedback]
@@ -38,17 +37,17 @@ class Publishers::VacanciesComponent < ViewComponent::Base
   end
 
   def no_jobs_text
-    I18n.t("jobs.manage.#{selected_type}.no_jobs.#{filters[:managed_school_ids]&.any? ? 'with' : 'no'}_filters")
+    I18n.t("jobs.manage.#{selected_type}.no_jobs.#{publisher_preference.organisations.any? ? 'with' : 'no'}_filters")
   end
 
   private
 
-  attr_reader :filters, :organisation, :selected_type, :sort, :vacancies
+  attr_reader :publisher_preference, :organisation, :selected_type, :sort, :vacancies
 
   def set_vacancies
     @vacancies =
-      if filters[:managed_school_ids]&.any?
-        Vacancy.in_organisation_ids(filters[:managed_school_ids])
+      if publisher_preference.organisations.any?
+        Vacancy.in_organisation_ids(publisher_preference.organisations.map(&:id))
       else
         organisation.all_vacancies
       end

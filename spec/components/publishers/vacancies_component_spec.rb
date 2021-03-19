@@ -1,16 +1,16 @@
 require "rails_helper"
 
 RSpec.describe Publishers::VacanciesComponent, type: :component do
+  let(:publisher) { create(:publisher) }
   let(:sort) { Publishers::VacancySort.new(organisation, selected_type).update(column: "job_title") }
   let(:selected_type) { "published" }
-  let(:filters) { {} }
-  let(:filters_form) { Publishers::ManagedOrganisationsForm.new(filters) }
+  let(:publisher_preference) { create(:publisher_preference, publisher: publisher, organisation: organisation) }
   let(:sort_form) { SortForm.new(sort.column) }
   let(:email) { "publisher@email.com" }
 
   subject do
     described_class.new(
-      organisation: organisation, sort: sort, selected_type: selected_type, filters: filters, filters_form: filters_form, sort_form: sort_form, email: email,
+      organisation: organisation, sort: sort, selected_type: selected_type, publisher_preference: publisher_preference, sort_form: sort_form, email: email,
     )
   end
 
@@ -51,7 +51,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       end
 
       it "does not render the filters sidebar" do
-        expect(inline_component.css('.new_publishers_managed_organisations_form input[type="submit"]')).to be_blank
+        expect(inline_component.css('.edit_publisher_preference input[type="submit"]')).to be_blank
       end
 
       context "when there are no jobs within the selected vacancy type" do
@@ -71,7 +71,6 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
         create(:vacancy, :published, :central_office,
                organisation_vacancies_attributes: [{ organisation: organisation }])
       end
-      let(:filters) { { managed_school_ids: [], managed_organisations: "all" } }
 
       before do
         organisation.school_group_memberships.create(school: open_school)
@@ -100,20 +99,20 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
 
       it "renders the filters sidebar" do
         expect(
-          inline_component.css('.new_publishers_managed_organisations_form input[type="submit"]').attribute("value").value,
+          inline_component.css('.edit_publisher_preference input[type="submit"]').attribute("value").value,
         ).to eq(I18n.t("buttons.apply_filters"))
       end
 
       it "renders the trust head office as a filter option" do
-        expect(inline_component.css(".new_publishers_managed_organisations_form").to_html).to include("Trust head office")
+        expect(inline_component.css(".edit_publisher_preference").to_html).to include("Trust head office")
       end
 
       it "renders the open school as a filter option" do
-        expect(inline_component.css(".new_publishers_managed_organisations_form").to_html).to include("Open school")
+        expect(inline_component.css(".edit_publisher_preference").to_html).to include("Open school")
       end
 
       it "does not render the closed school as a filter option" do
-        expect(inline_component.css(".new_publishers_managed_organisations_form").to_html).not_to include("Closed school")
+        expect(inline_component.css(".edit_publisher_preference").to_html).not_to include("Closed school")
       end
     end
 
@@ -125,7 +124,6 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
         create(:vacancy, :published, :at_one_school,
                organisation_vacancies_attributes: [{ organisation: open_school }])
       end
-      let(:filters) { { managed_school_ids: [], managed_organisations: "all" } }
 
       before do
         organisation.school_group_memberships.create(school: open_school)
@@ -154,20 +152,20 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
 
       it "renders the filters sidebar" do
         expect(
-          inline_component.css('.new_publishers_managed_organisations_form input[type="submit"]').attribute("value").value,
+          inline_component.css('.edit_publisher_preference input[type="submit"]').attribute("value").value,
         ).to eq(I18n.t("buttons.apply_filters"))
       end
 
       it "does not render the trust head office as a filter option" do
-        expect(inline_component.css(".new_publishers_managed_organisations_form").to_html).not_to include("Trust head office")
+        expect(inline_component.css(".edit_publisher_preference").to_html).not_to include("Trust head office")
       end
 
       it "renders the open school as a filter option" do
-        expect(inline_component.css(".new_publishers_managed_organisations_form").to_html).to include("Open school")
+        expect(inline_component.css(".edit_publisher_preference").to_html).to include("Open school")
       end
 
       it "does not render the closed school as a filter option" do
-        expect(inline_component.css(".new_publishers_managed_organisations_form").to_html).not_to include("Closed school")
+        expect(inline_component.css(".edit_publisher_preference").to_html).not_to include("Closed school")
       end
 
       context "when there are no jobs within the selected vacancy type" do
@@ -184,7 +182,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
     let(:organisation) { create(:trust) }
     let(:school_oxford) { create(:school, name: "Oxford") }
     let(:school_cambridge) { create(:school, name: "Cambridge") }
-    let(:filters) { { managed_school_ids: [school_oxford.id], managed_organisations: "" } }
+    let!(:organisation_publisher_preference) { OrganisationPublisherPreference.create(organisation: school_oxford, publisher_preference: publisher_preference) }
     let!(:vacancy_cambridge) do
       create(:vacancy, :published, :at_one_school,
              organisation_vacancies_attributes: [{ organisation: organisation }, { organisation: school_cambridge }],
