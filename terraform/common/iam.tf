@@ -139,23 +139,18 @@ resource "aws_iam_user_policy_attachment" "cloudfront" {
 
 data "aws_iam_policy_document" "db_backups_in_s3_fullaccess" {
   statement {
-    actions = [
-      "s3:GetBucketAcl",
-      "s3:GetBucketLocation",
-      "s3:GetObject",
-      "s3:GetObjectAcl",
-      "s3:ListBucket",
-      "s3:PutBucketAcl",
-      "s3:PutObject"
-    ]
+    actions = ["s3:GetObject", "s3:GetObjectAcl", "s3:PutObject"]
     resources = [
-      "arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/",
-      "arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/*",
       "arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/full/*",
       "arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/sanitised/*"
     ]
   }
+  statement {
+    actions   = ["s3:GetBucketAcl", "s3:GetBucketLocation", "s3:ListBucket", "s3:PutBucketAcl"]
+    resources = ["arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}"]
+  }
 }
+
 
 resource "aws_iam_policy" "db_backups_in_s3_fullaccess" {
   name   = "db_backups_in_s3_fullaccess"
@@ -174,8 +169,22 @@ data "aws_iam_policy_document" "deny_sensitive_data_in_s3" {
     ]
     effect = "Deny"
     resources = [
-      "arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/backups/*"
+      "arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/full/*"
     ]
+  }
+  statement {
+    actions   = ["s3:ListBucket"]
+    effect    = "Deny"
+    resources = ["arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}"]
+    condition {
+      test     = "StringEquals"
+      variable = "s3:prefix"
+
+      values = [
+        "",
+        "full"
+      ]
+    }
   }
 }
 
