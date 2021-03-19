@@ -300,6 +300,8 @@ ActiveRecord::Schema.define(version: 2021_03_18_163755) do
     t.string "contract_type_duration"
     t.string "apply_through_teaching_vacancies"
     t.text "personal_statement_guidance"
+    t.integer "end_listing_reason"
+    t.integer "candidate_hired_from"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["initially_indexed"], name: "index_vacancies_on_initially_indexed"
