@@ -152,6 +152,12 @@ en:
       destroy:
         success_html: >-
           %{job_title} has been <span class="govuk-!-font-weight-bold delete-listing-success-gtm">deleted</span>
+      end_listing:
+        show:
+          heading: End job listing early
+          title: End listing - %{job_title}
+        update:
+          success: "%{job_title} has been ended early"
       job_applications:
         reject:
           alert: The candidate will be sent an email telling them that their application has not been successful.

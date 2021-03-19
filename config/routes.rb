@@ -133,6 +133,7 @@ Rails.application.routes.draw do
       resource :feedback, only: %i[create], controller: "publishers/vacancies/feedbacks"
       resource :statistics, only: %i[update], controller: "publishers/vacancies/statistics"
       resource :copy, only: %i[new create], controller: "publishers/vacancies/copy"
+      resource :end_listing, only: %i[show update], controller: "publishers/vacancies/end_listing"
 
       constraints(-> { JobseekerApplicationsFeature.enabled? }) do
         resources :job_applications, only: %i[show], controller: "publishers/vacancies/job_applications" do

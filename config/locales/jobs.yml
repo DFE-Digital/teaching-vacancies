@@ -291,6 +291,7 @@ en:
       closing_date: Closing date
       copy_link_text: Copy listing
       delete_link_text: Delete
+      end_link_text: End listing
       draft:
         no_jobs:
           no_filters: You currently have no draft jobs.

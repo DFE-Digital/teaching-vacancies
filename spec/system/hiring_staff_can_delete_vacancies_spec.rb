@@ -1,58 +1,44 @@
 require "rails_helper"
+
 RSpec.describe "School deleting vacancies" do
   let(:publisher) { create(:publisher) }
-  let(:school) { create(:school) }
-  let(:vacancy) { create(:vacancy) }
+  let(:organisation) { create(:school) }
+  let(:vacancy) { create(:vacancy, :future_publish, organisation_vacancies_attributes: [{ organisation: organisation }]) }
 
   before do
-    login_publisher(publisher: publisher, organisation: school)
-    vacancy.organisation_vacancies.create(organisation: school)
+    login_publisher(publisher: publisher, organisation: organisation)
     stub_document_deletion_of_vacancy
+    visit jobs_with_type_organisation_path(:pending)
   end
 
   scenario "A school can delete a vacancy from a list" do
-    vacancy2 = create(:vacancy)
-    vacancy2.organisation_vacancies.create(organisation: school)
-
-    delete_vacancy(school, vacancy.id)
-
-    within(".card-component__actions") do
-      expect(page).not_to have_content(vacancy.job_title)
+    within(".card-component#vacancy_#{vacancy.id}") do
+      click_on "Delete"
     end
-    expect(page).to have_content(vacancy2.job_title)
+
     expect(page).to have_content(
       strip_tags(I18n.t("publishers.vacancies.destroy.success_html", job_title: vacancy.job_title)),
     )
+    expect(page).to have_content(I18n.t("publishers.no_vacancies_component.heading"))
   end
 
   scenario "Deleting a vacancy triggers deletion of its supporting documents" do
     expect(vacancy).to receive(:delete_documents)
 
-    delete_vacancy(school, vacancy.id)
-  end
-
-  scenario "The last vacancy is deleted" do
-    delete_vacancy(school, vacancy.id)
-
-    expect(page).to have_content(I18n.t("publishers.no_vacancies_component.heading"))
-  end
-
-  scenario "Notifies the Google index service" do
-    expect_any_instance_of(Publishers::Vacancies::BaseController)
-      .to receive(:remove_google_index).with(vacancy)
-
-    delete_vacancy(school, vacancy.id)
-  end
-
-  private
-
-  def delete_vacancy(school, vacancy_id)
-    visit organisation_path(school)
-
-    within(".card-component#vacancy_#{vacancy_id}") do
+    within(".card-component#vacancy_#{vacancy.id}") do
       click_on "Delete"
     end
   end
+
+  scenario "Notifies the Google index service" do
+    expect_any_instance_of(Publishers::Vacancies::BaseController).to receive(:remove_google_index).with(vacancy)
+
+    within(".card-component#vacancy_#{vacancy.id}") do
+      click_on "Delete"
+    end
+  end
+
+  private
 
   def stub_document_deletion_of_vacancy
     # Stub vacancy lookup so that the controller uses these tests' vacancy objects
