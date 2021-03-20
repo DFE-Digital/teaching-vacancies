@@ -99,7 +99,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
       let(:school_group) { create(:local_authority, local_authority_code: "323") }
 
       it "associates the user with the local_authority instead of the school" do
-        expect(current_path).to eq(organisation_path)
+        expect(current_path).to eq(new_publisher_preference_path)
       end
 
       it "shows the local_authority name" do
@@ -119,6 +119,8 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
       stub_authorisation_step
       stub_sign_in_with_multiple_organisations
     end
+
+    it_behaves_like "a successful sign in"
 
     scenario "it redirects the sign in page to the trust page" do
       visit root_path
@@ -146,15 +148,13 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
       stub_sign_in_with_multiple_organisations
     end
 
-    context "when user preferences have been set" do
-      it_behaves_like "a successful sign in"
+    it_behaves_like "a successful sign in"
 
-      scenario "it redirects the sign in page to the SchoolGroup page" do
+    context "when user preferences have been set" do
+      it "does not redirect the sign in page to the publisher preference page" do
         visit root_path
         sign_in_publisher
 
-        visit new_publisher_session_path
-        # TODO: create publisher preferences page
         expect(current_path).to eq(organisation_path)
       end
     end
@@ -162,11 +162,11 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
     context "when user preferences have not been set" do
       let(:publisher_preference) { nil }
 
-      scenario "it redirects the sign in page to the managed organisations user preference page" do
+      it "redirects the sign in page to the publisher preference page" do
         visit root_path
         sign_in_publisher
 
-        expect(current_path).to eq(organisation_path)
+        expect(current_path).to eq(new_publisher_preference_path)
       end
     end
 

@@ -19,6 +19,10 @@ shared:
     - id
     - email
     - unconfirmed_email
+  local_authority_publisher_schools:
+    - id
+    - publisher_preference_id
+    - school_id
   organisations:
     - id
   organisation_publisher_preferences:

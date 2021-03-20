@@ -34,14 +34,6 @@ module OrganisationHelper
     address_join([organisation.name, organisation.town, organisation.county])
   end
 
-  def managed_organisations_all_label(organisation)
-    if organisation.group_type == "local_authority"
-      t("publishers.organisations.managed_organisations.show.options.all_schools")
-    else
-      t("publishers.organisations.managed_organisations.show.options.all")
-    end
-  end
-
   def ofsted_report(school)
     OFSTED_REPORT_ENDPOINT + school.urn
   end

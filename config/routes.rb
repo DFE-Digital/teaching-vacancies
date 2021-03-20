@@ -74,7 +74,7 @@ Rails.application.routes.draw do
     get "auth/email/sessions/sign-in", to: "publishers/sign_in/email/sessions#create",
                                        as: "auth_email_create_session"
 
-    resources :publisher_preferences, only: %i[update], controller: "publishers/publisher_preferences"
+    resources :publisher_preferences, only: %i[new create edit update], controller: "publishers/publisher_preferences"
   end
 
   root "home#index"

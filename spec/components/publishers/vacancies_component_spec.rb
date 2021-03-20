@@ -120,6 +120,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       let(:organisation) { create(:local_authority) }
       let(:open_school) { create(:school, name: "Open school") }
       let(:closed_school) { create(:school, :closed, name: "Closed school") }
+      let(:publisher_preference) { create(:publisher_preference, publisher: publisher, organisation: organisation) }
       let!(:vacancy) do
         create(:vacancy, :published, :at_one_school,
                organisation_vacancies_attributes: [{ organisation: open_school }])
@@ -128,6 +129,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       before do
         organisation.school_group_memberships.create(school: open_school)
         organisation.school_group_memberships.create(school: closed_school)
+        publisher_preference.local_authority_publisher_schools.create(school_id: open_school.id)
       end
 
       let!(:inline_component) { render_inline(subject) }

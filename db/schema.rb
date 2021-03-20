@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_18_163755) do
+ActiveRecord::Schema.define(version: 2021_03_22_101659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -132,6 +132,13 @@ ActiveRecord::Schema.define(version: 2021_03_18_163755) do
     t.index ["email"], name: "index_jobseekers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_jobseekers_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_jobseekers_on_unlock_token", unique: true
+  end
+
+  create_table "local_authority_publisher_schools", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "publisher_preference_id"
+    t.uuid "school_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "location_polygons", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
