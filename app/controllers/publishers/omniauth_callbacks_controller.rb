@@ -1,10 +1,4 @@
 class Publishers::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  PUBLISHER_CATEGORIES = {
-    "001" => :school,
-    "002" => :local_authority,
-    "010" => :multi_academy_trust,
-  }.freeze
-
   skip_before_action :verify_authenticity_token, only: :dfe
 
   def new
@@ -13,7 +7,17 @@ class Publishers::OmniauthCallbacksController < Devise::OmniauthCallbacksControl
   end
 
   def dfe
-    perform_dfe_sign_in_authorisation
+    authorisation = Authorisation.new(organisation_id: organisation_id, user_id: user_id).call
+    organisation = organisation_from_request
+
+    if authorisation.authorised? && organisation && organisation.allowed_local_authority?
+      sign_in_publisher(organisation)
+      trigger_publisher_sign_in_event(:success, :dsi)
+      redirect_to organisation_path
+    else
+      trigger_publisher_sign_in_event(:failure, :dsi, user_id)
+      render "not_authorised", locals: { email: auth_hash["info"]["email"] }
+    end
   end
 
   def failure
@@ -34,32 +38,6 @@ class Publishers::OmniauthCallbacksController < Devise::OmniauthCallbacksControl
     auth_hash["uid"]
   end
 
-  def identifier
-    auth_hash["info"]["email"]
-  end
-
-  def publisher_category
-    # In organisation['category'], DSI provides an 'id' and a 'name' attribute.
-    # The mapping is documented in this table:
-    # https://github.com/david-mears-dfe/login.dfe.public-api/blob/patch-1/README.md#organisation-categories
-    # I am using the id as I imagine that is more stable than the name.
-    category_id = auth_hash.dig("extra", "raw_info", "organisation", "category", "id")
-    PUBLISHER_CATEGORIES[category_id]
-  end
-
-  def school_urn
-    auth_hash.dig("extra", "raw_info", "organisation", "urn")
-  end
-
-  def trust_uid
-    auth_hash.dig("extra", "raw_info", "organisation", "uid")
-  end
-
-  def local_authority_code
-    # All organisations have an establishmentNumber, but we only want this for identifying LAs by.
-    auth_hash.dig("extra", "raw_info", "organisation", "establishmentNumber")
-  end
-
   def organisation_id
     auth_hash.dig("extra", "raw_info", "organisation", "id")
   end
@@ -68,54 +46,26 @@ class Publishers::OmniauthCallbacksController < Devise::OmniauthCallbacksControl
     auth_hash.dig("credentials", "id_token")
   end
 
-  def perform_dfe_sign_in_authorisation
-    authorisation = Authorisation.new(organisation_id: organisation_id, user_id: user_id)
-    authorisation.call
-    check_authorisation(authorisation)
-  end
-
-  def check_authorisation(authorisation_permissions)
-    if authorisation_permissions.authorised? && allowed_user?
-      sign_in_publisher
-      trigger_publisher_sign_in_event(:success, :dsi)
-      redirect_to organisation_path
-    else
-      trigger_publisher_sign_in_event(:failure, :dsi, user_id)
-      @identifier = identifier
-      render "not_authorised"
+  def organisation_from_request
+    # https://github.com/david-mears-dfe/login.dfe.public-api/blob/patch-1/README.md#organisation-categories
+    case auth_hash.dig("extra", "raw_info", "organisation", "category", "id")
+    when "001"
+      School.find_by!(urn: auth_hash.dig("extra", "raw_info", "organisation", "urn"))
+    when "002"
+      SchoolGroup.find_by!(local_authority_code: auth_hash.dig("extra", "raw_info", "organisation", "establishmentNumber"))
+    when "010"
+      SchoolGroup.find_by!(uid: auth_hash.dig("extra", "raw_info", "organisation", "uid"))
     end
   end
 
-  def sign_in_publisher
+  def sign_in_publisher(organisation)
     publisher = Publisher.find_or_create_by(oid: user_id)
-    organisation = organisation_from_request
     OrganisationPublisher.find_or_create_by(organisation_id: organisation.id, publisher_id: publisher.id)
 
     sign_in(publisher)
     sign_out(:jobseeker)
     session.update(publisher_dsi_token: id_token, publisher_organisation_id: organisation.id)
     use_school_group_if_available(publisher, organisation)
-  end
-
-  def organisation_from_request
-    case publisher_category
-    when :school
-      School.find_by!(urn: school_urn)
-    when :local_authority
-      SchoolGroup.find_by!(local_authority_code: local_authority_code)
-    when :multi_academy_trust
-      SchoolGroup.find_by!(uid: trust_uid)
-    end
-  end
-
-  def allowed_user?
-    school_urn.present? || trust_uid.present? || (local_authority_code.present? && allowed_la_user?)
-  end
-
-  def allowed_la_user?
-    return true unless Rails.configuration.enforce_local_authority_allowlist
-
-    Rails.configuration.allowed_local_authorities.include?(local_authority_code)
   end
 
   def use_school_group_if_available(publisher, organisation)

@@ -8,7 +8,7 @@ class Publishers::SignIn::Email::SessionsController < ApplicationController
     publisher = Publisher.find(session[:publisher_id])
     organisation = publisher.organisations.find(params[:organisation_id])
 
-    if publisher.organisations.include?(organisation) && allowed_la_publisher?(organisation)
+    if publisher.organisations.include?(organisation) && organisation.allowed_local_authority?
       sign_in(publisher)
       sign_out(:jobseeker)
       session.update(publisher_organisation_id: organisation.id)
@@ -26,11 +26,16 @@ class Publishers::SignIn::Email::SessionsController < ApplicationController
   end
 
   def choose_organisation
-    process_login_key
-    session.update(publisher_id: @publisher.id) if @publisher
+    login_key = EmergencyLoginKey.find_by(id: params[:login_key])
+    return @reason_for_failing_sign_in = "no_key" unless login_key
+    return @reason_for_failing_sign_in = "expired" if login_key.expired?
 
-    @reason_for_failing_sign_in = "no_orgs" if @publisher&.organisations&.none?
-    return if @publisher&.organisations&.many? || @reason_for_failing_sign_in.present?
+    @publisher = Publisher.find(login_key.publisher_id)
+    login_key.destroy
+    session.update(publisher_id: @publisher.id)
+
+    return @reason_for_failing_sign_in = "no_orgs" if @publisher.organisations.none?
+    return if @publisher.organisations.many?
 
     redirect_to auth_email_create_session_path(organisation_id: @publisher.organisations.first.id)
   end
@@ -45,18 +50,6 @@ class Publishers::SignIn::Email::SessionsController < ApplicationController
     redirect_to new_publisher_session_path unless AuthenticationFallback.enabled?
   end
 
-  def process_login_key
-    login_key = EmergencyLoginKey.find_by(id: params[:login_key])
-    return @reason_for_failing_sign_in = "no_key" unless login_key
-
-    if login_key.expired?
-      @reason_for_failing_sign_in = "expired"
-    else
-      @publisher = Publisher.find(login_key.publisher_id)
-      login_key.destroy
-    end
-  end
-
   def send_login_key(publisher:)
     Publishers::AuthenticationFallbackMailer.sign_in_fallback(
       login_key_id: generate_login_key(publisher: publisher).id,
@@ -66,12 +59,5 @@ class Publishers::SignIn::Email::SessionsController < ApplicationController
 
   def generate_login_key(publisher:)
     publisher.emergency_login_keys.create(not_valid_after: Time.current + EMERGENCY_LOGIN_KEY_DURATION)
-  end
-
-  def allowed_la_publisher?(organisation)
-    return true unless Rails.configuration.enforce_local_authority_allowlist
-    return true unless organisation.local_authority_code.present?
-
-    Rails.configuration.allowed_local_authorities.include?(organisation.local_authority_code)
   end
 end

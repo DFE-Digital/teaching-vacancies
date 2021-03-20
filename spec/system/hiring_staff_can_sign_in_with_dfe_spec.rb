@@ -183,6 +183,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
 
   context "with valid credentials but no authorisation" do
     before do
+      create(:school, urn: "110627")
       stub_authentication_step(email: "another_email@example.com")
       stub_authorisation_step_with_not_found
     end
