@@ -6,3 +6,7 @@ data "aws_route53_zone" "zone" {
 data "aws_iam_user" "deploy" {
   user_name = "deploy"
 }
+
+data "aws_iam_role" "deployments" {
+  name = "deployments"
+}
