@@ -158,6 +158,14 @@ en:
     email: teaching.vacancies@education.gov.uk
 
   organisation:
+    location_link_text:
+      at_multiple_schools: School locations
+      at_one_school: School location
+      central_office: Head office location
+    overview_link_text:
+      at_multiple_schools: Schools overview
+      at_one_school: School overview
+      central_office: Trust overview
     view_more_or_change: View more or change
 
   job_alert_feedbacks:
