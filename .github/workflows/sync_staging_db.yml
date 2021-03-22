@@ -75,6 +75,7 @@ jobs:
       run: bin/restore-db
       env:
         CF_DESTINATION_ENVIRONMENT: staging
+        CF_SPACE_NAME: staging
         BACKUP_TYPE: sanitised
 
     - name: Upload sanitised backup to S3
