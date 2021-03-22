@@ -61,7 +61,8 @@ production: ## production # Requires `CONFIRM_PRODUCTION=true`
 .PHONY: qa
 qa: ## qa
 		$(eval env=qa)
-		$(eval var_file=qa)
+		$(eval var_file=$(env))
+		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
 
 ##@ Docker - build, tag, and push an image from local code. Requires Docker CLI
 
