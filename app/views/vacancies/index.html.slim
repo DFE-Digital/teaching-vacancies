@@ -10,7 +10,7 @@
   - content_for :page_description, t("landing_pages.description.#{@landing_page_translation}")
 
 .govuk-main-wrapper class="govuk-!-padding-top-3"
-  = render(Shared::BreadcrumbComponent.new(collapse_on_mobile: false, crumbs: [{ link_path: root_path, link_text: t("breadcrumbs.home") }, { link_path: "#", link_text: t("breadcrumbs.jobs") }]))
+  = govuk_breadcrumbs breadcrumbs: { "#{t("breadcrumbs.home")}": root_path, "#{t("breadcrumbs.jobs")}": "" }
 
   = render(Jobseekers::SearchResults::HeadingComponent.new(vacancies_search: @vacancies_search))
 
