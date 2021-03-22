@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Shared::TimelineComponent, type: :component do
+RSpec.describe TimelineComponent, type: :component do
   let(:kwargs) { {} }
 
   subject! { render_inline(described_class.new(**kwargs)) }
@@ -28,36 +28,36 @@ RSpec.describe Shared::TimelineComponent, type: :component do
     end
   end
 
-  describe "dates" do
-    context "when date slots are defined" do
+  describe "items" do
+    context "when item slots are defined" do
       subject! do
         render_inline(described_class.new) do |timeline|
-          timeline.date(key: "Date 1", value: "Jan 2020")
-          timeline.date(key: "Date 2", value: "Jan 2021")
+          timeline.item(key: "Item 1", value: "The first thing")
+          timeline.item(key: "Item 2", value: "The second thing")
         end
       end
 
-      it "renders dates" do
+      it "renders items" do
         expect(page).to have_css("aside", class: "timeline-component") do |timeline|
-          expect(timeline).to have_css("ul", class: "timeline-component__dates") do |dates|
-            expect(dates).to have_css("li", class: "timeline-component__date", count: 2)
+          expect(timeline).to have_css("ul", class: "timeline-component__items") do |items|
+            expect(items).to have_css("li", class: "timeline-component__item", count: 2)
           end
         end
 
-        expect(page.all(".timeline-component__date")[0])
-          .to have_css("h3", text: "Date 1")
-          .and have_css("p", text: "Jan 2020")
+        expect(page.all(".timeline-component__item")[0])
+          .to have_css("h3", text: "Item 1")
+          .and have_css("p", text: "The first thing")
 
-        expect(page.all(".timeline-component__date")[1])
-          .to have_css("h3", text: "Date 2")
-          .and have_css("p", text: "Jan 2021")
+        expect(page.all(".timeline-component__item")[1])
+          .to have_css("h3", text: "Item 2")
+          .and have_css("p", text: "The second thing")
       end
     end
 
-    context "when date slots are not defined" do
-      it "does not render dates" do
+    context "when item slots are not defined" do
+      it "does not render items" do
         expect(page).to have_css("aside", class: "timeline-component") do |timeline|
-          expect(timeline).not_to have_css("ul", class: "timeline-component__dates")
+          expect(timeline).not_to have_css("ul", class: "timeline-component__items")
         end
       end
     end
