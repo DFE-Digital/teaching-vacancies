@@ -12,6 +12,8 @@ class Vacancy < ApplicationRecord
   enum contract_type: { permanent: 0, fixed_term: 1 }
   enum status: { published: 0, draft: 1, trashed: 2 }
   enum job_location: { at_one_school: 0, at_multiple_schools: 1, central_office: 2 }
+  enum end_listing_reason: { suitable_candidate_found: 0, end_early: 1 }
+  enum candidate_hired_from: { teaching_vacancies: 0, other_free: 1, other_paid: 2, unknown: 3 }
   enum listed_elsewhere: {
     listed_paid: 0,
     listed_free: 1,

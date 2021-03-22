@@ -1,0 +1,18 @@
+- content_for :page_title_prefix, t(".title", job_title: vacancy.job_title)
+
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      .govuk-caption-l = vacancy.job_title
+      h1.govuk-heading-xl = t(".heading")
+
+      = form_for form, url: organisation_job_end_listing_path(vacancy.id), method: :patch do |f|
+        = f.govuk_error_summary
+
+        = f.govuk_radio_buttons_fieldset :end_listing_reason do
+          = f.govuk_radio_button :end_listing_reason, :suitable_candidate_found, link_errors: true do
+            = f.govuk_collection_select :candidate_hired_from, candidate_hired_from_options, :last, :first, label: { size: "s" }
+          = f.govuk_radio_button :end_listing_reason, :end_early
+
+        = f.govuk_submit t("buttons.end_listing") do
+          = f.govuk_submit t("buttons.cancel"), secondary: true

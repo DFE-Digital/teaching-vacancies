@@ -291,6 +291,7 @@ en:
       closing_date: Closing date
       copy_link_text: Copy listing
       delete_link_text: Delete
+      end_link_text: End listing
       draft:
         no_jobs:
           no_filters: You currently have no draft jobs.
@@ -310,8 +311,8 @@ en:
           with_filters: There are no scheduled jobs for the schools you have selected.
       published:
         no_jobs:
-          no_filters: You currently have no published jobs.
-          with_filters: There are no published jobs for the schools you have selected.
+          no_filters: You currently have no active jobs.
+          with_filters: There are no active jobs for the schools you have selected.
 
     date_listed: Date listed
     job_filled: Job filled on Teaching Vacancies?

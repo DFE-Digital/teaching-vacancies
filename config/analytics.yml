@@ -194,3 +194,5 @@ shared:
     - contract_type_duration
     - apply_through_teaching_vacancies
     - personal_statement_guidance
+    - end_listing_reason
+    - candidate_hired_from

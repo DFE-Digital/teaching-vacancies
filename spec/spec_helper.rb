@@ -20,3 +20,6 @@ RSpec.configure do |config|
     ENV.delete("OVERRIDE_SCHOOL_URN")
   end
 end
+
+RSpec::Matchers.define_negated_matcher :not_change, :change
+RSpec::Matchers.define_negated_matcher :not_have_enqueued_job, :have_enqueued_job

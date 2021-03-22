@@ -188,6 +188,12 @@ en:
         publishers/job_listing/feedback_form:
           attributes:
             <<: *publisher_job_listing_feedback_form_errors
+        publishers/job_listing/end_listing_form:
+          attributes:
+            end_listing_reason:
+              inclusion: Select an end listing reason
+            candidate_hired_from:
+              inclusion: Select a candidate hired from option
         publishers/organisation_form:
           attributes:
             <<: *organisation_errors

@@ -12,6 +12,6 @@
       - card.actions do
         = tag.div(govuk_link_to(t("jobs.manage.edit_link_text"), vacancy.edit_path))
         = tag.div(govuk_link_to(t("jobs.manage.copy_link_text"), vacancy.copy_path))
-        = tag.div(button_to(t("jobs.manage.delete_link_text"), vacancy.delete_path, method: :delete, data: { confirm: t("jobs.manage.are_you_sure", job_title: vacancy.job_title) }, class: "govuk-delete-link"))
+        = tag.div(govuk_link_to(t("jobs.manage.end_link_text"), organisation_job_end_listing_path(vacancy.id)))
 - else
   = render(Shared::NotificationComponent.new(body: no_jobs_text, variant: "empty", links: nil, dismiss: false, background: true, icon: false))
