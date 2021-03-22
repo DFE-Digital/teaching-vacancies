@@ -23,6 +23,7 @@
     "rollbar": "^2.21.0"
   },
   "devDependencies": {
+    "backstopjs": "^5.1.0",
     "concurrently": "^6.0.0",
     "eslint": "^7.20.0",
     "eslint-config-airbnb-base": "^14.2.1",
@@ -41,7 +42,9 @@
     "js:test": "jest",
     "js:test:coverage": "jest --coverage",
     "js:lint": "eslint ./app/frontend/src ./app/components/shared",
-    "sass:lint": "yarn stylelint app/frontend/**/*.scss -q"
+    "sass:lint": "yarn stylelint app/frontend/**/*.scss -q",
+    "visual:test": "backstop test --config='config/backstop/backstop.config.js'",
+    "visual:approve": "backstop approve --config='config/backstop/backstop.config.js'"
   },
   "jest": {
     "testMatch": [
