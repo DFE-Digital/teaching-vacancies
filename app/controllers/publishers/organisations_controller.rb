@@ -1,4 +1,6 @@
 class Publishers::OrganisationsController < Publishers::BaseController
+  helper_method :vacancy_statistics_form
+
   def show
     @selected_type = params[:type]
 
@@ -18,5 +20,18 @@ class Publishers::OrganisationsController < Publishers::BaseController
   def render_draft_saved_message
     vacancy = current_organisation.all_vacancies.find(params[:from_review])
     flash.now[:success] = t("messages.jobs.draft_saved_html", job_title: vacancy.job_title)
+  end
+
+  def vacancy_statistics_form(vacancy)
+    if vacancy.id == params[:invalid_form_job_id]
+      # Trigger validations to add errors to form
+      Publishers::VacancyStatisticsForm.new(statistics_params).tap(&:valid?)
+    else
+      @vacancy_statistics_form ||= Publishers::VacancyStatisticsForm.new
+    end
+  end
+
+  def statistics_params
+    params.require(:publishers_vacancy_statistics_form).permit(:listed_elsewhere, :hired_status)
   end
 end

@@ -1,7 +1,7 @@
 require "rails_helper"
 require "sanitize"
 
-RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: true do
+RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
   let(:job_title_link_selector) { ".view-vacancy-link" }
 
   let(:school) { create(:school) }
@@ -9,20 +9,12 @@ RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: tru
 
   before do
     login_publisher(publisher: publisher, organisation: school)
-    vacancy = create(:vacancy, :published_slugged)
-    vacancy.organisation_vacancies.create(organisation: school)
   end
 
   context "when there are vacancies awaiting feedback" do
-    let!(:vacancy) { create(:vacancy, :expired) }
-    let!(:another_vacancy) { create(:vacancy, :expired) }
-    let!(:third_vacancy) { create(:vacancy, :expired) }
-
-    before do
-      vacancy.organisation_vacancies.create(organisation: school)
-      another_vacancy.organisation_vacancies.create(organisation: school)
-      third_vacancy.organisation_vacancies.create(organisation: school)
-    end
+    let!(:vacancy) { create(:vacancy, :expired, organisation_vacancies_attributes: [{ organisation: school }]) }
+    let!(:another_vacancy) { create(:vacancy, :expired, organisation_vacancies_attributes: [{ organisation: school }]) }
+    let!(:third_vacancy) { create(:vacancy, :expired, organisation_vacancies_attributes: [{ organisation: school }]) }
 
     scenario "hiring staff can see notice of vacancies awaiting feedback" do
       visit organisation_path
@@ -40,130 +32,80 @@ RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: tru
       expect(page).to have_link(third_vacancy.job_title, href: organisation_job_path(third_vacancy.id))
 
       submit_feedback_for(vacancy)
+
       within("div.govuk-notification--notice") do
         expect(page).to have_content("2 jobs")
       end
+    end
+
+    scenario "it saves feedback to the correct record" do
+      visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
       submit_feedback_for(another_vacancy)
-      within("div.govuk-notification--notice") do
-        expect(page).to have_content("1 job")
+
+      another_vacancy.reload
+      expect(another_vacancy.hired_status).to eq("hired_tvs")
+      expect(another_vacancy.listed_elsewhere).to eq("listed_paid")
+    end
+
+    context "when an invalid form is submitted" do
+      before do
+        visit jobs_with_type_organisation_path(type: :awaiting_feedback)
+
+        within(".card-component", text: vacancy.job_title) do
+          click_on I18n.t("buttons.submit")
+        end
+      end
+
+      scenario "it renders the errors on the correct form" do
+        within("##{vacancy.id}") do
+          expect(page).to have_content(I18n.t("errors.publishers.job_statistics.error_summary", job_title: vacancy.job_title))
+        end
       end
     end
 
-    scenario "when adding feedback, it saves feedback to the model" do
-      visit jobs_with_type_organisation_path(type: :awaiting_feedback)
-
-      submit_feedback_for(vacancy)
-
-      vacancy.reload
-      expect(vacancy.hired_status).to eq("hired_tvs")
-      expect(vacancy.listed_elsewhere).to eq("listed_paid")
-    end
-
-    scenario "when an option is not selected in a javascript disabled browser", js: false do
-      visit jobs_with_type_organisation_path(type: :awaiting_feedback)
-
-      within(".card-component", text: vacancy.job_title) do
-        select I18n.t("jobs.feedback.hired_status.hired_tvs"), from: "vacancy_hired_status"
-        click_on I18n.t("buttons.submit")
+    context "when adding feedback to an invalid vacancy" do
+      let!(:invalid_vacancy) do
+        create(:vacancy, :expired, starts_on: 10.days.ago, organisation_vacancies_attributes: [{ organisation: school }])
       end
 
-      expect(page).to have_content(I18n.t("messages.jobs.feedback.error_body"))
-      expect(page).to have_content(vacancy.job_title)
+      scenario "it saves the feedback to the model without triggering validation errors" do
+        visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
-      expect(page).to_not have_content(I18n.t("messages.jobs.feedback.inline_error"))
+        submit_feedback_for(invalid_vacancy)
 
-      expect(vacancy.hired_status).to eq(nil)
-      expect(vacancy.listed_elsewhere).to eq(nil)
-    end
-
-    scenario "when an option is not selected in a javascript enabled browser" do
-      visit jobs_with_type_organisation_path(type: :awaiting_feedback)
-
-      within(".card-component", text: vacancy.job_title) do
-        select I18n.t("jobs.feedback.hired_status.hired_tvs"), from: "vacancy_hired_status"
-        click_on I18n.t("buttons.submit")
+        invalid_vacancy.reload
+        expect(invalid_vacancy.hired_status).to eq("hired_tvs")
+        expect(invalid_vacancy.listed_elsewhere).to eq("listed_paid")
       end
-
-      expect(page).to have_content(I18n.t("messages.jobs.feedback.inline_error"))
-      expect(page).to have_content(vacancy.job_title)
-
-      expect(page).to_not have_content(I18n.t("messages.jobs.feedback.error_body"))
-
-      expect(vacancy.hired_status).to eq(nil)
-      expect(vacancy.listed_elsewhere).to eq(nil)
-    end
-
-    scenario "input error styling only displays on blank selection field(s)" do
-      visit jobs_with_type_organisation_path(type: :awaiting_feedback)
-
-      within(".card-component", text: vacancy.job_title) do
-        click_on I18n.t("buttons.submit")
-      end
-
-      expect(page).to have_content(I18n.t("messages.jobs.feedback.inline_error"), count: 2)
-
-      within(".card-component", text: vacancy.job_title) do
-        select I18n.t("jobs.feedback.hired_status.hired_tvs"), from: "vacancy_hired_status"
-        click_on I18n.t("buttons.submit")
-
-        select "--", from: "vacancy_hired_status"
-
-        select I18n.t("jobs.feedback.listed_elsewhere.listed_paid"), from: "vacancy_listed_elsewhere"
-        click_on I18n.t("buttons.submit")
-      end
-
-      expect(page).to have_content(I18n.t("messages.jobs.feedback.inline_error"), count: 1)
-    end
-
-    scenario "when all feedback has been submitted" do
-      visit jobs_with_type_organisation_path(type: :awaiting_feedback)
-
-      expect(page).to have_link(vacancy.job_title, href: organisation_job_path(vacancy.id))
-      expect(page).to have_link(another_vacancy.job_title, href: organisation_job_path(another_vacancy.id))
-      expect(page).to have_link(third_vacancy.job_title, href: organisation_job_path(third_vacancy.id))
-
-      submit_feedback_for(vacancy)
-      submit_feedback_for(another_vacancy)
-      submit_feedback_for(third_vacancy)
-
-      expect(page).not_to have_content(I18n.t("jobs.manage.awaiting_feedback.intro"))
-      expect(page).not_to have_link(vacancy.job_title, href: organisation_job_path(vacancy.id))
-      expect(page).not_to have_link(another_vacancy.job_title, href: organisation_job_path(another_vacancy.id))
-      expect(page).not_to have_link(third_vacancy.job_title, href: organisation_job_path(third_vacancy.id))
-    end
-
-    scenario "when adding feedback to an invalid vacancy, it saves the feedback to the model" do
-      invalid_starts_on_date = 10.days.ago
-      invalid_vacancy = create(:vacancy, :expired, starts_on: invalid_starts_on_date)
-      invalid_vacancy.organisation_vacancies.create(organisation: school)
-
-      visit jobs_with_type_organisation_path(type: :awaiting_feedback)
-      submit_feedback_for(invalid_vacancy)
-
-      invalid_vacancy.reload
-      expect(invalid_vacancy.hired_status).to eq("hired_tvs")
-      expect(invalid_vacancy.listed_elsewhere).to eq("listed_paid")
     end
   end
 
-  context "when there are no vacancies awaiting feedback" do
-    scenario "hiring staff can not see notification badge" do
+  context "when all feedback has been submitted" do
+    let!(:vacancy) do
+      create(:vacancy, :expired,
+             hired_status: "hired_tvs",
+             listed_elsewhere: "listed_paid",
+             organisation_vacancies_attributes: [{ organisation: school }])
+    end
+
+    scenario "the no vacancies component is displayed" do
       visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
+      expect(page).not_to have_link(vacancy.job_title, href: organisation_job_path(vacancy.id))
       expect(page).to have_content(I18n.t("jobs.manage.awaiting_feedback.no_jobs.no_filters"))
     end
   end
 
   def submit_feedback_for(vacancy)
     within(".card-component", text: vacancy.job_title) do
-      select I18n.t("jobs.feedback.hired_status.hired_tvs"), from: "vacancy_hired_status"
-      select I18n.t("jobs.feedback.listed_elsewhere.listed_paid"), from: "vacancy_listed_elsewhere"
+      select I18n.t("jobs.feedback.hired_status.hired_tvs"), from: "publishers_vacancy_statistics_form[hired_status]"
+      select I18n.t("jobs.feedback.listed_elsewhere.listed_paid"), from: "publishers_vacancy_statistics_form[listed_elsewhere]"
       click_on I18n.t("buttons.submit")
     end
 
     expect(page).to have_content(
-      strip_tags(I18n.t("messages.jobs.feedback.submitted_html", job_title: vacancy.job_title)),
+      strip_tags(I18n.t("publishers.vacancies.statistics.update.success", job_title: vacancy.job_title)),
     )
   end
 end

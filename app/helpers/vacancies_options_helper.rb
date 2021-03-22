@@ -1,16 +1,16 @@
 module VacanciesOptionsHelper
   def hired_status_options
-    Vacancy.hired_statuses.keys.map { |k| [t("jobs.feedback.hired_status.#{k}"), k] }
+    Vacancy.hired_statuses.keys.map { |k| [t("jobs.feedback.hired_status.#{k}"), k] }.unshift(["--", ""])
+  end
+
+  def listed_elsewhere_options
+    Vacancy.listed_elsewheres.keys.map { |k| [t("jobs.feedback.listed_elsewhere.#{k}"), k] }.unshift(["--", ""])
   end
 
   def job_location_options(organisation)
     mapped_job_location_options(organisation)
       .delete_if { |_k, v| organisation.group_type == "local_authority" && v == "central_office" }
       .reject(&:blank?)
-  end
-
-  def listed_elsewhere_options
-    Vacancy.listed_elsewheres.keys.map { |k| [t("jobs.feedback.listed_elsewhere.#{k}"), k] }
   end
 
   def mapped_job_location_options(organisation)

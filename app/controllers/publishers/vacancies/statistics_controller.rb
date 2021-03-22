@@ -2,36 +2,26 @@ class Publishers::Vacancies::StatisticsController < Publishers::Vacancies::BaseC
   before_action :set_vacancy
 
   def update
-    if valid?
-      vacancy = Vacancy.find(params[:job_id])
-      update_vacancy(vacancy)
+    if Publishers::VacancyStatisticsForm.new(statistics_params).valid?
+      @vacancy.listed_elsewhere = statistics_params[:listed_elsewhere]
+      @vacancy.hired_status = statistics_params[:hired_status]
+
+      # An expired vacancy can be invalid, if validations have been added since it was published.
+      @vacancy.save(validate: false)
 
       redirect_to jobs_with_type_organisation_path(type: :awaiting_feedback),
-                  success: t("messages.jobs.feedback.submitted_html", job_title: vacancy.job_title)
+                  success: t(".success", job_title: @vacancy.job_title)
     else
-      redirect_to jobs_with_type_organisation_path(type: :awaiting_feedback), warning: {
-        title: t("messages.jobs.feedback.error_title"),
-        body: t("messages.jobs.feedback.error_body"),
-      }
+      redirect_to jobs_with_type_organisation_path(type: :awaiting_feedback, params: {
+        invalid_form_job_id: @vacancy.id,
+        publishers_vacancy_statistics_form: statistics_params,
+      })
     end
   end
 
   private
 
-  def update_vacancy(vacancy)
-    vacancy.listed_elsewhere = statistics_params[:listed_elsewhere]
-    vacancy.hired_status = statistics_params[:hired_status]
-
-    # The expired vacancy can be invalid, if validations have been
-    # added which weren't in place at time of publication.
-    vacancy.save(validate: false)
-  end
-
-  def valid?
-    statistics_params[:listed_elsewhere].present? && statistics_params[:hired_status].present?
-  end
-
   def statistics_params
-    params.require(:vacancy).permit(:listed_elsewhere, :hired_status)
+    params.require(:publishers_vacancy_statistics_form).permit(:listed_elsewhere, :hired_status)
   end
 end

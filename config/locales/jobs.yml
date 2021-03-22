@@ -315,8 +315,6 @@ en:
           with_filters: There are no active jobs for the schools you have selected.
 
     date_listed: Date listed
-    job_filled: Job filled on Teaching Vacancies?
-    listed_elsewhere: Listed elsewhere?
 
     feedback:
       listed_elsewhere:

@@ -11,10 +11,6 @@ en:
       already_published: This job has already been published
       draft_saved_html: <span class="govuk-!-font-weight-bold">Draft saved</span> for %{job_title}
       feedback:
-        error_title: There was a problem submitting your feedback
-        error_body: Please make sure you have submitted an answer for both questions
-        inline_error: Please select an option
-        submitted_html: <span class="govuk-!-font-weight-bold">Feedback submitted</span> for %{job_title}
         success: Thank you for your feedback
       listing_updated: Listing updated for %{job_title}
       manage_jobs_html: Back to <a href="%{link}" class="govuk-link govuk-link--no-visited-state">manage jobs</a>
@@ -46,6 +42,12 @@ en:
     jobs:
       unable_to_publish_title: We were unable to publish this job
       unable_to_publish_body: Make sure that you have filled all mandatory fields
+    publishers:
+      job_statistics:
+        error_summary:
+          There was a problem submitting your feedback for ‘%{job_title}’
+        base_error:
+          Please make sure you have submitted an answer for both questions
     sign_in:
       unauthorised: You are not authorised to act on behalf of this school
       failure: An unexpected error occured. We have been notified.

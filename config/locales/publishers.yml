@@ -190,6 +190,9 @@ en:
         success: The job listing has been completed
         view_jobs: View your job listings
         what_happens_next: What happens next
+      statistics:
+        update:
+          success: Thank you for submitting your feedback for %{job_title}
 
       vacancy_publisher_feedbacks:
         new:
