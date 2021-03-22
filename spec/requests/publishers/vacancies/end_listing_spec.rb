@@ -61,7 +61,7 @@ RSpec.describe "End job listing early", type: :request do
       end
     end
 
-    context "when the commit is `Cancel`" do
+    context "when the commit param is `Cancel`" do
       let(:button) { I18n.t("buttons.cancel") }
 
       it "does not update expires_at, end_listing_reason, google index and redirects to the dashboard" do

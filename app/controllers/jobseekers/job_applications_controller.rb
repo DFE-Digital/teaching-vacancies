@@ -13,7 +13,8 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
   end
 
   def submit
-    return redirect_to expired_jobseekers_job_job_application_path(vacancy.id) unless vacancy.listed?
+    raise ActionController::RoutingError, "Cannot submit application for non-listed job" unless vacancy.listed?
+    raise ActionController::RoutingError, "Cannot submit non-draft application" unless job_application.draft?
 
     if params[:commit] == t("buttons.save_as_draft")
       redirect_to jobseekers_job_applications_path, success: t("messages.jobseekers.job_applications.saved")
