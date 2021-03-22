@@ -22,11 +22,6 @@ resource "aws_iam_policy" "route53_all" {
   policy = data.aws_iam_policy_document.route53_all.json
 }
 
-resource "aws_iam_user_policy_attachment" "route53_all" {
-  user       = data.aws_iam_user.deploy.user_name
-  policy_arn = aws_iam_policy.route53_all.arn
-}
-
 resource "aws_iam_role_policy_attachment" "route53_all" {
   role       = data.aws_iam_role.deployments.name
   policy_arn = aws_iam_policy.route53_all.arn
@@ -60,10 +55,6 @@ resource "aws_iam_policy" "route53_hosted_zones" {
   policy = data.aws_iam_policy_document.route53_hosted_zones.json
 }
 
-resource "aws_iam_user_policy_attachment" "route53_hosted_zones" {
-  user       = data.aws_iam_user.deploy.user_name
-  policy_arn = aws_iam_policy.route53_hosted_zones.arn
-}
 
 resource "aws_iam_role_policy_attachment" "route53_hosted_zones" {
   role       = data.aws_iam_role.deployments.name

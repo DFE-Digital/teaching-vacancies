@@ -34,11 +34,6 @@ resource "aws_iam_policy" "edit_terraform_state" {
   policy = data.aws_iam_policy_document.edit_terraform_state.json
 }
 
-resource "aws_iam_user_policy_attachment" "edit_terraform_state" {
-  user       = aws_iam_user.deploy.name
-  policy_arn = aws_iam_policy.edit_terraform_state.arn
-}
-
 # SSM
 
 data "aws_iam_policy_document" "read_ssm_parameters" {
@@ -51,11 +46,6 @@ data "aws_iam_policy_document" "read_ssm_parameters" {
 resource "aws_iam_policy" "read_ssm_parameters" {
   name   = "read-ssm-parameter"
   policy = data.aws_iam_policy_document.read_ssm_parameters.json
-}
-
-resource "aws_iam_user_policy_attachment" "read_ssm_parameters" {
-  user       = aws_iam_user.deploy.name
-  policy_arn = aws_iam_policy.read_ssm_parameters.arn
 }
 
 # Cloudwatch
@@ -88,11 +78,6 @@ resource "aws_iam_policy" "cloudwatch" {
   policy = data.aws_iam_policy_document.cloudwatch.json
 }
 
-resource "aws_iam_user_policy_attachment" "cloudwatch" {
-  user       = aws_iam_user.deploy.name
-  policy_arn = aws_iam_policy.cloudwatch.arn
-}
-
 # ACM
 
 data "aws_iam_policy_document" "acm" {
@@ -111,11 +96,6 @@ resource "aws_iam_policy" "acm" {
   policy = data.aws_iam_policy_document.acm.json
 }
 
-resource "aws_iam_user_policy_attachment" "acm" {
-  user       = aws_iam_user.deploy.name
-  policy_arn = aws_iam_policy.acm.arn
-}
-
 # Cloudfront
 
 data "aws_iam_policy_document" "cloudfront" {
@@ -128,11 +108,6 @@ data "aws_iam_policy_document" "cloudfront" {
 resource "aws_iam_policy" "cloudfront" {
   name   = "cloudfront"
   policy = data.aws_iam_policy_document.cloudfront.json
-}
-
-resource "aws_iam_user_policy_attachment" "cloudfront" {
-  user       = aws_iam_user.deploy.name
-  policy_arn = aws_iam_policy.cloudfront.arn
 }
 
 # DB backups in S3
@@ -155,11 +130,6 @@ data "aws_iam_policy_document" "db_backups_in_s3_fullaccess" {
 resource "aws_iam_policy" "db_backups_in_s3_fullaccess" {
   name   = "db_backups_in_s3_fullaccess"
   policy = data.aws_iam_policy_document.db_backups_in_s3_fullaccess.json
-}
-
-resource "aws_iam_user_policy_attachment" "db_backups_in_s3_fullaccess" {
-  user       = aws_iam_user.deploy.name
-  policy_arn = aws_iam_policy.db_backups_in_s3_fullaccess.arn
 }
 
 data "aws_iam_policy_document" "deny_sensitive_data_in_s3" {
@@ -214,9 +184,4 @@ data "aws_iam_policy_document" "offline_site_full_access" {
 resource "aws_iam_policy" "offline_site_full_access" {
   name   = "offline_site_full_access"
   policy = data.aws_iam_policy_document.offline_site_full_access.json
-}
-
-resource "aws_iam_user_policy_attachment" "offline_site_full_access" {
-  user       = aws_iam_user.deploy.name
-  policy_arn = aws_iam_policy.offline_site_full_access.arn
 }
