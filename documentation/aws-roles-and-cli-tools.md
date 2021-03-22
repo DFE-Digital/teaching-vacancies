@@ -36,6 +36,8 @@ To carry out more privileged operations, you will need to [switch to a role](htt
 - `BillingManager` can:
   - access invoices and other billing information
   - read all resources
+- `Deployments` can:
+  - deploy apps and resources
 - `ReadOnly` can:
   - read all resources
 - `SecretEditor` can:
