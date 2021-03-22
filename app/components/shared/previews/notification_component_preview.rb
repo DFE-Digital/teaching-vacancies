@@ -1,8 +1,8 @@
-class Shared::NotificationComponentPreview < ViewComponent::Preview
+class Shared::Previews::NotificationComponentPreview < ViewComponent::Preview
   layout "design_system"
 
   def self.component_name
-    "notification"
+    component_class.to_s.underscore.humanize.split("/").second.split.first
   end
 
   def self.component_class
@@ -10,7 +10,7 @@ class Shared::NotificationComponentPreview < ViewComponent::Preview
   end
 
   def self.form
-    Shared::NotificationComponentPreview::OptionsForm
+    Shared::Previews::NotificationComponentPreview::OptionsForm
   end
 
   def self.interactive_options
