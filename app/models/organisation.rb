@@ -17,4 +17,11 @@ class Organisation < ApplicationRecord
     ids = is_a?(School) ? [id] : [id] + schools.pluck(:id)
     Vacancy.in_organisation_ids(ids)
   end
+
+  def allowed_local_authority?
+    return true unless local_authority_code?
+    return true unless Rails.configuration.enforce_local_authority_allowlist
+
+    Rails.configuration.allowed_local_authorities.include?(local_authority_code)
+  end
 end
