@@ -2,16 +2,16 @@
 
 .timeline-component {
   background-color: govuk-colour('light-grey');
-  margin-bottom: $govuk-gutter;
-  padding: $govuk-gutter-half;
+  margin-bottom: govuk-spacing(5);
+  padding: govuk-spacing(6);
 
   @include govuk-media-query($until: tablet) {
-    margin-top: $govuk-gutter;
+    margin-top: govuk-spacing(5);
   }
 
-  ul.timeline-component__dates {
+  ul.timeline-component__items {
     list-style-type: none;
-    margin: 0 0 15px;
+    margin: 0;
     overflow: hidden;
     padding-left: 0;
     position: relative;
@@ -28,7 +28,7 @@
       }
     }
 
-    .timeline-component__date {
+    .timeline-component__item {
       margin-bottom: 10px;
       padding-left: 20px;
       position: relative;
@@ -42,7 +42,7 @@
         width: 5px;
       }
 
-      &__key {
+      .timeline-component__key {
         display: inline;
         line-height: 1.31579;
 
@@ -57,7 +57,7 @@
         }
       }
 
-      &__value {
+      .timeline-component__value {
         margin: 0;
       }
     }

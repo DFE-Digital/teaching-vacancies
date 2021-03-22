@@ -14,7 +14,7 @@ module PageObjects
         end
 
         section :timeline, ".timeline-component" do
-          elements :dates, ".timeline-component__dates"
+          elements :items, ".timeline-component__items"
         end
       end
     end
