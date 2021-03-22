@@ -47,6 +47,5 @@ section#job-details class="govuk-!-margin-bottom-5"
   - if @vacancy.documents.any?
     section#supporting-documents
       h3.govuk-heading-l.section-heading = t("jobs.supporting_documents")
-      ul.document-link-component
-        - @vacancy.documents.in_groups_of(1, false).each do |row|
-          = render Shared::DocumentLinkComponent.with_collection(row)
+      .grey-border-box--thin
+        = render DocumentComponent.with_collection(@vacancy.documents)
