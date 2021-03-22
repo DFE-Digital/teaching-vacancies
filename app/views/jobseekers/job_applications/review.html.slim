@@ -4,6 +4,11 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
+    / TODO: Confirm content
+    - unless vacancy.listed?
+      = govuk_notification_banner title: "Deadline passed" do
+        p.govuk-body The deadline for this job listing has passed.
+
     = form_for review_form, url: jobseekers_job_application_submit_path(job_application), method: :post do |f|
       = f.govuk_error_summary
 
@@ -28,5 +33,6 @@
       = f.govuk_check_boxes_fieldset :confirm_data_usage, multiple: false, legend: nil do
         = f.govuk_check_box :confirm_data_usage, 1, 0, multiple: false, link_errors: true, label: { text: "Confirm data usage" }
 
-      = f.govuk_submit t("buttons.submit_application")
-      = f.govuk_submit t("buttons.save_as_draft"), secondary: true, classes: "button-link"
+      - if vacancy.listed?
+        = f.govuk_submit t("buttons.submit_application") do
+          = f.govuk_submit t("buttons.save_as_draft"), secondary: true
