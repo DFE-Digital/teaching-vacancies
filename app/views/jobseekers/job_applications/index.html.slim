@@ -17,12 +17,13 @@
                 = tag.div(location(draft_application.vacancy.parent_organisation, job_location: draft_application.vacancy.job_location))
 
               - card.body do
-                = job_application_status_tag(draft_application.status)
+                = draft_application.vacancy.expires_at.future? ? job_application_status_tag(draft_application.status) : govuk_tag(text: "deadline passed", colour: "grey", classes: "govuk-!-margin-bottom-2")
                 = tag.div(card.labelled_item(t(".last_edited"), format_date(draft_application.updated_at.to_date) + I18n.t("jobs.time_at") + format_time(draft_application.updated_at)))
                 = tag.div(card.labelled_item(t(".closing_date"), OrganisationVacancyPresenter.new(draft_application.vacancy).application_deadline))
 
               - card.actions do
-                = tag.div(govuk_link_to(t(".continue_application"), jobseekers_job_application_review_path(draft_application)))
+                - if draft_application.vacancy.expires_at.future?
+                  = tag.div(govuk_link_to(t(".continue_application"), jobseekers_job_application_review_path(draft_application)))
                 = tag.div(govuk_link_to(t("buttons.delete"), jobseekers_job_application_confirm_destroy_path(draft_application)))
 
           - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).not_draft.each do |submitted_application|
