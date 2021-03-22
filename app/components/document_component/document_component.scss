@@ -1,0 +1,14 @@
+@import 'base_component';
+
+.document-component {
+  margin-bottom: govuk-spacing(2);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &__link {
+    margin-right: govuk-spacing(2);
+    word-wrap: break-word;
+  }
+}
