@@ -41,7 +41,9 @@
                 = tag.div(govuk_link_to(t(".view_application"), jobseekers_job_application_path(submitted_application)))
                 = tag.div(govuk_link_to(t(".withdraw"), "#"))
         - else
-          = render Shared::NotificationComponent.new(title: t(".no_job_applications"), body: t(".no_job_applications_body_html", link_to: govuk_link_to(t(".find_and_apply"), jobs_path)), variant: "empty", dismiss: false, background: true, icon: false)
+          = render EmptySectionComponent.new title: t(".no_job_applications") do
+            p.govuk-body class="govuk-!-margin-bottom-0" = t(".no_job_applications_body_html", link_to: govuk_link_to(t(".find_and_apply"), root_path))
+
 .govuk-grid-row
   .govuk-grid-column-full
     = render(Jobseekers::AccountSurveyLinkComponent.new(origin: url_for))
