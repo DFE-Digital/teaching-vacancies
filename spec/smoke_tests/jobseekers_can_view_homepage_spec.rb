@@ -25,11 +25,14 @@ RSpec.describe "Page availability", js: true, smoke_test: true do
       page.fill_in I18n.t("jobs.filters.keyword"), with: "Maths"
       page.click_on I18n.t("buttons.search")
 
-      expect(page).to have_content(I18n.t("subscriptions.link.text"))
+      if page.has_css?("#vacancies-stats-top")
+        expect(page).to have_content(I18n.t("subscriptions.link.text"))
+      else
+        expect(page).to have_content(I18n.t("subscriptions.link.no_search_results.link"))
+      end
 
-      vacancy_page = page.first(".view-vacancy-link")
-      unless vacancy_page.nil?
-        vacancy_page.click
+      if page.has_css?(".view-vacancy-link")
+        page.first(".view-vacancy-link").click
         expect(page).to have_content(I18n.t("jobs.job_summary"))
         expect(page.current_url).to include("https://#{smoke_test_domain}/jobs/")
       end
