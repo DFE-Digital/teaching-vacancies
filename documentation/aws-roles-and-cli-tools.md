@@ -205,6 +205,14 @@ List the S3 buckets
 aws-vault exec ReadOnly -- aws s3 ls
 ```
 
+## Rotate AWS credentials for AWS Vault
+
+[Rotate your AWS access keys](https://github.com/99designs/aws-vault/blob/master/USAGE.md#rotating-credentials) at least every 90 days with this command:
+
+```bash
+aws-vault rotate teaching-vacancies
+```
+
 ## Use the AWS CLI without AWS Vault
 
 In this example you will use your personal Access Key and Secret key in the `[teaching-vacancies]` profile
