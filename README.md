@@ -87,12 +87,15 @@ Non-secrets (eg: public URLs or feature flags) are stored in the repository in `
 Run the following command to fetch all the required environment variables for development and output to a shell environment file:
 
 ```
-aws-vault exec SecretEditor -- make -s local print-env > .env
+aws-vault exec ReadOnly -- make -s local print-env > .env
 ```
 
 To run the command above you need [AWS credentials](#aws-credentials-mfa-and-role-profiles).
 
 [Git secrets](/documentation/secrets-detection.md) offers an easy way to defend against accidentally publishing these secrets.
+
+For local development, you can use a [dotenv-rails environment override](https://github.com/bkeepers/dotenv#frequently-answered-questions):
+- create the file `.env.local`, with contents `DOMAIN=localhost:3000`
 
 ### Install dependencies
 
@@ -114,7 +117,13 @@ yarn
 bundle exec rails db:create db:schema:load
 ```
 
-If you have problems connecting with the database, edit `DATABASE_URL` variable in `.env`
+[/config/database.yml](./config/database.yml) sets the default for `DATABASE_URL` to `postgres://postgres@localhost:5432`, which should work without any additional configuration on a Mac
+
+If you set up your local Postgres with a custom user and password, such as in Ubuntu 20.04, set this in `.env.local`:
+```
+DATABASE_URL=postgres://mylocaluser:mylocalpassword@localhost:5432
+```
+
 
 ### Seeding the database
 

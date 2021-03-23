@@ -197,7 +197,7 @@ https://signin.aws.amazon.com/federation?Action=login&Issuer=aws-vault&Destinati
 
 Refresh the `.env` file
 ```bash
-aws-vault exec SecretEditor -- make -s local print-env > .env
+aws-vault exec ReadOnly -- make -s local print-env > .env
 ```
 
 List the S3 buckets
