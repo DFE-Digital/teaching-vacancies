@@ -94,6 +94,7 @@ en:
         page_title: Set up your Teaching Vacancies account
       form:
         schools_in: Schools in %{organisation} local authority
+        missing_schools_error: Select one or more schools to continue
       edit:
         description_1: >-
           Select or deselect schools from the list below to choose which schools to include in your account.
