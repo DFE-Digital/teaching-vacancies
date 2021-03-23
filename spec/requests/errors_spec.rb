@@ -23,10 +23,11 @@ RSpec.describe "Errors", type: :request do
   end
 
   describe "POST #csp_violation" do
+    let(:violation) { { "csp-report": { foo: "bar" } }.to_json }
     it "sends the error to Rollbar" do
-      expect(Rollbar).to receive(:error).with("CSP Violation", details: "foo=bar")
+      expect(Rollbar).to receive(:error).with("CSP Violation", details: violation)
 
-      post errors_csp_violation_path, params: { foo: "bar" }
+      post errors_csp_violation_path, params: violation
       expect(response).to have_http_status(:no_content)
     end
   end
