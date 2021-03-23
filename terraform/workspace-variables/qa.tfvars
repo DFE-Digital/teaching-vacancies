@@ -2,7 +2,7 @@
 region                      = "eu-west-2"
 environment                 = "qa"
 app_environment             = "qa"
-parameter_store_environment = "dev"
+parameter_store_environment = "qa"
 
 # CloudFront
 distribution_list = {
