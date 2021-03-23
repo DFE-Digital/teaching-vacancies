@@ -62,11 +62,8 @@ html.govuk-template.app-html-class lang="en"
             | This is a new service - #{govuk_link_to "your feedback", new_feedback_path} will help us to improve it.
 
       main#main-content role="main"
-        - flash.each do |style, message|
-          - next unless ApplicationController::FLASH_TYPES.include?(style.to_sym)
-          .govuk-main-wrapper__notification
-            .govuk-width-container
-              = render(Shared::NotificationComponent.new(body: message, variant: style))
+        - flash.each do |variant, message|
+          = render FlashComponent.new variant: variant, message: message
 
         = yield
 

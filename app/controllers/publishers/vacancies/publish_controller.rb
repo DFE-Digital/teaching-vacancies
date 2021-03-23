@@ -9,9 +9,7 @@ class Publishers::Vacancies::PublishController < Publishers::Vacancies::BaseCont
       reset_session_vacancy!
       redirect_to organisation_job_summary_path(@vacancy.id)
     else
-      redirect_to review_path_with_errors(@vacancy), warning: {
-        title: t("errors.jobs.unable_to_publish_title"), body: t("errors.jobs.unable_to_publish_body")
-      }
+      redirect_to review_path_with_errors(@vacancy), warning: t("errors.jobs.unable_to_publish")
     end
   end
 end

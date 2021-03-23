@@ -25,7 +25,7 @@ class Publishers::OmniauthCallbacksController < Devise::OmniauthCallbacksControl
     Rollbar.error(omniauth_error, strategy: failed_strategy.name)
     Rails.logger.error("DSI failure - strategy: #{failed_strategy.name}, reason: #{omniauth_error.inspect}")
 
-    redirect_to new_publisher_session_path, flash: { warning: t(".message") }
+    redirect_to new_publisher_session_path, warning: t(".message")
   end
 
   private

@@ -19,7 +19,7 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
     scenario "hiring staff can see notice of vacancies awaiting feedback" do
       visit organisation_path
 
-      within("div.govuk-notification--notice") do
+      within("div.flash-component--notice") do
         expect(page).to have_content("3 jobs")
       end
     end
@@ -33,7 +33,7 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
 
       submit_feedback_for(vacancy)
 
-      within("div.govuk-notification--notice") do
+      within("div.flash-component--notice") do
         expect(page).to have_content("2 jobs")
       end
     end

@@ -12,8 +12,9 @@ en:
       draft_saved_html: <span class="govuk-!-font-weight-bold">Draft saved</span> for %{job_title}
       feedback:
         success: Thank you for your feedback
-      listing_updated: Listing updated for %{job_title}
-      manage_jobs_html: Back to <a href="%{link}" class="govuk-link govuk-link--no-visited-state">manage jobs</a>
+      listing_updated_html: >-
+        <span class="govuk-!-font-weight-bold">Listing updated</span> for %{job_title}. Back to %{link_to}.
+      listing_updated_link_text: manage jobs
       multi_school_job_notification_html: >-
         This teaching role is at <span class="govuk-!-font-weight-bold">more than one school in the
         %{organisation_type}</span>. You can find out more in
@@ -40,8 +41,7 @@ en:
 
   errors:
     jobs:
-      unable_to_publish_title: We were unable to publish this job
-      unable_to_publish_body: Make sure that you have filled all mandatory fields
+      unable_to_publish: We were unable to publish this job. Make sure that you have filled all mandatory fields.
     publishers:
       job_statistics:
         error_summary:

@@ -106,7 +106,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         fill_in "publishers_job_listing_job_details_form[job_title]", with: "Assistant Head Teacher"
         click_on I18n.t("buttons.update_job")
 
-        expect(page.body).to include(I18n.t("messages.jobs.listing_updated", job_title: "Assistant Head Teacher"))
+        expect(current_path).to eq(edit_organisation_job_path(vacancy.id))
         expect(page).to have_content("Assistant Head Teacher")
       end
 
@@ -119,7 +119,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         fill_in "publishers_job_listing_job_details_form[job_title]", with: "Assistant Head Teacher"
         click_on I18n.t("buttons.update_job")
 
-        expect(page.body).to include(I18n.t("messages.jobs.listing_updated", job_title: "Assistant Head Teacher"))
+        expect(current_path).to eq(edit_organisation_job_path(vacancy.id))
         expect(page).to have_content("Assistant Head Teacher")
 
         visit job_path(vacancy.reload)
@@ -163,7 +163,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         fill_in "publishers_job_listing_pay_package_form[salary]", with: "Pay scale 1 to Pay scale 2"
         click_on I18n.t("buttons.update_job")
 
-        expect(page.body).to include(I18n.t("messages.jobs.listing_updated", job_title: vacancy.job_title))
+        expect(current_path).to eq(edit_organisation_job_path(vacancy.id))
         expect(page).to have_content("Pay scale 1 to Pay scale 2")
       end
 
@@ -227,7 +227,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         expiry_date = Date.current + 1.week
         edit_date("expires_on", expiry_date)
 
-        expect(page.body).to include(I18n.t("messages.jobs.listing_updated", job_title: vacancy.job_title))
+        expect(current_path).to eq(edit_organisation_job_path(vacancy.id))
         # Using String#strip to get rid of an initial space in e.g. " 1 July 2020" which caused test failures
         # due to a leading newline in the body ("\n1 July 2020").
         expect(page).to have_content(expiry_date.to_s.strip)
@@ -261,7 +261,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
             fill_in "publishers_job_listing_important_dates_form[expires_on(3i)]", with: vacancy.expires_on.day
             click_on I18n.t("buttons.update_job")
 
-            expect(page.body).to include(I18n.t("messages.jobs.listing_updated", job_title: vacancy.job_title))
+            expect(current_path).to eq(edit_organisation_job_path(vacancy.id))
             verify_all_vacancy_details(vacancy)
           end
         end
@@ -279,7 +279,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
             publish_on = Date.current + 1.week
             edit_date("publish_on", publish_on)
 
-            expect(page.body).to include(I18n.t("messages.jobs.listing_updated", job_title: vacancy.job_title))
+            expect(current_path).to eq(edit_organisation_job_path(vacancy.id))
 
             vacancy.publish_on = publish_on
             verify_all_vacancy_details(vacancy)
@@ -346,7 +346,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         fill_in "publishers_job_listing_applying_for_the_job_form[application_link]", with: vacancy.application_link
         click_on I18n.t("buttons.update_job")
 
-        expect(page.body).to include(I18n.t("messages.jobs.listing_updated", job_title: vacancy.job_title))
+        expect(current_path).to eq(edit_organisation_job_path(vacancy.id))
 
         verify_all_vacancy_details(vacancy)
       end
@@ -387,7 +387,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         fill_in "publishers_job_listing_job_summary_form[job_summary]", with: "A summary about the job."
         click_on I18n.t("buttons.update_job")
 
-        expect(page.body).to include(I18n.t("messages.jobs.listing_updated", job_title: vacancy.job_title))
+        expect(current_path).to eq(edit_organisation_job_path(vacancy.id))
         expect(page).to have_content("A summary about the job.")
       end
 
