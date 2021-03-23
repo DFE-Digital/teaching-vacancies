@@ -93,7 +93,7 @@ en:
           You can add or remove schools from your account at any point.
         page_title: Set up your Teaching Vacancies account
       form:
-        schools_in: Schools in %{organisation} local authority
+        schools_in: Schools in %{organisation}
         missing_schools_error: Select one or more schools to continue
       edit:
         description_1: >-

@@ -24,4 +24,8 @@ class Organisation < ApplicationRecord
 
     Rails.configuration.allowed_local_authorities.include?(local_authority_code)
   end
+
+  def name
+    @name ||= read_attribute(:name).concat(group_type == "local_authority" ? " local authority" : "")
+  end
 end
