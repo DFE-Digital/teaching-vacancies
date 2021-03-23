@@ -14,6 +14,8 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   before_action :set_up_show_form, only: %i[show]
   before_action :set_up_update_form, only: %i[update]
 
+  helper_method :current_publisher_preference
+
   def show
     case step
     when :job_location
@@ -84,9 +86,14 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   def set_school_options
     return unless step == :schools && current_organisation.is_a?(SchoolGroup)
 
-    @school_options = current_organisation.schools.not_closed.order(:name).map do |school|
+    schools = current_organisation.local_authority_code? ? current_publisher_preference.schools : current_organisation.schools
+    @school_options = schools.not_closed.order(:name).map do |school|
       OpenStruct.new({ id: school.id, name: school.name, address: full_address(school) })
     end
+  end
+
+  def current_publisher_preference
+    current_publisher.publisher_preferences.find_by(organisation: current_organisation)
   end
 
   def set_up_show_form
