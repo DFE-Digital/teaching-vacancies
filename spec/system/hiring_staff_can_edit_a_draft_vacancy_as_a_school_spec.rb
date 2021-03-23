@@ -162,9 +162,7 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
         fill_in "publishers_job_listing_applying_for_the_job_form[application_link]", with: "https://example.com"
         click_on I18n.t("buttons.update_job")
 
-        expect(page.body).to include(
-          I18n.t("messages.jobs.listing_updated", job_title: published_vacancy.job_title),
-        )
+        expect(current_path).to eq(edit_organisation_job_path(published_vacancy.id))
       end
     end
   end

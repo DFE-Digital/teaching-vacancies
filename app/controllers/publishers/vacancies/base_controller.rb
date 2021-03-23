@@ -67,10 +67,12 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
 
   def redirect_updated_job_with_message
     updated_job_path = @vacancy.published? ? edit_organisation_job_path(@vacancy.id) : organisation_job_review_path(@vacancy.id)
-    redirect_to updated_job_path, success: {
-      title: t("messages.jobs.listing_updated", job_title: @vacancy.job_title),
-      body: t("messages.jobs.manage_jobs_html", link: helpers.back_to_manage_jobs_link(@vacancy)),
-    }
+    redirect_to updated_job_path,
+                success: t("messages.jobs.listing_updated_html",
+                           job_title: @vacancy.job_title,
+                           link_to: helpers.govuk_link_to(t("messages.jobs.listing_updated_link_text"),
+                                                          helpers.back_to_manage_jobs_link(@vacancy),
+                                                          class: "govuk-link--no-visited-state"))
   end
 
   def remove_google_index(job)

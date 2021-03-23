@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   SUSPICIOUS_RECAPTCHA_THRESHOLD = 0.5
-  FLASH_TYPES = %i[success warning notice alert].freeze
 
   add_flash_types :success, :warning
 
