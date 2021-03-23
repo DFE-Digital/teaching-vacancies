@@ -89,11 +89,16 @@ RSpec.describe "Hiring staff can filter vacancies in their dashboard" do
   end
 
   context "when organisations is a local authority" do
+    let(:local_authorities_extra_schools) { { local_authority1.local_authority_code.to_i => [school3.urn] } }
+    let!(:school3) { create(:school) }
+
     before do
       login_publisher(publisher: publisher, organisation: local_authority1)
 
       SchoolGroupMembership.create(school: school1, school_group: local_authority1)
       SchoolGroupMembership.create(school: school2, school_group: local_authority1)
+
+      allow(Rails.configuration).to receive(:local_authorities_extra_schools).and_return(local_authorities_extra_schools)
     end
 
     it "shows filters and results of only the schools that publisher selects in preference page" do
@@ -117,11 +122,12 @@ RSpec.describe "Hiring staff can filter vacancies in their dashboard" do
       expect(page).to have_content(I18n.t("publishers.publisher_preferences.form.missing_schools_error"))
 
       uncheck school1.name
-      check school2.name
+      check school3.name
       click_on I18n.t("buttons.save_and_continue")
 
-      expect(page).to have_content("#{school2.name} (0)")
+      expect(page).to have_content("#{school3.name} (0)")
       expect(page).to_not have_content(school1.name)
+      expect(page).to_not have_content(school2.name)
       expect(page).to_not have_content(school1_draft_vacancy.job_title)
       expect(page).to_not have_content(school2_draft_vacancy.job_title)
     end

@@ -94,6 +94,8 @@ en:
         page_title: Set up your Teaching Vacancies account
       form:
         schools_in: Schools in %{organisation}
+        schools_out: Schools outside %{organisation}
+        schools_out_hint_html: If you need to list vacancies for any schools that are not on the list, please email %{email}
         missing_schools_error: Select one or more schools to continue
       edit:
         description_1: >-
