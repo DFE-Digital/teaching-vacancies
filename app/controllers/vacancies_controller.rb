@@ -1,4 +1,6 @@
 class VacanciesController < ApplicationController
+  helper_method :job_application
+
   def index
     set_map_display
     params[:location] = params[:location_facet] if params[:location_facet]
@@ -39,6 +41,14 @@ class VacanciesController < ApplicationController
     end
     params.permit(:keyword, :location, :radius, :subject, :buffer_radius, :jobs_sort,
                   job_role: [], job_roles: [], phases: [], working_patterns: [])
+  end
+
+  def job_application
+    @job_application ||= current_jobseeker&.job_applications&.find_by(vacancy_id: vacancy.id)
+  end
+
+  def vacancy
+    @vacancy ||= Vacancy.listed.friendly.find(id)
   end
 
   def old_vacancy_path?(vacancy)
