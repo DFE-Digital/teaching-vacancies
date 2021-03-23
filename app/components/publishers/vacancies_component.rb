@@ -48,9 +48,12 @@ class Publishers::VacanciesComponent < ViewComponent::Base
     @vacancies =
       if publisher_preference.organisations.any?
         Vacancy.in_organisation_ids(publisher_preference.organisations.map(&:id))
+      elsif organisation.group_type == "local_authority"
+        Vacancy.in_organisation_ids(publisher_preference.schools.map(&:id))
       else
         organisation.all_vacancies
       end
+
     @vacancies = vacancies.send(selected_scope)
                           .order(sort.column => sort.order)
                           .reject { |vacancy| vacancy.job_title.blank? }
@@ -62,7 +65,8 @@ class Publishers::VacanciesComponent < ViewComponent::Base
   end
 
   def set_organisation_options
-    @organisation_options = organisation.schools.not_closed.order(:name).map do |school|
+    schools = organisation.group_type == "local_authority" ? publisher_preference.schools : organisation.schools
+    @organisation_options = schools.not_closed.order(:name).map do |school|
       count = Vacancy.in_organisation_ids(school.id).send(selected_scope).count
       OpenStruct.new({ id: school.id, name: school.name, label: "#{school.name} (#{count})" })
     end

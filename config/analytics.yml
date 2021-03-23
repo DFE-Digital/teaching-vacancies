@@ -60,6 +60,12 @@ shared:
     - locked_at
     - created_at
     - updated_at
+  local_authority_publisher_schools:
+    - id
+    - publisher_preference_id
+    - school_id
+    - created_at
+    - updated_at
   organisations:
     - id
     - type

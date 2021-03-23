@@ -306,6 +306,8 @@ en:
       current_selected_filters: Selected filters
       remove_filter_hidden: Remove this filter
       return_to_results: Return to results
+    filters_component:
+      add_or_remove_schools: Add or remove schools
 
   stats:
     intro: >-

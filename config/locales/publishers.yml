@@ -50,24 +50,6 @@ en:
     organisations:
       aria_change_description: '%{organisation_type} description'
       aria_change_website: '%{organisation_type} website'
-      managed_organisations:
-        show:
-          hints:
-            select_organisations: You can change this later from your dashboard using the filters
-          labels:
-            select_organisations: Select which schools' job listings you would like to see
-            select_organisations: >-
-              Select which schools' job listings you would like to view
-          options:
-            all: All schools and trust head office
-            all_schools: All schools
-            school_group: Trust head office
-          page_title: Manage your view
-          panel:
-            title: Manage your view for %{organisation}
-            body: >-
-              You can now see job listings from all schools in your %{organisation_type}, or choose to see specific
-              schools' listings
       schools:
         index:
           contact_support: contact our support team
@@ -102,6 +84,22 @@ en:
             description: You must sign in to your Teaching Vacancies account to list a job.
             request_account_title: Request an account
             request_account_html: *request_account_html
+    publisher_preferences:
+      new:
+        description_1: >-
+          Choose which schools to include in your account. Once you have selected a school,
+          you will be able to post and edit jobs listings for that school.
+        description_2: >-
+          You can add or remove schools from your account at any point.
+        page_title: Set up your Teaching Vacancies account
+      form:
+        schools_in: Schools in %{organisation} local authority
+      edit:
+        description_1: >-
+          Select or deselect schools from the list below to choose which schools to include in your account.
+        description_2: >-
+          Once you have selected a school, you will be able to post and edit jobs listings for that school.
+        page_title: Add or remove schools from your account
     temp_login:
       check_your_email:
         check_spam_html: >-

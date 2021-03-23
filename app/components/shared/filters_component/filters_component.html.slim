@@ -6,6 +6,8 @@
         .moj-filter__heading-title
           h2.govuk-heading-s class=mobile_modifier("filters-component__heading-title") id=(options[:mobile_variant] ? "mobile-filters-component-button" : "")
             = filters[:title]
+          - if options[:publisher_preference]
+            = govuk_link_to t(".add_or_remove_schools"), edit_publisher_preference_path(options[:publisher_preference]), class: "govuk-link--no-visited-state"
           span.govuk-body.filters-component__heading-applied = applied_text
           button.govuk-link.govuk-link--no-visited-state.filters-component--show-mobile-open id="return-to-results"
             = t("shared.filter_group.return_to_results")
