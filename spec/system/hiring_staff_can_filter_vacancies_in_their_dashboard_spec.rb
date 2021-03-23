@@ -98,6 +98,10 @@ RSpec.describe "Hiring staff can filter vacancies in their dashboard" do
 
     it "shows filters and results of only the schools that publisher selects in preference page" do
       visit new_publisher_preference_path
+      click_on I18n.t("buttons.save_and_continue")
+
+      expect(page).to have_content(I18n.t("publishers.publisher_preferences.form.missing_schools_error"))
+
       check school1.name
       click_on I18n.t("buttons.save_and_continue")
 
@@ -107,6 +111,11 @@ RSpec.describe "Hiring staff can filter vacancies in their dashboard" do
       expect(page).to_not have_content(school2_draft_vacancy.job_title)
 
       click_on I18n.t("shared.filters_component.add_or_remove_schools")
+      uncheck school1.name
+      click_on I18n.t("buttons.save_and_continue")
+
+      expect(page).to have_content(I18n.t("publishers.publisher_preferences.form.missing_schools_error"))
+
       uncheck school1.name
       check school2.name
       click_on I18n.t("buttons.save_and_continue")
