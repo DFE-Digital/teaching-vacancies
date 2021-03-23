@@ -50,6 +50,11 @@ Make sure you have the following services configured and running on your develop
 * [PostgreSQL](https://www.postgresql.org)
 * [Redis](https://redis.io)
 
+### Redis
+You can check if Redis server is installed by - `redis-server`
+You can check if Redis client is installed by - `redis-cli -v`
+If after installation, the Redis service isn't running, you run the following `sudo service redis-server restart`
+
 
 ### ChromeDriver
 
