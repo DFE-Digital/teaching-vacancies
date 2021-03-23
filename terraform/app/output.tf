@@ -7,8 +7,3 @@ output "docker_tag" {
   value       = module.paas.docker_tag
   description = "Docker tag"
 }
-
-
-output "workspace" {
-  value = terraform.workspace
-}
