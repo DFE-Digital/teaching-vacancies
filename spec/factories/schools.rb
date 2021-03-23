@@ -35,7 +35,7 @@ FactoryBot.define do
     postcode { Faker::Address.postcode }
     town { Faker::Address.city.delete("'") }
     urn { Faker::Number.number(digits: 6) }
-    url { Faker::Internet.url }
+    url { Faker::Internet.url(host: "example.com") }
 
     trait :closed do
       establishment_status { "Closed" }
