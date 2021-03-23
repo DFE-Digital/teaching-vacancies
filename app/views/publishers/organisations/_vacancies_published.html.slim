@@ -14,4 +14,4 @@
         = tag.div(govuk_link_to(t("jobs.manage.copy_link_text"), vacancy.copy_path))
         = tag.div(govuk_link_to(t("jobs.manage.end_link_text"), organisation_job_end_listing_path(vacancy.id)))
 - else
-  = render(Shared::NotificationComponent.new(body: no_jobs_text, variant: "empty", links: nil, dismiss: false, background: true, icon: false))
+  = render(Shared::NotificationComponent.new(body: no_jobs_text, variant: "empty", dismiss: false, background: true, icon: false))

@@ -50,6 +50,8 @@ $govuk-image-url-function: frontend-image-url;
 @import 'application/publishers/share-url';
 @import 'application/publishers/statistics';
 
+@import 'design-system';
+
 body {
   .govuk-width-container {
     @include govuk-media-query($from: desktop) {

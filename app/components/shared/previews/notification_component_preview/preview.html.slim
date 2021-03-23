@@ -1,0 +1,17 @@
+= form_for @preview_form, url: preview_view_component_path("#{@preview.preview_name}/#{@example_name}"), html: { method: "get" } do |f|
+  .govuk-grid-column-three-quarters
+
+    = render "design_system/header", preview_name: @preview_name
+
+    - @preview_variants.each do |variant|
+      div class="govuk-!-margin-bottom-9"
+        h3.govuk-heading-m = t("component.#{@preview_name}.#{variant}.title")
+        p.govuk-body = t("component.#{@preview_name}.#{variant}.description")
+        = render(@preview_class.new(icon: @preview_form.icon, title: t("text.short"), body: t("text.medium"), variant: variant, background: @preview_form.background, dismiss: @preview_form.dismiss, links: [["/", "link"]]))
+
+        h3.govuk-heading-s = t("heading.code")
+        pre
+          code = "render(#{@preview_class.name}.new(\n\ttitle: '#{t('text.short')}',\n\tbody: '#{t('text.short')}',\n\tlinks: [['/url', 'link']]\n\tvariant: '#{variant}',\n\tbackground: #{@preview_form.background},\n\tdismiss: #{@preview_form.dismiss},\n\ticon: #{@preview_form.icon}\n))"
+
+    - if @preview_interactive_options
+      = render "design_system/option_controls", form: f
