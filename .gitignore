@@ -62,6 +62,8 @@ dotenv*
 !dotenv*.gpg
 **/**/cf-vars*.yml
 terraform/workspace-variables/my_app_env.yml
+.env.local
+# See https://github.com/bkeepers/dotenv#frequently-answered-questions for dotenv-rails env files and whether they should be in .gitignore
 
 # Certificates
 *.pem

@@ -197,12 +197,20 @@ https://signin.aws.amazon.com/federation?Action=login&Issuer=aws-vault&Destinati
 
 Refresh the `.env` file
 ```bash
-aws-vault exec SecretEditor -- make -s local print-env > .env
+aws-vault exec ReadOnly -- make -s local print-env > .env
 ```
 
 List the S3 buckets
 ```bash
 aws-vault exec ReadOnly -- aws s3 ls
+```
+
+## Rotate AWS credentials for AWS Vault
+
+[Rotate your AWS access keys](https://github.com/99designs/aws-vault/blob/master/USAGE.md#rotating-credentials) at least every 90 days with this command:
+
+```bash
+aws-vault rotate teaching-vacancies
 ```
 
 ## Use the AWS CLI without AWS Vault
