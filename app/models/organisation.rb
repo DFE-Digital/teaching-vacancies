@@ -26,7 +26,7 @@ class Organisation < ApplicationRecord
   end
 
   def name
-    @name ||= read_attribute(:name).concat(group_type == "local_authority" ? " local authority" : "")
+    @name ||= read_attribute(:name)&.concat(group_type == "local_authority" ? " local authority" : "")
   end
 
   def schools_outside_local_authority
