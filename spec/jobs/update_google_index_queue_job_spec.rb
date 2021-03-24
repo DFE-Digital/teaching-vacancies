@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe UpdateGoogleIndexQueueJob, type: :job do
+RSpec.describe UpdateGoogleIndexQueueJob do
   let(:url) { Faker::Internet.url }
   subject(:job) { described_class.perform_later(url) }
 

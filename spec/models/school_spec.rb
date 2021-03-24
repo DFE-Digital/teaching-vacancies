@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe School, type: :model do
+RSpec.describe School do
   it { expect(subject.attributes).to include("gias_data") }
   it { expect(described_class.columns_hash["gias_data"].type).to eq(:json) }
 

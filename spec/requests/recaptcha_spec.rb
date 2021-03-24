@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "General feedback can interface with recaptcha", type: :request, recaptcha: true do
+RSpec.describe "General feedback can interface with recaptcha", recaptcha: true do
   let(:feedback) { instance_double(Feedback).as_null_object }
   let(:feedback_form) { instance_double(GeneralFeedbackForm) }
 

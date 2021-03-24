@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "CORS", type: :request do
+RSpec.describe "CORS" do
   describe "/api/v1/location_suggestion/:location.json" do
     let(:location_query) { "buckingham palace" }
     let(:params) { { api_version: 1, location: location_query, format: "json" } }

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Jobseekers::JobApplicationMailer, type: :mailer do
+RSpec.describe Jobseekers::JobApplicationMailer do
   let(:jobseeker) { create(:jobseeker, email: email) }
   let(:email) { "test@email.com" }
   let(:organisation) { build(:school) }

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe SendEventToDataWarehouseJob, type: :job do
+RSpec.describe SendEventToDataWarehouseJob do
   let(:big_query) { double("Bigquery") }
   let(:dataset) { double("Dataset") }
   let(:table) { double("Table") }

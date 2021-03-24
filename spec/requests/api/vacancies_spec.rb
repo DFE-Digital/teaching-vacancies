@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Api::Vacancies", type: :request do
+RSpec.describe "Api::Vacancies" do
   let(:json) { JSON.parse(response.body, symbolize_names: true) }
   let(:school) { create(:school) }
 

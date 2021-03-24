@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "NqtJobAlerts", type: :request, recaptcha: true do
+RSpec.describe "NqtJobAlerts", recaptcha: true do
   let(:keywords) { "something" }
   let(:location) { "some place" }
   let(:email) { "test@gmail.com" }

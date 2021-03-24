@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe SendEntityImportedEventsToDataWarehouseJob, type: :job do
+RSpec.describe SendEntityImportedEventsToDataWarehouseJob do
   let!(:jobseeker) { create(:jobseeker) }
   let!(:publisher) { create(:publisher) }
   let(:big_query) { double("Bigquery") }

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Documents", type: :request do
+RSpec.describe "Documents" do
   let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
   let(:document) { vacancy.documents.first }
 

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe RemoveVacanciesThatExpiredYesterday, type: :job do
+RSpec.describe RemoveVacanciesThatExpiredYesterday do
   subject(:job) { described_class.perform_later }
 
   it "invokes Vacancy#remove_vacancies_that_expired_yesterday!" do

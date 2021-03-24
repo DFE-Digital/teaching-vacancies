@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Interests", type: :request do
+RSpec.describe "Interests" do
   let(:application_link) { "http://foo.com" }
   let(:vacancy) { create(:vacancy, application_link: application_link, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
 

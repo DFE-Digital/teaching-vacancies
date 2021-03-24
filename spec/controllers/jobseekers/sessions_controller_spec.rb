@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Jobseekers::SessionsController, type: :controller do
+RSpec.describe Jobseekers::SessionsController do
   context "unrelated session contents" do
     let(:unrelated_session_contents) { { keep_me: { foo: "bar" } }.stringify_keys }
 

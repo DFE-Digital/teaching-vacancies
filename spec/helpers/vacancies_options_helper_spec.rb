@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe VacanciesOptionsHelper, type: :helper do
+RSpec.describe VacanciesOptionsHelper do
   describe "#job_location_options" do
     context "when the organisation is a local authority" do
       let(:organisation) { create(:local_authority) }

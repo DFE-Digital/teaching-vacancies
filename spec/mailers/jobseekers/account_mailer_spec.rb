@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Jobseekers::AccountMailer, type: :mailer do
+RSpec.describe Jobseekers::AccountMailer do
   let(:jobseeker) { create(:jobseeker, email: email) }
   let(:email) { "test@email.com" }
   let(:token) { "some-special-token" }

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Vacancy, type: :model do
+RSpec.describe Vacancy do
   it { is_expected.to belong_to(:publisher_organisation).optional }
   it { is_expected.to belong_to(:publisher).optional }
   it { is_expected.to have_many(:documents) }

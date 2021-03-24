@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Organisation, type: :model do
+RSpec.describe Organisation do
   it { is_expected.to have_many(:publishers) }
   it { is_expected.to have_many(:organisation_publishers) }
   it { is_expected.to have_many(:vacancies) }

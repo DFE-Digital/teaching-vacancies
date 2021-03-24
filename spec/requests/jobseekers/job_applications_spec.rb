@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Job applications", type: :request do
+RSpec.describe "Job applications" do
   let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
   let(:jobseeker) { create(:jobseeker) }
 

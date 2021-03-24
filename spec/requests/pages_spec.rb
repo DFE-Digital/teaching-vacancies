@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Pages", type: :request do
+RSpec.describe "Pages" do
   HighVoltage.page_ids.each do |page|
     context "GET /pages/#{page}" do
       before { get page_path(page) }

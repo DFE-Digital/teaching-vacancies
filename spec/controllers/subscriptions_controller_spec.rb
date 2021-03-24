@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe SubscriptionsController, type: :controller, recaptcha: true do
+RSpec.describe SubscriptionsController, recaptcha: true do
   describe "#create" do
     let(:params) do
       {

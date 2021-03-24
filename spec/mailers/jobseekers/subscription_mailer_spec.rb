@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Jobseekers::SubscriptionMailer, type: :mailer do
+RSpec.describe Jobseekers::SubscriptionMailer do
   include ERB::Util
 
   let(:email) { "an@email.com" }

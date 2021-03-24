@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe VacanciesHelper, type: :helper do
+RSpec.describe VacanciesHelper do
   describe "#new_attributes" do
     let(:vacancy) { double("vacancy").as_null_object }
 

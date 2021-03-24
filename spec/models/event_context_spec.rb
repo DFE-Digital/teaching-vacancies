@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe EventContext, type: :model do
+RSpec.describe EventContext do
   subject { described_class.new }
 
   describe "#trigger_event" do

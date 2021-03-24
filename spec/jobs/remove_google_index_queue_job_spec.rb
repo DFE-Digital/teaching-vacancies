@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe RemoveGoogleIndexQueueJob, type: :job do
+RSpec.describe RemoveGoogleIndexQueueJob do
   let(:url) { Faker::Internet.url }
   subject(:job) { described_class.perform_later(url) }
 

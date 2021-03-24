@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Redirect to canonical domain", type: :request do
+RSpec.describe "Redirect to canonical domain" do
   let(:headers) { { "Host" => domain } }
 
   before do

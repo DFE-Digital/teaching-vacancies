@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe RemoveInvalidSubscriptionsJob, type: :job do
+RSpec.describe RemoveInvalidSubscriptionsJob do
   subject(:job) { described_class.perform_later }
 
   before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(disable_expensive_jobs_enabled?) }

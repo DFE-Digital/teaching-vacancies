@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Errors", type: :request do
+RSpec.describe "Errors" do
   describe "GET #not_found" do
     it "returns not found" do
       get not_found_path
