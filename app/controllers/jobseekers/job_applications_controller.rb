@@ -1,7 +1,7 @@
 class Jobseekers::JobApplicationsController < Jobseekers::BaseController
   before_action :redirect_if_job_application_exists, only: %i[new create]
 
-  helper_method :job_application, :review_form, :vacancy
+  helper_method :job_application, :review_form, :vacancy, :withdraw_form
 
   def new
     request_event.trigger(:vacancy_apply_clicked, vacancy_id: vacancy.id)
@@ -43,6 +43,27 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
                 success: t("messages.jobseekers.job_applications.draft_deleted", job_title: vacancy.job_title)
   end
 
+  def confirm_withdraw
+    raise ActionController::RoutingError, "Cannot withdraw non-submitted or non-shortlisted application" unless
+      job_application.status.in?(%w[shortlisted submitted])
+  end
+
+  def withdraw
+    raise ActionController::RoutingError, "Cannot withdraw non-submitted or non-shortlisted application" unless
+      job_application.status.in?(%w[shortlisted submitted])
+
+    if params[:commit] == t("buttons.cancel")
+      return redirect_to jobseekers_job_applications_path if URI(params[:origin]).path == jobseekers_job_applications_path
+
+      redirect_to jobseekers_job_application_path(job_application)
+    elsif withdraw_form.valid?
+      job_application.withdrawn!
+      redirect_to jobseekers_job_applications_path, success: t(".success", job_title: vacancy.job_title)
+    else
+      render :confirm_withdraw
+    end
+  end
+
   private
 
   def job_application
@@ -65,21 +86,31 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
   end
 
   def review_form
-    @review_form ||= Jobseekers::JobApplication::ReviewForm.new(review_form_attributes)
+    @review_form ||= Jobseekers::JobApplication::ReviewForm.new(form_attributes)
   end
 
-  def review_form_attributes
+  def withdraw_form
+    @withdraw_form ||= Jobseekers::JobApplication::WithdrawForm.new(form_attributes)
+  end
+
+  def form_attributes
     case action_name
-    when "review"
+    when "review", "confirm_withdrawn"
       {}
     when "submit"
       review_form_params
+    when "withdraw"
+      withdraw_form_params
     end
   end
 
   def review_form_params
     params.require(:jobseekers_job_application_review_form).permit(:confirm_data_accurate, :confirm_data_usage)
           .merge(completed_steps: job_application.completed_steps)
+  end
+
+  def withdraw_form_params
+    (params[:jobseekers_job_application_withdraw_form] || params).permit(:withdraw_reason)
   end
 
   def vacancy

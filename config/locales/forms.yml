@@ -50,6 +50,7 @@ en:
     update_password: Update password
     upload_files: Upload files
     view_account: View your account
+    withdraw_application: Withdraw application
 
   helpers:
     hint:
@@ -297,6 +298,12 @@ en:
           on_track: I'm on track to receive my QTS
           "yes": "Yes"
         qualified_teacher_status_year: Year QTS was awarded
+      jobseekers_job_application_withdraw_form:
+        # TODO: Update these once confirmed
+        withdraw_reason_options:
+          another_role: I have found another role
+          changed_mind: I have changed my mind
+          other: Some other reason
       jobseekers_job_application_details_employment_history_form:
         current_role_options:
           "no": "No"
@@ -439,6 +446,8 @@ en:
       jobseekers_job_application_professional_status_form:
         statutory_induction_complete: Have you completed your statutory induction year?
         qualified_teacher_status: Do you have qualified teacher status (QTS)?
+      jobseekers_job_application_withdraw_form:
+        withdraw_reason: Why would you like to withdraw your application?
 
       jobseekers_subscription_form:
         frequency: When do you want to receive alerts?

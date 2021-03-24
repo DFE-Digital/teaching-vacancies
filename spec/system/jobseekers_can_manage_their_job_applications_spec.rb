@@ -60,11 +60,19 @@ RSpec.describe "Jobseekers can manage their job applications" do
         end
 
         it "can delete a draft application" do
-          # TODO: Do this when delete draft application functionality implemented
+          job_applications_page
+            .cards(text: draft_job_application.vacancy.job_title).first.actions
+            .links(text: I18n.t("buttons.delete")).first.click
+
+          expect(current_path).to eq(jobseekers_job_application_confirm_destroy_path(draft_job_application))
         end
 
         it "can withdraw a submitted application" do
-          # TODO: Do this when withdraw submitted application functionality implemented
+          job_applications_page
+            .cards(text: submitted_job_application.vacancy.job_title).first.actions
+            .links(text: I18n.t("jobseekers.job_applications.index.withdraw")).first.click
+
+          expect(current_path).to eq(jobseekers_job_application_confirm_withdraw_path(submitted_job_application))
         end
       end
     end
