@@ -1,0 +1,12 @@
+@import 'base_component';
+
+.empty-section-component {
+  @include govuk-font(19);
+  @include govuk-text-colour;
+  @include govuk-responsive-padding(5);
+
+  background-color: rgba($color: govuk-colour('light-grey'), $alpha: 0.5);
+  border: 5px dashed $govuk-border-colour;
+  margin-bottom: govuk-spacing(5);
+  margin-top: govuk-spacing(2);
+}
