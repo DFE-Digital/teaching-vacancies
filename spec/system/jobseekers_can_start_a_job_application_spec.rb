@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Jobseekers can start a job application" do
+RSpec.describe "Jobseekers can start or continue a job application" do
   let(:jobseeker) { build_stubbed(:jobseeker) }
   let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: school }]) }
   let(:school) { create(:school) }
@@ -22,7 +22,7 @@ RSpec.describe "Jobseekers can start a job application" do
         context "when the jobseeker is signed in" do
           before { login_as(jobseeker, scope: :jobseeker) }
 
-          context "when clicking apply on the job page" do
+          context "when clicking 'apply' on the job page" do
             before { click_on I18n.t("jobseekers.job_applications.banner_links.apply") }
 
             it "starts a job application" do
@@ -37,7 +37,7 @@ RSpec.describe "Jobseekers can start a job application" do
         end
 
         context "when the jobseeker is not signed in" do
-          context "when clicking apply on the job page" do
+          context "when clicking 'apply' on the job page" do
             before { click_on I18n.t("jobseekers.job_applications.banner_links.apply") }
 
             it "starts a job application after signing in" do
@@ -57,7 +57,7 @@ RSpec.describe "Jobseekers can start a job application" do
       end
 
       context "when the jobseeker does not have an account" do
-        context "when clicking apply on the job page" do
+        context "when clicking 'apply' on the job page" do
           before { click_on I18n.t("jobseekers.job_applications.banner_links.apply") }
 
           it "starts a job application after signing up" do
@@ -79,10 +79,10 @@ RSpec.describe "Jobseekers can start a job application" do
     end
 
     context "when the jobseeker has a draft application for the job" do
-      context "when clicking apply on the job page" do
-        let!(:jobseeker) { create(:jobseeker) }
-        let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+      let!(:jobseeker) { create(:jobseeker) }
+      let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
+      context "when clicking 'apply' on the job page" do
         before do
           login_as(jobseeker, scope: :jobseeker)
           click_on I18n.t("jobseekers.job_applications.banner_links.apply")
@@ -96,10 +96,23 @@ RSpec.describe "Jobseekers can start a job application" do
                                                link: jobseekers_job_application_review_path(job_application))))
         end
       end
+
+      context "when clicking 'continue application' on the job page" do
+        before do
+          login_as(jobseeker, scope: :jobseeker)
+          visit job_path(vacancy)
+          click_on I18n.t("jobseekers.job_applications.banner_links.draft")
+        end
+
+        it "redirects to the job application review page" do
+          expect(current_path).to eq(jobseekers_job_application_review_path(job_application))
+          expect(page).to have_content(I18n.t("jobseekers.job_applications.review.heading"))
+        end
+      end
     end
 
     context "when the jobseeker has a submitted application for the job" do
-      context "when clicking apply on the job page" do
+      context "when clicking 'apply' on the job page" do
         let!(:jobseeker) { create(:jobseeker) }
         let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 

@@ -188,7 +188,6 @@ en:
       remaining: '%{days_remaining} days remaining to apply'
       today: Deadline is today
       tomorrow: Deadline is tomorrow
-    expected_start: Expected start date
     publication_date: Date job will be listed
     starts_asap: As soon as possible
     start_on: Date job starts
