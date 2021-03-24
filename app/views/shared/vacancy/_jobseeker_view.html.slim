@@ -18,7 +18,7 @@
       - if JobseekerApplicationsFeature.enabled? && @vacancy.apply_through_teaching_vacancies == "yes" && @vacancy.expires_at.future?
         .govuk-grid-column-one-third
           - if defined?(job_application) && ["withdrawn", nil].exclude?(job_application&.status)
-            - if job_application.status == "draft"
+            - if job_application.draft?
               = render BannerButtonComponent.new text: t("jobseekers.job_applications.banner_links.draft"),
                 href: jobseekers_job_application_path(job_application),
                 icon: "green-tick"
