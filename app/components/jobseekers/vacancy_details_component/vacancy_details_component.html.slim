@@ -47,5 +47,6 @@ section#job-details class="govuk-!-margin-bottom-5"
   - if @vacancy.documents.any?
     section#supporting-documents
       h3.govuk-heading-l.section-heading = t("jobs.supporting_documents")
+      p.govuk-body = t("jobs.supporting_documents_accessibility")
       .grey-border-box--thin
         = render DocumentComponent.with_collection(@vacancy.documents)

@@ -202,6 +202,7 @@ en:
     experience: Essential skills and experience
 
     supporting_documents: Supporting documents
+    supporting_documents_accessibility: If you need these documents in an accessible format, please contact the school.
     no_files_message: No files selected
     no_supporting_documents: No documents uploaded
     file_delete_error_message: An error occurred while removing %{filename}
