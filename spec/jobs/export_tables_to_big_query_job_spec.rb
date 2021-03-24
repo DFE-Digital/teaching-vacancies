@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ExportTablesToBigQueryJob, type: :job do
+RSpec.describe ExportTablesToBigQueryJob do
   subject(:job) { described_class.perform_later }
 
   before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(disable_expensive_jobs_enabled?) }

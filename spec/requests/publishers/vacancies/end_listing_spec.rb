@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "End job listing early", type: :request do
+RSpec.describe "End job listing early" do
   let(:organisation) { build(:school) }
   let(:vacancy) { create(:vacancy, :published, expires_at: 1.week.from_now, organisation_vacancies_attributes: [{ organisation: organisation }]) }
   let(:publisher) { create(:publisher) }

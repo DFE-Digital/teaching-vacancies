@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Saved jobs", type: :request do
+RSpec.describe "Saved jobs" do
   let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
   let(:jobseeker) { create(:jobseeker) }
 

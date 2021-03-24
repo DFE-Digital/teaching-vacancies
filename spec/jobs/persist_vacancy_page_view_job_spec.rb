@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe PersistVacancyPageViewJob, type: :job do
+RSpec.describe PersistVacancyPageViewJob do
   subject(:job) { described_class.perform_later(vacancy.id) }
 
   let(:vacancy) { create(:vacancy, total_pageviews: 99) }

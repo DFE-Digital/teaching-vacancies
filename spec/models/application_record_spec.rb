@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ApplicationRecord, type: :model do
+RSpec.describe ApplicationRecord do
   describe "#event_data" do
     context "when model is included in analytics.yml and has fields to anonymise" do
       let(:model) { build(:publisher) }

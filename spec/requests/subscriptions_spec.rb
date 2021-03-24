@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Subscriptions", type: :request do
+RSpec.describe "Subscriptions" do
   let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
 
   describe "GET #new" do

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe SendDailyAlertEmailJob, type: :job do
+RSpec.describe SendDailyAlertEmailJob do
   subject(:job) { described_class.perform_later }
 
   let(:search_criteria) do

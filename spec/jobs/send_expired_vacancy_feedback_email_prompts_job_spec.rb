@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe SendExpiredVacancyFeedbackEmailJob, type: :job do
+RSpec.describe SendExpiredVacancyFeedbackEmailJob do
   subject(:job) { described_class.perform_later }
   let(:mail) { double("Mail::Message", deliver_later: true) }
 

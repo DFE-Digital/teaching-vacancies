@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe LocationPolygon, type: :model do
+RSpec.describe LocationPolygon do
   before do
     stub_const("ALL_IMPORTED_LOCATIONS", all_imported_locations)
     stub_const("MAPPED_LOCATIONS", mapped_locations)

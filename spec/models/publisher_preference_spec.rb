@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe PublisherPreference, type: :model do
+RSpec.describe PublisherPreference do
   it { is_expected.to belong_to(:publisher) }
   it { is_expected.to belong_to(:organisation) }
   it { is_expected.to have_many(:organisation_publisher_preferences) }

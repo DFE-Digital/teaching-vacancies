@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe EmergencyLoginKey, type: :model do
+RSpec.describe EmergencyLoginKey do
   it { is_expected.to belong_to(:publisher) }
 
   describe "validations" do

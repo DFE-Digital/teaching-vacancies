@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Vacancies", type: :request do
+RSpec.describe "Vacancies" do
   describe "GET #index" do
     it "sets headers robots are asked to index but not to follow" do
       get jobs_path

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ApplicationHelper, type: :helper do
+RSpec.describe ApplicationHelper do
   describe "#sanitize" do
     it "it sanitises the text" do
       html = "<p> a paragraph <a href='link'>with a link</a></p><br>"

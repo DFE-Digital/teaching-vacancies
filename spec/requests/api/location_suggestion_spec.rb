@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Api::LocationSuggestion", type: :request do
+RSpec.describe "Api::LocationSuggestion" do
   let(:json) { JSON.parse(response.body, symbolize_names: true) }
   let(:location) { "pla" }
 

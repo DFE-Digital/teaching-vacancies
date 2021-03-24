@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe RemoveStaleVacanciesJob, type: :job do
+RSpec.describe RemoveStaleVacanciesJob do
   subject(:job) { described_class.perform_later }
 
   it "deletes all vacancies without a job title" do

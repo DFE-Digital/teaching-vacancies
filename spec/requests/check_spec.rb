@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Check endpoint", type: :request do
+RSpec.describe "Check endpoint" do
   it "returns a 404 for html" do
     get "/check"
 

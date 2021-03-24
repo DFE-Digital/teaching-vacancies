@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "CookiesPreferences", type: :request do
+RSpec.describe "CookiesPreferences" do
   describe "GET #new" do
     it "returns success" do
       get cookies_preferences_path
