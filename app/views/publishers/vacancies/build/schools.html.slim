@@ -16,6 +16,11 @@
         = render "publishers/vacancies/vacancy_form_partials/hidden_state_input", f: f
 
         = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_schools_form.organisation_ids") } do
+          - if current_organisation.local_authority_code?
+            span.govuk-hint = t("helpers.hint.publishers_job_listing_schools_form.edit_schools")
+            span.govuk-hint = govuk_link_to t("helpers.hint.publishers_job_listing_schools_form.add_school"),
+                                            edit_publisher_preference_path(current_publisher_preference), class: "govuk-link--no-visited-state"
+
           = render Shared::SearchableCollectionComponent.new(form: f,
             threshold: 10,
             attribute_name: :organisation_ids,

@@ -186,6 +186,9 @@ en:
         salary: >-
           Enter the annual salary or salary range, and/or pay scale range.
           Where relevant, state if the salary is full-time equivalent
+      publishers_job_listing_schools_form:
+        add_school: Add a school to your account
+        edit_schools: "Can't see the school you are looking for?"
 
     label:
       general_feedback_form:

@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Creating a vacancy" do
   let(:publisher) { create(:publisher) }
+  let(:publisher_preference) { create(:publisher_preference, publisher: publisher, organisation: school_group) }
   let(:school_group) { create(:local_authority) }
   let(:school1) { create(:school, name: "First school") }
   let(:school2) { create(:school, name: "Second school") }
@@ -9,8 +10,10 @@ RSpec.describe "Creating a vacancy" do
 
   before do
     login_publisher(publisher: publisher, organisation: school_group)
-    SchoolGroupMembership.find_or_create_by(school_id: school1.id, school_group_id: school_group.id)
-    SchoolGroupMembership.find_or_create_by(school_id: school2.id, school_group_id: school_group.id)
+    SchoolGroupMembership.create(school: school1, school_group: school_group)
+    SchoolGroupMembership.create(school: school2, school_group: school_group)
+    LocalAuthorityPublisherSchool.create(school: school1, publisher_preference: publisher_preference)
+    LocalAuthorityPublisherSchool.create(school: school2, publisher_preference: publisher_preference)
     allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference))
   end
 
