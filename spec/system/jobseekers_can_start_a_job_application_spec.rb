@@ -7,10 +7,7 @@ RSpec.describe "Jobseekers can start or continue a job application" do
   let(:created_job_application) { JobApplication.first }
   let(:new_job_application_page) { PageObjects::Jobseekers::JobApplications::New.new }
 
-  before do
-    allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(jobseeker_applications_enabled?)
-    visit job_path(vacancy)
-  end
+  before { allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(jobseeker_applications_enabled?) }
 
   context "when JobseekerApplicationsFeature is enabled" do
     let(:jobseeker_applications_enabled?) { true }
@@ -19,26 +16,29 @@ RSpec.describe "Jobseekers can start or continue a job application" do
       context "when the jobseeker has an account" do
         let!(:jobseeker) { create(:jobseeker) }
 
-        context "when the jobseeker is signed in" do
-          before { login_as(jobseeker, scope: :jobseeker) }
+        context "when the jobseeker is signed in and clicks 'apply' on the job page" do
+          before do
+            login_as(jobseeker, scope: :jobseeker)
+            visit job_path(vacancy)
+            click_on I18n.t("jobseekers.job_applications.banner_links.apply")
+          end
 
-          context "when clicking 'apply' on the job page" do
-            before { click_on I18n.t("jobseekers.job_applications.banner_links.apply") }
+          it "starts a job application" do
+            expect(current_path).to eq(new_jobseekers_job_job_application_path(vacancy.id))
+            expect(new_job_application_page.caption).to have_content(vacancy.job_title)
 
-            it "starts a job application" do
-              expect(current_path).to eq(new_jobseekers_job_job_application_path(vacancy.id))
-              expect(new_job_application_page.caption).to have_content(vacancy.job_title)
+            expect { new_job_application_page.start_application.click }.to change { JobApplication.count }.by(1)
 
-              expect { new_job_application_page.start_application.click }.to change { JobApplication.count }.by(1)
-
-              expect(current_path).to eq(jobseekers_job_application_build_path(created_job_application, :personal_details))
-            end
+            expect(current_path).to eq(jobseekers_job_application_build_path(created_job_application, :personal_details))
           end
         end
 
         context "when the jobseeker is not signed in" do
           context "when clicking 'apply' on the job page" do
-            before { click_on I18n.t("jobseekers.job_applications.banner_links.apply") }
+            before do
+              visit job_path(vacancy)
+              click_on I18n.t("jobseekers.job_applications.banner_links.apply")
+            end
 
             it "starts a job application after signing in" do
               expect(current_path).not_to eq(new_jobseekers_job_job_application_path(vacancy.id))
@@ -58,7 +58,10 @@ RSpec.describe "Jobseekers can start or continue a job application" do
 
       context "when the jobseeker does not have an account" do
         context "when clicking 'apply' on the job page" do
-          before { click_on I18n.t("jobseekers.job_applications.banner_links.apply") }
+          before do
+            visit job_path(vacancy)
+            click_on I18n.t("jobseekers.job_applications.banner_links.apply")
+          end
 
           it "starts a job application after signing up" do
             expect(current_path).not_to eq(new_jobseekers_job_job_application_path(vacancy.id))
@@ -82,8 +85,22 @@ RSpec.describe "Jobseekers can start or continue a job application" do
       let!(:jobseeker) { create(:jobseeker) }
       let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
-      context "when clicking 'apply' on the job page" do
+      context "when the jobseeker is signed in and clicks 'continue application' on the job page" do
         before do
+          login_as(jobseeker, scope: :jobseeker)
+          visit job_path(vacancy)
+          click_on I18n.t("jobseekers.job_applications.banner_links.draft")
+        end
+
+        it "redirects to the job application review page" do
+          expect(current_path).to eq(jobseekers_job_application_review_path(job_application))
+          expect(page).to have_content(I18n.t("jobseekers.job_applications.review.heading"))
+        end
+      end
+
+      context "when a jobseeker clicks 'apply' on a job page that was loaded before they signed in" do
+        before do
+          visit job_path(vacancy)
           login_as(jobseeker, scope: :jobseeker)
           click_on I18n.t("jobseekers.job_applications.banner_links.apply")
         end
@@ -96,27 +113,27 @@ RSpec.describe "Jobseekers can start or continue a job application" do
                                                link: jobseekers_job_application_review_path(job_application))))
         end
       end
-
-      context "when clicking 'continue application' on the job page" do
-        before do
-          login_as(jobseeker, scope: :jobseeker)
-          visit job_path(vacancy)
-          click_on I18n.t("jobseekers.job_applications.banner_links.draft")
-        end
-
-        it "redirects to the job application review page" do
-          expect(current_path).to eq(jobseekers_job_application_review_path(job_application))
-          expect(page).to have_content(I18n.t("jobseekers.job_applications.review.heading"))
-        end
-      end
     end
 
     context "when the jobseeker has a submitted application for the job" do
-      context "when clicking 'apply' on the job page" do
-        let!(:jobseeker) { create(:jobseeker) }
-        let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+      let!(:jobseeker) { create(:jobseeker) }
+      let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
+      context "when the jobseeker is signed in and clicks 'view application' on the job page" do
         before do
+          login_as(jobseeker, scope: :jobseeker)
+          visit job_path(vacancy)
+          click_on I18n.t("jobseekers.job_applications.banner_links.submitted")
+        end
+
+        it "redirects to the job application show page" do
+          expect(current_path).to eq(jobseekers_job_application_path(job_application))
+        end
+      end
+
+      context "when a jobseeker clicks 'apply' on a job page that was loaded before they signed in" do
+        before do
+          visit job_path(vacancy)
           login_as(jobseeker, scope: :jobseeker)
           click_on I18n.t("jobseekers.job_applications.banner_links.apply")
         end
