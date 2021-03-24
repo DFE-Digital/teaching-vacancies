@@ -33,7 +33,9 @@ class ErrorsController < ApplicationController
   end
 
   def csp_violation
-    Rollbar.error("CSP Violation", details: request.raw_post)
+    # Ignore spurious CSP violations from misbehaving browser plugins
+    Rollbar.error("CSP Violation", details: request.raw_post) if valid_csp_violation?(request.raw_post)
+
     head :no_content
   end
 
@@ -44,5 +46,18 @@ class ErrorsController < ApplicationController
     respond_to do |format|
       format.html { render status: :unauthorized }
     end
+  end
+
+  private
+
+  def valid_csp_violation?(csp_violation)
+    csp_details = JSON.parse(csp_violation)["csp-report"]
+
+    # Misbehaving browser plugin(s)
+    return false if csp_details["document-uri"] == "about"
+    # Facebook in-app browser injecting its own scripts
+    return false if csp_details["blocked-uri"]&.start_with?("https://connect.facebook.net")
+
+    true
   end
 end
