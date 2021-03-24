@@ -27,6 +27,10 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
     end
   end
 
+  def show
+    raise ActionController::RoutingError, "Cannot view draft application" if job_application.draft?
+  end
+
   def confirm_destroy
     raise ActionController::RoutingError, "Cannot delete non-draft application" unless job_application.draft?
   end

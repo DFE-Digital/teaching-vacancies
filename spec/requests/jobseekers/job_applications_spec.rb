@@ -131,6 +131,24 @@ RSpec.describe "Job applications", type: :request do
     end
   end
 
+  describe "GET #show" do
+    context "when the application is not a draft" do
+      let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+
+      it "shows the application page" do
+        expect(get(jobseekers_job_application_path(job_application.id))).to render_template(:show)
+      end
+    end
+
+    context "when the application is a draft" do
+      let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+
+      it "raises an error" do
+        expect { get(jobseekers_job_application_path(job_application.id)) }.to raise_error(ActionController::RoutingError, /draft/)
+      end
+    end
+  end
+
   describe "GET #confirm_destroy" do
     context "when the application is a draft" do
       let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
