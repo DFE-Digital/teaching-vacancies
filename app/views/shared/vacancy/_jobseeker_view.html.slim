@@ -17,15 +17,15 @@
     .govuk-grid-row
       - if JobseekerApplicationsFeature.enabled? && @vacancy.apply_through_teaching_vacancies == "yes" && @vacancy.expires_at.future?
         .govuk-grid-column-one-third
-          - case job_application&.status
-          - when "submitted"
-            = render BannerButtonComponent.new text: t("jobseekers.job_applications.banner_links.submitted"),
-              href: jobseekers_job_application_path(job_application),
-              icon: "green-tick"
-          - when "draft"
-            = render BannerButtonComponent.new text: t("jobseekers.job_applications.banner_links.draft"),
-              href: jobseekers_job_application_path(job_application),
-              icon: "green-tick"
+          - if defined?(job_application) && ["withdrawn", nil].exclude?(job_application&.status)
+            - if job_application.status == "draft"
+              = render BannerButtonComponent.new text: t("jobseekers.job_applications.banner_links.draft"),
+                href: jobseekers_job_application_path(job_application),
+                icon: "green-tick"
+            - else
+              = render BannerButtonComponent.new text: t("jobseekers.job_applications.banner_links.submitted"),
+                href: jobseekers_job_application_path(job_application),
+                icon: "green-tick"
           - else
             = render BannerButtonComponent.new text: t("jobseekers.job_applications.banner_links.apply"),
               href: new_jobseekers_job_job_application_path(@vacancy.id),
@@ -38,7 +38,7 @@
           icon: "alert-blue",
           params: { search_criteria: @devised_job_alert_search_criteria, origin: request.original_fullpath }
 
-      - unless defined?(job_application) && job_application
+      - unless defined?(job_application) && job_application.present?
         = render BannerButtonComponent.new text: t("jobseekers.saved_jobs.#{@saved_job.present? ? 'saved' : 'save'}"),
           href: @saved_job.present? ? jobseekers_saved_job_path(@vacancy.id, @saved_job) : new_jobseekers_saved_job_path(@vacancy.id),
           icon: @saved_job.present? ? "saved" : "save",
