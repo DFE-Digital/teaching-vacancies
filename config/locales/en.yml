@@ -112,9 +112,6 @@ en:
   error_pages:
     invalid_recaptcha:
       email_subject: Invalid recaptcha - %{form}
-      text_html: >-
-        We have not been able to verify that you are a human, rather than a robot. We have therefore temporarily stopped you
-        from submitting the form. To fix this problem and submit the form, please email %{mail_to}.
       title: Sorry, you cannot submit this form right now
     not_found: Page not found.
     server_error: Sorry, there’s a technical issue at our end
