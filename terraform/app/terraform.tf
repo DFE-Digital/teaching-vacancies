@@ -21,8 +21,6 @@ provider "statuscake" {
   apikey   = local.infra_secrets.statuscake_apikey
 }
 
-provider "template" {}
-
 /*
 Store infrastructure state in a remote store (instead of local machine):
 https://www.terraform.io/docs/state/purpose.html

@@ -8,17 +8,11 @@ resource "aws_sns_topic" "cloudwatch_alerts" {
 resource "aws_sns_topic_policy" "sns_cloudwatch_alerts" {
   arn = aws_sns_topic.cloudwatch_alerts.arn
 
-  policy = data.template_file.sns_cloudwatch_alerts_policy.rendered
-}
-
-data "template_file" "sns_cloudwatch_alerts_policy" {
-  template = file("${path.module}/../../policies/sns-policy.json")
-
-  vars = {
+  policy = templatefile("${path.module}/../../policies/sns-policy.json", {
     policy_id      = "${var.service_name}-${var.environment}-cloudwatch-alerts-policy"
     sns_arn        = aws_sns_topic.cloudwatch_alerts.arn
     aws_account_id = data.aws_caller_identity.current.account_id
-  }
+  })
 }
 
 resource "aws_kms_key" "cloudwatch_lambda" {
@@ -42,21 +36,13 @@ resource "aws_iam_role" "slack_lambda_role" {
   )
 }
 
-data "template_file" "slack_lambda_policy" {
-  template = file(
-    "${path.module}/../../policies/cloudwatch-slack-lambda-policy.json",
-  )
-
-  vars = {
+resource "aws_iam_role_policy" "slack_lambda_policy" {
+  name = "${var.service_name}-${var.environment}-slack-lambda-policy"
+  role = aws_iam_role.slack_lambda_role.id
+  policy = templatefile("${path.module}/../../policies/cloudwatch-slack-lambda-policy.json", {
     cloudwatch_lambda_log_group_arn = aws_cloudwatch_log_group.cloudwatch_lambda_log_group.arn
     cloudwatch_lambda_kms_key_arn   = aws_kms_key.cloudwatch_lambda.arn
-  }
-}
-
-resource "aws_iam_role_policy" "slack_lambda_policy" {
-  name   = "${var.service_name}-${var.environment}-slack-lambda-policy"
-  role   = aws_iam_role.slack_lambda_role.id
-  policy = data.template_file.slack_lambda_policy.rendered
+  })
 }
 
 resource "aws_lambda_function" "cloudwatch_to_slack" {
