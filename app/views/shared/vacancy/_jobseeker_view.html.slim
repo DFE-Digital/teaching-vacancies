@@ -20,7 +20,7 @@
           - if defined?(job_application) && ["withdrawn", nil].exclude?(job_application&.status)
             - if job_application.draft?
               = render BannerButtonComponent.new text: t("jobseekers.job_applications.banner_links.draft"),
-                href: jobseekers_job_application_path(job_application),
+                href: jobseekers_job_application_review_path(job_application),
                 icon: "green-tick"
             - else
               = render BannerButtonComponent.new text: t("jobseekers.job_applications.banner_links.submitted"),
