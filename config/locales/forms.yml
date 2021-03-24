@@ -221,8 +221,8 @@ en:
       jobseekers_job_application_ask_for_support_form:
         support_details: Tell us any information you think is relevant
         support_needed_options:
-          "no": "No"
-          "yes": "Yes"
+          "no": No, I do not need support
+          "yes": Yes, I would like to share some information about the support that I need
       jobseekers_job_application_declarations_form:
         close_relationships_details: Please give details
         close_relationships_options:
