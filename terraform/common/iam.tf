@@ -1,7 +1,7 @@
 # This `terraform/common` code is run by privileged accounts only
-# The IAM policies below grant specific permissions to the `deploy` user
+# The IAM policies below grant specific permissions to the `Deployments` role
 # They are used when a GitHub Actions workflow uses `terraform apply`
-# The `deploy` user does not need permission to create an ACM certificate
+# The `Deployments` role does not need permission to create an ACM certificate
 
 resource "aws_iam_user" "deploy" {
   name = "deploy"
@@ -14,18 +14,30 @@ resource "aws_iam_access_key" "deploy" {
 
 # Terraform state
 
+# By specifically granting permissions on these prefixes
+# We are defending against the unintentional creation of further namespaces
 data "aws_iam_policy_document" "edit_terraform_state" {
   statement {
-    actions   = ["s3:GetObject", "s3:PutObject"]
-    resources = ["arn:aws:s3:::${var.s3_bucket_name}/*"]
+    actions = ["s3:GetObject", "s3:PutObject"]
+    resources = [
+      "arn:aws:s3:::${data.aws_s3_bucket.terraform_state.bucket}/dev/*",
+      "arn:aws:s3:::${data.aws_s3_bucket.terraform_state.bucket}/production/*",
+      "arn:aws:s3:::${data.aws_s3_bucket.terraform_state.bucket}/qa/*",
+      "arn:aws:s3:::${data.aws_s3_bucket.terraform_state.bucket}/review/*",
+      "arn:aws:s3:::${data.aws_s3_bucket.terraform_state.bucket}/staging/*"
+    ]
   }
   statement {
-    actions   = ["s3:DeleteObject"]
-    resources = ["arn:aws:s3:::${var.s3_bucket_name}/review:/*"]
+    actions = ["s3:DeleteObject"]
+    resources = [
+      "arn:aws:s3:::${data.aws_s3_bucket.terraform_state.bucket}/review/*"
+    ]
   }
   statement {
-    actions   = ["s3:ListBucket"]
-    resources = ["arn:aws:s3:::${var.s3_bucket_name}"]
+    actions = ["s3:ListBucket"]
+    resources = [
+      "arn:aws:s3:::${data.aws_s3_bucket.terraform_state.bucket}"
+    ]
   }
 }
 
@@ -139,7 +151,8 @@ data "aws_iam_policy_document" "deny_sensitive_data_in_s3" {
     ]
     effect = "Deny"
     resources = [
-      "arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/full/*"
+      "arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/full/*",
+      "arn:aws:s3:::${data.aws_s3_bucket.terraform_state.bucket}/production/*"
     ]
   }
   statement {
