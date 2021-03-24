@@ -6,7 +6,7 @@
   .govuk-grid-column-two-thirds
     / TODO: Confirm content
     - unless vacancy.listed?
-      = govuk_notification_banner title: "Deadline passed" do
+      = govuk_notification_banner title: t("banners.important") do
         p.govuk-body The deadline for this job listing has passed.
 
     = form_for review_form, url: jobseekers_job_application_submit_path(job_application), method: :post do |f|

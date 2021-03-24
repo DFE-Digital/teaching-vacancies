@@ -12,6 +12,11 @@ en:
     title: Teaching Vacancies
     environment_html: This is not the live Teaching Vacancies website. You are currently viewing the <strong>%{environment}</strong> version of the site.
 
+  banners:
+    important: Important
+    success: Success
+    warning: Warning
+
   breadcrumbs:
     home: Home
     job_applications: My applications

@@ -17,7 +17,7 @@ $govuk-image-url-function: frontend-image-url;
 @import 'global/variables';
 
 @import 'application/accordion';
-@import 'application/banners';
+@import 'application/govuk-notification-banner';
 @import 'application/full-width-mast';
 @import 'application/form';
 @import 'application/icons';
