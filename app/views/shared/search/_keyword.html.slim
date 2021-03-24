@@ -1,4 +1,5 @@
 = f.govuk_text_field :keyword,
   label: { text: t("jobs.filters.keyword"), size: "s" },
-  placeholder: t("jobs.filters.keyword_hint"),
+  hint: { text: (@nqt_job_alert ? t("jobs.filters.keyword_nqt_hint") : nil) },
+  placeholder: t("jobs.filters.keyword_placeholder"),
   width: filters ? "full" : "two-thirds"

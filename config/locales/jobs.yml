@@ -14,7 +14,10 @@ en:
       title: Search job listings
       job_filters: Job Filters
       keyword: Keywords
-      keyword_hint: Humanities, KS2, primary, NQT for example
+      keyword_placeholder: Humanities, KS2, primary, NQT for example
+      keyword_nqt_hint: Tell us what teaching job you’re looking for and what kind of school you’d like to teach in.
+                        You can use any keywords that describe your ideal role.
+                        This alert is especially for NQT suitable jobs, so you don’t need to add NQT as a keyword.
       location: Enter a location
       location_hint: City, town or postcode
       use_current_location: use current location
