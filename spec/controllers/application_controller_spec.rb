@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ApplicationController, type: :controller do
+RSpec.describe ApplicationController do
   controller do
     def test_action
       head :ok
