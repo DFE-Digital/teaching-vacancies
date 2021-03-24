@@ -4,4 +4,8 @@
   h1.govuk-heading-xl = t("error_pages.invalid_recaptcha.title")
 
   p.govuk-body
-    = t("error_pages.invalid_recaptcha.text_html", mail_to: govuk_mail_to(t("help.email"), t("help.email"), class: "link-wrap", subject: t("error_pages.invalid_recaptcha.email_subject", form: @form)))
+    | We have not been able to verify that you are a human, rather than a robot. Please go back to the form and try to
+    |  submit it again.
+
+  p.govuk-body
+    | If you still cannot submit the form, please email #{govuk_mail_to(t("help.email"), t("help.email"), class: "link-wrap", subject: t("error_pages.invalid_recaptcha.email_subject", form: @form))}
