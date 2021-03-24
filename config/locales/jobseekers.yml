@@ -114,6 +114,21 @@ en:
           heading: References
           no_references: No referees specified
           title: References — Application
+      confirm_destroy:
+        title: Delete draft
+        heading: Delete draft
+        confirmation_heading: Are you sure you want to delete your draft application?
+        confirmation_details: |
+          Your draft application will be permanently deleted. After this if you want to apply
+          for this job you will need to start a new application.
+        confirm: Delete draft
+        cancel: Keep draft
+      confirm_withdraw:
+        heading: Withdraw your application
+        description: >-
+          When you withdraw your application the school will be informed that you no longer want to be considered for
+          this role. They will not see the reason you have given for withdrawing your application.
+        title: Withdraw application
       current_step: Step %{current} of %{total}
       details:
         employment_history: Role
@@ -213,6 +228,7 @@ en:
         shortlisted: Shortlisted
         submitted: Application submitted
         unsuccessful: Unsuccessful
+        withdrawn: Withdrawn
       submit:
         feedback:
           description: >-
@@ -233,15 +249,8 @@ en:
           body: We have sent an email confirmation to %{email}
           title: Your application has been submitted
         title: Application submitted – Application
-      confirm_destroy:
-        title: Delete draft
-        heading: Delete draft
-        confirmation_heading: Are you sure you want to delete your draft application?
-        confirmation_details: |
-          Your draft application will be permanently deleted. After this if you want to apply
-          for this job you will need to start a new application.
-        confirm: Delete draft
-        cancel: Keep draft
+      withdraw:
+        success: You have withdrawn your application for %{job_title}
     passwords:
       check_your_email_password:
         description: We have sent you an email with instructions on how to reset your password.

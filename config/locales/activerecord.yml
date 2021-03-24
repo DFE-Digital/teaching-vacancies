@@ -284,7 +284,10 @@ en:
               accepted: must be accepted / Placeholder for content
             confirm_data_usage:
               accepted: must be accepted / Placeholder for content
-
+        jobseekers/job_application/withdraw_form:
+          attributes:
+            withdraw_reason:
+              inclusion: Select why you are withdrawing your application
         jobseekers/job_application/details/employment_history_form:
           attributes:
             current_role:

@@ -1,0 +1,23 @@
+- content_for :page_title_prefix, t(".title")
+
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      .govuk-caption-l class="govuk-!-margin-bottom-2" = t("jobseekers.job_applications.heading_component.caption", job_title: vacancy.job_title, organisation_name: vacancy.parent_organisation_name)
+      h1.govuk-heading-xl = t(".heading")
+
+      = form_for withdraw_form, url: jobseekers_job_application_withdraw_path(job_application), method: :post do |f|
+        = f.govuk_error_summary
+
+        = hidden_field_tag :origin, value: request.referrer
+
+        = f.govuk_radio_buttons_fieldset :withdraw_reason do
+          = f.govuk_radio_button :withdraw_reason, :another_role, link_errors: true
+          = f.govuk_radio_button :withdraw_reason, :changed_mind
+          = f.govuk_radio_button :withdraw_reason, :other
+
+        = govuk_notification_banner title: t("banners.warning"), classes: "govuk-notification-banner--warning" do
+          p.govuk-body = t(".description")
+
+        = f.govuk_submit t("buttons.withdraw_application") do
+          = f.govuk_submit t("buttons.cancel"), secondary: true

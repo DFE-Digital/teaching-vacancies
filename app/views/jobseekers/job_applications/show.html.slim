@@ -17,6 +17,8 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
+    - if job_application.status.in?(%w[shortlisted submitted])
+      = govuk_link_to t("buttons.withdraw_application"), jobseekers_job_application_confirm_withdraw_path(job_application), button: true, class: "govuk-button--warning"
 
     - if job_application.shortlisted?
       = render Shared::NotificationComponent.new variant: "notice", title: t(".shortlist_alert.title"), body: t(".shortlist_alert.body", organisation: vacancy.parent_organisation_name), icon: true, dismiss: false, background: true
@@ -49,6 +51,9 @@
       h2.account-sidebar__heading = t(".timeline")
 
     = render TimelineComponent.new do |timeline|
+      - if job_application.withdrawn?
+        - timeline.item(key: t("jobseekers.job_applications.status_timestamps.withdrawn"),
+                        value: format_date(job_application.withdrawn_at.to_date))
       - if job_application.unsuccessful?
         - timeline.item(key: t("jobseekers.job_applications.status_timestamps.unsuccessful"),
                         value: format_date(job_application.unsuccessful_at.to_date))

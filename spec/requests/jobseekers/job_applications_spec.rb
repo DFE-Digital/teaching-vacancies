@@ -189,4 +189,88 @@ RSpec.describe "Job applications", type: :request do
       end
     end
   end
+
+  describe "GET #confirm_withdraw" do
+    context "when the application is submitted" do
+      let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+
+      it "shows a confirmation page" do
+        expect(get(jobseekers_job_application_confirm_withdraw_path(job_application.id))).to render_template(:confirm_withdraw)
+      end
+    end
+
+    context "when the application is not submitted or shortlisted" do
+      let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+
+      it "raises an error" do
+        expect { get(jobseekers_job_application_confirm_withdraw_path(job_application.id)) }
+          .to raise_error(ActionController::RoutingError, /non-submitted or non-shortlisted/)
+      end
+    end
+  end
+
+  describe "POST #withdraw" do
+    let(:withdraw_reason) { "other" }
+    let(:origin) { "" }
+    let(:params) { { jobseekers_job_application_withdraw_form: { withdraw_reason: withdraw_reason }, origin: origin, commit: button } }
+
+    context "when the application is submitted" do
+      let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+
+      context "when the commit param is `Cancel`" do
+        let(:button) { I18n.t("buttons.cancel") }
+
+        context "when the origin param is not `jobseekers_job_applications_url`" do
+          it "does not withdraw the job application and redirects to the applications dashboard" do
+            expect { post jobseekers_job_application_withdraw_path(job_application.id), params: params }
+              .to(not_change { job_application.reload.status })
+
+            expect(response).to redirect_to(jobseekers_job_application_path(job_application.id))
+          end
+        end
+
+        context "when the origin param is `jobseekers_job_applications_url`" do
+          let(:origin) { jobseekers_job_applications_url }
+
+          it "does not withdraw the job application and redirects to the job application page" do
+            expect { post jobseekers_job_application_withdraw_path(job_application.id), params: params }
+              .to(not_change { job_application.reload.status })
+
+            expect(response).to redirect_to(jobseekers_job_applications_path)
+          end
+        end
+      end
+
+      context "when the commit param is `Withdraw application`" do
+        let(:button) { I18n.t("buttons.withdraw_application") }
+
+        context "when the withdraw form is invalid" do
+          let(:withdraw_reason) { "invalid" }
+
+          it "does not withdraw the job application and redirects to the confirm withdraw template" do
+            expect { post jobseekers_job_application_withdraw_path(job_application.id), params: params }
+              .to(not_change { job_application.reload.status })
+
+            expect(response).to render_template(:confirm_withdraw)
+          end
+        end
+
+        context "when the withdraw form is valid" do
+          it "withdraws the job application and redirects to the applications dashboard" do
+            expect { post jobseekers_job_application_withdraw_path(job_application.id), params: params }
+              .to change { job_application.reload.status }.from("submitted").to("withdrawn")
+          end
+        end
+      end
+    end
+
+    context "when the application is not submitted or shortlisted" do
+      let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+
+      it "raises an error" do
+        expect { post(jobseekers_job_application_withdraw_path(job_application.id)) }
+          .to raise_error(ActionController::RoutingError, /non-submitted or non-shortlisted/)
+      end
+    end
+  end
 end
