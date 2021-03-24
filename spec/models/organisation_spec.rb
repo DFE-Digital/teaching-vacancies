@@ -23,4 +23,28 @@ RSpec.describe Organisation, type: :model do
       end
     end
   end
+
+  describe "#schools_outside_local_authority" do
+    let(:local_authority) { create(:local_authority, local_authority_code: "111") }
+    let!(:school1) { create(:school, urn: "123456") }
+    let!(:school2) { create(:school, urn: "654321") }
+
+    before { allow(Rails.configuration).to receive(:local_authorities_extra_schools).and_return(local_authorities_extra_schools) }
+
+    context "when there are schools outside local authority" do
+      let(:local_authorities_extra_schools) { { 111 => [123_456, 999_999], 999 => [654_321, 111_111] } }
+
+      it "returns the schools with matching URNs" do
+        expect(local_authority.schools_outside_local_authority).to eq [school1]
+      end
+    end
+
+    context "when there are no schools outside local authority" do
+      let(:local_authorities_extra_schools) { nil }
+
+      it "returns an empty collection" do
+        expect(local_authority.schools_outside_local_authority).to eq []
+      end
+    end
+  end
 end

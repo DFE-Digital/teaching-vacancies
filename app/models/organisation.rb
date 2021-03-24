@@ -28,4 +28,9 @@ class Organisation < ApplicationRecord
   def name
     @name ||= read_attribute(:name).concat(group_type == "local_authority" ? " local authority" : "")
   end
+
+  def schools_outside_local_authority
+    school_urns = Rails.configuration.local_authorities_extra_schools&.dig(local_authority_code.to_i)
+    School.where(urn: school_urns)
+  end
 end

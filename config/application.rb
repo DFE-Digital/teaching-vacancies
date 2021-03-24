@@ -72,6 +72,7 @@ module TeacherVacancyService
     config.ab_tests = config_for(:ab_tests)
 
     config.allowed_local_authorities = config_for(:allowed_local_authorities)
+    config.local_authorities_extra_schools = config_for(:local_authorities_extra_schools)
 
     config.analytics = config_for(:analytics)
     config.analytics_pii = config_for(:analytics_pii)
