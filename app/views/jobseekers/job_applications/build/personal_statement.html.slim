@@ -9,7 +9,7 @@
     p.govuk-body = t(".description")
 
     - if job_application.vacancy.documents.any?
-      = govuk_notification_banner(title: t(".banner_title")) do
+      = govuk_notification_banner title: t("banners.important") do
         = t(".banner_description_html", job_link: govuk_link_to(job_application.vacancy.job_title, job_path(job_application.vacancy), target: "_blank"))
         div class="govuk-!-margin-top-3"
           = render DocumentComponent.with_collection(job_application.vacancy.documents)
