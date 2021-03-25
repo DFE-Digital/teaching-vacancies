@@ -32,6 +32,9 @@ yarn-debug.log*
 # Ignore generated test coverage folder
 /coverage
 
+# Ignore visual regression test data folder
+/visual_regression
+
 # Ignore application configuration
 /config/application.yml
 /config/storage.yml
