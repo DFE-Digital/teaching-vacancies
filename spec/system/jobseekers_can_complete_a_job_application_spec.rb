@@ -23,7 +23,50 @@ RSpec.describe "Jobseekers can complete a job application" do
     fill_in_professional_status
     click_on I18n.t("buttons.save_and_continue")
 
+    # Education and qualifications. There are four different user journeys to test.
+    expect(page).to have_content(I18n.t("jobseekers.job_applications.build.qualifications.heading"))
+    expect(page).to have_content("No qualifications specified")
+    click_on I18n.t("buttons.continue")
+    expect(page).not_to have_content("There is a problem")
+    click_on I18n.t("buttons.back")
+    click_on "Add a qualification"
+    validates_step_complete
+    choose "GCSE"
+    click_on I18n.t("buttons.continue")
+    expect(page).to have_content("Add GCSE")
+    validates_add_qualification_step_complete
+    fill_in_gcse
+    fill_in_another_gcse
+    click_on "Save qualification"
+    expect
+    click_on "Add another qualification"
+    choose "Other secondary qualification"
+    click_on I18n.t("buttons.continue")
+    expect(page).to have_content("Add secondary qualification")
+    validates_add_qualification_step_complete
+    fill_in_secondary_qualification
+    fill_in_another_secondary_qualification
+    click_on "Save qualification"
+    expect
+    click_on "Add another qualification"
+    choose "Undergraduate degree"
+    click_on I18n.t("buttons.continue")
+    expect(page).to have_content("Add undergraduate degree")
+    validates_add_qualification_step_complete
+    fill_in_undergraduate_degree
+    click_on "Save qualification"
+    expect
+    click_on "Add another qualification"
+    choose "Other qualification or course"
+    expect(page).to have_content("Add qualification or course")
+    validates_add_qualification_step_complete
+    fill_in_other_qualification
+    click_on "Save qualification"
+    expect
+    click_on I18n.t("buttons.continue")
+
     expect(page).to have_content(I18n.t("jobseekers.job_applications.build.employment_history.heading"))
+    expect(page).to have_content("No employment specified")
     validates_step_complete
     click_on I18n.t("buttons.add_employment")
     click_on I18n.t("buttons.save_employment")
@@ -71,6 +114,11 @@ RSpec.describe "Jobseekers can complete a job application" do
 
   def validates_step_complete
     click_on I18n.t("buttons.save_and_continue")
+    expect(page).to have_content("There is a problem")
+  end
+
+  def validates_add_qualification_step_complete
+    click_on "Save qualification"
     expect(page).to have_content("There is a problem")
   end
 end
