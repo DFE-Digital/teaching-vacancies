@@ -65,6 +65,7 @@ jobs:
         BACKEND_CONFIG=-backend-config="key=${{ github.event.inputs.environment }}/app.tfstate"
         PARAMETER_STORE_ENVIRONMENT=${{ github.event.inputs.environment }}
         VAR_FILE=${{ github.event.inputs.environment }}
+        echo "BACKEND_CONFIG=${BACKEND_CONFIG}" >> $GITHUB_ENV
         echo "PARAMETER_STORE_ENVIRONMENT=${PARAMETER_STORE_ENVIRONMENT}" >> $GITHUB_ENV
         echo "VAR_FILE=${VAR_FILE}" >> $GITHUB_ENV
 
