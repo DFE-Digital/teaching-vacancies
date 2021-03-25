@@ -20,12 +20,11 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     raise ActionController::RoutingError, "Cannot shortlist or reject a draft or withdrawn application" if
       job_application.draft? || job_application.withdrawn?
 
-    job_application.update(status: status, application_data: job_application.application_data.merge(form_params))
+    job_application.update(form_params.merge(status: status))
     Jobseekers::JobApplicationMailer.send("application_#{status}".to_sym, job_application).deliver_now
     # TODO: Update redirect when job applications index page exists (and update request/system specs)
     redirect_to organisation_jobs_path,
-                success: t(".#{status}",
-                           name: "#{job_application.application_data['first_name']} #{job_application.application_data['last_name']}")
+                success: t(".#{status}", name: "#{job_application.first_name} #{job_application.last_name}")
   end
 
   private

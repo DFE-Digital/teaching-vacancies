@@ -2,9 +2,9 @@
 
 # <%= t(".heading") %>
 
-<%- if @job_application.application_data["rejection_reasons"].present? %>
+<%- if @job_application.rejection_reasons.present? %>
   # <%= t(".feedback") %>
-  <%= @job_application.application_data["rejection_reasons"] %>
+  <%= @job_application.rejection_reasons %>
 <% end %>
 
 # <%= t(".more_info.heading") %>

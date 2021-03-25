@@ -2,37 +2,37 @@
   = govuk_summary_list do |component|
     - component.slot(:row,
       key: t("helpers.label.jobseekers_job_application_personal_details_form.first_name"),
-      value: job_application.application_data["first_name"],
+      value: job_application.first_name,
       html_attributes: { id: "personal_details_first_name" })
 
     - component.slot(:row,
       key: t("helpers.label.jobseekers_job_application_personal_details_form.last_name"),
-      value: job_application.application_data["last_name"],
+      value: job_application.last_name,
       html_attributes: { id: "personal_details_last_name" })
 
     - component.slot(:row,
       key: t("helpers.label.jobseekers_job_application_personal_details_form.previous_names"),
-      value: job_application.application_data["previous_names"].presence || t("jobs.not_defined"),
+      value: job_application.previous_names.presence || t("jobs.not_defined"),
       html_attributes: { id: "personal_details_previous_names" })
 
     - component.slot(:row,
       key: t("helpers.label.jobseekers_job_application_personal_details_form.your_address"),
-      value: safe_join([tag.div(job_application.application_data["street_address"], class: "govuk-body"),
-                        tag.div(job_application.application_data["city"], class: "govuk-body"),
-                        tag.div(job_application.application_data["postcode"], class: "govuk-body")]),
+      value: safe_join([tag.div(job_application.street_address, class: "govuk-body"),
+                        tag.div(job_application.city, class: "govuk-body"),
+                        tag.div(job_application.postcode, class: "govuk-body")]),
       html_attributes: { id: "personal_details_your_address" })
 
     - component.slot(:row,
       key: t("helpers.label.jobseekers_job_application_personal_details_form.phone_number"),
-      value: job_application.application_data["phone_number"],
+      value: job_application.phone_number,
       html_attributes: { id: "personal_details_phone_number" })
 
     - component.slot(:row,
       key: t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number"),
-      value: job_application.application_data["teacher_reference_number"],
+      value: job_application.teacher_reference_number,
       html_attributes: { id: "personal_details_teacher_reference_number" })
 
     - component.slot(:row,
       key: t("helpers.label.jobseekers_job_application_personal_details_form.national_insurance_number"),
-      value: job_application.application_data["national_insurance_number"],
+      value: job_application.national_insurance_number,
       html_attributes: { id: "personal_details_national_insurance_number" })

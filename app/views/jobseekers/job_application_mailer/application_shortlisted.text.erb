@@ -2,9 +2,9 @@
 
 # <%= t(".heading") %>
 
-<%- if @job_application.application_data["further_instructions"].present? %>
+<%- if @job_application.further_instructions.present? %>
   # <%= t(".instructions") %>
-  <%= @job_application.application_data["further_instructions"] %>
+  <%= @job_application.further_instructions %>
 <% end %>
 
 # <%= t(".more_info.heading") %>

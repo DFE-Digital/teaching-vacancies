@@ -16,7 +16,7 @@ RSpec.describe "Publishers can view a job application" do
 
   it "shows the job application page" do
     # TODO: Complete this spec
-    expect(page).to have_content("TV12345 - #{job_application.application_data['first_name']} #{job_application.application_data['last_name']}")
+    expect(page).to have_content("TV12345 - #{job_application.first_name} #{job_application.last_name}")
   end
 
   context "when the job application status is unsuccessful" do

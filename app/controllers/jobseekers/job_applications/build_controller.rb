@@ -13,18 +13,12 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
 
   def update
     @form = FORMS[step].new(form_params)
-    application_data = job_application.application_data.presence || {}
     completed_steps = job_application.completed_steps.presence || []
-
     if params[:commit] == t("buttons.save_as_draft")
-      job_application.assign_attributes(application_data: application_data.merge(form_params))
-      job_application.save
+      job_application.update(form_params)
       redirect_to jobseekers_job_applications_path, success: t("messages.jobseekers.job_applications.saved")
     elsif @form.valid?
-      job_application.assign_attributes(
-        application_data: application_data.merge(form_params),
-        completed_steps: completed_steps.push(step),
-      )
+      job_application.assign_attributes(form_params.merge(completed_steps: completed_steps.push(step)))
       render_wizard job_application
     else
       render_wizard

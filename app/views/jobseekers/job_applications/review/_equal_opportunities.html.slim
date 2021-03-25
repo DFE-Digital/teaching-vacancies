@@ -2,29 +2,29 @@
   = govuk_summary_list do |component|
     - component.slot(:row,
       key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.disability"),
-      value: job_application.application_data["disability"]&.humanize,
+      value: job_application.disability.humanize,
       html_attributes: { id: "equal_opportunities_disability" })
 
     - component.slot(:row,
       key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.gender"),
-      value: safe_join([tag.div(job_application.application_data["gender"]&.humanize, class: "govuk-body"),
-                        tag.div(job_application.application_data["gender_description"], class: "govuk-body")]),
+      value: safe_join([tag.div(job_application.gender.humanize, class: "govuk-body"),
+                        tag.div(job_application.gender_description, class: "govuk-body")]),
       html_attributes: { id: "equal_opportunities_gender" })
 
     - component.slot(:row,
       key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.orientation"),
-      value: safe_join([tag.div(job_application.application_data["orientation"]&.humanize, class: "govuk-body"),
-                        tag.div(job_application.application_data["orientation_description"], class: "govuk-body")]),
+      value: safe_join([tag.div(job_application.orientation.humanize, class: "govuk-body"),
+                        tag.div(job_application.orientation_description, class: "govuk-body")]),
       html_attributes: { id: "equal_opportunities_orientation" })
 
     - component.slot(:row,
       key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.ethnicity"),
-      value: safe_join([tag.div(job_application.application_data["ethnicity"]&.humanize, class: "govuk-body"),
-                        tag.div(job_application.application_data["ethnicity_description"], class: "govuk-body")]),
+      value: safe_join([tag.div(job_application.ethnicity.humanize, class: "govuk-body"),
+                        tag.div(job_application.ethnicity_description, class: "govuk-body")]),
       html_attributes: { id: "equal_opportunities_ethnicity" })
 
     - component.slot(:row,
       key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.religion"),
-      value: safe_join([tag.div(job_application.application_data["religion"]&.humanize, class: "govuk-body"),
-                        tag.div(job_application.application_data["religion_description"], class: "govuk-body")]),
+      value: safe_join([tag.div(job_application.religion.humanize, class: "govuk-body"),
+                        tag.div(job_application.religion_description, class: "govuk-body")]),
       html_attributes: { id: "equal_opportunities_religion" })

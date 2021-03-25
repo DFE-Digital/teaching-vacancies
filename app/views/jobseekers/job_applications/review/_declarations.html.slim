@@ -2,16 +2,16 @@
   = govuk_summary_list do |component|
     - component.slot(:row,
       key: t("helpers.legend.jobseekers_job_application_declarations_form.banned_or_disqualified"),
-      value: job_application.application_data["banned_or_disqualified"]&.capitalize,
+      value: job_application.banned_or_disqualified.capitalize,
       html_attributes: { id: "declarations_banned_or_disqualified" })
 
     - component.slot(:row,
       key: t("helpers.legend.jobseekers_job_application_declarations_form.close_relationships", organisation: vacancy.organisation.name),
-      value: safe_join([tag.div(job_application.application_data["close_relationships"]&.capitalize, class: "govuk-body"),
-                        tag.div(job_application.application_data["close_relationships_details"], class: "govuk-body")]),
+      value: safe_join([tag.div(job_application.close_relationships.capitalize, class: "govuk-body"),
+                        tag.div(job_application.close_relationships_details, class: "govuk-body")]),
       html_attributes: { id: "declarations_close_relationships" })
 
     - component.slot(:row,
       key: t("helpers.legend.jobseekers_job_application_declarations_form.right_to_work_in_uk"),
-      value: job_application.application_data["right_to_work_in_uk"]&.capitalize,
+      value: job_application.right_to_work_in_uk.capitalize,
       html_attributes: { id: "declarations_right_to_work_in_uk" })

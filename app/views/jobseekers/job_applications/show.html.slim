@@ -31,10 +31,10 @@
         - component.slot(:row, key: t(".school_details.number"), value: vacancy.contact_number)
         - component.slot(:row, key: t(".school_details.email"), value: vacancy.contact_email)
 
-    - if job_application.unsuccessful? && job_application.application_data["rejection_reasons"]
+    - if job_application.unsuccessful? && job_application.rejection_reasons.present?
       .grey-border-box
         h3.govuk-heading-m = t(".feedback")
-        p.govuk-body class="govuk-!-margin-bottom-0" = job_application.application_data["rejection_reasons"]
+        p.govuk-body class="govuk-!-margin-bottom-0" = job_application.rejection_reasons
 
     ol.app-task-list
       li = render "jobseekers/job_applications/review/personal_details", allow_edit: false
