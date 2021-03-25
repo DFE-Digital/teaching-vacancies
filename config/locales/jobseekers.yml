@@ -46,6 +46,7 @@ en:
         draft: Started - continue application
         submitted: Submitted - view application
       build:
+        # Content Design originally specified the page titles in https://docs.google.com/document/d/1oF4Vh1P8eJRdzmlJ4--cDDZQ_bCZMkKv/
         ask_for_support:
           adjustments: "This could be:"
           adjustment_examples:
@@ -110,6 +111,14 @@ en:
           heading: Professional status
           step_title: Professional status
           title: Professional status — Application
+        qualifications:
+          description: >-
+            Enter your qualifications as completely as you can, including all GCSEs, A levels (or equivalents),
+            undergraduate and postgraduate degrees. Please also specify any other qualifications where you showed skills
+            that might help you in this role.
+          heading: Education and qualifications
+          no_qualifications: No qualifications specified
+          title: Education and qualifications — Application
         references:
           description1_html: >-
             <span class='text-red'>Two referees are required</span> for this application. One of these must be your
@@ -146,14 +155,14 @@ en:
         edit:
           caption: Current role and employment history
           heading: Edit a role
-          title: Edit a role - Application
+          title: Edit a role — Application
         ended_on: End date
         job_title: Job title
         main_duties: Main duties
         new:
           caption: Current role and employment history
           heading: Add a role
-          title: Add a role - Application
+          title: Add a role — Application
         organisation: Organisation
         reason_for_leaving: Reason for leaving
         salary: Salary scale or level
@@ -217,6 +226,28 @@ en:
         save_and_return: You can save your application at any point and return to it later.
         title: Application
       not_defined: Not defined (will not be seen on application)
+      qualifications:
+        destroy:
+          success: Your qualification was deleted
+        qualifications_shared: &qualifications_shared
+          caption: Education and qualifications
+          heading:
+            gcse: Add GCSEs
+            as_level: Add AS Levels
+            a_level: Add A Levels
+            other_secondary: Add a secondary qualification
+            undergraduate: Add an undergraduate degree
+            postgraduate: Add a postgraduate degree
+            other: Add a qualification or course
+          title: Add a qualification — Application
+        edit:
+          <<: *qualifications_shared
+        new:
+          <<: *qualifications_shared
+        select_category:
+          caption: Education and qualifications
+          heading: Add a qualification
+          title: Add a qualification — Application
       references:
         destroy:
           success: Your referee was deleted
@@ -224,7 +255,7 @@ en:
           caption: References
           description: If you are shortlisted, the school will contact your referee before your interview.
           heading: Edit a referee
-          title: Edit a referee - Application
+          title: Edit a referee — Application
         email: Email address
         job_title: Job title
         name: Name
@@ -232,7 +263,7 @@ en:
           caption: References
           description: If you are shortlisted, the school will contact your referee before your interview.
           heading: Add a referee
-          title: Add a referee - Application
+          title: Add a referee — Application
         organisation: Organisation
         phone_number: Phone number
         relationship: Relationship to applicant

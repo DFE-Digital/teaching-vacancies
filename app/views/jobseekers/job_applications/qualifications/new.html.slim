@@ -1,0 +1,23 @@
+- content_for :page_title_prefix, t(".title")
+
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      .govuk-caption-l = t(".caption")
+      h1.govuk-heading-xl = t(".heading.#{form.category}")
+
+      = form_for form, url: jobseekers_job_application_qualifications_path(job_application, category: form.category), method: :post do |f|
+        = f.govuk_error_summary link_base_errors_to: :subject
+
+        = f.hidden_field :category
+
+        - case form.category
+        - when "gcse", "as_level", "a_level", "other_secondary"
+          = render "secondary_school_fields", f: f, category: form.category
+        - when "undergraduate", "postgraduate"
+          = render "degree_fields", f: f
+        - when "other"
+          = render "other_fields", f: f
+
+        = f.govuk_submit t("buttons.save_qualification") do
+          = f.govuk_submit t("buttons.cancel"), secondary: true

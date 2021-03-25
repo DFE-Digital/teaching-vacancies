@@ -267,6 +267,20 @@ ActiveRecord::Schema.define(version: 2021_04_09_094259) do
     t.index ["oid"], name: "index_publishers_on_oid", unique: true
   end
 
+  create_table "qualifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "category"
+    t.boolean "finished_studying"
+    t.text "finished_studying_details", default: "", null: false
+    t.string "grade", default: "", null: false
+    t.string "institution", default: "", null: false
+    t.string "name", default: "", null: false
+    t.string "subject", default: "", null: false
+    t.integer "year"
+    t.uuid "job_application_id", null: false
+  end
+
   create_table "references", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "job_title", default: "", null: false

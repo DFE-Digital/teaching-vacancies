@@ -26,44 +26,59 @@ RSpec.describe "Jobseekers can complete a job application" do
     # Education and qualifications. There are four different user journeys to test.
     expect(page).to have_content(I18n.t("jobseekers.job_applications.build.qualifications.heading"))
     expect(page).to have_content("No qualifications specified")
-    click_on I18n.t("buttons.continue")
+    click_on I18n.t("buttons.save_and_continue")
     expect(page).not_to have_content("There is a problem")
     click_on I18n.t("buttons.back")
-    click_on "Add a qualification"
-    validates_step_complete
-    choose "GCSE"
-    click_on I18n.t("buttons.continue")
-    expect(page).to have_content("Add GCSE")
-    validates_add_qualification_step_complete
-    fill_in_gcse
-    fill_in_another_gcse
-    click_on "Save qualification"
-    expect
-    click_on "Add another qualification"
-    choose "Other secondary qualification"
-    click_on I18n.t("buttons.continue")
-    expect(page).to have_content("Add secondary qualification")
-    validates_add_qualification_step_complete
-    fill_in_secondary_qualification
-    fill_in_another_secondary_qualification
-    click_on "Save qualification"
-    expect
-    click_on "Add another qualification"
+    # 1. Graduate degrees
+    click_on I18n.t("buttons.add_qualification")
+    validates_step_complete(button: I18n.t("buttons.continue"))
     choose "Undergraduate degree"
     click_on I18n.t("buttons.continue")
-    expect(page).to have_content("Add undergraduate degree")
-    validates_add_qualification_step_complete
+    expect(page).to have_content(I18n.t("jobseekers.job_applications.qualifications.qualifications_shared.heading.undergraduate"))
+    validates_step_complete(button: I18n.t("buttons.save_qualification"))
     fill_in_undergraduate_degree
-    click_on "Save qualification"
-    expect
-    click_on "Add another qualification"
+    click_on I18n.t("buttons.save_qualification")
+    # TODO: expect the qualification to be displayed
+    # 2. Generic 'other' qualification
+    click_on I18n.t("buttons.add_another_qualification")
     choose "Other qualification or course"
-    expect(page).to have_content("Add qualification or course")
-    validates_add_qualification_step_complete
-    fill_in_other_qualification
-    click_on "Save qualification"
-    expect
     click_on I18n.t("buttons.continue")
+    expect(page).to have_content(I18n.t("jobseekers.job_applications.qualifications.qualifications_shared.heading.other"))
+    validates_step_complete(button: I18n.t("buttons.save_qualification"))
+    fill_in_other_qualification
+    click_on I18n.t("buttons.save_qualification")
+    # TODO: expect the qualification to be displayed
+    # 3. Common secondary qualifications
+    click_on I18n.t("buttons.add_another_qualification")
+    choose "GCSE"
+    click_on I18n.t("buttons.continue")
+    expect(page).to have_content(I18n.t("jobseekers.job_applications.qualifications.qualifications_shared.heading.gcse"))
+    validates_step_complete(button: I18n.t("buttons.save_qualification"))
+    fill_in_gcse
+    # TODO: fill_in_another_gcse
+    click_on I18n.t("buttons.save_qualification")
+    # TODO: expect the qualification to be displayed
+    #
+    # TODO: Can delete and edit GCSE
+    # click_on I18n.t("buttons.add_another_qualification")
+    # choose "GCSE"
+    # click_on I18n.t("buttons.continue")
+    # delete_gcse
+    # edit_other_gcse
+    # click_on I18n.t("buttons.save_qualification")
+    # expect the qualifications to be deleted and edited
+    #
+    # 4. Other secondary qualification
+    click_on I18n.t("buttons.add_another_qualification")
+    choose "Other secondary qualification"
+    click_on I18n.t("buttons.continue")
+    expect(page).to have_content(I18n.t("jobseekers.job_applications.qualifications.qualifications_shared.heading.other_secondary"))
+    validates_step_complete(button: I18n.t("buttons.save_qualification"))
+    fill_in_secondary_qualification
+    # TODO: fill_in_another_secondary_qualification
+    click_on I18n.t("buttons.save_qualification")
+    # TODO: expect the qualification to be displayed
+    click_on I18n.t("buttons.save_and_continue")
 
     expect(page).to have_content(I18n.t("jobseekers.job_applications.build.employment_history.heading"))
     expect(page).to have_content("No employment specified")
@@ -112,13 +127,8 @@ RSpec.describe "Jobseekers can complete a job application" do
     expect(current_path).to eq(jobseekers_job_application_review_path(job_application))
   end
 
-  def validates_step_complete
-    click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_content("There is a problem")
-  end
-
-  def validates_add_qualification_step_complete
-    click_on "Save qualification"
+  def validates_step_complete(button: I18n.t("buttons.save_and_continue"))
+    click_on button
     expect(page).to have_content("There is a problem")
   end
 end

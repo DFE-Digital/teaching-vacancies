@@ -3,8 +3,10 @@ en:
     accept_all_cookies: Accept all cookies
     accept_and_continue: Accept and continue
     add_another_employment: Add another role
+    add_another_qualification: Add another qualification
     add_another_reference: Add another referee
     add_employment: Add a role
+    add_qualification: Add a qualification
     add_reference: Add a referee
     apply_filters: Apply filters
     back: Back
@@ -34,6 +36,7 @@ en:
     save_and_return_later: Save and return later
     save_changes: Save changes
     save_employment: Save role
+    save_qualification: Save qualification
     save_reference: Save referee
     search: Search
     select_file: Select a file
@@ -85,6 +88,8 @@ en:
         ended_on: For example, 01 01 2020
         main_duties: A very brief summary
         started_on: For example, 01 01 2020
+      jobseekers_job_application_details_qualifications_degree_form:
+        institution: For example, a university or college
       jobseekers_job_application_details_reference_form:
         phone_number: Please only give a phone number that your referee is happy to be contacted on.
       jobseekers_job_application_equal_opportunities_form:
@@ -242,6 +247,36 @@ en:
         reason_for_leaving: Reason for leaving
         salary: Salary scale or level
         subjects: Subjects and key stages taught
+      jobseekers_job_application_details_qualifications_category_form:
+        category_options:
+          gcse: GCSE
+          as_level: AS Level
+          a_level: A Level
+          other_secondary: Other secondary qualification
+          undergraduate: Undergraduate degree
+          postgraduate: Postgraduate degree
+          other: Other qualification or course
+      jobseekers_job_application_details_qualifications_shared_labels: &jobseekers_job_application_details_qualifications_shared_labels
+        finished_studying_details: Please give details
+        finished_studying_options:
+          false: "No"
+          true: "Yes"
+        institution: School, college, or other organisation
+        year: Year qualification(s) was/were awarded
+      jobseekers_job_application_details_qualifications_degree_form:
+        <<: *jobseekers_job_application_details_qualifications_shared_labels
+        institution: Awarding body
+        year: Year qualification was awarded
+      jobseekers_job_application_details_qualifications_other_form:
+        <<: *jobseekers_job_application_details_qualifications_shared_labels
+        institution: School, college, university or other organisation
+        name: Qualification or course name
+        year: Year qualification was awarded
+      jobseekers_job_application_details_qualifications_secondary_common_form:
+        <<: *jobseekers_job_application_details_qualifications_shared_labels
+      jobseekers_job_application_details_qualifications_secondary_other_form:
+        <<: *jobseekers_job_application_details_qualifications_shared_labels
+        name: Qualification name
       jobseekers_job_application_details_reference_form:
         email: Email address
         job_title: Job title
@@ -308,7 +343,6 @@ en:
         previous_names: Previous names
         street_address: Building and street
         teacher_reference_number: Teacher reference number
-        your_address: Your address
       jobseekers_job_application_personal_statement_form:
         personal_statement: Your personal statement
       jobseekers_job_application_professional_status_form:
@@ -449,8 +483,19 @@ en:
         current_role: Is this your current role?
         ended_on: End date
         started_on: Start date
+      jobseekers_job_application_details_qualifications_category_form:
+        category: What qualification would you like to add?
+      jobseekers_job_application_details_qualifications_shared_legends: &jobseekers_job_application_details_qualifications_shared_legends
+        finished_studying: Have you finished studying for this qualification?
+        subjects: Subjects
+      jobseekers_job_application_details_qualifications_degree_form:
+        <<: *jobseekers_job_application_details_qualifications_shared_legends
+      jobseekers_job_application_details_qualifications_other_form:
+        <<: *jobseekers_job_application_details_qualifications_shared_legends
       jobseekers_job_application_feedback_form:
         rating: How satisfied are you with your experience of using Teaching Vacancies?
+      jobseekers_job_application_personal_details_form:
+        your_address: Your address
       jobseekers_job_application_professional_status_form:
         statutory_induction_complete: Have you completed your statutory induction year?
         qualified_teacher_status: Do you have qualified teacher status (QTS)?

@@ -1,0 +1,10 @@
+- if category == "other_secondary"
+  = f.govuk_text_field :name, label: { size: "s" }, aria: { required: true }
+
+= f.govuk_fieldset legend: { text: t("helpers.legend.jobseekers_job_application_details_qualifications_shared_legends.subjects") } do
+  / TODO: change subject legend when adding new subject field (and change aria required)
+  = f.govuk_text_field :subject, legend: { text: "Subject name" }, aria: { required: true }, form_group: { classes: "inline-form-group inline-subject" }
+  = f.govuk_text_field :grade, aria: { required: true }, form_group: { classes: "inline-form-group inline-grade" }
+
+= f.govuk_text_field :institution, label: { size: "s" }, aria: { required: true }
+= f.govuk_number_field :year, label: { size: "s" }, aria: { required: true }, width: 4

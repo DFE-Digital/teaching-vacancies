@@ -23,7 +23,7 @@
         html_attributes: { id: "personal_details_previous_names" })
 
       - component.slot(:row,
-        key: t("helpers.label.jobseekers_job_application_personal_details_form.your_address"),
+        key: t("helpers.legend.jobseekers_job_application_personal_details_form.your_address"),
         value: safe_join([tag.div(job_application.street_address, class: "govuk-body"),
                           tag.div(job_application.city, class: "govuk-body"),
                           tag.div(job_application.postcode, class: "govuk-body")]),

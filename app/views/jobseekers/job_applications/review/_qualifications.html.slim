@@ -1,0 +1,27 @@
+= render Shared::ReviewComponent.new(id: "qualifications", title: t("jobseekers.job_applications.build.qualifications.heading"), edit_link: (jobseekers_job_application_build_path(job_application, :qualifications) if allow_edit)) do
+  .todo
+    / = govuk_accordion do |accordion|
+    /   - job_application.qualification_groups.order(:created_at).each_with_index do |qualification_group, index|
+    /     - accordion.add_section(title: qualification_group["name"], html_attributes: { id: "qualification_group_#{index}" }) do
+    /       = govuk_summary_list do |component|
+    /         - component.slot(:row,
+    /           key: qualification_group["keys"]["name"],
+    /           value: qualification_group["name"],
+    /           html_attributes: { id: "qualification_name" })
+    /
+    /         - if qualification_group.count == 1
+    /           - component.slot(:row,
+    /             key: qualification_group["keys"]["subject"],
+    /             value: qualification_group["subject"],
+    /             html_attributes: { id: "qualification_subject" })
+    /
+    /           - component.slot(:row,
+    /             key: "Grade",
+    /             value: qualification_group["grade"],
+    /             html_attributes: { id: "qualification_grade" })
+    /
+    /         - else
+    /           - component.slot(:row,
+    /             key: qualification_group["keys"]["subjects_and_grades"],
+    /             value: qualification_group["subjects_and_grades"],
+    /             html_attributes: { id: "qualification_subjects_and_grades" })

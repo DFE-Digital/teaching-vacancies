@@ -67,6 +67,21 @@
   }
 }
 
+.inline-form-group {
+  display: inline-block;
+
+  &.inline-grade {
+    $width: govuk-grid-width(one-third);
+    $padding-left: govuk-spacing(3);
+    padding-left: $padding-left;
+    width: calc(#{$width} - #{$padding-left});
+  }
+
+  &.inline-subject {
+    width: govuk-grid-width(two-thirds);
+  }
+}
+
 .js-enabled {
   form[data-auto-submit='true'][data-hide-submit='true'] {
     .govuk-button {
