@@ -84,7 +84,7 @@ The [refresh.yml](/.github/workflows/refresh.yml) workflow:
 Go to the [Refresh environment](https://github.com/DFE-Digital/teaching-vacancies/actions?query=workflow%3A%22Refresh+environment%22) workflow:
 Click "Run workflow", and choose:
 - Use workflow from `Branch: master`
-- Environment: e.g. `production` (or `staging`, or `dev`)
+- Environment: e.g. `production` (or `staging`, `qa`, or `dev`)
 
 ### Deploy a specific tag to an environment - GitHub Actions
 
@@ -98,7 +98,7 @@ is built from [commit 2641bebaf22ad96be543789693e015922e4514c4](https://github.c
 Go to the [Deploy App to Environment](https://github.com/DFE-Digital/teaching-vacancies/actions?query=workflow%3A%22Deploy+App+to+Environment%22) workflow.
 Click "Run workflow", and choose:
 - Use workflow from `Branch: master`
-- Environment: e.g. `production` (or `staging`, or `dev`)
+- Environment: e.g. `production` (or `staging`, `qa`, or `dev`)
 - Docker tag: e.g. `2641bebaf22ad96be543789693e015922e4514c41`
 
 ### Deploy a specific tag to an environment - Terraform via Makefile
@@ -131,7 +131,7 @@ In usual circumstances, the review apps lifecycle will be handled via GitHub Act
 
 We can use the Makefile to destroy a review app, by passing a `CONFIRM_DESTROY=true` plus changing the action to `review-destroy`:
 ```
-make passcode=MyPasscode pr=2086 CONFIRM_DESTROY=true review review-destroy
+make passcode=MyPasscode pr=3134 CONFIRM_DESTROY=true review review-destroy
 ```
 
 Requirements:
@@ -146,7 +146,7 @@ Log in to Gov.UK PaaS:
 cf login --sso
 ```
 
-Switch to the review space:
+Switch to the teaching-vacancies-review space:
 ```
 cf target -s teaching-vacancies-review
 ```
@@ -154,21 +154,19 @@ cf target -s teaching-vacancies-review
 List, then delete, apps and routes
 ```
 cf apps
-cf delete -r teaching-vacancies-review-pr-2068
-cf delete -r teaching-vacancies-worker-review-pr-2068
+cf delete -r teaching-vacancies-review-pr-3134
+cf delete -r teaching-vacancies-worker-review-pr-3134
 ```
 
 List, then delete, services
 ```
 cf services
-cf delete-service teaching-vacancies-postgres-review-pr-2068
-cf delete-service teaching-vacancies-redis-review-pr-2068
-cf delete-service teaching-vacancies-papertrail-review-pr-2068
+cf delete-service teaching-vacancies-postgres-review-pr-3134
+cf delete-service teaching-vacancies-redis-review-pr-3134
+cf delete-service teaching-vacancies-papertrail-review-pr-3134
 ```
 
-Note: removing apps and services outside of Terraform will require removing the review workspace, with is possible with
+Note: removing apps and services outside of Terraform will require removing the review terraform state file
 ```
-terraform init -input=false -backend-config="workspace_key_prefix=review:" -reconfigure terraform/app
-terraform workspace select default terraform/app
-terraform workspace delete -force review-pr-2068 terraform/app
+aws-vault exec Deployments -- aws s3 rm s3://530003481352-terraform-state/review/review-pr-3134.tfstate
 ```
