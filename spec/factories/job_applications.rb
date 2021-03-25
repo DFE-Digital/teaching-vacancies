@@ -3,8 +3,8 @@ JOB_APPLICATION_DATA = {
   first_name: Faker::Name.first_name,
   last_name: Faker::Name.last_name,
   previous_names: Faker::Name.name,
-  building_and_street: Faker::Address.street_address,
-  town_or_city: Faker::Address.city,
+  street_address: Faker::Address.street_address,
+  city: Faker::Address.city,
   postcode: Faker::Address.postcode,
   phone_number: "01234 567890",
   teacher_reference_number: "12345678",
@@ -27,7 +27,7 @@ JOB_APPLICATION_DATA = {
   religion_description: Faker::Lorem.sentence,
   # Ask for support
   support_needed: "yes",
-  support_details: Faker::Lorem.paragraph(sentence_count: 2),
+  support_needed_details: Faker::Lorem.paragraph(sentence_count: 2),
   # Declarations
   banned_or_disqualified: "no",
   close_relationships: "yes",
@@ -52,6 +52,35 @@ FactoryBot.define do
     status { :draft }
     jobseeker
     vacancy
+
+    # Personal details
+    first_name { Faker::Name.first_name }
+    last_name { Faker::Name.last_name }
+    previous_names { Faker::Name.name }
+    street_address { Faker::Address.street_address }
+    city { Faker::Address.city }
+    postcode { Faker::Address.postcode }
+    phone_number { "01234 567890" }
+    teacher_reference_number { "12345678" }
+    national_insurance_number { "QQ 12 34 56 C" }
+
+    # Professional statement
+    qualified_teacher_status { "yes" }
+    qualified_teacher_status_year { "1990" }
+    statutory_induction_complete { "yes" }
+
+    # Personal statement
+    personal_statement { Faker::Lorem.paragraph(sentence_count: 8) }
+
+    # Ask for support
+    support_needed { "yes" }
+    support_needed_details { Faker::Lorem.paragraph(sentence_count: 2) }
+
+    # Declarations
+    banned_or_disqualified { "no" }
+    close_relationships { "yes" }
+    close_relationships_details { Faker::Lorem.paragraph(sentence_count: 1) }
+    right_to_work_in_uk { "yes" }
 
     application_data { JOB_APPLICATION_DATA }
     completed_steps { JobApplication.completed_steps.keys }
@@ -81,6 +110,7 @@ FactoryBot.define do
 
   trait :status_shortlisted do
     status { :shortlisted }
+    further_instructions { Faker::Lorem.paragraph(sentence_count: 2) }
   end
 
   trait :status_submitted do
@@ -89,6 +119,7 @@ FactoryBot.define do
 
   trait :status_unsuccessful do
     status { :unsuccessful }
+    rejection_reasons { Faker::Lorem.paragraph(sentence_count: 1) }
   end
 
   trait :status_withdrawn do

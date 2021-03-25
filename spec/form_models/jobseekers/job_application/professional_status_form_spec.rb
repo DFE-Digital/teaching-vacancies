@@ -13,6 +13,6 @@ RSpec.describe Jobseekers::JobApplication::ProfessionalStatusForm, type: :model 
   context "when qualified_teacher_status is no" do
     before { allow(subject).to receive(:qualified_teacher_status).and_return("no") }
 
-    it { is_expected.to validate_presence_of(:no_qualified_teacher_status_details) }
+    it { is_expected.to validate_presence_of(:qualified_teacher_status_details) }
   end
 end

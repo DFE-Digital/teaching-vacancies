@@ -17,8 +17,8 @@
 
     - component.slot(:row,
       key: t("helpers.label.jobseekers_job_application_personal_details_form.your_address"),
-      value: safe_join([tag.div(job_application.application_data["building_and_street"], class: "govuk-body"),
-                        tag.div(job_application.application_data["town_or_city"], class: "govuk-body"),
+      value: safe_join([tag.div(job_application.application_data["street_address"], class: "govuk-body"),
+                        tag.div(job_application.application_data["city"], class: "govuk-body"),
                         tag.div(job_application.application_data["postcode"], class: "govuk-body")]),
       html_attributes: { id: "personal_details_your_address" })
 

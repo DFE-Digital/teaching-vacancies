@@ -3,5 +3,5 @@
     - component.slot(:row,
       key: t("helpers.legend.jobseekers_job_application_ask_for_support_form.support_needed"),
       value: safe_join([tag.div(job_application.application_data["support_needed"]&.capitalize, class: "govuk-body"),
-                        tag.div(job_application.application_data["support_details"], class: "govuk-body")]),
+                        tag.div(job_application.application_data["support_needed_details"], class: "govuk-body")]),
       html_attributes: { id: "ask_for_support_support_needed" })

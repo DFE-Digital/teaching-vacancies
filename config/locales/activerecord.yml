@@ -205,10 +205,10 @@ en:
         # Job application
         jobseekers/job_application/ask_for_support_form:
           attributes:
-            support_details:
-              blank: Give details about what support you might need
             support_needed:
               inclusion: Select an option
+            support_needed_details:
+              blank: Give details about what support you might need
         jobseekers/job_application/declarations_form:
           attributes:
             banned_or_disqualified:
@@ -245,8 +245,8 @@ en:
               blank: Describe your religion or belief
         jobseekers/job_application/personal_details_form:
           attributes:
-            building_and_street:
-              blank: Enter your building and street
+            city:
+              blank: Enter your town or city
             first_name:
               blank: Enter your first name
             last_name:
@@ -258,18 +258,18 @@ en:
               invalid: Enter a phone number in the correct format
             postcode:
               blank: Enter your postcode
+            street_address:
+              blank: Enter your building and street
             teacher_reference_number:
               blank: Enter your teacher reference number
               too_long: Teacher reference number must be 11 digits or fewer
-            town_or_city:
-              blank: Enter your town or city
         jobseekers/job_application/personal_statement_form:
           attributes:
             personal_statement:
               blank: Enter your personal statement
         jobseekers/job_application/professional_status_form:
           attributes:
-            no_qualified_teacher_status_details:
+            qualified_teacher_status_details:
               blank: Explain why you do not have QTS
             qualified_teacher_status:
               inclusion: Select yes if you have qualified teacher status

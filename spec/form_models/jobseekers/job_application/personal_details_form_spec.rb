@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Jobseekers::JobApplication::PersonalDetailsForm, type: :model do
-  it { is_expected.to validate_presence_of(:building_and_street) }
+  it { is_expected.to validate_presence_of(:street_address) }
   it { is_expected.to validate_presence_of(:postcode) }
-  it { is_expected.to validate_presence_of(:town_or_city) }
+  it { is_expected.to validate_presence_of(:city) }
 
   it { is_expected.to validate_presence_of(:first_name) }
   it { is_expected.to validate_presence_of(:last_name) }
