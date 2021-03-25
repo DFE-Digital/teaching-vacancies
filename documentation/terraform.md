@@ -2,14 +2,11 @@
 
 ## `terraform plan` via the Makefile
 
+To run the commands below, you will first need to assume the `Deployments` role with [aws-vault](./aws-roles-and-cli-tools.md)
+
 Dev
 ```
 make passcode=MyPasscode tag=dev-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714 dev terraform-app-plan
-```
-
-Staging
-```
-make passcode=MyPasscode tag=47fd1475376bbfa16a773693133569b794408995 staging terraform-app-plan
 ```
 
 Production
@@ -17,9 +14,31 @@ Production
 make passcode=MyPasscode CONFIRM_PRODUCTION=true tag=47fd1475376bbfa16a773693133569b794408995 production terraform-app-plan
 ```
 
+QA
+```
+make passcode=MyPasscode tag=dev-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714 qa terraform-app-plan
+```
+
 Review app
 ```
 make passcode=MyPasscode pr=2086 tag=review-pr-2086-e4c2c4afd991161f88808c907b4c66a30e5f3ef4-20201002203641 review terraform-app-plan
+```
+
+Staging
+```
+make passcode=MyPasscode tag=47fd1475376bbfa16a773693133569b794408995 staging terraform-app-plan
+```
+
+Monitoring
+```
+make passcode=MyPasscode terraform-monitoring-plan
+```
+
+To run the commands below, you will first need to assume the `Administrator` role with [aws-vault](../aws-roles-and-cli-tools.md)
+
+Common
+```
+make terraform-common-plan
 ```
 
 ## `terraform plan` with Terraform CLI commands
@@ -27,8 +46,8 @@ make passcode=MyPasscode pr=2086 tag=review-pr-2086-e4c2c4afd991161f88808c907b4c
 The equivalent of the Makefile `dev terraform-app-plan` is:
 ```
 cd terraform/app
-terraform init
-terraform workspace select dev
+rm -f .terraform.lock.hcl
+terraform init -reconfigure -backend-config="key=dev/app.tfstate"
 terraform plan -var="paas_sso_passcode=MyPasscode" -var="paas_app_docker_image=dfedigital/teaching-vacancies:dev-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714" -var-file ../workspace-variables/dev.tfvars
 ```
 
@@ -69,7 +88,7 @@ Here we see that it's the addition of a feature flag
 "FEATURE_MULTI_SCHOOL_JOBS": "true",
 ```
 
-## Terraform plan as the GitHub Actions deploy user
+## GitHub Actions deploy user
 
 Using the principle of least privilege, GitHub Actions uses a separate IAM account for Terraform
 The `deploy` user is itself created through Terraform, in the [terraform/common/iam.tf](../terraform/common/iam.tf) file
@@ -77,36 +96,4 @@ The `deploy` user is itself created through Terraform, in the [terraform/common/
 ### Deploy user Access key and Secret key
 
 These are output by Terraform at the end of a `terraform apply` command, i.e. running `make terraform-common-apply` will output
-Access Key ID, Secret access key for the `bigquery` and `deploy` users
-
-### Configure AWS credentials file
-
-In `~/.aws/credentials`, [create a named profile](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html) like
-
-```
-[deploy]
-aws_access_key_id = AKIAkeyID
-aws_secret_access_key = Bz7eGsecretkey
-```
-
-We note that in [provider.tf](../terraform/app/provider.tf), we do not specify a profile:
-
-```
-provider aws {
-  region = var.region
-}
-```
-
-Therefore as per [this Gruntwork blog](https://blog.gruntwork.io/authenticating-to-aws-with-the-credentials-file-d16c0fbcbf9e), we can first set the profile with an environment variable
-
-```
-export AWS_PROFILE=deploy
-terraform init -input=false -backend-config="workspace_key_prefix=review:" terraform/app
-terraform workspace select default terraform/app
-terraform workspace delete review-pr-2310 terraform/app
-```
-
-When you've finished, unset the environment variable with
-```
-unset AWS_PROFILE
-```
+Access Key ID, Secret access key for the `deploy` user, and then used by GitHub Actions workflows to assume the `Deployments` role.
