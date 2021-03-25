@@ -14,7 +14,7 @@
         = f.govuk_radio_button :qualified_teacher_status, :yes, link_errors: true do
           = f.govuk_text_field :qualified_teacher_status_year
         = f.govuk_radio_button :qualified_teacher_status, :no do
-          = f.govuk_text_area :no_qualified_teacher_status_details
+          = f.govuk_text_area :qualified_teacher_status_details
         = f.govuk_radio_button :qualified_teacher_status, :on_track
 
       = f.govuk_collection_radio_buttons :statutory_induction_complete, %w[yes no], :to_s, :capitalize, inline: true

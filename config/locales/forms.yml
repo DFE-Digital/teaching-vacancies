@@ -220,7 +220,7 @@ en:
         comment: Would you like to add any further comments about the relevancy of the job alerts you have received?
 
       jobseekers_job_application_ask_for_support_form:
-        support_details: Tell us any information you think is relevant
+        support_needed_details: Tell us any information you think is relevant
         support_needed_options:
           "no": No, I do not need support
           "yes": Yes, I would like to share some information about the support that I need
@@ -280,19 +280,19 @@ en:
           highly_dissatisfied: Highly dissatisfied
         comment: Do you have any suggestions on how we should improve the service?
       jobseekers_job_application_personal_details_form:
-        your_address: Your address
-        building_and_street: Building and street
+        city: Town or city
         first_name: First name
         last_name: Last name
         national_insurance_number: National Insurance number
         phone_number: Phone number
         previous_names: Previous names
-        town_or_city: Town or city
+        street_address: Building and street
         teacher_reference_number: Teacher reference number
+        your_address: Your address
       jobseekers_job_application_personal_statement_form:
         personal_statement: Your personal statement
       jobseekers_job_application_professional_status_form:
-        no_qualified_teacher_status_details: Please explain why you do not have QTS
+        qualified_teacher_status_details: Please explain why you do not have QTS
         qualified_teacher_status_options:
           "no": "No"
           on_track: I'm on track to receive my QTS

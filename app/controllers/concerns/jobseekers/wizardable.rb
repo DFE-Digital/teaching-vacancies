@@ -36,14 +36,14 @@ module Jobseekers::Wizardable
 
   def personal_details_params(params)
     params.require(:jobseekers_job_application_personal_details_form)
-          .permit(:building_and_street, :email_address, :first_name, :last_name, :national_insurance_number,
-                  :phone_number, :previous_names, :postcode, :teacher_reference_number, :town_or_city)
+          .permit(:city, :email_address, :first_name, :last_name, :national_insurance_number,
+                  :phone_number, :previous_names, :postcode, :street_address, :teacher_reference_number)
   end
 
   def professional_status_params(params)
     params.require(:jobseekers_job_application_professional_status_form)
           .permit(:qualified_teacher_status, :qualified_teacher_status_year,
-                  :no_qualified_teacher_status_details, :statutory_induction_complete)
+                  :qualified_teacher_status_details, :statutory_induction_complete)
   end
 
   def employment_history_params(params)
@@ -68,7 +68,7 @@ module Jobseekers::Wizardable
 
   def ask_for_support_params(params)
     params.require(:jobseekers_job_application_ask_for_support_form)
-          .permit(:support_needed, :support_details)
+          .permit(:support_needed, :support_needed_details)
   end
 
   def declarations_params(params)

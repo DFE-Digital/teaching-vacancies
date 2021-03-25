@@ -29,8 +29,8 @@ RSpec.describe "Jobseekers can view a job application" do
       %w[first_name last_name previous_names phone_number teacher_reference_number national_insurance_number].each do |attribute|
         expect(personal_details.body.rows(id: "personal_details_#{attribute}").first.value.text).to eq(job_application.application_data[attribute])
       end
-      expect(personal_details.body.rows(id: "personal_details_your_address").first.value.text).to include(job_application.application_data["building_and_street"])
-      expect(personal_details.body.rows(id: "personal_details_your_address").first.value.text).to include(job_application.application_data["town_or_city"])
+      expect(personal_details.body.rows(id: "personal_details_your_address").first.value.text).to include(job_application.application_data["street_address"])
+      expect(personal_details.body.rows(id: "personal_details_your_address").first.value.text).to include(job_application.application_data["city"])
       expect(personal_details.body.rows(id: "personal_details_your_address").first.value.text).to include(job_application.application_data["postcode"])
     end
 
@@ -85,7 +85,7 @@ RSpec.describe "Jobseekers can view a job application" do
 
     show_page.steps(text: I18n.t("jobseekers.job_applications.build.ask_for_support.heading")).first.within do |ask_for_support|
       expect(ask_for_support.body.rows(id: "ask_for_support_support_needed").first.value.text).to include(job_application.application_data["support_needed"].capitalize)
-      expect(ask_for_support.body.rows(id: "ask_for_support_support_needed").first.value.text).to include(job_application.application_data["support_details"])
+      expect(ask_for_support.body.rows(id: "ask_for_support_support_needed").first.value.text).to include(job_application.application_data["support_needed_details"])
     end
 
     show_page.steps(text: I18n.t("jobseekers.job_applications.build.declarations.heading")).first.within do |declarations|

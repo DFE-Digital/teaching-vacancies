@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_22_101659) do
+ActiveRecord::Schema.define(version: 2021_03_25_105120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -107,6 +107,28 @@ ActiveRecord::Schema.define(version: 2021_03_22_101659) do
     t.datetime "shortlisted_at"
     t.datetime "unsuccessful_at"
     t.datetime "withdrawn_at"
+    t.string "first_name", default: "", null: false
+    t.string "last_name", default: "", null: false
+    t.string "previous_names", default: "", null: false
+    t.string "street_address", default: "", null: false
+    t.string "city", default: "", null: false
+    t.string "postcode", default: "", null: false
+    t.string "phone_number", default: "", null: false
+    t.string "teacher_reference_number", default: "", null: false
+    t.string "national_insurance_number", default: "", null: false
+    t.string "qualified_teacher_status", default: "", null: false
+    t.string "qualified_teacher_status_year", default: "", null: false
+    t.text "qualified_teacher_status_details", default: "", null: false
+    t.string "statutory_induction_complete", default: "", null: false
+    t.text "personal_statement", default: "", null: false
+    t.string "support_needed", default: "", null: false
+    t.text "support_needed_details", default: "", null: false
+    t.string "banned_or_disqualified", default: "", null: false
+    t.string "close_relationships", default: "", null: false
+    t.text "close_relationships_details", default: "", null: false
+    t.string "right_to_work_in_uk", default: "", null: false
+    t.text "further_instructions", default: "", null: false
+    t.text "rejection_reasons", default: "", null: false
   end
 
   create_table "jobseekers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
