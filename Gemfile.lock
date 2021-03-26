@@ -401,7 +401,7 @@ GEM
       rspec-expectations (~> 3.10)
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
-    rspec-sonarqube-formatter (1.4.0)
+    rspec-sonarqube-formatter (1.5.0)
       htmlentities (~> 4.3.3)
       rspec (~> 3.0)
     rspec-support (3.10.2)
