@@ -21,7 +21,6 @@ gem "google-apis-indexing_v3"
 gem "google-cloud-bigquery"
 gem "google_drive", require: false
 gem "govuk-components"
-gem "gov_uk_date_fields"
 gem "govuk_design_system_formbuilder"
 gem "high_voltage"
 gem "httparty"
