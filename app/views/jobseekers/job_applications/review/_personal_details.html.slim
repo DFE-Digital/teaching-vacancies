@@ -12,7 +12,7 @@
 
     - component.slot(:row,
       key: t("helpers.label.jobseekers_job_application_personal_details_form.previous_names"),
-      value: job_application.previous_names.presence || t("jobs.not_defined"),
+      value: job_application.previous_names.presence || t("jobseekers.job_applications.not_defined"),
       html_attributes: { id: "personal_details_previous_names" })
 
     - component.slot(:row,
@@ -34,5 +34,5 @@
 
     - component.slot(:row,
       key: t("helpers.label.jobseekers_job_application_personal_details_form.national_insurance_number"),
-      value: job_application.national_insurance_number,
+      value: job_application.national_insurance_number.presence || t("jobseekers.job_applications.not_defined"),
       html_attributes: { id: "personal_details_national_insurance_number" })

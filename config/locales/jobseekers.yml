@@ -199,6 +199,7 @@ en:
         heading: Before you start
         privacy_info: We will store your information so you can use it to quickly apply for other jobs on Teaching Vacancies.
         title: Application
+      not_defined: Not defined (will not be seen on application)
       references:
         email_address: Email address
         job_title: Job title
