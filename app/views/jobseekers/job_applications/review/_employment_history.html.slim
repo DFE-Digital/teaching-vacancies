@@ -10,12 +10,12 @@
 
           - component.slot(:row,
             key: t("helpers.label.jobseekers_job_application_details_employment_history_form.salary"),
-            value: role.data["salary"] || t("jobs.not_defined"),
+            value: role.data["salary"].presence || t("jobseekers.job_applications.not_defined"),
             html_attributes: { id: "employment_history_salary" })
 
           - component.slot(:row,
             key: t("helpers.label.jobseekers_job_application_details_employment_history_form.subjects"),
-            value: role.data["subjects"],
+            value: role.data["subjects"].presence || t("jobseekers.job_applications.not_defined"),
             html_attributes: { id: "employment_history_subjects" })
 
           - component.slot(:row,
@@ -25,7 +25,7 @@
 
           - component.slot(:row,
             key: t("helpers.legend.jobseekers_job_application_details_employment_history_form.started_on"),
-            value: role.data["started_on"],
+            value: role.data["started_on"].presence || t("jobseekers.job_applications.not_defined"),
             html_attributes: { id: "employment_history_started_on" })
 
           - component.slot(:row,
