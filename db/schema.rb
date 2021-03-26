@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_26_085916) do
+ActiveRecord::Schema.define(version: 2021_03_26_134138) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_085916) do
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "jobseeker_id"
     t.uuid "vacancy_id"
-    t.integer "completed_steps", array: true
+    t.integer "completed_steps", default: [], null: false, array: true
     t.datetime "submitted_at"
     t.datetime "draft_at"
     t.datetime "shortlisted_at"
