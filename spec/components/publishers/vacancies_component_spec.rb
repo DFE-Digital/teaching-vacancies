@@ -49,6 +49,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
 
       it "renders the link to view applicants" do
         expect(rendered_component).to include(I18n.t("jobs.manage.view_applicants", count: 1))
+        expect(rendered_component).to include(Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id))
       end
 
       it "does not render the vacancy readable job location in the table" do
@@ -105,6 +106,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
 
       it "renders the link to view applicants" do
         expect(rendered_component).to include(I18n.t("jobs.manage.view_applicants", count: 1))
+        expect(rendered_component).to include(Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id))
       end
 
       it "renders the filters sidebar" do

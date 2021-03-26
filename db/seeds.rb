@@ -185,6 +185,12 @@ Publisher.create(oid: "899808DB-9038-4779-A20A-9E47B9DB99F9",
                  family_name: "Bowen",
                  given_name: "Alex")
 
+Publisher.create(oid: "D9F2B98E-F226-4C82-843B-185DE1311878",
+                 email: "alex.wiskar@digital.education.gov.uk",
+                 organisation_publishers_attributes: organisation_publishers_attributes,
+                 family_name: "Wiskar",
+                 given_name: "Alex")
+
 Publisher.create(oid: "B553A9A4-869B-44FA-8146-D35657EAD590",
                  email: "ben.mitchell@digital.education.gov.uk",
                  organisation_publishers_attributes: organisation_publishers_attributes,

@@ -18,6 +18,7 @@ en:
     warning: Warning
 
   breadcrumbs:
+    active_jobs: Active jobs
     home: Home
     job_applications: My applications
     jobs: Search results

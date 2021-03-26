@@ -126,6 +126,7 @@ Rails.application.routes.draw do
       resource :documents, only: %i[create destroy show], controller: "publishers/vacancies/documents"
       get :review
       get :preview
+      get :job_applications
       get :summary
       post :publish, to: "publishers/vacancies/publish#create"
       get :publish, to: "publishers/vacancies/publish#create"

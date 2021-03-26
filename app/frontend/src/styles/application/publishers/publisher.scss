@@ -6,4 +6,53 @@ $desktop-container-width: 1200px;
       width: $desktop-container-width;
     }
   }
+
+  .vacancy-actions {
+    text-align: right;
+
+    .govuk-button {
+      @include govuk-media-query($from: desktop) {
+        margin-left: govuk-spacing(2);
+      }
+    }
+  }
+
+  .application-header {
+    .govuk-heading-l span {
+      display: inline;
+      margin-right: govuk-spacing(1);
+    }
+  }
+
+  .vacancy-deadline {
+    margin-top: 0;
+    padding: govuk-spacing(3) 0;
+
+    &--passed {
+      h4 {
+        color: $govuk-error-colour;
+      }
+    }
+  }
+
+  .application-count {
+    display: block;
+    margin: govuk-spacing(3);
+    padding: govuk-spacing(3);
+    text-transform: none;
+
+    @include govuk-media-query($until: desktop) {
+      margin: govuk-spacing(3) 0;
+    }
+
+    .govuk-heading-l,
+    .govuk-caption-s {
+      color: inherit;
+      margin: 0;
+    }
+
+    .govuk-caption-s {
+      font-weight: normal;
+    }
+  }
 }

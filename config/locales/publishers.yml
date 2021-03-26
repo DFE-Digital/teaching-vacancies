@@ -160,18 +160,38 @@ en:
         update:
           success: "%{job_title} has been ended early"
       job_applications:
+        actions:
+          reject: Reject
+          shortlist: Shortlist
+        buttons:
+          copy: Copy listing
+          edit: Edit listing
+          end: End listing early
+          relist: Relist
+        deadline:
+          after: Deadline passed
+          before: Application deadline
+        heading: Applicants for
+        no_applicants: Nobody has applied for this job yet
+        received: Received on
+        rejected: Rejected applicants
         reject:
           alert: The candidate will be sent an email telling them that their application has not been successful.
           heading: Reject applicant
           page_title: Reject applicant
+        review: Applicants to review
         shortlist:
           alert: The candidate will be sent an email telling them that they have been shortlisted.
           heading: Shortlist applicant
           page_title: Shortlist applicant
+        shortlisted: Shortlisted applicants
         show:
           page_title: Application
           status_heading: Applicant status
           timeline: Timeline
+        sort_by:
+          date_received: date received (most recent)
+          applicant_last_name: applicant last name (A to Z)
         update_status:
           unsuccessful: "%{name} has been sent an email telling them their application has not been successful"
           shortlisted: "%{name} has been sent an email telling them that they have been shortlisted"

@@ -48,7 +48,7 @@ class Publishers::VacanciesComponent < ViewComponent::Base
 
     if vacancy.job_applications.any?
       link = govuk_link_to(I18n.t("jobs.manage.view_applicants", count: vacancy.job_applications.count),
-                           organisation_job_job_applications_path(vacancy),
+                           organisation_job_job_applications_path(vacancy.id),
                            class: "govuk-link--no-visited-state")
       tag.div(card.labelled_item(I18n.t("jobs.manage.applications"), link))
     elsif vacancy.job_applications.none?
