@@ -10,12 +10,8 @@ RSpec.describe Jobseekers::JobApplication::AskForSupportForm, type: :model do
   end
 
   context "when support_needed is no" do
-    context "when params contains support_needed_details" do
-      subject { described_class.new({ support_needed: "no", support_needed_details: "Some misplaced details" }) }
+    before { allow(subject).to receive(:support_needed).and_return("no") }
 
-      it "sets support_needed_details to nil" do
-        expect(subject.support_needed_details).to be_blank
-      end
-    end
+    it { is_expected.to validate_absence_of(:support_needed_details) }
   end
 end

@@ -93,8 +93,8 @@ RSpec.describe "Job applications" do
       end
     end
 
-    context "when the commit param is `Save as draft`" do
-      let(:button) { I18n.t("buttons.save_as_draft") }
+    context "when the commit param is `Save and come back later`" do
+      let(:button) { I18n.t("buttons.save_and_come_back") }
 
       it "does not submit the job application and redirects to applications dashboard" do
         assert_emails 0 do

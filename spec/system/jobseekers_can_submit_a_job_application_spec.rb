@@ -48,7 +48,7 @@ RSpec.describe "Jobseekers can submit a job application" do
     end
 
     it "allows jobseekers to save application and go to dashboard" do
-      click_on I18n.t("buttons.save_as_draft")
+      click_on I18n.t("buttons.save_and_come_back")
 
       expect(JobApplication.first.status).to eq("draft")
       expect(page).to have_content(I18n.t("messages.jobseekers.job_applications.saved"))

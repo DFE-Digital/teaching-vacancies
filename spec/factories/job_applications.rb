@@ -101,6 +101,17 @@ FactoryBot.define do
     # Personal statement
     personal_statement { "" }
 
+    # Equal opportunities
+    disability { "" }
+    gender { "" }
+    gender_description { "" }
+    orientation { "" }
+    orientation_description { "" }
+    ethnicity { "" }
+    ethnicity_description { "" }
+    religion { "" }
+    religion_description { "" }
+
     # Ask for support
     support_needed { "" }
     support_needed_details { "" }
