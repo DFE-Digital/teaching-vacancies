@@ -85,7 +85,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
   end
 
   def upload_document(document_params)
-    add_file_type_error(document_params.original_filename) unless valid_content_type?(document_params.content_type)
+    add_file_type_error(document_params.original_filename) unless valid_content_type?(document_params.tempfile)
     add_file_size_error(document_params.original_filename) if document_params.size > FILE_SIZE_LIMIT
 
     document_upload = DocumentUpload.new(
@@ -141,7 +141,11 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     }
   end
 
-  def valid_content_type?(content_type)
-    CONTENT_TYPES_ALLOWED.include?(content_type)
+  def valid_content_type?(file)
+    content_type = MimeMagic.by_magic(file)&.type
+    return true if CONTENT_TYPES_ALLOWED.include?(content_type)
+
+    Rails.logger.info("Attempted to upload forbidden file type '#{content_type}'")
+    false
   end
 end
