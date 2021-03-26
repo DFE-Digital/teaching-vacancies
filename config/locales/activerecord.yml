@@ -206,9 +206,11 @@ en:
         jobseekers/job_application/ask_for_support_form:
           attributes:
             support_needed:
-              inclusion: Select an option
+              inclusion: Select yes if you would like interview support
             support_needed_details:
               blank: Give details about what support you might need
+              # TODO: Update content once confirmed
+              present: If you don't need support, extra information must be blank
         jobseekers/job_application/declarations_form:
           attributes:
             banned_or_disqualified:
