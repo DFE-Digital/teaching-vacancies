@@ -1,44 +1,3 @@
-JOB_APPLICATION_DATA = {
-  # Personal details
-  first_name: Faker::Name.first_name,
-  last_name: Faker::Name.last_name,
-  previous_names: Faker::Name.name,
-  street_address: Faker::Address.street_address,
-  city: Faker::Address.city,
-  postcode: Faker::Address.postcode,
-  phone_number: "01234 567890",
-  teacher_reference_number: "12345678",
-  national_insurance_number: "QQ 12 34 56 C",
-  # Professional status
-  qualified_teacher_status: "yes",
-  qualified_teacher_status_year: "1990",
-  statutory_induction_complete: "yes",
-  # Personal statement
-  personal_statement: Faker::Lorem.paragraph(sentence_count: 8),
-  # Equal opportunities
-  disability: "no",
-  gender: "other",
-  gender_description: Faker::Lorem.sentence,
-  orientation: "other",
-  orientation_description: Faker::Lorem.sentence,
-  ethnicity: "other",
-  ethnicity_description: Faker::Lorem.sentence,
-  religion: "other",
-  religion_description: Faker::Lorem.sentence,
-  # Ask for support
-  support_needed: "yes",
-  support_needed_details: Faker::Lorem.paragraph(sentence_count: 2),
-  # Declarations
-  banned_or_disqualified: "no",
-  close_relationships: "yes",
-  close_relationships_details: Faker::Lorem.paragraph(sentence_count: 1),
-  right_to_work_in_uk: "yes",
-
-  # From publisher
-  further_instructions: Faker::Lorem.paragraph(sentence_count: 2),
-  rejection_reasons: Faker::Lorem.paragraph(sentence_count: 1),
-}.freeze
-
 FactoryBot.define do
   factory :job_application do
     transient do
@@ -97,7 +56,6 @@ FactoryBot.define do
     close_relationships_details { Faker::Lorem.paragraph(sentence_count: 1) }
     right_to_work_in_uk { "yes" }
 
-    application_data { JOB_APPLICATION_DATA }
     completed_steps { JobApplication.completed_steps.keys }
 
     after :create do |job_application, options|
@@ -119,7 +77,40 @@ FactoryBot.define do
 
   trait :status_draft do
     status { :draft }
-    application_data { {} }
+
+    # Personal details
+    first_name { "" }
+    last_name { "" }
+    previous_names { "" }
+    street_address { "" }
+    city { "" }
+    postcode { "" }
+    phone_number { "" }
+    teacher_reference_number { "" }
+    national_insurance_number { "" }
+
+    # Professional statement
+    qualified_teacher_status { "" }
+    qualified_teacher_status_year { "" }
+    statutory_induction_complete { "" }
+
+    # Employment history
+    gaps_in_employment { "" }
+    gaps_in_employment_details { "" }
+
+    # Personal statement
+    personal_statement { "" }
+
+    # Ask for support
+    support_needed { "" }
+    support_needed_details { "" }
+
+    # Declarations
+    banned_or_disqualified { "" }
+    close_relationships { "" }
+    close_relationships_details { "" }
+    right_to_work_in_uk { "" }
+
     completed_steps { [] }
   end
 

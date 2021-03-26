@@ -41,7 +41,6 @@ shared:
     - withdrawn_at
     - jobseeker_id
     - vacancy_id
-    - application_data
     - completed_steps
   jobseekers:
     - id

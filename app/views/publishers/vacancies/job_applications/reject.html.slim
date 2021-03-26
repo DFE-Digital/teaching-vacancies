@@ -4,7 +4,7 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       h2.govuk-heading-m class="govuk-!-margin-bottom-0"
-        = "#{job_application.application_data['first_name']} #{job_application.application_data['last_name']}"
+        = "#{job_application.first_name} #{job_application.last_name}"
       .govuk-caption-l
         = t("jobseekers.job_applications.heading_component.caption",
             job_title: vacancy.job_title, organisation_name: vacancy.parent_organisation_name)

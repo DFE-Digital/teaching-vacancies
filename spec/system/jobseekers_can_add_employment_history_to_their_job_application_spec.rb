@@ -39,8 +39,8 @@ RSpec.describe "Jobseekers can add employment history to their job application" 
         choose "Yes", name: "jobseekers_job_application_employment_history_form[gaps_in_employment]"
         fill_in "jobseekers_job_application_employment_history_form[gaps_in_employment_details]", with: "Some details about gaps in employment"
         click_on I18n.t("buttons.save_as_draft")
-        expect(job_application.reload.application_data["gaps_in_employment"]).to eq("yes")
-        expect(job_application.reload.application_data["gaps_in_employment_details"]).to eq("Some details about gaps in employment")
+        expect(job_application.reload.gaps_in_employment).to eq("yes")
+        expect(job_application.reload.gaps_in_employment_details).to eq("Some details about gaps in employment")
       end
 
       context "when there is at least one role" do
