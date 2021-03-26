@@ -114,6 +114,7 @@ en:
           heading: References
           no_references: No referees specified
           title: References — Application
+      caption: "%{job_title} at %{organisation}"
       confirm_destroy:
         title: Delete draft
         heading: Delete draft
@@ -164,9 +165,7 @@ en:
       feedbacks:
         create:
           success: Thank you for your feedback
-      heading_component:
-        caption: "%{job_title} at %{organisation_name}"
-        heading: Application
+      heading: Application
       index:
         continue_application: Continue application
         closing_date: Closing date

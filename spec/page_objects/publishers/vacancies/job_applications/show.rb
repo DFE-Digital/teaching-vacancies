@@ -5,7 +5,7 @@ module PageObjects
         class Show < SitePrism::Page
           set_url "/organisation/jobs/{job_id}/job_applications/{id}"
 
-          section :banner, ".jobs-banner" do
+          section :banner, ".banner-component" do
             element :job_title, "h1.govuk-heading-xl"
             element :status, "strong.govuk-tag"
           end

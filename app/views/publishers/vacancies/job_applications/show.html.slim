@@ -1,24 +1,20 @@
 - content_for :page_title_prefix, t(".page_title")
 
-.jobs-banner
-  .govuk-width-container
-    .govuk-grid-row
-      .govuk-grid-column-full
-        = govuk_breadcrumbs breadcrumbs: { "#{t("publishers.vacancies_component.published.tab_heading")}": jobs_with_type_organisation_path(:published),
-                                           "#{vacancy.job_title}": "",
-                                           "#{job_application.first_name} #{job_application.last_name}": "" }
+= render BannerComponent.new
+  = govuk_breadcrumbs breadcrumbs: { "#{t("publishers.vacancies_component.published.tab_heading")}": jobs_with_type_organisation_path(:published),
+                                      "#{vacancy.job_title}": "",
+                                      "#{job_application.first_name} #{job_application.last_name}": "" }
 
-        .govuk-caption-l class="govuk-!-margin-top-5"
-          = t("jobseekers.job_applications.heading_component.caption",
-              job_title: vacancy.job_title, organisation_name: vacancy.parent_organisation_name)
+  .govuk-caption-l class="govuk-!-margin-top-5"
+    = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
 
-        h1.govuk-heading-xl class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
-          // TODO: Implement reference numbers
-          = "TV12345 - #{job_application.first_name} #{job_application.last_name}"
+  h1.govuk-heading-xl class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
+    // TODO: Implement reference numbers
+    = "TV12345 - #{job_application.first_name} #{job_application.last_name}"
 
-        div
-          span.govuk-body class="govuk-!-margin-right-5" = t(".status_heading")
-          = publisher_job_application_status_tag(job_application.status)
+  div
+    span.govuk-body class="govuk-!-margin-right-5" = t(".status_heading")
+    = publisher_job_application_status_tag(job_application.status)
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
