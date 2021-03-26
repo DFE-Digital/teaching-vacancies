@@ -6,14 +6,29 @@ GOVUK_FRONTEND_PREFIX=https://github.com/alphagov/govuk-frontend/releases/downlo
 GOVUK_FRONTEND_ARCHIVE_NAME=release-v${RELEASE}.zip
 GOVUK_FRONTEND_URL="${GOVUK_FRONTEND_PREFIX}${GOVUK_FRONTEND_ARCHIVE_NAME}"
 
-wget ${GOVUK_FRONTEND_URL}
+# If archive file does not exist locally, attempt to download it
+if [[ ! -f ${GOVUK_FRONTEND_ARCHIVE_NAME} ]]; then
+  # we use wget to support the redirect to the underlying files being served from github-releases.githubusercontent.com
+  wget -O ${GOVUK_FRONTEND_ARCHIVE_NAME} ${GOVUK_FRONTEND_URL}
+fi
+# If archive file still does not exist locally, then exit this script
 if [[ ! -f "${GOVUK_FRONTEND_ARCHIVE_NAME}" ]]; then
   echo "${GOVUK_FRONTEND_ARCHIVE_NAME} does not exist."
   exit 1
 else
   unzip ${GOVUK_FRONTEND_ARCHIVE_NAME} -d ./offline
 fi
+
+# Rename version-specific CSS to well-known name
 mv ./offline/govuk-frontend-${RELEASE}.min.css ./offline/govuk-frontend.min.css
+# The supplied CSS expects the assets folder to be in the root of the file structure
+# We want to be able to serve from a subfolder
+# Use sed stream editor to replace links starting `url(/assets` with `url(./assets`
+sed -i 's/url(\/assets/url(.\/assets/g' ./offline/govuk-frontend.min.css
+# Remove specific support for IE8
 rm ./offline/govuk-frontend-ie8-${RELEASE}.min.css
+# There is no JavaScript in this simple HTML file
 rm ./offline/govuk-frontend-${RELEASE}.min.js
+# Although there is a favicon.ico supplied in /assets/images/favicon.ico
+# Copy the favicon from the /public folder for consistency
 cp ./public/favicon.ico ./offline/favicon.ico

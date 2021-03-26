@@ -12,11 +12,16 @@ The [regenerate-offline](../bin/regenerate-offline) script:
 
 - downloads and unzips a particular version of the [Gov.UK frontend](https://github.com/alphagov/govuk-frontend/releases/) into the [offline](../offline) folder
 - renames the version-specific minified CSS file to `offline/govuk-frontend.min.css`
-- copies the `favicon.ico`
+- does a search and replace to allow the site to be served from a sub-folder
+- copies the `favicon.ico` from `/public/favicon.ico`
+
+The [sync-offline](../bin/sync-offline) script:
+
+- uses the AWS CLI to synchronise with the offline site S3 bucket
 
 The GitHub Action [deploy](../.github/workflows/deploy.yml) workflow includes these steps:
-- run the regenerate-offline script
-- use the AWS CLI to synchronise with the offline site S3 bucket
+- runs the regenerate-offline script
+- runs the sync-offline script
 
 ## How to update
 
@@ -32,3 +37,7 @@ The offline page is a single HTML file in [offline/index.html](../offline/index.
 RELEASE=3.11.0
 ```
 - When the change is merged, the new version will be synchronised
+
+## How to test
+
+- Check the underlying page [in the S3 bucket](https://530003481352-offline-site.s3.eu-west-2.amazonaws.com/teaching-vacancies-offline/index.html)
