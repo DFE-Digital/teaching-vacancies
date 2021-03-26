@@ -80,6 +80,17 @@ FactoryBot.define do
     support_needed { "yes" }
     support_needed_details { Faker::Lorem.paragraph(sentence_count: 2) }
 
+    # Equal opportunities
+    disability { "no" }
+    gender { "other" }
+    gender_description { Faker::Lorem.sentence }
+    orientation { "other" }
+    orientation_description { Faker::Lorem.sentence }
+    ethnicity { "other" }
+    ethnicity_description { Faker::Lorem.sentence }
+    religion { "other" }
+    religion_description { Faker::Lorem.sentence }
+
     # Declarations
     banned_or_disqualified { "no" }
     close_relationships { "yes" }
