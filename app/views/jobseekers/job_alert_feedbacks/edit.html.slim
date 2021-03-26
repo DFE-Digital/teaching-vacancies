@@ -4,7 +4,7 @@
   .govuk-grid-row
     .govuk-grid-column-full
       - unless @feedback.relevant_to_user
-        = render Shared::NotificationComponent.new variant: "notice",
+        = render NotificationComponent.new variant: "notice",
           body: t(".change_alert_text", link: govuk_link_to(t(".change_alert_link"), edit_subscription_path(@subscription.token))),
           background: true,
           icon: true,

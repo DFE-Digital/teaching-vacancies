@@ -10,7 +10,7 @@
 
       h1.govuk-heading-xl class="govuk-!-margin-top-5 govuk-!-margin-bottom-5" = t(".heading")
 
-      = render Shared::NotificationComponent.new variant: "warning", body: t(".alert"), icon: true, dismiss: false
+      = render NotificationComponent.new variant: "warning", body: t(".alert"), icon: true, dismiss: false
 
       = form_for form, url: organisation_job_job_application_update_status_path(vacancy.id, job_application.id) do |f|
         = f.govuk_text_area :further_instructions, label: { size: "s" }, rows: 10, form_group: { classes: "optional-field" }

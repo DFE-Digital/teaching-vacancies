@@ -1,5 +1,5 @@
-import '../../../frontend/src/lib/polyfill/closest.polyfill';
-import '../../../frontend/src/lib/polyfill/remove.polyfill';
+import '../../frontend/src/lib/polyfill/closest.polyfill';
+import '../../frontend/src/lib/polyfill/remove.polyfill';
 
 const CTA_LINK_CLASS = 'js-dismissible__link';
 const DISMISSIBLE_ELEMENT_SELECTOR = '.js-dismissible';

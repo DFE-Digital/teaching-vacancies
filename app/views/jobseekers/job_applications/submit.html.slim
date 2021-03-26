@@ -8,7 +8,7 @@
     .govuk-grid-column-two-thirds
       h2.govuk-heading-l = t(".next_step.heading")
 
-      = render Shared::NotificationComponent.new variant: "notice",
+      = render NotificationComponent.new variant: "notice",
         title: t(".notice.title"), body: t(".notice.body"),
         background: true,
         icon: true,
