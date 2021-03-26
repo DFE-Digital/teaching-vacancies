@@ -1,11 +1,11 @@
-class Shared::Previews::NotificationComponentPreview::OptionsForm
+class Previews::NotificationComponentPreview::OptionsForm
   include ActiveModel::Model
 
   attr_reader :background, :dismiss, :icon
 
   def initialize(params = {})
-    preview_criteria = if params[:shared_previews_notification_component_preview_options_form].present?
-                         JSON.parse(params[:shared_previews_notification_component_preview_options_form].to_json).symbolize_keys
+    preview_criteria = if params[:previews_notification_component_preview_options_form].present?
+                         JSON.parse(params[:previews_notification_component_preview_options_form].to_json).symbolize_keys
                        else
                          {}
                        end

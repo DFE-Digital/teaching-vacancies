@@ -18,7 +18,7 @@
       = govuk_link_to t("buttons.withdraw_application"), jobseekers_job_application_confirm_withdraw_path(job_application), button: true, class: "govuk-button--warning"
 
     - if job_application.shortlisted?
-      = render Shared::NotificationComponent.new variant: "notice", title: t(".shortlist_alert.title"), body: t(".shortlist_alert.body", organisation: vacancy.parent_organisation_name), icon: true, dismiss: false, background: true
+      = render NotificationComponent.new variant: "notice", title: t(".shortlist_alert.title"), body: t(".shortlist_alert.body", organisation: vacancy.parent_organisation_name), icon: true, dismiss: false, background: true
 
     // TODO: Complete in later ticket
     .grey-border-box

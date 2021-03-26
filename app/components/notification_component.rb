@@ -1,4 +1,4 @@
-class Shared::NotificationComponent < GovukComponent::Base
+class NotificationComponent < GovukComponent::Base
   attr_accessor :variant, :links, :title, :body, :dismiss, :background, :icon
 
   def self.variants

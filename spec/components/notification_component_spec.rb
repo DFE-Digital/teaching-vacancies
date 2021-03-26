@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Shared::NotificationComponent, type: :component do
+RSpec.describe NotificationComponent, type: :component do
   let(:variant) { "notice" }
   let(:icon) { false }
   let(:body) { "This is content" }
