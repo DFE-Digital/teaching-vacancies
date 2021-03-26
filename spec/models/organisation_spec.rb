@@ -18,7 +18,7 @@ RSpec.describe Organisation do
     context "when the organisation is not a local authority" do
       let(:local_authority) { create(:local_authority, name: "Camden") }
 
-      it "does not append 'local authority' when reading the name" do
+      it "appends 'local authority' when reading the name" do
         expect(local_authority.name).to eq("Camden local authority")
       end
     end
@@ -31,7 +31,7 @@ RSpec.describe Organisation do
 
     before { allow(Rails.configuration).to receive(:local_authorities_extra_schools).and_return(local_authorities_extra_schools) }
 
-    context "when there are schools outside local authority" do
+    context "when there are schools outside the local authority" do
       let(:local_authorities_extra_schools) { { 111 => [123_456, 999_999], 999 => [654_321, 111_111] } }
 
       it "returns the schools with matching URNs" do

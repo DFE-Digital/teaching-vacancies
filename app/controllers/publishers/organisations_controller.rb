@@ -8,8 +8,8 @@ class Publishers::OrganisationsController < Publishers::BaseController
     @publisher_preference = PublisherPreference.find_or_create_by(publisher: current_publisher, organisation: current_organisation)
     @sort = Publishers::VacancySort.new(current_organisation, @selected_type).update(column: params[:sort_column])
     @sort_form = SortForm.new(@sort.column)
-    @awaiting_feedback_count = current_organisation.vacancies.awaiting_feedback.count
-    flash.now[:notice] = t(".awaiting", count: @awaiting_feedback_count) if @awaiting_feedback_count.positive?
+    awaiting_feedback_count = current_organisation.all_vacancies.awaiting_feedback.count
+    flash.now[:notice] = t(".awaiting", count: awaiting_feedback_count) if awaiting_feedback_count.positive?
     render_draft_saved_message if params[:from_review]
   end
 
