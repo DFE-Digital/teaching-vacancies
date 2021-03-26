@@ -47,9 +47,6 @@ class Vacancy < ApplicationRecord
 
   delegate :name, to: :parent_organisation, prefix: true, allow_nil: true
 
-  acts_as_gov_uk_date :starts_on, :publish_on,
-                      :expires_on, error_clash_behaviour: :omit_gov_uk_date_field_error
-
   scope :active, (-> { where(status: %i[published draft]) })
   scope :applicable, (-> { where("expires_at >= ?", Time.current) })
   scope :expired, (-> { published.where("expires_at < ?", Time.current) })
