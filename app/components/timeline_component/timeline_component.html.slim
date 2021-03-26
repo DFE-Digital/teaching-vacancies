@@ -1,7 +1,7 @@
 = tag.aside(class: classes, **html_attributes) do
   - if heading.present?
-    == heading
+    = heading
   - if items.present?
     ul.timeline-component__items
       - items.each do |item|
-        == item
+        = item
