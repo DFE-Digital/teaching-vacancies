@@ -2,7 +2,14 @@ source "https://rubygems.org"
 
 ruby "2.7.2"
 
-gem "rails", "~> 6.1.3"
+RAILS_VERSION = "~> 6.1.3".freeze
+gem "actionmailer", RAILS_VERSION
+gem "actionpack", RAILS_VERSION
+gem "activejob", RAILS_VERSION
+gem "activemodel", RAILS_VERSION
+gem "activerecord", RAILS_VERSION
+gem "activesupport", RAILS_VERSION
+gem "railties", RAILS_VERSION
 
 gem "activerecord-session_store"
 gem "addressable"
