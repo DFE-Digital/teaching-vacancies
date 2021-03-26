@@ -1,6 +1,9 @@
 - content_for :page_title_prefix, t(".title")
 
-= render(Jobseekers::JobApplications::HeadingComponent.new(vacancy: vacancy, back_path: job_path(vacancy)))
+= render BannerComponent.new do
+  = govuk_back_link text: t("buttons.back"), href: job_path(vacancy), classes: "govuk-!-margin-top-3"
+  .govuk-caption-l class="govuk-!-margin-top-5" = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
+  h2.govuk-heading-xl class="govuk-!-margin-bottom-5" = t("jobseekers.job_applications.heading")
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds class="govuk-!-margin-bottom-5"

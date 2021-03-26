@@ -3,17 +3,16 @@
     .govuk-grid-column-full
       .banner-warning = t("jobs.listing_expired")
 
-.jobs-banner
-  .govuk-width-container
+= render BannerComponent.new do
     = govuk_breadcrumbs breadcrumbs: { "#{t("breadcrumbs.home")}": root_path,
                                        "#{t("breadcrumbs.jobs")}": referred_from_jobs_path? ? request.referrer : jobs_path,
                                        "#{@vacancy.job_title}": "" }
-    .govuk-grid-row
-      .govuk-grid-column-full
-        h1.govuk-heading-xl class="govuk-!-margin-bottom-2"
-          = @vacancy.job_title
-        h2.govuk-caption-l.job-caption class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
-          = vacancy_job_location(@vacancy)
+
+    h1.govuk-heading-xl class="govuk-!-margin-bottom-2"
+      = @vacancy.job_title
+    h2.govuk-caption-l.job-caption class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
+      = vacancy_job_location(@vacancy)
+
     .govuk-grid-row
       - if JobseekerApplicationsFeature.enabled? && @vacancy.apply_through_teaching_vacancies == "yes" && @vacancy.expires_at.future?
         .govuk-grid-column-one-third
@@ -39,11 +38,12 @@
           params: { search_criteria: @devised_job_alert_search_criteria, origin: request.original_fullpath }
 
       - unless defined?(job_application) && job_application.present?
-        = render BannerButtonComponent.new text: t("jobseekers.saved_jobs.#{@saved_job.present? ? 'saved' : 'save'}"),
-          href: @saved_job.present? ? jobseekers_saved_job_path(@vacancy.id, @saved_job) : new_jobseekers_saved_job_path(@vacancy.id),
-          icon: @saved_job.present? ? "saved" : "save",
-          method: @saved_job.present? ? :delete : :get,
-          params: { click_event: "vacancy_save_to_account_clicked" }
+        .govuk-grid-column-one-third
+          = render BannerButtonComponent.new text: t("jobseekers.saved_jobs.#{@saved_job.present? ? 'saved' : 'save'}"),
+            href: @saved_job.present? ? jobseekers_saved_job_path(@vacancy.id, @saved_job) : new_jobseekers_saved_job_path(@vacancy.id),
+            icon: @saved_job.present? ? "saved" : "save",
+            method: @saved_job.present? ? :delete : :get,
+            params: { click_event: "vacancy_save_to_account_clicked" }
 
 .govuk-grid-row
 

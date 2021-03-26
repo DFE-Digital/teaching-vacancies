@@ -8,7 +8,7 @@ module PageObjects
 
         sections :steps, PageObjects::Shared::ReviewSection, ".review-component"
 
-        section :banner, ".jobs-banner" do
+        section :banner, ".banner-component" do
           element :job_title, "h1.govuk-heading-xl"
           element :status, "strong.govuk-tag"
         end

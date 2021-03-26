@@ -6,8 +6,7 @@
       h2.govuk-heading-m class="govuk-!-margin-bottom-0"
         = "#{job_application.first_name} #{job_application.last_name}"
       .govuk-caption-l
-        = t("jobseekers.job_applications.heading_component.caption",
-            job_title: vacancy.job_title, organisation_name: vacancy.parent_organisation_name)
+        = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
 
       h1.govuk-heading-xl class="govuk-!-margin-top-5 govuk-!-margin-bottom-5" = t(".heading")
 

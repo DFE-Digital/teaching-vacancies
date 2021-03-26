@@ -1,4 +1,6 @@
-.jobs-banner {
+@import 'base_component';
+
+.banner-component {
   background-color: govuk-colour('light-grey');
   left: 50%;
   margin-bottom: govuk-spacing(6);
