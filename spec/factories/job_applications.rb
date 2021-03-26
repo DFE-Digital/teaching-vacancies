@@ -69,12 +69,27 @@ FactoryBot.define do
     qualified_teacher_status_year { "1990" }
     statutory_induction_complete { "yes" }
 
+    # Employment history
+    gaps_in_employment { "yes" }
+    gaps_in_employment_details { Faker::Lorem.paragraph(sentence_count: 2) }
+
     # Personal statement
     personal_statement { Faker::Lorem.paragraph(sentence_count: 8) }
 
     # Ask for support
     support_needed { "yes" }
     support_needed_details { Faker::Lorem.paragraph(sentence_count: 2) }
+
+    # Equal opportunities
+    disability { "no" }
+    gender { "other" }
+    gender_description { Faker::Lorem.sentence }
+    orientation { "other" }
+    orientation_description { Faker::Lorem.sentence }
+    ethnicity { "other" }
+    ethnicity_description { Faker::Lorem.sentence }
+    religion { "other" }
+    religion_description { Faker::Lorem.sentence }
 
     # Declarations
     banned_or_disqualified { "no" }
