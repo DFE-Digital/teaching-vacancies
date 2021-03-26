@@ -1,4 +1,4 @@
-class Previews::NotificationComponentPreview < ViewComponent::Preview
+class NotificationComponentPreview < ViewComponent::Preview
   layout "design_system"
 
   def self.component_name
@@ -10,7 +10,7 @@ class Previews::NotificationComponentPreview < ViewComponent::Preview
   end
 
   def self.form
-    Previews::NotificationComponentPreview::OptionsForm
+    NotificationComponentPreview::OptionsForm
   end
 
   def self.interactive_options

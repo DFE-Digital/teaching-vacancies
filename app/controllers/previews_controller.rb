@@ -1,4 +1,4 @@
-class PreviewController < ApplicationController
+class PreviewsController < ApplicationController
   layout "design_system"
 
   before_action :find_preview, only: :previews
