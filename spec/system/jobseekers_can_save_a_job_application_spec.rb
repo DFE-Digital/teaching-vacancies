@@ -15,7 +15,7 @@ RSpec.describe "Jobseekers can save a job application" do
 
     fill_in "First name", with: "Steve"
 
-    expect { click_on I18n.t("buttons.save_as_draft") }
+    expect { click_on I18n.t("buttons.save_and_come_back") }
       .to change { job_application.reload.first_name }.from("").to("Steve")
 
     expect(current_path).to eq(jobseekers_job_applications_path)

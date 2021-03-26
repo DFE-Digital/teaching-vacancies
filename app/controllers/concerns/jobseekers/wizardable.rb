@@ -1,26 +1,4 @@
 module Jobseekers::Wizardable
-  FORMS = {
-    personal_details: Jobseekers::JobApplication::PersonalDetailsForm,
-    professional_status: Jobseekers::JobApplication::ProfessionalStatusForm,
-    employment_history: Jobseekers::JobApplication::EmploymentHistoryForm,
-    personal_statement: Jobseekers::JobApplication::PersonalStatementForm,
-    references: Jobseekers::JobApplication::ReferencesForm,
-    equal_opportunities: Jobseekers::JobApplication::EqualOpportunitiesForm,
-    ask_for_support: Jobseekers::JobApplication::AskForSupportForm,
-    declarations: Jobseekers::JobApplication::DeclarationsForm,
-  }.freeze
-
-  FORM_PARAMS = {
-    personal_details: :personal_details_params,
-    professional_status: :professional_status_params,
-    employment_history: :employment_history_params,
-    personal_statement: :personal_statement_params,
-    references: :references_params,
-    equal_opportunities: :equal_opportunities_params,
-    ask_for_support: :ask_for_support_params,
-    declarations: :declarations_params,
-  }.freeze
-
   def steps_config
     {
       personal_details: { number: 1, title: t(".personal_details.heading") },
@@ -34,46 +12,36 @@ module Jobseekers::Wizardable
     }.freeze
   end
 
-  def personal_details_params(params)
-    params.require(:jobseekers_job_application_personal_details_form)
-          .permit(:city, :email_address, :first_name, :last_name, :national_insurance_number,
-                  :phone_number, :previous_names, :postcode, :street_address, :teacher_reference_number)
+  def personal_details_fields
+    %i[city first_name last_name national_insurance_number phone_number previous_names postcode street_address teacher_reference_number]
   end
 
-  def professional_status_params(params)
-    params.require(:jobseekers_job_application_professional_status_form)
-          .permit(:qualified_teacher_status, :qualified_teacher_status_year,
-                  :qualified_teacher_status_details, :statutory_induction_complete)
+  def professional_status_fields
+    %i[qualified_teacher_status qualified_teacher_status_year qualified_teacher_status_details statutory_induction_complete]
   end
 
-  def employment_history_params(params)
-    params.require(:jobseekers_job_application_employment_history_form)
-          .permit(:gaps_in_employment, :gaps_in_employment_details)
+  def employment_history_fields
+    %i[gaps_in_employment gaps_in_employment_details]
   end
 
-  def personal_statement_params(params)
-    params.require(:jobseekers_job_application_personal_statement_form)
-          .permit(:personal_statement)
+  def personal_statement_fields
+    %i[personal_statement]
   end
 
-  def references_params(_params)
-    {}
+  def references_fields
+    []
   end
 
-  def equal_opportunities_params(params)
-    params.require(:jobseekers_job_application_equal_opportunities_form)
-          .permit(:disability, :gender, :gender_description, :orientation, :orientation_description,
-                  :ethnicity, :ethnicity_description, :religion, :religion_description)
+  def equal_opportunities_fields
+    %i[disability gender gender_description orientation orientation_description ethnicity ethnicity_description religion religion_description]
   end
 
-  def ask_for_support_params(params)
-    params.require(:jobseekers_job_application_ask_for_support_form)
-          .permit(:support_needed, :support_needed_details)
+  def ask_for_support_fields
+    %i[support_needed support_needed_details]
   end
 
-  def declarations_params(params)
-    params.require(:jobseekers_job_application_declarations_form)
-          .permit(:banned_or_disqualified, :close_relationships, :close_relationships_details, :right_to_work_in_uk)
+  def declarations_fields
+    %i[banned_or_disqualified close_relationships close_relationships_details right_to_work_in_uk]
   end
 
   def employment_history_info

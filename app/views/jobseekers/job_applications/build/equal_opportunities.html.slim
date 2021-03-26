@@ -1,7 +1,7 @@
 - content_for :page_title_prefix, t(".title")
 
 = render BannerComponent.new do
-  = govuk_back_link text: t("buttons.back"), href: back_link_path, classes: "govuk-!-margin-top-3"
+  = govuk_back_link text: t("buttons.back"), href: back_path, classes: "govuk-!-margin-top-3"
   .govuk-caption-l class="govuk-!-margin-top-5" = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
   h2.govuk-heading-xl class="govuk-!-margin-bottom-5" = t("jobseekers.job_applications.heading")
 
@@ -14,7 +14,9 @@
     p.govuk-body = t(".anonymity")
     p.govuk-body = t(".optional")
 
-    = form_for @form, url: wizard_path, method: :patch do |f|
+    = form_for form, url: wizard_path, method: :patch do |f|
+      = hidden_field_tag :origin, request.referrer
+
       = f.govuk_error_summary
 
       = f.govuk_radio_buttons_fieldset :disability do
@@ -63,8 +65,8 @@
         = f.govuk_radio_divider
         = f.govuk_radio_button :religion, :prefer_not_to_say
 
-      = f.govuk_submit t("buttons.continue")
-      = f.govuk_submit t("buttons.save_as_draft"), secondary: true, classes: "button-link"
+      = f.govuk_submit t("buttons.save_and_continue") do
+        = f.govuk_submit t("buttons.save_and_come_back"), secondary: true
 
   .govuk-grid-column-one-third
     = render(Shared::ProcessStepsComponent.new(process: vacancy, service: process_steps, title: t("jobseekers.job_applications.build.process_title")))

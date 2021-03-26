@@ -38,7 +38,7 @@ RSpec.describe "Jobseekers can add employment history to their job application" 
         visit jobseekers_job_application_build_path(job_application, :employment_history)
         choose "Yes", name: "jobseekers_job_application_employment_history_form[gaps_in_employment]"
         fill_in "jobseekers_job_application_employment_history_form[gaps_in_employment_details]", with: "Some details about gaps in employment"
-        click_on I18n.t("buttons.save_as_draft")
+        click_on I18n.t("buttons.save_and_come_back")
         expect(job_application.reload.gaps_in_employment).to eq("yes")
         expect(job_application.reload.gaps_in_employment_details).to eq("Some details about gaps in employment")
       end
