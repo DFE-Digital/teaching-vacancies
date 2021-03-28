@@ -25,4 +25,10 @@ class Shared::FiltersComponent < GovukComponent::Base
   def mobile_modifier(selector)
     options[:mobile_variant] ? "#{selector}--mobile" : selector
   end
+
+  def default_classes
+    ["filters-component"].tap do |applied_classes|
+      applied_classes.push(mobile_modifier("filters-component")) if options[:mobile_variant]
+    end
+  end
 end
