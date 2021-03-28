@@ -8,7 +8,7 @@
 
   .filters-component__section-heading {
     position: relative;
-  }
+  } 
 
   &.filters-component--mobile {
 
@@ -65,11 +65,15 @@
     font-weight: normal;
     position: absolute;
     right: 0;
-    top: 7px;
+    top: 0;
   }
 
   .filters-component__heading {
     box-shadow: none;
+
+    .govuk-link {
+      top: 7px;
+    }
 
     .filters-component__heading-container {
       margin-bottom: govuk-spacing(2);
@@ -85,7 +89,6 @@
         background-position: top 5px left;
         background-repeat: no-repeat;
         background-size: 22px 22px;
-        border-bottom: 2px solid $govuk-border-colour;
         padding-left: govuk-spacing(5);
       }
     }
@@ -95,11 +98,10 @@
         border: none;
       }
 
-      border-bottom: 2px solid $govuk-border-colour;
       display: flex;
 
       .govuk-heading-s {
-        line-height: 2em;
+        line-height: 1.8em;
         margin-bottom: 0;
       }
 
@@ -117,7 +119,7 @@
         text-decoration: none;
         color: govuk-colour("black");
         font-weight: normal;
-        margin: 0 govuk-spacing(1);
+        margin: govuk-spacing(1);
       }
     }
 
@@ -209,8 +211,14 @@
       }
     }
 
-    .filters-component__groups-container {
-      border-bottom: 1px solid $govuk-border-colour;
+    .filters-component__group {
+      border: 1px solid $govuk-border-colour;
+      margin-bottom: govuk-spacing(3);
+
+      .govuk-checkboxes__item,
+      .govuk-radios__item {
+        margin-left: govuk-spacing(2);
+      }
     }
   }
 }

@@ -38,7 +38,7 @@ ruby:
   ]
 
 div class="govuk-!-margin-bottom-7"
-  = render(Shared::FiltersComponent.new(form: f,
+  = render(FiltersComponent.new(form: f,
     filters: { total_count: 0, title: t("subscriptions.edit.filters") },
     items: items,
     options: { remove_buttons: false, mobile_variant: false, close_all: false }))

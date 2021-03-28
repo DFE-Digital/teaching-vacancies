@@ -1,11 +1,11 @@
-import '../../../frontend/src/lib/polyfill/closest.polyfill';
-import '../../../frontend/src/lib/polyfill/from.polyfill';
+import '../../frontend/src/lib/polyfill/closest.polyfill';
+import '../../frontend/src/lib/polyfill/from.polyfill';
 import 'classlist-polyfill';
 
 export const ACCORDION_SECTION_CLASS_SELECTOR = 'govuk-accordion__section';
 export const ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR = 'govuk-accordion__section--expanded';
 export const CHECKBOX_CLASS_SELECTOR = 'govuk-checkboxes__input';
-export const CHECKBOX_GROUP_CLASS_SELECTOR = 'filters-component__group-checkboxes';
+export const CHECKBOX_GROUP_CLASS_SELECTOR = 'filters-component__group';
 export const CLOSE_ALL_TEXT = 'Close all';
 export const OPEN_ALL_TEXT = 'Open all';
 
@@ -131,7 +131,7 @@ export const addFilterChangeEvent = (groups) => {
 };
 
 export const filterChangeHandler = (el) => {
-  if (el.className === CHECKBOX_CLASS_SELECTOR && isFormAutoSubmitEnabled('filters-component__groups-container')) {
+  if (el.className === CHECKBOX_CLASS_SELECTOR && isFormAutoSubmitEnabled('govuk-accordion__section')) {
     getSubmitButton(el).click();
   }
 };

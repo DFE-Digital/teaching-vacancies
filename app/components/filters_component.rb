@@ -1,4 +1,4 @@
-class Shared::FiltersComponent < GovukComponent::Base
+class FiltersComponent < GovukComponent::Base
   attr_accessor :filters, :form, :items, :options
 
   def initialize(filters:, form:, items:, options:, classes: [], html_attributes: {})

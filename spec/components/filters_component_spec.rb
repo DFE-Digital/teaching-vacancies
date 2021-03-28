@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Shared::FiltersComponent, type: :component do
+RSpec.describe FiltersComponent, type: :component do
   let(:form) { instance_double(GOVUKDesignSystemFormBuilder::FormBuilder) }
   let(:options) { { remove_buttons: true, close_all: true } }
   let(:filters) { { total_count: 2 } }

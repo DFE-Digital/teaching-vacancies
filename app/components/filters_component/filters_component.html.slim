@@ -1,7 +1,7 @@
 = tag.div(class: classes, **html_attributes) do
-  .filters-component__heading.moj-filter
 
-    div class=(options[:close_all] ? "filters-component__heading-container" : "")
+  .filters-component__heading.moj-filter
+    = tag.div(class: options[:close_all] ? "filters-component__heading-container" : "") do
       .filters-component__section-heading class=mobile_modifier("filters-component__heading")
         .moj-filter__heading-title
           h2.govuk-heading-s class=mobile_modifier("filters-component__heading-title") id=(options[:mobile_variant] ? "mobile-filters-component-button" : "")
@@ -42,18 +42,15 @@
   .filters-component__submit
     = form.govuk_submit t("buttons.apply_filters"), classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2 filters-component__submit-button"
 
-  = render GovukComponent::Accordion.new(id: "accordion-default") do |component|
+  = render GovukComponent::Accordion.new(id: "accordion-default", classes: "filters-component__groups") do |component|
     - items.each_with_index do |group, index|
       - component.slot(:section,
         title: group[:title]) do
-          - tag.p(class: "govuk-body", id: "accordion-default-heading-#{index}") do
-
-            .govuk-accordion__section-content.filters-component__group-checkboxes id="accordion-default-content-#{index}" aria-labelledby="accordion-default-heading-#{index}" data-group=group[:key]
-              .searchable-collection-component.searchable-collection-component--border
-                = form.govuk_collection_check_boxes group[:attribute],
-                  group[:options],
-                  group[:value_method],
-                  group[:text_method],
-                  small: true,
-                  legend: nil,
-                  hint: nil
+          .govuk-accordion__section-content.filters-component__group id="accordion-default-content-#{index}" aria-labelledby="accordion-default-heading-#{index}" data-group=group[:key]
+            = form.govuk_collection_check_boxes group[:attribute],
+              group[:options],
+              group[:value_method],
+              group[:text_method],
+              small: true,
+              legend: nil,
+              hint: nil
