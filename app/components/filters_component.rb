@@ -1,6 +1,10 @@
 class FiltersComponent < GovukComponent::Base
   attr_accessor :filters, :form, :items, :options
 
+  def self.variants
+    %w[default]
+  end
+
   def initialize(filters:, form:, items:, options:, classes: [], html_attributes: {})
     super(classes: classes, html_attributes: html_attributes)
 

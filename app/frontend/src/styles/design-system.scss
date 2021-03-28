@@ -20,8 +20,10 @@ pre {
 }
 
 .design-system-nav {
-  li {
-    margin-bottom: 0;
+  &__item {
+    margin-bottom: govuk-spacing(1);
+    padding-bottom: govuk-spacing(1);
+    padding-top: govuk-spacing(1);
   }
 
   .govuk-link {
@@ -30,18 +32,22 @@ pre {
     text-decoration: none;
   }
   
-  .design-system-nav-top {
+  &-top {
     display: flex;
     list-style-type: none;
 
-    .govuk-link {
-      border-bottom: 4px solid transparent;
-      font-weight: bold;
-      padding: 15px;
-      padding-bottom: 11px;
+    li {
+      margin-bottom: 0;
 
-      &.selected {
-        border-bottom-color: $govuk-link-colour;
+      .govuk-link {
+        border-bottom: 4px solid transparent;
+        font-weight: bold;
+        padding: govuk-spacing(3);
+        padding-bottom: 11px;
+
+        &.selected {
+          border-bottom-color: $govuk-link-colour;
+        }
       }
     }
   }

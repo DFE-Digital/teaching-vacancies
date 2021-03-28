@@ -8,6 +8,9 @@ en:
       notification:
         title: "Notification Component"
         description: "Displays a notification of a specified variant to the user. With dismiss option, when clicked will fade in 600ms and be removed from the DOM."
+      filters:
+        title: "Filters Component"
+        description: "Filter groups"
   text:
     short: "Lorem ipsum."
     medium: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porttitor tortor ac lobortis commodo. Curabitur condimentum ligula in leo pharetra."
