@@ -42,7 +42,7 @@
     "js:test": "jest",
     "js:test:coverage": "jest --coverage",
     "js:lint": "eslint ./app/frontend/src ./app/components/shared",
-    "sass:lint": "yarn stylelint app/frontend/**/*.scss -q",
+    "sass:lint": "yarn stylelint app/frontend/**/*.scss app/components/**/*.scss -q",
     "visual:test": "backstop test --config='config/backstop/backstop.config.js'",
     "visual:approve": "backstop approve --config='config/backstop/backstop.config.js'"
   },
