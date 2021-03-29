@@ -1,0 +1,14 @@
+#!/bin/bash
+set -eu
+
+BUCKET=530003481352-offline-site
+LOCAL_FOLDER=offline
+REMOTE_FOLDER=teaching-vacancies-offline
+# Rather than fail with an aws-cli error `The user-provided path LOCAL_FOLDER does not exist.`,
+# Test for existence of local folder before attempting an S3 sync
+if [[ ! -d "${LOCAL_FOLDER}" ]]; then
+  echo "${LOCAL_FOLDER} does not exist."
+  exit 1
+else
+  aws s3 sync "${LOCAL_FOLDER}" "s3://${BUCKET}/${REMOTE_FOLDER}"
+fi

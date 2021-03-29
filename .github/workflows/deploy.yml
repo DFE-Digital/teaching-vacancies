@@ -204,7 +204,7 @@ jobs:
 
     - name: Sync offline S3 bucket
       shell: bash
-      run: aws s3 sync ./offline s3://530003481352-offline-site/teaching-vacancies-offline
+      run: bin/sync-offline
 
     - name: Send job status message to twd_tv_dev channel
       if: always() && github.ref == 'refs/heads/master'
