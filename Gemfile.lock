@@ -333,6 +333,8 @@ GEM
     raabro (1.4.0)
     racc (1.5.2)
     rack (2.2.3)
+    rack-attack (6.5.0)
+      rack (>= 1.0, < 3)
     rack-cors (1.1.1)
       rack (>= 2.0.0)
     rack-oauth2 (1.16.0)
@@ -592,6 +594,7 @@ DEPENDENCIES
   pry-byebug
   pry-rails
   puma
+  rack-attack
   rack-cors
   rack_session_access
   rails-controller-testing
