@@ -3,7 +3,7 @@ class Publishers::Vacancies::CopyController < Publishers::Vacancies::BaseControl
   before_action :set_up_copy_form, only: %i[create]
 
   def new
-    reset_date_fields if @vacancy.publish_on.past?
+    reset_date_fields if @vacancy.publish_on&.past?
     @copy_form = Publishers::JobListing::CopyVacancyForm.new(@vacancy.attributes.symbolize_keys)
   end
 
