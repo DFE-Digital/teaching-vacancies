@@ -83,9 +83,9 @@ module TeacherVacancyService
 
     config.geocoder_lookup = :default
 
-    config.view_component.preview_paths << "#{Rails.root}/app/components"
+    config.view_component.preview_paths << "#{Rails.root}/app/components/previews"
     config.view_component.preview_route = "/components"
-    config.view_component.preview_controller = "PreviewController"
+    config.view_component.preview_controller = "PreviewsController"
     config.view_component.show_previews = true
   end
 end
