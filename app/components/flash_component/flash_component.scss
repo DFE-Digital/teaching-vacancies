@@ -4,10 +4,10 @@
   @include govuk-font(19);
   @include govuk-responsive-padding(4);
 
+  background-position: 13px 23px;
   border: $govuk-border-width solid govuk-colour('black');
   margin-bottom: govuk-spacing(3);
   margin-top: govuk-spacing(3);
-  background-position: 13px 23px;
 
   .js-dismissible {
     display: block;
@@ -36,7 +36,7 @@
   }
 
   &.flash-component--success {
-    border-color: govuk-colour('green');
     background-position: 13px 20px;
+    border-color: govuk-colour('green');
   }
 }
