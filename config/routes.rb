@@ -105,8 +105,7 @@ Rails.application.routes.draw do
     resources :unsubscribe_feedbacks, only: %i[new create], controller: "jobseekers/unsubscribe_feedbacks"
   end
 
-  get "sign-up-for-NQT-job-alerts", to: "nqt_job_alerts#new", as: "nqt_job_alerts"
-  post "sign-up-for-NQT-job-alerts", to: "nqt_job_alerts#create", as: "new_nqt_job_alert"
+  get "sign-up-for-NQT-job-alerts", to: "subscriptions#new", as: "nqt_job_alerts", defaults: { nqt_job_alert: true, origin: "/sign-up-for-NQT-job-alerts", search_criteria: { job_roles: ["nqt_suitable"] } }
 
   namespace :api do
     scope "v:api_version", api_version: /1/ do

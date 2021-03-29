@@ -20,6 +20,23 @@ RSpec.describe "Subscriptions" do
       end
     end
 
+    context "when hit via the nqt job alerts url" do
+      let(:origin) { "/sign-up-for-NQT-job-alerts" }
+      let(:params) { { "nqt_job_alert" => true, "origin" => "/sign-up-for-NQT-job-alerts", "search_criteria" => { "job_roles" => ["nqt_suitable"] } } }
+
+      before do
+        get nqt_job_alerts_path
+      end
+
+      it "includes the correct parameters" do
+        expect(request.parameters).to include(params)
+      end
+
+      it "sets subscription_origin in the session as the nqt job alerts url" do
+        expect(session[:subscription_origin]).to eq(origin)
+      end
+    end
+
     context "with invalid origin" do
       let(:origin) { "https://www.evil.com" }
 
@@ -48,6 +65,11 @@ RSpec.describe "Subscriptions" do
     before do
       # Required to set the session
       get new_subscription_path(origin: "/some/where")
+    end
+
+    it "calls Jobseekers::SubscriptionMailer" do
+      expect(Jobseekers::SubscriptionMailer).to receive_message_chain(:confirmation, :deliver_later)
+      subject
     end
 
     it "creates a subscription" do

@@ -3,6 +3,7 @@ class SubscriptionsController < ApplicationController
 
   def new
     @point_coordinates = params[:coordinates_present] == "true"
+    @nqt_job_alert = params[:nqt_job_alert]
     @subscription_form = Jobseekers::SubscriptionForm.new(params[:search_criteria].present? ? search_criteria_params : email)
   end
 
