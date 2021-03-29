@@ -15,7 +15,8 @@ class Organisation < ApplicationRecord
 
   def all_vacancies
     ids = is_a?(School) ? [id] : [id] + schools.pluck(:id)
-    Vacancy.in_organisation_ids(ids)
+    ids += schools_outside_local_authority.map(&:id)
+    Vacancy.in_organisation_ids(ids.compact)
   end
 
   def allowed_local_authority?
