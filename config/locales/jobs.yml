@@ -283,6 +283,7 @@ en:
         provided are, to the best of your knowledge, correct
 
     manage:
+      applications: Applications
       are_you_sure: Are you sure you want to delete the ‘%{job_title}’ job?
       awaiting_feedback:
         intro: >-
@@ -316,6 +317,10 @@ en:
         no_jobs:
           no_filters: You currently have no active jobs.
           with_filters: There are no active jobs for the schools you have selected.
+      view_applicants:
+        zero: "%{count} applicants"
+        one: "view %{count} applicant"
+        other: "view %{count} applicants"
 
     date_listed: Date listed
 

@@ -42,4 +42,46 @@
 
             = f.govuk_submit t("jobs.sort_by.submit")
         section
-          = render "publishers/organisations/vacancies_#{@selected_type}", selected_type: @selected_type, organisation: @organisation, vacancies: @vacancies, sort: @sort, no_jobs_text: no_jobs_text
+          - if vacancies.none?
+            = render EmptySectionComponent.new do
+              = no_jobs_text
+          - elsif @selected_type == "awaiting_feedback"
+            = render "publishers/organisations/vacancies_awaiting_feedback", organisation: @organisation, vacancies: @vacancies
+          - else
+            - vacancies.each do |vacancy|
+              = render Shared::CardComponent.new(html_attributes: { id: dom_id(vacancy) }) do |card|
+                - card.header do
+                  = tag.div(govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id)))
+                  - if organisation.is_a?(SchoolGroup)
+                    = tag.div(vacancy.readable_job_location)
+
+                - card.body do
+                  - case @selected_type
+                  - when "published"
+                    = view_applicants(vacancy, card)
+                    = tag.div(card.labelled_item(t("jobs.manage.closing_date"), vacancy.application_deadline))
+                  - when "pending"
+                    = view_applicants(vacancy, card)
+                    = tag.div(card.labelled_item(t("jobs.publication_date"), vacancy.publish_on))
+                    = tag.div(card.labelled_item(t("jobs.manage.closing_date"), vacancy.application_deadline))
+                  - when "expired"
+                    = view_applicants(vacancy, card)
+                    = tag.div(card.labelled_item(t("jobs.date_listed"), vacancy.publish_on))
+                    = tag.div(card.labelled_item(t("jobs.manage.expired.expired_on"), vacancy.application_deadline))
+                  - when "draft"
+                    = tag.div(card.labelled_item(t("jobs.manage.draft.time_created"), format_date(vacancy.created_at.to_date)))
+                    = tag.div(card.labelled_item(t("jobs.manage.draft.time_updated"), format_date(vacancy.updated_at.to_date)))
+
+                - card.actions do
+                  - case @selected_type
+                  - when "published"
+                    = tag.div(govuk_link_to(t("jobs.manage.edit_link_text"), vacancy.edit_path))
+                    = tag.div(govuk_link_to(t("jobs.manage.copy_link_text"), vacancy.copy_path))
+                    = tag.div(govuk_link_to(t("jobs.manage.end_link_text"), organisation_job_end_listing_path(vacancy.id)))
+                  - when "pending", "draft"
+                    = tag.div(govuk_link_to(t("jobs.manage.edit_link_text"), vacancy.edit_path))
+                    = tag.div(govuk_link_to(t("jobs.manage.copy_link_text"), vacancy.copy_path))
+                    = tag.div(button_to(t("jobs.manage.delete_link_text"), vacancy.delete_path, method: :delete, data: { confirm: t("jobs.manage.are_you_sure", job_title: vacancy.job_title) }, class: "govuk-delete-link"))
+                  - when "expired"
+                    = tag.div(govuk_link_to(t("jobs.manage.copy_link_text"), vacancy.copy_path))
+                    = tag.div(button_to(t("jobs.manage.delete_link_text"), vacancy.delete_path, method: :delete, data: { confirm: t("jobs.manage.are_you_sure", job_title: vacancy.job_title) }, class: "govuk-delete-link"))

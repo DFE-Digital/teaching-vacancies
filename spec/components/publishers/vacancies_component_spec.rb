@@ -29,6 +29,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
     context "when organisation is a school" do
       let(:organisation) { create(:school, name: "A school with jobs") }
       let(:vacancy) { create(:vacancy, :published) }
+      let!(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
 
       before { vacancy.organisation_vacancies.create(organisation: organisation) }
 
@@ -44,6 +45,10 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
 
       it "renders the vacancy job title in the table" do
         expect(inline_component.css(".card-component").to_html).to include(vacancy.job_title)
+      end
+
+      it "renders the link to view applicants" do
+        expect(rendered_component).to include(I18n.t("jobs.manage.view_applicants", count: 1))
       end
 
       it "does not render the vacancy readable job location in the table" do
@@ -71,6 +76,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
         create(:vacancy, :published, :central_office,
                organisation_vacancies_attributes: [{ organisation: organisation }])
       end
+      let!(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
 
       before do
         organisation.school_group_memberships.create(school: open_school)
@@ -95,6 +101,10 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
         expect(
           inline_component.css(".card-component__header").to_html,
         ).to include(vacancy.readable_job_location)
+      end
+
+      it "renders the link to view applicants" do
+        expect(rendered_component).to include(I18n.t("jobs.manage.view_applicants", count: 1))
       end
 
       it "renders the filters sidebar" do
@@ -125,6 +135,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
         create(:vacancy, :published, :at_one_school,
                organisation_vacancies_attributes: [{ organisation: open_school }])
       end
+      let!(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
 
       before do
         organisation.school_group_memberships.create(school: open_school)
@@ -144,6 +155,10 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
 
       it "renders the vacancy job title in the table" do
         expect(inline_component.css(".card-component").to_html).to include(vacancy.job_title)
+      end
+
+      it "does not render the link to view applicants" do
+        expect(rendered_component).not_to include(I18n.t("jobs.manage.view_applicants", count: 1))
       end
 
       it "renders the vacancy readable job location in the table" do

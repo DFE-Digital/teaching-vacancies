@@ -135,7 +135,7 @@ Rails.application.routes.draw do
       resource :end_listing, only: %i[show update], controller: "publishers/vacancies/end_listing"
 
       constraints(-> { JobseekerApplicationsFeature.enabled? }) do
-        resources :job_applications, only: %i[show], controller: "publishers/vacancies/job_applications" do
+        resources :job_applications, only: %i[index show], controller: "publishers/vacancies/job_applications" do
           get :shortlist
           get :reject
           post :update_status
