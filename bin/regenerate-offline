@@ -24,7 +24,7 @@ mv ./offline/govuk-frontend-${RELEASE}.min.css ./offline/govuk-frontend.min.css
 # The supplied CSS expects the assets folder to be in the root of the file structure
 # We want to be able to serve from a subfolder
 # Use sed stream editor to replace links starting `url(/assets` with `url(./assets`
-sed -i 's/url(\/assets/url(.\/assets/g' ./offline/govuk-frontend.min.css
+sed -i 's/url(\/assets/url(\/teaching-vacancies-offline\/assets/g' ./offline/govuk-frontend.min.css
 # Remove specific support for IE8
 rm ./offline/govuk-frontend-ie8-${RELEASE}.min.css
 # There is no JavaScript in this simple HTML file

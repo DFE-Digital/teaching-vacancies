@@ -1,5 +1,14 @@
 # Offline site
 
+## Location
+
+The offline site is simple HTML, CSS, and assets (fonts and images). It sits in the `teaching-vacancies-offline` folder within the S3 bucket [530003481352-offline-site](https://s3.console.aws.amazon.com/s3/buckets/530003481352-offline-site?tab=objects).
+
+With the [offline/index.html](../offline/index.html) page, paths to assets are declared from the root of the bucket, including the full folder name, e.g.:
+```
+/teaching-vacancies-offline/govuk-frontend.min.css
+```
+
 ## When is it served?
 
 The "site offline" page is served if Cloudfront detects that the PaaS-hosted site is returning HTTP status codes:
@@ -41,3 +50,15 @@ RELEASE=3.11.0
 ## How to test
 
 - Check the underlying page [in the S3 bucket](https://530003481352-offline-site.s3.eu-west-2.amazonaws.com/teaching-vacancies-offline/index.html)
+- Check the page when served [through the site](https://dev.teaching-vacancies.service.gov.uk/teaching-vacancies-offline/index.html)
+- Simulate an error on [https://dev.teaching-vacancies.service.gov.uk/](https://dev.teaching-vacancies.service.gov.uk/)
+```bash
+cf login --sso
+cf target -s teaching-vacancies-dev
+cf unbind-service teaching-vacancies-dev teaching-vacancies-postgres-dev
+```
+And after testing, re-bind:
+```bash
+cf bind-service teaching-vacancies-dev teaching-vacancies-postgres-dev
+cf restart teaching-vacancies-dev
+```
