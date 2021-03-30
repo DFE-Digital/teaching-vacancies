@@ -33,8 +33,6 @@ If you are on a new device, remember to [generate a new SSH key](https://docs.gi
 
 * [Ruby](https://www.ruby-lang.org)
 * [NodeJS](https://nodejs.org)
-* shared-mime-info (installed using Homebrew or other package manager of your choice, the
-  `mimemagic` gem depends on this)
 
 A tool like [asdf-vm](https://asdf-vm.com) can help you install the required versions of Ruby and Node.js.
 Current versions that match production ones are specified in [.tool-versions](/.tool-versions).
