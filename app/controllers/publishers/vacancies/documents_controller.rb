@@ -85,6 +85,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
   end
 
   def upload_document(document_params)
+    Rails.logger.info("Uploading document #{document_params.original_filename}, inferred type: #{document_params.content_type}")
     add_file_type_error(document_params.original_filename) unless valid_content_type?(document_params.tempfile)
     add_file_size_error(document_params.original_filename) if document_params.size > FILE_SIZE_LIMIT
 
