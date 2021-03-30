@@ -14,11 +14,22 @@
     p.govuk-body = t(".description2")
 
     - if job_application.references.any?
-      = render Jobseekers::JobApplications::DetailComponent.with_collection(job_application.references.includes(:job_application), title_attribute: "name", info_to_display: reference_info)
-      = govuk_link_to t("buttons.add_another_reference"), new_jobseekers_job_application_build_detail_path(job_application, :references), button: true, class: "govuk-button--secondary"
+      - job_application.references.each do |reference|
+        = render DetailComponent.new title: reference.name do |detail|
+          - detail.body do
+            = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |c|
+              - attributes = %w[job_title organisation relationship phone_number email]
+              - attributes.each do |attribute|
+                - c.slot(:row, key: t("jobseekers.job_applications.references.#{attribute}"), value: reference[attribute])
+
+          - detail.actions do
+            = govuk_button_to t("buttons.delete"), jobseekers_job_application_reference_path(reference.job_application, reference), method: :delete, class: "govuk-delete-link govuk-!-margin-bottom-0", form_class: "inline-block button_to"
+            = govuk_link_to t("buttons.edit"), edit_jobseekers_job_application_reference_path(reference.job_application, reference), class: "govuk-link--no-visited-state inline-block"
+
+      = govuk_link_to t("buttons.add_another_reference"), new_jobseekers_job_application_reference_path(job_application), button: true
     - else
       = render EmptySectionComponent.new title: t(".no_references") do
-        = govuk_link_to t("buttons.add_reference"), new_jobseekers_job_application_build_detail_path(job_application, :references), button: true, class: "govuk-button--secondary govuk-!-margin-bottom-0"
+        = govuk_link_to t("buttons.add_reference"), new_jobseekers_job_application_reference_path(job_application), button: true, class: "govuk-!-margin-bottom-0"
 
     = form_for form, url: wizard_path, method: :patch do |f|
       = hidden_field_tag :origin, request.referrer
