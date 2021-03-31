@@ -7,8 +7,8 @@ parameter_store_environment = "staging"
 # CloudFront
 distribution_list = {
   "tvsstaging" = {
-    offline_bucket_domain_name    = "tvs-offline.s3.amazonaws.com"
-    offline_bucket_origin_path    = "/school-jobs-offline"
+    offline_bucket_domain_name    = "530003481352-offline-site.s3.amazonaws.com"
+    offline_bucket_origin_path    = "/teaching-vacancies-offline"
     cloudfront_origin_domain_name = "teaching-vacancies-staging.london.cloudapps.digital"
   }
 }
