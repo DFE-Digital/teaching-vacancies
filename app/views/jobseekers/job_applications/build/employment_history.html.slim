@@ -13,12 +13,33 @@
     p.govuk-body = t(".description1")
     p.govuk-body = t(".description2")
 
-    - if job_application.employment_history.any?
-      = render Jobseekers::JobApplications::DetailComponent.with_collection(job_application.employment_history.includes(:job_application).order(created_at: :desc), title_attribute: "job_title", info_to_display: employment_history_info)
-      = govuk_link_to t("buttons.add_another_role"), new_jobseekers_job_application_build_detail_path(job_application, :employment_history), button: true, class: "govuk-button--secondary"
+    - if job_application.employments.any?
+      - job_application.employments.each do |employment|
+        = render DetailComponent.new title: employment.job_title do |detail|
+          - detail.body do
+            = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |c|
+              - attributes = %w[organisation salary subjects]
+              - attributes.each do |attribute|
+                - c.slot(:row, key: t("jobseekers.job_applications.employments.#{attribute}"), value: employment[attribute].presence || t("jobseekers.job_applications.not_defined"))
+              - c.slot(:row, key: t("jobseekers.job_applications.employments.started_on"), value: employment.started_on.to_s)
+
+              - case employment.current_role
+              - when "yes"
+                - c.slot(:row, key: t("jobseekers.job_applications.employments.ended_on"), value: t("jobseekers.job_applications.employments.current_role"))
+              - when "no"
+                - c.slot(:row, key: t("jobseekers.job_applications.employments.ended_on"), value: employment.ended_on.to_s)
+                - c.slot(:row, key: t("jobseekers.job_applications.employments.reason_for_leaving"), value: employment.reason_for_leaving)
+
+              - c.slot(:row, key: t("jobseekers.job_applications.employments.main_duties"), value: employment.main_duties)
+
+          - detail.actions do
+            = govuk_button_to t("buttons.delete"), jobseekers_job_application_employment_path(employment.job_application, employment), method: :delete, class: "govuk-delete-link govuk-!-margin-bottom-0", form_class: "inline-block button_to"
+            = govuk_link_to t("buttons.edit"), edit_jobseekers_job_application_employment_path(employment.job_application, employment), class: "govuk-link--no-visited-state inline-block"
+
+      = govuk_link_to t("buttons.add_another_employment"), new_jobseekers_job_application_employment_path(job_application), button: true
     - else
-      = render EmptySectionComponent.new title: t(".no_employment_history") do
-        = govuk_link_to t("buttons.add_role"), new_jobseekers_job_application_build_detail_path(job_application, :employment_history), button: true, class: "govuk-button--secondary govuk-!-margin-bottom-0"
+      = render EmptySectionComponent.new title: t(".no_employments") do
+        = govuk_link_to t("buttons.add_employment"), new_jobseekers_job_application_employment_path(job_application), button: true, class: "govuk-!-margin-bottom-0"
 
     = form_for form, url: wizard_path, method: :patch do |f|
       = hidden_field_tag :origin, request.referrer

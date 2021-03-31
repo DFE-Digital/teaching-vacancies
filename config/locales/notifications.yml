@@ -30,8 +30,6 @@ en:
             You have already started an application for %{job_title}.
             <a href="%{link}" class="govuk-link">Continue application</a>
           submitted: You have already applied for %{job_title}.
-        employment_history:
-          deleted: Your employment history was deleted
         saved: Your job application was saved
         draft_deleted: Your draft application for %{job_title} has been deleted
     subscriptions:

@@ -20,8 +20,7 @@ class JobApplication < ApplicationRecord
   belongs_to :jobseeker
   belongs_to :vacancy
 
-  has_many :job_application_details, dependent: :destroy
-  has_many :employment_history, -> { where(details_type: "employment_history") }, class_name: "JobApplicationDetail"
+  has_many :employments, dependent: :destroy
   has_many :references, dependent: :destroy
 
   private

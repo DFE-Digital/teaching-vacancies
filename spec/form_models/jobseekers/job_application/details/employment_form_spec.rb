@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Jobseekers::JobApplication::Details::EmploymentHistoryForm, type: :model do
+RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model do
   subject { described_class.new(params) }
   let(:params) { {} }
 

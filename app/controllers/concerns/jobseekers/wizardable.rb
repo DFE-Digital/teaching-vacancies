@@ -43,17 +43,4 @@ module Jobseekers::Wizardable
   def declarations_fields
     %i[banned_or_disqualified close_relationships close_relationships_details right_to_work_in_uk]
   end
-
-  def employment_history_info
-    @employment_history_info ||= [
-      { attribute: "organisation", title: t("jobseekers.job_applications.employment_history.organisation") },
-      { attribute: "salary", title: t("jobseekers.job_applications.employment_history.salary") },
-      { attribute: "subjects", title: t("jobseekers.job_applications.employment_history.subjects") },
-      { attribute: "started_on", title: t("jobseekers.job_applications.employment_history.started_on"), date: true },
-      { attribute: "current_role", title: t("jobseekers.job_applications.employment_history.current_role") },
-      { attribute: "ended_on", title: t("jobseekers.job_applications.employment_history.ended_on"), date: true },
-      { attribute: "reason_for_leaving", title: t("jobseekers.job_applications.employment_history.reason_for_leaving") },
-      { attribute: "main_duties", title: t("jobseekers.job_applications.employment_history.main_duties") },
-    ]
-  end
 end

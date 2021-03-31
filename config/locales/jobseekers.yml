@@ -73,7 +73,7 @@ en:
             Schools need a complete picture of your work history, including time out of the workplace, in order to
             safeguard children.
           heading: Current role and employment history
-          no_employment_history: No employment specified
+          no_employments: No employment specified
           title: Current role and employment history — Application
         equal_opportunities:
           anonymity: >-
@@ -131,19 +131,21 @@ en:
           this role. They will not see the reason you have given for withdrawing your application.
         title: Withdraw application
       current_step: Step %{current} of %{total}
-      details:
-        employment_history: Role
-        form:
-          employment_history:
-            caption: Current role and employment history
-            heading: Add a role
-            save: Save role
-            title: Add a role - Current role and employment history - Application
-      employment_history:
-        current_role: Current role
+      employments:
+        current_role: This is my current role
+        destroy:
+          success: Your employment history was deleted
+        edit:
+          caption: Current role and employment history
+          heading: Edit a role
+          title: Edit a role - Application
         ended_on: End date
         job_title: Job title
         main_duties: Main duties
+        new:
+          caption: Current role and employment history
+          heading: Add a role
+          title: Add a role - Application
         organisation: Organisation
         reason_for_leaving: Reason for leaving
         salary: Salary scale or level
@@ -201,7 +203,6 @@ en:
           description: If you are shortlisted, the school will contact your referee before your interview.
           heading: Edit a referee
           title: Edit a referee - Application
-          save: Save referee
         email: Email address
         job_title: Job title
         name: Name
@@ -210,7 +211,6 @@ en:
           description: If you are shortlisted, the school will contact your referee before your interview.
           heading: Add a referee
           title: Add a referee - Application
-          save: Save referee
         organisation: Organisation
         phone_number: Phone number
         relationship: Relationship to applicant
