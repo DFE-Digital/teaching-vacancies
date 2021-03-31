@@ -56,14 +56,4 @@ module Jobseekers::Wizardable
       { attribute: "main_duties", title: t("jobseekers.job_applications.employment_history.main_duties") },
     ]
   end
-
-  def reference_info
-    @reference_info ||= [
-      { attribute: "job_title", title: t("jobseekers.job_applications.references.job_title") },
-      { attribute: "organisation", title: t("jobseekers.job_applications.references.organisation") },
-      { attribute: "relationship_to_applicant", title: t("jobseekers.job_applications.references.relationship_to_applicant") },
-      { attribute: "email_address", title: t("jobseekers.job_applications.references.email_address") },
-      { attribute: "phone_number", title: t("jobseekers.job_applications.references.phone_number") },
-    ]
-  end
 end

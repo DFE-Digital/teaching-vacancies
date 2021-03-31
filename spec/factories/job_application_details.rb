@@ -20,19 +20,5 @@ FactoryBot.define do
         }
       end
     end
-
-    trait :reference do
-      details_type { "references" }
-      data do
-        {
-          name: Faker::Name.name,
-          job_title: Faker::Company.profession,
-          organisation: Faker::Educator.secondary_school,
-          relationship_to_applicant: "Line Manager",
-          email_address: Faker::Internet.email,
-          phone_number: "01234 567890",
-        }
-      end
-    end
   end
 end

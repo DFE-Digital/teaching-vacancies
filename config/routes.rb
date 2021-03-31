@@ -31,6 +31,7 @@ Rails.application.routes.draw do
         resources :build, only: %i[show update], controller: "job_applications/build" do
           resources :details, only: %i[new create edit update destroy], controller: "job_applications/details"
         end
+        resources :references, only: %i[new create edit update destroy], controller: "job_applications/references"
         get :review
         get :confirm_destroy
         get :confirm_withdraw

@@ -311,7 +311,7 @@ en:
               invalid: Enter a valid start date
         jobseekers/job_application/details/reference_form:
           attributes:
-            email_address:
+            email:
               blank: Enter your referee's email address
               invalid: Enter an email address in the correct format, like name@example.com
             job_title:
@@ -323,7 +323,7 @@ en:
             phone_number:
               blank: Enter your referee's phone number
               invalid:  Enter a phone number in the correct format
-            relationship_to_applicant:
+            relationship:
               blank: Enter the referee's relationship to you, for example line manager
   activerecord:
     attributes:

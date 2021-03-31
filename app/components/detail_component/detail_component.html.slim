@@ -1,0 +1,10 @@
+= tag.div(class: classes, **html_attributes) do
+  - if title
+    .detail-component__title
+      h4.govuk-heading-s = title
+  - if body
+    .detail-component__body
+      = body
+  - if actions
+    .detail-component__actions
+      = actions

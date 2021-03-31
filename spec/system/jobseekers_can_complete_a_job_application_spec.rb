@@ -42,13 +42,13 @@ RSpec.describe "Jobseekers can complete a job application" do
     expect(page).to have_content(I18n.t("jobseekers.job_applications.build.references.heading"))
     expect(page).not_to have_content(I18n.t("buttons.save_and_continue"))
     click_on I18n.t("buttons.add_reference")
-    click_on I18n.t("jobseekers.job_applications.details.form.references.save")
+    click_on I18n.t("buttons.save_reference")
     expect(page).to have_content("There is a problem")
     fill_in_reference
-    click_on I18n.t("jobseekers.job_applications.details.form.references.save")
+    click_on I18n.t("buttons.save_reference")
     click_on I18n.t("buttons.add_another_reference")
     fill_in_reference
-    click_on I18n.t("jobseekers.job_applications.details.form.references.save")
+    click_on I18n.t("buttons.save_reference")
     click_on I18n.t("buttons.save_and_continue")
 
     expect(page).to have_content(I18n.t("jobseekers.job_applications.build.equal_opportunities.heading"))

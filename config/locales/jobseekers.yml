@@ -139,13 +139,6 @@ en:
             heading: Add a role
             save: Save role
             title: Add a role - Current role and employment history - Application
-          references:
-            caption: References
-            description: If you are shortlisted, the school will contact your referee before your interview.
-            heading: Add a referee
-            save: Save referee
-            title: Add a referee - References - Application
-        references: Reference
       employment_history:
         current_role: Current role
         ended_on: End date
@@ -201,12 +194,26 @@ en:
         title: Application
       not_defined: Not defined (will not be seen on application)
       references:
-        email_address: Email address
+        destroy:
+          success: Your referee was deleted
+        edit:
+          caption: References
+          description: If you are shortlisted, the school will contact your referee before your interview.
+          heading: Edit a referee
+          title: Edit a referee - Application
+          save: Save referee
+        email: Email address
         job_title: Job title
         name: Name
+        new:
+          caption: References
+          description: If you are shortlisted, the school will contact your referee before your interview.
+          heading: Add a referee
+          title: Add a referee - Application
+          save: Save referee
         organisation: Organisation
         phone_number: Phone number
-        relationship_to_applicant: Relationship to applicant
+        relationship: Relationship to applicant
       review:
         heading: Review your application
         title: Review your application — Application

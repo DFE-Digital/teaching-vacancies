@@ -61,12 +61,12 @@ RSpec.describe "Jobseekers can view a job application" do
 
     job_application.references.order(:created_at).each_with_index do |reference_details, index|
       show_page.steps(text: I18n.t("jobseekers.job_applications.build.references.heading")).first.within do |reference|
-        reference.body.accordions(text: reference_details.data["name"], id: "reference_#{index}").first.within do |accordion|
-          expect(accordion.content.rows(id: "reference_job_title").first.value.text).to eq(reference_details.data["job_title"])
-          expect(accordion.content.rows(id: "reference_organisation").first.value.text).to eq(reference_details.data["organisation"])
-          expect(accordion.content.rows(id: "reference_relationship_to_applicant").first.value.text).to eq(reference_details.data["relationship_to_applicant"])
-          expect(accordion.content.rows(id: "reference_email_address").first.value.text).to eq(reference_details.data["email_address"])
-          expect(accordion.content.rows(id: "reference_phone_number").first.value.text).to eq(reference_details.data["phone_number"])
+        reference.body.accordions(text: reference_details.name, id: "reference_#{index}").first.within do |accordion|
+          expect(accordion.content.rows(id: "reference_job_title").first.value.text).to eq(reference_details.job_title)
+          expect(accordion.content.rows(id: "reference_organisation").first.value.text).to eq(reference_details.organisation)
+          expect(accordion.content.rows(id: "reference_relationship").first.value.text).to eq(reference_details.relationship)
+          expect(accordion.content.rows(id: "reference_email").first.value.text).to eq(reference_details.email)
+          expect(accordion.content.rows(id: "reference_phone_number").first.value.text).to eq(reference_details.phone_number)
         end
       end
     end
