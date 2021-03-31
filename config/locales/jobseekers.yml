@@ -61,9 +61,11 @@ en:
             When you are attending an interview, you might benefit from extra support if you have a disability, have a
             mental health condition or educational needs. You can ask for the support that you need now. The school can
             then make adjustments so you can attend an interview.
+          step_title: Ask for support
           title: Ask for support if you have a disability — Application
         declarations:
           heading: Declarations
+          step_title: Declarations
           title: Declarations — Application
         employment_history:
           description1: >-
@@ -74,6 +76,7 @@ en:
             safeguard children.
           heading: Current role and employment history
           no_employments: No employment specified
+          step_title: Employment history
           title: Current role and employment history — Application
         equal_opportunities:
           anonymity: >-
@@ -85,10 +88,12 @@ en:
             about your identity.
           heading: Equal opportunities and recruitment monitoring
           optional: You can select ‘prefer not to say’ if you would rather not answer any question.
+          step_title: Equal opportunities
           title: Equal opportunities — Application
         personal_details:
           description: Tell us some basic details about yourself, like how to contact you about this application.
           heading: Personal details
+          step_title: Personal details
           title: Personal details — Application
         personal_statement:
           additional_instructions: Additional instructions from the school hiring staff
@@ -98,10 +103,12 @@ en:
             Please explain why you are suitable for this role. You should refer to the person specification in the job description,
             and include any relevant personal qualities and experiences.
           heading: Personal statement
+          step_title: Personal statement
           title: Personal statement — Application
         process_title: Application steps
         professional_status:
           heading: Professional status
+          step_title: Professional status
           title: Professional status — Application
         references:
           description1_html: >-
@@ -113,6 +120,7 @@ en:
             the last time you did so.
           heading: References
           no_references: No referees specified
+          step_title: References
           title: References — Application
       caption: "%{job_title} at %{organisation}"
       confirm_destroy:
