@@ -25,11 +25,11 @@ RSpec.describe "Jobseekers can complete a job application" do
 
     expect(page).to have_content(I18n.t("jobseekers.job_applications.build.employment_history.heading"))
     validates_step_complete
-    click_on I18n.t("buttons.add_role")
-    click_on I18n.t("jobseekers.job_applications.details.form.employment_history.save")
+    click_on I18n.t("buttons.add_employment")
+    click_on I18n.t("buttons.save_employment")
     expect(page).to have_content("There is a problem")
     fill_in_employment_history
-    click_on I18n.t("jobseekers.job_applications.details.form.employment_history.save")
+    click_on I18n.t("buttons.save_employment")
     validates_step_complete
     choose "No", name: "jobseekers_job_application_employment_history_form[gaps_in_employment]"
     click_on I18n.t("buttons.save_and_continue")

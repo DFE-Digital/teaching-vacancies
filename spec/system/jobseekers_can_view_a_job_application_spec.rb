@@ -40,17 +40,17 @@ RSpec.describe "Jobseekers can view a job application" do
       expect(professional_status.body.rows(id: "professional_status_statutory_induction_complete").first.value.text).to eq(job_application.statutory_induction_complete.capitalize)
     end
 
-    job_application.employment_history.order(:created_at).each_with_index do |employment_history_details, index|
-      show_page.steps(text: I18n.t("jobseekers.job_applications.build.employment_history.heading")).first.within do |employment_history|
-        employment_history.body.accordions(text: employment_history_details.data["job_title"], id: "employment_history_#{index}").first.within do |accordion|
-          expect(accordion.content.rows(id: "employment_history_organisation").first.value.text).to eq(employment_history_details.data["organisation"])
-          expect(accordion.content.rows(id: "employment_history_salary").first.value.text).to eq(employment_history_details.data["salary"])
-          expect(accordion.content.rows(id: "employment_history_subjects").first.value.text).to eq(employment_history_details.data["subjects"])
-          expect(accordion.content.rows(id: "employment_history_main_duties").first.value.text).to eq(employment_history_details.data["main_duties"])
-          expect(accordion.content.rows(id: "employment_history_started_on").first.value.text).to eq(employment_history_details.data["started_on"])
-          expect(accordion.content.rows(id: "employment_history_current_role").first.value.text).to eq(employment_history_details.data["current_role"].capitalize)
-          expect(accordion.content.rows(id: "employment_history_ended_on").first.value.text).to eq(employment_history_details.data["ended_on"])
-          expect(accordion.content.rows(id: "employment_history_reason_for_leaving").first.value.text).to eq(employment_history_details.data["reason_for_leaving"])
+    job_application.employments.order(:created_at).each_with_index do |employment_details, index|
+      show_page.steps(text: I18n.t("jobseekers.job_applications.build.employment_history.heading")).first.within do |employment|
+        employment.body.accordions(text: employment_details.job_title, id: "employment_history_#{index}").first.within do |accordion|
+          expect(accordion.content.rows(id: "employment_history_organisation").first.value.text).to eq(employment_details.organisation)
+          expect(accordion.content.rows(id: "employment_history_salary").first.value.text).to eq(employment_details.salary)
+          expect(accordion.content.rows(id: "employment_history_subjects").first.value.text).to eq(employment_details.subjects)
+          expect(accordion.content.rows(id: "employment_history_main_duties").first.value.text).to eq(employment_details.main_duties)
+          expect(accordion.content.rows(id: "employment_history_started_on").first.value.text).to eq(employment_details.started_on.to_s.strip)
+          expect(accordion.content.rows(id: "employment_history_current_role").first.value.text).to eq(employment_details.current_role.capitalize)
+          expect(accordion.content.rows(id: "employment_history_ended_on").first.value.text).to eq(employment_details.ended_on.to_s.strip)
+          expect(accordion.content.rows(id: "employment_history_reason_for_leaving").first.value.text).to eq(employment_details.reason_for_leaving)
         end
       end
     end

@@ -290,7 +290,7 @@ en:
           attributes:
             withdraw_reason:
               inclusion: Select why you are withdrawing your application
-        jobseekers/job_application/details/employment_history_form:
+        jobseekers/job_application/details/employment_form:
           attributes:
             current_role:
               inclusion: Select yes if this is your current role

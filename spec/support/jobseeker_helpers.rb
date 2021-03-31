@@ -36,10 +36,10 @@ module JobseekerHelpers
     fill_in "School or other organisation", with: "The Best School"
     fill_in "Job title", with: "The Best Teacher"
     fill_in "Main duties", with: "Some details about what the main duties were"
-    fill_in "jobseekers_job_application_details_employment_history_form[started_on(1i)]", with: "2019"
-    fill_in "jobseekers_job_application_details_employment_history_form[started_on(2i)]", with: "09"
-    fill_in "jobseekers_job_application_details_employment_history_form[started_on(3i)]", with: "01"
-    choose "Yes", name: "jobseekers_job_application_details_employment_history_form[current_role]"
+    fill_in "jobseekers_job_application_details_employment_form[started_on(1i)]", with: "2019"
+    fill_in "jobseekers_job_application_details_employment_form[started_on(2i)]", with: "09"
+    fill_in "jobseekers_job_application_details_employment_form[started_on(3i)]", with: "01"
+    choose "Yes", name: "jobseekers_job_application_details_employment_form[current_role]"
   end
 
   def fill_in_declarations
@@ -53,13 +53,13 @@ module JobseekerHelpers
     fill_in "School or other organisation", with: "The Best School"
     fill_in "Job title", with: "The Best Teacher"
     fill_in "Main duties", with: "Some details about what the main duties were"
-    fill_in "jobseekers_job_application_details_employment_history_form[started_on(1i)]", with: "2019"
-    fill_in "jobseekers_job_application_details_employment_history_form[started_on(2i)]", with: "09"
-    fill_in "jobseekers_job_application_details_employment_history_form[started_on(3i)]", with: "01"
-    choose "No", name: "jobseekers_job_application_details_employment_history_form[current_role]"
-    fill_in "jobseekers_job_application_details_employment_history_form[ended_on(1i)]", with: "2020"
-    fill_in "jobseekers_job_application_details_employment_history_form[ended_on(2i)]", with: "07"
-    fill_in "jobseekers_job_application_details_employment_history_form[ended_on(3i)]", with: "30"
+    fill_in "jobseekers_job_application_details_employment_form[started_on(1i)]", with: "2019"
+    fill_in "jobseekers_job_application_details_employment_form[started_on(2i)]", with: "09"
+    fill_in "jobseekers_job_application_details_employment_form[started_on(3i)]", with: "01"
+    choose "No", name: "jobseekers_job_application_details_employment_form[current_role]"
+    fill_in "jobseekers_job_application_details_employment_form[ended_on(1i)]", with: "2020"
+    fill_in "jobseekers_job_application_details_employment_form[ended_on(2i)]", with: "07"
+    fill_in "jobseekers_job_application_details_employment_form[ended_on(3i)]", with: "30"
     fill_in "Reason for leaving", with: "Some details about the reason for leaving"
   end
 

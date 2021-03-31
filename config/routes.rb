@@ -28,10 +28,9 @@ Rails.application.routes.draw do
 
     constraints(-> { JobseekerApplicationsFeature.enabled? }) do
       resources :job_applications, only: %i[index show destroy] do
-        resources :build, only: %i[show update], controller: "job_applications/build" do
-          resources :details, only: %i[new create edit update destroy], controller: "job_applications/details"
-        end
+        resources :build, only: %i[show update], controller: "job_applications/build"
         resources :references, only: %i[new create edit update destroy], controller: "job_applications/references"
+        resources :employments, only: %i[new create edit update destroy], controller: "job_applications/employments"
         get :review
         get :confirm_destroy
         get :confirm_withdraw

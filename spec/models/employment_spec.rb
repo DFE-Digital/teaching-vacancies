@@ -1,5 +1,5 @@
 require "rails_helper"
 
-RSpec.describe JobApplicationDetail do
+RSpec.describe Employment do
   it { is_expected.to belong_to(:job_application) }
 end
