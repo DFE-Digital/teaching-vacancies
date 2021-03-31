@@ -1,4 +1,6 @@
 class Publishers::VacanciesComponent < ViewComponent::Base
+  include DatesHelper
+
   def initialize(organisation:, sort:, selected_type:, publisher_preference:, sort_form:, email:)
     @organisation = organisation
     @sort = sort
@@ -40,6 +42,21 @@ class Publishers::VacanciesComponent < ViewComponent::Base
     I18n.t("jobs.manage.#{selected_type}.no_jobs.#{publisher_preference.organisations.any? ? 'with' : 'no'}_filters")
   end
 
+  def view_applicants(vacancy, card)
+    return unless vacancy.apply_through_teaching_vacancies == "yes"
+    return unless include_job_applications?
+
+    if vacancy.job_applications.any?
+      link = govuk_link_to(I18n.t("jobs.manage.view_applicants", count: vacancy.job_applications.count),
+                           organisation_job_job_applications_path(vacancy),
+                           class: "govuk-link--no-visited-state")
+      tag.div(card.labelled_item(I18n.t("jobs.manage.applications"), link))
+    elsif vacancy.job_applications.none?
+      text = tag.span(I18n.t("jobs.manage.view_applicants", count: 0), class: "text-red")
+      tag.div(card.labelled_item(I18n.t("jobs.manage.applications"), text))
+    end
+  end
+
   private
 
   attr_reader :publisher_preference, :organisation, :selected_type, :sort, :vacancies
@@ -54,10 +71,15 @@ class Publishers::VacanciesComponent < ViewComponent::Base
         organisation.all_vacancies
       end
 
-    @vacancies = vacancies.send(selected_scope)
-                          .order(sort.column => sort.order)
-                          .reject { |vacancy| vacancy.job_title.blank? }
-                          .map { |v| OrganisationVacancyPresenter.new(v) }
+    @vacancies = @vacancies.includes(:job_applications) if include_job_applications?
+    @vacancies = @vacancies.send(selected_scope)
+                           .order(sort.column => sort.order)
+                           .reject { |vacancy| vacancy.job_title.blank? }
+                           .map { |v| OrganisationVacancyPresenter.new(v) }
+  end
+
+  def include_job_applications?
+    organisation.group_type != "local_authority" && @selected_type.in?(%w[published pending expired])
   end
 
   def selected_scope
