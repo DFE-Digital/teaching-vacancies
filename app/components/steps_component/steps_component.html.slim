@@ -1,0 +1,8 @@
+= tag.div(class: classes, **html_attributes) do
+  - if title
+    h2.govuk-heading-s
+      = title
+  - if steps.present?
+    ol.steps-component__steps
+      - steps.each do |step|
+        = step
