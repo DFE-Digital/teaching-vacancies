@@ -116,7 +116,7 @@ jobs:
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
         token: ${{ secrets.PERSONAL_TOKEN }}
-        checkName: Deploy app to environment # Job name within workflow
+        checkName: Deploy ${{ env.TAG }} to ${{ env.BRANCH }} # Job name within workflow
         ref: ${{ github.ref }}
         timeoutSeconds: 720
         intervalSeconds: 15
