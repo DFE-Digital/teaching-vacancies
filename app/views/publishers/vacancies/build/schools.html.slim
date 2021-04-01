@@ -15,7 +15,7 @@
 
         = render "publishers/vacancies/vacancy_form_partials/hidden_state_input", f: f
 
-        = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_schools_form.organisation_ids") } do
+        = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_schools_form.organisation_id#{'s' if @multiple_schools}") } do
           - if current_organisation.local_authority_code?
             span.govuk-hint = t("helpers.hint.publishers_job_listing_schools_form.edit_schools")
             span.govuk-hint = govuk_link_to t("helpers.hint.publishers_job_listing_schools_form.add_school"),
