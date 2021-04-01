@@ -492,9 +492,13 @@ en:
           unknown: I don't know
       publishers_job_listing_job_location_form:
         job_location:
-          at_one_school: At one school in the %{organisation_type}
-          central_office: At the %{organisation_type}'s head office
-          at_multiple_schools: At more than one school in the %{organisation_type}
+          local_authority:
+            at_one_school: At one school
+            at_multiple_schools: At more than one school
+          "Multi-academy trust":
+            at_one_school: At one school in the trust
+            central_office: At the trust's head office
+            at_multiple_schools: At more than one school in the trust
 
     placeholder:
       jobseekers_nqt_job_alerts_form:
