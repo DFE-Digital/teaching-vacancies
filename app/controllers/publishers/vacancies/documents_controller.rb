@@ -93,7 +93,10 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
       name: document_params.original_filename,
     )
 
-    return if errors_on_file?(document_params.original_filename)
+    if errors_on_file?(document_params.original_filename)
+      Rails.logger.info("Failed to upload #{document_params.original_filename}: #{@documents_form.errors.full_messages.join(', ')}")
+      return
+    end
 
     document_upload.upload
 
