@@ -109,7 +109,7 @@ jobs:
       uses: benc-uk/workflow-dispatch@v1.1
       with:
         token: ${{ secrets.PERSONAL_TOKEN }}
-        ref: ${{ github.event.pull_request.head.ref || github.ref }}
+        ref: ${{ github.event.pull_request.head.ref }}
         workflow: Deploy App to Environment # Workflow name
         inputs: '{"environment": "${{ env.ENVIRONMENT }}", "tag": "${{ env.TAG }}"}'
 
@@ -119,7 +119,7 @@ jobs:
       with:
         token: ${{ secrets.PERSONAL_TOKEN }}
         checkName: Deploy ${{ env.TAG }} to ${{ env.ENVIRONMENT }} # Job name within workflow
-        ref: ${{ github.event.pull_request.head.sha || github.ref }}
+        ref: ${{ github.event.pull_request.head.sha }}
         timeoutSeconds: 720
         intervalSeconds: 15
 
@@ -148,7 +148,7 @@ jobs:
       with:
         token: ${{ secrets.PERSONAL_TOKEN }}
         checkName: Smoke Test teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital ${{ github.sha }}
-        ref: ${{ github.event.pull_request.head.sha || github.sha }}
+        ref: ${{ github.event.pull_request.head.sha }}
         timeoutSeconds: 300
         intervalSeconds: 15
 

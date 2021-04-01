@@ -118,7 +118,7 @@ jobs:
       with:
         token: ${{ secrets.PERSONAL_TOKEN }}
         checkName: Deploy ${{ env.TAG }} to staging # Job name within workflow
-        ref: ${{ github.ref }}
+        ref: ${{ github.sha }}
         timeoutSeconds: 720
         intervalSeconds: 15
 
@@ -149,7 +149,7 @@ jobs:
       with:
         token: ${{ secrets.PERSONAL_TOKEN }}
         checkName: Smoke Test staging.teaching-vacancies.service.gov.uk ${{ github.sha }}
-        ref: ${{ github.ref }}
+        ref: ${{ github.sha }}
         timeoutSeconds: 300
         intervalSeconds: 15
 
@@ -171,7 +171,7 @@ jobs:
       with:
         token: ${{ secrets.PERSONAL_TOKEN }}
         checkName: Deploy ${{ env.TAG }} to production # Job name within workflow
-        ref: ${{ github.ref }}
+        ref: ${{ github.sha }}
         timeoutSeconds: 720
         intervalSeconds: 15
 
