@@ -13,9 +13,10 @@ jobs:
     runs-on: ubuntu-20.04
     timeout-minutes: 20
     steps:
-    - uses: softprops/turnstyle@v1
+    - uses: DFE-Digital/github-actions/turnstyle@master
       name: Check workflow concurrency
       with:
+        initial-wait-seconds: 12
         poll-interval-seconds: 20
         same-branch-only: true
       env:
