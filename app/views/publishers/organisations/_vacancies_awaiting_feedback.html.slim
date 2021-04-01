@@ -22,12 +22,14 @@ div class="govuk-!-margin-bottom-4"
             hired_status_options,
             :last,
             :first,
-            html_options: { class: "govuk-!-width-full", form: vacancy.id }
+            class: %w[govuk-!-width-full],
+            form: vacancy.id
           = f.govuk_collection_select :listed_elsewhere,
             listed_elsewhere_options,
             :last,
             :first,
-            html_options: { class: "govuk-!-width-full", form: vacancy.id }
+            class: %w[govuk-!-width-full],
+            form: vacancy.id
 
         dd.card-component__actions
           ul.actions.govuk-list

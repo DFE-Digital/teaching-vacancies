@@ -58,10 +58,11 @@ module Publishers::Wizardable
 
   def schools_params(params)
     job_location = session[:job_location].presence || @vacancy.job_location
-    school_name = if params[:publishers_job_listing_schools_form][:organisation_ids].is_a?(String)
+    organisation_ids = params[:publishers_job_listing_schools_form][:organisation_ids]
+    school_name = if organisation_ids.is_a?(String) && organisation_ids.present?
                     School.find(params[:publishers_job_listing_schools_form][:organisation_ids]).name
                   end
-    schools_count = if params[:publishers_job_listing_schools_form][:organisation_ids].is_a?(Array)
+    schools_count = if organisation_ids.is_a?(Array)
                       params[:publishers_job_listing_schools_form][:organisation_ids].count
                     end
     readable_job_location = readable_job_location(job_location, school_name: school_name, schools_count: schools_count)

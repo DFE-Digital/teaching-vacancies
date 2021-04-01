@@ -12,7 +12,8 @@
     :display_name,
     label: { text: t("jobs.sort_by.label"), size: "s", class: "govuk-label inline govuk-!-margin-right-2", id: "jobs_sort_label" },
     form_group: { classes: "govuk-!-margin-bottom-0" },
-    html_options: { class: "govuk-select govuk-input--width-10", disabled: @vacancies.none? }
+    class: %w[govuk-input--width-10],
+    disabled: @vacancies.none?
 
   = f.govuk_submit t("jobs.sort_by.submit"),
     classes: "govuk-button govuk-!-margin-0 govuk-input--width-5 jobs-sort-submit",
