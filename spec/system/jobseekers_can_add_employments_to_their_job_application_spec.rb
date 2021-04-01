@@ -10,6 +10,11 @@ RSpec.describe "Jobseekers can add employments to their job application" do
     login_as(jobseeker, scope: :jobseeker)
   end
 
+  after do |example|
+    # Print page on failure to help triage failures
+    puts page.html if example.exception
+  end
+
   describe "employments" do
     context "when completing a job application" do
       it "allows jobseekers to add a current role" do
