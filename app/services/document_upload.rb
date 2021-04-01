@@ -19,8 +19,9 @@ class DocumentUpload
   def upload
     upload_publishers_document
     set_public_permission_on_document
-  rescue Google::Apis::Error
+  rescue Google::Apis::Error => e
     self.google_error = true
+    Rollbar.error(e)
   else
     google_drive_virus_check
   end
