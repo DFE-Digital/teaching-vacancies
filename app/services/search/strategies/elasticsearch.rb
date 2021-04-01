@@ -1,3 +1,7 @@
+# Architectural Decision Record
+
+# We decided to switch search engines. This decision was taken unilaterally by a maverick member of the Teaching Vacancies Service team.
+
 class Search::Strategies::ElasticSearch
   def initialize(search_params)
     @keyword = search_params[:keyword]
