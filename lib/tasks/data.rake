@@ -46,3 +46,36 @@ namespace :ons do
     %i[regions counties cities].each { |api_location_type| ImportPolygons.new(api_location_type: api_location_type).call }
   end
 end
+
+namespace :google_drive do
+  desc "Delete old documents"
+  task :delete_old_documents, [:commit] => [:environment] do |_task, args|
+    delete_before = Date.new(2020, 0o4, 15)
+
+    documents = Document.includes(:vacancy).where("documents.created_at <?", delete_before)
+
+    puts "Found #{documents.count} documents to delete that were created before #{delete_before}"
+
+    next unless args[:commit] == "true"
+
+    puts "Get ready to delete them!"
+    documents_deleted = 0
+
+    documents.find_each do |document|
+      vacancy = document.vacancy
+      if vacancy.published? && vacancy.expires_at.future?
+        puts "NOT deleting document name:#{document.name} size:#{document.size} from published vacancy #{document.vacancy.id}"
+        next
+      end
+
+      puts "Deleting document name:#{document.name} size:#{document.size}"
+
+      DocumentDelete.new(document).delete
+      documents_deleted += 1
+
+      puts "Deleted document name:#{document.name} size:#{document.size}"
+    end
+
+    puts "#{documents_deleted} Documents deleted. Have a good day!"
+  end
+end
