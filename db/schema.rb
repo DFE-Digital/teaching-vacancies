@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_29_081916) do
+ActiveRecord::Schema.define(version: 2021_03_31_123301) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -49,6 +49,21 @@ ActiveRecord::Schema.define(version: 2021_03_29_081916) do
     t.index ["publisher_id"], name: "index_emergency_login_keys_on_publisher_id"
   end
 
+  create_table "employments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "organisation", default: "", null: false
+    t.string "job_title", default: "", null: false
+    t.string "salary", default: "", null: false
+    t.string "subjects", default: "", null: false
+    t.string "current_role", default: "", null: false
+    t.text "reason_for_leaving", default: "", null: false
+    t.text "main_duties", default: "", null: false
+    t.date "started_on"
+    t.date "ended_on"
+    t.uuid "job_application_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -84,14 +99,6 @@ ActiveRecord::Schema.define(version: 2021_03_29_081916) do
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
-  end
-
-  create_table "job_application_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "details_type"
-    t.uuid "job_application_id"
-    t.jsonb "data"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "job_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

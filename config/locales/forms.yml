@@ -2,10 +2,10 @@ en:
   buttons:
     accept_all_cookies: Accept all cookies
     accept_and_continue: Accept and continue
+    add_another_employment: Add another role
     add_another_reference: Add another referee
-    add_another_role: Add another role
+    add_employment: Add a role
     add_reference: Add a referee
-    add_role: Add a role
     apply_filters: Apply filters
     back: Back
     back_to_manage_jobs: Back to manage jobs
@@ -32,6 +32,7 @@ en:
     save_and_come_back: Save and come back later
     save_and_return_later: Save and return later
     save_changes: Save changes
+    save_employment: Save role
     save_reference: Save referee
     search: Search
     select_file: Select a file
@@ -79,7 +80,7 @@ en:
           benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
         phone_number: Please only give a phone number that you are happy to be contacted on.
         previous_names: For example maiden name or name at birth, if different from the name you have now.
-      jobseekers_job_application_details_employment_history_form:
+      jobseekers_job_application_details_employment_form:
         ended_on: For example, 01 01 2020
         main_duties: A very brief summary
         started_on: For example, 01 01 2020
@@ -305,7 +306,7 @@ en:
           another_role: I have found another role
           changed_mind: I have changed my mind
           other: Some other reason
-      jobseekers_job_application_details_employment_history_form:
+      jobseekers_job_application_details_employment_form:
         current_role_options:
           "no": "No"
           "yes": "Yes"
@@ -438,7 +439,7 @@ en:
         gender: How would you describe your gender?
         orientation: How would you describe your sexual orientation?
         religion: What is your religion or belief?
-      jobseekers_job_application_details_employment_history_form:
+      jobseekers_job_application_details_employment_form:
         current_role: Is this your current role?
         ended_on: End date
         started_on: Start date

@@ -6,6 +6,7 @@ FactoryBot.define do
       submitted_at { 3.days.ago }
       unsuccessful_at { 1.day.ago }
       withdrawn_at { 1.week.ago }
+      create_details { true }
     end
 
     status { :draft }
@@ -59,9 +60,9 @@ FactoryBot.define do
     completed_steps { JobApplication.completed_steps.keys }
 
     after :create do |job_application, options|
-      unless job_application.draft?
+      if options.create_details
         # TODO: education
-        create_list :job_application_detail, 3, :employment_history, job_application: job_application
+        create_list :employment, 3, job_application: job_application
         create_list :reference, 2, job_application: job_application
       end
 
@@ -76,6 +77,10 @@ FactoryBot.define do
   end
 
   trait :status_draft do
+    transient do
+      create_details { false }
+    end
+
     status { :draft }
 
     # Personal details
