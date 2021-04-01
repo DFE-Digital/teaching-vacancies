@@ -26,6 +26,10 @@ class Search::Strategies::ElasticSearch
 
   private
 
+  def big_if_true(bool)
+    bool ? "big" : "small"
+  end
+
   def search_arguments
     {
       aroundLatLng: @coordinates,
