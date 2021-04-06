@@ -1,15 +1,30 @@
 class Jobseekers::JobApplicationsController < Jobseekers::BaseController
-  before_action :redirect_if_job_application_exists, only: %i[new create]
+  before_action :redirect_if_job_application_exists, only: %i[new create new_quick_apply quick_apply]
 
   helper_method :job_application, :review_form, :vacancy, :withdraw_form
 
   def new
     request_event.trigger(:vacancy_apply_clicked, vacancy_id: vacancy.id)
+    redirect_to new_quick_apply_jobseekers_job_job_application_path(vacancy.id) if
+      current_jobseeker.job_applications.not_draft.any?
   end
 
   def create
     new_job_application = current_jobseeker.job_applications.create(vacancy: vacancy)
     redirect_to jobseekers_job_application_build_path(new_job_application, :personal_details)
+  end
+
+  def new_quick_apply
+    raise ActionController::RoutingError, "Cannot quick apply if there are no non-draft applications" unless
+      current_jobseeker.job_applications.not_draft.any?
+  end
+
+  def quick_apply
+    raise ActionController::RoutingError, "Cannot quick apply if there are no non-draft applications" unless
+      current_jobseeker.job_applications.not_draft.any?
+
+    new_job_application = Jobseekers::JobApplications::QuickApply.new(current_jobseeker, vacancy).job_application
+    redirect_to jobseekers_job_application_review_path(new_job_application)
   end
 
   def submit
