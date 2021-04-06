@@ -1,7 +1,7 @@
 = render "publishers/vacancies/new_attributes_tag", attributes: %i[job_location organisation_id organisation_ids], section: "job_location"
 = render "publishers/vacancies/error_tag", attributes: %i[job_location organisation_id organisation_ids], section: "job_location"
 
-= render Shared::ReviewComponent.new(id: "job_location", title: t("jobs.job_location"), edit_link: organisation_job_build_path(@vacancy.id, :job_location)) do
+= render ReviewComponent.new id: "job_location", title: t("jobs.job_location"), text: t("buttons.change"), href: organisation_job_build_path(@vacancy.id, :job_location) do
   dl.govuk-summary-list
     .govuk-summary-list__row
       dt.govuk-summary-list__key

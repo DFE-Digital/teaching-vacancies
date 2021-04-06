@@ -1,7 +1,7 @@
 = render "publishers/vacancies/new_attributes_tag", attributes: %i[job_summary about_school], section: "job_summary"
 = render "publishers/vacancies/error_tag", attributes: %i[job_summary about_school], section: "job_summary"
 
-= render Shared::ReviewComponent.new(id: "job_summary", title: t("jobs.job_summary"), edit_link: organisation_job_build_path(@vacancy.id, :job_summary)) do
+= render ReviewComponent.new id: "job_summary", title: t("jobs.job_summary"), text: t("buttons.change"), href: organisation_job_build_path(@vacancy.id, :job_summary) do
   = govuk_summary_list do |component|
     - component.slot(:row,
       key: t("jobs.job_summary"),
