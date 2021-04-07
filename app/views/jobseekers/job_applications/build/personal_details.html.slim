@@ -7,7 +7,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    .govuk-caption-m = t("jobseekers.job_applications.current_step", current: process_steps.current_step_number, total: 10)
+    = render "caption"
     h1.govuk-heading-l = t(".heading")
     p.govuk-body = t(".description")
 
@@ -31,4 +31,4 @@
         = f.govuk_submit t("buttons.save_and_come_back"), secondary: true
 
   .govuk-grid-column-one-third
-    = render "job_application_steps"
+    = render "steps"
