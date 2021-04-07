@@ -58,6 +58,7 @@ FactoryBot.define do
     right_to_work_in_uk { "yes" }
 
     completed_steps { JobApplication.completed_steps.keys }
+    in_progress_steps { [] }
 
     after :create do |job_application, options|
       if options.create_details

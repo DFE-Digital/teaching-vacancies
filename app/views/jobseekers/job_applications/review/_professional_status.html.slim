@@ -1,4 +1,4 @@
-= render ReviewComponent.new id: "professional_status", title: t("jobseekers.job_applications.build.professional_status.heading"), text: (t("buttons.change") if allow_edit), href: (jobseekers_job_application_build_path(job_application, :professional_status) if allow_edit) do
+= render ReviewComponent.new id: "professional_status", title: t("jobseekers.job_applications.build.professional_status.heading"), text: (job_application_review_edit_section_text(job_application, :professional_status) if allow_edit), href: (jobseekers_job_application_build_path(job_application, :professional_status) if allow_edit) do
   = govuk_summary_list do |component|
     - component.slot(:row,
       key: t("helpers.legend.jobseekers_job_application_professional_status_form.qualified_teacher_status"),

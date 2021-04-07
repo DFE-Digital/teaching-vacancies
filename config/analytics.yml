@@ -42,6 +42,7 @@ shared:
     - jobseeker_id
     - vacancy_id
     - completed_steps
+    - in_progress_steps
   jobseekers:
     - id
     - email

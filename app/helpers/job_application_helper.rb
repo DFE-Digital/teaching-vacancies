@@ -20,4 +20,10 @@ module JobApplicationHelper
   def status_tag_colour(status)
     JOB_APPLICATION_STATUS_TAG_COLOURS[status]
   end
+
+  def job_application_review_edit_section_text(job_application, step)
+    return t("buttons.change") if step.to_s.in?(job_application.completed_steps)
+
+    t("buttons.complete_section")
+  end
 end

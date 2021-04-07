@@ -8,7 +8,7 @@ class Jobseekers::JobApplication::ReviewForm
   validate :all_steps_completed
 
   def all_steps_completed
-    return if JobApplication.completed_steps.keys.all? { |step| completed_steps.include?(step) }
+    return if JobApplication.completed_steps.keys.all? { |step| step.in?(completed_steps) }
 
     errors.add(:base, "Please complete all incomplete steps")
   end
