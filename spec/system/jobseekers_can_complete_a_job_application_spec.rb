@@ -29,7 +29,8 @@ RSpec.describe "Jobseekers can complete a job application" do
     click_on I18n.t("buttons.back_to_previous_step")
     click_on I18n.t("buttons.add_qualification")
     validates_step_complete(button: I18n.t("buttons.continue"))
-    select_qualification_category("Undergraduate degree")
+    choose "Undergraduate degree"
+    click_on I18n.t("buttons.continue")
     expect(page).to have_content(I18n.t("jobseekers.job_applications.qualifications.new.heading.undergraduate"))
     validates_step_complete(button: I18n.t("buttons.save_qualification.one"))
     fill_in_undergraduate_degree
