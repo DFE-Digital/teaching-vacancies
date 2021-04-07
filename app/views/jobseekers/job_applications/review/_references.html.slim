@@ -1,29 +1,34 @@
-= render ReviewComponent.new id: "references", title: t("jobseekers.job_applications.build.references.heading"), text: (job_application_review_edit_section_text(job_application, :references) if allow_edit), href: (jobseekers_job_application_build_path(job_application, :references) if allow_edit) do
-  = govuk_accordion do |accordion|
-    - job_application.references.order(:created_at).each_with_index do |reference, index|
-      - accordion.add_section(title: reference.name, html_attributes: { id: "reference_#{index}" }) do
-        = govuk_summary_list do |component|
-          - component.slot(:row,
-            key: t("helpers.label.jobseekers_job_application_details_reference_form.job_title"),
-            value: reference.job_title,
-            html_attributes: { id: "reference_job_title" })
+= render ReviewComponent.new id: "references" do |review|
+  - review.heading title: t("jobseekers.job_applications.build.references.heading"),
+                   text: (job_application_review_edit_section_text(job_application, :references) if allow_edit),
+                   href: (jobseekers_job_application_build_path(job_application, :references) if allow_edit)
 
-          - component.slot(:row,
-            key: t("helpers.label.jobseekers_job_application_details_reference_form.organisation"),
-            value: reference.organisation,
-            html_attributes: { id: "reference_organisation" })
+  - review.body do
+    = govuk_accordion do |accordion|
+      - job_application.references.order(:created_at).each_with_index do |reference, index|
+        - accordion.add_section(title: reference.name, html_attributes: { id: "reference_#{index}" }) do
+          = govuk_summary_list do |component|
+            - component.slot(:row,
+              key: t("helpers.label.jobseekers_job_application_details_reference_form.job_title"),
+              value: reference.job_title,
+              html_attributes: { id: "reference_job_title" })
 
-          - component.slot(:row,
-            key: t("helpers.label.jobseekers_job_application_details_reference_form.relationship"),
-            value: reference.relationship,
-            html_attributes: { id: "reference_relationship" })
+            - component.slot(:row,
+              key: t("helpers.label.jobseekers_job_application_details_reference_form.organisation"),
+              value: reference.organisation,
+              html_attributes: { id: "reference_organisation" })
 
-          - component.slot(:row,
-            key: t("helpers.label.jobseekers_job_application_details_reference_form.email"),
-            value: reference.email,
-            html_attributes: { id: "reference_email" })
+            - component.slot(:row,
+              key: t("helpers.label.jobseekers_job_application_details_reference_form.relationship"),
+              value: reference.relationship,
+              html_attributes: { id: "reference_relationship" })
 
-          - component.slot(:row,
-            key: t("helpers.label.jobseekers_job_application_details_reference_form.phone_number"),
-            value: reference.phone_number,
-            html_attributes: { id: "reference_phone_number" })
+            - component.slot(:row,
+              key: t("helpers.label.jobseekers_job_application_details_reference_form.email"),
+              value: reference.email,
+              html_attributes: { id: "reference_email" })
+
+            - component.slot(:row,
+              key: t("helpers.label.jobseekers_job_application_details_reference_form.phone_number"),
+              value: reference.phone_number,
+              html_attributes: { id: "reference_phone_number" })

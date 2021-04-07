@@ -1,3 +1,8 @@
-= render ReviewComponent.new id: "personal_statement", title: t("jobseekers.job_applications.build.personal_statement.heading"), text: (job_application_review_edit_section_text(job_application, :personal_statement) if allow_edit), href: (jobseekers_job_application_build_path(job_application, :personal_statement) if allow_edit) do
+= render ReviewComponent.new id: "personal_statement" do |review|
+  - review.heading title: t("jobseekers.job_applications.build.personal_statement.heading"),
+                   text: (job_application_review_edit_section_text(job_application, :personal_statement) if allow_edit),
+                   href: (jobseekers_job_application_build_path(job_application, :personal_statement) if allow_edit)
+
   - if job_application.personal_statement.present?
-    p.govuk-body.review-component__body--border class="govuk-!-padding-bottom-3" = job_application.personal_statement
+    - review.body do
+      p.govuk-body.review-component__body--border class="govuk-!-padding-bottom-3" = job_application.personal_statement

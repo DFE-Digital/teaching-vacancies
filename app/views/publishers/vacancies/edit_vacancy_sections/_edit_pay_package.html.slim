@@ -1,12 +1,17 @@
 = render "publishers/vacancies/new_attributes_tag", attributes: %i[salary benefits], section: "pay_package"
 = render "publishers/vacancies/error_tag", attributes: %i[salary benefits], section: "pay_package"
 
-= render ReviewComponent.new id: "pay_package", title: t("jobs.pay_package"), text: t("buttons.change"), href: organisation_job_build_path(@vacancy.id, :pay_package) do
-  = govuk_summary_list do |component|
-    - component.slot(:row,
-      key: t("jobs.salary"),
-      value: @vacancy.salary)
+= render ReviewComponent.new id: "pay_package" do |review|
+  - review.heading title: t("jobs.pay_package"),
+                   text: t("buttons.change"),
+                   href: organisation_job_build_path(@vacancy.id, :pay_package)
 
-    - component.slot(:row,
-      key: t("jobs.benefits"),
-      value: @vacancy.benefits.presence || t("jobs.not_defined"))
+  - review.body do
+    = govuk_summary_list do |component|
+      - component.slot(:row,
+        key: t("jobs.salary"),
+        value: @vacancy.salary)
+
+      - component.slot(:row,
+        key: t("jobs.benefits"),
+        value: @vacancy.benefits.presence || t("jobs.not_defined"))

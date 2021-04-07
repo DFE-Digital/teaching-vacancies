@@ -13,7 +13,7 @@ RSpec.describe "Jobseekers can edit a draft job application" do
   it "allows jobseekers to edit job application from review page" do
     visit jobseekers_job_application_review_path(job_application)
 
-    within "#review-component-personal_details-heading" do
+    within "#personal_details" do
       click_on "Change"
     end
 

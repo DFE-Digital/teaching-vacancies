@@ -1,17 +1,22 @@
-= render ReviewComponent.new id: "declarations", title: t("jobseekers.job_applications.build.declarations.heading"), text: (job_application_review_edit_section_text(job_application, :declarations) if allow_edit), href: (jobseekers_job_application_build_path(job_application, :declarations) if allow_edit) do
-  = govuk_summary_list do |component|
-    - component.slot(:row,
-      key: t("helpers.legend.jobseekers_job_application_declarations_form.banned_or_disqualified"),
-      value: job_application.banned_or_disqualified.capitalize,
-      html_attributes: { id: "declarations_banned_or_disqualified" })
+= render ReviewComponent.new id: "declarations" do |review|
+  - review.heading title: t("jobseekers.job_applications.build.declarations.heading"),
+                   text: (job_application_review_edit_section_text(job_application, :declarations) if allow_edit),
+                   href: (jobseekers_job_application_build_path(job_application, :declarations) if allow_edit)
 
-    - component.slot(:row,
-      key: t("helpers.legend.jobseekers_job_application_declarations_form.close_relationships", organisation: vacancy.organisation.name),
-      value: safe_join([tag.div(job_application.close_relationships.capitalize, class: "govuk-body"),
-                        tag.div(job_application.close_relationships_details, class: "govuk-body")]),
-      html_attributes: { id: "declarations_close_relationships" })
+  - review.body do
+    = govuk_summary_list do |component|
+      - component.slot(:row,
+        key: t("helpers.legend.jobseekers_job_application_declarations_form.banned_or_disqualified"),
+        value: job_application.banned_or_disqualified.capitalize,
+        html_attributes: { id: "declarations_banned_or_disqualified" })
 
-    - component.slot(:row,
-      key: t("helpers.legend.jobseekers_job_application_declarations_form.right_to_work_in_uk"),
-      value: job_application.right_to_work_in_uk.capitalize,
-      html_attributes: { id: "declarations_right_to_work_in_uk" })
+      - component.slot(:row,
+        key: t("helpers.legend.jobseekers_job_application_declarations_form.close_relationships", organisation: vacancy.organisation.name),
+        value: safe_join([tag.div(job_application.close_relationships.capitalize, class: "govuk-body"),
+                          tag.div(job_application.close_relationships_details, class: "govuk-body")]),
+        html_attributes: { id: "declarations_close_relationships" })
+
+      - component.slot(:row,
+        key: t("helpers.legend.jobseekers_job_application_declarations_form.right_to_work_in_uk"),
+        value: job_application.right_to_work_in_uk.capitalize,
+        html_attributes: { id: "declarations_right_to_work_in_uk" })

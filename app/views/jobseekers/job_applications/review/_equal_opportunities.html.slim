@@ -1,30 +1,35 @@
-= render ReviewComponent.new id: "equal_opportunities", title: t("jobseekers.job_applications.build.equal_opportunities.heading"), text: (job_application_review_edit_section_text(job_application, :equal_opportunities) if allow_edit), href: (jobseekers_job_application_build_path(job_application, :equal_opportunities) if allow_edit) do
-  = govuk_summary_list do |component|
-    - component.slot(:row,
-      key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.disability"),
-      value: job_application.disability.humanize,
-      html_attributes: { id: "equal_opportunities_disability" })
+= render ReviewComponent.new id: "equal_opportunities" do |review|
+  - review.heading title: t("jobseekers.job_applications.build.equal_opportunities.heading"),
+                   text: (job_application_review_edit_section_text(job_application, :equal_opportunities) if allow_edit),
+                   href: (jobseekers_job_application_build_path(job_application, :equal_opportunities) if allow_edit)
 
-    - component.slot(:row,
-      key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.gender"),
-      value: safe_join([tag.div(job_application.gender.humanize, class: "govuk-body"),
-                        tag.div(job_application.gender_description, class: "govuk-body")]),
-      html_attributes: { id: "equal_opportunities_gender" })
+  - review.body do
+    = govuk_summary_list do |component|
+      - component.slot(:row,
+        key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.disability"),
+        value: job_application.disability.humanize,
+        html_attributes: { id: "equal_opportunities_disability" })
 
-    - component.slot(:row,
-      key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.orientation"),
-      value: safe_join([tag.div(job_application.orientation.humanize, class: "govuk-body"),
-                        tag.div(job_application.orientation_description, class: "govuk-body")]),
-      html_attributes: { id: "equal_opportunities_orientation" })
+      - component.slot(:row,
+        key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.gender"),
+        value: safe_join([tag.div(job_application.gender.humanize, class: "govuk-body"),
+                          tag.div(job_application.gender_description, class: "govuk-body")]),
+        html_attributes: { id: "equal_opportunities_gender" })
 
-    - component.slot(:row,
-      key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.ethnicity"),
-      value: safe_join([tag.div(job_application.ethnicity.humanize, class: "govuk-body"),
-                        tag.div(job_application.ethnicity_description, class: "govuk-body")]),
-      html_attributes: { id: "equal_opportunities_ethnicity" })
+      - component.slot(:row,
+        key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.orientation"),
+        value: safe_join([tag.div(job_application.orientation.humanize, class: "govuk-body"),
+                          tag.div(job_application.orientation_description, class: "govuk-body")]),
+        html_attributes: { id: "equal_opportunities_orientation" })
 
-    - component.slot(:row,
-      key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.religion"),
-      value: safe_join([tag.div(job_application.religion.humanize, class: "govuk-body"),
-                        tag.div(job_application.religion_description, class: "govuk-body")]),
-      html_attributes: { id: "equal_opportunities_religion" })
+      - component.slot(:row,
+        key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.ethnicity"),
+        value: safe_join([tag.div(job_application.ethnicity.humanize, class: "govuk-body"),
+                          tag.div(job_application.ethnicity_description, class: "govuk-body")]),
+        html_attributes: { id: "equal_opportunities_ethnicity" })
+
+      - component.slot(:row,
+        key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.religion"),
+        value: safe_join([tag.div(job_application.religion.humanize, class: "govuk-body"),
+                          tag.div(job_application.religion_description, class: "govuk-body")]),
+        html_attributes: { id: "equal_opportunities_religion" })
