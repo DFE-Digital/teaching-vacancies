@@ -9,7 +9,7 @@ class Jobseekers::JobApplications::QuickApply
   end
 
   def job_application
-    new_job_application.assign_attributes(recent_job_application.slice(*attributes_to_copy))
+    new_job_application.assign_attributes(recent_job_application.slice(*attributes_to_copy).merge(completed_steps: completed_steps))
     copy_qualifications
     copy_employments
     copy_references
@@ -29,6 +29,10 @@ class Jobseekers::JobApplications::QuickApply
 
   def attributes_to_copy
     personal_details_fields + professional_status_fields + employment_history_fields + ask_for_support_fields
+  end
+
+  def completed_steps
+    %w[personal_details professional_status employment_history references ask_for_support]
   end
 
   def copy_qualifications
