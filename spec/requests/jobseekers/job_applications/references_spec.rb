@@ -46,8 +46,7 @@ RSpec.describe "Job applications references" do
   end
 
   describe "POST #create" do
-    let(:params) { { commit: button, jobseekers_job_application_details_reference_form: { name: name } } }
-    let(:button) { I18n.t("buttons.save_reference") }
+    let(:params) { { commit: I18n.t("buttons.save_reference"), jobseekers_job_application_details_reference_form: { name: name } } }
     let(:name) { "Reference Bloggs" }
 
     context "when the form is valid" do
@@ -57,6 +56,7 @@ RSpec.describe "Job applications references" do
         expect { post jobseekers_job_application_references_path(job_application), params: params }
           .to change { Reference.count }.by(1)
 
+        expect(job_application.reload.in_progress_steps).to contain_exactly("references")
         expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :references))
       end
 
@@ -83,8 +83,7 @@ RSpec.describe "Job applications references" do
 
   describe "PATCH #update" do
     let!(:reference) { create(:reference, job_application: job_application, name: "Testing Bloggs") }
-    let(:params) { { commit: button, jobseekers_job_application_details_reference_form: { name: name } } }
-    let(:button) { I18n.t("buttons.save_reference") }
+    let(:params) { { commit: I18n.t("buttons.save_reference"), jobseekers_job_application_details_reference_form: { name: name } } }
     let(:name) { "Reference Bloggs" }
 
     context "when the form is valid" do
