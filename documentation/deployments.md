@@ -49,6 +49,13 @@ When a PR is approved and merged into `master` branch, the GitHub actions workfl
 - Calls the [deploy_app.yml](/.github/workflows/deploy_app.yml) workflow to use Terraform to update the `web` and `worker` apps to use the new Docker image, and apply any changes to the `production` environment
 - Sends a Slack notification to the `#twd_tv_dev` channel
 
+### Merge and concurrency deployment management
+When there are multiple merges, this could lead to race conditions. To mitigate this, the `turnstyle` action prevents two or more instances of the same workflow from running concurrently.
+
+Furthermore, to help with workflow code reuse, we trigger a separate deployment workflow via the [workflow_dispatch](https://docs.github.com/en/actions/reference/events-that-trigger-workflows#workflow_dispatch) action. We must pass the `ref` (branch) or pull request `ref` to locate the workflow.
+
+To block the calling workflow until the triggered workflow is completed, we use `action-wait-for-check`. This checks and waits on a `sha` (commit) instead of `ref` (branch), which is a moving target.
+
 ### Build and deploy to an environment - Makefile
 
 This builds and deploys a Docker image from local code, then updates the environment to use that image
