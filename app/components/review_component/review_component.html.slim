@@ -1,0 +1,8 @@
+= tag.div(class: classes, **html_attributes) do
+  = tag.h2(class: "govuk-heading-m review-component__heading review-component__section", id: "review-component-#{id}-heading") do
+    = title
+    - if text && href
+      = govuk_link_to text, href, class: "review-component__section-button", aria: { label: "#{text} #{id.humanize}" }
+
+  .review-component__body
+    = content

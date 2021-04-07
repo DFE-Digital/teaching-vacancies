@@ -1,7 +1,7 @@
 = render "publishers/vacancies/new_attributes_tag", attributes: %i[publish_on expires_on starts_on], section: "important_dates"
 = render "publishers/vacancies/error_tag", attributes: %i[publish_on expires_on starts_on], section: "important_dates"
 
-= render Shared::ReviewComponent.new(id: "important_dates", title: t("jobs.important_dates"), edit_link: organisation_job_build_path(@vacancy.id, :important_dates)) do
+= render ReviewComponent.new id: "important_dates", title: t("jobs.important_dates"), text: t("buttons.change"), href: organisation_job_build_path(@vacancy.id, :important_dates) do
   = govuk_summary_list do |component|
     - component.slot(:row,
       key: t("jobs.publication_date"),
