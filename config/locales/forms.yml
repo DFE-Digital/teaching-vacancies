@@ -5,6 +5,7 @@ en:
     add_another_employment: Add another role
     add_another_qualification: Add another qualification
     add_another_reference: Add another referee
+    add_another_subject: + Add another subject
     add_employment: Add a role
     add_qualification: Add a qualification
     add_reference: Add a referee
@@ -23,6 +24,7 @@ en:
     create_job: Create a job listing
     create_account: Create an account
     delete: Delete
+    delete_subject: delete subject
     dismiss: Dismiss
     edit: Edit
     end_listing: End job listing
