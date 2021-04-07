@@ -15,13 +15,12 @@ class ImportOrganisationData
   def self.delete_marked_school_group_memberships!
     memberships_to_delete = SchoolGroupMembership.where(do_not_delete: false)
     if memberships_to_delete.count > 10
-      raise SuspiciouslyHighNumberOfRecordsToDelete, memberships_to_delete.count 
-    
-      school_group_name_and_count_of_memberships = memberships_to_delete.map { |membership| membership.school_group.name}
+      school_group_name_and_count_of_memberships = memberships_to_delete.map { |membership| membership.school_group.name }
                                                                         .group_by { |x| x }
-                                                                        .map{ |key, value| [key, value.length]}
-                                                                        .to_h
+                                                                        .transform_values { |v| v.length }
       Rollbar.log(:info, "The number of memberships to delete, by SchoolGroup: #{school_group_name_and_count_of_memberships}")
+
+      raise SuspiciouslyHighNumberOfRecordsToDelete, memberships_to_delete.count
     else
       memberships_to_delete.delete_all
     end
