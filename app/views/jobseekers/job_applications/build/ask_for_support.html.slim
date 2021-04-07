@@ -31,4 +31,4 @@
         = f.govuk_submit t("buttons.save_and_come_back"), secondary: true
 
   .govuk-grid-column-one-third
-    = render(Shared::ProcessStepsComponent.new(process: vacancy, service: process_steps, title: t("jobseekers.job_applications.build.process_title")))
+    = render "job_application_steps"
