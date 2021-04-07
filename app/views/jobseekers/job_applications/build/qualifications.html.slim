@@ -34,9 +34,8 @@
                                     tag.div(group.first.finished_studying_details.presence, class: "govuk-body")]))
 
           - detail.actions do
-            = govuk_button_to t("buttons.delete"), destroy_jobseekers_job_application_qualifications_path(job_application), params: { ids: group.pluck(:id) }, method: :delete, class: "govuk-delete-link govuk-!-margin-bottom-0", form_class: "inline-block button_to"
-            / TODO: correct the edit path once multiple qualifications can be edited in one page.
-            = govuk_link_to t("buttons.edit"), edit_jobseekers_job_application_qualification_path(job_application, group), class: "govuk-link--no-visited-state inline-block"
+            = govuk_button_to t("buttons.delete"), destroy_jobseekers_job_application_qualifications_path(job_application, { ids: group.pluck(:id) }), method: :delete, class: "govuk-delete-link govuk-!-margin-bottom-0", form_class: "inline-block button_to"
+            = govuk_link_to t("buttons.edit"), edit_jobseekers_job_application_qualifications_path(job_application, { ids: group.pluck(:id) }), class: "govuk-link--no-visited-state inline-block"
 
       = govuk_link_to t("buttons.add_another_qualification"), select_category_jobseekers_job_application_qualifications_path(job_application), button: true, class: "govuk-button--secondary"
     - else
