@@ -1,6 +1,4 @@
 class Qualification < ApplicationRecord
-  include ActionView::Helpers::SanitizeHelper
-
   belongs_to :job_application
 
   SECONDARY_QUALIFICATIONS = %w[gcse as_level a_level other_secondary].freeze
@@ -16,7 +14,7 @@ class Qualification < ApplicationRecord
   end
 
   def remove_inapplicable_data
-    # When `finished_studying` changes, remove answers questions that no longer apply, so that they aren't displayed
+    # When `finished_studying` changes, remove answers to questions that no longer apply, so that they aren't displayed.
     return if finished_studying.nil?
 
     if finished_studying?
