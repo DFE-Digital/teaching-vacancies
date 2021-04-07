@@ -34,6 +34,7 @@ paas_web_app_instances                 = 4
 paas_worker_app_deployment_strategy    = "blue-green-v2"
 paas_worker_app_instances              = 2
 paas_worker_app_memory                 = 1536
+paas_web_app_memory                    = 1536
 
 # StatusCake
 
