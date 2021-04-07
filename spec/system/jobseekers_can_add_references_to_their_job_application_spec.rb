@@ -10,55 +10,49 @@ RSpec.describe "Jobseekers can add references to their job application" do
     login_as(jobseeker, scope: :jobseeker)
   end
 
-  describe "references" do
-    context "when completing a job application" do
-      it "allows jobseekers to add references" do
-        visit jobseekers_job_application_build_path(job_application, :references)
+  it "allows jobseekers to add references" do
+    visit jobseekers_job_application_build_path(job_application, :references)
 
-        click_on I18n.t("buttons.add_reference")
-        click_on I18n.t("buttons.save_reference")
+    expect(page).to have_content("No referees specified")
 
-        expect(page).to have_content("There is a problem")
+    click_on I18n.t("buttons.add_reference")
+    validates_step_complete(button: I18n.t("buttons.save_reference"))
 
-        fill_in_reference
+    fill_in_reference
 
-        click_on I18n.t("buttons.save_reference")
+    click_on I18n.t("buttons.save_reference")
 
-        expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :references))
-        expect(page).to have_content("Jim Referee")
-      end
+    expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :references))
+    expect(page).to have_content("Jim Referee")
+  end
 
-      context "when there is at least one reference" do
-        let!(:reference) { create(:reference, name: "John", job_application: job_application) }
+  context "when there is at least one reference" do
+    let!(:reference) { create(:reference, name: "John", job_application: job_application) }
 
-        it "allows jobseekers to delete references" do
-          visit jobseekers_job_application_build_path(job_application, :references)
+    it "allows jobseekers to delete references" do
+      visit jobseekers_job_application_build_path(job_application, :references)
 
-          click_on I18n.t("buttons.delete")
+      click_on I18n.t("buttons.delete")
 
-          expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :references))
-          expect(page).to have_content(I18n.t("jobseekers.job_applications.references.destroy.success"))
-          expect(page).not_to have_content("John")
-        end
+      expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :references))
+      expect(page).to have_content(I18n.t("jobseekers.job_applications.references.destroy.success"))
+      expect(page).not_to have_content("John")
+    end
 
-        it "allows jobseekers to edit references" do
-          visit jobseekers_job_application_build_path(job_application, :references)
+    it "allows jobseekers to edit references" do
+      visit jobseekers_job_application_build_path(job_application, :references)
 
-          click_on I18n.t("buttons.edit")
+      click_on I18n.t("buttons.edit")
 
-          fill_in "Name", with: ""
-          click_on I18n.t("buttons.save_reference")
+      fill_in "Name", with: ""
+      validates_step_complete(button: I18n.t("buttons.save_reference"))
 
-          expect(page).to have_content("There is a problem")
+      fill_in "Name", with: "Jason"
+      click_on I18n.t("buttons.save_reference")
 
-          fill_in "Name", with: "Jason"
-          click_on I18n.t("buttons.save_reference")
-
-          expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :references))
-          expect(page).not_to have_content("John")
-          expect(page).to have_content("Jason")
-        end
-      end
+      expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :references))
+      expect(page).not_to have_content("John")
+      expect(page).to have_content("Jason")
     end
   end
 end

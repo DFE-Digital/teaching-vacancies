@@ -1,11 +1,12 @@
 class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
   include Wicked::Wizard
   include Jobseekers::Wizardable
+  include QualificationFormConcerns
 
   steps :personal_details, :professional_status, :qualifications, :employment_history, :personal_statement, :references,
         :equal_opportunities, :ask_for_support, :declarations
 
-  helper_method :back_path, :form, :job_application, :vacancy
+  helper_method :back_path, :form, :job_application, :qualification_form_param_key, :vacancy
 
   def show
     render_wizard
