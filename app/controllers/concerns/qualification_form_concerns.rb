@@ -22,4 +22,6 @@ module QualificationFormConcerns
            end
     "Jobseekers::JobApplication::Details::Qualifications::#{name}".constantize
   end
+
+  alias form_param_key qualification_form_param_key
 end
