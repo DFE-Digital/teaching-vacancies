@@ -17,7 +17,7 @@ class ImportOrganisationData
     if memberships_to_delete.count > 10
       school_group_name_and_count_of_memberships = memberships_to_delete.map { |membership| membership.school_group.name }
                                                                         .group_by { |x| x }
-                                                                        .transform_values { |v| v.length }
+                                                                        .transform_values(&:length)
       Rollbar.log(:info, "The number of memberships to delete, by SchoolGroup: #{school_group_name_and_count_of_memberships}")
 
       raise SuspiciouslyHighNumberOfRecordsToDelete, memberships_to_delete.count
