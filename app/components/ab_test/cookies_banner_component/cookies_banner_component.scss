@@ -6,6 +6,11 @@
   background-color: rgba($color: govuk-colour('light-blue'), $alpha: 0.2);
   z-index: 1000;
 
+  .govuk-button-group {
+    align-items: inherit;
+    margin-bottom: 0;
+  }
+
   &--top {
     background-color: govuk-colour("white");
     position: sticky;
