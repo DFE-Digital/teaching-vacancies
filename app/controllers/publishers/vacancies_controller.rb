@@ -1,7 +1,9 @@
 class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   include Publishers::Wizardable
 
-  before_action :set_vacancy, only: %i[destroy edit preview review show summary]
+  helper_method :applications, :sort, :sort_form
+
+  before_action :set_vacancy, only: %i[destroy edit preview review show summary job_applications]
   before_action :redirect_if_published, only: %i[preview review]
   before_action :redirect_unless_permitted, only: %i[preview summary]
   before_action :devise_job_alert_search_criteria, only: %i[show preview]
@@ -60,6 +62,18 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   end
 
   private
+
+  def applications
+    @applications ||= @vacancy.job_applications.not_draft.order(sort.column => sort.order)
+  end
+
+  def sort
+    @sort ||= Publishers::JobApplicationSort.new.update(column: params[:sort_column])
+  end
+
+  def sort_form
+    @sort_form ||= SortForm.new(sort.column)
+  end
 
   def devise_job_alert_search_criteria
     @devised_job_alert_search_criteria = Search::CriteriaDeviser.new(@vacancy).criteria
