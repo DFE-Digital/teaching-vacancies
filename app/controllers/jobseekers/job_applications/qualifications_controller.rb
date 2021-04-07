@@ -1,4 +1,6 @@
 class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseController
+  include QualificationFormConcerns
+
   helper_method :back_path, :category, :form, :job_application, :qualification,
                 :submit_text
 
@@ -35,14 +37,15 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
   end
 
   def destroy
-    qualification.destroy
-    redirect_to back_path, success: t(".success")
+    count = qualifications.count
+    qualifications.each(&:destroy)
+    redirect_to back_path, success: t(".success", count: count)
   end
 
   private
 
   def form
-    @form ||= form_class.new(form_attributes)
+    @form ||= form_class(category).new(form_attributes)
   end
 
   def form_attributes
@@ -59,32 +62,13 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
   end
 
   def qualification_params
-    form_param_key = form_class.to_s.underscore.tr("/", "_").to_sym
     case action_name
     when "new", "select_category", "submit_category"
-      (params[form_param_key] || params).permit(:category)
+      (params[qualification_form_param_key(category)] || params).permit(:category)
     when "create", "edit", "update"
-      params.require(form_param_key)
+      params.require(qualification_form_param_key(category))
             .permit(:category, :finished_studying, :finished_studying_details, :grade, :institution, :name, :subject, :year)
     end
-  end
-
-  def form_class
-    name = if %w[select_category submit_category].include?(action_name)
-             "CategoryForm"
-           else
-             case category
-             when "gcse", "a_level", "as_level"
-               "Secondary::CommonForm"
-             when "other_secondary"
-               "Secondary::OtherForm"
-             when "undergraduate", "postgraduate"
-               "DegreeForm"
-             when "other"
-               "OtherForm"
-             end
-           end
-    "Jobseekers::JobApplication::Details::Qualifications::#{name}".constantize
   end
 
   def category
@@ -107,7 +91,11 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
     @qualification ||= job_application.qualifications.find(params[:id])
   end
 
+  def qualifications
+    @qualifications ||= [job_application.qualifications.find(params[:ids])].flatten
+  end
+
   def submit_text
-    category.in?(%w[undergraduate postgraduate other]) ? t("buttons.save_qualification.one") : t("buttons.save_qualification.many")
+    category.in?(%w[undergraduate postgraduate other]) ? t("buttons.save_qualification.one") : t("buttons.save_qualification.other")
   end
 end
