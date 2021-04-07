@@ -26,4 +26,16 @@ module JobApplicationHelper
 
     t("buttons.complete_section")
   end
+
+  def job_application_review_section_tag(job_application, step)
+    tag_attributes = if step.to_s.in?(job_application.completed_steps)
+                       { text: "complete" }
+                     elsif step.to_s.in?(job_application.in_progress_steps)
+                       { text: "in progress", colour: "yellow" }
+                     else
+                       { text: "not started", colour: "red" }
+                     end
+
+    govuk_tag(**tag_attributes)
+  end
 end

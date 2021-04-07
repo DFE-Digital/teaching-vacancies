@@ -2,27 +2,19 @@
 
 .review-component {
   .review-component__heading {
-    .review-component__section {
-      @include govuk-font($size:24, $weight: bold);
-      display: table;
-    }
+    a {
+      @include govuk-font($size: 16, $weight: bold);
 
-    .review-component__section-number {
-      display: table-cell;
-
-      @include govuk-media-query($from: tablet) {
-        min-width: govuk-spacing(6);
-        padding-right: 0;
-      }
-    }
-
-    .review-component__section-button {
-      @include govuk-font($size:16, $weight: bold);
       margin-left: govuk-spacing(4);
+      margin-right: govuk-spacing(4);
 
       @include govuk-media-query($from: desktop) {
-        @include govuk-font($size:19, $weight: bold);
+        @include govuk-font($size: 19, $weight: bold);
       }
+    }
+
+    .govuk-tag {
+      vertical-align: text-bottom;
     }
   }
 

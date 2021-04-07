@@ -1,28 +1,33 @@
 = render "publishers/vacancies/new_attributes_tag", attributes: %i[job_title job_roles suitable_for_nqt subjects working_patterns], section: "job_details"
 = render "publishers/vacancies/error_tag", attributes: %i[job_title job_roles suitable_for_nqt subjects working_patterns], section: "job_details"
 
-= render ReviewComponent.new id: "job_details", title: t("jobs.job_details"), text: t("buttons.change"), href: organisation_job_build_path(@vacancy.id, :job_details) do
-  = govuk_summary_list do |component|
-    - component.slot(:row,
-      key: t("jobs.job_title"),
-      value: @vacancy.job_title)
+= render ReviewComponent.new id: "job_details" do |review|
+  - review.heading title: t("jobs.job_details"),
+                   text: t("buttons.change"),
+                   href: organisation_job_build_path(@vacancy.id, :job_details)
 
-    - component.slot(:row,
-      key: t("jobs.job_roles"),
-      value: @vacancy.show_job_roles.presence || t("jobs.not_defined"))
+  - review.body do
+    = govuk_summary_list do |component|
+      - component.slot(:row,
+        key: t("jobs.job_title"),
+        value: @vacancy.job_title)
 
-    - component.slot(:row,
-      key: t("jobs.suitable_for_nqt"),
-      value: @vacancy.suitable_for_nqt&.capitalize)
+      - component.slot(:row,
+        key: t("jobs.job_roles"),
+        value: @vacancy.show_job_roles.presence || t("jobs.not_defined"))
 
-    - component.slot(:row,
-      key: t("jobs.subjects"),
-      value: @vacancy.show_subjects.presence || t("jobs.not_defined"))
+      - component.slot(:row,
+        key: t("jobs.suitable_for_nqt"),
+        value: @vacancy.suitable_for_nqt&.capitalize)
 
-    - component.slot(:row,
-      key: t("jobs.working_patterns"),
-      value: @vacancy.working_patterns)
+      - component.slot(:row,
+        key: t("jobs.subjects"),
+        value: @vacancy.show_subjects.presence || t("jobs.not_defined"))
 
-    - component.slot(:row,
-      key: t("jobs.contract_type"),
-      value: @vacancy.contract_type_with_duration)
+      - component.slot(:row,
+        key: t("jobs.working_patterns"),
+        value: @vacancy.working_patterns)
+
+      - component.slot(:row,
+        key: t("jobs.contract_type"),
+        value: @vacancy.contract_type_with_duration)
