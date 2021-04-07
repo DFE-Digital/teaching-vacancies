@@ -40,8 +40,10 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
     end
 
     it "copies qualifications" do
-      # TODO: Complete once qualification step complete
-      # expect(subject.qualifications).to eq(recent_job_application.qualifications)
+      attributes_to_copy = %i[category finished_studying finished_studying_details grade institution name subject year]
+
+      expect(subject.qualifications.map { |qualification| qualification.slice(*attributes_to_copy) })
+        .to eq(recent_job_application.qualifications.map { |qualification| qualification.slice(*attributes_to_copy) })
     end
 
     it "copies employments" do
