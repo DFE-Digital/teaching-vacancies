@@ -2,7 +2,7 @@ module Jobseekers::Wizardable
   def steps_config
     {
       personal_details: { number: 1, title: t(".personal_details.heading") },
-      professional_status: { number: 3, title: t(".professional_status.heading") },
+      professional_status: { number: 2, title: t(".professional_status.heading") },
       employment_history: { number: 4, title: t(".employment_history.heading") },
       personal_statement: { number: 5, title: t(".personal_statement.heading") },
       references: { number: 6, title: t(".references.heading") },
