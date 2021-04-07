@@ -6,6 +6,7 @@
       @include govuk-font($size: 16, $weight: bold);
 
       margin-left: govuk-spacing(4);
+      margin-right: govuk-spacing(4);
 
       @include govuk-media-query($from: desktop) {
         @include govuk-font($size: 19, $weight: bold);
@@ -13,7 +14,7 @@
     }
 
     .govuk-tag {
-      float: right;
+      vertical-align: text-bottom;
     }
   }
 

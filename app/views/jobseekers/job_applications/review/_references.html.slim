@@ -1,7 +1,9 @@
 = render ReviewComponent.new id: "references" do |review|
   - review.heading title: t("jobseekers.job_applications.build.references.heading"),
                    text: (job_application_review_edit_section_text(job_application, :references) if allow_edit),
-                   href: (jobseekers_job_application_build_path(job_application, :references) if allow_edit)
+                   href: (jobseekers_job_application_build_path(job_application, :references) if allow_edit) do
+      - if allow_edit
+        = job_application_review_section_tag(job_application, :professional_status)
 
   - review.body do
     = govuk_accordion do |accordion|
