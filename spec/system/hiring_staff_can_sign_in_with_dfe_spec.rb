@@ -135,12 +135,9 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
   context "with valid credentials that match a Local Authority" do
     let(:organisation) { create(:local_authority, local_authority_code: "100") }
     let(:publisher_preference) { instance_double(PublisherPreference) }
-    let(:la_user_allowed?) { true }
 
     before do
       allow(Rails.configuration).to receive(:enforce_local_authority_allowlist).and_return(true)
-      allow(Rails.configuration.allowed_local_authorities)
-        .to receive(:include?).with(organisation.local_authority_code).and_return(la_user_allowed?)
       allow(PublisherPreference).to receive(:find_by).and_return(publisher_preference)
 
       stub_authentication_step(school_urn: nil, la_code: organisation.local_authority_code, email: dsi_email_address)
@@ -168,16 +165,6 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
 
         expect(current_path).to eq(new_publisher_preference_path)
       end
-    end
-
-    context "when la_code is not in the allowed list" do
-      let(:dsi_email_address) { "test@email.com" }
-      let(:la_user_allowed?) { false }
-
-      it_behaves_like "a failed sign in", user_id: "161d1f6a-44f1-4a1a-940d-d1088c439da7",
-                                          la_code: "100",
-                                          email: "test@email.com",
-                                          not_authorised_message: "Hiring staff not authorised: 161d1f6a-44f1-4a1a-940d-d1088c439da7 for local authority: 100"
     end
   end
 

@@ -14,16 +14,8 @@ class Organisation < ApplicationRecord
   alias_attribute :data, :gias_data
 
   def all_vacancies
-    ids = is_a?(School) ? [id] : [id] + schools.pluck(:id)
-    ids += schools_outside_local_authority.map(&:id)
-    Vacancy.in_organisation_ids(ids.compact)
-  end
-
-  def allowed_local_authority?
-    return true unless local_authority_code?
-    return true unless Rails.configuration.enforce_local_authority_allowlist
-
-    Rails.configuration.allowed_local_authorities.include?(local_authority_code)
+    ids = is_a?(School) ? [id] : [id] + schools.pluck(:id) + schools_outside_local_authority.pluck(:id)
+    Vacancy.in_organisation_ids(ids)
   end
 
   def name

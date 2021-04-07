@@ -178,12 +178,9 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
 
       context "when the organisation is a Local Authority" do
         let(:organisation_publishers) { [{ organisation: local_authority }] }
-        let(:la_publisher_allowed?) { true }
 
         before do
           allow(Rails.configuration).to receive(:enforce_local_authority_allowlist).and_return(true)
-          allow(Rails.configuration.allowed_local_authorities)
-            .to receive(:include?).with(local_authority.local_authority_code).and_return(la_publisher_allowed?)
           allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference))
         end
 
@@ -208,20 +205,6 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
             expect(page).not_to have_content("Choose your organisation")
             expect(page).to have_content(local_authority.name)
             expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
-          end
-        end
-
-        context "when publisher oid is not in the allowed list" do
-          let(:la_publisher_allowed?) { false }
-
-          it "cannot sign in" do
-            freeze_time do
-              expect { visit auth_email_choose_organisation_path(login_key: login_key.id) }
-                .to have_triggered_event(:publisher_sign_in_attempt)
-                .and_data(success: "false", sign_in_type: "email", user_anonymised_publisher_id: anonymised_form_of(publisher.oid))
-
-              expect(page).to have_content "You are not authorised to log in"
-            end
           end
         end
       end
