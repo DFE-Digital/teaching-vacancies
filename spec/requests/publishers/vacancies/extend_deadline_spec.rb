@@ -38,7 +38,6 @@ RSpec.describe "Extend deadline" do
   end
 
   describe "PATCH #update" do
-    let(:button) { I18n.t("buttons.extend_deadline") }
     let(:expires_on) { 6.months.from_now }
     let(:expires_at) { Time.zone.parse("#{expires_on.year}-#{expires_on.month}-#{expires_on.day} 9:00") }
 
@@ -52,7 +51,7 @@ RSpec.describe "Extend deadline" do
       }
     end
 
-    let(:params) { { commit: button, publishers_job_listing_extend_deadline_form: form_params } }
+    let(:params) { { commit: I18n.t("buttons.extend_deadline"), publishers_job_listing_extend_deadline_form: form_params } }
 
     context "when the vacancy does not belong to the current organisation" do
       let(:vacancy) { create(:vacancy, :published, organisation_vacancies_attributes: [{ organisation: build_stubbed(:school) }]) }
