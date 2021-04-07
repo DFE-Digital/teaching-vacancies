@@ -36,7 +36,10 @@ class Jobseekers::JobApplications::QuickApply
   end
 
   def copy_qualifications
-    # TODO: Complete once qualification step complete
+    recent_job_application.qualifications.each do |qualification|
+      new_qualification = qualification.dup
+      new_qualification.update(job_application: new_job_application)
+    end
   end
 
   def copy_employments
