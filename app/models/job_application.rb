@@ -5,7 +5,7 @@ class JobApplication < ApplicationRecord
 
   array_enum completed_steps: {
     personal_details: 0,
-    professional_status: 2,
+    professional_status: 1,
     employment_history: 3,
     personal_statement: 4,
     references: 5,
@@ -16,7 +16,7 @@ class JobApplication < ApplicationRecord
 
   array_enum in_progress_steps: {
     personal_details: 0,
-    professional_status: 2,
+    professional_status: 1,
     employment_history: 3,
     personal_statement: 4,
     references: 5,
