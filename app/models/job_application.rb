@@ -46,6 +46,13 @@ class JobApplication < ApplicationRecord
     Jobseekers::JobApplicationMailer.application_submitted(self).deliver_later
   end
 
+  def qualification_groups
+    # When qualifications match on name, institution, and year, group/merge them into single objects for displaying.
+    qualifications.group_by { |qual| [qual.name, qual.institution, qual.year] }
+                  .values
+                  .sort_by { |group| group.min_by(&:created_at).created_at }
+  end
+
   private
 
   def update_status_timestamp

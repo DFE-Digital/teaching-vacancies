@@ -9,8 +9,7 @@
     = govuk_summary_list do |component|
       - component.slot(:row,
         key: t("helpers.legend.jobseekers_job_application_professional_status_form.qualified_teacher_status"),
-        value: safe_join([tag.div(t("helpers.label.jobseekers_job_application_professional_status_form.qualified_teacher_status_options.#{job_application.qualified_teacher_status}"), class: "govuk-body"),
-                          tag.p(job_application.qualified_teacher_status == "yes" ? job_application.qualified_teacher_status_year : job_application.qualified_teacher_status_details, class: "govuk-body")]),
+        value: job_application_qualified_teacher_status_info(job_application),
         html_attributes: { id: "professional_status_qualified_teacher_status" })
 
       - component.slot(:row,
