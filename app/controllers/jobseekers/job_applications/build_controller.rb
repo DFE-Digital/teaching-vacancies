@@ -5,7 +5,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
   steps :personal_details, :professional_status, :employment_history, :personal_statement, :references,
         :equal_opportunities, :ask_for_support, :declarations
 
-  helper_method :back_path, :form, :job_application, :process_steps, :vacancy
+  helper_method :back_path, :form, :job_application, :vacancy
 
   def show
     render_wizard
@@ -77,10 +77,6 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
 
   def job_application
     @job_application ||= current_jobseeker.job_applications.draft.find(params[:job_application_id])
-  end
-
-  def process_steps
-    @process_steps ||= ProcessSteps.new(steps: steps_config, adjust: 0, step: step)
   end
 
   def referrer_is_finish_wizard_path?

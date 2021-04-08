@@ -1,17 +1,4 @@
 module Jobseekers::Wizardable
-  def steps_config
-    {
-      personal_details: { number: 1, title: t(".personal_details.heading") },
-      professional_status: { number: 2, title: t(".professional_status.heading") },
-      employment_history: { number: 4, title: t(".employment_history.heading") },
-      personal_statement: { number: 5, title: t(".personal_statement.heading") },
-      references: { number: 6, title: t(".references.heading") },
-      equal_opportunities: { number: 7, title: t(".equal_opportunities.heading") },
-      ask_for_support: { number: 8, title: t(".ask_for_support.heading") },
-      declarations: { number: 9, title: t(".declarations.heading") },
-    }.freeze
-  end
-
   def personal_details_fields
     %i[city first_name last_name national_insurance_number phone_number previous_names postcode street_address teacher_reference_number]
   end
