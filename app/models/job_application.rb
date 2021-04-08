@@ -7,7 +7,6 @@ class JobApplication < ApplicationRecord
     personal_details: 0,
     professional_status: 1,
     qualifications: 2,
-    professional_status: 1,
     employment_history: 3,
     personal_statement: 4,
     references: 5,

@@ -1,5 +1,5 @@
 class Jobseekers::JobApplication::Details::Qualifications::Secondary::CommonForm < Jobseekers::JobApplication::Details::Qualifications::QualificationForm
-  validates :category, :institution, :year, presence: true
+  validates :institution, :year, presence: true
   validate :subject_and_grade_correspond?
   validates :year, format: { with: /\A\d{4}\z/.freeze }, if: -> { year.present? }
 
