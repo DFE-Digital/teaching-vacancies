@@ -67,18 +67,25 @@
   }
 }
 
-.inline-form-group {
-  display: inline-block;
+.inline-fields-container {
+  display: flex;
 
-  &.inline-grade {
-    $width: govuk-grid-width(one-third);
-    $padding-left: govuk-spacing(3);
-    padding-left: $padding-left;
-    width: calc(#{$width} - #{$padding-left});
-  }
+  .govuk-form-group {
+    // Align fields vertically if e.g. one field has an inline error
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 
-  &.inline-subject {
-    width: govuk-grid-width(two-thirds);
+    padding-left: govuk-spacing(3);
+
+    &.govuk-form-group--error:not(:first-of-type) {
+      // Remove vertical red error bar
+      border-left: 0;
+    }
+
+    &:first-of-type:not(.govuk-form-group--error) {
+      padding-left: 0;
+    }
   }
 }
 

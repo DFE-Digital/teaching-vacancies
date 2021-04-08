@@ -1,5 +1,6 @@
 class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseController
-  helper_method :back_path, :form, :job_application, :qualification
+  helper_method :back_path, :category, :form, :job_application, :qualification,
+                :submit_text
 
   def submit_category
     if params[:commit] == t("buttons.cancel")
@@ -41,16 +42,18 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
   private
 
   def form
-    @form ||= action_name == "select_category" ? form_class.new : form_class.new(qualification_params)
+    @form ||= form_class.new(form_attributes)
   end
 
   def form_attributes
     case action_name
     when "new"
+      { category: category }
+    when "select_category"
       {}
     when "edit"
       qualification.slice(:category, :finished_studying, :finished_studying_details, :grade, :institution, :name, :subject, :year)
-    when "create", "update"
+    when "create", "update", "submit_category"
       qualification_params
     end
   end
@@ -70,7 +73,7 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
     name = if %w[select_category submit_category].include?(action_name)
              "CategoryForm"
            else
-             case params[:category]
+             case category
              when "gcse", "a_level", "as_level"
                "Secondary::CommonForm"
              when "other_secondary"
@@ -84,15 +87,27 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
     "Jobseekers::JobApplication::Details::Qualifications::#{name}".constantize
   end
 
+  def category
+    @category ||= action_name.in?(%w[edit update]) ? qualification.category : category_param
+  end
+
+  def category_param
+    params.permit(:category)[:category]
+  end
+
   def back_path
     @back_path ||= jobseekers_job_application_build_path(job_application, :qualifications)
+  end
+
+  def job_application
+    @job_application ||= current_jobseeker.job_applications.draft.find(params[:job_application_id])
   end
 
   def qualification
     @qualification ||= job_application.qualifications.find(params[:id])
   end
 
-  def job_application
-    @job_application ||= current_jobseeker.job_applications.find(params[:job_application_id])
+  def submit_text
+    category.in?(%w[undergraduate postgraduate other]) ? t("buttons.save_qualification.one") : t("buttons.save_qualification.many")
   end
 end
