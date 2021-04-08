@@ -17,27 +17,27 @@ RSpec.describe "Hiring staff accepts terms and conditions" do
     scenario "they can accept the terms and conditions" do
       visit terms_and_conditions_path
 
-      expect(publisher).not_to be_accepted_terms_and_conditions
+      expect(publisher).not_to be_accepted_terms_at
 
       check I18n.t("terms_and_conditions.label")
       click_on I18n.t("buttons.accept_and_continue")
 
       publisher.reload
       expect(page).to have_content(school.name)
-      expect(publisher).to be_accepted_terms_and_conditions
+      expect(publisher).to be_accepted_terms_at
     end
 
     scenario "an error is shown if they don’t accept" do
       visit terms_and_conditions_path
 
-      expect(publisher).not_to be_accepted_terms_and_conditions
+      expect(publisher).not_to be_accepted_terms_at
 
       click_on I18n.t("buttons.accept_and_continue")
 
       publisher.reload
 
       expect(page).to have_content("There is a problem")
-      expect(publisher).not_to be_accepted_terms_and_conditions
+      expect(publisher).not_to be_accepted_terms_at
     end
 
     context "signing out" do
