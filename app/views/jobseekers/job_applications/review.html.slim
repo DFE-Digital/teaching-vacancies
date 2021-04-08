@@ -39,3 +39,11 @@
       - if vacancy.listed?
         = f.govuk_submit t("buttons.submit_application") do
           = f.govuk_submit t("buttons.save_and_come_back"), secondary: true
+
+  - if current_jobseeker.job_applications.not_draft.none?
+    .govuk-grid-column-one-third
+      = render StepsComponent.new title: "Application Steps", classes: "govuk-!-margin-top-6" do |component|
+        - steps = %w[personal_details professional_status employment_history personal_statement references equal_opportunities ask_for_support declarations]
+        - steps.each do |step|
+          - component.step(label: t("jobseekers.job_applications.build.#{step}.step_title"), current: false, completed: step.in?(job_application.completed_steps))
+        - component.step(label: t("jobseekers.job_applications.review.heading"), current: action_name == "review", completed: false)
