@@ -237,6 +237,18 @@ en:
         phone_number: Phone number
         relationship: Relationship to applicant
       review:
+        confirmation:
+          heading: Confirmation
+          how_we_use_your_data:
+            description: "When you submit your application, your data will be shared with:"
+            heading: How we use your data
+            list:
+              dfe: the Department for Education
+              employer: the school or schools the job is at
+              listing_organisation: the school, trust or local authority which posted the job listing
+            privacy_policy:
+              description_html: For more information on how we use your data, please read our %{link_to}.
+              link_text: Privacy Policy
         heading: Review your application
         title: Review your application — Application
       show:
