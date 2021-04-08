@@ -1,2 +1,9 @@
-= render ReviewComponent.new(id: "qualifications", title: t("jobseekers.job_applications.build.qualifications.heading"), text: (job_application_review_edit_section_text(job_application, :qualifications)), href: (jobseekers_job_application_build_path(job_application, :qualifications) if allow_edit)) do
-  .todo
+= render ReviewComponent.new id: "qualifications" do |review|
+  - review.heading title: t("jobseekers.job_applications.build.qualifications.heading"),
+                   text: (job_application_review_edit_section_text(job_application, :qualifications) if allow_edit),
+                   href: (jobseekers_job_application_build_path(job_application, :qualifications) if allow_edit) do
+      - if allow_edit
+        = job_application_review_section_tag(job_application, :qualifications)
+
+  - review.body do
+    p = "TODO"
