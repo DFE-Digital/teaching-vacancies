@@ -1,3 +1,4 @@
 = render StepsComponent.new title: "Application Steps", classes: "govuk-!-margin-top-6" do |component|
   - wizard_steps.each do |wizard_step|
     - component.step(label: t("jobseekers.job_applications.build.#{wizard_step}.step_title"), current: current_step?(wizard_step), completed: wizard_step.to_s.in?(job_application.completed_steps))
+  - component.step(label: t("jobseekers.job_applications.review.heading"), current: false, completed: false)
