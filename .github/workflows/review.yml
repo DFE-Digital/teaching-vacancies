@@ -27,7 +27,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   deploy:
-    name: Create review app
+    name: Create review app ${{ github.sha}}
     needs: turnstyle
     runs-on: ubuntu-20.04
     steps:
@@ -67,7 +67,7 @@ jobs:
       run: |
         $(echo "BRANCH=${{ github.head_ref }}" | sed -e 's/\//_/g' >> $GITHUB_ENV)
         ENVIRONMENT=review-pr-${{ github.event.number }}
-        TAG=${ENVIRONMENT}-${{ github.sha }}-$(date '+%Y%m%d%H%M%S')
+        TAG=${ENVIRONMENT}-${{ github.sha }}
         echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
         echo "TAG=${TAG}" >> $GITHUB_ENV
 
