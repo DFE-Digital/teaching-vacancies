@@ -284,9 +284,9 @@ en:
         jobseekers/job_application/review_form:
           attributes:
             confirm_data_accurate:
-              accepted: must be accepted / Placeholder for content
+              accepted:  You must confirm that your information is accurate and complete
             confirm_data_usage:
-              accepted: must be accepted / Placeholder for content
+              accepted: You must consent to share your data in order to apply for this job
             # TODO: Update once content has been confirmed
             ask_for_support:
               incomplete: Complete ask for support
