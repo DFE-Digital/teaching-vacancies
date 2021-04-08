@@ -8,7 +8,7 @@ class Publishers::SignIn::Email::SessionsController < ApplicationController
     publisher = Publisher.find(session[:publisher_id])
     organisation = publisher.organisations.find(params[:organisation_id])
 
-    if publisher.organisations.include?(organisation) && organisation.allowed_local_authority?
+    if publisher.organisations.include?(organisation)
       sign_in(publisher)
       sign_out(:jobseeker)
       session.update(publisher_organisation_id: organisation.id)

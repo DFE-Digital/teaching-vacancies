@@ -1,50 +1,87 @@
 require "rails_helper"
 
 RSpec.describe ReviewComponent, type: :component do
-  let(:id) { "test_review" }
-  let(:title) { "Test title" }
-  let(:text) { nil }
-  let(:href) { nil }
-
-  let(:kwargs) { { id: id, title: title, text: text, href: href } }
+  let(:id) { "test_id" }
+  let(:kwargs) { { id: id } }
 
   subject! { render_inline(described_class.new(**kwargs)) }
 
   it_behaves_like "a component that accepts custom classes"
   it_behaves_like "a component that accepts custom HTML attributes"
 
-  context "when a content block is provided" do
-    subject! { render_inline(described_class.new(**kwargs)) { tag.p("Some content here") } }
+  context "when a heading slot is defined" do
+    subject! { render_inline(described_class.new(**kwargs)) { |review| review.heading(title: title, text: text, href: href) } }
 
-    it "renders the review component with a title and the content provided" do
+    let(:title) { "Special section" }
+    let(:text) { nil }
+    let(:href) { nil }
+
+    context "when text and href are provided" do
+      let(:text) { "Update" }
+      let(:href) { "/test-link" }
+
+      it "renders the edit link in the heading" do
+        expect(page).to have_css("div", class: "review-component") do |review|
+          expect(review).to have_css("h2", class: "review-component__heading govuk-heading-m", text: title) do |heading|
+            expect(heading).to have_css("a", class: "govuk-link", text: text)
+          end
+        end
+      end
+    end
+
+    context "when text and href are not provided" do
+      it "does not render the edit link in the heading" do
+        expect(page).to have_css("div", class: "review-component") do |review|
+          expect(review).to have_css("h2", class: "review-component__heading govuk-heading-m", text: title) do |heading|
+            expect(heading).not_to have_css("a", class: "govuk-link")
+          end
+        end
+      end
+    end
+
+    it "renders the heading with a title" do
       expect(page).to have_css("div", class: "review-component") do |review|
-        expect(review).to have_css("h2", class: "review-component__heading review-component__section", id: "review-component-test_review-heading", text: title)
+        expect(review).to have_css("h2", class: "review-component__heading govuk-heading-m", text: title)
+      end
+    end
+
+    context "when a content block is provided" do
+      subject! { render_inline(described_class.new(**kwargs)) { |review| review.heading(title: title) { tag.strong("A tag") } } }
+
+      it "renders the heading with a title and the content provided" do
+        expect(page).to have_css("div", class: "review-component") do |review|
+          expect(review).to have_css("h2", class: "review-component__heading govuk-heading-m", text: title) do |heading|
+            expect(heading).to have_css("strong", text: "A tag")
+          end
+        end
+      end
+    end
+  end
+
+  context "when a heading slot is not defined" do
+    it "does not render the heading" do
+      expect(page).to have_css("div", class: "review-component") do |review|
+        expect(review).not_to have_css("h2", class: "review-component__heading govuk-heading-m")
+      end
+    end
+  end
+
+  context "when a body slot is defined" do
+    subject! { render_inline(described_class.new(**kwargs)) { |review| review.body { tag.p("A paragraph") } } }
+
+    it "renders the body with the content provided" do
+      expect(page).to have_css("div", class: "review-component") do |review|
         expect(review).to have_css("div", class: "review-component__body") do |body|
-          expect(body).to have_css("p", text: "Some content here")
+          expect(body).to have_css("p", text: "A paragraph")
         end
       end
     end
   end
 
-  context "when text and href are nil" do
-    it "renders the title without a link" do
+  context "when a body slot is not defined" do
+    it "does not render the body" do
       expect(page).to have_css("div", class: "review-component") do |review|
-        expect(review).to have_css("h2", class: "review-component__heading review-component__section", id: "review-component-test_review-heading", text: title) do |heading|
-          expect(heading).not_to have_css("a")
-        end
-      end
-    end
-  end
-
-  context "when text and href are not nil" do
-    let(:text) { "Do this action" }
-    let(:href) { "/edit-link" }
-
-    it "renders the title with the link" do
-      expect(page).to have_css("div", class: "review-component") do |review|
-        expect(review).to have_css("h2", class: "review-component__heading review-component__section", id: "review-component-test_review-heading", text: title) do |heading|
-          expect(heading).to have_css("a[aria-label='Do this action Test review'][href='/edit-link']", class: %w[govuk-link review-component__section-button], text: text)
-        end
+        expect(review).not_to have_css("div", class: "review-component__body")
       end
     end
   end
