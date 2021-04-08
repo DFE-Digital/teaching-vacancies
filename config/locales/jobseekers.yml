@@ -232,21 +232,30 @@ en:
           success: Your qualification was deleted
         qualifications_shared: &qualifications_shared
           caption: Education and qualifications
+        edit:
+          <<: *qualifications_shared
+          heading:
+            gcse: Edit GCSEs
+            as_level: Edit AS Levels
+            a_level: Edit A Levels
+            other_secondary: Edit secondary qualifications
+            undergraduate: Edit undergraduate degree
+            postgraduate: Edit postgraduate degree
+            other: Edit qualification or course
+          title: Edit qualification — Application
+        new:
+          <<: *qualifications_shared
           heading:
             gcse: Add GCSEs
             as_level: Add AS Levels
             a_level: Add A Levels
-            other_secondary: Add a secondary qualification
+            other_secondary: Add secondary qualifications
             undergraduate: Add an undergraduate degree
             postgraduate: Add a postgraduate degree
             other: Add a qualification or course
           title: Add a qualification — Application
-        edit:
-          <<: *qualifications_shared
-        new:
-          <<: *qualifications_shared
         select_category:
-          caption: Education and qualifications
+          <<: *qualifications_shared
           heading: Add a qualification
           title: Add a qualification — Application
       references:

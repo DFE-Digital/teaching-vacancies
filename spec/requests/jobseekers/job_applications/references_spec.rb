@@ -50,27 +50,6 @@ RSpec.describe "Job applications references" do
     let(:button) { I18n.t("buttons.save_reference") }
     let(:name) { "Reference Bloggs" }
 
-    context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
-
-      it "returns not_found" do
-        post jobseekers_job_application_references_path(job_application), params: params
-
-        expect(response).to have_http_status(:not_found)
-      end
-    end
-
-    context "when the commit param is `Cancel`" do
-      let(:button) { I18n.t("buttons.cancel") }
-
-      it "does not create the reference and redirects to the references build step" do
-        expect { post jobseekers_job_application_references_path(job_application), params: params }
-          .to(not_change { Reference.count })
-
-        expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :references))
-      end
-    end
-
     context "when the form is valid" do
       before { allow_any_instance_of(Jobseekers::JobApplication::Details::ReferenceForm).to receive(:valid?).and_return(true) }
 
@@ -79,6 +58,27 @@ RSpec.describe "Job applications references" do
           .to change { Reference.count }.by(1)
 
         expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :references))
+      end
+
+      context "when the job application status is not draft" do
+        let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+
+        it "returns not_found" do
+          post jobseekers_job_application_references_path(job_application), params: params
+
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+
+      context "when the commit param is `Cancel`" do
+        let(:button) { I18n.t("buttons.cancel") }
+
+        it "does not create the reference and redirects to the references build step" do
+          expect { post jobseekers_job_application_references_path(job_application), params: params }
+            .to(not_change { Reference.count })
+
+          expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :references))
+        end
       end
     end
 
@@ -98,27 +98,6 @@ RSpec.describe "Job applications references" do
     let(:button) { I18n.t("buttons.save_reference") }
     let(:name) { "Reference Bloggs" }
 
-    context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
-
-      it "returns not_found" do
-        patch jobseekers_job_application_reference_path(job_application, reference), params: params
-
-        expect(response).to have_http_status(:not_found)
-      end
-    end
-
-    context "when the commit param is `Cancel`" do
-      let(:button) { I18n.t("buttons.cancel") }
-
-      it "does not update the reference and redirects to the references build step" do
-        expect { patch jobseekers_job_application_reference_path(job_application, reference), params: params }
-          .to(not_change { reference.reload.name })
-
-        expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :references))
-      end
-    end
-
     context "when the form is valid" do
       before { allow_any_instance_of(Jobseekers::JobApplication::Details::ReferenceForm).to receive(:valid?).and_return(true) }
 
@@ -127,6 +106,27 @@ RSpec.describe "Job applications references" do
           .to change { reference.reload.name }.from("Testing Bloggs").to("Reference Bloggs")
 
         expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :references))
+      end
+
+      context "when the job application status is not draft" do
+        let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+
+        it "returns not_found" do
+          patch jobseekers_job_application_reference_path(job_application, reference), params: params
+
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+
+      context "when the commit param is `Cancel`" do
+        let(:button) { I18n.t("buttons.cancel") }
+
+        it "does not update the reference and redirects to the references build step" do
+          expect { patch jobseekers_job_application_reference_path(job_application, reference), params: params }
+            .to(not_change { reference.reload.name })
+
+          expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :references))
+        end
       end
     end
 

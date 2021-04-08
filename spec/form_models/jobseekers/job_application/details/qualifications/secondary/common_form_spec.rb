@@ -2,6 +2,7 @@ RSpec.describe Jobseekers::JobApplication::Details::Qualifications::Secondary::C
   subject { described_class.new(params) }
   let(:params) { {} }
 
+  it { is_expected.to validate_presence_of(:category) }
   it { is_expected.to validate_presence_of(:institution) }
   it { is_expected.to validate_presence_of(:year) }
 
