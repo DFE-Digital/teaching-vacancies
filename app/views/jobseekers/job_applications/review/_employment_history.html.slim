@@ -30,7 +30,7 @@
 
           - component.slot(:row,
             key: t("helpers.legend.jobseekers_job_application_details_employment_form.current_role"),
-            value: employment.current_role.capitalize,
+            value: employment.current_role.humanize,
             html_attributes: { id: "employment_history_current_role" })
 
           - if employment.current_role == "no"
