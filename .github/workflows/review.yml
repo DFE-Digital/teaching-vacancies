@@ -67,7 +67,7 @@ jobs:
       run: |
         $(echo "BRANCH=${{ github.head_ref }}" | sed -e 's/\//_/g' >> $GITHUB_ENV)
         ENVIRONMENT=review-pr-${{ github.event.number }}
-        TAG=${ENVIRONMENT}-${{ github.sha }}-$(date '+%Y%m%d%H%M%S')
+        TAG=${ENVIRONMENT}-${{ github.sha }}
         echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
         echo "TAG=${TAG}" >> $GITHUB_ENV
 
