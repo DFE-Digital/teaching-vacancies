@@ -347,8 +347,8 @@ en:
     sessions:
       new:
         assistance:
-          content_html: Find out %{link_to} so that you can list teaching jobs at your school or trust.
-          heading: School or trust accounts
+          content_html: Find out %{link_to} so that you can list teaching jobs at your school, trust or local authority.
+          heading: School, trust or local authority accounts
           link: how to create an account
         description: Use your Teaching Vacancies account details to sign in.
         forgotten: Forgotten your password?
