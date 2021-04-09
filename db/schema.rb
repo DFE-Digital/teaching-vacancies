@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_06_145837) do
+ActiveRecord::Schema.define(version: 2021_04_09_094259) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -357,10 +357,10 @@ ActiveRecord::Schema.define(version: 2021_04_06_145837) do
     t.boolean "starts_asap", default: false
     t.integer "contract_type"
     t.string "contract_type_duration"
-    t.string "apply_through_teaching_vacancies"
     t.text "personal_statement_guidance"
     t.integer "end_listing_reason"
     t.integer "candidate_hired_from"
+    t.boolean "enable_job_applications"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["initially_indexed"], name: "index_vacancies_on_initially_indexed"

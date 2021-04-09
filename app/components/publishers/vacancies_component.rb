@@ -43,7 +43,7 @@ class Publishers::VacanciesComponent < ViewComponent::Base
   end
 
   def view_applicants(vacancy, card)
-    return unless vacancy.apply_through_teaching_vacancies == "yes"
+    return unless vacancy.enable_job_applications?
     return unless include_job_applications?
 
     if vacancy.job_applications.any?

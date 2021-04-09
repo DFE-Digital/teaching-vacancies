@@ -14,7 +14,7 @@
       = vacancy_job_location(@vacancy)
 
     .govuk-grid-row
-      - if JobseekerApplicationsFeature.enabled? && @vacancy.apply_through_teaching_vacancies == "yes" && @vacancy.expires_at.future?
+      - if JobseekerApplicationsFeature.enabled? && @vacancy.enable_job_applications? && @vacancy.expires_at.future?
         .govuk-grid-column-one-third
           - if defined?(job_application) && ["withdrawn", nil].exclude?(job_application&.status)
             - if job_application.draft?

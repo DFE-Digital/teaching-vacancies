@@ -7,7 +7,7 @@ FactoryBot.define do
     job_location { "at_one_school" }
     about_school { Faker::Lorem.paragraph(sentence_count: 4) }
     application_link { Faker::Internet.url(host: "example.com") }
-    apply_through_teaching_vacancies { "yes" }
+    enable_job_applications { true }
     benefits { Faker::Lorem.paragraph(sentence_count: 4) }
     contact_email { Faker::Internet.email }
     contact_number { "01234 123456" }

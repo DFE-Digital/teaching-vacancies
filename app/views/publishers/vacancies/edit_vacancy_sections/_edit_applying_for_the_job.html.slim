@@ -10,15 +10,15 @@
     = govuk_summary_list do |component|
       - if JobseekerApplicationsFeature.enabled?
         - component.slot(:row,
-          key: t("jobs.apply_through_teaching_vacancies"),
-          value: @vacancy.apply_through_teaching_vacancies&.capitalize)
+          key: t("jobs.enable_job_applications"),
+          value: @vacancy.enable_job_applications? ? "Yes" : "No")
 
-        - if @vacancy.apply_through_teaching_vacancies == "yes"
+        - if @vacancy.enable_job_applications?
           - component.slot(:row,
             key: t("jobs.personal_statement_guidance"),
             value: @vacancy.personal_statement_guidance)
 
-        - if @vacancy.apply_through_teaching_vacancies == "no"
+        - elsif @vacancy.enable_job_applications == false # as opposed to nil
           - component.slot(:row,
             key: t("jobs.application_link"),
             value: @vacancy.application_link.present? ? govuk_link_to(@vacancy.application_link, @vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link"), target: "_blank", rel: "noopener noreferrer") : t("jobs.not_defined"))

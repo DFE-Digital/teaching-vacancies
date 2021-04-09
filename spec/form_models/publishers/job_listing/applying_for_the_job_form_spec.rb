@@ -16,6 +16,6 @@ RSpec.describe Publishers::JobListing::ApplyingForTheJobForm, type: :model do
   context "when JobseekerApplicationsFeature is enabled" do
     before { allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true) }
 
-    it { is_expected.to validate_inclusion_of(:apply_through_teaching_vacancies).in_array(%w[yes no]) }
+    it { is_expected.to validate_inclusion_of(:enable_job_applications).in_array([true, false]) }
   end
 end
