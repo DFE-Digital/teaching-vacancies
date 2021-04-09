@@ -44,8 +44,7 @@ ruby:
     = f.hidden_field :jobs_sort, value: @jobs_search_form.jobs_sort
     = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"
 
-  aside
-    = render(FiltersComponent.new(form: f,
-      filters: { total_count: @jobs_search_form.total_filters, title: "Filter results" },
-      items: items,
-      options: { remove_buttons: true, mobile_variant: true, close_all: true }))
+  = render(FiltersComponent.new(form: f,
+    filters: { total_count: @jobs_search_form.total_filters, title: "Filter results" },
+    items: items,
+    options: { remove_buttons: true, mobile_variant: true, close_all: true }))
