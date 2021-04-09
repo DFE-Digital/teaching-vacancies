@@ -355,9 +355,9 @@ en:
 
       publishers_job_listing_applying_for_the_job_form:
         application_link: Link to online application
-        apply_through_teaching_vacancies_options:
-          "no": "Use another service or organisation"
-          "yes": "Apply through Teaching Vacancies"
+        enable_job_applications_options:
+          "false": "Use another service or organisation"
+          "true": "Apply through Teaching Vacancies"
         contact_email: Contact email
         contact_number: Contact phone number
         how_to_apply: How to apply
@@ -458,7 +458,7 @@ en:
         reason: Why do you want to unsubscribe from this alert?
 
       publishers_job_listing_applying_for_the_job_form:
-        apply_through_teaching_vacancies: How would you like candidates to apply?
+        enable_job_applications: How would you like candidates to apply?
       publishers_job_listing_copy_vacancy_form:
         expires_on: Date application is due
         publish_on: Date job will be listed

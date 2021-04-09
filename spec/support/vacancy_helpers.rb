@@ -75,7 +75,7 @@ module VacancyHelpers
 
   def fill_in_applying_for_the_job_form_fields(vacancy)
     if JobseekerApplicationsFeature.enabled?
-      choose I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.apply_through_teaching_vacancies_options.#{vacancy.apply_through_teaching_vacancies}")
+      choose I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.enable_job_applications_options.#{vacancy.enable_job_applications}")
       fill_in "publishers_job_listing_applying_for_the_job_form[personal_statement_guidance]", with: vacancy.personal_statement_guidance
     end
     fill_in "publishers_job_listing_applying_for_the_job_form[contact_email]", with: vacancy.contact_email
