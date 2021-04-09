@@ -6,7 +6,7 @@
       = form_for @general_feedback_form, url: feedback_path do |f|
         = f.govuk_error_summary
 
-        h2.govuk-heading-xl
+        h1.govuk-heading-xl
           = t(".heading")
 
         = f.govuk_radio_buttons_fieldset(:visit_purpose, legend: { size: "m" }) do

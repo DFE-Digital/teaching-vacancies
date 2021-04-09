@@ -61,8 +61,24 @@ body {
     }
   }
 
-  .govuk-header__container {
-    border-bottom: 10px solid govuk-colour('orange');
+  .govuk-header {
+    border-bottom: 0;
+
+    &__container {
+      border-bottom: govuk-spacing(2) solid govuk-colour('orange');
+    }
+
+    .govuk-phase-banner {
+      background-color: govuk-colour('white');
+      border: 0;
+      padding-bottom: 0;
+      padding-top: govuk-spacing(4);
+
+      .govuk-width-container {
+        border-bottom: 1px solid $govuk-border-colour;
+        padding-bottom: govuk-spacing(2);
+      }
+    }
   }
 }
 
