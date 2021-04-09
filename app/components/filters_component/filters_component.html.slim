@@ -1,7 +1,7 @@
-.filters-component class=(options[:mobile_variant] ? "filters-component--mobile" : "")
-  .filters-component__heading.moj-filter
+= tag.div(class: classes, **html_attributes) do
 
-    div class=(options[:close_all] ? "filters-component__heading-container" : "")
+  .filters-component__heading.moj-filter
+    = tag.div(class: options[:close_all] ? "filters-component__heading-container" : "") do
       .filters-component__section-heading class=mobile_modifier("filters-component__heading")
         .moj-filter__heading-title
           h2.govuk-heading-s class=mobile_modifier("filters-component__heading-title") id=(options[:mobile_variant] ? "mobile-filters-component-button" : "")
@@ -42,16 +42,11 @@
   .filters-component__submit
     = form.govuk_submit t("buttons.apply_filters"), classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2 filters-component__submit-button"
 
-  .filters-component__groups.govuk-accordion id="accordion-default" data-module="govuk-accordion"
+  = render GovukComponent::Accordion.new(id: "accordion-default", classes: "filters-component__groups") do |component|
     - items.each_with_index do |group, index|
-      .govuk-accordion__section.accordion-content__group.filters-component__groups-container
-        .govuk-accordion__section-header
-          h3.govuk-accordion__section-heading
-            span.govuk-accordion__section-button id="accordion-default-heading-#{index}"
-              = group[:title]
-
-        .govuk-accordion__section-content.filters-component__group-checkboxes id="accordion-default-content-#{index}" aria-labelledby="accordion-default-heading-#{index}" data-group=group[:key]
-          .searchable-collection-component.searchable-collection-component--border
+      - component.slot(:section,
+        title: group[:title]) do
+          .govuk-accordion__section-content.filters-component__group id="accordion-default-content-#{index}" aria-labelledby="accordion-default-heading-#{index}" data-group=group[:key]
             = form.govuk_collection_check_boxes group[:attribute],
               group[:options],
               group[:value_method],

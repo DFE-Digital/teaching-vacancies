@@ -11,7 +11,7 @@
         - if @organisation.is_a?(SchoolGroup)
           .govuk-grid-column-one-third
             = form_for @publisher_preference, html: { data: { "auto-submit": true, "hide-submit": true } } do |f|
-              = render(Shared::FiltersComponent.new(filters: { total_count: @publisher_preference.organisations.count,
+              = render(FiltersComponent.new(filters: { total_count: @publisher_preference.organisations.count,
                                                                title: t("jobs.filters.job_filters") },
                                                                form: f,
                                                                items: [{ title: "Locations",

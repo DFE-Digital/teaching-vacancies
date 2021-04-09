@@ -1,17 +1,17 @@
-import '../../../frontend/src/lib/polyfill/closest.polyfill';
-import '../../../frontend/src/lib/polyfill/from.polyfill';
+import '../../frontend/src/lib/polyfill/closest.polyfill';
+import '../../frontend/src/lib/polyfill/from.polyfill';
 import 'classlist-polyfill';
 
 export const ACCORDION_SECTION_CLASS_SELECTOR = 'govuk-accordion__section';
 export const ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR = 'govuk-accordion__section--expanded';
 export const CHECKBOX_CLASS_SELECTOR = 'govuk-checkboxes__input';
-export const CHECKBOX_GROUP_CLASS_SELECTOR = 'filters-component__group-checkboxes';
+export const CHECKBOX_GROUP_CLASS_SELECTOR = 'filters-component__group';
 export const CLOSE_ALL_TEXT = 'Close all';
 export const OPEN_ALL_TEXT = 'Open all';
 
 window.addEventListener(
   'DOMContentLoaded',
-  () => init('filters-component__groups-container', 'moj-filter__tag', 'clear-filters-component-button', 'close-all-groups', 'mobile-filters-component-button', 'govuk-accordion__section-header'),
+  () => init('govuk-accordion__section', 'moj-filter__tag', 'clear-filters-component-button', 'close-all-groups', 'mobile-filters-component-button', 'govuk-accordion__section-header'),
 );
 
 export const init = (groupContainerSelector, removeButtonSelector, clearButtonSelector, closeButtonSelector, mobileFiltersButtonSelector, accordionButtonsSelector) => {
@@ -27,7 +27,6 @@ export const init = (groupContainerSelector, removeButtonSelector, clearButtonSe
   }
 
   addFilterChangeEvent(document.getElementsByClassName(groupContainerSelector));
-
   if (document.getElementById(closeButtonSelector)) {
     displayOpenOrCloseText(
       document.getElementById(closeButtonSelector),
@@ -132,7 +131,7 @@ export const addFilterChangeEvent = (groups) => {
 };
 
 export const filterChangeHandler = (el) => {
-  if (el.className === CHECKBOX_CLASS_SELECTOR && isFormAutoSubmitEnabled('filters-component__groups-container')) {
+  if (el.className === CHECKBOX_CLASS_SELECTOR && isFormAutoSubmitEnabled('govuk-accordion__section')) {
     getSubmitButton(el).click();
   }
 };

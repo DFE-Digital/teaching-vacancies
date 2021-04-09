@@ -2,7 +2,7 @@ h2.govuk-heading-l = t("heading.options")
 
 .govuk-form-group
   - @preview_interactive_options.each do |option|
-    .govuk-grid-column-one-third
+    .govuk-grid-column-one-third class="govuk-!-margin-bottom-2"
       = form.govuk_check_box option,
         "true",
         label: { text: option }

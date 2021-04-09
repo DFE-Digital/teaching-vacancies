@@ -7,10 +7,6 @@
   right: govuk-spacing(1);
 }
 
-.js-enabled .govuk-accordion__section-header {
-  border-top: 0;
-}
-
 .checkbox-label__bold .govuk-checkboxes__item label {
   font-weight: $bold-font-weight;
 }
@@ -25,7 +21,7 @@
 }
 
 .js-enabled .govuk-accordion__section-content {
-  padding: 0 0 govuk-spacing(2) 0;
+  padding: 0;
 }
 
 .govuk-accordion__controls {
