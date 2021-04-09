@@ -60,6 +60,7 @@ class Vacancy < ApplicationRecord
   paginates_per 10
 
   validates :slug, presence: true
+  validate :enable_job_applications_cannot_be_changed_once_listed
 
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
 
@@ -125,5 +126,11 @@ class Vacancy < ApplicationRecord
     return unless listed_elsewhere_changed? && hired_status_changed?
 
     self.stats_updated_at = Time.current
+  end
+
+  def enable_job_applications_cannot_be_changed_once_listed
+    return unless persisted? && listed? && enable_job_applications_changed?
+
+    errors.add(:enable_job_applications, :cannot_be_changed_once_listed)
   end
 end
