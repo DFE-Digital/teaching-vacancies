@@ -38,7 +38,7 @@ html.govuk-template.app-html-class lang="en"
           p.govuk-body class="govuk-!-margin-bottom-0"
             = t("account_creation_cta.help_text_html", link: link_to(t("account_creation_cta.sign_in"), new_jobseeker_session_path))
 
-    header.govuk-header data-module="govuk-header" role="banner"
+    header.govuk-header data-module="govuk-header"
       .govuk-header__container.govuk-width-container
         .govuk-header__logo
           a.govuk-header__link.govuk-header__link--homepage href="https://www.gov.uk"
@@ -53,21 +53,21 @@ html.govuk-template.app-html-class lang="en"
             | Menu
           = render(Shared::NavbarComponent.new)
 
-    .govuk-width-container
-      .govuk-phase-banner role="contentinfo"
-        p.govuk-phase-banner__content
-          strong.govuk-tag.govuk-phase-banner__content__tag
-            | beta
-          span.govuk-phase-banner__text
-            | This is a new service - #{govuk_link_to "your feedback", new_feedback_path} will help us to improve it.
+      .govuk-phase-banner aria-label="banner"
+        .govuk-width-container
+          p.govuk-phase-banner__content
+            strong.govuk-tag.govuk-phase-banner__content__tag
+              | beta
+            span.govuk-phase-banner__text
+              | This is a new service - #{govuk_link_to "your feedback", new_feedback_path} will help us to improve it.
 
-      main#main-content role="main"
-        - flash.each do |variant, message|
-          = render FlashComponent.new variant: variant, message: message
+    main.govuk-width-container#main-content role="main"
+      - flash.each do |variant, message|
+        = render FlashComponent.new variant: variant, message: message
 
-        = yield
+      = yield
 
-      = content_for :after_main
+    = content_for :after_main
 
     footer.govuk-footer role="contentinfo"
       .govuk-width-container
@@ -118,5 +118,6 @@ html.govuk-template.app-html-class lang="en"
               span> All content is available under the
               a.govuk-footer__link href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license" Open Government Licence v3.0
           .govuk-footer__meta-item
-            a.govuk-footer__link.govuk-footer__copyright-logo href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/" | © Crown copyright
+            a.govuk-footer__link.govuk-footer__copyright-logo href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/"
+              | © Crown copyright
     = javascript_pack_tag "application"

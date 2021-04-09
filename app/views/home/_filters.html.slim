@@ -6,7 +6,7 @@
           = t("jobs.filters.add_more_filters")
       - %w[job_roles phases working_patterns].each do |filter_type|
         legend.govuk-fieldset__legend.govuk-fieldset__legend--s
-          h3.govuk-label.govuk-label--s id="checkbox-group-heading-#{filter_type}"
+          h2.govuk-label.govuk-label--s id="checkbox-group-heading-#{filter_type}"
             = t("jobs.filters.#{filter_type}")
 
         .searchable-collection-component.searchable-collection-component--border aria-labelledby="checkbox-group-heading-#{filter_type}"
