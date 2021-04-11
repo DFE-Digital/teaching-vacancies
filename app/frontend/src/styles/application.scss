@@ -68,6 +68,10 @@ body {
       border-bottom: govuk-spacing(2) solid govuk-colour('orange');
     }
 
+    .govuk-header__logotype-text {
+      margin-left: govuk-spacing(1);
+    }
+
     .govuk-phase-banner {
       background-color: govuk-colour('white');
       border: 0;
