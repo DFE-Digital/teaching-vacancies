@@ -33,7 +33,7 @@ jobs:
     - name: set environment variable
       run: |
         ENVIRONMENT=review-pr-${{ github.event.number }}
-        TAG=${ENVIRONMENT}-${{ github.sha }}
+        TAG=${ENVIRONMENT}-${{ github.event.pull_request.head.sha }}
         echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
         echo "TAG=${TAG}" >> $GITHUB_ENV
 
@@ -43,8 +43,8 @@ jobs:
       with:
        token: ${{ secrets.PERSONAL_TOKEN }}
        #checkName: Deploy ${{ env.TAG }} to ${{ env.ENVIRONMENT }} # Job name within workflow
-       checkName: Create review app ${{ github.sha}}
-       ref: ${{ github.sha }}
+       checkName: Create review app ${{ github.event.pull_request.head.sha}}
+       ref: ${{ github.event.pull_request.head.sha }}
        timeoutSeconds: 720
        intervalSeconds: 15
 

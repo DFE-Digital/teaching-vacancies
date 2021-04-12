@@ -27,7 +27,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   deploy:
-    name: Create review app ${{ github.sha}}
+    name: Create review app ${{ github.event.pull_request.head.sha }}
     needs: turnstyle
     runs-on: ubuntu-20.04
     steps:
@@ -67,9 +67,15 @@ jobs:
       run: |
         $(echo "BRANCH=${{ github.head_ref }}" | sed -e 's/\//_/g' >> $GITHUB_ENV)
         ENVIRONMENT=review-pr-${{ github.event.number }}
-        TAG=${ENVIRONMENT}-${{ github.sha }}
+        TAG=${ENVIRONMENT}-${{ github.event.pull_request.head.sha }}
         echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
         echo "TAG=${TAG}" >> $GITHUB_ENV
+
+    - name: Bump version and push tag
+      id: tag_version
+      uses: mathieudutour/github-tag-action@v5.4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
@@ -109,7 +115,7 @@ jobs:
       uses: benc-uk/workflow-dispatch@v1.1
       with:
         token: ${{ secrets.PERSONAL_TOKEN }}
-        ref: ${{ github.ref }}
+        ref: ${{ steps.tag_version.outputs.new_tag }}
         workflow: Deploy App to Environment # Workflow name
         inputs: '{"environment": "${{ env.ENVIRONMENT }}", "tag": "${{ env.TAG }}"}'
 
@@ -119,7 +125,7 @@ jobs:
       with:
         token: ${{ secrets.PERSONAL_TOKEN }}
         checkName: Deploy ${{ env.TAG }} to ${{ env.ENVIRONMENT }} # Job name within workflow
-        ref: ${{ github.sha }}
+        ref: ${{ steps.tag_version.outputs.new_tag }}
         timeoutSeconds: 1200
         intervalSeconds: 15
 
@@ -139,16 +145,16 @@ jobs:
       with:
         workflow: Smoke Test
         token: ${{ secrets.PERSONAL_TOKEN }}
-        inputs: '{"smoke_test_domain": "teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital", "sha": "${{ github.sha }}"}'
-        ref: ${{ github.ref }}
+        inputs: '{"smoke_test_domain": "teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital", "sha": "${{ github.event.pull_request.head.sha }}"}'
+        ref: ${{ steps.tag_version.outputs.new_tag }}
 
     - name: Wait for smoke test
       id: wait_for_smoke_test
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
         token: ${{ secrets.PERSONAL_TOKEN }}
-        checkName: Smoke Test teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital ${{ github.sha }}
-        ref: ${{ github.sha }}
+        checkName: Smoke Test teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital ${{ github.event.pull_request.head.sha }}
+        ref: ${{ steps.tag_version.outputs.new_tag }}
         timeoutSeconds: 300
         intervalSeconds: 15
 
