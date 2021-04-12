@@ -4,7 +4,7 @@ on:
 
   pull_request:
     branches: [ master ]
-    types: [synchronize]
+    types: [closed]
 
 env:
   DOCKERHUB_REPOSITORY: dfedigital/teaching-vacancies
@@ -42,8 +42,8 @@ jobs:
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
        token: ${{ secrets.PERSONAL_TOKEN }}
-       #checkName: Deploy ${{ env.TAG }} to ${{ env.ENVIRONMENT }} # Job name within workflow
-       checkName: Create review app ${{ github.sha}}
+       #checkName: Deploy ${{ env.TAG }} to ${{ env.ENVIRONMENT }} # Job name within workflo
+       checkName: Create review app ${{ github.event.pull_request.head.sha}}
        ref: ${{ github.event.pull_request.head.sha }}
        timeoutSeconds: 720
        intervalSeconds: 15
