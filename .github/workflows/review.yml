@@ -3,7 +3,7 @@ name: Review
 on:
   pull_request:
     branches: [ master ]
-    types: [opened, synchronize]
+    types: [opened, reopened, synchronize]
     paths-ignore:
     - 'bigquery/**'
     - 'documentation/**'
