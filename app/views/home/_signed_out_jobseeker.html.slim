@@ -2,7 +2,4 @@ h2.govuk-heading-m = t(".title")
 
 p.govuk-body = t(".description_html", link: govuk_link_to(t("buttons.sign_in"), new_jobseeker_session_path, class: "govuk-link--no-visited-state"))
 
-- if current_variant?(:"2021_03_jobseeker_account_cta_test", :colour)
-  = govuk_link_to t("buttons.create_account"), new_jobseeker_registration_path, class: "govuk-!-margin-bottom-0", button: true
-- else
-  = govuk_link_to t("buttons.create_account"), new_jobseeker_registration_path, class: "govuk-button--secondary govuk-!-margin-bottom-0", button: true
+= govuk_link_to t("buttons.create_account"), new_jobseeker_registration_path, class: "govuk-button--secondary govuk-!-margin-bottom-0", button: true

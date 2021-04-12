@@ -20,20 +20,7 @@ module.exports = {
   ],
   "onBeforeScript": "puppet/onBefore.js",
   "onReadyScript": "puppet/onReady.js",
-  "scenarios": [
-    {
-      "label": "2021_03_jobseeker_account_cta_ab_test_default",
-      "url": "http://localhost:3000/?ab_test_override%5B2021_03_jobseeker_account_cta_test%5D=default"
-    },
-    {
-      "label": "2021_03_jobseeker_account_cta_ab_test_colour",
-      "url": "http://localhost:3000/?ab_test_override%5B2021_03_jobseeker_account_cta_test%5D=colour"
-    },
-    {
-      "label": "2021_03_jobseeker_account_cta_ab_test_sticky",
-      "url": "http://localhost:3000/?ab_test_override%5B2021_03_jobseeker_account_cta_test%5D=sticky"
-    }
-  ],
+  "scenarios": [],
   "paths": {
     "bitmaps_reference": "visual_snapshots",
     "bitmaps_test": "visual_regression/bitmaps_test",
