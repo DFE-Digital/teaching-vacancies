@@ -48,10 +48,6 @@ jobs:
        timeoutSeconds: 720
        intervalSeconds: 15
 
-    - name: Exit whole workflow if staging deployment was not successful
-      if: steps.wait_for_deploy_app_staging.outputs.conclusion != 'success' && 'refs/heads/master'
-      run: exit 1
-
     - uses: actions/checkout@v2
       name: Checkout Code
 
