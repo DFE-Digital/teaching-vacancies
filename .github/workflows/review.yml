@@ -27,7 +27,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   deploy:
-    name: Create review app ${{ github.sha}}
+    name: Create review app ${{ github.event.pull_request.head.sha}}
     needs: turnstyle
     runs-on: ubuntu-20.04
     steps:
@@ -67,7 +67,7 @@ jobs:
       run: |
         $(echo "BRANCH=${{ github.head_ref }}" | sed -e 's/\//_/g' >> $GITHUB_ENV)
         ENVIRONMENT=review-pr-${{ github.event.number }}
-        TAG=${ENVIRONMENT}-${{ github.sha }}
+        TAG=${ENVIRONMENT}-${{ github.event.pull_request.head.sha }}
         echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
         echo "TAG=${TAG}" >> $GITHUB_ENV
 
@@ -139,7 +139,7 @@ jobs:
       with:
         workflow: Smoke Test
         token: ${{ secrets.PERSONAL_TOKEN }}
-        inputs: '{"smoke_test_domain": "teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital", "sha": "${{ github.sha }}"}'
+        inputs: '{"smoke_test_domain": "teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital", "sha": "${{ github.event.pull_request.head.sha}}"}'
         ref: ${{ github.event.pull_request.head.ref }}
 
     - name: Wait for smoke test
@@ -147,7 +147,7 @@ jobs:
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
         token: ${{ secrets.PERSONAL_TOKEN }}
-        checkName: Smoke Test teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital ${{ github.sha }}
+        checkName: Smoke Test teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital ${{ github.event.pull_request.head.sha }}
         ref: ${{ github.event.pull_request.head.sha }}
         timeoutSeconds: 300
         intervalSeconds: 15
