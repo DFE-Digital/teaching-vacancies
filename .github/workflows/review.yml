@@ -120,7 +120,7 @@ jobs:
         token: ${{ secrets.PERSONAL_TOKEN }}
         checkName: Deploy ${{ env.TAG }} to ${{ env.ENVIRONMENT }} # Job name within workflow
         ref: ${{ github.sha }}
-        timeoutSeconds: 720
+        timeoutSeconds: 1200
         intervalSeconds: 15
 
     - name: Exit whole workflow if deployment was not successful
