@@ -232,6 +232,23 @@ en:
         close_relationships_options:
           "no": "No"
           "yes": "Yes"
+      jobseekers_job_application_details_employment_form:
+        current_role_options:
+          "no": "No"
+          "yes": "Yes"
+        job_title: Job title
+        main_duties: Main duties
+        organisation: School or other organisation
+        reason_for_leaving: Reason for leaving
+        salary: Salary scale or level
+        subjects: Subjects and key stages taught
+      jobseekers_job_application_details_reference_form:
+        email: Email address
+        job_title: Job title
+        name: Name
+        organisation: Organisation
+        relationship: Relationship to applicant
+        phone_number: Phone number
       jobseekers_job_application_employment_history_form:
         gaps_in_employment_details: Please provide details
         gaps_in_employment_options:
@@ -301,29 +318,17 @@ en:
           on_track: I'm on track to receive my QTS
           "yes": "Yes"
         qualified_teacher_status_year: Year QTS was awarded
+      jobseekers_job_application_review_form:
+        confirm_data_accurate_options:
+          "1": I confirm that the above information is accurate and complete
+        confirm_data_usage_options:
+          "1": I consent to my data being shared
       jobseekers_job_application_withdraw_form:
         # TODO: Update these once confirmed
         withdraw_reason_options:
           another_role: I have found another role
           changed_mind: I have changed my mind
           other: Some other reason
-      jobseekers_job_application_details_employment_form:
-        current_role_options:
-          "no": "No"
-          "yes": "Yes"
-        job_title: Job title
-        main_duties: Main duties
-        organisation: School or other organisation
-        reason_for_leaving: Reason for leaving
-        salary: Salary scale or level
-        subjects: Subjects and key stages taught
-      jobseekers_job_application_details_reference_form:
-        email: Email address
-        job_title: Job title
-        name: Name
-        organisation: Organisation
-        relationship: Relationship to applicant
-        phone_number: Phone number
       jobseekers_nqt_job_alerts_form:
         email: Email address
         keywords: Keywords
