@@ -146,7 +146,7 @@ GEM
       multipart-post (>= 1.2, < 3)
       ruby2_keywords
     faraday-net_http (1.0.1)
-    ffi (1.14.2)
+    ffi (1.15.0)
     friendly_id (5.4.2)
       activerecord (>= 4.0.0)
     fugit (1.4.2)
@@ -256,7 +256,7 @@ GEM
       rexml
     launchy (2.5.0)
       addressable (~> 2.7)
-    listen (3.4.1)
+    listen (3.5.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     lograge (0.11.2)
