@@ -25,7 +25,7 @@
 
       = f.govuk_collection_radio_buttons :statutory_induction_complete, %w[yes no], :to_s, :capitalize, inline: true
 
-      = f.govuk_submit t("buttons.save_and_continue") do
+      = f.govuk_submit current_jobseeker.job_applications.not_draft.none? ? t("buttons.save_and_continue") : t("buttons.save_changes") do
         = f.govuk_submit t("buttons.save_and_come_back"), secondary: true
 
   - if current_jobseeker.job_applications.not_draft.none?
