@@ -27,7 +27,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   deploy:
-    name: Create review app {{ github.sha}}
+    name: Create review app ${{ github.sha}}
     needs: turnstyle
     runs-on: ubuntu-20.04
     steps:
@@ -109,7 +109,7 @@ jobs:
       uses: benc-uk/workflow-dispatch@v1.1
       with:
         token: ${{ secrets.PERSONAL_TOKEN }}
-        ref: ${{ github.event.pull_request.head.ref }}
+        ref: ${{ github.ref }}
         workflow: Deploy App to Environment # Workflow name
         inputs: '{"environment": "${{ env.ENVIRONMENT }}", "tag": "${{ env.TAG }}"}'
 
@@ -140,7 +140,7 @@ jobs:
         workflow: Smoke Test
         token: ${{ secrets.PERSONAL_TOKEN }}
         inputs: '{"smoke_test_domain": "teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital", "sha": "${{ github.sha }}"}'
-        ref: ${{ github.event.pull_request.head.ref }}
+        ref: ${{ github.ref }}
 
     - name: Wait for smoke test
       id: wait_for_smoke_test
