@@ -350,4 +350,35 @@ RSpec.describe Vacancy do
       end
     end
   end
+
+  describe "validations" do
+    describe "changing enable_job_applications" do
+      subject { build_stubbed(:vacancy, status, enable_job_applications: true) }
+
+      before do
+        subject.enable_job_applications = false
+      end
+
+      context "when already listed" do
+        let(:status) { :published }
+
+        it "fails validation" do
+          expect(subject).not_to be_valid
+          expect(subject.errors).to include(:enable_job_applications)
+        end
+      end
+
+      context "when draft" do
+        let(:status) { :draft }
+
+        it { is_expected.to be_valid }
+      end
+
+      context "when scheduled" do
+        let(:status) { :draft }
+
+        it { is_expected.to be_valid }
+      end
+    end
+  end
 end
