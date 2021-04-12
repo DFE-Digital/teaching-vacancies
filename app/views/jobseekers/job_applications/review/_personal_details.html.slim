@@ -1,4 +1,4 @@
-= render ReviewComponent.new id: "personal_details" do |review|
+= render ReviewComponent.new id: "jobseekers-job-application-review-form-personal-details-field-error" do |review|
   - review.heading title: t("jobseekers.job_applications.build.personal_details.heading"),
                    text: (job_application_review_edit_section_text(job_application, :personal_details) if allow_edit),
                    href: (jobseekers_job_application_build_path(job_application, :personal_details) if allow_edit) do

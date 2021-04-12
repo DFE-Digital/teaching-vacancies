@@ -15,7 +15,8 @@
     = form_for review_form, url: jobseekers_job_application_submit_path(job_application), method: :post do |f|
       = f.govuk_error_summary
 
-      .govuk-caption-m = t("jobseekers.job_applications.current_step", current: JobApplication.completed_steps.values.last + 2, total: JobApplication.completed_steps.values.last + 2)
+      - if current_jobseeker.job_applications.not_draft.none?
+        .govuk-caption-m = t("jobseekers.job_applications.current_step", current: JobApplication.completed_steps.values.last + 2, total: JobApplication.completed_steps.values.last + 2)
       h1.govuk-heading-l = t(".heading")
 
       ol.app-task-list

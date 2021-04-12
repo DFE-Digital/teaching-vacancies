@@ -1,4 +1,4 @@
-= render ReviewComponent.new id: "equal_opportunities" do |review|
+= render ReviewComponent.new id: "jobseekers-job-application-review-form-equal-opportunities-field-error" do |review|
   - review.heading title: t("jobseekers.job_applications.build.equal_opportunities.heading"),
                    text: (job_application_review_edit_section_text(job_application, :equal_opportunities) if allow_edit),
                    href: (jobseekers_job_application_build_path(job_application, :equal_opportunities) if allow_edit) do
