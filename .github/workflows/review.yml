@@ -96,6 +96,7 @@ jobs:
         push: true
         tags: ${{ env.DOCKERHUB_REPOSITORY }}:builder-${{ env.BRANCH }}
         target: builder
+        context: https://github.com/DFE-Digital/teaching-vacancies#${{ github.event.pull_request.head.sha }}
 
     - name: Build and push docker image from production target
       uses: docker/build-push-action@v2
@@ -110,6 +111,7 @@ jobs:
           ${{ env.DOCKERHUB_REPOSITORY }}:${{ env.TAG }}
           ${{ env.DOCKERHUB_REPOSITORY }}:${{ env.BRANCH }}
         target: production
+        context: https://github.com/DFE-Digital/teaching-vacancies#${{ github.event.pull_request.head.sha }}
 
     - name: Trigger Deploy App Workflow for review
       uses: benc-uk/workflow-dispatch@v1.1
