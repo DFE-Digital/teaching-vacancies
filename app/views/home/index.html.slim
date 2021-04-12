@@ -6,21 +6,11 @@
       .govuk-grid-column-two-thirds
         .search-panel.location-search = render "search"
       .govuk-grid-column-one-third
-        - if current_variant?(:"2021_03_jobseeker_account_cta_test", :colour)
-          .signin.signin--colour-variant
-            - if jobseeker_signed_in?
-              = render "signed_in_jobseeker"
-            - else
-              = render "signed_out_jobseeker"
-        - if current_variant?(:"2021_03_jobseeker_account_cta_test", :default)
-          .signin
-            - if jobseeker_signed_in?
-              = render "signed_in_jobseeker"
-            - else
-              = render "signed_out_jobseeker"
-        - if current_variant?(:"2021_03_jobseeker_account_cta_test", :sticky) && jobseeker_signed_in?
-          .signin
+        .signin
+          - if jobseeker_signed_in?
             = render "signed_in_jobseeker"
+          - else
+            = render "signed_out_jobseeker"
 
 .govuk-main-wrapper class="govuk-!-padding-top-0"
   .govuk-grid-row

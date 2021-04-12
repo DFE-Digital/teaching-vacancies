@@ -30,14 +30,6 @@ html.govuk-template.app-html-class lang="en"
 
     = render AbTest::CookiesBannerComponent.new(create_path: create_cookies_preferences_path(cookies_consent: "yes", **utm_parameters), preferences_path: cookies_preferences_path(**utm_parameters)).with_variant(:default) unless cookies_preference_set?
 
-    - if current_variant?(:"2021_03_jobseeker_account_cta_test", :sticky) && controller_name == "home" && !jobseeker_signed_in?
-      .signin.signin--sticky-variant
-        .signin--sticky-variant__fade
-        .signin--sticky-variant__content class="govuk-heading-s govuk-!-font-weight-regular govuk-!-margin-0"
-          = govuk_link_to t("buttons.create_account"), new_jobseeker_registration_path, button: true, class: "govuk-button--secondary signin--sticky-variant__content-button"
-          p.govuk-body class="govuk-!-margin-bottom-0"
-            = t("account_creation_cta.help_text_html", link: link_to(t("account_creation_cta.sign_in"), new_jobseeker_session_path))
-
     header.govuk-header data-module="govuk-header"
       .govuk-header__container.govuk-width-container
         .govuk-header__logo
