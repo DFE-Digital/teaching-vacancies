@@ -33,7 +33,7 @@ jobs:
     - name: set environment variable
       run: |
         ENVIRONMENT=review-pr-${{ github.event.number }}
-        TAG=${ENVIRONMENT}-${{ github.event.pull_request.head.sha }}
+        TAG=${ENVIRONMENT}-${{ github.sha }}
         echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
         echo "TAG=${TAG}" >> $GITHUB_ENV
 
@@ -43,10 +43,14 @@ jobs:
       with:
        token: ${{ secrets.PERSONAL_TOKEN }}
        #checkName: Deploy ${{ env.TAG }} to ${{ env.ENVIRONMENT }} # Job name within workflow
-       checkName: Create review app ${{ github.event.pull_request.head.sha}}
-       ref: ${{ github.event.pull_request.head.sha }}
+       checkName: Create review app ${{ github.sha}}
+       ref: ${{ github.sha }}
        timeoutSeconds: 720
        intervalSeconds: 15
+
+    - name: Exit whole workflow if staging deployment was not successful
+      if: steps.wait_for_deploy_app_staging.outputs.conclusion != 'success' && 'refs/heads/master'
+      run: exit 1
 
     - uses: actions/checkout@v2
       name: Checkout Code
