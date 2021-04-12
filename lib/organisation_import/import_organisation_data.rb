@@ -20,10 +20,14 @@ class ImportOrganisationData
                                                                         .transform_values(&:length)
       Rollbar.log(:info, "The number of memberships to delete, by SchoolGroup: #{school_group_name_and_count_of_memberships}")
 
-      raise SuspiciouslyHighNumberOfRecordsToDelete, memberships_to_delete.count
-    else
-      memberships_to_delete.delete_all
+      # After mid-April 2021, remove Northamptonshire logic but retain error.
+      number_from_northamptonshire = school_group_name_and_count_of_memberships["Northamptonshire local authority"]
+      unless (memberships_to_delete.count - number_from_northamptonshire) < 10
+        raise SuspiciouslyHighNumberOfRecordsToDelete, memberships_to_delete.count
+      end
     end
+
+    memberships_to_delete.delete_all
   end
 
   private
