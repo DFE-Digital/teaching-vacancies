@@ -95,7 +95,7 @@ jobs:
       run: |
         export TF_VAR_environment=${{env.ENVIRONMENT}}
         terraform init -reconfigure -input=false -backend-config="key=review/review-pr-${{ github.event.number }}.tfstate"
-
+        #TODO: add destroy
       working-directory: terraform/app
 
     - name: Send failure message to twd_tv_dev channel
