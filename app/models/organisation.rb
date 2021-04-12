@@ -26,4 +26,20 @@ class Organisation < ApplicationRecord
     school_urns = Rails.configuration.local_authorities_extra_schools&.dig(local_authority_code.to_i)
     School.where(urn: school_urns)
   end
+
+  def school?
+    is_a?(School)
+  end
+
+  def school_group?
+    is_a?(SchoolGroup)
+  end
+
+  def trust?
+    uid.present?
+  end
+
+  def local_authority?
+    local_authority_code.present?
+  end
 end

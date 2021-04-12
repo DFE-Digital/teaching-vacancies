@@ -21,7 +21,7 @@ RSpec.describe Shared::ProcessStepsComponent, type: :component do
     }.freeze
   end
 
-  let(:steps_adjust) { current_organisation.is_a?(SchoolGroup) ? 0 : 1 }
+  let(:steps_adjust) { current_organisation.school_group? ? 0 : 1 }
 
   before do
     allow_any_instance_of(Publishers::AuthenticationConcerns).to receive(:current_organisation).and_return(current_organisation)

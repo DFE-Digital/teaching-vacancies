@@ -19,10 +19,10 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   def show
     case step
     when :job_location
-      skip_step if current_organisation.is_a?(School)
+      skip_step if current_organisation.school?
     when :schools
       job_location = session[:job_location].presence || @vacancy.job_location
-      skip_step if current_organisation.is_a?(School) || job_location == "central_office"
+      skip_step if current_organisation.school? || job_location == "central_office"
     when :job_details
       @job_details_back_path = @vacancy.central_office? ? wizard_path(:job_location) : wizard_path(:schools)
     when :documents
@@ -77,16 +77,16 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   end
 
   def set_multiple_schools
-    return unless step == :schools && current_organisation.is_a?(SchoolGroup)
+    return unless step == :schools && current_organisation.school_group?
 
     job_location = session[:job_location].presence || @vacancy.job_location
     @multiple_schools = job_location == "at_multiple_schools"
   end
 
   def set_school_options
-    return unless step == :schools && current_organisation.is_a?(SchoolGroup)
+    return unless step == :schools && current_organisation.school_group?
 
-    schools = current_organisation.local_authority_code? ? current_publisher_preference.schools : current_organisation.schools
+    schools = current_organisation.local_authority? ? current_publisher_preference.schools : current_organisation.schools
     @school_options = schools.not_closed.order(:name).map do |school|
       OpenStruct.new({ id: school.id, name: school.name, address: full_address(school) })
     end

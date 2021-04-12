@@ -69,7 +69,7 @@ class Publishers::OmniauthCallbacksController < Devise::OmniauthCallbacksControl
   end
 
   def use_school_group_if_available(publisher, organisation)
-    return unless organisation.is_a?(School)
+    return unless organisation.school?
 
     publisher_organisation = publisher.organisations.school_groups.find { |school_group| school_group.schools.include?(organisation) }
     session.update(publisher_organisation_id: publisher_organisation.id) if publisher_organisation

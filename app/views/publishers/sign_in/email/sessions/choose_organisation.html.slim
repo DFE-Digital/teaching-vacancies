@@ -12,7 +12,7 @@
 
         - @publisher.organisations.each do |organisation|
           p
-            - if organisation.is_a?(School)
+            - if organisation.school?
               = govuk_link_to(location(organisation), auth_email_create_session_path(organisation_id: organisation.id))
             - else
               = govuk_link_to(organisation.name, auth_email_create_session_path(organisation_id: organisation.id))

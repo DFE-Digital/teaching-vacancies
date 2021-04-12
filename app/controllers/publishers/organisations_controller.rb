@@ -16,7 +16,7 @@ class Publishers::OrganisationsController < Publishers::BaseController
   private
 
   def show_publisher_preferences
-    return unless current_organisation.local_authority_code?
+    return unless current_organisation.local_authority?
     return if PublisherPreference.find_by(publisher: current_publisher, organisation: current_organisation)
 
     redirect_to new_publisher_preference_path

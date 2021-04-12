@@ -7,7 +7,7 @@
     = govuk_breadcrumbs breadcrumbs: { "#{t("publishers.vacancies_component.published.tab_heading")}": organisation_path, "#{@vacancy.job_title}": organisation_job_job_applications_path(@vacancy.id) }
   .govuk-grid-row
     .govuk-grid-column-full.application-header
-      - if current_organisation.is_a?(SchoolGroup)
+      - if current_organisation.school_group?
         h2.govuk-caption-l = current_organisation.name
         h1.govuk-heading-l
           span.govuk-heading-l class="govuk-!-font-weight-regular" = t(".heading")

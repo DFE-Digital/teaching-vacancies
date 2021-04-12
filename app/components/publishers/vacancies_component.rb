@@ -10,7 +10,7 @@ class Publishers::VacanciesComponent < ViewComponent::Base
     @vacancy_types = %w[published expired pending draft awaiting_feedback]
     @selected_type = @vacancy_types.include?(selected_type) ? selected_type : "published"
 
-    set_organisation_options if @organisation.is_a?(SchoolGroup)
+    set_organisation_options if @organisation.school_group?
     set_vacancies
   end
 
@@ -31,7 +31,7 @@ class Publishers::VacanciesComponent < ViewComponent::Base
   end
 
   def grid_column_class
-    organisation.is_a?(SchoolGroup) ? "govuk-grid-column-two-thirds" : "govuk-grid-column-full"
+    organisation.school_group? ? "govuk-grid-column-two-thirds" : "govuk-grid-column-full"
   end
 
   def vacancy_type_tab_link(vacancy_type, selected)

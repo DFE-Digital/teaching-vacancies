@@ -19,7 +19,7 @@ module OrganisationHelper
       applying_for_the_job: 6,
       job_summary: 7,
     }
-    section_number = organisation.is_a?(SchoolGroup) ? sections[section] : sections[section] - 1
+    section_number = organisation.school_group? ? sections[section] : sections[section] - 1
     "#{section_number}."
   end
 
@@ -39,7 +39,7 @@ module OrganisationHelper
   end
 
   def organisation_type(organisation)
-    return organisation.group_type if organisation.is_a?(SchoolGroup)
+    return organisation.group_type if organisation.school_group?
 
     school_type_details = [organisation.school_type.singularize, organisation.religious_character]
     school_type_details.reject(&:blank?).reject { |str| str == I18n.t("schools.not_given") }.join(", ")
@@ -54,9 +54,9 @@ module OrganisationHelper
   end
 
   def organisation_type_basic(organisation)
-    if organisation.is_a?(School)
+    if organisation.school?
       "school"
-    elsif organisation.group_type == "local_authority"
+    elsif organisation.local_authority?
       "local authority"
     else
       "trust"
@@ -64,10 +64,10 @@ module OrganisationHelper
   end
 
   def school_or_trust_visits(organisation)
-    if organisation.group_type == "local_authority" || organisation.is_a?(School)
-      "school_visits"
-    else
+    if organisation.trust?
       "trust_visits"
+    else
+      "school_visits"
     end
   end
 
