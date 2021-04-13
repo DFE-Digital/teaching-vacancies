@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_09_094259) do
+ActiveRecord::Schema.define(version: 2021_04_12_164134) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -60,6 +60,44 @@ ActiveRecord::Schema.define(version: 2021_04_09_094259) do
     t.date "started_on"
     t.date "ended_on"
     t.uuid "job_application_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "equal_opportunities_reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "vacancy_id", null: false
+    t.integer "total_submissions", default: 0, null: false
+    t.integer "disability_no", default: 0, null: false
+    t.integer "disability_prefer_not_to_say", default: 0, null: false
+    t.integer "disability_yes", default: 0, null: false
+    t.integer "gender_man", default: 0, null: false
+    t.integer "gender_other", default: 0, null: false
+    t.integer "gender_prefer_not_to_say", default: 0, null: false
+    t.integer "gender_woman", default: 0, null: false
+    t.string "gender_other_descriptions", default: [], null: false, array: true
+    t.integer "orientation_bisexual", default: 0, null: false
+    t.integer "orientation_gay_or_lesbian", default: 0, null: false
+    t.integer "orientation_heterosexual", default: 0, null: false
+    t.integer "orientation_other", default: 0, null: false
+    t.integer "orientation_prefer_not_to_say", default: 0, null: false
+    t.string "orientation_other_descriptions", default: [], null: false, array: true
+    t.integer "ethnicity_asian", default: 0, null: false
+    t.integer "ethnicity_black", default: 0, null: false
+    t.integer "ethnicity_mixed", default: 0, null: false
+    t.integer "ethnicity_other", default: 0, null: false
+    t.integer "ethnicity_prefer_not_to_say", default: 0, null: false
+    t.integer "ethnicity_white", default: 0, null: false
+    t.string "ethnicity_other_descriptions", default: [], null: false, array: true
+    t.integer "religion_buddhist", default: 0, null: false
+    t.integer "religion_christian", default: 0, null: false
+    t.integer "religion_hindu", default: 0, null: false
+    t.integer "religion_jewish", default: 0, null: false
+    t.integer "religion_muslim", default: 0, null: false
+    t.integer "religion_none", default: 0, null: false
+    t.integer "religion_other", default: 0, null: false
+    t.integer "religion_prefer_not_to_say", default: 0, null: false
+    t.integer "religion_sikh", default: 0, null: false
+    t.string "religion_other_descriptions", default: [], null: false, array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
