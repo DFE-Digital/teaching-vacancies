@@ -64,6 +64,26 @@
   @include govuk-media-query($until: desktop) {
     margin-left: govuk-spacing(4);
   }
+
+  &--no-bullet {
+    list-style-type: none;
+    padding-left: 0;
+  }
+}
+
+.app-page-navigation__item {
+  margin-left: govuk-spacing(5);
+
+  a {
+    display: inline-block;
+  }
+
+  &::before {
+    content: '\2014';
+    height: 100%;
+    margin-left: -25px;
+    padding-right: govuk-spacing(1);
+  }
 }
 
 .notification-tag {
