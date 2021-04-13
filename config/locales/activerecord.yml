@@ -10,6 +10,22 @@ en:
     email:
       blank: Enter your email address
       invalid: Enter an email address in the correct format, like name@example.com
+  qualification_errors: &qualification_errors
+    category:
+      inclusion: Select a qualification
+    finished_studying:
+      blank: Select yes if you have finished studying for this qualification
+    finished_studying_details:
+      blank: Tell us more information
+    grade:
+      blank: Enter a grade
+    subject:
+      blank: Enter a subject
+    subject_and_grade_correspond:
+      false: Enter all subjects and grades
+    year:
+      blank: Enter the year the qualification was awarded
+      invalid: Enter a valid year
   organisation_errors: &organisation_errors
     website:
       url: Enter a link in the correct format, like http://www.school.ac.uk
@@ -327,6 +343,33 @@ en:
             started_on:
               blank: Enter the date you started at this school or organisation
               invalid: Enter a valid start date
+        jobseekers/job_application/details/qualifications/category_form:
+          attributes:
+            <<: *qualification_errors
+        jobseekers/job_application/details/qualifications/degree_form:
+          attributes:
+            <<: *qualification_errors
+            institution:
+              blank: Enter an awarding body
+        jobseekers/job_application/details/qualifications/secondary/common_form:
+          attributes:
+            <<: *qualification_errors
+            institution:
+              blank: Enter a school, college or other organisation
+        jobseekers/job_application/details/qualifications/secondary/other_form:
+          attributes:
+            <<: *qualification_errors
+            institution:
+              blank: Enter a school, college or other organisation
+            name:
+              blank: Enter a qualification name
+        jobseekers/job_application/details/qualifications/other_form:
+          attributes:
+            <<: *qualification_errors
+            institution:
+              blank: Enter a school, college, university or other organisation
+            name:
+              blank: Enter a qualification or course name
         jobseekers/job_application/details/reference_form:
           attributes:
             email:

@@ -32,29 +32,6 @@ RSpec.describe "Job applications build" do
     let(:button) { I18n.t("buttons.save_and_continue") }
     let(:origin) { "" }
 
-    context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
-
-      it "returns not_found" do
-        patch jobseekers_job_application_build_path(job_application, :personal_details)
-
-        expect(response).to have_http_status(:not_found)
-      end
-    end
-
-    context "when the commit param is `Save and come back later`" do
-      let(:button) { I18n.t("buttons.save_and_come_back") }
-
-      it "updates the job application without form validation and redirects to the dashboard" do
-        expect { patch jobseekers_job_application_build_path(job_application, :personal_details), params: params }
-          .to change { job_application.reload.first_name }.from("").to("Cool name")
-          .and change { job_application.in_progress_steps }.from([]).to(["personal_details"])
-          .and(not_change { job_application.completed_steps })
-
-        expect(response).to redirect_to(jobseekers_job_applications_path)
-      end
-    end
-
     context "when the form is valid" do
       before { allow_any_instance_of(Jobseekers::JobApplication::PersonalDetailsForm).to receive(:valid?).and_return(true) }
 
@@ -79,6 +56,29 @@ RSpec.describe "Job applications build" do
             .and(not_change { job_application.in_progress_steps })
 
           expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :professional_status))
+        end
+      end
+
+      context "when the job application status is not draft" do
+        let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+
+        it "returns not_found" do
+          patch jobseekers_job_application_build_path(job_application, :personal_details)
+
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+
+      context "when the commit param is `Save and come back later`" do
+        let(:button) { I18n.t("buttons.save_and_come_back") }
+
+        it "updates the job application without form validation and redirects to the dashboard" do
+          expect { patch jobseekers_job_application_build_path(job_application, :personal_details), params: params }
+            .to change { job_application.reload.first_name }.from("").to("Cool name")
+                                                            .and change { job_application.in_progress_steps }.from([]).to(["personal_details"])
+                                                                                                             .and(not_change { job_application.completed_steps })
+
+          expect(response).to redirect_to(jobseekers_job_applications_path)
         end
       end
     end

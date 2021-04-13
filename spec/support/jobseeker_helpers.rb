@@ -101,4 +101,34 @@ module JobseekerHelpers
     fill_in "Email address", with: "test@email.com"
     fill_in "Phone number", with: "09999 123456"
   end
+
+  def fill_in_gcse
+    fill_in "Subject", with: "Maths"
+    fill_in "Grade", with: "110%"
+    fill_in "School, college, or other organisation", with: "Churchill School for Gifted Macaques"
+    fill_in "Year qualification(s) was/were awarded", with: "2020"
+  end
+
+  def fill_in_secondary_qualification
+    fill_in "Qualification name", with: "Welsh Baccalaureate"
+    fill_in "Subject", with: "Science"
+    fill_in "Grade", with: "5"
+    fill_in "School, college, or other organisation", with: "Happy Rainbows School for High Achievers"
+    fill_in "Year qualification(s) was/were awarded", with: "2020"
+  end
+
+  def fill_in_undergraduate_degree
+    fill_in "Subject", with: "Linguistics"
+    fill_in "Awarding body", with: "University of Life"
+    choose "Yes", name: "jobseekers_job_application_details_qualifications_degree_form[finished_studying]"
+    fill_in "Grade", with: "2:1"
+    fill_in "Year", with: "1960"
+  end
+
+  def fill_in_other_qualification
+    fill_in "Qualification or course name", with: "Superteacher Certificate"
+    fill_in "School, college, university or other organisation", with: "Teachers Academy"
+    choose "No", name: "jobseekers_job_application_details_qualifications_other_form[finished_studying]"
+    fill_in "Please give details", with: "I expect to finish next year"
+  end
 end

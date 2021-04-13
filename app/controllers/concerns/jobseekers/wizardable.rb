@@ -7,6 +7,10 @@ module Jobseekers::Wizardable
     %i[qualified_teacher_status qualified_teacher_status_year qualified_teacher_status_details statutory_induction_complete]
   end
 
+  def qualifications_fields
+    []
+  end
+
   def employment_history_fields
     %i[gaps_in_employment gaps_in_employment_details]
   end
