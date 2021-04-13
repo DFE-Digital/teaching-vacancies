@@ -28,6 +28,11 @@ import_polygon_data:
   class: 'ImportPolygonDataJob'
   queue: low
 
+queue_applications_received:
+  cron: '0 6 * * *'
+  class: 'SendApplicationsReceivedYesterdayJob'
+  queue: default
+
 queue_daily_alerts:
   cron: '0 15 * * *'
   class: 'SendDailyAlertEmailJob'
