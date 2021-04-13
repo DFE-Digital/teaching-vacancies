@@ -17,8 +17,8 @@ en:
           <ul class="govuk-list govuk-list--bullet">
           <li>your full name</li>
           <li>your work email address</li>
-          <li>the name of your school or trust</li>
-          <li>your school URN (unique reference number) or trust UID (unique identifier). You can find these details on our <a href="https://www.get-information-schools.service.gov.uk/" class="govuk-link">Get information about schools</a>
+          <li>the name of your school, trust or local authority</li>
+          <li>your school URN (unique reference number) or trust UID (unique identifier), except if you are a local authority. You can find these details on our <a href="https://www.get-information-schools.service.gov.uk/" class="govuk-link">Get information about schools</a>
           page.</li>
           </ul>
         sign_in:
