@@ -103,4 +103,33 @@ RSpec.describe Organisation do
       end
     end
   end
+
+  describe "type predicates" do
+    context "for a school" do
+      subject { build_stubbed(:school) }
+
+      it { is_expected.to be_school }
+      it { is_expected.not_to be_school_group }
+      it { is_expected.not_to be_trust }
+      it { is_expected.not_to be_local_authority }
+    end
+
+    context "for a trust" do
+      subject { build_stubbed(:trust) }
+
+      it { is_expected.not_to be_school }
+      it { is_expected.to be_school_group }
+      it { is_expected.to be_trust }
+      it { is_expected.not_to be_local_authority }
+    end
+
+    context "for a local authority" do
+      subject { build_stubbed(:local_authority) }
+
+      it { is_expected.not_to be_school }
+      it { is_expected.to be_school_group }
+      it { is_expected.not_to be_trust }
+      it { is_expected.to be_local_authority }
+    end
+  end
 end

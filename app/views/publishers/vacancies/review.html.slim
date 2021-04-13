@@ -17,7 +17,7 @@
           = t("jobs.review_future")
 
       ol.app-task-list
-        - if current_organisation.is_a?(SchoolGroup)
+        - if current_organisation.school_group?
           li = render "publishers/vacancies/edit_vacancy_sections/edit_job_location"
 
         li = render "publishers/vacancies/edit_vacancy_sections/edit_job_details"

@@ -22,8 +22,8 @@ class Publishers::Organisations::SchoolsController < Publishers::BaseController
   private
 
   def set_organisation
-    @organisation = if current_organisation.is_a?(School) ||
-                       (current_organisation.is_a?(SchoolGroup) && current_organisation.id == params[:id])
+    @organisation = if current_organisation.school? ||
+                       (current_organisation.school_group? && current_organisation.id == params[:id])
                       current_organisation
                     else
                       current_organisation.schools.find(params[:id])
@@ -31,7 +31,7 @@ class Publishers::Organisations::SchoolsController < Publishers::BaseController
   end
 
   def set_redirect_path
-    @redirect_path = current_organisation.is_a?(School) ? organisation_path : organisation_schools_path
+    @redirect_path = current_organisation.school? ? organisation_path : organisation_schools_path
   end
 
   def organisation_params

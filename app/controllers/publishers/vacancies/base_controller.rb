@@ -4,7 +4,7 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
   helper_method :process_steps, :step_current, :steps_adjust
 
   def steps_adjust
-    current_organisation.is_a?(SchoolGroup) ? 0 : 1
+    current_organisation.school_group? ? 0 : 1
   end
 
   def step_current

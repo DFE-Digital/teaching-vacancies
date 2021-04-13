@@ -6,6 +6,6 @@ class Publishers::SchoolOverviewComponent < ViewComponent::Base
   end
 
   def render?
-    @organisation.is_a?(School)
+    @organisation.school?
   end
 end

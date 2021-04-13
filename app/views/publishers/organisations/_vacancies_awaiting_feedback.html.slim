@@ -10,7 +10,7 @@ div class="govuk-!-margin-bottom-4"
         .card-component__content
           dt.card-component__header
             div = govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id))
-            - if organisation.is_a?(SchoolGroup)
+            - if organisation.school_group?
               div = vacancy.readable_job_location
           dd.card-component__body
             div

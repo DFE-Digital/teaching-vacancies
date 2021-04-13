@@ -10,7 +10,7 @@ class Publishers::VacancySort < RecordSort
 
   def options
     base_options.tap do |options|
-      options << readable_job_location_option if @organisation.is_a?(SchoolGroup)
+      options << readable_job_location_option if @organisation.school_group?
     end
   end
 
