@@ -25,6 +25,45 @@
         = govuk_link_to t("buttons.reject"), organisation_job_job_application_reject_path(vacancy.id, job_application.id), button: true, class: "govuk-button--warning govuk-!-margin-right-3"
       = govuk_link_to t("buttons.download_application"), "#", button: true, class: "govuk-button--secondary"
 
+    h2.govuk-heading-m = "Application sections"
+
+    ul.govuk-list
+      li.app-page-navigation__item = govuk_link_to t(".personal_details.heading"), "#personal_details_summary", class: "govuk-link govuk-body-s govuk-!-margin-bottom-0"
+      li.app-page-navigation__item = govuk_link_to t(".professional_status.heading"), "#professional_status_summary", class: "govuk-link govuk-body-s govuk-!-margin-bottom-0"
+      li.app-page-navigation__item = govuk_link_to t(".qualifications.heading"), "#qualifications_summary", class: "govuk-link govuk-body-s govuk-!-margin-bottom-0"
+      li.app-page-navigation__item = govuk_link_to t(".current_role_and_employment_history.heading"), "#employment_history_summary", class: "govuk-link govuk-body-s govuk-!-margin-bottom-0"
+      li.app-page-navigation__item = govuk_link_to t(".personal_statement.heading"), "#personal_statement_summary", class: "govuk-link govuk-body-s govuk-!-margin-bottom-0"
+      li.app-page-navigation__item = govuk_link_to t(".references.heading"), "#references_summary", class: "govuk-link govuk-body-s govuk-!-margin-bottom-0"
+      li.app-page-navigation__item = govuk_link_to t(".ask_for_support.heading"), "#ask_for_support_summary", class: "govuk-link govuk-body-s govuk-!-margin-bottom-0"
+      li.app-page-navigation__item = govuk_link_to t(".declarations.heading"), "#declarations_summary", class: "govuk-link govuk-body-s govuk-!-margin-bottom-0"
+
+    - unless job_application.status.in?(%w[shortlisted unsuccessful withdrawn])
+      ul.app-task-list--no-bullet
+        li#personal_details_summary
+          = render "jobseekers/job_applications/review/personal_details", allow_edit: false
+        li#professional_status_summary
+          = render "jobseekers/job_applications/review/professional_status", allow_edit: false
+        li#qualifications_summary
+          = render "jobseekers/job_applications/review/qualifications", allow_edit: true
+        li#employment_history_summary
+          = render "jobseekers/job_applications/review/employment_history", allow_edit: false
+        - if job_application.gaps_in_employment == "yes"
+          li = render NotificationComponent.new variant: "notice",
+              title: "Gaps in employment",
+              body: job_application.gaps_in_employment_details,
+              background: true,
+              icon: true,
+              dismiss: false
+        li#personal_statement_summary
+          = render "jobseekers/job_applications/review/personal_statement", allow_edit: false
+        li#references_summary
+          = render "jobseekers/job_applications/review/references", allow_edit: false
+        li#ask_for_support_summary
+          = render "jobseekers/job_applications/review/ask_for_support", allow_edit: false
+        li#declarations_summary
+          = render "jobseekers/job_applications/review/declarations", allow_edit: false
+
+
   .govuk-grid-column-one-third
     .account-sidebar
       h2.account-sidebar__heading = t(".timeline")
