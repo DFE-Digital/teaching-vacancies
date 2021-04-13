@@ -5,6 +5,7 @@ on:
     branches:
       - dev
       - qa
+      - pentest
     paths-ignore:
     - 'bigquery/**'
     - 'documentation/**'
