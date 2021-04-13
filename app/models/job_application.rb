@@ -34,6 +34,8 @@ class JobApplication < ApplicationRecord
   has_many :employments, dependent: :destroy
   has_many :references, dependent: :destroy
 
+  scope :submitted_yesterday, -> { submitted.where("DATE(submitted_at) = ?", Date.yesterday) }
+
   private
 
   def update_status_timestamp

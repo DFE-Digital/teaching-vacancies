@@ -1,4 +1,9 @@
 en:
+  shared:
+    footer: >-
+      %{home_page_link} is a free job-listing service from the Department for Education. It helps schools to save money
+      on recruitment and you to take the next step in your career.
+
   jobseekers:
     account_mailer:
       confirmation_instructions:
@@ -53,9 +58,6 @@ en:
           irrelevant_link_text: No, they are not relevant
           relevant_link_text: Yes, they are relevant
           reason: This feedback helps us improve our service.
-        footer: >-
-          %{home_page_link} is a free job-listing service from the Department for Education. It helps schools to save money
-          on recruitment and you to take the next step in your career.
         salary: "Salary: %{salary}"
         subject: Your job alert from Teaching Vacancies
         summary:
@@ -129,3 +131,16 @@ en:
         title: You have updated a job alert from Teaching Vacancies
         unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
         unsubscribe_link_text: Unsubscribe here
+
+  publishers:
+    job_application_mailer:
+      applications_received:
+        applications:
+          one: this application
+          other: these applications
+        subject:
+          one: You have received an application
+          other: You have received applications
+        view_applications:
+          one: View %{count} new application
+          other: View %{count} new applications

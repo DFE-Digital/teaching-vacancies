@@ -1,0 +1,17 @@
+# <%= @subject %>
+
+You have received <%= t('.applications', count: @job_applications_count) %> in the last 24 hours.
+
+---
+
+<%- @vacancies.each do |vacancy| %>
+  <%= vacancy.job_title %>
+  <%= vacancy_job_location(vacancy) %>
+  <%= notify_link(organisation_job_job_applications_url(vacancy),
+                  t(".view_applications", count: vacancy.job_applications.submitted_yesterday.count)) %>
+
+  ---
+
+<% end %>
+
+<%= t("shared.footer", home_page_link: notify_link(root_url, t("app.title"))) %>
