@@ -12,6 +12,12 @@
   }
 
   &__gds {
+    @include govuk-media-query($until: tablet) {
+      .govuk-button--primary {
+        width: 100%;
+      }
+    }
+
     .govuk-button-group {
       align-items: center;
     }
