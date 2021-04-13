@@ -19,6 +19,15 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
     end
   end
 
+  context "when started_on is an incomplete date" do
+    let(:params) { { "started_on(3i)" => "1" } }
+
+    it "is invalid" do
+      expect(subject).not_to be_valid
+      expect(subject.errors.of_kind?(:started_on, :blank)).to be true
+    end
+  end
+
   context "when current_role is no" do
     let(:params) { { current_role: "no" } }
 
@@ -31,6 +40,19 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
       it "is invalid" do
         expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:ended_on, :invalid)).to be true
+      end
+    end
+
+    context "when ended_on is an incomplete date" do
+      let(:params) do
+        { current_role: "no",
+          "ended_on(3i)" => "10",
+          "started_on(1i)" => "2021", "started_on(2i)" => "01", "started_on(3i)" => "01", }
+      end
+
+      it "is invalid" do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:ended_on, :blank)).to be true
       end
     end
 

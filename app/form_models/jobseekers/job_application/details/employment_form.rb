@@ -16,7 +16,7 @@ class Jobseekers::JobApplication::Details::EmploymentForm
 
     errors.add(:ended_on, :before_started_on) unless
       Date.new(ended_on[1], ended_on[2], ended_on[3]) > Date.new(started_on[1], started_on[2], started_on[3])
-  rescue Date::Error
+  rescue Date::Error, TypeError
     nil
   end
 end
