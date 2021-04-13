@@ -11,52 +11,70 @@
     margin-bottom: 0;
   }
 
-  &--top {
-    background-color: govuk-colour("white");
-    position: sticky;
-    top: 0;
-    width: 100%;
+  &__gds {
+    @include govuk-media-query($until: tablet) {
+      .govuk-button--primary {
+        width: 100%;
+      }
+    }
 
-    &:after {
-      height: 6px;
-      background: linear-gradient(transparent, govuk-colour("mid-grey"));
-      content: '';
-      width: 100%;
-      display: block;
+    .govuk-button-group {
+      align-items: center;
     }
   }
 
-  &--gds {
-    .govuk-button {
-      margin-bottom: 0;
-      vertical-align: middle;
-    }
-  }
+  &__bottom {
+    &--black {
+      .cookies-banner-component__fade {
+        height: 6px;
+        background: linear-gradient(
+          to top,
+          govuk-colour("black"),
+          rgba(govuk-colour("black"), 0)
+        )
+      }
 
-  &--bottom {
-    background-color: govuk-colour("black");
+      .cookies-banner-component__background {
+        background-color: govuk-colour("black");
+      }
+    }
+
+    &--blue {
+      .cookies-banner-component__fade {
+        height: 6px;
+        background: linear-gradient(
+          to top,
+          govuk-colour("dark-blue"),
+          rgba(govuk-colour("dark-blue"), 0)
+        )
+      }
+
+      .cookies-banner-component__background {
+        background-color: govuk-colour("dark-blue");
+      }
+    }
+
+    @include govuk-media-query($until: tablet) {
+      .govuk-button--primary {
+        width: 100%;
+      }
+    }
+
     position: fixed;
     bottom: 0;
     padding-top: 0;
     width: 100%;
-    * {
+    .govuk-heading-s,
+    .govuk-body {
       color: govuk-colour("white");
     }
 
     .govuk-width-container {
       padding-top: 15px;
     }
-
-    &:before {
-      height: 6px;
-      background: linear-gradient(#b1b4b6, rgba($color: govuk-colour('black'), $alpha: 0));
-      content: '';
-      width: 100%;
-      display: block;
-    }
   }
 
-  &--modal {
+  &__modal {
     @include govuk-media-query($until: tablet) {
       margin-left: -40vw;
       margin-top: -8vw;
