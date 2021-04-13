@@ -40,6 +40,7 @@ class Vacancy < ApplicationRecord
   has_many :saved_by, through: :saved_jobs, source: :jobseeker
 
   has_many :job_applications, dependent: :destroy
+  has_one :equal_opportunities_report, dependent: :destroy
 
   has_many :organisation_vacancies, dependent: :destroy
   has_many :organisations, through: :organisation_vacancies
