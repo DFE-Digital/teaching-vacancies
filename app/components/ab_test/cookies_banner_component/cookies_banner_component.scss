@@ -11,35 +11,28 @@
     margin-bottom: 0;
   }
 
-  &--top {
-    background-color: govuk-colour("white");
-    position: sticky;
-    top: 0;
-    width: 100%;
-
-    &:after {
-      height: 6px;
-      background: linear-gradient(transparent, govuk-colour("mid-grey"));
-      content: '';
-      width: 100%;
-      display: block;
+  &__gds {
+    .govuk-button-group {
+      align-items: center;
     }
   }
 
-  &--gds {
-    .govuk-button {
-      margin-bottom: 0;
-      vertical-align: middle;
+  &__bottom {
+    
+    &--black {
+      background-color: govuk-colour("black");
     }
-  }
 
-  &--bottom {
-    background-color: govuk-colour("black");
+    &--blue {
+      background-color: govuk-colour("dark-blue");
+    }
+
     position: fixed;
     bottom: 0;
     padding-top: 0;
     width: 100%;
-    * {
+    .govuk-heading-s,
+    .govuk-body {
       color: govuk-colour("white");
     }
 
@@ -56,7 +49,7 @@
     }
   }
 
-  &--modal {
+  &__modal {
     @include govuk-media-query($until: tablet) {
       margin-left: -40vw;
       margin-top: -8vw;
