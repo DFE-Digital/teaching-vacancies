@@ -14,55 +14,24 @@
     p.govuk-body = t(".description")
 
     - if job_application.qualifications.any?
-      - job_application.qualification_groups.each do |qualification_group|
-        = render DetailComponent.new title: qualification_group.first.name do |detail|
+      - job_application.qualification_groups.each do |group|
+        = render DetailComponent.new title: (group.first.secondary? ? group.first.name.pluralize : group.first.name) do |detail|
           - detail.body do
             = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |c|
-              - if qualification_group.many?
-                - c.slot(:row, key: t("jobseekers.job_applications.qualifications.subjects_and_grades"), value: qualification_group.map { |qual| sanitize([qual.subject, qual.grade].join(" – ")) }.join("</br>").html_safe)
-                - c.slot(:row, key: t("helpers.label.jobseekers_job_application_details_qualifications_shared_labels.institution"), value: qualification_group.first.institution)
-                - c.slot(:row, key: t("helpers.label.jobseekers_job_application_details_qualifications_shared_labels.year"), value: qualification_group.first.year)
+              - if group.first.secondary?
+                - c.slot(:row, key: t("jobseekers.job_applications.qualifications.subjects_and_grades"), value: group.map { |qual| sanitize([qual.subject, qual.grade].join(" – ")) }.join("</br>").html_safe)
+                - attributes = %w[institution year]
+              - else
+                - attributes = %w[subject institution grade year]
+              - attributes.each do |attribute|
+                - c.slot(:row, key: t("helpers.label.#{qualification_form_param_key(group.first.category)}.#{attribute}"), value: group.first[attribute]) if group.first[attribute].present?
+              - unless group.first.finished_studying.nil?
+                - c.slot(:row, key: t("helpers.legend.#{qualification_form_param_key(group.first.category)}.finished_studying"), value: [t("helpers.label.jobseekers_job_application_details_qualifications_shared_labels.finished_studying_options.#{group.first.finished_studying}"), sanitize(group.first.finished_studying_details.presence)].compact.join("</br>").html_safe)
+
           - detail.actions do
-            / TODO: correct the paths
-            = govuk_button_to t("buttons.delete"), root_path(job_application, qualification_group), method: :delete, class: "govuk-delete-link govuk-!-margin-bottom-0", form_class: "inline-block button_to"
-            = govuk_link_to t("buttons.edit"), edit_jobseekers_job_application_qualification_path(job_application, qualification_group), class: "govuk-link--no-visited-state inline-block"
-
-
-      / - job_application.employments.each do |employment|
-      /   = render DetailComponent.new title: employment.job_title do |detail|
-      /     - detail.body do
-      /       = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |c|
-      /         - attributes = %w[organisation salary subjects]
-      /         - attributes.each do |attribute|
-      /           - c.slot(:row, key: t("jobseekers.job_applications.employments.#{attribute}"), value: employment[attribute].presence || t("jobseekers.job_applications.not_defined"))
-      /         - c.slot(:row, key: t("jobseekers.job_applications.employments.started_on"), value: employment.started_on.to_s)
-      /
-      /         - case employment.current_role
-      /         - when "yes"
-      /         - c.slot(:row, key: t("jobseekers.job_applications.employments.ended_on"), value: t("jobseekers.job_applications.employments.current_role"))
-      /         - when "no"
-      /         - c.slot(:row, key: t("jobseekers.job_applications.employments.ended_on"), value: employment.ended_on.to_s)
-      /         - c.slot(:row, key: t("jobseekers.job_applications.employments.reason_for_leaving"), value: employment.reason_for_leaving)
-      /
-      /         - c.slot(:row, key: t("jobseekers.job_applications.employments.main_duties"), value: employment.main_duties)
-      /
-      /     - detail.actions do
-      /       = govuk_button_to t("buttons.delete"), jobseekers_job_application_employment_path(employment.job_application, employment), method: :delete, class: "govuk-delete-link govuk-!-margin-bottom-0", form_class: "inline-block button_to"
-      /       = govuk_link_to t("buttons.edit"), edit_jobseekers_job_application_employment_path(employment.job_application, employment), class: "govuk-link--no-visited-state inline-block"
-
-
-      / - job_application.references.each do |reference|
-      /   = render DetailComponent.new title: reference.name do |detail|
-      /     - detail.body do
-      /       = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |c|
-      /         - attributes = %w[job_title organisation relationship phone_number email]
-      /         - attributes.each do |attribute|
-      /           - c.slot(:row, key: t("jobseekers.job_applications.references.#{attribute}"), value: reference[attribute])
-      /
-      /     - detail.actions do
-      /       = govuk_button_to t("buttons.delete"), jobseekers_job_application_reference_path(reference.job_application, reference), method: :delete, class: "govuk-delete-link govuk-!-margin-bottom-0", form_class: "inline-block button_to"
-      /       = govuk_link_to t("buttons.edit"), edit_jobseekers_job_application_reference_path(reference.job_application, reference), class: "govuk-link--no-visited-state inline-block"
-
+            = govuk_button_to t("buttons.delete"), destroy_jobseekers_job_application_qualifications_path(job_application), params: { ids: group.pluck(:id) }, method: :delete, class: "govuk-delete-link govuk-!-margin-bottom-0", form_class: "inline-block button_to"
+            / TODO: correct the edit path once multiple qualifications can be edited in one page.
+            = govuk_link_to t("buttons.edit"), edit_jobseekers_job_application_qualification_path(job_application, group), class: "govuk-link--no-visited-state inline-block"
 
       = govuk_link_to t("buttons.add_another_qualification"), select_category_jobseekers_job_application_qualifications_path(job_application), button: true, class: "govuk-button--secondary"
     - else
