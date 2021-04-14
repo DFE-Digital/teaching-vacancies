@@ -9,6 +9,7 @@ RSpec.describe Vacancy do
   it { is_expected.to have_many(:saved_jobs) }
   it { is_expected.to have_many(:saved_by) }
   it { is_expected.to have_many(:job_applications) }
+  it { is_expected.to have_one(:equal_opportunities_report) }
 
   context "indexing for search" do
     describe "#update_index!" do
