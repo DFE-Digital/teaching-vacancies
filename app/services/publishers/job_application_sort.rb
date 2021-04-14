@@ -6,8 +6,8 @@ class Publishers::JobApplicationSort < RecordSort
 
   def options
     [
-      SortOption.new("submitted_at", "desc", I18n.t("publishers.vacancies.job_applications.sort_by.date_received")),
-      SortOption.new("last_name", "asc", I18n.t("publishers.vacancies.job_applications.sort_by.applicant_last_name")),
+      SortOption.new("submitted_at", "desc", I18n.t("publishers.vacancies.job_applications.index.sort_by.date_received")),
+      SortOption.new("last_name", "asc", I18n.t("publishers.vacancies.job_applications.index.sort_by.applicant_last_name")),
     ]
   end
 end

@@ -92,6 +92,32 @@ RSpec.describe "Job applications" do
     end
   end
 
+  describe "GET #index" do
+    context "when the vacancy does not belong to the current organisation" do
+      let(:vacancy) { create(:vacancy, :published, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+
+      it "returns not_found" do
+        get organisation_job_job_applications_path(vacancy.id)
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context "when the vacancy is not listed" do
+      let(:vacancy) { create(:vacancy, publish_on: 1.day.from_now, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+
+      it "returns not_found" do
+        get organisation_job_job_applications_path(vacancy.id)
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    it "renders the index page" do
+      expect(get(organisation_job_job_applications_path(vacancy.id))).to render_template(:index)
+    end
+  end
+
   describe "POST #update_status" do
     let(:commit) { I18n.t("buttons.shortlist") }
     let(:params) { { publishers_job_application_update_status_form: { test: "param" }, commit: commit } }
