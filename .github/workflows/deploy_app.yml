@@ -70,6 +70,18 @@ jobs:
         echo "PARAMETER_STORE_ENVIRONMENT=${PARAMETER_STORE_ENVIRONMENT}" >> $GITHUB_ENV
         echo "VAR_FILE=${VAR_FILE}" >> $GITHUB_ENV
 
+    - name: Set environment variables for Pentest
+      if: startsWith(github.event.inputs.environment, 'pentest')
+      run: |
+        BACKEND_CONFIG=-backend-config="key=dev/app-${{ github.event.inputs.environment }}.tfstate"
+        PARAMETER_STORE_ENVIRONMENT=qa
+        TF_VAR_environment=${{ github.event.inputs.environment }}
+        VAR_FILE=pentest
+        echo "BACKEND_CONFIG=${BACKEND_CONFIG}" >> $GITHUB_ENV
+        echo "PARAMETER_STORE_ENVIRONMENT=${PARAMETER_STORE_ENVIRONMENT}" >> $GITHUB_ENV
+        echo "TF_VAR_environment=${TF_VAR_environment}" >> $GITHUB_ENV
+        echo "VAR_FILE=${VAR_FILE}" >> $GITHUB_ENV
+
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
 
