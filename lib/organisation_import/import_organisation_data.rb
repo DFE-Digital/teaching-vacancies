@@ -18,7 +18,7 @@ class ImportOrganisationData
                                                                       .group_by { |x| x }
                                                                       .transform_values(&:length)
     Rollbar.log(:info, "The number of memberships to delete, by SchoolGroup: #{school_group_name_and_count_of_memberships}")
-    
+
     raise SuspiciouslyHighNumberOfRecordsToDelete, memberships_to_delete.count if memberships_to_delete.count > 10
 
     memberships_to_delete.delete_all
