@@ -1,5 +1,6 @@
 class JobApplication < ApplicationRecord
   before_save :update_status_timestamp, if: :will_save_change_to_status?
+  before_save :anonymise_report, if: :will_save_change_to_status?
 
   extend ArrayEnum
 
@@ -43,5 +44,35 @@ class JobApplication < ApplicationRecord
 
   def update_status_timestamp
     self["#{status}_at"] = Time.current
+  end
+
+  def anonymise_report
+    return unless status == "submitted"
+
+    fill_in_report
+    anonymise_equal_opportunities_attributes
+  end
+
+  def fill_in_report
+    report = vacancy.equal_opportunity_report || vacancy.build_equal_opportunity_report
+    Jobseekers::JobApplication::EqualOpportunitiesForm::ATTRIBUTES.each do |attr|
+      attr_value = public_send(attr)
+      if attr.ends_with?("_description")
+        next unless attr_value.present?
+        attr_name = attr.to_s.split("_").first
+        report.public_send("#{attr_name}_other_descriptions") << attr_value
+      else
+        report.increment("#{attr}_#{attr_value}")
+      end
+    end
+    report.increment(:total_submissions)
+    report.save
+  end
+
+  def anonymise_equal_opportunities_attributes
+    Jobseekers::JobApplication::EqualOpportunitiesForm::ATTRIBUTES.each do |attr|
+      attr_value = public_send(attr)
+      self[attr] = StringAnonymiser.new(attr_value)
+    end
   end
 end

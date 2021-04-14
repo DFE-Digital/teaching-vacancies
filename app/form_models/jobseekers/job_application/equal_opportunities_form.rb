@@ -1,8 +1,10 @@
 class Jobseekers::JobApplication::EqualOpportunitiesForm
   include ActiveModel::Model
 
-  attr_accessor :disability, :gender, :gender_description, :orientation, :orientation_description,
-                :ethnicity, :ethnicity_description, :religion, :religion_description
+  ATTRIBUTES = %i[disability gender gender_description orientation orientation_description
+                  ethnicity ethnicity_description religion religion_description]
+
+  attr_accessor *ATTRIBUTES
 
   validates :disability, inclusion: { in: %w[no prefer_not_to_say yes] }
   validates :gender, inclusion: { in: %w[man other prefer_not_to_say woman] }
