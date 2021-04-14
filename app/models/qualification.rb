@@ -21,4 +21,8 @@ class Qualification < ApplicationRecord
       self.year = nil
     end
   end
+
+  def secondary?
+    gcse? || as_level? || a_level? || other_secondary?
+  end
 end
