@@ -1,6 +1,8 @@
 class Qualification < ApplicationRecord
   belongs_to :job_application
 
+  SECONDARY_QUALIFICATIONS = %w[gcse as_level a_level other_secondary].freeze
+
   enum category: { gcse: 0, as_level: 1, a_level: 2, other_secondary: 3, undergraduate: 4, postgraduate: 5, other: 6 }
 
   before_validation :remove_irrelevant_data
@@ -20,5 +22,9 @@ class Qualification < ApplicationRecord
       self.grade = ""
       self.year = nil
     end
+  end
+
+  def secondary?
+    category.in?(SECONDARY_QUALIFICATIONS)
   end
 end

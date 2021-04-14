@@ -27,6 +27,16 @@ module JobseekerHelpers
     end
   end
 
+  def validates_step_complete(button: I18n.t("buttons.save_and_continue"))
+    click_on button
+    expect(page).to have_content("There is a problem")
+  end
+
+  def select_qualification_category(category)
+    choose category
+    click_on I18n.t("buttons.continue")
+  end
+
   def fill_in_ask_for_support
     choose "Yes", name: "jobseekers_job_application_ask_for_support_form[support_needed]"
     fill_in "Tell us any information you think is relevant", with: "Some details about support"
