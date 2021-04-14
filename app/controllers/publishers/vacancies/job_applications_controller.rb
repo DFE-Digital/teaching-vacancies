@@ -1,5 +1,5 @@
 class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::BaseController
-  helper_method :form, :job_application, :vacancy
+  helper_method :form, :job_application, :job_applications, :sort, :sort_form, :vacancy
 
   def reject
     raise ActionController::RoutingError, "Cannot reject a draft or withdrawn application" if
@@ -29,6 +29,10 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   private
 
+  def job_applications
+    @job_applications ||= vacancy.job_applications.not_draft.order(sort.column => sort.order)
+  end
+
   def form
     @form ||= Publishers::JobApplication::UpdateStatusForm.new
   end
@@ -48,6 +52,14 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     when t("buttons.reject")
       "unsuccessful"
     end
+  end
+
+  def sort
+    @sort ||= Publishers::JobApplicationSort.new.update(column: params[:sort_column])
+  end
+
+  def sort_form
+    @sort_form ||= SortForm.new(sort.column)
   end
 
   def vacancy
