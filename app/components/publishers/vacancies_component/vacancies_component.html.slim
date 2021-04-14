@@ -77,6 +77,7 @@
                   - when "published"
                     = tag.div(govuk_link_to(t("jobs.manage.edit_link_text"), vacancy.edit_path))
                     = tag.div(govuk_link_to(t("jobs.manage.copy_link_text"), vacancy.copy_path))
+                    = tag.div(govuk_link_to(t("jobs.manage.extend_link_text"), organisation_job_extend_deadline_path(vacancy.id)))
                     = tag.div(govuk_link_to(t("jobs.manage.end_link_text"), organisation_job_end_listing_path(vacancy.id)))
                   - when "pending", "draft"
                     = tag.div(govuk_link_to(t("jobs.manage.edit_link_text"), vacancy.edit_path))
@@ -84,4 +85,5 @@
                     = tag.div(button_to(t("jobs.manage.delete_link_text"), vacancy.delete_path, method: :delete, data: { confirm: t("jobs.manage.are_you_sure", job_title: vacancy.job_title) }, class: "govuk-delete-link"))
                   - when "expired"
                     = tag.div(govuk_link_to(t("jobs.manage.copy_link_text"), vacancy.copy_path))
+                    = tag.div(govuk_link_to(t("jobs.manage.extend_link_text"), organisation_job_extend_deadline_path(vacancy.id)))
                     = tag.div(button_to(t("jobs.manage.delete_link_text"), vacancy.delete_path, method: :delete, data: { confirm: t("jobs.manage.are_you_sure", job_title: vacancy.job_title) }, class: "govuk-delete-link"))

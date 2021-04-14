@@ -211,6 +211,20 @@ en:
               inclusion: Select an end listing reason
             candidate_hired_from:
               inclusion: Select a candidate hired from option
+        publishers/job_listing/extend_deadline_form:
+          attributes:
+            expires_on:
+              blank: Enter the date application is due
+              in_past: Deadline must be today or in the future
+              invalid: Use the correct format for date application is due
+              not_extended: The date entered does not extend the deadline
+            expiry_time:
+              inclusion: Select the time the application is due
+            starts_on:
+              before_deadline: Date job starts must be after date application is due
+              date_and_asap: Select one option only
+              in_past: Date job starts must be today or in the future
+              invalid: Use the correct format for date job starts
         publishers/organisation_form:
           attributes:
             <<: *organisation_errors
