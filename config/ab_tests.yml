@@ -28,3 +28,18 @@ shared:
     foo: 1
     bar: 1
     baz: 1
+  2021_04_cookie_consent_test:
+    none: 1
+    default: 1
+    bottom_black: 1
+    bottom_blue: 1
+    modal: 1
+    gds: 1
+test:
+  2021_04_cookie_consent_test:
+    none: 0
+    default: 1
+    bottom_black: 0
+    bottom_blue: 0
+    modal: 0
+    gds: 0
