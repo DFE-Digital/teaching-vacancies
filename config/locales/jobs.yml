@@ -303,6 +303,7 @@ en:
         time_created: Date drafted
         time_updated: Date last updated
       edit_link_text: Edit listing
+      extend_link_text: Extend deadline
       heading_html: "%{email} <span class='govuk-!-font-weight-regular'>- %{organisation}</span>"
       expired:
         expired_on: Expired on

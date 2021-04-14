@@ -24,6 +24,7 @@ en:
     download_application: Download application
     edit: Edit
     end_listing: End job listing
+    extend_deadline: Extend deadline
     find: Find
     go_to_teaching_vacancies: Go to Teaching Vacancies
     hide_filters: Hide filters
@@ -165,6 +166,9 @@ en:
           them easier to read. Learn more about <a class="govuk-link"
           href="https://www.gov.uk/guidance/publishing-accessible-documents#writing-accessible-documents">
           how to make documents accessible.</a></p>
+      publishers_job_listing_extend_deadline_form:
+        expires_on: For example, 01 05 2021
+        starts_on: For example, 01 09 2021
       publishers_job_listing_important_dates_form:
         expires_on: For example, 01 05 2021
         expires_at: For example, 9:30 am or 11:59 pm (midnight)
@@ -417,6 +421,9 @@ en:
         end_listing_reason_options:
           suitable_candidate_found: We have found a suitable candidate and are no longer accepting applications
           end_early: We are no longer listing this role and want to end it earlier than the deadline
+      publishers_job_listing_extend_deadline_form:
+        starts_asap_options:
+          "true": As soon as possible
       publishers_job_listing_feedback_form:
         rating_options:
           highly_satisfied: Highly satisfied
@@ -517,6 +524,10 @@ en:
         starts_on: Date job starts
       publishers_job_listing_end_listing_form:
         end_listing_reason: Why would you like to end this role early?
+      publishers_job_listing_extend_deadline_form:
+        expires_on: Date application is due
+        expiry_time: Time application is due
+        starts_on: Date job starts
       publishers_job_listing_feedback_form:
         rating: How satisfied are you with the job listing process on Teaching Vacancies?
       publishers_job_listing_important_dates_form:
@@ -544,6 +555,12 @@ en:
           other_free: We hired through a different free service
           other_paid: We hired through a paid service
           unknown: I don't know
+      publishers_job_listing_extend_listing_form:
+        expiry_time:
+          "9:00": Start of the working day (9 am)
+          "12:00": Midday (12 pm)
+          "17:00": End of the working day (5 pm)
+          "23:59": End of the deadline day (11:59 pm)
       publishers_job_listing_job_location_form:
         job_location:
           local_authority:

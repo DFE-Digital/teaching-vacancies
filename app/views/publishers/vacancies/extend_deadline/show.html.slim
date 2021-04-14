@@ -1,0 +1,30 @@
+- content_for :page_title_prefix, t(".title", job_title: vacancy.job_title)
+
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      .govuk-caption-l = vacancy.job_title
+      h1.govuk-heading-xl = t(".heading")
+
+      = govuk_inset_text do
+        = vacancy.expires_at.past? ? t(".deadline.past") : t(".deadline.future")
+        strong =< OrganisationVacancyPresenter.new(vacancy).application_deadline
+
+      = form_for form, url: organisation_job_extend_deadline_path(vacancy.id), method: :patch do |f|
+        = f.govuk_error_summary
+
+        = f.govuk_date_field :expires_on
+
+        = f.govuk_collection_radio_buttons :expiry_time,
+          form.class::EXPIRY_TIME_OPTIONS,
+          ->(option) { option },
+          ->(option) { t("helpers.options.publishers_job_listing_extend_listing_form.expiry_time.#{option}") }
+
+        .clear-form.optional-field
+          = f.govuk_date_field :starts_on
+
+          .clear-form__checkbox
+            = f.govuk_check_box :starts_asap, true, 0, multiple: false, link_errors: false
+
+        = f.govuk_submit t("buttons.extend_deadline") do
+          = f.govuk_submit t("buttons.cancel"), secondary: true
