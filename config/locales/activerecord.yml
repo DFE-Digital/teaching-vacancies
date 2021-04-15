@@ -106,24 +106,24 @@ en:
       invalid_characters: Salary must not contain any HTML tags
   important_dates_errors: &important_dates_errors
     publish_on:
-      blank: Enter the date job will be listed
-      before_today: Date job will be listed must be either today or in the future
-      invalid: Use the correct format for date job will be listed
+      blank: Enter the date the job will be listed
+      before_today: The date the job will be listed must be either today or in the future
+      invalid: Enter a date in the correct format
     expires_on:
-      blank: Enter the date application is due
-      before_today: Date application is due must be in the future
-      before_publish_on: Date application is due must be after date job will be listed
-      invalid: Use the correct format for date application is due
+      blank: Enter the date applications are due
+      before_today: The date applications are due must be in the future
+      before_publish_on: The date applications are due must be after the date the job will be listed
+      invalid: Enter a date in the correct format
     expires_at:
-      blank: Enter the time application is due
-      wrong_format: Use the correct format for time application is due
+      blank: Enter the time applications are due
+      wrong_format: Enter a time in the correct format
       must_be_am_pm: Select am or pm
     starts_on:
-      before_today: Date job starts must be in the future
-      before_publish_on: Date job starts must be after date job will be listed
-      before_expires_on: Date job starts must be after date application is due
-      invalid: Use the correct format for date the job starts
-      multiple_start_dates: Select one option only
+      before_today: The date the job will be listed must be in the future
+      before_publish_on: The date the job will be listed must be after the date the job will be listed
+      before_expires_on: The date the job will be listed must be after the date applications are due
+      invalid: Enter a date in the correct format
+      multiple_start_dates: Select either a start date or 'As soon as possible'
   applying_for_the_job_errors: &applying_for_the_job_errors
     application_link:
       url: Enter a link in the correct format, like http://www.school.ac.uk
@@ -214,17 +214,17 @@ en:
         publishers/job_listing/extend_deadline_form:
           attributes:
             expires_on:
-              blank: Enter the date application is due
-              in_past: Deadline must be today or in the future
-              invalid: Use the correct format for date application is due
-              not_extended: The date entered does not extend the deadline
+              blank: Enter the date applications are due
+              in_past: The date applications are due must be in the future
+              invalid: Enter a date in the correct format
+              not_extended: To extend the deadline enter a date that is after the current deadline
             expiry_time:
               inclusion: Select the time the application is due
             starts_on:
-              before_deadline: Date job starts must be after date application is due
-              date_and_asap: Select one option only
-              in_past: Date job starts must be today or in the future
-              invalid: Use the correct format for date job starts
+              before_deadline: The date the job starts must be after the date applications are due
+              date_and_asap: Select either a start date or 'As soon as possible'
+              in_past: The date the job starts must be in the future
+              invalid: Enter a date in the correct format
         publishers/organisation_form:
           attributes:
             <<: *organisation_errors
