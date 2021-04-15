@@ -2,11 +2,13 @@ class Publishers::JobListing::ExtendDeadlineForm
   include ActiveModel::Model
   include ActiveRecord::AttributeAssignment
 
+  EXPIRY_TIME_OPTIONS = %w[9:00 12:00 17:00 23:59].freeze
+
   attr_accessor :expires_on, :expiry_time, :starts_on, :starts_asap, :previous_deadline
 
   validates :expires_on, presence: true, date: true
   validates :starts_on, date: true, if: proc { starts_on.present? && starts_asap == "0" }
-  validates :expiry_time, inclusion: { in: %w[9:00 12:00 17:00 23:59] }
+  validates :expiry_time, inclusion: { in: EXPIRY_TIME_OPTIONS }
 
   validate :expires_at_extended
   validate :expires_at_in_future
@@ -21,15 +23,6 @@ class Publishers::JobListing::ExtendDeadlineForm
       starts_on: (starts_on unless starts_asap == "true"),
       starts_asap: starts_asap,
     }
-  end
-
-  def expiry_time_options
-    [
-      ["9:00", "Start of the working day (9 am)"],
-      ["12:00", "Midday (12 pm)"],
-      ["17:00", "End of the working day (5 pm)"],
-      ["11:59", "End of the deadline day (11:59 pm)"],
-    ]
   end
 
   private

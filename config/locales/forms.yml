@@ -555,6 +555,12 @@ en:
           other_free: We hired through a different free service
           other_paid: We hired through a paid service
           unknown: I don't know
+      publishers_job_listing_extend_listing_form:
+        expiry_time:
+          "9:00": Start of the working day (9 am)
+          "12:00": Midday (12 pm)
+          "17:00": End of the working day (5 pm)
+          "23:59": End of the deadline day (11:59 pm)
       publishers_job_listing_job_location_form:
         job_location:
           local_authority:
