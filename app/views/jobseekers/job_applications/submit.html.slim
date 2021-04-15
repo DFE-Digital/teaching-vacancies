@@ -8,11 +8,9 @@
     .govuk-grid-column-two-thirds
       h2.govuk-heading-l = t(".next_step.heading")
 
-      = render NotificationComponent.new variant: "notice",
-        title: t(".notice.title"), body: t(".notice.body"),
-        background: true,
-        icon: true,
-        dismiss: false
+      = govuk_notification_banner title: t("banners.important") do |banner|
+        - banner.add_heading(text: t(".notice.title"))
+        span class="govuk-!-margin-top-3" = t(".notice.body")
 
       p = t(".next_step.school_communication", organisation: vacancy.parent_organisation.name, deadline: format_date(vacancy.expires_on))
       p = t(".next_step.shortlisted", organisation: vacancy.parent_organisation.name)
