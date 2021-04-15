@@ -1,0 +1,12 @@
+- content_for :page_title_prefix, "This job listing has been deleted"
+
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      .govuk-caption-l class="govuk-!-margin-bottom-2" = @vacancy.job_title
+      h1.govuk-heading-xl This job listing has been deleted
+
+      p.govuk-body
+        | The job listing and any applications that were made for the role have been deleted and cannot be viewed.
+
+      = govuk_link_to "View job listings", organisation_jobs_path, button: true
