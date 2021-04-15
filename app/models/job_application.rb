@@ -40,6 +40,15 @@ class JobApplication < ApplicationRecord
 
   scope :submitted_yesterday, -> { submitted.where("DATE(submitted_at) = ?", Date.yesterday) }
 
+  def qualification_groups
+    # Untested method
+
+    # When qualifications match on name, institution, and year, group/merge them into single objects for displaying.
+    # Note that the labels on the summary vary per type.
+    groups = qualifications.group_by { |qual| [qual.name, qual.institution, qual.year] }
+    groups.values.sort_by { |group| group.min_by(&:created_at).created_at }
+  end
+
   private
 
   def update_status_timestamp

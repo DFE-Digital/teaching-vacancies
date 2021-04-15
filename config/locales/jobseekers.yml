@@ -232,7 +232,9 @@ en:
       not_defined: Not defined (will not be seen on application)
       qualifications:
         destroy:
-          success: Your qualification was deleted
+          success:
+            one: Your qualification was deleted
+            other: Your qualifications were deleted
         qualifications_shared: &qualifications_shared
           caption: Education and qualifications
         edit:
@@ -261,6 +263,7 @@ en:
           <<: *qualifications_shared
           heading: Add a qualification
           title: Add a qualification — Application
+        subjects_and_grades: Subjects and grades
       references:
         destroy:
           success: Your referee was deleted
