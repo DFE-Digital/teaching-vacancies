@@ -5,6 +5,8 @@ Rails.application.configure do
   # Configure the domains permitted to access coordinates API
   config.allowed_cors_origin = proc { "https://#{DOMAIN}" }
 
+  config.hosts << "host.docker.internal"
+
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
