@@ -1,4 +1,6 @@
 class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::BaseController
+  before_action :find_trashed_vacancy, only: %i[index]
+
   helper_method :form, :job_application, :job_applications, :sort, :sort_form, :vacancy
 
   def reject
@@ -43,6 +45,12 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def job_application
     @job_application ||= vacancy.job_applications.find(params[:job_application_id] || params[:id])
+  end
+
+  def find_trashed_vacancy
+    @vacancy = current_organisation.all_vacancies.trashed.find_by(id: params[:job_id])
+
+    return render "/errors/publisher_trashed_vacancy_found", status: :not_found if @vacancy
   end
 
   def status

@@ -113,6 +113,17 @@ RSpec.describe "Job applications" do
       end
     end
 
+    context "when the vacancy is trashed" do
+      let(:vacancy) { create(:vacancy, :trashed, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+
+      it "returns not_found" do
+        expect(get(organisation_job_job_applications_path(vacancy.id)))
+          .to render_template("errors/publisher_trashed_vacancy_found")
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
     it "renders the index page" do
       expect(get(organisation_job_job_applications_path(vacancy.id))).to render_template(:index)
     end
