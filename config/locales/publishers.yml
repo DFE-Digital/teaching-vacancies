@@ -159,6 +159,15 @@ en:
           title: End listing - %{job_title}
         update:
           success: "%{job_title} has been ended early"
+      extend_deadline:
+        show:
+          deadline:
+            future: The current deadline is
+            past: The previous deadline was
+          heading: Extend deadline
+          title: Extend deadline - %{job_title}
+        update:
+          success: "The deadline for %{job_title} has been extended"
       job_applications:
         index:
           actions:
