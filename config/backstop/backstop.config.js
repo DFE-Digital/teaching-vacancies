@@ -4,7 +4,7 @@ module.exports = {
     {
       "label": "phone",
       "width": 320,
-      "height": 480
+      "height": 830
     },
     {
       "label": "tablet",
@@ -23,19 +23,13 @@ module.exports = {
   "scenarios": [
     {
       "label": "2021_04_cookie_consent_ab_test_bottom_black",
-      "url": "http://localhost:3000/?ab_test_override%5B2021_04_cookie_consent_test%5D=bottom_black"
-    },
-    {
-      "label": "2021_04_cookie_consent_ab_test_bottom_blue",
-      "url": "http://localhost:3000/?ab_test_override%5B2021_04_cookie_consent_test%5D=bottom_blue"
-    },
-    {
-      "label": "2021_04_cookie_consent_ab_test_modal",
-      "url": "http://localhost:3000/?ab_test_override%5B2021_04_cookie_consent_test%5D=modal"
-    },
-    {
-      "label": "2021_04_cookie_consent_ab_test_gds",
-      "url": "http://localhost:3000/?ab_test_override%5B2021_04_cookie_consent_test%5D=gds"
+      "url": "http://host.docker.internal:3000/?ab_test_override%5B2021_04_cookie_consent_test%5D=bottom_black",
+      "selectors": [
+        "viewport"
+      ],
+      "removeSelectors": [
+        ".govuk-main-wrapper"
+      ]
     }
   ],
   "paths": {
@@ -45,7 +39,7 @@ module.exports = {
     "html_report": "visual_regression/html_report",
     "ci_report": "visual_regression/ci_report"
   },
-  "report": ["browser"],
+  "report": ["CI"],
   "engine": "puppeteer",
   "engineOptions": {
     "args": ["--no-sandbox"]
