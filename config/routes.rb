@@ -103,6 +103,8 @@ Rails.application.routes.draw do
     resources :interests, only: %i[new]
   end
 
+  resources :shares, only: %i[new]
+
   resource :feedback, only: %i[new create], controller: "general_feedbacks"
 
   resources :subscriptions, except: %i[index show] do
