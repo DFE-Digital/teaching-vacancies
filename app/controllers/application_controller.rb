@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
-  before_action :redirect_to_canonical_domain, :set_headers
+  before_action :set_headers
   before_action :store_jobseeker_redirect_to!, if: -> { redirect_to_param.present? }
   before_action :trigger_click_event, if: -> { click_event_param.present? }
   before_action { EventContext.request_event = request_event }
