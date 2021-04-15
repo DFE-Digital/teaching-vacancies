@@ -170,3 +170,21 @@ jobs:
         SLACK_TITLE: Deployment ${{ job.status }}
         SLACK_MESSAGE: 'Review app for https://github.com/DFE-Digital/teaching-vacancies/pull/${{ github.event.number }}/ deployed to https://teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital - ${{ job.status }}'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+    - name: Trigger Visual Regression Test
+      uses: benc-uk/workflow-dispatch@v1.1
+      with:
+        workflow: Visual Regression Test
+        token: ${{ secrets.PERSONAL_TOKEN }}
+        inputs: '{"visual_regression_test_domain": "teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital", "sha": "${{ github.event.pull_request.head.sha }}"}'
+        ref: ${{ steps.tag_version.outputs.new_tag }}
+
+    - name: Wait for visual regression test
+      id: wait_for_visual_regression_test
+      uses: fountainhead/action-wait-for-check@v1.0.0
+      with:
+        token: ${{ secrets.PERSONAL_TOKEN }}
+        checkName: Visual Regression Test teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital ${{ github.event.pull_request.head.sha }}
+        ref: ${{ steps.tag_version.outputs.new_tag }}
+        timeoutSeconds: 300
+        intervalSeconds: 15

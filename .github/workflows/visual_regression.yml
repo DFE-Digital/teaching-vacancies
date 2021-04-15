@@ -1,0 +1,50 @@
+name: Visual Regression Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: GitHub SHA
+        required: true
+      visual_regression_test_domain:
+        description: Domain to smoke test
+        required: true
+        default: teaching-vacancies.service.gov.uk
+
+jobs:
+  visual-regression-test:
+    name: Visual Regression Test
+
+    runs-on: ubuntu-20.04
+
+    env:
+      RAILS_ENV: test
+      SMOKE_TEST_DOMAIN: ${{ github.event.inputs.smoke_test_domain }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Set up Node
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: '12.x'
+
+      - name: run visual regression tests
+        run: yarn run visual:test:ci
+
+      - name: Slack notification
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2.1.3
+        env:
+          SLACK_CHANNEL: twd_tv_dev
+          SLACK_USERNAME: Visual Regression Test
+          SLACK_ICON_EMOJI: ':cry:'
+          SLACK_TITLE: Visual regression test failed
+          SLACK_MESSAGE: 'Visual regression failure ${{ github.event.inputs.visual_regression_test_domain }} <!channel>'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
