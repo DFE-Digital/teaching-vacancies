@@ -5,11 +5,6 @@
   margin-bottom: govuk-spacing(6);
   margin-top: govuk-spacing(6);
 
-  @include govuk-media-query($from: tablet) {
-    // margin-left: -35px;
-    width: max-content;
-  }
-
   @include govuk-media-query($from: desktop) {
     width: unset;
   }
@@ -17,8 +12,6 @@
   h2 {
     margin-bottom: govuk-spacing(2);
     margin-top: govuk-spacing(4);
-
-
   }
 
   &__steps {
@@ -37,7 +30,10 @@
 
     h3 {
       margin-bottom: 0;
-      left: -35px;
+
+      @include govuk-media-query($from: tablet) {
+        margin-left: 35px;
+      }
 
       &::before {
         background-color: govuk-colour('white');
@@ -45,13 +41,13 @@
         border-radius: 50%;
         content: counter(steps-counter);
         display: inline-block;
+        left: 0;
         line-height: govuk-spacing(5);
         margin-right: govuk-spacing(2);
         text-align: center;
         width: govuk-spacing(5);
 
         @include govuk-media-query($from: tablet) {
-          // margin-left: -35px;
           position: absolute;
         }
       }
@@ -86,6 +82,7 @@
       height: 1px;
       left: govuk-spacing(8);
       position: absolute;
+      top: 52.5px;
       width: 85%;
     }
 
@@ -97,18 +94,9 @@
       position: absolute;
       top: 44px;
       width: 2px;
-
-      @include govuk-media-query($from: tablet) {
-        // margin-left: -35px;
-      }
     }
 
     &:last-of-type {
-      &::after {
-        bottom: govuk-spacing(2);
-        height: govuk-spacing(2);
-      }
-
       &::before {
         background: $govuk-border-colour;
         bottom: -7px;
@@ -119,8 +107,12 @@
 
         @include govuk-media-query($from: tablet) {
           bottom: -9px;
-          // margin-left: -35px;
         }
+      }
+
+      &::after {
+        bottom: govuk-spacing(2);
+        height: govuk-spacing(2);
       }
     }
   }
