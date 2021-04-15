@@ -1,5 +1,12 @@
-- content_for :page_title_prefix, t("error_pages.trashed_vacancy_found")
+- content_for :page_title_prefix, "This job listing has been deleted"
 
 .govuk-main-wrapper
-  h1.govuk-heading-xl = t("error_pages.trashed_vacancy_found")
-  p.govuk-body The job you are looking for is no longer listed on Teaching Vacancies. Try #{govuk_link_to("searching again", "/")}.
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      .govuk-caption-l class="govuk-!-margin-bottom-2" = @vacancy.job_title
+      h1.govuk-heading-xl This job listing has been deleted
+
+      p.govuk-body
+        | The job listing has been deleted and cannot be viewed.
+
+      = govuk_link_to "Try searching again", jobs_path, button: true
