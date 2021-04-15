@@ -121,3 +121,6 @@ jobs:
 
       - name: run frontend tests and linting
         run: yarn run js:test
+
+      - name: run visual regression tests
+        run: yarn run visual:test
