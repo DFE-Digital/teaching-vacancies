@@ -19,10 +19,6 @@ en:
         This teaching role is at <span class="govuk-!-font-weight-bold">more than one school in the
         %{organisation_type}</span>. You can find out more in
         <a class='govuk-link govuk-link--no-visited-state' href='#school-overview'>schools overview</a>.
-      new_attributes:
-        heading: New sections
-        label: new
-        message: Improve your job listing using the new sections and features below
     jobseekers:
       job_applications:
         already_exists:

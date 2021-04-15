@@ -1,4 +1,3 @@
-= render "publishers/vacancies/new_attributes_tag", attributes: %i[publish_on expires_on starts_on], section: "important_dates"
 = render "publishers/vacancies/error_tag", attributes: %i[publish_on expires_on starts_on], section: "important_dates"
 
 = render ReviewComponent.new id: "important_dates" do |review|

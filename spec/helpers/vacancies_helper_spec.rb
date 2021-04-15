@@ -1,15 +1,6 @@
 require "rails_helper"
 
 RSpec.describe VacanciesHelper do
-  describe "#new_attributes" do
-    let(:vacancy) { double("vacancy").as_null_object }
-
-    it "includes contact_number for legacy listings" do
-      allow(vacancy).to receive(:contact_number).and_return(nil)
-      expect(helper.new_attributes(vacancy)[:contact_number]).to eq(I18n.t("jobs.contact_number"))
-    end
-  end
-
   describe "#review_heading" do
     let(:vacancy) { double("vacancy").as_null_object }
 
