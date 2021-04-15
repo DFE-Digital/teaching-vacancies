@@ -24,7 +24,7 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
 
     it "is invalid" do
       expect(subject).not_to be_valid
-      expect(subject.errors.of_kind?(:started_on, :blank)).to be true
+      expect(subject.errors.of_kind?(:started_on, :invalid)).to be true
     end
   end
 
@@ -52,7 +52,7 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
 
       it "is invalid" do
         expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:ended_on, :blank)).to be true
+        expect(subject.errors.of_kind?(:ended_on, :invalid)).to be true
       end
     end
 
