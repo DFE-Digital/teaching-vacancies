@@ -1,6 +1,6 @@
 .DEFAULT_GOAL		:=help
 SHELL				:=/bin/bash
-DOCKER_REPOSITORY	:=dfedigital/teaching-vacancies
+DOCKER_REPOSITORY	:=dfe-digital/teaching-vacancies
 LOCAL_BRANCH		:=$$(git rev-parse --abbrev-ref HEAD)
 LOCAL_SHA			:=$$(git rev-parse HEAD)
 LOCAL_TAG			:=dev-$(LOCAL_BRANCH)-$(LOCAL_SHA)

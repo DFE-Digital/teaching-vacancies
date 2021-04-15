@@ -11,7 +11,7 @@ on:
         required: true
 
 env:
- DOCKERHUB_REPOSITORY: dfedigital/teaching-vacancies
+ DOCKERHUB_REPOSITORY: dfe-digital/teaching-vacancies
 
 jobs:
   turnstyle:
