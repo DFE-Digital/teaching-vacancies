@@ -1,2 +1,2 @@
-- flash.each do |style, message|
-  = render(NotificationComponent.new(body: message, variant: style))
+- flash.each do |variant, message|
+  = render FlashComponent.new variant: variant, message: message
