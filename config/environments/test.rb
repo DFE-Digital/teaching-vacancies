@@ -5,6 +5,8 @@ Rails.application.configure do
   # Configure the domains permitted to access coordinates API
   config.allowed_cors_origin = proc { "https://allowed.test.website" }
 
+  config.hosts << "host.docker.internal"
+
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that
   # your test database is "scratch space" for the test suite and is wiped
