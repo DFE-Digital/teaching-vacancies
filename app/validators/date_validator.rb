@@ -3,9 +3,7 @@ class DateValidator < ActiveModel::EachValidator
     return if value.nil?
 
     Date.new(value[1], value[2], value[3])
-  rescue Date::Error
+  rescue Date::Error, TypeError
     record.errors.add(attribute, :invalid)
-  rescue TypeError
-    record.errors.add(attribute, :blank)
   end
 end
