@@ -10,15 +10,29 @@ end
 # Throttle general requests by IP
 Rack::Attack.throttle("requests by remote ip", limit: 10, period: 4, &:remote_ip)
 
-# Throttle login/password reset attempts for jobseekers
-Rack::Attack.throttle("limit jobseeker logins/password resets", limit: 5, period: 60) do |request|
+# Throttle login/password reset attempts for jobseekers by IP
+Rack::Attack.throttle("limit jobseeker logins/password resets by IP", limit: 5, period: 60) do |request|
+  if %w[/jobseekers/password /jobseekers/sign_in].include?(request.path) && request.post?
+    request.remote_ip
+  end
+end
+
+# Throttle login/password reset attempts for jobseekers by email
+Rack::Attack.throttle("limit jobseeker logins/password resets by email", limit: 5, period: 60) do |request|
   if %w[/jobseekers/password /jobseekers/sign_in].include?(request.path) && request.post?
     request.params["jobseeker[email]"].to_s.downcase.gsub(/\s+/, "")
   end
 end
 
-# Throttle login attempts for publisher fallback auth
-Rack::Attack.throttle("limit publisher fallback logins", limit: 3, period: 60) do |request|
+# Throttle login attempts for publisher fallback auth by IP
+Rack::Attack.throttle("limit publisher fallback logins by IP", limit: 3, period: 60) do |request|
+  if request.path == "/publishers/auth/email/sessions/check-your-email" && request.post?
+    request.remote_ip
+  end
+end
+
+# Throttle login attempts for publisher fallback auth by email
+Rack::Attack.throttle("limit publisher fallback logins by email", limit: 3, period: 60) do |request|
   if request.path == "/publishers/auth/email/sessions/check-your-email" && request.post?
     request.params["publisher[email]"].to_s.downcase.gsub(/\s+/, "")
   end
