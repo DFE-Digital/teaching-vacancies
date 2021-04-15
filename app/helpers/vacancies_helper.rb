@@ -14,12 +14,6 @@ module VacanciesHelper
     array.join(" ")
   end
 
-  def new_attributes(vacancy)
-    attributes = {}
-    attributes[:contact_number] = t("jobs.contact_number") unless vacancy.contact_number
-    attributes
-  end
-
   def page_title_prefix(vacancy, form_object, page_heading)
     if %w[create review].include?(vacancy.state)
       "#{form_object.errors.present? ? 'Error: ' : ''}#{page_heading} — #{t('jobs.create_a_job_title', organisation: current_organisation.name)}"
