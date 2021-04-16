@@ -6,6 +6,7 @@ RSpec.describe Publisher do
   it { is_expected.to have_many(:publisher_preferences) }
   it { is_expected.to have_many(:emergency_login_keys) }
   it { is_expected.to have_many(:vacancies) }
+  it { is_expected.to have_many(:notifications) }
 
   describe "#vacancies_with_job_applications_submitted_yesterday" do
     let!(:publisher) { create(:publisher) }
