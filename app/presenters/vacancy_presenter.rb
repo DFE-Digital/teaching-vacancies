@@ -96,10 +96,6 @@ class VacancyPresenter < BasePresenter
     }
   end
 
-  def job_title_and_parent_organisation_name
-    "#{job_title} at #{parent_organisation_name}"
-  end
-
   def show_job_roles
     return unless model.job_roles
 
