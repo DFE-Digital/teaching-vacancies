@@ -65,7 +65,7 @@ RSpec.describe "Hiring staff can see the vacancies dashboard" do
     scenario "with published vacancies" do
       visit organisation_path
 
-      within(".moj-primary-navigation__list") do
+      within(".dashboard-component-navigation__list") do
         click_on(I18n.t("publishers.vacancies_component.published.tab_heading"))
       end
 
@@ -78,7 +78,7 @@ RSpec.describe "Hiring staff can see the vacancies dashboard" do
     scenario "with draft vacancies" do
       visit organisation_path
 
-      within(".moj-primary-navigation__list") do
+      within(".dashboard-component-navigation__list") do
         click_on(I18n.t("publishers.vacancies_component.draft.tab_heading"))
       end
 
@@ -94,7 +94,7 @@ RSpec.describe "Hiring staff can see the vacancies dashboard" do
     scenario "with pending vacancies" do
       visit organisation_path
 
-      within(".moj-primary-navigation__list") do
+      within(".dashboard-component-navigation__list") do
         click_on(I18n.t("publishers.vacancies_component.pending.tab_heading"))
       end
 
@@ -110,7 +110,7 @@ RSpec.describe "Hiring staff can see the vacancies dashboard" do
     scenario "with expired vacancies" do
       visit organisation_path
 
-      within(".moj-primary-navigation__list") do
+      within(".dashboard-component-navigation__list") do
         click_on(I18n.t("publishers.vacancies_component.expired.tab_heading"))
       end
 
@@ -133,7 +133,7 @@ RSpec.describe "Hiring staff can see the vacancies dashboard" do
         draft_vacancy
         visit organisation_path
 
-        within(".moj-primary-navigation__list") do
+        within(".dashboard-component-navigation__list") do
           click_on(I18n.t("publishers.vacancies_component.draft.tab_heading"))
         end
 
