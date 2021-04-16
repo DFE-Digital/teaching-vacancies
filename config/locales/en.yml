@@ -299,6 +299,10 @@ en:
       remove_filter_hidden: Remove this filter
       return_to_results: Return to results
 
+  shares:
+    new:
+      job_at: "%{title} at {organisation}"
+
   filters_component:
     add_or_remove_schools: Add or remove schools
 
