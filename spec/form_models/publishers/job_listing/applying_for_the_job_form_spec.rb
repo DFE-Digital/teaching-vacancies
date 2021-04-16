@@ -17,5 +17,31 @@ RSpec.describe Publishers::JobListing::ApplyingForTheJobForm, type: :model do
     before { allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true) }
 
     it { is_expected.to validate_inclusion_of(:enable_job_applications).in_array([true, false]) }
+
+    describe "enable job applications override" do
+      subject { described_class.new(current_organisation: organisation) }
+
+      context "when the current organisation given is a local authority" do
+        let(:organisation) { build_stubbed(:local_authority) }
+
+        it "overrides enable_job_applications to false" do
+          subject.valid?
+
+          expect(subject.enable_job_applications).to eq(false)
+          expect(subject.errors).not_to include(:enable_job_applications)
+        end
+      end
+
+      context "when the current organisation given is not a local authority" do
+        let(:organisation) { build_stubbed(:trust) }
+
+        it "does not override enable_job_applications" do
+          subject.valid?
+
+          expect(subject.enable_job_applications).to be_nil
+          expect(subject.errors).to include(:enable_job_applications)
+        end
+      end
+    end
   end
 end
