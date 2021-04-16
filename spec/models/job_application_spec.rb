@@ -79,4 +79,27 @@ RSpec.describe JobApplication do
       expect(subject.religion_description).to eq ""
     end
   end
+
+  describe "#submit!" do
+    subject { job_application.submit! }
+
+    let(:job_application) { create(:job_application) }
+
+    it "updates status" do
+      expect { subject }.to change { job_application.reload.status }.from("draft").to("submitted")
+    end
+
+    it "delivers `Publishers::JobApplicationReceivedNotification` notification" do
+      expect { subject }
+        .to have_delivered_notification("Publishers::JobApplicationReceivedNotification")
+        .with_recipient(job_application.vacancy.publisher)
+        .and_params(vacancy: job_application.vacancy)
+    end
+
+    it "delivers `application_submitted` email" do
+      expect { subject }
+        .to have_enqueued_email(Jobseekers::JobApplicationMailer, :application_submitted)
+        .with(hash_including(args: [job_application]))
+    end
+  end
 end

@@ -40,6 +40,12 @@ class JobApplication < ApplicationRecord
 
   scope :submitted_yesterday, -> { submitted.where("DATE(submitted_at) = ?", Date.yesterday) }
 
+  def submit!
+    submitted!
+    Publishers::JobApplicationReceivedNotification.with(vacancy: vacancy).deliver(vacancy.publisher)
+    Jobseekers::JobApplicationMailer.application_submitted(self).deliver_later
+  end
+
   private
 
   def update_status_timestamp
