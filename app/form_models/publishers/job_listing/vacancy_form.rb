@@ -1,5 +1,6 @@
 class Publishers::JobListing::VacancyForm
   include ActiveModel::Model
+  include ActiveModel::Validations::Callbacks
 
   attr_accessor :params, :vacancy
 
@@ -9,11 +10,11 @@ class Publishers::JobListing::VacancyForm
 
   def initialize(params = {})
     @params = params
-    @vacancy = Vacancy.new(params.except(:documents_attributes, :expires_at_hh, :expires_at_mm, :expires_at_meridiem))
+    @vacancy = Vacancy.new(params.except(:documents_attributes, :expires_at_hh, :expires_at_mm, :expires_at_meridiem, :current_organisation))
   end
 
   def params_to_save
-    params
+    params.except(:current_organisation)
   end
 
   # This method is only necessary for forms with specific error messages for date inputs.
