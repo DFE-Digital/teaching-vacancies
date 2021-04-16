@@ -1,8 +1,10 @@
 module JobApplicationHelper
-  PUBLISHER_STATUS_MAPPINGS = { shortlisted: "shortlisted", submitted: "review", unsuccessful: "rejected", withdrawn: "withdrawn" }.freeze
+  PUBLISHER_STATUS_MAPPINGS = {
+    shortlisted: "shortlisted", submitted: "review", unsuccessful: "rejected", withdrawn: "withdrawn"
+  }.freeze
 
   JOB_APPLICATION_STATUS_TAG_COLOURS = {
-    draft: "pink", submitted: "blue", shortlisted: "green", unsuccessful: "red", withdrawn: "grey"
+    draft: "pink", submitted: "blue", shortlisted: "green", unsuccessful: "red", withdrawn: "orange"
   }.freeze
 
   def job_application_status_tag(status)
