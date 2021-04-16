@@ -6,51 +6,7 @@
   position: relative;
   width: 100vw;
 
-  @include govuk-media-query ($from: desktop) {
-    .dashboard-component__header .govuk-width-container {
-      position: relative;
-
-      .moj-action-bar {
-        bottom: 0;
-        position: absolute;
-        right: 0;
-      }
-    }
-  }
-
   > .govuk-width-container {
     background-color: inherit;
-  }
-
-  .moj-primary-navigation {
-    background: none;
-
-    .moj-primary-navigation__container {
-      margin: 0;
-  
-      @include govuk-media-query ($until: desktop) {
-        .moj-primary-navigation__item {
-          display: block;
-          line-height: 1;
-          margin-bottom: 0;
-
-          .moj-primary-navigation__link {
-            padding: govuk-spacing(2);
-          }
-      
-          .moj-primary-navigation__link[aria-current] {
-            border-left: govuk-spacing(1) solid $govuk-link-colour;
-      
-            &::before {
-              background-color: transparent;
-            }
-          }
-        }
-      }
-
-      .moj-primary-navigation__link[aria-current] {
-        color: govuk-colour('black');
-      }
-    }
   }
 }
