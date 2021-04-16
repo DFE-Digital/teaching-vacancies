@@ -23,7 +23,7 @@
         = govuk_link_to t("buttons.shortlist"), organisation_job_job_application_shortlist_path(vacancy.id, job_application.id), button: true, class: "govuk-!-margin-right-3"
       - if job_application.submitted? || job_application.shortlisted?
         = govuk_link_to t("buttons.reject"), organisation_job_job_application_reject_path(vacancy.id, job_application.id), button: true, class: "govuk-button--warning govuk-!-margin-right-3"
-      = govuk_link_to t("buttons.download_application"), "#", button: true, class: "govuk-button--secondary"
+      = govuk_link_to t("buttons.print_download_application"), "#", button: true, class: "govuk-button--secondary js-action print-application"
 
   .govuk-grid-column-one-third
     .account-sidebar

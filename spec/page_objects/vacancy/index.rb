@@ -26,7 +26,7 @@ module PageObjects
 
       element :search_button, "input[value='Search']"
       element :sort_field, "#jobs-sort-field"
-      element :stats, "#vacancies-stats-top"
+      element :stats, ".vacancies-stats-top"
       section :filters, PageObjects::Search::Filters, ".filters-form"
       section :pagination, Pagination, "ul.pagination"
       sections :jobs, VacancyRow, "li.vacancy"

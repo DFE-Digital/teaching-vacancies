@@ -36,7 +36,7 @@
 }
 
 .sort-results {
-  #vacancies-stats-top {
+  .vacancies-stats-top {
     flex-grow: 1;
     text-align: right;
 
@@ -44,5 +44,10 @@
       float: right;
       margin-top: 0.5rem;
     }
+  }
+
+  .govuk-form-group {
+    align-items: center;
+    display: flex;
   }
 }
