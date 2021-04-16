@@ -121,7 +121,6 @@ en:
       title: Sorry, you cannot submit this form right now
     not_found: Page not found.
     server_error: Sorry, there’s a technical issue at our end
-    trashed_vacancy_found: Page not found.
     unauthorised:
       footer: >-
         If you still can’t access this page, or you haven’t yet been authorised, please email

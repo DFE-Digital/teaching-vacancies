@@ -17,7 +17,7 @@ class VacanciesController < ApplicationController
     begin
       vacancy = Vacancy.listed.friendly.find(id)
     rescue ActiveRecord::RecordNotFound
-      raise unless Vacancy.trashed.friendly.exists?(id)
+      @vacancy = Vacancy.trashed.friendly.find(id)
 
       return render "/errors/trashed_vacancy_found", status: :not_found
     end
