@@ -83,95 +83,6 @@ SchoolGroupMembership.create(school_group: trust_one, school: school_one)
 SchoolGroupMembership.create(school_group: local_authority_one, school: school_two)
 SchoolGroupMembership.create(school_group: local_authority_one, school: school_three)
 
-physics_job = FactoryBot.create(:vacancy,
-                                id: "20cc99ff-4fdb-4637-851a-68cf5f8fea9f",
-                                job_title: "Physics Teacher",
-                                subjects: %w[Physics],
-                                working_patterns: %w[full_time],
-                                salary: "£35,000",
-                                organisation_vacancies_attributes: [{ organisation: school_one }])
-
-FactoryBot.create(:vacancy,
-                  id: "67991ea9-431d-4d9d-9c99-a78b80108fe1",
-                  job_title: "Maths Teacher",
-                  subjects: %w[Maths],
-                  working_patterns: %w[part_time],
-                  salary: "£35,000",
-                  organisation_vacancies_attributes: [{ organisation: school_two }])
-
-# vacancy at a trust central office
-FactoryBot.create(:vacancy, :central_office,
-                  id: "7bfadb84-cf30-4121-88bd-a9f958440cc9",
-                  job_title: "Trust Executive Officer",
-                  subjects: %w[],
-                  working_patterns: %w[full_time],
-                  salary: "£35,000",
-                  expires_on: Faker::Time.forward(days: 7),
-                  organisation_vacancies_attributes: [{ organisation: trust_one }])
-
-# vacancy at multiple schools in a local authority
-FactoryBot.create(:vacancy, :at_multiple_schools,
-                  id: "9910d184-5686-4ffc-9322-69aa150c19d3",
-                  job_title: "PE Teacher",
-                  subjects: ["Physical Education"],
-                  working_patterns: %w[full_time],
-                  salary: "£30,000",
-                  total_pageviews: 4,
-                  total_get_more_info_clicks: 2,
-                  organisation_vacancies_attributes: [{ organisation: school_two }, { organisation: school_three }])
-
-FactoryBot.create(:vacancy,
-                  id: "3bf67da6-039c-4ee1-bf59-8475672a0d2b",
-                  job_title: "Chemistry Teacher",
-                  subjects: %w[Chemistry],
-                  working_patterns: %w[full_time part_time job_share],
-                  salary: "£55,000",
-                  organisation_vacancies_attributes: [{ organisation: school_two }])
-
-FactoryBot.create(:vacancy,
-                  id: "e750baf6-cc9a-4b93-84cf-ee4e5f8a7ee4",
-                  job_title: "Geography Teacher",
-                  subjects: %w[Geography],
-                  working_patterns: %w[part_time job_share],
-                  salary: "£25,000",
-                  organisation_vacancies_attributes: [{ organisation: school_one }])
-
-# pending vacancy
-FactoryBot.create(:vacancy,
-                  job_title: "Teacher of Drama",
-                  subjects: %w[Drama],
-                  salary: "£28,000",
-                  publish_on: 1.month.from_now.to_date,
-                  expires_on: 2.month.from_now.to_date,
-                  starts_on: 3.month.from_now.to_date,
-                  organisation_vacancies_attributes: [{ organisation: school_one }])
-
-# expired vacancy
-expired_one = FactoryBot.build(:vacancy,
-                               job_title: "Subject lead in Art",
-                               subjects: %w[Art],
-                               working_patterns: %w[full_time part_time job_share],
-                               salary: "£32,000",
-                               publish_on: 5.days.ago.to_date,
-                               expires_on: 2.days.ago.to_date,
-                               organisation_vacancies_attributes: [{ organisation: school_one }])
-expired_one.send :set_slug
-expired_one.save(validate: false)
-
-expired_two = FactoryBot.build(:vacancy,
-                               job_title: "Subject lead in Drama",
-                               subjects: %w[Drama],
-                               working_patterns: %w[full_time part_time job_share],
-                               salary: "£46,000",
-                               publish_on: 5.days.ago.to_date,
-                               expires_on: 2.days.ago.to_date,
-                               organisation_vacancies_attributes: [{ organisation: school_one }])
-expired_two.send :set_slug
-expired_two.save(validate: false)
-
-Vacancy.index.clear_index
-Vacancy.reindex!
-
 organisation_publishers_attributes = [
   { organisation: school_one },
   { organisation: school_two },
@@ -274,6 +185,113 @@ Publisher.create(oid: "7AEC8E8D-6036-4E6E-92A4-800E381A12E0",
                  organisation_publishers_attributes: organisation_publishers_attributes,
                  family_name: "Mackworth-Young",
                  given_name: "Rose")
+
+physics_job = FactoryBot.create(:vacancy,
+                                id: "20cc99ff-4fdb-4637-851a-68cf5f8fea9f",
+                                job_title: "Physics Teacher",
+                                subjects: %w[Physics],
+                                working_patterns: %w[full_time],
+                                salary: "£35,000",
+                                publisher: Publisher.find_by(email: "connor.mcquillan@digital.education.gov.uk"),
+                                publisher_organisation: school_one,
+                                organisation_vacancies_attributes: [{ organisation: school_one }])
+
+FactoryBot.create(:vacancy,
+                  id: "67991ea9-431d-4d9d-9c99-a78b80108fe1",
+                  job_title: "Maths Teacher",
+                  subjects: %w[Maths],
+                  working_patterns: %w[part_time],
+                  salary: "£35,000",
+                  publisher: Publisher.find_by(email: "christian.sutter@digital.education.gov.uk"),
+                  publisher_organisation: school_one,
+                  organisation_vacancies_attributes: [{ organisation: school_two }])
+
+# vacancy at a trust central office
+FactoryBot.create(:vacancy, :central_office,
+                  id: "7bfadb84-cf30-4121-88bd-a9f958440cc9",
+                  job_title: "Trust Executive Officer",
+                  subjects: %w[],
+                  working_patterns: %w[full_time],
+                  salary: "£35,000",
+                  expires_on: Faker::Time.forward(days: 7),
+                  publisher: Publisher.find_by(email: "alex.bowen@digital.education.gov.uk"),
+                  publisher_organisation: trust_one,
+                  organisation_vacancies_attributes: [{ organisation: trust_one }])
+
+# vacancy at multiple schools in a local authority
+FactoryBot.create(:vacancy, :at_multiple_schools,
+                  id: "9910d184-5686-4ffc-9322-69aa150c19d3",
+                  job_title: "PE Teacher",
+                  subjects: ["Physical Education"],
+                  working_patterns: %w[full_time],
+                  salary: "£30,000",
+                  total_pageviews: 4,
+                  total_get_more_info_clicks: 2,
+                  publisher: Publisher.find_by(email: "cesidio.dilanda@digital.education.gov.uk"),
+                  publisher_organisation: school_two,
+                  organisation_vacancies_attributes: [{ organisation: school_two }, { organisation: school_three }])
+
+FactoryBot.create(:vacancy,
+                  id: "3bf67da6-039c-4ee1-bf59-8475672a0d2b",
+                  job_title: "Chemistry Teacher",
+                  subjects: %w[Chemistry],
+                  working_patterns: %w[full_time part_time job_share],
+                  salary: "£55,000",
+                  publisher: Publisher.find_by(email: "david.mears@digital.education.gov.uk"),
+                  publisher_organisation: school_two,
+                  organisation_vacancies_attributes: [{ organisation: school_two }])
+
+FactoryBot.create(:vacancy,
+                  id: "e750baf6-cc9a-4b93-84cf-ee4e5f8a7ee4",
+                  job_title: "Geography Teacher",
+                  subjects: %w[Geography],
+                  working_patterns: %w[part_time job_share],
+                  salary: "£25,000",
+                  publisher: Publisher.find_by(email: "joseph.hull@digital.education.gov.uk"),
+                  publisher_organisation: school_one,
+                  organisation_vacancies_attributes: [{ organisation: school_one }])
+
+# pending vacancy
+FactoryBot.create(:vacancy,
+                  job_title: "Teacher of Drama",
+                  subjects: %w[Drama],
+                  salary: "£28,000",
+                  publish_on: 1.month.from_now.to_date,
+                  expires_on: 2.month.from_now.to_date,
+                  starts_on: 3.month.from_now.to_date,
+                  publisher: Publisher.find_by(email: "joseph.hull@digital.education.gov.uk"),
+                  publisher_organisation: school_one,
+                  organisation_vacancies_attributes: [{ organisation: school_one }])
+
+# expired vacancy
+expired_one = FactoryBot.build(:vacancy,
+                               job_title: "Subject lead in Art",
+                               subjects: %w[Art],
+                               working_patterns: %w[full_time part_time job_share],
+                               salary: "£32,000",
+                               publish_on: 5.days.ago.to_date,
+                               expires_on: 2.days.ago.to_date,
+                               publisher: Publisher.find_by(email: "joseph.hull@digital.education.gov.uk"),
+                               publisher_organisation: school_one,
+                               organisation_vacancies_attributes: [{ organisation: school_one }])
+expired_one.send :set_slug
+expired_one.save(validate: false)
+
+expired_two = FactoryBot.build(:vacancy,
+                               job_title: "Subject lead in Drama",
+                               subjects: %w[Drama],
+                               working_patterns: %w[full_time part_time job_share],
+                               salary: "£46,000",
+                               publish_on: 5.days.ago.to_date,
+                               expires_on: 2.days.ago.to_date,
+                               publisher: Publisher.find_by(email: "joseph.hull@digital.education.gov.uk"),
+                               publisher_organisation: school_one,
+                               organisation_vacancies_attributes: [{ organisation: school_one }])
+expired_two.send :set_slug
+expired_two.save(validate: false)
+
+Vacancy.index.clear_index
+Vacancy.reindex!
 
 jobseeker = Jobseeker.create(email: "jobseeker@example.com",
                              password: "password",
