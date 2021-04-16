@@ -35,7 +35,7 @@ class Publishers::VacanciesComponent < ViewComponent::Base
   end
 
   def vacancy_type_tab_link(vacancy_type, selected)
-    link_to t(".#{vacancy_type}.tab_heading"), jobs_with_type_organisation_path(vacancy_type), class: "moj-primary-navigation__link", "aria-current": ("page" if selected)
+    link_to t(".#{vacancy_type}.tab_heading"), jobs_with_type_organisation_path(vacancy_type), class: "dashboard-component-navigation__link", "aria-current": ("page" if selected)
   end
 
   def no_jobs_text

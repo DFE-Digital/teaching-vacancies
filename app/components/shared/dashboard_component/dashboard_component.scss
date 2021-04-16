@@ -3,11 +3,105 @@
 
 .dashboard-component {
   @include full-width-mast;
+
   background-color: govuk-colour('light-grey');
   padding: govuk-spacing(3) 0 0;
 
+  @include govuk-media-query ($from: desktop) {
+    .govuk-width-container {
+      position: relative;
+    }
+
+    &__button {
+      bottom: govuk-spacing(3);
+      margin-top: 0;
+      position: absolute;
+      right: 0;
+    }
+  }
+
   h2 {
     word-wrap: break-word;
+  }
+
+  &__button {
+    margin-top: govuk-spacing(4);
+  }
+
+  &-navigation {
+    background: none;
+
+    &__container {
+      font-size: 0;
+      margin: 0;
+      text-align: justify;
+    }
+
+    &__nav {
+      text-align: left;
+    }
+
+    &__list {
+      font-size: 0;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    &__item {
+      display: inline-block;
+      font-size: 1rem;
+      line-height: 1.25;
+      margin-bottom: 0;
+      margin-right: govuk-spacing(4);
+      margin-top: 0;
+
+      @include govuk-media-query ($until: desktop) {
+        display: block;
+        line-height: 1;
+        margin-bottom: 0;
+      }
+    }
+
+    &__link {
+      @include govuk-font(19);
+
+      color: $govuk-link-colour;
+      display: block;
+      font-family: 'GDS Transport', arial, sans-serif;
+      font-weight: bold;
+      padding-bottom: govuk-spacing(3);
+      padding-top: govuk-spacing(3);
+      position: relative;
+      text-decoration: none;
+
+      @include govuk-media-query ($until: desktop) {
+        padding: govuk-spacing(2);
+      }
+
+      &[aria-current] {
+        color: govuk-colour('black');
+
+        &::before {
+          background-color: govuk-colour('light-blue');
+          bottom: 0;
+          content: '';
+          display: block;
+          height: govuk-spacing(1);
+          left: 0;
+          position: absolute;
+          width: 100%;
+        }
+
+        @include govuk-media-query ($until: desktop) {
+          border-left: govuk-spacing(1) solid govuk-colour('light-blue');
+
+          &::before {
+            background-color: transparent;
+          }
+        }
+      }
+    }
   }
 
   &__link {
