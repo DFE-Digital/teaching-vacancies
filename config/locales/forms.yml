@@ -21,7 +21,6 @@ en:
     create_account: Create an account
     delete: Delete
     dismiss: Dismiss
-    download_application: Download application
     edit: Edit
     end_listing: End job listing
     extend_deadline: Extend deadline
@@ -30,6 +29,7 @@ en:
     hide_filters: Hide filters
     make_changes: Make changes
     preview_job_listing: Preview job listing
+    print_download_application: Print or download
     reject: Confirm rejection
     resend_email: Resend request
     save_and_continue: Save and continue

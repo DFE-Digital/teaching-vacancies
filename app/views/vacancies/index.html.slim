@@ -22,7 +22,7 @@
       section.sort-results.sortable-links role="search" aria-label="Sort vacancies"
         = render partial: "sorting_options", locals: { search_criteria: @vacancies_search.active_criteria, sort: @vacancies_search.sort_by }
         - unless @vacancies_search.out_of_bounds?
-          .govuk-body#vacancies-stats-top aria-label="Number of results"
+          .govuk-body.vacancies-stats-top aria-label="Number of results"
             - if @vacancies_search.total_count <= @vacancies_search.per_page
               = t("jobs.number_of_results_one_page_html", count: @vacancies_search.total_count)
             - else
