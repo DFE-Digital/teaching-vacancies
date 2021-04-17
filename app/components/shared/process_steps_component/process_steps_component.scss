@@ -1,5 +1,6 @@
 @import 'base_component';
 
+/* stylelint-disable */
 .process-steps-component {
   .process-steps-component-header {
     background: govuk-colour('light-grey', $legacy: 'grey-4');
@@ -628,3 +629,4 @@
     }
   }
 }
+/* stylelint-enable */

@@ -1,22 +1,22 @@
 @import 'base_component';
 
 .account-survey-cta {
+  bottom: 0;
+  box-sizing: border-box;
+  display: block;
+  position: sticky;
+
   @include govuk-media-query($until: desktop) {
-    margin: 0 -15px !important
+    margin: 0 -15px !important;
   }
 
-  position: sticky;
-  display: block;
-  box-sizing: border-box;
-  bottom: 0;
-
   .account-survey-cta__content {
-    background-color: govuk-colour("orange");
+    background-color: govuk-colour('orange');
+    color: govuk-colour('black');
     padding: govuk-spacing(2);
-    color: govuk-colour("black");
 
     a {
-      color: govuk-colour("black");
+      color: govuk-colour('black');
     }
   }
 }

@@ -30,9 +30,9 @@
       input.govuk-header__link {
         @include govuk-font(16, $weight: bold);
 
-        background-image: none;
         background-color: transparent;
-        border: none;
+        background-image: none;
+        border: 0;
         box-shadow: none;
         color: govuk-colour('white');
         cursor: pointer;

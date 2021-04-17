@@ -1,5 +1,6 @@
 @import 'base_component';
 
+/* stylelint-disable */
 .cookies-banner-component {
   @include govuk-responsive-padding(3, 'top');
   @include govuk-responsive-padding(0, 'bottom');
@@ -109,3 +110,4 @@
     background-color: rgba($color: govuk-colour('black'), $alpha: 0.5);
   }
 }
+/* stylelint-enable */
