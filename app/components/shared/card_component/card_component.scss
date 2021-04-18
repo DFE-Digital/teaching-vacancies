@@ -46,8 +46,8 @@
   }
 
   &__item-label {
-    &:after {
-      content: ":";
+    &::after {
+      content: ':';
       margin-right: govuk-spacing(1);
     }
   }

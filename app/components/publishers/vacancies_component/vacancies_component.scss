@@ -5,6 +5,10 @@
     position: relative;
 
     .moj-action-bar__filter {
+      position: absolute;
+      right: 0;
+      top: 0;
+
       @include govuk-media-query($until: desktop) {
         display: none;
       }
@@ -12,10 +16,6 @@
       &::after {
         width: 0;
       }
-
-      position: absolute;
-      right: 0;
-      top: 0;
     }
   }
 }
