@@ -1,0 +1,9 @@
+@media print {
+  .publishers_vacancies_job_applications_show {
+    .job-application-actions,
+    .account-sidebar,
+    .timeline-component {
+      display: none;
+    }
+  }
+}
