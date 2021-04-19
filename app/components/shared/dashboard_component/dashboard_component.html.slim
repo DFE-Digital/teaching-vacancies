@@ -1,16 +1,16 @@
 .dashboard-component
   .govuk-width-container
-    h2.govuk-heading-m class="govuk-!-margin-bottom-2"
-      = heading
+    .dashboard-component__header
+      h2.govuk-heading-m class="govuk-!-margin-bottom-2"
+        = heading
 
   .govuk-width-container
-    - if link.present?
-      .filters-information.moj-action-bar
-        = govuk_button_to link[:text], link[:url], class: "govuk-!-margin-bottom-0 govuk-!-margin-top-0 dashboard-component__link"
-    .moj-primary-navigation
-      .moj-primary-navigation__container
-        .moj-primary-navigation__nav aria-label="Account navigation"
-          ul.moj-primary-navigation__list
+    .dashboard-component-navigation
+      .dashboard-component-navigation__container
+        .dashboard-component-navigation__nav aria-label="Account navigation"
+          ul.dashboard-component-navigation__list
             - @navigation_items.each do |item|
-              li.moj-primary-navigation__item
+              li.dashboard-component-navigation__item
                 = item
+    - if link.present?
+      = govuk_button_to link[:text], link[:url], class: "govuk-!-margin-bottom-0 govuk-!-margin-top-0", form_class: "dashboard-component__button"
