@@ -30,9 +30,12 @@ Rails.application.routes.draw do
       resources :job_applications, only: %i[index show destroy] do
         resources :build, only: %i[show update], controller: "job_applications/build"
         resources :employments, only: %i[new create edit update destroy], controller: "job_applications/employments"
-        resources :qualifications, only: %i[new create edit update destroy], controller: "job_applications/qualifications" do
-          get :select_category, on: :collection
-          post :submit_category, on: :collection
+        resources :qualifications, only: %i[new create edit update], controller: "job_applications/qualifications" do
+          collection do
+            delete :destroy, as: :destroy
+            get :select_category
+            post :submit_category
+          end
         end
         resources :references, only: %i[new create edit update destroy], controller: "job_applications/references"
         get :review
