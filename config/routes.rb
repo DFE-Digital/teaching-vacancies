@@ -67,6 +67,10 @@ Rails.application.routes.draw do
     sessions: "publishers/sessions",
   }
 
+  namespace :publishers do
+    resources :notifications, only: %i[index]
+  end
+
   scope :publishers do
     devise_scope :publisher do
       get "sign_in", to: "publishers/sessions#new", as: :new_publisher_session
