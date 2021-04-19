@@ -14,11 +14,6 @@ RSpec.describe "Publishers can view a job application" do
     show_page.load(job_id: vacancy.id, id: job_application.id)
   end
 
-  it "shows the job application page" do
-    # TODO: Complete this spec
-    expect(page).to have_content("TV12345 - #{job_application.first_name} #{job_application.last_name}")
-  end
-
   context "when the job application status is unsuccessful" do
     let(:job_application) { create(:job_application, :status_unsuccessful, vacancy: vacancy) }
 
