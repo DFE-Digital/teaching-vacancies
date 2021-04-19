@@ -32,7 +32,6 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
     let(:params) { { current_role: "no" } }
 
     it { is_expected.to validate_presence_of(:ended_on) }
-    it { is_expected.to validate_presence_of(:reason_for_leaving) }
 
     context "when ended_on is invalid" do
       let(:params) { { current_role: "no", "ended_on(1i)" => "2021", "ended_on(2i)" => "01", "ended_on(3i)" => "100" } }
@@ -73,8 +72,7 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
   context "when all attributes are valid" do
     let(:params) do
       { organisation: "An organisation", job_title: "A job title", main_duties: "Some main duties",
-        current_role: "no", reason_for_leaving: "A reason for leaving",
-        "started_on(1i)" => "2019", "started_on(2i)" => "09", "started_on(3i)" => "01",
+        current_role: "no", "started_on(1i)" => "2019", "started_on(2i)" => "09", "started_on(3i)" => "01",
         "ended_on(1i)" => "2020", "ended_on(2i)" => "07", "ended_on(3i)" => "30" }
     end
 

@@ -29,7 +29,6 @@
                 - c.slot(:row, key: t("jobseekers.job_applications.employments.ended_on"), value: t("jobseekers.job_applications.employments.current_role"))
               - when "no"
                 - c.slot(:row, key: t("jobseekers.job_applications.employments.ended_on"), value: employment.ended_on.to_s)
-                - c.slot(:row, key: t("jobseekers.job_applications.employments.reason_for_leaving"), value: employment.reason_for_leaving)
 
               - c.slot(:row, key: t("jobseekers.job_applications.employments.main_duties"), value: employment.main_duties)
 

@@ -60,7 +60,6 @@ module JobseekerHelpers
     fill_in "jobseekers_job_application_details_employment_form[ended_on(1i)]", with: "2020"
     fill_in "jobseekers_job_application_details_employment_form[ended_on(2i)]", with: "07"
     fill_in "jobseekers_job_application_details_employment_form[ended_on(3i)]", with: "30"
-    fill_in "Reason for leaving", with: "Some details about the reason for leaving"
   end
 
   def fill_in_equal_opportunities
