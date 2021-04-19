@@ -111,14 +111,14 @@ jobs:
       uses: benc-uk/workflow-dispatch@v1.1
       with:
         workflow: Deploy App to Environment # Workflow name
-        token: ${{ secrets.PERSONAL_TOKEN }}
+        token: ${{ secrets.GH_CONTAINER_REGISTRY_TOKEN }}
         inputs: '{"environment": "${{ env.BRANCH }}", "tag": "${{ env.TAG }}"}'
 
     - name: Wait for Deploy App Workflow
       id: wait_for_deploy_app
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
-        token: ${{ secrets.PERSONAL_TOKEN }}
+        token: ${{ secrets.GH_CONTAINER_REGISTRY_TOKEN }}
         checkName: Deploy ${{ env.TAG }} to ${{ env.BRANCH }} # Job name within workflow
         ref: ${{ github.sha  }}
         timeoutSeconds: 720
@@ -128,14 +128,14 @@ jobs:
       uses: benc-uk/workflow-dispatch@v1.1
       with:
         workflow: Smoke Test
-        token: ${{ secrets.PERSONAL_TOKEN }}
+        token: ${{ secrets.GH_CONTAINER_REGISTRY_TOKEN }}
         inputs: '{"smoke_test_domain": "${{ env.BRANCH }}.teaching-vacancies.service.gov.uk", "sha": "${{ github.sha }}"}'
 
     - name: Wait for smoke test
       id: wait_for_smoke_test
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
-        token: ${{ secrets.PERSONAL_TOKEN }}
+        token: ${{ secrets.GH_CONTAINER_REGISTRY_TOKEN }}
         checkName: Smoke Test ${{ env.BRANCH }}.teaching-vacancies.service.gov.uk ${{ github.sha }}
         ref: ${{ github.sha }}
         timeoutSeconds: 300

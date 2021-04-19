@@ -115,7 +115,7 @@ jobs:
     - name: Trigger Deploy App Workflow for review
       uses: benc-uk/workflow-dispatch@v1.1
       with:
-        token: ${{ secrets.PERSONAL_TOKEN }}
+        token: ${{ secrets.GH_CONTAINER_REGISTRY_TOKEN }}
         ref: ${{ steps.tag_version.outputs.new_tag }}
         workflow: Deploy App to Environment # Workflow name
         inputs: '{"environment": "${{ env.ENVIRONMENT }}", "tag": "${{ env.TAG }}"}'
@@ -124,7 +124,7 @@ jobs:
       id: wait_for_deploy_app
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
-        token: ${{ secrets.PERSONAL_TOKEN }}
+        token: ${{ secrets.GH_CONTAINER_REGISTRY_TOKEN }}
         checkName: Deploy ${{ env.TAG }} to ${{ env.ENVIRONMENT }} # Job name within workflow
         ref: ${{ steps.tag_version.outputs.new_tag }}
         timeoutSeconds: 1200
@@ -137,7 +137,7 @@ jobs:
     - name: Post Sticky Pull Request Comment
       uses: marocchino/sticky-pull-request-comment@v2
       with:
-        GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_CONTAINER_REGISTRY_TOKEN }}
         message: |
           Review app deployed to <https://teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital>
 
@@ -145,7 +145,7 @@ jobs:
       uses: benc-uk/workflow-dispatch@v1.1
       with:
         workflow: Smoke Test
-        token: ${{ secrets.PERSONAL_TOKEN }}
+        token: ${{ secrets.GH_CONTAINER_REGISTRY_TOKEN }}
         inputs: '{"smoke_test_domain": "teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital", "sha": "${{ github.event.pull_request.head.sha }}"}'
         ref: ${{ steps.tag_version.outputs.new_tag }}
 
@@ -153,7 +153,7 @@ jobs:
       id: wait_for_smoke_test
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
-        token: ${{ secrets.PERSONAL_TOKEN }}
+        token: ${{ secrets.GH_CONTAINER_REGISTRY_TOKEN }}
         checkName: Smoke Test teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital ${{ github.event.pull_request.head.sha }}
         ref: ${{ steps.tag_version.outputs.new_tag }}
         timeoutSeconds: 300
