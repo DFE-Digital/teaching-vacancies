@@ -1,0 +1,20 @@
+@media print {
+  .publishers_vacancies_job_applications_show {
+    .job-application-actions,
+    .account-sidebar,
+    .timeline-component,
+    .anchor-link-list {
+      display: none;
+    }
+
+    .review-component__heading {
+      .govuk-link {
+        display:none;
+      }
+    }
+
+    .govuk-accordion__section > div {
+      display: block;
+    }
+  }
+}

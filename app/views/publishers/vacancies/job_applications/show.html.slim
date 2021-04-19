@@ -8,6 +8,9 @@
   .govuk-caption-l class="govuk-!-margin-top-5"
     = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
 
+  .print-page-content
+    .h2.govuk-heading-l = "#{job_application.first_name} #{job_application.last_name}"
+
   div
     span.govuk-body class="govuk-!-margin-right-5" = t(".status_heading")
     = publisher_job_application_status_tag(job_application.status)
@@ -19,19 +22,20 @@
         = govuk_link_to t("buttons.shortlist"), organisation_job_job_application_shortlist_path(vacancy.id, job_application.id), button: true, class: "govuk-!-margin-right-3"
       - if job_application.submitted? || job_application.shortlisted?
         = govuk_link_to t("buttons.reject"), organisation_job_job_application_reject_path(vacancy.id, job_application.id), button: true, class: "govuk-button--warning govuk-!-margin-right-3"
-      = govuk_link_to t("buttons.download_application"), "#", button: true, class: "govuk-button--secondary"
+      = govuk_link_to t("buttons.print_download_application"), "#", button: true, class: "govuk-button--secondary js-action print-application"
 
-    h2.govuk-heading-m = t(".application_sections.heading")
+    .anchor-link-list
+      h2.govuk-heading-m = t(".application_sections.heading")
 
-    ul.govuk-list
-      li.app-page-navigation__item--em-dash = govuk_link_to t(".personal_details.heading"), "#personal_details_summary", class: "govuk-link govuk-body-s"
-      li.app-page-navigation__item--em-dash = govuk_link_to t(".professional_status.heading"), "#professional_status_summary", class: "govuk-link govuk-body-s"
-      li.app-page-navigation__item--em-dash = govuk_link_to t(".qualifications.heading"), "#qualifications_summary", class: "govuk-link govuk-body-s"
-      li.app-page-navigation__item--em-dash = govuk_link_to t(".current_role_and_employment_history.heading"), "#employment_history_summary", class: "govuk-link govuk-body-s"
-      li.app-page-navigation__item--em-dash = govuk_link_to t(".personal_statement.heading"), "#personal_statement_summary", class: "govuk-link govuk-body-s"
-      li.app-page-navigation__item--em-dash = govuk_link_to t(".references.heading"), "#references_summary", class: "govuk-link govuk-body-s"
-      li.app-page-navigation__item--em-dash = govuk_link_to t(".ask_for_support.heading"), "#ask_for_support_summary", class: "govuk-link govuk-body-s"
-      li.app-page-navigation__item--em-dash = govuk_link_to t(".declarations.heading"), "#declarations_summary", class: "govuk-link govuk-body-s"
+      ul.govuk-list
+        li.app-page-navigation__item--em-dash = govuk_link_to t(".personal_details.heading"), "#personal_details_summary", class: "govuk-link govuk-body-s"
+        li.app-page-navigation__item--em-dash = govuk_link_to t(".professional_status.heading"), "#professional_status_summary", class: "govuk-link govuk-body-s"
+        li.app-page-navigation__item--em-dash = govuk_link_to t(".qualifications.heading"), "#qualifications_summary", class: "govuk-link govuk-body-s"
+        li.app-page-navigation__item--em-dash = govuk_link_to t(".current_role_and_employment_history.heading"), "#employment_history_summary", class: "govuk-link govuk-body-s"
+        li.app-page-navigation__item--em-dash = govuk_link_to t(".personal_statement.heading"), "#personal_statement_summary", class: "govuk-link govuk-body-s"
+        li.app-page-navigation__item--em-dash = govuk_link_to t(".references.heading"), "#references_summary", class: "govuk-link govuk-body-s"
+        li.app-page-navigation__item--em-dash = govuk_link_to t(".ask_for_support.heading"), "#ask_for_support_summary", class: "govuk-link govuk-body-s"
+        li.app-page-navigation__item--em-dash = govuk_link_to t(".declarations.heading"), "#declarations_summary", class: "govuk-link govuk-body-s"
 
     - unless job_application.status.in?(%w[shortlisted unsuccessful withdrawn])
       ul.app-task-list--no-bullet
