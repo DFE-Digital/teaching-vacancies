@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, t(".title", count: notifications.unread.count)
+- content_for :page_title_prefix, t(".title", count: notifications.unread.total_count)
 
 .govuk-main-wrapper
   .govuk-grid-row
@@ -7,3 +7,5 @@
 
       - notifications.each do |notification|
         = render NotificationComponent.new notification: notification.to_notification
+
+      = paginate notifications
