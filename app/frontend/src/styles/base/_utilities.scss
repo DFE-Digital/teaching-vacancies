@@ -176,3 +176,17 @@
     padding: govuk-spacing(3);
   }
 }
+
+.js-action {
+  display: none;
+}
+
+.js-enabled {
+  .js-action {
+    display: inline-block;
+  }
+}
+
+.print-page-content {
+  display: none;
+}
