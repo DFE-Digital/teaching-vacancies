@@ -5,34 +5,35 @@
   margin-bottom: govuk-spacing(6);
   margin-top: govuk-spacing(6);
 
-  @include govuk-media-query($from: desktop) {
-    width: unset;
-  }
-
-  h2 {
-    margin-bottom: govuk-spacing(2);
-    margin-top: govuk-spacing(4);
-  }
-
   &__steps {
     counter-reset: steps-counter;
     list-style: none;
-    margin-block-end: 0;
-    margin-block-start: 0;
-    padding-inline-start: 0;
+    margin: 0;
+    padding: 0;
+
+    &::after {
+      border-bottom: 2px solid $govuk-border-colour;
+      content: '';
+      display: block;
+      height: 2px;
+      margin-left: govuk-spacing(1);
+      width: govuk-spacing(4);
+    }
   }
 
   &__step {
     counter-increment: steps-counter;
+    display: flex;
     padding-bottom: govuk-spacing(1);
     padding-top: govuk-spacing(3);
     position: relative;
 
     h3 {
+      display: flex;
       margin-bottom: 0;
 
-      @include govuk-media-query($from: tablet) {
-        margin-left: 35px;
+      @include govuk-media-query($until: tablet) {
+        line-height: 1.6;
       }
 
       &::before {
@@ -40,17 +41,30 @@
         border: 2px solid $govuk-border-colour;
         border-radius: 50%;
         content: counter(steps-counter);
-        display: inline-block;
-        left: 0;
-        line-height: govuk-spacing(5);
+        height: govuk-spacing(5);
         margin-right: govuk-spacing(2);
+        min-width: govuk-spacing(5);
         text-align: center;
-        width: govuk-spacing(5);
-
-        @include govuk-media-query($from: tablet) {
-          position: absolute;
-        }
       }
+    }
+
+    &::after {
+      background: $govuk-border-colour;
+      content: '';
+      height: 100%;
+      left: 14px;
+      position: absolute;
+      top: 44px;
+      width: 2px;
+    }
+
+    &::before {
+      border-top: 1px solid govuk-colour('light-grey');
+      content: '';
+      left: govuk-spacing(7);
+      position: absolute;
+      top: 0;
+      width: 80%;
     }
 
     &--current {
@@ -75,44 +89,20 @@
       }
     }
 
-    &::before {
-      background: govuk-colour('light-grey', $legacy: 'grey-3');
-      bottom: 0;
-      content: '';
-      height: 1px;
-      left: govuk-spacing(8);
-      position: absolute;
-      top: 52.5px;
-      width: 85%;
-    }
-
-    &::after {
-      background: $govuk-border-colour;
-      content: '';
-      height: 100%;
-      left: 12.5px;
-      position: absolute;
-      top: 44px;
-      width: 2px;
-    }
-
     &:last-of-type {
-      &::before {
-        background: $govuk-border-colour;
-        bottom: -7px;
-        height: 2px;
-        left: 6px;
-        position: absolute;
-        width: govuk-spacing(3);
-
-        @include govuk-media-query($from: tablet) {
-          bottom: -9px;
-        }
-      }
+      padding-bottom: govuk-spacing(2);
 
       &::after {
+        border-bottom: 2px solid $govuk-border-colour;
         bottom: govuk-spacing(2);
-        height: govuk-spacing(2);
+        height: calc(100% - 44px);
+      }
+    }
+
+    &:first-of-type {
+      &::before {
+        border-top: 0;
+        content: '';
       }
     }
   }
