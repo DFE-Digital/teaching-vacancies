@@ -19,6 +19,8 @@ RSpec.describe "Sidekiq configuration" do
       SendEntityImportedEventsToDataWarehouseJob
       SendEventToDataWarehouseJob
       UpdateGoogleIndexQueueJob
+      Noticed::DeliveryMethods::Base
+      Noticed::DeliveryMethods::Database
     ]
   end
 
