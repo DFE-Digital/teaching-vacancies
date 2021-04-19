@@ -40,7 +40,6 @@ RSpec.describe "Jobseekers can review a job application" do
           expect(accordion.content.rows(id: "employment_history_started_on").first.value.text).to eq(employment_details.started_on.to_s.strip)
           expect(accordion.content.rows(id: "employment_history_current_role").first.value.text).to eq(employment_details.current_role.capitalize)
           expect(accordion.content.rows(id: "employment_history_ended_on").first.value.text).to eq(employment_details.ended_on.to_s.strip)
-          expect(accordion.content.rows(id: "employment_history_reason_for_leaving").first.value.text).to eq(employment_details.reason_for_leaving)
         end
       end
     end

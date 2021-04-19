@@ -352,8 +352,6 @@ en:
               blank: Tell us briefly what your main duties were
             organisation:
               blank: Enter a school or other organisation
-            reason_for_leaving:
-              blank: Tell us why you left
             started_on:
               blank: Enter the date you started at this school or organisation
               invalid: Enter a valid start date

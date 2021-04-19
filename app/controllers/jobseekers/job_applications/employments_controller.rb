@@ -40,7 +40,7 @@ class Jobseekers::JobApplications::EmploymentsController < Jobseekers::BaseContr
 
   def employment_params
     params.require(:jobseekers_job_application_details_employment_form)
-          .permit(:organisation, :job_title, :salary, :subjects, :main_duties, :started_on, :current_role, :ended_on, :reason_for_leaving)
+          .permit(:organisation, :job_title, :salary, :subjects, :main_duties, :started_on, :current_role, :ended_on)
   end
 
   def form
@@ -52,7 +52,7 @@ class Jobseekers::JobApplications::EmploymentsController < Jobseekers::BaseContr
     when "new"
       {}
     when "edit"
-      employment.slice(:organisation, :job_title, :salary, :subjects, :main_duties, :started_on, :current_role, :ended_on, :reason_for_leaving)
+      employment.slice(:organisation, :job_title, :salary, :subjects, :main_duties, :started_on, :current_role, :ended_on)
     when "create", "update"
       employment_params
     end
