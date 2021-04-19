@@ -6,7 +6,7 @@ on:
     types: [closed]
 
 env:
-  DOCKERHUB_REPOSITORY: dfedigital/teaching-vacancies
+  DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
 
 jobs:
   turnstyle:
