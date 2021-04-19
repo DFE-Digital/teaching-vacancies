@@ -199,7 +199,27 @@ en:
           heading: Shortlist applicant
           page_title: Shortlist applicant
         show:
+          ask_for_support:
+            heading: Ask for support if you have a disability or other needs
+          current_role_and_employment_history:
+            heading: Current role and employment history
+            gaps_in_employment:
+              heading: Gaps in employment
+          declarations:
+            heading: Declarations
+          education_and_qualifications:
+            heading: Education and qualifications
           page_title: Application
+          personal_details:
+            heading: Personal Details
+          personal_statement:
+            heading: Personal statement
+          professional_status:
+            heading: Professional status
+          qualifications:
+            heading: Education and qualifications
+          references:
+            heading: References
           status_heading: Applicant status
           timeline: Timeline
         update_status:
