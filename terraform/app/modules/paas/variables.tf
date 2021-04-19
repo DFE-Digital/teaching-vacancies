@@ -38,7 +38,10 @@ variable "redis_cache_service_plan" {
 }
 variable "redis_queue_service_plan" {
 }
+
 variable "service_name" {
+}
+variable "service_abbreviation" {
 }
 variable "space_name" {
 }
@@ -107,6 +110,8 @@ locals {
   postgres_service_name    = "${var.service_name}-postgres-${var.environment}"
   redis_cache_service_name = "${var.service_name}-redis-cache-${var.environment}"
   redis_queue_service_name = "${var.service_name}-redis-queue-${var.environment}"
+  # S3 bucket name uses abbreviation so we don't run into 63 character bucket name limit
+  documents_s3_bucket_name = "${data.aws_caller_identity.current.account_id}-${var.service_abbreviation}-attachments-documents-${var.environment}"
   web_app_name             = "${var.service_name}-${var.environment}"
   worker_app_start_command = "bundle exec sidekiq -C config/sidekiq.yml"
   worker_app_name          = "${var.service_name}-worker-${var.environment}"
