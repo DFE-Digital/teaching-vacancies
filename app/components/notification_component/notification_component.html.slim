@@ -1,0 +1,9 @@
+= tag.div(class: classes, **html_attributes) do
+  .notification-component__content
+    - unless notification.read?
+      .notification-component__tag
+        = unread_tag
+    .notification-component__message
+      == notification.message
+    .notification-component__timestamp
+      = notification.timestamp
