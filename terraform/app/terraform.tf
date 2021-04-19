@@ -77,6 +77,7 @@ module "paas" {
   papertrail_service_binding_enable = var.paas_papertrail_service_binding_enable
   parameter_store_environment       = var.parameter_store_environment
   service_name                      = local.service_name
+  service_abbreviation              = local.service_abbreviation
   postgres_service_plan             = var.paas_postgres_service_plan
   redis_cache_service_plan          = var.paas_redis_cache_service_plan
   redis_queue_service_plan          = var.paas_redis_queue_service_plan
