@@ -23,8 +23,8 @@
                 - c.slot(:row, key: t("jobseekers.job_applications.references.#{attribute}"), value: reference[attribute])
 
           - detail.actions do
-            = govuk_button_to t("buttons.delete"), jobseekers_job_application_reference_path(reference.job_application, reference), method: :delete, class: "govuk-delete-link govuk-!-margin-bottom-0", form_class: "inline-block button_to"
-            = govuk_link_to t("buttons.edit"), edit_jobseekers_job_application_reference_path(reference.job_application, reference), class: "govuk-link--no-visited-state inline-block"
+            = govuk_button_to t("buttons.delete"), jobseekers_job_application_reference_path(job_application, reference), method: :delete, class: "govuk-delete-link govuk-!-margin-bottom-0", form_class: "inline-block button_to"
+            = govuk_link_to t("buttons.edit"), edit_jobseekers_job_application_reference_path(job_application, reference), class: "govuk-link--no-visited-state inline-block"
 
       = govuk_link_to t("buttons.add_another_reference"), new_jobseekers_job_application_reference_path(job_application), button: true
     - else
