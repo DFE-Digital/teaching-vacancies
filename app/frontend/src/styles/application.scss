@@ -98,3 +98,22 @@ strong,
 b {
   font-weight: bold;
 }
+
+.app-page-navigation__item {
+  &--em-dash {
+    margin-left: govuk-spacing(5);
+
+    a {
+      display: inline-block;
+      margin-bottom: 0;
+    }
+
+    &::before {
+      content: '\2014';
+      height: 100%;
+      margin-left: -25px;
+      padding-right: govuk-spacing(1);
+      position: absolute;
+    }
+  }
+}
