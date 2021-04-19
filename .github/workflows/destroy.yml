@@ -6,7 +6,7 @@ on:
     types: [closed]
 
 env:
-  DOCKERHUB_REPOSITORY: dfedigital/teaching-vacancies
+  DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
 
 jobs:
   turnstyle:
@@ -39,7 +39,7 @@ jobs:
       id: wait_for_deploy_app
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
-       token: ${{ secrets.PERSONAL_TOKEN }}
+       token: ${{ secrets.GH_CONTAINER_REGISTRY_TOKEN }}
        checkName: Create review app ${{ github.event.pull_request.head.sha}}
        ref: ${{ github.event.pull_request.head.sha }}
        timeoutSeconds: 1800
