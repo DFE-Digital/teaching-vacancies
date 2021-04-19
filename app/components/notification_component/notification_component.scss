@@ -1,0 +1,29 @@
+@import 'base_component';
+
+.notification-component {
+  @include govuk-font(16);
+
+  align-items: center;
+  border-bottom: solid 1px $govuk-border-colour;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: govuk-spacing(3);
+  padding-bottom: govuk-spacing(2);
+
+  &__tag {
+    flex-basis: auto;
+    height: min-content;
+    margin-right: govuk-spacing(5);
+  }
+
+  &__message {
+    flex-basis: auto;
+    flex-grow: 2;
+    margin-right: govuk-spacing(5);
+  }
+
+  &__timestamp {
+    color: $govuk-secondary-text-colour;
+    flex-basis: auto;
+  }
+}
