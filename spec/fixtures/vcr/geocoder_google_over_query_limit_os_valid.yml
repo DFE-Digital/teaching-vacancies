@@ -53,7 +53,7 @@ http_interactions:
 
 - request:
     method: get
-    uri: https://api.ordnancesurvey.co.uk/opennames/v1/find?fq=local_type:City%20local_type:Hamlet%20local_type:Other_Settlement%20local_type:Town%20local_type:Village%20local_type:Postcode&key=placeholder_key&query=TS14%206RD
+    uri: https://api.os.uk/search/names/v1/find?fq=local_type:City%20local_type:Hamlet%20local_type:Other_Settlement%20local_type:Town%20local_type:Village%20local_type:Postcode&key=placeholder_key&query=TS14%206RD
     body:
       encoding: US-ASCII
       string: ''
@@ -88,7 +88,7 @@ http_interactions:
       string: |-
         {
           "header" : {
-            "uri" : "https://api.ordnancesurvey.co.uk/opennames/v1/find?fq=local_type%3ACity%20local_type%3AHamlet%20local_type%3AOther_Settlement%20local_type%3ATown%20local_type%3AVillage%20local_type%3APostcode&query=TS14%206RD",
+            "uri" : "https://api.os.uk/search/names/v1/find?fq=local_type%3ACity%20local_type%3AHamlet%20local_type%3AOther_Settlement%20local_type%3ATown%20local_type%3AVillage%20local_type%3APostcode&query=TS14%206RD",
             "query" : "TS14 6RD",
             "format" : "JSON",
             "maxresults" : 100,
