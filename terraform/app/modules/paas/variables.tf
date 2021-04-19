@@ -38,7 +38,10 @@ variable "redis_cache_service_plan" {
 }
 variable "redis_queue_service_plan" {
 }
+
 variable "service_name" {
+}
+variable "service_abbreviation" {
 }
 variable "space_name" {
 }
@@ -86,10 +89,16 @@ locals {
     yamldecode(data.aws_ssm_parameter.app_env_api_key_google.value)
   )
   app_env_secrets = yamldecode(data.aws_ssm_parameter.app_env_secrets.value)
-  app_env_domain  = { "DOMAIN" = "teaching-vacancies-${var.environment}.london.cloudapps.digital" }
+  app_env_documents_bucket_credentials = {
+    DOCUMENTS_S3_BUCKET         = local.documents_s3_bucket_name
+    DOCUMENTS_ACCESS_KEY_ID     = aws_iam_access_key.documents_s3_bucket_access_key.id
+    DOCUMENTS_ACCESS_KEY_SECRET = aws_iam_access_key.documents_s3_bucket_access_key.secret
+  }
+  app_env_domain = { "DOMAIN" = "teaching-vacancies-${var.environment}.london.cloudapps.digital" }
   app_environment = merge(
     local.app_env_api_keys,
     local.app_env_secrets,
+    local.app_env_documents_bucket_credentials,
     local.app_env_domain,
     var.app_env_values #Because of merge order, if present, the value of DOMAIN in .tfvars will overwrite app_env_domain
   )
@@ -107,6 +116,8 @@ locals {
   postgres_service_name    = "${var.service_name}-postgres-${var.environment}"
   redis_cache_service_name = "${var.service_name}-redis-cache-${var.environment}"
   redis_queue_service_name = "${var.service_name}-redis-queue-${var.environment}"
+  # S3 bucket name uses abbreviation so we don't run into 63 character bucket name limit
+  documents_s3_bucket_name = "${data.aws_caller_identity.current.account_id}-${var.service_abbreviation}-attachments-documents-${var.environment}"
   web_app_name             = "${var.service_name}-${var.environment}"
   worker_app_start_command = "bundle exec sidekiq -C config/sidekiq.yml"
   worker_app_name          = "${var.service_name}-worker-${var.environment}"
