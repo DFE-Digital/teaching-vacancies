@@ -1,0 +1,9 @@
+- content_for :page_title_prefix, t(".title", count: notifications.unread.count)
+
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl = t(".heading")
+
+      - notifications.each do |notification|
+        = render NotificationComponent.new notification: notification.to_notification
