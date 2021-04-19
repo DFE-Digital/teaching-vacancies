@@ -25,6 +25,52 @@ resource "cloudfoundry_user_provided_service" "papertrail" {
   syslog_drain_url = var.papertrail_url
 }
 
+resource "aws_s3_bucket" "documents_s3_bucket" {
+  bucket = local.documents_s3_bucket_name
+}
+
+resource "aws_s3_bucket_public_access_block" "documents_s3_bucket_block" {
+  bucket = aws_s3_bucket.documents_s3_bucket.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+resource "aws_iam_policy" "documents_s3_bucket_policy" {
+  name   = "${local.documents_s3_bucket_name}-policy"
+  path   = "/attachment_buckets_policies/"
+  policy = data.aws_iam_policy_document.documents_s3_bucket_policy_document.json
+}
+
+data "aws_iam_policy_document" "documents_s3_bucket_policy_document" {
+  statement {
+    actions   = ["s3:ListAllMyBuckets"]
+    resources = ["arn:aws:s3:::*"]
+    effect    = "Allow"
+  }
+  statement {
+    actions   = ["s3:*"]
+    resources = [aws_s3_bucket.documents_s3_bucket.arn]
+    effect    = "Allow"
+  }
+}
+
+resource "aws_iam_user" "documents_s3_bucket_user" {
+  name = "${local.documents_s3_bucket_name}-user"
+  path = "/attachment_buckets_users/"
+}
+
+resource "aws_iam_access_key" "document_s3_bucket_access_key" {
+  user = aws_iam_user.documents_s3_bucket_user.name
+}
+
+resource "aws_iam_user_policy_attachment" "attachment" {
+  user       = aws_iam_user.documents_s3_bucket_user.name
+  policy_arn = aws_iam_policy.documents_s3_bucket_policy.arn
+}
+
 resource "cloudfoundry_app" "web_app" {
   name                       = local.web_app_name
   command                    = var.web_app_start_command
@@ -49,6 +95,11 @@ resource "cloudfoundry_app" "web_app" {
       route = routes.value["id"]
     }
   }
+  environment = merge({
+    DOCUMENTS_S3_BUCKET         = local.documents_s3_bucket_name
+    DOCUMENTS_ACCESS_KEY_ID     = aws_iam_access_key.document_s3_bucket_access_key.id
+    DOCUMENTS_ACCESS_KEY_SECRET = aws_iam_access_key.document_s3_bucket_access_key.secret
+  }, local.app_environment)
   docker_credentials = {
     username = var.docker_username
     password = var.docker_password
@@ -63,7 +114,6 @@ resource "cloudfoundry_app" "web_app" {
       service_instance = service_binding.value
     }
   }
-  environment = local.app_environment
 }
 
 resource "cloudfoundry_route" "web_app_route" {
