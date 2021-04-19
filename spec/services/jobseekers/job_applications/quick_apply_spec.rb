@@ -45,7 +45,7 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
     end
 
     it "copies employments" do
-      attributes_to_copy = %i[organisation job_title salary subjects current_role reason_for_leaving main_duties started_on ended_on]
+      attributes_to_copy = %i[organisation job_title salary subjects current_role main_duties started_on ended_on]
 
       expect(subject.employments.map { |employment| employment.slice(*attributes_to_copy) })
         .to eq(recent_job_application.employments.map { |employment| employment.slice(*attributes_to_copy) })

@@ -2,12 +2,11 @@ class Jobseekers::JobApplication::Details::EmploymentForm
   include ActiveModel::Model
   include ActiveRecord::AttributeAssignment
 
-  attr_accessor :organisation, :job_title, :salary, :subjects, :main_duties, :started_on, :current_role, :ended_on, :reason_for_leaving
+  attr_accessor :organisation, :job_title, :salary, :subjects, :main_duties, :started_on, :current_role, :ended_on
 
   validates :organisation, :job_title, :main_duties, presence: true
   validates :started_on, presence: true, date: true
   validates :current_role, inclusion: { in: %w[yes no] }
-  validates :reason_for_leaving, presence: true, if: -> { current_role == "no" }
   validates :ended_on, presence: true, date: true, if: -> { current_role == "no" }
   validate :ended_on_is_after_started_on, if: -> { current_role == "no" }
 
