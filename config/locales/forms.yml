@@ -16,6 +16,7 @@ en:
     cancel_and_return: Cancel and return
     change: Change
     complete_section: Complete section
+    confirm_rejection: Confirm rejection
     continue: Continue
     create_job: Create a job listing
     create_account: Create an account
@@ -30,7 +31,7 @@ en:
     make_changes: Make changes
     preview_job_listing: Preview job listing
     print_download_application: Print or download
-    reject: Confirm rejection
+    reject: Reject
     resend_email: Resend request
     save_and_continue: Save and continue
     save_and_come_back: Save and come back later
