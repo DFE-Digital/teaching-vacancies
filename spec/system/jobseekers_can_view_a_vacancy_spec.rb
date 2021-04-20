@@ -3,6 +3,8 @@ require "rails_helper"
 RSpec.describe "Viewing a single published vacancy" do
   let(:school) { create(:school) }
 
+  before { allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true) }
+
   scenario "Published vacancies are viewable" do
     vacancy = create(:vacancy, :published)
     vacancy.organisation_vacancies.create(organisation: school)
@@ -103,7 +105,7 @@ RSpec.describe "Viewing a single published vacancy" do
     end
 
     scenario "can click on the application link when there is one set" do
-      vacancy = create(:vacancy, :job_schema)
+      vacancy = create(:vacancy, :job_schema, :no_tv_applications)
       vacancy.organisation_vacancies.create(organisation: school)
 
       visit job_path(vacancy)
