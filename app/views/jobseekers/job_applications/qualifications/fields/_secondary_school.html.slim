@@ -1,7 +1,7 @@
 = f.govuk_fieldset legend: { text: t("helpers.legend.jobseekers_job_application_details_qualifications_shared_legends.subjects") } do
-  / TODO: change subject legend when adding new subject field (and change aria required)
+  / TODO: change subject legend when adding new subject field (and change aria-required)
   .inline-fields-container
-    = f.govuk_text_field :subject, legend: { text: "Subject name" }, aria: { required: true }, form_group: { classes: "govuk-!-width-two-thirds" }
+    = f.govuk_text_field :subject, legend: { text: "Subject 1" }, aria: { required: true }, form_group: { classes: "govuk-!-width-two-thirds" }
     = f.govuk_text_field :grade, aria: { required: true }, form_group: { classes: "govuk-!-width-one-third" }
 
 = f.govuk_text_field :institution, label: { size: "s" }, aria: { required: true }, width: "three-quarters"
