@@ -43,7 +43,6 @@ module JobseekerHelpers
   end
 
   def fill_in_declarations
-    choose "Yes", name: "jobseekers_job_application_declarations_form[banned_or_disqualified]"
     choose "Yes", name: "jobseekers_job_application_declarations_form[close_relationships]"
     fill_in "Please give details", with: "Some details of the relationship"
     choose "Yes", name: "jobseekers_job_application_declarations_form[right_to_work_in_uk]"

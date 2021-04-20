@@ -32,6 +32,6 @@ module Jobseekers::Wizardable
   end
 
   def declarations_fields
-    %i[banned_or_disqualified close_relationships close_relationships_details right_to_work_in_uk]
+    %i[close_relationships close_relationships_details right_to_work_in_uk]
   end
 end

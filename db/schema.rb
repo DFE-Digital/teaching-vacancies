@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_19_153640) do
+ActiveRecord::Schema.define(version: 2021_04_20_133311) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -166,7 +166,6 @@ ActiveRecord::Schema.define(version: 2021_04_19_153640) do
     t.text "personal_statement", default: "", null: false
     t.string "support_needed", default: "", null: false
     t.text "support_needed_details", default: "", null: false
-    t.string "banned_or_disqualified", default: "", null: false
     t.string "close_relationships", default: "", null: false
     t.text "close_relationships_details", default: "", null: false
     t.string "right_to_work_in_uk", default: "", null: false
