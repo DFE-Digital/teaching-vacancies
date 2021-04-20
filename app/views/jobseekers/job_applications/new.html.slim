@@ -19,9 +19,7 @@
     = govuk_notification_banner title: t("banners.important") do
       = t(".privacy_info")
 
-    = govuk_button_to t("buttons.start_application"), jobseekers_job_job_application_path(vacancy.id), class: "govuk-button--start"
-
-    = govuk_link_to t("buttons.cancel"), job_path(vacancy)
+    = govuk_button_to t("buttons.start_application"), jobseekers_job_job_application_path(vacancy.id)
 
   .govuk-grid-column-one-third
     .account-sidebar
