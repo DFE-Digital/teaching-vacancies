@@ -31,6 +31,10 @@ en:
     subscriptions:
       created: Email subscription created successfully.
 
+  notifications:
+    publishers/job_application_received_notification:
+      message_html: You have received %{link} for %{job_title} at %{organisation}
+
   errors:
     jobs:
       unable_to_publish: We were unable to publish this job. Make sure that you have filled all mandatory fields.

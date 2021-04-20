@@ -1,0 +1,18 @@
+- content_for :page_title_prefix, t(".title", count: notifications.unread.total_count)
+
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl class="govuk-!-margin-bottom-3" = t(".heading")
+
+      .govuk-grid-row
+        .govuk-grid-column-full
+          = render "pagination_stats"
+
+      - notifications.each do |notification|
+        = render NotificationComponent.new notification: notification.to_notification
+
+      .govuk-grid-row
+        .govuk-grid-column-full
+          = render "pagination_stats"
+          = paginate notifications

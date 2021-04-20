@@ -8,6 +8,8 @@ class Publisher < ApplicationRecord
   has_many :organisations, through: :organisation_publishers
   accepts_nested_attributes_for :organisation_publishers
 
+  has_many :notifications, as: :recipient, dependent: :destroy
+
   devise :omniauthable, :timeoutable, omniauth_providers: %i[dfe]
   self.timeout_in = 60.minutes # Overrides default Devise configuration
 
