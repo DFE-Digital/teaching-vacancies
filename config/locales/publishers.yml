@@ -3,6 +3,7 @@ en:
     notifications:
       index:
         heading: Notifications
+        no_notifications: You have no notifications
         title:
           zero: No unread notifications
           one: 1 unread notification
