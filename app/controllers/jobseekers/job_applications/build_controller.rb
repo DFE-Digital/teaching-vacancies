@@ -59,15 +59,15 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
 
   def update_params
     form_params.merge(
-      completed_steps: job_application.completed_steps.delete_if { |completed_step| completed_step.to_sym == step },
-      in_progress_steps: job_application.in_progress_steps.append(step).uniq,
+      completed_steps: job_application.completed_steps.delete_if { |completed_step| completed_step == step.to_s },
+      in_progress_steps: job_application.in_progress_steps.append(step.to_s).uniq,
     )
   end
 
   def completed_update_params
     form_params.merge(
-      completed_steps: job_application.completed_steps.append(step).uniq,
-      in_progress_steps: job_application.in_progress_steps.delete_if { |in_progress_step| in_progress_step.to_sym == step },
+      completed_steps: job_application.completed_steps.append(step.to_s).uniq,
+      in_progress_steps: job_application.in_progress_steps.delete_if { |in_progress_step| in_progress_step == step.to_s },
     )
   end
 
