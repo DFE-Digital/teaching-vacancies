@@ -78,16 +78,11 @@ en:
       jobseeker:
         password: Your password has to be at least 8 characters long
 
-      jobseekers_job_application_employment_history_form:
-        gaps_in_employment: >-
-          Select yes if you have had any gaps in employment since you left full-time education. For example, if you've
-          taken 3 months or more off for parental leave, illness or study.
-      jobseekers_job_application_personal_details_form:
-        national_insurance_number: >-
-          If you have a National Insurance number you should enter it here. It's on your National Insurance card,
-          benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
-        phone_number: Please only give a phone number that you are happy to be contacted on.
-        previous_names: For example maiden name or name at birth, if different from the name you have now.
+      jobseekers_job_application_declarations_form:
+        right_to_work_in_uk_html: >-
+          You can find out whether you have the right to work in the UK on the
+          <a href="https://www.gov.uk/">GOV.UK website</a>. You can apply for this role even if you do not have the
+          right to work in the UK.
       jobseekers_job_application_details_employment_form:
         ended_on: For example, 01 01 2020
         main_duties: A very brief summary
@@ -96,6 +91,10 @@ en:
         institution: For example, a university or college
       jobseekers_job_application_details_reference_form:
         phone_number: Please only give a phone number that your referee is happy to be contacted on.
+      jobseekers_job_application_employment_history_form:
+        gaps_in_employment: >-
+          Select yes if you have had any gaps in employment since you left full-time education. For example, if you've
+          taken 3 months or more off for parental leave, illness or study.
       jobseekers_job_application_equal_opportunities_form:
         gender: If the options below do not reflect how you identify, please select ‘Other’.
         ethnicity: If the options below do not reflect how you identify, please select ‘Other’.
@@ -114,6 +113,12 @@ en:
           given options.
         religion_options:
           other: Please use your own words.
+      jobseekers_job_application_personal_details_form:
+        national_insurance_number: >-
+          If you have a National Insurance number you should enter it here. It's on your National Insurance card,
+          benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
+        phone_number: Please only give a phone number that you are happy to be contacted on.
+        previous_names: For example maiden name or name at birth, if different from the name you have now.
       jobseekers_job_alert_further_feedback_form:
         comment: This is optional, but the information will help us to make improvements.
       jobseekers_nqt_job_alerts_form:
