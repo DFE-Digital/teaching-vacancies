@@ -10,7 +10,7 @@ RSpec.describe "Job applications" do
   end
 
   describe "GET #new" do
-    context "when the job is not listed" do
+    context "when the job is not live" do
       let(:vacancy) { create(:vacancy, :expired, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
 
       it "does not trigger a `vacancy_apply_clicked` event and returns not found" do
@@ -20,7 +20,7 @@ RSpec.describe "Job applications" do
       end
     end
 
-    context "when the job is listed" do
+    context "when the job is live" do
       it "triggers a `vacancy_apply_clicked` event" do
         expect { get new_jobseekers_job_job_application_path(vacancy.id) }
           .to have_triggered_event(:vacancy_apply_clicked).with_data(vacancy_id: vacancy.id)
@@ -43,11 +43,20 @@ RSpec.describe "Job applications" do
             .to redirect_to(new_quick_apply_jobseekers_job_job_application_path(new_vacancy.id))
         end
       end
+
+      context "when the vacancy does not enable job applications" do
+        let(:vacancy) { create(:vacancy, enable_job_applications: false, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+
+        it "raises an error" do
+          expect { get new_jobseekers_job_job_application_path(vacancy.id) }
+            .to raise_error(ActionController::RoutingError, /Cannot apply for this vacancy/)
+        end
+      end
     end
   end
 
   describe "POST #create" do
-    context "when the job is not listed" do
+    context "when the job is not live" do
       let(:vacancy) { create(:vacancy, :expired, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
 
       it "does not create a job application and returns not found" do
@@ -62,6 +71,15 @@ RSpec.describe "Job applications" do
 
       it "redirects to `jobseekers_job_applications_path`" do
         expect(post(jobseekers_job_job_application_path(vacancy.id))).to redirect_to(jobseekers_job_applications_path)
+      end
+    end
+
+    context "when the vacancy does not enable job applications" do
+      let(:vacancy) { create(:vacancy, enable_job_applications: false, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+
+      it "raises an error" do
+        expect { post(jobseekers_job_job_application_path(vacancy.id)) }
+          .to raise_error(ActionController::RoutingError, /Cannot apply for this vacancy/)
       end
     end
 
@@ -90,6 +108,15 @@ RSpec.describe "Job applications" do
       it "raises an error" do
         expect { get new_quick_apply_jobseekers_job_job_application_path(vacancy.id) }
           .to raise_error(ActionController::RoutingError, /non-draft/)
+      end
+    end
+
+    context "when the vacancy does not enable job applications" do
+      let(:vacancy) { create(:vacancy, enable_job_applications: false, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+
+      it "raises an error" do
+        expect { get new_jobseekers_job_job_application_path(vacancy.id) }
+          .to raise_error(ActionController::RoutingError, /Cannot apply for this vacancy/)
       end
     end
 
@@ -131,6 +158,15 @@ RSpec.describe "Job applications" do
       it "raises an error" do
         expect { post quick_apply_jobseekers_job_job_application_path(vacancy.id) }
           .to raise_error(ActionController::RoutingError, /non-draft/)
+      end
+    end
+
+    context "when the vacancy does not enable job applications" do
+      let(:vacancy) { create(:vacancy, enable_job_applications: false, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+
+      it "raises an error" do
+        expect { post quick_apply_jobseekers_job_job_application_path(vacancy.id) }
+          .to raise_error(ActionController::RoutingError, /Cannot apply for this vacancy/)
       end
     end
 

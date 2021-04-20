@@ -21,7 +21,7 @@ RSpec.describe "Creating a vacancy" do
   context "creating a new vacancy" do
     let(:suitable_for_nqt) { "no" }
     let(:vacancy) do
-      VacancyPresenter.new(build(:vacancy, :complete,
+      VacancyPresenter.new(build(:vacancy, :complete, :no_tv_applications,
                                  job_roles: %i[teacher sen_specialist],
                                  suitable_for_nqt: suitable_for_nqt,
                                  working_patterns: %w[full_time part_time],
@@ -594,7 +594,7 @@ RSpec.describe "Creating a vacancy" do
 
       context "when a start date has been given" do
         scenario "lists all the vacancy details correctly" do
-          vacancy = create(:vacancy, :complete, :draft)
+          vacancy = create(:vacancy, :complete, :draft, :no_tv_applications)
           vacancy.organisation_vacancies.create(organisation: school)
 
           vacancy = VacancyPresenter.new(vacancy)
@@ -608,7 +608,7 @@ RSpec.describe "Creating a vacancy" do
 
       context "when the start date is as soon as possible" do
         scenario "lists all the vacancy details correctly" do
-          vacancy = create(:vacancy, :complete, :draft, :starts_asap)
+          vacancy = create(:vacancy, :complete, :draft, :starts_asap, :no_tv_applications)
           vacancy.organisation_vacancies.create(organisation: school)
 
           vacancy = VacancyPresenter.new(vacancy)
@@ -622,7 +622,7 @@ RSpec.describe "Creating a vacancy" do
 
       context "when the listing is full-time" do
         scenario "lists all the full-time vacancy details correctly" do
-          vacancy = create(:vacancy, :complete, :draft, working_patterns: %w[full_time])
+          vacancy = create(:vacancy, :complete, :draft, :no_tv_applications, working_patterns: %w[full_time])
           vacancy.organisation_vacancies.create(organisation: school)
 
           vacancy = VacancyPresenter.new(vacancy)
@@ -637,7 +637,7 @@ RSpec.describe "Creating a vacancy" do
 
       context "when the listing is part-time" do
         scenario "lists all the part-time vacancy details correctly" do
-          vacancy = create(:vacancy, :complete, :draft, working_patterns: %w[part_time])
+          vacancy = create(:vacancy, :complete, :draft, :no_tv_applications, working_patterns: %w[part_time])
           vacancy.organisation_vacancies.create(organisation: school)
 
           vacancy = VacancyPresenter.new(vacancy)
@@ -652,7 +652,7 @@ RSpec.describe "Creating a vacancy" do
 
       context "when the listing is both full- and part-time" do
         scenario "lists all the working pattern vacancy details correctly" do
-          vacancy = create(:vacancy, :complete, :draft, working_patterns: %w[full_time part_time])
+          vacancy = create(:vacancy, :complete, :draft, :no_tv_applications, working_patterns: %w[full_time part_time])
           vacancy.organisation_vacancies.create(organisation: school)
 
           vacancy = VacancyPresenter.new(vacancy)
