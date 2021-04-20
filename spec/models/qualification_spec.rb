@@ -34,4 +34,16 @@ RSpec.describe Qualification do
       end
     end
   end
+
+  describe "#finished_studying_option_with_details" do
+    let(:qualification) do
+      build_stubbed(:qualification,
+                    finished_studying: false,
+                    finished_studying_details: "I stopped studying to become a hacker <script>alert('hacked')</script>")
+    end
+
+    it "interposes a line break between the two fields and sanitizes the details field" do
+      expect(qualification.finished_studying_option_with_details).to eq("No</br>I stopped studying to become a hacker alert('hacked')")
+    end
+  end
 end
