@@ -59,7 +59,6 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
     end
 
     it "does not copy declarations attributes" do
-      expect(subject.banned_or_disqualified).to be_blank
       expect(subject.close_relationships).to be_blank
       expect(subject.close_relationships_details).to be_blank
       expect(subject.right_to_work_in_uk).to be_blank
