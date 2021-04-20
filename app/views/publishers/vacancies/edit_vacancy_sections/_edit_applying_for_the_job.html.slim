@@ -15,7 +15,7 @@
         - if @vacancy.enable_job_applications?
           - component.slot(:row,
             key: t("jobs.personal_statement_guidance"),
-            value: @vacancy.personal_statement_guidance)
+            value: @vacancy.personal_statement_guidance.presence || t("jobs.not_defined"))
 
         - elsif @vacancy.enable_job_applications == false # as opposed to nil
           - component.slot(:row,
