@@ -149,6 +149,12 @@ en:
         with_count_html: Active jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
     vacancies:
       build:
+        applying_for_the_job:
+          notification:
+            heading: Teaching Vacancies application form
+            description:
+              content_html: You can choose for candidates to apply for the job through Teaching Vacancies. %{link} (opens in new tab).
+              link: Preview the application form
         process_title: Create a job listing steps
       destroy:
         success_html: >-
