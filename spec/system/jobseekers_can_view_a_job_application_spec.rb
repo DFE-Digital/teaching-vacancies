@@ -76,7 +76,6 @@ RSpec.describe "Jobseekers can view a job application" do
     end
 
     show_page.steps(text: I18n.t("jobseekers.job_applications.build.declarations.heading")).first.within do |declarations|
-      expect(declarations.body.rows(id: "declarations_banned_or_disqualified").first.value.text).to eq(job_application.banned_or_disqualified.capitalize)
       expect(declarations.body.rows(id: "declarations_close_relationships").first.value.text).to include(job_application.close_relationships.capitalize)
       expect(declarations.body.rows(id: "declarations_close_relationships").first.value.text).to include(job_application.close_relationships_details)
       expect(declarations.body.rows(id: "declarations_right_to_work_in_uk").first.value.text).to eq(job_application.right_to_work_in_uk.capitalize)

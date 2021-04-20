@@ -52,7 +52,6 @@ FactoryBot.define do
     religion_description { Faker::Lorem.sentence }
 
     # Declarations
-    banned_or_disqualified { "no" }
     close_relationships { "yes" }
     close_relationships_details { Faker::Lorem.paragraph(sentence_count: 1) }
     right_to_work_in_uk { "yes" }
@@ -123,7 +122,6 @@ FactoryBot.define do
     support_needed_details { "" }
 
     # Declarations
-    banned_or_disqualified { "" }
     close_relationships { "" }
     close_relationships_details { "" }
     right_to_work_in_uk { "" }

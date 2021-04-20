@@ -474,10 +474,6 @@ en:
       jobseekers_job_application_ask_for_support_form:
         support_needed: Do you want to ask for support so that you can attend an interview?
       jobseekers_job_application_declarations_form:
-        banned_or_disqualified: >-
-          Are you banned or disqualified from working with children or subject to any sanctions or conditions on your
-          employment, imposed by the Independent Safeguarding Authority (ISA), Secretary of State or other regulatory body
-          (e.g. the GTCE)?
         close_relationships: Do you have any family or close relationship with people within %{organisation}?
         right_to_work_in_uk: Do you have the right to work in the UK?
       jobseekers_job_application_employment_history_form:
