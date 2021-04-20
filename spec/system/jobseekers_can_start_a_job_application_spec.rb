@@ -20,7 +20,9 @@ RSpec.describe "Jobseekers can start or continue a job application" do
           before do
             login_as(jobseeker, scope: :jobseeker)
             visit job_path(vacancy)
-            click_on I18n.t("jobseekers.job_applications.banner_links.apply")
+            within ".banner-component" do
+              click_on I18n.t("jobseekers.job_applications.banner_links.apply")
+            end
           end
 
           it "starts a job application" do
@@ -37,7 +39,9 @@ RSpec.describe "Jobseekers can start or continue a job application" do
           context "when clicking 'apply' on the job page" do
             before do
               visit job_path(vacancy)
-              click_on I18n.t("jobseekers.job_applications.banner_links.apply")
+              within ".banner-component" do
+                click_on I18n.t("jobseekers.job_applications.banner_links.apply")
+              end
             end
 
             it "starts a job application after signing in" do
@@ -60,7 +64,9 @@ RSpec.describe "Jobseekers can start or continue a job application" do
         context "when clicking 'apply' on the job page" do
           before do
             visit job_path(vacancy)
-            click_on I18n.t("jobseekers.job_applications.banner_links.apply")
+            within ".banner-component" do
+              click_on I18n.t("jobseekers.job_applications.banner_links.apply")
+            end
           end
 
           it "starts a job application after signing up" do
@@ -102,7 +108,9 @@ RSpec.describe "Jobseekers can start or continue a job application" do
         before do
           visit job_path(vacancy)
           login_as(jobseeker, scope: :jobseeker)
-          click_on I18n.t("jobseekers.job_applications.banner_links.apply")
+          within ".banner-component" do
+            click_on I18n.t("jobseekers.job_applications.banner_links.apply")
+          end
         end
 
         it "redirects to job applications dashboard with correct message" do
@@ -135,7 +143,9 @@ RSpec.describe "Jobseekers can start or continue a job application" do
         before do
           visit job_path(vacancy)
           login_as(jobseeker, scope: :jobseeker)
-          click_on I18n.t("jobseekers.job_applications.banner_links.apply")
+          within ".banner-component" do
+            click_on I18n.t("jobseekers.job_applications.banner_links.apply")
+          end
         end
 
         it "redirects to job applications dashboard with correct message" do
