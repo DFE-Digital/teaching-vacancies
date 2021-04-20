@@ -21,7 +21,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
   context "when editing a published vacancy" do
     let(:vacancy) do
       VacancyPresenter.new(
-        create(:vacancy, :complete, job_location: "at_one_school",
+        create(:vacancy, :complete, :no_tv_applications, job_location: "at_one_school",
                                     job_roles: %i[teacher sen_specialist], working_patterns: %w[full_time part_time],
                                     publish_on: Date.current, expires_on: Time.zone.tomorrow),
       )
@@ -247,7 +247,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
       context "when the job post has already been published" do
         context "when the publication date is in the past" do
           scenario "renders the publication date as text and does not allow editing" do
-            vacancy = build(:vacancy, :published, slug: "test-slug", publish_on: 1.day.ago)
+            vacancy = build(:vacancy, :published, :no_tv_applications, slug: "test-slug", publish_on: 1.day.ago)
             vacancy.save(validate: false)
             vacancy.organisation_vacancies.create(organisation: school)
             vacancy = VacancyPresenter.new(vacancy)
@@ -268,7 +268,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
 
         context "when the publication date is in the future" do
           scenario "renders the publication date as text and allows editing" do
-            vacancy = create(:vacancy, :published, publish_on: Time.current + 3.days)
+            vacancy = create(:vacancy, :published, :no_tv_applications, publish_on: Time.current + 3.days)
             vacancy.organisation_vacancies.create(organisation: school)
             vacancy = VacancyPresenter.new(vacancy)
             visit edit_organisation_job_path(vacancy.id)

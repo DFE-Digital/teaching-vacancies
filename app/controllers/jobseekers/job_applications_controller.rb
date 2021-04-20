@@ -1,5 +1,6 @@
 class Jobseekers::JobApplicationsController < Jobseekers::BaseController
-  before_action :redirect_if_job_application_exists, only: %i[new create new_quick_apply quick_apply]
+  before_action :raise_unless_vacancy_enable_job_applications,
+                :redirect_if_job_application_exists, only: %i[new create new_quick_apply quick_apply]
 
   helper_method :job_application, :review_form, :vacancy, :withdraw_form
 
@@ -98,6 +99,10 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
                   warning: t("messages.jobseekers.job_applications.already_exists.draft_html",
                              job_title: vacancy.job_title, link: jobseekers_job_application_review_path(job_application))
     end
+  end
+
+  def raise_unless_vacancy_enable_job_applications
+    raise ActionController::RoutingError, "Cannot apply for this vacancy" unless vacancy.enable_job_applications?
   end
 
   def review_form
