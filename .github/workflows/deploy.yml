@@ -110,14 +110,14 @@ jobs:
       uses: benc-uk/workflow-dispatch@v1.1
       with:
         workflow: Deploy App to Environment # Workflow name
-        token: ${{ secrets.PERSONAL_TOKEN }}
+        token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
         inputs: '{"environment": "staging", "tag": "${{ env.TAG }}"}'
 
     - name: Wait for Deploy App Workflow for staging
       id: wait_for_deploy_app_staging
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
-        token: ${{ secrets.PERSONAL_TOKEN }}
+        token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
         checkName: Deploy ${{ env.TAG }} to staging # Job name within workflow
         ref: ${{ github.sha }}
         timeoutSeconds: 720
@@ -141,14 +141,14 @@ jobs:
       uses: benc-uk/workflow-dispatch@v1.1
       with:
         workflow: Smoke Test
-        token: ${{ secrets.PERSONAL_TOKEN }}
+        token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
         inputs: '{"smoke_test_domain": "staging.teaching-vacancies.service.gov.uk", "sha": "${{ github.sha }}"}'
 
     - name: Wait for smoke test
       id: wait_for_smoke_test
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
-        token: ${{ secrets.PERSONAL_TOKEN }}
+        token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
         checkName: Smoke Test staging.teaching-vacancies.service.gov.uk ${{ github.sha }}
         ref: ${{ github.sha }}
         timeoutSeconds: 300
@@ -163,14 +163,14 @@ jobs:
       uses: benc-uk/workflow-dispatch@v1.1
       with:
         workflow: Deploy App to Environment # Workflow name
-        token: ${{ secrets.PERSONAL_TOKEN }}
+        token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
         inputs: '{"environment": "production", "tag": "${{ env.TAG }}"}'
 
     - name: Wait for Deploy App Workflow for production
       id: wait_for_deploy_app_production
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
-        token: ${{ secrets.PERSONAL_TOKEN }}
+        token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
         checkName: Deploy ${{ env.TAG }} to production # Job name within workflow
         ref: ${{ github.sha }}
         timeoutSeconds: 720
