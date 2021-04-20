@@ -145,7 +145,7 @@ RSpec.describe "Job applications" do
       end
 
       context "when rejecting a job application" do
-        let(:commit) { I18n.t("buttons.reject") }
+        let(:commit) { I18n.t("buttons.confirm_rejection") }
 
         it "updates the status" do
           expect { post(organisation_job_job_application_update_status_path(vacancy.id, job_application.id), params: params) }

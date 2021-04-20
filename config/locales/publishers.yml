@@ -170,9 +170,6 @@ en:
           success: "The deadline for %{job_title} has been extended"
       job_applications:
         index:
-          actions:
-            reject: Reject
-            shortlist: Shortlist
           buttons:
             copy: Copy listing
             edit: Edit listing

@@ -74,7 +74,7 @@
           - if application.shortlisted? || application.submitted?
             - card.actions do
               - if application.submitted?
-                = tag.div(govuk_link_to(t(".actions.shortlist"), organisation_job_job_application_shortlist_path(vacancy.id, application.id)))
-              = tag.div(govuk_link_to(t(".actions.reject"), organisation_job_job_application_reject_path(vacancy.id, application.id)))
+                = tag.div(govuk_link_to(t("buttons.shortlist"), organisation_job_job_application_shortlist_path(vacancy.id, application.id)))
+              = tag.div(govuk_link_to(t("buttons.reject"), organisation_job_job_application_reject_path(vacancy.id, application.id)))
     - else
       = render EmptySectionComponent.new title: t(".no_applicants")

@@ -91,13 +91,13 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
       it "has action to reject application" do
         within(".application-#{status} .card-component__actions") do
-          expect(page).to have_link(I18n.t("publishers.vacancies.job_applications.index.actions.reject"), href: organisation_job_job_application_reject_path(vacancy.id, job_application_submitted.id))
+          expect(page).to have_link(I18n.t("buttons.reject"), href: organisation_job_job_application_reject_path(vacancy.id, job_application_submitted.id))
         end
       end
 
       it "has action to shortlist application" do
         within(".application-#{status} .card-component__actions") do
-          expect(page).to have_link(I18n.t("publishers.vacancies.job_applications.index.actions.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, job_application_submitted.id))
+          expect(page).to have_link(I18n.t("buttons.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, job_application_submitted.id))
         end
       end
     end
@@ -124,8 +124,8 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
       it "has action to reject application only" do
         within(".application-#{status} .card-component__actions") do
-          expect(page).to have_link(I18n.t("publishers.vacancies.job_applications.index.actions.reject"), href: organisation_job_job_application_reject_path(vacancy.id, job_application_shortlisted.id))
-          expect(page).not_to have_link(I18n.t("publishers.vacancies.job_applications.index.actions.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, job_application_shortlisted.id))
+          expect(page).to have_link(I18n.t("buttons.reject"), href: organisation_job_job_application_reject_path(vacancy.id, job_application_shortlisted.id))
+          expect(page).not_to have_link(I18n.t("buttons.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, job_application_shortlisted.id))
         end
       end
     end
@@ -153,8 +153,8 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
       it "has no actions" do
         within(".application-#{status} .card-component__actions") do
-          expect(page).not_to have_link(I18n.t("publishers.vacancies.job_applications.index.actions.reject"), href: organisation_job_job_application_reject_path(vacancy.id, job_application_unsuccessful.id))
-          expect(page).not_to have_link(I18n.t("publishers.vacancies.job_applications.index.actions.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, job_application_unsuccessful.id))
+          expect(page).not_to have_link(I18n.t("buttons.reject"), href: organisation_job_job_application_reject_path(vacancy.id, job_application_unsuccessful.id))
+          expect(page).not_to have_link(I18n.t("buttons.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, job_application_unsuccessful.id))
         end
       end
     end
