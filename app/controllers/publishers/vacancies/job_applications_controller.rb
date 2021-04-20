@@ -49,7 +49,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     case params[:commit]
     when t("buttons.shortlist")
       "shortlisted"
-    when t("buttons.reject")
+    when t("buttons.confirm_rejection")
       "unsuccessful"
     end
   end

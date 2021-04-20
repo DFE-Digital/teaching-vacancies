@@ -12,13 +12,13 @@ RSpec.describe "Publishers can reject a job application" do
     visit organisation_job_job_application_path(vacancy.id, job_application.id)
   end
 
-  it "shortlists the job application after confirmation" do
+  it "rejects the job application after confirmation" do
     click_on I18n.t("buttons.reject")
 
     expect(current_path).to eq(organisation_job_job_application_reject_path(vacancy.id, job_application.id))
 
     fill_in "publishers_job_application_update_status_form[rejection_reasons]", with: "Some rejection reasons"
-    click_on I18n.t("buttons.reject")
+    click_on I18n.t("buttons.confirm_rejection")
 
     # TODO: Update expectation when redirect is updated
     expect(current_path).to eq(organisation_jobs_path)
