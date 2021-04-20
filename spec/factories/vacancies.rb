@@ -6,7 +6,6 @@ FactoryBot.define do
 
     job_location { "at_one_school" }
     about_school { Faker::Lorem.paragraph(sentence_count: 4) }
-    application_link { Faker::Internet.url(host: "example.com") }
     enable_job_applications { true }
     benefits { Faker::Lorem.paragraph(sentence_count: 4) }
     contact_email { Faker::Internet.email }
@@ -18,7 +17,6 @@ FactoryBot.define do
     expires_on { Faker::Time.forward(days: 14) }
     expires_at { expires_on&.change(sec: 0) }
     hired_status { nil }
-    how_to_apply { Faker::Lorem.paragraph(sentence_count: 4) }
     job_summary { Faker::Lorem.paragraph(sentence_count: 4) }
     job_roles { [:teacher] }
     job_title { Faker::Lorem.sentence[1...30].strip }
@@ -34,6 +32,12 @@ FactoryBot.define do
     subjects { SUBJECT_OPTIONS.sample(2).map(&:first).sort! }
     suitable_for_nqt { "no" }
     working_patterns { %w[full_time] }
+
+    trait :no_tv_applications do
+      application_link { Faker::Internet.url(host: "example.com") }
+      enable_job_applications { false }
+      how_to_apply { Faker::Lorem.paragraph(sentence_count: 4) }
+    end
 
     trait :central_office do
       job_location { "central_office" }
