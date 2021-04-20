@@ -3,9 +3,16 @@
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      h1.govuk-heading-xl = t(".heading")
+      h1.govuk-heading-xl class="govuk-!-margin-bottom-3" = t(".heading")
+
+      .govuk-grid-row
+        .govuk-grid-column-full
+          = render "pagination_stats"
 
       - notifications.each do |notification|
         = render NotificationComponent.new notification: notification.to_notification
 
-      = paginate notifications
+      .govuk-grid-row
+        .govuk-grid-column-full
+          = render "pagination_stats"
+          = paginate notifications
