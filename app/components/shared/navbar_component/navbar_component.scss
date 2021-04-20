@@ -2,6 +2,15 @@
 
 .govuk-template__body {
   .navbar-component {
+    .notification-badge {
+      background-color: govuk-colour('white');
+      border-radius: 75%;
+      color: govuk-colour('black');
+      font-weight: bold;
+      margin-left: govuk-spacing(2);
+      padding: 0 govuk-spacing(1);
+    }
+
     .navbar-component__navigation {
       @include govuk-media-query($from: desktop) {
         display: flex;
