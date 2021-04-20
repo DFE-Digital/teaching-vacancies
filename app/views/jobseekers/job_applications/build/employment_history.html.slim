@@ -33,8 +33,8 @@
               - c.slot(:row, key: t("jobseekers.job_applications.employments.main_duties"), value: employment.main_duties)
 
           - detail.actions do
-            = govuk_button_to t("buttons.delete"), jobseekers_job_application_employment_path(employment.job_application, employment), method: :delete, class: "govuk-delete-link govuk-!-margin-bottom-0", form_class: "inline-block button_to"
-            = govuk_link_to t("buttons.edit"), edit_jobseekers_job_application_employment_path(employment.job_application, employment), class: "govuk-link--no-visited-state inline-block"
+            = govuk_button_to t("buttons.delete"), jobseekers_job_application_employment_path(job_application, employment), method: :delete, class: "govuk-delete-link govuk-!-margin-bottom-0", form_class: "inline-block button_to"
+            = govuk_link_to t("buttons.edit"), edit_jobseekers_job_application_employment_path(job_application, employment), class: "govuk-link--no-visited-state inline-block"
 
       = govuk_link_to t("buttons.add_another_employment"), new_jobseekers_job_application_employment_path(job_application), button: true, class: "govuk-button--secondary"
     - else

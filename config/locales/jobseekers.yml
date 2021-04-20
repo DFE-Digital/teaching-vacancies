@@ -233,7 +233,9 @@ en:
       not_defined: Not defined (will not be seen on application)
       qualifications:
         destroy:
-          success: Your qualification was deleted
+          success:
+            one: Your qualification was deleted
+            other: Your qualifications were deleted
         qualifications_shared: &qualifications_shared
           caption: Education and qualifications
         edit:
@@ -262,6 +264,7 @@ en:
           <<: *qualifications_shared
           heading: Add a qualification
           title: Add a qualification — Application
+        subjects_and_grades: Subjects and grades
       references:
         destroy:
           success: Your referee was deleted
@@ -295,6 +298,7 @@ en:
               description_html: For more information on how we use your data, please read our %{link_to}.
               link_text: Privacy Policy
         heading: Review your application
+        no_qualifications: You have not added any qualifications.
         title: Review your application — Application
       show:
         feedback: Feedback on your application
