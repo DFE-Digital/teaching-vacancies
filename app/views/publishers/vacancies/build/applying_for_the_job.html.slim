@@ -13,6 +13,10 @@
 
         h2.govuk-heading-l = t("jobs.applying_for_the_job")
 
+        = govuk_notification_banner title: t("banners.important") do |banner|
+          - banner.add_heading text: t(".notification.heading")
+          = t(".notification.description.content_html", link: govuk_link_to(t(".notification.description.link"), page_path("job-application-preview"), target: "_blank"))
+
         = render "publishers/vacancies/vacancy_form_partials/hidden_state_input", f: f
 
         - if JobseekerApplicationsFeature.enabled?
