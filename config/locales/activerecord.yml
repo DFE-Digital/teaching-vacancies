@@ -208,9 +208,9 @@ en:
         publishers/job_listing/end_listing_form:
           attributes:
             end_listing_reason:
-              inclusion: Select an end listing reason
+              inclusion: Select why you would like to end this job listing early
             candidate_hired_from:
-              inclusion: Select a candidate hired from option
+              inclusion: Select how the successful candidate applied for the role
         publishers/job_listing/extend_deadline_form:
           attributes:
             expires_on:
