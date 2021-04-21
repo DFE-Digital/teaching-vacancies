@@ -197,7 +197,6 @@ physics_job = FactoryBot.create(:vacancy,
                                 organisation_vacancies_attributes: [{ organisation: school_one }])
 
 FactoryBot.create(:vacancy,
-                  id: "67991ea9-431d-4d9d-9c99-a78b80108fe1",
                   job_title: "Maths Teacher",
                   subjects: %w[Maths],
                   working_patterns: %w[part_time],
@@ -207,7 +206,6 @@ FactoryBot.create(:vacancy,
                   organisation_vacancies_attributes: [{ organisation: school_two }])
 
 FactoryBot.create(:vacancy,
-                  id: "67991ea9-431d-4d9d-9c99-a78b80108fe1",
                   job_title: "English Teacher",
                   subjects: %w[English],
                   working_patterns: %w[full_time],
@@ -218,7 +216,6 @@ FactoryBot.create(:vacancy,
 
 # vacancy at a trust central office
 FactoryBot.create(:vacancy, :central_office,
-                  id: "7bfadb84-cf30-4121-88bd-a9f958440cc9",
                   job_title: "Trust Executive Officer",
                   subjects: %w[],
                   working_patterns: %w[full_time],
@@ -230,7 +227,6 @@ FactoryBot.create(:vacancy, :central_office,
 
 # vacancy at multiple schools in a local authority
 FactoryBot.create(:vacancy, :at_multiple_schools,
-                  id: "9910d184-5686-4ffc-9322-69aa150c19d3",
                   job_title: "PE Teacher",
                   subjects: ["Physical Education"],
                   working_patterns: %w[full_time],
@@ -242,7 +238,6 @@ FactoryBot.create(:vacancy, :at_multiple_schools,
                   organisation_vacancies_attributes: [{ organisation: school_two }, { organisation: school_three }])
 
 FactoryBot.create(:vacancy,
-                  id: "3bf67da6-039c-4ee1-bf59-8475672a0d2b",
                   job_title: "Chemistry Teacher",
                   subjects: %w[Chemistry],
                   working_patterns: %w[full_time part_time job_share],
@@ -252,7 +247,6 @@ FactoryBot.create(:vacancy,
                   organisation_vacancies_attributes: [{ organisation: school_two }])
 
 FactoryBot.create(:vacancy,
-                  id: "e750baf6-cc9a-4b93-84cf-ee4e5f8a7ee4",
                   job_title: "Geography Teacher",
                   subjects: %w[Geography],
                   working_patterns: %w[part_time job_share],
@@ -308,6 +302,5 @@ jobseeker = Jobseeker.create(email: "jobseeker@example.com",
                              confirmed_at: Time.zone.now)
 
 FactoryBot.create(:job_application, :status_submitted,
-                  id: "6683c564-15e6-41af-ab44-7adf125f4c84",
                   jobseeker: jobseeker,
                   vacancy: physics_job)
