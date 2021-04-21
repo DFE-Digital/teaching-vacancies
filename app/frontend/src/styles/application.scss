@@ -118,3 +118,9 @@ b {
     }
   }
 }
+
+.govuk-section-break {
+  &--thick {
+    border-bottom: 5px solid #b1b4b6;
+  }
+}
