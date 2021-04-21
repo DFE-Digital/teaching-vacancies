@@ -73,6 +73,22 @@ RSpec.describe "Job applications" do
       end
     end
 
+    context "when the job application status is submitted" do
+      it "updates the job application status to reviewed" do
+        expect { get(organisation_job_job_application_path(vacancy.id, job_application.id)) }
+          .to change { job_application.reload.status }.from("submitted").to("reviewed")
+      end
+    end
+
+    context "when the job application status is not submitted" do
+      let(:job_application) { create(:job_application, :status_shortlisted, vacancy: vacancy) }
+
+      it "does not update the job application status" do
+        expect { get(organisation_job_job_application_path(vacancy.id, job_application.id)) }
+          .to(not_change { job_application.reload.status })
+      end
+    end
+
     context "when the job application status is draft" do
       let(:job_application) { create(:job_application, :status_draft, vacancy: vacancy) }
 
@@ -138,9 +154,8 @@ RSpec.describe "Job applications" do
         end
 
         it "redirects to job applications page" do
-          # TODO: Update expectation when redirect is updated
           expect(post(organisation_job_job_application_update_status_path(vacancy.id, job_application.id), params: params))
-            .to redirect_to(organisation_jobs_path)
+            .to redirect_to(organisation_job_job_applications_path(vacancy.id))
         end
       end
 
@@ -159,9 +174,8 @@ RSpec.describe "Job applications" do
         end
 
         it "redirects to job applications page" do
-          # TODO: Update expectation when redirect is updated
           expect(post(organisation_job_job_application_update_status_path(vacancy.id, job_application.id), params: params))
-            .to redirect_to(organisation_jobs_path)
+            .to redirect_to(organisation_job_job_applications_path(vacancy.id))
         end
       end
     end
