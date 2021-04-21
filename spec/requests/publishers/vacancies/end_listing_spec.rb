@@ -61,19 +61,6 @@ RSpec.describe "End job listing early" do
       end
     end
 
-    context "when the commit param is `Cancel`" do
-      let(:button) { I18n.t("buttons.cancel") }
-
-      it "does not update expires_at, end_listing_reason, google index and redirects to the dashboard" do
-        expect { patch(organisation_job_end_listing_path(vacancy.id), params: params) }
-          .to not_change { vacancy.reload.expires_at }
-          .and not_change { vacancy.reload.end_listing_reason }
-          .and not_have_enqueued_job(UpdateGoogleIndexQueueJob)
-
-        expect(response).to redirect_to(jobs_with_type_organisation_path(:published))
-      end
-    end
-
     it "updates expires_at, end_listing_reason, google index and redirects to the dashboard" do
       freeze_time do
         expect { patch(organisation_job_end_listing_path(vacancy.id), params: params) }
