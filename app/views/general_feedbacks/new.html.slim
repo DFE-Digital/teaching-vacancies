@@ -6,8 +6,9 @@
       = form_for @general_feedback_form, url: feedback_path do |f|
         = f.govuk_error_summary
 
-        h1.govuk-heading-xl
-          = t(".heading")
+        h1.govuk-heading-xl = t(".heading")
+
+        p.govuk-body = t(".report_a_problem_html", mail_to: govuk_mail_to(t("help.email"), t("help.email")))
 
         = f.govuk_radio_buttons_fieldset(:visit_purpose, legend: { size: "m" }) do
           - Feedback.visit_purposes.keys.each_with_index do |visit_purpose, idx|
