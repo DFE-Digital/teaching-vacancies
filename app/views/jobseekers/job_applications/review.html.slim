@@ -33,7 +33,7 @@
       h3.govuk-heading-m = t(".confirmation.heading")
 
       = f.govuk_check_boxes_fieldset :confirm_data_accurate, multiple: false, legend: nil do
-        = f.govuk_check_box :confirm_data_accurate, 1, 0, multiple: false, link_errors: true
+        = f.govuk_check_box :confirm_data_accurate, "1", 0, multiple: false, link_errors: true
 
       h3.govuk-heading-m = t(".confirmation.how_we_use_your_data.heading")
 
@@ -47,7 +47,7 @@
       p.govuk-body = t(".confirmation.how_we_use_your_data.privacy_policy.description_html", link_to: govuk_link_to(t(".confirmation.how_we_use_your_data.privacy_policy.link_text"), page_path("privacy-policy")))
 
       = f.govuk_check_boxes_fieldset :confirm_data_usage, multiple: false, legend: nil do
-        = f.govuk_check_box :confirm_data_usage, 1, 0, multiple: false, link_errors: true
+        = f.govuk_check_box :confirm_data_usage, "1", 0, multiple: false, link_errors: true
 
       - if vacancy.listed?
         = f.govuk_submit t("buttons.submit_application") do

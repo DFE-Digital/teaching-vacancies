@@ -305,6 +305,24 @@ RSpec.describe "Job applications" do
     end
   end
 
+  describe "GET #review" do
+    context "when the application is not a draft" do
+      let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+
+      it "redirects to the application page" do
+        expect(get(jobseekers_job_application_review_path(job_application.id))).to redirect_to(jobseekers_job_application_path(job_application.id))
+      end
+    end
+
+    context "when the application is a draft" do
+      let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+
+      it "shows the review page" do
+        expect(get(jobseekers_job_application_review_path(job_application.id))).to render_template(:review)
+      end
+    end
+  end
+
   describe "DELETE #destroy" do
     context "when the application is a draft" do
       let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
