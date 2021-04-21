@@ -528,7 +528,7 @@ en:
         publish_on: Date job will be listed
         starts_on: Date job starts
       publishers_job_listing_end_listing_form:
-        end_listing_reason: Why would you like to end this role early?
+        end_listing_reason: Why would you like to end this jobs listing early?
       publishers_job_listing_extend_deadline_form:
         expires_on: Date application is due
         expiry_time: Time application is due
