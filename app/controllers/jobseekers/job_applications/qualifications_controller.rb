@@ -3,9 +3,7 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
                 :submit_text
 
   def submit_category
-    if params[:commit] == t("buttons.cancel")
-      redirect_to back_path
-    elsif form.valid?
+    if form.valid?
       redirect_to new_jobseekers_job_application_qualification_path(qualification_params)
     else
       render :select_category
@@ -13,9 +11,7 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
   end
 
   def create
-    if params[:commit] == t("buttons.cancel")
-      redirect_to back_path
-    elsif form.valid?
+    if form.valid?
       job_application.qualifications.create(qualification_params)
       redirect_to back_path
     else
@@ -24,9 +20,7 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
   end
 
   def update
-    if params[:commit] == t("buttons.cancel")
-      redirect_to back_path
-    elsif form.valid?
+    if form.valid?
       qualification.update(qualification_params)
       redirect_to back_path
     else

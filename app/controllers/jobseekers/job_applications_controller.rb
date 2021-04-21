@@ -67,11 +67,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
     raise ActionController::RoutingError, "Cannot withdraw non-submitted or non-shortlisted application" unless
       job_application.status.in?(%w[shortlisted submitted])
 
-    if params[:commit] == t("buttons.cancel")
-      return redirect_to jobseekers_job_applications_path if URI(params[:origin]).path == jobseekers_job_applications_path
-
-      redirect_to jobseekers_job_application_path(job_application)
-    elsif withdraw_form.valid?
+    if withdraw_form.valid?
       job_application.withdrawn!
       redirect_to jobseekers_job_applications_path, success: t(".success", job_title: vacancy.job_title)
     else
