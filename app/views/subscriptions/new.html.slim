@@ -20,7 +20,3 @@
         = recaptcha
 
         = f.govuk_submit t("buttons.subscribe"), classes: "govuk-!-padding-left-8 govuk-!-padding-right-8"
-
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = govuk_link_to(t("buttons.cancel"), @origin.presence || jobs_path(@subscription_form.search_criteria_hash), class: "govuk-!-font-size-19")

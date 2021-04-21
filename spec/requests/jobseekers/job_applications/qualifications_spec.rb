@@ -43,16 +43,6 @@ RSpec.describe "Job applications qualifications" do
 
         expect(response).to redirect_to(new_jobseekers_job_application_qualification_path(job_application, category: "other"))
       end
-
-      context "when the commit param is `Cancel`" do
-        let(:button) { I18n.t("buttons.cancel") }
-
-        it "redirects to the qualification build step" do
-          post submit_category_jobseekers_job_application_qualifications_path(job_application), params: params
-
-          expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :qualifications))
-        end
-      end
     end
 
     context "when the form is invalid" do
@@ -128,17 +118,6 @@ RSpec.describe "Job applications qualifications" do
 
         expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :qualifications))
       end
-
-      context "when the commit param is `Cancel`" do
-        let(:button) { I18n.t("buttons.cancel") }
-
-        it "does not create the qualification and redirects to the qualification build step" do
-          expect { post jobseekers_job_application_qualifications_path(job_application), params: params }
-            .to(not_change { Qualification.count })
-
-          expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :qualifications))
-        end
-      end
     end
 
     context "when the form is invalid" do
@@ -205,17 +184,6 @@ RSpec.describe "Job applications qualifications" do
           patch jobseekers_job_application_qualification_path(job_application, qualification), params: params
 
           expect(response).to have_http_status(:not_found)
-        end
-      end
-
-      context "when the commit param is `Cancel`" do
-        let(:button) { I18n.t("buttons.cancel") }
-
-        it "does not update the qualification and redirects to the qualification build step" do
-          expect { patch jobseekers_job_application_qualification_path(job_application, qualification), params: params }
-            .to(not_change { qualification.reload.subject })
-
-          expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :qualifications))
         end
       end
     end

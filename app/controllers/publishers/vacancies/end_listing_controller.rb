@@ -2,8 +2,6 @@ class Publishers::Vacancies::EndListingController < Publishers::Vacancies::BaseC
   helper_method :form, :vacancy
 
   def update
-    return redirect_to jobs_with_type_organisation_path(:published) if params[:commit] == t("buttons.cancel")
-
     if form.valid?
       vacancy.update(form_params.merge(expires_on: Time.current, expires_at: Time.current))
       update_google_index(vacancy)

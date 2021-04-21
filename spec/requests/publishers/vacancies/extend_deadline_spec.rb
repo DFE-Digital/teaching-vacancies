@@ -74,18 +74,6 @@ RSpec.describe "Extend deadline" do
       end
     end
 
-    context "when the commit param is `Cancel`" do
-      let(:button) { I18n.t("buttons.cancel") }
-
-      it "does not extend the deadline or update google index and redirects to vacancy job applications dashboard" do
-        expect { patch organisation_job_extend_deadline_path(vacancy.id), params: params }
-          .to not_change { vacancy.reload.expires_at }
-          .and not_have_enqueued_job(UpdateGoogleIndexQueueJob)
-
-        expect(response).to redirect_to(organisation_job_job_applications_path(vacancy.id))
-      end
-    end
-
     context "when the form is invalid" do
       before { allow_any_instance_of(Publishers::JobListing::ExtendDeadlineForm).to receive(:valid?).and_return(false) }
 

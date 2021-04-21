@@ -69,17 +69,6 @@ RSpec.describe "Job applications employments" do
           expect(response).to have_http_status(:not_found)
         end
       end
-
-      context "when the commit param is `Cancel`" do
-        let(:button) { I18n.t("buttons.cancel") }
-
-        it "does not create the employment and redirects to the employment history build step" do
-          expect { post jobseekers_job_application_employments_path(job_application), params: params }
-            .to(not_change { Employment.count })
-
-          expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :employment_history))
-        end
-      end
     end
 
     context "when the form is invalid" do
@@ -106,17 +95,6 @@ RSpec.describe "Job applications employments" do
           .to change { employment.reload.organisation }.from("Cool school").to("Awesome academy")
 
         expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :employment_history))
-      end
-
-      context "when the commit param is `Cancel`" do
-        let(:button) { I18n.t("buttons.cancel") }
-
-        it "does not update the employment and redirects to the employment history build step" do
-          expect { patch jobseekers_job_application_employment_path(job_application, employment), params: params }
-            .to(not_change { employment.reload.organisation })
-
-          expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :employment_history))
-        end
       end
 
       context "when the job application status is not draft" do
