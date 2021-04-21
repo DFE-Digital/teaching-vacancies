@@ -52,7 +52,7 @@ class Publishers::VacanciesComponent < ViewComponent::Base
                            class: "govuk-link--no-visited-state")
       tag.div(card.labelled_item(I18n.t("jobs.manage.applications"), link))
     elsif vacancy.job_applications.none?
-      text = tag.span(I18n.t("jobs.manage.view_applicants", count: 0), class: "text-red")
+      text = tag.span(I18n.t("jobs.manage.view_applicants", count: 0))
       tag.div(card.labelled_item(I18n.t("jobs.manage.applications"), text))
     end
   end
