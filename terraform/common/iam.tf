@@ -122,6 +122,48 @@ resource "aws_iam_policy" "cloudfront" {
   policy = data.aws_iam_policy_document.cloudfront.json
 }
 
+# IAM user/key/policy management for file attachment buckets
+
+data "aws_iam_policy_document" "iam_manage_attachment_buckets_credentials" {
+  statement {
+    actions = [
+      "iam:CreateUser",
+      "iam:DeleteUser",
+      "iam:CreateAccessKey",
+      "iam:DeleteAccessKey",
+      "iam:AttachUserPolicy",
+      "iam:DetachUserPolicy"
+    ]
+    resources = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/attachment_buckets_users/*"]
+  }
+  statement {
+    actions = [
+      "iam:CreatePolicy",
+      "iam:DeletePolicy"
+    ]
+    resources = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/attachment_buckets_policies/*"]
+  }
+}
+
+resource "aws_iam_policy" "iam_manage_attachment_buckets_credentials" {
+  name   = "iam_manage_attachment_buckets_credentials"
+  policy = data.aws_iam_policy_document.iam_manage_attachment_buckets_credentials.json
+}
+
+# S3 file attachment buckets
+
+data "aws_iam_policy_document" "s3_manage_attachment_buckets" {
+  statement {
+    actions   = ["s3:CreateBucket", "s3:DeleteBucket"]
+    resources = ["arn:aws:s3:::${data.aws_caller_identity.current.account_id}-${local.service_name}-attachments-*"]
+  }
+}
+
+resource "aws_iam_policy" "s3_manage_attachment_buckets" {
+  name   = "s3_manage_attachment_buckets"
+  policy = data.aws_iam_policy_document.s3_manage_attachment_buckets.json
+}
+
 # DB backups in S3
 
 data "aws_iam_policy_document" "db_backups_in_s3_fullaccess" {
