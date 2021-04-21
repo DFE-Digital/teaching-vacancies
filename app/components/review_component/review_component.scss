@@ -53,9 +53,6 @@
   margin-left: govuk-spacing(6);
   margin-top: 0;
   padding-left: 0;
-  @include govuk-media-query($from: tablet) {
-    min-width: 550px;
-  }
 
   @include govuk-media-query($until: desktop) {
     margin-left: govuk-spacing(4);
