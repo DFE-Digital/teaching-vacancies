@@ -206,6 +206,16 @@ FactoryBot.create(:vacancy,
                   publisher_organisation: school_one,
                   organisation_vacancies_attributes: [{ organisation: school_two }])
 
+FactoryBot.create(:vacancy,
+                  id: "67991ea9-431d-4d9d-9c99-a78b80108fe1",
+                  job_title: "English Teacher",
+                  subjects: %w[English],
+                  working_patterns: %w[full_time],
+                  salary: "£35,000",
+                  publisher: Publisher.find_by(email: "mili.malde@digital.education.gov.uk"),
+                  publisher_organisation: school_one,
+                  organisation_vacancies_attributes: [{ organisation: school_one }])
+
 # vacancy at a trust central office
 FactoryBot.create(:vacancy, :central_office,
                   id: "7bfadb84-cf30-4121-88bd-a9f958440cc9",
