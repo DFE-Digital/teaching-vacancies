@@ -27,7 +27,7 @@
     .govuk-grid-column-one-quarter
       .application-count.govuk-tag class="govuk-tag--#{status_tag_colour(:submitted)}"
         .govuk-heading-l = job_applications.submitted.count
-        h3.govuk-caption-s = t(".review")
+        h3.govuk-caption-s = t(".submitted")
 
     .govuk-grid-column-one-quarter
       .application-count.govuk-tag class="govuk-tag--#{status_tag_colour(:shortlisted)}"
@@ -71,9 +71,9 @@
             = tag.div(publisher_job_application_status_tag(application.status))
             = tag.div(card.labelled_item(t(".received"), application.submitted_at))
 
-          - if application.shortlisted? || application.submitted?
+          - if application.status.in?(%w[reviewed shortlisted submitted])
             - card.actions do
-              - if application.submitted?
+              - if application.reviewed? || application.submitted?
                 = tag.div(govuk_link_to(t("buttons.shortlist"), organisation_job_job_application_shortlist_path(vacancy.id, application.id)))
               = tag.div(govuk_link_to(t("buttons.reject"), organisation_job_job_application_reject_path(vacancy.id, application.id)))
     - else
