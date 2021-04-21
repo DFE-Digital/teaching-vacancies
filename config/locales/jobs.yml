@@ -114,7 +114,7 @@ en:
           vacancy: date drafted (most recent)
       expires_on:
         ascending: closing date (soonest)
-        descending: expired (most recent)
+        descending: end date (most recent)
       expires_at:
         ascending:
           saved_job: application deadline (soonest)
@@ -312,7 +312,7 @@ en:
       extend_link_text: Extend deadline
       heading_html: "%{email} <span class='govuk-!-font-weight-regular'>- %{organisation}</span>"
       expired:
-        expired_on: Expired on
+        expired_on: Listing ended
         no_jobs:
           no_filters: You currently have no jobs that have passed the deadline.
           with_filters: There are no jobs that have passed the deadline for the schools you have selected.
