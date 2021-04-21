@@ -267,19 +267,25 @@ en:
           zero: >-
             This is how your job listing will appear to jobseekers visiting Teaching Vacancies.
             You can make changes or, if you are happy with it and agree to our <a href='/pages/terms-and-conditions'
-            class='govuk-link' target='blank'>terms and conditions</a>, you can submit it for publication now (%{date})
+            class='govuk-link' target='blank'>terms and conditions</a>, you can submit it for publication now (%{date}).
           one: >-
             This is how your job listing will appear to jobseekers visiting Teaching Vacancies.
             You can make changes or, if you are happy with it and agree to our <a href='/pages/terms-and-conditions'
-            class='govuk-link' target='blank'>terms and conditions</a>, you can submit it for publication on %{date}
+            class='govuk-link' target='blank'>terms and conditions</a>, you can submit it for publication on %{date}.
+        data_retention: >-
+          You will have access to candidates' applications for this job for one year after the closing data of the
+          listing.
 
     submit_listing:
+      data_retention: >-
+        You will have access to candidates' applications for this job for one year after the closing date of the
+        listing.
       heading:
         zero: Submit this listing for publication now (%{date})
         one: Submit this listing for publication on %{date}
       message_html: >-
         By publishing this job you agree to our <a href='/pages/terms-and-conditions'
-        class='govuk-link' target='blank'>terms and conditions</a>  for schools and confirm that the details you have
+        class='govuk-link' target='blank'>terms and conditions</a> for schools and confirm that the details you have
         provided are, to the best of your knowledge, correct
 
     manage:
