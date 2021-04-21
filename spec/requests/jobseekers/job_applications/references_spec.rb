@@ -69,17 +69,6 @@ RSpec.describe "Job applications references" do
           expect(response).to have_http_status(:not_found)
         end
       end
-
-      context "when the commit param is `Cancel`" do
-        let(:button) { I18n.t("buttons.cancel") }
-
-        it "does not create the reference and redirects to the references build step" do
-          expect { post jobseekers_job_application_references_path(job_application), params: params }
-            .to(not_change { Reference.count })
-
-          expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :references))
-        end
-      end
     end
 
     context "when the form is invalid" do
@@ -115,17 +104,6 @@ RSpec.describe "Job applications references" do
           patch jobseekers_job_application_reference_path(job_application, reference), params: params
 
           expect(response).to have_http_status(:not_found)
-        end
-      end
-
-      context "when the commit param is `Cancel`" do
-        let(:button) { I18n.t("buttons.cancel") }
-
-        it "does not update the reference and redirects to the references build step" do
-          expect { patch jobseekers_job_application_reference_path(job_application, reference), params: params }
-            .to(not_change { reference.reload.name })
-
-          expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :references))
         end
       end
     end

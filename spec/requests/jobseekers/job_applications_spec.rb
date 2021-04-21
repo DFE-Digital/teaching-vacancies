@@ -354,50 +354,23 @@ RSpec.describe "Job applications" do
 
     context "when the application is submitted" do
       let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+      let(:button) { I18n.t("buttons.withdraw_application") }
 
-      context "when the commit param is `Cancel`" do
-        let(:button) { I18n.t("buttons.cancel") }
+      context "when the withdraw form is invalid" do
+        let(:withdraw_reason) { "invalid" }
 
-        context "when the origin param is not `jobseekers_job_applications_url`" do
-          it "does not withdraw the job application and redirects to the applications dashboard" do
-            expect { post jobseekers_job_application_withdraw_path(job_application.id), params: params }
-              .to(not_change { job_application.reload.status })
+        it "does not withdraw the job application and redirects to the confirm withdraw template" do
+          expect { post jobseekers_job_application_withdraw_path(job_application.id), params: params }
+            .to(not_change { job_application.reload.status })
 
-            expect(response).to redirect_to(jobseekers_job_application_path(job_application.id))
-          end
-        end
-
-        context "when the origin param is `jobseekers_job_applications_url`" do
-          let(:origin) { jobseekers_job_applications_url }
-
-          it "does not withdraw the job application and redirects to the job application page" do
-            expect { post jobseekers_job_application_withdraw_path(job_application.id), params: params }
-              .to(not_change { job_application.reload.status })
-
-            expect(response).to redirect_to(jobseekers_job_applications_path)
-          end
+          expect(response).to render_template(:confirm_withdraw)
         end
       end
 
-      context "when the commit param is `Withdraw application`" do
-        let(:button) { I18n.t("buttons.withdraw_application") }
-
-        context "when the withdraw form is invalid" do
-          let(:withdraw_reason) { "invalid" }
-
-          it "does not withdraw the job application and redirects to the confirm withdraw template" do
-            expect { post jobseekers_job_application_withdraw_path(job_application.id), params: params }
-              .to(not_change { job_application.reload.status })
-
-            expect(response).to render_template(:confirm_withdraw)
-          end
-        end
-
-        context "when the withdraw form is valid" do
-          it "withdraws the job application and redirects to the applications dashboard" do
-            expect { post jobseekers_job_application_withdraw_path(job_application.id), params: params }
-              .to change { job_application.reload.status }.from("submitted").to("withdrawn")
-          end
+      context "when the withdraw form is valid" do
+        it "withdraws the job application and redirects to the applications dashboard" do
+          expect { post jobseekers_job_application_withdraw_path(job_application.id), params: params }
+            .to change { job_application.reload.status }.from("submitted").to("withdrawn")
         end
       end
     end

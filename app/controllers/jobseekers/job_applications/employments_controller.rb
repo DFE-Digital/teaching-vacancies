@@ -2,9 +2,7 @@ class Jobseekers::JobApplications::EmploymentsController < Jobseekers::BaseContr
   helper_method :back_path, :employment, :form, :job_application
 
   def create
-    if params[:commit] == t("buttons.cancel")
-      redirect_to back_path
-    elsif form.valid?
+    if form.valid?
       job_application.employments.create(employment_params)
       redirect_to back_path
     else
@@ -13,9 +11,7 @@ class Jobseekers::JobApplications::EmploymentsController < Jobseekers::BaseContr
   end
 
   def update
-    if params[:commit] == t("buttons.cancel")
-      redirect_to back_path
-    elsif form.valid?
+    if form.valid?
       employment.update(employment_params)
       redirect_to back_path
     else
