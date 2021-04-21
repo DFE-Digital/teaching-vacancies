@@ -205,17 +205,30 @@ RSpec.describe "Job applications qualifications" do
       let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
       it "returns not_found" do
-        delete jobseekers_job_application_qualification_path(job_application, qualification)
+        delete destroy_jobseekers_job_application_qualifications_path(job_application, params: { ids: qualification.id })
 
         expect(response).to have_http_status(:not_found)
       end
     end
 
-    it "destroys the qualification and redirects to the qualification build step" do
-      expect { delete jobseekers_job_application_qualification_path(job_application, qualification) }
-        .to change { Qualification.count }.by(-1)
+    context "when destroying only one qualification" do
+      it "destroys the qualification and redirects to the qualification build step" do
+        expect { delete destroy_jobseekers_job_application_qualifications_path(job_application, params: { ids: qualification.id }) }
+          .to change { Qualification.count }.by(-1)
 
-      expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :qualifications))
+        expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :qualifications))
+      end
+    end
+
+    context "when destroying a list of qualifications" do
+      let!(:qualifications) { Array.new(2) { create(:qualification, job_application: job_application) } }
+
+      it "destroys the qualifications and redirects to the qualification build step" do
+        expect { delete destroy_jobseekers_job_application_qualifications_path(job_application), params: { ids: qualifications.pluck(:id) } }
+          .to change { Qualification.count }.by(-2)
+
+        expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :qualifications))
+      end
     end
   end
 end

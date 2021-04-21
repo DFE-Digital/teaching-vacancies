@@ -6,4 +6,27 @@
         = job_application_review_section_tag(job_application, :qualifications)
 
   - review.body do
-    p = "TODO"
+    - if job_application.qualifications.none?
+      p = t("jobseekers.job_applications.review.no_qualifications")
+    - else
+      = govuk_accordion do |accordion|
+        - job_application.qualification_groups.each_with_index do |group, index|
+          - accordion.add_section(title: group.first.title_for_group, html_attributes: { id: "qualification_group_#{index}" }) do
+            = govuk_summary_list do |component|
+              - if group.first.secondary?
+                - component.slot(:row,
+                  key: t("jobseekers.job_applications.qualifications.subjects_and_grades"),
+                  value: group.map { |qual| sanitize([qual.subject, qual.grade].join(" – ")) }.join("</br>").html_safe,
+                  html_attributes: { id: "qualification_group_subjects_and_grades" })
+              - group.first.attributes_for_group.each do |attribute|
+                - if group.first[attribute].present?
+                  - component.slot(:row,
+                    key: t("helpers.label.#{qualification_form_param_key(group.first.category)}.#{attribute}"),
+                    value: group.first[attribute],
+                    html_attributes: { id: "qualification_group_#{attribute}" })
+              - unless group.first.finished_studying.nil?
+                - component.slot(:row,
+                  key: t("helpers.legend.#{qualification_form_param_key(group.first.category)}.finished_studying"),
+                  value: safe_join([tag.div(I18n.t("helpers.label.jobseekers_job_application_details_qualifications_shared_labels.finished_studying_options.#{group.first.finished_studying}")),
+                    tag.div(group.first.finished_studying_details.presence)]),
+                  html_attributes: { id: "qualification_group_finished_studying" })

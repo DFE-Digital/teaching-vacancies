@@ -38,8 +38,8 @@ en:
     save_changes: Save changes
     save_employment: Save role
     save_qualification:
-      many: Save qualifications
       one: Save qualification
+      other: Save qualifications
     save_reference: Save referee
     search: Search
     select_file: Select a file
@@ -276,7 +276,9 @@ en:
         finished_studying_options:
           false: "No"
           true: "Yes"
+        grade: Grade
         institution: School, college, or other organisation
+        subject: Subject
         year: Year qualification(s) was/were awarded
       jobseekers_job_application_details_qualifications_degree_form:
         <<: *jobseekers_job_application_details_qualifications_shared_labels

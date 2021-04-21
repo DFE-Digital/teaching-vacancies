@@ -14,14 +14,40 @@
     p.govuk-body = t(".description")
 
     - if job_application.qualifications.any?
-      / = render Jobseekers::JobApplications::DetailComponent.with_collection(job_application.references.includes(:job_application), title_attribute: "name", info_to_display: qualifications_info)
+      - job_application.qualification_groups.each do |group|
+        = render DetailComponent.new title: group.first.title_for_group do |detail|
+          - detail.body do
+            = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |c|
+              - if group.first.secondary?
+                - c.slot(:row,
+                  key: t("jobseekers.job_applications.qualifications.subjects_and_grades"),
+                  value: safe_join(group.map { |qual| tag.div("#{qual.subject} – #{qual.grade}", class: "govuk-body govuk-!-margin-bottom-1") }))
+              - group.first.attributes_for_group.each do |attribute|
+                - if group.first[attribute].present?
+                  - c.slot(:row,
+                    key: t("helpers.label.#{qualification_form_param_key(group.first.category)}.#{attribute}"),
+                    value: group.first[attribute])
+              - unless group.first.finished_studying.nil?
+                - c.slot(:row,
+                  key: t("helpers.legend.#{qualification_form_param_key(group.first.category)}.finished_studying"),
+                  value: safe_join([tag.div(I18n.t("helpers.label.jobseekers_job_application_details_qualifications_shared_labels.finished_studying_options.#{group.first.finished_studying}"), class: "govuk-body"),
+                                    tag.div(group.first.finished_studying_details.presence, class: "govuk-body")]))
+
+          - detail.actions do
+            = govuk_button_to t("buttons.delete"), destroy_jobseekers_job_application_qualifications_path(job_application), params: { ids: group.pluck(:id) }, method: :delete, class: "govuk-delete-link govuk-!-margin-bottom-0", form_class: "inline-block button_to"
+            / TODO: correct the edit path once multiple qualifications can be edited in one page.
+            = govuk_link_to t("buttons.edit"), edit_jobseekers_job_application_qualification_path(job_application, group), class: "govuk-link--no-visited-state inline-block"
+
       = govuk_link_to t("buttons.add_another_qualification"), select_category_jobseekers_job_application_qualifications_path(job_application), button: true, class: "govuk-button--secondary"
     - else
       = render EmptySectionComponent.new title: t(".no_qualifications") do
         = govuk_link_to t("buttons.add_qualification"), select_category_jobseekers_job_application_qualifications_path(job_application), button: true, class: "govuk-button--secondary govuk-!-margin-bottom-0"
 
     = form_for form, url: wizard_path, method: :patch do |f|
+      = hidden_field_tag :origin, request.referrer
+
       = f.govuk_error_summary
+
       = f.govuk_submit t("buttons.save_and_continue") do
         = f.govuk_submit t("buttons.save_and_come_back"), secondary: true
 
