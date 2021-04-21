@@ -1,5 +1,7 @@
 FactoryBot.define do
   factory :vacancy do
+    publisher
+
     after :create do |vacancy|
       create_list :document, 3, vacancy: vacancy
     end
