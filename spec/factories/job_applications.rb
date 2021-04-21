@@ -61,9 +61,9 @@ FactoryBot.define do
 
     after :create do |job_application, options|
       if options.create_details
-        # TODO: education
         create_list :employment, 3, job_application: job_application
         create_list :reference, 2, job_application: job_application
+        create_list :qualification, 3, job_application: job_application
       end
 
       job_application.update_columns(

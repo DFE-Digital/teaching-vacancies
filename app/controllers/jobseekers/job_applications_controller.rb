@@ -1,8 +1,10 @@
 class Jobseekers::JobApplicationsController < Jobseekers::BaseController
+  include QualificationFormConcerns
+
   before_action :raise_unless_vacancy_enable_job_applications,
                 :redirect_if_job_application_exists, only: %i[new create new_quick_apply quick_apply]
 
-  helper_method :job_application, :review_form, :vacancy, :withdraw_form
+  helper_method :job_application, :qualification_form_param_key, :review_form, :vacancy, :withdraw_form
 
   def new
     request_event.trigger(:vacancy_apply_clicked, vacancy_id: vacancy.id)

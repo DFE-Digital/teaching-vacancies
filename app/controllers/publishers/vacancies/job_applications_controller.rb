@@ -1,5 +1,7 @@
 class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::BaseController
-  helper_method :form, :job_application, :job_applications, :sort, :sort_form, :vacancy
+  include QualificationFormConcerns
+
+  helper_method :form, :job_application, :job_applications, :qualification_form_param_key, :sort, :sort_form, :vacancy
 
   def reject
     raise ActionController::RoutingError, "Cannot reject a draft or withdrawn application" if
