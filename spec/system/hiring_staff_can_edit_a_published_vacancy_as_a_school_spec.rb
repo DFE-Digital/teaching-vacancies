@@ -254,9 +254,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
             visit edit_organisation_job_path(vacancy.id)
 
             click_header_link(I18n.t("jobs.important_dates"))
-            expect(page).to have_content(I18n.t("jobs.publication_date"))
             expect(page).to have_content(format_date(vacancy.publish_on))
-            expect(page).not_to have_css("#publishers_job_listing_important_dates_form_publish_on_dd")
 
             fill_in "publishers_job_listing_important_dates_form[expires_on(3i)]", with: vacancy.expires_on.day
             click_on I18n.t("buttons.update_job")
