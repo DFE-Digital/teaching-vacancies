@@ -300,10 +300,13 @@ en:
         feedback: Feedback on your application
         page_title: View application
         school_details:
+          address: School address
           email: Contact email
           heading: School details
           name: School name
           number: Telephone number
+          type: School type
+          website: School website
         shortlist_alert:
           title: What happens next with shortlisting?
           body: "%{organisation} will be in touch soon with more information about next steps."
@@ -311,6 +314,7 @@ en:
         timeline: Timeline
       status_timestamps:
         rejected: Rejected
+        reviewed: Reviewed
         shortlisted: Shortlisted
         submitted: Application submitted
         unsuccessful: Unsuccessful

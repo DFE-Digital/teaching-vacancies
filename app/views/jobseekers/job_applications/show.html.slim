@@ -14,7 +14,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    - if job_application.status.in?(%w[shortlisted submitted])
+    - if job_application.status.in?(%w[shortlisted submitted reviewed])
       = govuk_link_to t("buttons.withdraw_application"), jobseekers_job_application_confirm_withdraw_path(job_application), button: true, class: "govuk-button--warning"
 
     - if job_application.shortlisted?
@@ -22,13 +22,17 @@
         - banner.add_heading text: t(".shortlist_alert.title")
         span class="govuk-!-margin-top-3" = t(".shortlist_alert.body", organisation: vacancy.parent_organisation_name)
 
-    // TODO: Complete in later ticket
     .grey-border-box
       h3.govuk-heading-m = t(".school_details.heading")
       = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |component|
         - component.slot(:row, key: t(".school_details.name"), value: vacancy.parent_organisation_name)
+        - component.slot(:row, key: t(".school_details.type"), value: vacancy.parent_organisation.school_type)
         - component.slot(:row, key: t(".school_details.number"), value: vacancy.contact_number)
-        - component.slot(:row, key: t(".school_details.email"), value: vacancy.contact_email)
+        - component.slot(:row, key: t(".school_details.email"), value: govuk_mail_to(vacancy.contact_email, vacancy.contact_email))
+        - if vacancy.parent_organisation.website.present? || vacancy.parent_organisation.url.present?
+          - component.slot(:row, key: t(".school_details.website"),
+                           value: govuk_link_to(vacancy.parent_organisation.website.presence || vacancy.parent_organisation.url, vacancy.parent_organisation.website.presence || vacancy.parent_organisation.url))
+        - component.slot(:row, key: t(".school_details.address"), value: full_address(vacancy.parent_organisation))
 
     - if job_application.unsuccessful? && job_application.rejection_reasons.present?
       .grey-border-box
