@@ -59,13 +59,13 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
   end
 
   def confirm_withdraw
-    raise ActionController::RoutingError, "Cannot withdraw non-submitted or non-shortlisted application" unless
-      job_application.status.in?(%w[shortlisted submitted])
+    raise ActionController::RoutingError, "Cannot withdraw non-reviewed/shortlisted/submitted application" unless
+      job_application.status.in?(%w[reviewed shortlisted submitted])
   end
 
   def withdraw
-    raise ActionController::RoutingError, "Cannot withdraw non-submitted or non-shortlisted application" unless
-      job_application.status.in?(%w[shortlisted submitted])
+    raise ActionController::RoutingError, "Cannot withdraw non-reviewed/shortlisted/submitted application" unless
+      job_application.status.in?(%w[reviewed shortlisted submitted])
 
     if withdraw_form.valid?
       job_application.withdrawn!
@@ -85,7 +85,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
     job_application = current_jobseeker.job_applications.find_by(vacancy_id: vacancy.id)
     return unless job_application
 
-    if job_application.submitted?
+    if job_application.submitted? || job_application.reviewed?
       redirect_to jobseekers_job_applications_path,
                   warning: t("messages.jobseekers.job_applications.already_exists.submitted",
                              job_title: vacancy.job_title)
