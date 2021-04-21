@@ -14,5 +14,4 @@
             = f.govuk_collection_select :candidate_hired_from, candidate_hired_from_options, :last, :first, label: { size: "s" }
           = f.govuk_radio_button :end_listing_reason, :end_early
 
-        = f.govuk_submit t("buttons.end_listing") do
-          = f.govuk_submit t("buttons.cancel"), secondary: true
+        = f.govuk_submit t("buttons.end_listing")

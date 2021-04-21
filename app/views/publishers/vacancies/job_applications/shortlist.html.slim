@@ -16,5 +16,3 @@
       = form_for form, url: organisation_job_job_application_update_status_path(vacancy.id, job_application.id) do |f|
         = f.govuk_text_area :further_instructions, label: { size: "s" }, rows: 10, form_group: { classes: "optional-field" }
         = f.govuk_submit t("buttons.shortlist")
-
-      = govuk_link_to t("buttons.cancel"), organisation_job_job_application_path(vacancy.id, job_application.id)

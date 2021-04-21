@@ -2,8 +2,6 @@ class Publishers::Vacancies::ExtendDeadlineController < Publishers::Vacancies::B
   helper_method :form, :vacancy
 
   def update
-    return redirect_to organisation_job_job_applications_path(vacancy.id) if params[:commit] == t("buttons.cancel")
-
     if form.valid?
       vacancy.update(form.attributes_to_save)
       update_google_index(vacancy)

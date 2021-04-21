@@ -2,9 +2,7 @@ class Jobseekers::JobApplications::ReferencesController < Jobseekers::BaseContro
   helper_method :back_path, :form, :job_application, :reference
 
   def create
-    if params[:commit] == t("buttons.cancel")
-      redirect_to back_path
-    elsif form.valid?
+    if form.valid?
       job_application.references.create(reference_params)
       redirect_to back_path
     else
@@ -13,9 +11,7 @@ class Jobseekers::JobApplications::ReferencesController < Jobseekers::BaseContro
   end
 
   def update
-    if params[:commit] == t("buttons.cancel")
-      redirect_to back_path
-    elsif form.valid?
+    if form.valid?
       reference.update(reference_params)
       redirect_to back_path
     else
