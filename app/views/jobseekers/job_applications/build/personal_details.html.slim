@@ -25,7 +25,7 @@
         = f.govuk_text_field :city, width: "two-thirds"
         = f.govuk_text_field :postcode, width: "one-third"
       = f.govuk_phone_field :phone_number, label: { size: "s" }, width: "one-half", aria: { required: true }
-      = f.govuk_text_field :teacher_reference_number, label: { size: "s" }, width: "one-half", aria: { required: true }
+      = f.govuk_text_field :teacher_reference_number, label: { size: "s" }, width: "one-half", aria: { required: true }, form_group: { classes: "optional-field" }
       = f.govuk_text_field :national_insurance_number, label: { size: "s" }, width: "one-half", form_group: { classes: "optional-field" }
 
       = f.govuk_submit current_jobseeker.job_applications.not_draft.none? ? t("buttons.save_and_continue") : t("buttons.save_changes") do
