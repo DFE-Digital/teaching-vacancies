@@ -48,7 +48,7 @@ RSpec.describe "School viewing vacancies" do
   end
 
   scenario "clicking on more information does not increment the counter" do
-    vacancy = create(:vacancy, status: "published")
+    vacancy = create(:vacancy, :no_tv_applications, status: "published")
     vacancy.organisation_vacancies.create(organisation: school)
 
     visit organisation_job_path(vacancy.id)

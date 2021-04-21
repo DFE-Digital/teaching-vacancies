@@ -132,8 +132,11 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.contact_email)
     expect(page).to have_content(vacancy.contact_number)
     expect(page.html).to include(vacancy.school_visits)
-    expect(page.html).to include(vacancy.how_to_apply)
-    expect(page).to have_content(vacancy.application_link)
+
+    unless vacancy.enable_job_applications?
+      expect(page.html).to include(vacancy.how_to_apply)
+      expect(page).to have_content(vacancy.application_link)
+    end
 
     expect(page.html).to include(vacancy.job_summary)
     expect(page.html).to include(vacancy.about_school)
@@ -157,7 +160,7 @@ module VacancyHelpers
     end
 
     expect(page.html).to include(vacancy.school_visits)
-    expect(page.html).to include(vacancy.how_to_apply)
+    expect(page.html).to include(vacancy.how_to_apply) unless vacancy.enable_job_applications?
 
     expect(page.html).to include(vacancy.job_summary)
     expect(page.html).to include(vacancy.about_school)
@@ -172,7 +175,11 @@ module VacancyHelpers
       expect(page.html).to include(vacancy.experience)
     end
 
-    expect(page).to have_link(I18n.t("jobs.apply"), href: new_job_interest_path(vacancy.id))
+    if vacancy.enable_job_applications?
+      expect(page).to have_link(I18n.t("jobseekers.job_applications.apply"), href: new_jobseekers_job_job_application_path(vacancy.id))
+    else
+      expect(page).to have_link(I18n.t("jobs.apply"), href: new_job_interest_path(vacancy.id))
+    end
   end
 
   def expect_schema_property_to_match_value(key, value)
