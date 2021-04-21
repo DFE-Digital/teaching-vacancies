@@ -296,6 +296,7 @@ en:
               link_text: Privacy Policy
         heading: Review your application
         title: Review your application — Application
+        warning: You cannot review a non-draft job application
       show:
         feedback: Feedback on your application
         page_title: View application

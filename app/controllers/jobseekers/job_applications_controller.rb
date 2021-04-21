@@ -1,6 +1,7 @@
 class Jobseekers::JobApplicationsController < Jobseekers::BaseController
   before_action :raise_unless_vacancy_enable_job_applications,
                 :redirect_if_job_application_exists, only: %i[new create new_quick_apply quick_apply]
+  before_action :redirect_unless_draft_job_application, only: %i[review]
 
   helper_method :job_application, :review_form, :vacancy, :withdraw_form
 
@@ -98,6 +99,13 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
                   warning: t("messages.jobseekers.job_applications.already_exists.draft_html",
                              job_title: vacancy.job_title, link: jobseekers_job_application_review_path(job_application))
     end
+  end
+
+  def redirect_unless_draft_job_application
+    job_application = current_jobseeker.job_applications.find_by(vacancy_id: vacancy.id)
+    return unless job_application
+
+    redirect_to jobseekers_job_application_path(job_application), warning: t(".warning") unless job_application.draft?
   end
 
   def raise_unless_vacancy_enable_job_applications
