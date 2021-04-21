@@ -1,15 +1,33 @@
 module JobApplicationHelper
   PUBLISHER_STATUS_MAPPINGS = {
-    shortlisted: "shortlisted", submitted: "review", unsuccessful: "rejected", withdrawn: "withdrawn"
+    submitted: "unread",
+    reviewed: "reviewed",
+    shortlisted: "shortlisted",
+    unsuccessful: "rejected",
+    withdrawn: "withdrawn",
+  }.freeze
+
+  JOBSEEKER_STATUS_MAPPINGS = {
+    draft: "draft",
+    submitted: "submitted",
+    reviewed: "submitted",
+    shortlisted: "shortlisted",
+    unsuccessful: "unsuccessful",
+    withdrawn: "withdrawn",
   }.freeze
 
   JOB_APPLICATION_STATUS_TAG_COLOURS = {
-    draft: "pink", submitted: "blue", shortlisted: "green", unsuccessful: "red", withdrawn: "orange"
+    draft: "pink",
+    submitted: "blue",
+    reviewed: "purple",
+    shortlisted: "green",
+    unsuccessful: "red",
+    withdrawn: "orange",
   }.freeze
 
   def job_application_status_tag(status)
-    govuk_tag text: status,
-              colour: JOB_APPLICATION_STATUS_TAG_COLOURS[status.to_sym],
+    govuk_tag text: JOBSEEKER_STATUS_MAPPINGS[status.to_sym],
+              colour: JOB_APPLICATION_STATUS_TAG_COLOURS[JOBSEEKER_STATUS_MAPPINGS[status.to_sym].to_sym],
               classes: "govuk-!-margin-bottom-2"
   end
 

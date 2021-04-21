@@ -2,8 +2,9 @@ FactoryBot.define do
   factory :job_application do
     transient do
       draft_at { 2.weeks.ago }
+      reviewed_at { 3.days.ago }
       shortlisted_at { 2.days.ago }
-      submitted_at { 3.days.ago }
+      submitted_at { 4.days.ago }
       unsuccessful_at { 1.day.ago }
       withdrawn_at { 1.week.ago }
       create_details { true }
@@ -68,6 +69,7 @@ FactoryBot.define do
 
       job_application.update_columns(
         draft_at: options.draft_at,
+        reviewed_at: options.reviewed_at,
         shortlisted_at: options.shortlisted_at,
         submitted_at: options.submitted_at,
         unsuccessful_at: options.unsuccessful_at,
@@ -127,6 +129,10 @@ FactoryBot.define do
     right_to_work_in_uk { "" }
 
     completed_steps { [] }
+  end
+
+  trait :status_reviewed do
+    status { :reviewed }
   end
 
   trait :status_shortlisted do
