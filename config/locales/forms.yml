@@ -358,7 +358,7 @@ en:
         phone_number: Phone number
         previous_names: Previous names
         street_address: Building and street
-        teacher_reference_number: Teacher reference number
+        teacher_reference_number: Teacher reference number (TRN)
       jobseekers_job_application_personal_statement_form:
         personal_statement: Your personal statement
       jobseekers_job_application_professional_status_form:
