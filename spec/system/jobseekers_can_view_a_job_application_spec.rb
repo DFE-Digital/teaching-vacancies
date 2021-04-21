@@ -19,6 +19,15 @@ RSpec.describe "Jobseekers can view a job application" do
 
     expect(show_page.banner.status.text).to eq(job_application.status)
 
+    expect(page).to have_css("div", class: "grey-border-box", text: I18n.t("jobseekers.job_applications.show.school_details.heading")) do |school_details|
+      expect(school_details).to have_content(job_application.vacancy.parent_organisation.name)
+      expect(school_details).to have_content(job_application.vacancy.parent_organisation.school_type)
+      expect(school_details).to have_content(job_application.vacancy.contact_number)
+      expect(school_details).to have_content(job_application.vacancy.contact_email)
+      expect(school_details).to have_content(job_application.vacancy.parent_organisation.website)
+      expect(school_details).to have_content(full_address(job_application.vacancy.parent_organisation))
+    end
+
     expect(show_page.timeline.items(text: I18n.t("jobseekers.job_applications.status_timestamps.submitted")).first.text)
       .to include(format_date(job_application.submitted_at.to_date) + I18n.t("jobs.time_at") + format_time(job_application.submitted_at))
 

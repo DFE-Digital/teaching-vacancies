@@ -195,12 +195,12 @@ en:
           heading: Applicants for
           no_applicants: Nobody has applied for this job yet
           received: Received on
-          rejected: Rejected applicants
-          review: Applicants to review
-          shortlisted: Shortlisted applicants
+          rejected: Rejected applications
+          shortlisted: Shortlisted applications
           sort_by:
             date_received: date received (most recent)
             applicant_last_name: applicant last name (A to Z)
+          submitted: Unread applications
         reject:
           alert: The candidate will be sent an email telling them that their application has not been successful.
           heading: Reject applicant

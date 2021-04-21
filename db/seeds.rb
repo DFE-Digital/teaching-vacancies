@@ -207,7 +207,7 @@ FactoryBot.create(:vacancy,
                   organisation_vacancies_attributes: [{ organisation: school_two }])
 
 FactoryBot.create(:vacancy,
-                  id: "67991ea9-431d-4d9d-9c99-a78b80108fe1",
+                  id: "ba7dfaf8-2b9f-4fbe-9243-c16a299598aa",
                   job_title: "English Teacher",
                   subjects: %w[English],
                   working_patterns: %w[full_time],
