@@ -29,7 +29,7 @@ class JobApplication < ApplicationRecord
   }
 
   # If you want to add a status, be sure to add a `status_at` column to the `job_applications` table
-  enum status: { draft: 0, submitted: 1, shortlisted: 2, unsuccessful: 3, withdrawn: 4 }, _default: 0
+  enum status: { draft: 0, submitted: 1, reviewed: 2, shortlisted: 3, unsuccessful: 4, withdrawn: 5 }, _default: 0
 
   belongs_to :jobseeker
   belongs_to :vacancy

@@ -2,14 +2,14 @@
 
 = render BannerComponent.new
   = govuk_breadcrumbs breadcrumbs: { "#{t("publishers.vacancies_component.published.tab_heading")}": jobs_with_type_organisation_path(:published),
-                                      "#{vacancy.job_title}": organisation_job_path(vacancy.id),
-                                      "#{job_application.first_name} #{job_application.last_name}": "" }
+                                     "#{vacancy.job_title}": organisation_job_job_applications_path(vacancy.id),
+                                     "#{job_application.first_name} #{job_application.last_name}": "" }
 
   .govuk-caption-l class="govuk-!-margin-top-5"
     = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
 
-  .print-page-content
-    .h2.govuk-heading-l = "#{job_application.first_name} #{job_application.last_name}"
+  h1.govuk-heading-xl class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
+    = "#{job_application.first_name} #{job_application.last_name}"
 
   div
     span.govuk-body class="govuk-!-margin-right-5" = t(".status_heading")
@@ -18,9 +18,9 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     .job-application-actions
-      - if job_application.submitted?
+      - if job_application.status.in?(%w[submitted reviewed])
         = govuk_link_to t("buttons.shortlist"), organisation_job_job_application_shortlist_path(vacancy.id, job_application.id), button: true, class: "govuk-!-margin-right-3"
-      - if job_application.submitted? || job_application.shortlisted?
+      - if job_application.status.in?(%w[submitted reviewed shortlisted])
         = govuk_link_to t("buttons.reject"), organisation_job_job_application_reject_path(vacancy.id, job_application.id), button: true, class: "govuk-button--warning govuk-!-margin-right-3"
       = govuk_link_to t("buttons.print_download_application"), "#", button: true, class: "govuk-button--secondary js-action print-application"
 
@@ -71,5 +71,8 @@
       - elsif job_application.shortlisted?
         - timeline.item(key: t("jobseekers.job_applications.status_timestamps.shortlisted"),
                         value: format_date(job_application.shortlisted_at.to_date) + I18n.t("jobs.time_at") + format_time(job_application.shortlisted_at))
+      - if job_application.reviewed_at?
+        - timeline.item(key: t("jobseekers.job_applications.status_timestamps.reviewed"),
+                        value: format_date(job_application.reviewed_at.to_date) + I18n.t("jobs.time_at") + format_time(job_application.reviewed_at))
       - timeline.item(key: t("jobseekers.job_applications.status_timestamps.submitted"),
                       value: format_date(job_application.submitted_at.to_date) + I18n.t("jobs.time_at") + format_time(job_application.submitted_at))
