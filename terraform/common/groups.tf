@@ -319,7 +319,9 @@ resource "aws_iam_role_policy_attachment" "deployments_role_policies" {
     aws_iam_policy.acm.arn,
     aws_iam_policy.cloudfront.arn,
     aws_iam_policy.db_backups_in_s3_fullaccess.arn,
-    aws_iam_policy.offline_site_full_access.arn
+    aws_iam_policy.iam_manage_attachment_buckets_credentials.arn,
+    aws_iam_policy.offline_site_full_access.arn,
+    aws_iam_policy.s3_manage_attachment_buckets.arn
   ])
 
   role       = aws_iam_role.deployments.name
