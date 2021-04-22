@@ -88,7 +88,9 @@ en:
           new:
             title: Sign in to Teaching Vacancies
             heading: Temporary login
-            body: DfE Sign In is experiencing problems. Please sign in using your email address.
+            body: >-
+              There are some technical problems with our sign in page. We’re working on fixing it,
+              but in the meantime you can still access your account.
             description: You must sign in to your Teaching Vacancies account to list a job.
             request_account_title: Request an account
             request_account_html: *request_account_html
@@ -138,7 +140,9 @@ en:
         heading: Sign in to Teaching Vacancies
         subject: Sign in to Teaching Vacancies
       heading: Temporary login
-      please_use_email: DfE Sign In is experiencing problems. Please sign in using your email address.
+      please_use_email: >-
+        There are some technical problems with our sign in page. We’re working on fixing it,
+        but in the meantime you can still access your account.
     vacancies_component:
       awaiting_feedback:
         tab_heading: Jobs awaiting feedback
