@@ -155,11 +155,19 @@ en:
     vacancies:
       build:
         applying_for_the_job:
-          notification:
+          banner:
             heading: Teaching Vacancies application form
             description:
-              content_html: You can choose for candidates to apply for the job through Teaching Vacancies. %{link} (opens in new tab).
-              link: Preview the application form
+              content_with_link_html: You can choose for candidates to apply for the job through Teaching Vacancies. %{link}
+              content_with_no_link: You can choose for candidates to apply for the job through Teaching Vacancies.
+              link: Preview the application form (opens in new tab).
+          radio_labels:
+            false: Use another application process or form
+            true:
+              label_with_link:
+                content_html: Apply using the Teaching Vacancies %{link}
+                link: application form (opens in new tab)
+              label_with_no_link: Apply through Teaching Vacancies
         process_title: Create a job listing steps
       destroy:
         success_html: >-
