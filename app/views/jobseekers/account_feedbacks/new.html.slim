@@ -1,8 +1,6 @@
 - content_for :page_title_prefix, t(".title")
 
 .govuk-main-wrapper
-  = govuk_back_link text: t("buttons.back"), href: @account_feedback_form.origin
-
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = form_for @account_feedback_form, url: jobseekers_account_feedback_path do |f|
