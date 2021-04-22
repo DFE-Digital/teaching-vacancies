@@ -17,24 +17,18 @@ RSpec.describe SendFeedbackToBigQueryJob do
       expect(big_query).to receive(:dataset).with("test_dataset", skip_lookup: true).and_return(dataset)
       expect(dataset).to receive(:table).with("feedbacks", skip_lookup: true).and_return(table)
       expect(table).to receive(:insert)
-        .with([
-          hash_including(
-            type: feedback1.feedback_type,
-            occurred_at: feedback1.created_at,
-            data: array_including(
-              hash_including(key: "visit_purpose", value: "find_teaching_job"),
-              hash_including(key: "comment", value: "Some feedback text"),
-            ),
-          ),
-          hash_including(
-            type: feedback2.feedback_type,
-            occurred_at: feedback2.created_at,
-            data: array_including(
-              hash_including(key: "visit_purpose", value: "find_teaching_job"),
-              hash_including(key: "comment", value: "A different comment"),
-            ),
-          ),
-        ])
+        .with(array_including(
+                hash_including(
+                  type: "general",
+                  occurred_at: feedback1.created_at,
+                  data: array_including(hash_including(key: "comment", value: feedback1.comment)),
+                ),
+                hash_including(
+                  type: "general",
+                  occurred_at: feedback2.created_at,
+                  data: array_including(hash_including(key: "comment", value: feedback2.comment)),
+                ),
+              ))
 
       subject.perform
     end
