@@ -27,8 +27,14 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   deploy:
     name: build docker image and deploy
+    strategy:
+      matrix:
+        environment: ["staging", "production"]
+      max-parallel: 1
     needs: turnstyle
     runs-on: ubuntu-20.04
+    outputs:
+      tag: ${{ steps.set_env_vars.outputs.TAG }}
     steps:
     - uses: actions/checkout@v2
       name: Checkout Code
@@ -47,6 +53,7 @@ jobs:
       id: set_env_vars
       run: |
         echo "TAG=${{ github.sha }}" >> $GITHUB_ENV
+        echo "::set-output name=TAG::${{ github.sha }}"
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
@@ -59,14 +66,12 @@ jobs:
         chmod +x bin/fetch_config.rb
         echo "::endgroup::"
 
-    - name: Validate secrets
+    - name: Validate ${{ matrix.environment }} secrets
       shell: bash
       run: |
         gem install aws-sdk-ssm --no-document
-        bin/fetch_config.rb -s aws-ssm-parameter-path:/teaching-vacancies/staging/app -d quiet \
-          && echo Data in /teaching-vacancies/staging looks valid
-        bin/fetch_config.rb -s aws-ssm-parameter-path:/teaching-vacancies/production/app -d quiet \
-          && echo Data in /teaching-vacancies/production looks valid
+        bin/fetch_config.rb -s aws-ssm-parameter-path:/teaching-vacancies/${{ matrix.environment }}/app -d quiet \
+          && echo Data in /teaching-vacancies/${{ matrix.environment }} looks valid
 
     - name: Terraform pin version
       uses: hashicorp/setup-terraform@v1
@@ -106,34 +111,34 @@ jobs:
           ${{ env.DOCKER_REPOSITORY }}:${{ env.TAG }}
         target: production
 
-    - name: Trigger Deploy App Workflow for staging
+    - name: Trigger Deploy App Workflow for ${{ matrix.environment }}
       uses: benc-uk/workflow-dispatch@v1.1
       with:
         workflow: Deploy App to Environment # Workflow name
         token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
-        inputs: '{"environment": "staging", "tag": "${{ env.TAG }}"}'
+        inputs: '{"environment": "${{ matrix.environment }}", "tag": "${{ env.TAG }}"}'
 
-    - name: Wait for Deploy App Workflow for staging
+    - name: Wait for Deploy App Workflow for ${{ matrix.environment }}
       id: wait_for_deploy_app_staging
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
         token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
-        checkName: Deploy ${{ env.TAG }} to staging # Job name within workflow
+        checkName: Deploy ${{ env.TAG }} to ${{ matrix.environment }} # Job name within workflow
         ref: ${{ github.sha }}
         timeoutSeconds: 720
         intervalSeconds: 15
 
-    - name: Notify twd_tv_dev channel on staging deployment failure
+    - name: Notify twd_tv_dev channel on ${{ matrix.environment }} deployment failure
       if: steps.wait_for_deploy_app_staging.outputs.conclusion != 'success' && 'refs/heads/master'
       uses: rtCamp/action-slack-notify@v2.1.3
       env:
         SLACK_CHANNEL: twd_tv_dev
         SLACK_USERNAME: CI Deployment
         SLACK_TITLE: Deployment failure
-        SLACK_MESSAGE: 'Deployment of Docker tag ${{ env.TAG }} to staging - unsuccessful <!channel>'
+        SLACK_MESSAGE: 'Deployment of Docker tag ${{ env.TAG }} to ${{ matrix.environment }} - unsuccessful <!channel>'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
-    - name: Exit whole workflow if staging deployment was not successful
+    - name: Exit whole workflow if ${{ matrix.environment }} deployment was not successful
       if: steps.wait_for_deploy_app_staging.outputs.conclusion != 'success' && 'refs/heads/master'
       run: exit 1
 
@@ -142,78 +147,67 @@ jobs:
       with:
         workflow: Smoke Test
         token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
-        inputs: '{"smoke_test_domain": "staging.teaching-vacancies.service.gov.uk", "sha": "${{ github.sha }}"}'
+        inputs: '{"smoke_test_domain": "${{ matrix.environment }}.teaching-vacancies.service.gov.uk", "sha": "${{ github.sha }}"}'
 
     - name: Wait for smoke test
       id: wait_for_smoke_test
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
         token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
-        checkName: Smoke Test staging.teaching-vacancies.service.gov.uk ${{ github.sha }}
+        checkName: Smoke Test ${{ matrix.environment }}.teaching-vacancies.service.gov.uk ${{ github.sha }}
         ref: ${{ github.sha }}
         timeoutSeconds: 300
         intervalSeconds: 15
 
-    - name: Exit whole workflow if staging smoke test was not successful
+    - name: Exit whole workflow if ${{ matrix.environment }} smoke test was not successful
       if: steps.wait_for_smoke_test.outputs.conclusion != 'success' && github.ref == 'refs/heads/master'
       run: exit 1
 
-    - name: Trigger Deploy App Workflow for production
-      if: steps.wait_for_smoke_test.outputs.conclusion == 'success' && github.ref == 'refs/heads/master'
-      uses: benc-uk/workflow-dispatch@v1.1
-      with:
-        workflow: Deploy App to Environment # Workflow name
-        token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
-        inputs: '{"environment": "production", "tag": "${{ env.TAG }}"}'
+  Post_Deployment:
+    name: Post Deployment steps
+    runs-on: ubuntu-20.04
+    needs: deploy
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout Code
 
-    - name: Wait for Deploy App Workflow for production
-      id: wait_for_deploy_app_production
-      uses: fountainhead/action-wait-for-check@v1.0.0
-      with:
-        token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
-        checkName: Deploy ${{ env.TAG }} to production # Job name within workflow
-        ref: ${{ github.sha }}
-        timeoutSeconds: 720
-        intervalSeconds: 15
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+          role-to-assume: Deployments
+          role-duration-seconds: 3600
+          role-skip-session-tagging: true
 
-    - name: Notify twd_tv_dev channel on production deployment failure
-      if: steps.wait_for_deploy_app_production.outputs.conclusion != 'success' && 'refs/heads/master'
-      uses: rtCamp/action-slack-notify@v2.1.3
-      env:
-        SLACK_CHANNEL: twd_tv_dev
-        SLACK_USERNAME: CI Deployment
-        SLACK_TITLE: Deployment failure
-        SLACK_MESSAGE: 'Deployment of Docker tag ${{ env.TAG }} to production - unsuccessful <!channel>'
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      - name: Terraform pin version
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.14.7
 
-    - name: Exit whole workflow if production deployment was not successful
-      if: steps.wait_for_deploy_app_production.outputs.conclusion != 'success' && 'refs/heads/master'
-      run: exit 1
-
-    - name: Deploy monitoring
-      env:
-        TF_VAR_paas_user: ${{ secrets.CF_USERNAME }}
-        TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
-      run: |
-        export TF_VAR_paas_app_docker_image=${{ env.DOCKER_REPOSITORY }}:${{ env.TAG }}
-        terraform init -upgrade=true -reconfigure -input=false
-        terraform apply -input=false -auto-approve
-      working-directory: terraform/monitoring
-
-    - name: Download and extract Gov.UK frontend archive
-      shell: bash
-      run: bin/regenerate-offline
-
-    - name: Sync offline S3 bucket
-      shell: bash
-      run: bin/sync-offline
-
-    - name: Send job status message to twd_tv_dev channel
-      if: always() && github.ref == 'refs/heads/master'
-      uses: rtCamp/action-slack-notify@v2.1.3
-      env:
-        SLACK_CHANNEL: twd_tv_dev
-        SLACK_USERNAME: CI Deployment
-        SLACK_TITLE: Deployment ${{ job.status }}
-        SLACK_MESSAGE: 'Deployment of Docker tag ${{ env.TAG }} to staging and production - ${{ job.status }}'
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      - name: Deploy monitoring
+        env:
+          TF_VAR_paas_user: ${{ secrets.CF_USERNAME }}
+          TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
+        run: |
+          echo ${{needs.deploy.outputs.tag}}
+          export TF_VAR_paas_app_docker_image=${{ env.DOCKER_REPOSITORY }}:${{needs.deploy.outputs.tag}}
+          terraform init -upgrade=true -reconfigure -input=false
+          terraform apply -input=false -auto-approve
+        working-directory: terraform/monitoring
+      - name: Download and extract Gov.UK frontend archive
+        shell: bash
+        run: bin/regenerate-offline
+      - name: Sync offline S3 bucket
+        shell: bash
+        run: bin/sync-offline
+      - name: Send job status message to twd_tv_dev channel
+        if: always() && github.ref == 'refs/heads/master'
+        uses: rtCamp/action-slack-notify@v2.1.3
+        env:
+          SLACK_CHANNEL: twd_tv_dev
+          SLACK_USERNAME: CI Deployment
+          SLACK_TITLE: Deployment ${{ job.status }}
+          SLACK_MESSAGE: 'Deployment of Docker tag ${{ env.TAG }} to ${{ matrix.environment }} - ${{ job.status }}'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
