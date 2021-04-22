@@ -3,8 +3,6 @@
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      = govuk_back_link(text: t("buttons.back"), href: @origin.presence || jobs_path(@subscription_form.search_criteria_hash))
-
       = form_for @subscription_form, url: subscriptions_path do |f|
         = f.govuk_error_summary
 

@@ -3,9 +3,6 @@
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-
-      = govuk_back_link text: t("buttons.back"), href: @redirect_path
-
       h1.govuk-heading-xl = t(".title", organisation_type: organisation_type_basic(@organisation))
 
       = form_for @organisation_form, url: organisation_school_path(@organisation), method: :patch do |f|
