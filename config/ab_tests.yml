@@ -35,6 +35,9 @@ shared:
     bottom_blue: 1
     modal: 1
     gds: 1
+  2021_04_application_preview_test:
+    default: 1
+    radio_copy_change: 1
 test:
   2021_04_cookie_consent_test:
     none: 0
