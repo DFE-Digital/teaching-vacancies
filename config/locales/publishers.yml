@@ -163,6 +163,13 @@ en:
             description:
               content_html: You can choose for candidates to apply for the job through Teaching Vacancies. %{link} (opens in new tab).
               link: Preview the application form
+          radio_labels:
+            false: Use another application process or form
+            true:
+              copy_change:
+                content_html: Apply using the Teaching Vacancies %{link}
+                link_text: application form
+              default: Apply through Teaching Vacancies
         process_title: Create a job listing steps
       destroy:
         success_html: >-
