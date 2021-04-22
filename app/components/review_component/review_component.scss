@@ -1,10 +1,14 @@
 @import 'base_component';
 
 .review-component {
-  .review-component__heading {
-    a {
+  &__heading {
+    display: flex;
+    margin-bottom: govuk-spacing(4);
+
+    .govuk-link {
       @include govuk-font($size: 16, $weight: bold);
 
+      line-height: 1.6;
       margin-left: govuk-spacing(4);
       margin-right: govuk-spacing(4);
 
@@ -13,8 +17,17 @@
       }
     }
 
-    .govuk-tag {
-      vertical-align: text-bottom;
+    &__title {
+      flex-basis: 75%;
+
+      .govuk-heading-m {
+        display: inline;
+      }
+    }
+
+    &__status {
+      flex-grow: 1;
+      text-align: right;
     }
   }
 
