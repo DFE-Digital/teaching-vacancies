@@ -20,8 +20,7 @@ RSpec.describe "Publishers can reject a job application" do
     fill_in "publishers_job_application_update_status_form[rejection_reasons]", with: "Some rejection reasons"
     click_on I18n.t("buttons.confirm_rejection")
 
-    # TODO: Update expectation when redirect is updated
-    expect(current_path).to eq(organisation_jobs_path)
+    expect(current_path).to eq(organisation_job_job_applications_path(vacancy.id))
     expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.update_status.unsuccessful",
                                         name: "#{job_application.first_name} #{job_application.last_name}"))
     expect(job_application.reload.status).to eq("unsuccessful")

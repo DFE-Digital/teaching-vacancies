@@ -2,5 +2,7 @@ exclude:
   - 'vendor/bundle/**/*.slim'
 
 linters:
+  ConsecutiveControlStatements:
+    enabled: false
   LineLength:
     enabled: false

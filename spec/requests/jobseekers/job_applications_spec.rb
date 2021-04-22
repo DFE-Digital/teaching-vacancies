@@ -355,12 +355,12 @@ RSpec.describe "Job applications" do
       end
     end
 
-    context "when the application is not submitted or shortlisted" do
+    context "when the application is not reviewed, submitted or shortlisted" do
       let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
       it "raises an error" do
         expect { get(jobseekers_job_application_confirm_withdraw_path(job_application.id)) }
-          .to raise_error(ActionController::RoutingError, /non-submitted or non-shortlisted/)
+          .to raise_error(ActionController::RoutingError, %r{non-reviewed/shortlisted/submitted})
       end
     end
   end
@@ -393,12 +393,12 @@ RSpec.describe "Job applications" do
       end
     end
 
-    context "when the application is not submitted or shortlisted" do
+    context "when the application is not reviewed, submitted or shortlisted" do
       let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
       it "raises an error" do
         expect { post(jobseekers_job_application_withdraw_path(job_application.id)) }
-          .to raise_error(ActionController::RoutingError, /non-submitted or non-shortlisted/)
+          .to raise_error(ActionController::RoutingError, %r{non-reviewed/shortlisted/submitted})
       end
     end
   end

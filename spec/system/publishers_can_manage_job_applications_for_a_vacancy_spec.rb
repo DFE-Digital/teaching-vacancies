@@ -14,6 +14,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
     let(:vacancy_trait) { :expired }
 
     let!(:job_application_submitted) { create(:job_application, :status_submitted, vacancy: vacancy) }
+    let!(:job_application_reviewed) { create(:job_application, :status_reviewed, vacancy: vacancy) }
     let!(:job_application_shortlisted) { create(:job_application, :status_shortlisted, vacancy: vacancy) }
     let!(:job_application_unsuccessful) { create(:job_application, :status_unsuccessful, vacancy: vacancy) }
     let!(:job_application_draft) { create(:job_application, :status_draft, vacancy: vacancy) }
@@ -46,7 +47,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
         within(".application-count.govuk-tag--blue") do
           expect(page).to have_content("1")
-          expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.review"))
+          expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.submitted"))
         end
 
         within(".application-count.govuk-tag--red") do
@@ -56,7 +57,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       end
 
       it "shows a card for each application that has been submitted and no draft applications" do
-        expect(page).to have_css(".card-component", count: 3)
+        expect(page).to have_css(".card-component", count: 4)
       end
 
       it "shows correct vacancy actions available to the publisher" do
@@ -79,7 +80,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
       it "shows blue submitted tag" do
         within(".application-#{status} .card-component__body") do
-          expect(page).to have_css(".govuk-tag--blue", text: "review")
+          expect(page).to have_css(".govuk-tag--blue", text: "unread")
         end
       end
 
@@ -102,8 +103,43 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       end
     end
 
+    describe "reviewed application" do
+      let(:status) { "reviewed" }
+
+      it "shows applicant name that links to application" do
+        within(".application-#{status} .card-component__header") do
+          expect(page).to have_link("#{job_application_reviewed.first_name} #{job_application_reviewed.last_name}", href: organisation_job_job_application_path(vacancy.id, job_application_reviewed.id))
+        end
+      end
+
+      it "shows blue submitted tag" do
+        within(".application-#{status} .card-component__body") do
+          expect(page).to have_css(".govuk-tag--purple", text: "reviewed")
+        end
+      end
+
+      it "shows date application was received" do
+        within(".application-#{status} .card-component__body") do
+          expect(page).to have_content(job_application_reviewed.submitted_at)
+        end
+      end
+
+      it "has action to reject application" do
+        within(".application-#{status} .card-component__actions") do
+          expect(page).to have_link(I18n.t("buttons.reject"), href: organisation_job_job_application_reject_path(vacancy.id, job_application_reviewed.id))
+        end
+      end
+
+      it "has action to shortlist application" do
+        within(".application-#{status} .card-component__actions") do
+          expect(page).to have_link(I18n.t("buttons.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, job_application_reviewed.id))
+        end
+      end
+    end
+
     describe "shortlisted application" do
       let(:status) { "shortlisted" }
+
       it "shows applicant name that links to application" do
         within(".application-#{status} .card-component__header") do
           expect(page).to have_link("#{job_application_shortlisted.first_name} #{job_application_shortlisted.last_name}", href: organisation_job_job_application_path(vacancy.id, job_application_shortlisted.id))
@@ -191,7 +227,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
         within(".application-count.govuk-tag--blue") do
           expect(page).to have_content("0")
-          expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.review"))
+          expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.submitted"))
         end
 
         within(".application-count.govuk-tag--red") do
