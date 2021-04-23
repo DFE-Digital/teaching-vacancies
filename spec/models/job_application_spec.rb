@@ -1,5 +1,11 @@
 require "rails_helper"
 
+RSpec.shared_examples "puts the qualifications in separate groups" do
+  it "puts the qualifications in separate groups" do
+    expect(subject.qualification_groups.count).to eq(qualifications.count)
+  end
+end
+
 RSpec.describe JobApplication do
   it { is_expected.to belong_to(:jobseeker) }
   it { is_expected.to belong_to(:vacancy) }
@@ -100,6 +106,75 @@ RSpec.describe JobApplication do
       expect { subject }
         .to have_enqueued_email(Jobseekers::JobApplicationMailer, :application_submitted)
         .with(hash_including(args: [job_application]))
+    end
+  end
+
+  describe "#qualification_groups" do
+    let(:stubbed_time) { Time.utc(2021, 2, 1, 12, 0, 0) }
+    let(:institution) { "Happy Rainbows School" }
+    let(:name) { "Ordinary Wizarding Level" }
+    let(:year) { 2000 }
+    let!(:qualifications) do
+      Array.new(3) do |index|
+        count = index + 1
+        build_stubbed(:qualification,
+                      created_at: stubbed_time - count.seconds,
+                      category: "other_secondary",
+                      institution: institution || "Institution #{count}",
+                      name: name || "Qualification name #{count}",
+                      year: year || 2000 + count)
+      end
+    end
+
+    before { allow(subject).to receive(:qualifications).and_return(qualifications) }
+
+    context "when the qualifications do not share a name" do
+      let(:name) { nil }
+
+      it_behaves_like "puts the qualifications in separate groups"
+
+      it "orders the groups by the created_at timestamp of the oldest qualification in each group" do
+        expect(subject.qualification_groups.first.first.created_at).to eq(stubbed_time - qualifications.count)
+        expect(subject.qualification_groups.second.first.created_at).to eq(stubbed_time - (qualifications.count - 1))
+        expect(subject.qualification_groups.third.first.created_at).to eq(stubbed_time - (qualifications.count - 2))
+      end
+    end
+
+    context "when the qualifications do not share an institution" do
+      let(:institution) { nil }
+
+      it_behaves_like "puts the qualifications in separate groups"
+    end
+
+    context "when the qualifications do not share a year" do
+      let(:year) { nil }
+
+      it_behaves_like "puts the qualifications in separate groups"
+    end
+
+    context "when some qualifications share a year, institution, and name" do
+      let(:institution) { nil }
+      let(:name) { nil }
+      let(:year) { nil }
+      let(:qualifications_to_be_grouped) do
+        Array.new(2) do
+          build_stubbed(:qualification,
+                        created_at: stubbed_time - 100.days,
+                        category: "other_secondary",
+                        institution: "Dreary Grey School",
+                        name: "O Level",
+                        year: 1970)
+        end
+      end
+
+      before { allow(subject).to receive(:qualifications).and_return(qualifications + qualifications_to_be_grouped) }
+
+      it "groups the qualifications correctly and in order of the created_at timestamp of the oldest qualification in each group" do
+        expect(subject.qualification_groups.first).to match_array(qualifications_to_be_grouped)
+        expect(subject.qualification_groups.second.first.created_at).to eq(stubbed_time - qualifications.count)
+        expect(subject.qualification_groups.third.first.created_at).to eq(stubbed_time - (qualifications.count - 1))
+        expect(subject.qualification_groups.last.first.created_at).to eq(stubbed_time - (qualifications.count - 2))
+      end
     end
   end
 end

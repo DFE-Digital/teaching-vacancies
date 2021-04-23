@@ -25,6 +25,13 @@ module JobApplicationHelper
     withdrawn: "orange",
   }.freeze
 
+  def job_application_qualified_teacher_status_info(job_application)
+    return unless job_application.qualified_teacher_status.present?
+
+    safe_join([tag.div(I18n.t("helpers.label.jobseekers_job_application_professional_status_form.qualified_teacher_status_options.#{job_application.qualified_teacher_status}"), class: "govuk-body"),
+               tag.p(job_application.qualified_teacher_status == "yes" ? job_application.qualified_teacher_status_year : job_application.qualified_teacher_status_details, class: "govuk-body")])
+  end
+
   def job_application_status_tag(status)
     govuk_tag text: JOBSEEKER_STATUS_MAPPINGS[status.to_sym],
               colour: JOB_APPLICATION_STATUS_TAG_COLOURS[JOBSEEKER_STATUS_MAPPINGS[status.to_sym].to_sym],
