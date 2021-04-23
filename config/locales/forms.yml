@@ -120,6 +120,7 @@ en:
           benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
         phone_number: Please only give a phone number that you are happy to be contacted on.
         previous_names: For example maiden name or name at birth, if different from the name you have now.
+        teacher_reference_number: Enter the 7 numbers of your TRN, excluding any letters and symbols.
       jobseekers_job_alert_further_feedback_form:
         comment: This is optional, but the information will help us to make improvements.
       jobseekers_nqt_job_alerts_form:
