@@ -22,7 +22,7 @@ FactoryBot.define do
     city { Faker::Address.city }
     postcode { Faker::Address.postcode }
     phone_number { "01234 567890" }
-    teacher_reference_number { "12345678" }
+    teacher_reference_number { "1234567" }
     national_insurance_number { "QQ 12 34 56 C" }
 
     # Professional statement
