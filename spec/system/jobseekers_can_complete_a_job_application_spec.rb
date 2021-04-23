@@ -31,7 +31,7 @@ RSpec.describe "Jobseekers can complete a job application" do
     expect(page).to have_content("No qualifications specified")
     click_on I18n.t("buttons.save_and_continue")
     expect(page).not_to have_content("There is a problem")
-    click_on I18n.t("buttons.back")
+    click_on I18n.t("buttons.back_to_previous_step")
     # 1. Graduate degrees
     click_on I18n.t("buttons.add_qualification")
     validates_step_complete(button: I18n.t("buttons.continue"))
