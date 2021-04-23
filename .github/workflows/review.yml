@@ -139,14 +139,14 @@ jobs:
       with:
         GITHUB_TOKEN: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
         message: |
-          Review app deployed to <https://teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital>
+          Review app deployed to <https://teaching-vacancies-${{ env.ENVIRONMENT }}.london.cloudapps.digital>
 
     - name: Trigger Smoke Test
       uses: benc-uk/workflow-dispatch@v1.1
       with:
         workflow: Smoke Test
         token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
-        inputs: '{"smoke_test_domain": "teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital", "sha": "${{ github.event.pull_request.head.sha }}"}'
+        inputs: '{"paas_environment": "${{ env.ENVIRONMENT }}", "sha": "${{ github.event.pull_request.head.sha }}"}'
         ref: ${{ steps.tag_version.outputs.new_tag }}
 
     - name: Wait for smoke test
@@ -154,7 +154,7 @@ jobs:
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
         token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
-        checkName: Smoke Test teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital ${{ github.event.pull_request.head.sha }}
+        checkName: Smoke Test ${{ env.ENVIRONMENT }} ${{ github.event.pull_request.head.sha }}
         ref: ${{ steps.tag_version.outputs.new_tag }}
         timeoutSeconds: 300
         intervalSeconds: 15
@@ -169,5 +169,5 @@ jobs:
         SLACK_CHANNEL: twd_tv_dev
         SLACK_USERNAME: CI Deployment
         SLACK_TITLE: Deployment ${{ job.status }}
-        SLACK_MESSAGE: 'Review app for https://github.com/DFE-Digital/teaching-vacancies/pull/${{ github.event.number }}/ deployed to https://teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital - ${{ job.status }}'
+        SLACK_MESSAGE: 'Review app for https://github.com/DFE-Digital/teaching-vacancies/pull/${{ github.event.number }}/ deployed to https://teaching-vacancies-${{ env.ENVIRONMENT }}.london.cloudapps.digital - ${{ job.status }}'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
