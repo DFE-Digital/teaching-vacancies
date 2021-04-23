@@ -402,6 +402,9 @@ en:
           circumstances_change: My circumstances have changed
           other_reason: Another reason
 
+      publisher:
+        email: Email address
+
       publishers_organisation_form:
         description: Description of %{organisation_type}
         website: '%{organisation_type} website'
