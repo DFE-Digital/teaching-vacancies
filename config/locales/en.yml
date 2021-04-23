@@ -302,7 +302,7 @@ en:
 
   shares:
     new:
-      job_at: "%{title} at {organisation}"
+      job_at: "%{title} at %{organisation}"
 
   filters_component:
     add_or_remove_schools: Add or remove schools
