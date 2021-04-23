@@ -28,9 +28,9 @@ jobs:
   deploy:
     name: build docker image and deploy
     strategy:
+      max-parallel: 1
       matrix:
         environment: ["staging", "production", "qa"]
-      max-parallel: 1
     needs: turnstyle
     runs-on: ubuntu-20.04
 
