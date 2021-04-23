@@ -9,5 +9,5 @@ class Jobseekers::JobApplication::PersonalDetailsForm
 
   validates :national_insurance_number, format: { with: /\A\s*[a-zA-Z]{2}(?:\s*\d\s*){6}[a-zA-Z]?\s*\z/.freeze }, allow_blank: true
   validates :phone_number, format: { with: /\A\+?(?:\d\s?){10,12}\z/.freeze }
-  validates :teacher_reference_number, length: { maximum: 11 }
+  validates :teacher_reference_number, format: { with: /\A\d{7}\z/.freeze }, allow_blank: true
 end
