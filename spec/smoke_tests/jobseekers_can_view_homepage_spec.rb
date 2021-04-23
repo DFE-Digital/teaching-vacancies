@@ -1,7 +1,9 @@
 require "capybara/rspec"
 require "i18n_helper"
+require "yaml"
 
-DEFAULT_DOMAIN = "teaching-vacancies.service.gov.uk".freeze
+SERVICE_DOMAIN = "teaching-vacancies.service.gov.uk".freeze
+CLOUDAPPS_DOMAIN = "london.cloudapps.digital".freeze
 
 RSpec.describe "Page availability", js: true, smoke_test: true do
   after do |example|
@@ -10,7 +12,14 @@ RSpec.describe "Page availability", js: true, smoke_test: true do
   end
 
   context "Jobseeker visits vacancy page" do
-    let(:smoke_test_domain) { (ENV.include? "SMOKE_TEST_DOMAIN") && !ENV["SMOKE_TEST_DOMAIN"].empty? ? ENV["SMOKE_TEST_DOMAIN"] : DEFAULT_DOMAIN }
+    let(:smoke_test_domain) do
+      paas_environment = !ENV.include?("PAAS_ENVIRONMENT") || ENV["PAAS_ENVIRONMENT"].empty? ? "production" : ENV["PAAS_ENVIRONMENT"]
+      begin
+        YAML.load_file("#{__dir__}/../../terraform/workspace-variables/#{paas_environment}_app_env.yml")["DOMAIN"]
+      rescue Errno::ENOENT
+        "teaching-vacancies-#{paas_environment}.#{CLOUDAPPS_DOMAIN}"
+      end
+    end
     let(:page) { Capybara::Session.new(:selenium_chrome_headless) }
 
     it "ensures users can search and view a job vacancy page" do
