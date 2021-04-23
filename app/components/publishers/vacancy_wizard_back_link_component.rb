@@ -17,7 +17,7 @@ class Publishers::VacancyWizardBackLinkComponent < ViewComponent::Base
 
   def text
     if vacancy_is_in_create_state?
-      t("buttons.back")
+      t("buttons.back_to_previous_step")
     else
       t("buttons.cancel_and_return")
     end
