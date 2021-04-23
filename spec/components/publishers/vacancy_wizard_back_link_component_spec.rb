@@ -24,7 +24,7 @@ RSpec.describe Publishers::VacancyWizardBackLinkComponent, type: :component do
       let(:current_step_is_first_step) { false }
 
       it "renders a 'back' link to the previous path given" do
-        expect(rendered_component).to include(I18n.t("buttons.back"))
+        expect(rendered_component).to include(I18n.t("buttons.back_to_previous_step"))
         expect(rendered_component).to include('href="/some/where"')
       end
     end
