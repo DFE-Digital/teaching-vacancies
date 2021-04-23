@@ -311,21 +311,9 @@ resource "aws_iam_policy" "allow_assume_role_deployments" {
   policy      = data.aws_iam_policy_document.allow_assume_role_deployments.json
 }
 
-resource "aws_iam_role_policy_attachment" "deployments_role_policies" {
-  for_each = toset([
-    aws_iam_policy.edit_terraform_state.arn,
-    aws_iam_policy.read_ssm_parameters.arn,
-    aws_iam_policy.cloudwatch.arn,
-    aws_iam_policy.acm.arn,
-    aws_iam_policy.cloudfront.arn,
-    aws_iam_policy.db_backups_in_s3_fullaccess.arn,
-    aws_iam_policy.iam_manage_attachment_buckets_credentials.arn,
-    aws_iam_policy.offline_site_full_access.arn,
-    aws_iam_policy.s3_manage_attachment_buckets.arn
-  ])
-
+resource "aws_iam_role_policy_attachment" "deployments_role_policy" {
   role       = aws_iam_role.deployments.name
-  policy_arn = each.value
+  policy_arn = aws_iam_policy.deployments_role_policy.arn
 }
 
 # Allow group members to manage own MFA, access keys, passwords

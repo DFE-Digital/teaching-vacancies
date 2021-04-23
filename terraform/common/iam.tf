@@ -12,13 +12,13 @@ resource "aws_iam_access_key" "deploy" {
   user = aws_iam_user.deploy.name
 }
 
-# Terraform state
-
-# By specifically granting permissions on these prefixes
-# We are defending against the unintentional creation of further namespaces
-data "aws_iam_policy_document" "edit_terraform_state" {
+data "aws_iam_policy_document" "deployments_role_policy" {
+  # Terraform state
   statement {
+    sid     = "ReadWriteTerraformState"
     actions = ["s3:GetObject", "s3:PutObject"]
+    # By specifically granting permissions on these prefixes
+    # We are defending against the unintentional creation of further namespaces
     resources = [
       "arn:aws:s3:::${data.aws_s3_bucket.terraform_state.bucket}/dev/*",
       "arn:aws:s3:::${data.aws_s3_bucket.terraform_state.bucket}/production/*",
@@ -28,72 +28,57 @@ data "aws_iam_policy_document" "edit_terraform_state" {
     ]
   }
   statement {
+    sid     = "DeleteTerraformState"
     actions = ["s3:DeleteObject"]
     resources = [
       "arn:aws:s3:::${data.aws_s3_bucket.terraform_state.bucket}/review/*"
     ]
   }
   statement {
+    sid     = "ListTerraformState"
     actions = ["s3:ListBucket"]
     resources = [
       "arn:aws:s3:::${data.aws_s3_bucket.terraform_state.bucket}"
     ]
   }
-}
 
-resource "aws_iam_policy" "edit_terraform_state" {
-  name   = "edit-terraform-state"
-  policy = data.aws_iam_policy_document.edit_terraform_state.json
-}
-
-# SSM
-
-data "aws_iam_policy_document" "read_ssm_parameters" {
+  # SSM
   statement {
+    sid       = "ReadSSMParameters"
     actions   = ["ssm:GetParameter", "ssm:GetParametersByPath"]
     resources = ["*"]
   }
-}
 
-resource "aws_iam_policy" "read_ssm_parameters" {
-  name   = "read-ssm-parameter"
-  policy = data.aws_iam_policy_document.read_ssm_parameters.json
-}
-
-# Cloudwatch
-
-data "aws_iam_policy_document" "cloudwatch" {
+  # CloudWatch
   statement {
+    sid       = "ManageCloudwatchIAMSlackLambdaRole"
     actions   = ["iam:*"]
     resources = ["arn:aws:iam::*:role/*-slack-lambda-role"]
   }
   statement {
+    sid       = "ManageCloudwatchKMS"
     actions   = ["kms:*"]
     resources = ["*"]
   }
   statement {
+    sid       = "ManageCloudwatchSNS"
     actions   = ["sns:*"]
     resources = ["*"]
   }
   statement {
+    sid       = "ManageCloudwatchLogs"
     actions   = ["logs:*"]
     resources = ["*"]
   }
   statement {
+    sid       = "ManageCloudwatchLambda"
     actions   = ["lambda:*"]
     resources = ["arn:aws:lambda:*:*:function:*"]
   }
-}
 
-resource "aws_iam_policy" "cloudwatch" {
-  name   = "cloudwatch"
-  policy = data.aws_iam_policy_document.cloudwatch.json
-}
-
-# ACM
-
-data "aws_iam_policy_document" "acm" {
+  # ACM
   statement {
+    sid = "ReadACMCertificates"
     actions = [
       "acm:DescribeCertificate",
       "acm:ListCertificates",
@@ -101,31 +86,17 @@ data "aws_iam_policy_document" "acm" {
     ]
     resources = ["*"]
   }
-}
 
-resource "aws_iam_policy" "acm" {
-  name   = "acm"
-  policy = data.aws_iam_policy_document.acm.json
-}
-
-# Cloudfront
-
-data "aws_iam_policy_document" "cloudfront" {
+  # Cloudfront
   statement {
+    sid       = "ManageCloudfront"
     actions   = ["cloudfront:*"]
     resources = ["*"]
   }
-}
 
-resource "aws_iam_policy" "cloudfront" {
-  name   = "cloudfront"
-  policy = data.aws_iam_policy_document.cloudfront.json
-}
-
-# IAM user/key/policy management for file attachment buckets
-
-data "aws_iam_policy_document" "iam_manage_attachment_buckets_credentials" {
+  # IAM user/key/policy management for file attachment buckets
   statement {
+    sid = "ManageAttachmentBucketUsers"
     actions = [
       "iam:CreateUser",
       "iam:DeleteUser",
@@ -137,53 +108,54 @@ data "aws_iam_policy_document" "iam_manage_attachment_buckets_credentials" {
     resources = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/attachment_buckets_users/*"]
   }
   statement {
+    sid = "ManageAttachmentBucketPolicies"
     actions = [
       "iam:CreatePolicy",
       "iam:DeletePolicy"
     ]
     resources = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/attachment_buckets_policies/*"]
   }
-}
 
-resource "aws_iam_policy" "iam_manage_attachment_buckets_credentials" {
-  name   = "iam_manage_attachment_buckets_credentials"
-  policy = data.aws_iam_policy_document.iam_manage_attachment_buckets_credentials.json
-}
-
-# S3 file attachment buckets
-
-data "aws_iam_policy_document" "s3_manage_attachment_buckets" {
+  # S3 file attachment buckets
   statement {
+    sid       = "ManageAttachmentBucketS3"
     actions   = ["s3:CreateBucket", "s3:DeleteBucket"]
     resources = ["arn:aws:s3:::${data.aws_caller_identity.current.account_id}-${local.service_name}-attachments-*"]
   }
-}
 
-resource "aws_iam_policy" "s3_manage_attachment_buckets" {
-  name   = "s3_manage_attachment_buckets"
-  policy = data.aws_iam_policy_document.s3_manage_attachment_buckets.json
-}
-
-# DB backups in S3
-
-data "aws_iam_policy_document" "db_backups_in_s3_fullaccess" {
+  # DB backups in S3
   statement {
+    sid     = "ManageDatabaseBackupsS3Files"
     actions = ["s3:GetObject", "s3:GetObjectAcl", "s3:PutObject"]
     resources = [
       "arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/full/*",
       "arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/sanitised/*"
     ]
   }
+
   statement {
+    sid       = "ManageDatabaseBackupsS3Bucket"
     actions   = ["s3:GetBucketAcl", "s3:GetBucketLocation", "s3:ListBucket", "s3:PutBucketAcl"]
     resources = ["arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}"]
   }
+
+  # Offline site in S3
+  statement {
+    sid       = "ManageOfflineSiteS3Files"
+    actions   = ["s3:GetObject", "s3:GetObjectAcl", "s3:DeleteObject", "s3:PutObject"]
+    resources = ["arn:aws:s3:::${aws_s3_bucket.offline_site.bucket}/teaching-vacancies-offline/*"]
+  }
+
+  statement {
+    sid       = "ManageOfflineSiteS3Bucket"
+    actions   = ["s3:GetBucketAcl", "s3:GetBucketLocation", "s3:ListBucket", "s3:PutBucketAcl"]
+    resources = ["arn:aws:s3:::${aws_s3_bucket.offline_site.bucket}"]
+  }
 }
 
-
-resource "aws_iam_policy" "db_backups_in_s3_fullaccess" {
-  name   = "db_backups_in_s3_fullaccess"
-  policy = data.aws_iam_policy_document.db_backups_in_s3_fullaccess.json
+resource "aws_iam_policy" "deployments_role_policy" {
+  name   = "deployments_role_policy"
+  policy = data.aws_iam_policy_document.deployments_role_policy.json
 }
 
 data "aws_iam_policy_document" "deny_sensitive_data_in_s3" {
@@ -221,22 +193,4 @@ resource "aws_iam_policy" "deny_sensitive_data_in_s3" {
 resource "aws_iam_role_policy_attachment" "deny_sensitive_data_in_s3" {
   role       = aws_iam_role.readonly.name
   policy_arn = aws_iam_policy.deny_sensitive_data_in_s3.arn
-}
-
-# Offline site S3
-
-data "aws_iam_policy_document" "offline_site_full_access" {
-  statement {
-    actions   = ["s3:GetObject", "s3:GetObjectAcl", "s3:DeleteObject", "s3:PutObject"]
-    resources = ["arn:aws:s3:::${aws_s3_bucket.offline_site.bucket}/teaching-vacancies-offline/*"]
-  }
-  statement {
-    actions   = ["s3:GetBucketAcl", "s3:GetBucketLocation", "s3:ListBucket", "s3:PutBucketAcl"]
-    resources = ["arn:aws:s3:::${aws_s3_bucket.offline_site.bucket}"]
-  }
-}
-
-resource "aws_iam_policy" "offline_site_full_access" {
-  name   = "offline_site_full_access"
-  policy = data.aws_iam_policy_document.offline_site_full_access.json
 }
