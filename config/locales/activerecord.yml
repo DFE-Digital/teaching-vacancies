@@ -292,8 +292,7 @@ en:
             street_address:
               blank: Enter your building and street
             teacher_reference_number:
-              blank: Enter your teacher reference number
-              too_long: Teacher reference number must be 11 digits or fewer
+              invalid: Enter a teacher reference number in the correct format
         jobseekers/job_application/personal_statement_form:
           attributes:
             personal_statement:
