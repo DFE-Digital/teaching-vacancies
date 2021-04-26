@@ -6,24 +6,15 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
   steps :personal_details, :professional_status, :qualifications, :employment_history, :personal_statement, :references,
         :equal_opportunities, :ask_for_support, :declarations
 
-  helper_method :back_path, :form, :job_application, :qualification_form_param_key, :vacancy
+  helper_method :back_path, :form, :job_application, :qualification_form_param_key, :redirect_to_review?, :vacancy
 
   def show
     render_wizard
   end
 
   def update
-    if params[:commit] == t("buttons.save_and_come_back")
-      job_application.update(update_params)
-      redirect_to jobseekers_job_applications_path, success: t("messages.jobseekers.job_applications.saved")
-    elsif form.valid?
-      if referrer_is_finish_wizard_path?
-        job_application.update(completed_update_params)
-        redirect_to finish_wizard_path, success: t("messages.jobseekers.job_applications.saved")
-      else
-        job_application.assign_attributes(completed_update_params)
-        render_wizard job_application
-      end
+    if save_and_come_back? || form.valid?
+      update_job_application
     else
       render_wizard
     end
@@ -58,20 +49,6 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
     (params["jobseekers_job_application_#{step}_form".to_sym] || params).permit(*send("#{step}_fields"))
   end
 
-  def update_params
-    form_params.merge(
-      completed_steps: job_application.completed_steps.delete_if { |completed_step| completed_step == step.to_s },
-      in_progress_steps: job_application.in_progress_steps.append(step.to_s).uniq,
-    )
-  end
-
-  def completed_update_params
-    form_params.merge(
-      completed_steps: job_application.completed_steps.append(step.to_s).uniq,
-      in_progress_steps: job_application.in_progress_steps.delete_if { |in_progress_step| in_progress_step == step.to_s },
-    )
-  end
-
   def finish_wizard_path
     jobseekers_job_application_review_path(job_application)
   end
@@ -80,8 +57,42 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
     @job_application ||= current_jobseeker.job_applications.draft.find(params[:job_application_id])
   end
 
+  def redirect_to_review?
+    current_jobseeker.job_applications.not_draft.any? || referrer_is_finish_wizard_path?
+  end
+
   def referrer_is_finish_wizard_path?
     URI(request.referrer || "").path == finish_wizard_path || URI(params[:origin] || "").path == finish_wizard_path
+  end
+
+  def save_and_come_back?
+    params[:commit] == t("buttons.save_and_come_back")
+  end
+
+  def update_job_application
+    job_application.update(update_params)
+
+    return redirect_to jobseekers_job_applications_path, success: t("messages.jobseekers.job_applications.saved") if
+      save_and_come_back?
+
+    return redirect_to finish_wizard_path, success: t("messages.jobseekers.job_applications.saved") if
+      redirect_to_review?
+
+    render_wizard job_application
+  end
+
+  def update_params
+    if save_and_come_back?
+      form_params.merge(
+        completed_steps: job_application.completed_steps.delete_if { |completed_step| completed_step == step.to_s },
+        in_progress_steps: job_application.in_progress_steps.append(step.to_s).uniq,
+      )
+    else
+      form_params.merge(
+        completed_steps: job_application.completed_steps.append(step.to_s).uniq,
+        in_progress_steps: job_application.in_progress_steps.delete_if { |in_progress_step| in_progress_step == step.to_s },
+      )
+    end
   end
 
   def vacancy

@@ -37,7 +37,7 @@
       = f.govuk_error_summary
 
       - if job_application.references.many?
-        = f.govuk_submit t("buttons.save_and_continue") do
+        = f.govuk_submit job_application_build_submit_button_text do
           = f.govuk_submit t("buttons.save_and_come_back"), secondary: true
       - else
         = f.govuk_submit t("buttons.save_and_come_back"), secondary: true
