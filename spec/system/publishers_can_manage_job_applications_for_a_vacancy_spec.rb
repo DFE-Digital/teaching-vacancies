@@ -42,17 +42,17 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       it "shows total of each status for all applications" do
         within(".application-count.govuk-tag--green") do
           expect(page).to have_content("1")
-          expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.shortlisted"))
+          expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.shortlisted", count: 1))
         end
 
         within(".application-count.govuk-tag--blue") do
           expect(page).to have_content("1")
-          expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.submitted"))
+          expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.submitted", count: 1))
         end
 
         within(".application-count.govuk-tag--red") do
           expect(page).to have_content("1")
-          expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.rejected"))
+          expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.rejected", count: 1))
         end
       end
 
@@ -222,17 +222,17 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       it "shows total of each status for all applications" do
         within(".application-count.govuk-tag--green") do
           expect(page).to have_content("0")
-          expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.shortlisted"))
+          expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.shortlisted", count: 0))
         end
 
         within(".application-count.govuk-tag--blue") do
           expect(page).to have_content("0")
-          expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.submitted"))
+          expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.submitted", count: 0))
         end
 
         within(".application-count.govuk-tag--red") do
           expect(page).to have_content("0")
-          expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.rejected"))
+          expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.rejected", count: 0))
         end
       end
 
