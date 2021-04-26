@@ -108,5 +108,5 @@ jobs:
       run: |
         export TF_VAR_paas_app_docker_image=${{ env.DOCKER_REPOSITORY }}:${{ github.event.inputs.tag }}
         terraform init -reconfigure -input=false ${{ env.BACKEND_CONFIG }}
-        terraform apply -var-file ../workspace-variables/${{ env.VAR_FILE }}.tfvars -auto-approve -input=false
+
       working-directory: terraform/app
