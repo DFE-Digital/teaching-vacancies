@@ -28,13 +28,23 @@ class ReviewComponent < GovukComponent::Base
     end
 
     def call
-      tag.h2(class: classes, **html_attributes) { safe_join([title, edit_link, content].compact) }
+      tag.div(class: classes, **html_attributes) do
+        safe_join([
+          tag.div(class: "review-component__heading__title") do
+            safe_join([
+              tag.h2(class: "govuk-heading-m") { title },
+              edit_link,
+            ].compact)
+          end,
+          tag.div(class: "review-component__heading__status") { content },
+        ].compact)
+      end
     end
 
     private
 
     def default_classes
-      %w[review-component__heading govuk-heading-m]
+      %w[review-component__heading]
     end
 
     def edit_link

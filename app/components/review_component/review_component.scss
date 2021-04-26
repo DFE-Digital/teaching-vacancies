@@ -1,20 +1,46 @@
 @import 'base_component';
 
 .review-component {
-  .review-component__heading {
-    a {
+  &__heading {
+    display: flex;
+    margin-bottom: govuk-spacing(4);
+
+    .govuk-link {
       @include govuk-font($size: 16, $weight: bold);
 
-      margin-left: govuk-spacing(4);
-      margin-right: govuk-spacing(4);
+      line-height: 1.6;
+      white-space: nowrap;
 
       @include govuk-media-query($from: desktop) {
         @include govuk-font($size: 19, $weight: bold);
       }
     }
 
-    .govuk-tag {
-      vertical-align: text-bottom;
+    &__title {
+      flex-basis: 50%;
+
+      @include govuk-media-query($from: tablet) {
+        flex-basis: 75%;
+      }
+
+      .govuk-heading-m {
+        display: block;
+
+        @include govuk-media-query($from: tablet) {
+          display: inline;
+          margin-bottom: 0;
+          margin-right: govuk-spacing(2);
+        }
+      }
+    }
+
+    &__status {
+      flex-grow: 1;
+      text-align: right;
+
+      .govuk-tag {
+        white-space: nowrap;
+      }
     }
   }
 
