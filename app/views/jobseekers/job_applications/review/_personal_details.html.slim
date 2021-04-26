@@ -30,6 +30,11 @@
         html_attributes: { id: "personal_details_your_address" })
 
       - component.slot(:row,
+        key: t("helpers.label.jobseekers_job_application_personal_details_form.country"),
+        value: job_application.country,
+        html_attributes: { id: "personal_details_country" })
+
+      - component.slot(:row,
         key: t("helpers.label.jobseekers_job_application_personal_details_form.phone_number"),
         value: job_application.phone_number,
         html_attributes: { id: "personal_details_phone_number" })
