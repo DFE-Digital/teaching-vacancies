@@ -267,7 +267,7 @@ en:
             gender_description:
               blank: Describe your gender identity
             orientation:
-              inclusion: Select an orientation or ‘Prefer not to say’
+              inclusion: Select a sexual orientation or ‘Prefer not to say’
             orientation_description:
               blank: Describe your sexual orientation
             religion:
