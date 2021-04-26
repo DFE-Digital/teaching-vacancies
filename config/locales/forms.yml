@@ -355,6 +355,7 @@ en:
         comment: Do you have any suggestions on how we should improve the service?
       jobseekers_job_application_personal_details_form:
         city: Town or city
+        country: Country
         first_name: First name
         last_name: Last name
         national_insurance_number: National Insurance number
