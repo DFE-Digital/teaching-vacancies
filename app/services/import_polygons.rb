@@ -108,6 +108,6 @@ class ImportPolygons
   end
 
   def take_every_nth_coord(coords, number)
-    coords.each_with_index.map { |item, index| item if (index % number).zero? }.compact
+    coords.each_with_index.filter_map { |item, index| item if (index % number).zero? }
   end
 end
