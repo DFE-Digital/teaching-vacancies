@@ -21,8 +21,7 @@ RSpec.describe "Jobseekers can edit a draft job application" do
 
     fill_in "First name", with: "Dave"
 
-    expect { click_on I18n.t("buttons.save_and_continue") }
-      .to change { job_application.reload.first_name }.from("Steve").to("Dave")
+    expect { click_on I18n.t("buttons.save") }.to change { job_application.reload.first_name }.from("Steve").to("Dave")
 
     expect(current_path).to eq(jobseekers_job_application_review_path(job_application))
     expect(page).to have_content(I18n.t("messages.jobseekers.job_applications.saved"))

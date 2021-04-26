@@ -66,7 +66,7 @@
         = f.govuk_radio_divider
         = f.govuk_radio_button :religion, :prefer_not_to_say
 
-      = f.govuk_submit current_jobseeker.job_applications.not_draft.none? ? t("buttons.save_and_continue") : t("buttons.save_changes") do
+      = f.govuk_submit job_application_build_submit_button_text do
         = f.govuk_submit t("buttons.save_and_come_back"), secondary: true
 
   - if current_jobseeker.job_applications.not_draft.none?

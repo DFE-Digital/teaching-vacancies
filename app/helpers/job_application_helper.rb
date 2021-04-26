@@ -65,4 +65,12 @@ module JobApplicationHelper
 
     govuk_tag(**tag_attributes)
   end
+
+  def job_application_build_submit_button_text
+    if redirect_to_review?
+      t("buttons.save")
+    else
+      t("buttons.save_and_continue")
+    end
+  end
 end
