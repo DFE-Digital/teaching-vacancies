@@ -98,8 +98,11 @@ data "aws_iam_policy_document" "deployments_role_policy" {
   statement {
     sid = "ManageAttachmentBucketUsers"
     actions = [
+      "iam:GetUser",
       "iam:CreateUser",
       "iam:DeleteUser",
+      "iam:ListGroupsForUser",
+      "iam:ListAccessKeys",
       "iam:CreateAccessKey",
       "iam:DeleteAccessKey",
       "iam:AttachUserPolicy",
@@ -110,6 +113,7 @@ data "aws_iam_policy_document" "deployments_role_policy" {
   statement {
     sid = "ManageAttachmentBucketPolicies"
     actions = [
+      "iam:GetPolicy",
       "iam:CreatePolicy",
       "iam:DeletePolicy"
     ]
@@ -120,7 +124,7 @@ data "aws_iam_policy_document" "deployments_role_policy" {
   statement {
     sid       = "ManageAttachmentBucketS3"
     actions   = ["s3:CreateBucket", "s3:DeleteBucket"]
-    resources = ["arn:aws:s3:::${data.aws_caller_identity.current.account_id}-${local.service_name}-attachments-*"]
+    resources = ["arn:aws:s3:::${data.aws_caller_identity.current.account_id}-attachments-*"]
   }
 
   # DB backups in S3
