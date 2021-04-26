@@ -11,4 +11,9 @@ FactoryBot.define do
 
     job_application
   end
+
+  trait :skip_validate do
+    # Skip validate so that we can test the before_validation hook
+    to_create { |instance| instance.save(validate: false) }
+  end
 end
