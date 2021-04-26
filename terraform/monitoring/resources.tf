@@ -11,5 +11,10 @@ module "prometheus_all" {
   alert_rules                = file("${path.module}/config/alert.rules.yml")
   alertmanager_slack_url     = local.alertmanager_slack_url
   alertmanager_slack_channel = local.alertmanager_slack_channel
-  redis_service_instance_id  = data.cloudfoundry_service_instance.redis_queue.id
+  redis_services = [
+    "${local.service_name}-production/${local.service_name}-redis-queue-production",
+    "${local.service_name}-production/${local.service_name}-redis-cache-production",
+    "${local.service_name}-staging/${local.service_name}-redis-queue-staging",
+    "${local.service_name}-staging/${local.service_name}-redis-cache-staging"
+  ]
 }
