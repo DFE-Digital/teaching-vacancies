@@ -15,7 +15,7 @@ We have three applications in Algolia, this is the setup:
 If you managed to [fetch the dev variables and output to a shell environment file](https://github.com/DFE-Digital/teaching-vacancies#environment-variables)
 
 ```
-make -s local print-env > .env
+aws-vault exec ReadOnly -- make -s local print-env > .env
 ```
 
 The following environment variables should be set in your `.env` file:
