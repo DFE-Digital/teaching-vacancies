@@ -6,7 +6,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
   steps :personal_details, :professional_status, :qualifications, :employment_history, :personal_statement, :references,
         :equal_opportunities, :ask_for_support, :declarations
 
-  helper_method :back_path, :form, :job_application, :qualification_form_param_key, :vacancy
+  helper_method :back_path, :form, :job_application, :qualification_form_param_key, :redirect_to_review?, :vacancy
 
   def show
     render_wizard
@@ -17,7 +17,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
       job_application.update(update_params)
       redirect_to jobseekers_job_applications_path, success: t("messages.jobseekers.job_applications.saved")
     elsif form.valid?
-      if referrer_is_finish_wizard_path?
+      if redirect_to_review?
         job_application.update(completed_update_params)
         redirect_to finish_wizard_path, success: t("messages.jobseekers.job_applications.saved")
       else
@@ -78,6 +78,10 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
 
   def job_application
     @job_application ||= current_jobseeker.job_applications.draft.find(params[:job_application_id])
+  end
+
+  def redirect_to_review?
+    current_jobseeker.job_applications.not_draft.any? || referrer_is_finish_wizard_path?
   end
 
   def referrer_is_finish_wizard_path?
