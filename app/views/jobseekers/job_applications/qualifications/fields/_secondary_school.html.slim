@@ -1,8 +1,23 @@
-= f.govuk_fieldset legend: { text: t("helpers.legend.jobseekers_job_application_details_qualifications_shared_legends.subjects") } do
-  / TODO: change subject legend when adding new subject field (and change aria-required)
-  .inline-fields-container
-    = f.govuk_text_field :subject, legend: { text: "Subject 1" }, aria: { required: true }, form_group: { classes: "govuk-!-width-two-thirds" }
-    = f.govuk_text_field :grade, aria: { required: true }, form_group: { classes: "govuk-!-width-one-third" }
+= f.govuk_fieldset legend: { text: t("helpers.legend.jobseekers_job_application_details_qualifications_shared_legends.subjects") }, id: "subjects-and-grades" do
+  - form.row_count.times do |index|
+      .inline-fields-container.subject-row id="subject_row_#{index + 1}"
+        = f.govuk_text_field "subject#{index + 1}".to_sym,
+          label: { text: "#{t("helpers.label.jobseekers_job_application_details_qualifications_shared_labels.subject")} #{index + 1}" },
+          aria: { required: index.zero? },
+          form_group: { classes: "govuk-!-width-one-half" }
+        = f.govuk_text_field "grade#{index + 1}".to_sym,
+          label: { text: t("helpers.label.jobseekers_job_application_details_qualifications_shared_labels.grade") },
+          aria: { required: index.zero? },
+          form_group: { classes: "govuk-!-width-one-quarter" }
+        - unless index.zero?
+          = govuk_link_to t("buttons.delete_subject"), "#", id: "delete_#{index + 1}", class: "js-action delete-button govuk-!-margin-bottom-6 govuk-!-padding-bottom-2"
 
-= f.govuk_text_field :institution, label: { size: "s" }, aria: { required: true }, width: "three-quarters"
+.add-subject
+
+p class="govuk-!-margin-bottom-6 govuk-!-margin-top-0 js-action"
+  = govuk_link_to t("buttons.add_another_subject"), "#", id: "add_subject"
+
+= hidden_field_tag :to_delete
+
+= f.govuk_text_field :institution, label: { size: "s" }, aria: { required: true }, width: "two-thirds"
 = f.govuk_number_field :year, label: { size: "s" }, aria: { required: true }, width: 4

@@ -4,6 +4,7 @@ class Jobseekers::JobApplications::EmploymentsController < Jobseekers::BaseContr
   def create
     if form.valid?
       job_application.employments.create(employment_params)
+      update_in_progress_steps!(:employment_history)
       redirect_to back_path
     else
       render :new
