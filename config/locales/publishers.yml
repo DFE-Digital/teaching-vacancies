@@ -30,7 +30,7 @@ en:
           page.</li>
           </ul>
         sign_in:
-          description: You must sign in to your Teaching Vacancies account to list a job.
+          description: Enter your email below and we will send you a link that will take you straight into your account.
           title: Sign in to Teaching Vacancies
     no_vacancies_component:
       bullets:
@@ -86,11 +86,6 @@ en:
           create:
             not_authorised: You are not authorised to log in
           new:
-            title: Sign in to Teaching Vacancies
-            heading: Temporary login
-            body: DfE Sign In is experiencing problems. Please sign in using your email address.
-            description: You must sign in to your Teaching Vacancies account to list a job.
-            request_account_title: Request an account
             request_account_html: *request_account_html
     publisher_preferences:
       new:
@@ -138,7 +133,9 @@ en:
         heading: Sign in to Teaching Vacancies
         subject: Sign in to Teaching Vacancies
       heading: Temporary login
-      please_use_email: DfE Sign In is experiencing problems. Please sign in using your email address.
+      please_use_email: >-
+        There are some technical problems with our sign in page.
+        We’re working on fixing it, but in the meantime you can still access your account.
     vacancies_component:
       awaiting_feedback:
         tab_heading: Jobs awaiting feedback
