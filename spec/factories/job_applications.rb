@@ -92,6 +92,7 @@ FactoryBot.define do
     street_address { "" }
     city { "" }
     postcode { "" }
+    country { "" }
     phone_number { "" }
     teacher_reference_number { "" }
     national_insurance_number { "" }
