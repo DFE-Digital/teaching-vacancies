@@ -189,11 +189,11 @@ class ExportTablesToBigQuery
   def bigquery_schema(table)
     @bigquery_schema = {}
 
-    table.columns.map { |c|
+    table.columns.filter_map do |c|
       next if DROP_THESE_ATTRIBUTES.include?(c.name)
 
       @bigquery_schema[c.name] = ENUM_ATTRIBUTES[c.name] || CONVERT_THESE_TYPES[c.type] || c.type
-    }.compact
+    end
 
     if table.column_names.include?("geolocation")
       @bigquery_schema["geolocation_x"] = :float
