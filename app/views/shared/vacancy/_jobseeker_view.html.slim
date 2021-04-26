@@ -13,10 +13,14 @@
     .govuk-grid-row
       - if JobseekerApplicationsFeature.enabled? && @vacancy.enable_job_applications? && @vacancy.expires_at.future?
         .govuk-grid-column-one-third
-          - if defined?(job_application) && ["withdrawn", nil].exclude?(job_application&.status)
+          - if defined?(job_application) && job_application.present?
             - if job_application.draft?
               = render BannerButtonComponent.new text: t("jobseekers.job_applications.banner_links.draft"),
                 href: jobseekers_job_application_review_path(job_application),
+                icon: "green-tick"
+            - elsif job_application.withdrawn?
+              = render BannerButtonComponent.new text: t("jobseekers.job_applications.banner_links.withdrawn"),
+                href: jobseekers_job_application_path(job_application),
                 icon: "green-tick"
             - else
               = render BannerButtonComponent.new text: t("jobseekers.job_applications.banner_links.submitted"),
