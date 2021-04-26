@@ -98,8 +98,10 @@ data "aws_iam_policy_document" "deployments_role_policy" {
   statement {
     sid = "ManageAttachmentBucketUsers"
     actions = [
+      "iam:GetUser",
       "iam:CreateUser",
       "iam:DeleteUser",
+      "iam:ListGroupsForUser",
       "iam:CreateAccessKey",
       "iam:DeleteAccessKey",
       "iam:AttachUserPolicy",
@@ -110,6 +112,7 @@ data "aws_iam_policy_document" "deployments_role_policy" {
   statement {
     sid = "ManageAttachmentBucketPolicies"
     actions = [
+      "iam:GetPolicy",
       "iam:CreatePolicy",
       "iam:DeletePolicy"
     ]
