@@ -88,14 +88,15 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
     job_application = current_jobseeker.job_applications.find_by(vacancy_id: vacancy.id)
     return unless job_application
 
-    if job_application.submitted? || job_application.reviewed?
+    if job_application.draft?
+      redirect_to jobseekers_job_applications_path,
+                  warning: t("messages.jobseekers.job_applications.already_exists.draft_html",
+                             job_title: vacancy.job_title,
+                             link: jobseekers_job_application_review_path(job_application))
+    else
       redirect_to jobseekers_job_applications_path,
                   warning: t("messages.jobseekers.job_applications.already_exists.submitted",
                              job_title: vacancy.job_title)
-    elsif job_application.draft?
-      redirect_to jobseekers_job_applications_path,
-                  warning: t("messages.jobseekers.job_applications.already_exists.draft_html",
-                             job_title: vacancy.job_title, link: jobseekers_job_application_review_path(job_application))
     end
   end
 
