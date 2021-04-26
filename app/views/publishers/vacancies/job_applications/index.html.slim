@@ -27,17 +27,17 @@
     .govuk-grid-column-one-quarter
       .application-count.govuk-tag class="govuk-tag--#{status_tag_colour(:submitted)}"
         .govuk-heading-l = job_applications.submitted.count
-        h3.govuk-caption-s = t(".submitted")
+        h3.govuk-caption-s = t(".submitted", count: job_applications.submitted.count)
 
     .govuk-grid-column-one-quarter
       .application-count.govuk-tag class="govuk-tag--#{status_tag_colour(:shortlisted)}"
         .govuk-heading-l = job_applications.shortlisted.count
-        h3.govuk-caption-s = t(".shortlisted")
+        h3.govuk-caption-s = t(".shortlisted", count: job_applications.shortlisted.count)
 
     .govuk-grid-column-one-quarter
       .application-count.govuk-tag class="govuk-tag--#{status_tag_colour(:unsuccessful)}"
         .govuk-heading-l = job_applications.unsuccessful.count
-        h3.govuk-caption-s = t(".rejected")
+        h3.govuk-caption-s = t(".rejected", count: job_applications.unsuccessful.count)
 
 .govuk-grid-row
   .govuk-grid-column-one-third
