@@ -28,7 +28,7 @@
           = f.govuk_text_area :support_needed_details, rows: 10
         = f.govuk_radio_button :support_needed, :no
 
-      = f.govuk_submit current_jobseeker.job_applications.not_draft.none? ? t("buttons.save_and_continue") : t("buttons.save_changes") do
+      = f.govuk_submit redirect_to_review? ? t("buttons.save") : t("buttons.save_and_continue") do
         = f.govuk_submit t("buttons.save_and_come_back"), secondary: true
 
   - if current_jobseeker.job_applications.not_draft.none?

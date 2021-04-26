@@ -28,7 +28,7 @@
       = f.govuk_text_field :teacher_reference_number, label: { size: "s" }, width: "one-half", aria: { required: true }, form_group: { classes: "optional-field" }
       = f.govuk_text_field :national_insurance_number, label: { size: "s" }, width: "one-half", form_group: { classes: "optional-field" }
 
-      = f.govuk_submit current_jobseeker.job_applications.not_draft.none? ? t("buttons.save_and_continue") : t("buttons.save_changes") do
+      = f.govuk_submit redirect_to_review? ? t("buttons.save") : t("buttons.save_and_continue") do
         = f.govuk_submit t("buttons.save_and_come_back"), secondary: true
 
   - if current_jobseeker.job_applications.not_draft.none?
