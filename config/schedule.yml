@@ -8,11 +8,6 @@ email_feedback_prompt:
   class: 'SendExpiredVacancyFeedbackEmailJob'
   queue: low
 
-export_tables:
-  cron: '10 0 * * *'
-  class: 'ExportTablesToBigQueryJob'
-  queue: low
-
 export_users:
   cron: '0 01 * * *'
   class: 'ExportDsiUsersToBigQueryJob'
@@ -61,6 +56,11 @@ remove_vacancies_that_expired_yesterday:
 reset_sessions:
   cron: '0 02 * * *'
   class: 'ResetSessionsJob'
+  queue: low
+
+send_feedback:
+  cron: '10 0 * * *'
+  class: 'SendFeedbackToBigQueryJob'
   queue: low
 
 update_algolia_index:
