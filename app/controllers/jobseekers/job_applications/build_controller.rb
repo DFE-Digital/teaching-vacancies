@@ -13,17 +13,8 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
   end
 
   def update
-    if params[:commit] == t("buttons.save_and_come_back")
-      job_application.update(update_params)
-      redirect_to jobseekers_job_applications_path, success: t("messages.jobseekers.job_applications.saved")
-    elsif form.valid?
-      if redirect_to_review?
-        job_application.update(completed_update_params)
-        redirect_to finish_wizard_path, success: t("messages.jobseekers.job_applications.saved")
-      else
-        job_application.assign_attributes(completed_update_params)
-        render_wizard job_application
-      end
+    if params[:commit] == t("buttons.save_and_come_back") || form.valid?
+      update_job_application
     else
       render_wizard
     end
@@ -59,17 +50,29 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
   end
 
   def update_params
-    form_params.merge(
-      completed_steps: job_application.completed_steps.delete_if { |completed_step| completed_step == step.to_s },
-      in_progress_steps: job_application.in_progress_steps.append(step.to_s).uniq,
-    )
+    if params[:commit] == t("buttons.save_and_come_back")
+      form_params.merge(
+        completed_steps: job_application.completed_steps.delete_if { |completed_step| completed_step == step.to_s },
+        in_progress_steps: job_application.in_progress_steps.append(step.to_s).uniq,
+      )
+    else
+      form_params.merge(
+        completed_steps: job_application.completed_steps.append(step.to_s).uniq,
+        in_progress_steps: job_application.in_progress_steps.delete_if { |in_progress_step| in_progress_step == step.to_s },
+      )
+    end
   end
 
-  def completed_update_params
-    form_params.merge(
-      completed_steps: job_application.completed_steps.append(step.to_s).uniq,
-      in_progress_steps: job_application.in_progress_steps.delete_if { |in_progress_step| in_progress_step == step.to_s },
-    )
+  def update_job_application
+    job_application.update(update_params)
+
+    return redirect_to jobseekers_job_applications_path, success: t("messages.jobseekers.job_applications.saved") if
+      params[:commit] == t("buttons.save_and_come_back")
+
+    return redirect_to finish_wizard_path, success: t("messages.jobseekers.job_applications.saved") if
+      redirect_to_review?
+
+    render_wizard job_application
   end
 
   def finish_wizard_path
