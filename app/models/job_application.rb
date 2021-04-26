@@ -40,6 +40,12 @@ class JobApplication < ApplicationRecord
 
   scope :submitted_yesterday, -> { submitted.where("DATE(submitted_at) = ?", Date.yesterday) }
 
+  def readable_qualified_teacher_status
+    return unless qualified_teacher_status.present?
+
+    I18n.t("helpers.label.jobseekers_job_application_professional_status_form.qualified_teacher_status_options.#{qualified_teacher_status}")
+  end
+
   def submit!
     submitted!
     Publishers::JobApplicationReceivedNotification.with(vacancy: vacancy, job_application: self).deliver(vacancy.publisher)
