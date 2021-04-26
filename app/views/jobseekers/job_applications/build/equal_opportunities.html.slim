@@ -35,19 +35,19 @@
         = f.govuk_radio_button :gender, :prefer_not_to_say
 
       = f.govuk_radio_buttons_fieldset :orientation do
-        = f.govuk_radio_button :orientation, :heterosexual, link_errors: true
+        = f.govuk_radio_button :orientation, :bisexual, link_errors: true
         = f.govuk_radio_button :orientation, :gay_or_lesbian
-        = f.govuk_radio_button :orientation, :bisexual
+        = f.govuk_radio_button :orientation, :heterosexual
         = f.govuk_radio_button :orientation, :other do
           = f.govuk_text_field :orientation_description
         = f.govuk_radio_divider
         = f.govuk_radio_button :orientation, :prefer_not_to_say
 
       = f.govuk_radio_buttons_fieldset :ethnicity do
-        = f.govuk_radio_button :ethnicity, :white, link_errors: true
-        = f.govuk_radio_button :ethnicity, :mixed
-        = f.govuk_radio_button :ethnicity, :asian
+        = f.govuk_radio_button :ethnicity, :asian, link_errors: true
         = f.govuk_radio_button :ethnicity, :black
+        = f.govuk_radio_button :ethnicity, :mixed
+        = f.govuk_radio_button :ethnicity, :white
         = f.govuk_radio_button :ethnicity, :other do
           = f.govuk_text_field :ethnicity_description
         = f.govuk_radio_divider
