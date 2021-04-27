@@ -39,16 +39,7 @@
         h3.govuk-heading-m = t(".feedback")
         p.govuk-body class="govuk-!-margin-bottom-0" = job_application.rejection_reasons
 
-    ol.app-task-list
-      li = render "jobseekers/job_applications/review/personal_details", allow_edit: false
-      li = render "jobseekers/job_applications/review/professional_status", allow_edit: false
-      li = render "jobseekers/job_applications/review/qualifications", allow_edit: false
-      li = render "jobseekers/job_applications/review/employment_history", allow_edit: false
-      li = render "jobseekers/job_applications/review/personal_statement", allow_edit: false
-      li = render "jobseekers/job_applications/review/references", allow_edit: false
-      li = render "jobseekers/job_applications/review/equal_opportunities", allow_edit: false
-      li = render "jobseekers/job_applications/review/ask_for_support", allow_edit: false
-      li = render "jobseekers/job_applications/review/declarations", allow_edit: false
+    = render "shared/job_application/show"
 
   .govuk-grid-column-one-third
     .account-sidebar
