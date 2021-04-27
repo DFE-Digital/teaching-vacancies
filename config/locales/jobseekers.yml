@@ -301,6 +301,7 @@ en:
               link_text: Privacy Policy
         heading: Review your application
         no_qualifications: You have not added any qualifications.
+        steps: Application steps
         title: Review your application — Application
         warning: You cannot review a non-draft job application
       show:
