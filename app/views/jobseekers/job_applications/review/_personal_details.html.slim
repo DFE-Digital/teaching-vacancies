@@ -1,45 +1,31 @@
 = render ReviewComponent.new id: "jobseekers-job-application-review-form-personal-details-field-error" do |review|
   - review.heading title: t("jobseekers.job_applications.build.personal_details.heading"),
-                   text: (job_application_review_edit_section_text(job_application, :personal_details) if allow_edit),
-                   href: (jobseekers_job_application_build_path(job_application, :personal_details) if allow_edit) do
-      - if allow_edit
-        = job_application_review_section_tag(job_application, :personal_details)
+                    text: job_application_review_edit_section_text(job_application, :personal_details),
+                    href: jobseekers_job_application_build_path(job_application, :personal_details) do
+      = job_application_review_section_tag(job_application, :personal_details)
 
   - review.body do
-    = govuk_summary_list do |component|
-      - component.slot(:row,
-        key: t("helpers.label.jobseekers_job_application_personal_details_form.first_name"),
-        value: job_application.first_name,
-        html_attributes: { id: "personal_details_first_name" })
-
-      - component.slot(:row,
-        key: t("helpers.label.jobseekers_job_application_personal_details_form.last_name"),
-        value: job_application.last_name,
-        html_attributes: { id: "personal_details_last_name" })
-
-      - component.slot(:row,
-        key: t("helpers.label.jobseekers_job_application_personal_details_form.previous_names"),
-        value: job_application.previous_names.presence || t("jobseekers.job_applications.not_defined"),
-        html_attributes: { id: "personal_details_previous_names" })
-
-      - component.slot(:row,
-        key: t("helpers.legend.jobseekers_job_application_personal_details_form.your_address"),
-        value: safe_join([tag.div(job_application.street_address, class: "govuk-body"),
-                          tag.div(job_application.city, class: "govuk-body"),
-                          tag.div(job_application.postcode, class: "govuk-body")]),
-        html_attributes: { id: "personal_details_your_address" })
-
-      - component.slot(:row,
-        key: t("helpers.label.jobseekers_job_application_personal_details_form.phone_number"),
-        value: job_application.phone_number,
-        html_attributes: { id: "personal_details_phone_number" })
-
-      - component.slot(:row,
-        key: t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number"),
-        value: job_application.teacher_reference_number,
-        html_attributes: { id: "personal_details_teacher_reference_number" })
-
-      - component.slot(:row,
-        key: t("helpers.label.jobseekers_job_application_personal_details_form.national_insurance_number"),
-        value: job_application.national_insurance_number.presence || t("jobseekers.job_applications.not_defined"),
-        html_attributes: { id: "personal_details_national_insurance_number" })
+    = govuk_summary_list do |summary|
+      - summary.slot :row,
+                      key: t("helpers.label.jobseekers_job_application_personal_details_form.first_name"),
+                      value: job_application.first_name
+      - summary.slot :row,
+                      key: t("helpers.label.jobseekers_job_application_personal_details_form.last_name"),
+                      value: job_application.last_name
+      - summary.slot :row,
+                      key: t("helpers.label.jobseekers_job_application_personal_details_form.previous_names"),
+                      value: job_application.previous_names.presence || t("jobseekers.job_applications.not_defined")
+      - summary.slot :row,
+                      key: t("helpers.legend.jobseekers_job_application_personal_details_form.your_address"),
+                      value: safe_join([tag.div(job_application.street_address, class: "govuk-body"),
+                                        tag.div(job_application.city, class: "govuk-body"),
+                                        tag.div(job_application.postcode, class: "govuk-body")])
+      - summary.slot :row,
+                      key: t("helpers.label.jobseekers_job_application_personal_details_form.phone_number"),
+                      value: job_application.phone_number
+      - summary.slot :row,
+                      key: t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number"),
+                      value: job_application.teacher_reference_number.presence || t("jobseekers.job_applications.not_defined")
+      - summary.slot :row,
+                      key: t("helpers.label.jobseekers_job_application_personal_details_form.national_insurance_number"),
+                      value: job_application.national_insurance_number.presence || t("jobseekers.job_applications.not_defined")

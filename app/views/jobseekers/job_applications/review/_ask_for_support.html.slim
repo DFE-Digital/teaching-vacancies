@@ -1,14 +1,11 @@
 = render ReviewComponent.new id: "jobseekers-job-application-review-form-ask-for-support-error" do |review|
   - review.heading title: t("jobseekers.job_applications.build.ask_for_support.heading"),
-                   text: (job_application_review_edit_section_text(job_application, :ask_for_support) if allow_edit),
-                   href: (jobseekers_job_application_build_path(job_application, :ask_for_support) if allow_edit) do
-      - if allow_edit
-        = job_application_review_section_tag(job_application, :ask_for_support)
+                   text: job_application_review_edit_section_text(job_application, :ask_for_support),
+                   href: jobseekers_job_application_build_path(job_application, :ask_for_support) do
+      = job_application_review_section_tag(job_application, :ask_for_support)
 
   - review.body do
-    = govuk_summary_list do |component|
-      - component.slot(:row,
-        key: t("helpers.legend.jobseekers_job_application_ask_for_support_form.support_needed"),
-        value: safe_join([tag.div(job_application.support_needed.humanize, class: "govuk-body"),
-                          tag.div(job_application.support_needed_details, class: "govuk-body")]),
-        html_attributes: { id: "ask_for_support_support_needed" })
+    = govuk_summary_list do |summary|
+      - summary.slot :row,
+                     key: t("helpers.legend.jobseekers_job_application_ask_for_support_form.support_needed"),
+                     value: job_application_support_needed_info(job_application)
