@@ -250,7 +250,9 @@ en:
             undergraduate: Edit undergraduate degree
             postgraduate: Edit postgraduate degree
             other: Edit qualification or course
-          title: Edit qualification — Application
+          title:
+            one: Edit qualification — Application
+            other: Edit qualifications — Application
         new:
           <<: *qualifications_shared
           heading:
@@ -261,7 +263,9 @@ en:
             undergraduate: Add an undergraduate degree
             postgraduate: Add a postgraduate degree
             other: Add a qualification or course
-          title: Add a qualification — Application
+          title:
+            one: Add a qualification — Application
+            other: Add qualifications — Application
         select_category:
           <<: *qualifications_shared
           heading: Add a qualification
