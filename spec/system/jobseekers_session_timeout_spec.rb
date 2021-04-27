@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers session timeout" do
   let!(:jobseeker) { create(:jobseeker, email: "jobseeker@example.com") }
-  let(:timeout_period) { 2.weeks }
+  let(:timeout_period) { 8.hours }
 
   before { login_as(jobseeker, scope: :jobseeker) }
 
