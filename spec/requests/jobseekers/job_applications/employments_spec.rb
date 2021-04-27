@@ -46,8 +46,7 @@ RSpec.describe "Job applications employments" do
   end
 
   describe "POST #create" do
-    let(:params) { { commit: button, jobseekers_job_application_details_employment_form: { organisation: organisation } } }
-    let(:button) { I18n.t("buttons.save_employment") }
+    let(:params) { { commit: I18n.t("buttons.save_employment"), jobseekers_job_application_details_employment_form: { organisation: organisation } } }
     let(:organisation) { "Awesome academy" }
 
     context "when the form is valid" do
@@ -57,6 +56,7 @@ RSpec.describe "Job applications employments" do
         expect { post jobseekers_job_application_employments_path(job_application), params: params }
           .to change { Employment.count }.by(1)
 
+        expect(job_application.reload.in_progress_steps).to contain_exactly("employment_history")
         expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :employment_history))
       end
 
@@ -83,8 +83,7 @@ RSpec.describe "Job applications employments" do
 
   describe "PATCH #update" do
     let!(:employment) { create(:employment, job_application: job_application, organisation: "Cool school") }
-    let(:params) { { commit: button, jobseekers_job_application_details_employment_form: { organisation: organisation } } }
-    let(:button) { I18n.t("buttons.save_employment") }
+    let(:params) { { commit: I18n.t("buttons.save_employment"), jobseekers_job_application_details_employment_form: { organisation: organisation } } }
     let(:organisation) { "Awesome academy" }
 
     context "when the form is valid" do

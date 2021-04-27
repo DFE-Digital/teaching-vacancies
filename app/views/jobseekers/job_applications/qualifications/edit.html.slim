@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, t(".title")
+- content_for :page_title_prefix, t(".title.#{secondary? ? 'other' : 'one'}")
 
 .govuk-main-wrapper
   .govuk-grid-row
@@ -6,9 +6,9 @@
       .govuk-caption-l = t(".caption")
       h1.govuk-heading-xl = t(".heading.#{category}")
 
-      = form_for form, url: jobseekers_job_application_qualification_path(job_application, qualification), method: :patch do |f|
-        = f.govuk_error_summary link_base_errors_to: :subject
+      = form_for form, url: jobseekers_job_application_qualifications_path(job_application, ids: qualifications.pluck(:id)), method: :patch do |f|
+        = f.govuk_error_summary
 
         = render "fields", f: f
 
-        = f.govuk_submit submit_text
+        = f.govuk_submit t("buttons.save_qualification.#{secondary? ? 'other' : 'one'}")
