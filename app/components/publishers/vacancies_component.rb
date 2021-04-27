@@ -46,8 +46,8 @@ class Publishers::VacanciesComponent < ViewComponent::Base
     return unless vacancy.enable_job_applications?
     return unless include_job_applications?
 
-    if vacancy.job_applications.any?
-      link = govuk_link_to(I18n.t("jobs.manage.view_applicants", count: vacancy.job_applications.count),
+    if vacancy.job_applications.submitted.any?
+      link = govuk_link_to(I18n.t("jobs.manage.view_applicants", count: vacancy.job_applications.submitted.count),
                            organisation_job_job_applications_path(vacancy.id),
                            class: "govuk-link--no-visited-state")
       tag.div(card.labelled_item(I18n.t("jobs.manage.applications"), link))
