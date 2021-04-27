@@ -103,17 +103,10 @@ en:
           asian: Includes Indian, Pakistani, Bangladeshi or Chinese
           mixed: Includes White and Black Caribbean, White and Black African or White and Asian
           white: Includes English, Welsh, Scottish, Northern Irish, British, Irish Gypsy or Irish Traveller
-          other: Please use your own words.
-        gender_options:
-          other: Please use your own words.
         orientation: If the options below do not reflect how you identify, please select ‘Other’.
-        orientation_options:
-          other: Please use your own words.
         religion: >-
           Tell us about your religion or faith. You can select ‘Other’ if your beliefs are not represented by one of the
           given options.
-        religion_options:
-          other: Please use your own words.
       jobseekers_job_application_personal_details_form:
         national_insurance_number: >-
           If you have a National Insurance number you should enter it here. It's on your National Insurance card,
@@ -313,28 +306,28 @@ en:
           "no": "No"
           "yes": "Yes"
           prefer_not_to_say: Prefer not to say
-        ethnicity_description: Describe your ethnic group
+        ethnicity_description: Please describe your ethnic group
         ethnicity_options:
           asian: Asian or Asian British
           black: Black African, Caribbean or Black British
           mixed: Mixed or multiple ethnic group
-          other: Other
+          other: Other ethnic group
           prefer_not_to_say: Prefer not to say
           white: White
-        gender_description: Describe your gender identity
+        gender_description: Please describe your gender identity
         gender_options:
           man: Man
-          other: Other
+          other: Other gender identity
           prefer_not_to_say: Prefer not to say
           woman: Woman
-        orientation_description: Describe your sexual orientation
+        orientation_description: Please describe your sexual orientation
         orientation_options:
           bisexual: Bisexual
           gay_or_lesbian: Gay or lesbian
           heterosexual: Heterosexual
-          other: Other
+          other: Other sexual orientation
           prefer_not_to_say: Prefer not to say
-        religion_description: Describe your religion or belief
+        religion_description: Please describe your religion or belief
         religion_options:
           buddhist: Buddhist
           christian: Christian
@@ -342,7 +335,7 @@ en:
           jewish: Jewish
           muslim: Muslim
           none: No religion, atheist or agnostic
-          other: Other
+          other: Other religion or belief
           prefer_not_to_say: Prefer not to say
           sikh: Sikh
       jobseekers_job_application_feedback_form:
