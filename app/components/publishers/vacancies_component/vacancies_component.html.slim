@@ -31,7 +31,7 @@
 
               = f.hidden_field :jobs_type, value: @selected_type
 
-      .moj-filter-layout__content class=grid_column_class
+      .moj-filter-layout__content class="grid_column_class"
         - if @vacancies.any?
           = form_for @sort_form, as: "", url: jobs_with_type_organisation_path(@selected_type), method: :get, data: { 'auto-submit': true, "hide-submit": true } do |f|
             = f.govuk_collection_select :sort_column,
@@ -61,7 +61,6 @@
                     = view_applicants(vacancy, card)
                     = tag.div(card.labelled_item(t("jobs.manage.closing_date"), vacancy.application_deadline))
                   - when "pending"
-                    = view_applicants(vacancy, card)
                     = tag.div(card.labelled_item(t("jobs.publication_date"), vacancy.publish_on))
                     = tag.div(card.labelled_item(t("jobs.manage.closing_date"), vacancy.application_deadline))
                   - when "expired"
