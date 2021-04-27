@@ -45,6 +45,8 @@ RUN gem install bundler:2.2.16 --no-document
 
 COPY --from=builder /app /app
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
+RUN echo export PATH=/usr/local/bundle/:$PATH > /root/.ashrc
+ENV ENV="/root/.ashrc"
 
 EXPOSE 3000
 CMD bundle exec rails db:migrate && bundle exec rails s
