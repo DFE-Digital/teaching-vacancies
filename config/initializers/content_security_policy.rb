@@ -20,7 +20,7 @@ Rails.application.config.content_security_policy do |policy|
                      "https://fonts.gstatic.com" # through Google Maps
 
   policy.frame_src   :self,
-                     "https://www.google.com", # through reCAPTCHA
+                     "https://www.recaptcha.net",
                      "https://www.googletagmanager.com"
 
   policy.img_src     :self,
