@@ -38,8 +38,7 @@ RSpec.describe "End job listing early" do
   end
 
   describe "PATCH #update" do
-    let(:button) { I18n.t("buttons.end_listing") }
-    let(:params) { { publishers_job_listing_end_listing_form: { end_listing_reason: "end_early" }, commit: button } }
+    let(:params) { { publishers_job_listing_end_listing_form: { end_listing_reason: "end_early" }, commit: I18n.t("buttons.end_listing") } }
 
     context "when the vacancy does not belong to the current organisation" do
       let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
