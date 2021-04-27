@@ -299,8 +299,17 @@ en:
             privacy_policy:
               description_html: For more information on how we use your data, please read our %{link_to}.
               link_text: Privacy Policy
+        deadline_passed: The deadline for this job listing has passed
+        employments:
+          none: You have not added any roles or employment history.
         heading: Review your application
-        no_qualifications: You have not added any qualifications.
+        personal_statement:
+          blank: You have not added a personal statement.
+        references:
+          none: You have not added any references.
+        qualifications:
+          none: You have not added any qualifications.
+        steps: Application steps
         title: Review your application — Application
         warning: You cannot review a non-draft job application
       show:
