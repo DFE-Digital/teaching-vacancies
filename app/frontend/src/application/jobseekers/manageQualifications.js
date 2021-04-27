@@ -1,49 +1,47 @@
 export const DELETE_BUTTON_CLASSNAME = 'delete-button';
+export const FIELDSET_ID = 'subjects-and-grades';
 export const GOVUK_ERROR_MESSAGE_CLASSNAME = '.govuk-error-message';
 export const GOVUK_INPUT_CLASSNAME = '.govuk-input';
+export const ROW_CLASS = 'subject-row';
+export const SUBJECT_LINK_ID = 'add_subject';
 
-export const rows = () => document.getElementsByClassName('subject-row');
+export const rows = () => document.getElementsByClassName(ROW_CLASS);
 
 window.addEventListener('DOMContentLoaded', () => {
-  manageQualifications.addEventListenerForAddSubject();
-  Array.from(manageQualifications.rows()).forEach((row, index) => {
-    if (index > 0) {
-      manageQualifications.addDeletionEventListener(row);
-    }
-  });
-});
-
-export const addEventListenerForAddSubject = () => {
-  const addSubjectLink = document.getElementById('add_subject');
-  if (addSubjectLink) {
-    addSubjectLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      manageQualifications.addSubject();
+  const firstRow = rows()[0];
+  const subjectLink = document.getElementById(SUBJECT_LINK_ID);
+  if (subjectLink) {
+    manageQualifications.addEventListenerForAddSubject(subjectLink, firstRow);
+    Array.from(manageQualifications.rows()).forEach((row, index) => {
+      if (index > 0) {
+        manageQualifications.addDeletionEventListener(row);
+      }
     });
   }
+});
+
+export const addEventListenerForAddSubject = (link, rowMarkup) => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const numberOfRows = manageQualifications.rows().length;
+    manageQualifications.addSubject(numberOfRows, rowMarkup);
+  });
 };
 
-export const addSubject = () => {
-  const originalRows = manageQualifications.rows();
-  const newNumber = originalRows.length + 1;
+export const addSubject = (numberOfRows, rowMarkup) => {
+  const newRow = rowMarkup.cloneNode(true);
+  manageQualifications.insertDeleteButton(newRow, numberOfRows + 1);
+  document.getElementById(FIELDSET_ID).appendChild(newRow);
+  manageQualifications.renumberRow(newRow, numberOfRows + 1, false, false);
+  // newRow.querySelector(GOVUK_INPUT_CLASSNAME).focus();
+};
 
-  if (originalRows && newNumber) {
-    const newRow = originalRows[originalRows.length - 1].cloneNode(true);
-    if (newNumber === 2) {
-      manageQualifications.insertInitialDeleteButton(newRow);
-    }
-    document.getElementById('subjects-and-grades').appendChild(newRow);
-    manageQualifications.renumberRow(newRow, originalRows.length, false, false);
-    manageQualifications.addDeletionEventListener(newRow);
-    newRow.querySelector(GOVUK_INPUT_CLASSNAME).focus();
-  }
-}
-
-export const insertInitialDeleteButton = (row) => {
-  row.insertAdjacentHTML('beforeend', `<a id="delete_2"
+export const insertDeleteButton = (row, newNumber) => {
+  row.insertAdjacentHTML('beforeend', `<a id="delete_${newNumber}"
     class="govuk-link ${DELETE_BUTTON_CLASSNAME} govuk-!-margin-bottom-6 govuk-!-padding-bottom-2"
     rel="nofollow"
     href="#">delete subject</a>`);
+  manageQualifications.addDeletionEventListener(row);
 };
 
 export const addDeletionEventListener = (row) => {
@@ -56,7 +54,7 @@ export const addDeletionEventListener = (row) => {
 export const onDelete = (indexToDelete) => {
   document.getElementById(`subject_row_${indexToDelete}`).remove();
   manageQualifications.renumberRemainingRows(indexToDelete);
-}
+};
 
 export const renumberRemainingRows = (deletedIndex) => {
   Array.from(manageQualifications.rows()).forEach((row, index) => {
@@ -105,13 +103,16 @@ const manageQualifications = {
   addDeletionEventListener,
   addEventListenerForAddSubject,
   addSubject,
-  insertInitialDeleteButton,
+  FIELDSET_ID,
+  insertDeleteButton,
   onDelete,
   removeErrors,
   renumberColumn,
   renumberRemainingRows,
   renumberRow,
+  ROW_CLASS,
   rows,
+  SUBJECT_LINK_ID,
 };
 
 export default manageQualifications;
