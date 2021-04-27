@@ -47,6 +47,7 @@ en:
         apply: Apply for this job
         draft: Started - continue application
         submitted: Submitted - view application
+        withdrawn: Withdrawn - view application
       build:
         # Content Design originally specified the page titles in https://docs.google.com/document/d/1oF4Vh1P8eJRdzmlJ4--cDDZQ_bCZMkKv/
         ask_for_support:
@@ -149,7 +150,8 @@ en:
         heading: Withdraw your application
         description: >-
           When you withdraw your application the school will be informed that you no longer want to be considered for
-          this role. They will not see the reason you have given for withdrawing your application.
+          this role. They will not see the reason you have given for withdrawing your application. You will not be able
+          to apply for this job again.
         title: Withdraw application
       current_step: Step %{current} of %{total}
       employments:
