@@ -61,7 +61,6 @@
                     = view_applicants(vacancy, card)
                     = tag.div(card.labelled_item(t("jobs.manage.closing_date"), vacancy.application_deadline))
                   - when "pending"
-                    = view_applicants(vacancy, card)
                     = tag.div(card.labelled_item(t("jobs.publication_date"), vacancy.publish_on))
                     = tag.div(card.labelled_item(t("jobs.manage.closing_date"), vacancy.application_deadline))
                   - when "expired"
