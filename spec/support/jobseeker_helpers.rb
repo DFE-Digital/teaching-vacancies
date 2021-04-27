@@ -86,6 +86,7 @@ module JobseekerHelpers
     fill_in "Building and street", with: "123 Fake Street"
     fill_in "Town or city", with: "Fakeopolis"
     fill_in "Postcode", with: "F1 4KE"
+    fill_in "Country", with: "United Kingdom"
     fill_in "Phone number", with: "01234 123456"
     fill_in "Teacher reference number", with: "1234567"
     fill_in "National Insurance number", with: "AB 12 12 12 A"

@@ -41,6 +41,7 @@ RSpec.describe "Jobseekers can view a job application" do
       expect(personal_details.body.rows(id: "personal_details_your_address").first.value.text).to include(job_application.street_address)
       expect(personal_details.body.rows(id: "personal_details_your_address").first.value.text).to include(job_application.city)
       expect(personal_details.body.rows(id: "personal_details_your_address").first.value.text).to include(job_application.postcode)
+      expect(personal_details.body.rows(id: "personal_details_your_address").first.value.text).to include(job_application.country)
     end
 
     show_page.steps(text: I18n.t("jobseekers.job_applications.build.professional_status.heading")).first.within do |professional_status|

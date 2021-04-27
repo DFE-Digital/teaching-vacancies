@@ -21,6 +21,7 @@ FactoryBot.define do
     street_address { Faker::Address.street_address }
     city { Faker::Address.city }
     postcode { Faker::Address.postcode }
+    country { Faker::Address.country }
     phone_number { "01234 567890" }
     teacher_reference_number { "1234567" }
     national_insurance_number { "QQ 12 34 56 C" }
