@@ -29,9 +29,11 @@ export const addEventListenerForAddSubject = (link) => {
 
 export const addSubject = () => {
   const newRow = rowMarkup().cloneNode(true);
-  manageQualifications.insertDeleteButton(newRow, rows().length + 1);
+
   document.getElementById(FIELDSET_ID).appendChild(newRow);
-  manageQualifications.renumberRow(newRow, rows().length, false, false);
+  const numberRows = rows().length;
+  manageQualifications.insertDeleteButton(newRow, numberRows);
+  manageQualifications.renumberRow(newRow, numberRows, false, false);
   newRow.querySelector(GOVUK_INPUT_SELECTOR).focus();
 };
 
