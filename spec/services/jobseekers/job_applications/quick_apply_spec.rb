@@ -26,7 +26,7 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
 
     it "copies attributes" do
       attributes_to_copy = %i[
-        first_name last_name previous_names street_address city postcode phone_number teacher_reference_number national_insurance_number
+        first_name last_name previous_names street_address city country postcode phone_number teacher_reference_number national_insurance_number
         qualified_teacher_status qualified_teacher_status_year qualified_teacher_status_details statutory_induction_complete
         gaps_in_employment gaps_in_employment_details
         support_needed support_needed_details

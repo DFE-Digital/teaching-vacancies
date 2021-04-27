@@ -1,6 +1,6 @@
 module Jobseekers::Wizardable
   def personal_details_fields
-    %i[city first_name last_name national_insurance_number phone_number previous_names postcode street_address teacher_reference_number]
+    %i[city country first_name last_name national_insurance_number phone_number previous_names postcode street_address teacher_reference_number]
   end
 
   def professional_status_fields
