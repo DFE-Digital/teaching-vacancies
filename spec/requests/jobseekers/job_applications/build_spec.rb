@@ -35,8 +35,9 @@ RSpec.describe "Job applications build" do
     context "when the form is valid" do
       before { allow_any_instance_of(Jobseekers::JobApplication::PersonalDetailsForm).to receive(:valid?).and_return(true) }
 
-      context "when origin param is `jobseekers_job_application_review_url`" do
-        let(:origin) { jobseekers_job_application_review_url(job_application) }
+      context "when the jobseeker has previously submitted a job application" do
+        let!(:job_application2) { create(:job_application, :status_submitted, jobseeker: jobseeker) }
+        let(:button) { I18n.t("buttons.save") }
 
         it "updates the job application and redirects to the review page" do
           expect { patch jobseekers_job_application_build_path(job_application, :personal_details), params: params }
@@ -48,14 +49,30 @@ RSpec.describe "Job applications build" do
         end
       end
 
-      context "when origin param is not `jobseekers_job_application_review_url`" do
-        it "updates the job application and redirects to the next step" do
-          expect { patch jobseekers_job_application_build_path(job_application, :personal_details), params: params }
-            .to change { job_application.reload.first_name }.from("").to("Cool name")
-            .and change { job_application.completed_steps }.from([]).to(["personal_details"])
-            .and(not_change { job_application.in_progress_steps })
+      context "when the jobseeker has not previously submitted a job application" do
+        context "when origin param is `jobseekers_job_application_review_url`" do
+          let(:origin) { jobseekers_job_application_review_url(job_application) }
+          let(:button) { I18n.t("buttons.save") }
 
-          expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :professional_status))
+          it "updates the job application and redirects to the review page" do
+            expect { patch jobseekers_job_application_build_path(job_application, :personal_details), params: params }
+              .to change { job_application.reload.first_name }.from("").to("Cool name")
+              .and change { job_application.completed_steps }.from([]).to(["personal_details"])
+              .and(not_change { job_application.in_progress_steps })
+
+            expect(response).to redirect_to(jobseekers_job_application_review_path(job_application))
+          end
+        end
+
+        context "when origin param is not `jobseekers_job_application_review_url`" do
+          it "updates the job application and redirects to the next step" do
+            expect { patch jobseekers_job_application_build_path(job_application, :personal_details), params: params }
+              .to change { job_application.reload.first_name }.from("").to("Cool name")
+              .and change { job_application.completed_steps }.from([]).to(["personal_details"])
+              .and(not_change { job_application.in_progress_steps })
+
+            expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :professional_status))
+          end
         end
       end
 
