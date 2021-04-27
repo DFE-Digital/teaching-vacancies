@@ -7,32 +7,42 @@ import manageQualifications, {
 } from './manageQualifications';
 
 describe('manageQualifications', () => {
+  document.body.innerHTML = `<div id="${FIELDSET_ID}">
+  <div class="${ROW_CLASS}">
+    <label for="subject1">Subject 1</label>
+    <input class="govuk-input" id="s1" value="Economics 101">
+  </div>
+  <div class="${ROW_CLASS}"></div>
+  <a id="${SUBJECT_LINK_ID}" href="#">Add subject</a>
+</div>`;
+
   beforeEach(() => {
     jest.resetAllMocks();
   });
-  document.body.innerHTML = `<div id="${FIELDSET_ID}">
-    <div class="${ROW_CLASS}">
-      <label for="subject1">Subject 1</label>
-      <input id="s1" value="Economics 101">
-    </div>
-    <div class="${ROW_CLASS}"></div>
-    <a id="${SUBJECT_LINK_ID}" href="#">Click me</a>
-  </div>`;
-  const firstRowHardCoded = document.getElementsByClassName(ROW_CLASS)[0];
+
   describe('addEventListenerForAddSubject', () => {
     const button = document.getElementById(SUBJECT_LINK_ID);
-    test('when the link is clicked, it adds a subject with the right number', () => {
+    test('when the link is clicked, it adds a subject', () => {
       manageQualifications.addSubject = jest.fn();
       const addSubjectMock = jest.spyOn(manageQualifications, 'addSubject');
-      addEventListenerForAddSubject(button, firstRowHardCoded);
+      addEventListenerForAddSubject(button);
       button.dispatchEvent(new Event('click'));
-      expect(addSubjectMock).toHaveBeenCalledWith(2, firstRowHardCoded);
+      expect(addSubjectMock).toHaveBeenCalled();
     });
   });
+
   describe('addSubject', () => {
-    addSubject(2, firstRowHardCoded);
+    addSubject();
     test('adds a row', () => {
       expect(document.getElementsByClassName(ROW_CLASS).length).toBe(3);
+    });
+
+    test('label with right number', () => {
+      expect(document.getElementsByClassName(ROW_CLASS)[2].querySelector('label').innerHTML).toBe('Subject 3');
+    });
+
+    test('subject in focus', () => {
+      expect(document.getElementsByClassName(ROW_CLASS)[2].querySelector('input') === document.activeElement).toBe(true);
     });
     //  adds a delete button
     //  subject in focus

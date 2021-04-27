@@ -1,17 +1,17 @@
 export const DELETE_BUTTON_CLASSNAME = 'delete-button';
 export const FIELDSET_ID = 'subjects-and-grades';
 export const GOVUK_ERROR_MESSAGE_CLASSNAME = '.govuk-error-message';
-export const GOVUK_INPUT_CLASSNAME = '.govuk-input';
+export const GOVUK_INPUT_SELECTOR = '.govuk-input';
 export const ROW_CLASS = 'subject-row';
 export const SUBJECT_LINK_ID = 'add_subject';
 
 export const rows = () => document.getElementsByClassName(ROW_CLASS);
+export const rowMarkup = () => rows()[0];
 
 window.addEventListener('DOMContentLoaded', () => {
-  const firstRow = rows()[0];
   const subjectLink = document.getElementById(SUBJECT_LINK_ID);
   if (subjectLink) {
-    manageQualifications.addEventListenerForAddSubject(subjectLink, firstRow);
+    manageQualifications.addEventListenerForAddSubject(subjectLink);
     Array.from(manageQualifications.rows()).forEach((row, index) => {
       if (index > 0) {
         manageQualifications.addDeletionEventListener(row);
@@ -20,20 +20,19 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-export const addEventListenerForAddSubject = (link, rowMarkup) => {
+export const addEventListenerForAddSubject = (link) => {
   link.addEventListener('click', (e) => {
     e.preventDefault();
-    const numberOfRows = manageQualifications.rows().length;
-    manageQualifications.addSubject(numberOfRows, rowMarkup);
+    manageQualifications.addSubject();
   });
 };
 
-export const addSubject = (numberOfRows, rowMarkup) => {
-  const newRow = rowMarkup.cloneNode(true);
-  manageQualifications.insertDeleteButton(newRow, numberOfRows + 1);
+export const addSubject = () => {
+  const newRow = rowMarkup().cloneNode(true);
+  manageQualifications.insertDeleteButton(newRow, rows().length + 1);
   document.getElementById(FIELDSET_ID).appendChild(newRow);
-  manageQualifications.renumberRow(newRow, numberOfRows + 1, false, false);
-  // newRow.querySelector(GOVUK_INPUT_CLASSNAME).focus();
+  manageQualifications.renumberRow(newRow, rows().length, false, false);
+  newRow.querySelector(GOVUK_INPUT_SELECTOR).focus();
 };
 
 export const insertDeleteButton = (row, newNumber) => {
@@ -70,7 +69,7 @@ export const renumberRow = (row, newNumber, keepValues, keepErrors) => {
 };
 
 export const renumberColumn = (column, newNumber, keepValues, keepErrors) => {
-  let input = column.querySelector(GOVUK_INPUT_CLASSNAME);
+  let input = column.querySelector(GOVUK_INPUT_SELECTOR);
   let inputValue;
   if (input && keepValues) {
     inputValue = input.value;
@@ -80,7 +79,7 @@ export const renumberColumn = (column, newNumber, keepValues, keepErrors) => {
   if (!keepErrors && column.querySelector(GOVUK_ERROR_MESSAGE_CLASSNAME)) {
     manageQualifications.removeErrors(column);
   }
-  input = column.querySelector(GOVUK_INPUT_CLASSNAME);
+  input = column.querySelector(GOVUK_INPUT_SELECTOR);
   if (input) {
     if (inputValue && keepValues) {
       input.value = inputValue;
@@ -96,7 +95,7 @@ export const removeErrors = (column) => {
   column.innerHTML = column.innerHTML.replace(/field-error\b/g, 'field');
   column.innerHTML = column.innerHTML.replace(/govuk-input--error\b/g, '');
   column.querySelector(GOVUK_ERROR_MESSAGE_CLASSNAME).remove();
-  column.querySelector(GOVUK_INPUT_CLASSNAME).removeAttribute('aria-describedby');
+  column.querySelector(GOVUK_INPUT_SELECTOR).removeAttribute('aria-describedby');
 };
 
 const manageQualifications = {
