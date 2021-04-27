@@ -1,47 +1,36 @@
 = render ReviewComponent.new id: "jobseekers-job-application-review-form-employment-history-field-error" do |review|
   - review.heading title: t("jobseekers.job_applications.build.employment_history.heading"),
-                   text: (job_application_review_edit_section_text(job_application, :employment_history) if allow_edit),
-                   href: (jobseekers_job_application_build_path(job_application, :employment_history) if allow_edit) do
-      - if allow_edit
-        = job_application_review_section_tag(job_application, :employment_history)
+                    text: job_application_review_edit_section_text(job_application, :employment_history),
+                    href: jobseekers_job_application_build_path(job_application, :employment_history) do
+      = job_application_review_section_tag(job_application, :employment_history)
 
   - review.body do
-    = govuk_accordion do |accordion|
-      - job_application.employments.order(:created_at).each_with_index do |employment, index|
-        - accordion.add_section(title: employment.job_title, html_attributes: { id: "employment_history_#{index}" }) do
-          = govuk_summary_list do |component|
-            - component.slot(:row,
-              key: t("helpers.label.jobseekers_job_application_details_employment_form.organisation"),
-              value: employment.organisation,
-              html_attributes: { id: "employment_history_organisation" })
-
-            - component.slot(:row,
-              key: t("helpers.label.jobseekers_job_application_details_employment_form.salary"),
-              value: employment.salary.presence || t("jobseekers.job_applications.not_defined"),
-              html_attributes: { id: "employment_history_salary" })
-
-            - component.slot(:row,
-              key: t("helpers.label.jobseekers_job_application_details_employment_form.subjects"),
-              value: employment.subjects.presence || t("jobseekers.job_applications.not_defined"),
-              html_attributes: { id: "employment_history_subjects" })
-
-            - component.slot(:row,
-              key: t("helpers.label.jobseekers_job_application_details_employment_form.main_duties"),
-              value: employment.main_duties,
-              html_attributes: { id: "employment_history_main_duties" })
-
-            - component.slot(:row,
-              key: t("helpers.legend.jobseekers_job_application_details_employment_form.started_on"),
-              value: employment.started_on,
-              html_attributes: { id: "employment_history_started_on" })
-
-            - component.slot(:row,
-              key: t("helpers.legend.jobseekers_job_application_details_employment_form.current_role"),
-              value: employment.current_role.humanize,
-              html_attributes: { id: "employment_history_current_role" })
-
-            - if employment.current_role == "no"
-              - component.slot(:row,
-                key: t("helpers.legend.jobseekers_job_application_details_employment_form.ended_on"),
-                value: employment.ended_on,
-                html_attributes: { id: "employment_history_ended_on" })
+    - if job_application.employments.none?
+      p.govuk-body = t(".none")
+    - else
+      = govuk_accordion do |accordion|
+        - job_application.employments.order(:created_at).each do |employment|
+          - accordion.add_section title: employment.job_title do
+            = govuk_summary_list do |summary|
+              - summary.slot :row,
+                              key: t("helpers.label.jobseekers_job_application_details_employment_form.organisation"),
+                              value: employment.organisation
+              - summary.slot :row,
+                              key: t("helpers.label.jobseekers_job_application_details_employment_form.salary"),
+                              value: employment.salary.presence || t("jobseekers.job_applications.not_defined")
+              - summary.slot :row,
+                              key: t("helpers.label.jobseekers_job_application_details_employment_form.subjects"),
+                              value: employment.subjects.presence || t("jobseekers.job_applications.not_defined")
+              - summary.slot :row,
+                              key: t("helpers.label.jobseekers_job_application_details_employment_form.main_duties"),
+                              value: employment.main_duties
+              - summary.slot :row,
+                              key: t("helpers.label.jobseekers_job_application_details_employment_form.started_on"),
+                              value: employment.started_on
+              - summary.slot :row,
+                              key: t("helpers.label.jobseekers_job_application_details_employment_form.current_role"),
+                              value: employment.current_role.humanize
+              - if employment.current_role == "no"
+                - summary.slot :row,
+                                key: t("helpers.label.jobseekers_job_application_details_employment_form.ended_on"),
+                                value: employment.ended_on

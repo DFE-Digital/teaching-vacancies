@@ -1,10 +1,11 @@
 = render ReviewComponent.new id: "jobseekers-job-application-review-form-personal-statement-field-error" do |review|
   - review.heading title: t("jobseekers.job_applications.build.personal_statement.heading"),
-                   text: (job_application_review_edit_section_text(job_application, :personal_statement) if allow_edit),
-                   href: (jobseekers_job_application_build_path(job_application, :personal_statement) if allow_edit) do
-      - if allow_edit
-        = job_application_review_section_tag(job_application, :personal_statement)
+                   text: job_application_review_edit_section_text(job_application, :personal_statement),
+                   href: jobseekers_job_application_build_path(job_application, :personal_statement) do
+      = job_application_review_section_tag(job_application, :personal_statement)
 
-  - if job_application.personal_statement.present?
-    - review.body do
+  - review.body do
+    - if job_application.personal_statement.present?
       p.govuk-body.review-component__body--border class="govuk-!-padding-bottom-3" = job_application.personal_statement
+    - else
+      p.govuk-body = t(".blank")
