@@ -32,11 +32,6 @@ module JobseekerHelpers
     expect(page).to have_content("There is a problem")
   end
 
-  def select_qualification_category(category)
-    choose category
-    click_on I18n.t("buttons.continue")
-  end
-
   def fill_in_ask_for_support
     choose "Yes", name: "jobseekers_job_application_ask_for_support_form[support_needed]"
     fill_in "Tell us any information you think is relevant", with: "Some details about support"
@@ -111,7 +106,7 @@ module JobseekerHelpers
   end
 
   def fill_in_gcse
-    fill_in "Subject", with: "Maths"
+    fill_in "Subject 1", with: "Maths"
     fill_in "Grade", with: "110%"
     fill_in "School, college, or other organisation", with: "Churchill School for Gifted Macaques"
     fill_in "Year qualification(s) was/were awarded", with: "2020"
