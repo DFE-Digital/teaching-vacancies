@@ -46,8 +46,8 @@ class Publishers::VacanciesComponent < ViewComponent::Base
     return unless vacancy.enable_job_applications?
     return unless include_job_applications?
 
-    if vacancy.job_applications.any?
-      link = govuk_link_to(I18n.t("jobs.manage.view_applicants", count: vacancy.job_applications.count),
+    if post_submission_statuses(vacancy.job_applications).present?
+      link = govuk_link_to(I18n.t("jobs.manage.view_applicants", count: post_submission_statuses(vacancy.job_applications).count),
                            organisation_job_job_applications_path(vacancy.id),
                            class: "govuk-link--no-visited-state")
       tag.div(card.labelled_item(I18n.t("jobs.manage.applications"), link))
@@ -99,5 +99,9 @@ class Publishers::VacanciesComponent < ViewComponent::Base
     @organisation_options.unshift(
       OpenStruct.new({ id: organisation.id, name: "Trust head office", label: "Trust head office (#{count})" }),
     )
+  end
+
+  def post_submission_statuses(job_applications)
+    job_applications.select { |application| application.status.in?(%w[submitted reviewed shortlisted unsuccessful]) }
   end
 end
