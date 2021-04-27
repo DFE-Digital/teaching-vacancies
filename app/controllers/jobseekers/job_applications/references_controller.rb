@@ -4,6 +4,7 @@ class Jobseekers::JobApplications::ReferencesController < Jobseekers::BaseContro
   def create
     if form.valid?
       job_application.references.create(reference_params)
+      update_in_progress_steps!(:references)
       redirect_to back_path
     else
       render :new

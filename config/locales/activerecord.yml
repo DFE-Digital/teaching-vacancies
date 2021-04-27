@@ -17,11 +17,11 @@ en:
       blank: Select yes if you have finished studying for this qualification
     finished_studying_details:
       blank: Tell us more information
-    grade:
+    grade1:
       blank: Enter a grade
-    subject:
+    subject1:
       blank: Enter a subject
-    subject_and_grade_correspond:
+    subjects_and_grades_have_counterparts:
       false: Enter all subjects and grades
     year:
       blank: Enter the year the qualification was awarded
