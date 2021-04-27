@@ -28,6 +28,24 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
     end
   end
 
+  context "when started_on is not in the past" do
+    let(:params) { { "started_on(1i)" => "2121", "started_on(2i)" => "01", "started_on(3i)" => "01" } }
+
+    it "is invalid" do
+      expect(subject).not_to be_valid
+      expect(subject.errors.of_kind?(:started_on, :not_in_the_past)).to be true
+    end
+  end
+
+  context "when ended_on is not in the past" do
+    let(:params) { { "ended_on(1i)" => "2121", "ended_on(2i)" => "01", "ended_on(3i)" => "01" } }
+
+    it "is invalid" do
+      expect(subject).not_to be_valid
+      expect(subject.errors.of_kind?(:ended_on, :not_in_the_past)).to be true
+    end
+  end
+
   context "when current_role is no" do
     let(:params) { { current_role: "no" } }
 

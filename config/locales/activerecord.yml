@@ -343,6 +343,7 @@ en:
               before_started_on: End date must be after the start date
               blank: Enter the date you left this school or organisation
               invalid: Enter a valid end date
+              not_in_the_past: The date the role ended must be in the past
             job_title:
               blank: Enter your job title
             main_duties:
@@ -352,6 +353,7 @@ en:
             started_on:
               blank: Enter the date you started at this school or organisation
               invalid: Enter a valid start date
+              not_in_the_past: The date the role started must be in the past
         jobseekers/job_application/details/qualifications/category_form:
           attributes:
             <<: *qualification_errors
