@@ -42,5 +42,6 @@
       - else
         = f.govuk_submit t("buttons.save_and_come_back"), secondary: true
 
-  .govuk-grid-column-one-third
-    = render "steps"
+  - if current_jobseeker.job_applications.not_draft.none?
+    .govuk-grid-column-one-third
+      = render "steps"
