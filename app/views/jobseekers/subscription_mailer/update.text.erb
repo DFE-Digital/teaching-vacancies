@@ -11,10 +11,10 @@
 
 <%- unless jobseeker.present? %>
   # <%= t(".create_account.heading") %>
-  <%= t(".create_account.intro", link_to: sign_up_link(subscription)) %>
+  <%= t(".create_account.intro", link_to: sign_up_link(utm_campaign: "#{subscription.frequency}_alert")) %>
 
   ---
 
 <% end %>
 
-<%= t(".unsubscribe", unsubscribe_link: unsubscribe_link(subscription)) %>
+<%= t(".unsubscribe", unsubscribe_link: unsubscribe_link(subscription, utm_campaign: "#{subscription.frequency}_alert")) %>
