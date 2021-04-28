@@ -33,7 +33,7 @@ RSpec.describe "Copying a vacancy" do
 
       fill_in_copy_vacancy_form_fields(new_vacancy)
 
-      click_on(I18n.t("buttons.cancel_copy"), class: "govuk-back-link")
+      click_on I18n.t("buttons.cancel_copy")
 
       expect(page.current_path).to eq(organisation_path)
       expect(page).not_to have_content("A new job title")

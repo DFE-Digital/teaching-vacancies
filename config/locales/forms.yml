@@ -12,8 +12,10 @@ en:
     back: Back
     back_to_previous_step: Go back to previous step
     back_to_manage_jobs: Back to manage jobs
-    cancel_copy: Cancel copy
+    cancel_copy: Cancel job listing copy
     cancel_and_return: Cancel and return
+    cancel_end_listing: Cancel ending job listing
+    cancel_extend_deadline: Cancel deadline extension
     change: Change
     complete_section: Complete section
     confirm_rejection: Confirm rejection
