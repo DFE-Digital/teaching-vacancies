@@ -1,6 +1,4 @@
 class Qualification < ApplicationRecord
-  include ActionView::Helpers::SanitizeHelper
-
   belongs_to :job_application
 
   SECONDARY_QUALIFICATIONS = %w[gcse as_level a_level other_secondary].freeze
@@ -36,7 +34,7 @@ class Qualification < ApplicationRecord
     secondary? ? name.pluralize : name
   end
 
-  def secondary?
-    category.in?(SECONDARY_QUALIFICATIONS)
+  def secondary?(qualification_category = category)
+    qualification_category.in?(SECONDARY_QUALIFICATIONS)
   end
 end
