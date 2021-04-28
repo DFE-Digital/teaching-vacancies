@@ -4,6 +4,7 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       .govuk-caption-l = vacancy.job_title
+
       h1.govuk-heading-xl = t(".heading")
 
       = form_for form, url: organisation_job_end_listing_path(vacancy.id), method: :patch do |f|
@@ -14,4 +15,6 @@
             = f.govuk_collection_select :candidate_hired_from, candidate_hired_from_options, :last, :first, label: { size: "s" }
           = f.govuk_radio_button :end_listing_reason, :end_early
 
-        = f.govuk_submit t("buttons.end_listing")
+        = f.govuk_submit t("buttons.end_listing"), classes: "govuk-!-margin-bottom-5"
+
+      = govuk_link_to(t("buttons.cancel_end_listing"), organisation_path, class: "govuk-link--no-visited-state govuk-!-font-size-19")
