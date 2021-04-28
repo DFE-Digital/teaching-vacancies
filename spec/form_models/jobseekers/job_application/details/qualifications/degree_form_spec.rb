@@ -7,7 +7,7 @@ RSpec.describe Jobseekers::JobApplication::Details::Qualifications::DegreeForm, 
   it { is_expected.to validate_presence_of(:category) }
   it { is_expected.to validate_presence_of(:finished_studying) }
   it { is_expected.to validate_presence_of(:institution) }
-  it { is_expected.to validate_presence_of(:subject) }
+  it { is_expected.to validate_presence_of(:subject1) }
 
   context "when finished studying is false" do
     let(:params) { { "finished_studying" => "false" } }
@@ -18,7 +18,7 @@ RSpec.describe Jobseekers::JobApplication::Details::Qualifications::DegreeForm, 
   context "when finished studying is true" do
     let(:params) { { "finished_studying" => "true" } }
 
-    it { is_expected.to validate_presence_of(:grade) }
+    it { is_expected.to validate_presence_of(:grade1) }
     it { is_expected.to validate_presence_of(:year) }
 
     it_behaves_like "validates year format"

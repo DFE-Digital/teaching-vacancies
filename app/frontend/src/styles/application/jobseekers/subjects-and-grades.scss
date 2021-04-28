@@ -1,0 +1,57 @@
+.subjects-and-grades {
+  .inline-fields-container {
+    display: flex;
+
+    .delete-button,
+    .govuk-form-group {
+      // Align fields vertically if e.g. one field has an inline error
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+
+      padding-left: govuk-spacing(3);
+
+      &.govuk-form-group--error:not(:first-of-type) {
+        // Remove vertical red error bar
+        border-left: 0;
+        padding-left: govuk-spacing(3);
+      }
+    }
+
+    &:first-of-type {
+      .govuk-error-message {
+        order: -1;
+      }
+
+      .govuk-label {
+        margin-bottom: govuk-spacing(3);
+      }
+    }
+
+    &:not(:first-of-type) {
+      .govuk-form-group.govuk-form-group--error {
+        // Remove vertical red error bar while preserving spacing
+        border-color: transparent;
+        padding-left: govuk-spacing(3);
+
+        // Add vertical red error bar which is long enough to join with the next item in the group
+        &:first-of-type::before {
+          background-color: $govuk-error-colour;
+          content: '';
+          height: calc(100% + #{govuk-spacing(6)});
+          left: -5px;
+          position: absolute;
+          width: $govuk-border-width-form-group-error;
+        }
+      }
+    }
+
+    .govuk-form-group {
+      position: relative;
+
+      &:first-of-type:not(.govuk-form-group--error) {
+        padding-left: 0;
+      }
+    }
+  }
+}

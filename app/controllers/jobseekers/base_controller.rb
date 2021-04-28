@@ -11,4 +11,9 @@ class Jobseekers::BaseController < ApplicationController
   def store_jobseeker_location!
     store_location_for(:jobseeker, request.fullpath)
   end
+
+  def update_in_progress_steps!(step)
+    job_application.in_progress_steps = job_application.in_progress_steps.append(step.to_s).uniq
+    job_application.save
+  end
 end
