@@ -14,6 +14,8 @@ en:
     back_to_manage_jobs: Back to manage jobs
     cancel_copy: Cancel copy
     cancel_and_return: Cancel and return
+    cancel_end_listing: Cancel end job listing
+    cancel_extend_deadline: Cancel extend deadline
     change: Change
     complete_section: Complete section
     confirm_rejection: Confirm rejection
