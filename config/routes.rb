@@ -20,6 +20,8 @@ Rails.application.routes.draw do
 
   get "/jobseekers/saved_jobs", to: "jobseekers/saved_jobs#index", as: :jobseeker_root
 
+  get "/sha", to: "sha#sha"
+
   namespace :jobseekers do
     devise_scope :jobseeker do
       get :check_your_email, to: "registrations#check_your_email", as: :check_your_email
