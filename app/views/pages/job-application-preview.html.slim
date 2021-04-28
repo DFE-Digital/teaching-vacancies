@@ -18,18 +18,16 @@
         |  and notify unsuccessful candidates quickly and easily.
 
       .anchor-link-list
-        h2.govuk-heading-m class="govuk-!-margin-top-6" Application sections
-
-        ul.govuk-list
-          li.app-page-navigation__item--em-dash = govuk_link_to "Personal details", "#personal_details_summary", class: "govuk-link govuk-body-s"
-          li.app-page-navigation__item--em-dash = govuk_link_to "Professional status", "#professional_status_summary", class: "govuk-link govuk-body-s"
-          li.app-page-navigation__item--em-dash = govuk_link_to "Education and qualifications", "#qualifications_summary", class: "govuk-link govuk-body-s"
-          li.app-page-navigation__item--em-dash = govuk_link_to "Current role and employment history", "#employment_history_summary", class: "govuk-link govuk-body-s"
-          li.app-page-navigation__item--em-dash = govuk_link_to "Personal statement", "#personal_statement_summary", class: "govuk-link govuk-body-s"
-          li.app-page-navigation__item--em-dash = govuk_link_to "References", "#references_summary", class: "govuk-link govuk-body-s"
-          li.app-page-navigation__item--em-dash = govuk_link_to "Equal opportunities and recruitment monitoring", "#equal_opportunities_summary", class: "govuk-link govuk-body-s"
-          li.app-page-navigation__item--em-dash = govuk_link_to "Ask for support if you have a disability or other needs", "#ask_for_support_summary", class: "govuk-link govuk-body-s"
-          li.app-page-navigation__item--em-dash = govuk_link_to "Declarations", "#declarations_summary", class: "govuk-link govuk-body-s"
+        = render NavigationListComponent.new title: "Application sections" do |navigation|
+          - navigation.anchor text: "Personal details", href: "#personal_details_summary"
+          - navigation.anchor text: "Professional status", href: "#professional_status_summary"
+          - navigation.anchor text: "Education and qualifications", href: "#qualifications_summary"
+          - navigation.anchor text: "Current role and employment history", href: "#employment_history_summary"
+          - navigation.anchor text: "Personal statement", href: "#personal_statement_summary"
+          - navigation.anchor text: "References", href: "#references_summary"
+          - navigation.anchor text: "Equal opportunities and recruitment monitoring", href: "#equal_opportunities_summary"
+          - navigation.anchor text: "Ask for support if you have a disability or other needs", href: "#ask_for_support_summary"
+          - navigation.anchor text: "Declarations", href: "#declarations_summary"
 
       h2.govuk-heading-m#personal_details_summary class="govuk-!-margin-top-8" Personal Details
 
