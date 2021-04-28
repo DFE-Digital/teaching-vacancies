@@ -13,28 +13,68 @@ env:
  DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
 
 jobs:
-  turnstyle:
+
+  build:
+    name: build image
+
     runs-on: ubuntu-20.04
-    timeout-minutes: 20
     steps:
-    - uses: DFE-Digital/github-actions/turnstyle@master
-      name: Check workflow concurrency
-      with:
-        initial-wait-seconds: 12
-        poll-interval-seconds: 20
-        same-branch-only: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: DFE-Digital/github-actions/turnstyle@master
+        name: Check workflow concurrency
+        with:
+          initial-wait-seconds: 12
+          poll-interval-seconds: 20
+          abort-after-seconds: 300
+          same-branch-only: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+            registry: ghcr.io
+            username: ${{ github.repository_owner }}
+            password: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
+
+      - name: Build and push docker image from builder target
+        uses: docker/build-push-action@v2
+        with:
+          build-args: BUILDKIT_INLINE_CACHE=1
+          cache-from: |
+            ${{ env.DOCKER_REPOSITORY }}:builder-master
+          push: true
+          tags: ${{ env.DOCKER_REPOSITORY }}:builder-master
+          target: builder
+
+      - name: Build and push docker image from production target
+        uses: docker/build-push-action@v2
+        with:
+          build-args: BUILDKIT_INLINE_CACHE=1
+          cache-from: |
+            ${{ env.DOCKER_REPOSITORY }}:builder-master
+            ${{ env.DOCKER_REPOSITORY }}:master
+          push: true
+          tags: |
+            ${{ env.DOCKER_REPOSITORY }}:master
+            ${{ env.DOCKER_REPOSITORY }}:${{ github.sha }}
+          target: production
+
   deploy:
-    name: build docker image and deploy
+    name: deploy
+
     strategy:
       max-parallel: 1
       matrix:
         environment: ["staging", "production", "qa"]
-    needs: turnstyle
+    needs: build
     runs-on: ubuntu-20.04
 
     steps:
+
     - uses: actions/checkout@v2
       name: Checkout Code
 
@@ -52,7 +92,6 @@ jobs:
       id: set_env_vars
       run: |
         echo "TAG=${{ github.sha }}" >> $GITHUB_ENV
-
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
@@ -77,52 +116,19 @@ jobs:
       with:
         terraform_version: 0.14.7
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
-
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v1
-      with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
-
-    - name: Build and push docker image from builder target
-      uses: docker/build-push-action@v2
-      with:
-        build-args: BUILDKIT_INLINE_CACHE=1
-        cache-from: |
-          ${{ env.DOCKER_REPOSITORY }}:builder-master
-        push: true
-        tags: ${{ env.DOCKER_REPOSITORY }}:builder-master
-        target: builder
-
-    - name: Build and push docker image from production target
-      uses: docker/build-push-action@v2
-      with:
-        build-args: BUILDKIT_INLINE_CACHE=1
-        cache-from: |
-          ${{ env.DOCKER_REPOSITORY }}:builder-master
-          ${{ env.DOCKER_REPOSITORY }}:master
-        push: true
-        tags: |
-          ${{ env.DOCKER_REPOSITORY }}:master
-          ${{ env.DOCKER_REPOSITORY }}:${{ env.TAG }}
-        target: production
-
     - name: Trigger Deploy App Workflow for ${{ matrix.environment }}
       uses: benc-uk/workflow-dispatch@v1.1
       with:
         workflow: Deploy App to Environment # Workflow name
         token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
-        inputs: '{"environment": "${{ matrix.environment }}", "tag": "${{ env.TAG }}"}'
+        inputs: '{"environment": "${{ matrix.environment }}", "tag": "${{ github.sha }}"}'
 
     - name: Wait for Deploy App Workflow for ${{ matrix.environment }}
       id: wait_for_deploy_app_staging
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
         token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
-        checkName: Deploy ${{ env.TAG }} to ${{ matrix.environment }} # Job name within workflow
+        checkName: Deploy ${{ github.sha }} to ${{ matrix.environment }} # Job name within workflow
         ref: ${{ github.sha }}
         timeoutSeconds: 720
         intervalSeconds: 15
@@ -134,7 +140,7 @@ jobs:
         SLACK_CHANNEL: twd_tv_dev
         SLACK_USERNAME: CI Deployment
         SLACK_TITLE: Deployment failure
-        SLACK_MESSAGE: 'Deployment of Docker tag ${{ env.TAG }} to ${{ matrix.environment }} - unsuccessful <!channel>'
+        SLACK_MESSAGE: 'Deployment of Docker tag ${{ github.sha }} to ${{ matrix.environment }} - unsuccessful <!channel>'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
     - name: Exit whole workflow if ${{ matrix.environment }} deployment was not successful
@@ -162,10 +168,20 @@ jobs:
       if: steps.wait_for_smoke_test.outputs.conclusion != 'success' && github.ref == 'refs/heads/master'
       run: exit 1
 
+    - name: Send job status message to twd_tv_dev channel
+      if: failure() && github.ref == 'refs/heads/master'
+      uses: rtCamp/action-slack-notify@v2.1.3
+      env:
+        SLACK_CHANNEL: twd_tv_dev
+        SLACK_USERNAME: CI Deployment
+        SLACK_TITLE: Deployment ${{ job.status }}
+        SLACK_MESSAGE: 'Deployment of Docker tag ${{ github.sha }} to {{matrix.environment}} - ${{ job.status }}'
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
   post_deployment:
     name: post deployment steps
-    runs-on: ubuntu-20.04
     needs: deploy
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
         name: Checkout Code
@@ -208,5 +224,5 @@ jobs:
           SLACK_CHANNEL: twd_tv_dev
           SLACK_USERNAME: CI Deployment
           SLACK_TITLE: Deployment ${{ job.status }}
-          SLACK_MESSAGE: 'Deployment of Docker tag ${{ env.TAG }} to ${{ matrix.environment }} - ${{ job.status }}'
+          SLACK_MESSAGE: 'Deployment of Docker tag ${{ github.sha }} to Staging, Prod and QA - ${{ job.status }}'
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
