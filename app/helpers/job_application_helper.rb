@@ -26,10 +26,35 @@ module JobApplicationHelper
   }.freeze
 
   def job_application_qualified_teacher_status_info(job_application)
-    return unless job_application.qualified_teacher_status.present?
+    case job_application.qualified_teacher_status
+    when "yes"
+      tag.div("Yes, awarded in #{job_application.qualified_teacher_status_year}", class: "govuk-body")
+    when "no"
+      safe_join([tag.div("No", class: "govuk-body"),
+                 tag.p(job_application.qualified_teacher_status_details, class: "govuk-body")])
+    when "on_track"
+      tag.div("I'm on track to receive my QTS", class: "govuk-body")
+    end
+  end
 
-    safe_join([tag.div(I18n.t("helpers.label.jobseekers_job_application_professional_status_form.qualified_teacher_status_options.#{job_application.qualified_teacher_status}"), class: "govuk-body"),
-               tag.p(job_application.qualified_teacher_status == "yes" ? job_application.qualified_teacher_status_year : job_application.qualified_teacher_status_details, class: "govuk-body")])
+  def job_application_support_needed_info(job_application)
+    case job_application.support_needed
+    when "yes"
+      safe_join([tag.div("Yes", class: "govuk-body"),
+                 tag.p(job_application.support_needed_details, class: "govuk-body")])
+    when "no"
+      tag.div("No", class: "govuk-body")
+    end
+  end
+
+  def job_application_close_relationships_info(job_application)
+    case job_application.close_relationships
+    when "yes"
+      safe_join([tag.div("Yes", class: "govuk-body"),
+                 tag.p(job_application.close_relationships_details, class: "govuk-body")])
+    when "no"
+      tag.div("No", class: "govuk-body")
+    end
   end
 
   def job_application_status_tag(status)
