@@ -276,6 +276,7 @@ en:
         finished_studying_options:
           false: "No"
           true: "Yes"
+        grade: Grade
         grade1: Grade
         institution: School, college, or other organisation
         subject1: Subject
