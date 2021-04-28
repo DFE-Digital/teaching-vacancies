@@ -3,7 +3,7 @@
 ---
 
 <%- @vacancies.each do |vacancy| %>
-  <%= show_link(vacancy, subscription) %>
+  <%= show_link(vacancy, utm_campaign: "#{subscription.frequency}_alert") %>
   <%= location(vacancy.parent_organisation, job_location: vacancy.job_location) %>
 
   <%= t(".salary", salary: vacancy.salary) %>
@@ -23,14 +23,14 @@
   <%= "- #{filter.humanize}: #{value}" %>
 <% end %>
 
-<%= [t(".alert_frequency", frequency: subscription.frequency), t(".edit_alert", edit_link: edit_link(subscription))].join(" ") %>
+<%= [t(".alert_frequency", frequency: subscription.frequency), t(".edit_alert", edit_link: edit_link(subscription, utm_campaign: "#{subscription.frequency}_alert"))].join(" ") %>
 
 ---
 
 # <%= t(".feedback.heading") %>
 
-<%= notify_link(job_alert_feedback_url(true, subscription, @vacancies), t(".feedback.relevant_link_text")) %>
-<%= notify_link(job_alert_feedback_url(false, subscription, @vacancies), t(".feedback.irrelevant_link_text")) %>
+<%= notify_link(job_alert_feedback_url(true, subscription, @vacancies, utm_campaign: "#{subscription.frequency}_alert"), t(".feedback.relevant_link_text")) %>
+<%= notify_link(job_alert_feedback_url(false, subscription, @vacancies, utm_campaign: "#{subscription.frequency}_alert"), t(".feedback.irrelevant_link_text")) %>
 
 <%= t(".feedback.reason") %>
 
@@ -38,12 +38,12 @@
 
 <%- unless jobseeker.present? %>
   # <%= t(".create_account.heading") %>
-  <%= t(".create_account.intro", link_to: sign_up_link(subscription)) %>
+  <%= t(".create_account.intro", link_to: sign_up_link(utm_campaign: "#{subscription.frequency}_alert")) %>
 
   ---
 
 <% end %>
 
-<%= t("shared.footer", home_page_link: home_page_link(subscription)) %>
+<%= t("shared.footer", home_page_link: home_page_link(utm_campaign: "#{subscription.frequency}_alert")) %>
 
-<%= t(".unsubscribe", unsubscribe_link: unsubscribe_link(subscription)) %>
+<%= t(".unsubscribe", unsubscribe_link: unsubscribe_link(subscription, utm_campaign: "#{subscription.frequency}_alert")) %>

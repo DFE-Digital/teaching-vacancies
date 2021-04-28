@@ -7,43 +7,41 @@ module NotifyViewHelper
     "[#{text}](#{url})"
   end
 
-  def edit_link(subscription)
-    url = edit_subscription_url(subscription.token, params: utm_params(subscription))
+  def edit_link(subscription, utm_campaign: "")
+    url = edit_subscription_url(subscription.token, **utm_params(utm_campaign))
     notify_link(url, t(".edit_link_text"))
   end
 
-  def home_page_link(subscription)
-    url = root_url(params: utm_params(subscription))
+  def home_page_link(utm_campaign: "")
+    url = root_url(**utm_params(utm_campaign))
     notify_link(url, t("app.title"))
   end
 
-  def job_alert_feedback_url(relevant, subscription, vacancies)
-    new_subscription_job_alert_feedback_url(
-      subscription.token,
-      params: { job_alert_feedback: { relevant_to_user: relevant,
-                                      job_alert_vacancy_ids: vacancies.pluck(:id),
-                                      search_criteria: subscription.search_criteria } },
-    )
+  def job_alert_feedback_url(relevant, subscription, vacancies, utm_campaign: "")
+    params = { job_alert_feedback: { relevant_to_user: relevant,
+                                     job_alert_vacancy_ids: vacancies.pluck(:id),
+                                     search_criteria: subscription.search_criteria } }.merge(utm_params(utm_campaign))
+    new_subscription_job_alert_feedback_url(subscription.token, **params)
   end
 
-  def show_link(vacancy, subscription)
-    url = vacancy.share_url(**utm_params(subscription))
-    text = vacancy.job_title
-    notify_link(url, text)
+  def show_link(vacancy, utm_campaign: "")
+    url = vacancy.share_url(**utm_params(utm_campaign))
+    notify_link(url, vacancy.job_title)
   end
 
-  def sign_up_link(subscription)
-    notify_link(new_jobseeker_registration_url(params: utm_params(subscription)), t(".create_account.link"))
+  def sign_up_link(utm_campaign: "")
+    url = new_jobseeker_registration_url(**utm_params(utm_campaign))
+    notify_link(url, t(".create_account.link"))
   end
 
-  def unsubscribe_link(subscription)
-    url = unsubscribe_subscription_url(subscription.token, params: utm_params(subscription))
+  def unsubscribe_link(subscription, utm_campaign: "")
+    url = unsubscribe_subscription_url(subscription.token, **utm_params(utm_campaign))
     notify_link(url, t(".unsubscribe_link_text"))
   end
 
   private
 
-  def utm_params(subscription)
-    { utm_source: subscription.alert_run_today&.id, utm_medium: "email", utm_campaign: "#{subscription.frequency}_alert" }
+  def utm_params(utm_campaign)
+    { utm_source: uid, utm_medium: "email", utm_campaign: utm_campaign }
   end
 end
