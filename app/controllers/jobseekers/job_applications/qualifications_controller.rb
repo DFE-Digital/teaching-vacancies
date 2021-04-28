@@ -50,44 +50,64 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
     when "select_category"
       {}
     when "edit"
-      attributes = qualifications.first.slice(:category, :finished_studying, :finished_studying_details, :institution, :name, :year)
-      (qualifications + built_qualifications).map.with_index { |qualification, index|
-        attributes.merge!(qualification.slice(:subject, :grade).transform_keys { |key| key + (index + 1).to_s })
-      }.uniq
-      attributes.merge(qualification_params.to_h)
+      shared_attributes.merge(varied_attributes).merge(qualification_params.to_h)
     when "create", "update", "submit_category"
       qualification_params
     end
   end
 
+  def shared_attributes
+    qualifications.first.slice(:category, :finished_studying, :finished_studying_details, :institution, :name, :year)
+  end
+
+  def varied_attributes
+    (qualifications + built_qualifications).each_with_object({}).with_index do |(qualification, hash), index|
+      hash.merge!(qualification.slice(:subject, :grade).transform_keys { |key| key + (index + 1).to_s })
+    end
+  end
+
   def built_qualifications
     @built_qualifications ||=
-      repeatable_param_keys&.group_by { |key| param_key_digit(key) }&.values&.select { |keys|
-        param_key_digit(keys.last) == "1" ||
-          qualification_params.permit(keys).values.any?(&:present?)
-      }&.map do |subject_and_grade_param_keys|
+      valid_varied_param_key_rows&.map do |param_key_row|
+        param_keys_for_single_record = shared_param_keys.concat(param_key_row)
         job_application.qualifications.find_or_initialize_by(
-          qualification_params.permit(unique_param_keys.concat(subject_and_grade_param_keys))
-                              .transform_keys { |key| key.split(/\d+/).first },
+          qualification_params.permit(param_keys_for_single_record).transform_keys do |attribute_name|
+            attribute_name.gsub(param_key_digit(attribute_name), "")
+          end,
         )
       end || []
+  end
+
+  def valid_varied_param_key_rows
+    group_param_keys_into_rows(varied_param_keys)&.select do |param_key_row|
+      qualification_params.permit(param_key_row).values.any?(&:present?) ||
+        param_key_digit(param_key_row.last) == "1" # permit blank row 1 because subject is optional for some forms
+    end
+  end
+
+  def group_param_keys_into_rows(param_keys)
+    param_keys&.group_by { |key| param_key_digit(key) }&.values
+  end
+
+  def varied_param_keys
+    form_params&.keys&.select { |key| param_key_digit(key).present? }
+  end
+
+  def shared_param_keys
+    %i[category finished_studying finished_studying_details institution name year]
   end
 
   def qualification_params
     case action_name
     when "new", "select_category", "submit_category"
-      (params[form_param_key(category)] || params).permit(:category)
+      (form_params || params).permit(:category)
     when "create", "edit", "update"
-      params[form_param_key(category)]&.permit(unique_param_keys.concat(repeatable_param_keys))
+      form_params&.permit(shared_param_keys.concat(varied_param_keys))
     end
   end
 
-  def unique_param_keys
-    %i[category finished_studying finished_studying_details institution name year]
-  end
-
-  def repeatable_param_keys
-    params[form_param_key(category)]&.keys&.select { |key| param_key_digit(key).present? }
+  def form_params
+    params[form_param_key(category)]
   end
 
   def category
