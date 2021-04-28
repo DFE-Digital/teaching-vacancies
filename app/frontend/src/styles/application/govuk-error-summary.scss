@@ -1,0 +1,8 @@
+.govuk-error-summary__list {
+  li {
+    // If an empty error message exists, skip over it when using keyboard navigation.
+    a:empty {
+      display: none;
+    }
+  }
+}

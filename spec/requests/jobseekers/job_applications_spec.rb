@@ -368,11 +368,14 @@ RSpec.describe "Job applications" do
   describe "POST #withdraw" do
     let(:withdraw_reason) { "other" }
     let(:origin) { "" }
-    let(:params) { { jobseekers_job_application_withdraw_form: { withdraw_reason: withdraw_reason }, origin: origin, commit: button } }
+    let(:params) do
+      { jobseekers_job_application_withdraw_form: { withdraw_reason: withdraw_reason },
+        origin: origin,
+        commit: I18n.t("buttons.withdraw_application") }
+    end
 
     context "when the application is submitted" do
       let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
-      let(:button) { I18n.t("buttons.withdraw_application") }
 
       context "when the withdraw form is invalid" do
         let(:withdraw_reason) { "invalid" }
