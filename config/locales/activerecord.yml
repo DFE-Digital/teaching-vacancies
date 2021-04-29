@@ -316,21 +316,20 @@ en:
               accepted:  You must confirm that your information is accurate and complete
             confirm_data_usage:
               accepted: You must consent to share your data in order to apply for this job
-            # TODO: Update once content has been confirmed
             ask_for_support:
-              incomplete: Complete ask for support
+              incomplete: Complete the questions on interview support
             employment_history:
               incomplete: Complete your employment history
             equal_opportunities:
-              incomplete: Complete equal opportunities
+              incomplete: Complete the questions on equal opportunities
             declarations:
-              incomplete: Complete declarations
+              incomplete: Complete the declarations
             personal_details:
               incomplete: Complete your personal details
             personal_statement:
               incomplete: Complete your personal statement
             professional_status:
-              incomplete: Complete professional status
+              incomplete: Complete the questions about your professional status
             references:
               incomplete: Complete your references
         jobseekers/job_application/withdraw_form:
