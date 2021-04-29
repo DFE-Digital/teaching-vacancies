@@ -35,6 +35,10 @@ shared:
     bottom_blue: 1
     modal: 1
     gds: 1
+  2021_04_application_preview_test:
+    banner_link: 1
+    banner_no_link: 1
+    no_banner_no_link: 1
 test:
   2021_04_cookie_consent_test:
     none: 0
