@@ -15,7 +15,6 @@ RSpec.describe Jobseekers::SubscriptionMailer do
     subscription
   end
 
-  let(:campaign_params) { { utm_source: nil, utm_medium: "email", utm_campaign: "daily_alert" } }
   let(:body) { mail.body }
 
   let(:expected_data) do
@@ -25,12 +24,17 @@ RSpec.describe Jobseekers::SubscriptionMailer do
       user_anonymised_jobseeker_id: user_anonymised_jobseeker_id,
       user_anonymised_publisher_id: nil,
       subscription_identifier: anonymised_form_of(subscription.id),
+      uid: "a_unique_identifier",
     }
   end
+
+  # Stub the uid so that we can test links more easily
+  before { allow_any_instance_of(ApplicationMailer).to receive(:uid).and_return("a_unique_identifier") }
 
   describe "#confirmation" do
     let(:mail) { described_class.confirmation(subscription.id) }
     let(:notify_template) { NOTIFY_SUBSCRIPTION_CONFIRMATION_TEMPLATE }
+    let(:campaign_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "jobseeker_subscription_confirmation" } }
 
     it "sends a confirmation email" do
       expect(mail.subject).to eq(I18n.t("jobseekers.subscription_mailer.confirmation.subject"))
@@ -81,6 +85,7 @@ RSpec.describe Jobseekers::SubscriptionMailer do
   describe "#update" do
     let(:mail) { described_class.update(subscription.id) }
     let(:notify_template) { NOTIFY_SUBSCRIPTION_UPDATE_TEMPLATE }
+    let(:campaign_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "jobseeker_subscription_update" } }
 
     it "sends a confirmation email" do
       expect(mail.subject).to eq(I18n.t("jobseekers.subscription_mailer.update.subject"))
