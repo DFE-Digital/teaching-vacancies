@@ -39,6 +39,7 @@ class JobApplication < ApplicationRecord
   has_many :references, dependent: :destroy
 
   scope :submitted_yesterday, -> { submitted.where("DATE(submitted_at) = ?", Date.yesterday) }
+  scope :after_submission, -> { where(status: %w[submitted reviewed shortlisted unsuccessful]) }
 
   def submit!
     submitted!
