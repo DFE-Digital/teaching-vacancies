@@ -17,6 +17,8 @@ class Jobseekers::AlertMailer < Jobseekers::BaseMailer
 
   private
 
+  attr_reader :subscription_id
+
   def email_event_data
     { subscription_identifier: StringAnonymiser.new(subscription.id), subscription_frequency: subscription.frequency }
   end
@@ -30,6 +32,10 @@ class Jobseekers::AlertMailer < Jobseekers::BaseMailer
   end
 
   def subscription
-    @subscription ||= SubscriptionPresenter.new(Subscription.find(@subscription_id))
+    @subscription ||= SubscriptionPresenter.new(Subscription.find(subscription_id))
+  end
+
+  def utm_campaign
+    "#{subscription.frequency}_alert"
   end
 end
