@@ -15,7 +15,6 @@ RSpec.describe Jobseekers::SubscriptionMailer do
     subscription
   end
 
-  let(:campaign_params) { { utm_source: nil, utm_medium: "email", utm_campaign: "daily_alert" } }
   let(:body) { mail.body }
 
   let(:expected_data) do
@@ -25,23 +24,31 @@ RSpec.describe Jobseekers::SubscriptionMailer do
       user_anonymised_jobseeker_id: user_anonymised_jobseeker_id,
       user_anonymised_publisher_id: nil,
       subscription_identifier: anonymised_form_of(subscription.id),
+      uid: "#{DateTime.current.strftime('%Q')}-#{StringAnonymiser.new(email)}",
     }
   end
 
   describe "#confirmation" do
     let(:mail) { described_class.confirmation(subscription.id) }
     let(:notify_template) { NOTIFY_SUBSCRIPTION_CONFIRMATION_TEMPLATE }
+    let(:campaign_params) do
+      { utm_source: "#{DateTime.current.strftime('%Q')}-#{StringAnonymiser.new(email)}",
+        utm_medium: "email",
+        utm_campaign: "jobseeker_subscription_confirmation" }
+    end
 
     it "sends a confirmation email" do
-      expect(mail.subject).to eq(I18n.t("jobseekers.subscription_mailer.confirmation.subject"))
-      expect(mail.to).to eq([subscription.email])
-      expect(body).to include(I18n.t("jobseekers.subscription_mailer.confirmation.title"))
-                  .and include(I18n.t("subscriptions.intro"))
-                  .and include("Keyword: English")
-                  .and include(I18n.t("jobseekers.subscription_mailer.confirmation.next_steps",
-                                      frequency: I18n.t("jobseekers.subscription_mailer.confirmation.frequency.#{subscription.frequency}")))
-                  .and include(I18n.t("jobseekers.subscription_mailer.confirmation.unsubscribe_link_text"))
-                  .and include(unsubscribe_subscription_url(subscription.token, **campaign_params))
+      freeze_time do
+        expect(mail.subject).to eq(I18n.t("jobseekers.subscription_mailer.confirmation.subject"))
+        expect(mail.to).to eq([subscription.email])
+        expect(body).to include(I18n.t("jobseekers.subscription_mailer.confirmation.title"))
+                    .and include(I18n.t("subscriptions.intro"))
+                    .and include("Keyword: English")
+                    .and include(I18n.t("jobseekers.subscription_mailer.confirmation.next_steps",
+                                        frequency: I18n.t("jobseekers.subscription_mailer.confirmation.frequency.#{subscription.frequency}")))
+                    .and include(I18n.t("jobseekers.subscription_mailer.confirmation.unsubscribe_link_text"))
+                    .and include(unsubscribe_subscription_url(subscription.token, **campaign_params))
+      end
     end
 
     context "when the subscription email matches a jobseeker account" do
@@ -49,7 +56,9 @@ RSpec.describe Jobseekers::SubscriptionMailer do
       let(:user_anonymised_jobseeker_id) { anonymised_form_of(jobseeker.id) }
 
       it "triggers a `jobseeker_subscription_confirmation` email event with the anonymised jobseeker id" do
-        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_confirmation).with_data(expected_data)
+        freeze_time do
+          expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_confirmation).with_data(expected_data)
+        end
       end
     end
 
@@ -57,7 +66,9 @@ RSpec.describe Jobseekers::SubscriptionMailer do
       let(:user_anonymised_jobseeker_id) { nil }
 
       it "triggers a `jobseeker_subscription_confirmation` email event without the anonymised jobseeker id" do
-        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_confirmation).with_data(expected_data)
+        freeze_time do
+          expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_confirmation).with_data(expected_data)
+        end
       end
     end
 
@@ -81,17 +92,24 @@ RSpec.describe Jobseekers::SubscriptionMailer do
   describe "#update" do
     let(:mail) { described_class.update(subscription.id) }
     let(:notify_template) { NOTIFY_SUBSCRIPTION_UPDATE_TEMPLATE }
+    let(:campaign_params) do
+      { utm_source: "#{DateTime.current.strftime('%Q')}-#{StringAnonymiser.new(email)}",
+        utm_medium: "email",
+        utm_campaign: "jobseeker_subscription_update" }
+    end
 
     it "sends a confirmation email" do
-      expect(mail.subject).to eq(I18n.t("jobseekers.subscription_mailer.update.subject"))
-      expect(mail.to).to eq([subscription.email])
-      expect(body).to include(I18n.t("jobseekers.subscription_mailer.update.title"))
-                  .and include(I18n.t("subscriptions.intro"))
-                  .and include("Keyword: English")
-                  .and include(I18n.t("jobseekers.subscription_mailer.update.next_steps",
-                                      frequency: I18n.t("jobseekers.subscription_mailer.confirmation.frequency.#{subscription.frequency}")))
-                  .and include(I18n.t("jobseekers.subscription_mailer.update.unsubscribe_link_text"))
-                  .and include(unsubscribe_subscription_url(subscription.token, **campaign_params))
+      freeze_time do
+        expect(mail.subject).to eq(I18n.t("jobseekers.subscription_mailer.update.subject"))
+        expect(mail.to).to eq([subscription.email])
+        expect(body).to include(I18n.t("jobseekers.subscription_mailer.update.title"))
+                    .and include(I18n.t("subscriptions.intro"))
+                    .and include("Keyword: English")
+                    .and include(I18n.t("jobseekers.subscription_mailer.update.next_steps",
+                                        frequency: I18n.t("jobseekers.subscription_mailer.confirmation.frequency.#{subscription.frequency}")))
+                    .and include(I18n.t("jobseekers.subscription_mailer.update.unsubscribe_link_text"))
+                    .and include(unsubscribe_subscription_url(subscription.token, **campaign_params))
+      end
     end
 
     context "when the subscription email matches a jobseeker account" do
@@ -99,7 +117,9 @@ RSpec.describe Jobseekers::SubscriptionMailer do
       let(:user_anonymised_jobseeker_id) { anonymised_form_of(jobseeker.id) }
 
       it "triggers a `jobseeker_subscription_update` email event with the anonymised jobseeker id" do
-        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_update).with_data(expected_data)
+        freeze_time do
+          expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_update).with_data(expected_data)
+        end
       end
     end
 
@@ -107,7 +127,9 @@ RSpec.describe Jobseekers::SubscriptionMailer do
       let(:user_anonymised_jobseeker_id) { nil }
 
       it "triggers a `jobseeker_subscription_update` email event without the anonymised jobseeker id" do
-        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_update).with_data(expected_data)
+        freeze_time do
+          expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_update).with_data(expected_data)
+        end
       end
     end
   end
