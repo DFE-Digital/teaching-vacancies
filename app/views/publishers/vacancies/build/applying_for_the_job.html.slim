@@ -24,8 +24,11 @@
                 = f.govuk_url_field :application_link, label: { size: "s" }, form_group: { classes: "optional-field" }
           - else
             = govuk_notification_banner title: t("banners.important") do |banner|
-              - banner.add_heading text: t(".notification.heading")
-              = t(".notification.description.content_html", link: govuk_link_to(t(".notification.description.link"), page_path("job-application-preview"), target: "_blank"))
+              - banner.add_heading text: t(".banner.heading")
+              - if current_variant?(:"2021_04_application_preview_test", :banner_link)
+                = t(".banner.description.content_with_link_html", link: govuk_link_to(t(".banner.description.link"), page_path("job-application-preview"), target: "_blank"))
+              - else current_variant?(:"2021_04_application_preview_test", :banner_no_link)
+                a = t(".banner.description.content_with_no_link")
             = f.govuk_radio_buttons_fieldset :enable_job_applications do
               = f.govuk_radio_button :enable_job_applications, true, link_errors: true do
                 = f.govuk_text_area :personal_statement_guidance, label: { size: "s" }, form_group: { classes: "optional-field" }
