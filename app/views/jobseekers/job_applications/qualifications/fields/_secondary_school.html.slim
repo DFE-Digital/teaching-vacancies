@@ -9,8 +9,7 @@
         label: { text: t("helpers.label.jobseekers_job_application_details_qualifications_shared_labels.grade1") },
         aria: { required: index.zero? },
         form_group: { classes: "govuk-!-width-one-quarter" }
-      - unless index.zero?
-        = govuk_link_to t("buttons.delete_subject"), "#", id: "delete_#{index + 1}", class: "js-action delete-button govuk-!-margin-bottom-6 govuk-!-padding-bottom-2"
+      = govuk_link_to t("buttons.delete_subject"), "#", id: "delete_#{index + 1}", class: "js-action delete-button govuk-!-margin-bottom-6 govuk-!-padding-bottom-2"
 
 p class="govuk-!-margin-bottom-6 govuk-!-margin-top-0 js-action"
   = govuk_link_to t("buttons.add_another_subject"), "#", id: "add_subject"

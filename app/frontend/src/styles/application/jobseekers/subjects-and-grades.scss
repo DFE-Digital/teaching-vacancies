@@ -26,6 +26,10 @@
       .govuk-label {
         margin-bottom: govuk-spacing(3);
       }
+
+      .delete-button {
+        display: none;
+      }
     }
 
     &:not(:first-of-type) {
