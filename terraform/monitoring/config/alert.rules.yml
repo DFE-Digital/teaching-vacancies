@@ -3,7 +3,7 @@ groups:
   rules:
   - alert: ProdRequestsFailuresElevated
     # Condition for alerting
-    expr: sum(rate(requests{app="teaching-vacancies-production", status_range=~"0xx|4xx|5xx"}[5m]))*60 > 25
+    expr: (sum(rate(requests{app="teaching-vacancies-production", status_range=~"0xx|4xx|5xx"}[5m]))) / (sum(rate(requests{app="teaching-vacancies-production"}[5m])) ) * 100 > 5
     # Annotation - additional informational labels to store more information
     annotations:
       summary: Per-minute failed requests rate high
