@@ -35,6 +35,8 @@ RUN rm -rf node_modules log tmp yarn.lock && \
 FROM ruby:2.7.3-alpine AS production
 
 ARG PROD_PACKAGES
+ARG COMMIT_SHA
+ENV COMMIT_SHA=$COMMIT_SHA
 
 WORKDIR /app
 
