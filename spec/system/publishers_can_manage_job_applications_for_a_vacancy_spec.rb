@@ -86,7 +86,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
       it "shows date application was received" do
         within(".application-#{status} .card-component__body") do
-          expect(page).to have_content(job_application_submitted.submitted_at)
+          expect(page).to have_content(job_application_submitted.submitted_at.strftime("%d %B %Y at %H:%M"))
         end
       end
 
@@ -120,7 +120,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
       it "shows date application was received" do
         within(".application-#{status} .card-component__body") do
-          expect(page).to have_content(job_application_reviewed.submitted_at)
+          expect(page).to have_content(job_application_reviewed.submitted_at.strftime("%d %B %Y at %H:%M"))
         end
       end
 
@@ -154,7 +154,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
       it "shows date application was received" do
         within(".application-#{status} .card-component__body") do
-          expect(page).to have_content(job_application_shortlisted.submitted_at)
+          expect(page).to have_content(job_application_shortlisted.submitted_at.strftime("%d %B %Y at %H:%M"))
         end
       end
 
@@ -183,7 +183,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
       it "shows date application was received" do
         within(".application-#{status} .card-component__body") do
-          expect(page).to have_content(job_application_unsuccessful.submitted_at)
+          expect(page).to have_content(job_application_unsuccessful.submitted_at.strftime("%d %B %Y at %H:%M"))
         end
       end
 
