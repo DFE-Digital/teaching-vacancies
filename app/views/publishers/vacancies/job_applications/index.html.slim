@@ -69,7 +69,7 @@
 
           - card.body do
             = tag.div(publisher_job_application_status_tag(application.status))
-            = tag.div(card.labelled_item(t(".received"), application.submitted_at))
+            = tag.div(card.labelled_item(t(".received"), application.submitted_at.strftime("%d %B %Y at %H:%M")))
 
           - if application.status.in?(%w[reviewed shortlisted submitted])
             - card.actions do
