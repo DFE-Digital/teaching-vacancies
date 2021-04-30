@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - dev
-      - qa
       - pentest
     paths-ignore:
     - 'bigquery/**'
