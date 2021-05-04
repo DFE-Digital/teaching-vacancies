@@ -152,4 +152,30 @@ RSpec.describe JobApplicationHelper do
       end
     end
   end
+
+  describe "#job_application_view_applicant" do
+    subject { helper.job_application_view_applicant(vacancy, job_application) }
+
+    let(:vacancy) { create(:vacancy, :published) }
+
+    context "when job application is withdrawn" do
+      let(:job_application) { create(:job_application, :status_withdrawn) }
+
+      it "renders the applicant name" do
+        expect(subject).to include("#{job_application.first_name} #{job_application.last_name}")
+      end
+
+      it "does not render a link" do
+        expect(subject).to have_no_link("#{job_application.first_name} #{job_application.last_name}")
+      end
+    end
+
+    context "when job application is not withdrawn" do
+      let(:job_application) { create(:job_application, :status_submitted) }
+
+      it "renders the applicant name as a link" do
+        expect(subject).to have_link("#{job_application.first_name} #{job_application.last_name}")
+      end
+    end
+  end
 end

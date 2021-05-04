@@ -65,7 +65,7 @@
       - job_applications.each do |application|
         = render Shared::CardComponent.new(classes: "application-#{application.status}") do |card|
           - card.header do
-            = tag.div(govuk_link_to("#{application.first_name} #{application.last_name}", organisation_job_job_application_path(vacancy.id, application.id)))
+            = tag.div(job_application_view_applicant(vacancy, application))
 
           - card.body do
             = tag.div(publisher_job_application_status_tag(application.status))
