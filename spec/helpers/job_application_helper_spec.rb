@@ -178,4 +178,26 @@ RSpec.describe JobApplicationHelper do
       end
     end
   end
+
+  describe "#job_application_page_title_prefix" do
+    subject { helper.job_application_page_title_prefix(form, title) }
+
+    let(:title) { "A page title" }
+
+    context "when the form has errors" do
+      let(:form) { double("some_form", errors: ["an error"]) }
+
+      it "prepends `Error:` to the title" do
+        expect(subject).to eq("Error: A page title")
+      end
+    end
+
+    context "when the form does not have errors" do
+      let(:form) { double("some_form", errors: []) }
+
+      it "returns the title" do
+        expect(subject).to eq("A page title")
+      end
+    end
+  end
 end

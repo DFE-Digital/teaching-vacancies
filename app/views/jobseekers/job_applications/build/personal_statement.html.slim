@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, t(".title")
+- content_for :page_title_prefix, job_application_page_title_prefix(form, t(".title"))
 
 = render BannerComponent.new do
   = govuk_back_link text: t("buttons.back_to_previous_step"), href: back_path, classes: "govuk-!-margin-top-3"
