@@ -262,9 +262,9 @@ en:
         subjects: Subjects and key stages taught
       jobseekers_job_application_details_qualifications_category_form:
         category_options:
-          gcse: GCSE
-          as_level: AS Level
-          a_level: A Level
+          gcse: GCSEs
+          as_level: AS Levels
+          a_level: A Levels
           other_secondary: Other secondary qualification
           undergraduate: Undergraduate degree
           postgraduate: Postgraduate degree

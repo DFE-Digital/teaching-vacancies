@@ -58,7 +58,9 @@ Rails.application.configure do
   # Bullet gem configuration
   config.after_initialize do
     Bullet.enable = true
-    Bullet.raise = true
+    # TODO: Causing lots of issues with FactoryBot-created qualification results
+    #   see: https://github.com/flyerhzm/bullet/issues/435
+    Bullet.raise = false
   end
 end
 

@@ -1,5 +1,16 @@
 FactoryBot.define do
   factory :qualification do
+    after(:create) do |qualification, evaluator|
+      next unless qualification.secondary?
+
+      create_list(:qualification_result, evaluator.results_count, qualification: qualification)
+    end
+
+    transient do
+      # Number of results to add _if_ a secondary qualification is created
+      results_count { 5 }
+    end
+
     category { Qualification.categories.keys.sample.to_s }
     finished_studying { undergraduate? || postgraduate? ? Faker::Boolean.boolean : nil }
     finished_studying_details { finished_studying.nil? || finished_studying? ? "" : "Stopped due to illness" }
