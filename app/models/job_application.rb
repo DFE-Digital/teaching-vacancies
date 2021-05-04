@@ -41,6 +41,10 @@ class JobApplication < ApplicationRecord
   scope :submitted_yesterday, -> { submitted.where("DATE(submitted_at) = ?", Date.yesterday) }
   scope :after_submission, -> { where(status: %w[submitted reviewed shortlisted unsuccessful]) }
 
+  def name
+    "#{first_name} #{last_name}"
+  end
+
   def submit!
     submitted!
     Publishers::JobApplicationReceivedNotification.with(vacancy: vacancy, job_application: self).deliver(vacancy.publisher)

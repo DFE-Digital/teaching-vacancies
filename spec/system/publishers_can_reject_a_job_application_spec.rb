@@ -22,7 +22,7 @@ RSpec.describe "Publishers can reject a job application" do
 
     expect(current_path).to eq(organisation_job_job_applications_path(vacancy.id))
     expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.update_status.unsuccessful",
-                                        name: "#{job_application.first_name} #{job_application.last_name}"))
+                                        name: job_application.name))
     expect(job_application.reload.status).to eq("unsuccessful")
   end
 end

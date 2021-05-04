@@ -162,11 +162,11 @@ RSpec.describe JobApplicationHelper do
       let(:job_application) { create(:job_application, :status_withdrawn) }
 
       it "renders the applicant name" do
-        expect(subject).to include("#{job_application.first_name} #{job_application.last_name}")
+        expect(subject).to include(job_application.name)
       end
 
       it "does not render a link" do
-        expect(subject).to have_no_link("#{job_application.first_name} #{job_application.last_name}")
+        expect(subject).to have_no_link(job_application.name)
       end
     end
 
@@ -174,7 +174,7 @@ RSpec.describe JobApplicationHelper do
       let(:job_application) { create(:job_application, :status_submitted) }
 
       it "renders the applicant name as a link" do
-        expect(subject).to have_link("#{job_application.first_name} #{job_application.last_name}")
+        expect(subject).to have_link(job_application.name)
       end
     end
   end
