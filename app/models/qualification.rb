@@ -30,7 +30,13 @@ class Qualification < ApplicationRecord
   end
 
   def display_attributes
-    secondary? ? %w[institution year] : %w[subject institution grade year]
+    if secondary?
+      %w[institution year]
+    else
+      %w[subject institution].tap do |attrs|
+        attrs << %i[grade year] if finished_studying?
+      end
+    end
   end
 
   def secondary?
