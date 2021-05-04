@@ -56,6 +56,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
       expect(page).to have_content("GCSEs")
       expect(page).to have_content("Churchill School for Gifted Macaques")
       expect(page).to have_content("Maths – 110%")
+      expect(page).to have_content("PE – 90%")
       expect(page).to have_content("2020")
     end
 
@@ -67,9 +68,10 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
       # TODO: fill_in_another_secondary_qualification
       click_on I18n.t("buttons.save_qualification.other")
       expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :qualifications))
-      expect(page).to have_content("Welsh Baccalaureates")
+      expect(page).to have_content("Welsh Baccalaureate")
       expect(page).to have_content("Happy Rainbows School for High Achievers")
       expect(page).to have_content("Science – 5")
+      expect(page).to have_content("German – 4")
       expect(page).to have_content("2020")
     end
   end
@@ -93,37 +95,6 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
       expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :qualifications))
       expect(page).not_to have_content("John")
       expect(page).to have_content("Nicholas")
-    end
-  end
-
-  context "when there is a group of more than one qualifications" do
-    let!(:qualifications) do
-      create_list(:qualification, 2,
-                  category: "other_secondary",
-                  institution: "John Mason School",
-                  name: "O Level",
-                  job_application: job_application,
-                  year: 1970)
-    end
-
-    it "allows jobseekers to delete the qualifications as a group" do
-      visit jobseekers_job_application_build_path(job_application, :qualifications)
-
-      click_on I18n.t("buttons.delete")
-
-      expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :qualifications))
-      expect(page).to have_content(I18n.t("jobseekers.job_applications.qualifications.destroy.success.other"))
-      expect(page).not_to have_content("John Mason School")
-    end
-
-    # TODO: complete these pending tests when functionality implemented
-
-    xit "allows jobseekers to edit qualifications from a group" do
-      # noop
-    end
-
-    xit "allows jobseekers to delete a row from a group" do
-      # noop
     end
   end
 end
