@@ -39,6 +39,11 @@ class Jobseekers::JobApplications::QuickApply
     recent_job_application.qualifications.each do |qualification|
       new_qualification = qualification.dup
       new_qualification.update(job_application: new_job_application)
+
+      qualification.qualification_results.each do |result|
+        new_result = result.dup
+        new_result.update(qualification: new_qualification)
+      end
     end
   end
 
