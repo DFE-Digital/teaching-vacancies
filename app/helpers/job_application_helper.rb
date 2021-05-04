@@ -107,4 +107,12 @@ module JobApplicationHelper
                     organisation_job_job_application_path(vacancy.id, job_application)
     end
   end
+
+  def job_application_page_title_prefix(form, title)
+    if form.errors.any?
+      "Error: #{title}"
+    else
+      title
+    end
+  end
 end
