@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, t(".title")
+- content_for :page_title_prefix, job_application_page_title_prefix(review_form, t(".title"))
 
 = render BannerComponent.new do
   - if current_jobseeker.job_applications.not_draft.none?
