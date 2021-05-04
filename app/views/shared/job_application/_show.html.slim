@@ -42,25 +42,25 @@
       p.govuk-body = t(".qualifications.none")
     - else
       = govuk_accordion do |accordion|
-        - job_application.qualification_groups.each do |group|
-          - accordion.add_section title: group.first.title_for_group do
+        - job_application.qualifications.each do |qualification|
+          - accordion.add_section title: qualification.name do
             = govuk_summary_list do |summary|
-              - if group.first.secondary?
+              - if qualification.secondary?
                 - summary.slot :row,
                                key: t(".qualifications.subjects_and_grades"),
-                               value: safe_join(group.map { |qualification| tag.div("#{qualification.subject} - #{qualification.grade}") })
+                               value: safe_join(qualification.qualification_results.map { |result| tag.div("#{result.subject} - #{result.grade}") })
 
-              - group.first.attributes_for_group.each do |attribute|
-                - if group.first[attribute].present?
+              - qualification.display_attributes.each do |attribute|
+                - if qualification[attribute].present?
                   - summary.slot :row,
-                                 key: t("helpers.label.#{qualification_form_param_key(group.first.category)}.#{attribute}"),
-                                 value: group.first[attribute]
+                                 key: t("helpers.label.#{qualification_form_param_key(qualification.category)}.#{attribute}"),
+                                 value: qualification[attribute]
 
-              - unless group.first.finished_studying.nil?
+              - unless qualification.finished_studying.nil?
                 - summary.slot :row,
-                               key: t("helpers.legend.#{qualification_form_param_key(group.first.category)}.finished_studying"),
-                               value: safe_join([tag.div(I18n.t("helpers.label.jobseekers_job_application_details_qualifications_shared_labels.finished_studying_options.#{group.first.finished_studying}")),
-                                                 tag.div(group.first.finished_studying_details.presence)])
+                               key: t("helpers.legend.#{qualification_form_param_key(qualification.category)}.finished_studying"),
+                               value: safe_join([tag.div(I18n.t("helpers.label.jobseekers_job_application_details_qualifications_shared_labels.finished_studying_options.#{qualification.finished_studying}")),
+                                                 tag.div(qualification.finished_studying_details.presence)])
 
 = render ReviewComponent.new id: "employment_history_summary" do |review|
   - review.heading title: t(".employment_history.heading")

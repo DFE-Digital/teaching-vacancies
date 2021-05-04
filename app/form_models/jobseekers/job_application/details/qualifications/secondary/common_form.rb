@@ -1,14 +1,50 @@
-class Jobseekers::JobApplication::Details::Qualifications::Secondary::CommonForm < Jobseekers::JobApplication::Details::Qualifications::QualificationForm
-  validates :institution, :year, presence: true
-  validate :subject_and_grade_correspond?
-  validates :year, format: { with: /\A\d{4}\z/.freeze }, if: -> { year.present? }
+module Jobseekers::JobApplication::Details::Qualifications::Secondary
+  class CommonForm < ::Jobseekers::JobApplication::Details::Qualifications::QualificationForm
+    MAXIMUM_NUMBER_OF_RESULTS = 6
 
-  def subject_and_grade_correspond?
-    return if subject.present? && grade.present?
+    validates :institution, :year, presence: true
+    validates :year, format: { with: /\A\d{4}\z/.freeze }, if: -> { year.present? }
+    validate :at_least_one_qualification_result
+    validate :all_qualifications_valid
 
-    errors.add(:subject, I18n.t("qualification_errors.subject_and_grade_correspond.false"))
-    # Empty string: highlight grade field with red, but rely on the user reading the error on subject.
-    # The resulting empty anchor tag in the error summary correctly links to the field.
-    errors.add(:grade, "")
+    def initialize(attributes = nil)
+      super(attributes)
+      pad_qualification_results
+    end
+
+    def qualification_results_attributes=(attrs)
+      @qualification_results ||= []
+      attrs.each do |_idx, qualification_params|
+        @qualification_results.push(QualificationResultForm.new(qualification_params))
+      end
+    end
+
+    private
+
+    def at_least_one_qualification_result
+      return if qualification_results.reject(&:empty?).any?
+
+      errors.add(:base, :at_least_one_result_required)
+
+      # Force first results form to validate so the first set of fields shows an error state on the form
+      qualification_results.first.valid?
+    end
+
+    def all_qualifications_valid
+      qualification_results.reject(&:empty?).each do |qualification|
+        next if qualification.valid?
+
+        errors.add(:base, :incomplete_result)
+      end
+    end
+
+    def pad_qualification_results
+      # Ensures the number of QualificationResults present in the form are the highest of:
+      #   - however many are already there (in case we lower the maximum number in the future), or
+      #   - the maximum number we want to have
+      # by padding the qualification results with empty objects
+      @qualification_results ||= []
+      @qualification_results += [QualificationResultForm.new] * [MAXIMUM_NUMBER_OF_RESULTS - qualification_results.count, 0].max
+    end
   end
 end
