@@ -152,4 +152,27 @@ RSpec.describe JobApplicationHelper do
       end
     end
   end
+
+  describe "#job_application_view_applicant" do
+    subject { helper.job_application_view_applicant(vacancy, job_application) }
+
+    let(:vacancy) { create(:vacancy, :published) }
+
+    context "when job application is withdrawn" do
+      let(:job_application) { create(:job_application, :status_withdrawn) }
+
+      it "returns the applicant name" do
+        expect(subject).to eq(tag.span("#{job_application.first_name} #{job_application.last_name}", class: "govuk-!-font-size-19"))
+      end
+    end
+
+    context "when job application is not withdrawn" do
+      let(:job_application) { create(:job_application, :status_submitted) }
+
+      it "returns a link to the application" do
+        expect(subject).to eq(helper.govuk_link_to("#{job_application.first_name} #{job_application.last_name}",
+                                                   organisation_job_job_application_path(vacancy.id, job_application)))
+      end
+    end
+  end
 end
