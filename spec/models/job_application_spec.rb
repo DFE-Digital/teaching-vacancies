@@ -12,6 +12,14 @@ RSpec.describe JobApplication do
   it { is_expected.to have_many(:employments) }
   it { is_expected.to have_many(:references) }
 
+  describe "#name" do
+    subject { build_stubbed(:job_application, first_name: "Brilliant", last_name: "Name") }
+
+    it "returns the applicant full name" do
+      expect(subject.name).to eq("Brilliant Name")
+    end
+  end
+
   context "when saving change to status" do
     subject { create(:job_application) }
 
