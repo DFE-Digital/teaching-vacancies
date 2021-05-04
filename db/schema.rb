@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_26_083551) do
+ActiveRecord::Schema.define(version: 2021_05_04_084958) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -318,6 +318,15 @@ ActiveRecord::Schema.define(version: 2021_04_26_083551) do
     t.index ["oid"], name: "index_publishers_on_oid", unique: true
   end
 
+  create_table "qualification_results", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "qualification_id", null: false
+    t.string "subject", null: false
+    t.string "grade", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["qualification_id"], name: "index_qualification_results_on_qualification_id"
+  end
+
   create_table "qualifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -436,6 +445,7 @@ ActiveRecord::Schema.define(version: 2021_04_26_083551) do
   add_foreign_key "documents", "vacancies"
   add_foreign_key "emergency_login_keys", "publishers"
   add_foreign_key "publisher_preferences", "publishers"
+  add_foreign_key "qualification_results", "qualifications"
   add_foreign_key "vacancies", "organisations", column: "publisher_organisation_id"
   add_foreign_key "vacancies", "publishers"
 end
