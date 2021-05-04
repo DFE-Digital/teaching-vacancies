@@ -98,4 +98,13 @@ module JobApplicationHelper
       t("buttons.save_and_continue")
     end
   end
+
+  def job_application_view_applicant(vacancy, job_application)
+    if job_application.withdrawn?
+      tag.span "#{job_application.first_name} #{job_application.last_name}", class: "govuk-!-font-size-19"
+    else
+      govuk_link_to "#{job_application.first_name} #{job_application.last_name}",
+                    organisation_job_job_application_path(vacancy.id, job_application)
+    end
+  end
 end
