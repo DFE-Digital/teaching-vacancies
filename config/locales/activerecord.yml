@@ -11,6 +11,9 @@ en:
       blank: Enter your email address
       invalid: Enter an email address in the correct format, like name@example.com
   qualification_errors: &qualification_errors
+    base:
+      at_least_one_result_required: Enter at least one subject and grade for this qualification
+      incomplete_result: Enter all subjects and grades
     category:
       inclusion: Select a qualification
     finished_studying:
@@ -21,8 +24,6 @@ en:
       blank: Enter a grade
     subject:
       blank: Enter a subject
-    subject_and_grade_correspond:
-      false: Enter all subjects and grades
     year:
       blank: Enter the year the qualification was awarded
       invalid: Enter a valid year
@@ -375,6 +376,9 @@ en:
               blank: Enter a school, college or other organisation
             name:
               blank: Enter a qualification name
+        jobseekers/job_application/details/qualifications/secondary/qualification_result_form:
+          attributes:
+            <<: *qualification_errors
         jobseekers/job_application/details/qualifications/other_form:
           attributes:
             <<: *qualification_errors
