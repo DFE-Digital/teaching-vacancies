@@ -36,7 +36,8 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
     end
 
     it "copies completed steps" do
-      expect(subject.completed_steps).to eq(%w[personal_details professional_status employment_history references ask_for_support])
+      expect(subject.completed_steps)
+        .to eq(%w[personal_details professional_status qualifications employment_history references ask_for_support])
     end
 
     it "copies qualifications" do
