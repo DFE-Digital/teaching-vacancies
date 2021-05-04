@@ -1,7 +1,7 @@
 = f.govuk_fieldset legend: { text: t("helpers.legend.jobseekers_job_application_details_qualifications_shared_legends.subjects") } do
   - form.qualification_results.each_with_index do |result, idx|
     = f.fields_for :qualification_results, result do |result_form|
-      .inline-fields-container
+      .inline-fields-container id="qualification-result-#{idx}"
         = result_form.govuk_text_field :subject, label: { text: "Subject #{idx + 1}" }, aria: { required: idx.zero? }, form_group: { classes: "govuk-!-width-two-thirds" }
         = result_form.govuk_text_field :grade, aria: { required: idx.zero? }, form_group: { classes: "govuk-!-width-one-third" }
 
