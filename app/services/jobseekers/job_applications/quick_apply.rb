@@ -32,7 +32,7 @@ class Jobseekers::JobApplications::QuickApply
   end
 
   def completed_steps
-    %w[personal_details professional_status employment_history references ask_for_support]
+    %w[personal_details professional_status qualifications employment_history references ask_for_support]
   end
 
   def copy_qualifications
