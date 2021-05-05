@@ -31,9 +31,8 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
   end
 
   def destroy
-    count = qualifications.count
-    qualifications.each(&:destroy)
-    redirect_to back_path, success: t(".success", count: count)
+    qualification.destroy
+    redirect_to back_path, success: t(".success")
   end
 
   private
@@ -49,7 +48,7 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
     when "select_category"
       {}
     when "edit"
-      qualification.slice(:category, :finished_studying, :finished_studying_details, :grade, :institution, :name, :subject, :year)
+      qualification.slice(:category, :finished_studying, :finished_studying_details, :grade, :institution, :name, :subject, :year, :qualification_results)
     when "create", "update", "submit_category"
       qualification_params
     end
@@ -61,7 +60,7 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
       (params[qualification_form_param_key(category)] || params).permit(:category)
     when "create", "edit", "update"
       params.require(qualification_form_param_key(category))
-            .permit(:category, :finished_studying, :finished_studying_details, :grade, :institution, :name, :subject, :year)
+            .permit(:category, :finished_studying, :finished_studying_details, :grade, :institution, :name, :subject, :year, qualification_results_attributes: %i[id subject grade])
     end
   end
 
@@ -83,10 +82,6 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
 
   def qualification
     @qualification ||= job_application.qualifications.find(params[:id])
-  end
-
-  def qualifications
-    @qualifications ||= [job_application.qualifications.find(params[:ids])].flatten
   end
 
   def submit_text

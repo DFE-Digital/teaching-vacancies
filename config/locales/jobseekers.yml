@@ -235,9 +235,7 @@ en:
       not_defined: Not defined (will not be seen on application)
       qualifications:
         destroy:
-          success:
-            one: Your qualification was deleted
-            other: Your qualifications were deleted
+          success: Your qualification was deleted
         qualifications_shared: &qualifications_shared
           caption: Education and qualifications
         edit:
