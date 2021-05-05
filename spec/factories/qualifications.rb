@@ -4,6 +4,7 @@ FactoryBot.define do
       next unless qualification.secondary?
 
       create_list(:qualification_result, evaluator.results_count, qualification: qualification)
+      qualification.reload
     end
 
     transient do
@@ -11,14 +12,14 @@ FactoryBot.define do
       results_count { 5 }
     end
 
-    category { Qualification.categories.keys.sample.to_s }
+    category { Qualification.categories.keys.sample }
     finished_studying { undergraduate? || postgraduate? ? Faker::Boolean.boolean : nil }
-    finished_studying_details { finished_studying.nil? || finished_studying? ? "" : "Stopped due to illness" }
-    grade { finished_studying.nil? || finished_studying? ? %w[A B C D E F].sample : "" }
-    institution { undergraduate? || postgraduate? || other? ? Faker::Educator.university : Faker::Educator.secondary_school }
+    finished_studying_details { finished_studying == false ? "Stopped due to illness" : "" }
+    grade { !finished_studying? || secondary? ? "" : %w[A B C D E F].sample }
+    institution { secondary? ? Faker::Educator.secondary_school : Faker::Educator.university }
     name { other_secondary? || other? ? Faker::Educator.degree : "" }
-    subject { Faker::Educator.subject }
-    year { finished_studying.nil? || finished_studying? ? rand(1970..2020) : nil }
+    subject { secondary? ? "" : Faker::Educator.subject }
+    year { finished_studying == false ? nil : rand(1970..2020) }
 
     job_application
   end
