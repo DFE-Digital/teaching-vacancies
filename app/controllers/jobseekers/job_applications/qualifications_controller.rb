@@ -48,7 +48,9 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
     when "select_category"
       {}
     when "edit"
-      qualification.slice(:category, :finished_studying, :finished_studying_details, :grade, :institution, :name, :subject, :year, :qualification_results)
+      qualification
+        .slice(:category, :finished_studying, :finished_studying_details, :grade, :institution, :name, :subject, :year, :qualification_results)
+        .reject { |_, v| v.blank? }
     when "create", "update", "submit_category"
       qualification_params
     end
