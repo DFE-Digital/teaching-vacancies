@@ -1,0 +1,49 @@
+rule_files:
+    - alert.rules.yml
+
+evaluation_interval: 1m
+
+tests:
+    - interval: 1m
+      # Series data.
+      input_series:
+          - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="0",organisation="dfe",space="teaching-vacancies-production",status_range="0xx"}'
+            values: '0+0x4 0+10x4 50+50x4 300+100x4 800'
+          - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="0",organisation="dfe",space="teaching-vacancies-production",status_range="2xx"}'
+            values: '0+0x4 0+1000x4 500+1000x4 1000+1000x4 6000'
+          - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="0",organisation="dfe",space="teaching-vacancies-production",status_range="3xx"}'
+            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
+          - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="0",organisation="dfe",space="teaching-vacancies-production",status_range="4xx"}'
+            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
+          - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="0",organisation="dfe",space="teaching-vacancies-production",status_range="5xx"}'
+            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
+          - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="1",organisation="dfe",space="teaching-vacancies-production",status_range="0xx"}'
+            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
+          - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="1",organisation="dfe",space="teaching-vacancies-production",status_range="2xx"}'
+            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
+          - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="1",organisation="dfe",space="teaching-vacancies-production",status_range="3xx"}'
+            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
+          - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="1",organisation="dfe",space="teaching-vacancies-production",status_range="4xx"}'
+            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
+          - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="1",organisation="dfe",space="teaching-vacancies-production",status_range="5xx"}'
+            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
+
+      # Unit test for alerting rules.
+      alert_rule_test:
+          - alertname: ProdRequestsFailuresElevated
+            eval_time: 5m # Only 200 requests - 1000 per minute
+          - alertname: ProdRequestsFailuresElevated
+            eval_time: 10m # 10 failed requests per minute (0.99% total)
+          - alertname: ProdRequestsFailuresElevated
+            eval_time: 15m # 50 failed requests per minute (4.76% total)
+          - alertname: ProdRequestsFailuresElevated
+            eval_time: 20m # 100 failed requests per minute (9.09% total)
+            exp_alerts:
+            - exp_annotations:
+                summary: Per-minute failed requests rate high
+                description: "teaching-vacancies-production app has a per-minute failed requests rate above 25 over a 5-minute period (current value: 9.09090909090909)"
+                runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/master/documentation/alert-runbook.md#ProdRequestsFailuresElevated
+                dashboard: https://grafana-teaching-vacancies.london.cloudapps.digital/d/6Ac4lUWGk/teaching-vacancies-production?orgId=1&refresh=5s
+              exp_labels:
+                environment: production
+                severity: high
