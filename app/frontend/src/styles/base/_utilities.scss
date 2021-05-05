@@ -178,11 +178,15 @@
 }
 
 .js-action {
-  display: none;
+  display: none !important;
 }
 
 .js-enabled {
   .js-action {
-    display: inline-block;
+    display: inherit !important;
+  }
+
+  .js-hidden {
+    display: none !important;
   }
 }
