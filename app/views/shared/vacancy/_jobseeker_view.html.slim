@@ -26,7 +26,7 @@
               = render BannerButtonComponent.new text: t("jobseekers.job_applications.banner_links.submitted"),
                 href: jobseekers_job_application_path(job_application),
                 icon: "green-tick"
-          - else
+          - elsif @vacancy.expires_at.future?
             = render BannerButtonComponent.new text: t("jobseekers.job_applications.banner_links.apply"),
               href: new_jobseekers_job_job_application_path(@vacancy.id),
               icon: "apply"

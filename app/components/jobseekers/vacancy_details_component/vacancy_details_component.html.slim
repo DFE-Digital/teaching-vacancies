@@ -32,18 +32,19 @@ section#job-details class="govuk-!-margin-bottom-5"
     h4.govuk-heading-s = t("jobs.benefits")
     p = @vacancy.benefits
 
-  - if JobseekerApplicationsFeature.enabled? && @vacancy.enable_job_applications?
-    h4.govuk-heading-s = t("jobseekers.job_applications.applying_for_the_role_heading")
-    p = t("jobseekers.job_applications.applying_for_the_role_paragraph")
-    = govuk_link_to t("jobseekers.job_applications.apply"), new_jobseekers_job_job_application_path(@vacancy.id), button: true
+  - if @vacancy.expires_at.future?
+    - if JobseekerApplicationsFeature.enabled? && @vacancy.enable_job_applications?
+      h4.govuk-heading-s = t("jobseekers.job_applications.applying_for_the_role_heading")
+      p = t("jobseekers.job_applications.applying_for_the_role_paragraph")
+      = govuk_link_to t("jobseekers.job_applications.apply"), new_jobseekers_job_job_application_path(@vacancy.id), button: true
 
-  - else
-    - if @vacancy.how_to_apply.present?
-      h4.govuk-heading-s = t("jobs.applying_for_the_job")
-      p = @vacancy.how_to_apply
+    - else
+      - if @vacancy.how_to_apply.present?
+        h4.govuk-heading-s = t("jobs.applying_for_the_job")
+        p = @vacancy.how_to_apply
 
-    - if @vacancy.application_link.present?
-      = govuk_link_to t("jobs.apply"), new_job_interest_path(@vacancy.id), target: "_blank", class: "vacancy-apply-link govuk-!-margin-bottom-5", button: true, "aria-label": t("jobs.aria_labels.apply_link")
+      - if @vacancy.application_link.present?
+        = govuk_link_to t("jobs.apply"), new_job_interest_path(@vacancy.id), target: "_blank", class: "vacancy-apply-link govuk-!-margin-bottom-5", button: true, "aria-label": t("jobs.aria_labels.apply_link")
 
   - if @vacancy.documents.any?
     section#supporting-documents
