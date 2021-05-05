@@ -5,7 +5,7 @@ module Jobseekers::JobApplication::Details::Qualifications::Secondary
     validates :institution, :year, presence: true
     validates :year, format: { with: /\A\d{4}\z/.freeze }, if: -> { year.present? }
     validate :at_least_one_qualification_result
-    validate :all_qualifications_valid
+    validate :all_qualification_results_valid
 
     def initialize(attributes = nil)
       super(attributes)
@@ -30,9 +30,9 @@ module Jobseekers::JobApplication::Details::Qualifications::Secondary
       qualification_results.first.valid?
     end
 
-    def all_qualifications_valid
-      qualification_results.reject(&:empty?).each do |qualification|
-        next if qualification.valid?
+    def all_qualification_results_valid
+      qualification_results.each do |result|
+        next if result.empty? || result.valid?
 
         errors.add(:base, :incomplete_result)
       end
