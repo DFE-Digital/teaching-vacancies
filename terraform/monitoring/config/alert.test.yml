@@ -40,8 +40,8 @@ tests:
             eval_time: 20m # 100 failed requests per minute (9.09% total)
             exp_alerts:
             - exp_annotations:
-                summary: Per-minute failed requests rate high
-                description: "teaching-vacancies-production app has a per-minute failed requests rate above 25 over a 5-minute period (current value: 9.09090909090909)"
+                summary: High rate of failing requests
+                description: "The proportion of failed HTTP requests in the past 5 min is above 5% (current value: 9.091%)"
                 runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/master/documentation/alert-runbook.md#ProdRequestsFailuresElevated
                 dashboard: https://grafana-teaching-vacancies.london.cloudapps.digital/d/6Ac4lUWGk/teaching-vacancies-production?orgId=1&refresh=5s
               exp_labels:
