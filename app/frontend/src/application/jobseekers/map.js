@@ -49,6 +49,7 @@ window.initMap = () => {
 
     const map = new google.maps.Map(document.getElementById('map'), {
       zoom: 14,
+      scrollwheel: false,
       center: myLatLng,
       mapTypeControlOptions, // Removes terrain options section ('map' or 'satellite')
     });
