@@ -11,9 +11,8 @@ en:
       blank: Enter your email address
       invalid: Enter an email address in the correct format, like name@example.com
   qualification_errors: &qualification_errors
-    base:
+    qualification_results_attributes_0_subject:
       at_least_one_result_required: Enter at least one subject and grade for this qualification
-      incomplete_result: Enter all subjects and grades
     category:
       inclusion: Select a qualification
     finished_studying:
@@ -149,6 +148,7 @@ en:
     messages:
       taken: has already been taken
       blank: can't be blank
+      incomplete_qualification_result: Enter both a subject and a grade for subject %{result_idx}
   activemodel:
     errors:
       models:
