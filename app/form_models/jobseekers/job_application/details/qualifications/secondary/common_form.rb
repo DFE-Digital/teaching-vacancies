@@ -2,10 +2,10 @@ module Jobseekers::JobApplication::Details::Qualifications::Secondary
   class CommonForm < ::Jobseekers::JobApplication::Details::Qualifications::QualificationForm
     MAXIMUM_NUMBER_OF_RESULTS = 6
 
-    validates :institution, :year, presence: true
-    validates :year, format: { with: /\A\d{4}\z/.freeze }, if: -> { year.present? }
     validate :at_least_one_qualification_result
     validate :all_qualification_results_valid
+    validates :institution, :year, presence: true
+    validates :year, format: { with: /\A\d{4}\z/.freeze }, if: -> { year.present? }
 
     def initialize(attributes = nil)
       super(attributes)
@@ -13,10 +13,17 @@ module Jobseekers::JobApplication::Details::Qualifications::Secondary
     end
 
     def qualification_results_attributes=(attrs)
-      @qualification_results ||= []
-      attrs.each do |_idx, qualification_params|
-        @qualification_results.push(QualificationResultForm.new(qualification_params))
-      end
+      @qualification_results = attrs.map { |_, params| QualificationResultForm.new(params) }
+    end
+
+    # Required to allow us to add qualification results form field errors to this form (its parent)
+    # in `#all_qualification_results_valid` so they show up in the GOV.UK Error Summary. The
+    # default `#read_attribute_for_validation` is aliased to `send(attr)`, which fails because
+    # these methods (e.g. qualification_results_attributes_3_grade) aren't defined. We don't need
+    # to actually return anything meaningful for these virtual attributes as the actual validation
+    # for the fields happens in the `QualificationResultForm`.
+    def read_attribute_for_validation(attr)
+      super unless /^qualification_results_attributes_/.match?(attr)
     end
 
     private
@@ -24,17 +31,18 @@ module Jobseekers::JobApplication::Details::Qualifications::Secondary
     def at_least_one_qualification_result
       return if qualification_results.reject(&:empty?).any?
 
-      errors.add(:base, :at_least_one_result_required)
+      errors.add(:qualification_results_attributes_0_subject, :at_least_one_result_required)
 
       # Force first results form to validate so the first set of fields shows an error state on the form
       qualification_results.first.valid?
     end
 
     def all_qualification_results_valid
-      qualification_results.each do |result|
+      qualification_results.each_with_index do |result, idx|
         next if result.empty? || result.valid?
 
-        errors.add(:base, :incomplete_result)
+        field = result.errors.attribute_names.first
+        errors.add(:"qualification_results_attributes_#{idx}_#{field}", :incomplete_qualification_result, result_idx: idx + 1)
       end
     end
 
