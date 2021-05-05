@@ -1,8 +1,7 @@
 class Jobseekers::JobApplication::Details::Qualifications::QualificationForm
   include ActiveModel::Model
 
-  attr_accessor :category, :finished_studying, :finished_studying_details, :grade, :name,
-                :institution, :subject, :year, :qualification_results
+  attr_accessor :category, :finished_studying, :finished_studying_details, :name, :institution, :year
 
   validates :category, presence: true
   validates :finished_studying_details, presence: true, if: -> { finished_studying == "false" }

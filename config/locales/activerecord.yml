@@ -148,7 +148,7 @@ en:
     messages:
       taken: has already been taken
       blank: can't be blank
-      incomplete_qualification_result: Enter both a subject and a grade for subject %{result_idx}
+      incomplete_qualification_result: Enter a %{attribute} for Subject %{result_idx}
   activemodel:
     errors:
       models:
