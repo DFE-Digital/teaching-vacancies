@@ -112,16 +112,28 @@ module JobseekerHelpers
   end
 
   def fill_in_gcse
-    fill_in "Subject", with: "Maths"
-    fill_in "Grade", with: "110%"
+    within "#qualification-result-0" do
+      fill_in "Subject 1", with: "Maths"
+      fill_in "Grade", with: "110%"
+    end
+    within "#qualification-result-1" do
+      fill_in "Subject 2", with: "PE"
+      fill_in "Grade", with: "90%"
+    end
     fill_in "School, college, or other organisation", with: "Churchill School for Gifted Macaques"
     fill_in "Year qualification(s) was/were awarded", with: "2020"
   end
 
   def fill_in_secondary_qualification
     fill_in "Qualification name", with: "Welsh Baccalaureate"
-    fill_in "Subject", with: "Science"
-    fill_in "Grade", with: "5"
+    within "#qualification-result-0" do
+      fill_in "Subject 1", with: "Science"
+      fill_in "Grade", with: "5"
+    end
+    within "#qualification-result-1" do
+      fill_in "Subject 2", with: "German"
+      fill_in "Grade", with: "4"
+    end
     fill_in "School, college, or other organisation", with: "Happy Rainbows School for High Achievers"
     fill_in "Year qualification(s) was/were awarded", with: "2020"
   end
