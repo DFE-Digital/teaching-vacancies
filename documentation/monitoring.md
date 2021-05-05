@@ -21,15 +21,16 @@ For several infrastructure components on Gov.UK PaaS, we use [Prometheus Exporte
 - turn those statistics into Prometheus metrics, using a client library
 - expose a `/metrics` URL, and have that URL display the system metrics (in the case of teaching vacancies, rather than appending `/metrics` to the root URL, it's instead at [https://paas-prometheus-exporter-teaching-vacancies.london.cloudapps.digital/metrics](https://paas-prometheus-exporter-teaching-vacancies.london.cloudapps.digital/metrics))
 
-The [Teaching Vacancies Production Grafana dashboard](https://grafana-teaching-vacancies.london.cloudapps.digital/d/6Ac4lUWGk/teaching-vacancies-production?orgId=1&refresh=5s) has been set up with useful visualisations of metrics over time for:
-- Requests per minute to the web app
-- Average CPU usage for the web app and the worker app
-- Max memory usage for the web app and the worker app
+- The [Teaching Vacancies Production Grafana dashboard](https://grafana-teaching-vacancies.london.cloudapps.digital/d/6Ac4lUWGk/teaching-vacancies-production?orgId=1&refresh=5s) has been set up with useful visualisations of metrics over time
+- The [CF apps Grafana dashboard](https://grafana-teaching-vacancies.london.cloudapps.digital/d/eF19g4RZx/cf-apps?orgId=1&refresh=10s) allows the filtering of apps and spaces, so you could choose to see the performance of the `teaching-vacancies-worker-staging` app
+- The [CF Databases dashboard](https://grafana-teaching-vacancies.london.cloudapps.digital/d/a2FR6FUMz/cf-databases?orgId=1&refresh=10s&var-SpaceName=teaching-vacancies-production&var-Services=teaching-vacancies-postgres-production) shows postgres metrics
+- The [Redis dashboard](https://grafana-teaching-vacancies.london.cloudapps.digital/d/_XaXFGTMz/redis-dashboard-for-prometheus-redis-exporter-1-x?orgId=1&refresh=30s) shows metrics for all redis instances
 
-The [CF apps Grafana dashboard](https://grafana-teaching-vacancies.london.cloudapps.digital/d/eF19g4RZx/cf-apps?orgId=1&refresh=10s) allows the filtering of apps and spaces, so you could choose to see the performance of the `teaching-vacancies-worker-staging` app
-
-- Additionally, we set up [Prometheus alerting rules](https://prometheus-teaching-vacancies.london.cloudapps.digital/alerts) (to trigger when CPU usage goes above 60% for 5 minutes)
+- Additionally, we set up [Prometheus alerting rules](https://prometheus-teaching-vacancies.london.cloudapps.digital/alerts) (example: trigger when CPU usage goes above 60% for 5 minutes)
 - [Alertmanager](https://alertmanager-teaching-vacancies.london.cloudapps.digital/#/alerts) receives the alerts specified in Prometheus, and routes these to the `#twd_tv_dev` channel in Slack
+
+Alerts can be unit tested, which is very useful for non obvious changes. Use [promtool](https://prometheus.io/docs/prometheus/latest/configuration/unit_testing_rules/)
+which is part of Prometheus and run `promtool test rules alert.test.yml` in the `terraform/monitoring/config` directory.
 
 The stack is comprised of 4 apps in the Gov.UK `teaching-vacancies-monitoring` space:
 
