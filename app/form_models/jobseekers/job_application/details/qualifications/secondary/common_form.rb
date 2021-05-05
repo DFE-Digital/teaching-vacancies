@@ -2,6 +2,8 @@ module Jobseekers::JobApplication::Details::Qualifications::Secondary
   class CommonForm < ::Jobseekers::JobApplication::Details::Qualifications::QualificationForm
     MAXIMUM_NUMBER_OF_RESULTS = 6
 
+    attr_accessor :qualification_results
+
     validate :at_least_one_qualification_result
     validate :all_qualification_results_valid
     validates :institution, :year, presence: true
@@ -41,8 +43,8 @@ module Jobseekers::JobApplication::Details::Qualifications::Secondary
       qualification_results.each_with_index do |result, idx|
         next if result.empty? || result.valid?
 
-        field = result.errors.attribute_names.first
-        errors.add(:"qualification_results_attributes_#{idx}_#{field}", :incomplete_qualification_result, result_idx: idx + 1)
+        attr = result.errors.attribute_names.first
+        errors.add(:"qualification_results_attributes_#{idx}_#{attr}", :incomplete_qualification_result, attribute: attr, result_idx: idx + 1)
       end
     end
 
