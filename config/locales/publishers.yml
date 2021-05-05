@@ -10,7 +10,7 @@ en:
           other: "%{count} unread notifications"
     omniauth_callbacks:
       failure:
-        message: Sorry, we could not sign you in because of a technical problem. The team have been notified and will investigate as soon as possible. Please try again later.
+        message: Your session has expired so you have been logged out. Please sign in again to your account below.
     sessions:
       new:
         assistance:
