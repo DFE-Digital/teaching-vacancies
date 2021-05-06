@@ -30,9 +30,8 @@ RSpec.describe "Job applications qualifications" do
 
   describe "POST #submit_category" do
     let(:params) do
-      { commit: button, jobseekers_job_application_details_qualifications_category_form: { category: "other" } }
+      { commit: I18n.t("buttons.continue"), jobseekers_job_application_details_qualifications_category_form: { category: "other" } }
     end
-    let(:button) { I18n.t("buttons.continue") }
 
     context "when the form is valid" do
       before { allow_any_instance_of(Jobseekers::JobApplication::Details::Qualifications::CategoryForm).to receive(:valid?).and_return(true) }
