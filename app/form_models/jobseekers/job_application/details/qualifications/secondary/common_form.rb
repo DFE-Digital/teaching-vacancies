@@ -28,6 +28,10 @@ module Jobseekers::JobApplication::Details::Qualifications::Secondary
       super unless /^qualification_results_attributes_/.match?(attr)
     end
 
+    def highest_present_result_index
+      @highest_present_result_index ||= qualification_results.map.with_index { |result, index| index unless result.empty? }.compact.last || 0
+    end
+
     private
 
     def at_least_one_qualification_result
