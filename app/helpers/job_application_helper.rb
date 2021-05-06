@@ -22,7 +22,7 @@ module JobApplicationHelper
     reviewed: "purple",
     shortlisted: "green",
     unsuccessful: "red",
-    withdrawn: "orange",
+    withdrawn: "yellow",
   }.freeze
 
   def job_application_qualified_teacher_status_info(job_application)
