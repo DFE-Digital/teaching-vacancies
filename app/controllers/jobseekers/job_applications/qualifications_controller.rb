@@ -1,8 +1,7 @@
 class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseController
   include QualificationFormConcerns
 
-  helper_method :back_path, :category, :form, :job_application, :qualification,
-                :submit_text
+  helper_method :back_path, :category, :form, :job_application, :qualification
 
   def submit_category
     if form.valid?
@@ -84,9 +83,5 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
 
   def qualification
     @qualification ||= job_application.qualifications.find(params[:id])
-  end
-
-  def submit_text
-    category.in?(%w[undergraduate postgraduate other]) ? t("buttons.save_qualification.one") : t("buttons.save_qualification.other")
   end
 end
