@@ -531,19 +531,19 @@ en:
       publishers_job_listing_applying_for_the_job_form:
         enable_job_applications: How would you like candidates to apply?
       publishers_job_listing_copy_vacancy_form:
-        expires_on: Date application is due
+        expires_on: Closing date
         publish_on: Date job will be listed
         starts_on: Date job starts
       publishers_job_listing_end_listing_form:
         end_listing_reason: Why would you like to end this job listing early?
       publishers_job_listing_extend_deadline_form:
-        expires_on: Date application is due
+        expires_on: Closing date
         expiry_time: Time application is due
         starts_on: Date job starts
       publishers_job_listing_feedback_form:
         rating: How satisfied are you with the job listing process on Teaching Vacancies?
       publishers_job_listing_important_dates_form:
-        expires_on: Date application is due
+        expires_on: Closing date
         expires_at: Time application is due
         publish_on: Date job will be listed
         starts_asap: As soon as possible
