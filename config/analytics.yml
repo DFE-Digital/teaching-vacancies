@@ -1,3 +1,4 @@
+# This file lists all the attributes to be exported, including those to be anonymised.
 shared:
   documents:
     - id
@@ -9,6 +10,19 @@ shared:
     - created_at
     - updated_at
     - vacancy_id
+  employments:
+    - id
+    - organisation
+    - job_title
+    - salary
+    - subjects
+    - current_role
+    - main_duties
+    - started_on
+    - ended_on
+    - job_application_id
+    - created_at
+    - updated_at
   feedbacks:
     - id
     - created_at
@@ -35,14 +49,38 @@ shared:
     - created_at
     - updated_at
     - submitted_at
+    - jobseeker_id
+    - vacancy_id
+    - completed_steps
     - draft_at
     - shortlisted_at
     - unsuccessful_at
     - withdrawn_at
-    - jobseeker_id
-    - vacancy_id
-    - completed_steps
+    - first_name
+    - last_name
+    - previous_names
+    - street_address
+    - city
+    - postcode
+    - phone_number
+    - teacher_reference_number
+    - national_insurance_number
+    - qualified_teacher_status
+    - qualified_teacher_status_year
+    - statutory_induction_complete
+    - personal_statement
+    - support_needed
+    - support_needed_details
+    - close_relationships
+    - close_relationships_details
+    - right_to_work_in_uk
+    - further_instructions
+    - rejection_reasons
+    - gaps_in_employment
+    - gaps_in_employment_details
     - in_progress_steps
+    - reviewed_at
+    - country
   jobseekers:
     - id
     - email
@@ -64,6 +102,14 @@ shared:
     - id
     - publisher_preference_id
     - school_id
+    - created_at
+    - updated_at
+  notifications:
+    - id
+    - recipient_type
+    - recipient_id
+    - type
+    - read_at
     - created_at
     - updated_at
   organisations:
@@ -130,6 +176,37 @@ shared:
     - id
     - publisher_id
     - organisation_id
+    - created_at
+    - updated_at
+  qualifications:
+    - id
+    - created_at
+    - updated_at
+    - category
+    - finished_studying
+    - finished_studying_details
+    - grade
+    - institution
+    - name
+    - subject
+    - year
+    - job_application_id
+  qualification_results:
+    - id
+    - qualification_id
+    - subject
+    - grade
+    - created_at
+    - updated_at
+  references:
+    - id
+    - name
+    - job_title
+    - organisation
+    - relationship
+    - email
+    - phone_number
+    - job_application_id
     - created_at
     - updated_at
   saved_jobs:
