@@ -24,6 +24,17 @@ RSpec.describe JobApplication do
     end
   end
 
+  context "when setting support needed to 'no'" do
+    subject { create(:job_application) }
+
+    before { subject.update(support_needed: "no", support_needed_details: "details in need of resetting") }
+
+    it "resets support needed details" do
+      expect(subject.support_needed).to eq "no"
+      expect(subject.support_needed_details).to be_blank
+    end
+  end
+
   context "when submitted" do
     subject do
       build(:job_application, vacancy: vacancy, disability: "no", gender: "man", gender_description: "",
