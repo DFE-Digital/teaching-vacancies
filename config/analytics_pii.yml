@@ -1,7 +1,15 @@
+# This file lists the attributes which should be anonymised when exported.
+# If an attribute is not listed in analytics.yml, it will not exported, even if it is listed here.
 shared:
   documents:
     - id
     - vacancy_id
+  employments:
+    - id
+    - organisation
+    - job_title
+    - main_duties
+    - job_application_id
   feedbacks:
     - id
     - email
@@ -15,6 +23,21 @@ shared:
     - id
     - jobseeker_id
     - vacancy_id
+    - first_name
+    - last_name
+    - previous_names
+    - street_address
+    - city
+    - postcode
+    - phone_number
+    - teacher_reference_number
+    - national_insurance_number
+    - personal_statement
+    - support_needed_details
+    - close_relationships_details
+    - further_instructions
+    - rejection_reasons
+    - gaps_in_employment_details
   jobseekers:
     - id
     - email
@@ -23,6 +46,9 @@ shared:
     - id
     - publisher_preference_id
     - school_id
+  notifications:
+    - id
+    - recipient_id
   organisations:
     - id
   organisation_publisher_preferences:
@@ -47,6 +73,22 @@ shared:
     - id
     - publisher_id
     - organisation_id
+  qualifications:
+    - id
+    - finished_studying_details
+    - institution
+    - job_application_id
+  qualification_results:
+    - id
+    - qualification_id
+  references:
+    - id
+    - name
+    - job_title
+    - organisation
+    - email
+    - phone_number
+    - job_application_id
   saved_jobs:
     - id
     - jobseeker_id
