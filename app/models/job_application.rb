@@ -1,6 +1,7 @@
 class JobApplication < ApplicationRecord
   before_save :update_status_timestamp, if: :will_save_change_to_status?
   before_save :anonymise_report, if: :will_save_change_to_status?
+  before_save :reset_support_needed_details
 
   extend ArrayEnum
 
@@ -83,5 +84,9 @@ class JobApplication < ApplicationRecord
 
   def reset_equal_opportunities_attributes
     Jobseekers::JobApplication::EqualOpportunitiesForm::ATTRIBUTES.each { |attr| self[attr] = "" }
+  end
+
+  def reset_support_needed_details
+    self[:support_needed_details] = "" if support_needed == "no"
   end
 end
