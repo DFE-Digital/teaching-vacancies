@@ -14,7 +14,17 @@ module DatesHelper
   def format_time(time)
     return "" if time.nil?
 
-    time.strftime("%-l:%M %P")
+    time.strftime("%-l:%M%P")
+  end
+
+  def day(date)
+    if date.today?
+      "Today"
+    elsif date.yesterday?
+      "Yesterday"
+    else
+      date.strftime("%-d %B")
+    end
   end
 
   def date_format_error_message(format, date_formats)
