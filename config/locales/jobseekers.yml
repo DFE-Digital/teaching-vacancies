@@ -413,6 +413,7 @@ en:
         page_title: Saved jobs
         deadline_passed: Deadline passed
         delete: Delete
+        view: View application
         zero_saved_jobs_body_html: '%{link_to} and start saving jobs you may want to review and apply for later.'
         zero_saved_jobs_title: You have no saved teaching jobs
       save: Save this job for later
