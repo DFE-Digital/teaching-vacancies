@@ -18,7 +18,7 @@ en:
     finished_studying:
       blank: Select yes if you have finished studying for this qualification
     finished_studying_details:
-      blank: Tell us more information
+      blank: Tell us why you are still studying for this qualification
     grade:
       blank: Enter a grade
     subject:
