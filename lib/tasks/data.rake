@@ -50,7 +50,7 @@ end
 namespace :google_drive do
   desc "Delete old documents"
   task :delete_old_documents, [:commit] => [:environment] do |_task, args|
-    delete_before = Date.new(2020, 0o7, 15)
+    delete_before = Date.new(2020, 9, 15)
 
     documents = Document.includes(:vacancy).where("documents.created_at <?", delete_before)
 
