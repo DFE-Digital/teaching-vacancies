@@ -35,7 +35,7 @@ RSpec.describe Publishers::JobApplicationReceivedNotification do
 
     context "when the notification was delivered before yesterday" do
       before do
-        travel_to 2.days.ago do
+        travel_to DateTime.new(2000, 0o1, 0o1, 14, 30) do
           described_class
             .with(vacancy: job_application.vacancy, job_application: job_application)
             .deliver(vacancy.publisher)
@@ -43,7 +43,7 @@ RSpec.describe Publishers::JobApplicationReceivedNotification do
       end
 
       it "returns the correct timestamp" do
-        expect(subject).to match(/#{2.days.ago.strftime("%B %d")} at/)
+        expect(subject).to eq("1 January at 2:30pm")
       end
     end
   end
