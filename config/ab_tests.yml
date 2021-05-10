@@ -38,6 +38,9 @@ shared:
   2021_04_application_preview_test:
     link: 1
     no_link: 1
+  2021_05_wider_search_suggestions:
+    with: 1
+    without: 1
 test:
   2021_04_cookie_consent_test:
     none: 0
