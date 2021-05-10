@@ -409,10 +409,12 @@ en:
         added: Added
         application_deadline: Application deadline
         apply: Apply for this job
-        link_find: Find a teaching job
-        page_title: Saved jobs
+        continue: Continue application
         deadline_passed: Deadline passed
         delete: Delete
+        link_find: Find a teaching job
+        page_title: Saved jobs
+        view: View application
         zero_saved_jobs_body_html: '%{link_to} and start saving jobs you may want to review and apply for later.'
         zero_saved_jobs_title: You have no saved teaching jobs
       save: Save this job for later
