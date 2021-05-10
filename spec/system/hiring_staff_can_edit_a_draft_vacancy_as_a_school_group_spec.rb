@@ -24,7 +24,7 @@ RSpec.describe "Editing a draft vacancy" do
         I18n.t("publishers.organisations.readable_job_location.central_office"),
       )
 
-      change_job_location(vacancy, "at_one_school")
+      change_job_location(vacancy, "at_one_school", "Multi-academy trust")
 
       expect(page.current_path).to eq(organisation_job_build_path(vacancy.id, :schools))
       fill_in_school_form_field(school1)
@@ -35,7 +35,7 @@ RSpec.describe "Editing a draft vacancy" do
       expect(page).to have_content(full_address(school1))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eq(school1.name)
 
-      change_job_location(vacancy, "at_one_school")
+      change_job_location(vacancy, "at_one_school", "Multi-academy trust")
 
       expect(page.current_path).to eq(organisation_job_build_path(vacancy.id, :schools))
       fill_in_school_form_field(school2)
@@ -46,7 +46,7 @@ RSpec.describe "Editing a draft vacancy" do
       expect(page).to have_content(full_address(school2))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eq(school2.name)
 
-      change_job_location(vacancy, "at_multiple_schools")
+      change_job_location(vacancy, "at_multiple_schools", "Multi-academy trust")
 
       expect(page.current_path).to eq(organisation_job_build_path(vacancy.id, :schools))
       check school1.name, name: "publishers_job_listing_schools_form[organisation_ids][]", visible: false
@@ -58,7 +58,7 @@ RSpec.describe "Editing a draft vacancy" do
                                           organisation_type: "trust"))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eq("More than one school (2)")
 
-      change_job_location(vacancy, "central_office")
+      change_job_location(vacancy, "central_office", "Multi-academy trust")
 
       expect(page.current_path).to eq(organisation_job_review_path(vacancy.id))
       expect(page).to have_content(I18n.t("school_groups.job_location_heading.central_office"))

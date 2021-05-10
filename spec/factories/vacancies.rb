@@ -39,6 +39,7 @@ FactoryBot.define do
       application_link { Faker::Internet.url(host: "example.com") }
       enable_job_applications { false }
       how_to_apply { Faker::Lorem.paragraph(sentence_count: 4) }
+      personal_statement_guidance { "" }
     end
 
     trait :central_office do
