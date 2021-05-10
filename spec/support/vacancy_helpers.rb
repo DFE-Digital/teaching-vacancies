@@ -81,8 +81,6 @@ module VacancyHelpers
     fill_in "publishers_job_listing_applying_for_the_job_form[contact_email]", with: vacancy.contact_email
     fill_in "publishers_job_listing_applying_for_the_job_form[contact_number]", with: vacancy.contact_number
     fill_in "publishers_job_listing_applying_for_the_job_form[school_visits]", with: vacancy.school_visits
-    fill_in "publishers_job_listing_applying_for_the_job_form[how_to_apply]", with: vacancy.how_to_apply
-    fill_in "publishers_job_listing_applying_for_the_job_form[application_link]", with: vacancy.application_link
   end
 
   def fill_in_job_summary_form_fields(vacancy)
@@ -133,7 +131,9 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.contact_number)
     expect(page.html).to include(vacancy.school_visits)
 
-    unless vacancy.enable_job_applications?
+    if vacancy.enable_job_applications?
+      expect(page).to have_content(vacancy.personal_statement_guidance)
+    else
       expect(page.html).to include(vacancy.how_to_apply)
       expect(page).to have_content(vacancy.application_link)
     end
