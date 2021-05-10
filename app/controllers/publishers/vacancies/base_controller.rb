@@ -24,7 +24,12 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
   end
 
   def step_valid?(step_form)
-    form = step_form.new(@vacancy.attributes)
+    form = if step_form.name == "Publishers::JobListing::ApplyingForTheJobForm"
+             step_form.new(@vacancy.attributes.merge(current_organisation: current_organisation))
+           else
+             step_form.new(@vacancy.attributes)
+           end
+
     form.complete_and_valid?.tap do |valid|
       @vacancy.errors.merge!(form.errors)
       session[:current_step] = nil unless valid

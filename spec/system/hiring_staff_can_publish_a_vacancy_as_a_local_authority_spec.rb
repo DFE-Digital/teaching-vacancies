@@ -6,7 +6,8 @@ RSpec.describe "Creating a vacancy" do
   let(:school_group) { create(:local_authority) }
   let(:school1) { create(:school, name: "First school") }
   let(:school2) { create(:school, name: "Second school") }
-  let(:vacancy) { build(:vacancy, :at_one_school, :complete) }
+  let(:vacancy) { build(:vacancy, :at_one_school, :complete, :no_tv_applications) }
+  let(:created_vacancy) { Vacancy.last }
 
   before do
     login_publisher(publisher: publisher, organisation: school_group)
@@ -23,7 +24,7 @@ RSpec.describe "Creating a vacancy" do
     visit organisation_path
     click_on I18n.t("buttons.create_job")
 
-    fill_in_job_location_form_field(vacancy)
+    fill_in_job_location_form_field(vacancy, "local_authority")
     click_on I18n.t("buttons.continue")
 
     expect(page.get_rack_session["current_step"]).to be nil
@@ -42,7 +43,7 @@ RSpec.describe "Creating a vacancy" do
           expect(page).to have_content(I18n.t("jobs.job_location"))
         end
 
-        fill_in_job_location_form_field(vacancy)
+        fill_in_job_location_form_field(vacancy, "local_authority")
         click_on I18n.t("buttons.continue")
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
@@ -84,7 +85,7 @@ RSpec.describe "Creating a vacancy" do
           expect(page).to have_content(I18n.t("jobs.job_location"))
         end
 
-        fill_in_job_location_form_field(vacancy)
+        fill_in_job_location_form_field(vacancy, "local_authority")
         click_on I18n.t("buttons.continue")
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
@@ -113,5 +114,73 @@ RSpec.describe "Creating a vacancy" do
         end
       end
     end
+  end
+
+  scenario "publishes a vacancy" do
+    visit organisation_path
+    click_on I18n.t("buttons.create_job")
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_location))
+
+    click_on I18n.t("buttons.continue")
+    expect(page).to have_content("There is a problem")
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_location))
+
+    fill_in_job_location_form_field(vacancy, "local_authority")
+    click_on I18n.t("buttons.continue")
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :schools))
+
+    click_on I18n.t("buttons.continue")
+    expect(page).to have_content("There is a problem")
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :schools))
+
+    fill_in_school_form_field(school1)
+    click_on I18n.t("buttons.continue")
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_details))
+
+    click_on I18n.t("buttons.continue")
+    expect(page).to have_content("There is a problem")
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_details))
+
+    fill_in_job_details_form_fields(vacancy)
+    click_on I18n.t("buttons.continue")
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :pay_package))
+
+    click_on I18n.t("buttons.continue")
+    expect(page).to have_content("There is a problem")
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :pay_package))
+
+    fill_in_pay_package_form_fields(vacancy)
+    click_on I18n.t("buttons.continue")
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :important_dates))
+
+    click_on I18n.t("buttons.continue")
+    expect(page).to have_content("There is a problem")
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :important_dates))
+
+    fill_in_important_dates_fields(vacancy)
+    click_on I18n.t("buttons.continue")
+    expect(current_path).to eq(organisation_job_documents_path(created_vacancy.id))
+
+    click_on I18n.t("buttons.continue")
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
+
+    click_on I18n.t("buttons.continue")
+    expect(page).to have_content("There is a problem")
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
+
+    fill_in_applying_for_the_job_form_fields(vacancy, local_authority_vacancy: true)
+    click_on I18n.t("buttons.continue")
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_summary))
+
+    click_on I18n.t("buttons.continue")
+    expect(page).to have_content("There is a problem")
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_summary))
+
+    fill_in_job_summary_form_fields(vacancy)
+    click_on I18n.t("buttons.continue")
+    expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
+
+    click_on I18n.t("buttons.submit_job_listing")
+    expect(current_path).to eq(organisation_job_summary_path(created_vacancy.id))
   end
 end

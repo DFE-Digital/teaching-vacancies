@@ -1,7 +1,6 @@
 module VacancyHelpers
-  def fill_in_job_location_form_field(vacancy)
-    hyphenated_location = vacancy.job_location.split("_").join("-")
-    find("label[for=\"publishers-job-listing-job-location-form-job-location-#{hyphenated_location}-field\"]").click
+  def fill_in_job_location_form_field(vacancy, group_type)
+    choose I18n.t("helpers.options.publishers_job_listing_job_location_form.job_location.#{group_type}.#{vacancy.job_location}")
   end
 
   def change_job_location(vacancy, location)
@@ -12,7 +11,7 @@ module VacancyHelpers
   end
 
   def fill_in_school_form_field(school)
-    find("label[for=\"publishers-job-listing-schools-form-organisation-ids-#{school.id}-field\"]").click
+    choose school.name
   end
 
   def fill_in_job_details_form_fields(vacancy)
@@ -73,11 +72,14 @@ module VacancyHelpers
     Capybara::RackTest::Form.new(page.driver, form.native).submit(form)
   end
 
-  def fill_in_applying_for_the_job_form_fields(vacancy)
-    if JobseekerApplicationsFeature.enabled?
-      choose I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.enable_job_applications_options.#{vacancy.enable_job_applications}")
+  def fill_in_applying_for_the_job_form_fields(vacancy, local_authority_vacancy: false)
+    if JobseekerApplicationsFeature.enabled? && !local_authority_vacancy && vacancy.enable_job_applications?
+      choose I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.enable_job_applications_options.true")
       fill_in "publishers_job_listing_applying_for_the_job_form[personal_statement_guidance]", with: vacancy.personal_statement_guidance
+    else
+      fill_in "publishers_job_listing_applying_for_the_job_form[application_link]", with: vacancy.application_link
     end
+
     fill_in "publishers_job_listing_applying_for_the_job_form[contact_email]", with: vacancy.contact_email
     fill_in "publishers_job_listing_applying_for_the_job_form[contact_number]", with: vacancy.contact_number
     fill_in "publishers_job_listing_applying_for_the_job_form[school_visits]", with: vacancy.school_visits
