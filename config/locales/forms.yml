@@ -377,7 +377,6 @@ en:
         confirm_data_usage_options:
           "1": I consent to my data being shared
       jobseekers_job_application_withdraw_form:
-        # TODO: Update these once confirmed
         withdraw_reason_options:
           another_role: I have found another role
           changed_mind: I have changed my mind
