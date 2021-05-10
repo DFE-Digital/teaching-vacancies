@@ -13,7 +13,7 @@ class Publishers::JobApplicationReceivedNotification < Noticed::Base
   end
 
   def timestamp
-    created_at.strftime("#{day(created_at)} at #{format_time(created_at)}")
+    "#{day(created_at)} at #{format_time(created_at)}"
   end
 
   private
