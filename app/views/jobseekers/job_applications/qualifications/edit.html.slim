@@ -12,4 +12,4 @@
         = render "fields", f: f
 
         = f.govuk_submit t("buttons.save_qualification.#{secondary? ? 'other' : 'one'}")
-        = govuk_button_to t("buttons.cancel"), jobseekers_job_application_qualification_path(job_application, qualification), class: "govuk-button--secondary govuk-!-margin-left-3"
+        = govuk_link_to t("buttons.cancel"), jobseekers_job_application_build_path(job_application, :qualifications), button: true, class: "govuk-button--secondary govuk-!-margin-left-3"
