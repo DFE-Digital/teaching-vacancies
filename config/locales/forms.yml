@@ -375,7 +375,7 @@ en:
         confirm_data_accurate_options:
           "1": I confirm that the above information is accurate and complete
         confirm_data_usage_options:
-          "1": I consent to my data being shared
+          "1": I consent to my data being shared with these organisations
       jobseekers_job_application_withdraw_form:
         # TODO: Update these once confirmed
         withdraw_reason_options:
