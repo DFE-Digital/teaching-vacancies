@@ -88,6 +88,12 @@
       padding-left: 0;
     }
   }
+
+  &:first-of-type {
+    .button_to {
+      visibility: hidden;
+    }
+  }
 }
 
 .js-enabled {

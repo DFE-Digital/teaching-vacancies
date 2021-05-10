@@ -47,6 +47,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
 
     it "allows jobseekers to add a common secondary qualification" do
       select_qualification_category("GCSE")
+      expect(page).to have_link(I18n.t("buttons.cancel"), href: select_category_jobseekers_job_application_qualifications_path(job_application))
       expect(page).to have_content(I18n.t("jobseekers.job_applications.qualifications.new.heading.gcse"))
       validates_step_complete(button: I18n.t("buttons.save_qualification.other"))
       fill_in_gcse
@@ -88,6 +89,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
       visit jobseekers_job_application_build_path(job_application, :qualifications)
 
       click_on I18n.t("buttons.edit")
+      expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :qualifications))
 
       fill_in "School", with: "St Nicholas School"
       click_on I18n.t("buttons.save_qualification.one")
