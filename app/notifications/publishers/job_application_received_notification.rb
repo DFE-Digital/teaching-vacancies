@@ -1,6 +1,7 @@
 class Publishers::JobApplicationReceivedNotification < Noticed::Base
   include ActionView::Helpers::UrlHelper
   include GovukLinkHelper
+  include DatesHelper
 
   deliver_by :database
   delegate :created_at, to: :record
@@ -12,10 +13,7 @@ class Publishers::JobApplicationReceivedNotification < Noticed::Base
   end
 
   def timestamp
-    return created_at.strftime("Today at %H:%I") if created_at.today?
-    return created_at.strftime("Yesterday at %H:%I") if created_at.yesterday?
-
-    created_at.strftime("%B %d at %H:%I")
+    "#{day(created_at)} at #{format_time(created_at)}"
   end
 
   private
