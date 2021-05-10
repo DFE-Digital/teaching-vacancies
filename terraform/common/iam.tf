@@ -119,7 +119,8 @@ data "aws_iam_policy_document" "deployments_role_policy" {
       "iam:GetPolicyVersion",
       "iam:ListPolicyVersions",
       "iam:CreatePolicy",
-      "iam:DeletePolicy"
+      "iam:DeletePolicy",
+      "iam:CreatePolicyVersion"
     ]
     resources = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/attachment_buckets_policies/*"]
   }
