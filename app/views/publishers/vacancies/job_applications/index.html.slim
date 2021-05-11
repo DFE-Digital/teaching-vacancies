@@ -17,7 +17,7 @@
         h1.govuk-heading-l
           =< vacancy.job_title
 
-  .govuk-grid-row
+  .govuk-grid-row.govuk-grid-row__job_applications_summary
     .govuk-grid-column-one-quarter
       .vacancy-deadline class=("vacancy-deadline--passed" if vacancy.expires_at.past?)
         h4.govuk-body.govuk-caption-s class="govuk-!-font-weight-bold govuk-!-margin-bottom-0"
