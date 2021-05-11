@@ -6,5 +6,5 @@ locals {
   primary_zone_name                     = "teaching-vacancies.service.gov.uk"
   secondary_zone_name                   = "teaching-jobs.service.gov.uk"
   service_name                          = "teaching-vacancies"
-  service_abbreviation                  = "TV"
+  service_abbreviation                  = "tv"
 }
