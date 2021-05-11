@@ -21,9 +21,9 @@ RSpec.describe "Hiring staff can edit a vacancy" do
   context "when editing a published vacancy" do
     let(:vacancy) do
       VacancyPresenter.new(
-        create(:vacancy, :complete, :no_tv_applications, job_location: "at_one_school",
-                                                         job_roles: %i[teacher sen_specialist], working_patterns: %w[full_time part_time],
-                                                         publish_on: Date.current, expires_on: Time.zone.tomorrow),
+        create(:vacancy, :complete, job_location: "at_one_school",
+                                    job_roles: %i[teacher sen_specialist], working_patterns: %w[full_time part_time],
+                                    publish_on: Date.current, expires_on: Time.zone.tomorrow),
       )
     end
 
@@ -247,7 +247,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
       context "when the job post has already been published" do
         context "when the publication date is in the past" do
           scenario "renders the publication date as text and does not allow editing" do
-            vacancy = build(:vacancy, :published, :no_tv_applications, slug: "test-slug", publish_on: 1.day.ago)
+            vacancy = build(:vacancy, :published, slug: "test-slug", publish_on: 1.day.ago)
             vacancy.save(validate: false)
             vacancy.organisation_vacancies.create(organisation: school)
             vacancy = VacancyPresenter.new(vacancy)
@@ -266,7 +266,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
 
         context "when the publication date is in the future" do
           scenario "renders the publication date as text and allows editing" do
-            vacancy = create(:vacancy, :published, :no_tv_applications, publish_on: Time.current + 3.days)
+            vacancy = create(:vacancy, :published, publish_on: Time.current + 3.days)
             vacancy.organisation_vacancies.create(organisation: school)
             vacancy = VacancyPresenter.new(vacancy)
             visit edit_organisation_job_path(vacancy.id)
@@ -327,21 +327,19 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         end
         click_header_link(I18n.t("jobs.applying_for_the_job"))
 
-        fill_in "publishers_job_listing_applying_for_the_job_form[application_link]", with: "some link"
+        fill_in "publishers_job_listing_applying_for_the_job_form[contact_email]", with: "some email"
         click_on I18n.t("buttons.update_job")
 
-        within_row_for(text: I18n.t("jobs.application_link")) do
-          expect(page).to have_content(I18n.t("applying_for_the_job_errors.application_link.url"))
-        end
+        expect(page).to have_content("There is a problem")
       end
 
       scenario "can be successfully edited" do
         visit edit_organisation_job_path(vacancy.id)
 
         click_header_link(I18n.t("jobs.applying_for_the_job"))
-        vacancy.application_link = "https://tvs.com"
+        vacancy.contact_email = "new-test@email.com"
 
-        fill_in "publishers_job_listing_applying_for_the_job_form[application_link]", with: vacancy.application_link
+        fill_in "publishers_job_listing_applying_for_the_job_form[contact_email]", with: vacancy.contact_email
         click_on I18n.t("buttons.update_job")
 
         expect(current_path).to eq(edit_organisation_job_path(vacancy.id))
@@ -355,8 +353,9 @@ RSpec.describe "Hiring staff can edit a vacancy" do
 
         visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t("jobs.applying_for_the_job"))
+        vacancy.contact_email = "new-test@email.com"
 
-        fill_in "publishers_job_listing_applying_for_the_job_form[application_link]", with: "https://schooljobs.com"
+        fill_in "publishers_job_listing_applying_for_the_job_form[contact_email]", with: vacancy.contact_email
         click_on I18n.t("buttons.update_job")
       end
     end

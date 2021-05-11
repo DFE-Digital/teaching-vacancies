@@ -63,7 +63,7 @@ RSpec.configure do |config|
   end
 
   config.before do
-    allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(false)
+    allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true)
     ActiveJob::Base.queue_adapter = :test
   end
 
