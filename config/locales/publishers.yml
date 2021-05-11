@@ -30,7 +30,8 @@ en:
           page.</li>
           </ul>
         sign_in:
-          description: Enter your email below and we will send you a link that will take you straight into your account.
+          description: You must sign in to your Teaching Vacancies account to list a job.
+          description_fallback: Enter your email below and we will send you a link that will take you straight into your account.
           title: Sign in to Teaching Vacancies
     no_vacancies_component:
       bullets:

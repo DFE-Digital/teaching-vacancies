@@ -9,7 +9,7 @@
 
       h1.govuk-heading-l = t("publishers.sessions.new.sign_in.title")
 
-      p = t("publishers.sessions.new.sign_in.description")
+      p = t("publishers.sessions.new.sign_in.description_fallback")
 
       = form_for Publisher.new, url: auth_email_check_your_email_path do |f|
         = f.govuk_email_field :email
