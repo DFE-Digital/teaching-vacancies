@@ -34,6 +34,10 @@ $desktop-container-width: 1200px;
     padding: govuk-spacing(3);
     text-transform: none;
 
+    @include govuk-media-query($from: tablet) {
+      height: 50%
+    }
+
     @include govuk-media-query($until: desktop) {
       margin: govuk-spacing(3) 0;
     }
@@ -51,6 +55,12 @@ $desktop-container-width: 1200px;
   }
 
   .job-application-actions {
+    display: flex;
+  }
+}
+
+.job-applications-summary {
+  @include govuk-media-query($from: tablet) {
     display: flex;
   }
 }
