@@ -9,10 +9,10 @@ For SSO authentication
 
 provider "cloudfoundry" {
   api_url           = var.paas_api_url
-  password          = var.paas_password != null ? var.paas_password : local.infra_secrets.cf_password
+  password          = var.paas_password != "" ? var.paas_password : local.infra_secrets.cf_password
   sso_passcode      = var.paas_sso_passcode != "" ? var.paas_sso_passcode : null
   store_tokens_path = "./tokens"
-  user              = var.paas_user != null ? var.paas_user : local.infra_secrets.cf_username
+  user              = var.paas_user != "" ? var.paas_user : local.infra_secrets.cf_username
 
 
 }
