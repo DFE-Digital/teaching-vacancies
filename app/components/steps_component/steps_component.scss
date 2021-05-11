@@ -1,5 +1,11 @@
 @import 'base_component';
 
+@include govuk-media-query($until: tablet) {
+  .steps-component {
+    display: none;
+  }
+}
+
 .steps-component {
   border-top: 3px solid govuk-colour('blue');
   margin-bottom: govuk-spacing(6);
