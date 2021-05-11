@@ -1,9 +1,10 @@
 - content_for :page_title_prefix, current_organisation.name
 
-= govuk_notification_banner title: t("banners.important"), classes: "govuk-!-margin-top-3" do
-  = t(".job_applications")
-  br
-  = govuk_link_to t(".job_applications_link_text"), page_path("job-application-preview"), target: "_blank", class: "govuk-link--no-visited-state"
+unless current_organisation.local_authority?
+  = govuk_notification_banner title: t("banners.important"), classes: "govuk-!-margin-top-3" do
+    = t(".job_applications")
+    br
+    = govuk_link_to t(".job_applications_link_text"), page_path("job-application-preview"), target: "_blank", class: "govuk-link--no-visited-state"
 
 = render(Publishers::VacanciesComponent.new(organisation: current_organisation,
                                             sort: @sort,
