@@ -11,7 +11,7 @@
   h1.govuk-heading-xl class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
     = job_application.name
 
-  div
+  .application-status
     span.govuk-body class="govuk-!-margin-right-5" = t(".status_heading")
     = publisher_job_application_status_tag(job_application.status)
 
