@@ -34,10 +34,6 @@ variable "channel_list" {
 variable "paas_api_url" {
 }
 
-variable "paas_password" {
-  default = ""
-}
-
 variable "paas_app_docker_image" {
   default = "ghcr.io/dfe-digital/teaching-vacancies:placeholder"
 }
@@ -78,14 +74,10 @@ variable "paas_space_name" {
 }
 
 variable "paas_sso_passcode" {
-  default = ""
+  default = null
 }
 
 variable "paas_store_tokens_path" {
-  default = ""
-}
-
-variable "paas_user" {
   default = ""
 }
 
