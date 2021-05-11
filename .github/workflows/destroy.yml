@@ -82,9 +82,6 @@ jobs:
         terraform_version: 0.14.7
 
     - name: Terraform destroy (on PR closed)
-      env:
-        TF_VAR_paas_user: ${{ secrets.CF_USERNAME }}
-        TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
       run: |
         export TF_VAR_environment=${{env.ENVIRONMENT}}
         terraform init -reconfigure -input=false -backend-config="key=review/review-pr-${{ github.event.number }}.tfstate"
