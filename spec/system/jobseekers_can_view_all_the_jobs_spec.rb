@@ -87,7 +87,7 @@ RSpec.describe "Jobseekers can view all the jobs" do
       )
     end
     let!(:expires_tomorrow_job) do
-      create(:vacancy, :past_publish, :expire_tomorrow, organisation_vacancies_attributes: [{ organisation: school }])
+      create(:vacancy, :past_publish, :expires_tomorrow, organisation_vacancies_attributes: [{ organisation: school }])
     end
 
     context "when visiting the home page and performing an empty search" do
