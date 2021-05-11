@@ -112,7 +112,7 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
         click_on I18n.t("buttons.continue")
 
         draft_vacancy.contact_email = "test@email.com"
-        draft_vacancy.application_link = "https://example.com"
+        draft_vacancy.enable_job_applications = true
 
         fill_in_applying_for_the_job_form_fields(draft_vacancy)
         click_on I18n.t("buttons.continue")
@@ -159,7 +159,7 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
         visit edit_organisation_job_path(published_vacancy.id)
         click_header_link(I18n.t("jobs.applying_for_the_job"))
 
-        fill_in "publishers_job_listing_applying_for_the_job_form[application_link]", with: "https://example.com"
+        fill_in "publishers_job_listing_applying_for_the_job_form[personal_statement_guidance]", with: "Some different guidance"
         click_on I18n.t("buttons.update_job")
 
         expect(current_path).to eq(edit_organisation_job_path(published_vacancy.id))
