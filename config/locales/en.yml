@@ -215,11 +215,11 @@ en:
       browse_all: Browse all teaching jobs in England
       title: Find a job in teaching
     signed_in_jobseeker:
-      description: "See all your saved jobs and job alerts in one place."
-      title: View your saved jobs
+      description: Apply for jobs you are interested in, and check the status of your applications.
+      title: Apply for jobs
     signed_out_jobseeker:
-      description_html: "%{link} or create an account to save the jobs you are interested in. You don’t need an account to search for a job or set up job alerts."
-      title: Save jobs you are interested in
+      description_html: "%{link} or create an account to apply for jobs through Teaching Vacancies."
+      title: Apply for jobs
     vacancy_facets:
       cities: Cities and towns with teaching jobs
       counties: Counties with teaching jobs
