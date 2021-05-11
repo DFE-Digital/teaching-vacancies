@@ -51,13 +51,14 @@ class Vacancy < ApplicationRecord
 
   scope :active, (-> { where(status: %i[published draft]) })
   scope :applicable, (-> { where("expires_at >= ?", Time.current) })
-  scope :expired, (-> { published.where("expires_at < ?", Time.current) })
   scope :awaiting_feedback, (-> { expired.where(listed_elsewhere: nil, hired_status: nil) })
-  scope :listed, (-> { published.where("publish_on <= ?", Date.current) })
-  scope :pending, (-> { published.where("publish_on > ?", Date.current) })
-  scope :live, (-> { listed.applicable })
-  scope :published_on_count, (->(date) { published.where(publish_on: date.all_day).count })
+  scope :expired, (-> { published.where("expires_at < ?", Time.current) })
+  scope :expired_yesterday, (-> { where("expires_at BETWEEN ? AND ?", Time.zone.yesterday.midnight, Date.current.midnight) })
   scope :in_organisation_ids, (->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { organisation_id: ids }).distinct })
+  scope :listed, (-> { published.where("publish_on <= ?", Date.current) })
+  scope :live, (-> { listed.applicable })
+  scope :pending, (-> { published.where("publish_on > ?", Date.current) })
+  scope :published_on_count, (->(date) { published.where(publish_on: date.all_day).count })
 
   paginates_per 10
 
@@ -65,6 +66,8 @@ class Vacancy < ApplicationRecord
   validate :enable_job_applications_cannot_be_changed_once_listed
 
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
+
+  EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
 
   def organisation
     organisation_vacancies.first&.organisation
@@ -112,6 +115,10 @@ class Vacancy < ApplicationRecord
 
   def education_phases
     organisations.map(&:readable_phases).flatten.uniq
+  end
+
+  def publish_equal_opportunities_report?
+    job_applications.after_submission.count >= EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD
   end
 
   private
