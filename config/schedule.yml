@@ -63,6 +63,11 @@ send_feedback:
   class: 'SendFeedbackToBigQueryJob'
   queue: low
 
+stream_equal_opportunities_report_publication_job:
+  cron: '30 01 * * *'
+  class: 'StreamEqualOpportunitiesReportPublicationJob'
+  queue: low
+
 update_algolia_index:
   cron: '*/5 * * * *'
   class: 'UpdateAlgoliaIndex'

@@ -23,6 +23,43 @@ shared:
     - job_application_id
     - created_at
     - updated_at
+  equal_opportunities:
+    - id
+    - vacancy_id
+    - total_submissions
+    - disability_no
+    - disability_prefer_not_to_say
+    - disability_yes
+    - gender_man
+    - gender_other
+    - gender_prefer_not_to_say
+    - gender_woman
+    - gender_other_descriptions
+    - orientation_bisexual
+    - orientation_gay_or_lesbian
+    - orientation_heterosexual
+    - orientation_other
+    - orientation_prefer_not_to_say
+    - orientation_other_descriptions
+    - ethnicity_asian
+    - ethnicity_black
+    - ethnicity_mixed
+    - ethnicity_other
+    - ethnicity_prefer_not_to_say
+    - ethnicity_white
+    - ethnicity_other_descriptions
+    - religion_buddhist
+    - religion_christian
+    - religion_hindu
+    - religion_jewish
+    - religion_muslim
+    - religion_none
+    - religion_other
+    - religion_prefer_not_to_say
+    - religion_sikh
+    - religion_other_descriptions
+    - created_at
+    - updated_at
   feedbacks:
     - id
     - created_at
