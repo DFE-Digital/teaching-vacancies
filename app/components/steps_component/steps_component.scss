@@ -5,6 +5,10 @@
   margin-bottom: govuk-spacing(6);
   margin-top: govuk-spacing(6);
 
+  @include govuk-media-query($until: tablet) {
+    display: none;
+  }
+
   &__steps {
     counter-reset: steps-counter;
     list-style: none;
