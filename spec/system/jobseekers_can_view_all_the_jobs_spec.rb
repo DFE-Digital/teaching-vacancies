@@ -83,7 +83,7 @@ RSpec.describe "Jobseekers can view all the jobs" do
 
   describe "sorting" do
     let!(:newest_job) { create(:vacancy, :past_publish, publish_on: Date.current, expires_at: 1.year.from_now, organisation_vacancies_attributes: [{ organisation: school }]) }
-    let!(:expires_tomorrow_job) { create(:vacancy, :past_publish, :expire_tomorrow, organisation_vacancies_attributes: [{ organisation: school }]) }
+    let!(:expires_tomorrow_job) { create(:vacancy, :past_publish, :expires_tomorrow, organisation_vacancies_attributes: [{ organisation: school }]) }
 
     context "when visiting the home page and performing an empty search" do
       before do
