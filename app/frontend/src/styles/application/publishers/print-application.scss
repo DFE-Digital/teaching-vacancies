@@ -1,20 +1,27 @@
 @media print {
   .publishers_vacancies_job_applications_show {
-    .job-application-actions,
     .account-sidebar,
-    .timeline-component,
-    .anchor-link-list {
-      display: none;
+    .anchor-link-list,
+    .application-status,
+    .job-application-actions,
+    .timeline-component {
+      display: none !important;
     }
 
     .review-component__heading {
       .govuk-link {
-        display:none;
+        display: none !important;
       }
     }
 
     .govuk-accordion__section > div {
-      display: block;
+      display: block !important;
+    }
+
+    .govuk-accordion__section-button,
+    .govuk-notification-banner__title,
+    .govuk-caption-l {
+      color: $govuk-text-colour !important;
     }
   }
 }
