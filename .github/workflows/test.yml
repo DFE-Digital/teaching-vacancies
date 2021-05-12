@@ -9,6 +9,7 @@ on:
     - 'documentation/**'
     - 'terraform/common/**'
     - 'terraform/monitoring/**'
+    - '**.md'
 
 jobs:
   backend-tests:
