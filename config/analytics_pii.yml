@@ -4,6 +4,9 @@ shared:
   documents:
     - id
     - vacancy_id
+  equal_opportunities:
+    - id
+    - vacancy_id
   employments:
     - id
     - organisation

@@ -121,8 +121,7 @@ module Indexable
     end
 
     def remove_vacancies_that_expired_yesterday!
-      expired_records = where("expires_at BETWEEN ? AND ?", Time.zone.yesterday.midnight, Date.current.midnight)
-      index.delete_objects(expired_records.map(&:id)) if expired_records&.any?
+      index.delete_objects(expired_yesterday.map(&:id)) if expired_yesterday&.any?
     end
   end
 
