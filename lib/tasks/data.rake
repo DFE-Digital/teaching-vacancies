@@ -1,10 +1,7 @@
 namespace :bugfix do
   desc "Set all published vacancies' enable_job_applications attribute to false"
   task set_enable_job_applications_false: :environment do
-    Vacancy.published.where(enable_job_applications: nil).in_batches.each_record do |vacancy|
-      vacancy.enable_job_applications = false
-      vacancy.save
-    end
+    Vacancy.published.where(enable_job_applications: nil).update_all(enable_job_applications: false)
   end
 end
 
