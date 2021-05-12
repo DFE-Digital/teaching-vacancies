@@ -8,12 +8,11 @@ For SSO authentication
 */
 
 provider "cloudfoundry" {
-  api_url           = var.paas_api_url
-  password          = var.paas_password != "" ? var.paas_password : null
-  sso_passcode      = var.paas_sso_passcode != "" ? var.paas_sso_passcode : null
   store_tokens_path = "./tokens"
-  user              = var.paas_user != "" ? var.paas_user : null
-
+  api_url           = var.paas_api_url
+  user              = var.paas_sso_passcode == null ? local.infra_secrets.cf_username : null
+  password          = var.paas_sso_passcode == null ? local.infra_secrets.cf_password : null
+  sso_passcode      = var.paas_sso_passcode
 }
 
 provider "statuscake" {
