@@ -31,10 +31,13 @@
       h2.account-sidebar__heading = t(".timeline")
 
     = render TimelineComponent.new do |timeline|
-      - if job_application.unsuccessful?
-        - timeline.item(key: t("jobseekers.job_applications.status_timestamps.rejected"),
+      - if job_application.withdrawn_at?
+        - timeline.item(key: t("jobseekers.job_applications.status_timestamps.withdrawn"),
+                        value: format_date(job_application.withdrawn_at.to_date) + I18n.t("jobs.time_at") + format_time(job_application.withdrawn_at))
+      - if job_application.unsuccessful_at?
+        - timeline.item(key: t("jobseekers.job_applications.status_timestamps.unsuccessful"),
                         value: format_date(job_application.unsuccessful_at.to_date) + I18n.t("jobs.time_at") + format_time(job_application.unsuccessful_at))
-      - elsif job_application.shortlisted?
+      - if job_application.shortlisted_at?
         - timeline.item(key: t("jobseekers.job_applications.status_timestamps.shortlisted"),
                         value: format_date(job_application.shortlisted_at.to_date) + I18n.t("jobs.time_at") + format_time(job_application.shortlisted_at))
       - if job_application.reviewed_at?
