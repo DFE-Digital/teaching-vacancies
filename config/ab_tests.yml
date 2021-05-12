@@ -28,13 +28,13 @@ shared:
     foo: 1
     bar: 1
     baz: 1
-  2021_04_cookie_consent_test:
-    none: 1
-    default: 1
-    bottom_black: 1
-    bottom_blue: 1
-    modal: 1
-    gds: 1
+  2021_05_cookie_consent_test:
+    bottom_sticky_default: 1
+    bottom_sticky_gds: 1
+    top_static_default: 1
+    top_static_gds: 1
+    top_sticky_default: 1
+    top_sticky_gds: 1
   2021_04_application_preview_test:
     link: 1
     no_link: 1
@@ -42,10 +42,10 @@ shared:
     with: 1
     without: 1
 test:
-  2021_04_cookie_consent_test:
-    none: 0
-    default: 1
-    bottom_black: 0
-    bottom_blue: 0
-    modal: 0
-    gds: 0
+  2021_05_cookie_consent_test:
+    bottom_sticky_default: 0
+    bottom_sticky_gds: 0
+    top_static_default: 1
+    top_static_gds: 1
+    top_sticky_default: 0
+    top_sticky_gds: 0
