@@ -1,16 +1,26 @@
 @import 'base_component';
 
-/* stylelint-disable */
 .cookies-banner-component {
   @include govuk-responsive-padding(3, 'top');
   @include govuk-responsive-padding(0, 'bottom');
-  background-color: rgba($color: govuk-colour('light-blue'), $alpha: 0.2);
+  background-color: rgba($color: govuk-colour('light-grey'), $alpha: 0.2);
+  padding-top: 0;
+  width: 100%;
   z-index: 1000;
+
+  &.govuk-cookie-banner {
+    padding-top: 0;
+  }
 
   .govuk-button-group {
     align-items: inherit;
     margin-bottom: 0;
   }
+
+  .cookies-banner-component__background {
+    background-color: govuk-colour('light-grey');
+  }
+
 
   &__gds {
     @include govuk-media-query($until: tablet) {
@@ -25,35 +35,8 @@
   }
 
   &__bottom {
-    &--black {
-      .cookies-banner-component__fade {
-        height: 6px;
-        background: linear-gradient(
-          to top,
-          govuk-colour("black"),
-          rgba(govuk-colour("black"), 0)
-        )
-      }
-
-      .cookies-banner-component__background {
-        background-color: govuk-colour("black");
-      }
-    }
-
-    &--blue {
-      .cookies-banner-component__fade {
-        height: 6px;
-        background: linear-gradient(
-          to top,
-          govuk-colour("dark-blue"),
-          rgba(govuk-colour("dark-blue"), 0)
-        )
-      }
-
-      .cookies-banner-component__background {
-        background-color: govuk-colour("dark-blue");
-      }
-    }
+    bottom: 0;
+    padding-top: 0;
 
     @include govuk-media-query($until: tablet) {
       .govuk-button--primary {
@@ -61,13 +44,9 @@
       }
     }
 
-    position: fixed;
-    bottom: 0;
-    padding-top: 0;
-    width: 100%;
     .govuk-heading-s,
     .govuk-body {
-      color: govuk-colour("white");
+      color: govuk-colour('black');
     }
 
     .govuk-width-container {
@@ -75,39 +54,27 @@
     }
   }
 
-  &__modal {
-    @include govuk-media-query($until: tablet) {
-      margin-left: -40vw;
-      margin-top: -8vw;
-      width: 80vw;
-      height: auto;
+  &__top {
+    padding-top: 0;
+    top: 0;
 
-      form {
-        display: flex;
+    @include govuk-media-query($until: tablet) {
+      .govuk-button--primary {
+        width: 100%;
       }
     }
 
-    background-color: govuk-colour("white");
-    width: 40vw;
-    height: auto;
-    position: absolute;
-    left: 50%;
-    top: 40%;
-    margin-left: -20vw;
-    margin-top: -8vw;
-  }
-}
+    .govuk-heading-s,
+    .govuk-body {
+      color: govuk-colour('black');
+    }
 
-.modal {
-  overflow: hidden;
-  .modal-container {
-    z-index: 999;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    content: '';
-    background-color: rgba($color: govuk-colour('black'), $alpha: 0.5);
+    .govuk-width-container {
+      padding-top: 15px;
+    }
+  }
+
+  &__sticky {
+    position: sticky;
   }
 }
-/* stylelint-enable */
