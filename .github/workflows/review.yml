@@ -9,6 +9,7 @@ on:
     - 'documentation/**'
     - 'terraform/common/**'
     - 'terraform/monitoring/**'
+    - 'README.md'
 
 env:
   DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
