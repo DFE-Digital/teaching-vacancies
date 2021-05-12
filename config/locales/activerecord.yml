@@ -128,7 +128,8 @@ en:
     application_link:
       url: Enter a link in the correct format, like http://www.school.ac.uk
     enable_job_applications:
-      cannot_be_changed_once_listed: You cannot change how you would like candidates to apply now that your listing is published
+      cannot_be_changed_once_listed: >-
+        You cannot change how you would like candidates to apply now that your listing is published
       inclusion: Select how you would like candidates to apply
     contact_email:
       blank: Enter a contact email
