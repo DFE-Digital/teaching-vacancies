@@ -15,7 +15,7 @@
 
 ## Setup
 
-Welcome! :tada: :fireworks:
+Welcome! :tada: :fireworks: :tiger:
 
 By now you should be [onboarded](/documentation/onboarding.md).
 
