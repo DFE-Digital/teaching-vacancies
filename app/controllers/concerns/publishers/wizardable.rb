@@ -108,6 +108,6 @@ module Publishers::Wizardable
 
   def job_summary_params(params)
     params.require(:publishers_job_listing_job_summary_form)
-          .permit(:state, :job_summary, :about_school).merge(completed_step: steps_config[step][:number])
+          .permit(:state, :job_advert, :about_school).merge(completed_step: steps_config[step][:number])
   end
 end

@@ -345,7 +345,7 @@ RSpec.describe Vacancy do
 
     it "does not update the stats when you are updating the job summary" do
       travel_to(Time.zone.local("2019, 1, 1, 10, 4, 3")) do
-        expired_job.update(job_summary: "I am description")
+        expired_job.update(job_advert: "I am description")
 
         expect(stats_updated_at).to be_nil
       end

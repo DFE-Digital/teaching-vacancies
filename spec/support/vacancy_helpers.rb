@@ -86,7 +86,7 @@ module VacancyHelpers
   end
 
   def fill_in_job_summary_form_fields(vacancy)
-    fill_in "publishers_job_listing_job_summary_form[job_summary]", with: vacancy.job_summary
+    fill_in "publishers_job_listing_job_summary_form[job_advert]", with: vacancy.job_advert
     fill_in "publishers_job_listing_job_summary_form[about_school]", with: vacancy.about_school
   end
 
@@ -140,7 +140,7 @@ module VacancyHelpers
       expect(page).to have_content(vacancy.application_link)
     end
 
-    expect(page.html).to include(vacancy.job_summary)
+    expect(page.html).to include(vacancy.job_advert)
     expect(page.html).to include(vacancy.about_school)
   end
 
@@ -164,7 +164,7 @@ module VacancyHelpers
     expect(page.html).to include(vacancy.school_visits)
     expect(page.html).to include(vacancy.how_to_apply) unless vacancy.enable_job_applications?
 
-    expect(page.html).to include(vacancy.job_summary)
+    expect(page.html).to include(vacancy.job_advert)
     expect(page.html).to include(vacancy.about_school)
 
     if vacancy.documents.any?
@@ -196,7 +196,7 @@ module VacancyHelpers
       salary: vacancy.salary,
       jobBenefits: vacancy.benefits,
       datePosted: vacancy.publish_on.to_time.iso8601,
-      description: vacancy.job_summary,
+      description: vacancy.job_advert,
       occupationalCategory: vacancy.job_roles&.join(", "),
       educationRequirements: vacancy.education,
       qualifications: vacancy.qualifications,

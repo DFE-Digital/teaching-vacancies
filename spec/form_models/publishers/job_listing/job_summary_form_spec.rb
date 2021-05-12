@@ -5,7 +5,7 @@ RSpec.describe Publishers::JobListing::JobSummaryForm, type: :model do
 
   let(:params) { {} }
 
-  it { is_expected.to validate_presence_of(:job_summary) }
+  it { is_expected.to validate_presence_of(:job_advert) }
 
   context "when vacancy job_location is at_one_school" do
     let(:params) { { job_location: "at_one_school" } }
