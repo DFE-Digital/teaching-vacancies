@@ -136,8 +136,8 @@ en:
     contact_number:
       invalid: Contact number must be a valid phone number
   job_summary_errors: &job_summary_errors
-    job_summary:
-      blank: Enter a job summary
+    job_advert:
+      blank: Enter a job advert
     about_school:
       blank: Enter a description of the %{organisation}
   errors:

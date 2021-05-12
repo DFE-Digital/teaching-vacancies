@@ -23,8 +23,8 @@ module Indexable
         VacancyPresenter.new(self).show_job_roles
       end
 
-      attribute :job_summary do
-        job_summary&.truncate(256)
+      attribute :job_advert do
+        job_advert&.truncate(256)
       end
 
       attribute :last_updated_at do
