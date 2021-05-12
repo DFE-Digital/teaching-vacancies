@@ -202,7 +202,7 @@ en:
         about_schools: >-
           Give a brief summary of the schools where the jobseeker would be teaching and any relevant information about
           the %{organisation_type}
-        job_summary: >-
+        job_advert: >-
           Give a brief summary of the job that jobseekers can quickly scan.
           This will be the first thing they see on the listing or in search engine results
       publishers_job_listing_pay_package_form:
@@ -469,7 +469,7 @@ en:
           job_share: Job share
       publishers_job_listing_job_summary_form:
         about_organisation: About %{organisation}
-        job_summary: Job summary
+        job_advert: Job summary
       publishers_job_listing_pay_package_form:
         benefits: Employee benefits
         salary: Salary

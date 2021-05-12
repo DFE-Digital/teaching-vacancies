@@ -203,7 +203,7 @@ RSpec.describe "Hiring staff can save and return later" do
 
         expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_summary))
 
-        fill_in "publishers_job_listing_job_summary_form[job_summary]", with: ""
+        fill_in "publishers_job_listing_job_summary_form[job_advert]", with: ""
         fill_in "publishers_job_listing_job_summary_form[about_school]", with: @vacancy.about_school
         click_on I18n.t("buttons.save_and_return_later")
 
@@ -213,7 +213,7 @@ RSpec.describe "Hiring staff can save and return later" do
         click_on "Edit"
 
         expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_summary))
-        expect(find_field("publishers_job_listing_job_summary_form[job_summary]").value).to eq("")
+        expect(find_field("publishers_job_listing_job_summary_form[job_advert]").value).to eq("")
         expect(find_field("publishers_job_listing_job_summary_form[about_school]").value).to eq(@vacancy.about_school)
       end
     end
