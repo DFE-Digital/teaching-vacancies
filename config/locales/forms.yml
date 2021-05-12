@@ -417,7 +417,9 @@ en:
         application_link: Link to online application
         enable_job_applications_options:
           "false": Use another application process or form
-          "true": Apply through Teaching Vacancies
+          true_html: >-
+            Apply using the Teaching Vacancies application form.
+            <a class="govuk-link" target="_blank" href="/pages/job-application-preview">Preview the application form (opens in a new tab)</a>
         contact_email: Contact email
         contact_number: Contact phone number
         how_to_apply: How to apply

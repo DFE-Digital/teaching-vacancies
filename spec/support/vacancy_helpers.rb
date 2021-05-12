@@ -77,6 +77,7 @@ module VacancyHelpers
       choose I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.enable_job_applications_options.true")
       fill_in "publishers_job_listing_applying_for_the_job_form[personal_statement_guidance]", with: vacancy.personal_statement_guidance
     else
+      fill_in "publishers_job_listing_applying_for_the_job_form[how_to_apply]", with: vacancy.how_to_apply
       fill_in "publishers_job_listing_applying_for_the_job_form[application_link]", with: vacancy.application_link
     end
 
