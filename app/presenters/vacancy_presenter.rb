@@ -19,8 +19,8 @@ class VacancyPresenter < BasePresenter
     Rails.application.routes.url_helpers.job_url(model, params)
   end
 
-  def job_summary
-    simple_format(model.job_summary)
+  def job_advert
+    simple_format(model.job_advert)
   end
 
   def about_school

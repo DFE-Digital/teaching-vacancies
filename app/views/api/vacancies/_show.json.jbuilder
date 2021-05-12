@@ -5,7 +5,7 @@ json.title vacancy.job_title
 json.salary vacancy.salary
 json.jobBenefits vacancy.benefits
 json.datePosted vacancy.publish_on.to_time.iso8601
-json.description vacancy.job_summary
+json.description vacancy.job_advert
 json.occupationalCategory vacancy.job_roles&.join(", ")
 
 json.educationRequirements vacancy.education

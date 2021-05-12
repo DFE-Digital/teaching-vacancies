@@ -32,7 +32,7 @@ RSpec.describe Jobseekers::VacancyDetailsComponent, type: :component do
   end
 
   it "renders the job summary" do
-    expect(rendered_component).to include(vacancy.job_summary)
+    expect(rendered_component).to include(vacancy.job_advert)
   end
 
   context "when benefits are present" do
