@@ -235,7 +235,7 @@ shared:
     - id
     - job_title
     - slug
-    - job_summary
+    - job_advert
     - benefits
     - starts_on
     - ends_on

@@ -1,5 +1,5 @@
 class Publishers::JobListing::JobSummaryForm < Publishers::JobListing::VacancyForm
-  validates :job_summary, presence: true
+  validates :job_advert, presence: true
   validate :about_school_must_not_be_blank
 
   def about_school_must_not_be_blank
@@ -14,8 +14,6 @@ class Publishers::JobListing::JobSummaryForm < Publishers::JobListing::VacancyFo
     when "at_multiple_schools"
       organisation = "schools"
     end
-    errors.add(:about_school,
-               I18n.t("job_summary_errors.about_school.blank",
-                      organisation: organisation))
+    errors.add(:about_school, I18n.t("job_summary_errors.about_school.blank", organisation: organisation))
   end
 end

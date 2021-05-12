@@ -15,7 +15,7 @@ RSpec.describe "Hiring staff can see the vacancies dashboard" do
     click_on(vacancy.job_title)
 
     expect(page).to have_content(vacancy.job_title)
-    expect(page).to have_content(vacancy.job_summary)
+    expect(page).to have_content(vacancy.job_advert)
   end
 
   context "with no jobs" do

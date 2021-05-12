@@ -23,12 +23,12 @@ RSpec.describe VacancyPresenter do
     end
   end
 
-  describe "#job_summary" do
-    it "sanitizes and transforms the job_summary into HTML" do
-      vacancy = build(:vacancy, job_summary: "<script> call();</script>Sanitized content")
+  describe "#job_advert" do
+    it "sanitizes and transforms the job_advert into HTML" do
+      vacancy = build(:vacancy, job_advert: "<script> call();</script>Sanitized content")
       presenter = VacancyPresenter.new(vacancy)
 
-      expect(presenter.job_summary).to eq("<p> call();Sanitized content</p>")
+      expect(presenter.job_advert).to eq("<p> call();Sanitized content</p>")
     end
   end
 

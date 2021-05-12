@@ -403,7 +403,7 @@ RSpec.describe "Creating a vacancy" do
         end
 
         within_row_for(text: I18n.t("jobs.job_summary")) do
-          expect(page).to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.job_summary.blank"))
+          expect(page).to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.job_advert.blank"))
         end
 
         within_row_for(text: I18n.t("jobs.about_school", school: school.name)) do
