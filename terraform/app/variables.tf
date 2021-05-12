@@ -31,12 +31,6 @@ variable "channel_list" {
 }
 
 # Gov.UK PaaS
-variable "paas_api_url" {
-}
-
-variable "paas_password" {
-  default = ""
-}
 
 variable "paas_app_docker_image" {
   default = "ghcr.io/dfe-digital/teaching-vacancies:placeholder"
@@ -78,15 +72,7 @@ variable "paas_space_name" {
 }
 
 variable "paas_sso_passcode" {
-  default = ""
-}
-
-variable "paas_store_tokens_path" {
-  default = ""
-}
-
-variable "paas_user" {
-  default = ""
+  default = null
 }
 
 variable "paas_web_app_deployment_strategy" {
@@ -124,6 +110,7 @@ variable "statuscake_alerts" {
 }
 
 locals {
+  paas_api_url         = "https://api.london.cloud.service.gov.uk"
   paas_app_env_values  = yamldecode(file("${path.module}/../workspace-variables/${var.app_environment}_app_env.yml"))
   infra_secrets        = yamldecode(data.aws_ssm_parameter.infra_secrets.value)
   is_production        = var.environment == "production"

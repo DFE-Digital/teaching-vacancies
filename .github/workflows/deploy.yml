@@ -207,9 +207,6 @@ jobs:
           terraform_version: 0.14.7
 
       - name: Deploy monitoring
-        env:
-          TF_VAR_paas_user: ${{ secrets.CF_USERNAME }}
-          TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
         run: |
 
           export TF_VAR_paas_app_docker_image=${{ env.DOCKER_REPOSITORY }}:${{ github.sha }}
