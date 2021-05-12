@@ -24,7 +24,7 @@ RSpec.describe "Publishers can view a job application" do
       expect(show_page.actions).to have_css("a", class: "govuk-button--secondary", text: I18n.t("buttons.print_download_application"))
 
       expect(show_page.timeline).to have_items(text: I18n.t("jobseekers.job_applications.status_timestamps.rejected"))
-      expect(show_page.timeline).not_to have_items(text: I18n.t("jobseekers.job_applications.status_timestamps.shortlisted"))
+      expect(show_page.timeline).to have_items(text: I18n.t("jobseekers.job_applications.status_timestamps.shortlisted"))
       expect(show_page.timeline).to have_items(text: I18n.t("jobseekers.job_applications.status_timestamps.reviewed"))
       expect(show_page.timeline).to have_items(text: I18n.t("jobseekers.job_applications.status_timestamps.submitted"))
 
@@ -47,7 +47,7 @@ RSpec.describe "Publishers can view a job application" do
       expect(show_page.actions).to have_css("a", class: "govuk-button--warning", text: I18n.t("buttons.reject"))
       expect(show_page.actions).to have_css("a", class: "govuk-button--secondary", text: I18n.t("buttons.print_download_application"))
 
-      expect(show_page.timeline).not_to have_items(text: I18n.t("jobseekers.job_applications.status_timestamps.rejected"))
+      expect(show_page.timeline).to have_items(text: I18n.t("jobseekers.job_applications.status_timestamps.rejected"))
       expect(show_page.timeline).to have_items(text: I18n.t("jobseekers.job_applications.status_timestamps.shortlisted"))
       expect(show_page.timeline).to have_items(text: I18n.t("jobseekers.job_applications.status_timestamps.reviewed"))
       expect(show_page.timeline).to have_items(text: I18n.t("jobseekers.job_applications.status_timestamps.submitted"))
@@ -70,8 +70,8 @@ RSpec.describe "Publishers can view a job application" do
         expect(show_page.actions).to have_css("a", class: "govuk-button--warning", text: I18n.t("buttons.reject"))
         expect(show_page.actions).to have_css("a", class: "govuk-button--secondary", text: I18n.t("buttons.print_download_application"))
 
-        expect(show_page.timeline).not_to have_items(text: I18n.t("jobseekers.job_applications.status_timestamps.rejected"))
-        expect(show_page.timeline).not_to have_items(text: I18n.t("jobseekers.job_applications.status_timestamps.shortlisted"))
+        expect(show_page.timeline).to have_items(text: I18n.t("jobseekers.job_applications.status_timestamps.rejected"))
+        expect(show_page.timeline).to have_items(text: I18n.t("jobseekers.job_applications.status_timestamps.shortlisted"))
         expect(show_page.timeline).to have_items(text: I18n.t("jobseekers.job_applications.status_timestamps.reviewed"))
         expect(show_page.timeline).to have_items(text: I18n.t("jobseekers.job_applications.status_timestamps.submitted"))
 
