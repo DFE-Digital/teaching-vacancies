@@ -30,15 +30,4 @@
     .account-sidebar
       h2.account-sidebar__heading = t(".timeline")
 
-    = render TimelineComponent.new do |timeline|
-      - if job_application.unsuccessful?
-        - timeline.item(key: t("jobseekers.job_applications.status_timestamps.rejected"),
-                        value: format_date(job_application.unsuccessful_at.to_date) + I18n.t("jobs.time_at") + format_time(job_application.unsuccessful_at))
-      - elsif job_application.shortlisted?
-        - timeline.item(key: t("jobseekers.job_applications.status_timestamps.shortlisted"),
-                        value: format_date(job_application.shortlisted_at.to_date) + I18n.t("jobs.time_at") + format_time(job_application.shortlisted_at))
-      - if job_application.reviewed_at?
-        - timeline.item(key: t("jobseekers.job_applications.status_timestamps.reviewed"),
-                        value: format_date(job_application.reviewed_at.to_date) + I18n.t("jobs.time_at") + format_time(job_application.reviewed_at))
-      - timeline.item(key: t("jobseekers.job_applications.status_timestamps.submitted"),
-                      value: format_date(job_application.submitted_at.to_date) + I18n.t("jobs.time_at") + format_time(job_application.submitted_at))
+    = render "shared/job_application/timeline", job_application: job_application
