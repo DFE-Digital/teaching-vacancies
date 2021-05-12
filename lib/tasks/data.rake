@@ -1,10 +1,3 @@
-namespace :bugfix do
-  desc "Set all published vacancies' enable_job_applications attribute to false"
-  task set_enable_job_applications_false: :environment do
-    Vacancy.published.where(enable_job_applications: nil).update_all(enable_job_applications: false)
-  end
-end
-
 namespace :algolia do
   desc "Load an index with live records for the first time"
   task reindex: :environment do
