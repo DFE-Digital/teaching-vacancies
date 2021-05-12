@@ -8,8 +8,8 @@
   - review.body do
     = govuk_summary_list do |component|
       - component.slot(:row,
-        key: t("jobs.job_summary"),
-        value: @vacancy.job_summary)
+        key: t("jobs.job_advert"),
+        value: @vacancy.job_advert)
 
       - component.slot(:row,
         key: t("jobs.about_school", school: vacancy_about_school_label_organisation(@vacancy)),

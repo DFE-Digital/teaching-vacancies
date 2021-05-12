@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_04_084958) do
+ActiveRecord::Schema.define(version: 2021_05_11_163320) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -391,7 +391,7 @@ ActiveRecord::Schema.define(version: 2021_05_04_084958) do
   create_table "vacancies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "job_title"
     t.string "slug", null: false
-    t.text "job_summary"
+    t.text "job_advert"
     t.text "benefits"
     t.date "starts_on"
     t.date "ends_on"
