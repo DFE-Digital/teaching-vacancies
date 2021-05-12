@@ -1,0 +1,8 @@
+.cookies-banner-component.cookies-banner-component__top.cookies-banner-component__sticky aria-label=t("cookies_preferences.banner.aria.label") role="region"
+  .cookies-banner-component__background
+    .govuk-width-container
+      h3.govuk-heading-s class="govuk-!-margin-bottom-2" = t("cookies_preferences.banner.heading")
+      p.govuk-body = t("cookies_preferences.banner.body")
+      .govuk-button-group
+        = govuk_button_to t("buttons.accept_all_cookies"), create_path, form_class: "govuk-button--primary"
+        = govuk_link_to t("buttons.set_preferences"), preferences_path
