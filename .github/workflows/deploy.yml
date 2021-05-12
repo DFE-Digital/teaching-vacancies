@@ -8,6 +8,7 @@ on:
     - 'bigquery/**'
     - 'documentation/**'
     - 'terraform/common/**'
+    - '**.md'
 
 env:
  DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
