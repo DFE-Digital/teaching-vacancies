@@ -16,6 +16,7 @@ RSpec.describe "Jobseekers can add references to their job application" do
     expect(page).to have_content("No referees specified")
 
     click_on I18n.t("buttons.add_reference")
+    expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :references))
     validates_step_complete(button: I18n.t("buttons.save_reference"))
 
     fill_in_reference
