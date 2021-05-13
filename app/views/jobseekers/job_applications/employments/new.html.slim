@@ -12,3 +12,4 @@
         = render "fields", f: f
 
         = f.govuk_submit t("buttons.save_employment")
+        = govuk_link_to t("buttons.cancel"), jobseekers_job_application_build_path(job_application, :employment_history), button: true, class: "govuk-button--secondary govuk-!-margin-left-3"
