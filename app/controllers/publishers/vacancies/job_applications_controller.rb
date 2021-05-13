@@ -65,6 +65,10 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def vacancy
-    @vacancy ||= current_organisation.all_vacancies.listed.find(params[:job_id])
+    @vacancy ||= if action_name == "show"
+                   current_organisation.all_vacancies.listed.expires_after_data_retention_period.find(params[:job_id])
+                 else
+                   current_organisation.all_vacancies.listed.find(params[:job_id])
+                 end
   end
 end

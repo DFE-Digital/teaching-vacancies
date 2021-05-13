@@ -223,6 +223,15 @@ RSpec.describe Vacancy do
       end
     end
 
+    describe "#expires_after_data_retention_period" do
+      let(:expired_years_ago) { build(:vacancy, expires_on: 2.years.ago, expires_at: 2.years.ago) }
+
+      it "retrieves vacancies that expired not more than one year ago" do
+        expect(Vacancy.expires_after_data_retention_period).to_not include(expired_earlier_today)
+        expect(Vacancy.expires_after_data_retention_period).to include(expired_years_ago)
+      end
+    end
+
     describe "#live" do
       it "includes vacancies till expiry time" do
         expect(Vacancy.live).to include(expires_later_today)

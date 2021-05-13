@@ -71,6 +71,22 @@ RSpec.describe "Job applications" do
       it "renders the show page" do
         expect(get(organisation_job_job_application_path(vacancy.id, job_application.id))).to render_template(:show)
       end
+
+      context "when the vacancy expired more than a year ago" do
+        let(:two_years_ago) { Time.zone.now - 2.years }
+        let(:vacancy) do
+          create(:vacancy,
+                 expires_at: two_years_ago,
+                 expires_on: two_years_ago,
+                 organisation_vacancies_attributes: [{ organisation: organisation }])
+        end
+
+        it "returns not found" do
+          get(organisation_job_job_application_path(vacancy.id, job_application.id))
+
+          expect(response).to have_http_status(:not_found)
+        end
+      end
     end
 
     context "when the job application status is submitted" do
