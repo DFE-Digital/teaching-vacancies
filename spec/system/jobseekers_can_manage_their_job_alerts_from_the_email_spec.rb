@@ -3,13 +3,14 @@ require "rails_helper"
 RSpec.describe "Jobseekers can manage their job alerts from the email" do
   let(:jobseeker_signed_in?) { false }
   let(:jobseeker) { build_stubbed(:jobseeker) }
-  let(:jobseeker_account_prompt_variant) { nil }
+  let(:job_alert_account_creation_prompt_variant) { :bottom }
 
   let(:search_criteria) { { keyword: "Maths", location: "London" } }
   let(:frequency) { :daily }
   let(:subscription) { create(:subscription, email: jobseeker.email, frequency: frequency, search_criteria: search_criteria) }
 
   before do
+    page.set_rack_session(ab_tests: { "2021_05_job_alert_account_creation_prompt_test": job_alert_account_creation_prompt_variant })
     login_as(jobseeker, scope: :jobseeker) if jobseeker_signed_in?
     visit edit_subscription_path(token)
   end
