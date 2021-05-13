@@ -135,6 +135,11 @@ FactoryBot.define do
       expires_on { Time.zone.tomorrow.end_of_day }
     end
 
+    trait :expired_years_ago do
+      expires_at { 2.years.ago }
+      expires_on { 2.years.ago }
+    end
+
     trait :without_working_patterns do
       to_create { |instance| instance.save(validate: false) }
       sequence(:slug) { |n| "slug-#{n}" }

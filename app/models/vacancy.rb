@@ -51,6 +51,7 @@ class Vacancy < ApplicationRecord
 
   scope :active, (-> { where(status: %i[published draft]) })
   scope :applicable, (-> { where("expires_at >= ?", Time.current) })
+  scope :expires_within_data_access_period, (-> { where("expires_at >= ?", Time.current - DATA_ACCESS_PERIOD_FOR_PUBLISHERS) })
   scope :expired, (-> { published.where("expires_at < ?", Time.current) })
   scope :awaiting_feedback, (-> { expired.where(listed_elsewhere: nil, hired_status: nil) })
   scope :listed, (-> { published.where("publish_on <= ?", Date.current) })
