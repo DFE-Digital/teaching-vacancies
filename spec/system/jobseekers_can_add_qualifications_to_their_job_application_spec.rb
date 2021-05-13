@@ -14,6 +14,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
     before do
       visit jobseekers_job_application_build_path(job_application, :qualifications)
       click_on I18n.t("buttons.add_qualification")
+      expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :qualifications))
     end
 
     it "allows jobseekers to add a graduate degree" do
