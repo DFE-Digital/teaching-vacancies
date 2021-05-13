@@ -6,31 +6,47 @@ RSpec.describe "Publishers can view their notifications" do
   let(:vacancy) { create(:vacancy, :published, organisation_vacancies_attributes: [{ organisation: organisation }], publisher: publisher) }
   let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
 
-  before do
-    stub_const("Publishers::NotificationsController::DEFAULT_NOTIFICATIONS_PER_PAGE", 1)
-    Publishers::JobApplicationReceivedNotification.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
-    Publishers::JobApplicationReceivedNotification.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
-    login_publisher(publisher: publisher, organisation: organisation)
-    visit root_path
+  before { login_publisher(publisher: publisher, organisation: organisation) }
+
+  context "when the notification was created outside the data retention period" do
+    before do
+      travel_to 2.years.ago do
+        Publishers::JobApplicationReceivedNotification.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
+      end
+      visit publishers_notifications_path
+    end
+
+    it "does not display the notification" do
+      expect(page).not_to have_css("div", class: "notification-component")
+    end
   end
 
-  it "clicks notifications link, renders the notifications, paginates, and marks as read" do
-    click_on I18n.t("nav.notifications_index_link")
-
-    expect(page).to have_css("div", class: "notification-component", count: 1) do |notification|
-      expect(notification).to have_css("div", class: "notification-component__tag", text: "new", count: 1)
+  context "when paginating" do
+    before do
+      stub_const("Publishers::NotificationsController::DEFAULT_NOTIFICATIONS_PER_PAGE", 1)
+      Publishers::JobApplicationReceivedNotification.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
+      Publishers::JobApplicationReceivedNotification.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
+      visit root_path
     end
 
-    click_on "Next"
+    it "clicks notifications link, renders the notifications, paginates, and marks as read" do
+      click_on I18n.t("nav.notifications_index_link")
 
-    expect(page).to have_css("div", class: "notification-component", count: 1) do |notification|
-      expect(notification).to have_css("div", class: "notification-component__tag", text: "new", count: 1)
-    end
+      expect(page).to have_css("div", class: "notification-component", count: 1) do |notification|
+        expect(notification).to have_css("div", class: "notification-component__tag", text: "new", count: 1)
+      end
 
-    click_on "Previous"
+      click_on "Next"
 
-    expect(page).to have_css("div", class: "notification-component", count: 1) do |notification|
-      expect(notification).not_to have_css("div", class: "notification-component__tag", text: "new", count: 1)
+      expect(page).to have_css("div", class: "notification-component", count: 1) do |notification|
+        expect(notification).to have_css("div", class: "notification-component__tag", text: "new", count: 1)
+      end
+
+      click_on "Previous"
+
+      expect(page).to have_css("div", class: "notification-component", count: 1) do |notification|
+        expect(notification).not_to have_css("div", class: "notification-component__tag", text: "new", count: 1)
+      end
     end
   end
 end
