@@ -5,6 +5,8 @@ class ApplicationRecord < ActiveRecord::Base
   after_update { EventContext.trigger_event(:entity_updated, event_data) unless saved_change_to_attribute?(:last_activity_at) }
   after_destroy { EventContext.trigger_event(:entity_destroyed, event_data) }
 
+  DATA_ACCESS_PERIOD_FOR_PUBLISHERS = 1.year.freeze
+
   private
 
   def event_data
