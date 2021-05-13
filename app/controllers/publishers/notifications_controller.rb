@@ -9,6 +9,7 @@ class Publishers::NotificationsController < Publishers::BaseController
 
   def notifications
     @notifications ||= current_publisher.notifications
+                                        .created_within_data_retention_period
                                         .order(created_at: :desc)
                                         .page(params[:page])
                                         .per(DEFAULT_NOTIFICATIONS_PER_PAGE)
