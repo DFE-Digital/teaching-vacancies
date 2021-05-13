@@ -21,7 +21,6 @@ channel_list = {
 }
 
 # Gov.UK PaaS
-paas_api_url                           = "https://api.london.cloud.service.gov.uk"
 paas_space_name                        = "teaching-vacancies-staging"
 paas_papertrail_service_binding_enable = true
 paas_postgres_service_plan             = "small-11"
