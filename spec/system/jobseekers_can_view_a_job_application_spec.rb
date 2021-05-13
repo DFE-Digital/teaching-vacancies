@@ -58,7 +58,7 @@ RSpec.describe "Jobseekers can view a job application" do
       expect(page).to have_content(I18n.t("jobseekers.job_applications.show.shortlist_alert.title"))
 
       within ".timeline-component" do
-        expect(page).not_to have_content(I18n.t("jobseekers.job_applications.status_timestamps.unsuccessful"))
+        expect(page).to have_content(I18n.t("jobseekers.job_applications.status_timestamps.unsuccessful"))
 
         within ".timeline-component__item", text: I18n.t("jobseekers.job_applications.status_timestamps.shortlisted") do
           expect(page).to have_content(format_date(job_application.shortlisted_at.to_date))
@@ -75,7 +75,7 @@ RSpec.describe "Jobseekers can view a job application" do
       expect(page).to have_content(job_application.rejection_reasons)
 
       within ".timeline-component" do
-        expect(page).not_to have_content(I18n.t("jobseekers.job_applications.status_timestamps.shortlisted"))
+        expect(page).to have_content(I18n.t("jobseekers.job_applications.status_timestamps.shortlisted"))
 
         within ".timeline-component__item", text: I18n.t("jobseekers.job_applications.status_timestamps.unsuccessful") do
           expect(page).to have_content(format_date(job_application.unsuccessful_at.to_date))
