@@ -9,6 +9,8 @@ on:
         description: GitHub SHA
         required: true
       paas_environment:
+        required: true
+        default: "production"
         description: Environment to test
 
 jobs:
