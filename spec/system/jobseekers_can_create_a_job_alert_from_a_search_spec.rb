@@ -23,6 +23,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
   end
 
   describe "job alert confirmation page" do
+
     before do
       login_as(jobseeker, scope: :jobseeker) if jobseeker_signed_in?
       visit jobs_path
