@@ -19,10 +19,10 @@ en:
       create:
         success: Thank you for your feedback
       new:
-        title: Account survey
+        title: Give feedback on Teaching Vacancies
     account_survey_link_component:
-      survey_link: take our quick survey
-      survey_text_html: Spare some time to %{link} on your account experience with Teaching Vacancies.
+      survey_link: Take our quick survey
+      survey_text_html: "%{link} about your experience of using Teaching Vacancies"
     confirmations:
       new:
         description: The link has expired. You need to request that a new link is sent to your email address (%{email}).
