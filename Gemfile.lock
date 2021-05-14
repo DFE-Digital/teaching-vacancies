@@ -234,7 +234,7 @@ GEM
       activemodel (>= 6.0)
       railties (>= 6.0)
       view_component (~> 2.20)
-    govuk_design_system_formbuilder (2.5.0)
+    govuk_design_system_formbuilder (2.5.1)
       actionview (>= 6.0)
       activemodel (>= 6.0)
       activesupport (>= 6.0)
