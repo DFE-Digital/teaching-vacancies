@@ -32,7 +32,7 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
       end
 
       it "renders the school type" do
-        organisation_types(vacancy.organisations).each { |school_type| expect(rendered_component).to include(school_type) }
+        expect(rendered_component).to include(organisation_type(vacancy.organisation))
       end
 
       it "renders the working pattern" do
