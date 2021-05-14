@@ -35,18 +35,6 @@ class VacancyPresenter < BasePresenter
     simple_format(model.how_to_apply) if model.how_to_apply.present?
   end
 
-  def education
-    simple_format(model.education) if model.education.present?
-  end
-
-  def qualifications
-    simple_format(model.qualifications) if model.qualifications.present?
-  end
-
-  def experience
-    simple_format(model.experience) if model.experience.present?
-  end
-
   def benefits
     simple_format(model.benefits) if model.benefits.present?
   end

@@ -102,10 +102,6 @@ class Vacancy < ApplicationRecord
     super().merge("working_patterns" => working_patterns, "job_roles" => job_roles)
   end
 
-  def any_candidate_specification?
-    experience.present? || qualifications.present? || education.present?
-  end
-
   def delete_documents
     documents.each { |document| DocumentDelete.new(document).delete }
   end

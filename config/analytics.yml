@@ -239,9 +239,6 @@ shared:
     - benefits
     - starts_on
     - ends_on
-    - education
-    - qualifications
-    - experience
     - contact_email
     - status
     - expires_on
