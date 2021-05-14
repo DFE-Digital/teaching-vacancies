@@ -4,7 +4,7 @@
 
 # <%= t(".what_to_do") %>
 
-<%= notify_link(jobseeker_confirmation_url(confirmation_token: @token), t("#{@confirmation_type}.link")) %>
+<%= email_confirmation_link(@token, @confirmation_type) %>
 
 ---
 
