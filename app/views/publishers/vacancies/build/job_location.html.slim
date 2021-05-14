@@ -17,7 +17,7 @@
 
         = f.govuk_collection_radio_buttons :job_location, t("helpers.options.publishers_job_listing_job_location_form.job_location.#{current_organisation.group_type}"), :first, :last
 
-        = render "publishers/vacancies/vacancy_form_partials/continue_or_update_submit", f: f
+        = f.govuk_submit t("buttons.continue")
 
     .govuk-grid-column-one-third
       = render(Shared::ProcessStepsComponent.new(process: @vacancy, service: process_steps, title: t("publishers.vacancies.build.process_title")))

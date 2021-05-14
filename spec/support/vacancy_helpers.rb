@@ -7,7 +7,7 @@ module VacancyHelpers
     vacancy.job_location = location
     click_header_link(I18n.t("jobs.job_location"))
     fill_in_job_location_form_field(vacancy, group_type)
-    click_on I18n.t("buttons.update_job")
+    click_on I18n.t("buttons.continue")
   end
 
   def fill_in_school_form_field(school)

@@ -116,7 +116,11 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
 
   def update_incomplete_listing
     @vacancy.save
-    redirect_updated_job_with_message
+    if step == :job_location && @vacancy.job_location != "central_office"
+      redirect_to wizard_path(:schools)
+    else
+      redirect_updated_job_with_message
+    end
   end
 
   def update_listing
