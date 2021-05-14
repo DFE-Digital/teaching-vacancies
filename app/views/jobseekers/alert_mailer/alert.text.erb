@@ -23,7 +23,7 @@
   <%= "- #{filter.humanize}: #{value}" %>
 <% end %>
 
-<%= [t(".alert_frequency", frequency: subscription.frequency), t(".edit_alert", edit_link: edit_link(subscription))].join(" ") %>
+<%= [t(".alert_frequency", frequency: subscription.frequency), t(".edit_alert", edit_link: edit_subscription_link(subscription))].join(" ") %>
 
 ---
 
