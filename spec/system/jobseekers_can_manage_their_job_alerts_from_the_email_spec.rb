@@ -3,7 +3,6 @@ require "rails_helper"
 RSpec.describe "Jobseekers can manage their job alerts from the email" do
   let(:jobseeker_signed_in?) { false }
   let(:jobseeker) { build_stubbed(:jobseeker) }
-  let(:jobseeker_account_prompt_variant) { nil }
 
   let(:search_criteria) { { keyword: "Maths", location: "London" } }
   let(:frequency) { :daily }
