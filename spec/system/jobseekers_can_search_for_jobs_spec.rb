@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can search for jobs" do
-  let(:jobs_page) { PageObjects::Vacancy::Index.new }
   let(:school) { create(:school) }
   let!(:maths_job1) { create(:vacancy, :past_publish, id: "67991ea9-431d-4d9d-9c99-a78b80108fe1", job_title: "Maths Teacher", organisation_vacancies_attributes: [{ organisation: school }]) }
   let!(:maths_job2) { create(:vacancy, :past_publish, id: "7bfadb84-cf30-4121-88bd-a9f958440cc9", job_title: "Maths Teacher 2", organisation_vacancies_attributes: [{ organisation: school }]) }
@@ -14,25 +13,28 @@ RSpec.describe "Jobseekers can search for jobs" do
   before do
     stub_const("Search::VacancySearch::DEFAULT_HITS_PER_PAGE", 2)
 
-    jobs_page.load
-    jobs_page.filters.keyword.set(keyword)
-    jobs_page.search
+    visit jobs_path
+
+    fill_in "Keyword", with: keyword
+    click_on I18n.t("buttons.search")
   end
 
   context "when searching for teacher jobs" do
     let(:keyword) { "Teacher" }
 
     it "displays page 1 jobs", vcr: { cassette_name: "algoliasearch teacher page 1" } do
-      expect(jobs_page).to have_jobs(count: 2)
-      expect(jobs_page.stats).to have_content(strip_tags(I18n.t("jobs.number_of_results_html", first: 1, last: 2, count: 6)))
+      expect(page).to have_css("li.vacancy", count: 2)
+      expect(page).to have_css(".vacancies-stats-top", text: strip_tags(I18n.t("jobs.number_of_results_html", first: 1, last: 2, count: 6)))
     end
 
     context "when navigating between pages" do
       it "displays page 3 jobs", vcr: { cassette_name: "algoliasearch teacher page 3" } do
-        jobs_page.pagination.go_to("3")
+        within "ul.pagination" do
+          click_on "3"
+        end
 
-        expect(jobs_page).to have_jobs(count: 2)
-        expect(jobs_page.stats).to have_content(strip_tags(I18n.t("jobs.number_of_results_html", first: 5, last: 6, count: 6)))
+        expect(page).to have_css("li.vacancy", count: 2)
+        expect(page).to have_css(".vacancies-stats-top", text: strip_tags(I18n.t("jobs.number_of_results_html", first: 5, last: 6, count: 6)))
       end
     end
   end
@@ -41,22 +43,24 @@ RSpec.describe "Jobseekers can search for jobs" do
     let(:keyword) { "Maths Teacher" }
 
     it "displays the Maths jobs" do
-      expect(jobs_page).to have_jobs(count: 2)
-      expect(jobs_page.stats).to have_content(strip_tags(I18n.t("jobs.number_of_results_one_page_html", count: 2)))
-      expect(jobs_page.jobs.first.job_title).to eq("Maths Teacher")
-      expect(jobs_page.jobs.last.job_title).to eq("Maths Teacher 2")
+      expect(page).to have_css("li.vacancy", count: 2) do |jobs|
+        expect(jobs[0]).to have_content("Maths Teacher")
+        expect(jobs[1]).to have_content("Maths Teacher 2")
+      end
+
+      expect(page).to have_css(".vacancies-stats-top", text: strip_tags(I18n.t("jobs.number_of_results_one_page_html", count: 2)))
     end
 
     context "when sorting the jobs", js: true do
-      before do
-        jobs_page.sort_field.find("option[value='expires_at_asc']").click
-      end
+      before { page.find("#jobs-sort-field > option[value='expires_at_asc']").click }
 
       it "displays the Maths jobs that expires soonest first" do
-        expect(jobs_page).to have_jobs(count: 2)
-        expect(jobs_page.stats).to have_content(strip_tags(I18n.t("jobs.number_of_results_one_page_html", count: 2)))
-        expect(jobs_page.jobs.first.job_title).to eq("Maths Teacher 2")
-        expect(jobs_page.jobs.last.job_title).to eq("Maths Teacher")
+        expect(page).to have_css("li.vacancy", count: 2) do |jobs|
+          expect(jobs[0]).to have_content("Maths Teacher 2")
+          expect(jobs[1]).to have_content("Maths Teacher")
+        end
+
+        expect(page).to have_css(".vacancies-stats-top", text: strip_tags(I18n.t("jobs.number_of_results_one_page_html", count: 2)))
       end
     end
   end

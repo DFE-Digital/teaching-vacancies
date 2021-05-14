@@ -5,7 +5,6 @@ RSpec.describe "Jobseekers can start or continue a job application" do
   let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: school }]) }
   let(:school) { create(:school) }
   let(:created_job_application) { JobApplication.first }
-  let(:new_job_application_page) { PageObjects::Jobseekers::JobApplications::New.new }
 
   before { allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(jobseeker_applications_enabled?) }
 
@@ -27,7 +26,7 @@ RSpec.describe "Jobseekers can start or continue a job application" do
 
           it "starts a job application" do
             expect(current_path).to eq(new_jobseekers_job_job_application_path(vacancy.id))
-            expect(new_job_application_page.caption).to have_content(vacancy.job_title)
+            expect(page).to have_css(".govuk-caption-l", text: vacancy.job_title)
 
             expect { click_on I18n.t("buttons.start_application") }.to change { JobApplication.count }.by(1)
 
@@ -50,7 +49,7 @@ RSpec.describe "Jobseekers can start or continue a job application" do
               sign_in_jobseeker
 
               expect(current_path).to eq(new_jobseekers_job_job_application_path(vacancy.id))
-              expect(new_job_application_page.caption).to have_content(vacancy.job_title)
+              expect(page).to have_css(".govuk-caption-l", text: vacancy.job_title)
 
               expect { click_on I18n.t("buttons.start_application") }.to change { JobApplication.count }.by(1)
 
@@ -77,7 +76,7 @@ RSpec.describe "Jobseekers can start or continue a job application" do
             visit first_link_from_last_mail
 
             expect(current_path).to eq(new_jobseekers_job_job_application_path(vacancy.id))
-            expect(new_job_application_page.caption).to have_content(vacancy.job_title)
+            expect(page).to have_css(".govuk-caption-l", text: vacancy.job_title)
 
             expect { click_on I18n.t("buttons.start_application") }.to change { JobApplication.count }.by(1)
 
