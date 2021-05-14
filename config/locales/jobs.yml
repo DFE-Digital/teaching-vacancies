@@ -199,10 +199,6 @@ en:
     expires_on: Closing date
     time_at: ' at '
 
-    education: Essential educational requirements
-    qualifications: Essential qualifications
-    experience: Essential skills and experience
-
     supporting_documents: Supporting documents
     supporting_documents_accessibility: If you need these documents in an accessible format, please contact the school.
     no_files_message: No files selected

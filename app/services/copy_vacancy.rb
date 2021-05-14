@@ -3,7 +3,6 @@ class CopyVacancy
     @vacancy = vacancy
     setup_new_vacancy
     setup_organisation_vacancies
-    reset_candidate_specification if @vacancy.any_candidate_specification?
   end
 
   def call
@@ -29,12 +28,6 @@ class CopyVacancy
         google_drive_id: document_copy.copied.id,
       })
     end
-  end
-
-  def reset_candidate_specification
-    @new_vacancy.experience = nil
-    @new_vacancy.education = nil
-    @new_vacancy.qualifications = nil
   end
 
   def setup_new_vacancy

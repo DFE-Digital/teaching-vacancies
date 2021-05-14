@@ -15,19 +15,6 @@ section#job-details class="govuk-!-margin-bottom-5"
   h4.govuk-heading-s = t("jobs.job_summary")
   p = @vacancy.job_advert
 
-  - if @vacancy.documents.none? && @vacancy.any_candidate_specification?
-    - if @vacancy.education?
-      h4.govuk-heading-s = t("jobs.education")
-      p = @vacancy.education
-
-    - if @vacancy.qualifications?
-      h4.govuk-heading-s = t("jobs.qualifications")
-      p = @vacancy.qualifications
-
-    - if @vacancy.experience?
-      h4.govuk-heading-s = t("jobs.experience")
-      p = @vacancy.experience
-
   - if @vacancy.benefits.present?
     h4.govuk-heading-s = t("jobs.benefits")
     p = @vacancy.benefits
