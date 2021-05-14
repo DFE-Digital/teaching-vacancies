@@ -111,60 +111,16 @@ RSpec.describe "Viewing a single published vacancy" do
       expect(page.current_url).to eq vacancy.application_link
     end
 
-    scenario "does not see headers of empty fields" do
-      vacancy = build(:vacancy, education: nil, qualifications: nil,
-                                experience: nil, benefits: nil, slug: "vacancy")
-      vacancy.save(validate: false)
-      vacancy.organisation_vacancies.create(organisation: school)
-
-      visit job_path(vacancy)
-
-      expect(page).to_not have_content(I18n.t("jobs.education"))
-      expect(page).to_not have_content(I18n.t("jobs.qualifications"))
-      expect(page).to_not have_content(I18n.t("jobs.experience"))
-      expect(page).to_not have_content(I18n.t("jobs.benefits_html"))
-    end
-
-    context "without supporting documents attached but candidate spec" do
+    context "with supporting documents attached" do
       before do
         vacancy = create(:vacancy, :published)
         vacancy.organisation_vacancies.create(organisation: school)
-        vacancy.documents = []
-        vacancy.save
-        visit job_path(vacancy)
-      end
-
-      scenario "cannot see the supporting documents section" do
-        expect(page).to_not have_content(I18n.t("jobs.supporting_documents"))
-      end
-
-      scenario "can see the candidate specification sections" do
-        expect(page).to have_content(I18n.t("jobs.education"))
-        expect(page).to have_content(I18n.t("jobs.qualifications"))
-        expect(page).to have_content(I18n.t("jobs.experience"))
-      end
-    end
-
-    context "with supporting documents attached and candidate spec" do
-      before do
-        vacancy = create(:vacancy, :published)
-        vacancy.organisation_vacancies.create(organisation: school)
-        vacancy.education = nil
-        vacancy.qualifications = nil
-        vacancy.experience = nil
-        vacancy.save
         visit job_path(vacancy)
       end
 
       scenario "can see the supporting documents section" do
         expect(page).to have_content(I18n.t("jobs.supporting_documents"))
         expect(page).to have_content("Test.png")
-      end
-
-      scenario "cannot see the candidate specification sections" do
-        expect(page).to_not have_content(I18n.t("jobs.education"))
-        expect(page).to_not have_content(I18n.t("jobs.qualifications"))
-        expect(page).to_not have_content(I18n.t("jobs.experience"))
       end
     end
 
