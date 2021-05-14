@@ -4,10 +4,11 @@
     p.govuk-body = t(".body.sign_in")
 
     = form_for @jobseeker, url: jobseeker_session_path, method: :post do |f|
-      = f.govuk_email_field :email,
-        label: { text: t("helpers.label.jobseekers_sign_in_form.email"), size: "s" },
-        width: "two-thirds",
-        value: @jobseeker.email
+      .govuk-heading-s class="govuk-!-margin-bottom-2"
+        = t(".form.email_address")
+      .govuk-body = @subscription.email
+
+      = f.hidden_field :email, value: @subscription.email
 
       = f.govuk_password_field :password, label: { text: t("helpers.label.jobseekers_sign_in_form.password"), size: "s" }, hint: nil, width: "two-thirds"
 
@@ -20,11 +21,11 @@
     p.govuk-body = t(".body.sign_up")
 
     = form_for Jobseeker.new, as: :jobseeker, url: jobseeker_registration_path, method: :post do |f|
-      = f.govuk_email_field :email,
-        label: { text: t("helpers.label.jobseekers_sign_in_form.email"), size: "s" },
-        width: "two-thirds",
-        value: @subscription.email,
-        readonly: true
+      .govuk-heading-s class="govuk-!-margin-bottom-2"
+        = t(".form.email_address")
+      .govuk-body = @subscription.email
+
+      = f.hidden_field :email, value: @subscription.email
 
       = f.govuk_password_field :password, label: { size: "s" }, width: "two-thirds"
 

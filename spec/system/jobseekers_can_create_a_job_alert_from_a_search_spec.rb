@@ -23,7 +23,10 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
   end
 
   describe "job alert confirmation page" do
+    let(:job_alert_account_creation_prompt_variant) { :bottom }
+
     before do
+      page.set_rack_session(ab_tests: { "2021_05_job_alert_account_creation_prompt_test": job_alert_account_creation_prompt_variant })
       login_as(jobseeker, scope: :jobseeker) if jobseeker_signed_in?
       visit jobs_path
       and_perform_a_search
