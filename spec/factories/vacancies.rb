@@ -14,8 +14,6 @@ FactoryBot.define do
     contact_number { "01234 123456" }
     contract_type { :fixed_term }
     contract_type_duration { "6 months" }
-    education { Faker::Lorem.paragraph(sentence_count: 4) }
-    experience { Faker::Lorem.paragraph(sentence_count: 4) }
     expires_on { Faker::Time.forward(days: 14) }
     expires_at { expires_on&.change(sec: 0) }
     hired_status { nil }
@@ -25,7 +23,6 @@ FactoryBot.define do
     listed_elsewhere { nil }
     personal_statement_guidance { Faker::Lorem.paragraph(sentence_count: 4) }
     publish_on { Date.current }
-    qualifications { Faker::Lorem.paragraph(sentence_count: 4) }
     salary { Faker::Lorem.sentence[1...30].strip }
     school_visits { Faker::Lorem.paragraph(sentence_count: 4) }
     state { "create" }
@@ -58,20 +55,14 @@ FactoryBot.define do
     end
 
     trait :fail_minimum_validation do
-      education { Faker::Lorem.paragraph[0..8] }
-      experience { Faker::Lorem.paragraph[0..7] }
       job_advert { Faker::Lorem.paragraph[0..5] }
       job_title { Faker::Job.title[0..2] }
-      qualifications { Faker::Lorem.paragraph[0...8] }
     end
 
     trait :fail_maximum_validation do
-      education { Faker::Lorem.characters(number: 1005) }
-      experience { Faker::Lorem.characters(number: 1010) }
       job_advert { Faker::Lorem.characters(number: 50_001) }
       job_title { Faker::Lorem.characters(number: 150) }
       salary { Faker::Lorem.characters(number: 257) }
-      qualifications { Faker::Lorem.characters(number: 1002) }
     end
 
     trait :complete do
@@ -127,7 +118,6 @@ FactoryBot.define do
 
     trait :job_schema do
       working_patterns { %w[full_time part_time] }
-      education { Faker::Lorem.paragraph }
       benefits { Faker::Lorem.sentence }
     end
 

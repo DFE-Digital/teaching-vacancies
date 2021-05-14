@@ -172,12 +172,6 @@ module VacancyHelpers
       expect(page).to have_content(I18n.t("jobs.supporting_documents"))
     end
 
-    if vacancy.documents.none? && vacancy.any_candidate_specification?
-      expect(page.html).to include(vacancy.education)
-      expect(page.html).to include(vacancy.qualifications)
-      expect(page.html).to include(vacancy.experience)
-    end
-
     if vacancy.enable_job_applications?
       expect(page).to have_link(I18n.t("jobseekers.job_applications.apply"), href: new_jobseekers_job_job_application_path(vacancy.id))
     else
@@ -199,9 +193,6 @@ module VacancyHelpers
       datePosted: vacancy.publish_on.to_time.iso8601,
       description: vacancy.job_advert,
       occupationalCategory: vacancy.job_roles&.join(", "),
-      educationRequirements: vacancy.education,
-      qualifications: vacancy.qualifications,
-      experienceRequirements: vacancy.experience,
       employmentType: vacancy.working_patterns_for_job_schema,
       industry: "Education",
       jobLocation: {
