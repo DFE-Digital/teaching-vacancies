@@ -14,11 +14,11 @@
 
     = govuk_notification_banner title: t(".banner_title") do
       - if job_application.vacancy.documents.any?
-        = t(".banner_documents_html", job_link: govuk_link_to(job_application.vacancy.job_title, job_path(job_application.vacancy), target: "_blank"))
+        = t(".banner_documents_html", job_link: govuk_link_to("‘#{job_application.vacancy.job_title}’ (opens in new tab)", job_path(job_application.vacancy), target: "_blank"))
         div class="govuk-!-margin-top-3"
           = render DocumentComponent.with_collection(job_application.vacancy.documents)
       - else
-        = t(".banner_no_documents_html", job_link: govuk_link_to(job_application.vacancy.job_title, job_path(job_application.vacancy), target: "_blank"))
+        = t(".banner_no_documents_html", job_link: govuk_link_to("‘#{job_application.vacancy.job_title}’ (opens in new tab)", job_path(job_application.vacancy), target: "_blank"))
 
     - if job_application.vacancy.personal_statement_guidance.present?
       h3.govuk-heading-s = t(".additional_instructions")
