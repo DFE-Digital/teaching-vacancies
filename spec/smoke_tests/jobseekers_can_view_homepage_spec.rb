@@ -13,7 +13,7 @@ RSpec.describe "Page availability", js: true, smoke_test: true do
 
   context "Jobseeker visits vacancy page" do
     let(:smoke_test_domain) do
-      paas_environment = !ENV.include?("PAAS_ENVIRONMENT") || ENV["PAAS_ENVIRONMENT"].empty? ? "production" : ENV["PAAS_ENVIRONMENT"]
+      paas_environment = ENV["PAAS_ENVIRONMENT"]
       begin
         YAML.load_file("#{__dir__}/../../terraform/workspace-variables/#{paas_environment}_app_env.yml")["DOMAIN"]
       rescue Errno::ENOENT
