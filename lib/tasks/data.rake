@@ -79,3 +79,37 @@ namespace :google_drive do
     puts "#{documents_deleted} Documents deleted. Have a good day!"
   end
 end
+
+namespace :vacancies do
+  desc "Fix about_school fields of live vacancies"
+  task fix_about_school: :environment do
+    fix_before = Date.new(2021, 5, 14)
+
+    organisation_ids = Organisation.not_closed.where.not(description: [nil, ""]).pluck(:id)
+
+    vacancies = Vacancy.live
+                       .distinct
+                       .joins(:organisation_vacancies)
+                       .where(organisation_vacancies: { organisation_id: organisation_ids })
+                       .where("vacancies.created_at < ?", fix_before)
+
+    puts "Found #{vacancies.count} vacancies created before #{fix_before} that may have a wrong about_school field"
+
+    puts "Get ready to fix them!"
+
+    fixed_vacancies = 0
+
+    vacancies.find_each do |vacancy|
+      organisation_description = vacancy.organisations.map(&:description).compact.first
+
+      next unless organisation_description.split.uniq.join(" ") == vacancy.about_school
+
+      puts "Fixing vacancy with slug: #{vacancy.slug}"
+      vacancy.update_column :about_school, organisation_description
+
+      fixed_vacancies += 1
+    end
+
+    puts "#{fixed_vacancies} Vacancies fixed. Have a good day!"
+  end
+end
