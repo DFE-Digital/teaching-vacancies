@@ -79,34 +79,3 @@ namespace :google_drive do
     puts "#{documents_deleted} Documents deleted. Have a good day!"
   end
 end
-
-namespace :vacancies do
-  desc "Fix about_school fields of live vacancies"
-  task fix_about_school: :environment do
-    organisation_ids = Organisation.not_closed.where.not(description: [nil, ""]).pluck(:id)
-
-    vacancies = Vacancy.live
-                       .distinct
-                       .joins(:organisation_vacancies)
-                       .where(organisation_vacancies: { organisation_id: organisation_ids })
-
-    fixed_vacancies = 0
-
-    vacancies.find_each do |vacancy|
-      organisation_description = vacancy.parent_organisation.description
-      next if organisation_description.blank?
-
-      uniq_organisation_description = organisation_description.split.uniq.join(" ")
-
-      next if uniq_organisation_description == organisation_description
-      next unless uniq_organisation_description == vacancy.about_school
-
-      puts "Fixing vacancy with slug: #{vacancy.slug}"
-      vacancy.update_column :about_school, organisation_description
-
-      fixed_vacancies += 1
-    end
-
-    puts "#{fixed_vacancies} Vacancies fixed. Have a good day!"
-  end
-end
