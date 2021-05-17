@@ -61,7 +61,16 @@ UPDATE job_applications
            close_relationships_details='',
            further_instructions='',
            rejection_reasons='',
-           gaps_in_employment_details='';
+           gaps_in_employment_details='',
+           disability='prefer_not_to_say',
+           gender='prefer_not_to_say',
+           gender_description='',
+           orientation='prefer_not_to_say',
+           orientation_description='',
+           ethnicity='prefer_not_to_say',
+           ethnicity_description='',
+           religion='prefer_not_to_say',
+           religion_description='';
 
 UPDATE jobseekers
        SET email=concat('anonymised-jobseeker-',id,'@example.org'),
