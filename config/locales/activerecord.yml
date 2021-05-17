@@ -216,10 +216,10 @@ en:
         publishers/job_listing/extend_deadline_form:
           attributes:
             expires_on:
-              blank: Enter the date applications are due
-              in_past: The date applications are due must be in the future
+              blank: Enter the closing date
+              in_past: The closing date must be in the future
               invalid: Enter a date in the correct format
-              not_extended: To extend the deadline enter a date that is after the current deadline
+              not_extended: To extend the closing date enter a date that is after the current deadline
             expiry_time:
               inclusion: Select the time the application is due
             starts_on:
