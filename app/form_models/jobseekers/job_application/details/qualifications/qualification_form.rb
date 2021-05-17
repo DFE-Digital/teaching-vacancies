@@ -5,6 +5,6 @@ class Jobseekers::JobApplication::Details::Qualifications::QualificationForm
 
   validates :category, presence: true
   validates :finished_studying_details, presence: true, if: -> { finished_studying == "false" }
-  validates :year, presence: true, if: -> { finished_studying == "true" }
-  validates :year, format: { with: /\A\d{4}\z/.freeze }, if: -> { year.present? }
+  validates :year, numericality: { less_than_or_equal_to: proc { Time.current.year } },
+                   if: -> { finished_studying == "true" }
 end
