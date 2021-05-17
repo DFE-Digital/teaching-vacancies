@@ -70,7 +70,7 @@ RSpec.describe Jobseekers::AlertMailer do
                   .and include(vacancies.first.job_title)
                   .and include(vacancies.first.job_title)
                   .and include(job_url(vacancies.first, **campaign_params))
-                  .and include(location(vacancies.first.organisation))
+                  .and include(vacancy_full_job_location(vacancies.first))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.salary", salary: vacancies.first.salary))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.working_pattern", working_pattern: vacancies.first.working_patterns))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.closing_date", closing_date: format_date(vacancies.first.expires_on)))
@@ -118,7 +118,7 @@ RSpec.describe Jobseekers::AlertMailer do
                   .and include(vacancies.first.job_title)
                   .and include(vacancies.first.job_title)
                   .and include(job_url(vacancies.first, **campaign_params))
-                  .and include(location(vacancies.first.organisation))
+                  .and include(vacancy_full_job_location(vacancies.first))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.salary", salary: vacancies.first.salary))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.working_pattern",
                                       working_pattern: vacancies.first.working_patterns))
