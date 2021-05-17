@@ -19,8 +19,6 @@ RSpec.describe Jobseekers::JobApplication::Details::Qualifications::DegreeForm, 
     let(:params) { { "finished_studying" => "true" } }
 
     it { is_expected.to validate_presence_of(:grade) }
-    it { is_expected.to validate_presence_of(:year) }
-
-    it_behaves_like "validates year format"
+    it { is_expected.to validate_numericality_of(:year).is_less_than_or_equal_to(Time.current.year) }
   end
 end

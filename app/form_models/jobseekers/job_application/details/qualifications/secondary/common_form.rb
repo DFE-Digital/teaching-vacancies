@@ -6,8 +6,8 @@ module Jobseekers::JobApplication::Details::Qualifications::Secondary
 
     validate :at_least_one_qualification_result
     validate :all_qualification_results_valid
-    validates :institution, :year, presence: true
-    validates :year, format: { with: /\A\d{4}\z/.freeze }, if: -> { year.present? }
+    validates :institution, presence: true
+    validates :year, numericality: { less_than_or_equal_to: proc { Time.current.year } }
 
     def initialize(attributes = nil)
       super(attributes)
