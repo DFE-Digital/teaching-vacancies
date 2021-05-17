@@ -27,10 +27,7 @@ module OrganisationHelper
     address_join([organisation.address, organisation.town, organisation.county, organisation.postcode])
   end
 
-  def location(organisation, job_location: nil)
-    return "#{I18n.t('publishers.organisations.readable_job_location.at_multiple_schools')}, #{organisation.name}" if
-      job_location.presence == "at_multiple_schools"
-
+  def location(organisation)
     address_join([organisation.name, organisation.town, organisation.county])
   end
 
