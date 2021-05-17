@@ -45,14 +45,13 @@ RSpec.describe Vacancy do
 
     describe "#remove_vacancies_that_expired_yesterday!" do
       it "selects all records that expired yesterday" do
-        expect(described_class).to receive(:where)
-          .with("expires_at BETWEEN ? AND ?", Time.zone.yesterday.midnight, Date.current.midnight)
+        expect(described_class).to receive(:expired_yesterday)
         described_class.remove_vacancies_that_expired_yesterday!
       end
 
       it "calls .index.delete_objects on the expired records" do
         vacancy = double(Vacancy, id: "ABC123")
-        allow(described_class).to receive(:where).and_return([vacancy])
+        allow(described_class).to receive(:expired_yesterday).and_return([vacancy])
         expect(described_class).to receive_message_chain(:index, :delete_objects).with(%w[ABC123])
         described_class.remove_vacancies_that_expired_yesterday!
       end
@@ -158,6 +157,16 @@ RSpec.describe Vacancy do
     let(:expired_earlier_today) { create(:vacancy, expires_on: Date.current, expires_at: 5.hour.ago) }
     let(:expires_later_today) { create(:vacancy, status: :published, expires_on: Date.current, expires_at: 1.hour.from_now) }
 
+    describe "#active" do
+      it "retrieves active vacancies that have a status of :draft or :published" do
+        draft = create_list(:vacancy, 2, :draft)
+        published = create_list(:vacancy, 5, :published)
+        create_list(:vacancy, 4, :trashed)
+
+        expect(Vacancy.active.count).to eq(draft.count + published.count)
+      end
+    end
+
     describe "#applicable" do
       it "finds current vacancies" do
         expired_earlier_today.send :set_slug
@@ -169,41 +178,13 @@ RSpec.describe Vacancy do
       end
     end
 
-    describe "#active" do
-      it "retrieves active vacancies that have a status of :draft or :published" do
-        draft = create_list(:vacancy, 2, :draft)
-        published = create_list(:vacancy, 5, :published)
-        create_list(:vacancy, 4, :trashed)
+    describe "#awaiting_feedback" do
+      it "gets all vacancies awaiting feedback" do
+        expired_and_awaiting = create_list(:vacancy, 2, :expired)
+        create_list(:vacancy, 3, :expired, listed_elsewhere: :listed_paid, hired_status: :hired_tvs)
+        create_list(:vacancy, 3, :published_slugged)
 
-        expect(Vacancy.active.count).to eq(draft.count + published.count)
-      end
-    end
-
-    describe "#listed" do
-      it "retrieves vacancies that have a status of :published and a past publish_on date" do
-        published = create_list(:vacancy, 5, :published)
-        create_list(:vacancy, 3, :future_publish)
-        create_list(:vacancy, 4, :trashed)
-
-        expect(Vacancy.listed.count).to eq(published.count)
-      end
-    end
-
-    describe "#pending" do
-      it "retrieves vacancies that have a status of :published, a future publish_on date & a future expires_on date" do
-        create_list(:vacancy, 5, :published)
-        pending = create_list(:vacancy, 3, :future_publish)
-
-        expect(Vacancy.pending.count).to eq(pending.count)
-      end
-    end
-
-    describe "#draft" do
-      it "retrieves vacancies that have a status of :draft" do
-        create_list(:vacancy, 5, :published)
-        draft = create_list(:vacancy, 3, :draft)
-
-        expect(Vacancy.draft.count).to eq(draft.count)
+        expect(Vacancy.awaiting_feedback.count).to eq(expired_and_awaiting.count)
       end
     end
 
@@ -223,6 +204,16 @@ RSpec.describe Vacancy do
       end
     end
 
+    describe "#expired_yesterday" do
+      it "retrieves published and unpublished vacancies that have an expires_on date of yesterday" do
+        create(:vacancy, :published, :expired_yesterday)
+        create(:vacancy, :draft, :expired_yesterday)
+        create(:vacancy, :published, :expires_tomorrow)
+
+        expect(Vacancy.expired_yesterday.count).to eq(2)
+      end
+    end
+
     describe "#expires_within_data_access_period" do
       let(:expired_years_ago) { build(:vacancy, expires_on: 2.years.ago, expires_at: 2.years.ago) }
 
@@ -232,10 +223,29 @@ RSpec.describe Vacancy do
       end
     end
 
+    describe "#listed" do
+      it "retrieves vacancies that have a status of :published and a past publish_on date" do
+        published = create_list(:vacancy, 5, :published)
+        create_list(:vacancy, 3, :future_publish)
+        create_list(:vacancy, 4, :trashed)
+
+        expect(Vacancy.listed.count).to eq(published.count)
+      end
+    end
+
     describe "#live" do
       it "includes vacancies till expiry time" do
         expect(Vacancy.live).to include(expires_later_today)
         expect(Vacancy.live).to_not include(expired_earlier_today)
+      end
+    end
+
+    describe "#pending" do
+      it "retrieves vacancies that have a status of :published, a future publish_on date & a future expires_on date" do
+        create_list(:vacancy, 5, :published)
+        pending = create_list(:vacancy, 3, :future_publish)
+
+        expect(Vacancy.pending.count).to eq(pending.count)
       end
     end
 
@@ -253,16 +263,6 @@ RSpec.describe Vacancy do
         expect(Vacancy.published_on_count(1.day.ago)).to eq(published_yesterday.count)
         expect(Vacancy.published_on_count(2.days.ago)).to eq(published_the_other_day.count)
         expect(Vacancy.published_on_count(1.month.ago)).to eq(published_some_other_day.count)
-      end
-    end
-
-    describe "#awaiting_feedback" do
-      it "gets all vacancies awaiting feedback" do
-        expired_and_awaiting = create_list(:vacancy, 2, :expired)
-        create_list(:vacancy, 3, :expired, listed_elsewhere: :listed_paid, hired_status: :hired_tvs)
-        create_list(:vacancy, 3, :published_slugged)
-
-        expect(Vacancy.awaiting_feedback.count).to eq(expired_and_awaiting.count)
       end
     end
   end
@@ -335,6 +335,33 @@ RSpec.describe Vacancy do
       expect(document2_delete).to receive(:delete)
 
       vacancy.delete_documents
+    end
+  end
+
+  describe "#publish_equal_opportunities_report?" do
+    subject { create(:vacancy) }
+
+    before do
+      stub_const("Vacancy::EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD", statuses.count)
+      statuses.each { |status| create(:job_application, status, vacancy: subject) }
+    end
+
+    context "when the vacancy has enough applications to publish the equal opportunities report" do
+      context "when the application statuses are post-submission" do
+        let(:statuses) { %i[status_reviewed status_shortlisted status_submitted status_unsuccessful status_withdrawn] }
+
+        it "returns true" do
+          expect(subject.publish_equal_opportunities_report?).to eq(true)
+        end
+      end
+
+      context "when the vacancy has too few post-submission applications to publish the equal opportunities report" do
+        let(:statuses) { %i[status_draft] }
+
+        it "returns false" do
+          expect(subject.publish_equal_opportunities_report?).to eq(false)
+        end
+      end
     end
   end
 
