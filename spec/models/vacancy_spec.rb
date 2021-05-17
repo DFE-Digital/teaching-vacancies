@@ -155,7 +155,7 @@ RSpec.describe Vacancy do
   end
 
   context "scopes" do
-    let(:expired_earlier_today) { build(:vacancy, expires_on: Date.current, expires_at: 5.hour.ago) }
+    let(:expired_earlier_today) { create(:vacancy, expires_on: Date.current, expires_at: 5.hour.ago) }
     let(:expires_later_today) { create(:vacancy, status: :published, expires_on: Date.current, expires_at: 1.hour.from_now) }
 
     describe "#applicable" do
@@ -220,6 +220,15 @@ RSpec.describe Vacancy do
         trashed_expired.trashed!
 
         expect(Vacancy.expired.count).to eq(1)
+      end
+    end
+
+    describe "#expires_within_data_access_period" do
+      let(:expired_years_ago) { build(:vacancy, expires_on: 2.years.ago, expires_at: 2.years.ago) }
+
+      it "retrieves vacancies that expired not more than one year ago" do
+        expect(Vacancy.expires_within_data_access_period).to_not include(expired_years_ago)
+        expect(Vacancy.expires_within_data_access_period).to include(expired_earlier_today)
       end
     end
 
