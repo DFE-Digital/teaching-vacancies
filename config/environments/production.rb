@@ -97,5 +97,7 @@ Rails.application.configure do
   ].flatten
 
   # Ensure browsers don't cache
-  config.action_dispatch.default_headers.merge!("Cache-Control" => "no-cache, no-store")
+  config.action_dispatch.default_headers["Cache-Control"] = "no-cache, no-store"
+
+  config.active_storage.service = :amazon
 end

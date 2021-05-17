@@ -37,7 +37,9 @@ yarn-debug.log*
 
 # Ignore application configuration
 /config/application.yml
-/config/storage.yml
+
+# Ignore local ActiveStorage upload folder
+storage/
 
 /spec/fixtures/temp_schools_data.csv
 
