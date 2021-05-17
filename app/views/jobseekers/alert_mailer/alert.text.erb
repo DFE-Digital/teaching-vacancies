@@ -4,7 +4,7 @@
 
 <%- @vacancies.each do |vacancy| %>
   <%= show_link(vacancy) %>
-  <%= location(vacancy.parent_organisation, job_location: vacancy.job_location) %>
+  <%= vacancy_full_job_location(vacancy) %>
 
   <%= t(".salary", salary: vacancy.salary) %>
   <%- if vacancy.working_patterns? %>
