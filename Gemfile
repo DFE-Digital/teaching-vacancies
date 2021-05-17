@@ -8,6 +8,7 @@ gem "actionpack", RAILS_VERSION
 gem "activejob", RAILS_VERSION
 gem "activemodel", RAILS_VERSION
 gem "activerecord", RAILS_VERSION
+gem "activestorage", RAILS_VERSION
 gem "activesupport", RAILS_VERSION
 gem "railties", RAILS_VERSION
 
@@ -15,6 +16,7 @@ gem "activerecord-session_store"
 gem "addressable"
 gem "algoliasearch-rails"
 gem "array_enum"
+gem "aws-sdk-s3", require: false
 gem "breasal"
 gem "browser"
 gem "colorize"

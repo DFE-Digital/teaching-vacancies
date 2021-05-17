@@ -62,6 +62,8 @@ Rails.application.configure do
     #   see: https://github.com/flyerhzm/bullet/issues/435
     Bullet.raise = false
   end
+
+  config.active_storage.service = :test
 end
 
 # Avoid OmniAuth output in tests:
