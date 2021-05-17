@@ -23,6 +23,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
 
     @vacancy.update(state: "edit_published")
     validate_all_steps
+    session[:current_step] = :review
     @vacancy = VacancyPresenter.new(@vacancy)
   end
 

@@ -37,10 +37,9 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
       save_listing_and_return_later
     elsif @form.complete_and_valid?
       update_vacancy
-      if params[:commit] == t("buttons.update_job")
+      if params[:commit] == t("buttons.update_job") ||
+         (params[:commit] == t("buttons.continue") && session[:current_step] == :review)
         update_listing
-      elsif params[:commit] == t("buttons.continue") && session[:current_step] == :review
-        update_incomplete_listing
       else
         render_wizard @vacancy
       end
@@ -112,11 +111,6 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
     return unless STRIP_CHECKBOXES.key?(step)
 
     strip_empty_checkboxes(STRIP_CHECKBOXES[step], "publishers_job_listing_#{step}_form".to_sym)
-  end
-
-  def update_incomplete_listing
-    @vacancy.save
-    redirect_updated_job_with_message
   end
 
   def update_listing
