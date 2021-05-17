@@ -65,6 +65,9 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def vacancy
-    @vacancy ||= current_organisation.all_vacancies.listed.find(params[:job_id])
+    @vacancy ||= current_organisation.all_vacancies
+                                     .listed
+                                     .expires_within_data_access_period
+                                     .find(params[:job_id])
   end
 end
