@@ -103,7 +103,11 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     add_google_error(document_params.original_filename) if document_upload.google_error
     add_virus_error(document_params.original_filename) unless document_upload.safe_download
 
-    document_attributes(document_params, document_upload) unless errors_on_file?(document_params.original_filename)
+    return if errors_on_file?(document_params.original_filename)
+
+    @vacancy.supporting_documents.attach(document_params)
+
+    document_attributes(document_params, document_upload)
   end
 
   def add_file_type_error(filename)
