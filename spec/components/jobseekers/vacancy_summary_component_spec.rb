@@ -24,7 +24,7 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
       end
 
       it "renders the address" do
-        expect(rendered_component).to include(location(vacancy.parent_organisation))
+        expect(rendered_component).to include(vacancy_full_job_location(vacancy))
       end
 
       it "renders the school type label" do
@@ -78,7 +78,7 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
     end
 
     it "renders the job location" do
-      expect(rendered_component).to include(location(vacancy.parent_organisation, job_location: "at_multiple_schools"))
+      expect(rendered_component).to include("#{I18n.t('publishers.organisations.readable_job_location.at_multiple_schools')}, #{organisation.name}")
     end
 
     it "renders the unique school types" do
@@ -97,7 +97,7 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
     end
 
     it "renders the address" do
-      assert_includes rendered_component, location(vacancy.parent_organisation)
+      assert_includes rendered_component, vacancy_full_job_location(vacancy)
     end
 
     it "renders the trust type label" do
