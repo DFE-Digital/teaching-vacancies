@@ -8,7 +8,7 @@
     h1.govuk-heading-xl class="govuk-!-margin-bottom-2"
       = @vacancy.job_title
     h2.govuk-caption-l.job-caption class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
-      = vacancy_job_location(@vacancy)
+      = vacancy_full_job_location(@vacancy)
 
     .govuk-grid-row
       - if JobseekerApplicationsFeature.enabled? && @vacancy.enable_job_applications? && @vacancy.expires_at.future?

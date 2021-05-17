@@ -86,6 +86,14 @@ module VacanciesHelper
     address_join([organisation.name, organisation.town, organisation.county])
   end
 
+  def vacancy_full_job_location(vacancy)
+    organisation = vacancy.parent_organisation
+    return "#{t('publishers.organisations.readable_job_location.at_multiple_schools')}, #{organisation.name}" if
+      vacancy.job_location == "at_multiple_schools"
+
+    address_join([organisation.address, organisation.town, organisation.county, organisation.postcode])
+  end
+
   def vacancy_job_location_heading(vacancy)
     return t("school_groups.job_location_heading.#{vacancy.job_location}") unless vacancy.job_location == "at_multiple_schools"
 
