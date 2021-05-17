@@ -34,6 +34,7 @@ local: ## local # Same values as the deployed dev environment, adapted for local
 .PHONY: dev
 dev: ## dev
 		$(eval env=dev)
+		$(eval space=teaching-vacancies-dev)
 		$(eval var_file=$(env))
 		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
 
@@ -41,6 +42,7 @@ dev: ## dev
 review: ## review # Requires `pr_id=NNNN`
 		$(if $(pr_id), , $(error Missing environment variable "pr_id"))
 		$(eval env=review-pr-$(pr_id))
+		$(eval space=teaching-vacancies-review)
 		$(eval export TF_VAR_environment=$(env))
 		$(eval var_file=review)
 		$(eval backend_config=-backend-config="key=review/$(env).tfstate")
@@ -48,6 +50,7 @@ review: ## review # Requires `pr_id=NNNN`
 .PHONY: staging
 staging: ## staging
 		$(eval env=staging)
+		$(eval space=teaching-vacancies-staging)
 		$(eval var_file=$(env))
 		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
 
@@ -55,12 +58,14 @@ staging: ## staging
 production: ## production # Requires `CONFIRM_PRODUCTION=true`
 		$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
 		$(eval env=production)
+		$(eval space=teaching-vacancies-production)
 		$(eval var_file=$(env))
 		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
 
 .PHONY: qa
 qa: ## qa
 		$(eval env=qa)
+		$(eval space=teaching-vacancies-dev)
 		$(eval var_file=$(env))
 		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
 
@@ -153,6 +158,12 @@ terraform-monitoring-plan: terraform-monitoring-init ## make passcode=MyPasscode
 .PHONY: terraform-monitoring-apply
 terraform-monitoring-apply: terraform-monitoring-init ## make passcode=MyPasscode terraform-monitoring-apply
 		cd terraform/monitoring && terraform apply -input=false -auto-approve
+
+##@ rails console. Ability to rail console to apps on PaaS
+
+console: ## make qa console
+	cf target -s ${space}
+	cf ssh teaching-vacancies-${env} -t -c "cd /app && /usr/local/bin/bundle exec rails c"
 
 ##@ Help
 
