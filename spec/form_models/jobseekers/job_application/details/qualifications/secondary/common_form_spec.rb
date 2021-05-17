@@ -6,9 +6,7 @@ RSpec.describe Jobseekers::JobApplication::Details::Qualifications::Secondary::C
 
   it { is_expected.to validate_presence_of(:category) }
   it { is_expected.to validate_presence_of(:institution) }
-  it { is_expected.to validate_presence_of(:year) }
-
-  it_behaves_like "validates year format"
+  it { is_expected.to validate_numericality_of(:year).is_less_than_or_equal_to(Time.current.year) }
 
   describe "qualification result validations" do
     context "when no qualification results are given" do
