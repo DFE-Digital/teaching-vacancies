@@ -103,6 +103,21 @@ FactoryBot.define do
       expires_at { Faker::Time.backward(days: 6) }
     end
 
+    trait :expired_yesterday do
+      expires_on { Time.zone.yesterday.end_of_day }
+      expires_at { Time.zone.yesterday.midday }
+    end
+
+    trait :expired_years_ago do
+      expires_at { 2.years.ago }
+      expires_on { 2.years.ago }
+    end
+
+    trait :expires_tomorrow do
+      expires_on { Time.zone.tomorrow.end_of_day }
+      expires_at { Time.zone.tomorrow.midday }
+    end
+
     trait :future_publish do
       publish_on { Date.current + 2.days }
       expires_on { Date.current + 2.months }
@@ -119,15 +134,6 @@ FactoryBot.define do
     trait :job_schema do
       working_patterns { %w[full_time part_time] }
       benefits { Faker::Lorem.sentence }
-    end
-
-    trait :expire_tomorrow do
-      expires_on { Time.zone.tomorrow.end_of_day }
-    end
-
-    trait :expired_years_ago do
-      expires_at { 2.years.ago }
-      expires_on { 2.years.ago }
     end
 
     trait :without_working_patterns do
