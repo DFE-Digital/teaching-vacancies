@@ -4,7 +4,6 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
   let(:location) { nil }
   let(:search_with_polygons?) { false }
   let(:jobseeker_signed_in?) { false }
-  let(:jobseeker_account_prompt_variant) { nil }
   let(:jobseeker) { build_stubbed(:jobseeker) }
 
   describe "recaptcha" do
@@ -36,7 +35,6 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
       let!(:jobseeker) { create(:jobseeker) }
 
       context "when jobseeker is signed in" do
-        let(:jobseeker_account_prompt_variant) { :link }
         let(:jobseeker_signed_in?) { true }
 
         it "redirects to job alerts dashboard" do
