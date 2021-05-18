@@ -110,9 +110,9 @@ en:
       before_today: The date the job will be listed must be either today or in the future
       invalid: Enter a date in the correct format
     expires_on:
-      blank: Enter the date applications are due
-      before_today: The date applications are due must be in the future
-      before_publish_on: The date applications are due must be after the date the job will be listed
+      blank: Enter the closing date
+      before_today: The closing date must be in the future
+      before_publish_on: The closing date must be after the date the job will be listed
       invalid: Enter a date in the correct format
     expires_at:
       blank: Enter the time applications are due
@@ -216,10 +216,10 @@ en:
         publishers/job_listing/extend_deadline_form:
           attributes:
             expires_on:
-              blank: Enter the date applications are due
-              in_past: The date applications are due must be in the future
+              blank: Enter the closing date
+              in_past: The closing date must be in the future
               invalid: Enter a date in the correct format
-              not_extended: To extend the deadline enter a date that is after the current deadline
+              not_extended: To extend the closing date enter a date that is after the current deadline
             expiry_time:
               inclusion: Select the time the application is due
             starts_on:
