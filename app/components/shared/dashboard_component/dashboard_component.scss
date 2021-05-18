@@ -9,23 +9,17 @@
 
   @include govuk-media-query ($from: desktop) {
     .govuk-width-container {
-      position: relative;
+      display: flex;
     }
 
     &__button {
-      bottom: govuk-spacing(3);
-      margin-top: 0;
-      position: absolute;
-      right: 0;
+      flex-grow: 1;
+      text-align: right;
     }
   }
 
   h2 {
     word-wrap: break-word;
-  }
-
-  &__button {
-    margin-top: govuk-spacing(4);
   }
 
   &-navigation {
