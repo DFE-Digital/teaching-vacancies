@@ -1,18 +1,8 @@
 @media print {
   .publishers_vacancies_job_applications_show {
-    .account-sidebar,
-    .anchor-link-list,
-    .application-status,
     .govuk-accordion__icon,
-    .job-application-actions,
     .timeline-component {
       display: none !important;
-    }
-
-    .review-component__heading {
-      .govuk-link {
-        display: none !important;
-      }
     }
 
     .govuk-accordion__section > div {
