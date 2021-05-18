@@ -120,8 +120,8 @@ en:
       must_be_am_pm: Select am or pm
     starts_on:
       before_today: The date the job will be listed must be in the future
-      before_publish_on: The date the job will be listed must be after the date the job will be listed
-      before_expires_on: The date the job will be listed must be after the date applications are due
+      before_publish_on: The date the job starts must be after the date the job listing will be published
+      before_expires_on: The date the job starts must be after the date applications are due
       invalid: Enter a date in the correct format
       multiple_start_dates: Select either a start date or 'As soon as possible'
   applying_for_the_job_errors: &applying_for_the_job_errors
