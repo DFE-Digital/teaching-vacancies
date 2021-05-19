@@ -403,7 +403,7 @@ en:
       title: Manage your job alert
     errors:
       duplicate_alert: A job alert matching this criteria already exists
-      no_criteria_selected: Please choose at least one criteria
+      no_criteria_selected: Please enter at least one keyword, location or other filter.
     info: You can unsubscribe at any time by following the simple instructions at the bottom of the alert.
     intro: 'We’ll email you details of any new jobs that match the following criteria:'
     jobseeker_account_prompt:
