@@ -178,7 +178,7 @@ en:
           href="https://www.gov.uk/guidance/publishing-accessible-documents#writing-accessible-documents">
           how to make documents accessible.</a></p>
       publishers_job_listing_extend_deadline_form:
-        expires_on: For example, 01 05 2021
+        expires_at: For example, 01 05 2021
         starts_on: For example, 01 09 2021
       publishers_job_listing_important_dates_form:
         expires_on: For example, 01 05 2021
@@ -538,7 +538,7 @@ en:
       publishers_job_listing_end_listing_form:
         end_listing_reason: Why would you like to end this job listing early?
       publishers_job_listing_extend_deadline_form:
-        expires_on: Closing date
+        expires_at: Closing date
         expiry_time: Time application is due
         starts_on: Date job starts
       publishers_job_listing_feedback_form:
