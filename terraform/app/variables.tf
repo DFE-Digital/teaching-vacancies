@@ -30,6 +30,11 @@ variable "channel_list" {
   default = {}
 }
 
+# Documents S3 bucket
+variable "documents_s3_bucket_force_destroy" {
+  default = false
+}
+
 # Gov.UK PaaS
 
 variable "paas_app_docker_image" {
