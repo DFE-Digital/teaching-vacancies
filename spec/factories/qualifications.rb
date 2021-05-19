@@ -15,10 +15,10 @@ FactoryBot.define do
     category { Qualification.categories.keys.sample }
     finished_studying { undergraduate? || postgraduate? ? Faker::Boolean.boolean : nil }
     finished_studying_details { finished_studying == false ? "Stopped due to illness" : "" }
-    grade { !finished_studying? || secondary? ? "" : %w[A B C D E F].sample }
+    grade { !finished_studying? ? "" : ["2.1", "Flying Colours", "Honours"].sample }
     institution { secondary? ? Faker::Educator.secondary_school : Faker::Educator.university }
     name { other_secondary? || other? ? Faker::Educator.degree : "" }
-    subject { secondary? ? "" : Faker::Educator.subject }
+    subject { undergraduate? || postgraduate? ? Faker::Educator.subject : "" }
     year { finished_studying == false ? nil : rand(1970..2020) }
 
     job_application
