@@ -84,4 +84,26 @@ RSpec.describe VacanciesHelper do
       expect(back_to_manage_jobs_link(vacancy)).to eq(jobs_with_type_organisation_path("expired"))
     end
   end
+
+  describe "#vacancy_full_job_location" do
+    subject { vacancy_full_job_location(vacancy) }
+
+    context "when job_location is at_multiple_schools" do
+      let(:trust) { build(:trust, name: "Magic Trust") }
+      let(:vacancy) { build(:vacancy, :at_multiple_schools, organisation_vacancies_attributes: [{ organisation: trust }])}
+
+      it "returns the multiple schools location" do
+        expect(subject).to eq("More than one school, Magic Trust")
+      end
+    end
+
+    context "when job_location is not at_multiple_schools" do
+      let(:school) { build(:school, name: "Magic School", town: "Cool Town", county: "Orange County", postcode: "SW1A") }
+      let(:vacancy) { build(:vacancy, organisation_vacancies_attributes: [{ organisation: school }])}
+
+      it "returns the full location" do
+        expect(subject).to eq("Magic School, Cool Town, Orange County, SW1A")
+      end
+    end
+  end
 end
