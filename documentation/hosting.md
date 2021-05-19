@@ -169,6 +169,9 @@ cd /app
 /usr/local/bin/bundle exec rails console
 ```
 
+```Makefile
+make <env> console e.g. make qa console
+```
 ## Run task
 
 ```bash
