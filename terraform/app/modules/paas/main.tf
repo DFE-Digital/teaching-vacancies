@@ -26,7 +26,8 @@ resource "cloudfoundry_user_provided_service" "papertrail" {
 }
 
 resource "aws_s3_bucket" "documents_s3_bucket" {
-  bucket = local.documents_s3_bucket_name
+  bucket        = local.documents_s3_bucket_name
+  force_destroy = var.documents_s3_bucket_force_destroy
 }
 
 resource "aws_s3_bucket_public_access_block" "documents_s3_bucket_block" {
