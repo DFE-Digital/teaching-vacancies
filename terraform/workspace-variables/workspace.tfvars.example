@@ -21,6 +21,9 @@ channel_list = {
   }
 }
 
+# Documents S3 bucket
+documents_s3_bucket_force_destroy = false
+
 # Gov.UK PaaS
 paas_api_url                        = "https://api.london.cloud.service.gov.uk"
 paas_space_name                     = ""
