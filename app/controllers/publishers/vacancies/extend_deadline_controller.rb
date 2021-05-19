@@ -28,7 +28,7 @@ class Publishers::Vacancies::ExtendDeadlineController < Publishers::Vacancies::B
 
   def form_params
     params.require(:publishers_job_listing_extend_deadline_form)
-          .permit(:expires_on, :expiry_time, :starts_on, :starts_asap)
+          .permit(:expires_at, :expiry_time, :starts_on, :starts_asap)
           .merge(previous_deadline: vacancy.expires_at)
   end
 
