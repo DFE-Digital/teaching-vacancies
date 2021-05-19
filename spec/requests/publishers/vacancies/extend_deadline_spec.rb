@@ -38,14 +38,13 @@ RSpec.describe "Extend deadline" do
   end
 
   describe "PATCH #update" do
-    let(:expires_on) { 6.months.from_now }
-    let(:expires_at) { Time.zone.parse("#{expires_on.year}-#{expires_on.month}-#{expires_on.day} 9:00") }
+    let(:expires_at) { 6.months.from_now }
 
     let(:form_params) do
       {
-        "expires_on(1i)" => expires_on.year.to_s,
-        "expires_on(2i)" => expires_on.month.to_s,
-        "expires_on(3i)" => expires_on.day.to_s,
+        "expires_at(1i)" => expires_at.year.to_s,
+        "expires_at(2i)" => expires_at.month.to_s,
+        "expires_at(3i)" => expires_at.day.to_s,
         expiry_time: "9:00",
         starts_asap: "0",
       }
@@ -88,7 +87,7 @@ RSpec.describe "Extend deadline" do
     it "extends the deadline, updates google index and redirects to active jobs dashboard" do
       freeze_time do
         expect { patch organisation_job_extend_deadline_path(vacancy.id), params: params }
-            .to change { vacancy.reload.expires_at }.from(1.month.from_now).to(expires_at)
+            .to change { vacancy.reload.expires_at }.from(1.month.from_now).to(expires_at.change({ hour: 9, minute: 0 }))
             .and have_enqueued_job(UpdateGoogleIndexQueueJob)
 
         expect(response).to redirect_to(jobs_with_type_organisation_path(:published))
