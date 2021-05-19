@@ -39,6 +39,10 @@ variable "redis_cache_service_plan" {
 variable "redis_queue_service_plan" {
 }
 
+variable "documents_s3_bucket_force_destroy" {
+  default = false
+}
+
 variable "service_name" {
 }
 variable "service_abbreviation" {

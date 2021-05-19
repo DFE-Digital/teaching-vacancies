@@ -20,6 +20,9 @@ channel_list = {
   #   }
 }
 
+# Documents S3 bucket
+documents_s3_bucket_force_destroy = true
+
 # Gov.UK PaaS
 paas_space_name                        = "teaching-vacancies-review"
 paas_postgres_service_plan             = "tiny-unencrypted-11"
