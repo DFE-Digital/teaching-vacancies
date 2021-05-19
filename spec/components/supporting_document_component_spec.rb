@@ -1,8 +1,7 @@
 require "rails_helper"
 
 RSpec.describe SupportingDocumentComponent, type: :component do
-  let(:supporting_document) { double("ActiveStorage attachment", blob: blob) }
-  let(:blob) { double("blob", filename: "joe.docx", byte_size: 100_000) }
+  let(:supporting_document) { double("ActiveStorage attachment", filename: "joe.docx", byte_size: 100_000) }
   let(:kwargs) { { supporting_document: supporting_document } }
 
   subject! { render_inline(described_class.new(**kwargs)) }
@@ -16,7 +15,7 @@ RSpec.describe SupportingDocumentComponent, type: :component do
         .to have_css(
           "a[href='#{Rails.application.routes.url_helpers.document_path(supporting_document)}']",
           class: "supporting-document-component__link",
-          text: supporting_document.blob.filename,
+          text: supporting_document.filename,
         )
     end
   end

@@ -1,3 +1,3 @@
 = tag.div(class: classes, **html_attributes) do
-  = govuk_link_to supporting_document.blob.filename, document_path(supporting_document), target: "_blank", class: "supporting-document-component__link"
+  = govuk_link_to supporting_document.filename, job_document_path(supporting_document.record, supporting_document), target: "_blank", class: "supporting-document-component__link"
   = document_size
