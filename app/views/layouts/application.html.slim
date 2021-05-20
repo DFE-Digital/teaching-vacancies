@@ -28,7 +28,7 @@ html.govuk-template.app-html-class lang="en"
     - unless cookies_preference_set? || %i[bottom_sticky_default bottom_sticky_gds].include?(ab_variant_for(:"2021_05_cookie_consent_test"))
       = render(AbTest::CookiesBannerComponent.new(create_path: create_cookies_preferences_path(cookies_consent: "yes", **utm_parameters), reject_path: create_cookies_preferences_path(cookies_consent: "no", **utm_parameters), preferences_path: cookies_preferences_path(**utm_parameters)).with_variant(ab_variant_for(:"2021_05_cookie_consent_test")))
 
-    = render Shared::EnvironmentBannerComponent.new
+    = render EnvironmentBannerComponent.new
 
     header.govuk-header data-module="govuk-header"
       .govuk-header__container.govuk-width-container
@@ -43,7 +43,7 @@ html.govuk-template.app-html-class lang="en"
             = t("app.title")
           button.govuk-header__menu-button.govuk-js-header-toggle data-module="govuk-button" type="button" role="button" aria-controls="navigation" aria-label="Show or hide Top Level Navigation"
             | Menu
-          = render(Shared::NavbarComponent.new)
+          = render(NavbarComponent.new)
 
       .govuk-phase-banner aria-label="banner"
         .govuk-width-container
