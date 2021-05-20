@@ -15,6 +15,10 @@ class CopyVacancy
   private
 
   def copy_documents
+    @vacancy.supporting_documents.each do |supporting_doc|
+      @new_vacancy.supporting_documents.attach(supporting_doc.blob)
+    end
+
     @vacancy.documents.each do |document|
       document_copy = DocumentCopy.new(document.google_drive_id)
       document_copy.copy

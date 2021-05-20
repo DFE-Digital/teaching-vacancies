@@ -36,17 +36,27 @@ RSpec.describe CopyVacancy do
     end
 
     describe "#documents" do
-      it "copies documents when copying a vacancy" do
-        document = create(:document,
-                          name: "Test.png",
-                          size: 1000,
-                          content_type: "image/png",
-                          download_url: "test/test.png",
-                          google_drive_id: "testid")
-        vacancy = create(:vacancy, documents: [document])
+      let(:document) do
+        create(
+          :document,
+          name: "Test.png",
+          size: 1000,
+          content_type: "image/png",
+          download_url: "test/test.png",
+          google_drive_id: "testid",
+        )
+      end
+      let(:vacancy) { create(:vacancy, documents: [document]) }
+      let(:result) { described_class.new(vacancy).call }
 
-        result = described_class.new(vacancy).call
+      it "attaches supporting document when copying a vacancy" do
+        vacancy.supporting_documents.attach(fixture_file_upload("blank_job_spec.pdf"))
 
+        expect(result.supporting_documents.count).to eq(1)
+        expect(result.supporting_documents.first.blob).to eq(vacancy.supporting_documents.first.blob)
+      end
+
+      it "copies legacy documents when copying a vacancy" do
         expect(result.documents.first.name).to eq(vacancy.documents.first.name)
       end
     end
