@@ -2,19 +2,26 @@ require "rails_helper"
 
 RSpec.describe "Documents" do
   let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
-  let(:document) { vacancy.documents.first }
+  let(:supporting_document) do
+    vacancy.supporting_documents.attach(fixture_file_upload("blank_job_spec.pdf"))
+    vacancy.supporting_documents.first
+  end
 
   describe "GET #show" do
-    it "redirects to the document link" do
-      get document_path(document)
+    it "redirects to ActiveStorage" do
+      get job_document_path(vacancy, supporting_document)
 
-      expect(response).to redirect_to(document.download_url)
+      expect(response).to redirect_to(supporting_document)
     end
 
     it "triggers a `vacancy_document_downloaded` event" do
-      expect { get document_path(document) }
+      expect { get job_document_path(vacancy, supporting_document) }
         .to have_triggered_event(:vacancy_document_downloaded)
-        .and_data(vacancy_id: vacancy.id, document_id: document.id, filename: document.name)
+        .and_data(
+          vacancy_id: vacancy.id,
+          document_id: supporting_document.id,
+          filename: supporting_document.filename,
+        )
     end
   end
 end
