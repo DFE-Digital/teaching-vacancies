@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Shared::CardComponent, type: :component do
+RSpec.describe CardComponent, type: :component do
   let(:kwargs) { {} }
 
   subject! { render_inline(described_class.new(**kwargs)) }
