@@ -1,5 +1,49 @@
 @media print {
   .publishers_vacancies_job_applications_show {
+
+    .review-component__body {
+      .govuk-summary-list__row > * {
+        font-size: 0.8em;
+      }
+
+      .govuk-body {
+        font-size: 1em;
+      }
+
+      margin-bottom: govuk-spacing(4);
+    }
+
+    .review-component__heading {
+      margin-bottom: 0;
+    }
+
+    .review-component {
+      border-bottom: 1px solid $govuk-border-colour;
+      margin-bottom: govuk-spacing(4);
+    }
+
+    .govuk-accordion__section-header, .govuk-accordion__section, .govuk-summary-list__actions, .review-component__body--border {
+      border: none !important;
+    }
+
+    .govuk-heading-xl {
+      margin-bottom: 0 !important;
+    }
+
+    .review-component__heading__title {
+      flex-basis: 75%;
+    }
+
+    .govuk-summary-list__key, .govuk-summary-list__value, .govuk-summary-list__actions, .govuk-summary-list__value .govuk-body {
+      display: table-row;
+      margin-bottom: govuk-spacing(2);
+      width: 100%;
+    }
+
+    .govuk-summary-list__row, .govuk-summary-list__value .govuk-body {
+      border-bottom: none !important;
+    }
+
     .govuk-accordion__icon,
     .timeline-component {
       display: none !important;
