@@ -1,4 +1,4 @@
-class Shared::SearchableCollectionComponent < ViewComponent::Base
+class SearchableCollectionComponent < ViewComponent::Base
   attr_accessor :form, :attribute_name, :collection, :value_method, :text_method, :hint_method, :threshold, :small, :scrollable
 
   def initialize(form:, attribute_name:, collection:, value_method:, text_method:, hint_method:, threshold: 10, scrollable: false)

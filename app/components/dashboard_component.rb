@@ -1,4 +1,4 @@
-class Shared::DashboardComponent < ViewComponent::Base
+class DashboardComponent < ViewComponent::Base
   attr_reader :heading, :navigation_items, :panel, :link
 
   def initialize(heading:, navigation_items: [], link: nil)

@@ -1,4 +1,4 @@
-= render(Shared::DashboardComponent.new(heading: t("jobs.manage.heading_html", organisation: @organisation.name, email: @email), navigation_items: vacancy_links, link: { url: organisation_jobs_path, text: t("buttons.create_job") }))
+= render(DashboardComponent.new(heading: t("jobs.manage.heading_html", organisation: @organisation.name, email: @email), navigation_items: vacancy_links, link: { url: organisation_jobs_path, text: t("buttons.create_job") }))
 
 .govuk-main-wrapper
   .vacancies-component
@@ -49,7 +49,7 @@
             = render "publishers/organisations/vacancies_awaiting_feedback", organisation: @organisation, vacancies: @vacancies
           - else
             - vacancies.each do |vacancy|
-              = render Shared::CardComponent.new(html_attributes: { id: dom_id(vacancy) }) do |card|
+              = render CardComponent.new(html_attributes: { id: dom_id(vacancy) }) do |card|
                 - card.header do
                   = tag.div(govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id)))
                   - if organisation.school_group?

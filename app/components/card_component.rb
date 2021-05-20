@@ -1,4 +1,4 @@
-class Shared::CardComponent < GovukComponent::Base
+class CardComponent < GovukComponent::Base
   include ViewComponent::SlotableV2
 
   renders_one :header

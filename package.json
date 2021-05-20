@@ -41,8 +41,8 @@
     "test": "concurrently \"yarn run js:test\" \"yarn run js:lint\" \"yarn run sass:lint\"",
     "js:test": "jest",
     "js:test:coverage": "jest --coverage",
-    "js:lint": "eslint ./app/frontend/src ./app/components/shared",
-    "sass:lint": "yarn stylelint app/frontend/**/*/*.scss app/components/**/*/*.scss -q",
+    "js:lint": "eslint ./app/frontend/src ./app/components",
+    "sass:lint": "yarn stylelint app/frontend/**/*/*.scss app/components/*/*.scss -q",
     "visual:test": "backstop test --config='config/backstop/backstop.config.js'",
     "visual:approve": "backstop approve --config='config/backstop/backstop.config.js'"
   },

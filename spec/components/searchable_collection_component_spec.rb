@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Shared::SearchableCollectionComponent, type: :component do
+RSpec.describe SearchableCollectionComponent, type: :component do
   let(:form) { instance_double(GOVUKDesignSystemFormBuilder::FormBuilder) }
 
   let(:collection) { [1, 2, 3, 4, 5].freeze }
