@@ -112,28 +112,20 @@ module JobseekerHelpers
   end
 
   def fill_in_gcse
-    within "#qualification-result-0" do
-      fill_in "Subject 1", with: "Maths"
-      fill_in "Grade", with: "110%"
-    end
-    within "#qualification-result-1" do
-      fill_in "Subject 2", with: "PE"
-      fill_in "Grade", with: "90%"
-    end
+    fill_in "jobseekers_job_application_details_qualifications_secondary_common_form[qualification_results_attributes][0][subject]", with: "Maths"
+    fill_in "jobseekers_job_application_details_qualifications_secondary_common_form[qualification_results_attributes][0][grade]", with: "110%"
+    fill_in "jobseekers_job_application_details_qualifications_secondary_common_form[qualification_results_attributes][1][subject]", with: "PE"
+    fill_in "jobseekers_job_application_details_qualifications_secondary_common_form[qualification_results_attributes][1][grade]", with: "90%"
     fill_in "School, college, or other organisation", with: "Churchill School for Gifted Macaques"
     fill_in "Year qualification(s) was/were awarded", with: "2020"
   end
 
   def fill_in_secondary_qualification
     fill_in "Qualification name", with: "Welsh Baccalaureate"
-    within "#qualification-result-0" do
-      fill_in "Subject 1", with: "Science"
-      fill_in "Grade", with: "5"
-    end
-    within "#qualification-result-1" do
-      fill_in "Subject 2", with: "German"
-      fill_in "Grade", with: "4"
-    end
+    fill_in "jobseekers_job_application_details_qualifications_secondary_other_form[qualification_results_attributes][0][subject]", with: "Science"
+    fill_in "jobseekers_job_application_details_qualifications_secondary_other_form[qualification_results_attributes][0][grade]", with: "5"
+    fill_in "jobseekers_job_application_details_qualifications_secondary_other_form[qualification_results_attributes][1][subject]", with: "German"
+    fill_in "jobseekers_job_application_details_qualifications_secondary_other_form[qualification_results_attributes][1][grade]", with: "4"
     fill_in "School, college, or other organisation", with: "Happy Rainbows School for High Achievers"
     fill_in "Year qualification(s) was/were awarded", with: "2020"
   end

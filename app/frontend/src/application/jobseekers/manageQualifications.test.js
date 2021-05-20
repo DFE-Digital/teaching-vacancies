@@ -132,8 +132,9 @@ describe('manageQualifications', () => {
       expect(label.innerHTML).toBe('Subject 6');
     });
 
-    test('does not renumber cell input values', () => {
-      renumberCell(input, 4);
+    test('renumbers input attributes except for values', () => {
+      renumberCell(input, 5);
+      expect(input.getAttribute('id')).toBe('s5');
       expect(input.value).toBe('Economics 101');
     });
   });
