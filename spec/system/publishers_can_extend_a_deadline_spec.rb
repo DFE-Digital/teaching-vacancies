@@ -4,7 +4,7 @@ RSpec.describe "Publishers can extend a deadline" do
   let(:organisation) { create(:school) }
   let!(:vacancy) { create(:vacancy, :published, organisation_vacancies_attributes: [{ organisation: organisation }]) }
   let(:publisher) { create(:publisher) }
-  let(:expires_on) { vacancy.expires_at + 1.month }
+  let(:expires_at) { vacancy.expires_at + 1.month }
 
   before do
     login_publisher(publisher: publisher, organisation: organisation)
@@ -18,9 +18,9 @@ RSpec.describe "Publishers can extend a deadline" do
 
     expect(page).to have_content("There is a problem")
 
-    fill_in "publishers_job_listing_extend_deadline_form[expires_on(1i)]", with: expires_on.year
-    fill_in "publishers_job_listing_extend_deadline_form[expires_on(2i)]", with: expires_on.month
-    fill_in "publishers_job_listing_extend_deadline_form[expires_on(3i)]", with: expires_on.day
+    fill_in "publishers_job_listing_extend_deadline_form[expires_at(1i)]", with: expires_at.year
+    fill_in "publishers_job_listing_extend_deadline_form[expires_at(2i)]", with: expires_at.month
+    fill_in "publishers_job_listing_extend_deadline_form[expires_at(3i)]", with: expires_at.day
     choose "Start of the working day (9 am)", name: "publishers_job_listing_extend_deadline_form[expiry_time]"
 
     click_on I18n.t("buttons.extend_deadline")
