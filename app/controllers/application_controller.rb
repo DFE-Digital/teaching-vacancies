@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception, except: :not_found
 
-  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+  rescue_from ActionController::RoutingError, with: :not_found
 
   before_action :redirect_to_canonical_domain, :set_headers
   before_action :store_jobseeker_redirect_to!, if: -> { redirect_to_param.present? }
