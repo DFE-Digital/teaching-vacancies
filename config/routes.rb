@@ -191,6 +191,4 @@ Rails.application.routes.draw do
         to: "vacancies#index", as: :subject, via: :get,
         constraints: ->(request) { SUBJECT_OPTIONS.map(&:first).include?(request.params[:subject]) },
         defaults: { pretty: :subject }
-
-  match "*path", to: "errors#not_found", via: :all
 end
