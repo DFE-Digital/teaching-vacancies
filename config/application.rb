@@ -101,5 +101,11 @@ module TeacherVacancyService
     config.view_component.preview_route = "/components"
     config.view_component.preview_controller = "PreviewsController"
     config.view_component.show_previews = true
+
+    config.after_initialize do |app|
+      # Catch-all 404 route
+      # Defined here instead of routes.rb to ensure it doesn't override gem/engine routes
+      app.routes.append { match "*path", to: "errors#not_found" } unless config.consider_all_requests_local
+    end
   end
 end

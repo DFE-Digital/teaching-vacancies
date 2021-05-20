@@ -1,6 +1,6 @@
 class DocumentsController < ApplicationController
   def show
-    # TODO: Replace this with a frontend-triggered event so we will be able to cache this document
+    # TODO: Replace this with a frontend-triggered event so we can get rid of this controller
     request_event.trigger(:vacancy_document_downloaded, vacancy_id: vacancy.id, document_id: document.id, filename: document.filename)
 
     redirect_to document
