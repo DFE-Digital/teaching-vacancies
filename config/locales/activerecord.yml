@@ -215,18 +215,17 @@ en:
               inclusion: Select how the successful candidate applied for the role
         publishers/job_listing/extend_deadline_form:
           attributes:
-            expires_on:
-              blank: Enter the closing date
-              in_past: The closing date must be in the future
+            expires_at:
+              after: To extend the closing date enter a date that is after the current deadline
               invalid: Enter a date in the correct format
-              not_extended: To extend the closing date enter a date that is after the current deadline
+              on_or_after: The closing date must be in the future
             expiry_time:
               inclusion: Select the time the application is due
             starts_on:
-              before_deadline: The date the job starts must be after the date applications are due
+              after: The date the job starts must be after the date applications are due
               date_and_asap: Select either a start date or 'As soon as possible'
-              in_past: The date the job starts must be in the future
               invalid: Enter a date in the correct format
+              on_or_after: The date the job starts must be in the future
         publishers/organisation_form:
           attributes:
             <<: *organisation_errors
@@ -343,10 +342,9 @@ en:
             current_role:
               inclusion: Select yes if this is your current role
             ended_on:
-              before_started_on: End date must be after the start date
-              blank: Enter the date you left this school or organisation
-              invalid: Enter a valid end date
-              not_in_the_past: The date the role ended must be in the past
+              after: End date must be after the start date
+              before: The date the role ended must be in the past
+              invalid: Enter a date in the correct format
             job_title:
               blank: Enter your job title
             main_duties:
@@ -354,9 +352,8 @@ en:
             organisation:
               blank: Enter a school or other organisation
             started_on:
-              blank: Enter the date you started at this school or organisation
-              invalid: Enter a valid start date
-              not_in_the_past: The date the role started must be in the past
+              before: The date the role started must be in the past
+              invalid: Enter a date in the correct format
         jobseekers/job_application/details/qualifications/category_form:
           attributes:
             <<: *qualification_errors
