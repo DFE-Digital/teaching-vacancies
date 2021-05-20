@@ -27,7 +27,7 @@
     .govuk-grid-column-full
         - if subscriptions.any?
           - subscriptions.each do |subscription|
-            = render Shared::CardComponent.new do |card|
+            = render CardComponent.new do |card|
               - card.header do
                 - subscription.filtered_search_criteria.each_pair do |filter, value|
                   = tag.div(card.labelled_item(filter.humanize, value))

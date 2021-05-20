@@ -38,8 +38,8 @@
   }
 
   &__timestamp {
-    flex-basis: 20%;
     color: $govuk-secondary-text-colour;
+    flex-basis: 20%;
     text-align: right;
 
     @include govuk-media-query ($until: desktop) {

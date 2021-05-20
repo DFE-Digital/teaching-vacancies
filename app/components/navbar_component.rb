@@ -1,4 +1,4 @@
-class Shared::NavbarComponent < ViewComponent::Base
+class NavbarComponent < ViewComponent::Base
   delegate :active_link_class, to: :helpers
   delegate :current_organisation, to: :helpers
   delegate :current_publisher, to: :helpers
