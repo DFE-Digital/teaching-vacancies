@@ -58,7 +58,7 @@ export const renumberCell = (renumberEl, newNumber) => {
     renumberEl.innerHTML = renumberEl.innerHTML.replace(/\d+/g, `${newNumber + 1}`);
   }
 
-  Array.from(renumberEl.attributes).filter((a) => ['for', 'name'].includes(a.name)).forEach((attribute) => {
+  Array.from(renumberEl.attributes).filter((a) => ['for', 'id', 'name'].includes(a.name)).forEach((attribute) => {
     renumberEl.setAttribute(attribute.name, attribute.value.replace(/\d+/g, `${newNumber}`));
   });
 };
