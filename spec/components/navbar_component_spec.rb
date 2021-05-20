@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Shared::NavbarComponent, type: :component do
+RSpec.describe NavbarComponent, type: :component do
   subject { described_class.new }
 
   before do

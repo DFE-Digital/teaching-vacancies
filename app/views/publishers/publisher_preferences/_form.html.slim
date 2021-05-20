@@ -3,7 +3,7 @@
     legend: { text: t(".schools_in", organisation: current_organisation.name) },
     classes: "checkbox-label__bold govuk-!-margin-top-5" do
 
-    = render Shared::SearchableCollectionComponent.new(form: f,
+    = render SearchableCollectionComponent.new(form: f,
       threshold: 10,
       attribute_name: :school_ids,
       collection: current_organisation.schools.not_closed.order(:name),
@@ -16,7 +16,7 @@
     hint: { text: t(".schools_out_hint_html", email: govuk_mail_to(t("help.email"), t("help.email"))) },
     classes: "checkbox-label__bold govuk-!-margin-top-5" do
 
-    = render Shared::SearchableCollectionComponent.new(form: f,
+    = render SearchableCollectionComponent.new(form: f,
       threshold: 10,
       attribute_name: :school_ids,
       collection: current_organisation.schools_outside_local_authority.not_closed.order(:name),

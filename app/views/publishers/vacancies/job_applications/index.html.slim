@@ -63,7 +63,7 @@
   .govuk-grid-column-full
     - if job_applications.any?
       - job_applications.each do |application|
-        = render Shared::CardComponent.new(classes: "application-#{application.status}") do |card|
+        = render CardComponent.new(classes: "application-#{application.status}") do |card|
           - card.header do
             = tag.div(job_application_view_applicant(vacancy, application))
 
