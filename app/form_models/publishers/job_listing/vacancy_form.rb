@@ -2,13 +2,13 @@ class Publishers::JobListing::VacancyForm
   include ActiveModel::Model
   include ActiveModel::Validations::Callbacks
 
-  attr_accessor :params, :vacancy
+  attr_accessor :params, :vacancy, :completed_step
 
-  delegate(*Vacancy.attribute_names.map { |attr| [attr, "#{attr}=", "#{attr}?"] }.flatten, to: :vacancy)
-
-  def initialize(params = {})
+  def initialize(params = {}, vacancy = nil)
     @params = params
-    @vacancy = Vacancy.new(params.except(:documents_attributes, :expires_at_hh, :expires_at_mm, :expires_at_meridiem, :current_organisation))
+    @vacancy = vacancy
+
+    super(params)
   end
 
   def params_to_save

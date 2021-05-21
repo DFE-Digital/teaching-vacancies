@@ -1,14 +1,15 @@
-- content_for :page_title_prefix, page_title_prefix(@vacancy, @documents_form, t("jobs.supporting_documents"))
+- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("jobs.supporting_documents"))
 
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-full
-      = render Publishers::VacancyFormPageHeadingComponent.new(@vacancy, process_steps.current_step_number, process_steps.total_steps)
-      = render Publishers::VacancyWizardBackLinkComponent.new(@vacancy, previous_step_path: organisation_job_build_path(@vacancy.id, :important_dates), review: session[:current_step] == :review)
+      = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, process_steps.current_step_number, process_steps.total_steps)
+      = govuk_back_link text: session[:current_step] == :review ? t("buttons.cancel_and_return") : t("buttons.back_to_previous_step"),
+                        href: session[:current_step] == :review ? edit_organisation_job_path(vacancy.id) : organisation_job_build_path(vacancy.id, :important_dates)
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      = form_for @documents_form, url: organisation_job_documents_path(@vacancy.id) do |f|
+      = form_for form, url: organisation_job_documents_path(vacancy.id) do |f|
         = f.govuk_error_summary
 
         h2.govuk-heading-l
@@ -27,14 +28,14 @@
 
         = f.govuk_submit t("buttons.upload_files"), secondary: true, classes: "upload-files-button"
 
-        .js-documents class=("js-documents--empty" if @documents.none?)
+        .js-documents class=("js-documents--empty" if vacancy.documents.none?)
           = render "publishers/vacancies/documents/documents"
           p.js-documents__no-files = t("jobs.no_files_message")
 
         = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
     .govuk-grid-column-one-third
-      = render(Shared::ProcessStepsComponent.new(process: @vacancy, service: process_steps, title: t("publishers.vacancies.build.process_title")))
+      = render(Shared::ProcessStepsComponent.new(process: vacancy, service: process_steps, title: t("publishers.vacancies.build.process_title")))
 
   - content_for :after_main do
     = render "shared/file_remove_confirmation_dialogue"

@@ -726,7 +726,7 @@ RSpec.describe "Creating a vacancy" do
 
         within_row_for(element: "legend",
                        text: strip_tags(I18n.t("helpers.legend.publishers_job_listing_important_dates_form.expires_on"))) do
-          expect(page).to have_content(I18n.t("important_dates_errors.expires_on.before_today"))
+          expect(page).to have_content(I18n.t("important_dates_errors.expires_on.before_publish_on"))
         end
 
         expiry_date = Date.current + 1.week

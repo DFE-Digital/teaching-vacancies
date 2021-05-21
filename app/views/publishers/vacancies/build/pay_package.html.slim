@@ -1,14 +1,14 @@
-- content_for :page_title_prefix, page_title_prefix(@vacancy, @form, t("jobs.pay_package"))
+- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("jobs.pay_package"))
 
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-full
-      = render Publishers::VacancyFormPageHeadingComponent.new(@vacancy, process_steps.current_step_number, process_steps.total_steps)
-      = render Publishers::VacancyWizardBackLinkComponent.new(@vacancy, previous_step_path: previous_wizard_path, review: session[:current_step] == :review)
+      = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, process_steps.current_step_number, process_steps.total_steps)
+      = govuk_back_link text: session[:current_step] == :review ? t("buttons.cancel_and_return") : t("buttons.back_to_previous_step"), href: back_path
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      = form_for @form, url: wizard_path, method: :patch do |f|
+      = form_for form, url: wizard_path, method: :patch do |f|
         = f.govuk_error_summary
 
         h2.govuk-heading-l = t("jobs.pay_package")
@@ -20,4 +20,4 @@
         = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
     .govuk-grid-column-one-third
-      = render(Shared::ProcessStepsComponent.new(process: @vacancy, service: process_steps, title: t("publishers.vacancies.build.process_title")))
+      = render(Shared::ProcessStepsComponent.new(process: vacancy, service: process_steps, title: t("publishers.vacancies.build.process_title")))
