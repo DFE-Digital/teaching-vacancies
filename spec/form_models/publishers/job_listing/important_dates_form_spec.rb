@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
-  subject { described_class.new(params) }
+  subject { described_class.new(params, build_stubbed(:vacancy, :draft)) }
 
   context "validations" do
     let(:params) { {} }
@@ -50,7 +50,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
       end
 
       context "when starts_asap is present" do
-        let(:params) { { starts_on: Date.current, starts_asap: true } }
+        let(:params) { { starts_on: Date.current, starts_asap: "true" } }
 
         it "must be blank" do
           expect(subject).not_to be_valid
@@ -151,16 +151,16 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
   context "when all attributes are valid" do
     let(:params) do
       {
-        expires_on: 1.week.from_now, publish_on: Date.current,
-        starts_on: 1.month.from_now, expires_at_hh: "9", expires_at_mm: "1", expires_at_meridiem: "am"
+        expires_on: Date.current + 1.week, publish_on: Date.current,
+        starts_on: Date.current + 1.month, expires_at_hh: "9", expires_at_mm: "1", expires_at_meridiem: "am"
       }
     end
 
     it "is valid" do
       expect(subject).to be_valid
-      expect(subject.vacancy.expires_on).to eq(Date.current + 1.week)
-      expect(subject.vacancy.publish_on).to eq(Date.current)
-      expect(subject.vacancy.starts_on).to eq(Date.current + 1.month)
+      expect(subject.expires_on).to eq(Date.current + 1.week)
+      expect(subject.publish_on).to eq(Date.current)
+      expect(subject.starts_on).to eq(Date.current + 1.month)
     end
   end
 end

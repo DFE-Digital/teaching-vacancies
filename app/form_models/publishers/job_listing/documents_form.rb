@@ -1,1 +1,3 @@
-class Publishers::JobListing::DocumentsForm < Publishers::JobListing::VacancyForm; end
+class Publishers::JobListing::DocumentsForm < Publishers::JobListing::VacancyForm
+  attr_accessor :documents
+end

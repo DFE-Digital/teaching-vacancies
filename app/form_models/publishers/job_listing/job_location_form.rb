@@ -1,4 +1,6 @@
 class Publishers::JobListing::JobLocationForm < Publishers::JobListing::VacancyForm
+  attr_accessor :job_location, :readable_job_location, :organisation_ids
+
   validates :job_location, presence: true
 
   def params_to_save
