@@ -1,21 +1,20 @@
 class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::VacancyForm
-  delegate :published?, :status, :publish_on_changed?, :expires_on_changed?, :starts_on_changed?,
-           :publish_on, :expires_on, :expires_at, to: :vacancy
+  delegate :published?, :status, to: :vacancy
 
-  attr_accessor :params, :expires_at_hh, :expires_at_mm, :expires_at_meridiem
+  attr_accessor :expires_at_hh, :expires_at_mm, :expires_at_meridiem, :starts_asap, :starts_on, :publish_on, :expires_on, :expires_at
 
   include DatesHelper
 
   include VacancyImportantDateValidations
   include VacancyExpiresAtFieldValidations
 
-  def initialize(params)
+  def initialize(params, vacancy)
     @params = params
     @expires_at_hh = params.delete(:expires_at_hh) || params[:expires_at]&.strftime("%-l")
     @expires_at_mm = params.delete(:expires_at_mm) || params[:expires_at]&.strftime("%-M")
     @expires_at_meridiem = params.delete(:expires_at_meridiem) || params[:expires_at]&.strftime("%P")
 
-    super(params)
+    super(params, vacancy)
   end
 
   def disable_editing_publish_on?

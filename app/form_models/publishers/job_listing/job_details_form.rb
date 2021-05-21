@@ -1,9 +1,11 @@
 class Publishers::JobListing::JobDetailsForm < Publishers::JobListing::VacancyForm
   include ActionView::Helpers::SanitizeHelper
 
+  attr_accessor :job_title, :job_roles, :suitable_for_nqt, :working_patterns, :contract_type, :contract_type_duration, :subjects, :job_location, :readable_job_location, :status
+
   validates :job_title, presence: true
-  validates :job_title, length: { minimum: 4, maximum: 100 }, if: :job_title?
-  validate :job_title_has_no_tags?, if: :job_title?
+  validates :job_title, length: { minimum: 4, maximum: 100 }, if: proc { job_title.present? }
+  validate :job_title_has_no_tags?, if: proc { job_title.present? }
 
   validates :suitable_for_nqt, inclusion: { in: %w[yes no] }
 
