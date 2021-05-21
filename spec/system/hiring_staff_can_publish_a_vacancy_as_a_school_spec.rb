@@ -95,16 +95,6 @@ RSpec.describe "Creating a vacancy" do
           expect(Vacancy.last.job_roles).to include("nqt_suitable")
         end
       end
-
-      scenario "vacancy state is create" do
-        visit organisation_path
-        click_on I18n.t("buttons.create_job")
-
-        fill_in_job_details_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        expect(Vacancy.last.state).to eq("create")
-      end
     end
 
     describe "#pay_package" do
@@ -507,79 +497,6 @@ RSpec.describe "Creating a vacancy" do
           within("h2.govuk-heading-l") do
             expect(page).to have_content(I18n.t("jobs.job_summary"))
           end
-        end
-
-        scenario "vacancy state is review when all steps completed" do
-          visit organisation_path
-          click_on I18n.t("buttons.create_job")
-
-          fill_in_job_details_form_fields(vacancy)
-          click_on I18n.t("buttons.continue")
-
-          fill_in_pay_package_form_fields(vacancy)
-          click_on I18n.t("buttons.continue")
-
-          fill_in_important_dates_fields(vacancy)
-          click_on I18n.t("buttons.continue")
-
-          click_on I18n.t("buttons.continue")
-
-          fill_in_applying_for_the_job_form_fields(vacancy)
-          click_on I18n.t("buttons.continue")
-
-          fill_in_job_summary_form_fields(vacancy)
-          click_on I18n.t("buttons.continue")
-
-          expect(Vacancy.last.state).to eq("review")
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 7, total: 7))
-          within("h2.govuk-heading-l") do
-            expect(page).to have_content(I18n.t("jobs.review_heading"))
-          end
-        end
-
-        scenario "vacancy state is review" do
-          visit organisation_path
-          click_on I18n.t("buttons.create_job")
-
-          fill_in_job_details_form_fields(vacancy)
-          click_on I18n.t("buttons.continue")
-
-          fill_in_pay_package_form_fields(vacancy)
-          click_on I18n.t("buttons.continue")
-
-          fill_in_important_dates_fields(vacancy)
-          click_on I18n.t("buttons.continue")
-
-          click_on I18n.t("buttons.continue")
-
-          fill_in_applying_for_the_job_form_fields(vacancy)
-          click_on I18n.t("buttons.continue")
-
-          fill_in_job_summary_form_fields(vacancy)
-          click_on I18n.t("buttons.continue")
-
-          expect(Vacancy.last.state).to eq("review")
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 7, total: 7))
-          within("h2.govuk-heading-l") do
-            expect(page).to have_content(I18n.t("jobs.review_heading"))
-          end
-
-          click_header_link(I18n.t("jobs.applying_for_the_job"))
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 7))
-          within("h2.govuk-heading-l") do
-            expect(page).to have_content(I18n.t("jobs.applying_for_the_job"))
-          end
-          expect(Vacancy.last.state).to eq("review")
-
-          click_on I18n.t("buttons.update_job")
-          expect(Vacancy.last.state).to eq("review")
-
-          click_header_link(I18n.t("jobs.job_details"))
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 7))
-          within("h2.govuk-heading-l") do
-            expect(page).to have_content(I18n.t("jobs.job_details"))
-          end
-          expect(Vacancy.last.state).to eq("review")
         end
       end
 

@@ -4,7 +4,7 @@
   .govuk-grid-row
     .govuk-grid-column-full
       = render Publishers::VacancyFormPageHeadingComponent.new(@vacancy, process_steps.current_step_number, process_steps.total_steps)
-      = render Publishers::VacancyWizardBackLinkComponent.new(@vacancy, previous_step_path: previous_wizard_path)
+      = render Publishers::VacancyWizardBackLinkComponent.new(@vacancy, previous_step_path: previous_wizard_path, review: session[:current_step] == :review)
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
@@ -12,8 +12,6 @@
         = f.govuk_error_summary
 
         h2.govuk-heading-l = t("jobs.important_dates")
-
-        = render "publishers/vacancies/vacancy_form_partials/hidden_state_input", f: f
 
         - if @form.disable_editing_publish_on?
           #publish_on

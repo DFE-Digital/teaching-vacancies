@@ -1,4 +1,5 @@
 require "rails_helper"
+
 RSpec.describe "Hiring staff can edit a draft vacancy" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school) }
@@ -171,15 +172,6 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
     let(:vacancy) { create(:vacancy, :draft) }
 
     before { vacancy.organisation_vacancies.create(organisation: school) }
-
-    scenario "vacancy state is edit" do
-      visit organisation_job_review_path(vacancy.id, edit_draft: true)
-
-      expect(Vacancy.last.state).to eq("edit")
-      within("h2.govuk-heading-l") do
-        expect(page).to have_content(I18n.t("jobs.review_heading"))
-      end
-    end
 
     describe "#cancel_and_return_later" do
       scenario "can cancel and return from job details page" do

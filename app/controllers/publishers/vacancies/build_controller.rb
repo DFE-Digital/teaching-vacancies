@@ -38,7 +38,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
     elsif @form.complete_and_valid?
       update_vacancy
       if params[:commit] == t("buttons.update_job") ||
-         (params[:commit] == t("buttons.continue") && session[:current_step] == :review)
+         (params[:commit] == t("buttons.continue") && session[:current_step].in?(%i[edit_incomplete review]))
         update_listing
       else
         render_wizard @vacancy

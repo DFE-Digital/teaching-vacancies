@@ -15,30 +15,16 @@ module VacanciesHelper
   end
 
   def page_title_prefix(vacancy, form_object, page_heading)
-    if %w[create review].include?(vacancy.state)
-      "#{form_object.errors.present? ? 'Error: ' : ''}#{page_heading} — #{t('jobs.create_a_job_title', organisation: current_organisation.name)}"
-    else
+    if vacancy.published?
       "#{form_object.errors.present? ? 'Error: ' : ''}Edit the #{page_heading}"
+    else
+      "#{form_object.errors.present? ? 'Error: ' : ''}#{page_heading} — #{t('jobs.create_a_job_title', organisation: current_organisation.name)}"
     end
   end
 
   def review_page_title_prefix(vacancy, organisation = current_organisation)
     page_title = t("jobs.review_page_title", organisation: organisation.name)
     "#{vacancy.errors.present? ? 'Error: ' : ''}#{page_title}"
-  end
-
-  def review_heading(vacancy)
-    return t("jobs.copy_review_heading") if vacancy.state == "copy"
-
-    t("jobs.review_heading")
-  end
-
-  def hidden_state_field_value(vacancy, copy: false)
-    return "copy" if copy
-    return "edit_published" if vacancy.published?
-    return vacancy.state if %w[copy review edit].include?(vacancy.state)
-
-    "create"
   end
 
   def back_to_manage_jobs_link(vacancy)

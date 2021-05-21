@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_18_143454) do
+ActiveRecord::Schema.define(version: 2021_05_20_225531) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -442,7 +442,6 @@ ActiveRecord::Schema.define(version: 2021_05_18_143454) do
     t.integer "completed_step"
     t.string "legacy_job_roles", array: true
     t.text "about_school"
-    t.string "state", default: "create"
     t.string "subjects", array: true
     t.text "school_visits"
     t.text "how_to_apply"
