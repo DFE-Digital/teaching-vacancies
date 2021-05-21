@@ -1,12 +1,13 @@
 class Publishers::JobListing::JobSummaryForm < Publishers::JobListing::VacancyForm
+  attr_accessor :job_advert, :about_school
+
   validates :job_advert, presence: true
   validate :about_school_must_not_be_blank
 
   def about_school_must_not_be_blank
     return if about_school.present?
 
-    # Since vacancy is set by VacancyForm.initialize, it can be undefined here.
-    case job_location
+    case vacancy.job_location
     when "central_office"
       organisation = "trust"
     when "at_one_school"

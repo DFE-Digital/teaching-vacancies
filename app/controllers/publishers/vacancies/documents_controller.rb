@@ -15,23 +15,20 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
                               application/vnd.openxmlformats-officedocument.presentationml.presentation ].freeze
   FILE_SIZE_LIMIT = 10.megabytes
 
-  before_action :set_vacancy
-  before_action :redirect_to_next_step, only: %i[create]
-  before_action :set_documents_form, only: %i[show create]
-  before_action :set_documents, only: %i[show create destroy]
+  helper_method :form
 
-  def show; end
+  before_action :redirect_to_next_step, only: %i[create]
 
   def create
     process_documents&.each do |document|
-      @documents.create(document)
+      vacancy.documents.create(document)
     end
 
     render :show
   end
 
   def destroy
-    document = @documents.find(params[:id])
+    document = vacancy.documents.find(params[:id])
     delete_operation_status = DocumentDelete.new(document).delete
     flash_type = delete_operation_status ? :success : :error
     flash_message = t("jobs.file_delete_#{flash_type}_message", filename: document.name)
@@ -41,7 +38,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
       render :destroy, layout: false, status: delete_operation_status ? :ok : :bad_request
     else
       flash[flash_type] = flash_message
-      redirect_to organisation_job_documents_path(@vacancy.id)
+      redirect_to organisation_job_documents_path(vacancy.id)
     end
   end
 
@@ -51,27 +48,23 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     :documents
   end
 
-  def set_documents_form
-    @documents_form = Publishers::JobListing::DocumentsForm.new
-  end
-
-  def set_documents
-    @documents = @vacancy.documents
+  def form
+    @form ||= Publishers::JobListing::DocumentsForm.new(documents_form_params, vacancy)
   end
 
   def documents_form_params
-    params.require(:publishers_job_listing_documents_form).permit(:state, documents: [])
+    (params[:publishers_job_listing_documents_form] || params).permit(documents: [])
   end
 
   def redirect_to_next_step
     if params[:commit] == t("buttons.save_and_return_later")
       redirect_saved_draft_with_message
     elsif params[:commit] == t("buttons.update_job")
-      @vacancy.update(completed_step: steps_config[step][:number])
+      vacancy.update(completed_step: steps_config[step][:number])
       redirect_updated_job_with_message
     elsif params[:commit] == t("buttons.continue")
-      @vacancy.update(completed_step: steps_config[step][:number])
-      redirect_to organisation_job_build_path(@vacancy.id, :applying_for_the_job)
+      vacancy.update(completed_step: steps_config[step][:number])
+      redirect_to organisation_job_build_path(vacancy.id, :applying_for_the_job)
     end
   end
 
@@ -94,7 +87,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     )
 
     if errors_on_file?(document_params.original_filename)
-      Rails.logger.info("Failed to upload #{document_params.original_filename}: #{@documents_form.errors.full_messages.join(', ')}")
+      Rails.logger.info("Failed to upload #{document_params.original_filename}: #{form.errors.full_messages.join(', ')}")
       return
     end
 
@@ -105,37 +98,32 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
 
     return if errors_on_file?(document_params.original_filename)
 
-    @vacancy.supporting_documents.attach(document_params)
+    vacancy.supporting_documents.attach(document_params)
 
     document_attributes(document_params, document_upload)
   end
 
   def add_file_type_error(filename)
-    @documents_form.errors.add(
-      :documents,
-      t("jobs.file_type_error_message", filename: filename),
-    )
+    form.errors.add(:documents, t("jobs.file_type_error_message", filename: filename))
   end
 
   def add_file_size_error(filename)
-    @documents_form.errors.add(
+    form.errors.add(
       :documents,
-      t("jobs.file_size_error_message",
-        filename: filename,
-        size_limit: helpers.number_to_human_size(FILE_SIZE_LIMIT)),
+      t("jobs.file_size_error_message", filename: filename, size_limit: helpers.number_to_human_size(FILE_SIZE_LIMIT)),
     )
   end
 
   def add_google_error(filename)
-    @documents_form.errors.add(:documents, t("jobs.file_google_error_message", filename: filename))
+    form.errors.add(:documents, t("jobs.file_google_error_message", filename: filename))
   end
 
   def add_virus_error(filename)
-    @documents_form.errors.add(:documents, t("jobs.file_virus_error_message", filename: filename))
+    form.errors.add(:documents, t("jobs.file_virus_error_message", filename: filename))
   end
 
   def errors_on_file?(filename)
-    @documents_form.errors.messages.values.join(" ").include?(filename)
+    form.errors.messages.values.join(" ").include?(filename)
   end
 
   def document_attributes(params, upload)

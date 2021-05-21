@@ -1,7 +1,9 @@
 require "indexing"
 
 class Publishers::Vacancies::BaseController < Publishers::BaseController
-  helper_method :process_steps, :step_current, :steps_adjust
+  include Publishers::Wizardable
+
+  helper_method :process_steps, :step_current, :steps_adjust, :vacancy
 
   def steps_adjust
     current_organisation.school_group? ? 0 : 1
@@ -15,6 +17,10 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
     @process_steps ||= ProcessSteps.new(steps: steps_config, adjust: steps_adjust, step: step_current)
   end
 
+  def vacancy
+    @vacancy ||= current_organisation.all_vacancies.find(params[:job_id].presence || params[:id])
+  end
+
   def all_steps_valid?
     step_valid?(Publishers::JobListing::JobDetailsForm) &&
       step_valid?(Publishers::JobListing::PayPackageForm) &&
@@ -24,10 +30,10 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
   end
 
   def step_valid?(step_form)
-    form = step_form.new(@vacancy.attributes.merge(current_organisation: current_organisation))
+    form = step_form.new(vacancy.slice(*send("#{step_form.to_s.underscore.split('/').last.split('_form').first}_fields")), vacancy)
 
     form.complete_and_valid?.tap do
-      @vacancy.errors.merge!(form.errors)
+      vacancy.errors.merge!(form.errors)
     end
   end
 
@@ -62,16 +68,16 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
   end
 
   def redirect_saved_draft_with_message
-    redirect_to jobs_with_type_organisation_path("draft"), success: t("messages.jobs.draft_saved_html", job_title: @vacancy.job_title)
+    redirect_to jobs_with_type_organisation_path("draft"), success: t("messages.jobs.draft_saved_html", job_title: vacancy.job_title)
   end
 
   def redirect_updated_job_with_message
-    updated_job_path = @vacancy.published? ? edit_organisation_job_path(@vacancy.id) : organisation_job_review_path(@vacancy.id)
+    updated_job_path = vacancy.published? ? edit_organisation_job_path(vacancy.id) : organisation_job_review_path(vacancy.id)
     redirect_to updated_job_path,
                 success: t("messages.jobs.listing_updated_html",
-                           job_title: @vacancy.job_title,
+                           job_title: vacancy.job_title,
                            link_to: helpers.govuk_link_to(t("messages.jobs.listing_updated_link_text"),
-                                                          helpers.back_to_manage_jobs_link(@vacancy),
+                                                          helpers.back_to_manage_jobs_link(vacancy),
                                                           class: "govuk-link--no-visited-state"))
   end
 
@@ -96,10 +102,6 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
 
   def review_path_with_errors(vacancy)
     organisation_job_review_path(job_id: vacancy.id, anchor: "errors", source: "publish")
-  end
-
-  def set_vacancy
-    @vacancy = current_organisation.all_vacancies.find(params[:job_id].presence || params[:id].presence)
   end
 
   def update_google_index(job)

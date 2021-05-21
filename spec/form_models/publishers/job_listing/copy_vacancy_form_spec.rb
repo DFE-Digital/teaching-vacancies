@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Publishers::JobListing::CopyVacancyForm, type: :model do
-  subject { described_class.new({ job_title: nil }) }
+  subject { described_class.new({ job_title: nil }, build_stubbed(:vacancy)) }
 
   it { is_expected.to validate_presence_of(:job_title) }
   it { is_expected.to validate_length_of(:job_title).is_at_least(4).is_at_most(100) }
