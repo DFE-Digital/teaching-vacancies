@@ -1,45 +1,45 @@
 namespace :google_drive do
-  desc "Migrate existing documents to S3"
-  task :migrate_to_s3, [:commit] => [:environment] do |_task, args|
+  desc "Enqueue existing documents for migration to Active Storage"
+  task migrate_to_active_storage: [:environment] do
+    puts "Enqueueing #{Document.count} documents for migration to Active Storage"
+
+    Document.pluck(:id).each do |doc_id|
+      MigrateDocumentToActiveStorageJob.perform_later(doc_id)
+    end
+
+    puts "⛅ Have a nice day!"
+  end
+
+  desc "Verify Google Drive migration was successful"
+  task verify_migration: [:environment] do
     Rails.logger.silence do
-      puts "Migrating #{Document.count} documents to S3"
+      vacancies_with_documents = Vacancy.where.not(documents: { id: nil }).includes(:documents)
+      total_count = vacancies_with_documents.count
+      matching_count = 0
+      mismatching_count = 0
 
-      total_count = Document.count
-      skipped_count = 0
-      migrated_count = 0
+      puts "Checking #{total_count} vacancies with existing documents..."
 
-      Document.includes(:vacancy).find_each(batch_size: 100).with_index do |doc, index|
-        puts "• #{doc.id}: #{doc.name} (#{index + 1}/#{total_count})"
-        puts "  ├ Vacancy #{doc.vacancy.id} ('#{doc.vacancy.job_title}')"
+      vacancies_with_documents.with_attached_supporting_documents.find_each do |vacancy|
+        docs = vacancy.documents.map { |d| [d.name, d.size, d.content_type] }.sort
+        supporting_docs = vacancy.supporting_documents.map { |sd| [sd.filename, sd.byte_size, sd.content_type] }.sort
 
-        if doc.vacancy.supporting_documents.any? { |supporting_doc| supporting_doc.blob.filename == doc.name }
-          puts "  └ ⏭ Skipping because it already exists in ActiveStorage"
-
-          skipped_count += 1
-          next
-        end
-
-        if args[:commit] == "true"
-          puts "  ├ Downloading from GDrive at #{doc.download_url}..."
-          doc.vacancy.supporting_documents.attach(
-            io: URI.parse(doc.download_url).open,
-            filename: doc.name,
-            content_type: doc.content_type,
-          )
-          puts "  └ ✅ Migrated!"
+        if docs == supporting_docs
+          puts "✅ Vacancy #{vacancy.id} has matching documents and supporting documents"
+          matching_count += 1
         else
-          puts "  └ ℹ Would migrate document from #{doc.download_url}"
+          puts "❌ Mismatch between documents and supporting documents for Vacancy #{vacancy.id}"
+          puts "Documents:"
+          pp docs
+          puts "Supporting documents:"
+          pp supporting_docs
+          puts
+          mismatching_count += 1
         end
-
-        migrated_count += 1
       end
 
-      total_attachments = ActiveRecord::Base.connection.select_value("SELECT COUNT(*) FROM active_storage_attachments")
-
-      puts
-      puts "📊 Migrated #{migrated_count} documents and skipped #{skipped_count} documents."
-      puts "🤔 We now have #{total_attachments} ActiveStorage attachments, and #{total_count} legacy documents."
-      puts "⛅ Have a nice day!"
+      puts "Found #{matching_count} vacancies with matching docs, and #{mismatching_count} problematic ones."
+      puts "Have a nice day!"
     end
   end
 
