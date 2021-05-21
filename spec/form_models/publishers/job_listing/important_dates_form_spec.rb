@@ -151,7 +151,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
   context "when all attributes are valid" do
     let(:params) do
       {
-        state: "create", expires_on: 1.week.from_now, publish_on: Date.current,
+        expires_on: 1.week.from_now, publish_on: Date.current,
         starts_on: 1.month.from_now, expires_at_hh: "9", expires_at_mm: "1", expires_at_meridiem: "am"
       }
     end

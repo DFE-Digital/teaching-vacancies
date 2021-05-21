@@ -4,19 +4,6 @@ import './publishers/init';
 import '../components/form/form';
 
 document.addEventListener('DOMContentLoaded', () => {
-  window.dataLayer = window.dataLayer || [];
-  dataLayer.push({ event: 'optimize.activate' });
-
-  dataLayer.push({
-    dePIIedURL: window.location.pathname,
-    event: 'parametersRemoved',
-  });
-
-  // will check with steven legg about this as if needs it need to add tests around it
-  const element = document.querySelector('.new_publishers_job_listing_copy_vacancy_form') || document.body || {};
-  const dataset = element.dataset || {};
-  dataLayer.push({ vacancy_state: dataset.vacancyState });
-
   // lint disabled as would require changes to library script
   new ClipboardJS('.copy-to-clipboard'); // eslint-disable-line
 

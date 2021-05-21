@@ -6,8 +6,6 @@ class Publishers::JobListing::VacancyForm
 
   delegate(*Vacancy.attribute_names.map { |attr| [attr, "#{attr}=", "#{attr}?"] }.flatten, to: :vacancy)
 
-  validates :state, inclusion: { in: %w[copy create edit edit_published review] }
-
   def initialize(params = {})
     @params = params
     @vacancy = Vacancy.new(params.except(:documents_attributes, :expires_at_hh, :expires_at_mm, :expires_at_meridiem, :current_organisation))

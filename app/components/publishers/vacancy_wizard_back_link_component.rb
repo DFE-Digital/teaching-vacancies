@@ -1,12 +1,13 @@
 class Publishers::VacancyWizardBackLinkComponent < ViewComponent::Base
-  def initialize(vacancy, previous_step_path: nil, current_step_is_first_step: false)
+  def initialize(vacancy, previous_step_path: nil, current_step_is_first_step: false, review: false)
     @vacancy = vacancy
     @previous_step_path = previous_step_path
     @current_step_is_first_step = current_step_is_first_step
+    @review = review
   end
 
   def render?
-    !vacancy_is_in_create_state? || !current_step_is_first_step?
+    @review || !current_step_is_first_step?
   end
 
   def call
@@ -16,29 +17,21 @@ class Publishers::VacancyWizardBackLinkComponent < ViewComponent::Base
   private
 
   def text
-    if vacancy_is_in_create_state?
-      t("buttons.back_to_previous_step")
-    else
+    if @vacancy.published? || @review
       t("buttons.cancel_and_return")
+    else
+      t("buttons.back_to_previous_step")
     end
   end
 
   def href
-    if vacancy_is_in_create_state?
-      @previous_step_path
-    elsif vacancy_is_published?
+    if @vacancy.published?
       edit_organisation_job_path(@vacancy.id)
-    else
+    elsif @review
       organisation_job_review_path(@vacancy.id)
+    else
+      @previous_step_path
     end
-  end
-
-  def vacancy_is_in_create_state?
-    @vacancy.state == "create"
-  end
-
-  def vacancy_is_published?
-    @vacancy.published?
   end
 
   def current_step_is_first_step?
