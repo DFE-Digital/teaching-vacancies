@@ -3,7 +3,6 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
 
   before_action :set_vacancy, only: %i[destroy edit preview review show summary]
   before_action :redirect_if_published, only: %i[preview review]
-  before_action :redirect_unless_permitted, only: %i[preview summary]
   before_action :devise_job_alert_search_criteria, only: %i[show preview]
 
   def show
@@ -21,7 +20,6 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   def edit
     return redirect_to organisation_job_review_path(@vacancy.id) unless @vacancy.published?
 
-    @vacancy.update(state: "edit_published")
     validate_all_steps
     session[:current_step] = :review
     @vacancy = VacancyPresenter.new(@vacancy)
@@ -30,15 +28,15 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   def review
     reset_session_vacancy!
 
-    if all_steps_valid? || %w[copy edit_published].include?(@vacancy.state)
-      update_vacancy_state
+    if all_steps_valid?
+      session[:current_step] = :review
       set_completed_step
       validate_all_steps
     else
+      session[:current_step] = :edit_incomplete
       redirect_to_incomplete_step
     end
 
-    session[:current_step] = :review
     @vacancy = VacancyPresenter.new(@vacancy)
   end
 
@@ -81,29 +79,8 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     return redirect_to organisation_job_build_path(@vacancy.id, :job_summary) unless step_valid?(Publishers::JobListing::JobSummaryForm)
   end
 
-  def redirect_unless_permitted
-    if @vacancy.state == "copy" && !all_steps_valid?
-      redirect_to organisation_job_review_path(@vacancy.id)
-    elsif @vacancy.state == "edit_published" && !all_steps_valid?
-      redirect_to edit_organisation_job_path(@vacancy.id)
-    elsif !all_steps_valid?
-      redirect_to_incomplete_step
-    end
-  end
-
   def set_completed_step
     @vacancy.update(completed_step: process_steps.current_step_number)
-  end
-
-  def update_vacancy_state
-    state = if params[:edit_draft] == "true" || @vacancy.state == "edit"
-              "edit"
-            elsif @vacancy.state == "copy"
-              "copy"
-            else
-              "review"
-            end
-    @vacancy.update(state: state)
   end
 
   def validate_all_steps

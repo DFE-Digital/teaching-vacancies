@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Shared::ProcessStepsComponent, type: :component do
-  let(:vacancy) { create(:vacancy, completed_step: completed_step) }
+  let(:vacancy) { create(:vacancy, :draft, completed_step: completed_step) }
   let(:completed_step) { 0 }
   let(:current_step_number) { 1 }
   let(:current_organisation) { build(:school_group) }

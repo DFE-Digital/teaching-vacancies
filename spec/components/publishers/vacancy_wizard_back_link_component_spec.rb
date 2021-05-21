@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Publishers::VacancyWizardBackLinkComponent, type: :component do
-  subject { described_class.new(vacancy, previous_step_path: previous_step_path, current_step_is_first_step: current_step_is_first_step) }
+  subject { described_class.new(vacancy, previous_step_path: previous_step_path, current_step_is_first_step: current_step_is_first_step, review: current_step_is_review) }
 
   let(:previous_step_path) { "/some/where" }
 
@@ -10,7 +10,8 @@ RSpec.describe Publishers::VacancyWizardBackLinkComponent, type: :component do
   end
 
   context "when the vacancy is first being created" do
-    let(:vacancy) { build_stubbed(:vacancy, state: "create") }
+    let(:vacancy) { build_stubbed(:vacancy, :draft) }
+    let(:current_step_is_review) { false }
 
     context "when the current step is the first step" do
       let(:current_step_is_first_step) { true }
@@ -31,8 +32,9 @@ RSpec.describe Publishers::VacancyWizardBackLinkComponent, type: :component do
   end
 
   context "when the vacancy has already been fully created" do
-    let(:vacancy) { create(:vacancy, id: 3, state: "review", status: status) }
+    let(:vacancy) { create(:vacancy, status: status) }
     let(:current_step_is_first_step) { false }
+    let(:current_step_is_review) { true }
 
     context "when the vacancy is already published" do
       let(:status) { :published }

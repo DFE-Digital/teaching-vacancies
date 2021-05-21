@@ -6,7 +6,7 @@ class Shared::ProcessStepsComponent < ViewComponent::Base
   end
 
   def render?
-    @process.blank? || %w[create review].include?(@process.state)
+    @process.blank? || !@process.published?
   end
 
   def current_step_number

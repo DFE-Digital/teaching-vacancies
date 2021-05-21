@@ -10,6 +10,7 @@ FactoryBot.define do
     about_school { "Great school with amazing people" }
     enable_job_applications { true }
     benefits { Faker::Lorem.paragraph(sentence_count: 4) }
+    completed_step { 7 }
     contact_email { Faker::Internet.email }
     contact_number { "01234 123456" }
     contract_type { :fixed_term }
@@ -25,7 +26,6 @@ FactoryBot.define do
     publish_on { Date.current }
     salary { Faker::Lorem.sentence[1...30].strip }
     school_visits { Faker::Lorem.paragraph(sentence_count: 4) }
-    state { "create" }
     starts_on { Date.current + 1.year }
     status { :published }
     subjects { SUBJECT_OPTIONS.sample(2).map(&:first).sort! }

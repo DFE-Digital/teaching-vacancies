@@ -7,7 +7,7 @@
 
   .vacancy.govuk-grid-row
     .govuk-grid-column-two-thirds
-      h2.govuk-heading-l = review_heading(@vacancy)
+      h2.govuk-heading-l = t("jobs.review_heading")
       = render "publishers/vacancies/error_messages", errors: @vacancy.errors
 
       p.govuk-body-l
