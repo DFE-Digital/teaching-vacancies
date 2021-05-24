@@ -4,7 +4,7 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school) }
   let!(:vacancy) do
-    VacancyPresenter.new(build(:vacancy, :complete,
+    VacancyPresenter.new(build(:vacancy,
                                job_title: "Draft vacancy",
                                working_patterns: %w[full_time part_time]))
   end
@@ -55,8 +55,7 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
         click_on I18n.t("buttons.continue")
 
         draft_vacancy.starts_on = 1.year.from_now
-        draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
-        draft_vacancy.expires_at = Time.current
+        draft_vacancy.expires_at = 6.months.from_now.change(hour: 9, minute: 0)
         draft_vacancy.publish_on = 1.day.from_now
 
         fill_in_important_dates_fields(draft_vacancy)
@@ -78,8 +77,7 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
         click_on I18n.t("buttons.continue")
 
         draft_vacancy.starts_on = 1.year.from_now
-        draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
-        draft_vacancy.expires_at = Time.current
+        draft_vacancy.expires_at = 6.months.from_now.change(hour: 9, minute: 0)
         draft_vacancy.publish_on = 1.day.from_now
 
         fill_in_important_dates_fields(draft_vacancy)
@@ -103,8 +101,7 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
         click_on I18n.t("buttons.continue")
 
         draft_vacancy.starts_on = 1.year.from_now
-        draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
-        draft_vacancy.expires_at = Time.current
+        draft_vacancy.expires_at = 6.months.from_now.change(hour: 9, minute: 0)
         draft_vacancy.publish_on = 1.day.from_now
 
         fill_in_important_dates_fields(draft_vacancy)
@@ -137,8 +134,7 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
         click_on I18n.t("buttons.continue")
 
         draft_vacancy.starts_on = 1.year.from_now
-        draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
-        draft_vacancy.expires_at = Time.current
+        draft_vacancy.expires_at = 6.months.from_now.change(hour: 9, minute: 0)
         draft_vacancy.publish_on = 1.day.from_now
 
         fill_in_important_dates_fields(draft_vacancy)

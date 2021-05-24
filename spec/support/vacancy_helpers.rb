@@ -49,19 +49,17 @@ module VacancyHelpers
 
   def fill_in_important_dates_fields(vacancy)
     fill_in "publishers_job_listing_important_dates_form[publish_on(3i)]", with: vacancy.publish_on.day
-    fill_in "publishers_job_listing_important_dates_form[publish_on(2i)]", with: vacancy.publish_on.strftime("%m")
+    fill_in "publishers_job_listing_important_dates_form[publish_on(2i)]", with: vacancy.publish_on.month
     fill_in "publishers_job_listing_important_dates_form[publish_on(1i)]", with: vacancy.publish_on.year
 
-    fill_in "publishers_job_listing_important_dates_form[expires_on(3i)]", with: vacancy.expires_on.day
-    fill_in "publishers_job_listing_important_dates_form[expires_on(2i)]", with: vacancy.expires_on.strftime("%m")
-    fill_in "publishers_job_listing_important_dates_form[expires_on(1i)]", with: vacancy.expires_on.year
+    fill_in "publishers_job_listing_important_dates_form[expires_at(3i)]", with: vacancy.expires_at.day
+    fill_in "publishers_job_listing_important_dates_form[expires_at(2i)]", with: vacancy.expires_at.month
+    fill_in "publishers_job_listing_important_dates_form[expires_at(1i)]", with: vacancy.expires_at.year
 
-    fill_in "publishers_job_listing_important_dates_form[expires_at_hh]", with: vacancy.expires_at.strftime("%-l")
-    fill_in "publishers_job_listing_important_dates_form[expires_at_mm]", with: vacancy.expires_at.strftime("%-M")
-    select vacancy.expires_at.strftime("%P"), from: "publishers_job_listing_important_dates_form[expires_at_meridiem]"
+    choose "Start of the working day (9 am)", name: "publishers_job_listing_important_dates_form[expiry_time]"
 
     fill_in "publishers_job_listing_important_dates_form[starts_on(3i)]", with: vacancy.starts_on.day
-    fill_in "publishers_job_listing_important_dates_form[starts_on(2i)]", with: vacancy.starts_on.strftime("%m")
+    fill_in "publishers_job_listing_important_dates_form[starts_on(2i)]", with: vacancy.starts_on.month
     fill_in "publishers_job_listing_important_dates_form[starts_on(1i)]", with: vacancy.starts_on.year
   end
 
@@ -94,13 +92,11 @@ module VacancyHelpers
   def fill_in_copy_vacancy_form_fields(vacancy)
     fill_in "publishers_job_listing_copy_vacancy_form[job_title]", with: vacancy.job_title
 
-    fill_in "publishers_job_listing_copy_vacancy_form[expires_on(3i)]", with: vacancy.expires_on&.day
-    fill_in "publishers_job_listing_copy_vacancy_form[expires_on(2i)]", with: vacancy.expires_on&.strftime("%m")
-    fill_in "publishers_job_listing_copy_vacancy_form[expires_on(1i)]", with: vacancy.expires_on&.year
+    fill_in "publishers_job_listing_copy_vacancy_form[expires_at(3i)]", with: vacancy.expires_at&.day
+    fill_in "publishers_job_listing_copy_vacancy_form[expires_at(2i)]", with: vacancy.expires_at&.strftime("%m")
+    fill_in "publishers_job_listing_copy_vacancy_form[expires_at(1i)]", with: vacancy.expires_at&.year
 
-    fill_in "publishers_job_listing_copy_vacancy_form[expires_at_hh]", with: vacancy.expires_at.strftime("%-l")
-    fill_in "publishers_job_listing_copy_vacancy_form[expires_at_mm]", with: vacancy.expires_at.strftime("%-M")
-    select vacancy.expires_at.strftime("%P"), from: "publishers_job_listing_copy_vacancy_form[expires_at_meridiem]"
+    choose "Start of the working day (9 am)", name: "publishers_job_listing_copy_vacancy_form[expiry_time]"
 
     fill_in "publishers_job_listing_copy_vacancy_form[publish_on(3i)]", with: vacancy.publish_on&.day
     fill_in "publishers_job_listing_copy_vacancy_form[publish_on(2i)]", with: vacancy.publish_on&.strftime("%m")
@@ -121,7 +117,7 @@ module VacancyHelpers
     expect(page.html).to include(vacancy.benefits)
 
     expect(page).to have_content(vacancy.publish_on.to_s.strip)
-    expect(page).to have_content(vacancy.expires_on.to_s.strip)
+    expect(page).to have_content(vacancy.expires_at.to_date.to_s.strip)
     if vacancy.starts_on?
       expect(page).to have_content(vacancy.starts_on.to_s.strip)
     elsif vacancy.starts_asap?
@@ -155,7 +151,7 @@ module VacancyHelpers
     expect(page.html).to include(vacancy.benefits)
 
     expect(page).to have_content(vacancy.publish_on.to_s.strip)
-    expect(page).to have_content(vacancy.expires_on.to_s.strip)
+    expect(page).to have_content(vacancy.expires_at.to_date.to_s.strip)
     if vacancy.starts_on?
       expect(page).to have_content(vacancy.starts_on.to_s.strip)
     elsif vacancy.starts_asap?
@@ -212,7 +208,7 @@ module VacancyHelpers
         identifier: vacancy.parent_organisation.urn,
         description: vacancy.about_school,
       },
-      validThrough: vacancy.expires_on.end_of_day.to_time.iso8601,
+      validThrough: vacancy.expires_at.to_time.iso8601,
     }
   end
 
@@ -231,8 +227,7 @@ module VacancyHelpers
     expect(page.find(".vacancy")).to have_content(vacancy.location)
     expect(page.find(".vacancy")).to have_content(vacancy.salary)
     expect(page.find(".vacancy")).to have_content(vacancy.working_patterns)
-    expect(page.find(".vacancy")).to have_content(vacancy.expires_on)
-
-    expect(page.find(".vacancy")).to have_content(vacancy.expires_at.strftime("%-l:%M %P")) unless vacancy.expires_at.nil?
+    expect(page.find(".vacancy")).to have_content(vacancy.expires_at.to_date)
+    expect(page.find(".vacancy")).to have_content(vacancy.expires_at.strftime("%-l:%M %P"))
   end
 end
