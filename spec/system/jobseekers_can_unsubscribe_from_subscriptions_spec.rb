@@ -23,40 +23,27 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
       expect(subscription.reload.active).to eq(false)
     end
 
-    it "allows me to provide feedback" do
-      click_on I18n.t("buttons.submit_feedback")
-
-      expect(page).to have_content("There is a problem")
-
-      choose "jobseekers-unsubscribe-feedback-form-unsubscribe-reason-other-reason-field"
-      fill_in "jobseekers_unsubscribe_feedback_form[other_unsubscribe_reason_comment]", with: "Spam"
-      fill_in "jobseekers_unsubscribe_feedback_form[comment]", with: "Eggs"
-
-      expect { click_on I18n.t("buttons.submit_feedback") }
-        .to have_triggered_event(:feedback_provided)
-        .with_data(comment: "Eggs",
-                   feedback_type: "unsubscribe",
-                   other_unsubscribe_reason_comment: "Spam",
-                   search_criteria: json_including(subscription.search_criteria),
-                   subscription_identifier: anything,
-                   unsubscribe_reason: "other_reason")
-
-      click_on I18n.t("jobseekers.unsubscribe_feedbacks.confirmation.new_search_link")
-
-      expect(current_path).to eq jobs_path
-    end
-
-    context "when jobseeker is signed in" do
-      let(:jobseeker) { create(:jobseeker) }
-
-      before { login_as(jobseeker, scope: :jobseeker) }
-
-      it "redirects to the job alerts dashboard after feedback is submitted" do
-        choose "jobseekers-unsubscribe-feedback-form-unsubscribe-reason-job-found-field"
+    context "when jobseeker is not signed in" do
+      it "allows the user to provide feedback and redirects to the jobs path" do
         click_on I18n.t("buttons.submit_feedback")
 
-        expect(page).to have_content(I18n.t("jobseekers.unsubscribe_feedbacks.create.success"))
-        expect(current_path).to eq jobseekers_subscriptions_path
+        expect(page).to have_content("There is a problem")
+
+        choose "jobseekers-unsubscribe-feedback-form-unsubscribe-reason-other-reason-field"
+        fill_in "jobseekers_unsubscribe_feedback_form[other_unsubscribe_reason_comment]", with: "Spam"
+        fill_in "jobseekers_unsubscribe_feedback_form[comment]", with: "Eggs"
+
+        expect { click_on I18n.t("buttons.submit_feedback") }.to change {
+          subscription.feedbacks.where(comment: "Eggs",
+                                       feedback_type: "unsubscribe",
+                                       other_unsubscribe_reason_comment: "Spam",
+                                       search_criteria: subscription.search_criteria,
+                                       unsubscribe_reason: "other_reason").count
+        }.by(1)
+
+        click_on I18n.t("jobseekers.unsubscribe_feedbacks.confirmation.new_search_link")
+
+        expect(current_path).to eq jobs_path
       end
     end
   end
