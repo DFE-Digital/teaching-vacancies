@@ -7,7 +7,6 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
 
   helper_method :back_path, :form
 
-  before_action :convert_date_params, only: %i[update]
   before_action :strip_checkbox_params, only: %i[update]
   before_action :set_multiple_schools
   before_action :set_school_options
@@ -30,7 +29,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   def update
     if params[:commit] == t("buttons.save_and_return_later")
       save_listing_and_return_later
-    elsif form.complete_and_valid?
+    elsif form.valid?
       update_vacancy
       if params[:commit] == t("buttons.update_job") ||
          (params[:commit] == t("buttons.continue") && session[:current_step].in?(%i[edit_incomplete review]))
@@ -39,7 +38,6 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
         render_wizard vacancy
       end
     else
-      replace_errors_in_form(@date_errors, form) if step == :important_dates
       render_wizard
     end
   end
@@ -75,20 +73,6 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
 
   def job_location
     @job_location ||= session[:job_location].presence || vacancy.job_location
-  end
-
-  def convert_date_params
-    return unless step == :important_dates
-
-    publish_in_past = vacancy.published? && vacancy.reload.publish_on.past?
-    delete_publish_on_params if vacancy.published? && vacancy.reload.publish_on.past?
-    dates_to_convert = publish_in_past ? %i[starts_on expires_on] : %i[starts_on publish_on expires_on]
-    @date_errors = convert_multiparameter_attributes_to_dates(:publishers_job_listing_important_dates_form, dates_to_convert)
-  end
-
-  def delete_publish_on_params
-    params.require(:publishers_job_listing_important_dates_form)
-          .extract!("publish_on(3i)", "publish_on(2i)", "publish_on(1i)")
   end
 
   def finish_wizard_path
