@@ -23,6 +23,8 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
       return redirect_to(organisation_job_documents_path(vacancy.id))
     end
 
+    form.valid?
+
     render_wizard
   end
 
