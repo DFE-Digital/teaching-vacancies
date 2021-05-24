@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Pubishers can give job listing feedback" do
+RSpec.describe "Publishers can give job listing feedback" do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }
   let(:comment) { "I love this service!" }
@@ -29,10 +29,9 @@ RSpec.describe "Pubishers can give job listing feedback" do
       choose I18n.t("helpers.label.publishers_job_listing_feedback_form.rating_options.somewhat_satisfied")
       fill_in "publishers_job_listing_feedback_form[comment]", with: comment
 
-      expect { click_on I18n.t("buttons.submit_feedback") }
-        .to have_triggered_event(:feedback_provided)
-        .with_base_data(user_anonymised_publisher_id: anonymised_form_of(vacancy.publisher.oid))
-        .and_data(comment: comment, feedback_type: "vacancy_publisher", vacancy_id: vacancy.id)
+      expect { click_on I18n.t("buttons.submit_feedback") }.to change {
+        publisher.feedbacks.where(comment: comment, feedback_type: "vacancy_publisher", vacancy_id: vacancy.id).count
+      }.by(1)
 
       expect(current_path).to eq(jobs_with_type_organisation_path(:published))
 
