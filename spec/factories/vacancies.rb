@@ -15,8 +15,7 @@ FactoryBot.define do
     contact_number { "01234 123456" }
     contract_type { :fixed_term }
     contract_type_duration { "6 months" }
-    expires_on { Faker::Time.forward(days: 14) }
-    expires_at { expires_on&.change(sec: 0) }
+    expires_at { Faker::Time.forward(days: 14).change(hour: 9, minute: 0, second: 0) }
     hired_status { nil }
     job_advert { Faker::Lorem.paragraph(sentence_count: 4) }
     job_roles { [:teacher] }
@@ -67,7 +66,7 @@ FactoryBot.define do
 
     trait :complete do
       starts_on { Faker::Time.between(from: Date.current + 10.days, to: Date.current + 30.days) }
-      expires_on { Faker::Time.between(from: Date.current + 2.days, to: Date.current + 9.days) }
+      expires_at { Faker::Time.between(from: Date.current + 2.days, to: Date.current + 9.days).change(hour: 9, minute: 0) }
       publish_on { Faker::Time.between(from: Date.current, to: Date.current + 1.day) }
     end
 
@@ -86,7 +85,7 @@ FactoryBot.define do
 
     trait :published do
       status { :published }
-      expires_on { Faker::Time.between(from: Date.current + 10.days, to: Date.current + 20.days) }
+      expires_at { Faker::Time.between(from: Date.current + 10.days, to: Date.current + 20.days).change(hour: 9, minute: 0) }
     end
 
     trait :published_slugged do
@@ -99,35 +98,31 @@ FactoryBot.define do
       status { :published }
       sequence(:slug) { |n| "slug-#{n}" }
       publish_on { Faker::Time.between(from: Date.current - 14.days, to: Date.current - 7.days) }
-      expires_on { Faker::Time.backward(days: 6) }
-      expires_at { Faker::Time.backward(days: 6) }
+      expires_at { Faker::Time.backward(days: 6).change(hour: 9, minute: 0) }
     end
 
     trait :expired_yesterday do
-      expires_on { Time.zone.yesterday.end_of_day }
-      expires_at { Time.zone.yesterday.midday }
+      expires_at { Time.zone.yesterday.change(hour: 9, minute: 0) }
     end
 
     trait :expired_years_ago do
-      expires_at { 2.years.ago }
-      expires_on { 2.years.ago }
+      expires_at { 2.years.ago.change(hour: 9, minute: 0) }
     end
 
     trait :expires_tomorrow do
-      expires_on { Time.zone.tomorrow.end_of_day }
-      expires_at { Time.zone.tomorrow.midday }
+      expires_at { Time.zone.tomorrow.change(hour: 9, minute: 0) }
     end
 
     trait :future_publish do
       publish_on { Date.current + 2.days }
-      expires_on { Date.current + 2.months }
+      expires_at { 2.months.from_now.change(hour: 9, minute: 0) }
     end
 
     trait :past_publish do
       status { :published }
       sequence(:slug) { |n| "slug-#{n}" }
       publish_on { Time.zone.yesterday }
-      expires_on { Date.current + 2.months }
+      expires_at { 2.months.from_now.change(hour: 9, minute: 0) }
       starts_on { Date.current + 3.months }
     end
 

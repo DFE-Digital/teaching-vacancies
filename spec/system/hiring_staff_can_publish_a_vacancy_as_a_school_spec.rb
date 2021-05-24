@@ -156,13 +156,13 @@ RSpec.describe "Creating a vacancy" do
         end
 
         within_row_for(element: "legend",
-                       text: strip_tags(I18n.t("helpers.legend.publishers_job_listing_important_dates_form.expires_on"))) do
-          expect(page).to have_content(I18n.t("important_dates_errors.expires_on.blank"))
+                       text: strip_tags(I18n.t("helpers.legend.publishers_job_listing_important_dates_form.expires_at"))) do
+          expect(page).to have_content(I18n.t("important_dates_errors.expires_at.blank"))
         end
 
         within_row_for(element: "legend",
-                       text: strip_tags(I18n.t("helpers.legend.publishers_job_listing_important_dates_form.expires_at"))) do
-          expect(page).to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.expires_at.blank"))
+                       text: strip_tags(I18n.t("helpers.legend.publishers_job_listing_important_dates_form.expiry_time"))) do
+          expect(page).to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.expiry_time.inclusion"))
         end
       end
 
@@ -704,7 +704,7 @@ RSpec.describe "Creating a vacancy" do
         yesterday_date = Time.zone.yesterday
         vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow)
         vacancy.organisation_vacancies.create(organisation: school)
-        vacancy.assign_attributes expires_on: yesterday_date
+        vacancy.assign_attributes expires_at: yesterday_date
         vacancy.save(validate: false)
 
         visit organisation_job_review_path(vacancy.id)
@@ -714,9 +714,9 @@ RSpec.describe "Creating a vacancy" do
           expect(page).to have_content(I18n.t("jobs.important_dates"))
         end
 
-        expect(find_field("publishers_job_listing_important_dates_form[expires_on(3i)]").value).to eq(yesterday_date.day.to_s)
-        expect(find_field("publishers_job_listing_important_dates_form[expires_on(2i)]").value).to eq(yesterday_date.month.to_s)
-        expect(find_field("publishers_job_listing_important_dates_form[expires_on(1i)]").value).to eq(yesterday_date.year.to_s)
+        expect(find_field("publishers_job_listing_important_dates_form[expires_at(3i)]").value).to eq(yesterday_date.day.to_s)
+        expect(find_field("publishers_job_listing_important_dates_form[expires_at(2i)]").value).to eq(yesterday_date.month.to_s)
+        expect(find_field("publishers_job_listing_important_dates_form[expires_at(1i)]").value).to eq(yesterday_date.year.to_s)
 
         click_on I18n.t("buttons.continue")
 
@@ -725,15 +725,17 @@ RSpec.describe "Creating a vacancy" do
         end
 
         within_row_for(element: "legend",
-                       text: strip_tags(I18n.t("helpers.legend.publishers_job_listing_important_dates_form.expires_on"))) do
-          expect(page).to have_content(I18n.t("important_dates_errors.expires_on.before_publish_on"))
+                       text: strip_tags(I18n.t("helpers.legend.publishers_job_listing_important_dates_form.expires_at"))) do
+          expect(page).to have_content(I18n.t("important_dates_errors.expires_at.after"))
         end
 
         expiry_date = Date.current + 1.week
 
-        fill_in "publishers_job_listing_important_dates_form[expires_on(3i)]", with: expiry_date.day
-        fill_in "publishers_job_listing_important_dates_form[expires_on(2i)]", with: expiry_date.month
-        fill_in "publishers_job_listing_important_dates_form[expires_on(1i)]", with: expiry_date.year
+        fill_in "publishers_job_listing_important_dates_form[expires_at(3i)]", with: expiry_date.day
+        fill_in "publishers_job_listing_important_dates_form[expires_at(2i)]", with: expiry_date.month
+        fill_in "publishers_job_listing_important_dates_form[expires_at(1i)]", with: expiry_date.year
+        choose "Start of the working day (9 am)", name: "publishers_job_listing_important_dates_form[expiry_time]"
+
         click_on I18n.t("buttons.continue")
 
         click_on I18n.t("buttons.submit_job_listing")
@@ -753,7 +755,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "displays the expiration date and time on the confirmation page" do
-        vacancy = create(:vacancy, :draft, expires_at: 5.days.from_now)
+        vacancy = create(:vacancy, :draft, expires_at: 5.days.from_now.change(hour: 9, minute: 0))
         vacancy.organisation_vacancies.create(organisation: school)
         visit organisation_job_review_path(vacancy.id)
         click_on I18n.t("buttons.submit_job_listing")
