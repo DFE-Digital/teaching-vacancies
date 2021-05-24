@@ -164,7 +164,21 @@ en:
               content_with_link_html: You can choose for candidates to apply for the job through Teaching Vacancies. %{link}
               content_with_no_link: You can choose for candidates to apply for the job through Teaching Vacancies.
               link: Preview the application form (opens in new tab).
-        process_title: Create a job listing steps
+          step_title: Applying for the job
+        supporting_documents:
+          step_title: Supporting documents
+        important_dates:
+          step_title: Important dates and deadlines
+        job_details:
+          step_title: Job details
+        job_location:
+          step_title: Job location
+        job_summary:
+          step_title: Job summary
+        pay_package:
+          step_title: Pay package
+        review:
+          step_title: Review the job listing
       destroy:
         success_html: >-
           %{job_title} has been <span class="govuk-!-font-weight-bold delete-listing-success-gtm">deleted</span>
@@ -223,6 +237,9 @@ en:
         update_status:
           unsuccessful: "%{name} has been sent an email telling them their application has not been successful"
           shortlisted: "%{name} has been sent an email telling them that they have been shortlisted"
+      review:
+        heading: Review the job listing
+        steps: Create a job listing steps
       show:
         notice: You can only view active jobs
       summary:

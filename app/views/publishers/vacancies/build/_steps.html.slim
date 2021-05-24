@@ -1,0 +1,10 @@
+- if current_organisation.is_a?(School)
+  = render StepsComponent.new title: t("publishers.vacancies.review.steps"), classes: "govuk-!-margin-top-6" do |component|
+    - school_vacancy_steps(process_steps).each do |vacancy_step, step_number|
+      - component.step(label: t("publishers.vacancies.build.#{vacancy_step}.step_title"), current: (step_number == process_steps.current_step_number), completed: vacancy_step_completed?(vacancy, step_number))
+    - component.step(label: t("jobseekers.job_applications.review.heading"), current: current_step_review?(process_steps), completed: false)
+- else
+  = render StepsComponent.new title: t("publishers.vacancies.review.steps"), classes: "govuk-!-margin-top-6" do |component|
+    - school_group_vacancy_steps(process_steps).each do |vacancy_step, step_number|
+      - component.step(label: t("publishers.vacancies.build.#{vacancy_step}.step_title"), current: (step_number == process_steps.current_step_number), completed: vacancy_step_completed?(vacancy, step_number))
+    - component.step(label: t("jobseekers.job_applications.review.heading"), current: current_step_review?(process_steps), completed: false)
