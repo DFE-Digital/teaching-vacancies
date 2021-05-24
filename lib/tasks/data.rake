@@ -46,10 +46,3 @@ namespace :ons do
     %i[regions counties cities].each { |api_location_type| ImportPolygons.new(api_location_type: api_location_type).call }
   end
 end
-
-namespace :temp do
-  desc "Migrate vacancy expires_on column"
-  task migrate_vacancy_expires_on: :environment do
-    Vacancy.where(expires_at: nil).update_all("expires_at = expires_on")
-  end
-end
