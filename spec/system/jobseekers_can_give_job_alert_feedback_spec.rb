@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.shared_examples "a correctly created Feedback" do
   it "creates a Feedback with the correct attributes" do
+    expect(feedback.feedback_type).to eq("job_alert")
     expect(feedback.relevant_to_user).to eq relevant_to_user
     expect(feedback.search_criteria).to eq subscription.search_criteria
     expect(feedback.job_alert_vacancy_ids).to contain_exactly(vacancies.first.id, vacancies.second.id)
@@ -36,18 +37,6 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
           expect(page).to have_content(I18n.t("jobseekers.job_alert_feedbacks.new.success"))
         end
       end
-
-      it "triggers a RequestEvent of type 'feedback_provided'" do
-        expect { follow_the_link_in_the_job_alert_email }
-          .to have_triggered_event(:feedback_provided)
-          .with_data(
-            feedback_type: "job_alert",
-            job_alert_vacancy_ids: job_alert_vacancy_ids.to_s,
-            relevant_to_user: relevant_to_user.to_s,
-            search_criteria: json_including(subscription.search_criteria),
-            subscription_identifier: anything,
-          )
-      end
     end
 
     context "when the user selects No" do
@@ -68,18 +57,6 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
           expect(page).to have_content(I18n.t("jobseekers.job_alert_feedbacks.new.success"))
         end
       end
-
-      it "triggers a RequestEvent of type 'feedback_provided'" do
-        expect { follow_the_link_in_the_job_alert_email }
-          .to have_triggered_event(:feedback_provided)
-                .with_data(
-                  feedback_type: "job_alert",
-                  job_alert_vacancy_ids: job_alert_vacancy_ids.to_s,
-                  relevant_to_user: relevant_to_user.to_s,
-                  search_criteria: json_including(subscription.search_criteria),
-                  subscription_identifier: anything,
-                )
-      end
     end
 
     context "when submitting further feedback" do
@@ -95,18 +72,7 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
         expect(current_path).to eq root_path
         expect(page).to have_content(I18n.t("jobseekers.job_alert_feedbacks.update.success"))
         expect(feedback.comment).to eq comment
-      end
-
-      it "triggers a RequestEvent of type 'feedback_provided'" do
-        expect { click_button I18n.t("buttons.submit") }
-          .to have_triggered_event(:feedback_provided)
-                .with_data(
-                  comment: comment,
-                  feedback_type: "job_alert",
-                  recaptcha_score: 0.9,
-                  search_criteria: json_including(subscription.search_criteria),
-                  subscription_identifier: anything,
-                )
+        expect(feedback.recaptcha_score).to eq(0.9)
       end
 
       context "when recaptcha is invalid" do
