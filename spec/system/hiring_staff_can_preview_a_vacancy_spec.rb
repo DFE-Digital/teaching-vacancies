@@ -16,6 +16,7 @@ RSpec.describe "Hiring staff can preview a vacancy" do
     end
 
     scenario "review page shows preview, submit and save calls to action" do
+      puts page.html
       expect(page).to have_selector(:link_or_button, I18n.t("buttons.preview_job_listing"))
       expect(page).to have_selector(:link_or_button, I18n.t("buttons.submit_job_listing"))
       expect(page).to have_selector(:link_or_button, I18n.t("buttons.back_to_manage_jobs"))

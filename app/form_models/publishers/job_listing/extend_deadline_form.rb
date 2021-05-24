@@ -15,12 +15,7 @@ class Publishers::JobListing::ExtendDeadlineForm
   validate :starts_on_and_starts_asap_not_present
 
   def attributes_to_save
-    {
-      expires_on: expires_at.to_date,
-      expires_at: expires_at,
-      starts_on: (starts_on unless starts_asap == "true"),
-      starts_asap: starts_asap,
-    }
+    { expires_at: expires_at, starts_on: (starts_on unless starts_asap == "true"), starts_asap: starts_asap }
   end
 
   def expires_at=(value)
