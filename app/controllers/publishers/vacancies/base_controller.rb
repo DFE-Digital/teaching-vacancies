@@ -30,7 +30,12 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
   end
 
   def step_valid?(step_form)
-    form = step_form.new(vacancy.slice(*send("#{step_form.to_s.underscore.split('/').last.split('_form').first}_fields")), vacancy)
+    # We need to merge in the current organisation otherwise the form will always be invalid for local authority users
+    form = step_form.new(
+      vacancy.slice(*send("#{step_form.to_s.underscore.split('/').last.split('_form').first}_fields"))
+             .merge(current_organisation: current_organisation),
+      vacancy,
+    )
 
     form.complete_and_valid?.tap do
       vacancy.errors.merge!(form.errors)
