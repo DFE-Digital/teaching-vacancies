@@ -69,24 +69,25 @@ jobs:
         run: bin/rails db:create db:schema:load
 
       - name: Run tests
-        run: bundle exec rspec --format RspecSonarqubeFormatter --out ${{ github.workspace }}/out/test-report.xml --format documentation
+        # run: bundle exec rspec --format RspecSonarqubeFormatter --out ${{ github.workspace }}/out/test-report.xml --format documentation
+        run: bundle exec rspec spec/system/hiring_staff_can_preview_a_vacancy_spec.rb:18
 
-      - name: Keep Code Coverage Report
-        uses: actions/upload-artifact@v2
-        with:
-          name: Code_Coverage
-          path: ${{ github.workspace }}/coverage/*
+      # - name: Keep Code Coverage Report
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: Code_Coverage
+      #     path: ${{ github.workspace }}/coverage/*
 
-      - name: Run sonarqube
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: sonar-scanner
-           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-           -Dsonar.organization=dfe-digital
-           -Dsonar.host.url=https://sonarcloud.io/
-           -Dsonar.projectKey=DFE-Digital_teaching-vacancies
-           -Dsonar.testExecutionReportPaths=${{ github.workspace }}/out/test-report.xml
-           -Dsonar.ruby.coverage.reportPaths=${{ github.workspace }}/coverage/.resultset.json
+      # - name: Run sonarqube
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: sonar-scanner
+      #      -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      #      -Dsonar.organization=dfe-digital
+      #      -Dsonar.host.url=https://sonarcloud.io/
+      #      -Dsonar.projectKey=DFE-Digital_teaching-vacancies
+      #      -Dsonar.testExecutionReportPaths=${{ github.workspace }}/out/test-report.xml
+      #      -Dsonar.ruby.coverage.reportPaths=${{ github.workspace }}/coverage/.resultset.json
 
   frontend-tests:
     name: Run frontend JS unit tests
