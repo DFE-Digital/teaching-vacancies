@@ -6,6 +6,7 @@ en:
       show:
         assistance:
           content_html: "%{link} to get help with problems you are having with your account."
+          delete: You should also contact the support team if you want to delete your Teaching Vacancies account.
           heading: Need assistance?
           link_text: Contact our support team
         delete_account: Delete your account
