@@ -7,6 +7,7 @@ default_domains = {
 DOMAIN = ENV.fetch("DOMAIN") { default_domains[Rails.env.to_sym] }
 domain = URI(DOMAIN)
 protocol = Rails.application.config.force_ssl ? "https" : "http"
+url_options = { protocol: protocol, host: domain.to_s }
 
-ActionMailer::Base.default_url_options = { protocol: protocol, host: domain.to_s }
-Rails.application.routes.default_url_options = ActionMailer::Base.default_url_options
+Rails.configuration.action_mailer.default_url_options = url_options
+Rails.application.routes.default_url_options = url_options
