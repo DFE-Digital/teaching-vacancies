@@ -1,26 +1,4 @@
 module Publishers::Wizardable
-  FORMS = {
-    job_location: Publishers::JobListing::JobLocationForm,
-    schools: Publishers::JobListing::SchoolsForm,
-    job_details: Publishers::JobListing::JobDetailsForm,
-    pay_package: Publishers::JobListing::PayPackageForm,
-    important_dates: Publishers::JobListing::ImportantDatesForm,
-    documents: Publishers::JobListing::DocumentsForm,
-    applying_for_the_job: Publishers::JobListing::ApplyingForTheJobForm,
-    job_summary: Publishers::JobListing::JobSummaryForm,
-  }.freeze
-
-  FORM_PARAMS = {
-    job_location: :job_location_params,
-    schools: :schools_params,
-    job_details: :job_details_params,
-    pay_package: :pay_package_params,
-    important_dates: :important_dates_params,
-    documents: :documents_params,
-    applying_for_the_job: :applying_for_the_job_params,
-    job_summary: :job_summary_params,
-  }.freeze
-
   STRIP_CHECKBOXES = {
     schools: %i[organisation_ids],
     job_details: %i[job_roles subjects working_patterns],
@@ -41,10 +19,38 @@ module Publishers::Wizardable
     }.freeze
   end
 
+  def job_location_fields
+    %i[job_location]
+  end
+
+  def schools_fields
+    %i[organisation_ids]
+  end
+
+  def job_details_fields
+    %i[job_title suitable_for_nqt contract_type contract_type_duration job_roles working_patterns subjects]
+  end
+
+  def pay_package_fields
+    %i[salary benefits]
+  end
+
+  def important_dates_fields
+    %i[starts_asap starts_on publish_on expires_on expires_at]
+  end
+
+  def applying_for_the_job_fields
+    %i[application_link enable_job_applications contact_email contact_number personal_statement_guidance school_visits how_to_apply]
+  end
+
+  def job_summary_fields
+    %i[job_advert about_school]
+  end
+
   def job_location_params(params)
     job_location = params[:publishers_job_listing_job_location_form][:job_location]
     readable_job_location = readable_job_location(
-      job_location, school_name: current_organisation.name, schools_count: @vacancy.organisation_ids.count
+      job_location, school_name: current_organisation.name, schools_count: vacancy.organisation_ids.count
     )
     attributes_to_merge = {
       completed_step: steps_config[step][:number],
@@ -52,12 +58,11 @@ module Publishers::Wizardable
       organisation_ids: job_location == "central_office" ? current_organisation.id : nil,
     }
     session[:job_location] = job_location
-    params.require(:publishers_job_listing_job_location_form)
-          .permit(:job_location).merge(attributes_to_merge.compact)
+    params.require(:publishers_job_listing_job_location_form).permit(:job_location).merge(attributes_to_merge.compact)
   end
 
   def schools_params(params)
-    job_location = session[:job_location].presence || @vacancy.job_location
+    job_location = session[:job_location].presence || vacancy.job_location
     organisation_ids = params[:publishers_job_listing_schools_form][:organisation_ids]
     school_name = if organisation_ids.is_a?(String) && organisation_ids.present?
                     School.find(params[:publishers_job_listing_schools_form][:organisation_ids]).name
@@ -72,8 +77,8 @@ module Publishers::Wizardable
   end
 
   def job_details_params(params)
-    job_location = @vacancy.job_location.presence || "at_one_school"
-    readable_job_location = @vacancy.readable_job_location.presence || readable_job_location(job_location, school_name: current_organisation.name)
+    job_location = vacancy.job_location.presence || "at_one_school"
+    readable_job_location = vacancy.readable_job_location.presence || readable_job_location(job_location, school_name: current_organisation.name)
     if params[:publishers_job_listing_job_details_form][:suitable_for_nqt] == "yes"
       params[:publishers_job_listing_job_details_form][:job_roles] |= [:nqt_suitable]
     end
@@ -81,8 +86,8 @@ module Publishers::Wizardable
       completed_step: steps_config[step][:number],
       job_location: job_location,
       readable_job_location: readable_job_location,
-      organisation_ids: @vacancy.organisation_ids.blank? ? current_organisation.id : nil,
-      status: @vacancy.status.blank? ? "draft" : nil,
+      organisation_ids: vacancy.organisation_ids.blank? ? current_organisation.id : nil,
+      status: vacancy.status.blank? ? "draft" : nil,
     }
     params.require(:publishers_job_listing_job_details_form)
           .permit(:job_title, :suitable_for_nqt, :contract_type, :contract_type_duration, job_roles: [], working_patterns: [], subjects: [])
