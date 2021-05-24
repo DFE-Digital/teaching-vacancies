@@ -15,7 +15,7 @@ RSpec.describe Search::Strategies::Database do
     end
 
     context "when there are vacancies" do
-      let!(:vacancies) { create_list(:vacancy, 5, :complete) }
+      let!(:vacancies) { create_list(:vacancy, 5) }
       let!(:draft_vacancies) { create_list(:vacancy, 2, :draft) }
 
       it "returns the correct count" do

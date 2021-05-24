@@ -13,7 +13,7 @@ RSpec.describe SendExpiredVacancyFeedbackEmailJob do
     let(:email_of_publishers) { "email@example.com" }
 
     context "with one expired vacancy needing feedback" do
-      let!(:expired_vacancy) { create(:vacancy, :expired, publisher: user, expires_on: Date.current) }
+      let!(:expired_vacancy) { create(:vacancy, :expired, publisher: user, expires_at: Time.current) }
 
       it "sends an email" do
         expect(Publishers::FeedbackPromptMailer).to receive(:prompt_for_feedback).with(user, [expired_vacancy])
@@ -33,7 +33,7 @@ RSpec.describe SendExpiredVacancyFeedbackEmailJob do
 
     context "with one expired vacancy with feedback already completed" do
       let!(:expired_vacancies) do
-        create(:vacancy, :expired, :with_feedback, expires_on: Date.current, publisher: user)
+        create(:vacancy, :expired, :with_feedback, expires_at: Time.current, publisher: user)
       end
 
       it "does not send an email" do
@@ -44,8 +44,8 @@ RSpec.describe SendExpiredVacancyFeedbackEmailJob do
 
     context "with two expired vacancies needing feedback" do
       let!(:expired_vacancies) do
-        [create(:vacancy, :expired, expires_on: Date.current, publisher: user),
-         create(:vacancy, :expired, expires_on: Date.current, publisher: user)]
+        [create(:vacancy, :expired, expires_at: Time.current, publisher: user),
+         create(:vacancy, :expired, expires_at: Time.current, publisher: user)]
       end
 
       it "sends an email with both vacancies" do
@@ -59,7 +59,7 @@ RSpec.describe SendExpiredVacancyFeedbackEmailJob do
 
     context "running the job before hiring staff have had 2 weeks opportunity to fill in feedback" do
       let!(:expired_vacancy) do
-        create(:vacancy, :expired, expires_on: Date.current, publisher: user)
+        create(:vacancy, :expired, expires_at: Time.current, publisher: user)
       end
 
       it "sends no emails" do
@@ -76,11 +76,11 @@ RSpec.describe SendExpiredVacancyFeedbackEmailJob do
 
     context "with one expired vacancy each" do
       let(:first_expired_vacancy) do
-        create(:vacancy, :expired, expires_on: Date.current, publisher: first_publisher)
+        create(:vacancy, :expired, expires_at: Time.current, publisher: first_publisher)
       end
 
       let(:second_expired_vacancy) do
-        create(:vacancy, :expired, expires_on: Date.current, publisher: second_publisher)
+        create(:vacancy, :expired, expires_at: Time.current, publisher: second_publisher)
       end
 
       it "sends one email for each hiring staff" do
@@ -93,7 +93,7 @@ RSpec.describe SendExpiredVacancyFeedbackEmailJob do
 
   context "without a publisher hiring staff" do
     context "with one expired vacancy needing feedback" do
-      let!(:expired_vacancy) { create(:vacancy, :expired, expires_on: Date.current, publisher: nil) }
+      let!(:expired_vacancy) { create(:vacancy, :expired, expires_at: Time.current, publisher: nil) }
 
       it "does not send an email" do
         expect(Publishers::FeedbackPromptMailer).to_not receive(:prompt_for_feedback)

@@ -171,8 +171,8 @@ RSpec.describe Vacancy do
   end
 
   context "scopes" do
-    let(:expired_earlier_today) { create(:vacancy, expires_on: Date.current, expires_at: 5.hour.ago) }
-    let(:expires_later_today) { create(:vacancy, status: :published, expires_on: Date.current, expires_at: 1.hour.from_now) }
+    let(:expired_earlier_today) { create(:vacancy, expires_at: 5.hour.ago) }
+    let(:expires_later_today) { create(:vacancy, status: :published, expires_at: 1.hour.from_now) }
 
     describe "#active" do
       it "retrieves active vacancies that have a status of :draft or :published" do
@@ -206,7 +206,7 @@ RSpec.describe Vacancy do
     end
 
     describe "#expired" do
-      it "retrieves published vacancies that have a past expires_on date" do
+      it "retrieves published vacancies that have a past expires_at" do
         create_list(:vacancy, 5, :published)
         expired = build(:vacancy, expires_at: Time.current - 1.hour)
         expired.send :set_slug
@@ -222,7 +222,7 @@ RSpec.describe Vacancy do
     end
 
     describe "#expired_yesterday" do
-      it "retrieves published and unpublished vacancies that have an expires_on date of yesterday" do
+      it "retrieves published and unpublished vacancies that have an expires_at of yesterday" do
         create(:vacancy, :published, :expired_yesterday)
         create(:vacancy, :draft, :expired_yesterday)
         create(:vacancy, :published, :expires_tomorrow)
@@ -232,7 +232,7 @@ RSpec.describe Vacancy do
     end
 
     describe "#expires_within_data_access_period" do
-      let(:expired_years_ago) { build(:vacancy, expires_on: 2.years.ago, expires_at: 2.years.ago) }
+      let(:expired_years_ago) { build(:vacancy, expires_at: 2.years.ago) }
 
       it "retrieves vacancies that expired not more than one year ago" do
         expect(Vacancy.expires_within_data_access_period).to_not include(expired_years_ago)
@@ -258,7 +258,7 @@ RSpec.describe Vacancy do
     end
 
     describe "#pending" do
-      it "retrieves vacancies that have a status of :published, a future publish_on date & a future expires_on date" do
+      it "retrieves vacancies that have a status of :published, a future publish_on date & a future expires_at date" do
         create_list(:vacancy, 5, :published)
         pending = create_list(:vacancy, 3, :future_publish)
 
