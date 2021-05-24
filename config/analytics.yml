@@ -278,7 +278,6 @@ shared:
     - ends_on
     - contact_email
     - status
-    - expires_on
     - publish_on
     - created_at
     - updated_at
@@ -295,7 +294,6 @@ shared:
     - completed_step
     - legacy_job_roles
     - about_school
-    - state
     - subjects
     - school_visits
     - how_to_apply

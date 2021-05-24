@@ -40,8 +40,6 @@ class VacancyPresenter < BasePresenter
   end
 
   def expired?
-    return model.expires_on < Date.current if model.expires_at.nil?
-
     model.expires_at < Time.current
   end
 
@@ -77,7 +75,7 @@ class VacancyPresenter < BasePresenter
       created_at: created_at.to_s,
       status: status,
       publish_on: publish_on,
-      expires_on: expires_on,
+      expires_at: expires_at,
       starts_on: starts_on,
       school_urn: organisation.urn,
       school_county: organisation.county,

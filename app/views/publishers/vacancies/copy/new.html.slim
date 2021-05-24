@@ -23,11 +23,17 @@
 
         = f.govuk_date_field :publish_on
 
-        = f.govuk_date_field :expires_on
+        = f.govuk_date_field :expires_at
 
-        = render "publishers/vacancies/expires_at_field", f: f
+        = f.govuk_collection_radio_buttons :expiry_time,
+          @copy_form.class::EXPIRY_TIME_OPTIONS,
+          ->(option) { option },
+          ->(option) { t("helpers.options.publishers_job_listing_extend_deadline_form.expiry_time.#{option}") }
 
         = f.govuk_date_field :starts_on
+
+        .clear-form__checkbox
+          = f.govuk_check_box :starts_asap, "true", 0, multiple: false, link_errors: false
 
         = f.govuk_submit classes: "govuk-!-margin-bottom-5"
 
