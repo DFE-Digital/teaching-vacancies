@@ -130,7 +130,10 @@ terraform-app-destroy-review: terraform-app-init ## make passcode=MyPasscode CON
 		cd terraform/app && terraform destroy -var-file ../workspace-variables/review.tfvars -auto-approve
 
 terraform-app-destroy: terraform-app-init ## make qa destroy passcode=MyPasscode
+	$(if $(CONFIRM_DESTROY), , $(error Can only run with CONFIRM_DESTROY))
+	$(ifnq ${pr_id}, ,$(${env}=review-pr-$(pr_id)))
 	cd terraform/app && terraform destroy -var-file ../workspace-variables/${env}.tfvars
+#		cd terraform/app && terraform destroy -var-file ../workspace-variables/review.tfvars -auto-approve
 
 ##@ terraform/common code. Requires privileged IAM account to run
 
