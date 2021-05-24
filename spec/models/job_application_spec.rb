@@ -6,6 +6,21 @@ RSpec.describe JobApplication do
   it { is_expected.to have_many(:employments) }
   it { is_expected.to have_many(:references) }
 
+  describe "#has_noticed_notifications" do
+    subject { create(:job_application) }
+
+    before do
+      Publishers::JobApplicationReceivedNotification.with(vacancy: subject.vacancy, job_application: subject)
+                                                    .deliver(subject.vacancy.publisher)
+      expect(Notification.count).to eq 1
+      subject.destroy
+    end
+
+    it "removes the notification when destroyed" do
+      expect(Notification.count).to eq 0
+    end
+  end
+
   describe "#name" do
     subject { build_stubbed(:job_application, first_name: "Brilliant", last_name: "Name") }
 
