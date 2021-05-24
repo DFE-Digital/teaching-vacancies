@@ -31,4 +31,4 @@ json.hiringOrganization do
   json.description vacancy.about_school
 end
 
-json.validThrough vacancy.expires_on.end_of_day.to_time.iso8601
+json.validThrough vacancy.expires_at.iso8601

@@ -3,7 +3,7 @@ class Publishers::Vacancies::EndListingController < Publishers::Vacancies::BaseC
 
   def update
     if form.valid?
-      vacancy.update(form_params.merge(expires_on: Time.current, expires_at: Time.current))
+      vacancy.update(form_params.merge(expires_at: Time.current))
       update_google_index(vacancy)
       redirect_to jobs_with_type_organisation_path(:expired), success: t(".success", job_title: vacancy.job_title)
     else
