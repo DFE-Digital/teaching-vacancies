@@ -15,24 +15,19 @@ class OrganisationVacancyPresenter < BasePresenter
   end
 
   def days_to_apply
-    case model.expires_on
+    case model.expires_at.to_date
     when Date.current
       I18n.t("jobs.days_to_apply.today")
-    when Time.zone.tomorrow
+    when 1.day.from_now.to_date
       I18n.t("jobs.days_to_apply.tomorrow")
     else
-      days_remaining = (model.expires_on - Date.current).to_i
+      days_remaining = (model.expires_at.to_date - Date.current).to_i
       I18n.t("jobs.days_to_apply.remaining", days_remaining: days_remaining)
     end
   end
 
-  def expires_on
-    format_date(model.expires_on)
-  end
-
   def application_deadline
-    expires_at_formatted = model.expires_at.nil? ? "" : I18n.t("jobs.time_at") + format_time(model.expires_at)
-    format_date(model.expires_on) + expires_at_formatted
+    format_date(model.expires_at.to_date) + I18n.t("jobs.time_at") + format_time(model.expires_at)
   end
 
   def preview_path
