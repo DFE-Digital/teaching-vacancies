@@ -72,7 +72,7 @@ RSpec.describe "Copying a vacancy" do
     new_vacancy.job_title = "A new job title"
     new_vacancy.starts_on = 35.days.from_now
     new_vacancy.publish_on = 0.days.from_now
-    new_vacancy.expires_at = new_vacancy.expires_on = 30.days.from_now
+    new_vacancy.expires_at = new_vacancy.expires_at = 30.days.from_now.change(hour: 9, minute: 0)
 
     visit organisation_path
 
@@ -97,7 +97,7 @@ RSpec.describe "Copying a vacancy" do
 
   context "when the original job is now invalid" do
     scenario "the job can be successfully copied but not published until valid" do
-      original_vacancy = build(:vacancy, :complete, about_school: nil, job_location: "at_one_school")
+      original_vacancy = build(:vacancy, about_school: nil, job_location: "at_one_school")
       original_vacancy.send(:set_slug)
       original_vacancy.save(validate: false)
       original_vacancy.organisation_vacancies.create(organisation: school)
@@ -108,7 +108,7 @@ RSpec.describe "Copying a vacancy" do
       new_vacancy.job_title = "A new job title"
       new_vacancy.starts_on = 35.days.from_now
       new_vacancy.publish_on = 0.days.from_now
-      new_vacancy.expires_at = new_vacancy.expires_on = 30.days.from_now
+      new_vacancy.expires_at = 30.days.from_now.change(hour: 9, minute: 0)
 
       within(".card-component__actions") do
         click_on I18n.t("jobs.manage.copy_link_text")
@@ -168,7 +168,7 @@ RSpec.describe "Copying a vacancy" do
       new_vacancy.job_title = "A new job title"
       new_vacancy.starts_on = 35.days.from_now
       new_vacancy.publish_on = 0.days.from_now
-      new_vacancy.expires_on = 30.days.from_now
+      new_vacancy.expires_at = 30.days.from_now.change(hour: 9, minute: 0)
 
       visit organisation_path
 
@@ -199,7 +199,7 @@ RSpec.describe "Copying a vacancy" do
       new_vacancy = original_vacancy.dup
       new_vacancy.job_title = "A new job title"
       new_vacancy.publish_on = 0.days.from_now
-      new_vacancy.expires_at = new_vacancy.expires_on
+      new_vacancy.expires_at = 1.day.from_now
 
       visit organisation_path
 
@@ -212,10 +212,10 @@ RSpec.describe "Copying a vacancy" do
       end
 
       fill_in_copy_vacancy_form_fields(new_vacancy)
-      fill_in "publishers_job_listing_copy_vacancy_form[expires_on(2i)]", with: "090"
+      fill_in "publishers_job_listing_copy_vacancy_form[expires_at(2i)]", with: "090"
 
       click_on I18n.t("buttons.continue")
-      expect(page).to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.expires_on.invalid"))
+      expect(page).to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.expires_at.invalid"))
     end
   end
 
@@ -253,15 +253,15 @@ RSpec.describe "Copying a vacancy" do
       let(:new_attributes) { { publish_on: 1.day.ago } }
 
       it "shows an error" do
-        expect(page).to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.publish_on.before_today"))
+        expect(page).to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.publish_on.on_or_after"))
       end
     end
 
-    context "when expires on is blank" do
-      let(:new_attributes) { { expires_on: nil } }
+    context "when expires at is blank" do
+      let(:new_attributes) { { expires_at: nil } }
 
       it "shows an error" do
-        expect(page).to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.expires_on.blank"))
+        expect(page).to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.expires_at.blank"))
       end
     end
 

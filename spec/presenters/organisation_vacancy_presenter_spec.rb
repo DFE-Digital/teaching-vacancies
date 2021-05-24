@@ -24,30 +24,16 @@ RSpec.describe OrganisationVacancyPresenter do
   end
 
   describe "application_deadline" do
-    let(:vacancy) { create(:vacancy, expires_on: deadline_date, expires_at: deadline_time) }
-    let(:deadline_date) { Date.current + 5.days }
+    let(:vacancy) { create(:vacancy, expires_at: Time.current + 5.days) }
+    let(:expected_deadline) { "#{format_date(Date.current + 5.days)} at #{format_time(Time.current + 5.days)}" }
 
-    context "when expiry time is not present" do
-      let(:deadline_time) { nil }
-      let(:expected_deadline) { format_date(deadline_date) }
-
-      it "displays the application deadline date" do
-        expect(presenter.application_deadline).to eq(expected_deadline)
-      end
-    end
-
-    context "when expiry time present" do
-      let(:deadline_time) { Time.current + 5.days }
-      let(:expected_deadline) { "#{format_date(deadline_date)} at #{format_time(deadline_time)}" }
-
-      it "displays the application deadline date" do
-        expect(presenter.application_deadline).to eq(expected_deadline)
-      end
+    it "displays the application deadline date" do
+      expect(presenter.application_deadline).to eq(expected_deadline)
     end
   end
 
   describe "days_to_apply" do
-    let(:vacancy) { create(:vacancy, expires_on: time_to_apply) }
+    let(:vacancy) { create(:vacancy, expires_at: time_to_apply) }
 
     context "when the deadline is today" do
       let(:time_to_apply) { (Date.current + 12.hours) }

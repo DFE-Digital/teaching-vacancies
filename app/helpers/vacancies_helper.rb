@@ -41,7 +41,7 @@ module VacanciesHelper
   end
 
   def expiry_date_and_time(vacancy)
-    "#{format_date(vacancy.expires_on)} at #{vacancy.expires_at.strftime('%-l:%M %P')}"
+    "#{format_date(vacancy.expires_at.to_date)} at #{vacancy.expires_at.strftime('%-l:%M %P')}"
   end
 
   def vacancy_or_organisation_description(vacancy)
