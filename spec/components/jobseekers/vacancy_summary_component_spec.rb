@@ -39,22 +39,8 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
         expect(rendered_component).to include(vacancy_presenter.working_patterns)
       end
 
-      context "when expires_at is nil" do
-        let(:vacancy) do
-          create(:vacancy, :at_one_school, expires_at: nil, organisation_vacancies_attributes: [
-            { organisation: organisation },
-          ])
-        end
-
-        it "renders the date it expires on but not the time" do
-          expect(rendered_component).to include(format_date(vacancy.expires_on))
-        end
-      end
-
-      context "when expiry time is not nil" do
-        it "renders the date and time it expires at" do
-          expect(rendered_component).to include(expiry_date_and_time(vacancy))
-        end
+      it "renders the date and time it expires at" do
+        expect(rendered_component).to include(expiry_date_and_time(vacancy))
       end
     end
   end

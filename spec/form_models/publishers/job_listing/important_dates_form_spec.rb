@@ -1,166 +1,224 @@
 require "rails_helper"
 
 RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
-  subject { described_class.new(params, build_stubbed(:vacancy, :draft)) }
+  subject { described_class.new(params, vacancy) }
 
-  context "validations" do
-    let(:params) { {} }
+  let(:vacancy) { build_stubbed(:vacancy) }
 
-    it { is_expected.to validate_presence_of(:publish_on) }
-    it { is_expected.to validate_presence_of(:expires_on) }
-    it { is_expected.to validate_presence_of(:expires_at) }
+  let(:publish_on) { 6.months.from_now }
+  let(:expires_at) { 1.year.from_now }
+  let(:starts_on) { 2.years.from_now }
+  let(:starts_asap) { "0" }
 
-    it { is_expected.to allow_value(Time.zone.tomorrow).for(:publish_on) }
-    it { is_expected.not_to allow_value(Time.zone.yesterday).for(:publish_on).with_message(I18n.t("important_dates_errors.publish_on.before_today")) }
-
-    it { is_expected.to allow_value(Time.zone.tomorrow).for(:expires_on) }
-    it { is_expected.not_to allow_value(Time.zone.yesterday).for(:expires_on).with_message(I18n.t("important_dates_errors.expires_on.before_today")) }
-
-    it { is_expected.to allow_value(Time.zone.tomorrow).for(:starts_on) }
-    it { is_expected.not_to allow_value(Time.zone.yesterday).for(:starts_on).with_message(I18n.t("important_dates_errors.starts_on.before_today")) }
-
-    describe "#expires_on" do
-      context "when the date is before publish_on" do
-        let(:params) { { expires_on: Date.current, publish_on: Time.zone.tomorrow } }
-
-        it "sets an error on expires_on" do
-          expect(subject).not_to be_valid
-          expect(subject.errors.messages[:expires_on]).to include(I18n.t("important_dates_errors.expires_on.before_publish_on"))
-        end
-      end
-    end
-
-    describe "#starts_on" do
-      context "when the date is before publish_on" do
-        let(:params) { { starts_on: Date.current, publish_on: Time.zone.tomorrow } }
-
-        it "must be after publish_on" do
-          expect(subject).not_to be_valid
-          expect(subject.errors.messages[:starts_on]).to include(I18n.t("important_dates_errors.starts_on.before_publish_on"))
-        end
-      end
-
-      context "when the date is before expires_on" do
-        let(:params) { { starts_on: Date.current, expires_on: Time.zone.tomorrow } }
-
-        it "must be after expires_on" do
-          expect(subject).not_to be_valid
-          expect(subject.errors.messages[:starts_on]).to include(I18n.t("important_dates_errors.starts_on.before_expires_on"))
-        end
-      end
-
-      context "when starts_asap is present" do
-        let(:params) { { starts_on: Date.current, starts_asap: "true" } }
-
-        it "must be blank" do
-          expect(subject).not_to be_valid
-          expect(subject.errors.messages[:starts_on]).to include(I18n.t("important_dates_errors.starts_on.multiple_start_dates"))
-        end
-      end
-    end
-
-    describe "#expires_at" do
-      let(:params) { { expires_at_hh: "11", expires_at_mm: "11", expires_at_meridiem: "am" } }
-
-      context "when expires_at is blank" do
-        let(:params) { { expires_at_hh: "", expires_at_mm: "", expires_at_meridiem: "" } }
-
-        it "requests an entry in the field" do
-          expect(subject).not_to be_valid
-          expect(subject.errors.messages[:expires_at]).to include(I18n.t("important_dates_errors.expires_at.blank"))
-        end
-      end
-
-      validate_expires_at_hours = [
-        { value: nil, errors: I18n.t("important_dates_errors.expires_at.blank") },
-        { value: "not a number", errors: I18n.t("important_dates_errors.expires_at.wrong_format") },
-        { value: "14", errors: I18n.t("important_dates_errors.expires_at.wrong_format") },
-        { value: "0", errors: I18n.t("important_dates_errors.expires_at.wrong_format") },
-      ]
-
-      validate_expires_at_hours.each do |h|
-        it "displays '#{h[:errors][0]}' error when hours field is #{h[:value]}" do
-          subject.expires_at_hh = h[:value]
-          expect(subject).not_to be_valid
-          expect(subject.errors.messages[:expires_at]).to include(h[:errors])
-        end
-      end
-
-      validate_expires_at_minutes = [
-        { value: nil, errors: I18n.t("important_dates_errors.expires_at.blank") },
-        { value: "not a number", errors: I18n.t("important_dates_errors.expires_at.wrong_format") },
-        { value: "-6", errors: I18n.t("important_dates_errors.expires_at.wrong_format") },
-        { value: "66", errors: I18n.t("important_dates_errors.expires_at.wrong_format") },
-      ]
-
-      validate_expires_at_minutes.each do |m|
-        it "displays '#{m[:errors][0]}' error when minutes field is #{m[:value]}" do
-          subject.expires_at_mm = m[:value]
-          expect(subject).not_to be_valid
-          expect(subject.errors.messages[:expires_at]).to include(m[:errors])
-        end
-      end
-
-      context "when meridiem field is blank" do
-        let(:params) { { expires_at_meridiem: "" } }
-
-        it "requests an entry in the field" do
-          expect(subject).not_to be_valid
-          expect(subject.errors.messages[:expires_at]).to include(I18n.t("important_dates_errors.expires_at.must_be_am_pm"))
-        end
-      end
-
-      context "when minutes and meridiem are invalid" do
-        let(:params) { { expires_at_mm: "66", expires_at_meridiem: "" } }
-
-        it "displays wrong format error" do
-          expect(subject).not_to be_valid
-          expect(subject.errors.messages[:expires_at]).to include(I18n.t("important_dates_errors.expires_at.wrong_format"))
-        end
-      end
-
-      context "when all fields are correct" do
-        it "does not display an error" do
-          subject.valid?
-          expect(subject.errors.messages[:expires_at]).to be_empty
-        end
-      end
-    end
-  end
-
-  context "when expiry time components are given" do
-    context "when fields are incomplete" do
-      let(:params) { { expires_at_hh: "9" } }
-
-      it "cannot save expiry time" do
-        expect(subject.params_to_save).not_to include(expires_at_hh: "9")
-      end
-    end
-
-    context "when fields are complete" do
-      let(:params) { { expires_on: 1.week.from_now, expires_at_hh: "9", expires_at_mm: "15", expires_at_meridiem: "am" } }
-
-      it "can save expiry time" do
-        expect(subject.params_to_save.count).to eq(2)
-        expect(subject.params_to_save[:expires_at].hour).to eq(9)
-        expect(subject.params_to_save[:expires_at].min).to eq(15)
-      end
-    end
+  let(:params) do
+    {
+      "publish_on(1i)" => publish_on.year.to_s,
+      "publish_on(2i)" => publish_on.month.to_s,
+      "publish_on(3i)" => publish_on.day.to_s,
+      "expires_at(1i)" => expires_at.year.to_s,
+      "expires_at(2i)" => expires_at.month.to_s,
+      "expires_at(3i)" => expires_at.day.to_s,
+      expiry_time: "9:00",
+      "starts_on(1i)" => starts_on.year.to_s,
+      "starts_on(2i)" => starts_on.month.to_s,
+      "starts_on(3i)" => starts_on.day.to_s,
+      starts_asap: starts_asap,
+    }
   end
 
   context "when all attributes are valid" do
-    let(:params) do
-      {
-        expires_on: Date.current + 1.week, publish_on: Date.current,
-        starts_on: Date.current + 1.month, expires_at_hh: "9", expires_at_mm: "1", expires_at_meridiem: "am"
-      }
-    end
-
     it "is valid" do
       expect(subject).to be_valid
-      expect(subject.expires_on).to eq(Date.current + 1.week)
-      expect(subject.publish_on).to eq(Date.current)
-      expect(subject.starts_on).to eq(Date.current + 1.month)
+    end
+  end
+
+  it { is_expected.to validate_inclusion_of(:expiry_time).in_array(%w[9:00 12:00 17:00 23:59]) }
+
+  describe "publish_on" do
+    context "when date is blank" do
+      before do
+        params["publish_on(1i)"] = ""
+        params["publish_on(2i)"] = ""
+        params["publish_on(3i)"] = ""
+      end
+
+      context "when vacancy is published" do
+        let(:vacancy) { build_stubbed(:vacancy, :published) }
+
+        it "is valid" do
+          expect(subject).to be_valid
+        end
+      end
+
+      context "when vacancy is not published" do
+        let(:vacancy) { build_stubbed(:vacancy, :draft) }
+
+        it "is invalid" do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:publish_on, :blank)).to be true
+        end
+      end
+    end
+
+    context "when date is incomplete" do
+      before { params["publish_on(2i)"] = "" }
+
+      context "when vacancy is published" do
+        let(:vacancy) { build_stubbed(:vacancy, :published) }
+
+        it "is valid" do
+          expect(subject).to be_valid
+        end
+      end
+
+      context "when vacancy is not published" do
+        let(:vacancy) { build_stubbed(:vacancy, :draft) }
+
+        it "is invalid" do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:publish_on, :invalid)).to be true
+        end
+      end
+    end
+
+    context "when date is invalid" do
+      before { params["publish_on(2i)"] = "100" }
+
+      context "when vacancy is published" do
+        let(:vacancy) { build_stubbed(:vacancy, :published) }
+
+        it "is valid" do
+          expect(subject).to be_valid
+        end
+      end
+
+      context "when vacancy is not published" do
+        let(:vacancy) { build_stubbed(:vacancy, :draft) }
+
+        it "is invalid" do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:publish_on, :invalid)).to be true
+        end
+      end
+    end
+
+    context "when date is not in the future" do
+      let(:publish_on) { 1.year.ago }
+
+      context "when vacancy is published" do
+        let(:vacancy) { build_stubbed(:vacancy, :published) }
+
+        it "is valid" do
+          expect(subject).to be_valid
+        end
+      end
+
+      context "when vacancy is not published" do
+        let(:vacancy) { build_stubbed(:vacancy, :draft) }
+
+        it "is invalid" do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:publish_on, :on_or_after)).to be true
+        end
+      end
+    end
+  end
+
+  describe "expires_at" do
+    context "when date is blank" do
+      before do
+        params["expires_at(1i)"] = ""
+        params["expires_at(2i)"] = ""
+        params["expires_at(3i)"] = ""
+      end
+
+      it "is invalid" do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:expires_at, :blank)).to be true
+      end
+    end
+
+    context "when date is incomplete" do
+      before { params["expires_at(2i)"] = "" }
+
+      it "is invalid" do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:expires_at, :invalid)).to be true
+      end
+    end
+
+    context "when date is invalid" do
+      before { params["expires_at(2i)"] = "100" }
+
+      it "is invalid" do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:expires_at, :invalid)).to be true
+      end
+    end
+
+    context "when date is not in the future" do
+      let(:expires_at) { 1.month.ago }
+
+      it "is invalid" do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:expires_at, :on_or_after)).to be true
+      end
+    end
+
+    context "when date is before publish_on" do
+      let(:expires_at) { 3.months.from_now }
+
+      it "is invalid" do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:expires_at, :after)).to be true
+      end
+    end
+  end
+
+  describe "starts_on" do
+    context "when date is incomplete" do
+      before { params["starts_on(2i)"] = "" }
+
+      it "is invalid" do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:starts_on, :invalid)).to be true
+      end
+    end
+
+    context "when date is invalid" do
+      before { params["starts_on(2i)"] = "100" }
+
+      it "is invalid" do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:starts_on, :invalid)).to be true
+      end
+    end
+
+    context "when date is not in the future" do
+      let(:starts_on) { 1.year.ago }
+
+      it "is invalid" do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:starts_on, :on_or_after)).to be true
+      end
+    end
+
+    context "when date is before expires_at" do
+      let(:starts_on) { 9.months.from_now }
+
+      it "is invalid" do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:starts_on, :after)).to be true
+      end
+    end
+
+    context "when date and starts_asap are present" do
+      let(:starts_asap) { "true" }
+
+      it "is invalid" do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:starts_on, :date_and_asap)).to be true
+      end
     end
   end
 end

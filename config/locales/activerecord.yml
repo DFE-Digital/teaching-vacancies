@@ -105,25 +105,22 @@ en:
       too_long: Salary must not be more than %{count} characters
       invalid_characters: Salary must not contain any HTML tags
   important_dates_errors: &important_dates_errors
+    expires_at:
+      after: The closing date must be after the date the job will be listed
+      blank: Enter a closing date
+      invalid: Enter a date in the correct format
+      on_or_after: The closing date must be in the future
+    expiry_time:
+      inclusion: Select the time the application is due
     publish_on:
       blank: Enter the date the job will be listed
-      before_today: The date the job will be listed must be either today or in the future
       invalid: Enter a date in the correct format
-    expires_on:
-      blank: Enter the closing date
-      before_today: The closing date must be in the future
-      before_publish_on: The closing date must be after the date the job will be listed
-      invalid: Enter a date in the correct format
-    expires_at:
-      blank: Enter the time applications are due
-      wrong_format: Enter a time in the correct format
-      must_be_am_pm: Select am or pm
+      on_or_after: The date the job will be listed must be either today or in the future
     starts_on:
-      before_today: The date the job will be listed must be in the future
-      before_publish_on: The date the job starts must be after the date the job listing will be published
-      before_expires_on: The date the job starts must be after the closing date
+      after: The date the job starts must be after the closing date
+      date_and_asap: Select either a start date or 'As soon as possible'
       invalid: Enter a date in the correct format
-      multiple_start_dates: Select either a start date or 'As soon as possible'
+      on_or_after: The date the job starts must be in the future
   applying_for_the_job_errors: &applying_for_the_job_errors
     application_link:
       url: Enter a link in the correct format, like http://www.school.ac.uk
@@ -215,18 +212,9 @@ en:
               inclusion: Select how the successful candidate applied for the role
         publishers/job_listing/extend_deadline_form:
           attributes:
+            <<: *important_dates_errors
             expires_at:
               after: To extend the closing date enter a date that is after the current deadline
-              blank: Enter a closing date
-              invalid: Enter a date in the correct format
-              on_or_after: The closing date must be in the future
-            expiry_time:
-              inclusion: Select the time the application is due
-            starts_on:
-              after: The date the job starts must be after the date applications are due
-              date_and_asap: Select either a start date or 'As soon as possible'
-              invalid: Enter a date in the correct format
-              on_or_after: The date the job starts must be in the future
         publishers/organisation_form:
           attributes:
             <<: *organisation_errors
