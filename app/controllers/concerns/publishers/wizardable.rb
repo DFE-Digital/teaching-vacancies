@@ -36,7 +36,7 @@ module Publishers::Wizardable
   end
 
   def important_dates_fields
-    %i[starts_asap starts_on publish_on expires_on expires_at]
+    %i[starts_asap starts_on publish_on expires_at]
   end
 
   def applying_for_the_job_fields
@@ -101,8 +101,8 @@ module Publishers::Wizardable
 
   def important_dates_params(params)
     params.require(:publishers_job_listing_important_dates_form)
-          .permit(:starts_asap, :starts_on, :publish_on, :expires_on,
-                  :expires_at, :expires_at_hh, :expires_at_mm, :expires_at_meridiem).merge(completed_step: steps_config[step][:number])
+          .permit(:starts_asap, :starts_on, :publish_on, :expires_at, :expiry_time)
+          .merge(completed_step: steps_config[step][:number])
   end
 
   def applying_for_the_job_params(params)

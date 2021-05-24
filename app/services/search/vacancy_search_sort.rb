@@ -35,14 +35,14 @@ class Search::VacancySearchSort
     ),
     EXPIRES_AT_DESC = new(
       :expires_at_desc,
-      I18n.t("jobs.sort_by.expires_at.descending"),
+      I18n.t("jobs.sort_by.expires_at.descending.vacancy.jobseeker"),
       column: :expires_at,
       order: :desc,
       algolia_replica_suffix: "expires_at_desc",
     ),
     EXPIRES_AT_ASC = new(
       :expires_at_asc,
-      I18n.t("jobs.sort_by.expires_at.ascending.vacancy"),
+      I18n.t("jobs.sort_by.expires_at.ascending.vacancy.jobseeker"),
       column: :expires_at,
       order: :asc,
       algolia_replica_suffix: "expires_at_asc",

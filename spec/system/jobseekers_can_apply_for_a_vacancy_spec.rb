@@ -18,7 +18,7 @@ RSpec.describe "Jobseekers can apply for a vacancy" do
 
   let(:expired_vacancy) do
     create(:vacancy, :expired, :no_tv_applications,
-           application_link: "www.google.com", organisation_vacancies_attributes: [{ organisation: build(:school) }], expires_on: Date.current)
+           application_link: "www.google.com", organisation_vacancies_attributes: [{ organisation: build(:school) }])
   end
 
   scenario "the application links are not present for expired vacancy" do

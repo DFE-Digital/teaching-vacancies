@@ -162,8 +162,7 @@ en:
         school_visits: Explain how a candidate can arrange a visit to the school (give a phone number if possible)
         trust_visits: Explain how a candidate can arrange a visit to the trust (give a phone number if possible)
       publishers_job_listing_copy_vacancy_form:
-        expires_on: For example, 01 05 2021
-        expires_at: For example, 9:30 am or 11:59 pm (midnight)
+        expires_at: For example, 01 05 2021
         job_title: >-
           For secondary school roles include subject and, if relevant,
           level of seniority (‘Subject leader for science’, for example).
@@ -181,8 +180,7 @@ en:
         expires_at: For example, 01 05 2021
         starts_on: For example, 01 09 2021
       publishers_job_listing_important_dates_form:
-        expires_on: For example, 01 05 2021
-        expires_at: For example, 9:30 am or 11:59 pm (midnight)
+        expires_at: For example, 01 05 2021
         publish_on: For example, 01 01 2021
         starts_on: For example, 01 09 2021
       publishers_job_listing_job_details_form:
@@ -427,10 +425,9 @@ en:
         school_visits: School visits
         trust_visits: Trust visits
       publishers_job_listing_copy_vacancy_form:
-        expires_at_hh: Hour
-        expires_at_meridiem: am or pm
-        expires_at_mm: Minute
         job_title: Job title
+        starts_asap_options:
+          "true": As soon as possible
       publishers_job_listing_documents_form:
         documents: Upload files
       publishers_job_listing_end_listing_form:
@@ -450,9 +447,8 @@ en:
           highly_dissatisfied: Highly dissatisfied
         comment: Do you have any suggestions on how we should improve the service?
       publishers_job_listing_important_dates_form:
-        expires_at_hh: Hour
-        expires_at_meridiem: am or pm
-        expires_at_mm: Minute
+        starts_asap_options:
+          "true": As soon as possible
       publishers_job_listing_job_details_form:
         contract_type_duration: Duration of fixed term contract
         contract_type_options:
@@ -532,7 +528,8 @@ en:
       publishers_job_listing_applying_for_the_job_form:
         enable_job_applications: How would you like candidates to apply?
       publishers_job_listing_copy_vacancy_form:
-        expires_on: Closing date
+        expires_at: Closing date
+        expiry_time: Time application is due
         publish_on: Date job will be listed
         starts_on: Date job starts
       publishers_job_listing_end_listing_form:
@@ -544,10 +541,9 @@ en:
       publishers_job_listing_feedback_form:
         rating: How satisfied are you with the job listing process on Teaching Vacancies?
       publishers_job_listing_important_dates_form:
-        expires_on: Closing date
-        expires_at: Time application is due
+        expires_at: Closing date
+        expiry_time: Time application is due
         publish_on: Date job will be listed
-        starts_asap: As soon as possible
         starts_on: Date job starts
       publishers_job_listing_job_details_form:
         contract_type: Contract type
@@ -568,7 +564,19 @@ en:
           other_free: We hired through a different free service
           other_paid: We hired through a paid service
           unknown: I don't know
-      publishers_job_listing_extend_listing_form:
+      publishers_job_listing_copy_vacancy_form:
+        expiry_time:
+          "9:00": Start of the working day (9 am)
+          "12:00": Midday (12 pm)
+          "17:00": End of the working day (5 pm)
+          "23:59": End of the deadline day (11:59 pm)
+      publishers_job_listing_extend_deadline_form:
+        expiry_time:
+          "9:00": Start of the working day (9 am)
+          "12:00": Midday (12 pm)
+          "17:00": End of the working day (5 pm)
+          "23:59": End of the deadline day (11:59 pm)
+      publishers_job_listing_important_dates_form:
         expiry_time:
           "9:00": Start of the working day (9 am)
           "12:00": Midday (12 pm)
