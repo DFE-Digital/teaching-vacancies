@@ -32,28 +32,9 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
   def step_valid?(step_form)
     form = step_form.new(vacancy.slice(*send("#{step_form.to_s.underscore.split('/').last.split('_form').first}_fields")), vacancy)
 
-    form.complete_and_valid?.tap do
+    form.valid?.tap do
       vacancy.errors.merge!(form.errors)
     end
-  end
-
-  def convert_multiparameter_attributes_to_dates(form_key, fields)
-    date_errors = {}
-    fields.each do |field|
-      date_params = flatten_date_hash(
-        params[form_key].extract!(:"#{field}(1i)", :"#{field}(2i)", :"#{field}(3i)"), field
-      )
-      begin
-        params[form_key][field] = date_params.all?(0) ? nil : Date.new(*date_params)
-      rescue ArgumentError
-        date_errors[field] = t("activerecord.errors.models.vacancy.attributes.#{field}.invalid")
-      end
-    end
-    date_errors
-  end
-
-  def flatten_date_hash(hash, field)
-    %w[1 2 3].map { |i| hash[:"#{field}(#{i}i)"].to_i }
   end
 
   def readable_job_location(job_location, school_name: nil, schools_count: nil)
@@ -86,13 +67,6 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
 
     url = job_url(job)
     RemoveGoogleIndexQueueJob.perform_later(url)
-  end
-
-  def replace_errors_in_form(errors, form_object)
-    errors.each do |field, error|
-      form_object.errors.delete(field)
-      form_object.errors.add(field, error)
-    end
   end
 
   def reset_session_vacancy!
