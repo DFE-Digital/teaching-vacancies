@@ -11,6 +11,23 @@ RSpec.describe Vacancy do
   it { is_expected.to have_many(:job_applications) }
   it { is_expected.to have_one(:equal_opportunities_report) }
 
+  describe "#has_noticed_notifications" do
+    subject { create(:vacancy) }
+
+    let(:job_application) { create(:job_application, vacancy: subject) }
+
+    before do
+      Publishers::JobApplicationReceivedNotification.with(vacancy: subject, job_application: job_application)
+                                                    .deliver(subject.publisher)
+      expect(Notification.count).to eq 1
+      subject.destroy
+    end
+
+    it "removes the notification when destroyed" do
+      expect(Notification.count).to eq 0
+    end
+  end
+
   context "indexing for search" do
     describe "#update_index!" do
       it { is_expected.to have_db_column(:initially_indexed) }
