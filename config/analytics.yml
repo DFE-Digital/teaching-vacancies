@@ -278,7 +278,6 @@ shared:
     - ends_on
     - contact_email
     - status
-    - expires_on
     - publish_on
     - created_at
     - updated_at
