@@ -122,7 +122,7 @@ jobs:
       with:
         token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
         ref: ${{ steps.tag_version.outputs.new_tag }}
-        workflow: .github/workflows/deploy_app.yml # Workflow name
+        workflow: Deploy App to Environment # Workflow name
         inputs: '{"environment": "${{ env.ENVIRONMENT }}", "tag": "${{ env.TAG }}"}'
 
     - name: Wait for Deploy App Workflow for review
