@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_20_225531) do
+ActiveRecord::Schema.define(version: 2021_05_22_171457) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -425,7 +425,6 @@ ActiveRecord::Schema.define(version: 2021_05_20_225531) do
     t.date "ends_on"
     t.string "contact_email"
     t.integer "status"
-    t.date "expires_on"
     t.date "publish_on"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -460,7 +459,6 @@ ActiveRecord::Schema.define(version: 2021_05_20_225531) do
     t.integer "candidate_hired_from"
     t.boolean "enable_job_applications"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
-    t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["initially_indexed"], name: "index_vacancies_on_initially_indexed"
     t.index ["publisher_id"], name: "index_vacancies_on_publisher_id"
     t.index ["publisher_organisation_id"], name: "index_vacancies_on_publisher_organisation_id"

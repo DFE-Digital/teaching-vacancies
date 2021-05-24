@@ -102,7 +102,7 @@ RSpec.describe "Hiring staff can see the vacancies dashboard" do
         expect(page).to have_content(I18n.t("jobs.publication_date"))
         expect(page).to have_content(pending_vacancy.job_title)
         expect(page).to have_content(format_date(pending_vacancy.publish_on))
-        expect(page).to have_content(format_date(pending_vacancy.expires_on))
+        expect(page).to have_content(format_date(pending_vacancy.expires_at))
         expect(page).to have_css(".card-component", count: 1)
       end
     end
@@ -116,7 +116,7 @@ RSpec.describe "Hiring staff can see the vacancies dashboard" do
 
       within(".moj-filter-layout__content") do
         expect(page).to have_content(expired_vacancy.job_title)
-        expect(page).to have_content(format_date(expired_vacancy.expires_on))
+        expect(page).to have_content(format_date(expired_vacancy.expires_at))
         expect(page).to have_content(format_date(expired_vacancy.publish_on))
         expect(page).to have_css(".card-component", count: 1)
       end

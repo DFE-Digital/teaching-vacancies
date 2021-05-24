@@ -20,13 +20,13 @@ class Publishers::VacancySort < RecordSort
     case @vacancy_type
     when "published"
       [
-        SortOption.new("expires_at", "asc", I18n.t("jobs.sort_by.expires_on.ascending")),
+        SortOption.new("expires_at", "asc", I18n.t("jobs.sort_by.expires_at.ascending")),
         SortOption.new("job_title", "asc", I18n.t("jobs.sort_by.job_title.ascending")),
       ]
     when "pending"
       [
         SortOption.new("publish_on", "desc", I18n.t("jobs.sort_by.published_date.descending")),
-        SortOption.new("expires_at", "asc", I18n.t("jobs.sort_by.expires_on.ascending")),
+        SortOption.new("expires_at", "asc", I18n.t("jobs.sort_by.expires_at.ascending")),
         SortOption.new("job_title", "asc", I18n.t("jobs.sort_by.job_title.ascending")),
       ]
     when "draft"
@@ -37,7 +37,7 @@ class Publishers::VacancySort < RecordSort
       ]
     when "expired", "awaiting_feedback"
       [
-        SortOption.new("expires_at", "desc", I18n.t("jobs.sort_by.expires_on.descending")),
+        SortOption.new("expires_at", "desc", I18n.t("jobs.sort_by.expires_at.descending")),
         SortOption.new("job_title", "asc", I18n.t("jobs.sort_by.job_title.ascending")),
       ]
     end
