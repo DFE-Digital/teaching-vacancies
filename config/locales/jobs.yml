@@ -112,7 +112,7 @@ en:
           saved_job: date added (most recent)
           subscription: date subscribed (most recent)
           vacancy: date drafted (most recent)
-      expires_on:
+      expires_at:
         ascending: closing date (soonest)
         descending: end date (most recent)
       expires_at:
@@ -195,7 +195,7 @@ en:
     start_on: Date job starts
     starts_on: Expected start date
     publish_on: Publish on
-    expires_on: Closing date
+    expires_at: Closing date
     time_at: ' at '
 
     supporting_documents: Supporting documents
