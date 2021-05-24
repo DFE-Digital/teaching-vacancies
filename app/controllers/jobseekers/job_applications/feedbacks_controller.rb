@@ -1,6 +1,4 @@
 class Jobseekers::JobApplications::FeedbacksController < Jobseekers::BaseController
-  include FeedbackEventConcerns
-
   helper_method :vacancy
 
   def create
@@ -8,7 +6,6 @@ class Jobseekers::JobApplications::FeedbacksController < Jobseekers::BaseControl
 
     if @application_feedback_form.valid?
       Feedback.create(feedback_attributes)
-      trigger_feedback_provided_event
       redirect_to jobseekers_job_applications_path, success: t(".success")
     else
       render "jobseekers/job_applications/submit"

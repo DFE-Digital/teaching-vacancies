@@ -4,6 +4,7 @@ class Subscription < ApplicationRecord
   enum frequency: { daily: 0, weekly: 1 }
 
   has_many :alert_runs, dependent: :destroy
+  has_many :feedbacks
 
   scope :active, (-> { where(active: true) })
 
