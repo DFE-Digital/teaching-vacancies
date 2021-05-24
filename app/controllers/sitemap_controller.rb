@@ -17,7 +17,7 @@ class SitemapController < ApplicationController
 
   def add_vacancies(map)
     Vacancy.listed.applicable.find_each do |vacancy|
-      map.add job_path(vacancy), updated: vacancy.updated_at, expires: vacancy.expires_on, period: "hourly", priority: 0.7
+      map.add job_path(vacancy), updated: vacancy.updated_at, expires: vacancy.expires_at, period: "hourly", priority: 0.7
     end
   end
 
