@@ -18,10 +18,6 @@ li.vacancy role="listitem" tab-index="0"
       dt = t("jobs.working_patterns")
       dd.double
         = @vacancy.working_patterns
-    dt = t("jobs.expires_on")
-    - if @vacancy.expires_at.nil?
-      dd.double
-        = format_date(@vacancy.expires_on)
-    - else
-      dd.double
-        = expiry_date_and_time(@vacancy)
+    dt = t("jobs.expires_at")
+    dd.double
+      = expiry_date_and_time(@vacancy)
