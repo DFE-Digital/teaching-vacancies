@@ -1,12 +1,9 @@
 class Jobseekers::JobAlertFeedbacksController < ApplicationController
-  include FeedbackEventConcerns
-
   def new
     # The `new` action creates the Feedback record because it is called from a link in the alert email.
     # Such links can only perform GET requests. HTTP forbids redirecting from GET to POST.
     @subscription = Subscription.find_and_verify_by_token(token)
-    @feedback = Feedback.create(feedback_attributes)
-    trigger_feedback_provided_event
+    @feedback = Feedback.create(new_feedback_attributes)
     redirect_to edit_subscription_job_alert_feedback_path(id: @feedback.id), success: t(".success")
   end
 
@@ -29,27 +26,16 @@ class Jobseekers::JobAlertFeedbacksController < ApplicationController
       @feedback.update(further_feedback_form_params)
       @feedback.recaptcha_score = recaptcha_reply["score"]
       @feedback.save
-      trigger_feedback_provided_event
       redirect_to root_path, success: t(".success")
     end
   end
 
   private
 
-  def feedback_attributes
-    # `trigger_feedback_provided_event`, which we use to create Events, relies on feedback_attributes.
-    # This method allows events to be created for either type of action. Here felt like the best place for this logic,
-    # since job alert feedback is the only feedback type that has >1 action.
-    case action_name
-    when "new"
-      feedback_attributes_base.merge(job_alert_email_link_params)
-    when "update"
-      feedback_attributes_base.merge(further_feedback_form_params)
-    end
-  end
-
-  def feedback_attributes_base
-    { feedback_type: "job_alert", search_criteria: @subscription.search_criteria, subscription_id: @subscription.id }
+  def new_feedback_attributes
+    job_alert_email_link_params.merge(
+      { feedback_type: "job_alert", search_criteria: @subscription.search_criteria, subscription_id: @subscription.id },
+    )
   end
 
   def job_alert_email_link_params
