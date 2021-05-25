@@ -30,10 +30,11 @@
           ->(option) { option },
           ->(option) { t("helpers.options.publishers_job_listing_extend_deadline_form.expiry_time.#{option}") }
 
-        = f.govuk_date_field :starts_on
+        .clear-form.optional-field
+          = f.govuk_date_field :starts_on
 
-        .clear-form__checkbox
-          = f.govuk_check_box :starts_asap, "true", 0, multiple: false, link_errors: false
+          .clear-form__checkbox
+            = f.govuk_check_box :starts_asap, "true", 0, multiple: false, link_errors: false
 
         = f.govuk_submit classes: "govuk-!-margin-bottom-5"
 
