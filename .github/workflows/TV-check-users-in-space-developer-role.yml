@@ -1,0 +1,32 @@
+name: 'Check users in space developer role'
+
+on:
+  push:
+  #schedule: # 1700hrs Mon-Fri
+  #  - cron: '00 17 * * 1-5'
+
+jobs:
+  CHECK-SPACE-USER:
+    runs-on: ubuntu-latest
+    env:
+      CF_SPACE_NAME: "teaching-vacancies-production"
+
+    steps:
+      - uses: DFE-Digital/github-actions/setup-cf-cli@master
+        with:
+          CF_USERNAME: ${{ secrets.CF_USERNAME_PROD }}
+          CF_PASSWORD: ${{ secrets.CF_PASSWORD_PROD }}
+          CF_SPACE_NAME: "${{ env.CF_SPACE_NAME }}"
+          CF_ORG_NAME: dfe
+          CF_API_URL:  https://api.london.cloud.service.gov.uk
+          INSTALL_CONDUIT: false
+
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          repository: DFE-Digital/bat-infrastructure
+          path: ./remote-checkout
+
+      - name: Run powershell script
+        run: |
+          ./remote-checkout/scripts/check-users-in-space-developer-role.ps1 "${{ env.CF_SPACE_NAME }}" "${{secrets.SLACK_WEBHOOK}}"
