@@ -73,6 +73,7 @@ module JobseekerHelpers
 
   def fill_in_equal_opportunities
     choose "Prefer not to say", name: "jobseekers_job_application_equal_opportunities_form[disability]"
+    choose "Under 25", name: "jobseekers_job_application_equal_opportunities_form[age]"
     choose "Man", name: "jobseekers_job_application_equal_opportunities_form[gender]"
     choose "Bisexual", name: "jobseekers_job_application_equal_opportunities_form[orientation]"
     choose "Mixed", name: "jobseekers_job_application_equal_opportunities_form[ethnicity]"
