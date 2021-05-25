@@ -24,7 +24,7 @@ module Jobseekers::Wizardable
   end
 
   def equal_opportunities_fields
-    %i[disability gender gender_description orientation orientation_description ethnicity ethnicity_description religion religion_description]
+    %i[disability age gender gender_description orientation orientation_description ethnicity ethnicity_description religion religion_description]
   end
 
   def ask_for_support_fields

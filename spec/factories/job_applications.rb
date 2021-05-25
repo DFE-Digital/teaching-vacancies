@@ -44,6 +44,7 @@ FactoryBot.define do
 
     # Equal opportunities
     disability { "no" }
+    age { "under_twenty_five" }
     gender { "other" }
     gender_description { Faker::Lorem.sentence }
     orientation { "other" }
