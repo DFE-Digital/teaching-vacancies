@@ -17,7 +17,8 @@ jobs:
 
   build:
     name: build image
-
+    outputs:
+      build-tag: ${{steps.tag_version.outputs.new_tag}}
     runs-on: ubuntu-20.04
     steps:
 
@@ -67,6 +68,12 @@ jobs:
             ${{ env.DOCKER_REPOSITORY }}:master
             ${{ env.DOCKER_REPOSITORY }}:${{ github.sha }}
           target: production
+
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v5.5
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
     name: deploy
@@ -126,6 +133,7 @@ jobs:
       with:
         workflow: Deploy App to Environment # Workflow name
         token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
+        ref: ${{ needs.build.outputs.build-tag}}
         inputs: '{"environment": "${{ matrix.environment }}", "tag": "${{ github.sha }}"}'
 
     - name: Wait for Deploy App Workflow for ${{ matrix.environment }}
@@ -134,7 +142,7 @@ jobs:
       with:
         token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
         checkName: Deploy ${{ github.sha }} to ${{ matrix.environment }} # Job name within workflow
-        ref: ${{ github.sha }}
+        ref: ${{ needs.build.outputs.build-tag}}
         timeoutSeconds: 720
         intervalSeconds: 15
 
@@ -158,6 +166,7 @@ jobs:
         workflow: Smoke Test
         token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
         inputs: '{"paas_environment": "${{ matrix.environment }}", "sha": "${{ github.sha }}"}'
+        ref: ${{ needs.build.outputs.build-tag}}
 
     - name: Wait for smoke test
       id: wait_for_smoke_test
@@ -165,7 +174,7 @@ jobs:
       with:
         token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
         checkName: Smoke Test ${{ matrix.environment }} ${{ github.sha }}
-        ref: ${{ github.sha }}
+        ref: ${{ needs.build.outputs.build-tag}}
         timeoutSeconds: 300
         intervalSeconds: 15
 
