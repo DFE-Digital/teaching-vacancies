@@ -1,6 +1,4 @@
 class GeneralFeedbacksController < ApplicationController
-  include FeedbackEventConcerns
-
   def new
     @general_feedback_form = GeneralFeedbackForm.new
   end
@@ -16,7 +14,6 @@ class GeneralFeedbacksController < ApplicationController
     else
       @feedback.recaptcha_score = recaptcha_reply["score"]
       @feedback.save
-      trigger_feedback_provided_event
       redirect_to root_path, success: t(".success")
     end
   end
@@ -29,6 +26,6 @@ class GeneralFeedbacksController < ApplicationController
   end
 
   def feedback_attributes
-    general_feedback_form_params.merge(feedback_type: "general")
+    general_feedback_form_params.merge(feedback_type: "general", jobseeker_id: current_jobseeker&.id, publisher_id: current_publisher&.id)
   end
 end

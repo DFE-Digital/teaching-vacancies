@@ -12,14 +12,15 @@ RSpec.describe "Giving general feedback for the service", recaptcha: true do
 
       fill_in_general_feedback
 
-      expect { click_button I18n.t("buttons.submit_feedback") }.to have_triggered_event(:feedback_provided)
-        .with_data(comment: comment,
-                   email_identifier: anything,
-                   feedback_type: "general",
-                   recaptcha_score: 0.9,
-                   user_participation_response: "interested",
-                   visit_purpose: "other_purpose",
-                   visit_purpose_comment: visit_purpose_comment)
+      expect { click_button I18n.t("buttons.submit_feedback") }.to change {
+        Feedback.where(comment: comment,
+                       email: email,
+                       feedback_type: "general",
+                       recaptcha_score: 0.9,
+                       user_participation_response: "interested",
+                       visit_purpose: "other_purpose",
+                       visit_purpose_comment: visit_purpose_comment).count
+      }.by(1)
 
       expect(page).to have_content(I18n.t("general_feedbacks.create.success"))
     end
