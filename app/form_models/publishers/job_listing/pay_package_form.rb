@@ -8,7 +8,8 @@ class Publishers::JobListing::PayPackageForm < Publishers::JobListing::VacancyFo
   validate :salary_has_no_tags?, if: proc { salary.present? }
 
   def salary_has_no_tags?
-    return if salary == sanitize(salary, tags: [])
+    salary_without_escaped_characters = salary.delete("&")
+    return if salary_without_escaped_characters == sanitize(salary_without_escaped_characters, tags: [])
 
     errors.add(:salary, I18n.t("pay_package_errors.salary.invalid_characters"))
   end

@@ -15,7 +15,8 @@ class Publishers::JobListing::JobDetailsForm < Publishers::JobListing::VacancyFo
   validates :contract_type_duration, presence: true, if: -> { contract_type == "fixed_term" }
 
   def job_title_has_no_tags?
-    return if job_title == sanitize(job_title, tags: [])
+    job_title_without_escaped_characters = job_title.delete("&")
+    return if job_title_without_escaped_characters == sanitize(job_title_without_escaped_characters, tags: [])
 
     errors.add(:job_title, I18n.t("job_details_errors.job_title.invalid_characters"))
   end
