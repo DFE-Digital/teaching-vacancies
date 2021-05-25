@@ -4,7 +4,8 @@ export const INPUT_ELEMENT_CLASSNAME = 'js-location-finder__input';
 
 export const onLoad = (el) => {
   if (el) {
-    if (!getCoords(el)) {
+    const coords = el.dataset.coordinates;
+    if (!coords || coords === 'false') {
       disableRadiusSelect();
     }
 
@@ -21,8 +22,6 @@ export const onChange = (value) => {
     disableRadiusSelect();
   }
 };
-
-export const getCoords = (el) => el.dataset.coordinates;
 
 window.addEventListener('DOMContentLoaded', () => {
   locationInput.onLoad(document.getElementsByClassName(INPUT_ELEMENT_CLASSNAME)[0]);
