@@ -21,9 +21,9 @@ RSpec.describe "Hiring staff can edit a vacancy" do
   context "when editing a published vacancy" do
     let(:vacancy) do
       VacancyPresenter.new(
-        create(:vacancy, :complete, job_location: "at_one_school",
-                                    job_roles: %i[teacher sen_specialist], working_patterns: %w[full_time part_time],
-                                    publish_on: Date.current, expires_on: Time.zone.tomorrow),
+        create(:vacancy, job_location: "at_one_school",
+                         job_roles: %i[teacher sen_specialist], working_patterns: %w[full_time part_time],
+                         publish_on: Date.current, expires_at: 1.day.from_now.change(hour: 9, minute: 0)),
       )
     end
 
@@ -187,28 +187,11 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         end
         click_header_link(I18n.t("jobs.important_dates"))
 
-        edit_date("expires_on", nil)
-
-        within_row_for(element: "legend",
-                       text: strip_tags(I18n.t("helpers.legend.publishers_job_listing_important_dates_form.expires_on"))) do
-          expect(page).to have_content(I18n.t("important_dates_errors.expires_on.blank"))
-        end
-      end
-
-      scenario "can not be saved when expiry time validation fails" do
-        visit edit_organisation_job_path(vacancy.id)
-
-        within("h1.govuk-heading-m") do
-          expect(page).to have_content(I18n.t("jobs.edit_job_title", job_title: vacancy.job_title))
-        end
-        click_header_link(I18n.t("jobs.important_dates"))
-
-        fill_in "publishers_job_listing_important_dates_form[expires_at_hh]", with: "88"
-        click_on I18n.t("buttons.update_job")
+        edit_date("expires_at", nil)
 
         within_row_for(element: "legend",
                        text: strip_tags(I18n.t("helpers.legend.publishers_job_listing_important_dates_form.expires_at"))) do
-          expect(page).to have_content(I18n.t("important_dates_errors.expires_at.wrong_format"))
+          expect(page).to have_content(I18n.t("important_dates_errors.expires_at.blank"))
         end
       end
 
@@ -217,7 +200,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         click_header_link(I18n.t("jobs.important_dates"))
 
         expiry_date = Date.current + 1.week
-        edit_date("expires_on", expiry_date)
+        edit_date("expires_at", expiry_date)
 
         expect(current_path).to eq(edit_organisation_job_path(vacancy.id))
         # Using String#strip to get rid of an initial space in e.g. " 1 July 2020" which caused test failures
@@ -233,7 +216,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         click_header_link(I18n.t("jobs.important_dates"))
 
         expiry_date = Date.current + 1.week
-        edit_date("expires_on", expiry_date)
+        edit_date("expires_at", expiry_date)
       end
 
       context "when the job post has already been published" do
@@ -248,7 +231,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
             click_header_link(I18n.t("jobs.important_dates"))
             expect(page).to have_content(format_date(vacancy.publish_on))
 
-            fill_in "publishers_job_listing_important_dates_form[expires_on(3i)]", with: vacancy.expires_on.day
+            fill_in "publishers_job_listing_important_dates_form[expires_at(3i)]", with: vacancy.expires_at.day
             click_on I18n.t("buttons.update_job")
 
             expect(current_path).to eq(edit_organisation_job_path(vacancy.id))
