@@ -23,6 +23,15 @@ describe('location search box', () => {
   });
 
   describe('onLoad', () => {
+    test('disables the radius input if point data is "false"', () => {
+      document.body.innerHTML = `<input class="${INPUT_ELEMENT_CLASSNAME}" data-coordinates="false"/>`;
+      onLoad(document.getElementsByClassName(INPUT_ELEMENT_CLASSNAME)[0]);
+      expect(disableRadiusSelect).toHaveBeenCalledTimes(1);
+      expect(enableRadiusSelect).toHaveBeenCalledTimes(0);
+    });
+  });
+
+  describe('onLoad', () => {
     test('does not disable the radius input if point (coordinates) available', () => {
       document.body.innerHTML = `<input class="${INPUT_ELEMENT_CLASSNAME}" data-coordinates="10,10" />`;
       onLoad(document.getElementsByClassName(INPUT_ELEMENT_CLASSNAME)[0]);
