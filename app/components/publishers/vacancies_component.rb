@@ -47,18 +47,12 @@ class Publishers::VacanciesComponent < ViewComponent::Base
     return unless include_job_applications?
 
     applications = vacancy.job_applications.where(status: %w[submitted reviewed shortlisted unsuccessful])
+    count = applications.any? ? applications.count : 0
 
-    if applications.any?
-      link = govuk_link_to(I18n.t("jobs.manage.view_applicants", count: applications.count),
-                           organisation_job_job_applications_path(vacancy.id),
-                           class: "govuk-link--no-visited-state")
-      tag.div(card.labelled_item(I18n.t("jobs.manage.applications"), link))
-    elsif vacancy.job_applications.withdrawn.any? || vacancy.job_applications.none?
-      text = govuk_link_to(I18n.t("jobs.manage.view_applicants", count: 0),
-                           organisation_job_job_applications_path(vacancy.id),
-                           class: "govuk-link--no-visited-state")
-      tag.div(card.labelled_item(I18n.t("jobs.manage.applications"), text))
-    end
+    link = govuk_link_to(I18n.t("jobs.manage.view_applicants", count: count),
+                         organisation_job_job_applications_path(vacancy.id),
+                         class: "govuk-link--no-visited-state")
+    tag.div(card.labelled_item(I18n.t("jobs.manage.applications"), link))
   end
 
   private
