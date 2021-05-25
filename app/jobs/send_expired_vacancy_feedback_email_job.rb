@@ -13,7 +13,7 @@ class SendExpiredVacancyFeedbackEmailJob < ApplicationJob
   private
 
   def expired_vacancies
-    Vacancy.where(expires_on: Time.current - 2.weeks, hired_status: nil)
+    Vacancy.where(expires_at: 2.weeks.ago.beginning_of_day..2.weeks.ago.end_of_day, hired_status: nil)
            .where.not(publisher: nil)
   end
 end

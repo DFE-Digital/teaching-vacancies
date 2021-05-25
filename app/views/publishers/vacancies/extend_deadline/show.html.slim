@@ -18,7 +18,7 @@
         = f.govuk_collection_radio_buttons :expiry_time,
           form.class::EXPIRY_TIME_OPTIONS,
           ->(option) { option },
-          ->(option) { t("helpers.options.publishers_job_listing_extend_listing_form.expiry_time.#{option}") }
+          ->(option) { t("helpers.options.publishers_job_listing_extend_deadline_form.expiry_time.#{option}") }
 
         .clear-form.optional-field
           = f.govuk_date_field :starts_on

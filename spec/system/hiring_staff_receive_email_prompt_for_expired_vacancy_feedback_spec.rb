@@ -18,19 +18,17 @@ RSpec.describe "Creating a vacancy" do
         :vacancy,
         :published,
         job_title: "Vacancy",
-        publish_on: Date.current,
-        expires_on: Date.current + 1.week,
+        publish_on: 2.weeks.ago,
+        expires_at: 1.week.ago,
         publisher_id: publisher.id,
       )
       vacancy.organisation_vacancies.create(organisation: school)
 
-      travel 2.weeks do
-        perform_enqueued_jobs do
-          SendExpiredVacancyFeedbackEmailJob.new.perform
-        end
-
-        expect(ApplicationMailer.deliveries.count).to eq(0)
+      perform_enqueued_jobs do
+        SendExpiredVacancyFeedbackEmailJob.new.perform
       end
+
+      expect(ApplicationMailer.deliveries.count).to eq(0)
     end
   end
 
@@ -40,8 +38,8 @@ RSpec.describe "Creating a vacancy" do
         :vacancy,
         :published,
         job_title: "Job one",
-        publish_on: Date.current,
-        expires_on: Date.current,
+        publish_on: 2.months.ago,
+        expires_at: 2.weeks.ago,
         publisher_id: publisher.id,
       )
       vacancy.organisation_vacancies.create(organisation: school)
@@ -50,8 +48,8 @@ RSpec.describe "Creating a vacancy" do
         :vacancy,
         :published,
         job_title: "Job two",
-        publish_on: Date.current,
-        expires_on: Date.current,
+        publish_on: 2.months.ago,
+        expires_at: 2.weeks.ago,
         publisher_id: publisher.id,
       )
       vacancy.organisation_vacancies.create(organisation: school)
@@ -60,23 +58,21 @@ RSpec.describe "Creating a vacancy" do
         :vacancy,
         :published,
         job_title: "Job three",
-        publish_on: Date.current,
-        expires_on: Date.current + 2.weeks,
+        publish_on: 2.weeks.ago,
+        expires_at: 1.week.ago,
         publisher_id: publisher.id,
       )
       vacancy.organisation_vacancies.create(organisation: school)
 
-      travel 2.weeks do
-        perform_enqueued_jobs do
-          SendExpiredVacancyFeedbackEmailJob.new.perform
-        end
-
-        expect(ApplicationMailer.deliveries.first.to).to eq(["test@mail.com"])
-        expect(ApplicationMailer.deliveries.count).to eq(1)
-        expect(ApplicationMailer.deliveries.first.body).to have_content("Job one")
-        expect(ApplicationMailer.deliveries.first.body).to have_content("Job two")
-        expect(ApplicationMailer.deliveries.first.body).to_not have_content("Job three")
+      perform_enqueued_jobs do
+        SendExpiredVacancyFeedbackEmailJob.new.perform
       end
+
+      expect(ApplicationMailer.deliveries.first.to).to eq(["test@mail.com"])
+      expect(ApplicationMailer.deliveries.count).to eq(1)
+      expect(ApplicationMailer.deliveries.first.body).to have_content("Job one")
+      expect(ApplicationMailer.deliveries.first.body).to have_content("Job two")
+      expect(ApplicationMailer.deliveries.first.body).to_not have_content("Job three")
     end
   end
 
@@ -87,8 +83,8 @@ RSpec.describe "Creating a vacancy" do
         :vacancy,
         :published,
         job_title: "Job one",
-        publish_on: Date.current,
-        expires_on: Date.current,
+        publish_on: 2.months.ago,
+        expires_at: 2.weeks.ago,
         publisher_id: publisher.id,
       )
       vacancy.organisation_vacancies.create(organisation: school)
@@ -97,22 +93,20 @@ RSpec.describe "Creating a vacancy" do
         :vacancy,
         :published,
         job_title: "Job two",
-        publish_on: Date.current,
-        expires_on: Date.current,
+        publish_on: 2.months.ago,
+        expires_at: 2.weeks.ago,
         publisher_id: another_user.id,
       )
       vacancy.organisation_vacancies.create(organisation: school)
 
-      travel 2.weeks do
-        perform_enqueued_jobs do
-          SendExpiredVacancyFeedbackEmailJob.new.perform
-        end
-
-        expect(ApplicationMailer.deliveries.map(&:to)).to match a_collection_containing_exactly(
-          ["another@user.com"], ["test@mail.com"]
-        )
-        expect(ApplicationMailer.deliveries.count).to eq(2)
+      perform_enqueued_jobs do
+        SendExpiredVacancyFeedbackEmailJob.new.perform
       end
+
+      expect(ApplicationMailer.deliveries.map(&:to)).to match a_collection_containing_exactly(
+        ["another@user.com"], ["test@mail.com"]
+      )
+      expect(ApplicationMailer.deliveries.count).to eq(2)
     end
   end
 end
