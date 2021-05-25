@@ -22,7 +22,7 @@ namespace :google_drive do
 
       vacancies_with_documents.with_attached_supporting_documents.find_each do |vacancy|
         docs = vacancy.documents.map { |d| [d.name, d.size, d.content_type] }.sort
-        supporting_docs = vacancy.supporting_documents.map { |sd| [sd.filename, sd.byte_size, sd.content_type] }.sort
+        supporting_docs = vacancy.supporting_documents.map { |sd| [sd.filename.to_s, sd.byte_size, sd.content_type] }.sort
 
         if docs == supporting_docs
           puts "✅ Vacancy #{vacancy.id} has matching documents and supporting documents"
