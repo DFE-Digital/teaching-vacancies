@@ -52,7 +52,7 @@ RSpec.describe JobApplication do
 
   context "when submitted" do
     subject do
-      build(:job_application, vacancy: vacancy, disability: "no", gender: "man", gender_description: "",
+      build(:job_application, vacancy: vacancy, disability: "no", age: "under_twenty_five", gender: "man", gender_description: "",
                               ethnicity: "black", ethnicity_description: "", orientation: "other",
                               orientation_description: "extravagant", religion: "other", religion_description: "agnostic")
     end
@@ -70,6 +70,13 @@ RSpec.describe JobApplication do
       expect(equal_opportunities_report.disability_no).to be 1
       expect(equal_opportunities_report.disability_prefer_not_to_say).to be 0
       expect(equal_opportunities_report.disability_yes).to be 0
+      expect(equal_opportunities_report.age_under_twenty_five).to be 1
+      expect(equal_opportunities_report.age_twenty_five_to_twenty_nine).to be 0
+      expect(equal_opportunities_report.age_prefer_not_to_say).to be 0
+      expect(equal_opportunities_report.age_thirty_to_thirty_nine).to be 0
+      expect(equal_opportunities_report.age_forty_to_forty_nine).to be 0
+      expect(equal_opportunities_report.age_fifty_to_fifty_nine).to be 0
+      expect(equal_opportunities_report.age_sixty_and_over).to be 0
       expect(equal_opportunities_report.gender_man).to be 1
       expect(equal_opportunities_report.gender_other).to be 0
       expect(equal_opportunities_report.gender_prefer_not_to_say).to be 0

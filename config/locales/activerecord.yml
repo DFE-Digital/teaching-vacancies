@@ -246,6 +246,8 @@ en:
               inclusion: Select yes if you have had any gaps in employment
         jobseekers/job_application/equal_opportunities_form:
           attributes:
+            age:
+              inclusion: Select an age range or ‘Prefer not to say’
             disability:
               inclusion: Select yes if you consider yourself to have a disability
             ethnicity:

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_22_171457) do
+ActiveRecord::Schema.define(version: 2021_05_25_064924) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -127,6 +127,13 @@ ActiveRecord::Schema.define(version: 2021_05_22_171457) do
     t.string "religion_other_descriptions", default: [], null: false, array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "age_under_twenty_five", default: 0, null: false
+    t.integer "age_twenty_five_to_twenty_nine", default: 0, null: false
+    t.integer "age_prefer_not_to_say", default: 0, null: false
+    t.integer "age_thirty_to_thirty_nine", default: 0, null: false
+    t.integer "age_forty_to_forty_nine", default: 0, null: false
+    t.integer "age_fifty_to_fifty_nine", default: 0, null: false
+    t.integer "age_sixty_and_over", default: 0, null: false
   end
 
   create_table "feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -214,6 +221,7 @@ ActiveRecord::Schema.define(version: 2021_05_22_171457) do
     t.integer "in_progress_steps", default: [], null: false, array: true
     t.datetime "reviewed_at"
     t.string "country", default: "", null: false
+    t.string "age", default: "", null: false
   end
 
   create_table "jobseekers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
