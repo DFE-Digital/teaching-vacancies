@@ -26,6 +26,16 @@
         = f.govuk_radio_divider
         = f.govuk_radio_button :disability, :prefer_not_to_say
 
+      = f.govuk_radio_buttons_fieldset :age do
+        = f.govuk_radio_button :age, :under_25, link_errors: true
+        = f.govuk_radio_button :age, :twenty_five_to_twenty_nine
+        = f.govuk_radio_button :age, :thirty_to_thirty_nine
+        = f.govuk_radio_button :age, :forty_to_forty_nine
+        = f.govuk_radio_button :age, :fifty_to_fifty_nine
+        = f.govuk_radio_button :age, :sixty_and_over
+        = f.govuk_radio_divider
+        = f.govuk_radio_button :age, :prefer_not_to_say
+
       = f.govuk_radio_buttons_fieldset :gender do
         = f.govuk_radio_button :gender, :man, link_errors: true
         = f.govuk_radio_button :gender, :woman

@@ -308,6 +308,14 @@ en:
           "no": "No"
           "yes": "Yes"
       jobseekers_job_application_equal_opportunities_form:
+        age_options:
+          under_25: Under 25
+          twenty_five_to_twenty_nine: 25 to 29
+          thirty_to_thirty_nine: 30 to 39
+          forty_to_forty_nine: 40 to 49
+          fifty_to_fifty_nine: 50 to 59
+          sixty_and_over: 60 and over
+          prefer_not_to_say: Prefer not to say
         disability_options:
           "no": "No"
           "yes": "Yes"
@@ -496,6 +504,7 @@ en:
       jobseekers_job_application_employment_history_form:
         gaps_in_employment: Have you had any gaps in employment?
       jobseekers_job_application_equal_opportunities_form:
+        age: How old are you?
         disability: Do you consider yourself to have a disability as defined by the Equality Act 2010?
         ethnicity: What is your ethnic group?
         gender: How would you describe your gender?
