@@ -112,7 +112,7 @@ module JobseekerHelpers
     fill_in "Phone number", with: "09999 123456"
   end
 
-  def fill_in_gcse
+  def fill_in_gcses
     fill_in "jobseekers_job_application_details_qualifications_secondary_common_form[qualification_results_attributes][0][subject]", with: "Maths"
     fill_in "jobseekers_job_application_details_qualifications_secondary_common_form[qualification_results_attributes][0][grade]", with: "110%"
     fill_in "jobseekers_job_application_details_qualifications_secondary_common_form[qualification_results_attributes][1][subject]", with: "PE"
@@ -121,7 +121,7 @@ module JobseekerHelpers
     fill_in "Year qualification(s) was/were awarded", with: "2020"
   end
 
-  def fill_in_secondary_qualification
+  def fill_in_custom_secondary_qualifications
     fill_in "Qualification name", with: "Welsh Baccalaureate"
     fill_in "jobseekers_job_application_details_qualifications_secondary_other_form[qualification_results_attributes][0][subject]", with: "Science"
     fill_in "jobseekers_job_application_details_qualifications_secondary_other_form[qualification_results_attributes][0][grade]", with: "5"
