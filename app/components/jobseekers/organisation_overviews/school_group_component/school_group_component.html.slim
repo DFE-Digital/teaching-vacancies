@@ -17,12 +17,12 @@ section#school-overview class="govuk-!-margin-bottom-5"
       = component.slot(:row, key: I18n.t("jobs.contact_number"), value: govuk_link_to(@vacancy.contact_number, "tel:#{@vacancy.contact_number}"))
 
   - if vacancy_or_organisation_description(vacancy).present?
-    h4.govuk-heading-s
+    h4.govuk-heading-m
       = t("school_groups.info", school_group: organisation.name)
     p = vacancy_or_organisation_description(vacancy)
 
   - if vacancy.school_visits.present?
-    h4.govuk-heading-s
+    h4.govuk-heading-m
       = t("school_groups.trust_visits", school_group: organisation.name)
     p = vacancy.school_visits
 
