@@ -33,11 +33,14 @@
 
         = f.govuk_phone_field :contact_number, label: { size: "s" }, width: "one-third", form_group: { classes: "optional-field" }
 
-        = f.govuk_text_area :school_visits,
-          label: { text: t("helpers.label.publishers_job_listing_applying_for_the_job_form.#{school_or_trust_visits(vacancy.parent_organisation)}"), size: "s" },
-          hint: { text: vacancy_school_visits_hint(vacancy) },
-          rows: 10,
-          form_group: { classes: "optional-field" }
+        = f.hidden_field :school_visits
+
+        .govuk-form-group.optional-field
+          label for="publishers-job-listing-applying-for-the-job-form-school-visits-field" class="govuk-label govuk-label--s"
+            = t("helpers.label.publishers_job_listing_applying_for_the_job_form.#{school_or_trust_visits(vacancy.parent_organisation)}")
+          span class="govuk-hint" = vacancy_school_visits_hint(vacancy)
+          trix-editor input="publishers_job_listing_applying_for_the_job_form_school_visits" class="govuk-textarea formatable govuk-!-margin-bottom-6 govuk-!-margin-top-2"
+
 
         - unless JobseekerApplicationsFeature.enabled?
           = f.govuk_text_area :how_to_apply, label: { size: "s" }, rows: 10, form_group: { classes: "optional-field" }
