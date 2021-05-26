@@ -1,9 +1,10 @@
 class SearchableCollectionComponent < ViewComponent::Base
-  attr_accessor :form, :attribute_name, :collection, :value_method, :text_method, :hint_method, :threshold, :small, :scrollable
+  SEARCHABLE_THRESHOLD = 10
 
-  def initialize(form:, attribute_name:, collection:, value_method:, text_method:, hint_method:, threshold: 10, scrollable: false)
+  attr_accessor :form, :attribute_name, :collection, :value_method, :text_method, :hint_method, :small, :scrollable
+
+  def initialize(form:, attribute_name:, collection:, value_method:, text_method:, hint_method:, scrollable: false)
     @form = form
-    @threshold = threshold
     @attribute_name = attribute_name
     @collection = collection
     @value_method = value_method
@@ -15,7 +16,7 @@ class SearchableCollectionComponent < ViewComponent::Base
   end
 
   def searchable
-    collection.count >= threshold
+    collection.count >= SEARCHABLE_THRESHOLD
   end
 
   def scrollable_class
