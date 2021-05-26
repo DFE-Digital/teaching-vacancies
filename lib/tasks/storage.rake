@@ -1,10 +1,10 @@
 namespace :google_drive do
   desc "Enqueue existing documents for migration to Active Storage"
   task migrate_to_active_storage: [:environment] do
-    puts "Enqueueing #{Document.count} documents for migration to Active Storage"
+    puts "Enqueueing #{Vacancy.count} vacancies for document migration to Active Storage"
 
-    Document.pluck(:id).each do |doc_id|
-      MigrateDocumentToActiveStorageJob.perform_later(doc_id)
+    Vacancy.pluck(:id).each do |vacancy_id|
+      MigrateVacancyDocumentsToActiveStorageJob.perform_later(vacancy_id)
     end
 
     puts "⛅ Have a nice day!"
