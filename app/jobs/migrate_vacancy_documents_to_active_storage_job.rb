@@ -42,6 +42,8 @@ class MigrateVacancyDocumentsToActiveStorageJob < ApplicationJob
 
     # Verify the attachment was successful by trying to find it again
     fail_integrity_check!(vacancy, document) unless existing_attachment?(vacancy, document)
+  rescue StandardError => e
+    Rollbar.error(e)
   end
 
   def existing_attachment?(vacancy, document)
@@ -60,7 +62,7 @@ class MigrateVacancyDocumentsToActiveStorageJob < ApplicationJob
     Rollbar.error(
       "Failed to verify integrity of migrated document #{document.id}",
       vacancy: vacancy.id,
-      google_drive_id: doc.google_drive_id,
+      google_drive_id: document.google_drive_id,
       document_name: document.name,
       document_size: document.size,
       document_content_type: document.content_type,
