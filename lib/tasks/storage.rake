@@ -1,9 +1,10 @@
 namespace :google_drive do
   desc "Enqueue existing documents for migration to Active Storage"
   task migrate_to_active_storage: [:environment] do
-    puts "Enqueueing #{Vacancy.count} vacancies for document migration to Active Storage"
+    vacancies = Vacancy.includes(:documents).distinct.where.not(documents: { id: nil })
+    puts "Enqueueing #{vacancies.count} vacancies with documents for migration to Active Storage"
 
-    Vacancy.pluck(:id).each do |vacancy_id|
+    vacancies.pluck(:id).each do |vacancy_id|
       MigrateVacancyDocumentsToActiveStorageJob.perform_later(vacancy_id)
     end
 
@@ -11,9 +12,9 @@ namespace :google_drive do
   end
 
   desc "Verify Google Drive migration was successful"
-  task verify_migration: [:environment] do
+  task :verify_migration, [:retry] => [:environment] do |_task, args|
     Rails.logger.silence do
-      vacancies_with_documents = Vacancy.where.not(documents: { id: nil }).includes(:documents)
+      vacancies_with_documents = Vacancy.includes(:documents).distinct.where.not(documents: { id: nil })
       total_count = vacancies_with_documents.count
       matching_count = 0
       mismatching_count = 0
@@ -35,6 +36,11 @@ namespace :google_drive do
           pp supporting_docs
           puts
           mismatching_count += 1
+
+          if args[:retry] == "retry"
+            puts "🔁 Enqueueing a job to try again"
+            MigrateVacancyDocumentsToActiveStorageJob.perform_later(vacancy.id)
+          end
         end
       end
 
