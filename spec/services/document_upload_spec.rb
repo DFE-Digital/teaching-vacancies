@@ -19,7 +19,7 @@ RSpec.describe DocumentUpload do
         fields: "id, web_view_link, web_content_link, mime_type",
         upload_source: anything,
       )
-      subject.upload_publishers_document
+      subject.upload_publishers_document!
     end
 
     it "explicity expects the temporary file path" do
@@ -27,7 +27,7 @@ RSpec.describe DocumentUpload do
         anything,
         hash_including(upload_source: upload_path),
       )
-      subject.upload_publishers_document
+      subject.upload_publishers_document!
     end
   end
 
@@ -42,13 +42,13 @@ RSpec.describe DocumentUpload do
         anything,
         anything,
       )
-      subject.set_public_permission_on_document
+      subject.set_public_permission_on_document!
     end
 
     it "calls create_permission with id returned by create_file call" do
       expect(create_file).to receive(:id)
       allow(subject.drive_service).to receive(:create_permission)
-      subject.set_public_permission_on_document
+      subject.set_public_permission_on_document!
     end
 
     it "calls create_permission with Google::Apis::DriveV3::Permission" do
@@ -57,7 +57,7 @@ RSpec.describe DocumentUpload do
       expect(Google::Apis::DriveV3::Permission).to receive(:new).with(
         type: "anyone", role: "reader",
       )
-      subject.set_public_permission_on_document
+      subject.set_public_permission_on_document!
     end
   end
 
@@ -74,13 +74,13 @@ RSpec.describe DocumentUpload do
         anything,
         anything,
       )
-      subject.google_drive_virus_check
+      subject.google_drive_virus_check!
     end
 
     it "calls get_file with id returned by create_file call" do
       expect(create_file).to receive(:id).twice
       allow(subject.drive_service).to receive(:get_file)
-      subject.google_drive_virus_check
+      subject.google_drive_virus_check!
     end
 
     it "calls delete_file on drive_service if Google::Apis::ClientError raised" do
@@ -90,7 +90,7 @@ RSpec.describe DocumentUpload do
         Google::Apis::ClientError.new(true, status_code: 403),
       )
       expect(subject.drive_service).to receive(:delete_file)
-      subject.google_drive_virus_check
+      subject.google_drive_virus_check!
     end
 
     it "calls delete_file with id returned by create_file call on drive_service if Google::Apis::ClientError raised" do
@@ -100,7 +100,7 @@ RSpec.describe DocumentUpload do
         Google::Apis::ClientError.new(true, status_code: 403),
       )
       allow(subject.drive_service).to receive(:delete_file)
-      subject.google_drive_virus_check
+      subject.google_drive_virus_check!
     end
   end
 end
