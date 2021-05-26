@@ -12,7 +12,7 @@ RSpec.describe "Sidekiq configuration" do
   let(:unscheduled_jobs) do
     %w[
       AlertEmail::Base
-      MigrateDocumentToActiveStorageJob
+      MigrateVacancyDocumentsToActiveStorageJob
       PerformancePlatformTransactionsQueueJob
       PersistVacancyGetMoreInfoClickJob
       PersistVacancyPageViewJob
