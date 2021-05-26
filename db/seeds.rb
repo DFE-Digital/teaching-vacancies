@@ -120,11 +120,11 @@ Publisher.create(oid: "5A21B414-EFE4-4B32-82BC-FC9751F841A5",
                  family_name: "Sutter",
                  given_name: "Christian")
 
-Publisher.create(oid: "A120A4FB-B773-4336-9BB5-CDBD1C977A2E",
-                 email: "chris.taylor@digital.education.gov.uk",
+Publisher.create(oid: "A111A1AA-A111-1111-1AA1-AAAA1A111A1A",
+                 email: "craig.forrester@digital.education.gov.uk",
                  organisation_publishers_attributes: organisation_publishers_attributes,
-                 family_name: "Taylor",
-                 given_name: "Chris")
+                 family_name: "Forrester",
+                 given_name: "Craig")
 
 Publisher.create(oid: "421542E6-ED96-4656-B61F-A06D8D487C07",
                  email: "colin.saliceti@digital.education.gov.uk",
@@ -143,6 +143,12 @@ Publisher.create(oid: "B81FC38C-4122-4BCE-9F1D-8B1A328FA4D8",
                  organisation_publishers_attributes: organisation_publishers_attributes,
                  family_name: "Mears",
                  given_name: "David")
+
+Publisher.create(oid: "A111A1AA-A111-1111-1AA1-AAAA1A111A1B",
+                 email: "jesse.yuen@digital.education.gov.uk",
+                 organisation_publishers_attributes: organisation_publishers_attributes,
+                 family_name: "Yuen",
+                 given_name: "Jesse")
 
 Publisher.create(oid: "DF97F25C-3A3E-4655-B7D3-5CDBDCBBBC69",
                  email: "joseph.hull@digital.education.gov.uk",
