@@ -1,14 +1,23 @@
-class MigrateDocumentToActiveStorageJob < ApplicationJob
-  class MigrationIntegrityError < RuntimeError; end
-
+class MigrateVacancyDocumentsToActiveStorageJob < ApplicationJob
   queue_as :low
-  discard_on MigrationIntegrityError
 
-  def perform(document_id)
-    document = Document.includes(:vacancy).find(document_id)
+  # Most failures we encounter are likely to be terminal, so stop it from ballooning up retries
+  sidekiq_options retry: false
+  discard_on StandardError do |_job, err|
+    Rollbar.error(err)
+  end
 
-    if existing_attachment?(document)
-      Rails.logger.info("Skipped migrating document #{document_id} as it already exists in AS")
+  def perform(vacancy_id)
+    vacancy = Vacancy.includes(:documents).with_attached_supporting_documents.find(vacancy_id)
+
+    vacancy.documents.each { |document| migrate_document(vacancy, document) }
+  end
+
+  private
+
+  def migrate_document(vacancy, document)
+    if existing_attachment?(vacancy, document)
+      Rails.logger.info("Skipped migrating document #{document.id} as it already exists in AS")
       return
     end
 
@@ -23,7 +32,7 @@ class MigrateDocumentToActiveStorageJob < ApplicationJob
 
       EventContext.suppress_events do
         # Attach file to the vacancy's supporting documents using ActiveStorage
-        document.vacancy.supporting_documents.attach(
+        vacancy.supporting_documents.attach(
           io: local_file,
           filename: document.name,
           content_type: document.content_type,
@@ -32,34 +41,31 @@ class MigrateDocumentToActiveStorageJob < ApplicationJob
     end
 
     # Verify the attachment was successful by trying to find it again
-    fail_integrity_check!(document) unless existing_attachment?(document)
+    fail_integrity_check!(vacancy, document) unless existing_attachment?(vacancy, document)
   end
 
-  private
-
-  def existing_attachment?(document)
-    document.vacancy.supporting_documents.reload.any? do |supporting_doc|
+  def existing_attachment?(vacancy, document)
+    vacancy.supporting_documents.reload.any? do |supporting_doc|
       supporting_doc.filename == document.name &&
         supporting_doc.byte_size == document.size &&
         supporting_doc.content_type == document.content_type
     end
   end
 
-  def fail_integrity_check!(document)
-    doc_details = document.vacancy.supporting_documents.map do |sd|
+  def fail_integrity_check!(vacancy, document)
+    doc_details = vacancy.supporting_documents.map do |sd|
       "#{sd.filename} (size: #{sd.byte_size}, type: #{sd.content_type}"
     end
 
     Rollbar.error(
-      "Failed to verify integrity of migrated document #{document_id}",
-      vacancy: document.vacancy_id,
+      "Failed to verify integrity of migrated document #{document.id}",
+      vacancy: vacancy.id,
       google_drive_id: doc.google_drive_id,
       document_name: document.name,
       document_size: document.size,
       document_content_type: document.content_type,
       supporting_documents_details: doc_details,
     )
-    raise MigrationIntegrityError
   end
 
   def drive_service
