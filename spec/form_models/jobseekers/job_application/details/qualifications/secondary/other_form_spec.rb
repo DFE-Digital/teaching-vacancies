@@ -5,8 +5,4 @@ RSpec.describe Jobseekers::JobApplication::Details::Qualifications::Secondary::O
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_presence_of(:institution) }
   it { is_expected.to validate_numericality_of(:year).is_less_than_or_equal_to(Time.current.year) }
-
-  describe "#subject_and_grade_correspond?" do
-    # TODO: Add test when functionality is finished
-  end
 end

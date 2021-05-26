@@ -51,8 +51,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
       expect(page).to have_link(I18n.t("buttons.cancel"), href: select_category_jobseekers_job_application_qualifications_path(job_application))
       expect(page).to have_content(I18n.t("jobseekers.job_applications.qualifications.new.heading.gcse"))
       validates_step_complete(button: I18n.t("buttons.save_qualification.other"))
-      fill_in_gcse
-      # TODO: fill_in_another_gcse
+      fill_in_gcses
       click_on I18n.t("buttons.save_qualification.other")
       expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :qualifications))
       expect(page).to have_content("GCSEs")
@@ -66,8 +65,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
       select_qualification_category("Other secondary qualification")
       expect(page).to have_content(I18n.t("jobseekers.job_applications.qualifications.new.heading.other_secondary"))
       validates_step_complete(button: I18n.t("buttons.save_qualification.other"))
-      fill_in_secondary_qualification
-      # TODO: fill_in_another_secondary_qualification
+      fill_in_custom_secondary_qualifications
       click_on I18n.t("buttons.save_qualification.other")
       expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :qualifications))
       expect(page).to have_content("Welsh Baccalaureate")
@@ -78,26 +76,51 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
     end
   end
 
-  context "when there is exactly one qualification" do
-    let!(:qualification) do
-      create(:qualification,
-             category: "other_secondary",
-             institution: "John Mason School",
-             job_application: job_application)
+  context "when editing a qualification" do
+    context "when the qualification does not have qualification results" do
+      let!(:qualification) do
+        create(:qualification,
+               category: "undergraduate",
+               institution: "Life University",
+               job_application: job_application)
+      end
+
+      it "allows jobseekers to edit the qualification" do
+        visit jobseekers_job_application_build_path(job_application, :qualifications)
+        click_on I18n.t("buttons.edit")
+        expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :qualifications))
+        fill_in "Awarding body", with: "University of Life"
+        click_on I18n.t("buttons.save_qualification.one")
+        expect(page).not_to have_content("Life University")
+        expect(page).to have_content("University of Life")
+      end
     end
 
-    it "allows jobseekers to edit a single qualification" do
-      visit jobseekers_job_application_build_path(job_application, :qualifications)
+    context "when the qualification has qualification results" do
+      let!(:qualification) do
+        create(:qualification,
+               category: "other_secondary",
+               institution: "John Mason School",
+               job_application: job_application)
+      end
 
-      click_on I18n.t("buttons.edit")
-      expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :qualifications))
-
-      fill_in "School", with: "St Nicholas School"
-      click_on I18n.t("buttons.save_qualification.one")
-
-      expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :qualifications))
-      expect(page).not_to have_content("John")
-      expect(page).to have_content("Nicholas")
+      it "allows jobseekers to edit the qualification and its results" do
+        visit jobseekers_job_application_build_path(job_application, :qualifications)
+        click_on I18n.t("buttons.edit")
+        fill_in "jobseekers_job_application_details_qualifications_secondary_other_form[qualification_results_attributes][0][subject]", with: "Hard Knocks"
+        empty_second_qualification_result
+        fill_in "School", with: "St Nicholas School"
+        expect { click_on I18n.t("buttons.save_qualification.one") }.to change { qualification.qualification_results.count }.by(-1)
+        expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :qualifications))
+        expect(page).not_to have_content("John")
+        expect(page).to have_content("Nicholas")
+        expect(page).to have_content("Hard Knocks")
+      end
     end
+  end
+
+  def empty_second_qualification_result
+    fill_in "jobseekers_job_application_details_qualifications_secondary_other_form[qualification_results_attributes][1][subject]", with: ""
+    fill_in "jobseekers_job_application_details_qualifications_secondary_other_form[qualification_results_attributes][1][grade]", with: ""
   end
 end
