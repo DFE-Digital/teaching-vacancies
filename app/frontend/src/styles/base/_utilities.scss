@@ -190,3 +190,21 @@
     display: none !important;
   }
 }
+
+.formatable {
+  min-height: 120px;
+}
+
+ul br {
+  display: none;
+}
+
+.trix-button--icon-attach,
+.trix-button--icon-code,
+.trix-button--icon-link,
+.trix-button--icon-quote,
+.trix-button--icon-strike,
+.trix-button--icon-increase-nesting-level,
+.trix-button--icon-decrease-nesting-level {
+  display: none;
+}
