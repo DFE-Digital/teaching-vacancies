@@ -16,17 +16,17 @@ class DocumentUpload
     self.google_error = false
   end
 
-  def upload
-    upload_publishers_document
-    set_public_permission_on_document
+  def upload!
+    upload_publishers_document!
+    set_public_permission_on_document!
   rescue Google::Apis::Error => e
     self.google_error = true
     Rollbar.error(e)
   else
-    google_drive_virus_check
+    google_drive_virus_check!
   end
 
-  def upload_publishers_document
+  def upload_publishers_document!
     self.uploaded = drive_service.create_file(
       { alt: "media", name: name },
       fields: "id, web_view_link, web_content_link, mime_type",
@@ -34,14 +34,14 @@ class DocumentUpload
     )
   end
 
-  def set_public_permission_on_document
+  def set_public_permission_on_document!
     drive_service.create_permission(
       uploaded.id,
       Google::Apis::DriveV3::Permission.new(type: "anyone", role: "reader"),
     )
   end
 
-  def google_drive_virus_check
+  def google_drive_virus_check!
     self.download_path = uploaded.id.to_s
     drive_service.get_file(
       uploaded.id,

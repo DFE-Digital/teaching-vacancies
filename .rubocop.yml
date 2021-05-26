@@ -80,40 +80,42 @@ Naming/AccessorMethodName:
 # We should consider slowly moving closer to the default settings.
 
 Metrics/AbcSize:
-  Max: 40
+  Max: 32 # Default 17
   Exclude:
     - "config/**/*"
     - "lib/**/*"
     - "spec/**/*"
 
 Metrics/BlockLength:
-  Max: 75
+  Max: 64 # Default 25
   Exclude:
     - "config/**/*"
     - "spec/**/*"
 
 Metrics/ClassLength:
-  Max: 200
+  Max: 128 # Default 100
 
 Metrics/CyclomaticComplexity:
-  Max: 20
+  Max: 16 # Default 7
   Exclude:
     - "spec/**/*"
 
 Metrics/MethodLength:
-  Max: 25
+  Max: 20 # Default 10
   Exclude:
     - "config/**/*"
     - "lib/**/*"
     - "spec/**/*"
 
 Metrics/ModuleLength:
-  Max: 200
+  Max: 128 # Default 100
+  Exclude:
+    - "spec/**/*"
 
 Metrics/ParameterLists:
-  Max: 8
+  Max: 7 # Default 5
 
 Metrics/PerceivedComplexity:
-  Max: 20
+  Max: 15 # Default 8
   Exclude:
     - "spec/**/*"

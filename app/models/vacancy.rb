@@ -98,7 +98,7 @@ class Vacancy < ApplicationRecord
     super(value)
   end
 
-  def refresh_slug
+  def refresh_slug!
     self.slug = nil
     send(:set_slug)
   end
@@ -107,7 +107,7 @@ class Vacancy < ApplicationRecord
     super().merge("working_patterns" => working_patterns, "job_roles" => job_roles)
   end
 
-  def delete_documents
+  def delete_documents!
     documents.each { |document| DocumentDelete.new(document).delete }
   end
 

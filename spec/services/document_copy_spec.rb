@@ -16,7 +16,7 @@ RSpec.describe DocumentCopy do
         document_id,
         anything,
       )
-      subject.copy_publishers_document
+      subject.copy_publishers_document!
     end
   end
 
@@ -31,13 +31,13 @@ RSpec.describe DocumentCopy do
         anything,
         anything,
       )
-      subject.set_public_permission_on_document
+      subject.set_public_permission_on_document!
     end
 
     it "calls create_permission with id returned by create_file call" do
       expect(copy_file).to receive(:id)
       allow(subject.drive_service).to receive(:create_permission)
-      subject.set_public_permission_on_document
+      subject.set_public_permission_on_document!
     end
 
     it "calls create_permission with Google::Apis::DriveV3::Permission" do
@@ -46,7 +46,7 @@ RSpec.describe DocumentCopy do
       expect(Google::Apis::DriveV3::Permission).to receive(:new).with(
         type: "anyone", role: "reader",
       )
-      subject.set_public_permission_on_document
+      subject.set_public_permission_on_document!
     end
   end
 end
