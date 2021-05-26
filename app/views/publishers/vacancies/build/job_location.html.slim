@@ -17,4 +17,4 @@
         = f.govuk_submit t("buttons.continue")
 
     .govuk-grid-column-one-third
-      = render(Shared::ProcessStepsComponent.new(process: vacancy, service: process_steps, title: t("publishers.vacancies.build.process_title")))
+      = render "steps"

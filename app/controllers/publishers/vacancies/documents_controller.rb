@@ -15,7 +15,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
                               application/vnd.openxmlformats-officedocument.presentationml.presentation ].freeze
   FILE_SIZE_LIMIT = 10.megabytes
 
-  helper_method :form
+  helper_method :form, :step
 
   before_action :redirect_to_next_step, only: %i[create]
 

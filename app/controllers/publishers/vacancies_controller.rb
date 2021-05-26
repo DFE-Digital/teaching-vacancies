@@ -37,6 +37,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     end
 
     @vacancy = VacancyPresenter.new(vacancy)
+    @step = :review
   end
 
   def destroy
