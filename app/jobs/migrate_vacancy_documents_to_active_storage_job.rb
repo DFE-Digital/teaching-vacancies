@@ -9,6 +9,7 @@ class MigrateVacancyDocumentsToActiveStorageJob < ApplicationJob
 
   def perform(vacancy_id)
     vacancy = Vacancy.includes(:documents).with_attached_supporting_documents.find(vacancy_id)
+    vacancy.supporting_documents.purge
 
     vacancy.documents.each { |document| migrate_document(vacancy, document) }
   end
@@ -16,11 +17,6 @@ class MigrateVacancyDocumentsToActiveStorageJob < ApplicationJob
   private
 
   def migrate_document(vacancy, document)
-    if existing_attachment?(vacancy, document)
-      Rails.logger.info("Skipped migrating document #{document.id} as it already exists in AS")
-      return
-    end
-
     Rails.logger.info("Migrating document #{document.id} (GDrive ID: #{document.google_drive_id})")
 
     Tempfile.create(binmode: true) do |local_file|
