@@ -425,7 +425,7 @@ en:
           "false": Use another application process or form
           true_html: >-
             Apply using the Teaching Vacancies application form.
-            <a class="govuk-link" target="_blank" href="/pages/job-application-preview">Preview the application form (opens in a new tab)</a>
+            <a class="govuk-link" target="_blank" href="/pages/job-application-preview">Preview the application form (opens in new tab)</a>
         contact_email: Contact email
         contact_number: Contact phone number
         how_to_apply: How to apply

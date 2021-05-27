@@ -20,7 +20,7 @@
         - elsif @vacancy.enable_job_applications == false # as opposed to nil
           - component.slot(:row,
             key: t("jobs.application_link"),
-            value: @vacancy.application_link.present? ? govuk_link_to(@vacancy.application_link, @vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link"), target: "_blank", rel: "noopener noreferrer") : t("jobs.not_defined"))
+            value: @vacancy.application_link.present? ? open_in_new_tab_link_to(@vacancy.application_link, @vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link")) : t("jobs.not_defined"))
 
       - component.slot(:row,
         key: t("jobs.contact_email"),
@@ -41,4 +41,4 @@
 
         - component.slot(:row,
           key: t("jobs.application_link"),
-          value: @vacancy.application_link.present? ? govuk_link_to(@vacancy.application_link, @vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link"), target: "_blank", rel: "noopener noreferrer") : t("jobs.not_defined"))
+          value: @vacancy.application_link.present? ? open_in_new_tab_link_to(@vacancy.application_link, @vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link")) : t("jobs.not_defined"))

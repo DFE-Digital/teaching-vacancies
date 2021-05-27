@@ -1,4 +1,6 @@
 class DocumentComponent < GovukComponent::Base
+  delegate :open_in_new_tab_link_to, to: :helpers
+
   attr_reader :document
 
   def initialize(document:, classes: [], html_attributes: {})
