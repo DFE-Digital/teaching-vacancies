@@ -1,15 +1,17 @@
 name: Review
 
 on:
-  pull_request:
-    branches: [ master ]
-    types: [opened, reopened , synchronize]
-    paths-ignore:
-    - 'bigquery/**'
-    - 'documentation/**'
-    - 'terraform/common/**'
-    - 'terraform/monitoring/**'
-    - '**.md'
+  schedule:
+    - cron:  '30 5,17 * * *'
+  #pull_request:
+  #  branches: [ master ]
+  #  types: [opened, reopened , synchronize]
+  #  paths-ignore:
+  #  - 'bigquery/**'
+  #  - 'documentation/**'
+  #  - 'terraform/common/**'
+  #  - 'terraform/monitoring/**'
+  #  - '**.md'
 
 env:
   DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
