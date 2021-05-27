@@ -174,12 +174,6 @@ Publisher.create(oid: "EB38B29A-3BA8-45D5-9CEC-89CE5C3BC14D",
                  family_name: "Capstick",
                  given_name: "Molly")
 
-Publisher.create(oid: "B5ECCE49-634C-4212-AC55-07F5C7BE74C2",
-                 email: "nick.romney@digital.education.gov.uk",
-                 organisation_publishers_attributes: organisation_publishers_attributes,
-                 family_name: "Romney",
-                 given_name: "Nick")
-
 Publisher.create(oid: "5787504B-3D6F-4374-A0CB-7b00CBED01BA",
                  email: "rajeev.aggarwal@digital.education.gov.uk",
                  organisation_publishers_attributes: organisation_publishers_attributes,
