@@ -10,6 +10,16 @@ on:
     - 'terraform/common/**'
     - '**.md'
 
+  pull_request:
+    branches: [ master ]
+    types: [opened, reopened , synchronize]
+    paths-ignore:
+    - 'bigquery/**'
+    - 'documentation/**'
+    - 'terraform/common/**'
+    - 'terraform/monitoring/**'
+    - '**.md'
+
 env:
  DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
 
@@ -76,12 +86,12 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
-    name: deploy
+    name: deploy app
 
     strategy:
       max-parallel: 1
       matrix:
-        environment: ["staging", "production", "qa"]
+        environment: ["qa"]
     needs: build
     runs-on: ubuntu-20.04
 
@@ -100,10 +110,29 @@ jobs:
         role-duration-seconds: 3600
         role-skip-session-tagging: true
 
+    - name: convert matrix to environment variables
+      run: |
+        echo "ENVIRONMENT=${{ matrix.environment }}" >> $GITHUB_ENV
+        echo "TAG=${{ github.sha }}" >> $GITHUB_ENV
+
+    #- name: change value of matrix
+    #  if: github.event_name == 'pull_request'
+    #  run: |
+    #    echo "ENVIRONMENT=${{ matrix.environment }}" >> $GITHUB_ENV
+    #- name: Set environment variables
+    #  id: set_env_vars
+    #  run: |
+    #    echo "TAG=${{ github.sha }}" >> $GITHUB_ENV
+
     - name: Set environment variables
+      if: github.event_name == 'pull_request'
       id: set_env_vars
       run: |
-        echo "TAG=${{ github.sha }}" >> $GITHUB_ENV
+        $(echo "BRANCH=${{ github.head_ref }}" | sed -e 's/\//_/g' >> $GITHUB_ENV)
+        ENVIRONMENT=review-pr-${{ github.event.number }}
+        TAG=${ENVIRONMENT}-${{ github.event.pull_request.head.sha }}
+        echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
+        echo "TAG=${TAG}" >> $GITHUB_ENV
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
@@ -116,47 +145,55 @@ jobs:
         chmod +x bin/fetch_config.rb
         echo "::endgroup::"
 
-    - name: Validate ${{ matrix.environment }} secrets
+    - name: Validate secrets
       shell: bash
       run: |
         gem install aws-sdk-ssm --no-document
-        bin/fetch_config.rb -s aws-ssm-parameter-path:/teaching-vacancies/${{ matrix.environment }}/app -d quiet \
-          && echo Data in /teaching-vacancies/${{ matrix.environment }} looks valid
+        bin/fetch_config.rb -s aws-ssm-parameter-path:/teaching-vacancies/dev/app -d quiet \
+          && echo Data in /teaching-vacancies/dev looks valid
+
+    - name: Validate ${{ env.ENVIRONMENT }} secrets
+      if: github.event_name != 'pull_request'
+      shell: bash
+      run: |
+        gem install aws-sdk-ssm --no-document
+        bin/fetch_config.rb -s aws-ssm-parameter-path:/teaching-vacancies/${{ env.ENVIRONMENT }}/app -d quiet \
+          && echo Data in /teaching-vacancies/${{ env.ENVIRONMENT }} looks valid
 
     - name: Terraform pin version
       uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: 0.14.7
 
-    - name: Trigger Deploy App Workflow for ${{ matrix.environment }}
+    - name: Trigger Deploy App Workflow for ${{ env.ENVIRONMENT }}
       uses: benc-uk/workflow-dispatch@v1.1
       with:
         workflow: Deploy App to Environment # Workflow name
         token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
         ref: ${{ needs.build.outputs.build-tag}}
-        inputs: '{"environment": "${{ matrix.environment }}", "tag": "${{ github.sha }}"}'
+        inputs: '{"environment": "${{ env.ENVIRONMENT }}", "tag": "${{ github.sha }}"}'
 
-    - name: Wait for Deploy App Workflow for ${{ matrix.environment }}
+    - name: Wait for Deploy App Workflow for ${{ env.ENVIRONMENT }}
       id: wait_for_deploy_app_staging
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
         token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
-        checkName: Deploy ${{ github.sha }} to ${{ matrix.environment }} # Job name within workflow
+        checkName: Deploy ${{ github.sha }} to ${{ env.ENVIRONMENT }} # Job name within workflow
         ref: ${{ needs.build.outputs.build-tag}}
         timeoutSeconds: 720
         intervalSeconds: 15
 
-    - name: Notify twd_tv_dev channel on ${{ matrix.environment }} deployment failure
+    - name: Notify twd_tv_dev channel on ${{ env.ENVIRONMENT }} deployment failure
       if: steps.wait_for_deploy_app_staging.outputs.conclusion != 'success' && 'refs/heads/master'
       uses: rtCamp/action-slack-notify@v2.1.3
       env:
         SLACK_CHANNEL: twd_tv_dev
         SLACK_USERNAME: CI Deployment
         SLACK_TITLE: Deployment failure
-        SLACK_MESSAGE: 'Deployment of Docker tag ${{ github.sha }} to ${{ matrix.environment }} - unsuccessful <!channel>'
+        SLACK_MESSAGE: 'Deployment of Docker tag ${{ github.sha }} to ${{ env.ENVIRONMENT }} - unsuccessful <!channel>'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
-    - name: Exit whole workflow if ${{ matrix.environment }} deployment was not successful
+    - name: Exit whole workflow if ${{ env.ENVIRONMENT }} deployment was not successful
       if: steps.wait_for_deploy_app_staging.outputs.conclusion != 'success' && 'refs/heads/master'
       run: exit 1
 
@@ -165,7 +202,7 @@ jobs:
       with:
         workflow: Smoke Test
         token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
-        inputs: '{"paas_environment": "${{ matrix.environment }}", "sha": "${{ github.sha }}"}'
+        inputs: '{"paas_environment": "${{ env.ENVIRONMENT }}", "sha": "${{ github.sha }}"}'
         ref: ${{ needs.build.outputs.build-tag}}
 
     - name: Wait for smoke test
@@ -173,12 +210,12 @@ jobs:
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
         token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
-        checkName: Smoke Test ${{ matrix.environment }} ${{ github.sha }}
+        checkName: Smoke Test ${{ env.ENVIRONMENT }} ${{ github.sha }}
         ref: ${{ needs.build.outputs.build-tag}}
         timeoutSeconds: 300
         intervalSeconds: 15
 
-    - name: Exit whole workflow if ${{ matrix.environment }} smoke test was not successful
+    - name: Exit whole workflow if ${{ env.ENVIRONMENT }} smoke test was not successful
       if: steps.wait_for_smoke_test.outputs.conclusion != 'success' && github.ref == 'refs/heads/master'
       run: exit 1
 
@@ -193,6 +230,7 @@ jobs:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
   post_deployment:
+    if: github.event_name != 'pull_request'
     name: post deployment steps
     needs: deploy
     runs-on: ubuntu-20.04
