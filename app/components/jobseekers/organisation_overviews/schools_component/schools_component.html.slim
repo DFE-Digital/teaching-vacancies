@@ -8,7 +8,7 @@ section#school-overview class="govuk-!-margin-bottom-5"
     - if organisation.website.present? || organisation.url.present?
       = component.slot(:row,
                        key: I18n.t("school_groups.website", organisation_type: organisation_type_basic(organisation).humanize),
-                       value: govuk_link_to(I18n.t("schools.website_link_text", organisation_name: organisation.name), organisation.website.presence || organisation.url, class: "link-wrap", target: "_blank"))
+                       value: open_in_new_tab_link_to(I18n.t("schools.website_link_text", organisation_name: organisation.name), organisation.website.presence || organisation.url, class: "link-wrap"))
     - if @vacancy.contact_email.present?
       = component.slot(:row, key: I18n.t("jobs.contact_email"), value: govuk_mail_to(@vacancy.contact_email, @vacancy.contact_email, class: "link-wrap",
                                                                                      subject: I18n.t("jobs.contact_email_subject", job: @vacancy.job_title),
@@ -39,11 +39,11 @@ section#school-overview class="govuk-!-margin-bottom-5"
             = component.slot(:row, key: I18n.t("schools.age_range"), value: age_range(organisation))
             = component.slot(:row,
                              key: I18n.t("schools.ofsted_report"),
-                             value: ofsted_report(organisation).present? ? govuk_link_to(I18n.t("schools.view_ofsted_report"), ofsted_report(organisation), class: "wordwrap", target: "_blank") : I18n.t("schools.no_information"))
+                             value: ofsted_report(organisation).present? ? open_in_new_tab_link_to(I18n.t("schools.view_ofsted_report"), ofsted_report(organisation), class: "wordwrap") : I18n.t("schools.no_information"))
             - if organisation.website.present? || organisation.url.present?
-              = component.slot(:row, key: I18n.t("schools.website"), value: govuk_link_to(I18n.t("schools.website_link_text", organisation_name: organisation.name),
-                                                                                          organisation.website.presence || organisation.url,
-                                                                                          class: "wordwrap", target: "_blank"))
+              = component.slot(:row, key: I18n.t("schools.website"), value: open_in_new_tab_link_to(I18n.t("schools.website_link_text", organisation_name: organisation.name),
+                                                                                                    organisation.website.presence || organisation.url,
+                                                                                                    class: "wordwrap"))
 
   - if vacancy.school_visits.present?
     h4.govuk-heading-s
