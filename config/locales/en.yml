@@ -267,7 +267,7 @@ en:
     urn: Unique identifier (URN)
     view_ofsted_report: View Ofsted report
     website: School website
-    website_link_text: '%{organisation_name} website (opens in a new window)'
+    website_link_text: '%{organisation_name} website'
 
   school_groups:
     address: Trust address

@@ -27,9 +27,9 @@ table.govuk-table
         strong.strong = t("school_groups.website", organisation_type: organisation_type_basic(current_organisation).humanize)
       td.govuk-table__cell.change_answer
         - if current_organisation.website.present?
-          = govuk_link_to(current_organisation.website, current_organisation.website, class: "wordwrap", target: "_blank", rel: "noopener")
+          = open_in_new_tab_link_to(current_organisation.website, current_organisation.website, class: "wordwrap")
         - elsif current_organisation.url.present?
-          = govuk_link_to(current_organisation.url, current_organisation.url, class: "wordwrap", target: "_blank", rel: "noopener")
+          = open_in_new_tab_link_to(current_organisation.url, current_organisation.url, class: "wordwrap")
         - else
           = t("jobs.not_defined")
       td.govuk-table__cell.change-answer
