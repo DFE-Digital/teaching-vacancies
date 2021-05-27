@@ -39,9 +39,9 @@ table.check-your-answers.govuk-table
         strong.strong = t("schools.website")
       td.govuk-table__cell
         - if @organisation.website.present?
-          = govuk_link_to(@organisation.website, @organisation.website, class: "wordwrap", target: "_blank")
+          = open_in_new_tab_link_to(@organisation.website, @organisation.website, class: "wordwrap")
         - elsif @organisation.url.present?
-          = govuk_link_to(@organisation.url, @organisation.url, class: "wordwrap", target: "_blank")
+          = open_in_new_tab_link_to(@organisation.url, @organisation.url, class: "wordwrap")
         - else
           = t("jobs.not_defined")
       td.govuk-table__cell.change-answer

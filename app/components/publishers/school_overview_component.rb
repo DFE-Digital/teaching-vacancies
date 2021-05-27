@@ -1,6 +1,8 @@
 class Publishers::SchoolOverviewComponent < ViewComponent::Base
   include OrganisationHelper
 
+  delegate :open_in_new_tab_link_to, to: :helpers
+
   def initialize(organisation:)
     @organisation = organisation
   end
