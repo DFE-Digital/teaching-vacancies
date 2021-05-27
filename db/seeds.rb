@@ -132,12 +132,6 @@ Publisher.create(oid: "421542E6-ED96-4656-B61F-A06D8D487C07",
                  family_name: "Saliceti",
                  given_name: "Colin")
 
-Publisher.create(oid: "897A6EE6-83D2-43F2-9E71-22B106541C94",
-                 email: "connor.mcquillan@digital.education.gov.uk",
-                 organisation_publishers_attributes: organisation_publishers_attributes,
-                 family_name: "McQuillan",
-                 given_name: "Connor")
-
 Publisher.create(oid: "B81FC38C-4122-4BCE-9F1D-8B1A328FA4D8",
                  email: "david.mears@digital.education.gov.uk",
                  organisation_publishers_attributes: organisation_publishers_attributes,
@@ -192,7 +186,7 @@ physics_job = FactoryBot.create(:vacancy,
                                 subjects: %w[Physics],
                                 working_patterns: %w[full_time],
                                 salary: "£35,000",
-                                publisher: Publisher.find_by(email: "connor.mcquillan@digital.education.gov.uk"),
+                                publisher: Publisher.find_by(email: "david.mears@digital.education.gov.uk"),
                                 publisher_organisation: school_one,
                                 organisation_vacancies_attributes: [{ organisation: school_one }])
 
