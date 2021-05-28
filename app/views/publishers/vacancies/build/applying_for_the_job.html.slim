@@ -38,6 +38,7 @@
           hint: { text: vacancy_school_visits_hint(vacancy) },
           rows: 10,
           form_group: { classes: "optional-field" }
+        trix-editor input="publishers-job-listing-applying-for-the-job-form-school-visits-field" class="govuk-textarea formatable-textarea js-action govuk-!-margin-bottom-6 govuk-!-margin-top-2"
 
         - unless JobseekerApplicationsFeature.enabled?
           = f.govuk_text_area :how_to_apply, label: { size: "s" }, rows: 10, form_group: { classes: "optional-field" }

@@ -5,6 +5,7 @@ module Indexable
 
   included do
     include AlgoliaSearch
+    include ActionView::Helpers::SanitizeHelper
 
     scope :unindexed, (-> { live.where(initially_indexed: false) })
 
@@ -24,7 +25,19 @@ module Indexable
       end
 
       attribute :job_advert do
-        job_advert&.truncate(256)
+        strip_tags(job_advert)&.truncate(256)
+      end
+
+      attribute :benefits do
+        strip_tags(benefits)
+      end
+
+      attribute :about_school do
+        strip_tags(about_school)
+      end
+
+      attribute :school_visits do
+        strip_tags(school_visits)
       end
 
       attribute :last_updated_at do
