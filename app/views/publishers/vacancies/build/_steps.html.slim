@@ -1,0 +1,4 @@
+= render StepsComponent.new title: t("publishers.vacancies.review.steps"), classes: "govuk-!-margin-top-6" do |component|
+  - steps_to_display(steps_config, steps_adjust).each do |vacancy_step, step_number|
+    - component.step(label: t("publishers.vacancies.build.#{vacancy_step}.step_title"), current: (vacancy_step == step_current), completed: vacancy_step_completed?(vacancy, step_number))
+  - component.step(label: t("publishers.vacancies.review.heading"), current: step_current == :review, completed: false)
