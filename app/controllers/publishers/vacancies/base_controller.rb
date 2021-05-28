@@ -3,14 +3,18 @@ require "indexing"
 class Publishers::Vacancies::BaseController < Publishers::BaseController
   include Publishers::Wizardable
 
-  helper_method :process_steps, :step_current, :steps_adjust, :vacancy
+  helper_method :process_steps, :step_current, :steps_adjust, :steps_config, :vacancy
 
   def steps_adjust
     current_organisation.school_group? ? 0 : 1
   end
 
   def step_current
-    defined?(step) ? step : :review
+    if defined?(step)
+      step == :schools ? :job_location : step
+    else
+      :review
+    end
   end
 
   def process_steps
