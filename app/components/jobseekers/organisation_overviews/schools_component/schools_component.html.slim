@@ -17,11 +17,11 @@ section#school-overview class="govuk-!-margin-bottom-5"
       = component.slot(:row, key: I18n.t("jobs.contact_number"), value: govuk_link_to(@vacancy.contact_number, "tel:#{@vacancy.contact_number}"))
 
   - if vacancy.about_school.present?
-    h4.govuk-heading-s
+    h4.govuk-heading-m
       = t("schools.about_schools")
     = vacancy.about_school
 
-  h4.govuk-heading-s class="govuk-!-margin-bottom-0"
+  h4.govuk-heading-m class="govuk-!-margin-bottom-0"
     = t("schools.school_details")
 
   #accordion-default.govuk-accordion data-module="govuk-accordion"
@@ -46,7 +46,7 @@ section#school-overview class="govuk-!-margin-bottom-5"
                                                                                                     class: "wordwrap"))
 
   - if vacancy.school_visits.present?
-    h4.govuk-heading-s
+    h4.govuk-heading-m
       = t("schools.schools_visits")
     = vacancy.school_visits
 
