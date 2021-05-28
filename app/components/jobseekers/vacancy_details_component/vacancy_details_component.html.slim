@@ -12,11 +12,11 @@ section#job-details class="govuk-!-margin-bottom-5"
       = component.slot(:row, key: I18n.t("jobs.contract_type"), value: @vacancy.contract_type_with_duration)
     = component.slot(:row, key: I18n.t("jobs.salary"), value: @vacancy.salary)
 
-  h4.govuk-heading-s = t("jobs.job_summary")
+  h4.govuk-heading-m = t("jobs.job_summary")
   p = @vacancy.job_advert
 
   - if @vacancy.benefits.present?
-    h4.govuk-heading-s = t("jobs.benefits")
+    h4.govuk-heading-m = t("jobs.benefits")
     p = @vacancy.benefits
 
   - if @vacancy.expires_at.future?

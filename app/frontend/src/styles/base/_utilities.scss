@@ -190,3 +190,23 @@
     display: none !important;
   }
 }
+
+.formatable-textarea {
+  min-height: 150px;
+}
+
+ul li + br,
+ul > br {
+  display: none;
+}
+
+.trix-button--icon-attach,
+.trix-button--icon-code,
+.trix-button--icon-link,
+.trix-button--icon-quote,
+.trix-button--icon-strike,
+.trix-button--icon-heading-1,
+.trix-button--icon-increase-nesting-level,
+.trix-button--icon-decrease-nesting-level {
+  display: none;
+}
