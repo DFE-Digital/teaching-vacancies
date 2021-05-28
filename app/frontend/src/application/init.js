@@ -13,3 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+document.addEventListener('trix-initialize', (e) => {
+  const eid = Array.from(e.target.attributes).find((attr) => attr.name === 'input');
+  document.getElementById(eid.value).style.display = 'none';
+});
+
+document.addEventListener('trix-change', (e) => {
+  const eid = Array.from(e.target.attributes).find((attr) => attr.name === 'input');
+  document.getElementById(eid.value).value = e.target.editor.element.innerHTML;
+});
