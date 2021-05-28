@@ -30,5 +30,6 @@
         div class="govuk-!-margin-top-6"
           = render "publishers/vacancies/vacancy_form_partials/continue_or_update_submit", f: f
 
+  - unless vacancy.published?
     .govuk-grid-column-one-third
-      = render(Shared::ProcessStepsComponent.new(process: vacancy, service: process_steps, title: t("publishers.vacancies.build.process_title")))
+      = render "steps"
