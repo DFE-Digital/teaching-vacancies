@@ -19,6 +19,7 @@ class DocumentUpload
   def upload
     upload_publishers_document
     set_public_permission_on_document
+    verify_remaining_storage_quota
   rescue Google::Apis::Error => e
     self.google_error = true
     Rollbar.error(e)
@@ -39,6 +40,15 @@ class DocumentUpload
       uploaded.id,
       Google::Apis::DriveV3::Permission.new(type: "anyone", role: "reader"),
     )
+  end
+
+  def verify_remaining_storage_quota
+    quota = drive_service.get_about(fields: "storage_quota").storage_quota
+    remaining = (quota.limit - quota.usage)
+    return if remaining > 200.megabytes
+
+    human_remaining = ActiveSupport::NumberHelper.number_to_human_size(remaining)
+    Rollbar.error("Google Drive running out of space soon", remaining: human_remaining)
   end
 
   def google_drive_virus_check
