@@ -90,4 +90,22 @@ module VacanciesHelper
     organisation = organisation_type_basic(vacancy.parent_organisation).tr(" ", "_")
     t("helpers.hint.publishers_job_listing_applying_for_the_job_form.#{organisation}_visits")
   end
+
+  def vacancy_step_completed?(vacancy, step_number)
+    return false if vacancy.completed_step.nil?
+
+    step_number <= vacancy.completed_step
+  end
+
+  def steps_to_display(steps, steps_adjust)
+    steps_to_remove = current_organisation.is_a?(School) ? %i[supporting_documents review] : %i[supporting_documents schools review]
+
+    steps.transform_values { |step_details| step_details[:number] - steps_adjust }
+         .except!(*steps_to_remove)
+         .reject { |_, step_number| step_number.zero? }
+  end
+
+  def total_steps(steps)
+    steps.values.map { |step| step[:number] }.max - steps_adjust
+  end
 end

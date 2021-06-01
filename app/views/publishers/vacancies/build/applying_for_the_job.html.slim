@@ -3,7 +3,7 @@
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-full
-      = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, process_steps.current_step_number, process_steps.total_steps)
+      = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, current_step_number, total_steps(steps_config))
       = govuk_back_link text: session[:current_step] == :review ? t("buttons.cancel_and_return") : t("buttons.back_to_previous_step"), href: back_path
 
   .govuk-grid-row
@@ -46,5 +46,6 @@
 
         = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
+  - unless vacancy.published?
     .govuk-grid-column-one-third
-      = render(Shared::ProcessStepsComponent.new(process: vacancy, service: process_steps, title: t("publishers.vacancies.build.process_title")))
+      = render "steps"
