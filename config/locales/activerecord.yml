@@ -133,6 +133,8 @@ en:
       invalid: Enter an email address in the correct format, like name@example.com
     contact_number:
       invalid: Contact number must be a valid phone number
+    how_to_apply:
+      blank: Please provide details about how candidates should apply
   job_summary_errors: &job_summary_errors
     job_advert:
       blank: Enter a job advert
