@@ -4,9 +4,10 @@ RSpec.describe Publishers::VacancyFormPageHeadingComponent, type: :component do
   let(:organisation) { create(:school, name: "Teaching Vacancies Academy") }
   let(:vacancy) { create(:vacancy, status, job_title: "Test job title") }
   let(:status) { :published }
-  let(:current_step) { 1 }
+  let(:current_step_number) { 1 }
   let(:current_publisher_is_part_of_school_group?) { true }
   let(:steps_adjust) { current_publisher_is_part_of_school_group? ? 0 : 1 }
+  let(:total_steps) { 2 }
 
   let(:steps) do
     {
@@ -15,9 +16,7 @@ RSpec.describe Publishers::VacancyFormPageHeadingComponent, type: :component do
     }.freeze
   end
 
-  let(:service) { ProcessSteps.new({ steps: steps, adjust: steps_adjust, step: :step_one }) }
-
-  subject { described_class.new(vacancy, service.current_step_number, service.total_steps) }
+  subject { described_class.new(vacancy, current_step_number, total_steps) }
 
   before do
     allow(subject).to receive(:current_organisation).and_return(organisation)
@@ -30,7 +29,7 @@ RSpec.describe Publishers::VacancyFormPageHeadingComponent, type: :component do
       let(:status) { :draft }
 
       it "shows the current step" do
-        expect(rendered_component).to include(I18n.t("jobs.current_step", step: current_step, total: 2))
+        expect(rendered_component).to include(I18n.t("jobs.current_step", step: current_step_number, total: total_steps))
       end
     end
 

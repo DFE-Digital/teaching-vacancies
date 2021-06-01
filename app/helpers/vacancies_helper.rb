@@ -104,4 +104,8 @@ module VacanciesHelper
          .except!(*steps_to_remove)
          .reject { |_, step_number| step_number.zero? }
   end
+
+  def total_steps(steps)
+    steps.values.map { |step| step[:number] }.max - steps_adjust
+  end
 end
