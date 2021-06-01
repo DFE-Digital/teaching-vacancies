@@ -13,16 +13,16 @@
 
         h2.govuk-heading-l = t("jobs.job_summary")
 
-        = f.govuk_text_area :job_advert, label: { size: "s" }, rows: 10, required: true
-        trix-editor input="publishers-job-listing-job-summary-form-job-advert-field" class="govuk-textarea formatable-textarea js-action govuk-!-margin-bottom-6 govuk-!-margin-top-2"
+        = f.govuk_text_area :job_advert, label: { size: "s", id:"advert-label" }, rows: 10, required: true
+        trix-editor input="publishers-job-listing-job-summary-form-job-advert-field" aria-labelledby="advert-label" role="textbox" contenteditable="true" aria-multiline="true" class="govuk-textarea formatable-textarea js-action govuk-!-margin-bottom-6 govuk-!-margin-top-2"
 
         = f.govuk_text_area :about_school,
-          label: { text: t("helpers.label.publishers_job_listing_job_summary_form.about_organisation", organisation: vacancy_about_school_label_organisation(vacancy)), size: "s" },
+          label: { id: "about-label" text: t("helpers.label.publishers_job_listing_job_summary_form.about_organisation", organisation: vacancy_about_school_label_organisation(vacancy)), size: "s" },
           hint: { text: vacancy_about_school_hint_text(vacancy) },
           value: vacancy_about_school_value(vacancy),
           rows: 10,
           required: true
-        trix-editor input="publishers-job-listing-job-summary-form-about-school-field" class="govuk-textarea formatable-textarea js-action govuk-!-margin-bottom-6 govuk-!-margin-top-2"
+        trix-editor input="publishers-job-listing-job-summary-form-about-school-field" aria-labelledby="about-label" role="textbox" contenteditable="true" aria-multiline="true" class="govuk-textarea formatable-textarea js-action govuk-!-margin-bottom-6 govuk-!-margin-top-2"
 
         = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
