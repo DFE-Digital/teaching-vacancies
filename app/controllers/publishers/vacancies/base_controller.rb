@@ -3,7 +3,7 @@ require "indexing"
 class Publishers::Vacancies::BaseController < Publishers::BaseController
   include Publishers::Wizardable
 
-  helper_method :process_steps, :step_current, :steps_adjust, :steps_config, :vacancy
+  helper_method :current_step_number, :step_current, :steps_adjust, :steps_config, :vacancy
 
   def steps_adjust
     current_organisation.school_group? ? 0 : 1
@@ -17,8 +17,8 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
     end
   end
 
-  def process_steps
-    @process_steps ||= ProcessSteps.new(steps: steps_config, adjust: steps_adjust, step: step_current)
+  def current_step_number
+    steps_config[step_current][:number] - steps_adjust
   end
 
   def vacancy
