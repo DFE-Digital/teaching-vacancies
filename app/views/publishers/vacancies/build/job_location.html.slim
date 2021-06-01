@@ -16,6 +16,6 @@
 
         = f.govuk_submit t("buttons.continue")
 
-  - unless vacancy.published?
-    .govuk-grid-column-one-third
-      = render "steps"
+    - unless vacancy.published?
+      .govuk-grid-column-one-third
+        = render "steps"
