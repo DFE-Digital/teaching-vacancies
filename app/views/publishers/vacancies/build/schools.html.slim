@@ -30,6 +30,6 @@
         div class="govuk-!-margin-top-6"
           = render "publishers/vacancies/vacancy_form_partials/continue_or_update_submit", f: f
 
-  - unless vacancy.published?
-    .govuk-grid-column-one-third
-      = render "steps"
+    - unless vacancy.published?
+      .govuk-grid-column-one-third
+        = render "steps"
