@@ -34,9 +34,9 @@
 
         = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
-  - unless vacancy.published?
-    .govuk-grid-column-one-third
-      = render "publishers/vacancies/build/steps"
+    - unless vacancy.published?
+      .govuk-grid-column-one-third
+        = render "publishers/vacancies/build/steps"
 
   - content_for :after_main do
     = render "shared/file_remove_confirmation_dialogue"
