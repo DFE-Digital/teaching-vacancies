@@ -9,8 +9,6 @@ RSpec.describe "Jobseekers can manage their job applications" do
   let(:vacancy3) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: organisation }]) }
   let(:vacancy4) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: organisation }]) }
 
-  before { allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true) }
-
   context "when logged in" do
     before { login_as(jobseeker, scope: :jobseeker) }
 

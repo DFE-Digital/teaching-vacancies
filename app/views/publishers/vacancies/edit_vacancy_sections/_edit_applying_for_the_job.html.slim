@@ -7,20 +7,19 @@
 
   - review.body do
     = govuk_summary_list do |component|
-      - if JobseekerApplicationsFeature.enabled?
+      - component.slot(:row,
+        key: t("jobs.enable_job_applications"),
+        value: @vacancy.enable_job_applications? ? "Yes" : "No")
+
+      - if @vacancy.enable_job_applications?
         - component.slot(:row,
-          key: t("jobs.enable_job_applications"),
-          value: @vacancy.enable_job_applications? ? "Yes" : "No")
+          key: t("jobs.personal_statement_guidance"),
+          value: @vacancy.personal_statement_guidance.presence || t("jobs.not_defined"))
 
-        - if @vacancy.enable_job_applications?
-          - component.slot(:row,
-            key: t("jobs.personal_statement_guidance"),
-            value: @vacancy.personal_statement_guidance.presence || t("jobs.not_defined"))
-
-        - elsif @vacancy.enable_job_applications == false # as opposed to nil
-          - component.slot(:row,
-            key: t("jobs.application_link"),
-            value: @vacancy.application_link.present? ? open_in_new_tab_link_to(@vacancy.application_link, @vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link")) : t("jobs.not_defined"))
+      - elsif @vacancy.enable_job_applications == false # as opposed to nil
+        - component.slot(:row,
+          key: t("jobs.application_link"),
+          value: @vacancy.application_link.present? ? open_in_new_tab_link_to(@vacancy.application_link, @vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link")) : t("jobs.not_defined"))
 
       - component.slot(:row,
         key: t("jobs.contact_email"),
@@ -33,12 +32,3 @@
       - component.slot(:row,
         key: t("jobs.#{school_or_trust_visits(@vacancy.parent_organisation)}"),
         value: @vacancy.school_visits.presence || t("jobs.not_defined"))
-
-      - unless JobseekerApplicationsFeature.enabled?
-        - component.slot(:row,
-          key: t("jobs.how_to_apply"),
-          value: @vacancy.how_to_apply.presence || t("jobs.not_defined"))
-
-        - component.slot(:row,
-          key: t("jobs.application_link"),
-          value: @vacancy.application_link.present? ? open_in_new_tab_link_to(@vacancy.application_link, @vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link")) : t("jobs.not_defined"))

@@ -5,10 +5,7 @@ RSpec.describe "Jobseekers can edit a draft job application" do
   let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
   let(:job_application) { create(:job_application, first_name: "Steve", jobseeker: jobseeker, vacancy: vacancy) }
 
-  before do
-    allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true)
-    login_as(jobseeker, scope: :jobseeker)
-  end
+  before { login_as(jobseeker, scope: :jobseeker) }
 
   it "allows jobseekers to edit job application from review page" do
     visit jobseekers_job_application_review_path(job_application)

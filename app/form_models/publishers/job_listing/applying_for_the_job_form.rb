@@ -3,7 +3,7 @@ class Publishers::JobListing::ApplyingForTheJobForm < Publishers::JobListing::Va
 
   before_validation :override_enable_job_applications_for_local_authority!
 
-  validates :enable_job_applications, inclusion: { in: [true, false, "true", "false"] }, if: -> { JobseekerApplicationsFeature.enabled? }
+  validates :enable_job_applications, inclusion: { in: [true, false, "true", "false"] }
   validates :how_to_apply, presence: true, unless: proc { enable_job_applications.in?(["true", true]) }
   validates :application_link, url: true, if: proc { application_link.present? }
 

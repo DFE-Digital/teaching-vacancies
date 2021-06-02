@@ -6,10 +6,7 @@ RSpec.describe "Jobseekers can give job application feedback after submitting th
   let(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
   let(:comment) { "I will never use any other website again" }
 
-  before do
-    allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true)
-    login_as(jobseeker, scope: :jobseeker)
-  end
+  before { login_as(jobseeker, scope: :jobseeker) }
 
   it "allows jobseekers to give job application feedback after submitting the application" do
     visit jobseekers_job_application_review_path(job_application)
