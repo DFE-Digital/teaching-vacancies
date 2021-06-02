@@ -52,6 +52,7 @@ Make sure you have the following services configured and running on your develop
 * [PostgreSQL](https://www.postgresql.org)
 * [Redis](https://redis.io)
 
+If using Homebrew to install PostgreSQL, run `brew services start postgresql` in order to have `launchd` start PostgreSQL and restart whenever you log in.
 
 ### ChromeDriver
 
@@ -69,6 +70,22 @@ On macOS you might need to "un-quarantine" chromedriver too
 ```bash
 which chromedriver
 xattr -d com.apple.quarantine /path/to/chromedriver
+```
+
+### Install dependencies
+
+#### Install Ruby dependency libraries
+
+```bash
+bundle
+```
+
+Install the version of Bundler that created the lockfile if prompted to do so.
+
+#### Install Javascript dependency libraries
+
+```bash
+yarn
 ```
 
 ### AWS credentials, MFA, and role profiles
@@ -99,27 +116,13 @@ To run the command above you need [AWS credentials](#aws-credentials-mfa-and-rol
 For local development, you can use a [dotenv-rails environment override](https://github.com/bkeepers/dotenv#frequently-answered-questions):
 - create the file `.env.local`, with contents `DOMAIN=localhost:3000`
 
-### Install dependencies
-
-Install Ruby dependency libraries:
-
-```bash
-bundle
-```
-
-Install Javascript dependency libraries:
-
-```bash
-yarn
-```
-
-### Setup the database
+### Set up the database
 
 ```bash
 bundle exec rails db:create db:schema:load
 ```
 
-[/config/database.yml](./config/database.yml) sets the default for `DATABASE_URL` to `postgres://postgres@localhost:5432`, which should work without any additional configuration on a Mac
+[/config/database.yml](./config/database.yml) sets the default for `DATABASE_URL` to `postgres://postgres@localhost:5432`, which should work without any additional configuration on a Mac. 
 
 If you set up your local Postgres with a custom user and password, such as in Ubuntu 20.04, set this in `.env.local`:
 ```
@@ -127,7 +130,7 @@ DATABASE_URL=postgres://mylocaluser:mylocalpassword@localhost:5432
 ```
 
 
-### Seeding the database
+### Seed the database
 
 To create a few vacancies in your database run:
 
@@ -135,23 +138,26 @@ To create a few vacancies in your database run:
 bundle exec rails db:seed
 ```
 
-### Importing data
-
-#### GIAS data (schools, trusts and local authorities)
-
-Populate your environment with real school data. This is taken from
-[GIAS](https://get-information-schools.service.gov.uk/). It might take a while, so make a cup of tea while you wait.
-
-```bash
-bundle exec rails gias:import_schools
-```
+### Import data
 
 #### ONS Location polygons
 
-Run these rake tasks to populate your database with location polygons (which are used in some cases to search by location).
+:hourglass_flowing_sand: This might take a while, so brew some tea while you wait.
+
+Run these rake tasks to populate your database with location polygons. These are required in some cases to search by location.
 
 ```bash
 bundle exec rails ons:import_location_polygons
+```
+
+#### GIAS data (schools, trusts and local authorities)
+
+:hourglass_flowing_sand: This is optional, and takes a while.
+
+To populate your environment with real school data, taken from [GIAS](https://get-information-schools.service.gov.uk/):
+
+```bash
+bundle exec rails gias:import_schools
 ```
 
 ### Run the server
@@ -161,6 +167,14 @@ bundle exec rails server
 ```
 
 Look at that, you’re up and running! Visit [http://localhost:3000](http://localhost:3000) and you’re ready to go.
+
+#### Use live reloading
+
+Optionally, use live reloading with [bin/webpack-dev-server](https://github.com/DFE-Digital/teaching-vacancies/blob/master/bin/webpack-dev-server) to save time when developing front-end assets:
+
+```
+yarn run dev
+```
 
 ### Run the worker
 
@@ -234,7 +248,7 @@ yarn run sass:lint
 
 * I see Page Not Found when I log in and try to create a job listing.
 
-Try [importing the school data](#gias-data-schools-trusts-and-local-authorities) if you have not already. When your sign in account was created, it was assigned to a school via a URN, and you may not have a school in your database with the same URN.
+Try [seeding the database](https://github.com/DFE-Digital/teaching-vacancies#seed-the-database) (quick) or [importing the school data](#gias-data-schools-trusts-and-local-authorities) (slow) if you have not already. When your sign in account was created, it was assigned to a school via a URN, and you may not have a school in your database with the same URN.
 
 ---
 
