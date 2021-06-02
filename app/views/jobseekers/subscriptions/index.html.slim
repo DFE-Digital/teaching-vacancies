@@ -10,7 +10,7 @@
   - if subscriptions.any?
     .govuk-grid-row class="govuk-!-margin-top-0"
       .govuk-grid-column-two-thirds
-        = form_for sort_form, as: "", url: jobseekers_subscriptions_path, method: :get, data: { 'auto-submit': true, "hide-submit": true } do |f|
+        = form_for sort_form, as: "", url: jobseekers_subscriptions_path, method: :get, data: { "auto-submit": true, "hide-submit": true } do |f|
           = f.govuk_collection_select :sort_column,
             sort,
             :column,
