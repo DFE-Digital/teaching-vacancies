@@ -89,7 +89,7 @@ jobs:
       - name: Set matrix environments (Push)
         id: set-env-push
         if: github.event_name == 'push'
-        run: echo "::set-output name=environment::{\"environment\":[\"qa\"]}"
+        run: echo "::set-output name=environment::{\"environment\":[\"staging\",\"production\",\"qa\"]}"
 
       - name: Set matrix environments (Pull request)
         id: set-env-pr
@@ -122,7 +122,8 @@ jobs:
     - name: Set environment variables (Push)
       if: github.event_name == 'push'
       run: |
-        echo "ENVIRONMENT=${{ matrix.environment }}" >> $GITHUB_ENV
+        ENVIRONMENT=${{ matrix.environment }}
+        echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
         echo "TAG=${{ github.sha }}" >> $GITHUB_ENV
         echo "PARAMETER_STORE_ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
 
