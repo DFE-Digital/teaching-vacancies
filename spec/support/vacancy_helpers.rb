@@ -181,8 +181,8 @@ module VacancyHelpers
 
   def vacancy_json_ld(vacancy)
     {
-      '@context': "http://schema.org",
-      '@type': "JobPosting",
+      "@context": "http://schema.org",
+      "@type": "JobPosting",
       title: vacancy.job_title,
       salary: vacancy.salary,
       jobBenefits: vacancy.benefits,
@@ -192,9 +192,9 @@ module VacancyHelpers
       employmentType: vacancy.working_patterns_for_job_schema,
       industry: "Education",
       jobLocation: {
-        '@type': "Place",
+        "@type": "Place",
         address: {
-          '@type': "PostalAddress",
+          "@type": "PostalAddress",
           addressLocality: vacancy.parent_organisation.town,
           addressRegion: vacancy.parent_organisation.region,
           streetAddress: vacancy.parent_organisation.address,
@@ -203,7 +203,7 @@ module VacancyHelpers
       },
       url: job_url(vacancy),
       hiringOrganization: {
-        '@type': "School",
+        "@type": "School",
         name: vacancy.parent_organisation.name,
         identifier: vacancy.parent_organisation.urn,
         description: vacancy.about_school,

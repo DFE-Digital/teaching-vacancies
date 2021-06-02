@@ -33,7 +33,7 @@
 
       .moj-filter-layout__content class=grid_column_class
         - if @vacancies.any?
-          = form_for @sort_form, as: "", url: jobs_with_type_organisation_path(@selected_type), method: :get, data: { 'auto-submit': true, "hide-submit": true } do |f|
+          = form_for @sort_form, as: "", url: jobs_with_type_organisation_path(@selected_type), method: :get, data: { "auto-submit": true, "hide-submit": true } do |f|
             = f.govuk_collection_select :sort_column,
               vacancy_sort_options,
               :column,
