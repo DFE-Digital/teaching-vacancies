@@ -94,7 +94,7 @@ jobs:
       - name: Set matrix environments (Pull request)
         id: set-env-pr
         if: github.event_name == 'pull_request'
-        run: echo "::set-output name=environment::{\"environment\":[\"pull_request\"]}"
+        run: echo "::set-output name=environment::{\"environment\":[\"review\"]}"
 
   deploy:
     name: deploy app
@@ -130,7 +130,6 @@ jobs:
     - name: Set environment variables (Pull request)
       if: github.event_name == 'pull_request'
       run: |
-        $(echo "BRANCH=${{ github.head_ref }}" | sed -e 's/\//_/g' >> $GITHUB_ENV)
         ENVIRONMENT=review-pr-${{ github.event.number }}
         TAG=${ENVIRONMENT}-${{ github.event.pull_request.head.sha }}
         echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
