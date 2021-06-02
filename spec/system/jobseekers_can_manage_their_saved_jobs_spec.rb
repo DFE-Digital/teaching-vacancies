@@ -8,10 +8,6 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
   let(:vacancy2) { create(:vacancy, enable_job_applications: true, organisation_vacancies_attributes: [{ organisation: organisation }]) }
   let(:expired_vacancy) { create(:vacancy, :expired, organisation_vacancies_attributes: [{ organisation: organisation }]) }
 
-  let(:jobseeker_applications_enabled?) { false }
-
-  before { allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(jobseeker_applications_enabled?) }
-
   context "when logged in" do
     before { login_as(jobseeker, scope: :jobseeker) }
 
@@ -59,31 +55,27 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
           end
         end
 
-        context "when JobseekerApplicationsFeature is enabled" do
-          let(:jobseeker_applications_enabled?) { true }
+        it "shows apply for this job link for live jobs that can be applied to" do
+          expect(page).to have_css(".card-component", count: 3) do |cards|
+            expect(cards[0]).to have_css(".card-component__actions") do |actions|
+              expect(actions).not_to have_link(I18n.t("jobseekers.saved_jobs.index.apply"))
+            end
 
-          it "shows apply for this job link for live jobs that can be applied to" do
-            expect(page).to have_css(".card-component", count: 3) do |cards|
-              expect(cards[0]).to have_css(".card-component__actions") do |actions|
-                expect(actions).not_to have_link(I18n.t("jobseekers.saved_jobs.index.apply"))
-              end
+            expect(cards[1]).to have_css(".card-component__actions") do |actions|
+              expect(actions).to have_link(I18n.t("jobseekers.saved_jobs.index.apply"))
+            end
 
-              expect(cards[1]).to have_css(".card-component__actions") do |actions|
-                expect(actions).to have_link(I18n.t("jobseekers.saved_jobs.index.apply"))
-              end
-
-              expect(cards[2]).to have_css(".card-component__actions") do |actions|
-                expect(actions).not_to have_link(I18n.t("jobseekers.saved_jobs.index.apply"))
-              end
+            expect(cards[2]).to have_css(".card-component__actions") do |actions|
+              expect(actions).not_to have_link(I18n.t("jobseekers.saved_jobs.index.apply"))
             end
           end
+        end
 
-          context "when applying to a saved job" do
-            before { click_on I18n.t("jobseekers.saved_jobs.index.apply") }
+        context "when applying to a saved job" do
+          before { click_on I18n.t("jobseekers.saved_jobs.index.apply") }
 
-            it "redirects to the new job application page" do
-              expect(current_path).to eq(new_jobseekers_job_job_application_path(vacancy2.id))
-            end
+          it "redirects to the new job application page" do
+            expect(current_path).to eq(new_jobseekers_job_job_application_path(vacancy2.id))
           end
         end
       end

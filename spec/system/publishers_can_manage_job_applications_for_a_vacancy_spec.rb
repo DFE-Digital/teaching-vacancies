@@ -6,7 +6,6 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
   let(:publisher) { create(:publisher) }
 
   before do
-    allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true)
     login_publisher(publisher: publisher, organisation: organisation)
   end
 

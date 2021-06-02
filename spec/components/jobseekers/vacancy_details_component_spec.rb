@@ -6,7 +6,6 @@ RSpec.describe Jobseekers::VacancyDetailsComponent, type: :component do
   let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
 
   before do
-    allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true)
     vacancy.organisation_vacancies.create(organisation: organisation)
     render_inline(described_class.new(vacancy: vacancy_presenter))
   end

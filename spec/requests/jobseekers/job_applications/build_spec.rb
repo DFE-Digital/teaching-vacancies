@@ -6,7 +6,6 @@ RSpec.describe "Job applications build" do
   let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
 
   before do
-    allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true)
     sign_in(jobseeker, scope: :jobseeker)
   end
 
