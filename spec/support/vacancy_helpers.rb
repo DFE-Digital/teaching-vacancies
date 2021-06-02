@@ -56,7 +56,7 @@ module VacancyHelpers
     fill_in "publishers_job_listing_important_dates_form[expires_at(2i)]", with: vacancy.expires_at.month
     fill_in "publishers_job_listing_important_dates_form[expires_at(1i)]", with: vacancy.expires_at.year
 
-    choose "Start of the working day (9 am)", name: "publishers_job_listing_important_dates_form[expiry_time]"
+    choose "9am", name: "publishers_job_listing_important_dates_form[expiry_time]"
 
     fill_in "publishers_job_listing_important_dates_form[starts_on(3i)]", with: vacancy.starts_on.day
     fill_in "publishers_job_listing_important_dates_form[starts_on(2i)]", with: vacancy.starts_on.month
@@ -96,7 +96,7 @@ module VacancyHelpers
     fill_in "publishers_job_listing_copy_vacancy_form[expires_at(2i)]", with: vacancy.expires_at&.strftime("%m")
     fill_in "publishers_job_listing_copy_vacancy_form[expires_at(1i)]", with: vacancy.expires_at&.year
 
-    choose "Start of the working day (9 am)", name: "publishers_job_listing_copy_vacancy_form[expiry_time]"
+    choose "9am", name: "publishers_job_listing_copy_vacancy_form[expiry_time]"
 
     fill_in "publishers_job_listing_copy_vacancy_form[publish_on(3i)]", with: vacancy.publish_on&.day
     fill_in "publishers_job_listing_copy_vacancy_form[publish_on(2i)]", with: vacancy.publish_on&.strftime("%m")
