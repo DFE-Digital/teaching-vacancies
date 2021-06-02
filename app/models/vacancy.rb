@@ -70,6 +70,7 @@ class Vacancy < ApplicationRecord
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
+  EXPIRY_TIME_OPTIONS = %w[7:00 8:00 9:00 10:00 11:00 12:00 13:00 14:00 15:00 16:00 17:00 23:59].freeze
 
   def organisation
     organisation_vacancies.first&.organisation
