@@ -62,7 +62,7 @@ school_three = FactoryBot.create(:school,
                                  readable_phases: %w[primary],
                                  detailed_school_type: "Foundation school",
                                  school_type: "Local authority maintained schools",
-                                 gias_data: { 'ReligiousCharacter (name)': "Does not apply" })
+                                 gias_data: { "ReligiousCharacter (name)": "Does not apply" })
 
 trust_one = FactoryBot.create(:trust,
                               name: "Weydon Multi Academy Trust",
