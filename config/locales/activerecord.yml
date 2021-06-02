@@ -293,8 +293,6 @@ en:
               blank: Enter your personal statement
         jobseekers/job_application/professional_status_form:
           attributes:
-            qualified_teacher_status_details:
-              blank: Explain why you do not have QTS
             qualified_teacher_status:
               inclusion: Select yes if you have qualified teacher status
             qualified_teacher_status_year:
