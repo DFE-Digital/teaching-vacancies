@@ -140,7 +140,7 @@ export AWS_VAULT_BACKEND=pass
 
 ## Configure AWS CLI with AWS Vault profiles
 
-Edit or create the `~/.aws/config` file, and paste this in, replacing `<YOUR-AWS-USERNAME>` in line 11
+Edit or create the `~/.aws/config` file, and paste this in, replacing `<YOUR-AWS-USERNAME>` in its three instances.
 
 ```
 [profile teaching-vacancies]
@@ -168,8 +168,11 @@ aws-vault add teaching-vacancies
 You'll be prompted:
 ```
 Enter Access Key ID:
-Enter Secret Access Key:
+Enter Secret Access Key: # This means 'create a password'
 ```
+
+You will find the ID in your [IAM Management Console](https://console.aws.amazon.com/iam/home?region=eu-west-2#/security_credentials).
+
 And then see:
 ```
 Added credentials to profile "teaching-vacancies" in vault
