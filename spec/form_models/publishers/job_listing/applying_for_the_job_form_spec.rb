@@ -18,6 +18,12 @@ RSpec.describe Publishers::JobListing::ApplyingForTheJobForm, type: :model do
 
     it { is_expected.to validate_inclusion_of(:enable_job_applications).in_array([true, false]) }
 
+    context "when enable_job_applications is false" do
+      subject { described_class.new(enable_job_applications: "false") }
+
+      it { is_expected.to validate_presence_of(:how_to_apply) }
+    end
+
     describe "enable job applications override" do
       subject { described_class.new(current_organisation: organisation) }
 
