@@ -29,6 +29,7 @@ jobs:
     name: build image
     outputs:
       build-tag: ${{steps.tag_version.outputs.new_tag}}
+      matrix: ${{ steps.set-env-push.outputs.environment || steps.set-env-pr.outputs.environment }}
     runs-on: ubuntu-20.04
     steps:
 
@@ -85,28 +86,23 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-  prep_matrix:
-    needs: build
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.set-master.outputs.environment ||  steps.set-pull_request.outputs.environment }}
-    steps:
-      - id: set-pull_request
-        name: pull_request
-        run: echo "::set-output name=environment::{\"environment\":[\"pull_request\"]}"
-
-      - id: set-master
-        if: github.event_name != 'pull_request'
-        name: master
+      - name: Set matrix environments (Push)
+        id: set-env-push
+        if: github.event_name == 'push'
         run: echo "::set-output name=environment::{\"environment\":[\"qa\"]}"
+
+      - name: Set matrix environments (Pull request)
+        id: set-env-pr
+        if: github.event_name == 'pull_request'
+        run: echo "::set-output name=environment::{\"environment\":[\"pull_request\"]}"
 
   deploy:
     name: deploy app
 
     strategy:
       max-parallel: 1
-      matrix: ${{fromJSON(needs.prep_matrix.outputs.matrix)}}
-    needs: [build, prep_matrix]
+      matrix: ${{fromJSON(needs.build.outputs.matrix)}}
+    needs: build
     runs-on: ubuntu-20.04
 
     steps:
