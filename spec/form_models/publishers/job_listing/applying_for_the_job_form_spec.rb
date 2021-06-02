@@ -18,6 +18,38 @@ RSpec.describe Publishers::JobListing::ApplyingForTheJobForm, type: :model do
 
     it { is_expected.to validate_inclusion_of(:enable_job_applications).in_array([true, false]) }
 
+    context "when job applications have not been enabled" do
+      subject { described_class.new(params) }
+
+      let(:params) do
+        {
+          "personal_statement_guidance" => "",
+          "enable_job_applications" => "false",
+          "how_to_apply" => how_to_apply,
+          "application_link" => "",
+          "contact_email" => "test@example.com",
+          "contact_number" => "02085555555",
+          "school_visits" => "Test"
+        }
+      end
+
+      context "when the how to apply field is empty" do
+        let(:how_to_apply) { "" }
+
+        it "is invalid" do
+          expect(subject.valid?).to eq(false)
+        end
+      end
+
+      context "when the how to apply field is not empty" do
+        let(:how_to_apply) { "Very important details" }
+
+        it "is valid" do
+          expect(subject.valid?).to eq(true)
+        end
+      end
+    end
+
     describe "enable job applications override" do
       subject { described_class.new(current_organisation: organisation) }
 
