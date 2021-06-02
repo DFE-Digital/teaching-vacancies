@@ -45,6 +45,12 @@ If asdf-vm is installed correctly, from the project repository you can just exec
 asdf install
 ```
 
+If `asdf install` fails with the below message, and you are on a Mac, install [GPG Suite](https://gpgtools.org/).
+
+```
+You must install GnuPG to verify the authenticity of the downloaded archives before continuing with the install: https://www.gnupg.org/
+```
+
 ### Services
 
 Make sure you have the following services configured and running on your development background:
