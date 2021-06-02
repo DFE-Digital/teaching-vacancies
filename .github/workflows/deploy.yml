@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - master
+    - master
     paths-ignore:
     - 'bigquery/**'
     - 'documentation/**'
@@ -11,8 +11,8 @@ on:
     - '**.md'
 
   pull_request:
-    branches: [ master ]
-    types: [opened, reopened , synchronize]
+    branches:
+    - master
     paths-ignore:
     - 'bigquery/**'
     - 'documentation/**'
@@ -29,6 +29,7 @@ jobs:
     name: build image
     outputs:
       build-tag: ${{steps.tag_version.outputs.new_tag}}
+      matrix: ${{ steps.set-env-push.outputs.environment || steps.set-env-pr.outputs.environment }}
     runs-on: ubuntu-20.04
     steps:
 
@@ -85,32 +86,23 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-#prepare matrix Pull request
-
-  prep_matrix:
-    needs: build
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.set-master.outputs.environment ||  steps.set-pull_request.outputs.environment }}
-    steps:
-      - id: set-pull_request
-        name: pull_request
-        run: echo "::set-output name=environment::{\"environment\":[\"pull_request\"]}"
-
-      - id: set-master
-        if: github.event_name != 'pull_request'
-        name: master
+      - name: Set matrix environments (Push)
+        id: set-env-push
+        if: github.event_name == 'push'
         run: echo "::set-output name=environment::{\"environment\":[\"qa\"]}"
 
-#prepare matrix_end
+      - name: Set matrix environments (Pull request)
+        id: set-env-pr
+        if: github.event_name == 'pull_request'
+        run: echo "::set-output name=environment::{\"environment\":[\"review\"]}"
+
   deploy:
     name: deploy app
 
     strategy:
       max-parallel: 1
-      matrix: ${{fromJSON(needs.prep_matrix.outputs.matrix)}}
-#        environment: ["qa"]
-    needs: [build, prep_matrix]
+      matrix: ${{fromJSON(needs.build.outputs.matrix)}}
+    needs: build
     runs-on: ubuntu-20.04
 
     steps:
@@ -128,55 +120,37 @@ jobs:
         role-duration-seconds: 3600
         role-skip-session-tagging: true
 
-    - name: convert matrix to environment variables
+    - name: Set environment variables (Push)
+      if: github.event_name == 'push'
       run: |
         echo "ENVIRONMENT=${{ matrix.environment }}" >> $GITHUB_ENV
         echo "TAG=${{ github.sha }}" >> $GITHUB_ENV
+        echo "PARAMETER_STORE_ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
 
-    #- name: change value of matrix
-    #  if: github.event_name == 'pull_request'
-    #  run: |
-    #    echo "ENVIRONMENT=${{ matrix.environment }}" >> $GITHUB_ENV
-    #- name: Set environment variables
-    #  id: set_env_vars
-    #  run: |
-    #    echo "TAG=${{ github.sha }}" >> $GITHUB_ENV
-
-    - name: Set environment variables
+    - name: Set environment variables (Pull request)
       if: github.event_name == 'pull_request'
-      id: set_env_vars
       run: |
-        $(echo "BRANCH=${{ github.head_ref }}" | sed -e 's/\//_/g' >> $GITHUB_ENV)
         ENVIRONMENT=review-pr-${{ github.event.number }}
         TAG=${ENVIRONMENT}-${{ github.event.pull_request.head.sha }}
         echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
         echo "TAG=${TAG}" >> $GITHUB_ENV
+        echo "PARAMETER_STORE_ENVIRONMENT=dev" >> $GITHUB_ENV
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
 
     - name: Download fetch_config.rb
-      shell: bash
       run: |
         echo "::group:: Download fetch_config.rb script"
         curl -s https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/scripts/fetch_config/fetch_config.rb -o bin/fetch_config.rb
         chmod +x bin/fetch_config.rb
         echo "::endgroup::"
 
-    - name: Validate secrets
-      shell: bash
+    - name: Validate ${{ env.PARAMETER_STORE_ENVIRONMENT }} secrets
       run: |
         gem install aws-sdk-ssm --no-document
-        bin/fetch_config.rb -s aws-ssm-parameter-path:/teaching-vacancies/dev/app -d quiet \
-          && echo Data in /teaching-vacancies/dev looks valid
-
-    - name: Validate ${{ env.ENVIRONMENT }} secrets
-      if: github.event_name != 'pull_request'
-      shell: bash
-      run: |
-        gem install aws-sdk-ssm --no-document
-        bin/fetch_config.rb -s aws-ssm-parameter-path:/teaching-vacancies/${{ env.ENVIRONMENT }}/app -d quiet \
-          && echo Data in /teaching-vacancies/${{ env.ENVIRONMENT }} looks valid
+        bin/fetch_config.rb -s aws-ssm-parameter-path:/teaching-vacancies/${PARAMETER_STORE_ENVIRONMENT}/app -d quiet \
+          && echo Data in /teaching-vacancies/${PARAMETER_STORE_ENVIRONMENT} looks valid
 
     - name: Terraform pin version
       uses: hashicorp/setup-terraform@v1
