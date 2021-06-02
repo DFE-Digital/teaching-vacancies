@@ -28,30 +28,28 @@ Rails.application.routes.draw do
       get :check_your_email_password, to: "passwords#check_your_email_password", as: :check_your_email_password
     end
 
-    constraints(-> { JobseekerApplicationsFeature.enabled? }) do
-      resources :job_applications, only: %i[index show destroy] do
-        resources :build, only: %i[show update], controller: "job_applications/build"
-        resources :employments, only: %i[new create edit update destroy], controller: "job_applications/employments"
-        resources :qualifications, only: %i[new create edit update destroy], controller: "job_applications/qualifications" do
-          collection do
-            get :select_category
-            post :submit_category
-          end
+    resources :job_applications, only: %i[index show destroy] do
+      resources :build, only: %i[show update], controller: "job_applications/build"
+      resources :employments, only: %i[new create edit update destroy], controller: "job_applications/employments"
+      resources :qualifications, only: %i[new create edit update destroy], controller: "job_applications/qualifications" do
+        collection do
+          get :select_category
+          post :submit_category
         end
-        resources :references, only: %i[new create edit update destroy], controller: "job_applications/references"
-        get :review
-        get :confirm_destroy
-        get :confirm_withdraw
-        post :submit
-        post :withdraw
-        resource :feedback, only: %i[create], controller: "job_applications/feedbacks"
       end
+      resources :references, only: %i[new create edit update destroy], controller: "job_applications/references"
+      get :review
+      get :confirm_destroy
+      get :confirm_withdraw
+      post :submit
+      post :withdraw
+      resource :feedback, only: %i[create], controller: "job_applications/feedbacks"
+    end
 
-      scope as: :job, path: ":job_id" do
-        resource :job_application, only: %i[new create] do
-          get :new_quick_apply
-          post :quick_apply
-        end
+    scope as: :job, path: ":job_id" do
+      resource :job_application, only: %i[new create] do
+        get :new_quick_apply
+        post :quick_apply
       end
     end
 
@@ -152,12 +150,10 @@ Rails.application.routes.draw do
       resource :end_listing, only: %i[show update], controller: "publishers/vacancies/end_listing"
       resource :extend_deadline, only: %i[show update], controller: "publishers/vacancies/extend_deadline"
 
-      constraints(-> { JobseekerApplicationsFeature.enabled? }) do
-        resources :job_applications, only: %i[index show], controller: "publishers/vacancies/job_applications" do
-          get :shortlist
-          get :reject
-          post :update_status
-        end
+      resources :job_applications, only: %i[index show], controller: "publishers/vacancies/job_applications" do
+        get :shortlist
+        get :reject
+        post :update_status
       end
     end
 

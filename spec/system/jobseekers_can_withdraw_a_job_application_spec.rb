@@ -6,7 +6,6 @@ RSpec.describe "Jobseekers can withdraw a job application" do
   let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
   before do
-    allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true)
     login_as(jobseeker, scope: :jobseeker)
     visit jobseekers_job_application_path(job_application)
     click_on I18n.t("buttons.withdraw_application")

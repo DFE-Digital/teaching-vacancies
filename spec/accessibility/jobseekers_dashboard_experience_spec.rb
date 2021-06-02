@@ -4,10 +4,7 @@ RSpec.describe "Jobseeker dashboardexperience", type: :system, accessibility: tr
   let(:jobseeker) { create(:jobseeker, email: "jobseeker@example.com") }
   let(:jobseeker_applications_enabled?) { false }
 
-  before do
-    allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(jobseeker_applications_enabled?)
-    login_as(jobseeker, scope: :jobseeker)
-  end
+  before { login_as(jobseeker, scope: :jobseeker) }
 
   context "Jobseeker visits their dashboard and views account details" do
     before { visit jobseekers_account_path }
