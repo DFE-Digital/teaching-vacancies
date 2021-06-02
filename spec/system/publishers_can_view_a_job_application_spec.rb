@@ -7,7 +7,6 @@ RSpec.describe "Publishers can view a job application" do
   let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
 
   before do
-    allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true)
     login_publisher(publisher: publisher, organisation: organisation)
   end
 

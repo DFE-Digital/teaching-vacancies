@@ -6,7 +6,6 @@ RSpec.describe "Jobseekers can save a job application" do
   let(:job_application) { create(:job_application, :status_draft, vacancy: vacancy, jobseeker: jobseeker) }
 
   before do
-    allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true)
     login_as(jobseeker, scope: :jobseeker)
   end
 

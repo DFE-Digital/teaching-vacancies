@@ -6,10 +6,7 @@ RSpec.describe "Jobseekers can complete a job application" do
   let(:organisation) { create(:school) }
   let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
 
-  before do
-    allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true)
-    login_as(jobseeker, scope: :jobseeker)
-  end
+  before { login_as(jobseeker, scope: :jobseeker) }
 
   it "allows jobseekers to complete an application and go to review page" do
     visit jobseekers_job_application_build_path(job_application, :personal_details)

@@ -4,7 +4,6 @@ RSpec.describe "Viewing a single vacancy on mobile" do
   let(:school) { create(:school) }
 
   before(:each) do
-    allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true)
     page.driver.header("User-Agent", USER_AGENTS["MOBILE_CHROME"])
   end
 
