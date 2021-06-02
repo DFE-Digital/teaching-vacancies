@@ -6,10 +6,7 @@ RSpec.describe "Jobseekers can delete a draft job application" do
   let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: organisation }]) }
   let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
-  before do
-    allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true)
-    login_as(jobseeker, scope: :jobseeker)
-  end
+  before { login_as(jobseeker, scope: :jobseeker) }
 
   it "allows deleting the draft permanently" do
     visit jobseekers_job_applications_path

@@ -8,7 +8,6 @@ RSpec.describe "Jobseekers can submit a job application" do
   let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: organisation }]) }
 
   before do
-    allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true)
     login_as(jobseeker, scope: :jobseeker)
     visit jobseekers_job_application_review_path(job_application)
   end

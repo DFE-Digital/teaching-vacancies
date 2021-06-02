@@ -5,10 +5,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
   let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
   let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
 
-  before do
-    allow(JobseekerApplicationsFeature).to receive(:enabled?).and_return(true)
-    login_as(jobseeker, scope: :jobseeker)
-  end
+  before { login_as(jobseeker, scope: :jobseeker) }
 
   context "adding a qualification" do
     before do

@@ -11,7 +11,7 @@
       = vacancy_full_job_location(@vacancy)
 
     .govuk-grid-row
-      - if JobseekerApplicationsFeature.enabled? && @vacancy.enable_job_applications? && @vacancy.expires_at.future?
+      - if @vacancy.enable_job_applications? && @vacancy.expires_at.future?
         .govuk-grid-column-one-third
           - if defined?(job_application) && job_application.present?
             - if job_application.draft?
