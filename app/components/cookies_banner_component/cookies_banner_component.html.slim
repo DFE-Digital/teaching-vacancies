@@ -1,0 +1,13 @@
+= tag.div(class: classes, **html_attributes) do
+  = govuk_cookie_banner title: t("cookies_preferences.banner.heading") do |component|
+    - component.body do
+      - t("cookies_preferences.banner.body").each do |body|
+        = tag.p(body, class: "govuk-body")
+    end
+    - component.actions do
+      = govuk_button_to t("cookies_preferences.banner.buttons.accept"), create_path, id: "cookie-consent"
+      = govuk_button_to t("cookies_preferences.banner.buttons.reject"), reject_path
+      = govuk_link_to t("cookies_preferences.banner.buttons.view"), preferences_path
+    end
+  end
+end
