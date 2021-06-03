@@ -1,0 +1,36 @@
+@import 'base_component';
+
+.cookies-banner-component {
+  @include govuk-responsive-padding(3, 'top');
+  @include govuk-responsive-padding(0, 'bottom');
+  background-color: govuk-colour('light-grey');
+  bottom: 0;
+  padding-top: 0;
+  position: sticky;
+  width: 100%;
+  z-index: 1000;
+
+  @include govuk-media-query($until: tablet) {
+    .govuk-button--primary {
+      width: 100%;
+    }
+  }
+
+  &.govuk-cookie-banner {
+    padding-top: 0;
+  }
+
+  .govuk-button-group {
+    align-items: center;
+    margin-bottom: 0;
+  }
+
+  .govuk-heading-s,
+  .govuk-body {
+    color: govuk-colour('black');
+  }
+
+  .govuk-width-container {
+    padding-top: 15px;
+  }
+}
