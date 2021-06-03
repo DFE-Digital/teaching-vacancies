@@ -43,6 +43,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Set environment variables
+      run: |
+        GIT_REF=${{ github.ref }}
+        GIT_BRANCH=${GIT_REF##*/}
+        echo "GIT_BRANCH=$GIT_BRANCH" >> $GITHUB_ENV
+        echo "DOCKER_IMAGE_TAG=$GITHUB_SHA" >> $GITHUB_ENV
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
@@ -60,9 +67,9 @@ jobs:
             BUILDKIT_INLINE_CACHE=1
             COMMIT_SHA=${{ github.sha }}
           cache-from: |
-            ${{ env.DOCKER_REPOSITORY }}:builder-master
+            ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
           push: true
-          tags: ${{ env.DOCKER_REPOSITORY }}:builder-master
+          tags: ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
           target: builder
 
       - name: Build and push docker image from production target
@@ -72,11 +79,11 @@ jobs:
             BUILDKIT_INLINE_CACHE=1
             COMMIT_SHA=${{ github.sha }}
           cache-from: |
-            ${{ env.DOCKER_REPOSITORY }}:builder-master
-            ${{ env.DOCKER_REPOSITORY }}:master
+            ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
+            ${{ env.DOCKER_REPOSITORY }}:${{ env.GIT_BRANCH }}
           push: true
           tags: |
-            ${{ env.DOCKER_REPOSITORY }}:master
+            ${{ env.DOCKER_REPOSITORY }}:${{ env.GIT_BRANCH }}
             ${{ env.DOCKER_REPOSITORY }}:${{ github.sha }}
           target: production
 
