@@ -232,6 +232,13 @@ jobs:
       if: steps.wait_for_smoke_test.outputs.conclusion != 'success'
       run: exit 1
 
+    - name: Post sticky pull request comment
+      if: github.event_name == 'pull_request'
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        message: |
+          Review app deployed to <https://teaching-vacancies-${{ env.ENVIRONMENT }}.london.cloudapps.digital>
+
     - name: Send job status message to twd_tv_dev channel
       if: failure()
       uses: rtCamp/action-slack-notify@v2.1.3
