@@ -30,7 +30,7 @@ jobs:
     name: Build docker image
     outputs:
       build_git_tag: ${{steps.tag_version.outputs.new_tag}}
-      matrix: ${{ steps.set-env-push-master.outputs.environment || steps.set-env-push-non-master.outputs.environment || steps.set-env-pr.outputs.environment }}
+      matrix_environments: ${{ env.MATRIX_ENVIRONMENTS }}
       docker_image_tag: ${{ env.DOCKER_IMAGE_TAG }}
       commit_sha: ${{ env.COMMIT_SHA }}
     runs-on: ubuntu-20.04
@@ -106,26 +106,23 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set matrix environments (Push to master)
-        id: set-env-push-master
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        run: echo "::set-output name=environment::{\"environment\":[\"staging\",\"production\",\"qa\"]}"
+        run: echo "MATRIX_ENVIRONMENTS={\"environment\":[\"staging\",\"production\",\"qa\"]}" >> $GITHUB_ENV
 
       - name: Set matrix environments (Push to non master branch)
-        id: set-env-push-non-master
         if: github.event_name == 'push' && github.ref != 'refs/heads/master'
-        run: echo "::set-output name=environment::{\"environment\":[\"${GIT_BRANCH}\"]}"
+        run: echo "MATRIX_ENVIRONMENTS={\"environment\":[\"${GIT_BRANCH}\"]}" >> $GITHUB_ENV
 
       - name: Set matrix environments (Pull request)
-        id: set-env-pr
         if: github.event_name == 'pull_request'
-        run: echo "::set-output name=environment::{\"environment\":[\"review\"]}"
+        run: echo "MATRIX_ENVIRONMENTS={\"environment\":[\"review\"]}" >> $GITHUB_ENV
 
   deploy:
     name: Deploy app
 
     strategy:
       max-parallel: 1
-      matrix: ${{fromJSON(needs.build.outputs.matrix)}}
+      matrix: ${{fromJSON(needs.build.outputs.matrix_environments)}}
     needs: build
     runs-on: ubuntu-20.04
 
