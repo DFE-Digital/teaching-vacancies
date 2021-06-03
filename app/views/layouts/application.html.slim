@@ -25,8 +25,6 @@ html.govuk-template.app-html-class lang="en"
     = javascript_tag(nonce: true) do
       | document.body.className = ((document.body.className) ? document.body.className + " js-enabled" : "js-enabled");
     = render "shared/skip_links"
-    - unless cookies_preference_set? || %i[bottom_sticky_default bottom_sticky_gds].include?(ab_variant_for(:"2021_05_cookie_consent_test"))
-      = render(AbTest::CookiesBannerComponent.new(create_path: create_cookies_preferences_path(cookies_consent: "yes", **utm_parameters), reject_path: create_cookies_preferences_path(cookies_consent: "no", **utm_parameters), preferences_path: cookies_preferences_path(**utm_parameters)).with_variant(ab_variant_for(:"2021_05_cookie_consent_test")))
 
     = render EnvironmentBannerComponent.new
 
@@ -113,7 +111,7 @@ html.govuk-template.app-html-class lang="en"
             a.govuk-footer__link.govuk-footer__copyright-logo href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/"
               | © Crown copyright
 
-    - unless cookies_preference_set? || %i[top_sticky_default top_sticky_gds top_static_default top_static_gds].include?(ab_variant_for(:"2021_05_cookie_consent_test"))
-      = render(AbTest::CookiesBannerComponent.new(create_path: create_cookies_preferences_path(cookies_consent: "yes", **utm_parameters), reject_path: create_cookies_preferences_path(cookies_consent: "no", **utm_parameters), preferences_path: cookies_preferences_path(**utm_parameters)).with_variant(ab_variant_for(:"2021_05_cookie_consent_test")))
+    - unless cookies_preference_set?
+      = render(CookiesBannerComponent.new(create_path: create_cookies_preferences_path(cookies_consent: "yes", **utm_parameters), reject_path: create_cookies_preferences_path(cookies_consent: "no", **utm_parameters), preferences_path: cookies_preferences_path(**utm_parameters)))
 
     = javascript_pack_tag "application"

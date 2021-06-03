@@ -27,9 +27,13 @@ en:
     banner:
       aria:
         label: Cookies banner
-      body: >-
-        We use cookies to collect information about how you use Teaching Vacancies. This helps us to make our service work
-        as well as possible and helps us to improve it in the future.
+      body:
+        - We use some essential cookies to make this service work.
+        - We’d also like to use analytics cookies so we can understand how you use the service and make improvements.
+      buttons:
+        accept: Accept analytics cookies
+        reject: Reject analytics cookies
+        view: View cookies
       heading: Cookies on Teaching Vacancies
     form:
       legend: Do you want to accept Google Analytics cookies?
