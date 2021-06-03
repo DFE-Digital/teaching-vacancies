@@ -62,6 +62,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
       visit new_publisher_session_path
 
       expect(page).to have_content(organisation.name)
+      expect(page).to have_content(dsi_email_address)
       expect(current_path).to eq(organisation_path)
     end
   end
@@ -128,6 +129,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
       visit new_publisher_session_path
 
       expect(page).to have_content(organisation.name)
+      expect(page).to have_content(dsi_email_address)
       expect(current_path).to eq(organisation_path)
     end
   end
@@ -152,6 +154,8 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
         visit root_path
         sign_in_publisher
 
+        expect(page).to have_content(organisation.name)
+        expect(page).to have_content(dsi_email_address)
         expect(current_path).to eq(organisation_path)
       end
     end
