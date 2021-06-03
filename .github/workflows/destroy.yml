@@ -88,6 +88,12 @@ jobs:
         terraform destroy -var-file ../workspace-variables/review.tfvars -auto-approve
       working-directory: terraform/app
 
+    - name: Post sticky pull request comment
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        message: |
+          Review app <https://teaching-vacancies-${{ env.ENVIRONMENT }}.london.cloudapps.digital> was successfully deleted
+
     - name: Send failure message to twd_tv_dev channel
       if: failure()
       uses: rtCamp/action-slack-notify@v2.1.3

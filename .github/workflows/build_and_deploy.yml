@@ -4,6 +4,7 @@ on:
   push:
     branches:
     - master
+    - dev     # Push to branch other than master deploys directly to environment with the same name. ie 'dev' branch deploys to 'dev' environment
     paths-ignore:
     - 'bigquery/**'
     - 'documentation/**'
@@ -28,8 +29,10 @@ jobs:
   build:
     name: Build docker image
     outputs:
-      build-tag: ${{steps.tag_version.outputs.new_tag}}
-      matrix: ${{ steps.set-env-push.outputs.environment || steps.set-env-pr.outputs.environment }}
+      build_git_tag: ${{steps.tag_version.outputs.new_tag}}
+      matrix_environments: ${{ env.MATRIX_ENVIRONMENTS }}
+      docker_image_tag: ${{ env.DOCKER_IMAGE_TAG }}
+      commit_sha: ${{ env.COMMIT_SHA }}
     runs-on: ubuntu-20.04
 
     steps:
@@ -42,6 +45,25 @@ jobs:
           same-branch-only: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set environment variables (Push)
+        if: github.event_name == 'push'
+        run: |
+          GIT_REF=${{ github.ref }}
+          echo "GIT_BRANCH=${GIT_REF##*/}" >> $GITHUB_ENV
+          echo "COMMIT_SHA=${GITHUB_SHA}" >> $GITHUB_ENV
+
+      - name: Set environment variables (Pull request)
+        if: github.event_name == 'pull_request'
+        run: |
+          # This is the actual PR branch
+          GIT_REF=${{ github.head_ref }}
+          echo "GIT_BRANCH=${GIT_REF##*/}" >> $GITHUB_ENV
+          # This is the latest commit on the actual PR branch
+          echo "COMMIT_SHA=${{ github.event.pull_request.head.sha }}" >> $GITHUB_ENV
+
+      - name: Set DOCKER_IMAGE_TAG environment variable
+        run: echo "DOCKER_IMAGE_TAG=${GIT_BRANCH}-${COMMIT_SHA}" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -58,11 +80,10 @@ jobs:
         with:
           build-args: |
             BUILDKIT_INLINE_CACHE=1
-            COMMIT_SHA=${{ github.sha }}
           cache-from: |
-            ${{ env.DOCKER_REPOSITORY }}:builder-master
+            ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
           push: true
-          tags: ${{ env.DOCKER_REPOSITORY }}:builder-master
+          tags: ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
           target: builder
 
       - name: Build and push docker image from production target
@@ -70,38 +91,43 @@ jobs:
         with:
           build-args: |
             BUILDKIT_INLINE_CACHE=1
-            COMMIT_SHA=${{ github.sha }}
+            COMMIT_SHA=${{ env.COMMIT_SHA }}
           cache-from: |
-            ${{ env.DOCKER_REPOSITORY }}:builder-master
-            ${{ env.DOCKER_REPOSITORY }}:master
+            ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
+            ${{ env.DOCKER_REPOSITORY }}:${{ env.GIT_BRANCH }}
           push: true
           tags: |
-            ${{ env.DOCKER_REPOSITORY }}:master
-            ${{ env.DOCKER_REPOSITORY }}:${{ github.sha }}
+            ${{ env.DOCKER_REPOSITORY }}:${{ env.GIT_BRANCH }}
+            ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }}
           target: production
 
+      # Creates a unique git tag to help synchronising dependent jobs
       - name: Bump version and push tag
         id: tag_version
         uses: mathieudutour/github-tag-action@v5.5
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set matrix environments (Push)
-        id: set-env-push
-        if: github.event_name == 'push'
-        run: echo "::set-output name=environment::{\"environment\":[\"staging\",\"production\",\"qa\"]}"
+      - name: Set matrix environments (Push to master)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        run: echo "MATRIX_ENVIRONMENTS={\"environment\":[\"staging\",\"production\",\"qa\"]}" >> $GITHUB_ENV
+
+      - name: Set matrix environments (Push to non master branch)
+        if: github.event_name == 'push' && github.ref != 'refs/heads/master'
+        run: echo "MATRIX_ENVIRONMENTS={\"environment\":[\"${GIT_BRANCH}\"]}" >> $GITHUB_ENV
 
       - name: Set matrix environments (Pull request)
-        id: set-env-pr
         if: github.event_name == 'pull_request'
-        run: echo "::set-output name=environment::{\"environment\":[\"review\"]}"
+        run: echo "MATRIX_ENVIRONMENTS={\"environment\":[\"review\"]}" >> $GITHUB_ENV
 
   deploy:
     name: Deploy app
 
     strategy:
       max-parallel: 1
-      matrix: ${{fromJSON(needs.build.outputs.matrix)}}
+      # Creates a variable 'environment' from the build job output 'matrix_environments'
+      # Its value is the list of environments. The matrix iterates once per environment and the value is accessed via ${{ matrix.environment }}
+      matrix: ${{fromJSON(needs.build.outputs.matrix_environments)}}
     needs: build
     runs-on: ubuntu-20.04
 
@@ -119,21 +145,24 @@ jobs:
         role-duration-seconds: 3600
         role-skip-session-tagging: true
 
+    - name: Set environment variables from build output
+      run: |
+        echo "COMMIT_SHA=${{ needs.build.outputs.commit_sha }}" >> $GITHUB_ENV
+        echo "DOCKER_IMAGE_TAG=${{ needs.build.outputs.docker_image_tag }}" >> $GITHUB_ENV
+        echo "BUILD_GIT_TAG=${{ needs.build.outputs.build_git_tag}}" >> $GITHUB_ENV
+
     - name: Set environment variables (Push)
       if: github.event_name == 'push'
       run: |
         ENVIRONMENT=${{ matrix.environment }}
         echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
-        echo "TAG=${{ github.sha }}" >> $GITHUB_ENV
         echo "PARAMETER_STORE_ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
 
     - name: Set environment variables (Pull request)
       if: github.event_name == 'pull_request'
       run: |
         ENVIRONMENT=review-pr-${{ github.event.number }}
-        TAG=${ENVIRONMENT}-${{ github.event.pull_request.head.sha }}
         echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
-        echo "TAG=${TAG}" >> $GITHUB_ENV
         echo "PARAMETER_STORE_ENVIRONMENT=dev" >> $GITHUB_ENV
 
     - name: Set up Ruby
@@ -146,6 +175,7 @@ jobs:
         chmod +x bin/fetch_config.rb
         echo "::endgroup::"
 
+    # Validate secrets stored in parameter store to prevent terraform from exposing them in case of an issue
     - name: Validate ${{ env.PARAMETER_STORE_ENVIRONMENT }} secrets
       run: |
         gem install aws-sdk-ssm --no-document
@@ -160,18 +190,18 @@ jobs:
     - name: Trigger Deploy App Workflow for ${{ env.ENVIRONMENT }}
       uses: benc-uk/workflow-dispatch@v1.1
       with:
-        workflow: Deploy App to Environment # Workflow name
+        workflow: Deploy App to Environment # Name of the triggered workflow
         token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
-        ref: ${{ needs.build.outputs.build-tag}}
-        inputs: '{"environment": "${{ env.ENVIRONMENT }}", "tag": "${{ github.sha }}"}'
+        ref: ${{ env.BUILD_GIT_TAG }}
+        inputs: '{"environment": "${{ env.ENVIRONMENT }}", "tag": "${{ env.DOCKER_IMAGE_TAG }}"}'
 
     - name: Wait for Deploy App Workflow for ${{ env.ENVIRONMENT }}
       id: wait_for_deploy_app_staging
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
         token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
-        checkName: Deploy ${{ github.sha }} to ${{ env.ENVIRONMENT }} # Job name within workflow
-        ref: ${{ needs.build.outputs.build-tag}}
+        checkName: Deploy ${{ env.DOCKER_IMAGE_TAG }} to ${{ env.ENVIRONMENT }} # Job name within triggered workflow
+        ref: ${{ env.BUILD_GIT_TAG }}
         timeoutSeconds: 720
         intervalSeconds: 15
 
@@ -182,7 +212,7 @@ jobs:
         SLACK_CHANNEL: twd_tv_dev
         SLACK_USERNAME: CI Deployment
         SLACK_TITLE: Deployment failure
-        SLACK_MESSAGE: 'Deployment of Docker tag ${{ github.sha }} to ${{ env.ENVIRONMENT }} - unsuccessful <!channel>'
+        SLACK_MESSAGE: 'Deployment of Docker image ${{ env.DOCKER_IMAGE_TAG }} to ${{ env.ENVIRONMENT }} - unsuccessful <!channel>'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
     - name: Exit whole workflow if ${{ env.ENVIRONMENT }} deployment was not successful
@@ -194,22 +224,29 @@ jobs:
       with:
         workflow: Smoke Test
         token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
-        inputs: '{"paas_environment": "${{ env.ENVIRONMENT }}", "sha": "${{ github.sha }}"}'
-        ref: ${{ needs.build.outputs.build-tag}}
+        inputs: '{"paas_environment": "${{ env.ENVIRONMENT }}", "sha": "${{ env.COMMIT_SHA }}"}'
+        ref: ${{ env.BUILD_GIT_TAG }}
 
     - name: Wait for smoke test
       id: wait_for_smoke_test
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
         token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
-        checkName: Smoke Test ${{ env.ENVIRONMENT }} ${{ github.sha }}
-        ref: ${{ needs.build.outputs.build-tag}}
+        checkName: Smoke Test ${{ env.ENVIRONMENT }} ${{ env.COMMIT_SHA }}
+        ref: ${{ env.BUILD_GIT_TAG }}
         timeoutSeconds: 300
         intervalSeconds: 15
 
     - name: Exit whole workflow if ${{ env.ENVIRONMENT }} smoke test was not successful
       if: steps.wait_for_smoke_test.outputs.conclusion != 'success'
       run: exit 1
+
+    - name: Post sticky pull request comment
+      if: github.event_name == 'pull_request'
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        message: |
+          Review app deployed to <https://teaching-vacancies-${{ env.ENVIRONMENT }}.london.cloudapps.digital>
 
     - name: Send job status message to twd_tv_dev channel
       if: failure()
@@ -218,11 +255,11 @@ jobs:
         SLACK_CHANNEL: twd_tv_dev
         SLACK_USERNAME: CI Deployment
         SLACK_TITLE: Deployment ${{ job.status }}
-        SLACK_MESSAGE: 'Deployment of Docker tag ${{ github.sha }} to ${{matrix.environment}} - ${{ job.status }}'
+        SLACK_MESSAGE: 'Deployment of Docker image ${{ env.DOCKER_IMAGE_TAG }} to ${{matrix.environment}} - ${{ job.status }}'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
   post_deployment:
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     name: Post deployment steps
     needs: deploy
     runs-on: ubuntu-20.04
