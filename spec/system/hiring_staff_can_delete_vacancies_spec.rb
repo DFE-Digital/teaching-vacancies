@@ -23,7 +23,7 @@ RSpec.describe "School deleting vacancies" do
   end
 
   scenario "Deleting a vacancy triggers deletion of its supporting documents" do
-    expect(vacancy).to receive(:delete_documents)
+    expect(vacancy).to receive(:delete_documents!)
 
     within(".card-component#vacancy_#{vacancy.id}") do
       click_on "Delete"
@@ -44,10 +44,10 @@ RSpec.describe "School deleting vacancies" do
     # Stub vacancy lookup so that the controller uses these tests' vacancy objects
     # to wrap the vacancy, instead of creating its own new vacancy object.
     # We need to use a `vacancy` object created in the test so that we can stub out the method
-    # Vacancy#delete_documents, which otherwise will attempt HTTP connections.
+    # Vacancy#delete_documents!, which otherwise will attempt HTTP connections.
     allow_any_instance_of(Publishers::Vacancies::BaseController).to receive_message_chain(
       :current_organisation, :all_vacancies, :find
     ).and_return(vacancy)
-    allow(vacancy).to receive(:delete_documents).and_return(nil)
+    allow(vacancy).to receive(:delete_documents!).and_return(nil)
   end
 end

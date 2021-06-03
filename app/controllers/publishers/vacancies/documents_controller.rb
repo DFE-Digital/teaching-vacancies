@@ -20,7 +20,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
   before_action :redirect_to_next_step, only: %i[create]
 
   def create
-    process_documents&.each do |document|
+    process_documents!&.each do |document|
       vacancy.documents.create(document)
     end
 
@@ -45,7 +45,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
   private
 
   def step
-    :documents
+    :supporting_documents
   end
 
   def form
@@ -68,30 +68,30 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     end
   end
 
-  def process_documents
+  def process_documents!
     documents_form_params[:documents]&.each_with_object([]) do |document_params, documents_array|
-      document_hash = upload_document(document_params)
+      document_upload = upload_document!(document_params)
+      document_hash = document_attributes(document_params, document_upload)
       next if errors_on_file?(document_params.original_filename)
 
       documents_array << document_hash
     end
   end
 
-  def upload_document(document_params)
-    add_file_type_error(document_params.original_filename) unless valid_content_type?(document_params.tempfile)
-    add_file_size_error(document_params.original_filename) if document_params.size > FILE_SIZE_LIMIT
-
-    document_upload = DocumentUpload.new(
-      upload_path: document_params.tempfile.path,
-      name: document_params.original_filename,
-    )
+  def upload_document!(document_params)
+    add_pre_upload_file_errors(document_params)
 
     if errors_on_file?(document_params.original_filename)
       Rails.logger.info("Failed to upload #{document_params.original_filename}: #{form.errors.full_messages.join(', ')}")
       return
     end
 
-    document_upload.upload
+    document_upload = DocumentUpload.new(
+      upload_path: document_params.tempfile.path,
+      name: document_params.original_filename,
+    )
+
+    document_upload.upload!
 
     add_google_error(document_params.original_filename) if document_upload.google_error
     add_virus_error(document_params.original_filename) unless document_upload.safe_download
@@ -100,7 +100,12 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
 
     vacancy.supporting_documents.attach(document_params)
 
-    document_attributes(document_params, document_upload)
+    document_upload
+  end
+
+  def add_pre_upload_file_errors(document_params)
+    add_file_type_error(document_params.original_filename) unless valid_content_type?(document_params.tempfile)
+    add_file_size_error(document_params.original_filename) if document_params.size > FILE_SIZE_LIMIT
   end
 
   def add_file_type_error(filename)
@@ -108,10 +113,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
   end
 
   def add_file_size_error(filename)
-    form.errors.add(
-      :documents,
-      t("jobs.file_size_error_message", filename: filename, size_limit: helpers.number_to_human_size(FILE_SIZE_LIMIT)),
-    )
+    form.errors.add(:documents, t("jobs.file_size_error_message", filename: filename, size_limit: helpers.number_to_human_size(FILE_SIZE_LIMIT)))
   end
 
   def add_google_error(filename)
