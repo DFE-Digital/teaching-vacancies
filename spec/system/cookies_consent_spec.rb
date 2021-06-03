@@ -16,7 +16,7 @@ RSpec.describe "Cookies consent" do
     scenario "can accept all cookies" do
       visit root_path_with_utm_parameters
 
-      click_on I18n.t("buttons.accept_all_cookies")
+      click_on I18n.t("cookies_preferences.banner.buttons.accept")
 
       expect(page).to have_current_path(root_path_with_utm_parameters)
       expect(page).to_not have_content(I18n.t("cookies_preferences.banner.heading"))
@@ -28,7 +28,7 @@ RSpec.describe "Cookies consent" do
     describe "setting your preferences" do
       before do
         visit jobs_path_with_utm_parameters
-        click_on I18n.t("buttons.set_preferences")
+        click_on I18n.t("cookies_preferences.banner.buttons.view")
       end
 
       scenario "can consent to cookies" do
@@ -65,7 +65,7 @@ RSpec.describe "Cookies consent" do
   scenario "can accept all cookies" do
     visit root_path
 
-    click_on I18n.t("buttons.accept_all_cookies")
+    click_on I18n.t("cookies_preferences.banner.buttons.accept")
 
     expect(page).to have_current_path(root_path)
     expect(page).to_not have_content(I18n.t("cookies_preferences.banner.heading"))
@@ -77,7 +77,7 @@ RSpec.describe "Cookies consent" do
   describe "setting your preferences" do
     before do
       visit jobs_path
-      click_on I18n.t("buttons.set_preferences")
+      click_on I18n.t("cookies_preferences.banner.buttons.view")
     end
 
     scenario "can consent to cookies" do
@@ -126,7 +126,7 @@ RSpec.describe "Cookies consent" do
     scenario "must re-set cookies_preferences" do
       visit root_path
 
-      click_on I18n.t("buttons.accept_all_cookies")
+      click_on I18n.t("cookies_preferences.banner.buttons.accept")
 
       expect(page).to have_current_path(root_path)
       expect(page).to_not have_content(I18n.t("cookies_preferences.banner.heading"))
