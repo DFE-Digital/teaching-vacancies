@@ -28,13 +28,6 @@ shared:
     foo: 1
     bar: 1
     baz: 1
-  2021_05_cookie_consent_test:
-    bottom_sticky_default: 1
-    bottom_sticky_gds: 1
-    top_static_default: 1
-    top_static_gds: 1
-    top_sticky_default: 1
-    top_sticky_gds: 1
   2021_05_wider_search_suggestions:
     with: 1
     without: 1
@@ -43,13 +36,6 @@ shared:
     right_blue: 1
     right_grey: 1
 test:
-  2021_05_cookie_consent_test:
-    bottom_sticky_default: 0
-    bottom_sticky_gds: 0
-    top_static_default: 1
-    top_static_gds: 0
-    top_sticky_default: 0
-    top_sticky_gds: 0
   2021_04_cookie_consent_test:
     none: 0
     default: 1
