@@ -5,7 +5,7 @@
         = tag.p(body, class: "govuk-body")
     end
     - component.actions do
-      = govuk_button_to t("cookies_preferences.banner.buttons.accept"), create_path
+      = govuk_button_to t("cookies_preferences.banner.buttons.accept"), create_path, id: "cookie-consent"
       = govuk_button_to t("cookies_preferences.banner.buttons.reject"), reject_path
       = govuk_link_to t("cookies_preferences.banner.buttons.view"), preferences_path
     end
