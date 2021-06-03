@@ -4,6 +4,7 @@ on:
   push:
     branches:
     - master
+    - dev     # Push to branch other than master deploys directly to environment with the same name. ie 'dev' branch deploys to 'dev' environment
     paths-ignore:
     - 'bigquery/**'
     - 'documentation/**'
@@ -29,7 +30,7 @@ jobs:
     name: Build docker image
     outputs:
       build_git_tag: ${{steps.tag_version.outputs.new_tag}}
-      matrix: ${{ steps.set-env-push.outputs.environment || steps.set-env-pr.outputs.environment }}
+      matrix_environments: ${{ env.MATRIX_ENVIRONMENTS }}
       docker_image_tag: ${{ env.DOCKER_IMAGE_TAG }}
       commit_sha: ${{ env.COMMIT_SHA }}
     runs-on: ubuntu-20.04
@@ -55,8 +56,10 @@ jobs:
       - name: Set environment variables (Pull request)
         if: github.event_name == 'pull_request'
         run: |
+          # This is the actual PR branch
           GIT_REF=${{ github.head_ref }}
           echo "GIT_BRANCH=${GIT_REF##*/}" >> $GITHUB_ENV
+          # This is the latest commit on the actual PR branch
           echo "COMMIT_SHA=${{ github.event.pull_request.head.sha }}" >> $GITHUB_ENV
 
       - name: Set DOCKER_IMAGE_TAG environment variable
@@ -98,28 +101,33 @@ jobs:
             ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }}
           target: production
 
+      # Creates a unique git tag to help synchronising dependent jobs
       - name: Bump version and push tag
         id: tag_version
         uses: mathieudutour/github-tag-action@v5.5
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set matrix environments (Push)
-        id: set-env-push
-        if: github.event_name == 'push'
-        run: echo "::set-output name=environment::{\"environment\":[\"staging\",\"production\",\"qa\"]}"
+      - name: Set matrix environments (Push to master)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        run: echo "MATRIX_ENVIRONMENTS={\"environment\":[\"staging\",\"production\",\"qa\"]}" >> $GITHUB_ENV
+
+      - name: Set matrix environments (Push to non master branch)
+        if: github.event_name == 'push' && github.ref != 'refs/heads/master'
+        run: echo "MATRIX_ENVIRONMENTS={\"environment\":[\"${GIT_BRANCH}\"]}" >> $GITHUB_ENV
 
       - name: Set matrix environments (Pull request)
-        id: set-env-pr
         if: github.event_name == 'pull_request'
-        run: echo "::set-output name=environment::{\"environment\":[\"review\"]}"
+        run: echo "MATRIX_ENVIRONMENTS={\"environment\":[\"review\"]}" >> $GITHUB_ENV
 
   deploy:
     name: Deploy app
 
     strategy:
       max-parallel: 1
-      matrix: ${{fromJSON(needs.build.outputs.matrix)}}
+      # Creates a variable 'environment' from the build job output 'matrix_environments'
+      # Its value is the list of environments. The matrix iterates once per environment and the value is accessed via ${{ matrix.environment }}
+      matrix: ${{fromJSON(needs.build.outputs.matrix_environments)}}
     needs: build
     runs-on: ubuntu-20.04
 
@@ -167,6 +175,7 @@ jobs:
         chmod +x bin/fetch_config.rb
         echo "::endgroup::"
 
+    # Validate secrets stored in parameter store to prevent terraform from exposing them in case of an issue
     - name: Validate ${{ env.PARAMETER_STORE_ENVIRONMENT }} secrets
       run: |
         gem install aws-sdk-ssm --no-document
@@ -181,7 +190,7 @@ jobs:
     - name: Trigger Deploy App Workflow for ${{ env.ENVIRONMENT }}
       uses: benc-uk/workflow-dispatch@v1.1
       with:
-        workflow: Deploy App to Environment # Workflow name
+        workflow: Deploy App to Environment # Name of the triggered workflow
         token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
         ref: ${{ env.BUILD_GIT_TAG }}
         inputs: '{"environment": "${{ env.ENVIRONMENT }}", "tag": "${{ env.DOCKER_IMAGE_TAG }}"}'
@@ -191,7 +200,7 @@ jobs:
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
         token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
-        checkName: Deploy ${{ env.DOCKER_IMAGE_TAG }} to ${{ env.ENVIRONMENT }} # Job name within workflow
+        checkName: Deploy ${{ env.DOCKER_IMAGE_TAG }} to ${{ env.ENVIRONMENT }} # Job name within triggered workflow
         ref: ${{ env.BUILD_GIT_TAG }}
         timeoutSeconds: 720
         intervalSeconds: 15
@@ -250,7 +259,7 @@ jobs:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
   post_deployment:
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     name: Post deployment steps
     needs: deploy
     runs-on: ubuntu-20.04
