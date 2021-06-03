@@ -60,6 +60,9 @@ class Publishers::OmniauthCallbacksController < Devise::OmniauthCallbacksControl
 
   def sign_in_publisher(organisation)
     publisher = Publisher.find_or_create_by(oid: user_id)
+    publisher.update(email: auth_hash["info"]["email"],
+                     given_name: auth_hash["info"]["first_name"],
+                     family_name: auth_hash["info"]["last_name"])
     OrganisationPublisher.find_or_create_by(organisation_id: organisation.id, publisher_id: publisher.id)
 
     sign_in(publisher)
