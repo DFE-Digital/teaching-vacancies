@@ -76,18 +76,11 @@ Rails.application.routes.draw do
   scope :publishers do
     devise_scope :publisher do
       get "sign_in", to: "publishers/sessions#new", as: :new_publisher_session
+      get "auth", to: "publishers/sessions#create", as: :create_publisher_session
       delete "sign_out", to: "publishers/sessions#destroy", as: :destroy_publisher_session
     end
 
-    # Authentication fallback with emailed magic link
-    get "auth/email/sessions/new", to: "publishers/sign_in/email/sessions#new",
-                                   as: "new_auth_email"
-    post "auth/email/sessions/check-your-email", to: "publishers/sign_in/email/sessions#check_your_email",
-                                                 as: "auth_email_check_your_email"
-    get "auth/email/sessions/choose-organisation", to: "publishers/sign_in/email/sessions#choose_organisation",
-                                                   as: "auth_email_choose_organisation"
-    get "auth/email/sessions/sign-in", to: "publishers/sign_in/email/sessions#create",
-                                       as: "auth_email_create_session"
+    resources :login_keys, only: %i[show new create], controller: "publishers/login_keys"
 
     resources :publisher_preferences, only: %i[new create edit update], controller: "publishers/publisher_preferences"
   end
