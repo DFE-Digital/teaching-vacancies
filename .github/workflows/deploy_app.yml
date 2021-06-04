@@ -81,6 +81,7 @@ jobs:
         chmod +x bin/fetch_config.rb
         echo "::endgroup::"
 
+    # Validate secrets stored in parameter store to prevent terraform from exposing them in case of an issue
     - name: Validate secrets
       shell: bash
       run: |
