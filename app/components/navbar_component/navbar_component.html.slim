@@ -29,6 +29,6 @@ nav.navbar-component role="navigation"
           = link_to t("buttons.sign_in"), new_jobseeker_session_path, class: "govuk-header__link"
         li.navbar-component__navigation-item--right class=active_link_class(new_publisher_session_path)
           - if AuthenticationFallback.enabled?
-            = link_to t("nav.for_schools"), new_auth_email_path, class: "govuk-header__link"
+            = link_to t("nav.for_schools"), new_login_key_path, class: "govuk-header__link"
           - else
             = link_to t("nav.for_schools"), new_publisher_session_path, class: "govuk-header__link"
