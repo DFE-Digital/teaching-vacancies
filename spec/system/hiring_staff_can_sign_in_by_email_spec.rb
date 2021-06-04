@@ -28,14 +28,14 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
 
     let(:login_key) do
       publisher.emergency_login_keys.create(
-        not_valid_after: Time.current + Publishers::SignIn::Email::SessionsController::EMERGENCY_LOGIN_KEY_DURATION,
+        not_valid_after: Time.current + Publishers::LoginKeysController::EMERGENCY_LOGIN_KEY_DURATION,
       )
     end
 
     let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
 
     before do
-      allow_any_instance_of(Publishers::SignIn::Email::SessionsController)
+      allow_any_instance_of(Publishers::LoginKeysController)
         .to receive(:generate_login_key)
         .with(publisher: publisher)
         .and_return(login_key)
@@ -58,7 +58,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
 
       let(:other_login_key) do
         publisher.emergency_login_keys.create(
-          not_valid_after: Time.current + Publishers::SignIn::Email::SessionsController::EMERGENCY_LOGIN_KEY_DURATION,
+          not_valid_after: Time.current + Publishers::LoginKeysController::EMERGENCY_LOGIN_KEY_DURATION,
         )
       end
 
@@ -75,7 +75,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
           expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
           # Expect that the link in the email goes to the landing page
-          visit auth_email_choose_organisation_path(login_key: login_key.id)
+          visit login_key_path(login_key)
 
           expect(page).to have_content("Choose your organisation")
           expect(page).not_to have_content(I18n.t("publishers.temp_login.choose_organisation.denial.title"))
@@ -98,19 +98,19 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
           expect(page).to have_content(I18n.t("devise.sessions.signed_out"))
 
           # Login link no longer works
-          visit auth_email_choose_organisation_path(login_key: login_key.id)
+          visit login_key_path(login_key)
           expect(page).to have_content("used")
           expect(page).not_to have_content("Choose your organisation")
         end
       end
 
       it "cannot sign in if key has expired" do
-        visit new_auth_email_path
+        visit new_login_key_path
         fill_in "publisher[email]", with: publisher.email
         expect(message_delivery).to receive(:deliver_later)
         click_on "commit"
         travel 5.hours do
-          visit auth_email_choose_organisation_path(login_key: login_key.id)
+          visit login_key_path(login_key)
           expect(page).to have_content("expired")
           expect(page).not_to have_content("Choose your organisation")
         end
@@ -134,7 +134,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
             expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
             # Expect that the link in the email goes to the landing page
-            expect { visit auth_email_choose_organisation_path(login_key: login_key.id) }
+            expect { visit login_key_path(login_key) }
               .to have_triggered_event(:publisher_sign_in_attempt)
               .with_base_data(user_anonymised_publisher_id: anonymised_form_of(publisher.oid))
               .and_data(success: "true", sign_in_type: "email")
@@ -164,7 +164,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
             expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
             # Expect that the link in the email goes to the landing page
-            expect { visit auth_email_choose_organisation_path(login_key: login_key.id) }
+            expect { visit login_key_path(login_key) }
               .to have_triggered_event(:publisher_sign_in_attempt)
               .with_base_data(user_anonymised_publisher_id: anonymised_form_of(publisher.oid))
               .and_data(success: "true", sign_in_type: "email")
@@ -197,7 +197,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
             expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
             # Expect that the link in the email goes to the landing page
-            expect { visit auth_email_choose_organisation_path(login_key: login_key.id) }
+            expect { visit login_key_path(login_key) }
               .to have_triggered_event(:publisher_sign_in_attempt)
               .with_base_data(user_anonymised_publisher_id: anonymised_form_of(publisher.oid))
               .and_data(success: "true", sign_in_type: "email")
