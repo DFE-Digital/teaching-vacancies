@@ -13,7 +13,7 @@ module NotifyViewHelper
   end
 
   def choose_organisation_link(token)
-    url = auth_email_choose_organisation_url(login_key: token, **utm_params)
+    url = login_key_url(token, **utm_params)
     notify_link(url)
   end
 

@@ -1,32 +1,16 @@
-class Publishers::SignIn::Email::SessionsController < ApplicationController
+class Publishers::LoginKeysController < ApplicationController
   EMERGENCY_LOGIN_KEY_DURATION = 10.minutes
 
-  before_action :redirect_signed_in_publishers, only: %i[new create check_your_email choose_organisation]
-  before_action :redirect_for_dsi_authentication, only: %i[new create check_your_email choose_organisation]
+  before_action :redirect_signed_in_publishers, only: %i[new create show]
+  before_action :redirect_for_dsi_authentication, only: %i[new create show]
 
   def create
-    publisher = Publisher.find(session[:publisher_id])
-    organisation = publisher.organisations.find(params[:organisation_id])
-
-    if publisher.organisations.include?(organisation)
-      sign_in(publisher)
-      sign_out(:jobseeker)
-      session.update(publisher_organisation_id: organisation.id)
-      trigger_publisher_sign_in_event(:success, :email)
-      redirect_to organisation_path
-    else
-      trigger_publisher_sign_in_event(:failure, :email, publisher.oid)
-      redirect_to new_auth_email_path, notice: t(".not_authorised")
-    end
-  end
-
-  def check_your_email
     publisher = Publisher.find_by(email: params.dig(:publisher, :email).downcase.strip)
     send_login_key(publisher: publisher) if publisher
   end
 
-  def choose_organisation
-    login_key = EmergencyLoginKey.find_by(id: params[:login_key])
+  def show
+    login_key = EmergencyLoginKey.find_by(id: params[:id])
     return @reason_for_failing_sign_in = "no_key" unless login_key
     return @reason_for_failing_sign_in = "expired" if login_key.expired?
 
@@ -34,6 +18,7 @@ class Publishers::SignIn::Email::SessionsController < ApplicationController
     login_key.destroy
     session.update(publisher_id: @publisher.id)
 
+    binding.pry
     return @reason_for_failing_sign_in = "no_orgs" if @publisher.organisations.none?
     return if @publisher.organisations.many?
 
