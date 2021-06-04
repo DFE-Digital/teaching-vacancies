@@ -20,7 +20,7 @@ RSpec.describe Publishers::AuthenticationFallbackMailer do
       expect(mail.subject.downcase).to include("sign in to teaching vacancies")
       expect(body).to include("sign in to teaching vacancies")
                   .and include("click the link")
-                  .and include("/auth/email/sessions/choose-organisation?login_key=#{login_key.id}")
+                  .and include("/login_keys/#{login_key.id}")
     end
 
     it "triggers a `publisher_sign_in_fallback` email event" do
