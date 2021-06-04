@@ -9,22 +9,8 @@ env:
   DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
 
 jobs:
-  turnstyle:
-    runs-on: ubuntu-20.04
-    timeout-minutes: 20
-    steps:
-    - uses: DFE-Digital/github-actions/turnstyle@master
-      name: Check workflow concurrency
-      with:
-        initial-wait-seconds: 12
-        poll-interval-seconds: 20
-        same-branch-only: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  deploy:
-    name: Destroy review app
-    needs: turnstyle
+  delete-review-app:
+    name: Delete review app after deploy
     runs-on: ubuntu-20.04
 
     steps:
@@ -34,7 +20,6 @@ jobs:
         echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
 
     - name: Wait for this review app deploy_app job to finish
-      id: wait_for_deploy_app
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
        token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
