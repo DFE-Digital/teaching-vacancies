@@ -1,4 +1,4 @@
-name: Destroy
+name: Delete review app
 
 on:
   pull_request:
@@ -9,39 +9,23 @@ env:
   DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
 
 jobs:
-  turnstyle:
-    runs-on: ubuntu-20.04
-    timeout-minutes: 20
-    steps:
-    - uses: DFE-Digital/github-actions/turnstyle@master
-      name: Check workflow concurrency
-      with:
-        initial-wait-seconds: 12
-        poll-interval-seconds: 20
-        same-branch-only: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  deploy:
-    name: Destroy review app
+  delete-review-app:
+    name: Delete review app after deploy
     needs: turnstyle
     runs-on: ubuntu-20.04
 
     steps:
-    - name: set environment variable
+    - name: Set environment variables
       run: |
         ENVIRONMENT=review-pr-${{ github.event.number }}
-        TAG=${ENVIRONMENT}-${{ github.event.pull_request.head.sha }}
         echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
-        echo "TAG=${TAG}" >> $GITHUB_ENV
 
-    - name: Wait for Deploy App Workflow for review
-      id: wait_for_deploy_app
+    - name: Wait for this review app deploy_app job to finish
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
        token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
-       checkName: Create review app ${{ github.event.pull_request.head.sha}}
-       ref: ${{ github.event.pull_request.head.sha }}
+       checkName: Deploy app (review)                   # Matrix job name within deploy_app workflow
+       ref: ${{ github.event.pull_request.head.sha }}   # The deploy_app job is linked to the PR branch HEAD SHA
        timeoutSeconds: 1800
        intervalSeconds: 15
 
