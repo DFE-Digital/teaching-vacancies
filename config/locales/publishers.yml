@@ -12,6 +12,8 @@ en:
       failure:
         message: Your session has expired so you have been logged out. Please sign in again to your account below.
     sessions:
+      create:
+        not_authorised: You are not authorised to log in
       new:
         assistance:
           content_html: "%{link} to your account to search for and save jobs"
@@ -83,13 +85,6 @@ en:
         at_multiple_schools: More than one school
         at_multiple_schools_with_count: More than one school (%{count})
         central_office: Trust head office
-    sign_in:
-      email:
-        sessions:
-          create:
-            not_authorised: You are not authorised to log in
-          new:
-            request_account_html: *request_account_html
     publisher_preferences:
       new:
         description_1: >-
