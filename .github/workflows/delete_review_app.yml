@@ -1,4 +1,4 @@
-name: Destroy
+name: Delete review app
 
 on:
   pull_request:
@@ -28,20 +28,18 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-    - name: set environment variable
+    - name: Set environment variables
       run: |
         ENVIRONMENT=review-pr-${{ github.event.number }}
-        TAG=${ENVIRONMENT}-${{ github.event.pull_request.head.sha }}
         echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
-        echo "TAG=${TAG}" >> $GITHUB_ENV
 
-    - name: Wait for Deploy App Workflow for review
+    - name: Wait for this review app deploy_app workflow to finish
       id: wait_for_deploy_app
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
        token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
-       checkName: Create review app ${{ github.event.pull_request.head.sha}}
-       ref: ${{ github.event.pull_request.head.sha }}
+       checkName: Deploy app to ${{ env.ENVIRONMENT }} (review)                   # Matrix job name within deploy_app workflow
+       ref: ${{ github.event.pull_request.head.sha }}   # The deploy_app job is linked to the PR branch HEAD SHA
        timeoutSeconds: 1800
        intervalSeconds: 15
 
@@ -83,7 +81,6 @@ jobs:
 
     - name: Terraform destroy (on PR closed)
       run: |
-        export TF_VAR_environment=${{env.ENVIRONMENT}}
         terraform init -reconfigure -input=false -backend-config="key=review/review-pr-${{ github.event.number }}.tfstate"
         terraform destroy -var-file ../workspace-variables/review.tfvars -auto-approve
       working-directory: terraform/app
