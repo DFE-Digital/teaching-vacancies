@@ -121,7 +121,7 @@ jobs:
         run: echo "MATRIX_ENVIRONMENTS={\"environment\":[\"review\"]}" >> $GITHUB_ENV
 
   deploy:
-    name: Deploy app to ${{ matrix.environment }}
+    name: Deploy app
 
     strategy:
       max-parallel: 1

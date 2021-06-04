@@ -38,7 +38,7 @@ jobs:
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
        token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
-       checkName: Deploy app to ${{ env.ENVIRONMENT }} (review)                   # Matrix job name within deploy_app workflow
+       checkName: Deploy app (review)                   # Matrix job name within deploy_app workflow
        ref: ${{ github.event.pull_request.head.sha }}   # The deploy_app job is linked to the PR branch HEAD SHA
        timeoutSeconds: 1800
        intervalSeconds: 15
