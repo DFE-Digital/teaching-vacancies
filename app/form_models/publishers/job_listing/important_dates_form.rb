@@ -2,14 +2,12 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Vacan
   include ActiveRecord::AttributeAssignment
   include DateAttributeAssignment
 
-  EXPIRY_TIME_OPTIONS = %w[9:00 12:00 17:00 23:59].freeze
-
   attr_accessor :expiry_time, :starts_asap
   attr_reader :expires_at, :publish_on, :starts_on
 
   validates :publish_on, date: { on_or_after: :today }, unless: :disable_editing_publish_on?
   validates :expires_at, date: { on_or_after: :now, after: :publish_on }
-  validates :expiry_time, inclusion: { in: EXPIRY_TIME_OPTIONS }
+  validates :expiry_time, inclusion: { in: Vacancy::EXPIRY_TIME_OPTIONS }
   validates :starts_on, date: { on_or_after: :today, after: :expires_at }, allow_blank: true,
                         if: proc { starts_asap == "0" }
   validate :starts_on_and_starts_asap_not_present

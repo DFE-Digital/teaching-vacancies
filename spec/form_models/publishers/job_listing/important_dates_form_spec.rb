@@ -32,7 +32,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
     end
   end
 
-  it { is_expected.to validate_inclusion_of(:expiry_time).in_array(%w[9:00 12:00 17:00 23:59]) }
+  it { is_expected.to validate_inclusion_of(:expiry_time).in_array(Vacancy::EXPIRY_TIME_OPTIONS) }
 
   describe "publish_on" do
     context "when date is blank" do

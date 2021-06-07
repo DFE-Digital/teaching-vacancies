@@ -575,22 +575,46 @@ en:
           unknown: I don't know
       publishers_job_listing_copy_vacancy_form:
         expiry_time:
-          "9:00": Start of the working day (9 am)
-          "12:00": Midday (12 pm)
-          "17:00": End of the working day (5 pm)
-          "23:59": End of the deadline day (11:59 pm)
+          "7:00": 7am
+          "8:00": 8am
+          "9:00": 9am
+          "10:00": 10am
+          "11:00": 11am
+          "12:00": Midday
+          "13:00": 1pm
+          "14:00": 2pm
+          "15:00": 3pm
+          "16:00": 4pm
+          "17:00": 5pm
+          "23:59": 11:59pm
       publishers_job_listing_extend_deadline_form:
         expiry_time:
-          "9:00": Start of the working day (9 am)
-          "12:00": Midday (12 pm)
-          "17:00": End of the working day (5 pm)
-          "23:59": End of the deadline day (11:59 pm)
+          "7:00": 7am
+          "8:00": 8am
+          "9:00": 9am
+          "10:00": 10am
+          "11:00": 11am
+          "12:00": Midday
+          "13:00": 1pm
+          "14:00": 2pm
+          "15:00": 3pm
+          "16:00": 4pm
+          "17:00": 5pm
+          "23:59": 11:59pm
       publishers_job_listing_important_dates_form:
         expiry_time:
-          "9:00": Start of the working day (9 am)
-          "12:00": Midday (12 pm)
-          "17:00": End of the working day (5 pm)
-          "23:59": End of the deadline day (11:59 pm)
+          "7:00": 7am
+          "8:00": 8am
+          "9:00": 9am
+          "10:00": 10am
+          "11:00": 11am
+          "12:00": Midday
+          "13:00": 1pm
+          "14:00": 2pm
+          "15:00": 3pm
+          "16:00": 4pm
+          "17:00": 5pm
+          "23:59": 11:59pm
       publishers_job_listing_job_location_form:
         job_location:
           local_authority:
