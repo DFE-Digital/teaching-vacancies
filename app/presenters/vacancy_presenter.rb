@@ -68,20 +68,6 @@ class VacancyPresenter < BasePresenter
     model_working_patterns.compact.map(&:upcase).join(", ")
   end
 
-  def to_row
-    {
-      id: id,
-      slug: slug,
-      created_at: created_at.to_s,
-      status: status,
-      publish_on: publish_on,
-      expires_at: expires_at,
-      starts_on: starts_on,
-      school_urn: organisation.urn,
-      school_county: organisation.county,
-    }
-  end
-
   def show_job_roles
     return unless model.job_roles
 

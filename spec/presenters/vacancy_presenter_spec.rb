@@ -129,23 +129,4 @@ RSpec.describe VacancyPresenter do
       end
     end
   end
-
-  describe "#to_row" do
-    let!(:vacancy) { create(:vacancy) }
-    let!(:school) { create(:school) }
-    let!(:organisation_vacancy) { vacancy.organisation_vacancies.create(organisation: school) }
-    let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
-
-    before do
-      allow(vacancy_presenter).to receive(:id).and_return("123a-456b-789c")
-      allow(vacancy_presenter).to receive(:slug).and_return("my-new-vacancy")
-    end
-
-    it "creates a CSV row representation of the vacancy" do
-      expect(vacancy_presenter.to_row).to be_a(Hash)
-      expect(vacancy_presenter.to_row[:id]).to eq("123a-456b-789c")
-      expect(vacancy_presenter.to_row[:slug]).to eq("my-new-vacancy")
-      expect(vacancy_presenter.to_row[:status]).to eq("published")
-    end
-  end
 end
