@@ -22,7 +22,7 @@ RSpec.describe Search::VacancySearch do
   let!(:location_polygon) { create(:location_polygon, name: "london") }
 
   describe "pagination helpers" do
-    let(:per_page) { 10 }
+    let(:per_page) { 20 }
     let(:page) { 3 }
 
     before do
@@ -32,8 +32,8 @@ RSpec.describe Search::VacancySearch do
     it "returns the expected bounds" do
       expect(subject).not_to be_out_of_bounds
 
-      expect(subject.page_from).to eq(21)
-      expect(subject.page_to).to eq(30)
+      expect(subject.page_from).to eq(41)
+      expect(subject.page_to).to eq(50)
     end
 
     context "when out of bounds" do
@@ -44,7 +44,7 @@ RSpec.describe Search::VacancySearch do
       it "returns the expected bounds" do
         expect(subject).to be_out_of_bounds
 
-        expect(subject.page_from).to eq(21)
+        expect(subject.page_from).to eq(41)
         expect(subject.page_to).to eq(20)
       end
     end
@@ -102,7 +102,7 @@ RSpec.describe Search::VacancySearch do
             keyword: keyword,
             polygons: location_polygon.polygons["polygons"],
             filters: filter_query,
-            per_page: 10,
+            per_page: 20,
             page: page,
             typo_tolerance: true,
           }
@@ -125,7 +125,7 @@ RSpec.describe Search::VacancySearch do
             coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
             radius: convert_miles_to_metres(radius),
             filters: filter_query,
-            per_page: 10,
+            per_page: 20,
             page: page,
             typo_tolerance: true,
           }
@@ -145,7 +145,7 @@ RSpec.describe Search::VacancySearch do
       let(:jobs_sort) { Search::VacancySearchSort::PUBLISH_ON_DESC }
 
       it "calls `Search::Strategies::Database` with the correct parameters" do
-        expect(Search::Strategies::Database).to receive(:new).with(1, 10, an_instance_of(Search::VacancySearchSort)).and_call_original
+        expect(Search::Strategies::Database).to receive(:new).with(1, 20, an_instance_of(Search::VacancySearchSort)).and_call_original
         subject.vacancies
       end
     end
@@ -162,7 +162,7 @@ RSpec.describe Search::VacancySearch do
           {
             insidePolygon: location_polygon.polygons["polygons"],
             filters: filter_query,
-            hitsPerPage: 10,
+            hitsPerPage: 20,
             page: page,
             typoTolerance: true,
           }
@@ -185,7 +185,7 @@ RSpec.describe Search::VacancySearch do
             keyword: keyword,
             polygons: location_polygon.polygons["polygons"],
             filters: filter_query,
-            per_page: 10,
+            per_page: 20,
             page: page,
             typo_tolerance: true,
           }
@@ -207,7 +207,7 @@ RSpec.describe Search::VacancySearch do
           coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
           radius: convert_miles_to_metres(radius),
           filters: filter_query,
-          per_page: 10,
+          per_page: 20,
           page: page,
           typo_tolerance: true,
         }
@@ -221,7 +221,7 @@ RSpec.describe Search::VacancySearch do
             aroundLatLng: Geocoder::DEFAULT_STUB_COORDINATES,
             aroundRadius: convert_miles_to_metres(radius),
             filters: filter_query,
-            hitsPerPage: 10,
+            hitsPerPage: 20,
             page: page,
             typoTolerance: true,
           }
