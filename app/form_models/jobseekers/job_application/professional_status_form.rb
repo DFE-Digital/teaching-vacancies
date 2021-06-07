@@ -7,6 +7,5 @@ class Jobseekers::JobApplication::ProfessionalStatusForm
   validates :qualified_teacher_status, inclusion: { in: %w[yes no on_track] }
   validates :qualified_teacher_status_year, numericality: { less_than_or_equal_to: proc { Time.current.year } },
                                             if: -> { qualified_teacher_status == "yes" }
-  validates :qualified_teacher_status_details, presence: true, if: -> { qualified_teacher_status == "no" }
   validates :statutory_induction_complete, inclusion: { in: %w[yes no] }
 end
