@@ -1,5 +1,5 @@
 class Search::VacancySearch
-  DEFAULT_HITS_PER_PAGE = 10
+  DEFAULT_HITS_PER_PAGE = 20
   DEFAULT_PAGE = 1
 
   extend Forwardable
