@@ -21,7 +21,7 @@ RSpec.describe "Publishers can extend a deadline" do
     fill_in "publishers_job_listing_extend_deadline_form[expires_at(1i)]", with: expires_at.year
     fill_in "publishers_job_listing_extend_deadline_form[expires_at(2i)]", with: expires_at.month
     fill_in "publishers_job_listing_extend_deadline_form[expires_at(3i)]", with: expires_at.day
-    choose "Start of the working day (9 am)", name: "publishers_job_listing_extend_deadline_form[expiry_time]"
+    choose "9am", name: "publishers_job_listing_extend_deadline_form[expiry_time]"
 
     click_on I18n.t("buttons.extend_deadline")
 

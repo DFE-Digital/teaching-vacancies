@@ -27,7 +27,7 @@
         = f.govuk_date_field :expires_at
 
         = f.govuk_collection_radio_buttons :expiry_time,
-          form.class::EXPIRY_TIME_OPTIONS,
+          Vacancy::EXPIRY_TIME_OPTIONS,
           ->(option) { option },
           ->(option) { t("helpers.options.publishers_job_listing_extend_deadline_form.expiry_time.#{option}") }
 

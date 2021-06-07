@@ -28,7 +28,7 @@ RSpec.describe Publishers::JobListing::ExtendDeadlineForm, type: :model do
     end
   end
 
-  it { is_expected.to validate_inclusion_of(:expiry_time).in_array(%w[9:00 12:00 17:00 23:59]) }
+  it { is_expected.to validate_inclusion_of(:expiry_time).in_array(Vacancy::EXPIRY_TIME_OPTIONS) }
 
   describe "expires_at" do
     context "when date is blank" do
