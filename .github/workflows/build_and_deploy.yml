@@ -82,6 +82,7 @@ jobs:
             BUILDKIT_INLINE_CACHE=1
           cache-from: |
             ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
+            ${{ env.DOCKER_REPOSITORY }}:builder-master
           push: true
           tags: ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
           target: builder
@@ -94,7 +95,9 @@ jobs:
             COMMIT_SHA=${{ env.COMMIT_SHA }}
           cache-from: |
             ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
+            ${{ env.DOCKER_REPOSITORY }}:builder-master
             ${{ env.DOCKER_REPOSITORY }}:${{ env.GIT_BRANCH }}
+            ${{ env.DOCKER_REPOSITORY }}:master
           push: true
           tags: |
             ${{ env.DOCKER_REPOSITORY }}:${{ env.GIT_BRANCH }}
