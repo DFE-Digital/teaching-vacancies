@@ -47,7 +47,7 @@ RSpec.describe "Users can only be signed in to one type of account" do
       let(:authentication_fallback_enabled?) { true }
       let(:login_key) do
         publisher.emergency_login_keys.create(
-          not_valid_after: Time.current + Publishers::SignIn::Email::SessionsController::EMERGENCY_LOGIN_KEY_DURATION,
+          not_valid_after: Time.current + Publishers::LoginKeysController::EMERGENCY_LOGIN_KEY_DURATION,
         )
       end
 
@@ -55,7 +55,7 @@ RSpec.describe "Users can only be signed in to one type of account" do
         visit jobseekers_account_path
         expect(page).to have_content(I18n.t("jobseekers.accounts.show.page_title"))
 
-        visit auth_email_choose_organisation_path(login_key: login_key.id)
+        visit login_key_path(login_key)
         expect(page).to have_current_path(organisation_path)
 
         visit jobseekers_account_path
