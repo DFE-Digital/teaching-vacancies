@@ -14,10 +14,10 @@ class Publishers::Vacancies::FeedbacksController < Publishers::Vacancies::BaseCo
   private
 
   def feedback_form_params
-    params.require(:publishers_job_listing_feedback_form).permit(:comment, :rating)
+    params.require(:publishers_job_listing_feedback_form).permit(:comment, :email, :rating, :report_a_problem, :user_participation_response)
   end
 
   def feedback_attributes
-    feedback_form_params.merge(feedback_type: "vacancy_publisher", publisher_id: current_publisher&.id, vacancy_id: @vacancy.id)
+    feedback_form_params.except("report_a_problem").merge(feedback_type: "vacancy_publisher", publisher_id: current_publisher&.id, vacancy_id: @vacancy.id)
   end
 end
