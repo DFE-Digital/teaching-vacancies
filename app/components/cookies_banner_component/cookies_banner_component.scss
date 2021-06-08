@@ -1,7 +1,6 @@
 @import 'base_component';
 
 .cookies-banner-component {
-  @include govuk-responsive-padding(3, 'top');
   @include govuk-responsive-padding(0, 'bottom');
   background-color: govuk-colour('light-grey');
   bottom: 0;
@@ -28,9 +27,5 @@
   .govuk-heading-s,
   .govuk-body {
     color: govuk-colour('black');
-  }
-
-  .govuk-width-container {
-    padding-top: 15px;
   }
 }
