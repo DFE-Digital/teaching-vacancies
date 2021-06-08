@@ -8,25 +8,25 @@ tests:
       # Series data.
       input_series:
           - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="0",organisation="dfe",space="teaching-vacancies-production",status_range="0xx"}'
-            values: '0+0x4 0+10x4 50+50x4 300+100x4 800'
+            values: '0+0x4 0+10x4 50+50x4 300+100x4 800+200x4 1800'
           - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="0",organisation="dfe",space="teaching-vacancies-production",status_range="2xx"}'
-            values: '0+0x4 0+1000x4 500+1000x4 1000+1000x4 6000'
+            values: '0+1000x4 0+1000x4 500+1000x4 1000+1000x4 6000+1000x4'
           - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="0",organisation="dfe",space="teaching-vacancies-production",status_range="3xx"}'
-            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
+            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
           - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="0",organisation="dfe",space="teaching-vacancies-production",status_range="4xx"}'
-            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
+            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
           - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="0",organisation="dfe",space="teaching-vacancies-production",status_range="5xx"}'
-            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
+            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
           - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="1",organisation="dfe",space="teaching-vacancies-production",status_range="0xx"}'
-            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
+            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
           - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="1",organisation="dfe",space="teaching-vacancies-production",status_range="2xx"}'
-            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
+            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
           - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="1",organisation="dfe",space="teaching-vacancies-production",status_range="3xx"}'
-            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
+            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
           - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="1",organisation="dfe",space="teaching-vacancies-production",status_range="4xx"}'
-            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
+            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
           - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="1",organisation="dfe",space="teaching-vacancies-production",status_range="5xx"}'
-            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
+            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
 
       # Unit test for alerting rules.
       alert_rule_test:
@@ -38,10 +38,12 @@ tests:
             eval_time: 15m # 50 failed requests per minute (4.76% total)
           - alertname: ProdRequestsFailuresElevated
             eval_time: 20m # 100 failed requests per minute (9.09% total)
+          - alertname: ProdRequestsFailuresElevated
+            eval_time: 25m # 200 failed requests per minute (16.67% total)
             exp_alerts:
             - exp_annotations:
                 summary: High rate of failing requests
-                description: "The proportion of failed HTTP requests in the past 5 min is above 5% (current value: 9.091%)"
+                description: "The proportion of failed HTTP requests in the past 5 min is above 10% (current value: 16.67%)"
                 runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/master/documentation/alert-runbook.md#ProdRequestsFailuresElevated
                 dashboard: https://grafana-teaching-vacancies.london.cloudapps.digital/d/6Ac4lUWGk/teaching-vacancies-production?orgId=1&refresh=5s
               exp_labels:
