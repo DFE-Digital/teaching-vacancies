@@ -101,7 +101,7 @@ jobs:
         SLACK_TITLE: Delete review app failure
         SLACK_MESSAGE: |
           Failed deletion of review app PR ${{ github.event.number }}
-          See: https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
+          See: https://github.com/${{ env.GITHUB_REPOSITORY }}/actions/runs/${{ env.GITHUB_RUN_ID }}
           <!channel>
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_COLOR: ${{ job.status }}
