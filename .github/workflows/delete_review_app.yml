@@ -4,6 +4,12 @@ on:
   pull_request:
     branches: [ master ]
     types: [closed]
+    paths-ignore:
+      - 'bigquery/**'
+      - 'documentation/**'
+      - 'terraform/common/**'
+      - 'terraform/monitoring/**'
+      - '**.md'
 
 env:
   DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
