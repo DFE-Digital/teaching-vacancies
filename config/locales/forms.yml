@@ -371,7 +371,7 @@ en:
       jobseekers_job_application_personal_statement_form:
         personal_statement: Your personal statement
       jobseekers_job_application_professional_status_form:
-        qualified_teacher_status_details: Please explain why you do not have QTS
+        qualified_teacher_status_details: Please provide more detail
         qualified_teacher_status_options:
           "no": "No"
           on_track: I'm on track to receive my QTS
