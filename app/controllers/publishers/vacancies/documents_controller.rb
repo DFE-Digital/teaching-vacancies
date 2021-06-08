@@ -30,7 +30,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
   def destroy
     document = vacancy.documents.find(params[:id])
     delete_operation_status = DocumentDelete.new(document).delete
-    flash_type = delete_operation_status ? :success : :error
+    flash_type = delete_operation_status ? :success : :warning
     flash_message = t("jobs.file_delete_#{flash_type}_message", filename: document.name)
 
     if request.xhr?
