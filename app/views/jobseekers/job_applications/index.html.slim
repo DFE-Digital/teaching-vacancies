@@ -43,7 +43,7 @@
                   = tag.div(govuk_link_to(t(".withdraw"), jobseekers_job_application_confirm_withdraw_path(submitted_application)))
         - else
           = render EmptySectionComponent.new title: t(".no_job_applications") do
-            p.govuk-body class="govuk-!-margin-bottom-0" = t(".no_job_applications_body_html", link_to: govuk_link_to(t(".find_and_apply"), root_path))
+            = t(".no_job_applications_body_html", link_to: govuk_link_to(t(".find_and_apply"), root_path))
 
 .govuk-grid-row
   .govuk-grid-column-full

@@ -18,4 +18,5 @@
             = render "pagination_stats"
             = paginate notifications
       - else
-        = render EmptySectionComponent.new title: t(".no_notifications")
+        = render EmptySectionComponent.new do
+          = t(".no_notifications")
