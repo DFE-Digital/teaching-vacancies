@@ -282,35 +282,27 @@ RSpec.describe "Creating a vacancy" do
       context "when deleting uploaded files", js: true do
         let(:document_delete) { double("document_delete") }
 
+        let!(:delete_me_document) { create(:document, vacancy: documents_vacancy, name: "delete_me.pdf") }
+        let!(:do_not_delete_me_document) { create(:document, vacancy: documents_vacancy, name: "do_not_delete_me.pdf") }
+
         before do
           allow(DocumentDelete).to receive(:new).and_return(document_delete)
 
-          create :document, vacancy: documents_vacancy, name: "delete_me.pdf"
-          create :document, vacancy: documents_vacancy, name: "do_not_delete_me.pdf"
-
           visit organisation_job_documents_path(documents_vacancy.id)
-
-          find('[data-file-name="delete_me.pdf"]').click
         end
 
         scenario "deletes them" do
           allow(document_delete).to receive(:delete).and_return(true)
 
-          click_on "Yes, remove file"
-
-          within "#js-xhr-flashes" do
-            expect(page).to have_content "delete_me.pdf was removed"
-          end
+          find("tr[data-document-id=\"#{delete_me_document.id}\"] a[data-method=delete]").click
+          expect(page).to have_content "delete_me.pdf was removed"
         end
 
         scenario "shows errors" do
           allow(document_delete).to receive(:delete).and_return(false)
 
-          click_on "Yes, remove file"
-
-          within "#js-gem-c-modal-dialogue__error" do
-            expect(page).to have_content "An error occurred while removing the file."
-          end
+          find("tr[data-document-id=\"#{delete_me_document.id}\"] a[data-method=delete]").click
+          expect(page).to have_content "An error occurred while removing delete_me.pdf"
         end
       end
     end
