@@ -68,7 +68,7 @@
     - if job_application.employments.none?
       p.govuk-body = t(".employment_history.none")
     - else
-      = govuk_accordion classes: "govuk-!-margin-bottom-5" do |accordion|
+      = govuk_accordion classes: "govuk-!-margin-bottom-2" do |accordion|
         - job_application.employments.order(:created_at).each do |employment|
           - accordion.add_section title: employment.job_title do
             = govuk_summary_list do |summary|
@@ -84,9 +84,12 @@
                 - summary.slot :row, key: t(".employment_history.ended_on"), value: employment.ended_on
 
     - if job_application.gaps_in_employment == "yes"
-      = govuk_notification_banner title: t("banners.important") do |banner|
-        - banner.add_heading text: t(".employment_history.gaps_in_employment")
-        p.govuk-body = job_application.gaps_in_employment_details
+      = govuk_summary_list classes: "summary-list--no-divider" do |summary|
+        - summary.slot :row, key: t(".employment_history.gaps_in_employment"), value: "Yes"
+        - summary.slot :row, key: "", value: job_application.gaps_in_employment_details
+    - else
+      = govuk_summary_list classes: "summary-list--no-divider" do |summary|
+        - summary.slot :row, key: t(".employment_history.gaps_in_employment"), value: "No"
 
 = render ReviewComponent.new id: "personal_statement_summary" do |review|
   - review.heading title: t(".personal_statement.heading")
