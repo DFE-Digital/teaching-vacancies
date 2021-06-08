@@ -3,8 +3,9 @@ require "rails_helper"
 RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
   subject { described_class.new(params, vacancy) }
 
-  let(:vacancy) { build_stubbed(:vacancy) }
+  let(:vacancy) { build_stubbed(:vacancy, publish_on: publish_on) }
 
+  let(:publish_on_day) { "another_day" }
   let(:publish_on) { 6.months.from_now }
   let(:expires_at) { 1.year.from_now }
   let(:starts_on) { 2.years.from_now }
@@ -12,6 +13,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
 
   let(:params) do
     {
+      publish_on_day: publish_on_day,
       "publish_on(1i)" => publish_on.year.to_s,
       "publish_on(2i)" => publish_on.month.to_s,
       "publish_on(3i)" => publish_on.day.to_s,
@@ -33,6 +35,21 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
   end
 
   it { is_expected.to validate_inclusion_of(:expiry_time).in_array(Vacancy::EXPIRY_TIME_OPTIONS) }
+
+  context "when publish_on_day and publish_on are not defined" do
+    let(:publish_on_day) { "" }
+
+    before do
+      params["publish_on(1i)"] = ""
+      params["publish_on(2i)"] = ""
+      params["publish_on(3i)"] = ""
+    end
+
+    it "is invalid" do
+      expect(subject).not_to be_valid
+      expect(subject.errors.of_kind?(:publish_on_day, :inclusion)).to be true
+    end
+  end
 
   describe "publish_on" do
     context "when date is blank" do
