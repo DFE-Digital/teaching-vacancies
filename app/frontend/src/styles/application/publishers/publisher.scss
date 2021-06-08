@@ -58,6 +58,30 @@ $desktop-container-width: 1200px;
   .job-application-actions {
     display: flex;
   }
+
+  .govuk-summary-list {
+    &.summary-list--no-divider {
+      border-top: none;
+
+      .govuk-summary-list__row {
+        border-top: none;
+
+        .govuk-summary-list__key, .govuk-summary-list__value, .govuk-summary-list__actions {
+          border-bottom: none;
+        }
+
+        &:last-child {
+          .govuk-summary-list__key, .govuk-summary-list__value, .govuk-summary-list__actions {
+            border-bottom: 1px solid #b1b4b6;
+          }
+        }
+
+        @include govuk-media-query($until: desktop) {
+            border-bottom: none;
+        }
+      }
+    }
+  }
 }
 
 .job-applications-summary {
