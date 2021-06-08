@@ -101,7 +101,7 @@ module Publishers::Wizardable
 
   def important_dates_params(params)
     params.require(:publishers_job_listing_important_dates_form)
-          .permit(:starts_asap, :starts_on, :publish_on, :expires_at, :expiry_time)
+          .permit(:starts_asap, :starts_on, :publish_on, :publish_on_day, :expires_at, :expiry_time)
           .merge(completed_step: steps_config[step][:number])
   end
 
