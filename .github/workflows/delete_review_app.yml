@@ -24,6 +24,9 @@ jobs:
       run: |
         ENVIRONMENT=review-pr-${{ github.event.number }}
         echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
+        echo "LINK_TO_RUN=https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" >> $GITHUB_ENV
+        echo "LINK_TO_PR=https://github.com/${GITHUB_REPOSITORY}/pulls/${{ github.event.number }}" >> $GITHUB_ENV
+        echo "LINK_TO_APP=https://teaching-vacancies-${ENVIRONMENT}.london.cloudapps.digital" >> $GITHUB_ENV
 
     - name: Wait for this review app 'Deploy app' job to finish
       id: wait_for_deployment
@@ -89,7 +92,7 @@ jobs:
       uses: marocchino/sticky-pull-request-comment@v2
       with:
         message: |
-          Review app <https://teaching-vacancies-${{ env.ENVIRONMENT }}.london.cloudapps.digital> was successfully deleted
+          Review app <${{ env.LINK_TO_APP }}> was successfully deleted
 
     - name: Send failure message to twd_tv_dev channel
       if: failure()
@@ -101,7 +104,7 @@ jobs:
         SLACK_TITLE: Delete review app failure
         SLACK_MESSAGE: |
           Failed deletion of review app PR ${{ github.event.number }}
-          See: https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
+          See: <${{ env.LINK_TO_RUN }}|Workflow run> - <${{ env.LINK_TO_PR }}|Pull request> - <${{ env.LINK_TO_APP }}|Review app>
           <!channel>
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_COLOR: ${{ job.status }}
