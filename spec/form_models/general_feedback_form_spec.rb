@@ -10,6 +10,7 @@ RSpec.describe GeneralFeedbackForm, type: :model do
     {
       comment: "Fancy",
       email: email,
+      report_a_problem: "no",
       user_participation_response: user_participation_response,
       visit_purpose: visit_purpose,
       visit_purpose_comment: visit_purpose_comment,
@@ -18,6 +19,7 @@ RSpec.describe GeneralFeedbackForm, type: :model do
 
   it { is_expected.to validate_presence_of(:comment) }
   it { is_expected.to validate_length_of(:comment).is_at_most(1200) }
+  it { is_expected.to validate_inclusion_of(:report_a_problem).in_array(%w[yes no]) }
   it {
     is_expected.to validate_inclusion_of(:user_participation_response)
                   .in_array(Feedback.user_participation_responses.keys)
@@ -40,6 +42,15 @@ RSpec.describe GeneralFeedbackForm, type: :model do
       context "and the email is provided" do
         it "is valid" do
           expect(subject).to be_valid
+        end
+
+        context "and the email is blank" do
+          let(:email) { nil }
+
+          it "ensures the field is not blank" do
+            expect(subject).to be_invalid
+            expect(subject.errors[:email]).to include(I18n.t("general_feedback_errors.email.blank"))
+          end
         end
 
         context "and the email is invalid" do
