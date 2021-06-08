@@ -5,6 +5,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
 
   let(:vacancy) { build_stubbed(:vacancy) }
 
+  let(:publish_on_day) { "another_day" }
   let(:publish_on) { 6.months.from_now }
   let(:expires_at) { 1.year.from_now }
   let(:starts_on) { 2.years.from_now }
@@ -12,6 +13,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
 
   let(:params) do
     {
+      publish_on_day: publish_on_day,
       "publish_on(1i)" => publish_on.year.to_s,
       "publish_on(2i)" => publish_on.month.to_s,
       "publish_on(3i)" => publish_on.day.to_s,
@@ -33,6 +35,12 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
   end
 
   it { is_expected.to validate_inclusion_of(:expiry_time).in_array(Vacancy::EXPIRY_TIME_OPTIONS) }
+
+  context "when publish on is not defined" do
+    subject { described_class.new({}, vacancy) }
+
+    it { is_expected.to validate_inclusion_of(:publish_on_day).in_array(%w[today tomorrow another_day]) }
+  end
 
   describe "publish_on" do
     context "when date is blank" do
