@@ -1,8 +1,9 @@
 class GeneralFeedbackForm
   include ActiveModel::Model
 
-  attr_accessor :comment, :email, :user_participation_response, :visit_purpose, :visit_purpose_comment
+  attr_accessor :comment, :email, :report_a_problem, :user_participation_response, :visit_purpose, :visit_purpose_comment
 
+  validates :report_a_problem, inclusion: { in: %w[yes no] }
   validates :comment, presence: true, length: { maximum: 1200 }
   validates :email, presence: true, if: -> { user_participation_response == "interested" }
   validates :email, format: { with: Devise.email_regexp }, if: -> { email.present? }
