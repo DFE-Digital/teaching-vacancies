@@ -48,6 +48,8 @@ module VacancyHelpers
   end
 
   def fill_in_important_dates_fields(vacancy)
+    choose I18n.t("helpers.label.publishers_job_listing_important_dates_form.publish_on_day_options.another_day")
+
     fill_in "publishers_job_listing_important_dates_form[publish_on(3i)]", with: vacancy.publish_on.day
     fill_in "publishers_job_listing_important_dates_form[publish_on(2i)]", with: vacancy.publish_on.month
     fill_in "publishers_job_listing_important_dates_form[publish_on(1i)]", with: vacancy.publish_on.year
