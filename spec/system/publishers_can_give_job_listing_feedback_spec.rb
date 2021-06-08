@@ -26,11 +26,13 @@ RSpec.describe "Publishers can give job listing feedback" do
 
       expect(page).to have_content("There is a problem")
 
+      choose name: "publishers_job_listing_feedback_form[report_a_problem]", option: "yes"
       choose I18n.t("helpers.label.publishers_job_listing_feedback_form.rating_options.somewhat_satisfied")
+      choose name: "publishers_job_listing_feedback_form[user_participation_response]", option: "interested"
       fill_in "publishers_job_listing_feedback_form[comment]", with: comment
 
       expect { click_on I18n.t("buttons.submit_feedback") }.to change {
-        publisher.feedbacks.where(comment: comment, feedback_type: "vacancy_publisher", vacancy_id: vacancy.id).count
+        publisher.feedbacks.where(comment: comment, email: publisher.email, feedback_type: "vacancy_publisher", report_a_problem: "interested", user_participation_response: "interested", vacancy_id: vacancy.id).count
       }.by(1)
 
       expect(current_path).to eq(jobs_with_type_organisation_path(:published))
