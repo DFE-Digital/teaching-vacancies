@@ -139,7 +139,7 @@ Publisher.create(oid: "B81FC38C-4122-4BCE-9F1D-8B1A328FA4D8",
                  given_name: "David")
 
 Publisher.create(oid: "A111A1AA-A111-1111-1AA1-AAAA1A111A1B",
-                 email: "jesse.yuen@digital.education.gov.uk",
+                 email: "jesse.yuen@education.gov.uk",
                  organisation_publishers_attributes: organisation_publishers_attributes,
                  family_name: "Yuen",
                  given_name: "Jesse")
@@ -167,12 +167,6 @@ Publisher.create(oid: "EB38B29A-3BA8-45D5-9CEC-89CE5C3BC14D",
                  organisation_publishers_attributes: organisation_publishers_attributes,
                  family_name: "Capstick",
                  given_name: "Molly")
-
-Publisher.create(oid: "5787504B-3D6F-4374-A0CB-7b00CBED01BA",
-                 email: "rajeev.aggarwal@digital.education.gov.uk",
-                 organisation_publishers_attributes: organisation_publishers_attributes,
-                 family_name: "Aggarwal",
-                 given_name: "Rajeev")
 
 Publisher.create(oid: "7AEC8E8D-6036-4E6E-92A4-800E381A12E0",
                  email: "rose.mackworth-young@digital.education.gov.uk",
