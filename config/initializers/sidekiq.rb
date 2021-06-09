@@ -7,6 +7,7 @@ options = {
 # Redis concurrency must be plus 5 https://github.com/mperham/sidekiq/wiki/Using-Redis#complete-control
 Sidekiq.configure_server do |config|
   config.options.merge!(options)
+  config.logger.level = Logger::WARN
   config.redis = { url: Rails.configuration.redis_queue_url, network_timeout: 5, size: config.options[:concurrency] + 5 }
 end
 
