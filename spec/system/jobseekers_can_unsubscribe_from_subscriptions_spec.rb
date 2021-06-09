@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
   let(:subscription) { create(:subscription) }
+  let(:email) { "email@example.com" }
 
   context "with the correct token" do
     before do
@@ -32,9 +33,12 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
         choose "jobseekers-unsubscribe-feedback-form-unsubscribe-reason-other-reason-field"
         fill_in "jobseekers_unsubscribe_feedback_form[other_unsubscribe_reason_comment]", with: "Spam"
         fill_in "jobseekers_unsubscribe_feedback_form[comment]", with: "Eggs"
+        choose name: "jobseekers_unsubscribe_feedback_form[user_participation_response]", option: "interested"
+        fill_in "jobseekers_unsubscribe_feedback_form[email]", with: email
 
         expect { click_on I18n.t("buttons.submit_feedback") }.to change {
           subscription.feedbacks.where(comment: "Eggs",
+                                       email: email,
                                        feedback_type: "unsubscribe",
                                        other_unsubscribe_reason_comment: "Spam",
                                        search_criteria: subscription.search_criteria,
