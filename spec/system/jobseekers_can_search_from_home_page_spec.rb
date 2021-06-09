@@ -23,7 +23,7 @@ RSpec.describe "Searching on the home page", vcr: { cassette_name: "algoliasearc
     expect(page.find("#keyword-field").value).to eq("math")
     expect(page.find("#location-field").value).to eq("bristol")
 
-    expect(page).to have_css(".moj-filter__tag", count: 4)
+    expect(page).to have_css(".filters-component__remove-tags__tag", count: 4)
 
     expect(page.find("#job-roles-nqt-suitable-field")).to be_checked
     expect(page.find("#phases-primary-field")).to be_checked

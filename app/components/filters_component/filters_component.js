@@ -5,35 +5,43 @@ import 'classlist-polyfill';
 export const ACCORDION_SECTION_CLASS_SELECTOR = 'govuk-accordion__section';
 export const ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR = 'govuk-accordion__section--expanded';
 export const CHECKBOX_CLASS_SELECTOR = 'govuk-checkboxes__input';
-export const CHECKBOX_GROUP_CLASS_SELECTOR = 'filters-component__group';
+export const CHECKBOX_GROUP_CLASS_SELECTOR = 'filters-component__groups__group';
+export const REMOVE_FILTER_CLASS_SELECTOR = 'filters-component__remove-tags__tag';
 export const CLOSE_ALL_TEXT = 'Close all';
 export const OPEN_ALL_TEXT = 'Open all';
 
 window.addEventListener(
   'DOMContentLoaded',
-  () => init('govuk-accordion__section', 'moj-filter__tag', 'clear-filters-component-button', 'close-all-groups', 'mobile-filters-component-button', 'govuk-accordion__section-header'),
+  () => init(
+    ACCORDION_SECTION_CLASS_SELECTOR,
+    REMOVE_FILTER_CLASS_SELECTOR,
+    'clear-filters-component-button',
+    'close-all-groups',
+    'mobile-filters-component-button',
+    'govuk-accordion__section-header',
+  ),
 );
 
-export const init = (groupContainerSelector, removeButtonSelector, clearButtonSelector, closeButtonSelector, mobileFiltersButtonSelector, accordionButtonsSelector) => {
+export const init = (groupContainerSelector, removeButtonSelector, clearButtonId, closeButtonId, mobileFiltersButtonSelector, accordionButtonsSelector) => {
   if (!isFormAutoSubmitEnabled(groupContainerSelector)) { return; }
 
-  Array.from(document.getElementsByClassName(accordionButtonsSelector)).forEach((accordionButton) => filterGroup.addUpdateOpenOrCloseEvent(accordionButton, closeButtonSelector));
+  Array.from(document.getElementsByClassName(accordionButtonsSelector)).forEach((accordionButton) => filterGroup.addUpdateOpenOrCloseEvent(accordionButton, closeButtonId));
 
   Array.from(document.getElementsByClassName(removeButtonSelector)).forEach((removeButton) => filterGroup.addRemoveFilterEvent(removeButton, () => getSubmitButton(removeButton).click()));
 
-  const clearButton = document.getElementById(clearButtonSelector);
+  const clearButton = document.getElementById(clearButtonId);
   if (clearButton) {
     filterGroup.addRemoveAllFiltersEvent(clearButton, () => getSubmitButton(clearButton).click());
   }
 
   addFilterChangeEvent(document.getElementsByClassName(groupContainerSelector));
-  if (document.getElementById(closeButtonSelector)) {
+  if (document.getElementById(closeButtonId)) {
     displayOpenOrCloseText(
-      document.getElementById(closeButtonSelector),
+      document.getElementById(closeButtonId),
       document.getElementsByClassName(ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR).length,
       document.getElementsByClassName(ACCORDION_SECTION_CLASS_SELECTOR).length,
     );
-    document.getElementById(closeButtonSelector).addEventListener('click', openOrCloseAllSectionsHandler);
+    document.getElementById(closeButtonId).addEventListener('click', openOrCloseAllSectionsHandler);
   }
 
   if (document.getElementById(mobileFiltersButtonSelector)) {
