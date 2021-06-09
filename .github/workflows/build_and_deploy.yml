@@ -178,7 +178,7 @@ jobs:
         token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
         checkName: Deploy ${{ env.DOCKER_IMAGE_TAG }} to ${{ env.ENVIRONMENT }} # Job name within triggered workflow
         ref: ${{ env.BUILD_GIT_TAG }}
-        timeoutSeconds: 720
+        timeoutSeconds: 840
         intervalSeconds: 15
 
     - name: Notify twd_tv_dev channel on ${{ env.ENVIRONMENT }} deployment failure
