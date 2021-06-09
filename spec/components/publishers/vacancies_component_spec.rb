@@ -37,7 +37,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
         let!(:inline_component) { render_inline(subject) }
 
         it "renders the vacancies component" do
-          expect(inline_component.css(".moj-filter-layout__content").to_html).not_to be_blank
+          expect(inline_component.css(".vacancies-component__content").to_html).not_to be_blank
         end
 
         it "renders the number of jobs in the heading" do
@@ -97,7 +97,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
         let!(:inline_component) { render_inline(subject) }
 
         it "renders the vacancies component" do
-          expect(inline_component.css(".moj-filter-layout__content").to_html).not_to be_blank
+          expect(inline_component.css(".vacancies-component__content").to_html).not_to be_blank
         end
 
         it "renders the number of jobs in the heading" do
@@ -158,7 +158,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
         let!(:inline_component) { render_inline(subject) }
 
         it "renders the vacancies component" do
-          expect(inline_component.css(".moj-filter-layout__content").to_html).not_to be_blank
+          expect(inline_component.css(".vacancies-component__content").to_html).not_to be_blank
         end
 
         it "renders the number of jobs in the heading" do
