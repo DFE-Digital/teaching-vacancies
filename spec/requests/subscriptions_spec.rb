@@ -16,7 +16,7 @@ RSpec.describe "Subscriptions" do
       it "triggers a `vacancy_create_job_alert_clicked` event" do
         expect { get new_subscription_path(origin: origin) }
           .to have_triggered_event(:vacancy_create_job_alert_clicked)
-          .and_data(vacancy_id: vacancy.id)
+          .and_data(vacancy_id: anonymised_form_of(vacancy.id) )
       end
     end
 
