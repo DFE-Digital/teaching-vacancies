@@ -18,9 +18,13 @@ RSpec.describe ApplicationController do
   end
 
   describe "click_event events" do
+    let(:params) do
+      { click_event: "this_event", click_event_data: { vacancy_id: "more_data" } }
+    end
+
     it "triggers a `click_event` event on a request" do
-      expect { get :test_action, params: { click_event: "this_event" } }
-        .to have_triggered_event(:this_event).with_request_data
+      expect { get :test_action, params: params }
+        .to have_triggered_event(:this_event).with_request_data.and_data(vacancy_id: "more_data")
     end
   end
 

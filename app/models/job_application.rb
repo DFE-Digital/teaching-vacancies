@@ -51,7 +51,7 @@ class JobApplication < ApplicationRecord
   def submit!
     submitted!
     Publishers::JobApplicationReceivedNotification.with(vacancy: vacancy, job_application: self).deliver(vacancy.publisher)
-    Jobseekers::JobApplicationMailer.application_submitted(self).deliver_later
+    # Jobseekers::JobApplicationMailer.application_submitted(self).deliver_later
   end
 
   private

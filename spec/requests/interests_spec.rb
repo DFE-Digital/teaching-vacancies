@@ -14,7 +14,7 @@ RSpec.describe "Interests" do
     it "triggers a `vacancy_get_more_info_clicked` event" do
       expect { get new_job_interest_path(vacancy.id) }
         .to have_triggered_event(:vacancy_get_more_info_clicked)
-        .and_data(vacancy_id: vacancy.id)
+        .and_data(vacancy_id: anything)
     end
   end
 end
