@@ -36,17 +36,29 @@ en:
     frequency:
       blank: Select when you want to receive job alert emails
   unsubscribe_feedback_errors: &unsubscribe_feedback_errors
-    unsubscribe_reason:
-      inclusion: Tell us why you want to unsubscribe
+    email:
+      blank: Enter your email address
+      invalid: Enter an email address in the correct format, like name@example.com
     other_unsubscribe_reason_comment:
       blank: Tell us why you want to unsubscribe
+    unsubscribe_reason:
+      inclusion: Tell us why you want to unsubscribe
+    user_participation_response:
+      inclusion: Please indicate if you'd like to participate in user research
 
   # Feedback forms
   account_feedback_errors: &account_feedback_errors
-    rating:
-      inclusion: Select how satisfied or dissatisfied you are
     comment:
       too_long: Feedback must not be more than 1,200 characters
+    email:
+      blank: Enter your email address
+      invalid: Enter an email address in the correct format, like name@example.com
+    rating:
+      inclusion: Select how satisfied or dissatisfied you are
+    report_a_problem:
+      inclusion: Select yes if you want to report a problem or request support
+    user_participation_response:
+      inclusion: Please indicate if you'd like to participate in user research
   general_feedback_errors: &general_feedback_errors
     user_participation_response:
       inclusion: Please indicate if you'd like to participate in user research
@@ -56,6 +68,8 @@ en:
     comment:
       blank: Enter your feedback
       too_long: Feedback must not be more than 1,200 characters
+    report_a_problem:
+      inclusion: Select yes if you want to report a problem or request support
     visit_purpose:
       inclusion: Enter the reason for your visit
     visit_purpose_comment:
@@ -65,14 +79,37 @@ en:
     comment:
       blank: You have not submitted any further feedback
       too_long: Feedback must not be more than 1,200 characters
+    email:
+      blank: Enter your email address
+      invalid: Enter an email address in the correct format, like name@example.com
+    user_participation_response:
+      inclusion: Please indicate if you'd like to participate in user research
+  jobseekers_job_alert_further_feedback_form: &job_alert_further_feedback_form_errors
+    email:
+      blank: Enter your email address
+      invalid: Enter an email address in the correct format, like name@example.com
+    user_participation_response:
+      inclusion: Please indicate if you'd like to participate in user research
   jobseekers_job_application_feedback_form: &jobseekers_job_application_feedback_form_errors
+    email:
+      blank: Enter your email address
+      invalid: Enter an email address in the correct format, like name@example.com
     rating:
       inclusion: Choose how satisfied you are with the application process
     comment:
       too_long: Feedback must not be more than 1,200 characters
+    user_participation_response:
+      inclusion: Please indicate if you'd like to participate in user research
   publisher_job_listing_feedback_form: &publisher_job_listing_feedback_form_errors
+    email:
+      blank: Enter your email address
+      invalid: Enter an email address in the correct format, like name@example.com
     rating:
       inclusion: Choose how satisfied you are with the job listing process
+    report_a_problem:
+      inclusion: Select yes if you want to report a problem or request support
+    user_participation_response:
+      inclusion: Please indicate if you'd like to participate in user research
 
   # Hiring staff journey
   job_location_errors: &job_location_errors
@@ -166,6 +203,9 @@ en:
         jobseekers/job_alert_feedback_form:
           attributes:
             <<: *job_alert_feedback_errors
+        jobseekers/job_alert_further_feedback_form:
+          attributes:
+            <<: *job_alert_further_feedback_form_errors
         jobseekers/job_application/feedback_form:
           attributes:
             <<: *jobseekers_job_application_feedback_form_errors
