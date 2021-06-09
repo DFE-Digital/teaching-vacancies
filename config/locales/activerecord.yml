@@ -217,6 +217,9 @@ en:
             <<: *important_dates_errors
             expires_at:
               after: To extend the closing date enter a date that is after the current deadline
+              blank: Enter a closing date
+              invalid: Enter a date in the correct format
+              on_or_after: The closing date must be in the future
         publishers/organisation_form:
           attributes:
             <<: *organisation_errors
