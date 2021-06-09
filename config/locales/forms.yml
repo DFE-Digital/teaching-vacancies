@@ -434,6 +434,10 @@ en:
         trust_visits: Trust visits
       publishers_job_listing_copy_vacancy_form:
         job_title: Job title
+        publish_on_day_options:
+          another_day: On another day
+          today: Today
+          tomorrow: Tomorrow
         starts_asap_options:
           "true": As soon as possible
       publishers_job_listing_documents_form:
@@ -455,6 +459,10 @@ en:
           highly_dissatisfied: Highly dissatisfied
         comment: Do you have any suggestions on how we should improve the service?
       publishers_job_listing_important_dates_form:
+        publish_on_day_options:
+          another_day: On another day
+          today: Today
+          tomorrow: Tomorrow
         starts_asap_options:
           "true": As soon as possible
       publishers_job_listing_job_details_form:
@@ -539,7 +547,8 @@ en:
       publishers_job_listing_copy_vacancy_form:
         expires_at: Closing date
         expiry_time: Time application is due
-        publish_on: Date job will be listed
+        publish_on: What date will the job be listed?
+        publish_on_day: Date job will be listed
         starts_on: Date job starts
       publishers_job_listing_end_listing_form:
         end_listing_reason: Why would you like to end this job listing early?
@@ -552,7 +561,8 @@ en:
       publishers_job_listing_important_dates_form:
         expires_at: Closing date
         expiry_time: Time application is due
-        publish_on: Date job will be listed
+        publish_on: What date will the job be listed?
+        publish_on_day: Date job will be listed
         starts_on: Date job starts
       publishers_job_listing_job_details_form:
         contract_type: Contract type

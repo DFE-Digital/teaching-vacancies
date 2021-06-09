@@ -21,7 +21,11 @@
           span#publishers_job_listing_copy_form_job_title-info.govuk-hint.govuk-character-count__message aria-live="polite"
             | You can enter up to 100 characters
 
-        = f.govuk_date_field :publish_on
+        = f.govuk_radio_buttons_fieldset :publish_on_day do
+          = f.govuk_radio_button :publish_on_day, :today, link_errors: true
+          = f.govuk_radio_button :publish_on_day, :tomorrow
+          = f.govuk_radio_button :publish_on_day, :another_day do
+            = f.govuk_date_field :publish_on
 
         = f.govuk_date_field :expires_at
 
