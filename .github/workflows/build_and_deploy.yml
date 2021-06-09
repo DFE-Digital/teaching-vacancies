@@ -179,7 +179,7 @@ jobs:
         checkName: Deploy ${{ env.DOCKER_IMAGE_TAG }} to ${{ env.ENVIRONMENT }} # Job name within triggered workflow
         ref: ${{ env.BUILD_GIT_TAG }}
         timeoutSeconds: 1200
-        intervalSeconds: 15
+        intervalSeconds: 14
 
     - name: Notify twd_tv_dev channel on ${{ env.ENVIRONMENT }} deployment failure
       if: steps.wait_for_deploy_app.outputs.conclusion != 'success'
@@ -257,7 +257,7 @@ jobs:
       - name: Terraform pin version
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: 0.14.7
+          terraform_version: 0.15.5
 
       - name: Deploy monitoring
         run: |
