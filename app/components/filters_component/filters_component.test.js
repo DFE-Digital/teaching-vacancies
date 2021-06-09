@@ -22,6 +22,7 @@ import filterGroup, {
   OPEN_ALL_TEXT,
   ACCORDION_SECTION_CLASS_SELECTOR,
   ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR,
+  REMOVE_FILTER_CLASS_SELECTOR,
   addUpdateOpenOrCloseEvent,
 } from './filters_component';
 
@@ -46,17 +47,17 @@ describe('filterGroup', () => {
       const addUpdateOpenOrCloseEventMock = jest.spyOn(filterGroup, 'addUpdateOpenOrCloseEvent');
 
       document.body.innerHTML = `<form data-auto-submit="true"><div>
-<h2 id="mobile-filters-component-button"></h2>
-<button class="moj-filter__tag">remove</button>
-<button class="moj-filter__tag">remove</button>
-<button id="clear-filters-component-button">remove</button>
-<button id="close-all-groups">remove</button>
+<h2 id="filters-component-show-mobile"></h2>
+<button class="${REMOVE_FILTER_CLASS_SELECTOR}">remove</button>
+<button class="${REMOVE_FILTER_CLASS_SELECTOR}">remove</button>
+<button id="filters-component-clear-all">remove</button>
+<button id="filters-component-close-all">remove</button>
 </div>
-<div class="govuk-accordion__section"><div class="govuk-accordion__section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div></div>
-<div class="govuk-accordion__section"><div class="govuk-accordion__section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div></div>
+<div class="${ACCORDION_SECTION_CLASS_SELECTOR}"><div class="govuk-accordion__section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div></div>
+<div class="${ACCORDION_SECTION_CLASS_SELECTOR}"><div class="govuk-accordion__section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div></div>
 </form>`;
 
-      init('govuk-accordion__section', 'moj-filter__tag', 'clear-filters-component-button', 'close-all-groups', 'mobile-filters-component-button', 'govuk-accordion__section-header');
+      init(ACCORDION_SECTION_CLASS_SELECTOR, REMOVE_FILTER_CLASS_SELECTOR, 'filters-component-clear-all', 'filters-component-close-all', 'filters-component-show-mobile', 'govuk-accordion__section-header');
 
       expect(addRemoveFilterEventMock).toHaveBeenCalledTimes(2);
       expect(addRemoveAllFiltersEventMock).toHaveBeenCalledTimes(1);
@@ -215,7 +216,7 @@ describe('filterGroup', () => {
   describe('filterChangeHandler', () => {
     test('submits the form only if a filter checkbox is clicked', () => {
       document.body.innerHTML = `<form data-auto-submit="true">
-  <div class="govuk-accordion__section">
+  <div class="${ACCORDION_SECTION_CLASS_SELECTOR}">
   <input type="text" id="should-submit" class="${CHECKBOX_CLASS_SELECTOR}" />
   <span id="should-not-submit">abc</span>
   </div>
@@ -250,9 +251,9 @@ describe('filterGroup', () => {
 
   describe('openOrCloseAllSectionsHandler', () => {
     test('removes the class selector from all filter groups that makes them visible', () => {
-      document.body.innerHTML = `<div class="govuk-accordion__section govuk-accordion__section--expanded"></div>
-      <div class="govuk-accordion__section govuk-accordion__section--expanded"></div>
-      <div class="govuk-accordion__section"></div>`;
+      document.body.innerHTML = `<div class="govuk-accordion__section ${ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR}"></div>
+      <div class="govuk-accordion__section ${ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR}"></div>
+      <div class="${ACCORDION_SECTION_CLASS_SELECTOR}"></div>`;
 
       const event = { preventDefault: jest.fn(), target: { innerText: CLOSE_ALL_TEXT } };
       const dontFollowLinkMock = jest.spyOn(event, 'preventDefault');
@@ -260,13 +261,13 @@ describe('filterGroup', () => {
       openOrCloseAllSectionsHandler(event);
 
       expect(dontFollowLinkMock).toHaveBeenCalled();
-      expect(document.getElementsByClassName('govuk-accordion__section--expanded').length).toEqual(0);
+      expect(document.getElementsByClassName(ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR).length).toEqual(0);
     });
 
     test('adds the class selector from all filter groups that makes them visible', () => {
-      document.body.innerHTML = `<div class="govuk-accordion__section govuk-accordion__section--expanded"></div>
-      <div class="govuk-accordion__section govuk-accordion__section--expanded"></div>
-      <div class="govuk-accordion__section"></div>`;
+      document.body.innerHTML = `<div class="govuk-accordion__section ${ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR}"></div>
+      <div class="govuk-accordion__section ${ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR}"></div>
+      <div class="${ACCORDION_SECTION_CLASS_SELECTOR}"></div>`;
 
       const event = { preventDefault: jest.fn(), target: { innerText: OPEN_ALL_TEXT } };
       const dontFollowLinkMock = jest.spyOn(event, 'preventDefault');
@@ -274,7 +275,7 @@ describe('filterGroup', () => {
       openOrCloseAllSectionsHandler(event);
 
       expect(dontFollowLinkMock).toHaveBeenCalled();
-      expect(document.getElementsByClassName('govuk-accordion__section--expanded').length).toEqual(3);
+      expect(document.getElementsByClassName(ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR).length).toEqual(3);
     });
   });
 
@@ -300,25 +301,25 @@ describe('filterGroup', () => {
 
   describe('openOrCloseAllSections', () => {
     test('closes all elements when called', () => {
-      document.body.innerHTML = `<div class="govuk-accordion__section govuk-accordion__section--expanded"></div>
-      <div class="govuk-accordion__section govuk-accordion__section--expanded"></div>
-      <div class="govuk-accordion__section"></div>`;
+      document.body.innerHTML = `<div class="govuk-accordion__section ${ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR}"></div>
+      <div class="govuk-accordion__section ${ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR}"></div>
+      <div class="${ACCORDION_SECTION_CLASS_SELECTOR}"></div>`;
       const targetElement = { innerText: CLOSE_ALL_TEXT };
 
       openOrCloseAllSections(targetElement);
       expect(targetElement.innerText).toEqual(OPEN_ALL_TEXT);
-      expect(document.getElementsByClassName('govuk-accordion__section--expanded').length).toEqual(0);
+      expect(document.getElementsByClassName(ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR).length).toEqual(0);
     });
 
     test('opens all elements when called', () => {
-      document.body.innerHTML = `<div class="govuk-accordion__section govuk-accordion__section--expanded"></div>
-      <div class="govuk-accordion__section govuk-accordion__section--expanded"></div>
-      <div class="govuk-accordion__section"></div>`;
+      document.body.innerHTML = `<div class="govuk-accordion__section ${ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR}"></div>
+      <div class="govuk-accordion__section ${ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR}"></div>
+      <div class="${ACCORDION_SECTION_CLASS_SELECTOR}"></div>`;
       const targetElement = { innerText: OPEN_ALL_TEXT };
 
       openOrCloseAllSections(targetElement);
       expect(targetElement.innerText).toEqual(CLOSE_ALL_TEXT);
-      expect(document.getElementsByClassName('govuk-accordion__section--expanded').length).toEqual(3);
+      expect(document.getElementsByClassName(ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR).length).toEqual(3);
     });
   });
 
@@ -326,13 +327,13 @@ describe('filterGroup', () => {
     const accordionTemplate = (allOpen) => {
       const expandedClass = allOpen ? ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR : '';
       return `
-      <div><button id="close-all-groups"></button></div>
+      <div><button id="filters-component-close-all"></button></div>
       <div class="${ACCORDION_SECTION_CLASS_SELECTOR} ${expandedClass}"><div></div></div>
       <div class="${ACCORDION_SECTION_CLASS_SELECTOR} ${expandedClass}"><div id="click-this-header"></div></div>
       `;
     };
 
-    const openOrCloseAllSelector = 'close-all-groups';
+    const openOrCloseAllSelector = 'filters-component-close-all';
 
     test('displays close all when all elements are open', () => {
       document.body.innerHTML = accordionTemplate(true);
