@@ -45,7 +45,7 @@
                 = tag.div(button_to(t(".delete"), jobseekers_saved_job_path(saved_job.vacancy.id, saved_job, redirect_to_dashboard: true), method: :delete, class: "govuk-delete-link"))
         - else
           = render EmptySectionComponent.new title: t(".zero_saved_jobs_title") do
-            p.govuk-body class="govuk-!-margin-bottom-0" = t(".zero_saved_jobs_body_html", link_to: govuk_link_to(t(".link_find"), root_path))
+            = t(".zero_saved_jobs_body_html", link_to: govuk_link_to(t(".link_find"), root_path))
 
 .govuk-grid-row
   .govuk-grid-column-full
