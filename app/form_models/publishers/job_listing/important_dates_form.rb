@@ -4,8 +4,10 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Vacan
 
   attr_accessor :expiry_time, :starts_asap
   attr_reader :expires_at, :publish_on, :starts_on
+  attr_writer :publish_on_day
 
-  validates :publish_on, date: { on_or_after: :today }, unless: :disable_editing_publish_on?
+  validates :publish_on_day, inclusion: { in: %w[today tomorrow another_day] }, unless: :disable_editing_publish_on?
+  validates :publish_on, date: { on_or_after: :today }, if: proc { !disable_editing_publish_on? && publish_on_day == "another_day" }
   validates :expires_at, date: { on_or_after: :now, after: :publish_on }
   validates :expiry_time, inclusion: { in: Vacancy::EXPIRY_TIME_OPTIONS }
   validates :starts_on, date: { on_or_after: :today, after: :expires_at }, allow_blank: true,
@@ -37,8 +39,20 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Vacan
     @expires_at = datetime_from_date_and_time(expires_on, expiry_time)
   end
 
+  def publish_on_day
+    return "today" if params[:publish_on_day] == "today" || params[:publish_on] == Date.today
+    return "tomorrow" if params[:publish_on_day] == "tomorrow" || params[:publish_on] == Date.tomorrow
+
+    "another_day" if params[:publish_on_day] == "another_day" || params[:publish_on].is_a?(Date)
+  end
+
   def publish_on=(value)
-    @publish_on = date_from_multiparameter_hash(value)
+    @publish_on =
+      case params[:publish_on_day]
+      when "today" then Date.today
+      when "tomorrow" then Date.tomorrow
+      else date_from_multiparameter_hash(value)
+      end
   end
 
   def starts_on=(value)
