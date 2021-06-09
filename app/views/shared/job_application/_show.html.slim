@@ -23,6 +23,7 @@
                                        tag.div(job_application.city, class: "govuk-body"),
                                        tag.div(job_application.postcode, class: "govuk-body")])
       - summary.slot :row, key: t(".personal_details.phone_number"), value: job_application.phone_number
+      - summary.slot :row, key: t(".personal_details.email"), value: job_application.jobseeker.email
       - if job_application.teacher_reference_number.present?
         - summary.slot :row, key: t(".personal_details.teacher_reference_number"), value: job_application.teacher_reference_number
       - if job_application.national_insurance_number.present?
