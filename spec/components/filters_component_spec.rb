@@ -29,12 +29,12 @@ RSpec.describe FiltersComponent, type: :component do
 
   context "when there are selected filters" do
     it "renders filter remove UI" do
-      expect(subject.css(".moj-filter__content").to_html).not_to be_blank
+      expect(subject.css(".filters-component__remove").to_html).not_to be_blank
     end
 
     it "renders filter remove buttons for the selected filters" do
-      expect(subject.css(".moj-filter__content .govuk-heading-s").to_html).to include("Group 1")
-      expect(subject.css(".moj-filter__content .govuk-heading-s").to_html).to include("Group 2")
+      expect(subject.css(".filters-component__remove .govuk-heading-s").to_html).to include("Group 1")
+      expect(subject.css(".filters-component__remove .govuk-heading-s").to_html).to include("Group 2")
     end
 
     it "renders count of number of filters applied" do
@@ -52,8 +52,8 @@ RSpec.describe FiltersComponent, type: :component do
     end
 
     it "filters remove UI is not visible" do
-      expect(subject.css(".moj-filter__content").to_html).to be_blank
-      expect(subject.css(".moj-filter__content .govuk-heading-s").to_html).to be_blank
+      expect(subject.css(".filters-component__remove").to_html).to be_blank
+      expect(subject.css(".filters-component__remove .govuk-heading-s").to_html).to be_blank
       expect(subject.css(".filters-component__heading-applied").to_html).to be_blank
     end
   end

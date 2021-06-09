@@ -256,17 +256,6 @@
   }
 }
 
-// misc (for dashboard)
-.moj-remove-filter-sidebar {
-  &.moj-remove-filter-sidebar__hidden {
-    display: none;
-  }
-}
-
-.moj-remove-action-bar {
-  margin-bottom: govuk-spacing(3);
-}
-
 .js-enabled .filters-component__submit {
   display: none;
 }
