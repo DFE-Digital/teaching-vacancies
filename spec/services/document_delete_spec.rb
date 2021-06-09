@@ -4,7 +4,11 @@ RSpec.describe DocumentDelete do
   subject { described_class.new(document_stub) }
 
   let(:drive_service_stub) { double(Google::Apis::DriveV3::DriveService) }
-  let(:document_stub) { double(Document, google_drive_id: google_drive_id) }
+  let(:document_stub) { double(Document, name: "foo.doc", size: 1234, google_drive_id: google_drive_id, vacancy: vacancy) }
+  let(:vacancy) { double(Vacancy, supporting_documents: supporting_documents) }
+  let(:supporting_documents) { [supporting_document1, supporting_document2] }
+  let(:supporting_document1) { double("supporting document 1", filename: "foo.doc", byte_size: 1234) }
+  let(:supporting_document2) { double("supporting document 2", filename: "bar.xls", byte_size: 4321) }
 
   let(:google_drive_id) { "abcde" }
 
@@ -12,6 +16,8 @@ RSpec.describe DocumentDelete do
     allow(Google::Apis::DriveV3::DriveService).to receive(:new).and_return(drive_service_stub)
     allow(drive_service_stub).to receive(:delete_file)
     allow(document_stub).to receive(:destroy)
+    allow(supporting_document1).to receive(:purge)
+    allow(supporting_document2).to receive(:purge)
   end
 
   it "raises MissingUploadPath error when document is nil" do
@@ -27,6 +33,13 @@ RSpec.describe DocumentDelete do
 
     it "calls destroy on document" do
       expect(document_stub).to receive(:destroy)
+
+      subject.delete
+    end
+
+    it "deletes matching supporting documents" do
+      expect(supporting_document1).to receive(:purge)
+      expect(supporting_document2).not_to receive(:purge)
 
       subject.delete
     end
