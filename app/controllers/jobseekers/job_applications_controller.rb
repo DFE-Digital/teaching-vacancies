@@ -8,7 +8,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
   helper_method :job_application, :qualification_form_param_key, :review_form, :vacancy, :withdraw_form
 
   def new
-    request_event.trigger(:vacancy_apply_clicked, vacancy_id: vacancy.id)
+    request_event.trigger(:vacancy_apply_clicked, vacancy_id: StringAnonymiser.new(vacancy.id))
     redirect_to new_quick_apply_jobseekers_job_job_application_path(vacancy.id) if
       current_jobseeker.job_applications.not_draft.any?
   end
