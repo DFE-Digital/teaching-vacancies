@@ -172,17 +172,17 @@ jobs:
         inputs: '{"environment": "${{ env.ENVIRONMENT }}", "tag": "${{ env.DOCKER_IMAGE_TAG }}"}'
 
     - name: Wait for Deploy App Workflow for ${{ env.ENVIRONMENT }}
-      id: wait_for_deploy_app_staging
+      id: wait_for_deploy_app
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
         token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
         checkName: Deploy ${{ env.DOCKER_IMAGE_TAG }} to ${{ env.ENVIRONMENT }} # Job name within triggered workflow
         ref: ${{ env.BUILD_GIT_TAG }}
-        timeoutSeconds: 720
+        timeoutSeconds: 1200
         intervalSeconds: 15
 
     - name: Notify twd_tv_dev channel on ${{ env.ENVIRONMENT }} deployment failure
-      if: steps.wait_for_deploy_app_staging.outputs.conclusion != 'success'
+      if: steps.wait_for_deploy_app.outputs.conclusion != 'success'
       uses: rtCamp/action-slack-notify@v2.1.3
       env:
         SLACK_CHANNEL: twd_tv_dev
@@ -192,7 +192,7 @@ jobs:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
     - name: Exit whole workflow if ${{ env.ENVIRONMENT }} deployment was not successful
-      if: steps.wait_for_deploy_app_staging.outputs.conclusion != 'success'
+      if: steps.wait_for_deploy_app.outputs.conclusion != 'success'
       run: exit 1
 
     - name: Trigger Smoke Test
