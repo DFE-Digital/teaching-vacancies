@@ -130,6 +130,9 @@ en:
         teacher_reference_number: Enter the 7 numbers of your TRN, excluding any letters and symbols.
       jobseekers_job_alert_further_feedback_form:
         comment: This is optional, but the information will help us to make improvements.
+        email: >-
+          We'll only use this to tell you about opportunities to take part in user research that helps us improve
+          Department for Education services.
       jobseekers_nqt_job_alerts_form:
         email: Enter your email address. We will only use it to send you job alerts.
         keywords: >-
@@ -265,6 +268,10 @@ en:
           uninterested: 'No'
       jobseekers_job_alert_further_feedback_form:
         comment: Would you like to add any further comments about the relevancy of the job alerts you have received?
+        email: What is your email address?
+        user_participation_response_options:
+          interested: 'Yes'
+          uninterested: 'No'
 
       jobseekers_job_application_ask_for_support_form:
         support_needed_details: Tell us any information you think is relevant
@@ -528,6 +535,9 @@ en:
       general_feedback_form:
         report_a_problem: Do you need to report a problem, or request support with using Teaching Vacancies?
         visit_purpose: What did you come to Teaching Vacancies to do?
+        user_participation_response: Would you like to participate in our research?
+
+      jobseekers_job_alert_further_feedback_form:
         user_participation_response: Would you like to participate in our research?
 
       jobseekers_account_feedback_form:

@@ -81,6 +81,11 @@ en:
       blank: Enter your email address
     user_participation_response:
       inclusion: Please indicate if you'd like to participate in user research
+  jobseekers_job_alert_further_feedback_form: &job_alert_further_feedback_form_errors
+    email:
+      blank: Enter your email address
+    user_participation_response:
+      inclusion: Please indicate if you'd like to participate in user research
   jobseekers_job_application_feedback_form: &jobseekers_job_application_feedback_form_errors
     email:
       blank: Enter your email address
@@ -190,6 +195,9 @@ en:
         jobseekers/job_alert_feedback_form:
           attributes:
             <<: *job_alert_feedback_errors
+        jobseekers/job_alert_further_feedback_form:
+          attributes:
+            <<: *job_alert_further_feedback_form_errors
         jobseekers/job_application/feedback_form:
           attributes:
             <<: *jobseekers_job_application_feedback_form_errors
