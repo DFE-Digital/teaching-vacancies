@@ -58,12 +58,13 @@ RSpec.describe "Giving general feedback for the service", recaptcha: true do
   end
 
   def fill_in_general_feedback
-    choose("general-feedback-form-visit-purpose-other-purpose-field")
-    fill_in "general_feedback_form[visit_purpose_comment]", with: visit_purpose_comment
+    choose name: "general_feedback_form[report_a_problem]", option: "yes"
+    choose I18n.t("helpers.label.general_feedback_form.visit_purpose_options.other_purpose")
 
+    fill_in "general_feedback_form[visit_purpose_comment]", with: visit_purpose_comment
     fill_in "general_feedback_form[comment]", with: comment
 
-    choose("general-feedback-form-user-participation-response-interested-field")
+    choose name: "general_feedback_form[user_participation_response]", option: "interested"
     fill_in "email", with: email
   end
 end

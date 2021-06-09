@@ -8,7 +8,10 @@
 
         h1.govuk-heading-xl = t(".heading")
 
-        p.govuk-body = t(".report_a_problem_html", mail_to: govuk_mail_to(t("help.email"), t("help.email")))
+        = f.govuk_radio_buttons_fieldset(:report_a_problem, legend: { size: "m" }) do
+          = f.govuk_radio_button :report_a_problem, :yes, link_errors: true do
+            p.govuk-body = t("help.report_a_problem_html", mail_to: govuk_mail_to(t("help.email"), t("help.email")))
+          = f.govuk_radio_button :report_a_problem, :no, link_errors: true
 
         = f.govuk_radio_buttons_fieldset(:visit_purpose, legend: { size: "m" }) do
           - Feedback.visit_purposes.keys.each_with_index do |visit_purpose, idx|
