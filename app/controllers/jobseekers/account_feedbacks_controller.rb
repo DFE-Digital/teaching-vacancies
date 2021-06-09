@@ -17,10 +17,10 @@ class Jobseekers::AccountFeedbacksController < Jobseekers::BaseController
   private
 
   def account_feedback_form_params
-    params.require(:jobseekers_account_feedback_form).permit(:rating, :comment, :origin)
+    params.require(:jobseekers_account_feedback_form).permit(:comment, :email, :origin, :rating, :report_a_problem, :user_participation_response)
   end
 
   def feedback_attributes
-    account_feedback_form_params.merge(jobseeker_id: current_jobseeker.id, feedback_type: "jobseeker_account")
+    account_feedback_form_params.except("report_a_problem").merge(jobseeker_id: current_jobseeker.id, feedback_type: "jobseeker_account")
   end
 end
