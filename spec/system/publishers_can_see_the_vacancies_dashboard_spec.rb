@@ -69,7 +69,7 @@ RSpec.describe "Hiring staff can see the vacancies dashboard" do
         click_on(I18n.t("publishers.vacancies_component.published.tab_heading"))
       end
 
-      within(".moj-filter-layout__content") do
+      within(".vacancies-component__content") do
         expect(page).to have_content(published_vacancy.job_title)
         expect(page).to have_css(".card-component", count: 1)
       end
@@ -82,7 +82,7 @@ RSpec.describe "Hiring staff can see the vacancies dashboard" do
         click_on(I18n.t("publishers.vacancies_component.draft.tab_heading"))
       end
 
-      within(".moj-filter-layout__content") do
+      within(".vacancies-component__content") do
         expect(page).to have_content(I18n.t("jobs.manage.draft.time_created"))
         expect(page).to have_content(format_date(draft_vacancy.created_at.to_date))
         expect(page).to have_content(format_date(draft_vacancy.updated_at.to_date))
@@ -98,7 +98,7 @@ RSpec.describe "Hiring staff can see the vacancies dashboard" do
         click_on(I18n.t("publishers.vacancies_component.pending.tab_heading"))
       end
 
-      within(".moj-filter-layout__content") do
+      within(".vacancies-component__content") do
         expect(page).to have_content(I18n.t("jobs.publication_date"))
         expect(page).to have_content(pending_vacancy.job_title)
         expect(page).to have_content(format_date(pending_vacancy.publish_on))
@@ -114,7 +114,7 @@ RSpec.describe "Hiring staff can see the vacancies dashboard" do
         click_on(I18n.t("publishers.vacancies_component.expired.tab_heading"))
       end
 
-      within(".moj-filter-layout__content") do
+      within(".vacancies-component__content") do
         expect(page).to have_content(expired_vacancy.job_title)
         expect(page).to have_content(format_date(expired_vacancy.expires_at.to_date))
         expect(page).to have_content(format_date(expired_vacancy.publish_on))
@@ -137,7 +137,7 @@ RSpec.describe "Hiring staff can see the vacancies dashboard" do
           click_on(I18n.t("publishers.vacancies_component.draft.tab_heading"))
         end
 
-        within(".moj-filter-layout__content") do
+        within(".vacancies-component__content") do
           expect(page).to have_content(format_date(draft_vacancy.created_at.to_date))
           expect(page).to have_content(format_date(draft_vacancy.updated_at.to_date))
         end
