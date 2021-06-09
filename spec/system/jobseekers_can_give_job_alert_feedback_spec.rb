@@ -61,10 +61,13 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
 
     context "when submitting further feedback" do
       let(:comment) { "Excellent" }
+      let(:email) { subscription.email }
 
       before do
         follow_the_link_in_the_job_alert_email
         fill_in "jobseekers_job_alert_further_feedback_form[comment]", with: comment
+        choose name: "jobseekers_job_alert_further_feedback_form[user_participation_response]", option: "interested"
+        fill_in "email", with: email
       end
 
       it "allows the user to submit further feedback" do
@@ -72,6 +75,8 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
         expect(current_path).to eq root_path
         expect(page).to have_content(I18n.t("jobseekers.job_alert_feedbacks.update.success"))
         expect(feedback.comment).to eq comment
+        expect(feedback.email).to eq email
+        expect(feedback.user_participation_response).to eq("interested")
         expect(feedback.recaptcha_score).to eq(0.9)
       end
 
