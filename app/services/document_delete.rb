@@ -14,6 +14,7 @@ class DocumentDelete
 
   def delete
     delete_file_on_google_drive!
+    delete_matching_supporting_document!
     document.destroy
   end
 
@@ -25,5 +26,13 @@ class DocumentDelete
     drive_service.delete_file document.google_drive_id
   rescue Google::Apis::ClientError => e
     raise e unless e.status_code == FILE_NOT_FOUND_STATUS_CODE
+  end
+
+  def delete_matching_supporting_document!
+    supporting_docs = document.vacancy.supporting_documents.select do |sd|
+      # Quick and dirty comparison instead of complex WHERE query on ActiveStorage schema
+      sd.filename == document.name && sd.byte_size == document.size
+    end
+    supporting_docs.each(&:purge)
   end
 end
