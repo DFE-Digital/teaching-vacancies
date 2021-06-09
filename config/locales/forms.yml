@@ -80,9 +80,13 @@ en:
         visit_purpose_comment: >-
           Please tell us what you came here to do. Do not include any information that could identify you personally
           (such as your name or the name of your school).
-
       jobseeker:
         password: Your password has to be at least 8 characters long
+
+      jobseekers_account_feedback_form:
+        email: >-
+          We'll only use this to tell you about opportunities to take part in user research that helps us improve
+          Department for Education services.
 
       jobseekers_job_application_declarations_form:
         right_to_work_in_uk_html: >-
@@ -113,6 +117,10 @@ en:
         religion: >-
           Tell us about your religion or faith. You can select ‘Other’ if your beliefs are not represented by one of the
           given options.
+      jobseekers_job_application_feedback_form:
+        email: >-
+          We'll only use this to tell you about opportunities to take part in user research that helps us improve
+          Department for Education services.
       jobseekers_job_application_personal_details_form:
         national_insurance_number: >-
           If you have a National Insurance number you should enter it here. It's on your National Insurance card,
@@ -122,6 +130,9 @@ en:
         teacher_reference_number: Enter the 7 numbers of your TRN, excluding any letters and symbols.
       jobseekers_job_alert_further_feedback_form:
         comment: This is optional, but the information will help us to make improvements.
+        email: >-
+          We'll only use this to tell you about opportunities to take part in user research that helps us improve
+          Department for Education services.
       jobseekers_nqt_job_alerts_form:
         email: Enter your email address. We will only use it to send you job alerts.
         keywords: >-
@@ -134,6 +145,9 @@ en:
         email: Enter your email address. We'll only use it to send you job alerts.
       jobseekers_unsubscribe_feedback_form:
         comment: Any more information you can share will help us to improve the service
+        email: >-
+          We'll only use this to tell you about opportunities to take part in user research that helps us improve
+          Department for Education services.
 
       publishers_organisation_form:
         description: Jobseekers will see this description of the %{organisation_type} in the job listing
@@ -179,6 +193,10 @@ en:
       publishers_job_listing_extend_deadline_form:
         expires_at: For example, 01 05 2021
         starts_on: For example, 01 09 2021
+      publishers_job_listing_feedback_form:
+        email: >-
+          We'll only use this to tell you about opportunities to take part in user research that helps us improve
+          Department for Education services.
       publishers_job_listing_important_dates_form:
         expires_at: For example, 01 05 2021
         publish_on: For example, 01 01 2021
@@ -218,7 +236,9 @@ en:
       general_feedback_form:
         comment: How could we improve this service?
         email: What is your email address?
-        visit_purpose: Visit purpose
+        report_a_problem_options:
+          "no": "No"
+          "yes": "Yes"
         visit_purpose_options:
           find_teaching_job: Find a job in teaching
           list_teaching_job: List a teaching job on the service
@@ -232,15 +252,26 @@ en:
         password: Password
 
       jobseekers_account_feedback_form:
+        comment: Do you have any suggestions on how we should improve the service?
+        email: What is your email address?
         rating_options:
+          highly_dissatisfied: Highly dissatisfied
           highly_satisfied: Highly satisfied
-          somewhat_satisfied: Somewhat satisfied
           neither: Neither satisfied nor dissatisfied
           somewhat_dissatisfied: Somewhat dissatisfied
-          highly_dissatisfied: Highly dissatisfied
-        comment: Do you have any suggestions on how we should improve the service?
+          somewhat_satisfied: Somewhat satisfied
+        report_a_problem_options:
+          "no": "No"
+          "yes": "Yes"
+        user_participation_response_options:
+          interested: 'Yes'
+          uninterested: 'No'
       jobseekers_job_alert_further_feedback_form:
         comment: Would you like to add any further comments about the relevancy of the job alerts you have received?
+        email: What is your email address?
+        user_participation_response_options:
+          interested: 'Yes'
+          uninterested: 'No'
 
       jobseekers_job_application_ask_for_support_form:
         support_needed_details: Tell us any information you think is relevant
@@ -351,13 +382,17 @@ en:
           prefer_not_to_say: Prefer not to say
           sikh: Sikh
       jobseekers_job_application_feedback_form:
+        email: What is your email address?
+        comment: Do you have any suggestions on how we should improve the service?
         rating_options:
+          highly_dissatisfied: Highly dissatisfied
           highly_satisfied: Highly satisfied
-          somewhat_satisfied: Somewhat satisfied
           neither: Neither satisfied nor dissatisfied
           somewhat_dissatisfied: Somewhat dissatisfied
-          highly_dissatisfied: Highly dissatisfied
-        comment: Do you have any suggestions on how we should improve the service?
+          somewhat_satisfied: Somewhat satisfied
+        user_participation_response_options:
+              interested: 'Yes'
+              uninterested: 'No'
       jobseekers_job_application_personal_details_form:
         city: Town or city
         country: Country
@@ -400,13 +435,17 @@ en:
           daily: Daily, at around 3 pm
           weekly: Weekly (Friday evening at around 6 pm)
       jobseekers_unsubscribe_feedback_form:
+        email: What is your email address?
         comment: Is there anything else you'd like to tell us?
         other_unsubscribe_reason_comment: Briefly, tell us more about that reason
         unsubscribe_reason_options:
-          not_relevant: The alerts I am receiving are not relevant to me
-          job_found: I have found a teaching job
           circumstances_change: My circumstances have changed
+          job_found: I have found a teaching job
+          not_relevant: The alerts I am receiving are not relevant to me
           other_reason: Another reason
+        user_participation_response_options:
+          interested: 'Yes'
+          uninterested: 'No'
 
       publisher:
         email: Email address
@@ -447,13 +486,21 @@ en:
         starts_asap_options:
           "true": As soon as possible
       publishers_job_listing_feedback_form:
+        email: What is your email address?
+        comment: Do you have any suggestions on how we should improve the service?
         rating_options:
+          highly_dissatisfied: Highly dissatisfied
           highly_satisfied: Highly satisfied
-          somewhat_satisfied: Somewhat satisfied
           neither: Neither satisfied nor dissatisfied
           somewhat_dissatisfied: Somewhat dissatisfied
-          highly_dissatisfied: Highly dissatisfied
-        comment: Do you have any suggestions on how we should improve the service?
+          somewhat_satisfied: Somewhat satisfied
+        report_a_problem_options:
+          "no": "No"
+          "yes": "Yes"
+        user_participation_response_options:
+          interested: 'Yes'
+          uninterested: 'No'
+
       publishers_job_listing_important_dates_form:
         starts_asap_options:
           "true": As soon as possible
@@ -486,11 +533,17 @@ en:
 
     legend:
       general_feedback_form:
+        report_a_problem: Do you need to report a problem, or request support with using Teaching Vacancies?
         visit_purpose: What did you come to Teaching Vacancies to do?
+        user_participation_response: Would you like to participate in our research?
+
+      jobseekers_job_alert_further_feedback_form:
         user_participation_response: Would you like to participate in our research?
 
       jobseekers_account_feedback_form:
         rating: How satisfied are you with your experience of using Teaching Vacancies?
+        report_a_problem: Do you need to report a problem, or request support with using Teaching Vacancies?
+        user_participation_response: Would you like to participate in our research?
 
       jobseekers_job_application_ask_for_support_form:
         support_needed: Do you want to ask for support so that you can attend an interview?
@@ -521,6 +574,7 @@ en:
         <<: *jobseekers_job_application_details_qualifications_shared_legends
       jobseekers_job_application_feedback_form:
         rating: How satisfied are you with your experience of using Teaching Vacancies?
+        user_participation_response: Would you like to participate in our research?
       jobseekers_job_application_personal_details_form:
         your_address: Your address
       jobseekers_job_application_professional_status_form:
@@ -533,6 +587,7 @@ en:
         frequency: When do you want to receive alerts?
       jobseekers_unsubscribe_feedback_form:
         reason: Why do you want to unsubscribe from this alert?
+        user_participation_response: Would you like to participate in our research?
 
       publishers_job_listing_applying_for_the_job_form:
         enable_job_applications: How would you like candidates to apply?
@@ -549,6 +604,8 @@ en:
         starts_on: Date job starts
       publishers_job_listing_feedback_form:
         rating: How satisfied are you with the job listing process on Teaching Vacancies?
+        report_a_problem: Do you need to report a problem, or request support with using Teaching Vacancies?
+        user_participation_response: Would you like to participate in our research?
       publishers_job_listing_important_dates_form:
         expires_at: Closing date
         expiry_time: Time application is due

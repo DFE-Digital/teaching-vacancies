@@ -20,10 +20,11 @@ RSpec.describe "Jobseekers can give job application feedback after submitting th
     expect(page).to have_content("There is a problem")
 
     choose I18n.t("helpers.label.jobseekers_job_application_feedback_form.rating_options.somewhat_satisfied")
+    choose I18n.t("helpers.label.jobseekers_job_application_feedback_form.user_participation_response_options.interested")
     fill_in "jobseekers_job_application_feedback_form[comment]", with: comment
 
     expect { click_on I18n.t("buttons.submit_feedback") }.to change {
-      jobseeker.feedbacks.where(comment: comment, feedback_type: "application", rating: "somewhat_satisfied").count
+      jobseeker.feedbacks.where(comment: comment, email: jobseeker.email, feedback_type: "application", rating: "somewhat_satisfied", user_participation_response: "interested").count
     }.by(1)
 
     expect(current_path).to eq(jobseekers_job_applications_path)

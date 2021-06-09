@@ -22,10 +22,10 @@ class GeneralFeedbacksController < ApplicationController
 
   def general_feedback_form_params
     params.require(:general_feedback_form)
-          .permit(:comment, :email, :user_participation_response, :visit_purpose, :visit_purpose_comment)
+          .permit(:comment, :email, :report_a_problem, :user_participation_response, :visit_purpose, :visit_purpose_comment)
   end
 
   def feedback_attributes
-    general_feedback_form_params.merge(feedback_type: "general", jobseeker_id: current_jobseeker&.id, publisher_id: current_publisher&.id)
+    general_feedback_form_params.except("report_a_problem").merge(feedback_type: "general", jobseeker_id: current_jobseeker&.id, publisher_id: current_publisher&.id)
   end
 end
