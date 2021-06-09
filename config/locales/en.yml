@@ -157,12 +157,13 @@ en:
       success: Your feedback has been successfully submitted
     new:
       heading: Give feedback
-      report_a_problem_html: To report a problem, or for support using Teaching Vacancies, please email %{mail_to}
       page_description: Tell us how we can improve Teaching Vacancies and volunteer as a user research participant.
       title: Feedback
 
   help:
     email: teaching.vacancies@education.gov.uk
+    report_a_problem_html: To report a problem, or for support using Teaching Vacancies, please email %{mail_to}
+
 
   organisation:
     location_link_text:

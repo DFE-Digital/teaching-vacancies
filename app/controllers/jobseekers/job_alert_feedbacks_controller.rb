@@ -44,7 +44,7 @@ class Jobseekers::JobAlertFeedbacksController < ApplicationController
   end
 
   def further_feedback_form_params
-    params.require(:jobseekers_job_alert_further_feedback_form).permit(:comment)
+    params.require(:jobseekers_job_alert_further_feedback_form).permit(:comment, :email, :user_participation_response)
   end
 
   def token
