@@ -11,7 +11,7 @@ class Publishers::SessionsController < Devise::SessionsController
       redirect_to organisation_path
     else
       trigger_publisher_sign_in_event(:failure, :email, publisher.oid)
-      redirect_to new_auth_email_path, notice: t(".not_authorised")
+      redirect_to new_login_key_path, notice: t(".not_authorised")
     end
   end
 
