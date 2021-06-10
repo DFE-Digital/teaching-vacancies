@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe ImportOrganisationDataJob do
-  subject(:job) { described_class.perform_later }
-
   before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(disable_expensive_jobs_enabled?) }
 
   context "when DisableExpensiveJobs is not enabled" do
@@ -17,7 +15,7 @@ RSpec.describe ImportOrganisationDataJob do
       expect(import_school_data).to receive(:run!)
       expect(import_trust_data).to receive(:run!)
 
-      perform_enqueued_jobs { job }
+      described_class.perform_now
     end
 
     context "when there are some old memberships in the database that are not in the latest imported data" do
@@ -56,7 +54,7 @@ RSpec.describe ImportOrganisationDataJob do
           :get,
           "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{todays_date}.csv",
         ).to_return(body: schools_csv)
-        perform_enqueued_jobs { job }
+        described_class.perform_now
       end
 
       after do
@@ -81,7 +79,7 @@ RSpec.describe ImportOrganisationDataJob do
     it "does not perform the job" do
       expect(ImportSchoolData).not_to receive(:new)
 
-      perform_enqueued_jobs { job }
+      described_class.perform_now
     end
   end
 end
