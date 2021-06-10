@@ -22,10 +22,10 @@
         "sourceType": "module"
     },
     "rules": {
-        "semi": ["warn", "always"],
+        "semi": ["error", "always"],
         "no-use-before-define": 0,
-        "max-len": ["warn", { "code": 200 }],
-        "quotes": ["warn", "single"],
+        "max-len": ["error", { "code": 200 }],
+        "quotes": ["error", "single"],
         "eol-last": 1,
         "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 1 }],
         "import/prefer-default-export": 0,
