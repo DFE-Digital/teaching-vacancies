@@ -106,6 +106,6 @@ class ApplicationController < ActionController::Base
 
   def click_event_data_params
     # Any params that might be present must be explicitly permitted in order to convert to hash
-    params[:click_event_data].permit(:vacancy_id)
+    params[:click_event_data]&.permit(:vacancy_id)
   end
 end
