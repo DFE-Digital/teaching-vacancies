@@ -25,28 +25,28 @@ RSpec.describe "Jobseekers can view all the jobs" do
 
       it "jobseekers can view jobs and navigate between pages" do
         expect(page).to have_css("li.vacancy", count: 2)
-        expect(page).to have_css(".vacancies-stats-top", text: "Showing 1 to 2 of 5 results")
+        expect(page).to have_css(".search-results__header-stats", text: "Showing 1 to 2 of 5 results")
 
         within "ul.pagination" do
           click_on "Next"
         end
 
         expect(page).to have_css("li.vacancy", count: 2)
-        expect(page).to have_css(".vacancies-stats-top", text: "Showing 3 to 4 of 5 results")
+        expect(page).to have_css(".search-results__header-stats", text: "Showing 3 to 4 of 5 results")
 
         within "ul.pagination" do
           click_on "Previous"
         end
 
         expect(page).to have_css("li.vacancy", count: 2)
-        expect(page).to have_css(".vacancies-stats-top", text: "Showing 1 to 2 of 5 results")
+        expect(page).to have_css(".search-results__header-stats", text: "Showing 1 to 2 of 5 results")
 
         within "ul.pagination" do
           click_on "3"
         end
 
         expect(page).to have_css("li.vacancy", count: 1)
-        expect(page).to have_css(".vacancies-stats-top", text: "Showing 5 to 5 of 5 results")
+        expect(page).to have_css(".search-results__header-stats", text: "Showing 5 to 5 of 5 results")
       end
     end
 
@@ -55,28 +55,28 @@ RSpec.describe "Jobseekers can view all the jobs" do
 
       it "jobseekers can view jobs and navigate between pages" do
         expect(page).to have_css("li.vacancy", count: 2)
-        expect(page).to have_css(".vacancies-stats-top", text: "Showing 1 to 2 of 5 results")
+        expect(page).to have_css(".search-results__header-stats", text: "Showing 1 to 2 of 5 results")
 
         within "ul.pagination" do
           click_on "Next"
         end
 
         expect(page).to have_css("li.vacancy", count: 2)
-        expect(page).to have_css(".vacancies-stats-top", text: "Showing 3 to 4 of 5 results")
+        expect(page).to have_css(".search-results__header-stats", text: "Showing 3 to 4 of 5 results")
 
         within "ul.pagination" do
           click_on "Previous"
         end
 
         expect(page).to have_css("li.vacancy", count: 2)
-        expect(page).to have_css(".vacancies-stats-top", text: "Showing 1 to 2 of 5 results")
+        expect(page).to have_css(".search-results__header-stats", text: "Showing 1 to 2 of 5 results")
 
         within "ul.pagination" do
           click_on "3"
         end
 
         expect(page).to have_css("li.vacancy", count: 1)
-        expect(page).to have_css(".vacancies-stats-top", text: "Showing 5 to 5 of 5 results")
+        expect(page).to have_css(".search-results__header-stats", text: "Showing 5 to 5 of 5 results")
       end
     end
   end

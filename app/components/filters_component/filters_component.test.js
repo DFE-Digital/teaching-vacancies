@@ -57,7 +57,14 @@ describe('filterGroup', () => {
 <div class="${ACCORDION_SECTION_CLASS_SELECTOR}"><div class="govuk-accordion__section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div></div>
 </form>`;
 
-      init(ACCORDION_SECTION_CLASS_SELECTOR, REMOVE_FILTER_CLASS_SELECTOR, 'filters-component-clear-all', 'filters-component-close-all', 'filters-component-show-mobile', 'govuk-accordion__section-header');
+      init(
+        ACCORDION_SECTION_CLASS_SELECTOR,
+        REMOVE_FILTER_CLASS_SELECTOR,
+        'filters-component-clear-all',
+        'filters-component-close-all',
+        'filters-component-show-mobile',
+        'govuk-accordion__section-header',
+      );
 
       expect(addRemoveFilterEventMock).toHaveBeenCalledTimes(2);
       expect(addRemoveAllFiltersEventMock).toHaveBeenCalledTimes(1);

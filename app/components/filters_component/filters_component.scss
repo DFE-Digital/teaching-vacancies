@@ -73,6 +73,13 @@
     top: 0;
   }
 
+  //not the best but cant figure a better way to sort this right now
+  .add-remove-schools {
+    @include govuk-media-query($until: tablet) {
+      position: static;
+    }
+  }
+
   &__heading {
     box-shadow: none;
 
