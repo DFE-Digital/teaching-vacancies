@@ -27,7 +27,7 @@
     word-break: break-all;
   }
 
-  input[type="submit"] {
+  input[type='submit'] {
     white-space: normal;
     word-break: break-word;
   }
@@ -43,7 +43,7 @@
       color: govuk-colour('white');
     }
 
-    input[type="password"] {
+    input[type='password'] {
       color: govuk-colour('black');
     }
   }
@@ -55,7 +55,7 @@
       color: govuk-colour('black');
     }
 
-    input[type="submit"] {
+    input[type='submit'] {
       color: govuk-colour('white');
     }
   }

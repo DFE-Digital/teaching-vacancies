@@ -1,7 +1,8 @@
 @media print {
   .publishers_vacancies_job_applications_show {
-
     .review-component__body {
+      margin-bottom: govuk-spacing(4);
+
       .govuk-summary-list__row > * {
         font-size: 0.8em;
       }
@@ -9,8 +10,6 @@
       .govuk-body {
         font-size: 1em;
       }
-
-      margin-bottom: govuk-spacing(4);
     }
 
     .review-component__heading {
@@ -22,8 +21,11 @@
       margin-bottom: govuk-spacing(4);
     }
 
-    .govuk-accordion__section-header, .govuk-accordion__section, .govuk-summary-list__actions, .review-component__body--border {
-      border: none !important;
+    .govuk-accordion__section-header,
+    .govuk-accordion__section,
+    .govuk-summary-list__actions,
+    .review-component__body--border {
+      border: 0 !important;
     }
 
     .govuk-heading-xl {
@@ -34,14 +36,18 @@
       flex-basis: 75%;
     }
 
-    .govuk-summary-list__key, .govuk-summary-list__value, .govuk-summary-list__actions, .govuk-summary-list__value .govuk-body {
+    .govuk-summary-list__key,
+    .govuk-summary-list__value,
+    .govuk-summary-list__actions,
+    .govuk-summary-list__value .govuk-body {
       display: table-row;
       margin-bottom: govuk-spacing(2);
       width: 100%;
     }
 
-    .govuk-summary-list__row, .govuk-summary-list__value .govuk-body {
-      border-bottom: none !important;
+    .govuk-summary-list__row,
+    .govuk-summary-list__value .govuk-body {
+      border-bottom: 0 !important;
     }
 
     .govuk-accordion__icon,

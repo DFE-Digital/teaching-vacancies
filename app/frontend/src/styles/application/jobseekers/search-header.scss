@@ -1,0 +1,33 @@
+.search-results__header {
+  display: flex;
+  flex-direction: column;
+
+  @include govuk-media-query($from: tablet) {
+    flex-direction: row;
+  }
+
+  &-stats {
+    @include govuk-media-query($from: tablet) {
+      order: 2;
+
+      .govuk-body {
+        line-height: 2.6rem;
+      }
+    }
+
+    .govuk-body {
+      margin-bottom: 0;
+    }
+  }
+
+  &-sorting {
+    @include govuk-media-query($from: tablet) {
+      flex-grow: 1;
+      order: 1;
+    }
+
+    .govuk-label {
+      display: inline;
+    }
+  }
+}
