@@ -97,10 +97,15 @@ class ApplicationController < ActionController::Base
   end
 
   def trigger_click_event
-    request_event.trigger(click_event_param.to_sym)
+    request_event.trigger(click_event_param.to_sym, click_event_data_params.to_h)
   end
 
   def click_event_param
     params[:click_event]
+  end
+
+  def click_event_data_params
+    # Any params that might be present must be explicitly permitted in order to convert to hash
+    params[:click_event_data].permit(:vacancy_id)
   end
 end

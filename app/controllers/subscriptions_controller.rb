@@ -84,7 +84,7 @@ class SubscriptionsController < ApplicationController
     vacancy = Vacancy.find_by_slug(origin_param.split("/").last)
     return unless vacancy
 
-    request_event.trigger(:vacancy_create_job_alert_clicked, vacancy_id: vacancy.id)
+    request_event.trigger(:vacancy_create_job_alert_clicked, vacancy_id: StringAnonymiser.new(vacancy.id))
   end
 
   def trigger_subscription_event(type, subscription)
