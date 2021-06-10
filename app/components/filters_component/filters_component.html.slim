@@ -9,7 +9,7 @@
             span.govuk-body.filters-component__heading-applied = applied_text
           h3.govuk-heading-s = filters[:title]
           - if options[:publisher_preference]
-            = govuk_link_to t(".add_or_remove_schools"), edit_publisher_preference_path(options[:publisher_preference]), class: "filters-button govuk-link--no-visited-state"
+            = govuk_link_to t(".add_or_remove_schools"), edit_publisher_preference_path(options[:publisher_preference]), class: "filters-button add-remove-schools govuk-link--no-visited-state"
 
           button.filters-button.filters-component--show-mobile-open id="filters-component-filters-component-return-to-results"
             = t("shared.filter_group.return_to_results")

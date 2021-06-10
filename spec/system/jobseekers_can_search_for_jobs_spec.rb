@@ -24,7 +24,7 @@ RSpec.describe "Jobseekers can search for jobs" do
 
     it "displays page 1 jobs", vcr: { cassette_name: "algoliasearch teacher page 1" } do
       expect(page).to have_css("li.vacancy", count: 2)
-      expect(page).to have_css(".vacancies-stats-top", text: strip_tags(I18n.t("jobs.number_of_results_html", first: 1, last: 2, count: 6)))
+      expect(page).to have_css(".search-results__header-stats", text: strip_tags(I18n.t("jobs.number_of_results_html", first: 1, last: 2, count: 6)))
     end
 
     context "when navigating between pages" do
@@ -34,7 +34,7 @@ RSpec.describe "Jobseekers can search for jobs" do
         end
 
         expect(page).to have_css("li.vacancy", count: 2)
-        expect(page).to have_css(".vacancies-stats-top", text: strip_tags(I18n.t("jobs.number_of_results_html", first: 5, last: 6, count: 6)))
+        expect(page).to have_css(".search-results__header-stats", text: strip_tags(I18n.t("jobs.number_of_results_html", first: 5, last: 6, count: 6)))
       end
     end
   end
@@ -48,7 +48,7 @@ RSpec.describe "Jobseekers can search for jobs" do
         expect(jobs[1]).to have_content("Maths Teacher 2")
       end
 
-      expect(page).to have_css(".vacancies-stats-top", text: strip_tags(I18n.t("jobs.number_of_results_one_page_html", count: 2)))
+      expect(page).to have_css(".search-results__header-stats", text: strip_tags(I18n.t("jobs.number_of_results_one_page_html", count: 2)))
     end
 
     context "when sorting the jobs", js: true do
@@ -60,7 +60,7 @@ RSpec.describe "Jobseekers can search for jobs" do
           expect(jobs[1]).to have_content("Maths Teacher")
         end
 
-        expect(page).to have_css(".vacancies-stats-top", text: strip_tags(I18n.t("jobs.number_of_results_one_page_html", count: 2)))
+        expect(page).to have_css(".search-results__header-stats", text: strip_tags(I18n.t("jobs.number_of_results_one_page_html", count: 2)))
       end
     end
   end

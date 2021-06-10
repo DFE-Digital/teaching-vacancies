@@ -7,13 +7,12 @@
     overflow-x: hidden;
   }
 
-  &.jobseekers_job_applications_review  {
-  .govuk-grid-column-two-thirds {
-
-    @media (max-width: 900px) {
+  &.jobseekers_job_applications_review {
+    .govuk-grid-column-two-thirds {
+      @media (max-width: 900px) {
         box-sizing: border-box;
-        width: 100%;
         padding: 0 govuk-spacing(3);
+        width: 100%;
       }
     }
   }

@@ -15,18 +15,20 @@
   = render(Jobseekers::SearchResults::HeadingComponent.new(vacancies_search: @vacancies_search))
 
   .govuk-grid-row
-    .govuk-grid-column-one-third class="govuk-!-margin-bottom-4"
+    .govuk-grid-column-one-third
       = render "filters"
     .govuk-grid-column-two-thirds
       = render(Jobseekers::SearchResults::SearchVisualizerComponent.new(vacancies_search: @vacancies_search, render: @display_map))
-      section.sort-results.sortable-links role="search" aria-label="Sort vacancies"
-        = render partial: "sorting_options", locals: { search_criteria: @vacancies_search.active_criteria, sort: @vacancies_search.sort_by }
+      .search-results__header
         - unless @vacancies_search.out_of_bounds?
-          .govuk-body.vacancies-stats-top aria-label="Number of results"
-            - if @vacancies_search.total_count <= @vacancies_search.per_page
-              = t("jobs.number_of_results_one_page_html", count: @vacancies_search.total_count)
-            - else
-              = t("jobs.number_of_results_html", first: @vacancies_search.page_from, last: @vacancies_search.page_to, count: @vacancies_search.total_count)
+          .govuk-body.search-results__header-stats aria-label="Number of results"
+            p.govuk-body
+              - if @vacancies_search.total_count <= @vacancies_search.per_page
+                = t("jobs.number_of_results_one_page_html", count: @vacancies_search.total_count)
+              - else
+                = t("jobs.number_of_results_html", first: @vacancies_search.page_from, last: @vacancies_search.page_to, count: @vacancies_search.total_count)
+        .search-results__header-sorting
+          = render partial: "sorting_options", locals: { search_criteria: @vacancies_search.active_criteria, sort: @vacancies_search.sort_by }
       #search-results aria-label="Search results"
         - if @vacancies.any?
           ul.vacancies role="list"
