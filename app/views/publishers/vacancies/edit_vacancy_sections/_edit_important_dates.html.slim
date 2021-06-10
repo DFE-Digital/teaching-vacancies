@@ -1,5 +1,6 @@
 = render "publishers/vacancies/error_tag", attributes: %i[publish_on expires_at starts_on], section: "important_dates"
 
+#expiry_time
 = render ReviewComponent.new id: "important_dates" do |review|
   - review.heading title: t("jobs.important_dates"),
                    text: t("buttons.change"),
