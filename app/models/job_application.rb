@@ -71,9 +71,8 @@ class JobApplication < ApplicationRecord
     report = vacancy.equal_opportunities_report || vacancy.build_equal_opportunities_report
     Jobseekers::JobApplication::EqualOpportunitiesForm::ATTRIBUTES.each do |attr|
       attr_value = public_send(attr)
+      next unless attr_value.present?
       if attr.ends_with?("_description")
-        next unless attr_value.present?
-
         attr_name = attr.to_s.split("_").first
         report.public_send("#{attr_name}_other_descriptions") << attr_value
       else
