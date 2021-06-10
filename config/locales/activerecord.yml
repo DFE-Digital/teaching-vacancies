@@ -111,7 +111,7 @@ en:
       invalid: Enter a date in the correct format
       on_or_after: The closing date must be in the future
     expiry_time:
-      inclusion: Select the time the application is due
+      inclusion: Choose the time the application is due from the options provided
     publish_on_day:
       inclusion: Enter the date the job will be listed
     publish_on:
