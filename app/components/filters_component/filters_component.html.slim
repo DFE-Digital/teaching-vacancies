@@ -46,13 +46,12 @@
 
   = render GovukComponent::Accordion.new(id: "accordion-default", classes: "filters-component__groups") do |component|
     - items.each_with_index do |group, index|
-      - component.slot(:section,
-        title: group[:title]) do
-          .govuk-accordion__section-content.filters-component__groups__group id="accordion-default-content-#{index}" aria-labelledby="accordion-default-heading-#{index}" data-group=group[:key]
-            = form.govuk_collection_check_boxes group[:attribute],
-              group[:options],
-              group[:value_method],
-              group[:text_method],
-              small: true,
-              legend: nil,
-              hint: nil
+      - component.slot(:section, title: group[:title]) do
+        .filters-component__groups__group id="accordion-default-content-#{index + 1}" data-group=group[:key]
+          = form.govuk_collection_check_boxes group[:attribute],
+            group[:options],
+            group[:value_method],
+            group[:text_method],
+            small: true,
+            legend: nil,
+            hint: nil
