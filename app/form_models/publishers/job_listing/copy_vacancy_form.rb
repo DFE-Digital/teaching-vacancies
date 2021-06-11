@@ -7,6 +7,10 @@ class Publishers::JobListing::CopyVacancyForm < Publishers::JobListing::Importan
   validates :job_title, length: { minimum: 4, maximum: 100 }, if: proc { job_title.present? }
   validate :job_title_has_no_tags?, if: proc { job_title.present? }
 
+  def params_to_save
+    super.merge(job_title: job_title)
+  end
+
   private
 
   def job_title_has_no_tags?
