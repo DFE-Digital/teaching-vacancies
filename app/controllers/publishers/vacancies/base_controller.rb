@@ -31,7 +31,7 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
 
   def all_invalid_steps
     @all_invalid_steps ||= steps_config.except(:job_location, :schools, :supporting_documents, :review).map do |step|
-      step unless step_valid?(step)
+      step unless step_valid?(step.first)
     end
   end
 

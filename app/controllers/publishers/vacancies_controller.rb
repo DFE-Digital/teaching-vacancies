@@ -29,7 +29,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
 
     if all_steps_valid?
       session[:current_step] = :review
-      set_completed_step
+      set_completed_step!
     else
       session[:current_step] = :edit_incomplete
       redirect_to_incomplete_step
