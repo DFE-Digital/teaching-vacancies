@@ -17,6 +17,7 @@ class ApplicationController < ActionController::Base
   helper_method :cookies_preference_set?, :referred_from_jobs_path?, :utm_parameters, :current_variant?
 
   include Publishers::AuthenticationConcerns
+  include DeviseFlashConcerns
   include AbTestable
 
   def check
