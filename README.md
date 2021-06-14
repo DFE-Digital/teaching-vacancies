@@ -119,8 +119,14 @@ To run the command above you need [AWS credentials](#aws-credentials-mfa-and-rol
 
 [Git secrets](/documentation/secrets-detection.md) offers an easy way to defend against accidentally publishing these secrets.
 
+#### Override variables for local development
+
 For local development, you can use a [dotenv-rails environment override](https://github.com/bkeepers/dotenv#frequently-answered-questions):
-- create the file `.env.local`, with contents `DOMAIN=localhost:3000`
+- create the file `.env.local`, with contents
+```
+DFE_SIGN_IN_REDIRECT_URL=https://localhost:3000/publishers/auth/dfe/callback
+DOMAIN=localhost:3000
+```
 
 ### Set up the database
 
