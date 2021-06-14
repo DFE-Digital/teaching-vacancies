@@ -18,6 +18,7 @@ en:
     cancel_and_return: Cancel and return
     cancel_end_listing: Cancel ending job listing
     cancel_extend_deadline: Cancel deadline extension
+    close_account: Close account
     change: Change
     complete_section: Complete section
     confirm_rejection: Confirm rejection
@@ -88,6 +89,8 @@ en:
           We'll only use this to tell you about opportunities to take part in user research that helps us improve
           Department for Education services.
 
+      jobseekers_close_account_feedback_form:
+        close_account_reason_comment: Your feedback will help us improve the service
       jobseekers_job_application_declarations_form:
         right_to_work_in_uk_html: >-
           You can find out whether you have the right to work in the UK on the
@@ -266,13 +269,18 @@ en:
         user_participation_response_options:
           interested: 'Yes'
           uninterested: 'No'
+      jobseekers_close_account_feedback_form:
+        close_account_reason_options:
+          too_many_emails: "I'm getting too many emails"
+          not_getting_any_value: "I'm not getting any value from the service"
+          not_looking_for_job: "I'm not looking for a teaching job"
+          other_close_account_reason: Other
       jobseekers_job_alert_further_feedback_form:
         comment: Would you like to add any further comments about the relevancy of the job alerts you have received?
         email: What is your email address?
         user_participation_response_options:
           interested: 'Yes'
           uninterested: 'No'
-
       jobseekers_job_application_ask_for_support_form:
         support_needed_details: Tell us any information you think is relevant
         support_needed_options:
@@ -554,6 +562,8 @@ en:
         report_a_problem: Do you need to report a problem, or request support with using Teaching Vacancies?
         user_participation_response: Would you like to participate in our research?
 
+      jobseekers_close_account_feedback_form:
+        reason: Tell us why you are closing your account
       jobseekers_job_application_ask_for_support_form:
         support_needed: Do you want to ask for support so that you can attend an interview?
       jobseekers_job_application_declarations_form:
