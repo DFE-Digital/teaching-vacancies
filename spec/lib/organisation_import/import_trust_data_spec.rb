@@ -17,7 +17,7 @@ RSpec.describe ImportTrustData do
 
       it "raises an HTTP error" do
         expect { subject.send(:save_csv_file, csv_url, temp_file_location) }
-          .to raise_error(HTTParty::ResponseError).with_message("CSV file not found.")
+          .to raise_error(HTTParty::ResponseError).with_message("CSV file not found at #{csv_url}.")
       end
     end
 
@@ -26,7 +26,7 @@ RSpec.describe ImportTrustData do
 
       it "raises an HTTP error" do
         expect { subject.send(:save_csv_file, csv_url, temp_file_location) }
-          .to raise_error(HTTParty::ResponseError).with_message("Unexpected problem downloading CSV file.")
+          .to raise_error(HTTParty::ResponseError).with_message("Unexpected problem downloading CSV file from #{csv_url}.")
       end
     end
 
