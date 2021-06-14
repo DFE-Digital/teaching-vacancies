@@ -2,8 +2,6 @@ class Jobseekers::SessionsController < Devise::SessionsController
   before_action :sign_out_publisher!, only: %i[create]
   before_action :render_resource_with_errors, only: %i[new]
   before_action :check_if_access_locked, only: %i[new]
-  before_action :replace_devise_alert_flash_with_notice!, only: %i[new]
-  after_action :replace_devise_notice_flash_with_success!, only: %i[create destroy]
   after_action only: %i[create] do
     trigger_jobseeker_sign_in_event(:success)
   end
@@ -45,10 +43,5 @@ class Jobseekers::SessionsController < Devise::SessionsController
       success: success_or_failure == :success,
       errors: errors,
     )
-  end
-
-  def replace_devise_alert_flash_with_notice!
-    flash[:notice] = flash[:alert] if flash[:alert].present?
-    flash.delete(:alert)
   end
 end
