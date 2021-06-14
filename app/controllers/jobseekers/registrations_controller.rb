@@ -7,6 +7,16 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
   after_action :set_correct_update_message, only: %i[update]
   after_action :remove_devise_flash!, only: %i[create update]
 
+  def confirm_destroy
+    @close_account_feedback_form = Jobseekers::CloseAccountFeedbackForm.new
+  end
+
+  def destroy
+    Jobseekers::CloseAccount.new(current_jobseeker, close_account_feedback_form_params).call
+    sign_out(:jobseeker)
+    redirect_to root_path, success: t(".success")
+  end
+
   protected
 
   def check_password_difference
@@ -58,5 +68,10 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
 
   def after_update_path_for(resource)
     resource.pending_reconfirmation? && !password_update? ? jobseekers_check_your_email_path : jobseekers_account_path
+  end
+
+  def close_account_feedback_form_params
+    params.require(:jobseekers_close_account_feedback_form)
+          .permit(:close_account_reason, :close_account_reason_comment)
   end
 end
