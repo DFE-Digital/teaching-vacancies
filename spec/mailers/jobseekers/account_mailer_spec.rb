@@ -14,6 +14,17 @@ RSpec.describe Jobseekers::AccountMailer do
     }
   end
 
+  describe "#account_closed" do
+    let(:mail) { described_class.account_closed(jobseeker) }
+    let(:notify_template) { NOTIFY_JOBSEEKER_ACCOUNT_CLOSED_TEMPLATE }
+
+    it "sends an `account_closed` email" do
+      expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.account_closed.subject"))
+      expect(mail.to).to eq(["test@email.com"])
+      expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.account_closed.heading"))
+    end
+  end
+
   describe "#confirmation_instructions" do
     let(:mail) { described_class.confirmation_instructions(jobseeker, token) }
     let(:notify_template) { NOTIFY_JOBSEEKER_CONFIRMATION_TEMPLATE }

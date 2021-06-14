@@ -1,4 +1,12 @@
 class Jobseekers::AccountMailer < Jobseekers::BaseMailer
+  def account_closed(record, _opts = {})
+    @template = NOTIFY_JOBSEEKER_ACCOUNT_CLOSED_TEMPLATE
+    @jobseeker = record
+    @to = @jobseeker.email
+
+    view_mail(@template, to: @to, subject: t(".subject"))
+  end
+
   def confirmation_instructions(record, token, _opts = {})
     @template = NOTIFY_JOBSEEKER_CONFIRMATION_TEMPLATE
     @jobseeker = record

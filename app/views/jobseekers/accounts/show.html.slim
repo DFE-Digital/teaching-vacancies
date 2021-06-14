@@ -24,12 +24,12 @@
               = t(".summary_list.change")
               span.govuk-visually-hidden
                 = t(".summary_list.password")
+      p = govuk_link_to t(".close_account"), jobseekers_confirm_destroy_account_path
 
     .govuk-grid-column-one-third
       .account-sidebar
         h2.account-sidebar__heading = t(".assistance.heading")
         p.govuk-body-s = t(".assistance.content_html", link: govuk_mail_to(t("help.email"), t(".assistance.link_text")))
-        p.govuk-body-s = t(".assistance.delete")
 
 .govuk-grid-row
   .govuk-grid-column-full
