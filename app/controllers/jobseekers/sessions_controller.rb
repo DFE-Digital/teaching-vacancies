@@ -4,6 +4,7 @@ class Jobseekers::SessionsController < Devise::SessionsController
   before_action :check_if_access_locked, only: %i[new]
   after_action only: %i[create] do
     trigger_jobseeker_sign_in_event(:success)
+    reactivate_account_if_closed
   end
 
   AUTHENTICATION_FAILURE_MESSAGES = %w[
@@ -43,5 +44,11 @@ class Jobseekers::SessionsController < Devise::SessionsController
       success: success_or_failure == :success,
       errors: errors,
     )
+  end
+
+  def reactivate_account_if_closed
+    return unless current_jobseeker.closed_account
+
+    Jobseekers::ReactivateAccount.new(current_jobseeker).call
   end
 end
