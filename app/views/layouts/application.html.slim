@@ -53,7 +53,7 @@ html.govuk-template.app-html-class lang="en"
 
     main.govuk-width-container#main-content role="main"
       - flash.each do |variant, message|
-        = render FlashComponent.new variant: variant, message: message
+        = render FlashComponent.new(variant: convert_devise_flash_variant(variant, message), message: message)
 
       = yield
 
