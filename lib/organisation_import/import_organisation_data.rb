@@ -58,9 +58,9 @@ class ImportOrganisationData
     when 200
       File.write(location, request.body, mode: "wb")
     when 404
-      raise HTTParty::ResponseError, "CSV file not found."
+      raise HTTParty::ResponseError, "CSV file not found at #{url}."
     else
-      raise HTTParty::ResponseError, "Unexpected problem downloading CSV file."
+      raise HTTParty::ResponseError, "Unexpected problem downloading CSV file from #{url}."
     end
   end
 
