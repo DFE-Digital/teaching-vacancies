@@ -12,7 +12,7 @@ RSpec.describe "Creating a vacancy" do
 
   after { travel_back }
 
-  context "Hiring staff has expired vacancy that is not older than 2 weeks" do
+  context "Publisher has expired vacancy that is not older than 2 weeks" do
     scenario "does not receive feedback prompt e-mail" do
       vacancy = create(
         :vacancy,
@@ -32,7 +32,7 @@ RSpec.describe "Creating a vacancy" do
     end
   end
 
-  context "Hiring staff has 2 expired vacancies that are older than 2 weeks" do
+  context "Publisher has 2 expired vacancies that are older than 2 weeks" do
     scenario "receives feedback prompt email with 2 vacancies" do
       vacancy = create(
         :vacancy,

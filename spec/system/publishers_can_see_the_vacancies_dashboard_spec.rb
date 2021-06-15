@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Hiring staff can see the vacancies dashboard" do
+RSpec.describe "Publishers can see the vacancies dashboard" do
   let(:publisher) { create(:publisher) }
 
   scenario "school with geolocation" do
@@ -19,7 +19,7 @@ RSpec.describe "Hiring staff can see the vacancies dashboard" do
   end
 
   context "with no jobs" do
-    scenario "hiring staff see a message informing them they have no jobs" do
+    scenario "Publishers see a message informing them they have no jobs" do
       school = create(:school)
 
       login_publisher(publisher: publisher, organisation: school)

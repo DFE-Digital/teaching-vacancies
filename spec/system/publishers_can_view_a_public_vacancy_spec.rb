@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Hiring staff can view a public vacancy" do
+RSpec.describe "Publishers can view a public vacancy" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school) }
 

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Hiring staff session" do
+RSpec.describe "Publisher session" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school) }
 

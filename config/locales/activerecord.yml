@@ -111,7 +111,7 @@ en:
     user_participation_response:
       inclusion: Please indicate if you'd like to participate in user research
 
-  # Hiring staff journey
+  # Publishers journey
   job_location_errors: &job_location_errors
     job_location:
       inclusion: Select the location where the job will be based
@@ -219,7 +219,7 @@ en:
           attributes:
             <<: *unsubscribe_feedback_errors
 
-        # Hiring staff journey
+        # Publishers journey
         publishers/job_listing/job_location_form:
           attributes:
             <<: *job_location_errors

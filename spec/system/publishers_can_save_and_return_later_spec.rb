@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Hiring staff can save and return later" do
+RSpec.describe "Publishers can save and return later" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school) }
 

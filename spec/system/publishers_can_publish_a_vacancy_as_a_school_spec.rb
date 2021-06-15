@@ -191,7 +191,7 @@ RSpec.describe "Creating a vacancy" do
 
       before { documents_vacancy.organisation_vacancies.create(organisation: school) }
 
-      scenario "hiring staff can select a file for upload" do
+      scenario "Publishers can select a file for upload" do
         visit organisation_job_documents_path(documents_vacancy.id)
         page.attach_file("publishers-job-listing-documents-form-documents-field", Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"))
         expect(page.find("#publishers-job-listing-documents-form-documents-field").value).to_not be nil

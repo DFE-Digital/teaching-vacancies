@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Hiring staff accepts terms and conditions" do
+RSpec.describe "Publishers can accept terms and conditions" do
   let(:school) { create(:school) }
 
   context "the user has not accepted the terms and conditions" do

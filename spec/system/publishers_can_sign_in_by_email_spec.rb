@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Hiring staff signing in with fallback email authentication" do
+RSpec.describe "Publishers can sign in with fallback email authentication" do
   before { allow(AuthenticationFallback).to receive(:enabled?) { true } }
 
   it "can reach email request page by nav-bar link" do
