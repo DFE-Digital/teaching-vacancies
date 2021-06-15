@@ -85,51 +85,26 @@ resource "aws_cloudfront_distribution" "default" {
     viewer_protocol_policy = "redirect-to-https"
   }
 
-  ordered_cache_behavior {
-    allowed_methods  = ["GET", "HEAD"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "${var.service_name}-${var.environment}-default-origin"
-
-    path_pattern = "/assets/*"
-
-    forwarded_values {
-      query_string = false
-      headers      = ["Host"]
-
-      cookies {
-        forward = "none"
-      }
-    }
-
-    min_ttl     = 0
-    default_ttl = 3600
-    max_ttl     = 86400
-
-    viewer_protocol_policy = "redirect-to-https"
-  }
-
-  ordered_cache_behavior {
-    allowed_methods  = ["GET", "HEAD"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "${var.service_name}-${var.environment}-default-origin"
-
-    path_pattern = "/api/*"
-
-    forwarded_values {
-      query_string = true
-      headers      = ["Authorization", "Host"]
-
-      cookies {
-        forward = "none"
-      }
-    }
-
-    min_ttl     = 900
-    default_ttl = 3600
-    max_ttl     = 86400
-
-    viewer_protocol_policy = "redirect-to-https"
-  }
+ordered_cache_behavior {
+           allowed_methods        = [
+                "GET",
+                "HEAD",
+            ]
+            cache_policy_id        = "658327ea-f89d-4fab-a63d-7e88639e58f6"
+            cached_methods         = [
+                "GET",
+                "HEAD",
+            ]
+            compress               = false
+            default_ttl            = 0
+            max_ttl                = 0
+            min_ttl                = 0
+            path_pattern           = "/packs/*"
+            smooth_streaming       = false
+            target_origin_id       = "teaching-vacancies-dev-default-origin"
+            trusted_signers        = []
+            viewer_protocol_policy = "redirect-to-https"
+        }
 
   price_class = "PriceClass_100"
 
