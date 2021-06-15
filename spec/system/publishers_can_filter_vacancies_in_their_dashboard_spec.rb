@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Hiring staff can filter vacancies in their dashboard" do
+RSpec.describe "Publishers can filter vacancies in their dashboard" do
   let(:publisher) { create(:publisher) }
   let(:trust) { create(:trust) }
   let(:local_authority1) { create(:local_authority) }
