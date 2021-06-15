@@ -25,6 +25,9 @@
                       key: t("helpers.label.jobseekers_job_application_personal_details_form.phone_number"),
                       value: job_application.phone_number
       - summary.slot :row,
+                      key: t("helpers.label.jobseekers_job_application_personal_details_form.email_address"),
+                      value: job_application.email
+      - summary.slot :row,
                       key: t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number"),
                       value: job_application.teacher_reference_number.presence || t("jobseekers.job_applications.not_defined")
       - summary.slot :row,

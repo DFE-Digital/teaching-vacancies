@@ -29,6 +29,28 @@ RSpec.describe JobApplication do
     end
   end
 
+  describe "#email" do
+    let(:jobseeker) { build_stubbed(:jobseeker, email: "backup-email@example.com") }
+    subject { build_stubbed(:job_application, email_address: email_address, jobseeker: jobseeker) }
+    let(:email_address) { "something@example.com" }
+
+    context "when the application has an email address" do
+      let(:email_address) { "something@example.com" }
+
+      it "uses the application email address" do
+        expect(subject.email).to eq("something@example.com")
+      end
+    end
+
+    context "when the application does not have an email address" do
+      let(:email_address) { "" }
+
+      it "uses the jobseeker email address" do
+        expect(subject.email).to eq("backup-email@example.com")
+      end
+    end
+  end
+
   context "when saving change to status" do
     subject { create(:job_application) }
 

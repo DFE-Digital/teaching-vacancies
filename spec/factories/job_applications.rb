@@ -22,6 +22,7 @@ FactoryBot.define do
     city { Faker::Address.city }
     postcode { Faker::Address.postcode }
     country { Faker::Address.country }
+    email_address { Faker::Internet.email }
     phone_number { "01234 567890" }
     teacher_reference_number { "1234567" }
     national_insurance_number { "QQ 12 34 56 C" }
@@ -95,6 +96,7 @@ FactoryBot.define do
     city { "" }
     postcode { "" }
     country { "" }
+    email_address { "" }
     phone_number { "" }
     teacher_reference_number { "" }
     national_insurance_number { "" }
