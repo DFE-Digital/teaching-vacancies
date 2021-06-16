@@ -41,7 +41,7 @@ html.govuk-template.app-html-class lang="en"
             = t("app.title")
           button.govuk-header__menu-button.govuk-js-header-toggle data-module="govuk-button" type="button" role="button" aria-controls="navigation" aria-label="Show or hide Top Level Navigation"
             | Menu
-          = render(NavbarComponent.new)
+          = render NavbarComponent.new(publisher_signed_in: publisher_signed_in?, jobseeker_signed_in: jobseeker_signed_in?, current_organisation: current_organisation, current_publisher: current_publisher, html_attributes: { role: "navigation" })
 
       .govuk-phase-banner aria-label="banner"
         .govuk-width-container

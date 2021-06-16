@@ -9,7 +9,7 @@ RSpec.describe "Jobseekers can sign out from their account" do
 
   scenario "signing out takes them to sign in page with banner" do
     visit root_path
-    within(".navbar-component") do
+    within(".navigation-bar") do
       click_on I18n.t("nav.sign_out")
     end
 
