@@ -131,6 +131,28 @@ resource "aws_cloudfront_distribution" "default" {
     viewer_protocol_policy = "redirect-to-https"
   }
 
+
+ordered_cache_behavior {
+           allowed_methods        = [
+                "GET",
+                "HEAD",
+            ]
+            cache_policy_id        = "658327ea-f89d-4fab-a63d-7e88639e58f6"
+            cached_methods         = [
+                "GET",
+                "HEAD",
+            ]
+            compress               = false
+            default_ttl            = 0
+            max_ttl                = 0
+            min_ttl                = 0
+            path_pattern           = "/packs/*"
+            smooth_streaming       = false
+            target_origin_id       = "teaching-vacancies-dev-default-origin"
+            trusted_signers        = []
+            viewer_protocol_policy = "redirect-to-https"
+        }
+
   price_class = "PriceClass_100"
 
   restrictions {
