@@ -86,49 +86,18 @@ resource "aws_cloudfront_distribution" "default" {
   }
 
   ordered_cache_behavior {
-    allowed_methods  = ["GET", "HEAD"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "${var.service_name}-${var.environment}-default-origin"
-
-    path_pattern = "/assets/*"
-
-    forwarded_values {
-      query_string = false
-      headers      = ["Host"]
-
-      cookies {
-        forward = "none"
-      }
-    }
-
-    min_ttl     = 0
-    default_ttl = 3600
-    max_ttl     = 86400
-
+    allowed_methods = [
+      "GET",
+      "HEAD",
+    ]
+    cached_methods = [
+      "GET",
+      "HEAD",
+    ]
+    path_pattern           = "/packs/*"
+    target_origin_id       = "teaching-vacancies-dev-default-origin"
     viewer_protocol_policy = "redirect-to-https"
-  }
-
-  ordered_cache_behavior {
-    allowed_methods  = ["GET", "HEAD"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "${var.service_name}-${var.environment}-default-origin"
-
-    path_pattern = "/api/*"
-
-    forwarded_values {
-      query_string = true
-      headers      = ["Authorization", "Host"]
-
-      cookies {
-        forward = "none"
-      }
-    }
-
-    min_ttl     = 900
-    default_ttl = 3600
-    max_ttl     = 86400
-
-    viewer_protocol_policy = "redirect-to-https"
+    cache_policy_id        = data.aws_cloudfront_cache_policy.managed-caching-optimized.id
   }
 
   price_class = "PriceClass_100"
