@@ -133,6 +133,14 @@ en:
         unsubscribe_link_text: Unsubscribe here
 
   publishers:
+    job_application_data_expiry_mailer:
+      job_application_data_expiry:
+        expiry: In line with our data retention policy, you will not be able to view candidates’ applications for %{job_title} after %{expiration_date}.
+        privacy_policy: To find out more about how Teaching Vacancies manages personal data, please read our %{privacy_policy_link}
+        privacy_policy_link: Privacy Policy.
+        subject: "%{job_title}: Access to applications will be removed on %{expiration_date}"
+        title: "%{job_title}, listed in %{publish_date}: Your access to applications will be removed on %{expiration_date}"
+        view_applications_for: View applications for %{job_title}
     job_application_mailer:
       applications_received:
         applications:
