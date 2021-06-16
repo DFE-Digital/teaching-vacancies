@@ -1,4 +1,4 @@
-= render FlashComponent.new variant: "notice", message: t("jobs.listing_expired") if @vacancy.expired?
+= render FlashComponent.new variant_name: "notice", message: t("jobs.listing_expired") if @vacancy.expired?
 
 = render BannerComponent.new do
     = govuk_breadcrumbs breadcrumbs: { "#{t("breadcrumbs.home")}": root_path,
