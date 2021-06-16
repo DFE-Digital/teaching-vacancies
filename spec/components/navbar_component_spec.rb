@@ -1,15 +1,35 @@
 require "rails_helper"
 
 RSpec.describe NavbarComponent, type: :component do
-  subject { described_class.new }
+  let(:jobseeker_signed_in) { false }
+  let(:publisher_signed_in) { false }
+  let(:current_organisation) { create(:school) }
+  let!(:current_publisher) { create(:publisher, organisation_publishers_attributes: [{ organisation: current_organisation }]) }
+  let(:kwargs) do
+    {
+      jobseeker_signed_in: jobseeker_signed_in,
+      publisher_signed_in: publisher_signed_in,
+      current_organisation: current_organisation,
+      current_publisher: current_publisher,
+    }
+  end
 
-  before do
-    allow(controller).to receive(:jobseeker_signed_in?).and_return(true)
-    allow(controller).to receive(:publisher_signed_in?).and_return(false)
-    render_inline(subject)
+  subject! { render_inline(described_class.new(**kwargs)) }
+
+  it_behaves_like "a component that accepts custom classes"
+  it_behaves_like "a component that accepts custom HTML attributes"
+
+  context "when jobseeker is not signed in" do
+    it "renders the correct links" do
+      expect(rendered_component).to include(I18n.t("nav.find_job"))
+      expect(rendered_component).to include(I18n.t("buttons.sign_in"))
+      expect(rendered_component).to include(I18n.t("nav.for_schools"))
+    end
   end
 
   context "when jobseeker is signed in" do
+    let(:jobseeker_signed_in) { true }
+
     it "renders the correct links" do
       expect(rendered_component).to include(I18n.t("nav.find_job"))
       expect(rendered_component).to include(I18n.t("footer.your_account"))
@@ -17,16 +37,15 @@ RSpec.describe NavbarComponent, type: :component do
     end
   end
 
-  context "when jobseeker is not signed in" do
-    before do
-      allow(controller).to receive(:jobseeker_signed_in?).and_return(false)
-      render_inline(subject)
-    end
+  context "when publisher is signed in" do
+    let(:jobseeker_signed_in) { false }
+    let(:publisher_signed_in) { true }
 
     it "renders the correct links" do
-      expect(rendered_component).to include(I18n.t("nav.find_job"))
-      expect(rendered_component).to include(I18n.t("buttons.sign_in"))
-      expect(rendered_component).to include(I18n.t("nav.for_schools"))
+      expect(rendered_component).to include(I18n.t("nav.school_page_link"))
+      expect(rendered_component).to include(I18n.t("nav.jobseekers_index_link"))
+      expect(rendered_component).to include(I18n.t("nav.notifications_index_link"))
+      expect(page.find(".button_to .govuk-header__link")["value"]).to eq(I18n.t("nav.sign_out"))
     end
   end
 end
