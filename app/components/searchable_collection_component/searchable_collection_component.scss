@@ -5,14 +5,14 @@
     margin-bottom: 0;
   }
 
-  &.searchable-collection-component--scrollable {
+  &--scrollable {
     .govuk-form-group {
       max-height: 400px;
       overflow: auto;
     }
   }
 
-  &.searchable-collection-component--border {
+  &--border {
     background-color: #fff;
     border: 2px solid $govuk-border-colour;
     padding: 0;
@@ -23,7 +23,7 @@
     }
   }
 
-  .searchable-collection-component__search {
+  &__search {
     background: #fff;
     margin: govuk-spacing(2);
     position: relative;
