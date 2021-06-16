@@ -34,6 +34,8 @@ en:
   notifications:
     publishers/job_application_received_notification:
       message_html: You have received %{link} for %{job_title} at %{organisation}
+    publishers/job_application_data_expiry_notification:
+      message_html: You will have access to candidates' applications for %{link} until %{date}
 
   errors:
     jobs:

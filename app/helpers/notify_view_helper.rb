@@ -44,6 +44,11 @@ module NotifyViewHelper
     notify_link(url, t(".next_steps.link_text"))
   end
 
+  def privacy_policy_link
+    url = page_url("privacy-policy", **utm_params)
+    notify_link(url, t(".privacy_policy_link"))
+  end
+
   def publisher_job_applications_link(vacancy)
     url = organisation_job_job_applications_url(vacancy, **utm_params)
     notify_link(url, t(".view_applications", count: vacancy.job_applications.submitted_yesterday.count))
@@ -77,6 +82,11 @@ module NotifyViewHelper
   def unsubscribe_link(subscription)
     url = unsubscribe_subscription_url(subscription.token, **utm_params)
     notify_link(url, t(".unsubscribe_link_text"))
+  end
+
+  def view_applications_for_link(vacancy)
+    url = organisation_job_job_applications_url(vacancy.id, **utm_params)
+    notify_link(url, t(".view_applications_for", job_title: vacancy.job_title))
   end
 
   private
