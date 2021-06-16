@@ -1,7 +1,9 @@
-class SearchableCollectionComponent < ViewComponent::Base
+class SearchableCollectionComponent < GovukComponent::Base
   attr_accessor :form, :attribute_name, :collection, :value_method, :text_method, :hint_method, :threshold, :small, :scrollable
 
-  def initialize(form:, attribute_name:, collection:, value_method:, text_method:, hint_method:, threshold: 10, scrollable: false)
+  def initialize(form:, attribute_name:, collection:, value_method:, text_method:, hint_method:, threshold: 10, scrollable: false, classes: [], html_attributes: {})
+    super(classes: classes, html_attributes: html_attributes)
+
     @form = form
     @threshold = threshold
     @attribute_name = attribute_name
@@ -24,5 +26,11 @@ class SearchableCollectionComponent < ViewComponent::Base
 
   def border_class
     return "searchable-collection-component--border" if searchable
+  end
+
+  private
+
+  def default_classes
+    %w[searchable-collection-component]
   end
 end
