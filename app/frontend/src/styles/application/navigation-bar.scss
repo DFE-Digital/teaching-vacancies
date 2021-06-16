@@ -1,0 +1,40 @@
+.navigation-bar {
+  .notification-badge {
+    background-color: govuk-colour('white');
+    border-radius: 75%;
+    color: govuk-colour('black');
+    font-weight: bold;
+    margin-left: govuk-spacing(2);
+    padding: 0 govuk-spacing(1);
+  }
+
+  .navigation-bar__items {
+    @include govuk-media-query($from: desktop) {
+      display: flex;
+
+      &-spacer {
+        flex-grow: 1;
+      }
+    }
+
+    @include govuk-media-query($until: tablet) {
+      &-spacer {
+        visibility: hidden;
+      }
+    }
+  }
+
+  .govuk-header__navigation-item {
+    input.govuk-header__link {
+      @include govuk-font(16, $weight: bold);
+
+      background-color: transparent;
+      background-image: none;
+      border: 0;
+      box-shadow: none;
+      color: govuk-colour('white');
+      cursor: pointer;
+      padding: 0;
+    }
+  }
+}
