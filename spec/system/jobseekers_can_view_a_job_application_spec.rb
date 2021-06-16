@@ -46,7 +46,7 @@ RSpec.describe "Jobseekers can view a job application" do
     expect(page).to have_css(".review-component", text: I18n.t("shared.job_application.show.declarations.heading"))
 
     within ".timeline-component__item", text: I18n.t("jobseekers.job_applications.status_timestamps.submitted") do
-      expect(page).to have_content(format_date(job_application.submitted_at.to_date) + I18n.t("jobs.time_at") + format_time(job_application.submitted_at))
+      expect(page).to have_content("#{format_date(job_application.submitted_at.to_date)} at #{format_time(job_application.submitted_at)}")
     end
   end
 
