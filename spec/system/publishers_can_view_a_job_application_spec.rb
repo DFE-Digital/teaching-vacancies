@@ -15,23 +15,23 @@ RSpec.describe "Publishers can view a job application" do
 
     expect(page).to have_css(".timeline-component") do |timeline|
       expect(timeline).to have_css(".timeline-component__items", text: I18n.t("jobseekers.job_applications.status_timestamps.withdrawn")) do |item|
-        expect(item).to have_content(format_date(job_application.withdrawn_at.to_date) + I18n.t("jobs.time_at") + format_time(job_application.withdrawn_at))
+        expect(item).to have_content("#{format_date(job_application.withdrawn_at.to_date)} at #{format_time(job_application.withdrawn_at)}")
       end
 
       expect(timeline).to have_css(".timeline-component__items", text: I18n.t("jobseekers.job_applications.status_timestamps.rejected")) do |item|
-        expect(item).to have_content(format_date(job_application.unsuccessful_at.to_date) + I18n.t("jobs.time_at") + format_time(job_application.unsuccessful_at))
+        expect(item).to have_content("#{format_date(job_application.unsuccessful_at.to_date)} at #{format_time(job_application.unsuccessful_at)}")
       end
 
       expect(timeline).to have_css(".timeline-component__items", text: I18n.t("jobseekers.job_applications.status_timestamps.shortlisted")) do |item|
-        expect(item).to have_content(format_date(job_application.shortlisted_at.to_date) + I18n.t("jobs.time_at") + format_time(job_application.shortlisted_at))
+        expect(item).to have_content("#{format_date(job_application.shortlisted_at.to_date)} at #{format_time(job_application.shortlisted_at)}")
       end
 
       expect(timeline).to have_css(".timeline-component__items", text: I18n.t("jobseekers.job_applications.status_timestamps.reviewed")) do |item|
-        expect(item).to have_content(format_date(job_application.reviewed_at.to_date) + I18n.t("jobs.time_at") + format_time(job_application.reviewed_at))
+        expect(item).to have_content("#{format_date(job_application.reviewed_at.to_date)} at #{format_time(job_application.reviewed_at)}")
       end
 
       expect(timeline).to have_css(".timeline-component__items", text: I18n.t("jobseekers.job_applications.status_timestamps.submitted")) do |item|
-        expect(item).to have_content(format_date(job_application.submitted_at.to_date) + I18n.t("jobs.time_at") + format_time(job_application.submitted_at))
+        expect(item).to have_content("#{format_date(job_application.submitted_at.to_date)} at #{format_time(job_application.submitted_at)}")
       end
     end
   end
