@@ -40,10 +40,6 @@ module VacanciesHelper
     jobs_with_type_organisation_path(state)
   end
 
-  def expiry_date_and_time(vacancy)
-    "#{format_date(vacancy.expires_at.to_date)} at #{vacancy.expires_at.strftime('%-l:%M %P')}"
-  end
-
   def vacancy_or_organisation_description(vacancy)
     vacancy.about_school.presence || vacancy.parent_organisation.description.presence
   end

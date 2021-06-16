@@ -40,7 +40,7 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
       end
 
       it "renders the date and time it expires at" do
-        expect(rendered_component).to include(expiry_date_and_time(vacancy))
+        expect(rendered_component).to include(format_time_to_datetime_at(vacancy.expires_at))
       end
     end
   end
