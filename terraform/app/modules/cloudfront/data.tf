@@ -12,3 +12,7 @@ data "aws_acm_certificate" "cloudfront_cert" {
   most_recent = true
   provider    = aws.aws_us_east_1
 }
+
+data "aws_cloudfront_cache_policy" "managed-caching-optimized" {
+  name = "Managed-CachingOptimized"
+}
