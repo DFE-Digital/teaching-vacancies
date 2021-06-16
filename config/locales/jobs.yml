@@ -198,7 +198,7 @@ en:
     starts_on: Expected start date
     publish_on: Publish on
     expires_at: Closing date
-    time_at: ' at '
+    time_at: at
 
     supporting_documents: Supporting documents
     supporting_documents_accessibility: If you need these documents in an accessible format, please contact the school.

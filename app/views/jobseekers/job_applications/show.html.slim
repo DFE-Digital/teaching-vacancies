@@ -48,7 +48,7 @@
     = render TimelineComponent.new do |timeline|
       - if job_application.withdrawn_at?
         - timeline.item(key: t("jobseekers.job_applications.status_timestamps.withdrawn"),
-                        value: format_date(job_application.withdrawn_at.to_date) + I18n.t("jobs.time_at") + format_time(job_application.withdrawn_at))
+                        value: format_time_to_datetime_at(job_application.withdrawn_at))
       - if job_application.unsuccessful_at?
         - timeline.item(key: t("jobseekers.job_applications.status_timestamps.unsuccessful"),
                         value: format_date(job_application.unsuccessful_at.to_date))
@@ -59,4 +59,4 @@
         - timeline.item(key: t("jobseekers.job_applications.status_timestamps.reviewed"),
                         value: format_date(job_application.reviewed_at.to_date))
       - timeline.item(key: t("jobseekers.job_applications.status_timestamps.submitted"),
-                      value: format_date(job_application.submitted_at.to_date) + I18n.t("jobs.time_at") + format_time(job_application.submitted_at))
+                      value: format_time_to_datetime_at(job_application.submitted_at))
