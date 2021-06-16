@@ -48,6 +48,12 @@ class JobApplication < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+  def email
+    # This method and its test can be removed once there are no job applications remaining which were begun before we asked
+    # jobseekers for their emails as part of the application, or after https://dfedigital.atlassian.net/browse/TEVA-2720 is done.
+    email_address.presence || jobseeker.email
+  end
+
   def submit!
     submitted!
     Publishers::JobApplicationReceivedNotification.with(vacancy: vacancy, job_application: self).deliver(vacancy.publisher)

@@ -26,7 +26,8 @@
         = f.govuk_text_field :postcode, width: "one-third"
         = f.govuk_text_field :country, width: "one-third"
       = f.govuk_phone_field :phone_number, label: { size: "s" }, width: "one-half", aria: { required: true }
-      = f.govuk_text_field :teacher_reference_number, label: { size: "s" }, width: "one-half", aria: { required: true }, form_group: { classes: "optional-field" }
+      = f.govuk_email_field :email_address, value: (form.email_address.presence || job_application.email), label: { size: "s" }, width: "one-half", aria: { required: true }
+      = f.govuk_text_field :teacher_reference_number, label: { size: "s" }, width: "one-half", form_group: { classes: "optional-field" }
       = f.govuk_text_field :national_insurance_number, label: { size: "s" }, width: "one-half", form_group: { classes: "optional-field" }
 
       = f.govuk_submit job_application_build_submit_button_text do
