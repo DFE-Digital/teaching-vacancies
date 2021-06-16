@@ -33,7 +33,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
         end
 
         within(".vacancy-deadline") do
-          expect(page).to have_content(expiry_date_and_time(vacancy))
+          expect(page).to have_content(format_time_to_datetime_at(vacancy.expires_at))
           expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.deadline.after"))
         end
       end
@@ -213,7 +213,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
         end
 
         within(".vacancy-deadline") do
-          expect(page).to have_content(expiry_date_and_time(vacancy))
+          expect(page).to have_content(format_time_to_datetime_at(vacancy.expires_at))
           expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.deadline.before"))
         end
       end

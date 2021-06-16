@@ -14,7 +14,7 @@
 
       - component.slot(:row,
         key: t("jobs.application_deadline"),
-        value: expiry_date_and_time(@vacancy))
+        value: format_time_to_datetime_at(@vacancy.expires_at))
 
       - component.slot(:row,
         key: t("jobs.starts_on"),

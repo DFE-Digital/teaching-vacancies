@@ -30,7 +30,7 @@
                 = tag.div(vacancy_job_location(saved_job.vacancy))
 
               - card.body do
-                = tag.div(card.labelled_item(t(".added"), saved_job.created_at.strftime("%d %B %Y")))
+                = tag.div(card.labelled_item(t(".added"), format_date(saved_job.created_at, :date_only)))
                 - if saved_job.vacancy.expires_at.past?
                   = tag.div(t(".deadline_passed"), class: "govuk-!-font-weight-bold text-red")
                 = tag.div(card.labelled_item(t(".application_deadline"), OrganisationVacancyPresenter.new(saved_job.vacancy).application_deadline))
