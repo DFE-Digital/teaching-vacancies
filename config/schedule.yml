@@ -63,6 +63,11 @@ send_feedback:
   class: 'SendFeedbackToBigQueryJob'
   queue: low
 
+send_job_application_data_expiry_notification:
+  cron: '0 6 * * *'
+  class: 'SendJobApplicationDataExpiryNotificationJob'
+  queue: default
+
 stream_equal_opportunities_report_publication_job:
   cron: '30 01 * * *'
   class: 'StreamEqualOpportunitiesReportPublicationJob'
