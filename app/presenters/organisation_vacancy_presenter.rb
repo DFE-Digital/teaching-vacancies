@@ -27,7 +27,7 @@ class OrganisationVacancyPresenter < BasePresenter
   end
 
   def application_deadline
-    format_date(model.expires_at.to_date) + I18n.t("jobs.time_at") + format_time(model.expires_at)
+    format_time_to_datetime_at(model.expires_at)
   end
 
   def preview_path
