@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe FlashComponent, type: :component do
-  let(:variant) { "notice" }
-  let(:kwargs) { { variant: variant, message: "Some message" } }
+  let(:variant_name) { "notice" }
+  let(:kwargs) { { variant_name: variant_name, message: "Some message" } }
 
   subject! { render_inline(described_class.new(**kwargs)) }
 
@@ -17,7 +17,7 @@ RSpec.describe FlashComponent, type: :component do
   end
 
   context "when variant is invalid" do
-    let(:variant) { "invalid-variant" }
+    let(:variant_name) { "invalid-variant" }
 
     it "does not render the flash" do
       expect(page).not_to have_css("div", class: "flash-component")
