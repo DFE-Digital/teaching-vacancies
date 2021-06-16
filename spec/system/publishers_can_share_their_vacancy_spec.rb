@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Hiring staff can share their vacancy" do
+RSpec.describe "Publishers can share their vacancy" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school) }
 

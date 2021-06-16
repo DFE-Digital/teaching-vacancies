@@ -29,7 +29,7 @@ RSpec.shared_examples "a failed sign in" do |options|
   end
 end
 
-RSpec.describe "Hiring staff signing-in with DfE Sign In" do
+RSpec.describe "Publishers can sign in with DfE Sign In" do
   let(:user_oid) { "161d1f6a-44f1-4a1a-940d-d1088c439da7" }
   let(:dsi_email_address) { Faker::Internet.email }
 
@@ -179,10 +179,7 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
       stub_authorisation_step_with_not_found
     end
 
-    it_behaves_like "a failed sign in", user_id: "161d1f6a-44f1-4a1a-940d-d1088c439da7",
-                                        school_urn: "110627",
-                                        email: "another_email@example.com",
-                                        not_authorised_message: "Hiring staff not authorised: 161d1f6a-44f1-4a1a-940d-d1088c439da7 for school: 110627"
+    it_behaves_like "a failed sign in", email: "another_email@example.com"
   end
 
   context "when there is was an error with DfE Sign-in" do

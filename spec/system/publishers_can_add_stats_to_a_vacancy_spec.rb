@@ -16,7 +16,7 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
     let!(:another_vacancy) { create(:vacancy, :expired, organisation_vacancies_attributes: [{ organisation: school }]) }
     let!(:third_vacancy) { create(:vacancy, :expired, organisation_vacancies_attributes: [{ organisation: school }]) }
 
-    scenario "hiring staff can see notice of vacancies awaiting feedback" do
+    scenario "Publishers can see notice of vacancies awaiting feedback" do
       visit organisation_path
 
       within("div.flash-component--notice") do
