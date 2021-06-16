@@ -1,32 +1,34 @@
 require "rails_helper"
 
 RSpec.describe NavbarComponent, type: :component do
-  subject { described_class.new }
+  let(:kwargs) { {} }
 
-  before do
-    allow(controller).to receive(:jobseeker_signed_in?).and_return(true)
-    allow(controller).to receive(:publisher_signed_in?).and_return(false)
-    render_inline(subject)
-  end
+  subject! { render_inline(described_class.new(**kwargs)) }
 
-  context "when jobseeker is signed in" do
-    it "renders the correct links" do
-      expect(rendered_component).to include(I18n.t("nav.find_job"))
-      expect(rendered_component).to include(I18n.t("footer.your_account"))
-      expect(rendered_component).to include(I18n.t("nav.sign_out"))
-    end
-  end
+  it_behaves_like "a component that accepts custom classes"
+  it_behaves_like "a component that accepts custom HTML attributes"
 
-  context "when jobseeker is not signed in" do
-    before do
-      allow(controller).to receive(:jobseeker_signed_in?).and_return(false)
-      render_inline(subject)
+  context "when navigation items are defined" do
+    subject! do
+      render_inline(described_class.new(**kwargs)) do |navigation|
+        navigation.item(link_text: "A nav item", align: :left, path: "/1")
+        navigation.item(link_text: :spacer)
+        navigation.item(link_text: "Another nav item", align: :right, path: "/2")
+      end
     end
 
-    it "renders the correct links" do
-      expect(rendered_component).to include(I18n.t("nav.find_job"))
-      expect(rendered_component).to include(I18n.t("buttons.sign_in"))
-      expect(rendered_component).to include(I18n.t("nav.for_schools"))
+    it "renders the navigation items" do
+      expect(page).to have_css("nav", class: "navbar-component") do |items|
+        expect(items).to have_css("ul", class: "navbar-component__items") do |item|
+          expect(item).to have_css("li", class: "navbar-component__navigation-item--left", text: "A nav item") do |link|
+            expect(link).to have_css("a[href='/1']")
+          end
+          expect(item).to have_css("li", class: "navbar-component__items-spacer")
+          expect(item).to have_css("li", class: "navbar-component__navigation-item--right", text: "Another nav item") do |link|
+            expect(link).to have_css("a[href='/2']")
+          end
+        end
+      end
     end
   end
 end
