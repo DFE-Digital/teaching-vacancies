@@ -59,13 +59,13 @@
                 - card.body do
                   - case @selected_type
                   - when "published"
-                    = view_applicants(vacancy, card)
+                    = view_applicants(vacancy, card) unless vacancy_expired_over_a_year_ago?(vacancy)
                     = tag.div(card.labelled_item(t("jobs.manage.closing_date"), vacancy.application_deadline))
                   - when "pending"
                     = tag.div(card.labelled_item(t("jobs.publication_date"), vacancy.publish_on))
                     = tag.div(card.labelled_item(t("jobs.manage.closing_date"), vacancy.application_deadline))
                   - when "expired"
-                    = view_applicants(vacancy, card)
+                    = view_applicants(vacancy, card) unless vacancy_expired_over_a_year_ago?(vacancy)
                     = tag.div(card.labelled_item(t("jobs.date_listed"), vacancy.publish_on))
                     = tag.div(card.labelled_item(t("jobs.manage.expired.expired_on"), vacancy.application_deadline))
                   - when "draft"
