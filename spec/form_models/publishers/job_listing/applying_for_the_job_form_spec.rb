@@ -13,8 +13,6 @@ RSpec.describe Publishers::JobListing::ApplyingForTheJobForm, type: :model do
   it { is_expected.to allow_value("").for(:application_link) }
   it { is_expected.not_to allow_value("invalid-01234").for(:contact_number) }
 
-  it { is_expected.to validate_inclusion_of(:enable_job_applications).in_array([true, false]) }
-
   context "when enable_job_applications is false" do
     subject { described_class.new(enable_job_applications: "false") }
 
