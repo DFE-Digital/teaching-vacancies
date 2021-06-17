@@ -47,7 +47,6 @@ module "cloudfront" {
   route53_a_records             = local.route53_a_records
   route53_cname_record          = local.route53_cname_record
   providers = {
-    aws.default       = aws.default
     aws.aws_us_east_1 = aws.aws_us_east_1
   }
 }
