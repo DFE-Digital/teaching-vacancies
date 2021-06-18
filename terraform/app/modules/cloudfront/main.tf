@@ -85,19 +85,18 @@ resource "aws_cloudfront_distribution" "default" {
     viewer_protocol_policy = "redirect-to-https"
   }
 
-  ordered_cache_behavior {
-    allowed_methods = [
-      "GET",
-      "HEAD",
-    ]
-    cached_methods = [
-      "GET",
-      "HEAD",
-    ]
-    path_pattern           = "/packs/*"
-    target_origin_id       = "${var.service_name}-${var.environment}-default-origin"
-    viewer_protocol_policy = "redirect-to-https"
-    cache_policy_id        = data.aws_cloudfront_cache_policy.managed-caching-optimized.id
+
+  dynamic "ordered_cache_behavior" {
+    for_each = local.cloudfront_path_pattern
+
+    content {
+      allowed_methods        = ["GET", "HEAD"]
+      cached_methods         = ["GET", "HEAD"]
+      path_pattern           = ordered_cache_behavior.value.path
+      target_origin_id       = "${var.service_name}-${var.environment}-default-origin"
+      viewer_protocol_policy = "redirect-to-https"
+      cache_policy_id        = data.aws_cloudfront_cache_policy.managed-caching-optimized.id
+    }
   }
 
   price_class = "PriceClass_100"
