@@ -41,6 +41,7 @@ shared:
     - further_instructions
     - rejection_reasons
     - gaps_in_employment_details
+    - email_address
   jobseekers:
     - id
     - email
