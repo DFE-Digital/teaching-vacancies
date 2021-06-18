@@ -118,6 +118,7 @@ shared:
     - in_progress_steps
     - reviewed_at
     - country
+    - email_address
   jobseekers:
     - id
     - email
