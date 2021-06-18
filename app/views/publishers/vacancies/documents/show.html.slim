@@ -28,7 +28,7 @@
 
         = f.govuk_submit t("buttons.upload_files"), secondary: true, classes: "upload-files-button"
 
-        .js-documents class=("js-documents--empty" if vacancy.documents.none?)
+        .js-documents class=("js-documents--empty" if vacancy.supporting_documents.none?)
           = render "publishers/vacancies/documents/documents"
           p.js-documents__no-files = t("jobs.no_files_message")
 
