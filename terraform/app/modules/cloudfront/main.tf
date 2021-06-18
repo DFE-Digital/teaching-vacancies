@@ -16,28 +16,14 @@ resource "aws_cloudfront_distribution" "default" {
     origin_id   = "${var.service_name}-${var.environment}-offline"
   }
 
-  custom_error_response {
-    error_code            = "404"
-    error_caching_min_ttl = "10"
-  }
-
-  custom_error_response {
-    error_code            = "500"
-    error_caching_min_ttl = "60"
-  }
-
-  custom_error_response {
-    error_code            = "503"
-    error_caching_min_ttl = "60"
-    response_code         = "503"
-    response_page_path    = "${var.offline_bucket_origin_path}/index.html"
-  }
-
-  custom_error_response {
-    error_code            = "502"
-    error_caching_min_ttl = "60"
-    response_code         = "502"
-    response_page_path    = "${var.offline_bucket_origin_path}/index.html"
+  dynamic "custom_error_response" {
+    for_each = local.cloudfront_custom_response
+    content {
+      error_code            = custom_error_response.value["er_code"]
+      error_caching_min_ttl = custom_error_response.value["ttl"]
+      response_code         = custom_error_response.value["response_code"]
+      response_page_path    = custom_error_response.value["page_path"]
+    }
   }
 
   enabled = true

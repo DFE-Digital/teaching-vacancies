@@ -48,4 +48,9 @@ locals {
   cloudfront_aliases                                     = concat(var.route53_a_records, local.cloudfront_aliases_cnames)
   cloudfront_viewer_certificate_minimum_protocol_version = "TLSv1.2_2018"
   cloudfront_path_pattern                                = { pattern = { path = "/packs/*" }, pattern2 = { path = "/attachment*" } }
+  cloudfront_custom_response = { response_1 = { er_code = "404", ttl = "10", response_code = "404", page_path = "${var.offline_bucket_origin_path}/index.html" },
+    response_2 = { er_code = "500", ttl = "60", response_code = "500", page_path = "${var.offline_bucket_origin_path}/index.html" },
+    response_3 = { er_code = "503", ttl = "60", response_code = "503", page_path = "${var.offline_bucket_origin_path}/index.html" },
+    response_4 = { er_code = "502", ttl = "60", response_code = "502", page_path = "${var.offline_bucket_origin_path}/index.html" }
+  }
 }
