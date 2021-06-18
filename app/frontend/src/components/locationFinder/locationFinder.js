@@ -5,14 +5,14 @@ import '../../lib/polyfill/remove.polyfill';
 import loader from '../loader/loader';
 import { getPostcodeFromCoordinates } from '../../lib/api';
 import { enableRadiusSelect, disableRadiusSelect } from '../../application/jobseekers/radius';
-import Rollbar from '../../lib/logging';
+import logger from '../../lib/logging';
 import './locationFinder.scss';
 
 const containerEl = document.getElementsByClassName('js-location-finder')[0];
 const inputEl = document.getElementsByClassName('js-location-finder__input')[0];
 
 export const ERROR_MESSAGE = 'Unable to find your location';
-export const LOGGING_MESSAGE = '[Module: locationFinder]: Unable to find user location';
+export const LOGGING_MESSAGE = '[component: locationFinder]: Unable to find user location';
 
 export const DEFAULT_PLACEHOLDER = 'City, town or postcode';
 export const LOADING_PLACEHOLDER = 'Finding Location...';
@@ -70,7 +70,7 @@ export const onFailure = () => {
   locationFinder.showErrorMessage(document.getElementById('current-location'));
   disableRadiusSelect();
   locationFinder.stopLoading(containerEl, inputEl);
-  Rollbar.log(LOGGING_MESSAGE);
+  logger.log(LOGGING_MESSAGE);
 };
 
 export const postcodeFromPosition = (position, apiPromise) => apiPromise(position.coords.latitude, position.coords.longitude).then((response) => {
