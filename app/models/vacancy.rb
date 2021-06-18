@@ -34,7 +34,6 @@ class Vacancy < ApplicationRecord
   belongs_to :publisher, optional: true
   belongs_to :publisher_organisation, class_name: "Organisation", optional: true
 
-  has_many :documents, dependent: :destroy
   has_many_attached :supporting_documents
 
   has_many :saved_jobs, dependent: :destroy
