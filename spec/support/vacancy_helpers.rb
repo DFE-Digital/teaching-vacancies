@@ -168,7 +168,7 @@ module VacancyHelpers
     expect(page.html).to include(vacancy.job_advert)
     expect(page.html).to include(vacancy.about_school)
 
-    if vacancy.documents.any?
+    if vacancy.supporting_documents.any?
       expect(page).to have_content(I18n.t("jobs.supporting_documents"))
     end
 
