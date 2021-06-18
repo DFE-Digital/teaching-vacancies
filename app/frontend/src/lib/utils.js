@@ -1,4 +1,4 @@
-import Rollbar from './logging';
+import logger from './logging';
 
 export const stringMatchesPostcode = (postcode) => {
   const noSpacePostcode = postcode.replace(/\s/g, '');
@@ -44,7 +44,7 @@ export const storageAvailable = (type, logMessage = false) => {
     return true;
   } catch (e) {
     if (logMessage) {
-      Rollbar.log(logMessage);
+      logger.info(logMessage);
     }
 
     return e instanceof DOMException && (

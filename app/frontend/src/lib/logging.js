@@ -1,11 +1,23 @@
-import Rollbar from 'rollbar';
+const environment = process.env.NODE_ENV;
+const noop = () => true;
+const silentMock = {
+  log: noop,
+  warn: noop,
+  error: noop,
+  info: noop,
+};
 
-const rollbar = new Rollbar({
-  accessToken: '14fb3641a126437ab1d29cf52357c192',
-  captureUncaught: true,
-  captureUnhandledRejections: true,
-});
+/* eslint-disable no-console */
+const consoleMock = {
+  log: console.log,
+  warn: console.warn,
+  error: console.error,
+  info: console.info,
+};
+/* eslint-enable no-console */
 
-rollbar.configure({ reportLevel: 'warning' });
+const mockLogger = environment === 'test' ? silentMock : consoleMock;
 
-export default rollbar;
+const Logger = window.Rollbar || mockLogger;
+
+export default Logger;
