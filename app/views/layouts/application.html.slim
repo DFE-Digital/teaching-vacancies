@@ -41,7 +41,29 @@ html.govuk-template.app-html-class lang="en"
             = t("app.title")
           button.govuk-header__menu-button.govuk-js-header-toggle data-module="govuk-button" type="button" role="button" aria-controls="navigation" aria-label="Show or hide Top Level Navigation"
             | Menu
-          = render(NavbarComponent.new)
+          = render NavbarComponent.new(html_attributes: { role: "navigation" }) do |navigation|
+            - if publisher_signed_in?
+              - navigation.item link_text: t("nav.school_page_link"), align: :left, path: organisation_path
+              - if current_organisation.school_group?
+                - navigation.item link_text: t("nav.school_group_index_link", organisation_type: organisation_type_basic(current_organisation)), align: :left, path: organisation_schools_path
+              - navigation.item link_text: t("nav.jobseekers_index_link"), align: :left, path: root_path
+              - navigation.item link_text: t("nav.notifications_index_link"), aria: { label: "#{current_publisher.notifications.unread.count} unread notifications" }, align: :left, path: publishers_notifications_path
+              - if current_publisher.notifications.unread.any?
+                span.notification-badge = current_publisher.notifications.unread.count
+              - navigation.item link_text: :spacer
+              - navigation.item link_text: t("nav.sign_out"), align: :right, path: destroy_publisher_session_path, method: :delete
+
+            - if jobseeker_signed_in?
+              - navigation.item link_text: t("nav.find_job"), align: :left, path: root_path
+              - navigation.item link_text: t("footer.your_account"), align: :left, path: jobseeker_root_path
+              - navigation.item link_text: :spacer
+              - navigation.item link_text: t("nav.sign_out"), method: :delete, align: :right, path: destroy_jobseeker_session_path
+
+            - if !jobseeker_signed_in? && !publisher_signed_in?
+              - navigation.item link_text: t("nav.find_job"), align: :left, path: root_path
+              - navigation.item link_text: :spacer
+              - navigation.item link_text: t("buttons.sign_in"), align: :right, path: new_jobseeker_session_path
+              - navigation.item link_text: t("nav.for_schools"), align: :right, path: AuthenticationFallback.enabled? ? new_login_key_path : new_publisher_session_path
 
       .govuk-phase-banner aria-label="banner"
         .govuk-width-container
