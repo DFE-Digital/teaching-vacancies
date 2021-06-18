@@ -105,7 +105,8 @@ describe('current location', () => {
         .then(() => {
           expect(onSuccessMock).toHaveBeenCalled();
           expect(onFailureMock).not.toHaveBeenCalled();
-        });
+        })
+        .catch(() => {});
     });
 
     test('calls onFailure handler when API returns falsy value', () => {
@@ -118,7 +119,8 @@ describe('current location', () => {
         .then(() => {
           expect(onFailureMock).toHaveBeenCalled();
           expect(onSuccessMock).not.toHaveBeenCalled();
-        });
+        })
+        .catch(() => {});
     });
   });
 });
