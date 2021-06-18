@@ -80,6 +80,8 @@ shared:
     - subscription_id
     - vacancy_id
     - application_id
+    - close_account_reason
+    - close_account_reason_comment
   job_applications:
     - id
     - status
@@ -118,6 +120,8 @@ shared:
     - in_progress_steps
     - reviewed_at
     - country
+    - withdrawn_by_closing_account
+    - status_before_withdrawn
   jobseekers:
     - id
     - email
@@ -135,6 +139,7 @@ shared:
     - locked_at
     - created_at
     - updated_at
+    - closed_account
   local_authority_publisher_schools:
     - id
     - publisher_preference_id
