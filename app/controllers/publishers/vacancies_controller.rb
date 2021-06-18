@@ -40,7 +40,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   end
 
   def destroy
-    vacancy.delete_documents
+    vacancy.supporting_documents.purge_later
     vacancy.trashed!
     remove_google_index(vacancy)
     redirect_to organisation_path, success: t(".success_html", job_title: vacancy.job_title)
