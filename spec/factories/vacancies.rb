@@ -2,10 +2,6 @@ FactoryBot.define do
   factory :vacancy do
     publisher
 
-    after :create do |vacancy|
-      create_list :document, 3, vacancy: vacancy
-    end
-
     job_location { "at_one_school" }
     about_school { "Great school with amazing people" }
     enable_job_applications { true }
@@ -143,6 +139,17 @@ FactoryBot.define do
     trait :not_suitable_for_nqt do
       suitable_for_nqt { "no" }
       job_roles { %w[] }
+    end
+
+    trait :with_supporting_documents do
+      supporting_documents do
+        [
+          Rack::Test::UploadedFile.new(
+            Rails.root.join("spec", "fixtures", "files", "blank_job_spec.pdf"),
+            "application/pdf",
+          )
+        ]
+      end
     end
   end
 end

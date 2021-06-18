@@ -1,10 +1,19 @@
 class DocumentsController < ApplicationController
   def show
-    document = Document.find(params[:id])
     request_event.trigger(:vacancy_document_downloaded,
-                          vacancy_id: StringAnonymiser.new(document.vacancy.id),
+                          vacancy_id: StringAnonymiser.new(vacancy.id),
                           document_id: StringAnonymiser.new(document.id),
-                          filename: document.name)
-    redirect_to(document.download_url)
+                          filename: document.filename)
+    redirect_to(document)
+  end
+
+  private
+
+  def vacancy
+    @vacancy ||= Vacancy.friendly.find(params[:job_id])
+  end
+
+  def document
+    @document ||= vacancy.supporting_documents.find(params[:id])
   end
 end
