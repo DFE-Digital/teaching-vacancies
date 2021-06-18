@@ -47,4 +47,5 @@ locals {
   cloudfront_aliases_cnames                              = [for zone in var.route53_zones : "${var.route53_cname_record}.${zone}"]
   cloudfront_aliases                                     = concat(var.route53_a_records, local.cloudfront_aliases_cnames)
   cloudfront_viewer_certificate_minimum_protocol_version = "TLSv1.2_2018"
+  cloudfront_path_pattern                                = { pattern = { path = "/packs/*" }, pattern2 = { path = "/attachment*" } }
 }
