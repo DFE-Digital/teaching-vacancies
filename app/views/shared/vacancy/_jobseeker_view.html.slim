@@ -63,7 +63,7 @@
         / Up to four half columns in one row so that they automatically wrap depending on how many are present
         .govuk-grid-column-one-half
           = render PillLinkComponent.new text: "Job details", href: "#job-details"
-        - if @vacancy.documents.any?
+        - if @vacancy.supporting_documents.any?
           .govuk-grid-column-one-half
             = render PillLinkComponent.new text: "Supporting documents", href: "#supporting-documents"
         .govuk-grid-column-one-half
