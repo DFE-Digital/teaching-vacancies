@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_15_144822) do
+ActiveRecord::Schema.define(version: 2021_06_17_132404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -159,6 +159,8 @@ ActiveRecord::Schema.define(version: 2021_06_15_144822) do
     t.uuid "vacancy_id"
     t.uuid "application_id"
     t.boolean "exported_to_bigquery", default: false, null: false
+    t.integer "close_account_reason"
+    t.text "close_account_reason_comment"
     t.index ["vacancy_id"], name: "index_feedbacks_on_vacancy_id"
   end
 
@@ -223,6 +225,7 @@ ActiveRecord::Schema.define(version: 2021_06_15_144822) do
     t.string "country", default: "", null: false
     t.string "age", default: "", null: false
     t.string "email_address", default: "", null: false
+    t.boolean "withdrawn_by_closing_account", default: false, null: false
   end
 
   create_table "jobseekers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -244,6 +247,7 @@ ActiveRecord::Schema.define(version: 2021_06_15_144822) do
     t.datetime "locked_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "closed_account", default: false, null: false
     t.index ["confirmation_token"], name: "index_jobseekers_on_confirmation_token", unique: true
     t.index ["email"], name: "index_jobseekers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_jobseekers_on_reset_password_token", unique: true
