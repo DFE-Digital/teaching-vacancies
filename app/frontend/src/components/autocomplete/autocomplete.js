@@ -13,7 +13,12 @@ export const renderAutocomplete = (widgetParams) => {
   });
 };
 
-export const showOptions = (getOptions, container, input, key) => getOptions(input.value).then((options) => view.show(options, container, input, key));
+export const removeUnwantedCharacters = (searchTerm) => searchTerm.replace('.', ' ');
+
+export const showOptions = (getOptions, container, input, key) => {
+  const searchTerm = removeUnwantedCharacters(input.value);
+  return getOptions(searchTerm).then((options) => view.show(options, container, input, key));
+};
 
 export const clearOptions = (container, input) => {
   view.hide(container, input);
@@ -24,6 +29,7 @@ export const isActive = (threshold, inputLength) => inputLength >= threshold;
 const autocomplete = {
   view,
   renderAutocomplete,
+  removeUnwantedCharacters,
   showOptions,
   clearOptions,
 };
