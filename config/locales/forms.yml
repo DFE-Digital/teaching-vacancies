@@ -533,7 +533,7 @@ en:
         about_organisation: About %{organisation}
         job_advert: Job advert
       publishers_job_listing_pay_package_form:
-        benefits: Employee benefits
+        benefits: Additional allowances
         salary: Salary
 
       publishers_vacancy_statistics_form:
