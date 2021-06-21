@@ -5,7 +5,7 @@ require "open-uri"
 
 class ImportOrganisationData
   def run!
-    csv_metadata.each { |metadata| import_data(metadata) }
+    csv_metadata.each { |metadata| import_data(**metadata) }
   end
 
   def self.mark_all_school_group_memberships_to_be_deleted!

@@ -5,5 +5,5 @@ class Jobseekers::JobApplication::Details::ReferenceForm
 
   validates :name, :job_title, :organisation, :relationship, :email, :phone_number, presence: true
   validates :email, format: { with: Devise.email_regexp }
-  validates :phone_number, format: { with: /\A\+?(?:\d\s?){10,12}\z/.freeze }
+  validates :phone_number, format: { with: /\A\+?(?:\d\s?){10,12}\z/ }
 end
