@@ -33,9 +33,9 @@ section#job-details class="govuk-!-margin-bottom-5"
       - if @vacancy.application_link.present?
         = open_in_new_tab_link_to t("jobs.apply"), new_job_interest_path(@vacancy.id), button: true, class: "vacancy-apply-link govuk-!-margin-bottom-5", "aria-label": t("jobs.aria_labels.apply_link")
 
-  - if @vacancy.documents.any?
+  - if @vacancy.supporting_documents.any?
     section#supporting-documents
       h3.govuk-heading-l.section-heading = t("jobs.supporting_documents")
       p.govuk-body = t("jobs.supporting_documents_accessibility")
       .grey-border-box--thin
-        = render SupportingDocumentComponent.with_collection(@vacancy.documents)
+        = render SupportingDocumentComponent.with_collection(@vacancy.supporting_documents)

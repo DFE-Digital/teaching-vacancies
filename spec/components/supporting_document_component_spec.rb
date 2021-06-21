@@ -1,7 +1,8 @@
 require "rails_helper"
 
 RSpec.describe SupportingDocumentComponent, type: :component do
-  let(:supporting_document) { create(:document, size: 100_000) }
+  let(:vacancy) { create(:vacancy) }
+  let(:supporting_document) { double("ActiveStorage attachment", id: "abcde-12345", filename: "job_desc.doc", byte_size: 100_000, record: vacancy) }
   let(:kwargs) { { supporting_document: supporting_document } }
 
   subject! { render_inline(described_class.new(**kwargs)) }
@@ -13,16 +14,16 @@ RSpec.describe SupportingDocumentComponent, type: :component do
     expect(page).to have_css("div", class: "supporting-document-component") do |component|
       expect(component)
         .to have_css(
-          "a[href='#{Rails.application.routes.url_helpers.document_path(supporting_document)}']",
+          "a[href='#{Rails.application.routes.url_helpers.job_document_path(vacancy, supporting_document)}']",
           class: "supporting-document-component__link",
-          text: supporting_document.name,
+          text: supporting_document.filename,
         )
     end
   end
 
   it "renders the document size in megabytes" do
     expect(page).to have_css("div", class: "supporting-document-component") do |component|
-      expect(component).to have_content("0.10 MB")
+      expect(component).to have_content("97.7 KB")
     end
   end
 

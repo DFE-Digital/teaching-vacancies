@@ -18,20 +18,6 @@ class CopyVacancy
     @vacancy.supporting_documents.each do |supporting_doc|
       @new_vacancy.supporting_documents.attach(supporting_doc.blob)
     end
-
-    @vacancy.documents.each do |document|
-      document_copy = DocumentCopy.new(document.google_drive_id)
-      document_copy.copy
-      next if document_copy.google_error
-
-      @new_vacancy.documents.create({
-        name: document.name,
-        size: document.size,
-        content_type: document.content_type,
-        download_url: document_copy.copied.web_content_link,
-        google_drive_id: document_copy.copied.id,
-      })
-    end
   end
 
   def setup_new_vacancy

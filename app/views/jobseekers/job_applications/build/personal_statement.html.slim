@@ -13,10 +13,10 @@
     p.govuk-body = t(".description")
 
     = govuk_notification_banner title: t(".banner_title") do
-      - if job_application.vacancy.documents.any?
+      - if job_application.vacancy.supporting_documents.any?
         = t(".banner_documents_html", job_link: open_in_new_tab_link_to("‘#{job_application.vacancy.job_title}’", job_path(job_application.vacancy)))
         div class="govuk-!-margin-top-3"
-          = render SupportingDocumentComponent.with_collection(job_application.vacancy.documents)
+          = render SupportingDocumentComponent.with_collection(job_application.vacancy.supporting_documents)
       - else
         = t(".banner_no_documents_html", job_link: open_in_new_tab_link_to("‘#{job_application.vacancy.job_title}’", job_path(job_application.vacancy)))
 

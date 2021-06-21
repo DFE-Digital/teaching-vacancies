@@ -198,17 +198,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       context "when uploading files" do
-        let(:document_upload) { double("document_upload") }
         let(:filename) { "blank_job_spec.pdf" }
-
-        before do
-          allow(DocumentUpload).to receive(:new).and_return(document_upload)
-          allow(document_upload).to receive(:upload)
-          allow(document_upload).to receive_message_chain(:uploaded, :web_content_link).and_return("test_url")
-          allow(document_upload).to receive_message_chain(:uploaded, :id).and_return("test_id")
-          allow(document_upload).to receive(:safe_download).and_return(true)
-          allow(document_upload).to receive(:google_error).and_return(false)
-        end
 
         scenario "displays uploaded file in a table" do
           visit organisation_job_documents_path(documents_vacancy.id)
@@ -225,20 +215,17 @@ RSpec.describe "Creating a vacancy" do
         scenario "displays error message when invalid file type is uploaded" do
           visit organisation_job_documents_path(documents_vacancy.id)
 
-          allow_any_instance_of(Publishers::Vacancies::DocumentsController)
-            .to receive_message_chain(:valid_content_type?).and_return(false)
-
           upload_document(
             "new_publishers_job_listing_documents_form",
             "publishers-job-listing-documents-form-documents-field",
-            "spec/fixtures/files/#{filename}",
+            "spec/fixtures/files/mime_types/invalid_plain_text_file.txt",
           )
 
-          expect(page).to have_content(I18n.t("jobs.file_type_error_message", filename: filename))
+          expect(page).to have_content(I18n.t("jobs.file_type_error_message", filename: "invalid_plain_text_file.txt"))
         end
 
         scenario "displays error message when large file is uploaded" do
-          stub_const("#{Publishers::Vacancies::DocumentsController}::FILE_SIZE_LIMIT", 1.kilobyte)
+          stub_const("#{Publishers::JobListing::DocumentsForm}::FILE_SIZE_LIMIT", 1.kilobyte)
           visit organisation_job_documents_path(documents_vacancy.id)
 
           upload_document(
@@ -251,9 +238,9 @@ RSpec.describe "Creating a vacancy" do
         end
 
         scenario "displays error message when virus file is uploaded" do
-          visit organisation_job_documents_path(documents_vacancy.id)
+          fail("TODO: Implement this spec")
 
-          allow(document_upload).to receive(:safe_download).and_return(false)
+          visit organisation_job_documents_path(documents_vacancy.id)
 
           upload_document(
             "new_publishers_job_listing_documents_form",
@@ -263,46 +250,21 @@ RSpec.describe "Creating a vacancy" do
 
           expect(page).to have_content(I18n.t("jobs.file_virus_error_message", filename: filename))
         end
-
-        scenario "displays error message when file not uploaded" do
-          visit organisation_job_documents_path(documents_vacancy.id)
-
-          allow(document_upload).to receive(:google_error).and_return(true)
-
-          upload_document(
-            "new_publishers_job_listing_documents_form",
-            "publishers-job-listing-documents-form-documents-field",
-            "spec/fixtures/files/#{filename}",
-          )
-
-          expect(page).to have_content(I18n.t("jobs.file_google_error_message", filename: filename))
-        end
       end
 
       context "when deleting uploaded files", js: true do
-        let(:document_delete) { double("document_delete") }
-
-        let!(:delete_me_document) { create(:document, vacancy: documents_vacancy, name: "delete_me.pdf") }
-        let!(:do_not_delete_me_document) { create(:document, vacancy: documents_vacancy, name: "do_not_delete_me.pdf") }
-
         before do
-          allow(DocumentDelete).to receive(:new).and_return(document_delete)
+          documents_vacancy.supporting_documents.attach(io: StringIO.new("delete_me"), filename: "delete_me.pdf", content_type: "application/pdf")
+          documents_vacancy.supporting_documents.attach(io: StringIO.new("do_not_delete_me"), filename: "do_not_delete_me.pdf", content_type: "application/pdf")
 
           visit organisation_job_documents_path(documents_vacancy.id)
         end
 
         scenario "deletes them" do
-          allow(document_delete).to receive(:delete).and_return(true)
-
-          find("tr[data-document-id=\"#{delete_me_document.id}\"] a[data-method=delete]").click
+          attachment = documents_vacancy.supporting_documents.first { |doc| doc.filename == "delete_me.pdf" }
+          find("tr[data-document-id=\"#{attachment.id}\"] a[data-method=delete]").click
           expect(page).to have_content "delete_me.pdf was removed"
-        end
-
-        scenario "shows errors" do
-          allow(document_delete).to receive(:delete).and_return(false)
-
-          find("tr[data-document-id=\"#{delete_me_document.id}\"] a[data-method=delete]").click
-          expect(page).to have_content "An error occurred while removing delete_me.pdf"
+          expect(documents_vacancy.supporting_documents.count).to eq(1)
         end
       end
     end
