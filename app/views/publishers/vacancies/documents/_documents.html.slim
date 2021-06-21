@@ -6,9 +6,9 @@ table.govuk-table.js-documents__table
       th.govuk-table__header = t("jobs.upload_documents_table.headers.file_size")
       th.govuk-table__header = t("jobs.upload_documents_table.headers.action")
   tbody#js-documents__table-body.govuk-table__body
-    - vacancy.documents.each do |document|
+    - vacancy.supporting_documents.each do |document|
       tr.govuk-table__row.js-document-row data-document-id=document.id
-        td.govuk-table__cell = open_in_new_tab_link_to(document.name, document.download_url)
+        td.govuk-table__cell = open_in_new_tab_link_to(document.filename, document)
         td.govuk-table__cell = t("jobs.upload_documents_table.upload_status.uploaded")
-        td.govuk-table__cell = " #{number_with_precision(document.size / 1024.0 / 1024.0, precision: 2)} MB"
-        td.govuk-table__cell = govuk_link_to(t("jobs.upload_documents_table.actions.remove"), organisation_job_documents_path(id: document.id, job_id: document.vacancy_id), method: :delete)
+        td.govuk-table__cell = number_to_human_size(document.byte_size)
+        td.govuk-table__cell = govuk_link_to(t("jobs.upload_documents_table.actions.remove"), organisation_job_documents_path(id: document.id, job_id: vacancy.id), method: :delete)
