@@ -10,7 +10,7 @@ class SupportingDocumentComponent < GovukComponent::Base
   end
 
   def document_size
-    "#{number_with_precision(supporting_document.size / 1024.0 / 1024.0, precision: 2)} MB"
+    number_to_human_size(supporting_document.byte_size)
   end
 
   private

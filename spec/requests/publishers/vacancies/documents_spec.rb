@@ -14,6 +14,8 @@ RSpec.describe "Documents" do
 
   describe "POST #create" do
     before do
+      expect(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
+
       post organisation_job_documents_path(vacancy.id), params: {
         publishers_job_listing_documents_form: { documents: [file] },
       }

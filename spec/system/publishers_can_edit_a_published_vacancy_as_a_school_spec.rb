@@ -262,17 +262,7 @@ RSpec.describe "Publishers can edit a vacancy" do
     end
 
     describe "#supporting_documents" do
-      let(:document_upload) { double("document_upload") }
       let(:filename) { "blank_job_spec.pdf" }
-
-      before do
-        allow(DocumentUpload).to receive(:new).and_return(document_upload)
-        allow(document_upload).to receive(:upload)
-        allow(document_upload).to receive_message_chain(:uploaded, :web_content_link).and_return("test_url")
-        allow(document_upload).to receive_message_chain(:uploaded, :id).and_return("test_id")
-        allow(document_upload).to receive(:safe_download).and_return(true)
-        allow(document_upload).to receive(:google_error).and_return(false)
-      end
 
       scenario "can edit documents" do
         visit edit_organisation_job_path(vacancy.id)
@@ -281,6 +271,7 @@ RSpec.describe "Publishers can edit a vacancy" do
 
         expect(page).to have_content(I18n.t("helpers.label.publishers_job_listing_documents_form.documents"))
 
+        allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
         upload_document(
           "new_publishers_job_listing_documents_form",
           "publishers-job-listing-documents-form-documents-field",
