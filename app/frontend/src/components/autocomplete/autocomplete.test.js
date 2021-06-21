@@ -78,7 +78,7 @@ describe('autocomplete view', () => {
       expect(hideMock).toHaveBeenCalledWith(container, input);
     });
 
-    test('when user inputs number of characters above threshhold the options are retrieved', () => {
+    test('when user inputs number of characters above threshold the options are shown', () => {
       input.value = 'option';
       const event = new Event('input');
       input.dispatchEvent(event);
@@ -86,7 +86,12 @@ describe('autocomplete view', () => {
       expect(showOptionsMock).toHaveBeenCalledWith(getOptions, container, input, key);
     });
 
-    test('when user inputs number of characters below threshhold the options are cleared', () => {
+    test('unwanted characters are replaced with space in a searchterm ', () => {
+      const searchTerm = 'St.Austell';
+      expect(autocomplete.removeUnwantedCharacters(searchTerm)).toBe('St Austell');
+    });
+
+    test('when user inputs number of characters below threshold the options are cleared', () => {
       input.value = 'op';
       const event = new Event('input');
       input.dispatchEvent(event);
