@@ -41,7 +41,7 @@ RSpec.describe SearchableCollectionComponent, type: :component do
   context "when using an item threshold of higher than collection size" do
     let(:options) { { threshold: 10 } }
     let(:radio_collection) do
-      described_class.new(base.merge(options)).with_variant(:checkbox)
+      described_class.new(**base.merge(options)).with_variant(:checkbox)
     end
 
     let!(:inline_component) { render_inline(radio_collection) }
@@ -65,7 +65,7 @@ RSpec.describe SearchableCollectionComponent, type: :component do
     let(:options) { { threshold: 5 } }
 
     let(:checkbox_collection) do
-      described_class.new(base.merge(options)).with_variant(:checkbox)
+      described_class.new(**base.merge(options)).with_variant(:checkbox)
     end
 
     let!(:inline_component) { render_inline(checkbox_collection) }
