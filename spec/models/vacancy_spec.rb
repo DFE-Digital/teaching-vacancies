@@ -3,7 +3,6 @@ require "rails_helper"
 RSpec.describe Vacancy do
   it { is_expected.to belong_to(:publisher_organisation).optional }
   it { is_expected.to belong_to(:publisher).optional }
-  it { is_expected.to have_many(:documents) }
   it { is_expected.to have_many(:organisation_vacancies) }
   it { is_expected.to have_many(:organisations) }
   it { is_expected.to have_many(:saved_jobs) }
@@ -284,14 +283,6 @@ RSpec.describe Vacancy do
     end
   end
 
-  describe "when supporting documents are provided" do
-    it "returns the document name" do
-      document = create(:document, name: "Test_doc.png")
-      vacancy = create(:vacancy, documents: [document])
-      expect(vacancy.documents.first.name).to eq("Test_doc.png")
-    end
-  end
-
   describe "#parent_organisation_name" do
     context "when vacancy has a school" do
       it "returns the school name for the vacancy" do
@@ -332,26 +323,6 @@ RSpec.describe Vacancy do
         vacancy = create(:vacancy, application_link: "www.example.com")
         expect(vacancy.application_link).to eq("http://www.example.com")
       end
-    end
-  end
-
-  describe "#delete_documents" do
-    it "deletes all attached supporting documents" do
-      document1 = create(:document, name: "document1.pdf")
-      document2 = create(:document, name: "document2.pdf")
-
-      vacancy = create(:vacancy, documents: [document1, document2])
-
-      document1_delete = instance_double(DocumentDelete)
-      document2_delete = instance_double(DocumentDelete)
-
-      allow(DocumentDelete).to receive(:new).with(document1).and_return(document1_delete)
-      allow(DocumentDelete).to receive(:new).with(document2).and_return(document2_delete)
-
-      expect(document1_delete).to receive(:delete)
-      expect(document2_delete).to receive(:delete)
-
-      vacancy.delete_documents
     end
   end
 
