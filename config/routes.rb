@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     devise_scope :jobseeker do
       get :check_your_email, to: "registrations#check_your_email", as: :check_your_email
       get :check_your_email_password, to: "passwords#check_your_email_password", as: :check_your_email_password
+      get :confirm_destroy, to: "registrations#confirm_destroy", as: :confirm_destroy_account
     end
 
     resources :job_applications, only: %i[index show destroy] do
