@@ -30,18 +30,11 @@ resource "aws_cloudfront_distribution" "default" {
   aliases = local.cloudfront_aliases
 
   default_cache_behavior {
-    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "${var.service_name}-${var.environment}-default-origin"
-
-    forwarded_values {
-      query_string = true
-      headers      = var.default_header_list
-
-      cookies {
-        forward = "all"
-      }
-    }
+    allowed_methods          = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = "${var.service_name}-${var.environment}-default-origin"
+    cache_policy_id          = data.aws_cloudfront_cache_policy.Managed-CachingDisabled.id
+    origin_request_policy_id = data.aws_cloudfront_origin_request_policy.Managed-AllViewer.id
 
     # The absense of `ttl` configuration here means caching is deferred to the origin
     # https://angristan.xyz/terraform-enable-origin-cache-headers-aws-cloudfront/
