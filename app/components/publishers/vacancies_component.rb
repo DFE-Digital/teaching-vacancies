@@ -54,6 +54,10 @@ class Publishers::VacanciesComponent < ViewComponent::Base
     tag.div(card.labelled_item(I18n.t("jobs.manage.applications"), link))
   end
 
+  def vacancy_expired_over_a_year_ago?(vacancy)
+    vacancy.expires_at < 1.year.ago
+  end
+
   private
 
   attr_reader :publisher_preference, :organisation, :selected_type, :sort, :vacancies
