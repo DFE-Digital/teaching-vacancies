@@ -26,6 +26,8 @@ class ErrorsController < ApplicationController
   end
 
   def internal_server_error
+    @rollbar_error_id = Rollbar.last_report[:uuid] if Rollbar.last_report.present?
+
     respond_to do |format|
       format.html { render status: :internal_server_error }
       format.json { render json: { error: "Internal server error" }, status: :internal_server_error }
