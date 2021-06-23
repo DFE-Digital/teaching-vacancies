@@ -75,7 +75,7 @@ export const onFailure = () => {
 
 export const postcodeFromPosition = (position, apiPromise) => apiPromise(position.coords.latitude, position.coords.longitude).then((response) => {
   if (response && response.result) {
-    onSuccess(response.result[0].postcode, document.getElementById('location-field'));
+    onSuccess(response.result[0].postcode, document.getElementsByClassName('js-location-finder__input')[0]);
   } else {
     onFailure();
   }
