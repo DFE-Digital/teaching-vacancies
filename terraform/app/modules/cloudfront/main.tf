@@ -29,7 +29,7 @@ resource "aws_cloudfront_distribution" "default" {
   enabled = true
   aliases = local.cloudfront_aliases
 
-    ordered_cache_behavior {
+  ordered_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = "${var.service_name}-${var.environment}-offline"
