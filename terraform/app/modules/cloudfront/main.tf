@@ -29,26 +29,6 @@ resource "aws_cloudfront_distribution" "default" {
   enabled = true
   aliases = local.cloudfront_aliases
 
-  default_cache_behavior {
-    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "${var.service_name}-${var.environment}-default-origin"
-
-    forwarded_values {
-      query_string = true
-      headers      = var.default_header_list
-
-      cookies {
-        forward = "all"
-      }
-    }
-
-    # The absense of `ttl` configuration here means caching is deferred to the origin
-    # https://angristan.xyz/terraform-enable-origin-cache-headers-aws-cloudfront/
-
-    viewer_protocol_policy = "redirect-to-https"
-  }
-
   ordered_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
     cached_methods   = ["GET", "HEAD"]
@@ -71,7 +51,6 @@ resource "aws_cloudfront_distribution" "default" {
     viewer_protocol_policy = "redirect-to-https"
   }
 
-
   dynamic "ordered_cache_behavior" {
     for_each = local.cloudfront_cached_paths
 
@@ -83,6 +62,16 @@ resource "aws_cloudfront_distribution" "default" {
       viewer_protocol_policy = "redirect-to-https"
       cache_policy_id        = data.aws_cloudfront_cache_policy.managed-caching-optimized.id
     }
+  }
+
+  default_cache_behavior {
+    allowed_methods          = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = "${var.service_name}-${var.environment}-default-origin"
+    cache_policy_id          = data.aws_cloudfront_cache_policy.Managed-CachingDisabled.id
+    origin_request_policy_id = data.aws_cloudfront_origin_request_policy.Managed-AllViewer.id
+
+    viewer_protocol_policy = "redirect-to-https"
   }
 
   price_class = "PriceClass_100"
