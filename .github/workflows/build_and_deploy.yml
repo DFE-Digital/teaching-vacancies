@@ -130,9 +130,12 @@ jobs:
         if: github.event_name == 'pull_request'
         run: echo "MATRIX_ENVIRONMENTS={\"environment\":[\"review\"]}" >> $GITHUB_ENV
 
+      - name: print
+        run: echo ${{ github.head_ref }}
+
   deploy:
     name: Deploy app
-
+    if: "!contains( github.head_ref, 'no-infra')"
     strategy:
       max-parallel: 1
       # Creates a variable 'environment' from the build job output 'matrix_environments'
