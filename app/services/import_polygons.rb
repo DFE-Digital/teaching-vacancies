@@ -3,6 +3,8 @@ class ImportPolygons
   BUFFER_DISTANCES_IN_MILES = [5, 10, 15, 20, 25].freeze
   URL_MAXIMUM_LENGTH = 33_000
 
+  class ArcgisResponseError < StandardError; end
+
   include DistanceHelper
 
   attr_reader :location_name, :api_location_type
@@ -13,6 +15,8 @@ class ImportPolygons
 
   def call
     response = JSON.parse(HTTParty.get(LOCATION_POLYGON_SETTINGS[api_location_type][:boundary_api]))
+
+    raise ArcgisResponseError, response.dig("error", "message") if response.dig("error", "code").present?
 
     response.fetch("features", []).each do |region_response|
       @location_name = region_response.dig("attributes", LOCATION_POLYGON_SETTINGS[api_location_type][:name_key]).downcase
