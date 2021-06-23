@@ -16,3 +16,11 @@ data "aws_acm_certificate" "cloudfront_cert" {
 data "aws_cloudfront_cache_policy" "managed-caching-optimized" {
   name = "Managed-CachingOptimized"
 }
+
+data "aws_cloudfront_cache_policy" "Managed-CachingDisabled" {
+  name = "Managed-CachingDisabled"
+}
+
+data "aws_cloudfront_origin_request_policy" "Managed-AllViewer" {
+  name = "Managed-AllViewer"
+}
