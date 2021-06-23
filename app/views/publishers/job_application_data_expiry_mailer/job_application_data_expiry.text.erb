@@ -1,0 +1,11 @@
+# <%= t(".title", job_title: @vacancy.job_title, publish_date: @vacancy.publish_on.to_s(:month_year), expiration_date: data_expiration_date) %>
+
+<%= t(".expiry", job_title: @vacancy.job_title, expiration_date: data_expiration_date) %>
+
+<%= t(".privacy_policy", privacy_policy_link: privacy_policy_link) %>
+
+<%= view_applications_for_link(@vacancy) %>
+
+---
+
+<%= t("shared.footer", home_page_link: home_page_link) %>

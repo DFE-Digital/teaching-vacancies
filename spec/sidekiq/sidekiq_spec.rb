@@ -22,6 +22,7 @@ RSpec.describe "Sidekiq configuration" do
       UpdateGoogleIndexQueueJob
       Noticed::DeliveryMethods::Base
       Noticed::DeliveryMethods::Database
+      Noticed::DeliveryMethods::Email
     ]
   end
 
