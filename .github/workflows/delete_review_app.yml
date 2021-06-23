@@ -18,9 +18,10 @@ jobs:
   delete-review-app:
     name: Delete review app after deploy
     runs-on: ubuntu-20.04
+    if: ${{ github.event.label.name == 'deploy' }} # "!contains( github.head_ref, 'no-infra')"
 
     steps:
-    - name: Set environment variables
+    - name: Set environment variable
       run: |
         ENVIRONMENT=review-pr-${{ github.event.number }}
         echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
