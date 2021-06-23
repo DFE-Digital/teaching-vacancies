@@ -30,7 +30,7 @@ locals {
   cloudfront_aliases_cnames                              = [for zone in var.route53_zones : "${var.route53_cname_record}.${zone}"]
   cloudfront_aliases                                     = concat(var.route53_a_records, local.cloudfront_aliases_cnames)
   cloudfront_viewer_certificate_minimum_protocol_version = "TLSv1.2_2018"
-  cloudfront_cached_paths                                = ["/packs/*", "/attachment*"]
+  cloudfront_cached_paths                                = ["/packs/*", "/attachment/*"]
   cloudfront_custom_response = {
     404 = { ttl = "10" },
     500 = { ttl = "60", response_code = "500", page_path = "${var.offline_bucket_origin_path}/index.html" },
