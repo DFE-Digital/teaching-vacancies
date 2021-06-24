@@ -2,7 +2,7 @@
 
 ## ProdRequestsFailuresElevated
 
-Alerts when `teaching-vacancies-production` app has more than 25 failed requests for a 5-minute period.
+Alerts when `teaching-vacancies-production` app has a rate of more than 10% of requests failing for a 5-minute period.
 Failed requests are defined as those with HTTP status codes matching the patterns `0xx`, `4xx` or `5xx`.
 
 ## ProdAppCPUHigh
