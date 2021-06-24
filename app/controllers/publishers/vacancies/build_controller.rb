@@ -2,8 +2,8 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   include Wicked::Wizard
   include OrganisationHelper
 
-  steps :job_location, :schools, :job_details, :pay_package, :important_dates, :documents, :applying_for_the_job,
-        :job_summary
+  steps :job_location, :schools, :job_details, :pay_package, :important_dates, :supporting_documents,
+        :applying_for_the_job, :job_summary
 
   helper_method :back_path, :form
 
@@ -19,7 +19,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
       skip_step if current_organisation.school?
     when :schools
       skip_step if current_organisation.school? || job_location == "central_office"
-    when :documents
+    when :supporting_documents
       return redirect_to(organisation_job_documents_path(vacancy.id))
     end
 
@@ -121,7 +121,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
 
   def update_vacancy
     vacancy.assign_attributes(form.params_to_save)
-    vacancy.refresh_slug
+    vacancy.refresh_slug!
     update_google_index(vacancy) if vacancy.listed?
   end
 end

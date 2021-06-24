@@ -267,7 +267,7 @@ RSpec.describe "Publishers can edit a vacancy" do
 
       before do
         allow(DocumentUpload).to receive(:new).and_return(document_upload)
-        allow(document_upload).to receive(:upload)
+        allow(document_upload).to receive(:upload!)
         allow(document_upload).to receive_message_chain(:uploaded, :web_content_link).and_return("test_url")
         allow(document_upload).to receive_message_chain(:uploaded, :id).and_return("test_id")
         allow(document_upload).to receive(:safe_download).and_return(true)
@@ -281,7 +281,7 @@ RSpec.describe "Publishers can edit a vacancy" do
 
         expect(page).to have_content(I18n.t("helpers.label.publishers_job_listing_documents_form.documents"))
 
-        upload_document(
+        upload_document!(
           "new_publishers_job_listing_documents_form",
           "publishers-job-listing-documents-form-documents-field",
           "spec/fixtures/files/#{filename}",
