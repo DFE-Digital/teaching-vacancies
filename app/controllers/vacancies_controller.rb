@@ -1,6 +1,12 @@
 class VacanciesController < ApplicationController
   helper_method :job_application
 
+  attr_reader :canonical
+
+  before_action :canonical, only: %i[show]
+
+  SEO_CANONICAL_TEST_VACANCIES = %w[c9f9a45f-1f42-4686-9515-311bc169af29 ef21f5d2-4226-4cf8-b8d2-3155e149b0b2]
+
   def index
     set_map_display
     params[:location] = params[:location_facet] if params[:location_facet]
@@ -22,7 +28,7 @@ class VacanciesController < ApplicationController
       return render "/errors/trashed_vacancy_found", status: :not_found
     end
 
-    return redirect_to(job_path(vacancy), status: :moved_permanently) if old_vacancy_path?(vacancy)
+    # return redirect_to(job_path(vacancy), status: :moved_permanently) if old_vacancy_path?(vacancy)
 
     @saved_job = current_jobseeker&.saved_jobs&.find_by(vacancy_id: vacancy.id)
     @vacancy = VacancyPresenter.new(vacancy)
@@ -33,6 +39,16 @@ class VacanciesController < ApplicationController
   end
 
   private
+
+  UUID_REGEX = /\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b/
+
+  def canonical
+    if SEO_CANONICAL_TEST_VACANCIES.include?(vacancy.id)
+      if UUID_REGEX.match(id) || !job_path(vacancy).end_with?(vacancy.slug)
+        @canonical_href = job_url(id)
+      end
+    end
+  end
 
   def algolia_search_params
     strip_empty_checkboxes(%i[job_roles phases working_patterns])
