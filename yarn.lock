@@ -2030,11 +2030,6 @@ babel-preset-jest@^26.6.2:
     babel-plugin-jest-hoist "^26.6.2"
     babel-preset-current-node-syntax "^1.0.0"
 
-backstop@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/backstop/-/backstop-1.0.1.tgz#9afd0d1c74022d07449d6c0e73199973314a911c"
-  integrity sha512-1vLEMys4xy7ffDuTZQnjk7+30fwxQ5Nw5P7KDqm0TtsqsTM38aITYAJ083AEX/uojgtB/iBaq2B6ZygLjNAjUw==
-
 backstopjs@^5.3.2:
   version "5.3.2"
   resolved "https://registry.yarnpkg.com/backstopjs/-/backstopjs-5.3.2.tgz#b2f8c8856a0d065abad2e23870bfa61b36f0df17"
