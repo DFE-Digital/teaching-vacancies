@@ -79,7 +79,6 @@ shared:
     - publisher_id
     - subscription_id
     - vacancy_id
-    - application_id
     - close_account_reason
     - close_account_reason_comment
   job_applications:
