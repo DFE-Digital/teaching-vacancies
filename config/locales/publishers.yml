@@ -160,7 +160,7 @@ en:
               content_with_no_link: You can choose for candidates to apply for the job through Teaching Vacancies.
               link: Preview the application form
           step_title: Applying for the job
-        documents:
+        supporting_documents:
           step_title: Supporting documents
         important_dates:
           step_title: Important dates and deadlines
