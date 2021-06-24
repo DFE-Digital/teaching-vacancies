@@ -105,7 +105,7 @@ RSpec.describe Vacancy do
       it "resets the current slug by accessing a friendly_id private method" do
         job = create(:vacancy, slug: "the-wrong-slug")
         job.job_title = "CS Teacher"
-        job.refresh_slug
+        job.refresh_slug!
 
         expect(job.slug).to eq("cs-teacher")
       end
@@ -351,7 +351,7 @@ RSpec.describe Vacancy do
       expect(document1_delete).to receive(:delete)
       expect(document2_delete).to receive(:delete)
 
-      vacancy.delete_documents
+      vacancy.delete_documents!
     end
   end
 

@@ -30,12 +30,12 @@ class School < Organisation
 
   def easting=(easting)
     self[:easting] = easting
-    set_geolocation_from_easting_and_northing
+    set_geolocation_from_easting_and_northing!
   end
 
   def northing=(northing)
     self[:northing] = northing
-    set_geolocation_from_easting_and_northing
+    set_geolocation_from_easting_and_northing!
   end
 
   def religious_character
@@ -47,7 +47,7 @@ class School < Organisation
 
   private
 
-  def set_geolocation_from_easting_and_northing
+  def set_geolocation_from_easting_and_northing!
     if easting && northing
       wgs84 = Breasal::EastingNorthing.new(
         easting: easting.to_i,

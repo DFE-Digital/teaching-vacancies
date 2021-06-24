@@ -29,18 +29,17 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
 
     if all_steps_valid?
       session[:current_step] = :review
-      set_completed_step
-      validate_all_steps
+      set_completed_step!
     else
       session[:current_step] = :edit_incomplete
-      redirect_to_incomplete_step
+      redirect_to organisation_job_build_path(vacancy.id, first_invalid_step)
     end
 
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
   def destroy
-    vacancy.delete_documents
+    vacancy.delete_documents!
     vacancy.trashed!
     remove_google_index(vacancy)
     redirect_to organisation_path, success: t(".success_html", job_title: vacancy.job_title)
@@ -69,24 +68,13 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     redirect_to organisation_job_path(vacancy.id), notice: t("messages.jobs.already_published")
   end
 
-  def redirect_to_incomplete_step
-    return redirect_to organisation_job_build_path(vacancy.id, :job_details) unless step_valid?(Publishers::JobListing::JobDetailsForm)
-    return redirect_to organisation_job_build_path(vacancy.id, :pay_package) unless step_valid?(Publishers::JobListing::PayPackageForm)
-    return redirect_to organisation_job_build_path(vacancy.id, :important_dates) unless step_valid?(Publishers::JobListing::ImportantDatesForm)
-    return redirect_to organisation_job_build_path(vacancy.id, :documents) unless vacancy.completed_step >= steps_config[:documents][:number]
-    return redirect_to organisation_job_build_path(vacancy.id, :applying_for_the_job) unless step_valid?(Publishers::JobListing::ApplyingForTheJobForm)
-    return redirect_to organisation_job_build_path(vacancy.id, :job_summary) unless step_valid?(Publishers::JobListing::JobSummaryForm)
+  def first_invalid_step
+    all_invalid_steps.min_by { |step| step.last[:number] }.first
   end
 
-  def set_completed_step
+  def set_completed_step!
     vacancy.update(completed_step: current_step_number)
   end
 
-  def validate_all_steps
-    step_valid?(Publishers::JobListing::JobDetailsForm)
-    step_valid?(Publishers::JobListing::PayPackageForm)
-    step_valid?(Publishers::JobListing::ImportantDatesForm)
-    step_valid?(Publishers::JobListing::ApplyingForTheJobForm)
-    step_valid?(Publishers::JobListing::JobSummaryForm)
-  end
+  alias validate_all_steps all_invalid_steps
 end

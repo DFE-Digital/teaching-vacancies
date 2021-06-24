@@ -94,14 +94,14 @@ module VacanciesHelper
   end
 
   def steps_to_display(steps, steps_adjust)
-    steps_to_remove = current_organisation.is_a?(School) ? %i[supporting_documents review] : %i[supporting_documents schools review]
+    steps_to_remove = current_organisation.is_a?(School) ? %i[] : %i[schools]
 
     steps.transform_values { |step_details| step_details[:number] - steps_adjust }
          .except!(*steps_to_remove)
          .reject { |_, step_number| step_number.zero? }
   end
 
-  def total_steps(steps)
+  def total_steps(steps, steps_adjust)
     steps.values.map { |step| step[:number] }.max - steps_adjust
   end
 end

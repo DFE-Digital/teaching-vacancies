@@ -8,20 +8,20 @@ class CopyVacancy
   def call
     @new_vacancy.send(:set_slug)
     @new_vacancy.save(validate: false)
-    copy_documents
+    copy_documents!
     @new_vacancy
   end
 
   private
 
-  def copy_documents
+  def copy_documents!
     @vacancy.supporting_documents.each do |supporting_doc|
       @new_vacancy.supporting_documents.attach(supporting_doc.blob)
     end
 
     @vacancy.documents.each do |document|
       document_copy = DocumentCopy.new(document.google_drive_id)
-      document_copy.copy
+      document_copy.copy!
       next if document_copy.google_error
 
       @new_vacancy.documents.create({
