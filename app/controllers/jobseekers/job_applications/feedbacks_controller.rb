@@ -20,7 +20,7 @@ class Jobseekers::JobApplications::FeedbacksController < Jobseekers::BaseControl
 
   def feedback_attributes
     feedback_form_params.merge(
-      application_id: job_application.id,
+      job_application_id: job_application.id,
       feedback_type: "application",
       jobseeker_id: current_jobseeker.id,
     )
