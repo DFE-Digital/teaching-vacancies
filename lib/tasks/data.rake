@@ -46,23 +46,3 @@ namespace :ons do
     %i[regions counties cities].each { |api_location_type| ImportPolygons.new(api_location_type: api_location_type).call }
   end
 end
-
-namespace :feedbacks do
-  desc "Copy application_id to job_application_id"
-  task copy_application_id_to_job_application_id: :environment do
-    feedbacks_to_fix_count = Feedback.where.not(application_id: nil).where(job_application_id: nil).count
-    fixed_feedbacks_count = 0
-
-    puts "Checking #{feedbacks_to_fix_count} feedbacks with application_id set and job_application_id nil..."
-
-    Feedback.find_each do |feedback|
-      next unless feedback.application_id.present? && feedback.job_application_id.blank?
-
-      feedback.update_column(:job_application_id, feedback.application_id)
-      fixed_feedbacks_count += 1
-    end
-
-    puts "Fixed #{fixed_feedbacks_count} feedbacks."
-    puts "⛅ Have a nice day!"
-  end
-end
