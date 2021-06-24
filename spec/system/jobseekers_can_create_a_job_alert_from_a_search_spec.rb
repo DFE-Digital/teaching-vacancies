@@ -6,6 +6,8 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
   let(:jobseeker_signed_in?) { false }
   let(:jobseeker) { build_stubbed(:jobseeker) }
 
+  before { allow_any_instance_of(Jobseekers::SubscriptionForm).to receive(:variant).and_return(:default) }
+
   describe "recaptcha" do
     context "when verify_recaptcha is false" do
       before do
