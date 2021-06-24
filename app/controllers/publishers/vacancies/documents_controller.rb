@@ -70,26 +70,27 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
 
   def process_documents!
     documents_form_params[:documents]&.each_with_object([]) do |document_params, documents_array|
-      document_upload = upload_document!(document_params)
-      document_hash = document_attributes(document_params, document_upload)
+      document_hash = upload_document!(document_params)
       next if errors_on_file?(document_params.original_filename)
 
       documents_array << document_hash
     end
   end
 
+  # rubocop:disable Metrics/AbcSize # This method is deleted in PR 3651
   def upload_document!(document_params)
-    add_pre_upload_file_errors(document_params)
-
-    if errors_on_file?(document_params.original_filename)
-      Rails.logger.info("Failed to upload #{document_params.original_filename}: #{form.errors.full_messages.join(', ')}")
-      return
-    end
+    add_file_type_error(document_params.original_filename) unless valid_content_type?(document_params.tempfile)
+    add_file_size_error(document_params.original_filename) if document_params.size > FILE_SIZE_LIMIT
 
     document_upload = DocumentUpload.new(
       upload_path: document_params.tempfile.path,
       name: document_params.original_filename,
     )
+
+    if errors_on_file?(document_params.original_filename)
+      Rails.logger.info("Failed to upload #{document_params.original_filename}: #{form.errors.full_messages.join(', ')}")
+      return
+    end
 
     document_upload.upload!
 
@@ -100,20 +101,19 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
 
     vacancy.supporting_documents.attach(document_params)
 
-    document_upload
+    document_attributes(document_params, document_upload)
   end
-
-  def add_pre_upload_file_errors(document_params)
-    add_file_type_error(document_params.original_filename) unless valid_content_type?(document_params.tempfile)
-    add_file_size_error(document_params.original_filename) if document_params.size > FILE_SIZE_LIMIT
-  end
+  # rubocop:enable Metrics/AbcSize # This method is deleted in PR 3651
 
   def add_file_type_error(filename)
     form.errors.add(:documents, t("jobs.file_type_error_message", filename: filename))
   end
 
   def add_file_size_error(filename)
-    form.errors.add(:documents, t("jobs.file_size_error_message", filename: filename, size_limit: helpers.number_to_human_size(FILE_SIZE_LIMIT)))
+    form.errors.add(
+      :documents,
+      t("jobs.file_size_error_message", filename: filename, size_limit: helpers.number_to_human_size(FILE_SIZE_LIMIT)),
+    )
   end
 
   def add_google_error(filename)

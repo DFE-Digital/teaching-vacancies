@@ -32,7 +32,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
       set_completed_step!
     else
       session[:current_step] = :edit_incomplete
-      redirect_to_incomplete_step
+      redirect_to organisation_job_build_path(vacancy.id, first_invalid_step)
     end
 
     @vacancy = VacancyPresenter.new(vacancy)
@@ -68,12 +68,8 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     redirect_to organisation_job_path(vacancy.id), notice: t("messages.jobs.already_published")
   end
 
-  def redirect_to_incomplete_step
-    incomplete_steps = all_invalid_steps
-    if vacancy.completed_step < steps_config[:supporting_documents][:number]
-      incomplete_steps.push(steps_config.slice(:supporting_documents))
-    end
-    redirect_to organisation_job_build_path(vacancy.id, incomplete_steps.min_by { |step| step.last[:number] })
+  def first_invalid_step
+    all_invalid_steps.min_by { |step| step.last[:number] }.first
   end
 
   def set_completed_step!
