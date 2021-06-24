@@ -20,6 +20,7 @@
                                             edit_publisher_preference_path(current_publisher_preference), class: "govuk-link--no-visited-state"
 
           = render SearchableCollectionComponent.new(form: f,
+            threshold: 10,
             attribute_name: :organisation_ids,
             collection: @school_options,
             value_method: :id,
