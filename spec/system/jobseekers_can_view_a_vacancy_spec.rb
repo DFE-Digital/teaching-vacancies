@@ -4,12 +4,15 @@ RSpec.describe "Viewing a single published vacancy" do
   let(:school) { create(:school) }
 
   scenario "Published vacancies are viewable" do
+    allow_any_instance_of(ApplicationController).to receive(:canonical_href).and_return(false)
     vacancy = create(:vacancy, :published)
     vacancy.organisation_vacancies.create(organisation: school)
 
     published_vacancy = VacancyPresenter.new(vacancy)
 
     visit job_path(published_vacancy)
+
+    expect(page).to_not have_css("link[rel='canonical']")
 
     verify_vacancy_show_page_details(published_vacancy)
   end
@@ -77,6 +80,7 @@ RSpec.describe "Viewing a single published vacancy" do
       let(:vacancy) { create(:vacancy, subjects: %w[Physics]) }
 
       before do
+        allow_any_instance_of(ApplicationController).to receive(:canonical_href).and_return(false)
         vacancy.organisation_vacancies.create(organisation: school)
         visit job_path(vacancy)
       end
@@ -132,6 +136,7 @@ RSpec.describe "Viewing a single published vacancy" do
 
   context "meta tags" do
     include ActionView::Helpers::SanitizeHelper
+
     scenario "the vacancy's meta data are rendered correctly" do
       vacancy = create(:vacancy, :published)
       vacancy.organisation_vacancies.create(organisation: school)

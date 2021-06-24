@@ -1,6 +1,10 @@
 class VacanciesController < ApplicationController
   helper_method :job_application
 
+  before_action :canonical, only: %i[show]
+
+  SEO_CANONICAL_TEST_VACANCIES = %w[c9f9a45f-1f42-4686-9515-311bc169af29 ef21f5d2-4226-4cf8-b8d2-3155e149b0b2].freeze
+
   def index
     set_map_display
     params[:location] = params[:location_facet] if params[:location_facet]
@@ -33,6 +37,16 @@ class VacanciesController < ApplicationController
   end
 
   private
+
+  UUID_REGEX = /\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b/
+
+  def canonical
+    if SEO_CANONICAL_TEST_VACANCIES.include?(vacancy.id)
+      if UUID_REGEX.match(id) || !job_path(vacancy).end_with?(vacancy.slug)
+        @canonical_href = job_url(id)
+      end
+    end
+  end
 
   def algolia_search_params
     strip_empty_checkboxes(%i[job_roles phases working_patterns])
