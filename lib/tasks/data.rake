@@ -46,3 +46,34 @@ namespace :ons do
     %i[regions counties cities].each { |api_location_type| ImportPolygons.new(api_location_type: api_location_type).call }
   end
 end
+
+namespace :subscriptions do
+  desc "Fix subscriptions with wrong email"
+  task fix_wrong_email: :environment do
+    subscriptions_to_fix = Subscription.where("email LIKE '%.con' AND created_at > ?", 6.months.ago)
+    subscriptions_to_delete = Subscription.where("email LIKE '%.con' AND created_at < ?", 6.months.ago)
+
+    puts "Checking #{subscriptions_to_fix.count} subscriptions having email ending in .con created in the last 6 months"
+
+    fixed_subscriptions_count = 0
+    deleted_subscriptions_count = 0
+
+    subscriptions_to_fix.find_each do |subscription|
+      if Subscription.find_by(email: subscription.email.gsub(".con", ".com"))
+        subscription.destroy
+        deleted_subscriptions_count += 1
+      else
+        subscription.update_column(:email, subscription.email.gsub(".con", ".com"))
+        fixed_subscriptions_count += 1
+      end
+    end
+
+    subscriptions_to_delete.count
+    subscriptions_to_delete.destroy_all
+
+    puts "Fixed #{fixed_subscriptions_count} subscriptions having email ending with .con"
+    puts "Deleted #{deleted_subscriptions_count} subscriptions having email ending with .con but also having the user created one with the right email"
+    puts "Also deleted #{subscriptions_to_delete.count} subscriptions having email ending with .con created more than 6 months ago"
+    puts "Have a nice day!"
+  end
+end
