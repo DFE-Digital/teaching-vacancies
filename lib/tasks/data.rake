@@ -13,7 +13,7 @@ namespace :algolia do
     replicas.each { |replica| Algolia.client.delete_index(replica) }
   end
 
-  desc "Update a live index with newly published records using minimal operations"
+  desc "Just a test a live index with newly published records using minimal operations"
   task update_index: :environment do
     Vacancy.update_index!
   end
