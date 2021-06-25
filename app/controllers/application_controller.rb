@@ -20,6 +20,8 @@ class ApplicationController < ActionController::Base
   include DeviseFlashConcerns
   include AbTestable
 
+  helper_method :canonical_href
+
   def check
     render json: { status: "OK" }, status: :ok
   end
@@ -33,6 +35,10 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def canonical_href
+    nil
+  end
 
   def cookies_preference_set?
     cookies["consented-to-cookies"].present?
