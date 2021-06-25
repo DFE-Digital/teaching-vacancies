@@ -25,7 +25,7 @@ LOCATION_POLYGON_SETTINGS = { # ESMARspQHYMw9BZ9 is not an API key
     name_key: "CTYUA19NM",
   },
   cities: {
-    boundary_api: "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Major_Towns_and_Cities_December_2015_EW_BGG/FeatureServer/0/query?where=1%3D1&outFields=tcity15nm,shape&outSR=4326&f=json",
+    boundary_api: "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Major_Towns_and_Cities_December_2015_Boundaries/FeatureServer/0/query?where=1%3D1&outFields=tcity15nm,shape&outSR=4326&f=json",
     name_key: "TCITY15NM",
   },
 }.freeze
