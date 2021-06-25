@@ -4,14 +4,16 @@ class Jobseekers::SubscriptionForm
   attr_accessor :email, :frequency,
                 :keyword, :location, :radius,
                 :job_roles, :phases, :working_patterns,
-                :job_role_options, :phase_options, :working_pattern_options
+                :job_role_options, :phase_options, :working_pattern_options,
+                :variant
 
   validates :email, presence: true
   validates :email, format: { with: Devise.email_regexp }
   validates :frequency, presence: true
 
   validate :unique_job_alert
-  validate :criteria_selected
+  validate :criteria_selected, if: -> { variant == :default }
+  validate :location_and_one_other_criterion_selected, if: -> { variant == :mandatory_location_and_one_other_field }
 
   def initialize(params = {})
     search_criteria = params[:search_criteria]&.symbolize_keys || {}
@@ -26,6 +28,8 @@ class Jobseekers::SubscriptionForm
     @job_roles = params[:job_roles]&.reject(&:blank?) || search_criteria[:job_roles]
     @phases = params[:phases]&.reject(&:blank?) || search_criteria[:phases]
     @working_patterns = params[:working_patterns]&.reject(&:blank?) || search_criteria[:working_patterns]
+
+    @variant = params[:variant]
 
     set_facet_options
   end
@@ -62,6 +66,11 @@ class Jobseekers::SubscriptionForm
   def criteria_selected
     errors.add(:base, I18n.t("subscriptions.errors.no_criteria_selected")) if
       keyword.blank? && location.blank? && job_roles.blank? && phases.blank? && working_patterns.blank?
+  end
+
+  def location_and_one_other_criterion_selected
+    errors.add(:base, I18n.t("subscriptions.errors.no_location_or_other_criterion_selected")) unless
+      location.present? && %i[keyword job_roles phases working_patterns].any? { |criterion| public_send(criterion).present? }
   end
 
   def unique_job_alert
