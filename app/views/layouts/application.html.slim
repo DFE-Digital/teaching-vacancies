@@ -8,6 +8,10 @@ html.govuk-template.app-html-class lang="en"
     title #{content_for :page_title_prefix} — #{t("app.title")}
     meta content="width=device-width, initial-scale=1" name="viewport"
     meta content="blue" name="theme-color"
+
+    - if canonical_href
+      link rel="canonical" href="#{canonical_href}"
+
     link href=asset_pack_path("media/images/favicon.ico") rel="shortcut icon" type="image/x-icon"
     link color="blue" href=asset_pack_path("media/images/govuk-mask-icon.svg") rel="mask-icon"
     link href=asset_pack_path("media/images/govuk-apple-touch-icon-180x180.png") rel="apple-touch-icon" sizes="180x180"
