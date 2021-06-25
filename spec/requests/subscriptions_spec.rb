@@ -3,6 +3,8 @@ require "rails_helper"
 RSpec.describe "Subscriptions" do
   let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
 
+  before { allow_any_instance_of(Jobseekers::SubscriptionForm).to receive(:variant).and_return(:default) }
+
   describe "GET #new" do
     context "with valid origin" do
       let(:origin) { "/jobs/#{vacancy.id}/#{vacancy.slug}" }
