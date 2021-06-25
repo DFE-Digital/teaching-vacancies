@@ -62,6 +62,7 @@ RSpec.configure do |config|
 
   config.before do
     ActiveJob::Base.queue_adapter = :test
+    allow_any_instance_of(SubscriptionsController).to receive(:ab_variant_for).and_return(:default)
   end
 
   config.before(:each, geocode: true) do
