@@ -35,6 +35,9 @@ shared:
     bottom: 1
     right_blue: 1
     right_grey: 1
+  2021_06_mandatory_job_alert_fields_test:
+    mandatory_location_and_one_other_field: 1
+    default: 1
 test:
   2021_04_cookie_consent_test:
     none: 0
