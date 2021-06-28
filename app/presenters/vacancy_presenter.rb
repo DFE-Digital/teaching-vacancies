@@ -63,14 +63,10 @@ class VacancyPresenter < BasePresenter
   end
 
   def working_patterns_for_job_schema
-    return unless working_patterns?
-
     model_working_patterns.compact.map(&:upcase).join(", ")
   end
 
   def show_job_roles
-    return unless model.job_roles
-
     model.job_roles.map { |job_role| I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{job_role}") }.join(", ")
   end
 

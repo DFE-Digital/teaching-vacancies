@@ -14,7 +14,7 @@ class Publishers::JobApplicationDataExpiryNotification < Noticed::Base
   end
 
   def timestamp
-    "#{day(created_at)} at #{format_time(created_at)}"
+    "#{day(created_at)} at #{format_time(created_at)}".humanize
   end
 
   private
