@@ -17,6 +17,7 @@ class ApplicationRecord < ActiveRecord::Base
     attributes.each_with_object({}) do |(key, value), anonymised|
       next unless export?(key)
 
+      value = value.to_s(:db) if value.respond_to?(:strftime)
       anonymised[key] = anonymise?(key) ? anonymise_value(value) : value
     end
   end

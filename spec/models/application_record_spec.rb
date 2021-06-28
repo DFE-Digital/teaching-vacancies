@@ -10,7 +10,8 @@ RSpec.describe ApplicationRecord do
                                "oid" => StringAnonymiser.new(model.oid).to_s,
                                "email" => StringAnonymiser.new(model.email).to_s,
                                "given_name" => StringAnonymiser.new(model.given_name).to_s,
-                               "family_name" => StringAnonymiser.new(model.family_name).to_s)
+                               "family_name" => StringAnonymiser.new(model.family_name).to_s,
+                               "accepted_terms_at" => model.accepted_terms_at.to_s(:db))
       end
 
       it "anonymises data" do
