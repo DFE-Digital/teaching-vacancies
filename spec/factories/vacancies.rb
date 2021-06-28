@@ -107,6 +107,7 @@ FactoryBot.define do
     end
 
     trait :future_publish do
+      status { :published }
       publish_on { Date.current + 2.days }
       expires_at { 2.months.from_now.change(hour: 9, minute: 0) }
     end
@@ -117,11 +118,6 @@ FactoryBot.define do
       publish_on { Date.current - 1.day }
       expires_at { 2.months.from_now.change(hour: 9, minute: 0) }
       starts_on { Date.current + 3.months }
-    end
-
-    trait :job_schema do
-      working_patterns { %w[full_time part_time] }
-      benefits { Faker::Lorem.sentence }
     end
 
     trait :without_working_patterns do

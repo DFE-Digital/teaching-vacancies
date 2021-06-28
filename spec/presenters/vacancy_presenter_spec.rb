@@ -77,11 +77,11 @@ RSpec.describe VacancyPresenter do
   end
 
   describe "#working_patterns_for_job_schema" do
-    it "returns nil if working_patterns is unset" do
+    it "returns blank if working_patterns is unset" do
       vacancy = VacancyPresenter.new(create(:vacancy, :without_working_patterns))
       vacancy.organisation_vacancies.create(organisation: create(:school, name: "Smith High School"))
 
-      expect(vacancy.working_patterns_for_job_schema).to be_nil
+      expect(vacancy.working_patterns_for_job_schema).to be_blank
     end
 
     it "returns a working patterns string if working_patterns is set" do
