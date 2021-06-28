@@ -146,6 +146,7 @@ module VacancyHelpers
   end
 
   def verify_vacancy_show_page_details(vacancy)
+    vacancy = VacancyPresenter.new(vacancy)
     expect(page).to have_content(vacancy.job_title)
     expect(page).to have_content(vacancy.show_job_roles)
     expect(page).to have_content(vacancy.show_subjects)
