@@ -28,9 +28,6 @@ shared:
     foo: 1
     bar: 1
     baz: 1
-  2021_05_wider_search_suggestions:
-    with: 1
-    without: 1
   2021_05_job_alert_account_creation_prompt_test:
     bottom: 1
     right_blue: 1
