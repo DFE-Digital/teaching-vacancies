@@ -15,10 +15,10 @@ on:
     branches:
     - master
     types:
-      - "labeled"
-      - "opened"
-      - "synchronize"
-      - "reopened"
+      - labeled
+      - opened
+      - synchronize
+      - reopened
     paths-ignore:
     - 'bigquery/**'
     - 'documentation/**'
@@ -34,7 +34,7 @@ jobs:
   build:
     name: Build docker image
     #if: ${{ github.event.label.name == 'deploy' }} - does work in the presence of multiple tags
-    if: contains(github.event.labels.*.name, 'deploy')
+    if: contains(github.event.pull_request.labels.*.name, 'deploy')
     outputs:
       build_git_tag: ${{steps.tag_version.outputs.new_tag}}
       matrix_environments: ${{ env.MATRIX_ENVIRONMENTS }}
@@ -142,7 +142,6 @@ jobs:
 
   deploy:
     name: Deploy app
-    if:   ${{ github.event.label.name == 'deploy' }} # "!contains( github.head_ref, 'no-infra')"
     strategy:
       max-parallel: 1
       # Creates a variable 'environment' from the build job output 'matrix_environments'
