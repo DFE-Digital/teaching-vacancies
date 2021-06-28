@@ -1,9 +1,12 @@
-= render FlashComponent.new variant_name: "notice", message: t("jobs.listing_expired") if @vacancy.expired?
-
 = render BannerComponent.new do
     = govuk_breadcrumbs breadcrumbs: { "#{t("breadcrumbs.home")}": root_path,
                                        "#{t("breadcrumbs.jobs")}": referred_from_jobs_path? ? request.referrer : jobs_path,
                                        "#{@vacancy.job_title}": "" }
+
+    - if @vacancy.expired?
+      = govuk_tag text: t("jobs.expired_tag").upcase,
+                  colour: "orange",
+                  classes: "govuk-!-margin-bottom-2 govuk-!-margin-top-4"
 
     h1.govuk-heading-xl class="govuk-!-margin-bottom-2"
       = @vacancy.job_title

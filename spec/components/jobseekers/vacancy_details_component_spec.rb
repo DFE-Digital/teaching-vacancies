@@ -99,4 +99,17 @@ RSpec.describe Jobseekers::VacancyDetailsComponent, type: :component do
         .to include(Rails.application.routes.url_helpers.new_jobseekers_job_job_application_path(vacancy.id))
     end
   end
+
+  context "when the vacancy has expired" do
+    let(:vacancy) { create(:vacancy, :expired) }
+
+    it "does not render the application headings" do
+      expect(rendered_component).not_to include(I18n.t("jobs.applying_for_the_job"))
+      expect(rendered_component).not_to include(I18n.t("jobseekers.job_applications.applying_for_the_role_heading"))
+    end
+
+    it "renders the expiry warning text" do
+      expect(rendered_component).to include(I18n.t("jobs.listing_expired"))
+    end
+  end
 end
