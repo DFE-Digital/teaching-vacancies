@@ -203,7 +203,7 @@ RSpec.describe "Creating a vacancy" do
 
         before do
           allow(DocumentUpload).to receive(:new).and_return(document_upload)
-          allow(document_upload).to receive(:upload)
+          allow(document_upload).to receive(:upload!)
           allow(document_upload).to receive_message_chain(:uploaded, :web_content_link).and_return("test_url")
           allow(document_upload).to receive_message_chain(:uploaded, :id).and_return("test_id")
           allow(document_upload).to receive(:safe_download).and_return(true)
@@ -213,7 +213,7 @@ RSpec.describe "Creating a vacancy" do
         scenario "displays uploaded file in a table" do
           visit organisation_job_documents_path(documents_vacancy.id)
 
-          upload_document(
+          upload_document!(
             "new_publishers_job_listing_documents_form",
             "publishers-job-listing-documents-form-documents-field",
             "spec/fixtures/files/#{filename}",
@@ -228,7 +228,7 @@ RSpec.describe "Creating a vacancy" do
           allow_any_instance_of(Publishers::Vacancies::DocumentsController)
             .to receive_message_chain(:valid_content_type?).and_return(false)
 
-          upload_document(
+          upload_document!(
             "new_publishers_job_listing_documents_form",
             "publishers-job-listing-documents-form-documents-field",
             "spec/fixtures/files/#{filename}",
@@ -241,7 +241,7 @@ RSpec.describe "Creating a vacancy" do
           stub_const("#{Publishers::Vacancies::DocumentsController}::FILE_SIZE_LIMIT", 1.kilobyte)
           visit organisation_job_documents_path(documents_vacancy.id)
 
-          upload_document(
+          upload_document!(
             "new_publishers_job_listing_documents_form",
             "publishers-job-listing-documents-form-documents-field",
             "spec/fixtures/files/#{filename}",
@@ -255,7 +255,7 @@ RSpec.describe "Creating a vacancy" do
 
           allow(document_upload).to receive(:safe_download).and_return(false)
 
-          upload_document(
+          upload_document!(
             "new_publishers_job_listing_documents_form",
             "publishers-job-listing-documents-form-documents-field",
             "spec/fixtures/files/#{filename}",
@@ -269,7 +269,7 @@ RSpec.describe "Creating a vacancy" do
 
           allow(document_upload).to receive(:google_error).and_return(true)
 
-          upload_document(
+          upload_document!(
             "new_publishers_job_listing_documents_form",
             "publishers-job-listing-documents-form-documents-field",
             "spec/fixtures/files/#{filename}",

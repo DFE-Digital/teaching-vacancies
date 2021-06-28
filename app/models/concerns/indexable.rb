@@ -3,6 +3,7 @@ module Indexable
 
   INDEX_NAME = [Rails.configuration.algolia_index_prefix, DOMAIN, Vacancy].compact.join("-").freeze
 
+  # rubocop:disable Metrics/BlockLength
   included do
     include AlgoliaSearch
     include ActionView::Helpers::SanitizeHelper
@@ -100,6 +101,7 @@ module Indexable
       end
     end
   end
+  # rubocop:enable Metrics/BlockLength
 
   class_methods do
     # NOTE: the `if: :listed?` filter in the `algoliasearch` definition *only* excludes records from being *added* to

@@ -39,7 +39,7 @@ en:
 
   errors:
     jobs:
-      unable_to_publish: We were unable to publish this job. Make sure that you have filled all mandatory fields.
+      unable_to_publish: We were unable to publish this job. Make sure that you have filled all mandatory fields and completed all steps.
     publishers:
       job_statistics:
         error_summary:

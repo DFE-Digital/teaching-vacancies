@@ -140,6 +140,8 @@ en:
           no_references: No referees specified
           step_title: References
           title: References — Application
+        review:
+          step_title: Review the job listing
       caption: "%{job_title} at %{organisation}"
       confirm_destroy:
         title: Delete draft

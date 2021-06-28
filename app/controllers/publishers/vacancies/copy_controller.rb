@@ -12,7 +12,7 @@ class Publishers::Vacancies::CopyController < Publishers::Vacancies::BaseControl
     if @copy_form.valid?
       new_vacancy = CopyVacancy.new(vacancy).call
       new_vacancy.assign_attributes(@copy_form.params_to_save)
-      new_vacancy.refresh_slug
+      new_vacancy.refresh_slug!
       new_vacancy.save
       update_google_index(new_vacancy) if new_vacancy.listed?
       redirect_to organisation_job_review_path(new_vacancy.id)

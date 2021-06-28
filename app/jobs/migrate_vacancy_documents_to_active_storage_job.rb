@@ -21,10 +21,7 @@ class MigrateVacancyDocumentsToActiveStorageJob < ApplicationJob
 
     Tempfile.create(binmode: true) do |local_file|
       # Download file from Google Drive into the tempfile
-      drive_service.get_file(
-        document.google_drive_id,
-        download_dest: local_file.path,
-      )
+      drive_service.get_file(document.google_drive_id, download_dest: local_file.path)
 
       EventContext.suppress_events do
         # Attach file to the vacancy's supporting documents using ActiveStorage

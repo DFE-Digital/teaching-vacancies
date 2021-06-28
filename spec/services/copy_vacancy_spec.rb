@@ -2,11 +2,11 @@ require "rails_helper"
 
 RSpec.describe CopyVacancy do
   describe "#call" do
-    let(:document_copy) { double("document_copy") }
+    let(:document_copy) { instance_double(DocumentCopy) }
 
     before do
       allow(DocumentCopy).to receive(:new).and_return(document_copy)
-      allow(document_copy).to receive(:copy).and_return(document_copy)
+      allow(document_copy).to receive(:copy!).and_return(document_copy)
       allow(document_copy).to receive_message_chain(:copied, :web_content_link).and_return("test_url")
       allow(document_copy).to receive_message_chain(:copied, :id).and_return("test_id")
       allow(document_copy).to receive(:google_error).and_return(false)

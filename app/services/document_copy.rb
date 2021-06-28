@@ -12,21 +12,21 @@ class DocumentCopy
     self.google_error = false
   end
 
-  def copy
-    copy_publishers_document
-    set_public_permission_on_document
+  def copy!
+    copy_publishers_document!
+    set_public_permission_on_document!
   rescue Google::Apis::Error
     self.google_error = true
   end
 
-  def copy_publishers_document
+  def copy_publishers_document!
     self.copied = drive_service.copy_file(
       document_id,
       fields: "id, web_view_link, web_content_link, mime_type",
     )
   end
 
-  def set_public_permission_on_document
+  def set_public_permission_on_document!
     drive_service.create_permission(
       copied.id,
       Google::Apis::DriveV3::Permission.new(type: "anyone", role: "reader"),

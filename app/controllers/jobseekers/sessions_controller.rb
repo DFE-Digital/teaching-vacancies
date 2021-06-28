@@ -15,17 +15,20 @@ class Jobseekers::SessionsController < Devise::SessionsController
 
   def render_resource_with_errors
     self.resource = resource_class.new
-    form = Jobseekers::SignInForm.new(sign_in_params)
-    if params[:action] == "create" && form.invalid?
-      form.errors.each { |error| resource.errors.add(error.attribute, error.type) }
-      trigger_jobseeker_sign_in_event(:failure, resource.errors)
-      clear_flash_and_render(:new)
+    if params[:action] == "create" && sign_in_form.invalid?
+      sign_in_form.errors.each { |error| resource.errors.add(error.attribute, error.type) }
     elsif AUTHENTICATION_FAILURE_MESSAGES.include?(flash[:alert])
       resource.errors.add(:email, flash[:alert])
       resource.errors.add(:password, "")
-      trigger_jobseeker_sign_in_event(:failure, resource.errors)
-      clear_flash_and_render(:new)
+    else
+      return
     end
+    trigger_jobseeker_sign_in_event(:failure, resource.errors)
+    clear_flash_and_render(:new)
+  end
+
+  def sign_in_form
+    @sign_in_form ||= Jobseekers::SignInForm.new(sign_in_params)
   end
 
   def check_if_access_locked

@@ -131,7 +131,7 @@ RSpec.describe "Api::Vacancies" do
     it "never redirects to latest url" do
       vacancy = create(:vacancy, :published)
       vacancy.job_title = "A new job title"
-      vacancy.refresh_slug
+      vacancy.refresh_slug!
       vacancy.save
 
       get api_job_path(vacancy.slug, api_version: 1), params: { format: :json }
