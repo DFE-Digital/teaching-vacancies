@@ -1,12 +1,13 @@
 class SearchableCollectionComponent < GovukComponent::Base
-  attr_accessor :form, :attribute_name, :collection, :value_method, :text_method, :hint_method, :threshold, :small, :scrollable
+  attr_accessor :form, :label_text, :attribute_name, :collection, :value_method, :text_method, :hint_method, :threshold, :small, :scrollable
 
   # rubocop:disable Metrics/ParameterLists
-  def initialize(form:, attribute_name:, collection:, value_method:, text_method:, hint_method:, threshold: 10, scrollable: false, classes: [], html_attributes: {})
+  def initialize(form:, label_text: nil, attribute_name:, collection:, value_method:, text_method:, hint_method:, threshold: 10, scrollable: false, classes: [], html_attributes: {})
     # rubocop:enable Metrics/ParameterLists
     super(classes: classes, html_attributes: html_attributes)
 
     @form = form
+    @label_text = label_text
     @threshold = threshold
     @attribute_name = attribute_name
     @collection = collection
