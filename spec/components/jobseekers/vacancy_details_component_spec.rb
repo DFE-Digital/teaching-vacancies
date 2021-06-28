@@ -10,16 +10,36 @@ RSpec.describe Jobseekers::VacancyDetailsComponent, type: :component do
     render_inline(described_class.new(vacancy: vacancy_presenter))
   end
 
-  it "renders the job title label" do
-    expect(rendered_component).to include(I18n.t("jobs.job_roles"))
+  context "when a job role is present" do
+    it "renders the job title label" do
+      expect(rendered_component).to include(I18n.t("jobs.job_roles"))
+    end
+
+    it "renders the job role" do
+      expect(rendered_component).to include(vacancy_presenter.show_job_roles)
+    end
   end
 
-  it "renders the job role" do
-    expect(rendered_component).to include(vacancy_presenter.show_job_roles)
+  context "when job roles are not present" do
+    let(:vacancy) { create(:vacancy, job_roles: %w[]) }
+
+    it "does not render the job title label" do
+      expect(rendered_component).not_to include(I18n.t("jobs.job_roles"))
+    end
   end
 
-  it "renders the subjects label" do
-    expect(rendered_component).to include(I18n.t("jobs.subject", count: vacancy.subjects&.count))
+  context "when a subject is present" do
+    it "renders the subjects label" do
+      expect(rendered_component).to include(I18n.t("jobs.subject", count: vacancy.subjects&.count))
+    end
+  end
+
+  context "when subjects are not present" do
+    let(:vacancy) { create(:vacancy, subjects: %w[]) }
+
+    it "does not render the subjects label" do
+      expect(rendered_component).not_to include(I18n.t("jobs.subject", count: vacancy.subjects&.count))
+    end
   end
 
   it "renders the working pattern" do
