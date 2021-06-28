@@ -19,9 +19,9 @@ module DatesHelper
 
   def day(date)
     if date.today?
-      "Today"
+      "today"
     elsif date.yesterday?
-      "Yesterday"
+      "yesterday"
     else
       date.strftime("%-d %B")
     end
