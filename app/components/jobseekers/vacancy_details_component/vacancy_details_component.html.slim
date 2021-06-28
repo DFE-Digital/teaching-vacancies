@@ -32,6 +32,8 @@ section#job-details class="govuk-!-margin-bottom-5"
 
       - if @vacancy.application_link.present?
         = open_in_new_tab_link_to t("jobs.apply"), new_job_interest_path(@vacancy.id), button: true, class: "vacancy-apply-link govuk-!-margin-bottom-5", "aria-label": t("jobs.aria_labels.apply_link")
+  - else
+    = govuk_inset_text text: t("jobs.listing_expired"), classes: "govuk-!-font-weight-bold"
 
   - if @vacancy.documents.any?
     section#supporting-documents

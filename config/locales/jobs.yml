@@ -152,7 +152,9 @@ en:
     similar_jobs: Similar jobs
     school_type: School type
     trust_type: Trust type
-    listing_expired: This job post has expired
+    expired_tag: expired
+    listing_expired: This job post has expired.
+    listing_expired_on_html: "This job expired on <span class='govuk-!-font-weight-regular'>%{date}</span>"
 
     create_a_job_title: Create a job listing for %{organisation}
     create_a_job_title_no_org: Create a job listing
