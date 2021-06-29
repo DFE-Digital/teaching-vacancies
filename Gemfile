@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby "3.0.1"
 
-RAILS_VERSION = "~> 6.1.3".freeze
+RAILS_VERSION = "~> 6.1.4".freeze
 gem "actionmailer", RAILS_VERSION
 gem "actionpack", RAILS_VERSION
 gem "activejob", RAILS_VERSION
@@ -30,7 +30,7 @@ gem "google-apis-indexing_v3"
 gem "google-cloud-bigquery"
 gem "google_drive", require: false
 gem "govuk-components"
-gem "govuk_design_system_formbuilder"
+gem "govuk_design_system_formbuilder", "~> 2.6.0"
 gem "high_voltage"
 gem "httparty"
 gem "ipaddr"
