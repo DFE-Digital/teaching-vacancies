@@ -15,6 +15,7 @@ RSpec.describe SearchableCollectionComponent, type: :component do
   let(:base) do
     {
       form: form,
+      label_text: "search colllection",
       attribute_name: :attributes,
       collection: collection,
       text_method: :first,
@@ -74,6 +75,10 @@ RSpec.describe SearchableCollectionComponent, type: :component do
       expect(checkbox_collection.searchable).to be_truthy
       expect(inline_component.css(".searchable-collection-component__search").count).to eq(1)
       expect(inline_component.css(".searchable-collection-component--border").count).to eq(1)
+    end
+
+    it "has aria label to describe collection to search" do
+      expect(inline_component.css(".searchable-collection-component__search-input").attribute("aria-label").value).to eq("search colllection")
     end
 
     it "has small collection items" do

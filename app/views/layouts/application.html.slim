@@ -73,13 +73,14 @@ html.govuk-template.app-html-class lang="en"
             span.govuk-phase-banner__text
               | This is a new service - #{govuk_link_to "your feedback", new_feedback_path} will help us to improve it.
 
-    main.govuk-width-container#main-content role="main"
-      - flash.each do |variant, message|
-        = render FlashComponent.new(variant_name: convert_devise_flash_variant(variant, message), message: message)
+    .govuk-width-container
+      main.govuk-main-wrapper#main-content role="main" class="govuk-!-padding-top-0"
+        - flash.each do |variant, message|
+          = render FlashComponent.new(variant_name: convert_devise_flash_variant(variant, message), message: message)
 
-      = yield
+        = yield
 
-    = content_for :after_main
+      = content_for :after_main
 
     footer.govuk-footer role="contentinfo"
       .govuk-width-container
