@@ -97,9 +97,9 @@ Rails.application.routes.draw do
   post "/cookies-preferences", to: "cookies_preferences#create", as: "create_cookies_preferences"
 
   resources :updates, only: %i[index]
-  resources :documents, only: %i[show]
 
   resources :jobs, only: %i[index show], controller: "vacancies" do
+    resources :documents, only: %i[show]
     resources :interests, only: %i[new]
   end
 

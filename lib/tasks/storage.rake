@@ -1,4 +1,18 @@
 namespace :google_drive do
+  desc "Create supporting_document events for past document uploads"
+  task events_backfill: [:environment] do
+    Document.find_each do |document|
+      Event.new.trigger(
+        :supporting_document_created,
+        vacancy_id: StringAnonymiser.new(document.vacancy_id),
+        name: document.name,
+        size: document.size,
+        content_type: document.content_type,
+        created_at: document.created_at,
+      )
+    end
+  end
+
   desc "Enqueue existing documents for migration to Active Storage"
   task migrate_to_active_storage: [:environment] do
     vacancies = Vacancy.includes(:documents).distinct.where.not(documents: { id: nil })

@@ -35,9 +35,9 @@ section#job-details class="govuk-!-margin-bottom-5"
   - else
     = govuk_inset_text text: t("jobs.listing_expired"), classes: "govuk-!-font-weight-bold"
 
-  - if @vacancy.documents.any?
+  - if @vacancy.supporting_documents.any?
     section#supporting-documents
       h3.govuk-heading-l.section-heading = t("jobs.supporting_documents")
       p.govuk-body = t("jobs.supporting_documents_accessibility")
       .grey-border-box--thin
-        = render SupportingDocumentComponent.with_collection(@vacancy.documents)
+        = render SupportingDocumentComponent.with_collection(@vacancy.supporting_documents)
