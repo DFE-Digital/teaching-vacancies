@@ -1,15 +1,5 @@
 # This file lists all the attributes to be exported, including those to be anonymised.
 shared:
-  documents:
-    - id
-    - name
-    - size
-    - content_type
-    - download_url
-    - google_drive_id
-    - created_at
-    - updated_at
-    - vacancy_id
   employments:
     - id
     - organisation
