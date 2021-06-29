@@ -47,6 +47,7 @@ Rails.application.configure do
   config.ssl_options = { redirect: { exclude: ->(request) { request.path.include?("check") } } }
 
   config.cache_store = :redis_cache_store, { url: config.redis_cache_url, pool_size: ENV.fetch("RAILS_MAX_THREADS", 5) }
+  config.public_file_server.headers = { "Cache-Control" => "public, max-age=31536000" }
 
   # Use a real queuing backend for Active Job
   # (and separate queues per environment)
@@ -95,9 +96,6 @@ Rails.application.configure do
     ActionDispatch::RemoteIp::TRUSTED_PROXIES,
     AWSIpRanges.cloudfront_ips.map { |proxy| IPAddr.new(proxy) },
   ].flatten
-
-  # Ensure browsers don't cache
-  config.action_dispatch.default_headers["Cache-Control"] = "no-cache, no-store"
 
   config.active_storage.service = :amazon
 end
