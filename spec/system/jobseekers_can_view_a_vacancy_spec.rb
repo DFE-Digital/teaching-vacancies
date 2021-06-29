@@ -110,15 +110,16 @@ RSpec.describe "Viewing a single published vacancy" do
     end
 
     context "with supporting documents attached" do
+      let(:vacancy) { create(:vacancy, :published, :with_supporting_documents) }
+
       before do
-        vacancy = create(:vacancy, :published)
         vacancy.organisation_vacancies.create(organisation: school)
         visit job_path(vacancy)
       end
 
       scenario "can see the supporting documents section" do
         expect(page).to have_content(I18n.t("jobs.supporting_documents"))
-        expect(page).to have_content("Test.png")
+        expect(page).to have_content(vacancy.supporting_documents.first.filename)
       end
     end
 
