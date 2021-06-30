@@ -75,6 +75,6 @@
       .pagination-and-stats
         .pagination-results
           = paginate @vacancies_search.vacancies
-        p.govuk-body#vacancies-stats-bottom aria-label="Number of results"
+        span.govuk-body#vacancies-stats-bottom
 
       = render(Jobseekers::SearchResults::JobAlertsLinkComponent.new(vacancies_search: @vacancies_search, count: @vacancies.count, origin: request.original_fullpath))
