@@ -406,4 +406,19 @@ RSpec.describe Vacancy do
       end
     end
   end
+
+  describe "#bigquery_view_count" do
+    subject { build_stubbed(:vacancy) }
+    let(:response) { [{ number_of_unique_vacancy_views: 42 }] }
+    let(:big_query) { double("Bigquery") }
+
+    before do
+      allow(Google::Cloud::Bigquery).to receive(:new).and_return(big_query)
+      allow(big_query).to receive(:query).with(/SELECT number_of_unique_vacancy_views.*WHERE id="#{StringAnonymiser.new(subject.id)}"/m).and_return(response)
+    end
+
+    it "retrieves the vacancy view count from the BigQuery API" do
+      expect(subject.bigquery_view_count).to eq(42)
+    end
+  end
 end

@@ -119,7 +119,23 @@ class Vacancy < ApplicationRecord
     job_applications.after_submission.count >= EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD
   end
 
+  def bigquery_view_count
+    Rails.cache.fetch([:number_of_unique_vacancy_views, id], expires_in: 6.hours, skip_nil: true) do
+      Google::Cloud::Bigquery.new.query(number_of_unique_vacancy_views_sql).first&.fetch(:number_of_unique_vacancy_views)
+    end
+  end
+
   private
+
+  def number_of_unique_vacancy_views_sql
+    # publish_on added to make query more efficient. The BigQuery table is partitioned by publish_on date.
+    <<-SQL
+      SELECT number_of_unique_vacancy_views
+      FROM `#{Rails.configuration.big_query_dataset}.vacancies_published`
+      WHERE id="#{StringAnonymiser.new(id)}"
+      AND publish_on = "#{publish_on.iso8601}"
+    SQL
+  end
 
   def slug_candidates
     [
