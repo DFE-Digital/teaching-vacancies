@@ -7,7 +7,7 @@ class SendEntityImportedEventsToDataWarehouseJob < ApplicationJob
 
   def perform
     bq = Google::Cloud::Bigquery.new
-    dataset = bq.dataset(ENV.fetch("BIG_QUERY_DATASET"), skip_lookup: true)
+    dataset = bq.dataset(Rails.configuration.big_query_dataset, skip_lookup: true)
     bq_table = dataset.table(TABLE_NAME, skip_lookup: true)
 
     ApplicationRecord.connection.tables.each do |db_table|
