@@ -18,7 +18,7 @@ RSpec.describe "Jobseeker experience", type: :system, accessibility: true do
         expect(page).to meet_accessibility_standards
 
         click_on "Teacher of Potions"
-        expect(page).to meet_accessibility_standards
+        expect(page).to meet_accessibility_standards.excluding("#map")
       end
     end
 
