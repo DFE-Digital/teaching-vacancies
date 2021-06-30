@@ -7,7 +7,7 @@ class BaseDsiBigQueryExporter
   attr_reader :dataset
 
   def initialize(bigquery: Google::Cloud::Bigquery.new)
-    @dataset = bigquery.dataset ENV.fetch("BIG_QUERY_DATASET")
+    @dataset = bigquery.dataset(Rails.configuration.big_query_dataset)
   end
 
   private
