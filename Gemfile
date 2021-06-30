@@ -73,9 +73,9 @@ group :development do
 end
 
 group :development, :test do
-  gem "axe-core-api", "~> 4.1.0"
-  gem "axe-core-capybara", "~> 4.1.0"
-  gem "axe-core-rspec", "~> 4.1.0"
+  gem "axe-core-api"
+  gem "axe-core-capybara"
+  gem "axe-core-rspec"
   gem "brakeman"
   gem "bullet"
   gem "byebug", platforms: %i[mri mingw x64_mingw]
