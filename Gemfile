@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby "3.0.1"
 
-RAILS_VERSION = "~> 6.1.3".freeze
+RAILS_VERSION = "~> 6.1.4".freeze
 gem "actionmailer", RAILS_VERSION
 gem "actionpack", RAILS_VERSION
 gem "activejob", RAILS_VERSION
@@ -14,7 +14,7 @@ gem "railties", RAILS_VERSION
 
 gem "activerecord-session_store"
 gem "addressable"
-gem "algoliasearch-rails"
+gem "algoliasearch-rails", "~> 1.25.0"
 gem "array_enum"
 gem "aws-sdk-s3", require: false
 gem "breasal"
@@ -30,7 +30,7 @@ gem "google-apis-indexing_v3"
 gem "google-cloud-bigquery"
 gem "google_drive", require: false
 gem "govuk-components"
-gem "govuk_design_system_formbuilder"
+gem "govuk_design_system_formbuilder", "~> 2.6.0"
 gem "high_voltage"
 gem "httparty"
 gem "ipaddr"
@@ -58,7 +58,7 @@ gem "sidekiq-cron"
 gem "skylight"
 gem "slim-rails"
 gem "validate_url"
-gem "view_component"
+gem "view_component", "~> 2.30.0"
 gem "webpacker"
 gem "wicked"
 gem "xml-sitemap"
@@ -73,8 +73,8 @@ group :development do
 end
 
 group :development, :test do
-  gem "axe-core-capybara"
-  gem "axe-core-rspec"
+  gem "axe-core-capybara", "~> 4.1.0"
+  gem "axe-core-rspec", "~> 4.1.0"
   gem "brakeman"
   gem "bullet"
   gem "byebug", platforms: %i[mri mingw x64_mingw]

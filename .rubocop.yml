@@ -24,6 +24,9 @@ AllCops:
 ##
 # Team Style conventions
 
+Layout/LineEndStringConcatenationIndentation:
+  Enabled: false
+
 Layout/FirstArrayElementIndentation:
   EnforcedStyle: consistent
 
@@ -34,6 +37,9 @@ Layout/LineLength:
   Enabled: false
 
 Layout/MultilineMethodCallIndentation:
+  Enabled: false
+
+Naming/InclusiveLanguage:
   Enabled: false
 
 Style/BlockDelimiters:
