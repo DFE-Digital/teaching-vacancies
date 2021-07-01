@@ -1,7 +1,7 @@
 ruby:
   items = [
     {
-      title: "Job role",
+      title: t("jobs.filters.job_roles"),
       key: "job_roles",
       attribute: :job_roles,
       selected: @jobs_search_form.job_roles,
@@ -11,7 +11,7 @@ ruby:
       selected_method: :last,
     },
     {
-      title: "Education phase",
+      title: t("jobs.filters.phases"),
       key: "education_phase",
       attribute: :phases,
       selected: @jobs_search_form.phases,
@@ -21,7 +21,7 @@ ruby:
       selected_method: :last,
     },
     {
-      title: "Working pattern",
+      title: t("jobs.filters.working_patterns"),
       key: "working_patterns",
       attribute: :working_patterns,
       selected: @jobs_search_form.working_patterns,
@@ -34,12 +34,12 @@ ruby:
 
 = form_for @jobs_search_form, as: "", url: jobs_path, method: :get, html: { id: "filter-form", data: { "auto-submit": true }, class: "filters-form", role: "search", aria: { label: "Search criteria" } } do |f|
   .filter-vacancies class="govuk-!-margin-bottom-3"
-    h2.govuk-heading-m = t("jobs.filters.title")
+    h2.govuk-heading-m = t("jobs.search.title")
 
-    = render "shared/search/keyword", f: f, filters: true
-    = render "shared/search/location", f: f
+    = render "shared/search/keyword", f: f, wide: true
+    = render "shared/search/location", f: f, wide: true
+    = render "shared/search/radius", f: f, wide: true
     = render "shared/search/current_location", loaderElement: "location-field"
-    = render "shared/search/radius", f: f, filters: true
 
     = f.hidden_field :jobs_sort, value: @jobs_search_form.jobs_sort
     = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"
