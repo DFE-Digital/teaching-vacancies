@@ -16,7 +16,7 @@
 
   .govuk-grid-row
     .govuk-grid-column-one-third
-      = render "filters"
+      = render "search"
     .govuk-grid-column-two-thirds
       = render(Jobseekers::SearchResults::SearchVisualizerComponent.new(vacancies_search: @vacancies_search, render: @display_map))
       .search-results__header
