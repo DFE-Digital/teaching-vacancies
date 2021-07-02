@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe ExportDsiApproversToBigQuery do
   before do
-    ENV["BIG_QUERY_DATASET"] = "test_dataset"
     expect(bigquery_stub).to receive(:dataset).with("test_dataset").and_return(dataset_stub)
     expect(dataset_stub).to receive(:table).and_return(table_stub)
 
