@@ -74,6 +74,17 @@ jobs:
             registry: ghcr.io
             username: ${{ github.repository_owner }}
             password: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
+#*****************************************************************************************************
+      - uses: actions/checkout@v2
+        name: Checkout Code
+
+      - name: Docker Image for scanning
+        run: docker buildx build --build-arg BUILDKIT_INLINE_CACHE=1 --tag ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }} --target builder --cache-from ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }} . --file Dockerfile
+
+      - name: List Docker images
+        run: |
+          docker images
+#*****************************************************************************************************
 
       - name: Build and push docker image from builder target
         uses: docker/build-push-action@v2
@@ -84,11 +95,34 @@ jobs:
           # Cache from builder target tagged with master branch name, always present, maybe less recent
           cache-from: |
             ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
-            ${{ env.DOCKER_REPOSITORY }}:builder-master
-          push: true
+          #  ${{ env.DOCKER_REPOSITORY }}:builder-master ??
+          push: false
+          load: true
           # Tag with branch name for reuse
           tags: ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
           target: builder
+
+#*****************************************************************************************************
+      - name: List Docker images
+        run: |
+          docker images
+#*****************************************************************************************************
+      - uses: anchore/scan-action@v2
+        id: scan
+        with:
+          image: ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
+          acs-report-enable: true
+          fail-build: false
+          severity-cutoff: high
+
+      - name: upload Anchore scan SARIF report
+        if: always()
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: ${{ steps.scan.outputs.sarif }}
+
+      - name: docker push ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }} after scanning
+        run: docker push ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
 
       - name: Build and push docker image from production target
         uses: docker/build-push-action@v2
@@ -110,6 +144,12 @@ jobs:
             ${{ env.DOCKER_REPOSITORY }}:${{ env.GIT_BRANCH }}
             ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }}
           target: production
+
+#*****************************************************************************************************
+      - name: List Docker images
+        run: |
+          docker images
+#*****************************************************************************************************
 
       # Creates a unique git tag to help synchronising dependent jobs
       - name: Bump version and push tag
