@@ -119,6 +119,13 @@ class Vacancy < ApplicationRecord
     job_applications.after_submission.count >= EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD
   end
 
+  def update_organisations(organisations_ids)
+    new_organisations_ids = [organisations_ids].flatten
+    old_organisations_ids = organisation_vacancies.pluck(:organisation_id)
+    (old_organisations_ids - new_organisations_ids).each { |organisation_id| organisation_vacancies.find_by(organisation_id: organisation_id).destroy }
+    (new_organisations_ids - old_organisations_ids).each { |organisation_id| organisation_vacancies.create(organisation_id: organisation_id) }
+  end
+
   private
 
   def slug_candidates
