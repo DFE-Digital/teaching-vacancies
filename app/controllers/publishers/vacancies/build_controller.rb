@@ -120,7 +120,8 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   end
 
   def update_vacancy
-    vacancy.assign_attributes(form.params_to_save)
+    vacancy.update_organisations(form.params_to_save[:organisation_ids]) if form.params_to_save[:organisation_ids]
+    vacancy.assign_attributes(form.params_to_save.except(:organisation_ids))
     vacancy.refresh_slug
     update_google_index(vacancy) if vacancy.listed?
   end
