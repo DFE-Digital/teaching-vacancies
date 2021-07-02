@@ -91,6 +91,8 @@ module TeacherVacancyService
     config.analytics = config_for(:analytics)
     config.analytics_pii = config_for(:analytics_pii)
 
+    config.big_query_dataset = ENV["BIG_QUERY_DATASET"]
+
     config.enforce_local_authority_allowlist = ActiveModel::Type::Boolean.new.cast(ENV["ENFORCE_LOCAL_AUTHORITY_ALLOWLIST"])
 
     config.algolia_index_prefix = ENV.fetch("ALGOLIA_INDEX_PREFIX", nil)
