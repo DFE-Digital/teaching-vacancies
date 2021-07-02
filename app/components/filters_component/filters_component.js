@@ -2,51 +2,32 @@ import '../../frontend/src/lib/polyfill/closest.polyfill';
 import '../../frontend/src/lib/polyfill/from.polyfill';
 import 'classlist-polyfill';
 
-export const ACCORDION_SECTION_CLASS_SELECTOR = 'govuk-accordion__section';
-export const ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR = 'govuk-accordion__section--expanded';
 export const CHECKBOX_CLASS_SELECTOR = 'govuk-checkboxes__input';
 export const CHECKBOX_GROUP_CLASS_SELECTOR = 'filters-component__groups__group';
 export const REMOVE_FILTER_CLASS_SELECTOR = 'filters-component__remove-tags__tag';
-export const CLOSE_ALL_TEXT = 'Close all';
-export const OPEN_ALL_TEXT = 'Open all';
+export const MOBILE_BREAKPOINT = 640;
 
 window.addEventListener(
   'DOMContentLoaded',
   () => init(
-    ACCORDION_SECTION_CLASS_SELECTOR,
     REMOVE_FILTER_CLASS_SELECTOR,
     'filters-component-clear-all',
-    'filters-component-close-all',
+    'filters-component-close-panel',
     'filters-component-show-mobile',
-    'govuk-accordion__section-header',
   ),
 );
 
-export const init = (groupContainerSelector, removeButtonSelector, clearButtonId, closeButtonId, mobileFiltersButtonSelector, accordionButtonsSelector) => {
-  if (!isFormAutoSubmitEnabled(groupContainerSelector)) { return; }
-
-  Array.from(document.getElementsByClassName(accordionButtonsSelector)).forEach((accordionButton) => filterGroup.addUpdateOpenOrCloseEvent(accordionButton, closeButtonId));
-
-  Array.from(document.getElementsByClassName(removeButtonSelector)).forEach((removeButton) => filterGroup.addRemoveFilterEvent(removeButton, () => getSubmitButton(removeButton).click()));
+export const init = (removeButtonSelector, clearButtonId, closeButtonId, showFilterPanelId) => {
+  Array.from(document.getElementsByClassName(removeButtonSelector)).forEach((removeButton) => filterGroup.addRemoveFilterEvent(removeButton));
 
   const clearButton = document.getElementById(clearButtonId);
   if (clearButton) {
-    filterGroup.addRemoveAllFiltersEvent(clearButton, () => getSubmitButton(clearButton).click());
+    filterGroup.addRemoveAllFiltersEvent(clearButton);
   }
 
-  addFilterChangeEvent(document.getElementsByClassName(groupContainerSelector));
-  if (document.getElementById(closeButtonId)) {
-    displayOpenOrCloseText(
-      document.getElementById(closeButtonId),
-      document.getElementsByClassName(ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR).length,
-      document.getElementsByClassName(ACCORDION_SECTION_CLASS_SELECTOR).length,
-    );
-    document.getElementById(closeButtonId).addEventListener('click', openOrCloseAllSectionsHandler);
-  }
-
-  if (document.getElementById(mobileFiltersButtonSelector)) {
-    document.getElementById(mobileFiltersButtonSelector).addEventListener('click', () => {
-      document.getElementsByClassName('filters-component')[0].classList.toggle('filters-component--show-mobile');
+  if (document.getElementById(showFilterPanelId)) {
+    document.getElementById(showFilterPanelId).addEventListener('click', (e) => {
+      togglePanel(e.target);
 
       if (document.getElementsByClassName('filters-component--show-mobile').length) {
         document.getElementsByClassName('filters-component--show-mobile')[0].closest('form').removeAttribute('data-auto-submit');
@@ -54,94 +35,71 @@ export const init = (groupContainerSelector, removeButtonSelector, clearButtonId
     });
   }
 
-  if (document.getElementById('filters-component-return-to-results')) {
-    document.getElementById('filters-component-return-to-results').addEventListener('click', (e) => {
-      e.preventDefault();
-      return Array.from(document.getElementsByClassName('filters-component')).map((element) => element.classList.toggle('filters-component--show-mobile'));
+  if (document.documentElement.clientWidth <= MOBILE_BREAKPOINT) {
+    setFiltersHiddenState(document.getElementById(showFilterPanelId), document.getElementsByClassName('filters-component')[0]);
+  }
+
+  if (document.getElementById(closeButtonId)) {
+    document.getElementById(closeButtonId).addEventListener('click', () => {
+      togglePanel(document.getElementById(showFilterPanelId));
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (['Esc', 'Escape'].includes(e.key)) {
+        togglePanel(document.getElementById(showFilterPanelId));
+      }
     });
   }
+
+  const mediaQuery = `(max-width: ${MOBILE_BREAKPOINT}px)`;
+  const mediaQueryList = window.matchMedia(mediaQuery);
+
+  mediaQueryList.addEventListener('change', (e) => {
+    if (e.matches) {
+      document.getElementsByClassName('filters-component')[0].setAttribute('aria-hidden', 'true');
+      document.getElementById(showFilterPanelId).setAttribute('aria-expanded', 'false');
+    } else {
+      document.getElementsByClassName('filters-component')[0].removeAttribute('aria-hidden', 'true');
+    }
+  });
 };
 
-export const displayOpenOrCloseText = (targetElement, expandedElements, maxElements) => {
-  if (expandedElements === 0) {
-    targetElement.innerText = OPEN_ALL_TEXT;
-  } else if (expandedElements === maxElements) {
-    targetElement.innerText = CLOSE_ALL_TEXT;
-  }
+export const togglePanel = (actionEl) => Array.from(document.getElementsByClassName('filters-component')).map((element) => {
+  element.classList.toggle('filters-component--show-mobile');
+
+  return element.classList.contains('filters-component--show-mobile') ? setFiltersVisibleState(actionEl, element) : setFiltersHiddenState(actionEl, element);
+});
+
+export const setFiltersVisibleState = (actionEl, filtersEl) => {
+  filtersEl.focus();
+  filtersEl.setAttribute('aria-hidden', 'false');
+  actionEl.setAttribute('aria-expanded', 'true');
 };
 
-export const addUpdateOpenOrCloseEvent = (sectionHeaderElement, openOrCloseAllSelector) => {
-  const openOrCloseAllElement = document.getElementById(openOrCloseAllSelector);
-  if (openOrCloseAllElement) {
-    sectionHeaderElement.addEventListener('click', () => {
-      displayOpenOrCloseText(
-        openOrCloseAllElement,
-        document.getElementsByClassName(ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR).length,
-        document.getElementsByClassName(ACCORDION_SECTION_CLASS_SELECTOR).length,
-      );
-    });
-  }
+export const setFiltersHiddenState = (actionEl, filtersEl) => {
+  actionEl.focus();
+  filtersEl.setAttribute('aria-hidden', 'true');
+  actionEl.setAttribute('aria-expanded', 'false');
 };
-
-export const isFormAutoSubmitEnabled = (groupContainerSelector) => {
-  if (!document.getElementsByClassName(groupContainerSelector).length) {
-    return false;
-  }
-  const form = document.getElementsByClassName(groupContainerSelector)[0].closest('form');
-  return form && form.dataset.autoSubmit;
-};
-
-export const openOrCloseAllSectionsHandler = (e) => {
-  e.preventDefault();
-  openOrCloseAllSections(e.target);
-};
-
-export const openOrCloseAllSections = (targetElement) => {
-  if (targetElement.innerText === CLOSE_ALL_TEXT) {
-    Array.from(document.getElementsByClassName(ACCORDION_SECTION_CLASS_SELECTOR)).forEach((section) => section.classList.remove(ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR));
-    targetElement.innerText = OPEN_ALL_TEXT;
-  } else if (targetElement.innerText === OPEN_ALL_TEXT) {
-    Array.from(document.getElementsByClassName(ACCORDION_SECTION_CLASS_SELECTOR)).forEach((section) => section.classList.add(ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR));
-    targetElement.innerText = CLOSE_ALL_TEXT;
-  }
-};
-
-export const getSubmitButton = (el) => Array.from(el.closest('form').getElementsByTagName('input')).filter((input) => input.type === 'submit')[0];
 
 export const addRemoveFilterEvent = (el, onClear) => {
-  el.addEventListener('click', (e) => {
-    e.preventDefault();
+  el.addEventListener('click', () => {
     filterGroup.removeFilterHandler(filterGroup.getFilterGroup(el.dataset.group), el.dataset.key, onClear);
   });
 };
 
-export const removeFilterHandler = (group, key, onClear) => {
+export const removeFilterHandler = (group, key) => {
   filterGroup.unCheckCheckbox(filterGroup.findFilterCheckboxInGroup(group, key));
-  onClear();
 };
 
 export const addRemoveAllFiltersEvent = (el, onClear) => {
-  el.addEventListener('click', (e) => {
-    e.preventDefault();
+  el.addEventListener('click', () => {
     filterGroup.removeAllFiltersHandler(onClear);
   });
 };
 
-export const removeAllFiltersHandler = (onClear) => {
+export const removeAllFiltersHandler = () => {
   filterGroup.getFilterGroups().forEach((groupEl) => filterGroup.getFilterCheckboxesInGroup(groupEl).forEach((checkbox) => filterGroup.unCheckCheckbox(checkbox)));
-  onClear();
-};
-
-export const addFilterChangeEvent = (groups) => {
-  Array.from(groups).forEach((group) => group.addEventListener('click', (e) => {
-    filterGroup.filterChangeHandler(e.target);
-  }));
-};
-
-export const filterChangeHandler = (el) => {
-  if (el.className === CHECKBOX_CLASS_SELECTOR && isFormAutoSubmitEnabled('govuk-accordion__section')) {
-    getSubmitButton(el).click();
-  }
 };
 
 export const unCheckCheckbox = (checkbox) => { checkbox.checked = false; };
@@ -162,11 +120,8 @@ const filterGroup = {
   unCheckCheckbox,
   findFilterCheckboxInGroup,
   getFilterCheckboxesInGroup,
-  addFilterChangeEvent,
   addRemoveFilterEvent,
   addRemoveAllFiltersEvent,
-  addUpdateOpenOrCloseEvent,
-  filterChangeHandler,
 };
 
 export default filterGroup;
