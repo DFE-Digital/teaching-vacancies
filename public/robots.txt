@@ -2,3 +2,6 @@ SITEMAP: https://teaching-vacancies.service.gov.uk/sitemap.xml
 User-agent: *
 Allow: /
 Disallow: /check
+Disallow: /subscriptions/
+Disallow: /documents/
+Disallow: /attachments/
