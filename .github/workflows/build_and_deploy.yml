@@ -14,6 +14,12 @@ on:
   pull_request:
     branches:
     - master
+    types:
+      - labeled
+      - opened
+      - synchronize
+      - reopened
+
     paths-ignore:
     - 'bigquery/**'
     - 'documentation/**'
@@ -27,6 +33,7 @@ env:
 jobs:
 
   build:
+    if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name != 'pull_request'
     name: Build docker image
     outputs:
       build_git_tag: ${{steps.tag_version.outputs.new_tag}}

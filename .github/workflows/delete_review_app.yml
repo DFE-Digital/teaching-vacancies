@@ -16,6 +16,7 @@ env:
 
 jobs:
   delete-review-app:
+    if: contains(github.event.pull_request.labels.*.name, 'deploy')
     name: Delete review app after deploy
     runs-on: ubuntu-20.04
 
