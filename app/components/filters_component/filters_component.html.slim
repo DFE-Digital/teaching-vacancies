@@ -1,22 +1,15 @@
 = tag.div(class: classes, **html_attributes) do
-
   .filters-component__heading
-    = tag.div(class: options[:close_all] ? "filters-component__heading-container" : "") do
-      .filters-component__section-heading class=mobile_modifier("filters-component__heading")
-        .filters-component__heading-title
-          a.govuk-button.govuk-button--secondary id=(options[:mobile_variant] ? "filters-component-show-mobile" : "")
-            = "Show filters"
-            span.govuk-body.filters-component__heading-applied = applied_text
-          h3.govuk-heading-s = filters[:title]
-          - if options[:publisher_preference]
-            = govuk_link_to t(".add_or_remove_schools"), edit_publisher_preference_path(options[:publisher_preference]), class: "filters-button add-remove-schools govuk-link--no-visited-state"
+    .filters-component__heading-title
+      a.govuk-button.govuk-button--secondary id="filters-component-show-mobile"
+        = "Show filters"
+        span.govuk-body.filters-component__heading-applied = applied_text
+      h3.govuk-heading-m = filters[:title]
+      - if options[:publisher_preference]
+        = govuk_link_to t(".add_or_remove_schools"), edit_publisher_preference_path(options[:publisher_preference]), class: "filters-button add-remove-schools govuk-link--no-visited-state"
 
-          button.filters-button.filters-component--show-mobile-open id="filters-component-filters-component-return-to-results"
-            = t("shared.filter_group.return_to_results")
-        - if options[:close_all]
-          span.js-action
-            button.filters-button.filters-component__heading-close-all id="filters-component-close-all"
-              = t("shared.filter_group.close_all_filter_groups")
+      button.filters-button.icon--close.filters-component--show-mobile-open id="filters-component-close-panel" type="button"
+        span.govuk-body = "Close"
 
   .filters-component__remove
     - if display_remove_buttons
@@ -24,7 +17,7 @@
         .filters-component__section-heading class="govuk-!-margin-bottom-2"
           .govuk-body class="govuk-!-margin-bottom-0"
             = t("shared.filter_group.current_selected_filters")
-          button.filters-button.govuk-link--no-visited-state id="filters-component-clear-all"
+          button.filters-button.govuk-body.govuk-link--no-visited-state id="filters-component-clear-all"
             = t("shared.filter_group.clear_all_filters")
 
         - items.each do |group|
@@ -41,17 +34,17 @@
                       = t("shared.filter_group.remove_filter_hidden")
                     = tag.send(group[:selected_method])
 
+  .filters-component__groups
+    - items.each_with_index do |group, index|
+      legend.govuk-fieldset__legend.govuk-fieldset__legend--s = group[:title]
+      .filters-component__groups__group id="accordion-default-content-#{index + 1}" data-group=group[:key]
+        = form.govuk_collection_check_boxes group[:attribute],
+          group[:options],
+          group[:value_method],
+          group[:text_method],
+          small: true,
+          legend: nil,
+          hint: nil
+
   .filters-component__submit
     = form.govuk_submit t("buttons.apply_filters"), classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2 filters-component__submit-button"
-
-  = render GovukComponent::Accordion.new(id: "accordion-default", classes: "filters-component__groups") do |component|
-    - items.each_with_index do |group, index|
-      - component.slot(:section, title: group[:title]) do
-        .filters-component__groups__group id="accordion-default-content-#{index + 1}" data-group=group[:key]
-          = form.govuk_collection_check_boxes group[:attribute],
-            group[:options],
-            group[:value_method],
-            group[:text_method],
-            small: true,
-            legend: nil,
-            hint: nil
