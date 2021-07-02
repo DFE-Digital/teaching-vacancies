@@ -276,8 +276,6 @@ shared:
     - created_at
     - updated_at
     - application_link
-    - total_pageviews
-    - total_get_more_info_clicks
     - working_patterns
     - listed_elsewhere
     - hired_status

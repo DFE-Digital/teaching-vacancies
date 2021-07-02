@@ -15,10 +15,6 @@ RSpec.describe "Viewing a single published vacancy" do
       verify_vacancy_show_page_details(vacancy)
     end
 
-    scenario "the page view is tracked" do
-      expect { visit job_path(vacancy) }.to have_enqueued_job(PersistVacancyPageViewJob).with(vacancy.id)
-    end
-
     context "when the publish_on date is in the future" do
       let(:vacancy) { create(:vacancy, :future_publish) }
 

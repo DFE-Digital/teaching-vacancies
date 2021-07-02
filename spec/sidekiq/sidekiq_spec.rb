@@ -14,8 +14,6 @@ RSpec.describe "Sidekiq configuration" do
       AlertEmail::Base
       MigrateVacancyDocumentsToActiveStorageJob
       PerformancePlatformTransactionsQueueJob
-      PersistVacancyGetMoreInfoClickJob
-      PersistVacancyPageViewJob
       RemoveGoogleIndexQueueJob
       SendEntityImportedEventsToDataWarehouseJob
       SendEventToDataWarehouseJob
