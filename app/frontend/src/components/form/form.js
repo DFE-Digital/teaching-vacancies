@@ -6,13 +6,21 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   Array.from(document.querySelectorAll('[data-auto-submit="true"]')).forEach((el) => {
-    Array.from(el.querySelectorAll('.govuk-select')).forEach((select) => {
-      select.addEventListener('change', (e) => {
-        e.target.closest('form').submit();
+    el.addEventListener('change', (e) => {
+      ['govuk-select', 'govuk-checkboxes__input'].forEach((selector) => {
+        if (e.target.classList.contains(selector)) {
+          changeHandler(e.target.closest('form'));
+        }
       });
     });
   });
 });
+
+export const changeHandler = (formEl) => {
+  if (formEl.dataset.autoSubmit) {
+    formEl.submit();
+  }
+};
 
 export const disableInputs = (inputs) => {
   inputs.forEach((input) => {
