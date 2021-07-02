@@ -104,3 +104,17 @@ b {
     border-bottom: 5px solid #b1b4b6;
   }
 }
+
+.vacancies_index {
+  .govuk-grid-column-one-third {
+    @media only screen and (max-width: $big-screen) {
+      width: 100%;
+    }
+  }
+
+  .govuk-grid-column-two-thirds {
+    @media only screen and (max-width: $big-screen) {
+      width: 100%;
+    }
+  }
+}
