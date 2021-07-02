@@ -44,7 +44,7 @@ class Vacancy < ApplicationRecord
   has_noticed_notifications
 
   has_many :organisation_vacancies, dependent: :destroy
-  has_many :organisations, through: :organisation_vacancies
+  has_many :organisations, through: :organisation_vacancies, dependent: :destroy
   accepts_nested_attributes_for :organisation_vacancies
 
   delegate :name, to: :parent_organisation, prefix: true, allow_nil: true
