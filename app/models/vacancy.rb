@@ -119,6 +119,15 @@ class Vacancy < ApplicationRecord
     job_applications.after_submission.count >= EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD
   end
 
+  # This methods exists because if we just do update(organisations_ids: organisations_ids) it will not run destroy callbacks
+  def update_organisations(organisations_ids)
+    new_organisations_ids = [organisations_ids].flatten
+    old_organisations_ids = organisation_vacancies.pluck(:organisation_id)
+    organisation_vacancies.where(organisation_id: (old_organisations_ids - new_organisations_ids)).destroy_all
+    (new_organisations_ids - old_organisations_ids).each { |id| organisation_vacancies.create(organisation_id: id) }
+    reload
+  end
+
   private
 
   def slug_candidates
