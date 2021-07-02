@@ -8,7 +8,6 @@ RSpec.describe SendEntityImportedEventsToDataWarehouseJob do
   let(:table) { double("Table") }
 
   before do
-    allow(ENV).to receive(:fetch).with("BIG_QUERY_DATASET").and_return("test_dataset")
     allow(Google::Cloud::Bigquery).to receive(:new).and_return(big_query)
     allow(ApplicationRecord).to receive(:descendants).and_return([Jobseeker, Publisher])
   end
