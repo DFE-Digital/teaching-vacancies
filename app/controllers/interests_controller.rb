@@ -1,6 +1,5 @@
 class InterestsController < ApplicationController
   def new
-    PersistVacancyGetMoreInfoClickJob.perform_later(vacancy.id) unless publisher_signed_in?
     request_event.trigger(:vacancy_get_more_info_clicked, vacancy_id: StringAnonymiser.new(vacancy.id))
 
     redirect_to(vacancy.application_link)

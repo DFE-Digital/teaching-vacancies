@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_24_104321) do
+ActiveRecord::Schema.define(version: 2021_07_02_140805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -441,8 +441,6 @@ ActiveRecord::Schema.define(version: 2021_06_24_104321) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "application_link"
-    t.integer "total_pageviews", default: 0
-    t.integer "total_get_more_info_clicks", default: 0
     t.integer "working_patterns", array: true
     t.integer "listed_elsewhere"
     t.integer "hired_status"

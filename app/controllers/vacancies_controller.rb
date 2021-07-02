@@ -28,8 +28,6 @@ class VacanciesController < ApplicationController
     @vacancy = VacancyPresenter.new(vacancy)
     @devised_job_alert_search_criteria = Search::CriteriaDeviser.new(vacancy).criteria
     @similar_jobs = Search::SimilarJobs.new(vacancy).similar_jobs
-
-    PersistVacancyPageViewJob.perform_later(vacancy.id) unless publisher_signed_in? || smoke_test?
   end
 
   private
