@@ -16,6 +16,16 @@ ruby:
       selected_method: :last,
     },
     {
+      title: "Suitable for NQTs",
+      key: "suitable_nqts",
+      attribute: :job_roles,
+      selected: @subscription_form.job_roles.include?("nqt_suitable") ? @subscription_form.job_roles : [],
+      options: @subscription_form.suitable_nqts_options,
+      value_method: :first,
+      text_method: :last,
+      selected_method: :last,
+    },
+    {
       title: "Education phase",
       key: "education_phase",
       attribute: :phases,
