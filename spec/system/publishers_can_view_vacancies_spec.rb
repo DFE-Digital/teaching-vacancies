@@ -46,13 +46,4 @@ RSpec.describe "School viewing vacancies" do
     expect(page).to have_content(school.name)
     expect(page).to have_content(vacancy.job_title)
   end
-
-  scenario "clicking on more information does not increment the counter" do
-    vacancy = create(:vacancy, :no_tv_applications, status: "published")
-    vacancy.organisation_vacancies.create(organisation: school)
-
-    visit organisation_job_path(vacancy.id)
-
-    expect { click_on I18n.t("jobs.apply") }.not_to have_enqueued_job(PersistVacancyGetMoreInfoClickJob)
-  end
 end

@@ -39,22 +39,12 @@ RSpec.describe CopyVacancy do
       let(:vacancy) do
         create(:vacancy,
                job_title: "Maths teacher",
-               slug: "maths-teacher",
-               total_pageviews: 4,
-               total_get_more_info_clicks: 6)
+               slug: "maths-teacher")
       end
       let(:result) { described_class.new(vacancy).call }
 
       it "does not copy the slug of a vacancy" do
         expect(Vacancy.find(result.id).slug).to_not eq("maths-teacher")
-      end
-
-      it "does not copy the total page views of a vacancy" do
-        expect(Vacancy.find(result.id).total_pageviews).to eq(0)
-      end
-
-      it "does not copy the get more info clicks of a vacancy" do
-        expect(Vacancy.find(result.id).total_get_more_info_clicks).to eq(0)
       end
     end
   end

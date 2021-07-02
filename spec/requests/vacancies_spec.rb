@@ -39,27 +39,5 @@ RSpec.describe "Vacancies" do
         expect(response).to have_http_status(:not_found)
       end
     end
-
-    context "when using cookies" do
-      let(:school) { create(:school) }
-      let(:vacancy) { create(:vacancy) }
-      let(:params) { { id: vacancy.slug } }
-      let(:vacancy_page_view) { instance_double(VacancyPageView) }
-
-      before do
-        vacancy.organisation_vacancies.create(organisation: school)
-      end
-
-      it "calls the track method if cookies not set" do
-        expect(PersistVacancyPageViewJob).to receive(:perform_later).with(vacancy.id)
-        subject
-      end
-
-      it "does not call the track method if smoke_test cookies set" do
-        expect(PersistVacancyPageViewJob).not_to receive(:perform_later)
-        cookies[:smoke_test] = "1"
-        subject
-      end
-    end
   end
 end

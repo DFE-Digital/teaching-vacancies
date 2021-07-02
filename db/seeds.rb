@@ -223,8 +223,6 @@ FactoryBot.create(:vacancy, :at_multiple_schools,
                   subjects: ["Physical Education"],
                   working_patterns: %w[full_time],
                   salary: "£30,000",
-                  total_pageviews: 4,
-                  total_get_more_info_clicks: 2,
                   publisher: Publisher.find_by(email: "cesidio.dilanda@digital.education.gov.uk"),
                   publisher_organisation: school_two,
                   organisation_vacancies_attributes: [{ organisation: school_two }, { organisation: school_three }])

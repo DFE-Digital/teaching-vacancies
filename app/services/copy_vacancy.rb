@@ -23,8 +23,6 @@ class CopyVacancy
   def setup_new_vacancy
     @new_vacancy = @vacancy.dup
     @new_vacancy.status = :draft
-    @new_vacancy.total_pageviews = 0
-    @new_vacancy.total_get_more_info_clicks = 0
   end
 
   def setup_organisation_vacancies
