@@ -105,3 +105,23 @@ b {
     border-bottom: 5px solid #b1b4b6;
   }
 }
+
+.vacancies_index {
+
+  @media only screen and (min-width: $small-screen) {
+    .grid-row {
+      display: flex;
+    }
+
+    .grid-column-left {
+      max-width: 33%;
+      min-width: 250px;
+      width: 100%;
+    }
+
+    .grid-column-right {
+      flex-basis: 1;
+      padding: 0 0 0 $govuk-gutter;
+    }
+  }
+}

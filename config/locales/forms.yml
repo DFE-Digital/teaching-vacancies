@@ -545,6 +545,7 @@ en:
           leadership: Leadership
           sen_specialist: SEN specialist
           nqt_suitable: Suitable for NQTs
+          nqt_suitable_hidden_prefix: Only show results
         job_title: Job title
         suitable_for_nqt: Is this job suitable for NQTs?
         working_patterns_options:
