@@ -1,23 +1,17 @@
 require "rails_helper"
 
 RSpec.describe "Publishers can share their vacancy" do
-  let(:publisher) { create(:publisher) }
   let(:school) { create(:school) }
+  let(:publisher) { create(:publisher, organisation_publishers_attributes: [{ organisation: school }]) }
+  let!(:vacancy) { create(:vacancy, :published, organisation_vacancies_attributes: [{ organisation: school }]) }
 
   before { login_publisher(publisher: publisher, organisation: school) }
 
   scenario "A school can visit their page as the jobseeker would" do
-    vacancy = create(:vacancy)
-    vacancy.organisation_vacancies.create(organisation: school)
-
     visit organisation_path
 
     click_on(vacancy.job_title)
-    click_on(I18n.t("jobs.view_public_link"))
-
-    expected_url = URI("localhost:3000#{job_path(vacancy)}")
-
-    expect(current_url).to match(expected_url.to_s)
-    expect(page).to have_content(vacancy.job_title)
+    click_on(I18n.t("publishers.vacancies.show.view_live_listing_link"))
+    expect(current_path).to match(job_path(vacancy))
   end
 end
