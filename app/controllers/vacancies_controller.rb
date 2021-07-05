@@ -9,7 +9,12 @@ class VacanciesController < ApplicationController
       @landing_page_translation = "#{params[:pretty]}.#{@landing_page.parameterize.underscore}"
     end
     @jobs_search_form = Jobseekers::SearchForm.new(algolia_search_params)
-    @vacancies_search = Search::VacancySearch.new(@jobs_search_form.to_hash, sort_by: @jobs_search_form.jobs_sort, page: params[:page])
+    @vacancies_search = Search::VacancySearch.new(
+      @jobs_search_form.to_hash,
+      sort_by: @jobs_search_form.jobs_sort,
+      page: params[:page],
+      pg_search: ActiveModel::Type::Boolean.new.cast(params[:pg_search]),
+    )
     @vacancies = VacanciesPresenter.new(@vacancies_search.vacancies)
   end
 
