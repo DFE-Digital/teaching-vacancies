@@ -7,8 +7,6 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   helper_method :applying_for_the_job_fields, :important_dates_fields, :job_details_fields, :job_location_fields, :job_summary_fields, :pay_package_fields, :schools_fields
 
   def show
-    return redirect_to organisation_job_review_path(vacancy.id), notice: t(".notice") unless vacancy.published?
-
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
