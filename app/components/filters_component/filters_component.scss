@@ -1,12 +1,9 @@
 @import 'base_component';
 
-.filters-component {
-  &--show-mobile-open {
-    display: none;
-  }
+.js-enabled .filters-component {
 
-  &__section-heading {
-    position: relative;
+  @include govuk-media-query($until: tablet) {
+    background-color: govuk-colour('white');
   }
 
   &.filters-component--mobile {
@@ -19,16 +16,14 @@
     &.filters-component--show-mobile {
       @include govuk-media-query($until: tablet) {
         background-color: govuk-colour('white');
-        box-sizing: border-box;
-        display: block;
-        height: 100%;
-        left: 0;
-        overflow: auto;
-        padding: govuk-spacing(2) govuk-spacing(3) 65px;
+        border: 1px solid govuk-colour('mid-grey');
+        bottom: 5px;
+        overflow-y: scroll;
         position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 1000;
+        right: 5px;
+        top: 5px;
+        width: calc(100vw - 100px);
+        z-index: 100;
 
         .filters-component--show-mobile-open {
           display: block;
@@ -48,7 +43,7 @@
             display: none;
           }
 
-          .govuk-heading-s {
+          .govuk-heading-m {
             display: block;
           }
 
@@ -59,18 +54,31 @@
       }
     }
   }
+}
+
+.filters-component {
+  background-color: govuk-colour('light-grey');
+  padding: govuk-spacing(3);
+
+  &--show-mobile-open {
+    display: none;
+  }
 
   .filters-button {
-    background: none;
+    background-color: transparent;
+    background-repeat: no-repeat;
     border: 0;
-    color: $govuk-link-colour;
     cursor: pointer;
     font-size: 0.9rem;
     padding: 0;
     position: absolute;
     right: 0;
-    text-decoration: underline;
     top: 0;
+
+    span {
+      line-height: 1em;
+      padding-left: govuk-spacing(4);
+    }
   }
 
   //not the best but cant figure a better way to sort this right now
@@ -82,9 +90,10 @@
 
   &__heading {
     box-shadow: none;
+    position: relative;
 
     @include govuk-media-query($from: mobile) {
-      .govuk-heading-s {
+      .govuk-heading-m {
         display: none;
       }
 
@@ -94,7 +103,7 @@
     }
 
     @include govuk-media-query($from: tablet) {
-      .govuk-heading-s {
+      .govuk-heading-m {
         display: block;
       }
 
@@ -147,18 +156,6 @@
         display: none;
       }
     }
-
-    &-title--mobile {
-      @include govuk-media-query($until: tablet) {
-        @include govuk-font(24);
-
-        color: $govuk-link-colour;
-        cursor: pointer;
-        font-weight: bold;
-        margin: 0 govuk-spacing(1) govuk-spacing(2);
-        text-decoration: underline;
-      }
-    }
   }
 
   &__remove {
@@ -171,7 +168,6 @@
     .filters-component-filter__selected {
       background-color: govuk-colour('light-grey');
       box-shadow: none;
-      padding: govuk-spacing(2);
       position: relative;
     }
 
@@ -192,7 +188,7 @@
 
       li {
         display: inline-block;
-        margin-right: 10px;
+        margin-right: govuk-spacing(2);
       }
 
       &__tag {
@@ -226,36 +222,22 @@
     }
   }
 
-  &__submit {
-    @include govuk-media-query($until: tablet) {
-      background-color: govuk-colour('white');
-      bottom: 0;
-      box-sizing: border-box;
-      display: flex;
-      left: 0;
-      position: fixed;
-      width: 100%;
-      z-index: 2000;
-
-      .govuk-button {
-        margin: 0 govuk-spacing(3);
-      }
-    }
-  }
-
   &__groups {
     .govuk-accordion__section-button {
       font-size: 1.2rem;
       padding: 0 0 govuk-spacing(1) 0;
     }
 
+    .govuk-form-group {
+      margin-bottom: govuk-spacing(2);
+    }
+
     &__group {
-      border: 2px solid $govuk-border-colour;
+      border-bottom: 1px solid govuk-colour('mid-grey');
       margin-bottom: govuk-spacing(3);
 
-      .govuk-checkboxes__item,
-      .govuk-radios__item {
-        margin-left: govuk-spacing(2);
+      &:last-of-type {
+        border-bottom: 0;
       }
     }
   }
