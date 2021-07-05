@@ -1,7 +1,7 @@
 class DashboardComponent < GovukComponent::Base
   attr_reader :heading, :link
 
-  def initialize(heading:, link: nil, classes: [], html_attributes: {})
+  def initialize(heading: nil, link: nil, classes: [], html_attributes: {})
     super(classes: classes, html_attributes: html_attributes)
 
     @heading = heading
