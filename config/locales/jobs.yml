@@ -173,6 +173,7 @@ en:
     review_page_title: Review the job listing — Create a job listing for %{organisation}
     review_heading: Review the job listing
     edit_job_title: Edit %{job_title}
+    edit_listing: Edit listing
     current_step: Step %{step} of %{total}
 
     job_location: Job location
@@ -308,9 +309,6 @@ en:
           no_filters: There are no jobs waiting for your feedback at the moment.
           with_filters: There are no jobs waiting for your feedback for the schools you have selected.
       closing_date: Closing date
-      copy_link_text: Copy listing
-      delete_link_text: Delete
-      end_link_text: End listing
       draft:
         no_jobs:
           no_filters: You currently have no draft jobs.
