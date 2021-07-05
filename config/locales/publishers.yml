@@ -205,11 +205,6 @@ en:
           success: "The deadline for %{job_title} has been extended"
       job_applications:
         index:
-          buttons:
-            copy: Copy listing
-            edit: Edit listing
-            end: End listing early
-            relist: Relist
           deadline:
             after: Deadline passed
             before: Application deadline
@@ -243,11 +238,14 @@ en:
         update_status:
           unsuccessful: "%{name} has been sent an email telling them their application has not been successful"
           shortlisted: "%{name} has been sent an email telling them that they have been shortlisted"
+      live:
+        notice: You can only view active jobs
       review:
         heading: Review the job listing
         steps: Create a job listing steps
       show:
-        notice: You can only view active jobs
+        view_live_listing_link: View this listing
+        view_live_listing_title: View the live listing
       summary:
         date_expires: >-
           The listing will appear on the service until %{application_deadline}, after which it will no longer be
