@@ -44,7 +44,7 @@ class Search::LocationBuilder
 
     @polygon_boundaries = []
     locations.compact.each do |location|
-      polygons = buffer_radius.present? ? location.buffers[buffer_radius] : location.polygons["polygons"]
+      polygons = buffer_radius.present? ? location.buffers[buffer_radius] : location.buffers[radius.to_s]
       polygons.each do |polygon|
         @polygon_boundaries.push(polygon)
       end
