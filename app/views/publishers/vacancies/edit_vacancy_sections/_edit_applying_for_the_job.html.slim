@@ -1,4 +1,4 @@
-= render "publishers/vacancies/error_tag", attributes: %i[contact_email contact_number school_visits how_to_apply application_link], section: "applying_for_the_job"
+= render "publishers/vacancies/error_tag", attributes: %i[contact_email contact_number school_visits how_to_apply application_link]
 
 = render ReviewComponent.new id: "applying_for_the_job" do |review|
   - review.heading title: t("jobs.applying_for_the_job"),

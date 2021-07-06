@@ -1,5 +1,5 @@
 - attributes.each do |attribute|
   - if @vacancy.errors.messages.key?(attribute)
-    strong.govuk-tag.action-required-tag class="action-required--#{section}"
+    strong.govuk-tag.action-required-tag
       = t("messages.jobs.action_required.label")
     - break

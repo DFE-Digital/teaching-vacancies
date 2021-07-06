@@ -1,4 +1,4 @@
-= render "publishers/vacancies/error_tag", attributes: %i[salary benefits], section: "pay_package"
+= render "publishers/vacancies/error_tag", attributes: %i[salary benefits]
 
 = render ReviewComponent.new id: "pay_package" do |review|
   - review.heading title: t("jobs.pay_package"),
