@@ -1,38 +1,26 @@
 @import 'base_component';
 
-.filters-component {
-  &--show-mobile-open {
-    display: none;
-  }
-
-  &__section-heading {
-    position: relative;
-  }
-
+.js-enabled .filters-component {
   &.filters-component--mobile {
     .filters-component__groups {
-      @include govuk-media-query($until: tablet) {
+      @include govuk-media-query($until: desktop) {
         display: none;
       }
     }
 
     &.filters-component--show-mobile {
-      @include govuk-media-query($until: tablet) {
-        background-color: govuk-colour('white');
-        box-sizing: border-box;
-        display: block;
-        height: 100%;
-        left: 0;
-        overflow: auto;
-        padding: govuk-spacing(2) govuk-spacing(3) 65px;
+      @include govuk-media-query($until: desktop) {
+        border: 1px solid govuk-colour('mid-grey');
+        bottom: 5px;
+        max-width: calc(100vw - 100px);
+        overflow-y: scroll;
         position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 1000;
+        right: 5px;
+        top: 5px;
+        z-index: 100;
 
         .filters-component--show-mobile-open {
           display: block;
-          top: 6px;
         }
 
         .filters-component__groups {
@@ -41,15 +29,21 @@
 
         .filters-component__submit {
           display: flex;
+          padding: 0 govuk-spacing(3);
+          position: sticky;
         }
 
         .filters-component__heading {
+          padding: govuk-spacing(3) govuk-spacing(3) 0 govuk-spacing(3);
+
+          .govuk-heading-m {
+            display: block;
+          }
+        }
+
+        .filters-component__open {
           .filters-component__heading-applied {
             display: none;
-          }
-
-          .govuk-heading-s {
-            display: block;
           }
 
           .govuk-button {
@@ -59,32 +53,69 @@
       }
     }
   }
+}
 
-  .filters-button {
-    background: none;
+.filters-component {
+  background-color: govuk-colour('light-grey');
+
+  &--show-mobile-open {
+    display: none;
+  }
+
+  &__link-button {
+    background-color: transparent;
+    background-repeat: no-repeat;
     border: 0;
-    color: $govuk-link-colour;
     cursor: pointer;
     font-size: 0.9rem;
     padding: 0;
     position: absolute;
     right: 0;
-    text-decoration: underline;
     top: 0;
+
+    span {
+      line-height: 1em;
+      padding-left: govuk-spacing(4);
+    }
   }
 
   //not the best but cant figure a better way to sort this right now
   .add-remove-schools {
-    @include govuk-media-query($until: tablet) {
+    @include govuk-media-query($until: desktop) {
       position: static;
+    }
+  }
+
+  &__open {
+    @include govuk-media-query($until: desktop) {
+      .govuk-button {
+        display: block;
+        width: 100%;
+      }
+    }
+
+    @include govuk-media-query($from: desktop) {
+      .govuk-button {
+        display: none;
+      }
     }
   }
 
   &__heading {
     box-shadow: none;
+    padding: govuk-spacing(3) govuk-spacing(3) 0 govuk-spacing(3);
+    position: relative;
+
+    @include govuk-media-query($until: desktop) {
+      margin-bottom: govuk-spacing(3);
+      padding: 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
 
     @include govuk-media-query($from: mobile) {
-      .govuk-heading-s {
+      .govuk-heading-m {
         display: none;
       }
 
@@ -93,14 +124,18 @@
       }
     }
 
-    @include govuk-media-query($from: tablet) {
-      .govuk-heading-s {
+    @include govuk-media-query($from: desktop) {
+      .govuk-heading-m {
         display: block;
       }
 
       .govuk-button {
         display: none;
       }
+    }
+
+    .govuk-heading-m {
+      margin-bottom: 0;
     }
 
     .filters-button {
@@ -108,30 +143,17 @@
     }
 
     &-container {
-      margin-bottom: govuk-spacing(2);
+      position: relative;
 
       .govuk-heading-s {
         margin-bottom: govuk-spacing(2);
       }
     }
 
-    &-title {
-
-      display: flex;
-      @include govuk-media-query($until: tablet) {
-        border: 0;
-      }
-
-      .govuk-heading-s {
-        line-height: 1.8em;
-        margin-bottom: 0;
-      }
-    }
-
     &-applied {
       display: none;
 
-      @include govuk-media-query($until: tablet) {
+      @include govuk-media-query($until: desktop) {
         color: govuk-colour('black');
         display: inline;
         font-weight: normal;
@@ -143,35 +165,22 @@
     &-close-all {
       top: govuk-spacing(1);
 
-      @include govuk-media-query($until: tablet) {
+      @include govuk-media-query($until: desktop) {
         display: none;
-      }
-    }
-
-    &-title--mobile {
-      @include govuk-media-query($until: tablet) {
-        @include govuk-font(24);
-
-        color: $govuk-link-colour;
-        cursor: pointer;
-        font-weight: bold;
-        margin: 0 govuk-spacing(1) govuk-spacing(2);
-        text-decoration: underline;
       }
     }
   }
 
   &__remove {
     box-shadow: none;
+    padding: govuk-spacing(1) govuk-spacing(3);
 
-    @include govuk-media-query($until: tablet) {
+    @include govuk-media-query($until: desktop) {
       display: none;
     }
 
     .filters-component-filter__selected {
-      background-color: govuk-colour('light-grey');
       box-shadow: none;
-      padding: govuk-spacing(2);
       position: relative;
     }
 
@@ -192,7 +201,7 @@
 
       li {
         display: inline-block;
-        margin-right: 10px;
+        margin-right: govuk-spacing(2);
       }
 
       &__tag {
@@ -226,36 +235,32 @@
     }
   }
 
-  &__submit {
-    @include govuk-media-query($until: tablet) {
-      background-color: govuk-colour('white');
-      bottom: 0;
-      box-sizing: border-box;
-      display: flex;
-      left: 0;
-      position: fixed;
-      width: 100%;
-      z-index: 2000;
-
-      .govuk-button {
-        margin: 0 govuk-spacing(3);
-      }
-    }
-  }
-
   &__groups {
+    padding: govuk-spacing(1) govuk-spacing(3) govuk-spacing(1);
+
     .govuk-accordion__section-button {
       font-size: 1.2rem;
       padding: 0 0 govuk-spacing(1) 0;
     }
 
+    .govuk-form-group {
+      margin-bottom: govuk-spacing(2);
+    }
+
+    .govuk-checkboxes__label {
+      font-size: 1rem;
+
+      &::before {
+        background-color: govuk-colour('white');
+      }
+    }
+
     &__group {
-      border: 2px solid $govuk-border-colour;
+      border-bottom: 1px solid govuk-colour('mid-grey');
       margin-bottom: govuk-spacing(3);
 
-      .govuk-checkboxes__item,
-      .govuk-radios__item {
-        margin-left: govuk-spacing(2);
+      &:last-of-type {
+        border-bottom: 0;
       }
     }
   }

@@ -4,7 +4,7 @@ class Jobseekers::SearchForm
   attr_reader :keyword,
               :location, :radius,
               :job_roles, :phases, :working_patterns,
-              :job_role_options, :phase_options, :working_pattern_options,
+              :job_role_options, :suitable_nqts_options, :phase_options, :working_pattern_options,
               :total_filters, :jobs_sort
 
   def initialize(params = {})
@@ -45,8 +45,9 @@ class Jobseekers::SearchForm
   end
 
   def set_facet_options
-    @job_role_options = Vacancy.job_roles.keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{option}")] }
+    @job_role_options = Vacancy.job_roles.except(:nqt_suitable).keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{option}")] }
     @phase_options = [%w[primary Primary], %w[middle Middle], %w[secondary Secondary], %w[16-19 16-19]]
+    @suitable_nqts_options = Vacancy.job_roles.slice(:nqt_suitable).keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{option}")] }
     @working_pattern_options = Vacancy.working_patterns.keys.map do |option|
       [option, I18n.t("helpers.label.publishers_job_listing_job_details_form.working_patterns_options.#{option}")]
     end
