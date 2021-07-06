@@ -15,7 +15,7 @@ class Search::BufferSuggestionsBuilder
                 else
                   [LocationPolygon.with_name(location)]
                 end
-    buffer_vacancy_count = ImportPolygons::BUFFER_DISTANCES_IN_MILES.map do |distance|
+    buffer_vacancy_count = Search::RadiusSuggestionsBuilder::RADIUS_OPTIONS.map do |distance|
       buffered_polygons = []
       locations.each do |location|
         location.buffers[distance.to_s].each { |buffer| buffered_polygons.push(buffer) }
