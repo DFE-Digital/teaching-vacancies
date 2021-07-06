@@ -40,6 +40,7 @@ jobs:
       matrix_environments: ${{ env.MATRIX_ENVIRONMENTS }}
       docker_image_tag: ${{ env.DOCKER_IMAGE_TAG }}
       commit_sha: ${{ env.COMMIT_SHA }}
+      scan_docker_image: ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }}
     runs-on: ubuntu-20.04
 
     steps:
@@ -137,15 +138,41 @@ jobs:
         if: github.event_name == 'pull_request'
         run: echo "MATRIX_ENVIRONMENTS={\"environment\":[\"review\"]}" >> $GITHUB_ENV
 
+  scan_docker_images:
+    name: scan
+    needs: [build]
+    runs-on: ubuntu-20.04
+    steps:
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+            registry: ghcr.io
+            username: ${{ github.repository_owner }}
+            password: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
+
+      - uses: anchore/scan-action@v2
+        id: scan
+        with:
+          image: ${{ needs.build.outputs.scan_docker_image}}
+          acs-report-enable: true
+          fail-build: false
+          severity-cutoff: low
+
+      - name: upload Anchore scan SARIF report
+        if: always()
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: ${{ steps.scan.outputs.sarif }}
+
   deploy:
     name: Deploy app
-
     strategy:
       max-parallel: 1
       # Creates a variable 'environment' from the build job output 'matrix_environments'
       # Its value is the list of environments. The matrix iterates once per environment and the value is accessed via ${{ matrix.environment }}
       matrix: ${{fromJSON(needs.build.outputs.matrix_environments)}}
-    needs: build
+    needs: [build]
     runs-on: ubuntu-20.04
 
     steps:
