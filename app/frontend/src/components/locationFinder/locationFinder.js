@@ -4,7 +4,6 @@ import '../../lib/polyfill/after.polyfill';
 import '../../lib/polyfill/remove.polyfill';
 import loader from '../loader/loader';
 import { getPostcodeFromCoordinates } from '../../lib/api';
-import { enableRadiusSelect, disableRadiusSelect } from '../../application/jobseekers/radius';
 import logger from '../../lib/logging';
 import './locationFinder.scss';
 
@@ -62,13 +61,11 @@ export const removeErrorMessage = () => {
 
 export const onSuccess = (postcode, element) => {
   element.value = postcode;
-  enableRadiusSelect();
   locationFinder.stopLoading(containerEl, inputEl);
 };
 
 export const onFailure = () => {
   locationFinder.showErrorMessage(document.getElementById('current-location'));
-  disableRadiusSelect();
   locationFinder.stopLoading(containerEl, inputEl);
   logger.log(LOGGING_MESSAGE);
 };

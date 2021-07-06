@@ -27,16 +27,16 @@ RSpec.describe Search::RadiusSuggestionsBuilder do
 
     context "when there are 5 wider radii" do
       let(:radius) { "1" }
-      let(:wider_radii) { [5, 10, 15, 20, 25] }
+      let(:wider_radii) { [5, 10, 25, 50, 100] }
       let(:search_hits) { [1, 1, 3, 4, 7] }
 
       it "sets the correct radius suggestions" do
-        expect(subject.radius_suggestions).to eq([[5, 1], [15, 3], [20, 4], [25, 7]])
+        expect(subject.radius_suggestions).to eq([[5, 1], [25, 3], [50, 4], [100, 7]])
       end
     end
 
     context "when there are fewer than 5 wider radii" do
-      let(:radius) { "90" }
+      let(:radius) { "50" }
       let(:wider_radii) { [100, 200] }
       let(:search_hits) { [5, 9] }
 
