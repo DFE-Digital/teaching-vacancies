@@ -9,8 +9,10 @@
     = govuk_summary_list do |component|
       - component.slot(:row,
         key: t("jobs.salary"),
-        value: @vacancy.salary)
+        value: @vacancy.salary,
+        html_attributes: { id: "salary" })
 
       - component.slot(:row,
         key: t("jobs.benefits"),
-        value: @vacancy.benefits.presence || t("jobs.not_defined"))
+        value: @vacancy.benefits.presence || t("jobs.not_defined"),
+        html_attributes: { id: "benefits" })

@@ -9,26 +9,32 @@
     = govuk_summary_list do |component|
       - component.slot(:row,
         key: t("jobs.enable_job_applications"),
-        value: @vacancy.enable_job_applications? ? "Yes" : "No")
+        value: @vacancy.enable_job_applications? ? "Yes" : "No",
+        html_attributes: { id: "enable_job_applications" })
 
       - if @vacancy.enable_job_applications?
         - component.slot(:row,
           key: t("jobs.personal_statement_guidance"),
-          value: @vacancy.personal_statement_guidance.presence || t("jobs.not_defined"))
+          value: @vacancy.personal_statement_guidance.presence || t("jobs.not_defined"),
+          html_attributes: { id: "personal_statement_guidance" })
 
       - elsif @vacancy.enable_job_applications == false # as opposed to nil
         - component.slot(:row,
           key: t("jobs.application_link"),
-          value: @vacancy.application_link.present? ? open_in_new_tab_link_to(@vacancy.application_link, @vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link")) : t("jobs.not_defined"))
+          value: @vacancy.application_link.present? ? open_in_new_tab_link_to(@vacancy.application_link, @vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link")) : t("jobs.not_defined"),
+          html_attributes: { id: "application_link" })
 
       - component.slot(:row,
         key: t("jobs.contact_email"),
-        value: govuk_mail_to("Job contact email", @vacancy.contact_email, "aria-label": t("jobs.aria_labels.contact_email_link", email: @vacancy.contact_email)))
+        value: govuk_mail_to("Job contact email", @vacancy.contact_email, "aria-label": t("jobs.aria_labels.contact_email_link", email: @vacancy.contact_email)),
+        html_attributes: { id: "contact_email" })
 
       - component.slot(:row,
         key: t("jobs.contact_number"),
-        value: @vacancy.contact_number.present? ? govuk_link_to(@vacancy.contact_number, "tel:#{@vacancy.contact_number}") : t("jobs.not_defined"))
+        value: @vacancy.contact_number.present? ? govuk_link_to(@vacancy.contact_number, "tel:#{@vacancy.contact_number}") : t("jobs.not_defined"),
+        html_attributes: { id: "contact_number" })
 
       - component.slot(:row,
         key: t("jobs.#{school_or_trust_visits(@vacancy.parent_organisation)}"),
-        value: @vacancy.school_visits.presence || t("jobs.not_defined"))
+        value: @vacancy.school_visits.presence || t("jobs.not_defined"),
+        html_attributes: { id: "school_visits" })
