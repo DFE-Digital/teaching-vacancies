@@ -9,13 +9,24 @@ RSpec.describe Search::BufferSuggestionsBuilder do
         per_page: 10,
       }
     end
-    let(:buffer_coordinates_five_miles) { [[5.004562496029994090, 56.50833566307333], [5.005710530794815389, 56.5051084208278]] }
-    let(:buffer_coordinates_ten_miles) { [[10.004562496029994090, 56.50833566307333], [10.005710530794815389, 56.5051084208278]] }
-    let(:buffer_coordinates_fifteen_miles) { [[15.004562496029994090, 56.50833566307333], [15.005710530794815389, 56.5051084208278]] }
-    let(:buffer_coordinates_twenty_miles) { [[20.004562496029994090, 56.50833566307333], [20.005710530794815389, 56.5051084208278]] }
-    let(:buffer_coordinates_twenty_five_miles) { [[25.004562496029994090, 56.50833566307333], [25.005710530794815389, 56.5051084208278]] }
+    let(:buffer_coordinates_one_mile) { [[1.004562496029994090, 56.50833566307333], [1.005710530794815389, 56.5051084208278]] }
+    let(:buffer_coordinates_five_miles) { [[2.004562496029994090, 56.50833566307333], [2.005710530794815389, 56.5051084208278]] }
+    let(:buffer_coordinates_ten_miles) { [[3.004562496029994090, 56.50833566307333], [3.005710530794815389, 56.5051084208278]] }
+    let(:buffer_coordinates_twenty_five_miles) { [[4.004562496029994090, 56.50833566307333], [4.005710530794815389, 56.5051084208278]] }
+    let(:buffer_coordinates_fifty_miles) { [[5.004562496029994090, 56.50833566307333], [5.005710530794815389, 56.5051084208278]] }
+    let(:buffer_coordinates_one_hundred_miles) { [[6.004562496029994090, 56.50833566307333], [6.005710530794815389, 56.5051084208278]] }
+    let(:buffer_coordinates_two_hundred_miles) { [[7.004562496029994090, 56.50833566307333], [7.005710530794815389, 56.5051084208278]] }
+
     let(:all_buffer_coordinates) do
-      [buffer_coordinates_five_miles, buffer_coordinates_ten_miles, buffer_coordinates_fifteen_miles, buffer_coordinates_twenty_miles, buffer_coordinates_twenty_five_miles]
+      [
+        buffer_coordinates_one_mile,
+        buffer_coordinates_five_miles,
+        buffer_coordinates_ten_miles,
+        buffer_coordinates_twenty_five_miles,
+        buffer_coordinates_fifty_miles,
+        buffer_coordinates_one_hundred_miles,
+        buffer_coordinates_two_hundred_miles,
+      ]
     end
     let(:buffer_hash) { ImportPolygons::BUFFER_DISTANCES_IN_MILES.map(&:to_s).zip(all_buffer_coordinates).to_h }
     let(:arguments_for_algolia) { { hitsPerPage: 10 } }
@@ -34,26 +45,26 @@ RSpec.describe Search::BufferSuggestionsBuilder do
       end
 
       context "when there is only one vacancy in any of the buffer polygons" do
-        let(:search_hits) { [1, 1, 1, 1, 1] }
+        let(:search_hits) { [1, 1, 1, 1, 1, 1, 1] }
 
         it "suggests the buffer with the smallest radius" do
-          expect(subject.buffer_suggestions).to eq([["5", 1]])
+          expect(subject.buffer_suggestions).to eq([["1", 1]])
         end
       end
 
       context "when there are vacancies in the wider buffer polygons not found in the smaller polygons" do
-        let(:search_hits) { [1, 2, 3, 4, 5] }
+        let(:search_hits) { [1, 2, 3, 4, 5, 6, 7] }
 
         it "suggests the wider buffer radii as well" do
-          expect(subject.buffer_suggestions).to eq([["5", 1], ["10", 2], ["15", 3], ["20", 4], ["25", 5]])
+          expect(subject.buffer_suggestions).to eq([["1", 1], ["5", 2], ["10", 3], ["25", 4], ["50", 5], ["100", 6], ["200", 7]])
         end
       end
 
       context "when there are zero vacancies in a buffer polygon" do
-        let(:search_hits) { [0, 0, 0, 0, 5] }
+        let(:search_hits) { [0, 0, 0, 0, 0, 0, 5] }
 
         it "only returns buffer radii that include vacancies" do
-          expect(subject.buffer_suggestions).to eq([["25", 5]])
+          expect(subject.buffer_suggestions).to eq([["200", 5]])
         end
       end
     end
@@ -61,7 +72,7 @@ RSpec.describe Search::BufferSuggestionsBuilder do
     context "when searching in a composite location" do
       let(:location) { "Bedfordshire" }
       let(:districts) { ["Bedford", "Central Bedfordshire", "Luton"] }
-      let(:search_hits) { [0, 1, 1, 2, 3] }
+      let(:search_hits) { [0, 1, 1, 2, 3, 0, 0] }
 
       before do
         districts.each do |name|
@@ -79,7 +90,7 @@ RSpec.describe Search::BufferSuggestionsBuilder do
       end
 
       it "returns the appropriate buffer suggestions" do
-        expect(subject.buffer_suggestions).to eq([["10", 1], ["20", 2], ["25", 3]])
+        expect(subject.buffer_suggestions).to eq([["5", 1], ["25", 2], ["50", 3]])
       end
     end
   end
