@@ -3,11 +3,12 @@ class Jobseekers::JobApplication::ReviewForm
 
   attr_accessor :confirm_data_accurate, :confirm_data_usage, :completed_steps
 
-  validates :confirm_data_accurate, acceptance: true
-  validates :confirm_data_usage, acceptance: true
-  validate :all_steps_completed
+  validates_acceptance_of :confirm_data_accurate, :confirm_data_usage,
+                          acceptance: true,
+                          if: :all_steps_completed?
+  validate :all_steps_completed?
 
-  def all_steps_completed
+  def all_steps_completed?
     JobApplication.completed_steps.each_key do |step|
       next if step.in?(completed_steps)
 
