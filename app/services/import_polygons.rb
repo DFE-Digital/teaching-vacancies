@@ -1,6 +1,6 @@
 class ImportPolygons
   BUFFER_API_URL = "https://tasks.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer/buffer?".freeze
-  BUFFER_DISTANCES_IN_MILES = [5, 10, 15, 20, 25].freeze
+  BUFFER_DISTANCES_IN_MILES = Search::RadiusSuggestionsBuilder::RADIUS_OPTIONS
   URL_MAXIMUM_LENGTH = 33_000
 
   class ArcgisResponseError < StandardError; end
@@ -53,8 +53,8 @@ class ImportPolygons
       # when we change a location's location-type mapping.
       location_polygon.update(location_type: LOCATIONS_MAPPED_TO_HUMAN_FRIENDLY_TYPES[location_name])
 
-      # Skip buffers API call if the points have not changed since last time we used them to calculate the buffers.
-      location_polygon.update(polygons: polygons_hash, buffers: get_buffers(polygons)) unless polygons_hash == location_polygon.polygons
+      # Skip buffers API call if the points and the buffer radii have not changed since last time we used them to calculate the buffers.
+      location_polygon.update(polygons: polygons_hash, buffers: get_buffers(polygons)) if polygons_hash != location_polygon.polygons || location_polygon.buffers.keys.map(&:to_i) != BUFFER_DISTANCES_IN_MILES
     end
   end
 
