@@ -1,0 +1,4 @@
+- attributes.each do |attribute|
+  - if model.errors.messages.key?(attribute)
+    strong.govuk-tag.action-required-tag = t("messages.jobs.action_required.label")
+    - break

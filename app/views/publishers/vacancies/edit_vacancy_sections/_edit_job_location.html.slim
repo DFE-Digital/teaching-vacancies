@@ -1,4 +1,4 @@
-= render "publishers/vacancies/error_tag", attributes: %i[job_location organisation_id organisation_ids]
+= render "shared/error_tag", attributes: %i[job_location organisation_id organisation_ids], model: @vacancy
 
 = render ReviewComponent.new id: "job_location" do |review|
   - review.heading title: t("jobs.job_location"),
