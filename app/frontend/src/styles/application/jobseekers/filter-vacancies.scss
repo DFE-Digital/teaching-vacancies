@@ -1,7 +1,9 @@
 .filter-vacancies {
   background-color: govuk-colour('light-grey');
+  border-bottom: 1px solid govuk-colour('mid-grey');
   margin-bottom: 0;
   padding: $govuk-gutter-half;
+  padding-bottom: govuk-spacing(3);
 
   @include govuk-media-query($until: tablet) {
     margin-bottom: $govuk-gutter;
