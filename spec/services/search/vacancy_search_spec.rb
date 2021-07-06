@@ -13,7 +13,7 @@ RSpec.describe Search::VacancySearch do
 
   let(:keyword) { "maths teacher" }
   let(:location) { "" }
-  let(:radius) { "" }
+  let(:radius) { 10 }
   let(:jobs_sort) { Search::VacancySearchSort::RELEVANCE }
   let(:per_page) { nil }
   let(:page) { 1 }
@@ -100,7 +100,7 @@ RSpec.describe Search::VacancySearch do
         let(:search_params) do
           {
             keyword: keyword,
-            polygons: location_polygon.polygons["polygons"],
+            polygons: location_polygon.buffers[radius.to_s],
             filters: filter_query,
             per_page: 20,
             page: page,
@@ -160,7 +160,7 @@ RSpec.describe Search::VacancySearch do
 
         let(:arguments_to_algolia) do
           {
-            insidePolygon: location_polygon.polygons["polygons"],
+            insidePolygon: location_polygon.buffers[radius.to_s],
             filters: filter_query,
             hitsPerPage: 20,
             page: page,
@@ -183,7 +183,7 @@ RSpec.describe Search::VacancySearch do
         let(:search_params) do
           {
             keyword: keyword,
-            polygons: location_polygon.polygons["polygons"],
+            polygons: location_polygon.buffers[radius.to_s],
             filters: filter_query,
             per_page: 20,
             page: page,

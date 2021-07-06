@@ -71,36 +71,45 @@ en:
           <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span>
       location_html:
         one: >-
-          <span class='govuk-!-font-weight-bold'>%{count}</span> job found near
+          <span class="govuk-!-font-weight-bold">%{count}</span> job found within
+          <span class='govuk-!-font-weight-bold'>%{radius} %{units}</span> of
           <span class='govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe'>%{location}</span>
         other: >-
-          <span class="govuk-!-font-weight-bold">%{count}</span> jobs found near
+          <span class="govuk-!-font-weight-bold">%{count}</span> jobs found within
+          <span class='govuk-!-font-weight-bold'>%{radius} %{units}</span> of
           <span class="govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe">%{location}</span>
       location_polygon_html:
         one: >-
-          <span class='govuk-!-font-weight-bold'>%{count}</span> job found in
+          <span class="govuk-!-font-weight-bold">%{count}</span> job found within
+          <span class='govuk-!-font-weight-bold'>%{radius} %{units}</span> of
           <span class='govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe'>%{location}</span>
         other: >-
-          <span class="govuk-!-font-weight-bold">%{count}</span> jobs found in
+          <span class="govuk-!-font-weight-bold">%{count}</span> jobs found within
+          <span class='govuk-!-font-weight-bold'>%{radius} %{units}</span> of
           <span class="govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe">%{location}</span>
       keyword_location_html:
         one: >-
           <span class='govuk-!-font-weight-bold'>%{count}</span> job matches
-          <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span> near
+          <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span> within
+          <span class='govuk-!-font-weight-bold'>%{radius} %{units}</span> of
           <span class='govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize'>%{location}</span>
         other: >-
           <span class="govuk-!-font-weight-bold">%{count}</span> jobs match
-          <span class="govuk-!-font-weight-bold text-wrap-apostrophe">%{keyword}</span> near
+          <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span> within
+          <span class='govuk-!-font-weight-bold'>%{radius} %{units}</span> of
           <span class="govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize">%{location}</span>
       keyword_location_polygon_html:
         one: >-
           <span class='govuk-!-font-weight-bold'>%{count}</span> job matches
-          <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span> in
+          <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span> within
+          <span class='govuk-!-font-weight-bold'>%{radius} %{units}</span> of
           <span class='govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize'>%{location}</span>
         other: >-
           <span class="govuk-!-font-weight-bold">%{count}</span> jobs match
-          <span class="govuk-!-font-weight-bold text-wrap-apostrophe">%{keyword}</span> in
+          <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span> within
+          <span class='govuk-!-font-weight-bold'>%{radius} %{units}</span> of
           <span class="govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize">%{location}</span>
+      unit_of_length: mile
 
     legacy_job_alert:
       link: Receive a job alert
