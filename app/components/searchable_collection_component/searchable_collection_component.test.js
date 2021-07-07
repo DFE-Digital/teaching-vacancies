@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { init, substringExistsInString, searchableClassNames } from './searchable_collection_component';
 
 describe('searchCheckbox', () => {

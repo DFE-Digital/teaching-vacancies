@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { add, remove } from './loader';
 
 describe('loader', () => {

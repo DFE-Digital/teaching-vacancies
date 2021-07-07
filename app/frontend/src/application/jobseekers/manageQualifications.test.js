@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import manageQualifications, {
   addAddSubjectEventListener,
   addSubjectHandler,

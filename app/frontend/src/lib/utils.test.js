@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import {
   getNewState, getUnixTimestampForDayStart, stringMatchesPostcode, convertMilesToMetres, convertEpochToUnixTimestamp, stringContainsNumber,
 } from './utils';
