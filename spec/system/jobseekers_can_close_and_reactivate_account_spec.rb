@@ -21,10 +21,8 @@ RSpec.describe "Jobseekers can close and reactivate their account" do
 
     expect(page).to have_content(I18n.t("jobseekers.registrations.destroy.success"))
 
-    within(".navbar-component") do
-      click_link I18n.t("buttons.sign_in")
-    end
-
+    within(".navbar-component") { click_link I18n.t("buttons.sign_in") }
+    click_on I18n.t("buttons.sign_in_jobseeker")
     sign_in_jobseeker(email: jobseeker.email, password: jobseeker.password)
 
     expect(page).to have_content(I18n.t("devise.sessions.signed_in"))

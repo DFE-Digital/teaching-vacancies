@@ -1,5 +1,16 @@
 en:
   publishers:
+    account_requests:
+      create:
+        acknowledge: We will send you an email once your account has been set up. You will then be able to sign in and start listing jobs for free.
+        problems_html: If you have not heard from us after 5 working days, please email %{link}.
+        success: Success
+        success_message: Thank you for requesting a Teaching Vacancies account
+        title: Account creation request created
+      new:
+        title: Request a Teaching Vacancies account
+        intro_request: Request an account to list jobs for free on Teaching Vacancies.
+        intro_conditions: You can get an account if you work at a state-funded school or trust in England, or if you work at a local authority and list job vacancies on behalf of schools.
     notifications:
       index:
         heading: Notifications
@@ -15,10 +26,10 @@ en:
       create:
         not_authorised: You are not authorised to log in
       new:
-        assistance:
-          content_html: "%{link} to your account to search for and save jobs"
-          heading: Teachers account
-          link_text: Sign in
+        no_account:
+          content_html: "If you do not yet have access to Teaching Vacancies you can %{link}"
+          heading: Don't have an account yet?
+          link_text: request an account
         page_description: If you already have a Teaching Vacancies account you can sign in to the service here.
         request_account_title: Request an account
         request_account_html: &request_account_html >-
@@ -32,9 +43,9 @@ en:
           page.</li>
           </ul>
         sign_in:
-          description: You must sign in to your Teaching Vacancies account to list a job.
+          description: Use DfE Sign-in to access your Teaching Vacancies account.
           description_fallback: Enter your email below and we will send you a link that will take you straight into your account.
-          title: Sign in to Teaching Vacancies
+          title: Hiring staff sign in
     no_vacancies_component:
       bullets:
         required:
