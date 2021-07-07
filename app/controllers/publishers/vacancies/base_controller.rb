@@ -81,10 +81,6 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
     session[:current_step] = nil
   end
 
-  def review_path_with_errors(vacancy)
-    organisation_job_review_path(job_id: vacancy.id, anchor: "errors", source: "publish")
-  end
-
   def update_google_index(job)
     return if DisableExpensiveJobs.enabled?
 

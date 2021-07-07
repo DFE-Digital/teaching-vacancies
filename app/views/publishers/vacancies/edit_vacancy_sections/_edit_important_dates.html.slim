@@ -1,4 +1,4 @@
-= render "shared/error_tag", attributes: %i[publish_on expires_at starts_on], model: @vacancy
+= render "shared/error_tag", attributes: important_dates_fields, model: @vacancy
 
 #expiry_time
 = render ReviewComponent.new id: "important_dates" do |review|
