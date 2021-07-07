@@ -11,6 +11,16 @@ ruby:
       selected_method: :last,
     },
     {
+      title: "Suitable for NQTs",
+      key: "suitable_nqts",
+      attribute: :job_roles,
+      selected: @jobs_search_form.job_roles.include?("nqt_suitable") ? @jobs_search_form.job_roles : [],
+      options: @jobs_search_form.suitable_nqts_options,
+      value_method: :first,
+      text_method: :last,
+      selected_method: :last,
+    },
+    {
       title: "Education phase",
       key: "education_phase",
       attribute: :phases,
@@ -33,7 +43,7 @@ ruby:
   ]
 
 = form_for @jobs_search_form, as: "", url: jobs_path, method: :get, html: { id: "filter-form", data: { "auto-submit": true }, class: "filters-form", role: "search", aria: { label: "Search criteria" } } do |f|
-  .filter-vacancies class="govuk-!-margin-bottom-3"
+  .filter-vacancies
     h2.govuk-heading-m = t("jobs.filters.title")
 
     = render "shared/search/keyword", f: f, filters: true
@@ -47,4 +57,5 @@ ruby:
   = render(FiltersComponent.new(form: f,
     filters: { total_count: @jobs_search_form.total_filters, title: "Filter results" },
     items: items,
-    options: { remove_buttons: true, mobile_variant: true, close_all: true }))
+    options: { remove_buttons: true, mobile_variant: true, close_all: true },
+    html_attributes: { tabindex: "-1", id: "filters-component" }))
