@@ -154,7 +154,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
       fill_in "keyword", with: "english"
       fill_in "location", with: location
       if search_with_polygons?
-        select "40 miles", from: "radius"
+        select "10 miles", from: "radius"
       end
       check I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.teacher")
       check I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.nqt_suitable")
@@ -168,7 +168,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
     expect(page.find_field("jobseekers-subscription-form-location-field").value).to eq(location)
     expect(page).to have_css(".js-location-finder__input")
     if search_with_polygons?
-      expect(page.find_field("jobseekers-subscription-form-radius-field").value).to eq("40")
+      expect(page.find_field("jobseekers-subscription-form-radius-field").value).to eq("10")
     end
     expect(page.find_field("jobseekers-subscription-form-job-roles-teacher-field")).to be_checked
     expect(page.find_field("jobseekers-subscription-form-job-roles-nqt-suitable-field")).to be_checked

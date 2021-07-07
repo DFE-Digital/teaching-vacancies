@@ -1,8 +1,6 @@
 import '../../lib/polyfill/after.polyfill';
 import './autocomplete.scss';
 
-import { onChange as locationChange } from '../../application/jobseekers/location';
-
 export const create = (container, input, key) => {
   if (!getRenderedList(container)) {
     const ul = document.createElement('ul');
@@ -22,7 +20,6 @@ export const create = (container, input, key) => {
 
     ul.addEventListener('click', (e) => {
       setInputValue(input, e.target.dataset[key]);
-      locationChange(e.target.dataset[key]);
     });
 
     input.addEventListener('keyup', (e) => {
