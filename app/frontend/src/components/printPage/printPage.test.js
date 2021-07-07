@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import printPage, { initTriggerElements, addTriggerEvent } from './printPage';
 
 describe('printPage', () => {

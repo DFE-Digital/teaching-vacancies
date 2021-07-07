@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import panel, { toggleControlText, isPanelClosed, togglePanel } from './panel';
 
 describe('panel', () => {

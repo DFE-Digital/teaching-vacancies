@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import locationFinder, {
   startLoading, stopLoading, onSuccess, onFailure, showErrorMessage, ERROR_MESSAGE, DEFAULT_PLACEHOLDER, LOADING_PLACEHOLDER, postcodeFromPosition,
 } from './locationFinder';
