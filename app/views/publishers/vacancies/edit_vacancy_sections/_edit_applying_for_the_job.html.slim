@@ -1,4 +1,4 @@
-= render "shared/error_tag", applying_for_the_job_fields, model: @vacancy
+= render "publishers/vacancies/error_tag", attributes: applying_for_the_job_fields
 
 = render ReviewComponent.new id: "applying_for_the_job" do |review|
   - review.heading title: t("jobs.applying_for_the_job"),
