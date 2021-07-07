@@ -5,14 +5,10 @@
 import locationFinder, {
   startLoading, stopLoading, onSuccess, onFailure, showErrorMessage, ERROR_MESSAGE, DEFAULT_PLACEHOLDER, LOADING_PLACEHOLDER, postcodeFromPosition,
 } from './locationFinder';
-import radius from '../../application/jobseekers/radius';
 import loader from '../loader/loader';
 
-jest.mock('../../application/jobseekers/radius');
-
 describe('current location', () => {
-  let showErrorMessageMock = null; let stopLoadingMock = null; let enableRadiusMock = null; let
-    disableRadiusMock = null; let onSuccessMock = null; let
+  let showErrorMessageMock = null; let stopLoadingMock = null; let onSuccessMock = null; let
     onFailureMock = null; let addLoaderMock = null; let removeLoaderMock = null; let input = null; let container = null;
 
   beforeEach(() => {
@@ -23,9 +19,6 @@ describe('current location', () => {
 
     locationFinder.stopLoading = jest.fn();
     stopLoadingMock = jest.spyOn(locationFinder, 'stopLoading');
-
-    enableRadiusMock = jest.spyOn(radius, 'enableRadiusSelect');
-    disableRadiusMock = jest.spyOn(radius, 'disableRadiusSelect');
 
     loader.add = jest.fn();
     addLoaderMock = jest.spyOn(loader, 'add');
@@ -61,17 +54,15 @@ describe('current location', () => {
     test('updates the UI correctly and adds error message', () => {
       onFailure();
       expect(input.value).toBe('');
-      expect(disableRadiusMock).toHaveBeenCalled();
       expect(stopLoadingMock).toHaveBeenCalled();
       expect(showErrorMessageMock).toHaveBeenCalled();
     });
   });
 
   describe('onSuccess', () => {
-    test('updates the UI correctly and enables radius control', () => {
+    test('updates the UI correctly', () => {
       onSuccess('W12 8QT', input);
       expect(input.value).toBe('W12 8QT');
-      expect(enableRadiusMock).toHaveBeenCalled();
       expect(stopLoadingMock).toHaveBeenCalled();
       expect(showErrorMessageMock).not.toHaveBeenCalled();
     });
