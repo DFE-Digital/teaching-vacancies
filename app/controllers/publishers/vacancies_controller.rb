@@ -30,7 +30,6 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     if all_steps_valid?
       session[:current_step] = :review
       set_completed_step
-      validate_all_steps
     else
       session[:current_step] = :edit_incomplete
       redirect_to_incomplete_step
@@ -83,10 +82,8 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   end
 
   def validate_all_steps
-    step_valid?(Publishers::JobListing::JobDetailsForm)
-    step_valid?(Publishers::JobListing::PayPackageForm)
-    step_valid?(Publishers::JobListing::ImportantDatesForm)
-    step_valid?(Publishers::JobListing::ApplyingForTheJobForm)
-    step_valid?(Publishers::JobListing::JobSummaryForm)
+    steps_config.except(:job_location, :schools, :supporting_documents, :documents, :review).each_key do |step|
+      step_valid?("publishers/job_listing/#{step}_form".camelize.constantize)
+    end
   end
 end
