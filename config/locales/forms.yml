@@ -13,6 +13,7 @@ en:
     back: Back
     back_to_previous_step: Go back to previous step
     back_to_manage_jobs: Back to manage jobs
+    back_to_teaching_vacancies: Back to Teaching Vacancies
     cancel: Cancel
     cancel_copy: Cancel job listing copy
     cancel_and_return: Cancel and return
@@ -23,6 +24,7 @@ en:
     complete_section: Complete section
     confirm_rejection: Confirm rejection
     continue: Continue
+    continue_to_dsi: Continue to DfE Sign-in
     create_job: Create a job listing
     create_account: Create an account
     delete: Delete
@@ -38,6 +40,7 @@ en:
     preview_job_listing: Preview job listing
     print_download_application: Print or download
     reject: Reject
+    request_account: Request account
     resend_email: Resend request
     save: Save
     save_and_continue: Save and continue
@@ -54,6 +57,8 @@ en:
     set_preferences: Set your preferences
     shortlist: Shortlist
     sign_in: Sign in
+    sign_in_jobseeker: Sign in as a jobseeker
+    sign_in_publisher: Sign in as hiring staff
     skip_this_step: Skip this step
     start_application: Start application
     submit: Submit
@@ -151,6 +156,9 @@ en:
         email: >-
           We'll only use this to tell you about opportunities to take part in user research that helps us improve
           Department for Education services.
+
+      publishers_account_request_form:
+        organisation_identifier_html: You can find these details on %{link}
 
       publishers_organisation_form:
         description: Jobseekers will see this description of the %{organisation_type} in the job listing
@@ -458,6 +466,12 @@ en:
 
       publisher:
         email: Email address
+
+      publishers_account_request_form:
+        full_name: Full name
+        email: Work email address
+        organisation_name: Your school, trust or local authority name
+        organisation_identifier: School unique reference number (URN) or trust unique identifier (UID)
 
       publishers_organisation_form:
         description: Description of %{organisation_type}

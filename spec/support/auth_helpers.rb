@@ -87,7 +87,7 @@ module AuthHelpers
 
   def sign_in_publisher
     visit new_publisher_session_path
-    within("form.publisher-sign-in") { click_on I18n.t("buttons.sign_in") }
+    within("form.publisher-sign-in") { click_on I18n.t("buttons.continue_to_dsi") }
   end
 
   def stub_accepted_terms_and_conditions

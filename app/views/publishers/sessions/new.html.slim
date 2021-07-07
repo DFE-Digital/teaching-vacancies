@@ -1,21 +1,15 @@
 - content_for :page_title_prefix, t(".sign_in.title")
 
+= govuk_back_link text: t("buttons.back"), href: page_path("sign-in")
+
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       h1.govuk-heading-l = t(".sign_in.title")
+
       p = t(".sign_in.description")
-
-      - if AuthenticationFallback.enabled?
-        = govuk_link_to t("buttons.sign_in"), new_login_key_path, class: "govuk-button govuk-!-margin-bottom-0"
-      - else
-        = govuk_button_to t("buttons.sign_in"), publisher_dfe_omniauth_authorize_path, class: "govuk-!-margin-bottom-0", form_class: "publisher-sign-in"
-
-      hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
-      h2.govuk-heading-m = t(".request_account_title")
-      p = t(".request_account_html", mail_to: govuk_mail_to(t("help.email"), t("help.email")))
+      = govuk_button_to t("buttons.continue_to_dsi"), publisher_dfe_omniauth_authorize_path, class: "govuk-!-margin-bottom-0", form_class: "publisher-sign-in"
 
     .govuk-grid-column-one-third
-      .account-sidebar
-        h2.account-sidebar__heading = t(".assistance.heading")
-        p.govuk-body-s = t(".assistance.content_html", link: govuk_link_to(t(".assistance.link_text"), new_jobseeker_session_path))
+      h2.account-sidebar__heading = t(".no_account.heading")
+      p.govuk-body = t(".no_account.content_html", link: govuk_link_to(t(".no_account.link_text"), new_publishers_account_request_path))
