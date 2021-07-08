@@ -1,7 +1,8 @@
 = render ReviewComponent.new id: "jobseekers-job-application-review-form-employment-history-field-error" do |review|
   - review.heading title: t("jobseekers.job_applications.build.employment_history.heading"),
                     text: job_application_review_edit_section_text(job_application, :employment_history),
-                    href: jobseekers_job_application_build_path(job_application, :employment_history) do
+                    href: jobseekers_job_application_build_path(job_application, :employment_history),
+                    html_attributes: { id: "gaps_in_employment" } do
       = job_application_review_section_tag(job_application, :employment_history)
 
   - review.body do

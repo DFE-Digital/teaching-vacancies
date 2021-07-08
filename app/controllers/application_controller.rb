@@ -32,6 +32,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  private
+
   def user_type
     if current_jobseeker.present?
       :jobseeker
@@ -39,8 +41,6 @@ class ApplicationController < ActionController::Base
       :publisher
     end
   end
-
-  private
 
   def cookies_preference_set?
     cookies["consented-to-cookies"].present?

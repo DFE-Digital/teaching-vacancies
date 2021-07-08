@@ -1,7 +1,8 @@
 = render ReviewComponent.new id: "jobseekers-job-application-review-form-personal-statement-field-error" do |review|
   - review.heading title: t("jobseekers.job_applications.build.personal_statement.heading"),
                    text: job_application_review_edit_section_text(job_application, :personal_statement),
-                   href: jobseekers_job_application_build_path(job_application, :personal_statement) do
+                   href: jobseekers_job_application_build_path(job_application, :personal_statement),
+                   html_attributes: { id: "personal_statement" } do
       = job_application_review_section_tag(job_application, :personal_statement)
 
   - review.body do

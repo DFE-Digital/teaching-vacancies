@@ -1,11 +1,15 @@
 class Jobseekers::JobApplicationsController < Jobseekers::BaseController
   include QualificationFormConcerns
+  include Jobseekers::Wizardable
 
   before_action :raise_unless_vacancy_enable_job_applications,
                 :redirect_if_job_application_exists, only: %i[new create new_quick_apply quick_apply]
   before_action :redirect_unless_draft_job_application, only: %i[review]
 
   helper_method :job_application, :qualification_form_param_key, :review_form, :vacancy, :withdraw_form
+  helper_method :personal_details_fields, :professional_status_fields, :qualifications_fields, :employment_history_fields,
+                :personal_statement_fields, :references_fields, :equal_opportunities_fields, :ask_for_support_fields,
+                :declarations_fields
 
   def new
     request_event.trigger(:vacancy_apply_clicked, vacancy_id: StringAnonymiser.new(vacancy.id))
@@ -37,7 +41,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
 
     if params[:commit] == t("buttons.save_and_come_back")
       redirect_to jobseekers_job_applications_path, success: t("messages.jobseekers.job_applications.saved")
-    elsif review_form.valid?
+    elsif review_form.valid? && completed_steps_valid?
       job_application.submit!
       @application_feedback_form = Jobseekers::JobApplication::FeedbackForm.new
     else
@@ -79,6 +83,22 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
   end
 
   private
+
+  def completed_steps_valid?
+    # Check that all completed steps are valid, in case we have changed the validations since the step was completed.
+    # NB: Only validates top-level step forms. Does not validate individual qualifications, employments, or references.
+    job_application.completed_steps.all? do |step|
+      step_valid?("jobseekers/job_application/#{step}_form".camelize.constantize)
+    end
+  end
+
+  def step_valid?(step_form)
+    form = step_form.new(job_application.slice(*send("#{step_form.to_s.underscore.split('/').last.split('_form').first}_fields")))
+
+    form.valid?.tap do
+      job_application.errors.merge!(form.errors)
+    end
+  end
 
   def job_application
     @job_application ||= current_jobseeker.job_applications.find(params[:job_application_id] || params[:id])

@@ -8,28 +8,35 @@
     = govuk_summary_list do |summary|
       - summary.slot :row,
                       key: t("helpers.label.jobseekers_job_application_personal_details_form.first_name"),
-                      value: job_application.first_name
+                      value: job_application.first_name,
+                      html_attributes: { id: "first_name" }
       - summary.slot :row,
                       key: t("helpers.label.jobseekers_job_application_personal_details_form.last_name"),
-                      value: job_application.last_name
+                      value: job_application.last_name,
+                      html_attributes: { id: "last_name" }
       - summary.slot :row,
                       key: t("helpers.label.jobseekers_job_application_personal_details_form.previous_names"),
-                      value: job_application.previous_names.presence || t("jobseekers.job_applications.not_defined")
+                      value: job_application.previous_names.presence || t("jobseekers.job_applications.not_defined"),
+                      html_attributes: { id: "previous_names" }
       - summary.slot :row,
                       key: t("helpers.legend.jobseekers_job_application_personal_details_form.your_address"),
-                      value: safe_join([tag.div(job_application.street_address, class: "govuk-body"),
-                                        tag.div(job_application.city, class: "govuk-body"),
-                                        tag.div(job_application.postcode, class: "govuk-body"),
-                                        tag.div(job_application.country, class: "govuk-body")])
+                      value: safe_join([tag.div(job_application.street_address, class: "govuk-body", id: "street_address"),
+                                        tag.div(job_application.city, class: "govuk-body", id: "city"),
+                                        tag.div(job_application.postcode, class: "govuk-body", id: "postcode"),
+                                        tag.div(job_application.country, class: "govuk-body", id: "country")])
       - summary.slot :row,
                       key: t("helpers.label.jobseekers_job_application_personal_details_form.phone_number"),
-                      value: job_application.phone_number
+                      value: job_application.phone_number,
+                      html_attributes: { id: "phone_number" }
       - summary.slot :row,
                       key: t("helpers.label.jobseekers_job_application_personal_details_form.email_address"),
-                      value: job_application.email
+                      value: job_application.email,
+                      html_attributes: { id: "email_address" }
       - summary.slot :row,
                       key: t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number"),
-                      value: job_application.teacher_reference_number.presence || t("jobseekers.job_applications.not_defined")
+                      value: job_application.teacher_reference_number.presence || t("jobseekers.job_applications.not_defined"),
+                      html_attributes: { id: "teacher_reference_number" }
       - summary.slot :row,
                       key: t("helpers.label.jobseekers_job_application_personal_details_form.national_insurance_number"),
-                      value: job_application.national_insurance_number.presence || t("jobseekers.job_applications.not_defined")
+                      value: job_application.national_insurance_number.presence || t("jobseekers.job_applications.not_defined"),
+                      html_attributes: { id: "national_insurance_number" }

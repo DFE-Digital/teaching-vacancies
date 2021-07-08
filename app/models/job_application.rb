@@ -49,8 +49,8 @@ class JobApplication < ApplicationRecord
   end
 
   def email
-    # This method and its test can be removed once there are no job applications remaining which were begun before we asked
-    # jobseekers for their emails as part of the application, or after https://dfedigital.atlassian.net/browse/TEVA-2720 is done.
+    # This method and its test can be removed once there are no job applications remaining which were submitted before
+    # we asked jobseekers for their emails as part of the application.
     email_address.presence || jobseeker.email
   end
 
