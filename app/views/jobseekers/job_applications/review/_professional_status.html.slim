@@ -11,4 +11,5 @@
                       value: job_application_qualified_teacher_status_info(job_application)
       - summary.slot :row,
                       key: t("helpers.legend.jobseekers_job_application_professional_status_form.statutory_induction_complete"),
-                      value: job_application.statutory_induction_complete.humanize
+                      value: job_application.statutory_induction_complete.humanize,
+                      html_attributes: { id: "statutory_induction_complete" }

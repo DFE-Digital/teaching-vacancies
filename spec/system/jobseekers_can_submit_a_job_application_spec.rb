@@ -36,7 +36,7 @@ RSpec.describe "Jobseekers can submit a job application" do
   context "when the application is incomplete" do
     let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
 
-    it "does not allow jobseekers to submit application and go to confirmation page" do
+    it "does not allow jobseekers to submit application" do
       check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
       check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
 
@@ -44,6 +44,31 @@ RSpec.describe "Jobseekers can submit a job application" do
 
       expect(JobApplication.first.status).to eq("draft")
       expect(page).to have_content("There is a problem")
+    end
+
+    it "allows jobseekers to save application and go to dashboard" do
+      click_on I18n.t("buttons.save_and_come_back")
+
+      expect(JobApplication.first.status).to eq("draft")
+      expect(page).to have_content(I18n.t("messages.jobseekers.job_applications.saved"))
+      expect(current_path).to eq(jobseekers_job_applications_path)
+    end
+  end
+
+  context "when the application is complete but invalid" do
+    let(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy, statutory_induction_complete: "invalid answer") }
+
+    it "does not allow jobseekers to submit application, and informs jobseeker of invalid value" do
+      check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
+      check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
+
+      click_on I18n.t("buttons.submit_application")
+
+      expect(JobApplication.first.status).to eq("draft")
+      expect(page).not_to have_content("There is a problem")
+      expect(page).to have_content(I18n.t("messages.jobs.action_required.message.jobseeker"))
+      expect(page).to have_link(I18n.t("activemodel.errors.models.jobseekers/job_application/professional_status_form.attributes.statutory_induction_complete.inclusion"),
+                                href: "#statutory_induction_complete")
     end
 
     it "allows jobseekers to save application and go to dashboard" do
