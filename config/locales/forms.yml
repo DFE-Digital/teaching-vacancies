@@ -110,15 +110,15 @@ en:
           Select yes if you have had any gaps in employment since you left full-time education. For example, if you've
           taken 3 months or more off for parental leave, illness or study.
       jobseekers_job_application_equal_opportunities_form:
-        gender: If the options below do not reflect how you identify, please select ‘Other’.
-        ethnicity: If the options below do not reflect how you identify, please select ‘Other’.
+        gender: If the options below do not reflect how you identify, please select ‘Other gender identity’.
+        ethnicity: If the options below do not reflect how you identify, please select ‘Other ethnic group’.
         ethnicity_options:
           asian: Includes Indian, Pakistani, Bangladeshi or Chinese
           mixed: Includes White and Black Caribbean, White and Black African or White and Asian
           white: Includes English, Welsh, Scottish, Northern Irish, British, Irish Gypsy or Irish Traveller
-        orientation: If the options below do not reflect how you identify, please select ‘Other’.
+        orientation: If the options below do not reflect how you identify, please select ‘Other sexual orientation’.
         religion: >-
-          Tell us about your religion or faith. You can select ‘Other’ if your beliefs are not represented by one of the
+          Tell us about your religion or faith. You can select ‘Other religion or belief’ if your beliefs are not represented by one of the
           given options.
       jobseekers_job_application_feedback_form:
         email: >-
