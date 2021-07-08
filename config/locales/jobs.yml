@@ -11,21 +11,7 @@ en:
     location_search_heading: Teaching jobs in %{location}
 
     filters:
-      title: Search job listings
       job_filters: Job Filters
-      keyword: Keywords
-      keyword_placeholder: Humanities, KS2, primary, NQT for example
-      keyword_nqt_hint: Tell us what teaching job you’re looking for and what kind of school you’d like to teach in.
-                        You can use any keywords that describe your ideal role.
-                        This alert is especially for NQT suitable jobs, so you don’t need to add NQT as a keyword.
-      location: Enter a location
-      location_hint: City, town or postcode
-      use_current_location: use current location
-      within_radius: Within a radius of
-      number_of_miles:
-        one: '%{count} mile'
-        other: '%{count} miles'
-      add_more_filters: Add more filters
       job_roles: Job role
       phases: Education phase
       working_patterns: Working pattern
@@ -57,6 +43,20 @@ en:
     none_listed:
       - This may be because this isn’t a busy period in the teacher recruitment cycle.
       - Schools have listed %{count} jobs but they have since expired.
+
+    search:
+      keyword: Keywords
+      keyword_nqt_hint: Tell us what teaching job you’re looking for and what kind of school you’d like to teach in.
+        You can use any keywords that describe your ideal role.
+        This alert is especially for NQT suitable jobs, so you don’t need to add NQT as a keyword.
+      location: Location
+      location_hint: For example, city, county or postcode
+      number_of_miles:
+        one: '%{count} mile'
+        other: '%{count} miles'
+      title: Search job listings
+      use_current_location: use current location
+      within_radius: Within a radius of
 
     search_result_heading:
       without_search_html:
