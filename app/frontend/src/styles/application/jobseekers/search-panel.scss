@@ -20,11 +20,14 @@
   h1,
   label,
   p,
-  .govuk-hint,
   .govuk-link,
   .govuk-label.govuk-label--s,
   .js-location-finder__link {
     color: govuk-colour('white');
+  }
+
+  .govuk-form-group {
+    @include govuk-responsive-margin(2, 'bottom');
   }
 
   .govuk-button--start {
