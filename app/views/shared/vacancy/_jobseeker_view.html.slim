@@ -92,5 +92,10 @@
         =< t("jobs.alert.similar.verbose.reminder")
 
     section class="govuk-!-margin-top-3"
-      h4.govuk-heading-s.share-this-job = t("jobs.share_this_job")
+      .govuk-inset-text
+        h2.govuk-heading-m = t("jobs.share_this_job")
+        p#vacancy-share-url = @vacancy.share_url
+        button.govuk-button.govuk-button--secondary.copy-to-clipboard type="button" data={ "target-id": "vacancy-share-url" } = "Copy URL"
+
+    section class="govuk-!-margin-top-3"
       = render "/shared/vacancy/share_buttons"
