@@ -1,11 +1,15 @@
-ul.govuk-list
-  li.share-links__list-item
-    = govuk_link_to new_share_path(channel: "facebook", vacancy_id: @vacancy.id), target: "_blank", class: "share-links__link vacancy-share-link", "data-target": "facebook" do
-      img src=asset_pack_path("media/images/svg/logo-facebook.svg") alt="Facebook logo" height="40" width="40" class="share-links__link-icon" aria-hidden="true"
-      span.visually-hidden = t("jobs.share_on")
-      | Facebook
-  li.share-links__list-item
-    = govuk_link_to new_share_path(channel: "twitter", vacancy_id: @vacancy.id), target: "_blank", class: "share-links__link vacancy-share-link", "data-target": "twitter" do
-      img src=asset_pack_path("media/images/svg/logo-twitter.svg") alt="Twitter logo" height="40" width="40" class="share-links__link-icon" aria-hidden="true"
-      span.visually-hidden = t("jobs.share_on")
-      | Twitter
+/ ul.govuk-list
+/   li.share-links__list-item
+/     = govuk_link_to new_share_path(channel: "facebook", vacancy_id: @vacancy.id), target: "_blank", class: "share-links__link vacancy-share-link", "data-target": "facebook" do
+/       img src=asset_pack_path("media/images/svg/logo-facebook.svg") alt="Facebook logo" height="40" width="40" class="share-links__link-icon" aria-hidden="true"
+/       span.visually-hidden = t("jobs.share_on")
+/       | Facebook
+/   li.share-links__list-item
+/     = govuk_link_to new_share_path(channel: "twitter", vacancy_id: @vacancy.id), target: "_blank", class: "share-links__link vacancy-share-link", "data-target": "twitter" do
+/       img src=asset_pack_path("media/images/svg/logo-twitter.svg") alt="Twitter logo" height="40" width="40" class="share-links__link-icon" aria-hidden="true"
+/       span.visually-hidden = t("jobs.share_on")
+/       | Twitter
+.govuk-inset-text
+  h4.govuk-heading-m = t("jobs.share_this_job")
+  p#share-url = job_url(@vacancy)
+  button.govuk-button.govuk-button--secondary.copy-to-clipboard type="button" data={ "target-id": "share-url" } = "Copy URL"
