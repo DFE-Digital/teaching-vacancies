@@ -2,6 +2,6 @@
   radius_filter_options,
   :last,
   :first,
-  label: { text: t("jobs.search.within_radius"), size: "s" },
-  class: "govuk-!-width-#{wide ? 'full' : 'one-third'}",
-  form_group: { classes: "location-radius-select" }
+  label: { text: t("jobs.filters.within_radius"), size: "s" },
+  class: %w[govuk-!-width-full],
+  form_group: { classes: "#{filters ? 'govuk-inset-text' : ''} location-radius-select location-radius-select-block" }
