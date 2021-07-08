@@ -26,11 +26,9 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
   end
 
   def all_steps_valid?
-    step_valid?(Publishers::JobListing::JobDetailsForm) &&
-      step_valid?(Publishers::JobListing::PayPackageForm) &&
-      step_valid?(Publishers::JobListing::ImportantDatesForm) &&
-      step_valid?(Publishers::JobListing::ApplyingForTheJobForm) &&
-      step_valid?(Publishers::JobListing::JobSummaryForm)
+    steps_config.except(:job_location, :schools, :supporting_documents, :documents, :review).keys.all? do |step|
+      step_valid?("publishers/job_listing/#{step}_form".camelize.constantize)
+    end
   end
 
   def step_valid?(step_form)
@@ -81,10 +79,6 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
   def reset_session_vacancy!
     session[:job_location] = nil
     session[:current_step] = nil
-  end
-
-  def review_path_with_errors(vacancy)
-    organisation_job_review_path(job_id: vacancy.id, anchor: "errors", source: "publish")
   end
 
   def update_google_index(job)

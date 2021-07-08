@@ -38,7 +38,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         visit edit_organisation_job_path(vacancy.id)
 
         expect(page).to have_content(I18n.t("messages.jobs.action_required.heading"))
-        expect(page).to have_content(I18n.t("messages.jobs.action_required.message"))
+        expect(page).to have_content(I18n.t("messages.jobs.action_required.message.publisher"))
         expect(page).to have_content(I18n.t("job_summary_errors.about_school.blank", organisation: "school"))
         expect(page).to have_content(I18n.t("job_details_errors.suitable_for_nqt.inclusion"))
       end

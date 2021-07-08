@@ -1,4 +1,4 @@
-= render "publishers/vacancies/error_tag", attributes: %i[publish_on expires_at starts_on], section: "important_dates"
+= render "publishers/vacancies/error_tag", attributes: important_dates_fields
 
 #expiry_time
 = render ReviewComponent.new id: "important_dates" do |review|
@@ -10,12 +10,15 @@
     = govuk_summary_list do |component|
       - component.slot(:row,
         key: t("jobs.publication_date"),
-        value: format_date(@vacancy.publish_on))
+        value: format_date(@vacancy.publish_on),
+        html_attributes: { id: "publish_on" })
 
       - component.slot(:row,
         key: t("jobs.application_deadline"),
-        value: format_time_to_datetime_at(@vacancy.expires_at))
+        value: format_time_to_datetime_at(@vacancy.expires_at),
+        html_attributes: { id: "expires_at" })
 
       - component.slot(:row,
         key: t("jobs.starts_on"),
-        value: @vacancy.starts_asap? ? t("jobs.starts_asap") : format_date(@vacancy.starts_on))
+        value: @vacancy.starts_asap? ? t("jobs.starts_asap") : format_date(@vacancy.starts_on),
+        html_attributes: { id: "starts_on" })

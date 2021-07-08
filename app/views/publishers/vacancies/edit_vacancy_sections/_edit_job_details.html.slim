@@ -1,4 +1,4 @@
-= render "publishers/vacancies/error_tag", attributes: %i[job_title job_roles suitable_for_nqt subjects working_patterns], section: "job_details"
+= render "publishers/vacancies/error_tag", attributes: job_details_fields
 
 = render ReviewComponent.new id: "job_details" do |review|
   - review.heading title: t("jobs.job_details"),
@@ -9,24 +9,30 @@
     = govuk_summary_list do |component|
       - component.slot(:row,
         key: t("jobs.job_title"),
-        value: @vacancy.job_title)
+        value: @vacancy.job_title,
+        html_attributes: { id: "job_title" })
 
       - component.slot(:row,
         key: t("jobs.job_roles"),
-        value: @vacancy.show_job_roles.presence || t("jobs.not_defined"))
+        value: @vacancy.show_job_roles.presence || t("jobs.not_defined"),
+        html_attributes: { id: "job_roles" })
 
       - component.slot(:row,
         key: t("jobs.suitable_for_nqt"),
-        value: @vacancy.suitable_for_nqt&.capitalize)
+        value: @vacancy.suitable_for_nqt&.capitalize,
+        html_attributes: { id: "suitable_for_nqt" })
 
       - component.slot(:row,
         key: t("jobs.subjects"),
-        value: @vacancy.show_subjects.presence || t("jobs.not_defined"))
+        value: @vacancy.show_subjects.presence || t("jobs.not_defined"),
+        html_attributes: { id: "subjects" })
 
       - component.slot(:row,
         key: t("jobs.working_patterns"),
-        value: @vacancy.working_patterns)
+        value: @vacancy.working_patterns,
+        html_attributes: { id: "working_patterns" })
 
       - component.slot(:row,
         key: t("jobs.contract_type"),
-        value: @vacancy.contract_type_with_duration)
+        value: @vacancy.contract_type_with_duration,
+        html_attributes: { id: "contract_type" })
