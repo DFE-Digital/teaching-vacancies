@@ -275,7 +275,6 @@ ActiveRecord::Schema.define(version: 2021_07_08_091608) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "buffers"
-    t.jsonb "polygons"
   end
 
   create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

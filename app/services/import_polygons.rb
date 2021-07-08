@@ -45,7 +45,6 @@ class ImportPolygons
         end
         polygons.push(polygon)
       end
-      polygons_hash = { "polygons" => polygons }
 
       location_polygon = LocationPolygon.find_or_create_by(name: location_name)
 
@@ -53,8 +52,8 @@ class ImportPolygons
       # when we change a location's location-type mapping.
       location_polygon.update(location_type: LOCATIONS_MAPPED_TO_HUMAN_FRIENDLY_TYPES[location_name])
 
-      # Skip buffers API call if the points and BUFFER_RADII have not changed since last time we used them to calculate the buffers.
-      location_polygon.update(polygons: polygons_hash, buffers: get_buffers(polygons)) if polygons_hash != location_polygon.polygons || location_polygon.buffers.keys.map(&:to_i) != BUFFER_RADII
+      # Skip buffers API call if the BUFFER_RADII have not changed since last time we used them to calculate the buffers.
+      location_polygon.update(buffers: buffered_polygons(polygons)) if polygons_have_changed?(location_polygon, polygons) || location_polygon.buffers&.keys&.map(&:to_i) != BUFFER_RADII
     end
   end
 
@@ -66,19 +65,9 @@ class ImportPolygons
       api_location_type == :cities && DOWNCASE_ONS_CITIES.include?(location_name)
   end
 
-  def get_buffers(polygons)
+  def buffered_polygons(polygons)
     buffers = {}
-    BUFFER_RADII.each do |distance|
-      buffered_polygon_coords = []
-      polygons.each do |polygon|
-        # convert 1D array to 2D array for arcgis
-        polygon_coords = polygon.each_slice(2).to_a
-        response = HTTParty.get(buffer_api_endpoint(polygon_coords, convert_miles_to_metres(distance)))
-        # Buffer coordinates are stored as a 1D array
-        buffered_polygon_coords.push(response.dig("geometries", 0, "rings").flatten)
-      end
-      buffers[distance.to_s] = buffered_polygon_coords
-    end
+    BUFFER_RADII.each { |distance| buffers[distance.to_s] = get_buffered_polygons(polygons, distance) }
     buffers
   end
 
@@ -113,5 +102,23 @@ class ImportPolygons
 
   def take_every_nth_coord(coords, number)
     coords.each_with_index.filter_map { |item, index| item if (index % number).zero? }
+  end
+
+  def polygons_have_changed?(location_polygon, polygons)
+    return true if location_polygon&.buffers.nil? || location_polygon.buffers&.fetch(BUFFER_RADII.first.to_s, nil).nil?
+
+    get_buffered_polygons(polygons, BUFFER_RADII.first) != location_polygon.buffers[BUFFER_RADII.first.to_s]
+  end
+
+  def get_buffered_polygons(polygons, distance)
+    buffered_polygon_coords = []
+    polygons.each do |polygon|
+      # convert 1D array to 2D array for arcgis
+      polygon_coords = polygon.each_slice(2).to_a
+      response = HTTParty.get(buffer_api_endpoint(polygon_coords, convert_miles_to_metres(distance)))
+      # Buffer coordinates are stored as a 1D array
+      buffered_polygon_coords.push(response.dig("geometries", 0, "rings").flatten)
+    end
+    buffered_polygon_coords
   end
 end

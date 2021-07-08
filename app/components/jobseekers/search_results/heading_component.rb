@@ -4,7 +4,7 @@ class Jobseekers::SearchResults::HeadingComponent < ViewComponent::Base
     @keyword = @vacancies_search.keyword
     @location = @vacancies_search.location_search.location
     @polygon_boundaries = @vacancies_search.location_search.polygon_boundaries
-    @radius = @vacancies_search.search_criteria[:buffer_radius] || @vacancies_search.search_criteria[:radius]
+    @radius = @vacancies_search.search_criteria[:radius]
     @total_count = @vacancies_search.total_count
   end
 

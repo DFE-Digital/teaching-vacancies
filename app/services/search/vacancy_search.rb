@@ -29,7 +29,7 @@ class Search::VacancySearch
   end
 
   def location_search
-    @location_search ||= Search::LocationBuilder.new(search_criteria[:location], search_criteria[:radius], search_criteria[:buffer_radius])
+    @location_search ||= Search::LocationBuilder.new(search_criteria[:location], search_criteria[:radius])
   end
 
   def search_filters
