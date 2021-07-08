@@ -29,7 +29,8 @@
     "attributesForFaceting": [
       "job_roles",
       "working_patterns",
-      "education_phases"
+      "education_phases",
+      "subjects"
     ],
     "attributesToSnippet": null,
     "attributesToHighlight": null,
@@ -42,6 +43,8 @@
       "business",
       "chemistry",
       "class",
+      "classes",
+      "classics",
       "computer",
       "computing",
       "dance",
