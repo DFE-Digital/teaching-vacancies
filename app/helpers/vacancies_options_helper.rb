@@ -8,7 +8,7 @@ module VacanciesOptionsHelper
   end
 
   def radius_filter_options
-    Search::RadiusSuggestionsBuilder::LEGACY_RADIUS_OPTIONS.inject([]) do |radii, radius|
+    Search::RadiusSuggestionsBuilder::RADIUS_OPTIONS.inject([]) do |radii, radius|
       radii << [t("jobs.filters.number_of_miles", count: radius), radius]
     end
   end
