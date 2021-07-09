@@ -62,8 +62,7 @@ html.govuk-template.app-html-class lang="en"
             - if !jobseeker_signed_in? && !publisher_signed_in?
               - navigation.item link_text: t("nav.find_job"), align: :left, path: root_path
               - navigation.item link_text: :spacer
-              - navigation.item link_text: t("buttons.sign_in"), align: :right, path: new_jobseeker_session_path
-              - navigation.item link_text: t("nav.for_schools"), align: :right, path: AuthenticationFallback.enabled? ? new_login_key_path : new_publisher_session_path
+              - navigation.item link_text: t("buttons.sign_in"), align: :right, path: page_path("sign-in")
 
       .govuk-phase-banner aria-label="banner"
         .govuk-width-container
