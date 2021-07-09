@@ -71,6 +71,7 @@ Rails.application.routes.draw do
   }
 
   namespace :publishers do
+    resources :account_requests, only: %i[new create]
     resources :notifications, only: %i[index]
   end
 

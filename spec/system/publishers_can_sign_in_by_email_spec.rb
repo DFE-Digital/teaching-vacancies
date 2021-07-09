@@ -3,18 +3,11 @@ require "rails_helper"
 RSpec.describe "Publishers can sign in with fallback email authentication" do
   before { allow(AuthenticationFallback).to receive(:enabled?) { true } }
 
-  it "can reach email request page by nav-bar link" do
+  it "can reach email authentication page" do
     visit root_path
+    within(".navbar-component") { click_on I18n.t("buttons.sign_in") }
+    click_on I18n.t("buttons.sign_in_publisher")
 
-    within(".govuk-header__navigation") { click_on(I18n.t("nav.for_schools")) }
-    expect(page).to have_content(I18n.t("publishers.temp_login.heading"))
-    expect(page).to have_content(I18n.t("publishers.temp_login.please_use_email"))
-  end
-
-  it "can reach email request page by for schools button" do
-    visit root_path
-
-    click_for_schools
     expect(page).to have_content(I18n.t("publishers.temp_login.heading"))
     expect(page).to have_content(I18n.t("publishers.temp_login.please_use_email"))
   end
@@ -65,7 +58,8 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
       it "can sign in, choose an org, sign out" do
         freeze_time do
           visit root_path
-          click_for_schools
+          within(".navbar-component") { click_on I18n.t("buttons.sign_in") }
+          click_on I18n.t("buttons.sign_in_publisher")
 
           # Expect to send an email
           expect(message_delivery).to receive(:deliver_later)
@@ -93,7 +87,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
           # Can sign out
           click_on(I18n.t("nav.sign_out"))
 
-          within(".govuk-header__navigation") { expect(page).to have_content(I18n.t("nav.for_schools")) }
+          within(".govuk-header__navigation") { expect(page).to have_content(I18n.t("buttons.sign_in")) }
 
           expect(page).to have_content(I18n.t("devise.sessions.signed_out"))
 
@@ -124,7 +118,8 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
         it "can sign in and bypass choice of org" do
           freeze_time do
             visit root_path
-            click_for_schools
+            within(".navbar-component") { click_on I18n.t("buttons.sign_in") }
+            click_on I18n.t("buttons.sign_in_publisher")
 
             # Expect to send an email
             expect(message_delivery).to receive(:deliver_later)
@@ -154,7 +149,8 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
         it "can sign in and bypass choice of org" do
           freeze_time do
             visit root_path
-            click_for_schools
+            within(".navbar-component") { click_on I18n.t("buttons.sign_in") }
+            click_on I18n.t("buttons.sign_in_publisher")
 
             # Expect to send an email
             expect(message_delivery).to receive(:deliver_later)
@@ -187,7 +183,8 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
         it "can sign in and bypass choice of org" do
           freeze_time do
             visit root_path
-            click_for_schools
+            within(".navbar-component") { click_on I18n.t("buttons.sign_in") }
+            click_on I18n.t("buttons.sign_in_publisher")
 
             # Expect to send an email
             expect(message_delivery).to receive(:deliver_later)
@@ -209,11 +206,5 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
         end
       end
     end
-  end
-
-  private
-
-  def click_for_schools
-    within(".govuk-header__navigation") { click_on(I18n.t("nav.for_schools")) }
   end
 end
