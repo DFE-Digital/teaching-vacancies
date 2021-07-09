@@ -3,6 +3,7 @@ class Vacancy < ApplicationRecord
   extend ArrayEnum
 
   include Indexable
+  include PgSearchable
 
   friendly_id :slug_candidates, use: %w[slugged history]
 
