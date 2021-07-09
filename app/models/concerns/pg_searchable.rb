@@ -29,7 +29,7 @@ module PgSearchable
           education_phases,
           job_roles,
           parent_organisation_name,
-          presented.working_patterns,
+          VacancyPresenter.new(self).working_patterns,
           # C
           organisations.map(&:name),
           organisations.map(&:county).uniq,
@@ -41,37 +41,31 @@ module PgSearchable
           organisations.schools.map { |org| org.school_type&.singularize }.uniq,
           organisations.map(&:town).reject(&:blank?).uniq,
           # D
-          job_advert,
+          strip_tags(job_advert)&.truncate(256),
         ],
       )
     end
 
     private
 
-    def presented
-      @presented ||= VacancyPresenter.new(self)
-    end
-
     def set_vector_column(column, values)
-      attributes[column] = to_tsvector(values)
+      attributes[column] = ActiveRecord::Base
+        .connection
+        .execute(Arel::SelectManager.new.project(to_tsvector(values)).to_sql)
+        .first
+        .values
+        .first
     end
 
     def to_tsvector(values)
       ts_vector_value = values.flatten.reject(&:blank?).join(" ")
 
-      function = Arel::Nodes::NamedFunction.new(
+      Arel::Nodes::NamedFunction.new(
         "TO_TSVECTOR", [
           Arel::Nodes::Quoted.new("english"),
           Arel::Nodes::Quoted.new(ts_vector_value),
         ]
       )
-
-      ActiveRecord::Base
-        .connection
-        .execute(Arel::SelectManager.new.project(function).to_sql)
-        .first
-        .values
-        .first
     end
   end
 end
