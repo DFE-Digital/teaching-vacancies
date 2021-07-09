@@ -1,0 +1,2 @@
+class AccountRequest < ApplicationRecord
+end
