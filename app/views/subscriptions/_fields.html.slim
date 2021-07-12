@@ -1,12 +1,12 @@
-= render "shared/search/keyword", f: f, filters: false
-= render "shared/search/location", f: f
-= render "shared/search/radius", f: f, filters: false
+= render "shared/search/keyword", f: f, wide: false
+= render "shared/search/location", f: f, wide: false
 = render "shared/search/current_location", loaderElement: "jobseekers-subscription-form-location-field"
+= render "shared/search/radius", f: f, wide: false
 
 ruby:
   items = [
     {
-      title: "Job role",
+      title: t("jobs.filters.job_roles"),
       key: "job_roles",
       attribute: :job_roles,
       selected: @subscription_form.job_roles,
@@ -16,7 +16,7 @@ ruby:
       selected_method: :last,
     },
     {
-      title: "Education phase",
+      title: t("jobs.filters.phases"),
       key: "education_phase",
       attribute: :phases,
       selected: @subscription_form.phases,
@@ -26,7 +26,7 @@ ruby:
       selected_method: :last,
     },
     {
-      title: "Working pattern",
+      title: t("jobs.filters.working_patterns"),
       key: "working_patterns",
       attribute: :working_patterns,
       selected: @subscription_form.working_patterns,
