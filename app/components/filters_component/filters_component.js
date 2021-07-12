@@ -1,5 +1,6 @@
 import '../../frontend/src/lib/polyfill/closest.polyfill';
 import '../../frontend/src/lib/polyfill/from.polyfill';
+import logger from '../../frontend/src/lib/logging';
 import 'classlist-polyfill';
 
 export const CHECKBOX_CLASS_SELECTOR = 'govuk-checkboxes__input';
@@ -36,7 +37,7 @@ export const init = (removeButtonSelector, clearButtonId, closeButtonId, showFil
   }
 
   if (document.documentElement.clientWidth <= MOBILE_BREAKPOINT) {
-    setFiltersHiddenState(document.getElementById(showFilterPanelId), document.querySelector('.filters-component'), false);
+    setFiltersHiddenState(document.getElementById(showFilterPanelId), document.getElementsByClassName('filters-component')[0], false);
   }
 
   if (document.getElementById(closeButtonId)) {
@@ -101,7 +102,11 @@ export const setFiltersHiddenState = (actionEl, filtersEl, shouldFocus = true) =
     actionEl.focus();
   }
 
-  filtersEl.setAttribute('aria-hidden', 'true');
+  try {
+    filtersEl.setAttribute('aria-hidden', 'true');
+  } catch (e) {
+    logger.log('filter element', filtersEl);
+  }
   actionEl.setAttribute('aria-expanded', 'false');
 };
 
