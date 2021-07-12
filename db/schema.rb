@@ -469,11 +469,12 @@ ActiveRecord::Schema.define(version: 2021_07_08_102016) do
     t.integer "end_listing_reason"
     t.integer "candidate_hired_from"
     t.boolean "enable_job_applications"
-    t.tsvector "searchable"
+    t.tsvector "search_vector"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["initially_indexed"], name: "index_vacancies_on_initially_indexed"
     t.index ["publisher_id"], name: "index_vacancies_on_publisher_id"
     t.index ["publisher_organisation_id"], name: "index_vacancies_on_publisher_organisation_id"
+    t.index ["search_vector"], name: "index_vacancies_on_search_vector", using: :gin
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

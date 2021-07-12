@@ -6,21 +6,13 @@ module PgSearchable
 
     include ActionView::Helpers::SanitizeHelper
 
-    before_save :set_searchable
+    before_save :set_search_vector
 
-    pg_search_scope :pg_search,
-                    against: %i[searchable],
-                    using: {
-                      tsearch: {
-                        prefix: true,
-                        dictionary: "english",
-                        tsvector_column: "searchable",
-                      },
-                    }
+    scope :pg_search, ->(query) { where("search_vector @@ websearch_to_tsquery('simple', ?)", query) }
 
-    def set_searchable # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def set_search_vector # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       set_vector_column(
-        :searchable,
+        :search_vector,
         {
           A: [
             job_title,
@@ -55,12 +47,13 @@ module PgSearchable
     def set_vector_column(column, values)
       query = concat(values.map { |weight, vals| setweight(weight, vals) })
 
-      attributes[column] = ActiveRecord::Base
-        .connection
-        .execute(Arel::SelectManager.new.project(query).to_sql)
-        .first
-        .values
-        .first
+      vector = ActiveRecord::Base
+                 .connection
+                 .execute(Arel::SelectManager.new.project(query).to_sql)
+                 .first
+                 .values
+                 .first
+      write_attribute(column, vector)
     end
 
     def concat(queries)
@@ -81,7 +74,7 @@ module PgSearchable
 
       Arel::Nodes::NamedFunction.new(
         "TO_TSVECTOR", [
-          Arel::Nodes::Quoted.new("english"),
+          Arel::Nodes::Quoted.new("simple"),
           Arel::Nodes::Quoted.new(ts_vector_value),
         ]
       )
