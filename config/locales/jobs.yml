@@ -13,6 +13,7 @@ en:
     filters:
       job_filters: Job Filters
       job_roles: Job role
+      nqt_suitable: Suitable for NQTs
       phases: Education phase
       working_patterns: Working pattern
 

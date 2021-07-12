@@ -14,10 +14,10 @@
 
   = render(Jobseekers::SearchResults::HeadingComponent.new(vacancies_search: @vacancies_search))
 
-  .govuk-grid-row
-    .govuk-grid-column-one-third
+  .grid-row
+    .grid-column-left class="govuk-!-margin-bottom-3"
       = render "search"
-    .govuk-grid-column-two-thirds
+    .grid-column-right
       = render(Jobseekers::SearchResults::SearchVisualizerComponent.new(vacancies_search: @vacancies_search, render: @display_map))
       .search-results__header
         - unless @vacancies_search.out_of_bounds?
