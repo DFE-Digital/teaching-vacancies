@@ -11,4 +11,5 @@
                      value: job_application_close_relationships_info(job_application)
       - summary.slot :row,
                      key: t("helpers.legend.jobseekers_job_application_declarations_form.right_to_work_in_uk"),
-                     value: job_application.right_to_work_in_uk.humanize
+                     value: job_application.right_to_work_in_uk.humanize,
+                     html_attributes: { id: "right_to_work_in_uk" }

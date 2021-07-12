@@ -8,23 +8,25 @@
     = govuk_summary_list do |summary|
       - summary.slot :row,
                      key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.disability"),
-                     value: job_application.disability.humanize
+                     value: job_application.disability.humanize,
+                     html_attributes: { id: "disability" }
       - summary.slot :row,
                      key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.age"),
-                     value: job_application.age.humanize
+                     value: job_application.age.humanize,
+                     html_attributes: { id: "age" }
       - summary.slot :row,
                      key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.gender"),
-                     value: safe_join([tag.div(job_application.gender.humanize, class: "govuk-body"),
-                                       tag.div(job_application.gender_description, class: "govuk-body")])
+                     value: safe_join([tag.div(job_application.gender.humanize, class: "govuk-body", id: "gender"),
+                                       tag.div(job_application.gender_description, class: "govuk-body", id: "gender_description")])
       - summary.slot :row,
                      key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.orientation"),
-                     value: safe_join([tag.div(job_application.orientation.humanize, class: "govuk-body"),
-                                       tag.div(job_application.orientation_description, class: "govuk-body")])
+                     value: safe_join([tag.div(job_application.orientation.humanize, class: "govuk-body", id: "orientation"),
+                                       tag.div(job_application.orientation_description, class: "govuk-body", id: "orientation_description")])
       - summary.slot :row,
                      key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.ethnicity"),
-                     value: safe_join([tag.div(job_application.ethnicity.humanize, class: "govuk-body"),
-                                       tag.div(job_application.ethnicity_description, class: "govuk-body")])
+                     value: safe_join([tag.div(job_application.ethnicity.humanize, class: "govuk-body", id: "ethnicity"),
+                                       tag.div(job_application.ethnicity_description, class: "govuk-body", id: "ethnicity_description")])
       - summary.slot :row,
                      key: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.religion"),
-                     value: safe_join([tag.div(job_application.religion.humanize, class: "govuk-body"),
-                                       tag.div(job_application.religion_description, class: "govuk-body")])
+                     value: safe_join([tag.div(job_application.religion.humanize, class: "govuk-body", id: "religion"),
+                                       tag.div(job_application.religion_description, class: "govuk-body", id: "religion_description")])

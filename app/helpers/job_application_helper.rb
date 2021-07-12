@@ -1,4 +1,6 @@
 module JobApplicationHelper
+  include Jobseekers::Wizardable
+
   PUBLISHER_STATUS_MAPPINGS = {
     submitted: "unread",
     reviewed: "reviewed",
@@ -28,32 +30,33 @@ module JobApplicationHelper
   def job_application_qualified_teacher_status_info(job_application)
     case job_application.qualified_teacher_status
     when "yes"
-      tag.div("Yes, awarded in #{job_application.qualified_teacher_status_year}", class: "govuk-body")
+      safe_join([tag.span("Yes, awarded in ", class: "govuk-body", id: "qualified_teacher_status"),
+                 tag.span(job_application.qualified_teacher_status_year, class: "govuk-body", id: "qualified_teacher_status_year")])
     when "no"
-      safe_join([tag.div("No", class: "govuk-body"),
-                 tag.p(job_application.qualified_teacher_status_details, class: "govuk-body")])
+      safe_join([tag.div("No", class: "govuk-body", id: "qualified_teacher_status"),
+                 tag.p(job_application.qualified_teacher_status_details, class: "govuk-body", id: "qualified_teacher_status_details")])
     when "on_track"
-      tag.div("I'm on track to receive my QTS", class: "govuk-body")
+      tag.div("I'm on track to receive my QTS", class: "govuk-body", id: "qualified_teacher_status")
     end
   end
 
   def job_application_support_needed_info(job_application)
     case job_application.support_needed
     when "yes"
-      safe_join([tag.div("Yes", class: "govuk-body"),
-                 tag.p(job_application.support_needed_details, class: "govuk-body")])
+      safe_join([tag.div("Yes", class: "govuk-body", id: "support_needed"),
+                 tag.p(job_application.support_needed_details, class: "govuk-body", id: "support_needed_details")])
     when "no"
-      tag.div("No", class: "govuk-body")
+      tag.div("No", class: "govuk-body", id: "support_needed")
     end
   end
 
   def job_application_close_relationships_info(job_application)
     case job_application.close_relationships
     when "yes"
-      safe_join([tag.div("Yes", class: "govuk-body"),
-                 tag.p(job_application.close_relationships_details, class: "govuk-body")])
+      safe_join([tag.div("Yes", class: "govuk-body", id: "close_relationships"),
+                 tag.p(job_application.close_relationships_details, class: "govuk-body", id: "close_relationships_details")])
     when "no"
-      tag.div("No", class: "govuk-body")
+      tag.div("No", class: "govuk-body", id: "close_relationships")
     end
   end
 
@@ -80,10 +83,12 @@ module JobApplicationHelper
   end
 
   def job_application_review_section_tag(job_application, step)
-    tag_attributes = if step.to_s.in?(job_application.completed_steps)
-                       { text: "complete" }
+    tag_attributes = if send("#{step}_fields".to_sym).any? { |field| field.in?(job_application.errors.messages.keys) }
+                       { text: t("messages.jobs.action_required.label"), colour: "orange" }
                      elsif step.to_s.in?(job_application.in_progress_steps)
                        { text: "in progress", colour: "yellow" }
+                     elsif step.to_s.in?(job_application.completed_steps)
+                       { text: "complete" }
                      else
                        { text: "not started", colour: "red" }
                      end
