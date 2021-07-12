@@ -27,7 +27,7 @@ en:
         not_authorised: You are not authorised to log in
       new:
         no_account:
-          content_html: "If you do not yet have access to Teaching Vacancies you can %{link}"
+          content_html: "If you do not yet have access to Teaching Vacancies you can %{link}."
           heading: Don't have an account yet?
           link_text: request an account
         page_description: If you already have a Teaching Vacancies account you can sign in to the service here.
