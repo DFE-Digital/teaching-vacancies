@@ -18,14 +18,9 @@ module PgSearchable
     private
 
     def update_searchable
-      ts_vector_value = [job_title, *subjects].join(" ")
+      ts_vector_value = [job_title, *subjects]
 
-      to_tsvector = Arel::Nodes::NamedFunction.new(
-        "TO_TSVECTOR", [
-          Arel::Nodes::Quoted.new("pg_catalog.simple"),
-          Arel::Nodes::Quoted.new(ts_vector_value),
-        ]
-      )
+      to_tsvector = setweight(ts_vector_value, "A")
 
       self.searchable =
         ActiveRecord::Base
@@ -34,6 +29,25 @@ module PgSearchable
           .first
           .values
           .first
+    end
+
+    def setweight(values, weight)
+      Arel::Nodes::NamedFunction.new(
+        "SETWEIGHT",
+        [
+          to_tsvector(values),
+          Arel::Nodes::Quoted.new(weight),
+        ],
+      )
+    end
+
+    def to_tsvector(values)
+      Arel::Nodes::NamedFunction.new(
+        "TO_TSVECTOR", [
+          Arel::Nodes::Quoted.new("pg_catalog.simple"),
+          Arel::Nodes::Quoted.new(values.join(" ")),
+        ]
+      )
     end
   end
 end
