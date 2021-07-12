@@ -84,13 +84,12 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
   def completed_steps_valid?
     # Check that all completed steps are valid, in case we have changed the validations since the step was completed.
     # NB: Only validates top-level step forms. Does not validate individual qualifications, employments, or references.
-    job_application.completed_steps.all? do |step|
-      step_valid?("jobseekers/job_application/#{step}_form".camelize.constantize)
-    end
+    job_application.completed_steps.all? { |step| step_valid?(step) }
   end
 
-  def step_valid?(step_form)
-    form = step_form.new(job_application.slice(*send("#{step_form.to_s.underscore.split('/').last.split('_form').first}_fields")))
+  def step_valid?(step)
+    step_form = "jobseekers/job_application/#{step}_form".camelize.constantize
+    form = step_form.new(job_application.slice(*send("#{step}_fields")))
 
     form.valid?.tap do
       job_application.errors.merge!(form.errors)

@@ -35,9 +35,9 @@ class ApplicationController < ActionController::Base
   private
 
   def user_type
-    if current_jobseeker.present?
+    if jobseeker_signed_in?
       :jobseeker
-    elsif current_publisher.present?
+    elsif publisher_signed_in?
       :publisher
     end
   end

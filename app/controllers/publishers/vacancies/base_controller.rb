@@ -27,17 +27,15 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
 
   def all_steps_valid?
     steps_config.except(:job_location, :schools, :supporting_documents, :documents, :review).keys.all? do |step|
-      step_valid?("publishers/job_listing/#{step}_form".camelize.constantize)
+      step_valid?(step)
     end
   end
 
-  def step_valid?(step_form)
+  def step_valid?(step)
+    step_form = "publishers/job_listing/#{step}_form".camelize.constantize
+
     # We need to merge in the current organisation otherwise the form will always be invalid for local authority users
-    form = step_form.new(
-      vacancy.slice(*send("#{step_form.to_s.underscore.split('/').last.split('_form').first}_fields"))
-             .merge(current_organisation: current_organisation),
-      vacancy,
-    )
+    form = step_form.new(vacancy.slice(*send("#{step}_fields")).merge(current_organisation: current_organisation), vacancy)
 
     form.valid?.tap do
       vacancy.errors.merge!(form.errors)
