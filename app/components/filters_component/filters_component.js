@@ -104,10 +104,10 @@ export const setFiltersHiddenState = (actionEl, filtersEl, shouldFocus = true) =
 
   try {
     filtersEl.setAttribute('aria-hidden', 'true');
+    actionEl.setAttribute('aria-expanded', 'false');
   } catch (e) {
-    logger.log('filter element', filtersEl);
+    logger.log('setFiltersHiddenState', e);
   }
-  actionEl.setAttribute('aria-expanded', 'false');
 };
 
 export const addRemoveFilterEvent = (el, onClear) => {
