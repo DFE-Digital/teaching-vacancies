@@ -226,41 +226,31 @@ For images built off the `master` branch, we use the [SHA of the GitHub commit](
 
 - [Multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/) were introduced in Docker 17.05
 
-## Docker Hub
+## GitHub Packages (Container registry)
 
-### Docker Hub organisation
+### GitHub container registry
 
-The Docker images for Teaching Vacancies are stored in the Docker Hub organisation [dfedigital](https://hub.docker.com/u/dfedigital).
+The Docker images for Teaching Vacancies are stored in the GitHub's container registry [https://github.com/DFE-Digital/teaching-vacancies/](https://github.com/DFE-Digital/teaching-vacancies/pkgs/container/teaching-vacancies).
 
-### Docker Hub team
 
-The Docker Hub team [teacherservices](https://hub.docker.com/orgs/dfedigital/teams/teacherservices) has multiple members, (~35 in October 2020), each of which is a Docker Hub user.
-
-### Docker Hub rate limiting
-
-On 2 November 2020, Docker introduced [rate limits](https://www.docker.com/increase-rate-limits).
-> Anonymous and Free Docker Hub users are limited to 100 and 200 container image pull requests per six hours.
-> Docker Pro and Docker Team accounts continue to have unlimited access to pull container images from Docker Hub.
-
-Therefore we need to log in with Docker Team accounts.
-### Docker Hub users
+### GitHub Packages users
 
 #### Individual end-user
 
-To use `docker` commands, either directly, or through the abstraction of the Makefile, you must first be logged in as a Docker user.
+To use `docker` commands, either directly, or through the abstraction of the Makefile, you must first be logged in as a GitHub user.
 
-- You will require write access to Docker Hub [dfedigital/teaching-vacancies](https://hub.docker.com/r/dfedigital/teaching-vacancies) repository. Ask in #digital-tools-support should you require it.
-- Log in to Docker Hub (with `docker login`)
+- You will require write access to GitHub packages [https://github.com/DFE-Digital/teaching-vacancies/](https://github.com/DFE-Digital/teaching-vacancies/pkgs/container/teaching-vacancies) repository. Ask in #digital-tools-support should you require it.
+- Log in to Log in to Github Packages (with `docker login ghcr.io -u USERNAME` - use PAT token as passoword)
 
-#### The `teachingjobs` user:
+#### The `twd-tv-ci` user:
 - is used as a service account, by GitHub Actions to pull and/or push images.
-- is registered with the email address `teachingjobs@digital.education.gov.uk`
+- is registered with the email address `twd-tv-ci@digital.education.gov.uk`
 
-Credentials for `teachingjobs` for pulling images
+Credentials for `twd-tv-ci` for pulling images
 - are held in [AWS Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table), per-environment e.g. `/teaching-vacancies/dev/infra/secrets` as a pair of YAML lines:
 ```
-docker_password: NotARealPa$5w0rd
-docker_username: username
+github_packages_username: NotARealUserName
+github_packages_token: NotRealToken
 ```
 These are used within the Gov.UK PaaS web app and worker app [terraform](../terraform/app/modules/paas/main.tf), like so:
 ```
@@ -270,27 +260,30 @@ These are used within the Gov.UK PaaS web app and worker app [terraform](../terr
   }
 ```
 
-Credentials for `teachingjobs` for pulling and pushing images in workflows
-- entered into [GitHub Actions secrets](https://github.com/DFE-Digital/teaching-vacancies/settings/secrets/actions) as a pair of repository secrets:
+Credentials for `twd-tv-ci` for pulling and pushing images in workflows
+- entered into [GitHub Actions secrets](https://github.com/DFE-Digital/teaching-vacancies/settings/secrets/actions) repository secret:
 ```
-DOCKER_PASSWORD
-DOCKER_USERNAME
+GIT_HUB_SERVICE_ACCOUNT_TOKEN
+
+No username is required; but we use `${{ github.repository_owner }}` in the workflow.
 ```
 These are used within GitHub workflows like [deploy.yml](../github/workflows/deploy.yml), like so:
 ```
-    - name: Login to DockerHub
+    - name: Login to GitHub Container Registry
       uses: docker/login-action@v1
       with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
 ```
 The secrets can not be decrypted through the UI, but can be updated.
 
-### Docker Hub repositories
+### GitHub container registry
 
-Note that [Docker Hub repositories](https://docs.docker.com/docker-hub/repos/) are distinct from GitHub repositories:
-> Docker Hub repositories allow you to share container images with your team, customers, or the Docker community at large.
-> Docker images are pushed to Docker Hub through the `docker push` command. A single Docker Hub repository can hold many Docker images (stored as *tags*).
+Docker images are pushed to Github container registry through the `docker push` command. A single Github container registry can hold many Docker images (stored as *tags*).
 
-Repositories include the organisation name, but in the URL, note that the `u` for user, changes to `r` for repository:
-- [https://hub.docker.com/r/dfedigital/teaching-vacancies](https://hub.docker.com/r/dfedigital/teaching-vacancies)
+To view the docker images stored on GitHub's container registry, you need to go through DfE's main GitHub page, and then click packages. Please note, GitHub repositories are different from GitHub packages:
+- [Teaching-vacancies Packages (docker images)](https://github.com/DFE-Digital/teaching-vacancies/pkgs/container/teaching-vacancies)
+
+### Docker image scan
+
+As part of the CI/CD, we conduct a Docker security scan using anchore/scan-action@v2, which uses Anchore Engine. This allows us a deep image inspection and vulnerability scan, which allows detailed analysis of container workloads, producing reports and defining policies that can be used in the software delivery lifecycle stack. The stateless scan result (SARIF format) is loaded to Github’s Security scanning alert console using github/codeql-action/upload-sarif@v1

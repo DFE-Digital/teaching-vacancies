@@ -8,14 +8,16 @@ This builds a Docker image from a feature branch, and then uses Terraform to cre
 
 - Push to a feature branch.
 - Create a Pull Request.
+- attach a `deploy` label
 
-The GitHub actions workflow [review.yml](/.github/workflows/review.yml) performs these steps:
+The GitHub actions workflow [review.yml](/.github/workflows/review.yml) performs the steps below, if a `deploy` label is attached to the pull request. If not, the `build` and `deploy` jobs will not run:
+
 - Builds a Docker image from code in the feature branch
 - Tags the Docker image with the tags:
     - branch name (e.g. [TEVA-1797-update-school-type-summary](https://hub.docker.com/layers/dfedigital/teaching-vacancies/TEVA-1797-update-school-type-summary/images/sha256-dc01451b1486e40a3fb1a32ca577c65ece1a28a2ff27eefbd2455202c93caa71?context=explore)). Review apps often go through several iterations, so it's worth the creation of an image in order to speed up building from cache on subsequent pushes to the branch.
     - a composite tag containing the PR number and a unique timestamp (e.g. [review-pr-2664-80dd5f417a0faabfbe3f1a4bf8570eefec07139a-20210118172840](https://hub.docker.com/layers/dfedigital/teaching-vacancies/review-pr-2664-80dd5f417a0faabfbe3f1a4bf8570eefec07139a-20210118172840/images/sha256-dc01451b1486e40a3fb1a32ca577c65ece1a28a2ff27eefbd2455202c93caa71?context=explore)). This is useful for identifying the image.
-- Logs in to Docker Hub as the service account `teachingjobs`
-- Pushes the image to Docker Hub
+- Logs in to GitHub's container registry as the service account `twd-tv-ci`
+- Pushes the image to GitHub's container registry
 - Calls the [deploy_app.yml](/.github/workflows/deploy_app.yml) workflow to use Terraform to update the `web` and `worker` apps to use the new Docker image, and apply any changes to the review environment
 - Appends a comment to the Pull Request with the URL of the review app.
 - Sends a Slack notification to the `#twd_tv_dev` channel:
@@ -31,8 +33,8 @@ The GitHub actions workflow [deploy_branch.yml](/.github/workflows/deploy_branch
 
 - Builds a Docker image from code in the `dev` branch
 - Tags the Docker image with the tag
-- Logs in to Docker Hub as the service account `teachingjobs`
-- Pushes the image to Docker Hub
+- Logs in to GitHub's container registry as the service account `twd-tv-ci`
+- Pushes the image to GitHub packages
 - Calls the [deploy_app.yml](/.github/workflows/deploy_app.yml) workflow to use Terraform to update the `web` and `worker` apps to use the new Docker image, and apply any changes to the `dev` environment
 - Sends a Slack notification to the `#twd_tv_dev` channel
 
@@ -42,8 +44,8 @@ When a PR is approved and merged into `master` branch, the GitHub actions workfl
 
 - Builds and tags a Docker image from code in the `master` branch
 - Tags the Docker image with the commit SHA as the tag
-- Logs in to Docker Hub as the service account `teachingjobs`
-- Pushes the image to Docker Hub
+- Logs in to Github's container registry as the service account `twd-tv-ci`
+- Pushes the image to GitHub packages
 - Calls the [deploy_app.yml](/.github/workflows/deploy_app.yml) workflow to use Terraform to update the `web` and `worker` apps to use the new Docker image, and apply any changes to the `staging` environment
 - Runs a smoke test against the `staging` environment
 - Calls the [deploy_app.yml](/.github/workflows/deploy_app.yml) workflow to use Terraform to update the `web` and `worker` apps to use the new Docker image, and apply any changes to the `production` environment
@@ -75,7 +77,7 @@ Requirements:
 - docker CLI of at least version `19.03`
 - [terraform CLI](https://www.terraform.io/downloads.html) of at least version `0.15.5`
 - Write access to Docker Hub `dfedigital/teaching-vacancies` repository. Ask in #digital-tools-support should you require it.
-- Log in to Docker Hub (with `docker login`)
+- Log in to Container registry (with `docker login ghcr.io -u USERNAME` - use PAT token as passoword)
 - Log in to GOV.UK PaaS (with `cf login --sso`). You will need a [Passcode](https://login.london.cloud.service.gov.uk/passcode)
 
 ## Deploy a pre-built image
@@ -97,7 +99,7 @@ Click "Run workflow", and choose:
 
 If you need to deploy a particular image to an environment, including in a rollback situation, this is possible with the [deploy_app.yml](/.github/workflows/deploy_app.yml) workflow.
 
-You will need to know the tag of the Docker image you wish to use. Go to this [Docker Hub URL with tags ordered by last_updated](https://hub.docker.com/r/dfedigital/teaching-vacancies/tags?page=1&ordering=last_updated)
+You will need to know the tag of the Docker image you wish to use. Go to the [Github packages](https://github.com/DFE-Digital/teaching-vacancies/pkgs/container/teaching-vacancies)
 
 E.g. [image tag 2641bebaf22ad96be543789693e015922e4514c4](https://hub.docker.com/layers/dfedigital/teaching-vacancies/2641bebaf22ad96be543789693e015922e4514c4/images/sha256-804c11e347b156a65c4ffe504e11e97917550d3ea11fed4e1697fdfc3725f3f7?context=explore)
 is built from [commit 2641bebaf22ad96be543789693e015922e4514c4](https://github.com/DFE-Digital/teaching-vacancies/commit/2641bebaf22ad96be543789693e015922e4514c4)
@@ -123,7 +125,7 @@ performs these steps:
 
 Requirements:
 - [terraform CLI](https://www.terraform.io/downloads.html) of at least version `0.15.5`
-- Log in to Docker Hub (with `docker login`)
+- Log in to GitHub Packages (with `docker login ghcr.io -u USERNAME` - use PAT token as passoword)
 - Log in to GOV.UK PaaS (with `cf login --sso`). You will need a [Passcode](https://login.london.cloud.service.gov.uk/passcode)
 
 ## Remove review app
@@ -143,7 +145,7 @@ make passcode=MyPasscode pr=3134 CONFIRM_DESTROY=true review review-destroy
 
 Requirements:
 - [terraform CLI](https://www.terraform.io/downloads.html) of at least version `0.15.5`
-- Log in to Docker Hub (with `docker login`)
+- Log in to Docker Hub (with `docker login ghcr.io -u USERNAME` - use PAT token as passoword)
 - Log in to GOV.UK PaaS (with `cf login --sso`). You will need a [Passcode](https://login.london.cloud.service.gov.uk/passcode)
 
 ### Remove review app - CloudFoundry CLI
