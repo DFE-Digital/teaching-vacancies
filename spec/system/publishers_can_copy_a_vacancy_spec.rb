@@ -16,10 +16,8 @@ RSpec.describe "Copying a vacancy" do
       new_vacancy.job_title = "A new job title"
 
       visit organisation_path
-
-      within(".card-component__actions") do
-        click_on I18n.t("jobs.manage.copy_link_text")
-      end
+      click_on original_vacancy.job_title
+      click_on I18n.t("buttons.copy_listing")
 
       fill_in_copy_vacancy_form_fields(new_vacancy)
 
@@ -38,10 +36,8 @@ RSpec.describe "Copying a vacancy" do
       new_vacancy.job_title = "A new job title"
 
       visit organisation_path
-
-      within(".card-component__actions") do
-        click_on I18n.t("jobs.manage.copy_link_text")
-      end
+      click_on original_vacancy.job_title
+      click_on I18n.t("buttons.copy_listing")
 
       fill_in_copy_vacancy_form_fields(new_vacancy)
 
@@ -65,10 +61,8 @@ RSpec.describe "Copying a vacancy" do
     new_vacancy.expires_at = new_vacancy.expires_at = 30.days.from_now.change(hour: 9, minute: 0)
 
     visit organisation_path
-
-    within(".card-component__actions") do
-      click_on I18n.t("jobs.manage.copy_link_text")
-    end
+    click_on original_vacancy.job_title
+    click_on I18n.t("buttons.copy_listing")
 
     within("h1.govuk-heading-m") do
       expect(page).to have_content(I18n.t("jobs.copy_job_title", job_title: original_vacancy.job_title))
@@ -93,16 +87,14 @@ RSpec.describe "Copying a vacancy" do
       original_vacancy.organisation_vacancies.create(organisation: school)
 
       visit organisation_path
+      click_on original_vacancy.job_title
+      click_on I18n.t("buttons.copy_listing")
 
       new_vacancy = original_vacancy.dup
       new_vacancy.job_title = "A new job title"
       new_vacancy.starts_on = 35.days.from_now
       new_vacancy.publish_on = 0.days.from_now
       new_vacancy.expires_at = 30.days.from_now.change(hour: 9, minute: 0)
-
-      within(".card-component__actions") do
-        click_on I18n.t("jobs.manage.copy_link_text")
-      end
 
       within("h1.govuk-heading-m") do
         expect(page).to have_content(I18n.t("jobs.copy_job_title", job_title: original_vacancy.job_title))
@@ -131,11 +123,9 @@ RSpec.describe "Copying a vacancy" do
       original_vacancy.organisation_vacancies.create(organisation: school)
 
       visit organisation_path
-
       click_on I18n.t("publishers.vacancies_component.pending.tab_heading")
-      within(".card-component__actions") do
-        click_on I18n.t("jobs.manage.copy_link_text")
-      end
+      click_on original_vacancy.job_title
+      click_on I18n.t("buttons.copy_listing")
 
       within("h1.govuk-heading-m") do
         expect(page).to have_content(I18n.t("jobs.copy_job_title", job_title: original_vacancy.job_title))
@@ -161,11 +151,9 @@ RSpec.describe "Copying a vacancy" do
       new_vacancy.expires_at = 30.days.from_now.change(hour: 9, minute: 0)
 
       visit organisation_path
-
       click_on I18n.t("publishers.vacancies_component.expired.tab_heading")
-      within(".card-component__actions") do
-        click_on I18n.t("jobs.manage.copy_link_text")
-      end
+      click_on original_vacancy.job_title
+      click_on I18n.t("buttons.copy_listing")
 
       within("h1.govuk-heading-m") do
         expect(page).to have_content(I18n.t("jobs.copy_job_title", job_title: original_vacancy.job_title))
@@ -192,10 +180,8 @@ RSpec.describe "Copying a vacancy" do
       new_vacancy.expires_at = 1.day.from_now
 
       visit organisation_path
-
-      within(".card-component__actions") do
-        click_on I18n.t("jobs.manage.copy_link_text")
-      end
+      click_on original_vacancy.job_title
+      click_on I18n.t("buttons.copy_listing")
 
       within("h1.govuk-heading-m") do
         expect(page).to have_content(I18n.t("jobs.copy_job_title", job_title: original_vacancy.job_title))
@@ -220,10 +206,8 @@ RSpec.describe "Copying a vacancy" do
 
     before do
       visit organisation_path
-
-      within(".card-component__actions") do
-        click_on I18n.t("jobs.manage.copy_link_text")
-      end
+      click_on original_vacancy.job_title
+      click_on I18n.t("buttons.copy_listing")
 
       expect(page).to have_content(I18n.t("jobs.copy_job_title", job_title: original_vacancy.job_title))
 

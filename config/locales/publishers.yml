@@ -204,30 +204,26 @@ en:
         update:
           success: "The deadline for %{job_title} has been extended"
       job_applications:
-        index:
-          buttons:
-            copy: Copy listing
-            edit: Edit listing
-            end: End listing early
-            relist: Relist
+        banner:
+          applications: Applications
           deadline:
             after: Deadline passed
             before: Application deadline
-          heading: Applicants for
-          no_applicants: Nobody has applied for this job yet
-          received: Received on
           rejected:
             one: Rejected application
             other: Rejected applications
           shortlisted:
             one: Shortlisted application
             other: Shortlisted applications
-          sort_by:
-            date_received: date received (most recent)
-            applicant_last_name: applicant last name (A to Z)
           submitted:
             one: Unread application
             other: Unread applications
+        index:
+          no_applicants: Nobody has applied for this job yet
+          received: Received on
+          sort_by:
+            date_received: date received (most recent)
+            applicant_last_name: applicant last name (A to Z)
         reject:
           alert: The candidate will be sent an email telling them that their application has not been successful.
           heading: Reject applicant
@@ -243,11 +239,14 @@ en:
         update_status:
           unsuccessful: "%{name} has been sent an email telling them their application has not been successful"
           shortlisted: "%{name} has been sent an email telling them that they have been shortlisted"
+      live:
+        notice: You can only view active jobs
       review:
         heading: Review the job listing
         steps: Create a job listing steps
       show:
-        notice: You can only view active jobs
+        view_live_listing_link: View this listing
+        view_live_listing_title: View the live listing
       summary:
         date_expires: >-
           The listing will appear on the service until %{application_deadline}, after which it will no longer be
