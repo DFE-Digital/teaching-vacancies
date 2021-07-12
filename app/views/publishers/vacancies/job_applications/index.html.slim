@@ -49,16 +49,6 @@
         label: { text: t("jobs.sort_by.label"), size: "s", class: "govuk-label inline govuk-!-margin-right-2" },
         selected: :last
 
-  .govuk-grid-column-two-thirds.vacancy-actions
-    - unless vacancy.expires_at.past?
-      = govuk_link_to(t(".buttons.edit"), edit_organisation_job_path(vacancy.id), class: "govuk-button--secondary", button: true)
-
-    = govuk_link_to(t(".buttons.copy"), new_organisation_job_copy_path(vacancy.id), class: "govuk-button--secondary", button: true)
-    = govuk_link_to(t("buttons.extend_deadline"), organisation_job_extend_deadline_path(vacancy.id), button: true, class: "govuk-button--secondary")
-
-    - unless vacancy.expires_at.past?
-      = govuk_link_to(t(".buttons.end"), organisation_job_end_listing_path(vacancy.id), class: "govuk-button--secondary", button: true)
-
 .govuk-grid-row
   .govuk-grid-column-full
     - if job_applications.any?
