@@ -17,11 +17,35 @@ module PgSearchable
 
     private
 
-    def update_searchable
+    def update_searchable # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       to_tsvector = concat([
-        setweight([job_title], "A"),
+        setweight([
+          job_title,
+        ], "A"),
         Arel::Nodes::Quoted.new(" "),
-        setweight(subjects, "B"),
+        setweight([
+          subjects,
+          education_phases,
+          job_roles,
+          parent_organisation_name,
+          VacancyPresenter.new(self).working_patterns,
+        ], "B"),
+        Arel::Nodes::Quoted.new(" "),
+        setweight([
+          organisations.map(&:name),
+          organisations.map(&:county).uniq,
+          organisations.schools.map(&:detailed_school_type).uniq,
+          organisations.school_groups.map(&:group_type).reject(&:blank?).uniq,
+          organisations.map(&:local_authority_within).reject(&:blank?).uniq,
+          organisations.schools.map(&:religious_character).reject(&:blank?).uniq,
+          organisations.schools.map(&:region).uniq,
+          organisations.schools.map { |org| org.school_type&.singularize }.uniq,
+          organisations.map(&:town).reject(&:blank?).uniq,
+        ], "C"),
+        # Arel::Nodes::Quoted.new(" "),
+        # setweight([
+        #   strip_tags(job_advert)&.truncate(256),
+        # ], "D"),
       ])
 
       self.searchable =
