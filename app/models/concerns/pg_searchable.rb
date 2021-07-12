@@ -18,9 +18,11 @@ module PgSearchable
     private
 
     def update_searchable
-      ts_vector_value = [job_title, *subjects]
-
-      to_tsvector = setweight(ts_vector_value, "A")
+      to_tsvector = concat([
+        setweight([job_title], "A"),
+        Arel::Nodes::Quoted.new(" "),
+        setweight(subjects, "B"),
+      ])
 
       self.searchable =
         ActiveRecord::Base
@@ -29,6 +31,13 @@ module PgSearchable
           .first
           .values
           .first
+    end
+
+    def concat(ts_vectors)
+      Arel::Nodes::NamedFunction.new(
+        "CONCAT",
+        ts_vectors,
+      )
     end
 
     def setweight(values, weight)
