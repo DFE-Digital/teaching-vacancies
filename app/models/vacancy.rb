@@ -3,6 +3,7 @@ class Vacancy < ApplicationRecord
   extend ArrayEnum
 
   include Indexable
+  include PgSearch::Model
 
   friendly_id :slug_candidates, use: %w[slugged history]
 
@@ -60,6 +61,12 @@ class Vacancy < ApplicationRecord
   scope :live, (-> { listed.applicable })
   scope :pending, (-> { published.where("publish_on > ?", Date.current) })
   scope :published_on_count, (->(date) { published.where(publish_on: date.all_day).count })
+
+  pg_search_scope :pg_search,
+                  against: {
+                    job_title: "A",
+                    subjects: "A",
+                  }
 
   paginates_per 10
 
