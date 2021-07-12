@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
 
   after_action :trigger_page_visited_event, unless: :request_is_healthcheck?
 
-  helper_method :cookies_preference_set?, :referred_from_jobs_path?, :utm_parameters, :current_variant?
+  helper_method :cookies_preference_set?, :referred_from_jobs_path?, :user_type, :utm_parameters, :current_variant?
 
   include Publishers::AuthenticationConcerns
   include DeviseFlashConcerns
@@ -33,6 +33,14 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def user_type
+    if jobseeker_signed_in?
+      :jobseeker
+    elsif publisher_signed_in?
+      :publisher
+    end
+  end
 
   def cookies_preference_set?
     cookies["consented-to-cookies"].present?

@@ -8,8 +8,10 @@ RSpec.describe JobApplicationHelper do
       let(:job_application) { build_stubbed(:job_application, qualified_teacher_status: "yes") }
 
       it "returns the correct info" do
-        expect(subject)
-          .to eq(tag.div("Yes, awarded in #{job_application.qualified_teacher_status_year}", class: "govuk-body"))
+        expect(subject).to eq(safe_join([
+          tag.span("Yes, awarded in ", class: "govuk-body", id: "qualified_teacher_status"),
+          tag.span(job_application.qualified_teacher_status_year, class: "govuk-body", id: "qualified_teacher_status_year"),
+        ]))
       end
     end
 
@@ -17,8 +19,10 @@ RSpec.describe JobApplicationHelper do
       let(:job_application) { build_stubbed(:job_application, qualified_teacher_status: "no") }
 
       it "returns the correct info" do
-        expect(subject).to eq(safe_join([tag.div("No", class: "govuk-body"),
-                                         tag.p(job_application.qualified_teacher_status_details, class: "govuk-body")]))
+        expect(subject).to eq(safe_join([
+          tag.div("No", class: "govuk-body", id: "qualified_teacher_status"),
+          tag.p(job_application.qualified_teacher_status_details, class: "govuk-body", id: "qualified_teacher_status_details"),
+        ]))
       end
     end
 
@@ -26,7 +30,7 @@ RSpec.describe JobApplicationHelper do
       let(:job_application) { build_stubbed(:job_application, qualified_teacher_status: "on_track") }
 
       it "returns the correct info" do
-        expect(subject).to eq(tag.div("I'm on track to receive my QTS", class: "govuk-body"))
+        expect(subject).to eq(tag.div("I'm on track to receive my QTS", class: "govuk-body", id: "qualified_teacher_status"))
       end
     end
 
@@ -46,8 +50,8 @@ RSpec.describe JobApplicationHelper do
       let(:job_application) { build_stubbed(:job_application, support_needed: "yes") }
 
       it "returns the correct info" do
-        expect(subject).to eq(safe_join([tag.div("Yes", class: "govuk-body"),
-                                         tag.p(job_application.support_needed_details, class: "govuk-body")]))
+        expect(subject).to eq(safe_join([tag.div("Yes", class: "govuk-body", id: "support_needed"),
+                                         tag.p(job_application.support_needed_details, class: "govuk-body", id: "support_needed_details")]))
       end
     end
 
@@ -55,7 +59,7 @@ RSpec.describe JobApplicationHelper do
       let(:job_application) { build_stubbed(:job_application, support_needed: "no") }
 
       it "returns the correct info" do
-        expect(subject).to eq(tag.div("No", class: "govuk-body"))
+        expect(subject).to eq(tag.div("No", class: "govuk-body", id: "support_needed"))
       end
     end
 
@@ -75,8 +79,10 @@ RSpec.describe JobApplicationHelper do
       let(:job_application) { build_stubbed(:job_application, close_relationships: "yes") }
 
       it "returns the correct info" do
-        expect(subject).to eq(safe_join([tag.div("Yes", class: "govuk-body"),
-                                         tag.p(job_application.close_relationships_details, class: "govuk-body")]))
+        expect(subject).to eq(safe_join([
+          tag.div("Yes", class: "govuk-body", id: "close_relationships"),
+          tag.p(job_application.close_relationships_details, class: "govuk-body", id: "close_relationships_details"),
+        ]))
       end
     end
 
@@ -84,7 +90,7 @@ RSpec.describe JobApplicationHelper do
       let(:job_application) { build_stubbed(:job_application, close_relationships: "no") }
 
       it "returns the correct info" do
-        expect(subject).to eq(tag.div("No", class: "govuk-body"))
+        expect(subject).to eq(tag.div("No", class: "govuk-body", id: "close_relationships"))
       end
     end
 
@@ -128,10 +134,20 @@ RSpec.describe JobApplicationHelper do
                     in_progress_steps: %w[ask_for_support])
     end
 
+    context "when there is an error on an attribute in the step" do
+      let(:step) { :personal_details }
+
+      before { allow(job_application).to receive_message_chain(:errors, :messages).and_return({ city: "Invalid city" }) }
+
+      it "returns 'action required' tag" do
+        expect(subject).to eq(helper.govuk_tag(text: t("messages.jobs.action_required.label"), colour: "orange"))
+      end
+    end
+
     context "when the step is completed" do
       let(:step) { :personal_details }
 
-      it "returns complete tag" do
+      it "returns 'complete' tag" do
         expect(subject).to eq(helper.govuk_tag(text: "complete"))
       end
     end
@@ -139,7 +155,7 @@ RSpec.describe JobApplicationHelper do
     context "when the step is in progress" do
       let(:step) { :ask_for_support }
 
-      it "returns in progress tag" do
+      it "returns in 'progress' tag" do
         expect(subject).to eq(helper.govuk_tag(text: "in progress", colour: "yellow"))
       end
     end
@@ -147,7 +163,7 @@ RSpec.describe JobApplicationHelper do
     context "when the step is not started" do
       let(:step) { :personal_statement }
 
-      it "returns not started tag" do
+      it "returns 'not started' tag" do
         expect(subject).to eq(helper.govuk_tag(text: "not started", colour: "red"))
       end
     end
