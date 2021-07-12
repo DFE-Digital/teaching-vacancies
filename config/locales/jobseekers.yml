@@ -401,18 +401,12 @@ en:
         new_password: New password
         title: Change password
       new:
-        assistance:
-          content_html: Find out %{link_to} so that you can list teaching jobs at your school or trust.
-          heading: School or trust accounts
-          link: how to create an account
-        description: >-
-          If you have an account you can save teaching jobs you are interested in and
-          create job alerts.
-        existing_account:
+        description: Create an account to save and apply for jobs.
+        sign_in:
           content_html: You can %{link_to} here.
           link: sign in
-          heading: Already have an account?
-        title: Create an account
+          heading: Already have a jobseeker account?
+        title: Create a jobseeker account
     saved_jobs:
       destroy:
         success: Saved job removed
@@ -434,17 +428,13 @@ en:
         You have saved this job. <a href="%{link}" class="govuk-link">View all your saved jobs</a> on your account.
     sessions:
       new:
-        assistance:
-          content_html: Find out %{link_to} so that you can list teaching jobs at your school, trust or local authority.
-          heading: School, trust or local authority accounts
-          link: how to create an account
-        description: Use your Teaching Vacancies account details to sign in.
+        description: If you are a teacher or aspiring teacher you can sign in here to save and apply for jobs.
         forgotten: Forgotten your password?
         no_account:
-          content_html: If you %{link_to} you can save and apply for jobs you are interested in.
+          content_html: "%{link_to} to save and apply for jobs you are interested in."
           heading: Don't have an account yet?
-          link: create an account
-        title: Teacher sign in
+          link: Create an account
+        title: Jobseeker sign in
       locked:
         description: You have been locked out of your account because you have made too many attempts to log in.
         having_trouble_html: Still having trouble? %{mail_to} to our support team.
