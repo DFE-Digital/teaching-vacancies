@@ -11,8 +11,8 @@ RSpec.describe "Publishers can end a job listing early" do
   end
 
   it "submits form, renders error, then ends listing early" do
-    click_on I18n.t("jobs.manage.end_link_text")
-
+    click_on vacancy.job_title
+    click_on I18n.t("buttons.end_listing_early")
     click_on I18n.t("buttons.end_listing")
 
     expect(page).to have_content("There is a problem")
