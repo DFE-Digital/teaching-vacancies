@@ -10,7 +10,7 @@ WORKDIR /app
 RUN apk add --no-cache $PROD_PACKAGES $DEV_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
-RUN gem install bundler:2.2.20 --no-document
+RUN gem install bundler:2.2.18 --no-document
 
 COPY Gemfile* ./
 RUN bundle install --no-binstubs --retry=5 --jobs=4 --no-cache --without development test
@@ -43,12 +43,14 @@ WORKDIR /app
 RUN apk update && apk add --no-cache $PROD_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
-RUN gem install bundler:2.2.20 --no-document
+RUN gem install bundler:2.2.18 --no-document
 
 COPY --from=builder /app /app
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
 RUN echo export PATH=/usr/local/bundle/:/usr/local/bin/:$PATH > /root/.ashrc
 ENV ENV="/root/.ashrc"
+RUN rm /usr/local/lib/ruby/gems/3.0.0/specifications/default/bundler-2.2.15.gemspec
+RUN gem install bundler -v 2.2.18 --default
 
 EXPOSE 3000
 CMD bundle exec rails db:migrate && bundle exec rails s
