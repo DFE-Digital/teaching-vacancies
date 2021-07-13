@@ -26,7 +26,7 @@ module PgSearchable
         setweight([
           subjects,
           education_phases,
-          job_roles,
+          VacancyPresenter.new(self).show_job_roles,
           parent_organisation_name,
           VacancyPresenter.new(self).working_patterns,
         ], "B"),
@@ -78,9 +78,13 @@ module PgSearchable
       Arel::Nodes::NamedFunction.new(
         "TO_TSVECTOR", [
           Arel::Nodes::Quoted.new("pg_catalog.simple"),
-          Arel::Nodes::Quoted.new(values.join(" ")),
+          Arel::Nodes::Quoted.new(normalize(values)),
         ]
       )
+    end
+
+    def normalize(values)
+      values.flatten.map { |value| Search::Normalizer.new(value) }.join(" ")
     end
   end
 end
