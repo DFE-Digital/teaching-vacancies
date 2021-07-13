@@ -56,18 +56,20 @@ export const init = (removeButtonSelector, clearButtonId, closeButtonId, showFil
     const mediaQuery = `(max-width: ${MOBILE_BREAKPOINT}px)`;
     const mediaQueryList = window.matchMedia(mediaQuery);
 
-    mediaQueryList.addEventListener('change', (e) => {
-      if (e.matches) {
-        removeAutoSubmit();
-        filtersFocusble();
-        document.getElementsByClassName('filters-component')[0].setAttribute('aria-hidden', 'true');
-        document.getElementById(showFilterPanelId).setAttribute('aria-expanded', 'false');
-      } else {
-        addAutoSubmit();
-        filtersUnfocusble();
-        document.getElementsByClassName('filters-component')[0].removeAttribute('aria-hidden', 'true');
-      }
-    });
+    if (mediaQueryList.addEventListener) {
+      mediaQueryList.addEventListener('change', (e) => {
+        if (e.matches) {
+          removeAutoSubmit();
+          filtersFocusble();
+          document.getElementsByClassName('filters-component')[0].setAttribute('aria-hidden', 'true');
+          document.getElementById(showFilterPanelId).setAttribute('aria-expanded', 'false');
+        } else {
+          addAutoSubmit();
+          filtersUnfocusble();
+          document.getElementsByClassName('filters-component')[0].removeAttribute('aria-hidden', 'true');
+        }
+      });
+    }
   }
 };
 
@@ -76,19 +78,19 @@ export const togglePanel = (actionEl) => Array.from(document.getElementsByClassN
 });
 
 export const filtersFocusble = () => {
-  document.querySelector('.filters-component').setAttribute('tabindex', '-1');
+  document.getElementsByClassName('filters-component')[0].setAttribute('tabindex', '-1');
 };
 
 export const filtersUnfocusble = () => {
-  document.querySelector('.filters-component').removeAttribute('tabindex');
+  document.getElementsByClassName('filters-component')[0].removeAttribute('tabindex');
 };
 
 export const addAutoSubmit = () => {
-  document.querySelector('.filters-component').closest('form').setAttribute('data-auto-submit', 'true');
+  document.getElementsByClassName('filters-component')[0].closest('form').setAttribute('data-auto-submit', 'true');
 };
 
 export const removeAutoSubmit = () => {
-  document.querySelector('.filters-component').closest('form').removeAttribute('data-auto-submit');
+  document.getElementsByClassName('filters-component')[0].closest('form').removeAttribute('data-auto-submit');
 };
 
 export const setFiltersVisibleState = (actionEl, filtersEl) => {
