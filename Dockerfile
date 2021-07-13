@@ -1,6 +1,6 @@
 ARG PROD_PACKAGES="libxml2 libxslt libpq tzdata nodejs shared-mime-info"
 
-FROM ruby:3.0.1-alpine AS builder
+FROM ruby:3.0.2-alpine AS builder
 
 ARG DEV_PACKAGES="gcc libc-dev make yarn postgresql-dev build-base libxml2-dev libxslt-dev"
 ARG PROD_PACKAGES
@@ -32,7 +32,7 @@ RUN rm -rf node_modules log tmp yarn.lock && \
 
 
 # this stage reduces the image size.
-FROM ruby:3.0.1-alpine AS production
+FROM ruby:3.0.2-alpine AS production
 
 ARG PROD_PACKAGES
 ARG COMMIT_SHA
