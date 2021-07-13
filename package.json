@@ -15,7 +15,7 @@
     "classlist-polyfill": "^1.2.0",
     "clipboard": "^2.0.7",
     "es6-promise": "^4.2.8",
-    "govuk-frontend": "3.12.0",
+    "govuk-frontend": "3.13.0",
     "jquery": "^3.5.0",
     "jsdom": "^16.6.0",
     "rails-ujs": "^5.2.6",
