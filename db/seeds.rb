@@ -139,7 +139,7 @@ Publisher.create(oid: "B81FC38C-4122-4BCE-9F1D-8B1A328FA4D8",
                  given_name: "David")
 
 Publisher.create(oid: "A111A1AA-A111-1111-1AA1-AAAA1A111A1B",
-                 email: "jesse.yuen@education.gov.uk",
+                 email: "jesse.yuen@digital.education.gov.uk",
                  organisation_publishers_attributes: organisation_publishers_attributes,
                  family_name: "Yuen",
                  given_name: "Jesse")
