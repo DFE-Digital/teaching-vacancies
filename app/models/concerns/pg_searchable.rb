@@ -16,9 +16,8 @@ module PgSearchable
                     }
 
     scope :raw_search, ->(dangerous_query) do
-      query = Search::KeywordQueryBuilder.new(dangerous_query).to_sql
-      ranking = Arel.sql("ts_rank(searchable, 'music'::tsquery) DESC")
-      where("searchable @@ (#{query})").order(ranking)
+      builder = Search::KeywordQueryBuilder.new(dangerous_query)
+      where("searchable @@ (#{builder.to_query(allow_synonyms: true)})").order(builder.to_ranking)
     end
 
     private
