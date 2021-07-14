@@ -15,9 +15,9 @@ module PgSearchable
                       },
                     }
 
-    scope :raw_search, ->(dangerous_query) do
+    scope :pg_raw_search, ->(dangerous_query) do
       builder = Search::KeywordQueryBuilder.new(dangerous_query)
-      where("searchable @@ (#{builder.to_query(allow_synonyms: true)})").order(builder.to_ranking)
+      where("searchable @@ (#{builder.to_search_query(allow_synonyms: true)})").order(builder.to_ranking)
     end
 
     private
