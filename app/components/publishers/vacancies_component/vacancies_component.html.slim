@@ -1,4 +1,4 @@
-= render(DashboardComponent.new(heading: t("jobs.manage.heading_html", organisation: @organisation.name, email: @email), link: { url: organisation_jobs_path, text: t("buttons.create_job") })) do |dashboard|
+= render(DashboardComponent.new(background: true, heading: t("jobs.manage.heading_html", organisation: @organisation.name, email: @email), link: { url: organisation_jobs_path, text: t("buttons.create_job") })) do |dashboard|
   - vacancy_links.each do |item|
     - dashboard.navigation_item item: item
 
