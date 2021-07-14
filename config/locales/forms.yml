@@ -25,6 +25,7 @@ en:
     confirm_rejection: Confirm rejection
     continue: Continue
     continue_to_dsi: Continue to DfE Sign-in
+    copy_listing: Copy listing
     create_job: Create a job listing
     create_account: Create an account
     delete: Delete
@@ -32,11 +33,13 @@ en:
     dismiss: Dismiss
     edit: Edit
     end_listing: End job listing
+    end_listing_early: End listing early
     extend_deadline: Extend deadline
     find: Find
     go_to_teaching_vacancies: Go to Teaching Vacancies
     hide_filters: Hide filters
     make_changes: Make changes
+    manage_listing: Manage listing
     preview_job_listing: Preview job listing
     print_download_application: Print or download
     reject: Reject
