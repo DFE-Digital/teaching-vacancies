@@ -206,21 +206,6 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
         end
       end
     end
-
-    context "when job applications have not been received" do
-      let(:organisation) { create(:school, name: "A school with jobs") }
-      let(:vacancy) { create(:vacancy, :published) }
-
-      before do
-        vacancy.organisation_vacancies.create(organisation: organisation)
-        render_inline(subject)
-      end
-
-      it "still renders the link to view applicants" do
-        expect(rendered_component).to include(I18n.t("jobs.manage.view_applicants", count: 0))
-        expect(rendered_component).to include(Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id))
-      end
-    end
   end
 
   context "when filtering results" do
