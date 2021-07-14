@@ -13,6 +13,7 @@ RSpec.describe "Publishers can share their vacancy" do
     visit organisation_path
 
     click_on(vacancy.job_title)
+    click_on(I18n.t("publishers.vacancies.show.view_live_listing_link"))
     click_on(I18n.t("jobs.view_public_link"))
 
     expected_url = URI("localhost:3000#{job_path(vacancy)}")

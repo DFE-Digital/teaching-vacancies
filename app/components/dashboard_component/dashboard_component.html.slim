@@ -1,15 +1,17 @@
 = tag.div(class: classes, **html_attributes) do
   .govuk-width-container
-    .dashboard-component__header
-      h2.govuk-heading-m class="govuk-!-margin-bottom-2"
-        = heading
+    - if heading
+      .dashboard-component__header
+        h2.govuk-heading-m class="govuk-!-margin-bottom-2"
+          = heading
 
-  .govuk-width-container
+        - if link.present?
+          = govuk_button_to link[:text], link[:url], class: "govuk-!-margin-bottom-0", form_class: "dashboard-component__button"
+
+
     .dashboard-component-navigation
       .dashboard-component-navigation__container
         .dashboard-component-navigation__nav aria-label="Dashboard navigation"
           ul.dashboard-component-navigation__list
             - navigation_items.each do |item|
               = item
-    - if link.present?
-      = govuk_button_to link[:text], link[:url], class: "govuk-!-margin-bottom-0", form_class: "dashboard-component__button"
