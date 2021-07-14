@@ -52,20 +52,25 @@
             - vacancies.each do |vacancy|
               = render CardComponent.new(html_attributes: { id: dom_id(vacancy) }) do |card|
                 - card.header do
-                  = tag.div(govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id)))
+                  = tag.div(govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id), class: "govuk-!-font-weight-bold govuk-!-font-size-24"))
                   - if organisation.school_group?
                     = tag.div(vacancy.readable_job_location)
 
                 - card.body do
                   - case @selected_type
                   - when "published"
-                    = view_applicants(vacancy, card) unless vacancy_expired_over_a_year_ago?(vacancy)
+                    - if vacancy.enable_job_applications
+                      - if vacancy.job_applications.where(status: %w[submitted reviewed shortlisted unsuccessful]).count.positive?
+                        = view_applicants(vacancy) unless vacancy_expired_over_a_year_ago?(vacancy)
+                      - else
+                        = tag.div(t("jobs.manage.view_applicants", count: 0), class: "govuk-!-font-size-19")
                     = tag.div(card.labelled_item(t("jobs.manage.closing_date"), vacancy.application_deadline))
                   - when "pending"
                     = tag.div(card.labelled_item(t("jobs.publication_date"), vacancy.publish_on))
                     = tag.div(card.labelled_item(t("jobs.manage.closing_date"), vacancy.application_deadline))
                   - when "expired"
-                    = view_applicants(vacancy, card) unless vacancy_expired_over_a_year_ago?(vacancy)
+                    - if vacancy.enable_job_applications
+                      = view_applicants(vacancy) unless vacancy_expired_over_a_year_ago?(vacancy)
                     = tag.div(card.labelled_item(t("jobs.date_listed"), vacancy.publish_on))
                     = tag.div(card.labelled_item(t("jobs.manage.expired.expired_on"), vacancy.application_deadline))
                   - when "draft"
