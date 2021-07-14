@@ -205,7 +205,7 @@ en:
           success: "The deadline for %{job_title} has been extended"
       job_applications:
         banner:
-          applications: Applications
+          applications: Applications (%{count})
           deadline:
             after: Deadline passed
             before: Application deadline

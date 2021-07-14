@@ -2,8 +2,8 @@
 
 = render "banner", vacancy: vacancy, job_applications: job_applications
 
-.govuk-grid-row
-  .govuk-grid-column-one-third
+.govuk-grid-row class="govuk-!-margin-top-7"
+  .govuk-grid-column-full
     = form_for sort_form, as: "", url: organisation_job_job_applications_path(vacancy.id), method: :get, data: { "auto-submit": true, "hide-submit": true } do |f|
       = f.govuk_collection_select :sort_column,
         sort,
