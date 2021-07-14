@@ -4,6 +4,8 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   before_action :redirect_if_published, only: %i[preview review]
   before_action :devise_job_alert_search_criteria, only: %i[show preview]
 
+  helper_method :applying_for_the_job_fields, :important_dates_fields, :job_details_fields, :job_location_fields, :job_summary_fields, :pay_package_fields, :schools_fields
+
   def show
     return redirect_to organisation_job_review_path(vacancy.id), notice: t(".notice") unless vacancy.published?
 
@@ -30,7 +32,6 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     if all_steps_valid?
       session[:current_step] = :review
       set_completed_step
-      validate_all_steps
     else
       session[:current_step] = :edit_incomplete
       redirect_to_incomplete_step
@@ -70,12 +71,12 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   end
 
   def redirect_to_incomplete_step
-    return redirect_to organisation_job_build_path(vacancy.id, :job_details) unless step_valid?(Publishers::JobListing::JobDetailsForm)
-    return redirect_to organisation_job_build_path(vacancy.id, :pay_package) unless step_valid?(Publishers::JobListing::PayPackageForm)
-    return redirect_to organisation_job_build_path(vacancy.id, :important_dates) unless step_valid?(Publishers::JobListing::ImportantDatesForm)
+    return redirect_to organisation_job_build_path(vacancy.id, :job_details) unless step_valid?(:job_details)
+    return redirect_to organisation_job_build_path(vacancy.id, :pay_package) unless step_valid?(:pay_package)
+    return redirect_to organisation_job_build_path(vacancy.id, :important_dates) unless step_valid?(:important_dates)
     return redirect_to organisation_job_build_path(vacancy.id, :documents) unless vacancy.completed_step >= steps_config[:documents][:number]
-    return redirect_to organisation_job_build_path(vacancy.id, :applying_for_the_job) unless step_valid?(Publishers::JobListing::ApplyingForTheJobForm)
-    return redirect_to organisation_job_build_path(vacancy.id, :job_summary) unless step_valid?(Publishers::JobListing::JobSummaryForm)
+    return redirect_to organisation_job_build_path(vacancy.id, :applying_for_the_job) unless step_valid?(:applying_for_the_job)
+    return redirect_to organisation_job_build_path(vacancy.id, :job_summary) unless step_valid?(:job_summary)
   end
 
   def set_completed_step
@@ -83,10 +84,8 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   end
 
   def validate_all_steps
-    step_valid?(Publishers::JobListing::JobDetailsForm)
-    step_valid?(Publishers::JobListing::PayPackageForm)
-    step_valid?(Publishers::JobListing::ImportantDatesForm)
-    step_valid?(Publishers::JobListing::ApplyingForTheJobForm)
-    step_valid?(Publishers::JobListing::JobSummaryForm)
+    steps_config.except(:job_location, :schools, :supporting_documents, :documents, :review).each_key do |step|
+      step_valid?(step)
+    end
   end
 end

@@ -14,6 +14,9 @@
       = govuk_notification_banner title: t("banners.important") do
         p.govuk-body = t(".deadline_passed")
 
+    - unless review_form.errors.any?
+      = render "shared/error_messages", errors: @job_application.errors
+
     = form_for review_form, url: jobseekers_job_application_submit_path(job_application), method: :post do |f|
       = f.govuk_error_summary
 
