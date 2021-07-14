@@ -13,6 +13,10 @@ class CardComponent < GovukComponent::Base
     tag.span(label, class: "card-component__item-label govuk-!-font-weight-bold") + value
   end
 
+  def item_with_hidden_text(value, hidden_text_pre: nil, hidden_text_post: nil)
+    tag.span(hidden_text_pre, class: "govuk-visually-hidden") + value + tag.span(hidden_text_post, class: "govuk-visually-hidden")
+  end
+
   private
 
   def default_classes
