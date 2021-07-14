@@ -15,6 +15,8 @@ module PgSearchable
                       },
                     }
 
+    scope :raw_search, ->(query1, query2) { where("searchable @@ (?::tsquery || ?::tsquery)", query1, query2) }
+
     private
 
     def update_searchable # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
