@@ -1,11 +1,21 @@
 class Search::KeywordQueryBuilder
   ONE_WAY_SYNONYMS = {
-    'sats' => ['ks1', 'ks2']
+    'sats' => ['ks1', 'ks2'],
   }
 
   TWO_WAY_SYNONYMS = [
-    ['maths', 'mathematics', 'math']
+    ['maths', 'mathematics', 'math'],
+    ['modern foreign languages', 'mfl']
   ].freeze
+
+  NON_SYNONYMS = {
+    'science' => 'computer science'
+  }
+
+  # https://www.postgresql.org/docs/12/functions-textsearch.html
+  # We need to account for multiword tokens like the new synonyms above
+  # This applies to all synonym types
+  # <->
 
   def initialize(query_string)
     @query_string = query_string
