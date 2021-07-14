@@ -310,3 +310,18 @@ export AWS_ACCESS_KEY_ID="$(echo $sessionInfo | jq '.Credentials.AccessKeyId' | 
 export AWS_SECRET_ACCESS_KEY="$(echo $sessionInfo | jq '.Credentials.SecretAccessKey' | tr -d '"')"
 export AWS_SESSION_TOKEN="$(echo $sessionInfo | jq '.Credentials.SessionToken' | tr -d '"')"
 ```
+
+
+### Rotating `deploy` user access key
+
+
+The `deploy` user is an AWS account and it is used to run the CI/CD. Both its `access key` and `access_key_id` are stored on Github Secrets (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY). For security reasons, the access key needs to be rotated occasionally e.g. every 3 months
+
+The `deploy` user and its access key (` aws_iam_access_key` ) are deployed via the `common` terraform module. Please note, these resources are not deployed via the CI\CD pipeline.
+
+To rotate the key, please do the following:-
+- [] From the root of the project, change directory - `cd terraform/common/`
+- [] `aws-vault exec Administrator -- terraform apply -replace aws_iam_access_key.deploy`
+- [] `aws-vault exec Administrator -- terraform output -json` - note the newly generated ACCESS_KEY_ID and ACCESS_KEY.
+- [] Copy the newly generated ACCESS_KEY_ID and ACCESS_KEY to Github secrets -  AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY.
+- [] Test by running/triggering a deploy workflow or run a workflow_dispatch action
