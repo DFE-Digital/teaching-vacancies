@@ -8,15 +8,13 @@ RSpec.describe Jobseekers::SearchResults::HeadingComponent, type: :component do
   let(:location) { "London" }
   let(:polygon_boundaries) { [[51.0, 51.0]] }
   let(:count) { 10 }
-  let(:radius) { 1 }
-  let(:buffer_radius) { nil }
+  let(:radius) { 10 }
 
   before do
     allow(vacancies_search).to receive(:keyword).and_return(keyword)
     allow(vacancies_search).to receive_message_chain(:location_search, :location).and_return(location)
     allow(vacancies_search).to receive_message_chain(:location_search, :polygon_boundaries).and_return(polygon_boundaries)
     allow(vacancies_search).to receive_message_chain(:total_count).and_return(count)
-    allow(vacancies_search).to receive_message_chain(:location_search, :buffer_radius).and_return(buffer_radius)
     allow(vacancies_search).to receive_message_chain(:search_criteria, :[]).and_return(radius)
     render_inline(subject)
   end
@@ -26,16 +24,6 @@ RSpec.describe Jobseekers::SearchResults::HeadingComponent, type: :component do
       expect(rendered_component).to include(
         I18n.t("jobs.search_result_heading.keyword_location_polygon_html", keyword: keyword, location: location, count: count, radius: radius, units: I18n.t("jobs.search_result_heading.unit_of_length").pluralize(radius.to_i)),
       )
-    end
-
-    context "and a buffer radius is applied" do
-      let(:buffer_radius) { 5 }
-
-      it "renders correct heading" do
-        expect(rendered_component).to include(
-          I18n.t("jobs.search_result_heading.keyword_location_html", keyword: keyword, location: location, count: count, radius: radius, units: I18n.t("jobs.search_result_heading.unit_of_length").pluralize(radius.to_i)),
-        )
-      end
     end
   end
 
@@ -69,16 +57,6 @@ RSpec.describe Jobseekers::SearchResults::HeadingComponent, type: :component do
       expect(rendered_component).to include(
         I18n.t("jobs.search_result_heading.location_polygon_html", location: location, count: count, radius: radius, units: I18n.t("jobs.search_result_heading.unit_of_length").pluralize(radius.to_i)),
       )
-    end
-
-    context "and a buffer radius is applied" do
-      let(:buffer_radius) { 5 }
-
-      it "renders correct heading" do
-        expect(rendered_component).to include(
-          I18n.t("jobs.search_result_heading.location_html", location: location, count: count, radius: radius, units: I18n.t("jobs.search_result_heading.unit_of_length").pluralize(radius.to_i)),
-        )
-      end
     end
   end
 

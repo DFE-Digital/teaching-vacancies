@@ -171,6 +171,7 @@ RSpec.describe Search::VacancySearch do
         before do
           allow(vacancies).to receive(:empty?).and_return(false)
           mock_algolia_search(vacancies, 1, keyword, arguments_to_algolia)
+          freeze_time
         end
 
         it "does not call the buffer suggestions builder" do
@@ -190,6 +191,8 @@ RSpec.describe Search::VacancySearch do
             typo_tolerance: true,
           }
         end
+
+        before { freeze_time }
 
         it "calls the buffer suggestions builder" do
           expect(Search::BufferSuggestionsBuilder).to receive(:new).with(location_polygon.name, search_params).and_call_original

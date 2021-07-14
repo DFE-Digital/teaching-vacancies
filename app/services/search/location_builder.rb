@@ -6,12 +6,11 @@ class Search::LocationBuilder
 
   include DistanceHelper
 
-  attr_reader :buffer_radius, :location, :location_filter, :polygon_boundaries, :radius
+  attr_reader :location, :location_filter, :polygon_boundaries, :radius
 
-  def initialize(location, radius, buffer_radius)
+  def initialize(location, radius)
     @location = location
     @radius = (radius || DEFAULT_RADIUS).to_i
-    @buffer_radius = buffer_radius
     @location_filter = {}
 
     if NATIONWIDE_LOCATIONS.include?(@location&.downcase)
@@ -44,7 +43,7 @@ class Search::LocationBuilder
 
     @polygon_boundaries = []
     locations.compact.each do |location|
-      polygons = buffer_radius.present? ? location.buffers[buffer_radius] : location.buffers[radius.to_s]
+      polygons = location.buffers[radius.to_s]
       polygons.each do |polygon|
         @polygon_boundaries.push(polygon)
       end

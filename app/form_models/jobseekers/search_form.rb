@@ -13,8 +13,7 @@ class Jobseekers::SearchForm
 
     @location = params[:location]
 
-    @radius = params[:radius] || 10
-    @buffer_radius = params[:buffer_radius]
+    @radius = params[:radius]
 
     @job_roles = params[:job_roles] || params[:job_role] || []
     @phases = params[:phases]
@@ -31,7 +30,6 @@ class Jobseekers::SearchForm
       keyword: @keyword,
       location: @location,
       radius: @radius,
-      buffer_radius: @buffer_radius,
       job_roles: @job_roles,
       phases: @phases,
       working_patterns: @working_patterns,
