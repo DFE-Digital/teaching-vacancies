@@ -39,13 +39,42 @@
     margin-bottom: govuk-spacing(2);
     margin-left: 0;
     margin-right: govuk-spacing(2);
+
+    dl,
+    dd {
+      margin: 0;
+    }
+
+    dt,
+    dd {
+      display: inline-block;
+    }
   }
 
   &__actions {
     margin-left: 0;
 
-    @include govuk-media-query ($from: tablet) {
-      text-align: right;
+    > * {
+      display: inline-block;
+
+      .govuk-link {
+        padding: 0 govuk-spacing(2);
+      }
+
+      &::after {
+        border-right: 1px solid $govuk-border-colour;
+        content: ' ';
+      }
+
+      &:last-of-type {
+        .govuk-link {
+          padding-right: 0;
+        }
+
+        &::after {
+          border-right: 0;
+        }
+      }
     }
   }
 

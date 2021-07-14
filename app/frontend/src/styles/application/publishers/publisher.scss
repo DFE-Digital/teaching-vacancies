@@ -26,6 +26,11 @@ $desktop-container-width: 1200px;
     }
   }
 
+  .view-live-vacancy {
+    background-color: $govuk-border-colour;
+    padding-bottom: govuk-spacing(3);
+  }
+
   .application-count {
     display: block;
     margin: govuk-spacing(3);
