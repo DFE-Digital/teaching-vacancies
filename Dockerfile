@@ -10,7 +10,7 @@ WORKDIR /app
 RUN apk add --no-cache $PROD_PACKAGES $DEV_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
-RUN gem install bundler:2.2.20 --no-document
+RUN gem install --default bundler:2.2.18 --no-document
 
 COPY Gemfile* ./
 RUN bundle install --no-binstubs --retry=5 --jobs=4 --no-cache --without development test
@@ -43,7 +43,7 @@ WORKDIR /app
 RUN apk update && apk add --no-cache $PROD_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
-RUN gem install bundler:2.2.20 --no-document
+RUN gem install --default bundler:2.2.18 --no-document
 
 COPY --from=builder /app /app
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
