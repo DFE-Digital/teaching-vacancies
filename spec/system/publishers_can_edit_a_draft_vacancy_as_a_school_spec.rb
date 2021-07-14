@@ -146,7 +146,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
       end
 
       scenario "then editing the draft redirects to incomplete step" do
-        visit organisation_job_path(id: draft_vacancy.id)
+        visit edit_organisation_job_path(id: draft_vacancy.id)
         expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 7))
       end
 

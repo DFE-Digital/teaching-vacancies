@@ -5,8 +5,6 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   before_action :devise_job_alert_search_criteria, only: %i[show preview]
 
   def show
-    return redirect_to organisation_job_review_path(vacancy.id), notice: t(".notice") unless vacancy.published?
-
     @vacancy = VacancyPresenter.new(vacancy)
   end
 

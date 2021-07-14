@@ -1,9 +1,10 @@
 class DashboardComponent < GovukComponent::Base
   attr_reader :heading, :link
 
-  def initialize(heading:, link: nil, classes: [], html_attributes: {})
+  def initialize(background: nil, heading: nil, link: nil, classes: [], html_attributes: {})
     super(classes: classes, html_attributes: html_attributes)
 
+    @background = background
     @heading = heading
     @link = link
   end
@@ -17,6 +18,8 @@ class DashboardComponent < GovukComponent::Base
   private
 
   def default_classes
-    %w[dashboard-component]
+    %w[dashboard-component].tap do |applied_classes|
+      applied_classes.push("dashboard-component--background") if @background
+    end
   end
 end
