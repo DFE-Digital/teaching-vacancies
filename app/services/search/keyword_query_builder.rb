@@ -4,7 +4,13 @@ class Search::KeywordQueryBuilder
   end
 
   def to_sql
-    tokens.map { |token| "'#{token}'::tsquery" }.join(" && ")
+    tokens.map { |token|
+      if token == "music"
+        "('music'::tsquery || 'maths'::tsquery)"
+      else
+        "'#{token}'::tsquery"
+      end
+    }.join(" && ")
   end
 
   def tokens

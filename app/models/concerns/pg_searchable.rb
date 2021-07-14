@@ -1,7 +1,7 @@
 module PgSearchable
   extend ActiveSupport::Concern
 
-  included do
+  included do # rubocop:disable Metrics/BlockLength
     include PgSearch::Model
 
     before_save :update_searchable
@@ -15,7 +15,11 @@ module PgSearchable
                       },
                     }
 
-    scope :raw_search, ->(query1, query2) { where("searchable @@ (?::tsquery || ?::tsquery)", query1, query2) }
+    scope :raw_search, ->(dangerous_query) do
+      query = Search::KeywordQueryBuilder.new(dangerous_query).to_sql
+      ranking = Arel.sql("ts_rank(searchable, 'music'::tsquery) DESC")
+      where("searchable @@ (#{query})").order(ranking)
+    end
 
     private
 
