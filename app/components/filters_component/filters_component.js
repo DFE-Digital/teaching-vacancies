@@ -52,7 +52,7 @@ export const init = (removeButtonSelector, clearButtonId, closeButtonId, showFil
     });
   }
 
-  if (window.matchMedia) {
+  if (window.matchMedia && document.getElementsByClassName('filters-component').length) {
     const mediaQuery = `(max-width: ${MOBILE_BREAKPOINT}px)`;
     const mediaQueryList = window.matchMedia(mediaQuery);
 
