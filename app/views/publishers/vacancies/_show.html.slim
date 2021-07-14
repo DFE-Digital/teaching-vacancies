@@ -5,11 +5,11 @@
     .share-url-info
       .govuk-grid-row
         .govuk-grid-column-one-half
-          .share-url.display-none class="govuk-!-margin-bottom-6"
-            h2.govuk-heading-m class="govuk-!-margin-top-0" | Share this job
+          .govuk-inset-text
+            h2.govuk-heading-m class="govuk-!-margin-top-0" = t("jobs.share_this_job")
             = govuk_link_to(t("jobs.view_public_link"), @vacancy.share_url, "aria-label": t("jobs.view_public_link"))
-            | , or
-            = govuk_link_to(t("jobs.copy_public_url"), "#", class: "copy-to-clipboard", "data-clipboard-text": @vacancy.share_url, "aria-label": t("jobs.copy_public_url"))
+            span = ", or "
+            = govuk_link_to(t("jobs.copy_public_url"), "#", class: "copy-to-clipboard", "data-target-id": "vacancy-share-url", "aria-label": t("jobs.copy_public_url"))
           .share-url-no-js class="govuk-!-margin-bottom-6"
             h2.govuk-heading-s class="govuk-!-margin-top-0" | Share this job
             = govuk_link_to("#{t('jobs.view_public_link')} (#{@vacancy.share_url})", job_path(@vacancy))
