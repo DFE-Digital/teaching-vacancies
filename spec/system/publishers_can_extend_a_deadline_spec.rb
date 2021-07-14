@@ -12,8 +12,8 @@ RSpec.describe "Publishers can extend a deadline" do
   end
 
   it "submits form, renders error, then ends listing early" do
-    click_on I18n.t("jobs.manage.extend_link_text")
-
+    click_on vacancy.job_title
+    click_on I18n.t("buttons.extend_deadline")
     click_on I18n.t("buttons.extend_deadline")
 
     expect(page).to have_content("There is a problem")

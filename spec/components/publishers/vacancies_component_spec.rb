@@ -216,9 +216,8 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
         render_inline(subject)
       end
 
-      it "still renders the link to view applicants" do
+      it "renders plain text of 0 applicants" do
         expect(rendered_component).to include(I18n.t("jobs.manage.view_applicants", count: 0))
-        expect(rendered_component).to include(Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id))
       end
     end
   end

@@ -46,7 +46,7 @@ module JobApplicationHelper
       safe_join([tag.div("Yes", class: "govuk-body", id: "support_needed"),
                  tag.p(job_application.support_needed_details, class: "govuk-body", id: "support_needed_details")])
     when "no"
-      tag.div("No", class: "govuk-body", id: "support_needed")
+      tag.div("No", id: "support_needed")
     end
   end
 
@@ -108,7 +108,7 @@ module JobApplicationHelper
     if job_application.withdrawn?
       tag.span job_application.name, class: "govuk-!-font-size-19"
     else
-      govuk_link_to job_application.name, organisation_job_job_application_path(vacancy.id, job_application)
+      govuk_link_to job_application.name, organisation_job_job_application_path(vacancy.id, job_application), class: "govuk-!-font-weight-bold govuk-!-font-size-24"
     end
   end
 

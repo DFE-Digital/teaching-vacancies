@@ -26,17 +26,6 @@ RSpec.describe "School viewing vacancies" do
     expect(page).to have_content(vacancy2.job_title)
   end
 
-  scenario "A draft vacancy show page shows a flash message with the status" do
-    vacancy = create(:vacancy, status: "draft")
-    vacancy.organisation_vacancies.create(organisation: school)
-
-    visit organisation_job_path(vacancy.id)
-
-    expect(page).to have_content(school.name)
-    expect(page).to have_content(vacancy.job_title)
-    expect(page).to have_content(I18n.t("publishers.vacancies.show.notice"))
-  end
-
   scenario "A published vacancy show page does not show a flash message with the status" do
     vacancy = create(:vacancy, status: "published")
     vacancy.organisation_vacancies.create(organisation: school)

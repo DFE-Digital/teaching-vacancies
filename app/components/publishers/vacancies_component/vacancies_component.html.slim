@@ -1,4 +1,4 @@
-= render(DashboardComponent.new(heading: t("jobs.manage.heading_html", organisation: @organisation.name, email: @email), link: { url: organisation_jobs_path, text: t("buttons.create_job") })) do |dashboard|
+= render(DashboardComponent.new(background: true, heading: t("jobs.manage.heading_html", organisation: @organisation.name, email: @email), link: { url: organisation_jobs_path, text: t("buttons.create_job") })) do |dashboard|
   - vacancy_links.each do |item|
     - dashboard.navigation_item item: item
 
@@ -52,38 +52,25 @@
             - vacancies.each do |vacancy|
               = render CardComponent.new(html_attributes: { id: dom_id(vacancy) }) do |card|
                 - card.header do
-                  = tag.div(govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id)))
+                  = tag.div(govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id), class: "govuk-!-font-weight-bold govuk-!-font-size-24"))
                   - if organisation.school_group?
                     = tag.div(vacancy.readable_job_location)
 
                 - card.body do
                   - case @selected_type
                   - when "published"
-                    = view_applicants(vacancy, card) unless vacancy_expired_over_a_year_ago?(vacancy)
+                    - if vacancy.job_applications.where(status: %w[submitted reviewed shortlisted unsuccessful]).count.positive?
+                      = view_applicants(vacancy) unless vacancy_expired_over_a_year_ago?(vacancy)
+                    - else
+                      = tag.div(t("jobs.manage.view_applicants", count: 0), class: "govuk-!-font-size-19")
                     = tag.div(card.labelled_item(t("jobs.manage.closing_date"), vacancy.application_deadline))
                   - when "pending"
                     = tag.div(card.labelled_item(t("jobs.publication_date"), vacancy.publish_on))
                     = tag.div(card.labelled_item(t("jobs.manage.closing_date"), vacancy.application_deadline))
                   - when "expired"
-                    = view_applicants(vacancy, card) unless vacancy_expired_over_a_year_ago?(vacancy)
+                    = view_applicants(vacancy) unless vacancy_expired_over_a_year_ago?(vacancy)
                     = tag.div(card.labelled_item(t("jobs.date_listed"), vacancy.publish_on))
                     = tag.div(card.labelled_item(t("jobs.manage.expired.expired_on"), vacancy.application_deadline))
                   - when "draft"
                     = tag.div(card.labelled_item(t("jobs.manage.draft.time_created"), format_date(vacancy.created_at.to_date)))
                     = tag.div(card.labelled_item(t("jobs.manage.draft.time_updated"), format_date(vacancy.updated_at.to_date)))
-
-                - card.actions do
-                  - case @selected_type
-                  - when "published"
-                    = tag.div(govuk_link_to(t("jobs.manage.edit_link_text"), vacancy.edit_path))
-                    = tag.div(govuk_link_to(t("jobs.manage.copy_link_text"), vacancy.copy_path))
-                    = tag.div(govuk_link_to(t("jobs.manage.extend_link_text"), organisation_job_extend_deadline_path(vacancy.id)))
-                    = tag.div(govuk_link_to(t("jobs.manage.end_link_text"), organisation_job_end_listing_path(vacancy.id)))
-                  - when "pending", "draft"
-                    = tag.div(govuk_link_to(t("jobs.manage.edit_link_text"), vacancy.edit_path))
-                    = tag.div(govuk_link_to(t("jobs.manage.copy_link_text"), vacancy.copy_path))
-                    = tag.div(button_to(t("jobs.manage.delete_link_text"), vacancy.delete_path, method: :delete, data: { confirm: t("jobs.manage.are_you_sure", job_title: vacancy.job_title) }, class: "govuk-delete-link"))
-                  - when "expired"
-                    = tag.div(govuk_link_to(t("jobs.manage.copy_link_text"), vacancy.copy_path))
-                    = tag.div(govuk_link_to(t("jobs.manage.extend_link_text"), organisation_job_extend_deadline_path(vacancy.id)))
-                    = tag.div(button_to(t("jobs.manage.delete_link_text"), vacancy.delete_path, method: :delete, data: { confirm: t("jobs.manage.are_you_sure", job_title: vacancy.job_title) }, class: "govuk-delete-link"))

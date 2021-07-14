@@ -58,14 +58,6 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       it "shows a card for each application that has been submitted and no draft applications" do
         expect(page).to have_css(".card-component", count: 4)
       end
-
-      it "shows correct vacancy actions available to the publisher" do
-        within(".vacancy-actions") do
-          expect(page).to have_css(".govuk-button", count: 2)
-          expect(page).to have_link(I18n.t("publishers.vacancies.job_applications.index.buttons.copy"), href: new_organisation_job_copy_path(vacancy.id))
-          expect(page).to have_link(I18n.t("buttons.extend_deadline"), href: organisation_job_extend_deadline_path(vacancy.id))
-        end
-      end
     end
 
     describe "submitted application" do
@@ -237,16 +229,6 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
       it "shows that there are no applicants" do
         expect(page).to have_css(".empty-section-component h3", text: I18n.t("publishers.vacancies.job_applications.index.no_applicants"))
-      end
-
-      it "shows correct vacancy actions available to the publisher" do
-        within(".vacancy-actions") do
-          expect(page).to have_css(".govuk-button", count: 4)
-          expect(page).to have_link(I18n.t("publishers.vacancies.job_applications.index.buttons.copy"), href: new_organisation_job_copy_path(vacancy.id))
-          expect(page).to have_link(I18n.t("publishers.vacancies.job_applications.index.buttons.edit"), href: edit_organisation_job_path(vacancy.id))
-          expect(page).to have_link(I18n.t("publishers.vacancies.job_applications.index.buttons.end"), href: organisation_job_end_listing_path(vacancy.id))
-          expect(page).to have_link(I18n.t("buttons.extend_deadline"), href: organisation_job_extend_deadline_path(vacancy.id))
-        end
       end
     end
   end

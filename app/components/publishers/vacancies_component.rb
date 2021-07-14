@@ -42,16 +42,18 @@ class Publishers::VacanciesComponent < ViewComponent::Base
     I18n.t("jobs.manage.#{selected_type}.no_jobs.#{publisher_preference.organisations.any? ? 'with' : 'no'}_filters")
   end
 
-  def view_applicants(vacancy, card)
+  def view_applicants(vacancy)
     return unless vacancy.enable_job_applications?
     return unless include_job_applications?
 
     applications = vacancy.job_applications.where(status: %w[submitted reviewed shortlisted unsuccessful])
 
-    link = govuk_link_to(I18n.t("jobs.manage.view_applicants", count: applications.count),
+    link = govuk_link_to(tag.span(I18n.t("jobs.manage.view_applicants.hidden_text"), class: "govuk-visually-hidden") \
+                          + I18n.t("jobs.manage.view_applicants", count: applications.count) \
+                          + tag.span(" for #{vacancy.job_title}", class: "govuk-visually-hidden"),
                          organisation_job_job_applications_path(vacancy.id),
-                         class: "govuk-link--no-visited-state")
-    tag.div(card.labelled_item(I18n.t("jobs.manage.applications"), link))
+                         class: "govuk-link--no-visited-state govuk-!-font-size-19")
+    tag.div(link)
   end
 
   def vacancy_expired_over_a_year_ago?(vacancy)
