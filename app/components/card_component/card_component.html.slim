@@ -1,10 +1,10 @@
-dl class=classes *html_attributes
+= tag.div(class: classes, **html_attributes) do
   .card-component__content
-    dt.card-component__header
+    .card-component__header
       == header
 
-    dd.card-component__body
+    .card-component__body
       == body
 
-    dd.card-component__actions
+    .card-component__actions
       == actions
