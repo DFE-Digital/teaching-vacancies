@@ -36,8 +36,3 @@
         .application-count.govuk-tag class="govuk-tag--#{status_tag_colour(:unsuccessful)}"
           .govuk-heading-l = job_applications.unsuccessful.count
           h3.govuk-caption-s = t(".rejected", count: job_applications.unsuccessful.count)
-
-- if vacancy.enable_job_applications?
-  = render(DashboardComponent.new) do |dashboard|
-    - dashboard.navigation_item item: (link_to t("buttons.manage_listing"), organisation_job_path(vacancy.id), class: "dashboard-component-navigation__link", "aria-current": ("page" if controller_name == "vacancies"))
-    - dashboard.navigation_item item: (link_to t(".applications"), organisation_job_job_applications_path(vacancy.id), class: "dashboard-component-navigation__link", "aria-current": ("page" if controller_name == "job_applications"))
