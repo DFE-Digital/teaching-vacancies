@@ -83,13 +83,9 @@ module PgSearchable
       Arel::Nodes::NamedFunction.new(
         "TO_TSVECTOR", [
           Arel::Nodes::Quoted.new("pg_catalog.simple"),
-          Arel::Nodes::Quoted.new(normalize(values)),
+          Arel::Nodes::Quoted.new(values.flatten.join(" ")),
         ]
       )
-    end
-
-    def normalize(values)
-      values.flatten.map { |value| Search::Normalizer.new(value) }.join(" ")
     end
   end
 end
