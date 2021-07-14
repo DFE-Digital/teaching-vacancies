@@ -8,11 +8,9 @@ $desktop-container-width: 1200px;
   }
 
   .vacancy-actions {
-    text-align: right;
-
     .govuk-button {
       @include govuk-media-query($from: desktop) {
-        margin-left: govuk-spacing(2);
+        margin-right: govuk-spacing(2);
       }
     }
   }
