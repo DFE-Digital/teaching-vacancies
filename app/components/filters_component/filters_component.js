@@ -19,6 +19,11 @@ window.addEventListener(
 );
 
 export const init = (removeButtonSelector, clearButtonId, closeButtonId, showFilterPanelId) => {
+
+  if (document.getElementsByClassName('filters-component').length === 0) {
+    return false;
+  }
+
   Array.from(document.getElementsByClassName(removeButtonSelector)).forEach((removeButton) => filterGroup.addRemoveFilterEvent(removeButton));
 
   const clearButton = document.getElementById(clearButtonId);
