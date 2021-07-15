@@ -1,4 +1,11 @@
 class Search::KeywordQueryBuilder
+  # https://www.postgresql.org/docs/12/functions-textsearch.html
+  # TODO:
+  #   - rank based on original query again
+  #   - deal with one way synonyms again
+  #   - deal with non-synonyms
+  #   - tidy all this the hell up
+
   ONE_WAY_SYNONYMS = {
     "sats" => %w[ks1 ks2],
   }.freeze
@@ -41,11 +48,6 @@ class Search::KeywordQueryBuilder
     end
   end
 
-  # https://www.postgresql.org/docs/12/functions-textsearch.html
-  # We need to account for multiword tokens like the new synonyms above
-  # This applies to all synonym types
-  # <->
-
   def initialize(query_string)
     @query_string = query_string
   end
@@ -56,8 +58,8 @@ class Search::KeywordQueryBuilder
 
   def to_ranking
     # Rank results preferring the original query even when using two-way synonyms
-    # Arel.sql("ts_rank(searchable, #{to_search_query(allow_synonyms: false)}) DESC")
-    Arel.sql("publish_on DESC")
+    original_tokens = @query_string.split.map { |t| Token.new(t) }
+    Arel.sql("ts_rank(searchable, #{original_tokens.map(&:to_tsquery).join(" && ")}) DESC")
   end
 
   private
