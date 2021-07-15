@@ -102,6 +102,18 @@ RSpec.describe ImportSchoolData do
       expect(example_school.url).to eq("http://www.sirjohncassprimary.org")
     end
 
+    context "updating an existing school's location" do
+      let(:wgs84_latitude) { 51.51396895 }
+      let(:wgs84_longitude) { -0.07751627 }
+      let!(:school) { create(:school, urn: "100000", geolocation: [1, 2]) }
+      let!(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: school }]) }
+
+      it "changes the mean_geolocation on the school's vacancies" do
+        expect { subject.run! }.to change { vacancy.reload.mean_geolocation.x.round(8) }.from(1).to(wgs84_latitude)
+                               .and change { vacancy.reload.mean_geolocation.y.round(8) }.from(2).to(wgs84_longitude)
+      end
+    end
+
     context "when the CSV contains smart-quotes using Windows 1252 encoding" do
       before do
         stub_request(
