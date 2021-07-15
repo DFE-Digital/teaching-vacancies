@@ -52,6 +52,7 @@ class ImportTrustData < ImportOrganisationData
     trust.postcode = postcode
     coordinates = Geocoding.new(trust.postcode).coordinates
     trust.geolocation = coordinates unless coordinates == [0, 0]
+    trust.vacancies.each(&:set_mean_geolocation!)
   end
 
   def csv_metadata
