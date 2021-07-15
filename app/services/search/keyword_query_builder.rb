@@ -20,8 +20,6 @@ class Search::KeywordQueryBuilder
     "science" => "computer science",
   }.freeze
 
-  SYNONYM_TERMS = ONE_WAY_SYNONYMS.keys + TWO_WAY_SYNONYMS.flatten + NON_SYNONYMS.keys
-
   class Token
     attr_reader :token_string
 
@@ -42,7 +40,7 @@ class Search::KeywordQueryBuilder
     end
   end
 
-  class TwoWaySynonymToken
+  class SynonymToken
     attr_reader :tokens, :original_token
 
     def initialize(tokens, original_token)
@@ -92,9 +90,21 @@ class Search::KeywordQueryBuilder
     TWO_WAY_SYNONYMS.each do |synonyms|
       synonyms.each do |synonym|
         str.gsub!(synonym) do
-          tokens.push(TwoWaySynonymToken.new(synonyms.map { |t| Token.new(t) }, Token.new(synonym)))
+          tokens.push(SynonymToken.new(synonyms.map { |t| Token.new(t) }, Token.new(synonym)))
           ""
         end
+      end
+    end
+
+    ONE_WAY_SYNONYMS.each do |original, synonyms|
+      str.gsub!(original) do
+        tokens.push(
+          SynonymToken.new(
+            synonyms.map { |t| Token.new(t) } + [Token.new(original)],
+            Token.new(original),
+          )
+        )
+        ""
       end
     end
 
