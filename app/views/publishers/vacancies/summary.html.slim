@@ -18,8 +18,8 @@
       = govuk_link_to t(".view_jobs"), jobs_with_type_organisation_path(:published), button: true, class: "govuk-button--secondary"
 
       .divider-bottom
-        h4.govuk-heading-s.share-this-job class="govuk-!-margin-top-0" = t("jobs.share_this_job")
-        = render "/shared/vacancy/share_buttons"
+
+      = render "shared/vacancy/copy_vacancy_link"
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
