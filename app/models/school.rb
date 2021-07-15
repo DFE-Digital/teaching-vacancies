@@ -59,5 +59,6 @@ class School < Organisation
     end
 
     self.geolocation = geolocation
+    vacancies.each(&:set_mean_geolocation!)
   end
 end

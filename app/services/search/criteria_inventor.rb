@@ -1,19 +1,20 @@
 # Based on a vacancy, devise a plausible set of search criteria for a job alert subscription
-class Search::CriteriaDeviser
+class Search::CriteriaInventor
   attr_reader :criteria
 
   def initialize(vacancy)
     @vacancy = vacancy
     @subjects_from_job_title = get_subjects_from_job_title
-    @criteria = devise_search_criteria
+    set_criteria
   end
 
   private
 
-  def devise_search_criteria
-    {
-      location: @vacancy.parent_organisation.postcode,
-      radius: (@vacancy.parent_organisation.postcode.present? ? "10" : nil),
+  def set_criteria
+    set_location
+    @criteria ||= {
+      location: @location,
+      radius: (@location.present? ? "10" : nil),
       working_patterns: @vacancy.working_patterns,
       phases: @vacancy.education_phases,
       job_roles: @vacancy.job_roles,
@@ -28,6 +29,14 @@ class Search::CriteriaDeviser
     return @subjects_from_job_title.first if @subjects_from_job_title.one?
 
     get_keywords_from_job_title.presence unless @vacancy.job_roles.present?
+  end
+
+  def set_location
+    @location ||= if @vacancy.organisations.many?
+                    Geocoding.new(@vacancy.mean_geolocation.to_a).postcode_from_coordinates
+                  else
+                    @vacancy.organisation.postcode
+                  end
   end
 
   def get_subjects_from_vacancy

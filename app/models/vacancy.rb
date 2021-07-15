@@ -115,6 +115,15 @@ class Vacancy < ApplicationRecord
     job_applications.after_submission.count >= EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD
   end
 
+  def set_mean_geolocation!
+    # When SimilarJobs searches for jobs similar to a multi-school job, we need to derive a location to search around.
+    # We do not have LAs' postcodes; anyway, LAs can manage schools outside themselves.
+    # Take the mean of the geolocations of the school(s) the vacancy is at.
+    # Centroids are for polygons (ordered points defining a shape), so the mean is more appropriate than a centroid.
+    coords = organisations.map(&:geolocation).compact.map { |loc| [loc.x, loc.y] }.reject { |coord| coord == [0, 0] }
+    self.mean_geolocation = [(coords.sum(&:first) / coords.length), (coords.sum(&:second) / coords.length)] unless coords.count.zero?
+  end
+
   private
 
   def slug_candidates
