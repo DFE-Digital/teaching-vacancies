@@ -58,6 +58,10 @@ class ImportSchoolData < ImportOrganisationData
     set_properties(school, row)
     set_gias_data_as_json(school, row)
     set_readable_phases(school)
+    if school.geolocation_changed?
+      school.save
+      school.vacancies.each(&:set_mean_geolocation!)
+    end
     school
   end
 end
