@@ -1,7 +1,9 @@
 module PgSearchable
   extend ActiveSupport::Concern
 
-  included do # rubocop:disable Metrics/BlockLength
+  # Question: should we reindex if associated model changes?
+
+  included do
     include PgSearch::Model
 
     before_save :update_searchable
@@ -15,10 +17,10 @@ module PgSearchable
                       },
                     }
 
-    scope :pg_raw_search, ->(dangerous_query) do
+    scope :pg_raw_search, lambda { |dangerous_query|
       builder = Search::KeywordQueryBuilder.new(dangerous_query)
       where("searchable @@ (#{builder.to_search_query(allow_synonyms: true)})").order(builder.to_ranking)
-    end
+    }
 
     private
 

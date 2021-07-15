@@ -1,16 +1,42 @@
 class Search::KeywordQueryBuilder
   ONE_WAY_SYNONYMS = {
-    'sats' => ['ks1', 'ks2'],
-  }
+    "sats" => %w[ks1 ks2],
+  }.freeze
 
   TWO_WAY_SYNONYMS = [
-    ['maths', 'mathematics', 'math'],
-    ['modern foreign languages', 'mfl']
+    %w[maths mathematics math],
+    ["modern foreign languages", "mfl"],
   ].freeze
 
   NON_SYNONYMS = {
-    'science' => 'computer science'
-  }
+    "science" => "computer science",
+  }.freeze
+
+  class Token
+    attr_reader :token_string
+
+    def initialize(token_string)
+      @token_string = token_string.downcase
+    end
+
+    def to_tsquery(allow_synonyms: true)
+      if allow_synonyms
+        ONE_WAY_SYNONYMS.each do |original, synonyms|
+          return to_or_tsquery([original] + synonyms) if token_string == original
+        end
+
+        TWO_WAY_SYNONYMS.each do |synonym_row|
+          return to_or_tsquery(synonym_row) if token_string.in?(synonym_row)
+        end
+      end
+
+      "'#{token_string}'::tsquery"
+    end
+
+    def to_or_tsquery(synonyms)
+      "(#{synonyms.map { |option| "'#{option}'::tsquery" }.join(' || ')})"
+    end
+  end
 
   # https://www.postgresql.org/docs/12/functions-textsearch.html
   # We need to account for multiword tokens like the new synonyms above
@@ -22,7 +48,7 @@ class Search::KeywordQueryBuilder
   end
 
   def to_search_query(allow_synonyms: true)
-    tokens.map { |token| to_tsquery(token, allow_synonyms: allow_synonyms) }.join(" && ")
+    tokens.map { |token| token.to_tsquery(allow_synonyms: allow_synonyms) }.join(" && ")
   end
 
   def to_ranking
@@ -32,24 +58,7 @@ class Search::KeywordQueryBuilder
 
   private
 
-  def to_tsquery(token, allow_synonyms: true)
-    if allow_synonyms
-      ONE_WAY_SYNONYMS.each do |original, synonyms|
-        return to_or_tsquery([original] + synonyms) if token == original
-      end
-
-      TWO_WAY_SYNONYMS.each do |synonym_row|
-        return to_or_tsquery(synonym_row) if token.in?(synonym_row)
-      end
-    end
-    "'#{token}'::tsquery"
-  end
-
-  def to_or_tsquery(synonyms)
-    "(#{synonyms.map { |option| "'#{option}'::tsquery" }.join(" || ")})"
-  end
-
   def tokens
-    @query_string.downcase.split
+    @query_string.split.map { |t| Token.new(t) }
   end
 end
