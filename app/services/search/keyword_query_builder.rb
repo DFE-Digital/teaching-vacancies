@@ -20,11 +20,17 @@ class Search::KeywordQueryBuilder
     "science" => "computer science",
   }.freeze
 
+  SYNONYM_TERMS = ONE_WAY_SYNONYMS.keys + TWO_WAY_SYNONYMS.flatten + NON_SYNONYMS.keys
+
   class Token
     attr_reader :token_string
 
     def initialize(token_string)
       @token_string = token_string
+    end
+
+    def to_tsquery_without_synonyms
+      to_tsquery
     end
 
     def to_tsquery
@@ -36,11 +42,16 @@ class Search::KeywordQueryBuilder
     end
   end
 
-  class OrToken
-    attr_reader :tokens
+  class TwoWaySynonymToken
+    attr_reader :tokens, :original_token
 
-    def initialize(tokens)
+    def initialize(tokens, original_token)
       @tokens = tokens
+      @original_token = original_token
+    end
+
+    def to_tsquery_without_synonyms
+      original_token.to_tsquery
     end
 
     def to_tsquery
@@ -58,8 +69,7 @@ class Search::KeywordQueryBuilder
 
   def to_ranking
     # Rank results preferring the original query even when using two-way synonyms
-    original_tokens = @query_string.split.map { |t| Token.new(t) }
-    Arel.sql("ts_rank(searchable, #{original_tokens.map(&:to_tsquery).join(" && ")}) DESC")
+    Arel.sql("ts_rank(searchable, #{tokens.map(&:to_tsquery_without_synonyms).join(' && ')}) DESC")
   end
 
   private
@@ -82,7 +92,7 @@ class Search::KeywordQueryBuilder
     TWO_WAY_SYNONYMS.each do |synonyms|
       synonyms.each do |synonym|
         str.gsub!(synonym) do
-          tokens.push(OrToken.new(synonyms.map { |t| Token.new(t) }))
+          tokens.push(TwoWaySynonymToken.new(synonyms.map { |t| Token.new(t) }, Token.new(synonym)))
           ""
         end
       end
