@@ -6,7 +6,13 @@ RSpec.shared_examples "no keyword in the criteria" do
   end
 end
 
-RSpec.describe Search::CriteriaDeviser do
+RSpec.shared_examples "radius is set" do
+  it "sets the radius to 25" do
+    expect(subject.criteria[:radius]).to eq("25")
+  end
+end
+
+RSpec.describe Search::CriteriaInventor do
   subject { described_class.new(vacancy) }
 
   let(:postcode) { "ab12 3cd" }
@@ -16,34 +22,56 @@ RSpec.describe Search::CriteriaDeviser do
   let(:subjects) { %w[English Maths] }
   let(:job_title) { "A wonderful job" }
   let(:job_roles) { %w[teacher send_responsible] }
+  let(:location_trait) { :at_one_school }
+  let(:organisation_vacancies_attributes) { [{ organisation: school }] }
   let(:vacancy) do
-    create(:vacancy, :at_one_school, organisation_vacancies_attributes: [{ organisation: school }],
+    create(:vacancy, location_trait, organisation_vacancies_attributes: organisation_vacancies_attributes,
+                                     mean_geolocation: [1, 2],
                                      working_patterns: working_patterns,
                                      subjects: subjects,
                                      job_title: job_title,
                                      job_roles: job_roles)
   end
 
-  describe "#devise_search_criteria" do
-    context "when the parent organisation has no postcode" do
-      let(:postcode) { nil }
+  describe "#criteria" do
+    context "location" do
+      let(:trust) { create(:trust) }
 
-      it "does not set the location" do
-        expect(subject.criteria[:location]).to be_nil
+      context "when vacancy is associated to a single school" do
+        it "sets the location to the school's postcode" do
+          expect(subject.criteria[:location]).to eq(postcode)
+        end
+
+        it_behaves_like "radius is set"
       end
 
-      it "does not set the radius" do
-        expect(subject.criteria[:radius]).to be_nil
-      end
-    end
+      context "when the vacancy is associated to multiple schools in a school group" do
+        let(:school1) { create(:school) }
+        let(:school2) { create(:school) }
+        let(:organisation_vacancies_attributes) { [{ organisation: trust }, { organisation: school1 }, { organisation: school2 }] }
+        let(:location_trait) { :at_multiple_schools }
 
-    context "when the parent organisation has a postcode" do
-      it "sets the location to the postcode" do
-        expect(subject.criteria[:location]).to eq(postcode)
+        before do
+          SchoolGroupMembership.create(school: school1, school_group: trust)
+          SchoolGroupMembership.create(school: school2, school_group: trust)
+        end
+
+        it "calls the Geocoding class to calculate the postcode from the mean location" do
+          expect(subject.criteria[:location]).to eq(Geocoder::DEFAULT_LOCATION)
+        end
+
+        it_behaves_like "radius is set"
       end
 
-      it "sets the radius to 10" do
-        expect(subject.criteria[:radius]).to eq("10")
+      context "when the vacancy is at the central office of a trust" do
+        let(:location_trait) { :central_office }
+        let(:organisation_vacancies_attributes) { [{ organisation: trust }] }
+
+        it "sets the location to the trust's postcode" do
+          expect(subject.criteria[:location]).to eq(trust.postcode)
+        end
+
+        it_behaves_like "radius is set"
       end
     end
 

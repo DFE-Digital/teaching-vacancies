@@ -48,16 +48,13 @@ class School < Organisation
   private
 
   def set_geolocation_from_easting_and_northing
-    if easting && northing
-      wgs84 = Breasal::EastingNorthing.new(
-        easting: easting.to_i,
-        northing: northing.to_i,
-        type: :gb,
-      ).to_wgs84
+    return unless easting && northing && (easting_changed? || northing_changed?)
 
-      geolocation = [wgs84[:latitude], wgs84[:longitude]]
-    end
-
-    self.geolocation = geolocation
+    wgs84 = Breasal::EastingNorthing.new(
+      easting: easting.to_i,
+      northing: northing.to_i,
+      type: :gb,
+    ).to_wgs84
+    self.geolocation = [wgs84[:latitude], wgs84[:longitude]]
   end
 end

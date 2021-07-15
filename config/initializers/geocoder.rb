@@ -2,6 +2,7 @@ Geocoder.configure(
   timeout: 5,
   units: :mi,
   distance: :spherical,
+  http_headers: { "User-Agent" => "Teaching Vacancies Service teaching.vacancies@education.gov.uk" },
 
   google: {
     api_key: Rails.env.test? ? "placeholder_key" : ENV.fetch("GOOGLE_LOCATION_SEARCH_API_KEY", ""),

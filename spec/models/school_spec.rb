@@ -7,6 +7,9 @@ RSpec.describe School do
   it { is_expected.to have_many(:school_group_memberships) }
   it { is_expected.to have_many(:school_groups) }
 
+  let(:wgs84_latitude) { 51.51396894535262 }
+  let(:wgs84_longitude) { -0.07751626505544208 }
+
   describe "#religious_character" do
     let(:religious_character) { "Roman Catholic" }
     let(:gias_data) { { "ReligiousCharacter (name)" => religious_character } }
@@ -49,27 +52,28 @@ RSpec.describe School do
 
     describe "#geolocation" do
       context "when setting a GB easting and northing" do
-        it "sets the WGS84 geolocation" do
+        before do
           school.easting = 533_498
           school.northing = 181_201
+        end
 
-          expect(school.geolocation.x).to eq(51.51396894535262)
-          expect(school.geolocation.y).to eq(-0.07751626505544208)
+        it "sets the WGS84 geolocation" do
+          expect(school.geolocation.x).to eq(wgs84_latitude)
+          expect(school.geolocation.y).to eq(wgs84_longitude)
         end
       end
 
       context "when setting just a GB easting" do
         it "does not set a geolocation" do
           school.easting = 533_498
-          expect(school.geolocation).to eq(nil)
+          expect(school.geolocation).to be_nil
         end
       end
 
       context "when setting just a GB northing" do
         it "does not set a geolocation" do
           school.northing = 308_885
-
-          expect(school.geolocation).to eq(nil)
+          expect(school.geolocation).to be_nil
         end
       end
     end
@@ -78,12 +82,14 @@ RSpec.describe School do
       let(:school) { create(:school, easting: 100, northing: 200) }
 
       context "when setting a GB easting and northing" do
-        it "updates the WGS84 geolocation" do
+        before do
           school.easting = 533_498
           school.northing = 181_201
+        end
 
-          expect(school.geolocation.x).to eq(51.51396894535262)
-          expect(school.geolocation.y).to eq(-0.07751626505544208)
+        it "updates the WGS84 geolocation" do
+          expect(school.geolocation.x).to eq(wgs84_latitude)
+          expect(school.geolocation.y).to eq(wgs84_longitude)
         end
       end
 
