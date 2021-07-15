@@ -18,7 +18,7 @@ class Search::LocationBuilder
     elsif search_with_polygons?
       initialize_polygon_boundaries
     elsif @location.present?
-      @location_filter = build_location_filter(@location, @radius)
+      @location_filter = build_location_filter
     end
   end
 
@@ -50,7 +50,7 @@ class Search::LocationBuilder
     end
   end
 
-  def build_location_filter(location, radius)
+  def build_location_filter
     {
       point_coordinates: Geocoding.new(location).coordinates,
       radius: convert_miles_to_metres(radius),
