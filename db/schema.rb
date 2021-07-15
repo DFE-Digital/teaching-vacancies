@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_15_075650) do
+ActiveRecord::Schema.define(version: 2021_07_15_103012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
+  enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
@@ -464,10 +465,12 @@ ActiveRecord::Schema.define(version: 2021_07_15_075650) do
     t.integer "end_listing_reason"
     t.integer "candidate_hired_from"
     t.boolean "enable_job_applications"
+    t.tsvector "searchable"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["initially_indexed"], name: "index_vacancies_on_initially_indexed"
     t.index ["publisher_id"], name: "index_vacancies_on_publisher_id"
     t.index ["publisher_organisation_id"], name: "index_vacancies_on_publisher_organisation_id"
+    t.index ["searchable"], name: "index_vacancies_on_searchable", using: :gin
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
