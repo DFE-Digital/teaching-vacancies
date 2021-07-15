@@ -108,7 +108,7 @@ en:
       heading: Cookies
       subheading: Cookies that measure website use
       title: Cookies
-    page_description: Find out what cookies Teaching Vacancies stores on your computer and what they are for.
+      page_description: Find out what cookies Teaching Vacancies stores on your computer and what they are for.
 
   date:
     formats:
@@ -165,6 +165,18 @@ en:
     gias: Get information about schools
     gias_url: https://www.get-information-schools.service.gov.uk/
     report_a_problem_html: To report a problem, or for support using Teaching Vacancies, please email %{mail_to}
+
+  jobseekers:
+    passwords:
+      new:
+        page_description: Request a new password for your Teaching Vacancies account
+    registrations:
+      new:
+        page_description: Sign up to Teaching Vacancies
+    sessions:
+      new:
+        page_description: Sign in to Teaching Vacancies
+
 
   organisation:
     location_link_text:
@@ -469,6 +481,8 @@ en:
 
   updates:
     heading: Updates
+    index:
+      page_description: Find out about recent updates to Teaching Vacancies
     updates_description_html: >-
        Teaching vacancies is a new service and we make frequent updates to improve it.
        You can %{link} to help us.
