@@ -29,14 +29,14 @@ RSpec.describe "Viewing a single published vacancy" do
 
       scenario "it shows warnings that the post has expired" do
         expect(page).to have_content("EXPIRED")
-        expect(page).to have_content("This job expired on #{vacancy.expires_at.to_date}")
+        expect(page).to have_content("This job expired on #{format_date(vacancy.expires_at, :date_only)}")
       end
     end
 
     context "when the vacancy has not expired" do
       scenario "it does not show warnings that the post has expired" do
         expect(page).not_to have_content("EXPIRED")
-        expect(page).not_to have_content("This job expired on #{vacancy.expires_at.to_date}")
+        expect(page).not_to have_content("This job expired on #{format_date(vacancy.expires_at, :date_only)}")
       end
     end
 
