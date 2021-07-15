@@ -107,10 +107,6 @@ class Vacancy < ApplicationRecord
     super().merge("working_patterns" => working_patterns, "job_roles" => job_roles)
   end
 
-  def delete_documents
-    documents.each { |document| DocumentDelete.new(document).delete }
-  end
-
   def education_phases
     organisations.map(&:readable_phases).flatten.uniq
   end

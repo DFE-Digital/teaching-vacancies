@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_08_091608) do
+ActiveRecord::Schema.define(version: 2021_07_15_075650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -64,18 +64,6 @@ ActiveRecord::Schema.define(version: 2021_07_08_091608) do
     t.datetime "updated_at", null: false
     t.integer "status", default: 0
     t.index ["subscription_id"], name: "index_alert_runs_on_subscription_id"
-  end
-
-  create_table "documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name", null: false
-    t.integer "size", null: false
-    t.string "content_type", null: false
-    t.string "download_url", null: false
-    t.string "google_drive_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "vacancy_id"
-    t.index ["vacancy_id"], name: "index_documents_on_vacancy_id"
   end
 
   create_table "emergency_login_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -484,7 +472,6 @@ ActiveRecord::Schema.define(version: 2021_07_08_091608) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "documents", "vacancies"
   add_foreign_key "emergency_login_keys", "publishers"
   add_foreign_key "publisher_preferences", "publishers"
   add_foreign_key "qualification_results", "qualifications"
