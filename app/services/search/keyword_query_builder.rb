@@ -6,6 +6,7 @@ class Search::KeywordQueryBuilder
   TWO_WAY_SYNONYMS = [
     %w[maths mathematics math],
     ["modern foreign languages", "mfl"],
+    ["computer science", "ict", "information technology"],
   ].freeze
 
   NON_SYNONYMS = {
@@ -16,25 +17,27 @@ class Search::KeywordQueryBuilder
     attr_reader :token_string
 
     def initialize(token_string)
-      @token_string = token_string.downcase
+      @token_string = token_string
     end
 
-    def to_tsquery(allow_synonyms: true)
-      if allow_synonyms
-        ONE_WAY_SYNONYMS.each do |original, synonyms|
-          return to_or_tsquery([original] + synonyms) if token_string == original
-        end
+    def to_tsquery
+      phrase_query = token_string.split.map { |word|
+        "'#{word}'::tsquery"
+      }.join(" <-> ")
 
-        TWO_WAY_SYNONYMS.each do |synonym_row|
-          return to_or_tsquery(synonym_row) if token_string.in?(synonym_row)
-        end
-      end
+      "(#{phrase_query})"
+    end
+  end
 
-      "'#{token_string}'::tsquery"
+  class OrToken
+    attr_reader :tokens
+
+    def initialize(tokens)
+      @tokens = tokens
     end
 
-    def to_or_tsquery(synonyms)
-      "(#{synonyms.map { |option| "'#{option}'::tsquery" }.join(' || ')})"
+    def to_tsquery
+      "(#{tokens.map(&:to_tsquery).join(' || ')})"
     end
   end
 
@@ -47,18 +50,42 @@ class Search::KeywordQueryBuilder
     @query_string = query_string
   end
 
-  def to_search_query(allow_synonyms: true)
-    tokens.map { |token| token.to_tsquery(allow_synonyms: allow_synonyms) }.join(" && ")
+  def to_search_query
+    tokens.map(&:to_tsquery).join(" && ")
   end
 
   def to_ranking
     # Rank results preferring the original query even when using two-way synonyms
-    Arel.sql("ts_rank(searchable, #{to_search_query(allow_synonyms: false)}) DESC")
+    # Arel.sql("ts_rank(searchable, #{to_search_query(allow_synonyms: false)}) DESC")
+    Arel.sql("publish_on DESC")
   end
 
   private
 
+  # if allow_synonyms
+  #   ONE_WAY_SYNONYMS.each do |original, synonyms|
+  #     return to_or_tsquery([original] + synonyms) if token_string == original
+  #   end
+
+  #   TWO_WAY_SYNONYMS.each do |synonym_row|
+  #     return to_or_tsquery(synonym_row) if token_string.in?(synonym_row)
+  #   end
+  # end
   def tokens
-    @query_string.split.map { |t| Token.new(t) }
+    return @tokens if @tokens
+
+    str = @query_string.downcase
+    tokens = []
+
+    TWO_WAY_SYNONYMS.each do |synonyms|
+      synonyms.each do |synonym|
+        str.gsub!(synonym) do
+          tokens.push(OrToken.new(synonyms.map { |t| Token.new(t) }))
+          ""
+        end
+      end
+    end
+
+    @tokens = tokens + str.split.map { |t| Token.new(t) }
   end
 end
