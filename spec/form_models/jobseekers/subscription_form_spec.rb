@@ -3,6 +3,34 @@ require "rails_helper"
 RSpec.describe Jobseekers::SubscriptionForm, type: :model do
   subject { described_class.new(params) }
 
+  describe "#initialize" do
+    before { stub_const("Search::LocationBuilder::DEFAULT_RADIUS", "32") }
+
+    context "when a radius is provided" do
+      let(:params) { { radius: "1" } }
+
+      it "assigns the radius attribute to the radius param" do
+        expect(subject.radius).to eq("1")
+      end
+    end
+
+    context "when a radius is provided in the search criteria param" do
+      let(:params) { { search_criteria: { radius: "1" } } }
+
+      it "assigns the radius attribute to the radius param" do
+        expect(subject.radius).to eq("1")
+      end
+    end
+
+    context "when a radius is not provided" do
+      let(:params) { {} }
+
+      it "assigns the radius to the default radius" do
+        expect(subject.radius).to eq("32")
+      end
+    end
+  end
+
   describe "#search_criteria_hash" do
     let(:params) { { keyword: keyword, job_roles: job_roles } }
     let(:keyword) { "physics" }

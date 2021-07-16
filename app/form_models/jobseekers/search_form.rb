@@ -13,7 +13,7 @@ class Jobseekers::SearchForm
 
     @location = params[:location]
 
-    @radius = params[:radius]
+    @radius = (params[:radius].presence if @location.present?) || Search::LocationBuilder::DEFAULT_RADIUS
 
     @job_roles = params[:job_roles] || params[:job_role] || []
     @phases = params[:phases]
