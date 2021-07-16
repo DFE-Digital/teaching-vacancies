@@ -18,19 +18,19 @@ RSpec.describe CardComponent, type: :component do
     end
 
     it "renders header" do
-      expect(page).to have_css("dt", class: "card-component__header") do |header|
+      expect(page).to have_css("div", class: "card-component__header") do |header|
         expect(header).to have_css("h2", text: "Hello")
       end
     end
 
     it "renders body" do
-      expect(page).to have_css("dd", class: "card-component__body") do |body|
+      expect(page).to have_css("div", class: "card-component__body") do |body|
         expect(body).to have_css("p", text: "World!")
       end
     end
 
     it "renders actions" do
-      expect(page).to have_css("dd", class: "card-component__actions") do |actions|
+      expect(page).to have_css("div", class: "card-component__actions") do |actions|
         expect(actions).to have_css("a[href='/test-url']", text: "Click this")
       end
     end

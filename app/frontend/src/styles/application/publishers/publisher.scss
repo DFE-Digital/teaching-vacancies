@@ -8,11 +8,9 @@ $desktop-container-width: 1200px;
   }
 
   .vacancy-actions {
-    text-align: right;
-
     .govuk-button {
       @include govuk-media-query($from: desktop) {
-        margin-left: govuk-spacing(2);
+        margin-right: govuk-spacing(2);
       }
     }
   }
@@ -26,6 +24,11 @@ $desktop-container-width: 1200px;
         color: $govuk-error-colour;
       }
     }
+  }
+
+  .view-live-vacancy {
+    background-color: $govuk-border-colour;
+    padding-bottom: govuk-spacing(3);
   }
 
   .application-count {
