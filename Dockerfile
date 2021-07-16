@@ -12,8 +12,10 @@ RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
 RUN gem install bundler:2.2.22 --no-document
 
+
 COPY Gemfile* ./
-RUN bundle install --no-binstubs --retry=5 --jobs=4 --no-cache --without development test
+RUN bundle config set --local without 'development test'
+RUN bundle install --no-binstubs --retry=5 --jobs=4 --no-cache
 
 COPY package.json yarn.lock ./
 RUN yarn install --check-files
