@@ -12,11 +12,13 @@ RSpec.describe "Searching on the home page", vcr: { cassette_name: "algoliasearc
   it "persists search terms to the jobs index page" do
     fill_in "Keyword", with: "math"
     fill_in "Location", with: "bristol"
+    select "20 miles", from: "radius"
 
     click_on I18n.t("buttons.search")
 
     expect(current_path).to eq(jobs_path)
     expect(page.find("#keyword-field").value).to eq("math")
     expect(page.find("#location-field").value).to eq("bristol")
+    expect(page.find("#radius-field").value).to eq("20")
   end
 end
