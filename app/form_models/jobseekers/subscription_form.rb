@@ -20,15 +20,12 @@ class Jobseekers::SubscriptionForm
 
     @email = params[:email]
     @frequency = params[:frequency]
-
     @keyword = params[:keyword] || search_criteria[:keyword]
     @location = params[:location] || search_criteria[:location]
-    @radius = params[:radius] || search_criteria[:radius]
-
+    @radius = ((params[:radius] || search_criteria[:radius]) if @location.present?) || Search::LocationBuilder::DEFAULT_RADIUS.to_s
     @job_roles = params[:job_roles]&.reject(&:blank?) || search_criteria[:job_roles] || []
     @phases = params[:phases]&.reject(&:blank?) || search_criteria[:phases]
     @working_patterns = params[:working_patterns]&.reject(&:blank?) || search_criteria[:working_patterns]
-
     @variant = params[:variant]
 
     set_facet_options
@@ -46,7 +43,7 @@ class Jobseekers::SubscriptionForm
     {
       keyword: keyword,
       location: location,
-      radius: radius,
+      radius: (@location.present? ? radius : nil),
       job_roles: job_roles,
       phases: phases,
       working_patterns: working_patterns,

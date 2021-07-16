@@ -3,13 +3,74 @@ require "rails_helper"
 RSpec.describe Jobseekers::SubscriptionForm, type: :model do
   subject { described_class.new(params) }
 
+  describe "#initialize" do
+    before { stub_const("Search::LocationBuilder::DEFAULT_RADIUS", "32") }
+
+    context "when a radius is provided" do
+      context "when a location is provided" do
+        let(:params) { { radius: "1", location: "North Nowhere" } }
+
+        it "assigns the radius attribute to the radius param" do
+          expect(subject.radius).to eq("1")
+        end
+      end
+
+      context "when a location is not provided" do
+        let(:params) { { radius: "1" } }
+
+        it "assigns the radius to the default radius" do
+          expect(subject.radius).to eq("32")
+        end
+      end
+    end
+
+    context "when a radius is not provided" do
+      context "when a location is provided" do
+        let(:params) { { location: "North Nowhere" } }
+
+        it "assigns the radius attribute to the default radius" do
+          expect(subject.radius).to eq("32")
+        end
+      end
+
+      context "when a location is not provided" do
+        let(:params) { {} }
+
+        it "assigns the radius to the default radius" do
+          expect(subject.radius).to eq("32")
+        end
+      end
+    end
+
+    context "when a radius is provided in the search criteria param" do
+      context "when a location is provided" do
+        let(:params) { { search_criteria: { radius: "1" }, location: "North Nowhere" } }
+
+        it "assigns the radius attribute to the radius param" do
+          expect(subject.radius).to eq("1")
+        end
+      end
+
+      context "when a location is not provided" do
+        let(:params) { { search_criteria: { radius: "1" } } }
+
+        it "assigns the radius to the default radius" do
+          expect(subject.radius).to eq("32")
+        end
+      end
+    end
+  end
+
   describe "#search_criteria_hash" do
-    let(:params) { { keyword: keyword, job_roles: job_roles } }
+    let(:params) { { keyword: keyword, job_roles: job_roles, radius: radius, location: location } }
     let(:keyword) { "physics" }
-    let(:job_roles) { %w[teacher] }
+    let(:radius) { nil }
+    let(:location) { nil }
+    let(:job_roles) { [] }
 
     context "when a value is blank" do
-      let(:keyword) { nil }
+      let(:keyword) { "" }
+      let(:job_roles) { %w[teacher] }
 
       it "is deleted from the hash" do
         expect(subject.search_criteria_hash).to eq({ job_roles: job_roles })
@@ -21,6 +82,24 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
 
       it "is deleted from the hash" do
         expect(subject.search_criteria_hash).to eq({ keyword: keyword })
+      end
+    end
+
+    context "when radius is present" do
+      let(:radius) { "10" }
+
+      context "when location is not present" do
+        it "omits radius value from the hash" do
+          expect(subject.search_criteria_hash).to eq({ keyword: keyword })
+        end
+      end
+
+      context "when location is present" do
+        let(:location) { "North Nowhere" }
+
+        it "includes radius value in the hash" do
+          expect(subject.search_criteria_hash).to eq({ keyword: keyword, location: location, radius: "10" })
+        end
       end
     end
   end

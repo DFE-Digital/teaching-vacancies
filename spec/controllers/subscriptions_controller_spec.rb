@@ -29,17 +29,17 @@ RSpec.describe SubscriptionsController, recaptcha: true do
       end
 
       let(:subscription) { instance_double(Subscription).as_null_object }
-      let(:subscription_form) { instance_double(Jobseekers::SubscriptionForm) }
+      let(:form) { instance_double(Jobseekers::SubscriptionForm) }
       let(:subscription_form_valid?) { true }
 
       before do
         allow(Subscription).to receive(:new).and_return(subscription)
         allow(subscription).to receive(:id).and_return("abc123")
         allow(subscription).to receive(:class).and_return(Subscription)
-        allow(Jobseekers::SubscriptionForm).to receive(:new).and_return(subscription_form)
-        allow(subscription_form).to receive(:job_alert_params).and_return(job_alert_params)
-        allow(subscription_form).to receive(:invalid?).and_return(!subscription_form_valid?)
-        allow(subscription_form).to receive(:class).and_return(Jobseekers::SubscriptionForm)
+        allow(Jobseekers::SubscriptionForm).to receive(:new).and_return(form)
+        allow(form).to receive(:job_alert_params).and_return(job_alert_params)
+        allow(form).to receive(:invalid?).and_return(!subscription_form_valid?)
+        allow(form).to receive(:class).and_return(Jobseekers::SubscriptionForm)
         allow(controller).to receive(:recaptcha_reply).and_return({ "score" => recaptcha_score })
         allow(controller).to receive(:verify_recaptcha).and_return(verify_recaptcha)
       end
