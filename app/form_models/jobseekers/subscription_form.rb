@@ -23,7 +23,9 @@ class Jobseekers::SubscriptionForm
 
     @keyword = params[:keyword] || search_criteria[:keyword]
     @location = params[:location] || search_criteria[:location]
-    @radius = params[:radius] || search_criteria[:radius]
+    @radius = if @location.present?
+                params[:radius] || search_criteria[:radius] || Search::LocationBuilder::DEFAULT_RADIUS.to_s
+              end
 
     @job_roles = params[:job_roles]&.reject(&:blank?) || search_criteria[:job_roles] || []
     @phases = params[:phases]&.reject(&:blank?) || search_criteria[:phases]
