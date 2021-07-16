@@ -3,7 +3,8 @@ require "rails_helper"
 RSpec.describe DashboardComponent, type: :component do
   let(:heading) { "A heading" }
   let(:link) { nil }
-  let(:kwargs) { { heading: heading, link: link } }
+  let(:background) { nil }
+  let(:kwargs) { { background: background, heading: heading, link: link } }
 
   subject! { render_inline(described_class.new(**kwargs)) }
 
@@ -15,6 +16,13 @@ RSpec.describe DashboardComponent, type: :component do
       expect(page).to have_css("div", class: "dashboard-component") do |dashboard|
         expect(dashboard).to have_css("h2", class: "govuk-heading-m", text: heading)
       end
+    end
+  end
+
+  context "when background is true" do
+    let(:background) { true }
+    it "adds the background class" do
+      expect(page).to have_css("div", class: "dashboard-component--background")
     end
   end
 

@@ -59,7 +59,7 @@ RSpec.describe JobApplicationHelper do
       let(:job_application) { build_stubbed(:job_application, support_needed: "no") }
 
       it "returns the correct info" do
-        expect(subject).to eq(tag.div("No", class: "govuk-body", id: "support_needed"))
+        expect(subject).to eq(tag.div("No", id: "support_needed"))
       end
     end
 
