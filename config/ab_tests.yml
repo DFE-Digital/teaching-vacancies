@@ -16,6 +16,8 @@
 #     you must not remove/rename any existing variants. If you want a variant to receive no
 #     new participants, set its weight to 0 instead.
 #   - You need to restart your Rails server when changing this file in development
+#   - You can add a query parameter such as the below to force a particular variant:
+#     ?ab_test_override[2021_01_testing_test]=red
 shared:
   # A fake test to test (ha!) the AB testing functionality
   2021_01_testing_test:
@@ -35,6 +37,9 @@ shared:
   2021_06_mandatory_job_alert_fields_test:
     mandatory_location_and_one_other_field: 1
     default: 1
+  2021_07_contents_tabs_on_job_listing_test:
+    present: 1
+    absent: 1
 test:
   2021_04_cookie_consent_test:
     none: 0
@@ -47,3 +52,6 @@ test:
     bottom: 1
     right_blue: 0
     right_grey: 0
+  2021_07_contents_tabs_on_job_listing_test:
+    present: 1
+    absent: 0
