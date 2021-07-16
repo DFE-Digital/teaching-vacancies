@@ -6,7 +6,7 @@ RSpec.shared_examples "no keyword in the criteria" do
   end
 end
 
-RSpec.describe Search::CriteriaDeviser do
+RSpec.describe Search::CriteriaInventor do
   subject { described_class.new(vacancy) }
 
   let(:postcode) { "ab12 3cd" }

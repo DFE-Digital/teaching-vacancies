@@ -247,7 +247,7 @@ FactoryBot.create(:vacancy,
                   publisher_organisation: school_one,
                   organisation_vacancies_attributes: [{ organisation: school_one }])
 
-# pending vacancy
+# scheduled vacancy
 FactoryBot.create(:vacancy,
                   job_title: "Teacher of Drama",
                   subjects: %w[Drama],

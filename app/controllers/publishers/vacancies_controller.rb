@@ -2,7 +2,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   include Publishers::Wizardable
 
   before_action :redirect_if_published, only: %i[preview review]
-  before_action :devise_job_alert_search_criteria, only: %i[show preview]
+  before_action :invent_job_alert_search_criteria, only: %i[show preview]
 
   helper_method :applying_for_the_job_fields, :important_dates_fields, :job_details_fields, :job_location_fields, :job_summary_fields, :pay_package_fields, :schools_fields
 
@@ -60,8 +60,8 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
 
   private
 
-  def devise_job_alert_search_criteria
-    @devised_job_alert_search_criteria = Search::CriteriaDeviser.new(vacancy).criteria
+  def invent_job_alert_search_criteria
+    @invented_job_alert_search_criteria = Search::CriteriaInventor.new(vacancy).criteria
   end
 
   def redirect_if_published
