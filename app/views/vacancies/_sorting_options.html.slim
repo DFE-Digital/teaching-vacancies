@@ -1,10 +1,10 @@
-= form_for @jobs_search_form, as: "", url: jobs_path, method: :get, html: { id: "sorting-options-form", data: { "auto-submit": true, "hide-submit": true } } do |f|
-  = f.hidden_field :keyword, value: @jobs_search_form.keyword
-  = f.hidden_field :location, value: @jobs_search_form.location
-  = f.hidden_field :radius, value: @jobs_search_form.radius
-  = f.hidden_field :job_roles, value: @jobs_search_form.job_roles
-  = f.hidden_field :phases, value: @jobs_search_form.phases
-  = f.hidden_field :working_patterns, value: @jobs_search_form.working_patterns
+= form_for @form, as: "", url: jobs_path, method: :get, html: { id: "sorting-options-form", data: { "auto-submit": true, "hide-submit": true } } do |f|
+  = f.hidden_field :keyword, value: @form.keyword
+  = f.hidden_field :location, value: @form.location
+  = f.hidden_field :radius, value: @form.radius
+  = f.hidden_field :job_roles, value: @form.job_roles
+  = f.hidden_field :phases, value: @form.phases
+  = f.hidden_field :working_patterns, value: @form.working_patterns
 
   .govuk-form-group
     = f.govuk_collection_select :jobs_sort,

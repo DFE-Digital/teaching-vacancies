@@ -4,15 +4,15 @@ class SubscriptionsController < ApplicationController
   def new
     @point_coordinates = params[:coordinates_present] == "true"
     @nqt_job_alert = params[:nqt_job_alert]
-    @subscription_form = Jobseekers::SubscriptionForm.new(params[:search_criteria].present? ? search_criteria_params : email)
+    @form = Jobseekers::SubscriptionForm.new(params[:search_criteria].present? ? search_criteria_params : email)
   end
 
   def create
-    @subscription_form = Jobseekers::SubscriptionForm.new(subscription_params)
-    subscription = Subscription.new(@subscription_form.job_alert_params)
+    @form = Jobseekers::SubscriptionForm.new(subscription_params)
+    subscription = Subscription.new(@form.job_alert_params)
     @subscription = SubscriptionPresenter.new(subscription)
 
-    if @subscription_form.invalid?
+    if @form.invalid?
       render :new
     elsif recaptcha_is_invalid?(subscription)
       redirect_to invalid_recaptcha_path(form_name: subscription.class.name.underscore.humanize)
@@ -33,16 +33,16 @@ class SubscriptionsController < ApplicationController
 
   def edit
     @subscription = Subscription.find_and_verify_by_token(token)
-    @subscription_form = Jobseekers::SubscriptionForm.new(@subscription)
+    @form = Jobseekers::SubscriptionForm.new(@subscription)
   end
 
   def update
     subscription = Subscription.find_and_verify_by_token(token)
-    @subscription_form = Jobseekers::SubscriptionForm.new(subscription_params)
+    @form = Jobseekers::SubscriptionForm.new(subscription_params)
     @subscription = SubscriptionPresenter.new(subscription)
 
-    if @subscription_form.valid?
-      subscription.update(@subscription_form.job_alert_params)
+    if @form.valid?
+      subscription.update(@form.job_alert_params)
       Jobseekers::SubscriptionMailer.update(subscription.id).deliver_later
       trigger_subscription_event(:job_alert_subscription_updated, subscription)
 
