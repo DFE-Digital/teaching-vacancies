@@ -169,11 +169,11 @@ en:
     create_a_job_title: Create a job listing for %{organisation}
     create_a_job_title_no_org: Create a job listing
     copy_job_title: Copy %{job_title}
+    manage_listing: Manage listing
     new_job_listing_details: New job listing details
     review_page_title: Review the job listing — Create a job listing for %{organisation}
     review_heading: Review the job listing
     edit_job_title: Edit %{job_title}
-    edit_listing: Edit listing
     current_step: Step %{step} of %{total}
 
     job_location: Job location
@@ -335,7 +335,7 @@ en:
         hidden_text: view
         zero: "%{count} applicants"
         one: "%{count} applicant"
-        other: "view %{count} applicants"
+        other: "%{count} applicants"
 
     date_listed: Date listed
 
