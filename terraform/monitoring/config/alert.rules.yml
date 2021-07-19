@@ -15,6 +15,22 @@ groups:
       environment: production
       severity: high
 
+- name: slow_response
+  rules:
+  - alert: ProdSlowRequests
+  # Condition for alerting
+    expr: histogram_quantile(0.9, sum(rate(response_time_bucket{app="teaching-vacancies-production", status_range="2xx"}[5m])) by (le)) > 2
+    # Annotation - additional informational labels to store more information
+    annotations:
+      summary: Identify slow running request above 95 percentile
+      description: "Identify slow running http request above 95 percentile above 3sec (current value: {{ humanize $value}}s )"
+      runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/master/documentation/alert-runbook.md#ProdSlowRequests
+      dashboard: https://grafana-teaching-vacancies.london.cloudapps.digital/d/6Ac4lUWGk/teaching-vacancies-production?orgId=1&refresh=5s
+  # Labels - additional labels to be attached to the alert
+    labels:
+      environment: production
+      severity: high
+
 - name: CPU-usage
   rules:
   - alert: ProdAppCPUHigh
