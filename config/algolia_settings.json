@@ -24,6 +24,7 @@
     ],
     "numericAttributesToIndex": null,
     "attributesToRetrieve": null,
+    "advancedSyntax": true,
     "unretrievableAttributes": null,
     "optionalWords": null,
     "attributesForFaceting": [
@@ -127,9 +128,25 @@
   "rules": [],
   "synonyms": [
     {
-      "type": "synonym",
+      "type": "onewaysynonym",
+      "input": "ks2",
       "synonyms": [
-        "primary",
+        "primary"
+      ],
+      "objectID": "syn-1626273585224-26"
+    },
+    {
+      "type": "onewaysynonym",
+      "input": "ks1",
+      "synonyms": [
+        "primary"
+      ],
+      "objectID": "syn-1626273515462-21"
+    },
+    {
+      "type": "onewaysynonym",
+      "input": "primary",
+      "synonyms": [
         "ks1",
         "ks2"
       ],
