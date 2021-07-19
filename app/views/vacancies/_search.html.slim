@@ -4,8 +4,8 @@ ruby:
       title: t("jobs.filters.job_roles"),
       key: "job_roles",
       attribute: :job_roles,
-      selected: @jobs_search_form.job_roles,
-      options: @jobs_search_form.job_role_options,
+      selected: @form.job_roles,
+      options: @form.job_role_options,
       value_method: :first,
       text_method: :last,
       selected_method: :last,
@@ -15,8 +15,8 @@ ruby:
       key: "nqt_suitable",
       hidden_text: t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.nqt_suitable_hidden_prefix"),
       attribute: :job_roles,
-      selected: @jobs_search_form.job_roles.include?("nqt_suitable") ? @jobs_search_form.job_roles : [],
-      options: @jobs_search_form.nqt_suitable_options,
+      selected: @form.job_roles.include?("nqt_suitable") ? @form.job_roles : [],
+      options: @form.nqt_suitable_options,
       value_method: :first,
       text_method: :last,
       selected_method: :last,
@@ -25,8 +25,8 @@ ruby:
       title: t("jobs.filters.phases"),
       key: "education_phase",
       attribute: :phases,
-      selected: @jobs_search_form.phases,
-      options: @jobs_search_form.phase_options,
+      selected: @form.phases,
+      options: @form.phase_options,
       value_method: :first,
       text_method: :last,
       selected_method: :last,
@@ -35,15 +35,15 @@ ruby:
       title: t("jobs.filters.working_patterns"),
       key: "working_patterns",
       attribute: :working_patterns,
-      selected: @jobs_search_form.working_patterns,
-      options: @jobs_search_form.working_pattern_options,
+      selected: @form.working_patterns,
+      options: @form.working_pattern_options,
       value_method: :first,
       text_method: :last,
       selected_method: :last,
     },
   ]
 
-= form_for @jobs_search_form, as: "", url: jobs_path, method: :get, html: { id: "filter-form", data: { "auto-submit": true }, class: "filters-form", role: "search", aria: { label: "Search criteria" } } do |f|
+= form_for @form, as: "", url: jobs_path, method: :get, html: { id: "filter-form", data: { "auto-submit": true }, class: "filters-form", role: "search", aria: { label: "Search criteria" } } do |f|
   .filter-vacancies
     h2.govuk-heading-m = t("jobs.search.title")
 
@@ -52,11 +52,11 @@ ruby:
     = render "shared/search/current_location", loaderElement: "location-field"
     = render "shared/search/radius", f: f, wide: true
 
-    = f.hidden_field :jobs_sort, value: @jobs_search_form.jobs_sort
+    = f.hidden_field :jobs_sort, value: @form.jobs_sort
     = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"
 
   = render(FiltersComponent.new(form: f,
-    filters: { total_count: @jobs_search_form.total_filters, title: "Filter results" },
+    filters: { total_count: @form.total_filters, title: "Filter results" },
     items: items,
     options: { remove_buttons: true, mobile_variant: true, close_all: true },
     html_attributes: { tabindex: "-1", id: "filters-component" }))
