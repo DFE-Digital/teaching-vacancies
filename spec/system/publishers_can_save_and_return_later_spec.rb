@@ -29,7 +29,10 @@ RSpec.describe "Publishers can save and return later" do
         expect(page.current_path).to eq(jobs_with_type_organisation_path("draft"))
         expect(page.body).to include(I18n.t("messages.jobs.draft_saved_html", job_title: @vacancy.job_title))
 
-        click_on "Edit"
+        click_on @vacancy.job_title
+        within("#job_details") do
+          click_on I18n.t("buttons.change")
+        end
 
         expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_details))
         expect(find_field("publishers_job_listing_job_details_form[job_title]").value).to eq(@vacancy.job_title)
@@ -53,7 +56,10 @@ RSpec.describe "Publishers can save and return later" do
         expect(page.current_path).to eq(jobs_with_type_organisation_path("draft"))
         expect(page.body).to include(I18n.t("messages.jobs.draft_saved_html", job_title: @vacancy.job_title))
 
-        click_on "Edit"
+        click_on @vacancy.job_title
+        within("#pay_package") do
+          click_on I18n.t("buttons.change")
+        end
 
         expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :pay_package))
         expect(find_field("publishers_job_listing_pay_package_form[benefits]").value).to eq(@vacancy.benefits)
@@ -82,7 +88,10 @@ RSpec.describe "Publishers can save and return later" do
         expect(page.current_path).to eq(jobs_with_type_organisation_path("draft"))
         expect(page.body).to include(I18n.t("messages.jobs.draft_saved_html", job_title: @vacancy.job_title))
 
-        click_on "Edit"
+        click_on @vacancy.job_title
+        within("#important_dates") do
+          click_on I18n.t("buttons.change")
+        end
 
         expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :important_dates))
         expect(find_field("publishers_job_listing_important_dates_form[publish_on(3i)]").value).to eq("12")
@@ -112,7 +121,10 @@ RSpec.describe "Publishers can save and return later" do
         expect(page.current_path).to eq(jobs_with_type_organisation_path("draft"))
         expect(page.body).to include(I18n.t("messages.jobs.draft_saved_html", job_title: @vacancy.job_title))
 
-        click_on "Edit"
+        click_on @vacancy.job_title
+        within("#important_dates") do
+          click_on I18n.t("buttons.change")
+        end
 
         expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :important_dates))
         expect(find_field("publishers_job_listing_important_dates_form[publish_on(3i)]").value).to eq("12")
@@ -143,7 +155,10 @@ RSpec.describe "Publishers can save and return later" do
         expect(page.current_path).to eq(jobs_with_type_organisation_path("draft"))
         expect(page.body).to include(I18n.t("messages.jobs.draft_saved_html", job_title: @vacancy.job_title))
 
-        click_on "Edit"
+        click_on @vacancy.job_title
+        within(".review-component#supporting_documents") do
+          click_on I18n.t("buttons.change")
+        end
 
         expect(current_path).to eq(organisation_job_documents_path(created_vacancy.id))
       end
@@ -174,7 +189,10 @@ RSpec.describe "Publishers can save and return later" do
         expect(page.current_path).to eq(jobs_with_type_organisation_path("draft"))
         expect(page.body).to include(I18n.t("messages.jobs.draft_saved_html", job_title: @vacancy.job_title))
 
-        click_on "Edit"
+        click_on @vacancy.job_title
+        within("#applying_for_the_job") do
+          click_on I18n.t("buttons.change")
+        end
 
         expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
         expect(find_field("publishers_job_listing_applying_for_the_job_form[application_link]").value).to eq("some link")
@@ -210,7 +228,10 @@ RSpec.describe "Publishers can save and return later" do
         expect(page.current_path).to eq(jobs_with_type_organisation_path("draft"))
         expect(page.body).to include(I18n.t("messages.jobs.draft_saved_html", job_title: @vacancy.job_title))
 
-        click_on "Edit"
+        click_on @vacancy.job_title
+        within("#job_summary") do
+          click_on I18n.t("buttons.change")
+        end
 
         expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_summary))
         expect(find_field("publishers_job_listing_job_summary_form[job_advert]").value).to eq("")

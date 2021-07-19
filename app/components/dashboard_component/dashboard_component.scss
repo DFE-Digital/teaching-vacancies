@@ -2,15 +2,10 @@
 @import '../../frontend/src/styles/application/full-width-mast';
 
 .dashboard-component {
-  @include full-width-mast;
-
-  background-color: govuk-colour('light-grey');
-  padding: govuk-spacing(3) 0 0;
+  margin: govuk-spacing(3) inherit;
 
   @include govuk-media-query ($from: desktop) {
-    .govuk-width-container {
-      display: flex;
-    }
+    border-bottom: 1px solid $govuk-border-colour;
 
     &__button {
       flex-grow: 1;
@@ -18,8 +13,44 @@
     }
   }
 
+  .govuk-width-container {
+    display: block;
+    margin-bottom: govuk-spacing(3);
+    margin-left: 0;
+
+    @include govuk-media-query ($from: desktop) {
+      margin-bottom: 0;
+    }
+  }
+
   h2 {
     word-wrap: break-word;
+  }
+
+  &--background {
+    @include full-width-mast;
+    background-color: govuk-colour('light-grey');
+    border-bottom: 0;
+    padding: govuk-spacing(3) 0 0;
+
+    @include govuk-media-query ($until: desktop) {
+      .govuk-width-container {
+        margin-left: govuk-spacing(3);
+      }
+    }
+
+    @include govuk-media-query ($from: desktop) {
+      .govuk-width-container {
+        margin-left: auto;
+      }
+    }
+  }
+
+  &__header {
+    display: block;
+    @include govuk-media-query ($from: desktop) {
+      display: flex;
+    }
   }
 
   &-navigation {
