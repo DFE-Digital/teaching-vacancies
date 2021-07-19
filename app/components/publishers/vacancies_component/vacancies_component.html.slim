@@ -69,8 +69,10 @@
                     = tag.div(card.labelled_item(t("jobs.publication_date"), vacancy.publish_on))
                     = tag.div(card.labelled_item(t("jobs.manage.closing_date"), vacancy.application_deadline))
                   - when "expired"
-                    - if vacancy.enable_job_applications && !vacancy_expired_over_a_year_ago?(vacancy)
+                    - if vacancy.enable_job_applications && !vacancy_expired_over_a_year_ago?(vacancy) && vacancy.job_applications.where.not(status: %w[draft withdrawn]).any?
                       = view_applicants(vacancy)
+                    - else
+                      = tag.div(t("jobs.manage.view_applicants", count: 0), class: "govuk-!-font-size-19")
                     = tag.div(card.labelled_item(t("jobs.date_listed"), vacancy.publish_on))
                     = tag.div(card.labelled_item(t("jobs.manage.expired.expired_on"), vacancy.application_deadline))
                   - when "draft"
