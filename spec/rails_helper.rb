@@ -39,6 +39,10 @@ RSpec.configure do |config|
 
   config.use_transactional_fixtures = true
 
+  config.before do
+    ActiveJob::Base.queue_adapter = :test
+  end
+
   config.before(:each, type: :system) do
     driven_by :rack_test
     Capybara.default_host = "http://#{ENV.fetch('DOMAIN', 'localhost:3000')}"
@@ -58,10 +62,6 @@ RSpec.configure do |config|
 
   config.before(:each, type: :system, accessibility: true) do
     driven_by :selenium, using: :headless_chrome
-  end
-
-  config.before do
-    ActiveJob::Base.queue_adapter = :test
   end
 
   config.before(:each, geocode: true) do
