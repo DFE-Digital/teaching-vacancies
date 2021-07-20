@@ -20,7 +20,11 @@ RSpec.describe CopyVacancy do
 
         described_class.new(vacancy).call
 
-        expect(Vacancy.find(vacancy.id).attributes == vacancy.attributes)
+        db_vacancy = Vacancy.find(vacancy.id)
+        # For whatever reason, db_vacancy.attributes doesn't include the migrated_contact_email field,
+        # even though db_vacancy.migrated_contact_email contains the right data.
+        # That column will be dropped in the subsequent PR, so we can revert this change then.
+        expect(vacancy.attributes == db_vacancy.attributes.merge({ "migrated_contact_email" => db_vacancy.migrated_contact_email}))
           .to eq(true)
       end
     end
