@@ -23,8 +23,14 @@
 
               - card.actions do
                 - if draft_application.vacancy.expires_at.future?
-                  = tag.div(govuk_link_to(t(".continue_application"), jobseekers_job_application_review_path(draft_application)))
-                = tag.div(govuk_link_to(t("buttons.delete"), jobseekers_job_application_confirm_destroy_path(draft_application)))
+                  .card-component__action
+                    = govuk_link_to jobseekers_job_application_review_path(draft_application) do
+                      = t(".continue_application")
+                      span.govuk-visually-hidden = " for #{draft_application.vacancy.job_title}"
+                .card-component__action
+                  = govuk_link_to jobseekers_job_application_confirm_destroy_path(draft_application) do
+                    = t("buttons.delete")
+                    span.govuk-visually-hidden = " application for #{draft_application.vacancy.job_title}"
 
           - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).not_draft.each do |submitted_application|
             = render CardComponent.new do |card|
@@ -38,9 +44,16 @@
                 = tag.div(card.labelled_item(t(".closing_date"), OrganisationVacancyPresenter.new(submitted_application.vacancy).application_deadline))
 
               - card.actions do
-                = tag.div(govuk_link_to(t(".view_application"), jobseekers_job_application_path(submitted_application)))
+                .card-component__action
+                  = govuk_link_to jobseekers_job_application_path(submitted_application) do
+                    = t(".view_application")
+                    span.govuk-visually-hidden = " for #{submitted_application.vacancy.job_title}"
                 - if submitted_application.status.in?(%w[shortlisted submitted])
-                  = tag.div(govuk_link_to(t(".withdraw"), jobseekers_job_application_confirm_withdraw_path(submitted_application)))
+                  .card-component__action
+                    = govuk_link_to jobseekers_job_application_confirm_withdraw_path(submitted_application) do
+                      = t(".withdraw")
+                      span.govuk-visually-hidden = " application for #{submitted_application.vacancy.job_title}"
+
         - else
           = render EmptySectionComponent.new title: t(".no_job_applications") do
             = t(".no_job_applications_body_html", link_to: govuk_link_to(t(".find_and_apply"), root_path))

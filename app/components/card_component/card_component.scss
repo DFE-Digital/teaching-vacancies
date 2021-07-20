@@ -54,7 +54,7 @@
   &__actions {
     margin-left: 0;
 
-    > * {
+    .card-component__action {
       display: inline-block;
 
       .govuk-link {
