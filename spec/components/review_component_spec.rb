@@ -22,7 +22,7 @@ RSpec.describe ReviewComponent, type: :component do
 
       it "renders the edit link in the heading" do
         expect(page).to have_css("div", class: "review-component") do |review|
-          expect(review).to have_css("h2", class: "govuk-heading-m", text: title)
+          expect(review).to have_css("h3", class: "govuk-heading-m", text: title)
           expect(review).to have_css("a", class: "govuk-link", text: text)
         end
       end
@@ -31,7 +31,7 @@ RSpec.describe ReviewComponent, type: :component do
     context "when text and href are not provided" do
       it "does not render the edit link in the heading" do
         expect(page).to have_css("div", class: "review-component") do |review|
-          expect(review).to have_css("h2", class: "govuk-heading-m", text: title) do |heading|
+          expect(review).to have_css("h3", class: "govuk-heading-m", text: title) do |heading|
             expect(heading).not_to have_css("a", class: "govuk-link")
           end
         end
@@ -40,7 +40,7 @@ RSpec.describe ReviewComponent, type: :component do
 
     it "renders the heading with a title" do
       expect(page).to have_css("div", class: "review-component") do |review|
-        expect(review).to have_css("h2", class: "govuk-heading-m", text: title)
+        expect(review).to have_css("h3", class: "govuk-heading-m", text: title)
       end
     end
 
@@ -49,7 +49,7 @@ RSpec.describe ReviewComponent, type: :component do
 
       it "renders the heading with a title and the content provided" do
         expect(page).to have_css("div", class: "review-component") do |review|
-          expect(review).to have_css("h2", class: "govuk-heading-m", text: title)
+          expect(review).to have_css("h3", class: "govuk-heading-m", text: title)
           expect(review).to have_css("strong", text: "A tag")
         end
       end
@@ -59,7 +59,7 @@ RSpec.describe ReviewComponent, type: :component do
   context "when a heading slot is not defined" do
     it "does not render the heading" do
       expect(page).to have_css("div", class: "review-component") do |review|
-        expect(review).not_to have_css("h2", class: "govuk-heading-m")
+        expect(review).not_to have_css("h3", class: "govuk-heading-m")
       end
     end
   end
