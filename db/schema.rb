@@ -86,6 +86,9 @@ ActiveRecord::Schema.define(version: 2021_08_06_161056) do
     t.uuid "job_application_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "organisation_ciphertext"
+    t.text "job_title_ciphertext"
+    t.text "main_duties_ciphertext"
     t.integer "employment_type", default: 0
     t.text "reason_for_break", default: ""
   end
@@ -224,6 +227,21 @@ ActiveRecord::Schema.define(version: 2021_08_06_161056) do
     t.string "age", default: "", null: false
     t.string "email_address", default: "", null: false
     t.boolean "withdrawn_by_closing_account", default: false, null: false
+    t.text "first_name_ciphertext"
+    t.text "last_name_ciphertext"
+    t.text "previous_names_ciphertext"
+    t.text "street_address_ciphertext"
+    t.text "city_ciphertext"
+    t.text "postcode_ciphertext"
+    t.text "phone_number_ciphertext"
+    t.text "teacher_reference_number_ciphertext"
+    t.text "national_insurance_number_ciphertext"
+    t.text "personal_statement_ciphertext"
+    t.text "support_needed_details_ciphertext"
+    t.text "close_relationships_details_ciphertext"
+    t.text "further_instructions_ciphertext"
+    t.text "rejection_reasons_ciphertext"
+    t.text "gaps_in_employment_details_ciphertext"
   end
 
   create_table "jobseekers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -246,6 +264,8 @@ ActiveRecord::Schema.define(version: 2021_08_06_161056) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.date "account_closed_on"
+    t.text "current_sign_in_ip_ciphertext"
+    t.text "last_sign_in_ip_ciphertext"
     t.index ["confirmation_token"], name: "index_jobseekers_on_confirmation_token", unique: true
     t.index ["email"], name: "index_jobseekers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_jobseekers_on_reset_password_token", unique: true
@@ -353,6 +373,8 @@ ActiveRecord::Schema.define(version: 2021_08_06_161056) do
     t.string "given_name"
     t.datetime "created_at", precision: 6
     t.datetime "updated_at", precision: 6
+    t.text "family_name_ciphertext"
+    t.text "given_name_ciphertext"
     t.index ["oid"], name: "index_publishers_on_oid", unique: true
   end
 
@@ -377,6 +399,7 @@ ActiveRecord::Schema.define(version: 2021_08_06_161056) do
     t.string "subject", default: "", null: false
     t.integer "year"
     t.uuid "job_application_id", null: false
+    t.text "finished_studying_details_ciphertext"
   end
 
   create_table "references", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -389,6 +412,11 @@ ActiveRecord::Schema.define(version: 2021_08_06_161056) do
     t.uuid "job_application_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "name_ciphertext"
+    t.text "job_title_ciphertext"
+    t.text "organisation_ciphertext"
+    t.text "email_ciphertext"
+    t.text "phone_number_ciphertext"
   end
 
   create_table "saved_jobs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
