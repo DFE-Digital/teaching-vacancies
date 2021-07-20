@@ -16,7 +16,7 @@ module VacanciesHelper
 
   def page_title_prefix(vacancy, form_object, page_heading)
     if vacancy.published?
-      "#{form_object.errors.present? ? 'Error: ' : ''}Edit the #{page_heading}"
+      "#{form_object.errors.present? ? 'Error: ' : ''}Edit the #{page_heading} for #{vacancy.job_title}"
     else
       "#{form_object.errors.present? ? 'Error: ' : ''}#{page_heading} — #{t('jobs.create_a_job_title', organisation: current_organisation.name)}"
     end
