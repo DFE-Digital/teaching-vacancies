@@ -352,7 +352,7 @@ en:
         relationship: Relationship to applicant
         phone_number: Phone number
       jobseekers_job_application_employment_history_form:
-        gaps_in_employment_details: Please provide details
+        gaps_in_employment_details: Please provide details about any gaps in employment
         gaps_in_employment_options:
           "no": "No"
           "yes": "Yes"
