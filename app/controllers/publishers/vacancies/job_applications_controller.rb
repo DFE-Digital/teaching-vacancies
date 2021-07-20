@@ -15,8 +15,9 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def show
-    raise ActionController::RoutingError, "Cannot view a draft or withdrawn application" if
-      job_application.draft? || job_application.withdrawn?
+    redirect_to organisation_job_job_application_withdrawn_path(vacancy.id, job_application) if job_application.withdrawn?
+
+    raise ActionController::RoutingError, "Cannot view a draft application" if job_application.draft?
 
     job_application.reviewed! if job_application.submitted?
   end
@@ -29,6 +30,8 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     Jobseekers::JobApplicationMailer.send("application_#{status}".to_sym, job_application).deliver_now
     redirect_to organisation_job_job_applications_path(vacancy.id), success: t(".#{status}", name: job_application.name)
   end
+
+  def withdrawn; end
 
   private
 

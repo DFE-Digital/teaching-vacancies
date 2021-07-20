@@ -251,6 +251,11 @@ en:
         update_status:
           unsuccessful: "%{name} has been sent an email telling them their application has not been successful"
           shortlisted: "%{name} has been sent an email telling them that they have been shortlisted"
+        withdrawn:
+          content: The candidate has withdrawn their application and you cannot view it any more.
+          heading: This application has been withdrawn
+          page_title: Application withdrawn
+          view_more_applications: View more applications
       live:
         notice: You can only view active jobs
       review:
