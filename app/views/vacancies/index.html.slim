@@ -21,7 +21,7 @@
       = render(Jobseekers::SearchResults::SearchVisualizerComponent.new(vacancies_search: @vacancies_search, render: @display_map))
       .search-results__header
         - unless @vacancies_search.out_of_bounds?
-          .govuk-body.search-results__header-stats aria-label="Number of results"
+          .govuk-body.search-results__header-stats
             p.govuk-body
               - if @vacancies_search.total_count <= @vacancies_search.per_page
                 = t("jobs.number_of_results_one_page_html", count: @vacancies_search.total_count)
@@ -29,7 +29,7 @@
                 = t("jobs.number_of_results_html", first: @vacancies_search.page_from, last: @vacancies_search.page_to, count: @vacancies_search.total_count)
         .search-results__header-sorting
           = render partial: "sorting_options", locals: { search_criteria: @vacancies_search.active_criteria, sort: @vacancies_search.sort_by }
-      #search-results aria-label="Search results"
+      #search-results
         - if @vacancies.any?
           ul.vacancies role="list"
             - @vacancies.each do |vacancy|

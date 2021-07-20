@@ -11,4 +11,7 @@ table.govuk-table.js-documents__table
         td.govuk-table__cell = open_in_new_tab_link_to(document.filename, document)
         td.govuk-table__cell = t("jobs.upload_documents_table.upload_status.uploaded")
         td.govuk-table__cell = number_to_human_size(document.byte_size)
-        td.govuk-table__cell = govuk_link_to(t("jobs.upload_documents_table.actions.remove"), organisation_job_documents_path(id: document.id, job_id: vacancy.id), method: :delete)
+        td.govuk-table__cell
+          = govuk_link_to organisation_job_documents_path(id: document.id, job_id: vacancy.id), method: :delete do
+           = t("jobs.upload_documents_table.actions.remove")
+           span.govuk-visually-hidden = " #{document.filename} supporting document"
