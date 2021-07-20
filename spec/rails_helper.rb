@@ -3,6 +3,8 @@ SimpleCov.start
 
 require "spec_helper"
 ENV["RAILS_ENV"] ||= "test"
+# Lockbox master key is specific to test environment
+ENV["LOCKBOX_MASTER_KEY"] = "5b1f54d9c713b028b34a34b2bf95b4e22150fcd636069efc67cf7bff64ddfb04"
 require File.expand_path("../config/environment", __dir__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require "rspec/rails"
@@ -39,6 +41,10 @@ RSpec.configure do |config|
 
   config.use_transactional_fixtures = true
 
+  config.before do
+    ActiveJob::Base.queue_adapter = :test
+  end
+
   config.before(:each, type: :system) do
     driven_by :rack_test
     Capybara.default_host = "http://#{ENV.fetch('DOMAIN', 'localhost:3000')}"
@@ -58,10 +64,6 @@ RSpec.configure do |config|
 
   config.before(:each, type: :system, accessibility: true) do
     driven_by :selenium, using: :headless_chrome
-  end
-
-  config.before do
-    ActiveJob::Base.queue_adapter = :test
   end
 
   config.before(:each, geocode: true) do
