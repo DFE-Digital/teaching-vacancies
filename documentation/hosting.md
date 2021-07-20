@@ -175,8 +175,11 @@ make <env> console e.g. make qa console
 ## Run task
 
 ```bash
-cf run-task <app_name> -c "rails task:name"
+cf run-task <app_name> -c "command task:name"
 ```
+
+`command` could be `rails`, `rake`, or something else, depending on the task.
+
 ## CI/CD with GitHub Actions
 
 Tests run every time is pushed on a branch.
