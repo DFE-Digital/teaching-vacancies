@@ -79,6 +79,21 @@ RSpec.describe Jobseekers::AccountMailer do
     end
   end
 
+  describe "#inactive_account" do
+    let(:mail) { described_class.inactive_account(jobseeker) }
+    let(:notify_template) { NOTIFY_JOBSEEKER_INACTIVE_ACCOUNT_TEMPLATE }
+
+    it "sends an `inactive_account` email" do
+      expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.inactive_account.subject"))
+      expect(mail.to).to eq(["test@email.com"])
+      expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.inactive_account.subject"))
+      expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.inactive_account.intro"))
+      expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.inactive_account.explanation"))
+      expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.inactive_account.reactivate", date: 2.weeks.from_now.to_date.to_s(:day_month)))
+      expect(mail.body.encoded).to include(new_jobseeker_session_path)
+    end
+  end
+
   describe "#reset_password_instructions" do
     let(:mail) { described_class.reset_password_instructions(jobseeker, token) }
     let(:notify_template) { NOTIFY_JOBSEEKER_RESET_PASSWORD_TEMPLATE }

@@ -3,6 +3,11 @@ clear_emergency_login_keys:
   class: 'ClearEmergencyLoginKeysJob'
   queue: low
 
+destroy_inactive_accounts:
+  cron: '10 8 * * *'
+  class: 'DestroyInactiveAccountsJob'
+  queue: low
+
 email_feedback_prompt:
   cron: '0 09 * * *'
   class: 'SendExpiredVacancyFeedbackEmailJob'
@@ -61,6 +66,11 @@ reset_sessions:
 send_feedback:
   cron: '10 0 * * *'
   class: 'SendFeedbackToBigQueryJob'
+  queue: low
+
+send_inactive_account_email:
+  cron: '0 8 * * *'
+  class: 'SendInactiveAccountEmailJob'
   queue: low
 
 send_job_application_data_expiry_notification:
