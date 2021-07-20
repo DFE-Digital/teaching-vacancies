@@ -11,8 +11,8 @@ RSpec.describe Jobseekers::CloseAccount do
   describe "#call" do
     before { subject.call }
 
-    it "marks jobseeker account as closed" do
-      expect(jobseeker.closed_account).to be true
+    it "sets jobseeker account_closed_on to current date" do
+      expect(jobseeker.account_closed_on).to eq Date.current
     end
 
     context "when close_account_feedback_form_params are present" do

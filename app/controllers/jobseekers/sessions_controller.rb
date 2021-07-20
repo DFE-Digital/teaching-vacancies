@@ -47,7 +47,7 @@ class Jobseekers::SessionsController < Devise::SessionsController
   end
 
   def reactivate_account_if_closed
-    return unless current_jobseeker.closed_account
+    return unless current_jobseeker.account_closed_on?
 
     Jobseekers::ReactivateAccount.new(current_jobseeker).call
   end

@@ -17,7 +17,7 @@ class Jobseekers::CloseAccount
   private
 
   def mark_jobseeker_account_closed
-    jobseeker.update(closed_account: true)
+    jobseeker.update(account_closed_on: Date.current)
   end
 
   def create_feedback

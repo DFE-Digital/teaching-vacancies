@@ -13,7 +13,7 @@ class Jobseekers::ReactivateAccount
   private
 
   def mark_jobseeker_account_not_closed
-    jobseeker.update(closed_account: false)
+    jobseeker.update(account_closed_on: nil)
   end
 
   def mark_subscriptions_active

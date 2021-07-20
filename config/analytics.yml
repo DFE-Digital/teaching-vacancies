@@ -136,7 +136,7 @@ shared:
     - locked_at
     - created_at
     - updated_at
-    - closed_account
+    - account_closed_on
   local_authority_publisher_schools:
     - id
     - publisher_preference_id
