@@ -78,3 +78,6 @@ OmniAuth.config.logger = Logger.new("/dev/null")
 OmniAuth.config.on_failure = proc { |env|
   OmniAuth::FailureEndpoint.new(env).redirect_to_failure
 }
+
+# Lockbox key token is specific to test environment
+Lockbox.master_key = "5b1f54d9c713b028b34a34b2bf95b4e22150fcd636069efc67cf7bff64ddfb04"
