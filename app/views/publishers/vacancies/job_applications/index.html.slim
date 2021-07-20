@@ -36,6 +36,6 @@
                 = govuk_link_to organisation_job_job_application_reject_path(vacancy.id, application.id) do
                   = t("buttons.reject")
                   span.govuk-visually-hidden = " #{application.name}"
-                  
+
     - else
       = render EmptySectionComponent.new title: t(".no_applicants")
