@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   Array.from(document.querySelectorAll('[data-auto-submit="true"]')).forEach((el) => {
     el.addEventListener('change', (e) => {
       ['govuk-select', 'govuk-checkboxes__input'].forEach((selector) => {
-        if (e.target.classList.contains(selector)) {
+        if (e.target.classList.contains(selector) && e.target.dataset.changeSubmit !== 'false') {
           changeHandler(e.target.closest('form'));
         }
       });
