@@ -178,9 +178,10 @@ en:
         application_link: Leave this blank unless candidates can apply directly on the school or council website
         contact_email: This email address will be shown publicly as a point of contact
         contact_number: This phone number will be for any questions applicants may have about the role
-        enable_job_applications: >-
-          Candidates can apply using the Teaching Vacancies application form, or you can direct them to another service,
-          like the local authority or a school's website.
+        enable_job_applications_html: >-
+          Candidates can apply using the Teaching Vacancies application form,
+          or you can direct them to another service, like the local authority or a school's website.
+          <a class="govuk-link" target="_blank" href="/pages/job-application-preview">Preview the application form (opens in new tab)</a>
         how_to_apply: Explain how to apply for the job, referring to any relevant documents
         local_authority_visits: >-
           Explain how a candidate can arrange visits within the local authority (give a phone number if possible)
@@ -488,9 +489,7 @@ en:
         application_link: Link to online application
         enable_job_applications_options:
           "false": Use another application process or form
-          true_html: >-
-            Apply using the Teaching Vacancies application form.
-            <a class="govuk-link" target="_blank" href="/pages/job-application-preview">Preview the application form (opens in new tab)</a>
+          "true": Apply using the Teaching Vacancies application form.
         contact_email: Contact email
         contact_number: Contact phone number
         how_to_apply: How to apply
