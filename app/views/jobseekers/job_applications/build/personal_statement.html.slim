@@ -3,13 +3,13 @@
 = render BannerComponent.new do
   = govuk_back_link text: t("buttons.back_to_previous_step"), href: back_path, classes: "govuk-!-margin-top-3"
   .govuk-caption-l class="govuk-!-margin-top-5" = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
-  h2.govuk-heading-xl class="govuk-!-margin-bottom-5" = t("jobseekers.job_applications.heading")
+  h1.govuk-heading-xl class="govuk-!-margin-bottom-5" = t("jobseekers.job_applications.heading")
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     - if current_jobseeker.job_applications.not_draft.none?
       = render "caption"
-    h1.govuk-heading-l = t(".heading")
+    h2.govuk-heading-l = t(".heading")
     p.govuk-body = t(".description")
 
     = govuk_notification_banner title: t(".banner_title") do

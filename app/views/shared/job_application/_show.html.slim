@@ -72,8 +72,8 @@
       p.govuk-body = t(".employment_history.none")
     - else
       = govuk_accordion classes: "govuk-!-margin-bottom-2" do |accordion|
-        - job_application.employments.order(:created_at).each do |employment|
-          - accordion.add_section title: employment.job_title do
+        - job_application.employments.order(:created_at).each_with_index do |employment, index|
+          - accordion.add_section title: employment.job_title, html_attributes: { id: "#{employment.job_title}-#{index}" }
             = govuk_summary_list do |summary|
               - summary.slot :row, key: t(".employment_history.organisation"), value: employment.organisation
               - if employment.salary.present?

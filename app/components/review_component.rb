@@ -32,7 +32,7 @@ class ReviewComponent < GovukComponent::Base
         safe_join([
           tag.div(class: "review-component__heading__title") do
             safe_join([
-              tag.h2(class: "govuk-heading-m") { title },
+              tag.h3(class: "govuk-heading-m") { title },
               edit_link,
             ].compact)
           end,
