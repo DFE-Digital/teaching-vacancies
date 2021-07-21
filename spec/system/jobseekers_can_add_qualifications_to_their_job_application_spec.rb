@@ -84,7 +84,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
 
       it "allows jobseekers to edit the qualification" do
         visit jobseekers_job_application_build_path(job_application, :qualifications)
-        click_on I18n.t("buttons.edit")
+        click_on I18n.t("buttons.change")
         expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :qualifications))
         fill_in "Awarding body", with: "University of Life"
         click_on I18n.t("buttons.save_qualification.one")
@@ -103,7 +103,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
 
       it "allows jobseekers to edit the qualification and its results" do
         visit jobseekers_job_application_build_path(job_application, :qualifications)
-        click_on I18n.t("buttons.edit")
+        click_on I18n.t("buttons.change")
         fill_in "jobseekers_job_application_details_qualifications_secondary_other_form[qualification_results_attributes][0][subject]", with: "Hard Knocks"
         empty_second_qualification_result
         fill_in "School", with: "St Nicholas School"
