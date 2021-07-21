@@ -27,7 +27,15 @@
           - if application.status.in?(%w[reviewed shortlisted submitted])
             - card.actions do
               - if application.reviewed? || application.submitted?
-                = tag.div(govuk_link_to(t("buttons.shortlist"), organisation_job_job_application_shortlist_path(vacancy.id, application.id)))
-              = tag.div(govuk_link_to(t("buttons.reject"), organisation_job_job_application_reject_path(vacancy.id, application.id)))
+                .card-component__action
+                  = govuk_link_to organisation_job_job_application_shortlist_path(vacancy.id, application.id) do
+                    = t("buttons.shortlist")
+                    span.govuk-visually-hidden = " #{application.name}"
+
+              .card-component__action
+                = govuk_link_to organisation_job_job_application_reject_path(vacancy.id, application.id) do
+                  = t("buttons.reject")
+                  span.govuk-visually-hidden = " #{application.name}"
+
     - else
       = render EmptySectionComponent.new title: t(".no_applicants")
