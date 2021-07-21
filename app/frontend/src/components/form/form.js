@@ -32,6 +32,7 @@ export const disableInputs = (inputs) => {
 export const enableInputs = (inputs) => {
   inputs.forEach((input) => {
     input.disabled = false;
+    input.value = input.getAttribute('value');
   });
 };
 

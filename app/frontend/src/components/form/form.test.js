@@ -1,55 +1,60 @@
 /**
  * @jest-environment jsdom
  */
-
 import form from './form';
 
 describe('form', () => {
-  document.body.innerHTML = '<div class="clear-form"> <input id="test-text-input" type="text"/> <input id="test-checkbox" type="checkbox"/> </div>';
-  const textField = document.querySelector('#test-text-input');
-  textField.value = '01';
-  const fields = Array.from(document.querySelectorAll('input[type="text"]'));
-
   describe('toggling inputs', () => {
+    let textField;
+
     beforeEach(() => {
-      form.disableInputs(fields);
+      document.body.innerHTML = '<div> <input id="test-text-input" type="text" value="10" /> <input id="test-checkbox" type="checkbox"/> </div>';
+      textField = document.getElementById('test-text-input');
     });
 
     describe('disableInputs', () => {
+      beforeEach(() => {
+        form.disableInputs(Array.from(document.querySelectorAll('input[type="text"]')));
+      });
+
       test('removes the value from the input element', () => {
-        expect(document.querySelector('#test-text-input').value).toBe('');
+        expect(textField.value).toBe('');
       });
 
       test('disables the input element', () => {
-        expect(document.querySelector('#test-text-input').disabled).toBe(true);
+        expect(textField.disabled).toBe(true);
       });
     });
 
     describe('enableInputs', () => {
       beforeEach(() => {
-        form.enableInputs(fields);
-        textField.value = '01';
+        form.enableInputs(Array.from(document.querySelectorAll('input[type="text"]')));
       });
 
-      test('allows for a value to be added to the input element', () => {
-        expect(document.querySelector('#test-text-input').value).toBe('01');
+      test('restores the original value of the input element', () => {
+        expect(textField.value).toBe('10');
       });
 
       test('enables the input element', () => {
-        expect(document.querySelector('#test-text-input').disabled).toBe(false);
+        expect(textField.disabled).toBe(false);
       });
     });
   });
 
-  describe('checkboxClickHandler', () => {
-    const formElement = document.querySelector('.clear-form');
+  describe('clear form', () => {
+    let clearContainer;
+
+    beforeEach(() => {
+      document.body.innerHTML = '<div class="clear-form"> <input id="test-text-input" type="text"/> <input id="test-checkbox" type="checkbox"/> </div>';
+      clearContainer = document.querySelector('.clear-form');
+    });
 
     describe('when checkbox is checked', () => {
       test('calls disableInputs', () => {
         form.disableInputs = jest.fn();
         const disableInputsMock = jest.spyOn(form, 'disableInputs');
-        form.checkboxClickHandler(formElement, true);
-        expect(disableInputsMock).toHaveBeenCalled();
+        form.checkboxClickHandler(clearContainer, true);
+        expect(disableInputsMock).toHaveBeenCalledWith(Array.from(document.querySelectorAll('input[type="text"]')));
       });
     });
 
@@ -57,8 +62,8 @@ describe('form', () => {
       test('calls enablesInputs', () => {
         form.enableInputs = jest.fn();
         const enableInputsMock = jest.spyOn(form, 'enableInputs');
-        form.checkboxClickHandler(formElement, false);
-        expect(enableInputsMock).toHaveBeenCalled();
+        form.checkboxClickHandler(clearContainer, false);
+        expect(enableInputsMock).toHaveBeenCalledWith(Array.from(document.querySelectorAll('input[type="text"]')));
       });
     });
   });
