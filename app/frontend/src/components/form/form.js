@@ -1,22 +1,29 @@
 document.addEventListener('DOMContentLoaded', () => {
+  initClearForm();
+  initAutoSubmit();
+});
+
+export const initClearForm = () => {
   Array.from(document.getElementsByClassName('clear-form')).forEach((el) => {
     el.querySelector('input[type="checkbox"]').addEventListener('click', (event) => {
-      checkboxClickHandler(el, event.target.checked);
+      form.checkboxClickHandler(el, event.target.checked);
     });
   });
+};
 
-  Array.from(document.querySelectorAll('[data-auto-submit="true"]')).forEach((el) => {
-    el.addEventListener('change', (e) => {
-      ['govuk-select', 'govuk-checkboxes__input'].forEach((selector) => {
-        if (e.target.classList.contains(selector)) {
-          changeHandler(e.target.closest('form'));
+export const initAutoSubmit = () => {
+  Array.from(document.querySelectorAll('[data-auto-submit="true"]')).forEach((formEl) => {
+    Array.from(formEl.querySelectorAll('.govuk-select, .govuk-checkboxes__input')).forEach((el) => {
+      el.addEventListener('change', (e) => {
+        if (e.target.dataset.changeSubmit !== 'false') {
+          form.formSubmit(e.target.closest('form'));
         }
       });
     });
   });
-});
+};
 
-export const changeHandler = (formEl) => {
+export const formSubmit = (formEl) => {
   if (formEl.dataset.autoSubmit) {
     formEl.submit();
   }
@@ -32,6 +39,7 @@ export const disableInputs = (inputs) => {
 export const enableInputs = (inputs) => {
   inputs.forEach((input) => {
     input.disabled = false;
+    input.value = input.getAttribute('value');
   });
 };
 
@@ -48,6 +56,7 @@ const form = {
   disableInputs,
   enableInputs,
   checkboxClickHandler,
+  formSubmit,
 };
 
 export default form;
