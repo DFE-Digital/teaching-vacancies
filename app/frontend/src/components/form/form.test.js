@@ -1,14 +1,20 @@
 /**
  * @jest-environment jsdom
  */
-import form, { initAutoSubmit, initClearForm } from './form';
+import form, {
+  initAutoSubmit,
+  initClearForm,
+  CHECKBOX_CLASS,
+  CLEARFORM_CLASS,
+  AUTOSUBMIT_ATTR_KEY,
+} from './form';
 
 describe('form', () => {
   describe('form auto submit behaviour', () => {
     beforeEach(() => {
-      document.body.innerHTML = `<form data-auto-submit="true">
-      <input type="checkbox" class="govuk-checkboxes__input" data-change-submit="false" id="no-submit" />
-      <input type="checkbox" class="govuk-checkboxes__input" id="should-submit" />
+      document.body.innerHTML = `<form data-${AUTOSUBMIT_ATTR_KEY}="true">
+      <input type="checkbox" class="${CHECKBOX_CLASS}" data-change-submit="false" id="no-submit" />
+      <input type="checkbox" class="${CHECKBOX_CLASS}" id="should-submit" />
       </form>`;
     });
 
@@ -39,7 +45,7 @@ describe('form', () => {
     let textField;
 
     beforeEach(() => {
-      document.body.innerHTML = '<div> <input id="test-text-input" type="text" value="10" /> </div>';
+      document.body.innerHTML = `<div class="${CLEARFORM_CLASS}"> <input id="test-text-input" type="text" value="10" /> </div>`;
       textField = document.getElementById('test-text-input');
     });
 
@@ -73,11 +79,8 @@ describe('form', () => {
   });
 
   describe('clear form', () => {
-    let clearContainer;
-
     beforeEach(() => {
-      document.body.innerHTML = '<div class="clear-form"> <input id="test-text-input" type="text"/> <input id="test-checkbox" type="checkbox"/> </div>';
-      clearContainer = document.querySelector('.clear-form');
+      document.body.innerHTML = `<div class="${CLEARFORM_CLASS}"> <input id="test-text-input" type="text" /> <input id="test-checkbox" type="checkbox" class="${CHECKBOX_CLASS}" /> </div>`;
       initClearForm();
     });
 
@@ -85,7 +88,7 @@ describe('form', () => {
       test('calls disableInputs', () => {
         form.disableInputs = jest.fn();
         const disableInputsMock = jest.spyOn(form, 'disableInputs');
-        form.checkboxClickHandler(clearContainer, true);
+        form.checkboxClickHandler(document.querySelector(`.${CLEARFORM_CLASS}`), true);
         expect(disableInputsMock).toHaveBeenCalledWith(Array.from(document.querySelectorAll('input[type="text"]')));
       });
     });
@@ -94,7 +97,7 @@ describe('form', () => {
       test('calls enablesInputs', () => {
         form.enableInputs = jest.fn();
         const enableInputsMock = jest.spyOn(form, 'enableInputs');
-        form.checkboxClickHandler(clearContainer, false);
+        form.checkboxClickHandler(document.querySelector(`.${CLEARFORM_CLASS}`), false);
         expect(enableInputsMock).toHaveBeenCalledWith(Array.from(document.querySelectorAll('input[type="text"]')));
       });
     });
