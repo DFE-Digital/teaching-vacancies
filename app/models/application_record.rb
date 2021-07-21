@@ -7,6 +7,10 @@ class ApplicationRecord < ActiveRecord::Base
 
   DATA_ACCESS_PERIOD_FOR_PUBLISHERS = 1.year.freeze
 
+  def attributes_except_ciphertext_and_bidx
+    attributes.reject { |k, _v| k.include?("_ciphertext") || k.include?("_bidx") }
+  end
+
   private
 
   def event_data

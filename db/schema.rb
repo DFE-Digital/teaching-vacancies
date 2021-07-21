@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_21_135549) do
+ActiveRecord::Schema.define(version: 2021_07_22_094927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -22,10 +22,6 @@ ActiveRecord::Schema.define(version: 2021_07_21_135549) do
   create_table "account_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "organisation_identifier"
-    t.string "organisation_name", default: "", null: false
-    t.string "full_name", default: "", null: false
-    t.string "email", default: "", null: false
     t.text "email_ciphertext"
     t.text "full_name_ciphertext"
     t.text "organisation_name_ciphertext"
@@ -87,9 +83,6 @@ ActiveRecord::Schema.define(version: 2021_07_21_135549) do
     t.uuid "job_application_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "main_duties", default: "", null: false
-    t.string "job_title", default: "", null: false
-    t.string "organisation", default: "", null: false
     t.text "organisation_ciphertext"
     t.text "job_title_ciphertext"
     t.text "main_duties_ciphertext"
@@ -163,7 +156,6 @@ ActiveRecord::Schema.define(version: 2021_07_21_135549) do
     t.boolean "exported_to_bigquery", default: false, null: false
     t.integer "close_account_reason"
     t.text "close_account_reason_comment"
-    t.string "email", default: "", null: false
     t.text "email_ciphertext"
     t.string "email_bidx"
     t.index ["email_bidx"], name: "index_feedbacks_on_email_bidx"
@@ -217,21 +209,6 @@ ActiveRecord::Schema.define(version: 2021_07_21_135549) do
     t.string "country", default: "", null: false
     t.string "age", default: "", null: false
     t.boolean "withdrawn_by_closing_account", default: false, null: false
-    t.string "email_address", default: "", null: false
-    t.string "gaps_in_employment_details", default: "", null: false
-    t.text "rejection_reasons", default: "", null: false
-    t.text "further_instructions", default: "", null: false
-    t.text "close_relationships_details", default: "", null: false
-    t.text "support_needed_details", default: "", null: false
-    t.text "personal_statement", default: "", null: false
-    t.string "national_insurance_number", default: "", null: false
-    t.string "teacher_reference_number", default: "", null: false
-    t.string "postcode", default: "", null: false
-    t.string "city", default: "", null: false
-    t.string "street_address", default: "", null: false
-    t.string "previous_names", default: "", null: false
-    t.string "last_name", default: "", null: false
-    t.string "first_name", default: "", null: false
     t.text "first_name_ciphertext"
     t.text "last_name_ciphertext"
     t.text "previous_names_ciphertext"
@@ -269,8 +246,6 @@ ActiveRecord::Schema.define(version: 2021_07_21_135549) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.date "account_closed_on"
-    t.string "unconfirmed_email"
-    t.string "email", default: "", null: false
     t.text "email_ciphertext"
     t.string "email_bidx"
     t.text "unconfirmed_email_ciphertext"
@@ -379,10 +354,6 @@ ActiveRecord::Schema.define(version: 2021_07_21_135549) do
     t.datetime "last_activity_at"
     t.datetime "created_at", precision: 6
     t.datetime "updated_at", precision: 6
-    t.string "given_name"
-    t.string "family_name"
-    t.string "email"
-    t.string "oid"
     t.text "oid_ciphertext"
     t.string "oid_bidx"
     t.text "email_ciphertext"
@@ -413,7 +384,6 @@ ActiveRecord::Schema.define(version: 2021_07_21_135549) do
     t.string "subject", default: "", null: false
     t.integer "year"
     t.uuid "job_application_id", null: false
-    t.text "finished_studying_details", default: "", null: false
     t.text "finished_studying_details_ciphertext"
   end
 
@@ -422,11 +392,6 @@ ActiveRecord::Schema.define(version: 2021_07_21_135549) do
     t.uuid "job_application_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "phone_number", default: "", null: false
-    t.string "email", default: "", null: false
-    t.string "organisation", default: "", null: false
-    t.string "job_title", default: "", null: false
-    t.string "name", default: "", null: false
     t.text "name_ciphertext"
     t.text "job_title_ciphertext"
     t.text "organisation_ciphertext"
@@ -508,7 +473,6 @@ ActiveRecord::Schema.define(version: 2021_07_21_135549) do
     t.integer "end_listing_reason"
     t.integer "candidate_hired_from"
     t.boolean "enable_job_applications"
-    t.string "contact_email"
     t.text "contact_email_ciphertext"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["initially_indexed"], name: "index_vacancies_on_initially_indexed"

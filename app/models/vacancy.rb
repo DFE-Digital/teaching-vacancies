@@ -63,7 +63,7 @@ class Vacancy < ApplicationRecord
 
   paginates_per 10
 
-  encrypts :contact_email, migrating: true
+  encrypts :contact_email
 
   validates :slug, presence: true
   validate :enable_job_applications_cannot_be_changed_once_listed

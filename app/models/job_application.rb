@@ -34,9 +34,9 @@ class JobApplication < ApplicationRecord
 
   encrypts :first_name, :last_name, :previous_names, :street_address, :city, :postcode, :teacher_reference_number,
            :national_insurance_number, :personal_statement, :support_needed_details, :close_relationships_details,
-           :further_instructions, :rejection_reasons, :gaps_in_employment_details, :email_address, migrating: true
+           :further_instructions, :rejection_reasons, :gaps_in_employment_details, :email_address
   # blind index needed for searching by encrypted columns with .where/.find_by, and for validating uniqueness.
-  blind_index :email_address, migrating: true
+  blind_index :email_address
 
   belongs_to :jobseeker
   belongs_to :vacancy

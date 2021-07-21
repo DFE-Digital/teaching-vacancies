@@ -1,7 +1,7 @@
 class Jobseeker < ApplicationRecord
-  encrypts :email, :unconfirmed_email, migrating: true
+  encrypts :email, :unconfirmed_email
   # blind index needed for searching by encrypted columns with .where/.find_by, and for validating uniqueness.
-  blind_index :email, :unconfirmed_email, migrating: true
+  blind_index :email, :unconfirmed_email
 
   devise :database_authenticatable, :registerable, :recoverable, :validatable,
          :confirmable, :lockable, :trackable, :timeoutable
