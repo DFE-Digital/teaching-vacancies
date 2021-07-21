@@ -1,14 +1,45 @@
 /**
  * @jest-environment jsdom
  */
-import form from './form';
+import form, { initAutoSubmit, initClearForm } from './form';
 
 describe('form', () => {
+  describe('form auto submit behaviour', () => {
+    beforeEach(() => {
+      document.body.innerHTML = `<form data-auto-submit="true">
+      <input type="checkbox" class="govuk-checkboxes__input" data-change-submit="false" id="no-submit" />
+      <input type="checkbox" class="govuk-checkboxes__input" id="should-submit" />
+      </form>`;
+    });
+
+    describe('form has auto submit data attribute', () => {
+      let formSubmitMock = null;
+
+      beforeEach(() => {
+        form.formSubmit = jest.fn();
+        formSubmitMock = jest.spyOn(form, 'formSubmit');
+        initAutoSubmit();
+      });
+
+      test('changing state of an input with data-change-submit="false" attribute does not submit form', () => {
+        const event = new Event('change');
+        document.getElementById('no-submit').dispatchEvent(event);
+        expect(formSubmitMock).not.toHaveBeenCalled();
+      });
+
+      test('changing state of an input without data-change-submit="false" attribute does submit form', () => {
+        const event = new Event('change');
+        document.getElementById('should-submit').dispatchEvent(event);
+        expect(formSubmitMock).toHaveBeenCalled();
+      });
+    });
+  });
+
   describe('toggling inputs', () => {
     let textField;
 
     beforeEach(() => {
-      document.body.innerHTML = '<div> <input id="test-text-input" type="text" value="10" /> <input id="test-checkbox" type="checkbox"/> </div>';
+      document.body.innerHTML = '<div> <input id="test-text-input" type="text" value="10" /> </div>';
       textField = document.getElementById('test-text-input');
     });
 
@@ -47,6 +78,7 @@ describe('form', () => {
     beforeEach(() => {
       document.body.innerHTML = '<div class="clear-form"> <input id="test-text-input" type="text"/> <input id="test-checkbox" type="checkbox"/> </div>';
       clearContainer = document.querySelector('.clear-form');
+      initClearForm();
     });
 
     describe('when checkbox is checked', () => {
