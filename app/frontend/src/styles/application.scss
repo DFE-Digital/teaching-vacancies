@@ -107,6 +107,10 @@ b {
   }
 }
 
+.grey-cta-container {
+  background-color: govuk-colour('light-grey');
+}
+
 .vacancies_index {
 
   @media only screen and (min-width: $small-screen) {
