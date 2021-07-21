@@ -86,14 +86,6 @@
               - if employment.current_role == "no"
                 - summary.slot :row, key: t(".employment_history.ended_on"), value: employment.ended_on
 
-    - if job_application.gaps_in_employment == "yes"
-      = govuk_summary_list classes: "summary-list--no-divider" do |summary|
-        - summary.slot :row, key: t(".employment_history.gaps_in_employment"), value: job_application.gaps_in_employment.capitalize
-        - summary.slot :row, key: "", value: job_application.gaps_in_employment_details
-    - else
-      = govuk_summary_list classes: "summary-list--no-divider" do |summary|
-        - summary.slot :row, key: t(".employment_history.gaps_in_employment"), value: job_application.gaps_in_employment.capitalize
-
 = render ReviewComponent.new id: "personal_statement_summary" do |review|
   - review.heading title: t(".personal_statement.heading")
   - review.body do

@@ -11,27 +11,34 @@
     - else
       = govuk_accordion do |accordion|
         - job_application.employments.order(:created_at).each do |employment|
-          - accordion.add_section title: employment.job_title do
-            = govuk_summary_list do |summary|
-              - summary.slot :row,
-                              key: t("helpers.label.jobseekers_job_application_details_employment_form.organisation"),
-                              value: employment.organisation
-              - summary.slot :row,
-                              key: t("helpers.label.jobseekers_job_application_details_employment_form.salary"),
-                              value: employment.salary.presence || t("jobseekers.job_applications.not_defined")
-              - summary.slot :row,
-                              key: t("helpers.label.jobseekers_job_application_details_employment_form.subjects"),
-                              value: employment.subjects.presence || t("jobseekers.job_applications.not_defined")
-              - summary.slot :row,
-                              key: t("helpers.label.jobseekers_job_application_details_employment_form.main_duties"),
-                              value: employment.main_duties
-              - summary.slot :row,
-                              key: t("helpers.legend.jobseekers_job_application_details_employment_form.started_on"),
-                              value: employment.started_on
-              - summary.slot :row,
-                              key: t("helpers.legend.jobseekers_job_application_details_employment_form.current_role"),
-                              value: employment.current_role.humanize
-              - if employment.current_role == "no"
+          - if employment.job?
+            - accordion.add_section title: employment.job_title do
+              = govuk_summary_list do |summary|
                 - summary.slot :row,
-                                key: t("helpers.legend.jobseekers_job_application_details_employment_form.ended_on"),
-                                value: employment.ended_on
+                                key: t("helpers.label.jobseekers_job_application_details_employment_form.organisation"),
+                                value: employment.organisation
+                - summary.slot :row,
+                                key: t("helpers.label.jobseekers_job_application_details_employment_form.salary"),
+                                value: employment.salary.presence || t("jobseekers.job_applications.not_defined")
+                - summary.slot :row,
+                                key: t("helpers.label.jobseekers_job_application_details_employment_form.subjects"),
+                                value: employment.subjects.presence || t("jobseekers.job_applications.not_defined")
+                - summary.slot :row,
+                                key: t("helpers.label.jobseekers_job_application_details_employment_form.main_duties"),
+                                value: employment.main_duties
+                - summary.slot :row,
+                                key: t("helpers.legend.jobseekers_job_application_details_employment_form.started_on"),
+                                value: employment.started_on
+                - summary.slot :row,
+                                key: t("helpers.legend.jobseekers_job_application_details_employment_form.current_role"),
+                                value: employment.current_role.humanize
+                - if employment.current_role == "no"
+                  - summary.slot :row,
+                                  key: t("helpers.legend.jobseekers_job_application_details_employment_form.ended_on"),
+                                  value: employment.ended_on
+          - if employment.break?
+            - accordion.add_section title: "" do
+              = govuk_inset_text do
+                h2.govuk-heading-s class="govuk-!-margin-bottom-1" = t("jobseekers.job_applications.build.employment_history.break")
+                p.govuk-body class="govuk-!-margin-bottom-0" = employment.reason_for_break
+                p.govuk-hint class="govuk-!-margin-top-1 govuk-!-margin-bottom-1" #{employment.started_on} to #{employment.ended_on}
