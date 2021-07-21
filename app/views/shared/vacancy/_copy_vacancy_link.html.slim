@@ -2,4 +2,6 @@ section class="govuk-!-margin-top-3"
   .govuk-inset-text
     h2.govuk-heading-m = t("jobs.share_this_job")
     p#vacancy-share-url = @vacancy.share_url
-    button.govuk-button.govuk-button--secondary.copy-to-clipboard type="button" data={ "copied-text": "Copied", "target-id": "vacancy-share-url" } = "Copy URL"
+    button.govuk-button.govuk-button--secondary.copy-to-clipboard type="button" data={ "copied-text": "Copied", "target-id": "vacancy-share-url" }
+      = "Copy URL"
+      span.govuk-visually-hidden = " to clipboard for #{@vacancy.job_title}"

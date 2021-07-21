@@ -5,7 +5,7 @@
     .govuk-grid-column-two-thirds
       = govuk_panel title: t(".success"), body: ""
 
-      h3.govuk-heading-m = t(".what_happens_next")
+      h2.govuk-heading-m = t(".what_happens_next")
 
       - if @vacancy.publish_today?
         p.govuk-body = t(".date_posted_now")
@@ -23,7 +23,7 @@
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      h3.govuk-heading-m = t(".feedback.heading")
+      h2.govuk-heading-m = t(".feedback.heading")
       p.govuk-body = t(".feedback.description")
 
       = form_for @feedback_form, url: organisation_job_feedback_path(@vacancy.id) do |f|
