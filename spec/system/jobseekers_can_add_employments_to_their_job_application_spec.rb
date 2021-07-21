@@ -66,7 +66,7 @@ RSpec.describe "Jobseekers can add employments to their job application" do
     it "allows jobseekers to edit employment history" do
       visit jobseekers_job_application_build_path(job_application, :employment_history)
 
-      click_on I18n.t("buttons.edit")
+      click_on I18n.t("buttons.change")
 
       fill_in "School or other organisation", with: ""
       validates_step_complete(button: I18n.t("buttons.save_employment"))
