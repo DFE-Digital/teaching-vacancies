@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_19_151911) do
+ActiveRecord::Schema.define(version: 2021_07_21_135549) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -20,12 +20,16 @@ ActiveRecord::Schema.define(version: 2021_07_19_151911) do
   enable_extension "uuid-ossp"
 
   create_table "account_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "full_name", null: false
-    t.string "email", null: false
-    t.string "organisation_name", null: false
-    t.string "organisation_identifier"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "organisation_identifier"
+    t.string "organisation_name", default: "", null: false
+    t.string "full_name", default: "", null: false
+    t.string "email", default: "", null: false
+    t.text "email_ciphertext"
+    t.text "full_name_ciphertext"
+    t.text "organisation_name_ciphertext"
+    t.text "organisation_identifier_ciphertext"
   end
 
   create_table "active_storage_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -75,17 +79,20 @@ ActiveRecord::Schema.define(version: 2021_07_19_151911) do
   end
 
   create_table "employments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "organisation", default: "", null: false
-    t.string "job_title", default: "", null: false
     t.string "salary", default: "", null: false
     t.string "subjects", default: "", null: false
     t.string "current_role", default: "", null: false
-    t.text "main_duties", default: "", null: false
     t.date "started_on"
     t.date "ended_on"
     t.uuid "job_application_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "main_duties", default: "", null: false
+    t.string "job_title", default: "", null: false
+    t.string "organisation", default: "", null: false
+    t.text "organisation_ciphertext"
+    t.text "job_title_ciphertext"
+    t.text "main_duties_ciphertext"
   end
 
   create_table "equal_opportunities_reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -145,7 +152,6 @@ ActiveRecord::Schema.define(version: 2021_07_19_151911) do
     t.uuid "job_alert_vacancy_ids", array: true
     t.integer "unsubscribe_reason"
     t.text "other_unsubscribe_reason_comment"
-    t.string "email"
     t.integer "user_participation_response"
     t.integer "visit_purpose"
     t.text "visit_purpose_comment"
@@ -157,6 +163,10 @@ ActiveRecord::Schema.define(version: 2021_07_19_151911) do
     t.boolean "exported_to_bigquery", default: false, null: false
     t.integer "close_account_reason"
     t.text "close_account_reason_comment"
+    t.string "email", default: "", null: false
+    t.text "email_ciphertext"
+    t.string "email_bidx"
+    t.index ["email_bidx"], name: "index_feedbacks_on_email_bidx"
     t.index ["vacancy_id"], name: "index_feedbacks_on_vacancy_id"
   end
 
@@ -184,29 +194,15 @@ ActiveRecord::Schema.define(version: 2021_07_19_151911) do
     t.datetime "shortlisted_at"
     t.datetime "unsuccessful_at"
     t.datetime "withdrawn_at"
-    t.string "first_name", default: "", null: false
-    t.string "last_name", default: "", null: false
-    t.string "previous_names", default: "", null: false
-    t.string "street_address", default: "", null: false
-    t.string "city", default: "", null: false
-    t.string "postcode", default: "", null: false
     t.string "phone_number", default: "", null: false
-    t.string "teacher_reference_number", default: "", null: false
-    t.string "national_insurance_number", default: "", null: false
     t.string "qualified_teacher_status", default: "", null: false
     t.string "qualified_teacher_status_year", default: "", null: false
     t.text "qualified_teacher_status_details", default: "", null: false
     t.string "statutory_induction_complete", default: "", null: false
-    t.text "personal_statement", default: "", null: false
     t.string "support_needed", default: "", null: false
-    t.text "support_needed_details", default: "", null: false
     t.string "close_relationships", default: "", null: false
-    t.text "close_relationships_details", default: "", null: false
     t.string "right_to_work_in_uk", default: "", null: false
-    t.text "further_instructions", default: "", null: false
-    t.text "rejection_reasons", default: "", null: false
     t.string "gaps_in_employment", default: "", null: false
-    t.string "gaps_in_employment_details", default: "", null: false
     t.string "disability", default: "", null: false
     t.string "gender", default: "", null: false
     t.string "gender_description", default: "", null: false
@@ -220,12 +216,42 @@ ActiveRecord::Schema.define(version: 2021_07_19_151911) do
     t.datetime "reviewed_at"
     t.string "country", default: "", null: false
     t.string "age", default: "", null: false
-    t.string "email_address", default: "", null: false
     t.boolean "withdrawn_by_closing_account", default: false, null: false
+    t.string "email_address", default: "", null: false
+    t.string "gaps_in_employment_details", default: "", null: false
+    t.text "rejection_reasons", default: "", null: false
+    t.text "further_instructions", default: "", null: false
+    t.text "close_relationships_details", default: "", null: false
+    t.text "support_needed_details", default: "", null: false
+    t.text "personal_statement", default: "", null: false
+    t.string "national_insurance_number", default: "", null: false
+    t.string "teacher_reference_number", default: "", null: false
+    t.string "postcode", default: "", null: false
+    t.string "city", default: "", null: false
+    t.string "street_address", default: "", null: false
+    t.string "previous_names", default: "", null: false
+    t.string "last_name", default: "", null: false
+    t.string "first_name", default: "", null: false
+    t.text "first_name_ciphertext"
+    t.text "last_name_ciphertext"
+    t.text "previous_names_ciphertext"
+    t.text "street_address_ciphertext"
+    t.text "city_ciphertext"
+    t.text "postcode_ciphertext"
+    t.text "teacher_reference_number_ciphertext"
+    t.text "national_insurance_number_ciphertext"
+    t.text "personal_statement_ciphertext"
+    t.text "support_needed_details_ciphertext"
+    t.text "close_relationships_details_ciphertext"
+    t.text "further_instructions_ciphertext"
+    t.text "rejection_reasons_ciphertext"
+    t.text "gaps_in_employment_details_ciphertext"
+    t.text "email_address_ciphertext"
+    t.string "email_address_bidx"
+    t.index ["email_address_bidx"], name: "index_job_applications_on_email_address_bidx"
   end
 
   create_table "jobseekers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -237,16 +263,22 @@ ActiveRecord::Schema.define(version: 2021_07_19_151911) do
     t.string "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.string "unconfirmed_email"
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
     t.datetime "locked_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.date "account_closed_on"
+    t.string "unconfirmed_email"
+    t.string "email", default: "", null: false
+    t.text "email_ciphertext"
+    t.string "email_bidx"
+    t.text "unconfirmed_email_ciphertext"
+    t.string "unconfirmed_email_bidx"
     t.index ["confirmation_token"], name: "index_jobseekers_on_confirmation_token", unique: true
-    t.index ["email"], name: "index_jobseekers_on_email", unique: true
+    t.index ["email_bidx"], name: "index_jobseekers_on_email_bidx"
     t.index ["reset_password_token"], name: "index_jobseekers_on_reset_password_token", unique: true
+    t.index ["unconfirmed_email_bidx"], name: "index_jobseekers_on_unconfirmed_email_bidx"
     t.index ["unlock_token"], name: "index_jobseekers_on_unlock_token", unique: true
   end
 
@@ -343,15 +375,22 @@ ActiveRecord::Schema.define(version: 2021_07_19_151911) do
   end
 
   create_table "publishers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "oid"
     t.datetime "accepted_terms_at"
-    t.string "email"
     t.datetime "last_activity_at"
-    t.string "family_name"
-    t.string "given_name"
     t.datetime "created_at", precision: 6
     t.datetime "updated_at", precision: 6
-    t.index ["oid"], name: "index_publishers_on_oid", unique: true
+    t.string "given_name"
+    t.string "family_name"
+    t.string "email"
+    t.string "oid"
+    t.text "oid_ciphertext"
+    t.string "oid_bidx"
+    t.text "email_ciphertext"
+    t.string "email_bidx"
+    t.text "family_name_ciphertext"
+    t.text "given_name_ciphertext"
+    t.index ["email_bidx"], name: "index_publishers_on_email_bidx"
+    t.index ["oid_bidx"], name: "index_publishers_on_oid_bidx"
   end
 
   create_table "qualification_results", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -368,25 +407,31 @@ ActiveRecord::Schema.define(version: 2021_07_19_151911) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "category"
     t.boolean "finished_studying"
-    t.text "finished_studying_details", default: "", null: false
     t.string "grade", default: "", null: false
     t.string "institution", default: "", null: false
     t.string "name", default: "", null: false
     t.string "subject", default: "", null: false
     t.integer "year"
     t.uuid "job_application_id", null: false
+    t.text "finished_studying_details", default: "", null: false
+    t.text "finished_studying_details_ciphertext"
   end
 
   create_table "references", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name", default: "", null: false
-    t.string "job_title", default: "", null: false
-    t.string "organisation", default: "", null: false
     t.string "relationship", default: "", null: false
-    t.string "email", default: "", null: false
-    t.string "phone_number", default: "", null: false
     t.uuid "job_application_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "phone_number", default: "", null: false
+    t.string "email", default: "", null: false
+    t.string "organisation", default: "", null: false
+    t.string "job_title", default: "", null: false
+    t.string "name", default: "", null: false
+    t.text "name_ciphertext"
+    t.text "job_title_ciphertext"
+    t.text "organisation_ciphertext"
+    t.text "email_ciphertext"
+    t.text "phone_number_ciphertext"
   end
 
   create_table "saved_jobs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -431,7 +476,6 @@ ActiveRecord::Schema.define(version: 2021_07_19_151911) do
     t.text "benefits"
     t.date "starts_on"
     t.date "ends_on"
-    t.string "contact_email"
     t.integer "status"
     t.date "publish_on"
     t.datetime "created_at", null: false
@@ -464,6 +508,8 @@ ActiveRecord::Schema.define(version: 2021_07_19_151911) do
     t.integer "end_listing_reason"
     t.integer "candidate_hired_from"
     t.boolean "enable_job_applications"
+    t.string "contact_email"
+    t.text "contact_email_ciphertext"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["initially_indexed"], name: "index_vacancies_on_initially_indexed"
     t.index ["publisher_id"], name: "index_vacancies_on_publisher_id"
