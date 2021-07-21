@@ -75,12 +75,9 @@ ActiveRecord::Schema.define(version: 2021_08_06_161056) do
   end
 
   create_table "employments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "organisation", default: ""
-    t.string "job_title", default: ""
     t.string "salary", default: "", null: false
     t.string "subjects", default: "", null: false
     t.string "current_role", default: "", null: false
-    t.text "main_duties", default: ""
     t.date "started_on"
     t.date "ended_on"
     t.uuid "job_application_id", null: false
@@ -189,29 +186,14 @@ ActiveRecord::Schema.define(version: 2021_08_06_161056) do
     t.datetime "shortlisted_at"
     t.datetime "unsuccessful_at"
     t.datetime "withdrawn_at"
-    t.string "first_name", default: ""
-    t.string "last_name", default: ""
-    t.string "previous_names", default: ""
-    t.string "street_address", default: ""
-    t.string "city", default: ""
-    t.string "postcode", default: ""
-    t.string "phone_number", default: ""
-    t.string "teacher_reference_number", default: ""
-    t.string "national_insurance_number", default: ""
     t.string "qualified_teacher_status", default: "", null: false
     t.string "qualified_teacher_status_year", default: "", null: false
     t.text "qualified_teacher_status_details", default: "", null: false
     t.string "statutory_induction_complete", default: "", null: false
-    t.text "personal_statement", default: ""
     t.string "support_needed", default: "", null: false
-    t.text "support_needed_details", default: ""
     t.string "close_relationships", default: "", null: false
-    t.text "close_relationships_details", default: ""
     t.string "right_to_work_in_uk", default: "", null: false
-    t.text "further_instructions", default: ""
-    t.text "rejection_reasons", default: ""
     t.string "gaps_in_employment", default: "", null: false
-    t.string "gaps_in_employment_details", default: ""
     t.string "disability", default: "", null: false
     t.string "gender", default: "", null: false
     t.string "gender_description", default: "", null: false
@@ -252,8 +234,6 @@ ActiveRecord::Schema.define(version: 2021_08_06_161056) do
     t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string "current_sign_in_ip"
-    t.string "last_sign_in_ip"
     t.string "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
@@ -369,8 +349,6 @@ ActiveRecord::Schema.define(version: 2021_08_06_161056) do
     t.datetime "accepted_terms_at"
     t.string "email"
     t.datetime "last_activity_at"
-    t.string "family_name"
-    t.string "given_name"
     t.datetime "created_at", precision: 6
     t.datetime "updated_at", precision: 6
     t.text "family_name_ciphertext"
@@ -392,7 +370,6 @@ ActiveRecord::Schema.define(version: 2021_08_06_161056) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "category"
     t.boolean "finished_studying"
-    t.text "finished_studying_details", default: ""
     t.string "grade", default: "", null: false
     t.string "institution", default: "", null: false
     t.string "name", default: "", null: false
@@ -403,12 +380,7 @@ ActiveRecord::Schema.define(version: 2021_08_06_161056) do
   end
 
   create_table "references", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name", default: ""
-    t.string "job_title", default: ""
-    t.string "organisation", default: ""
     t.string "relationship", default: "", null: false
-    t.string "email", default: ""
-    t.string "phone_number", default: ""
     t.uuid "job_application_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

@@ -20,8 +20,8 @@ class SendFeedbackToBigQueryJob < ApplicationJob
             type: record.feedback_type,
             occurred_at: record.created_at,
             data: record.attributes_except_ciphertext.map do |key, value|
-              { key: key.to_s, value: formatted_value(value) }
-            end,
+                    { key: key.to_s, value: formatted_value(value) }
+                  end,
           }
         end,
       )
