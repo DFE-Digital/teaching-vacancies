@@ -10,6 +10,6 @@
       p = t(".sign_in.description")
       = govuk_button_to t("buttons.continue_to_dsi"), publisher_dfe_omniauth_authorize_path, class: "govuk-!-margin-bottom-0", form_class: "publisher-sign-in"
 
-    .govuk-grid-column-one-third
+    .govuk-grid-column-one-third.grey-cta-container
       h2.account-sidebar__heading = t(".no_account.heading")
       p.govuk-body = t(".no_account.content_html", link: govuk_link_to(t(".no_account.link_text"), new_publishers_account_request_path))

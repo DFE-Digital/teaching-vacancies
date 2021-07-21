@@ -12,7 +12,7 @@ RSpec.describe DetailComponent, type: :component do
   it "renders the detail with a title" do
     expect(page).to have_css("div", class: "detail-component") do |detail|
       expect(detail).to have_css("div", class: "detail-component__title") do |detail_title|
-        expect(detail_title).to have_css("h4", class: "govuk-heading-s", text: title)
+        expect(detail_title).to have_css(".govuk-heading-s", text: title)
       end
     end
   end

@@ -30,6 +30,6 @@
     = render "publishers/vacancies/back_to_manage_jobs"
 
   - if vacancy.published? && !vacancy.pending?
-    .govuk-grid-column-one-third.view-live-vacancy
+    .govuk-grid-column-one-third
       h3 = t(".view_live_listing_title")
       = open_in_new_tab_link_to(t(".view_live_listing_link"), job_path(vacancy.id))
