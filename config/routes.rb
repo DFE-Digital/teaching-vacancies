@@ -148,6 +148,7 @@ Rails.application.routes.draw do
       resources :job_applications, only: %i[index show], controller: "publishers/vacancies/job_applications" do
         get :shortlist
         get :reject
+        get :withdrawn
         post :update_status
       end
     end
