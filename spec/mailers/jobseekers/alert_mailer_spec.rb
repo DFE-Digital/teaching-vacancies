@@ -156,20 +156,4 @@ RSpec.describe Jobseekers::AlertMailer do
       end
     end
   end
-
-  describe "create account section" do
-    context "when the subscription email matches a jobseeker account" do
-      let!(:jobseeker) { create(:jobseeker, email: email) }
-
-      it "does not display create account section" do
-        expect(body).not_to include(I18n.t("jobseekers.alert_mailer.alert.create_account.heading"))
-      end
-    end
-
-    context "when the subscription email does not match a jobseeker account" do
-      it "displays create account section" do
-        expect(body).to include(I18n.t("jobseekers.alert_mailer.alert.create_account.heading"))
-      end
-    end
-  end
 end
