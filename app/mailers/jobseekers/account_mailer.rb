@@ -26,6 +26,14 @@ class Jobseekers::AccountMailer < Jobseekers::BaseMailer
     view_mail(@template, to: @to, subject: t(".subject"))
   end
 
+  def inactive_account(record, _opts = {})
+    @template = NOTIFY_JOBSEEKER_INACTIVE_ACCOUNT_TEMPLATE
+    @jobseeker = record
+    @to = @jobseeker.email
+
+    view_mail(@template, to: @to, subject: t(".subject"))
+  end
+
   def reset_password_instructions(record, token, _opts = {})
     @template = NOTIFY_JOBSEEKER_RESET_PASSWORD_TEMPLATE
     @jobseeker = record

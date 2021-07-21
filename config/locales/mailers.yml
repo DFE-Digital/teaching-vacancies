@@ -47,6 +47,12 @@ en:
           body: If you did not make this request, please email %{mail_to}
           heading: Not requested this?
         subject: Email updated
+      inactive_account:
+        intro: We will delete your Teaching Vacancies account and data unless you sign into your account in the next 2 weeks.
+        explanation: This is because you have not used your account for 5 years.
+        link: Sign into Teaching Vacancies
+        reactivate: If you want to keep your account and your data, please sign into your account before %{date}.
+        subject: Your Teaching Vacancies account and data
       reset_password_instructions:
         heading: Reset your password for your Teaching Vacancies account
         intro: You have requested to reset your password

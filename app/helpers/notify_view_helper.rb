@@ -69,6 +69,11 @@ module NotifyViewHelper
     notify_link(url, vacancy.job_title)
   end
 
+  def sign_in_link
+    url = new_jobseeker_session_url(**utm_params)
+    notify_link(url, t(".link"))
+  end
+
   def sign_up_link
     url = new_jobseeker_registration_url(**utm_params)
     notify_link(url, t(".create_account.link"))
