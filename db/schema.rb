@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_21_135549) do
+ActiveRecord::Schema.define(version: 2021_07_22_094927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -73,12 +73,9 @@ ActiveRecord::Schema.define(version: 2021_07_21_135549) do
   end
 
   create_table "employments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "organisation", default: "", null: false
-    t.string "job_title", default: "", null: false
     t.string "salary", default: "", null: false
     t.string "subjects", default: "", null: false
     t.string "current_role", default: "", null: false
-    t.text "main_duties", default: "", null: false
     t.date "started_on"
     t.date "ended_on"
     t.uuid "job_application_id", null: false
@@ -185,29 +182,14 @@ ActiveRecord::Schema.define(version: 2021_07_21_135549) do
     t.datetime "shortlisted_at"
     t.datetime "unsuccessful_at"
     t.datetime "withdrawn_at"
-    t.string "first_name", default: "", null: false
-    t.string "last_name", default: "", null: false
-    t.string "previous_names", default: "", null: false
-    t.string "street_address", default: "", null: false
-    t.string "city", default: "", null: false
-    t.string "postcode", default: "", null: false
-    t.string "phone_number", default: "", null: false
-    t.string "teacher_reference_number", default: "", null: false
-    t.string "national_insurance_number", default: "", null: false
     t.string "qualified_teacher_status", default: "", null: false
     t.string "qualified_teacher_status_year", default: "", null: false
     t.text "qualified_teacher_status_details", default: "", null: false
     t.string "statutory_induction_complete", default: "", null: false
-    t.text "personal_statement", default: "", null: false
     t.string "support_needed", default: "", null: false
-    t.text "support_needed_details", default: "", null: false
     t.string "close_relationships", default: "", null: false
-    t.text "close_relationships_details", default: "", null: false
     t.string "right_to_work_in_uk", default: "", null: false
-    t.text "further_instructions", default: "", null: false
-    t.text "rejection_reasons", default: "", null: false
     t.string "gaps_in_employment", default: "", null: false
-    t.string "gaps_in_employment_details", default: "", null: false
     t.string "disability", default: "", null: false
     t.string "gender", default: "", null: false
     t.string "gender_description", default: "", null: false
@@ -248,8 +230,6 @@ ActiveRecord::Schema.define(version: 2021_07_21_135549) do
     t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string "current_sign_in_ip"
-    t.string "last_sign_in_ip"
     t.string "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
@@ -365,8 +345,6 @@ ActiveRecord::Schema.define(version: 2021_07_21_135549) do
     t.datetime "accepted_terms_at"
     t.string "email"
     t.datetime "last_activity_at"
-    t.string "family_name"
-    t.string "given_name"
     t.datetime "created_at", precision: 6
     t.datetime "updated_at", precision: 6
     t.text "family_name_ciphertext"
@@ -388,7 +366,6 @@ ActiveRecord::Schema.define(version: 2021_07_21_135549) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "category"
     t.boolean "finished_studying"
-    t.text "finished_studying_details", default: "", null: false
     t.string "grade", default: "", null: false
     t.string "institution", default: "", null: false
     t.string "name", default: "", null: false
@@ -399,12 +376,7 @@ ActiveRecord::Schema.define(version: 2021_07_21_135549) do
   end
 
   create_table "references", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name", default: "", null: false
-    t.string "job_title", default: "", null: false
-    t.string "organisation", default: "", null: false
     t.string "relationship", default: "", null: false
-    t.string "email", default: "", null: false
-    t.string "phone_number", default: "", null: false
     t.uuid "job_application_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

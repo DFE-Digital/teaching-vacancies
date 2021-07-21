@@ -35,7 +35,7 @@ class JobApplication < ApplicationRecord
   encrypts :first_name, :last_name, :previous_names, :street_address, :city, :postcode, :phone_number,
            :teacher_reference_number, :national_insurance_number, :personal_statement, :support_needed_details,
            :close_relationships_details, :further_instructions, :rejection_reasons,
-           :gaps_in_employment_details, migrating: true
+           :gaps_in_employment_details
 
   belongs_to :jobseeker
   belongs_to :vacancy

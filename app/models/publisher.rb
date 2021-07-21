@@ -9,7 +9,7 @@ class Publisher < ApplicationRecord
 
   accepts_nested_attributes_for :organisation_publishers
 
-  encrypts :family_name, :given_name, migrating: true
+  encrypts :family_name, :given_name
 
   devise :omniauthable, :timeoutable, omniauth_providers: %i[dfe]
   self.timeout_in = 60.minutes # Overrides default Devise configuration
