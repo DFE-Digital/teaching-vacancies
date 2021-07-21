@@ -39,7 +39,7 @@ en:
       new:
         success: Thank you for your feedback on your job alert
       update:
-        success: Your further feedback on job alerts has been sent to the team
+        success: Thank you for providing additional feedback on your job alert
     job_applications:
       apply: Apply for this job
       applying_for_the_role_heading: Applying for the role
