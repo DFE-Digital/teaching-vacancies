@@ -85,9 +85,8 @@ en:
     user_participation_response:
       inclusion: Please indicate if you'd like to participate in user research
   jobseekers_job_alert_further_feedback_form: &job_alert_further_feedback_form_errors
-    email:
-      blank: Enter your email address
-      invalid: Enter an email address in the correct format, like name@example.com
+    comment:
+      blank: Tell us about the relevancy of your job alerts
     user_participation_response:
       inclusion: Please indicate if you'd like to participate in user research
   jobseekers_job_application_feedback_form: &jobseekers_job_application_feedback_form_errors
