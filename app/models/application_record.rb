@@ -10,7 +10,7 @@ class ApplicationRecord < ActiveRecord::Base
   private
 
   def event_data
-    { table_name: self.class.table_name }.merge(anonymised_attributes)
+    { "table_name" => self.class.table_name }.merge(anonymised_attributes)
   end
 
   def anonymised_attributes
