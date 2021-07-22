@@ -2,11 +2,6 @@ TRUNCATE TABLE alert_runs;
 TRUNCATE TABLE emergency_login_keys;
 TRUNCATE TABLE sessions;
 
-UPDATE employments
-       SET organisation='Example Organisation',
-           job_title='Example Job Title',
-           main_duties='Lorem ipsum dolor sit amet';
-
 UPDATE equal_opportunities_reports
        SET disability_no=0,
            disability_prefer_not_to_say=0,
@@ -47,22 +42,7 @@ UPDATE feedbacks
            visit_purpose_comment=NULL;
 
 UPDATE job_applications
-       SET first_name='Anonymous',
-           last_name='Anon',
-           previous_names='',
-           street_address='1 Example Street',
-           city='Anonymised City',
-           postcode='P05T C0DE',
-           phone_number='01234567890',
-           teacher_reference_number='1234567',
-           national_insurance_number='QQ 12 34 56 C',
-           personal_statement='Lorem ipsum dolor sit amet',
-           support_needed_details='',
-           close_relationships_details='',
-           further_instructions='',
-           rejection_reasons='',
-           gaps_in_employment_details='',
-           disability='prefer_not_to_say',
+       SET disability='prefer_not_to_say',
            gender='prefer_not_to_say',
            gender_description='',
            orientation='prefer_not_to_say',
@@ -76,26 +56,13 @@ UPDATE jobseekers
        SET email=concat('anonymised-jobseeker-',id,'@example.org'),
            encrypted_password='ABCDEFGH12345',
            reset_password_token=concat('anonymised-reset-password-token-',id),
-           current_sign_in_ip='8.8.8.8',
-           last_sign_in_ip='8.8.4.4',
            confirmation_token=concat('anonymised-confirmation-token-',id),
            unconfirmed_email='',
            unlock_token=concat('anonymised-unlock-token-',id)
        WHERE email NOT LIKE '%education.gov.uk';
 
 UPDATE publishers
-       SET email=concat('anonymised-publisher-',id,'@example.org'),
-           family_name='anon',
-           given_name='anon';
-
-UPDATE qualifications
-       SET finished_studying_details='';
-
-UPDATE "references"
-       SET name='Anonymous Anon',
-           job_title='Example Job Title',
-           email='anon@example.org',
-           phone_number='01234567890';
+       SET email=concat('anonymised-publisher-',id,'@example.org');
 
 UPDATE subscriptions
        SET email=concat('anonymised-subscription-',id,'@example.org');
