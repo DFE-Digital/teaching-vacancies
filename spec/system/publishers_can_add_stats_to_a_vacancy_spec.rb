@@ -16,14 +16,6 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
     let!(:another_vacancy) { create(:vacancy, :expired, organisation_vacancies_attributes: [{ organisation: school }]) }
     let!(:third_vacancy) { create(:vacancy, :expired, organisation_vacancies_attributes: [{ organisation: school }]) }
 
-    scenario "Publishers can see notice of vacancies awaiting feedback" do
-      visit organisation_path
-
-      within("div.flash-component--notice") do
-        expect(page).to have_content("3 jobs")
-      end
-    end
-
     scenario "displays the vacancies awaiting feedback" do
       visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
@@ -33,9 +25,7 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
 
       submit_feedback_for(vacancy)
 
-      within("div.flash-component--notice") do
-        expect(page).to have_content("2 jobs")
-      end
+      expect(page).not_to have_link(vacancy.job_title, href: organisation_job_path(vacancy.id))
     end
 
     scenario "it saves feedback to the correct record" do
