@@ -39,16 +39,16 @@
     margin-bottom: govuk-spacing(2);
     margin-left: 0;
     margin-right: govuk-spacing(2);
+  }
 
-    dl,
-    dd {
-      margin: 0;
-    }
+  dl,
+  dd {
+    margin: 0;
+  }
 
-    dt,
-    dd {
-      display: inline-block;
-    }
+  dt,
+  dd {
+    display: inline-block;
   }
 
   &__actions {
