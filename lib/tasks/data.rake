@@ -28,14 +28,11 @@ namespace :dsi do
 end
 
 namespace :column_encryption do
-  desc "Migrate encrypted columns and blind index"
+  desc "Migrate encrypted columns"
   task migrate: :environment do
     [
-      AccountRequest, Employment, Feedback, JobApplication, Jobseeker, Publisher, Qualification, Reference, Vacancy
+      Employment, JobApplication, Jobseeker, Publisher, Qualification, Reference
     ].each { |klass| Lockbox.migrate(klass, batch_size: 100) }
-    [
-      Feedback, JobApplication, Jobseeker, Publisher
-    ].each { |klass| BlindIndex.backfill(klass, batch_size: 100) }
   end
 end
 

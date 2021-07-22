@@ -17,7 +17,6 @@ gem "addressable"
 gem "algoliasearch-rails", "~> 1.25.0"
 gem "array_enum"
 gem "aws-sdk-s3", require: false
-gem "blind_index"
 gem "breasal"
 gem "browser"
 gem "colorize"
