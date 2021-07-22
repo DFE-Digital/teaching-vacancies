@@ -9,6 +9,10 @@ class Publisher < ApplicationRecord
 
   accepts_nested_attributes_for :organisation_publishers
 
+  encrypts :oid, :email, :family_name, :given_name
+  # blind index needed for searching by encrypted columns with .where/.find_by, and for validating uniqueness.
+  blind_index :email, :oid
+
   devise :omniauthable, :timeoutable, omniauth_providers: %i[dfe]
   self.timeout_in = 60.minutes # Overrides default Devise configuration
 

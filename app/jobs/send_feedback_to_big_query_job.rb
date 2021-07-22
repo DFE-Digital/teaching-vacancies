@@ -19,7 +19,9 @@ class SendFeedbackToBigQueryJob < ApplicationJob
           {
             type: record.feedback_type,
             occurred_at: record.created_at,
-            data: record.attributes.map { |key, value| { key: key.to_s, value: formatted_value(value) } },
+            data: record.attributes_except_ciphertext_and_bidx.map { |key, value|
+                    { key: key.to_s, value: formatted_value(value)
+                  } },
           }
         end,
       )
