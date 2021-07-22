@@ -1,5 +1,6 @@
 groups:
-- name: Request-rates
+- name: Default
+
   rules:
   - alert: ProdRequestsFailuresElevated
     # Condition for alerting
@@ -15,8 +16,6 @@ groups:
       environment: production
       severity: high
 
-- name: slow_response
-  rules:
   - alert: ProdSlowRequests
   # Condition for alerting
     expr: histogram_quantile(0.9, sum(rate(response_time_bucket{app="teaching-vacancies-production", status_range="2xx"}[5m])) by (le)) > 2
@@ -31,8 +30,6 @@ groups:
       environment: production
       severity: high
 
-- name: CPU-usage
-  rules:
   - alert: ProdAppCPUHigh
     expr: avg by ( app ) (cpu{app=~"teaching-vacancies-production"}) > 60
     for: 5m
@@ -44,6 +41,7 @@ groups:
     labels:
       environment: production
       severity: high
+
   - alert: ProdWorkerCPUHigh
     expr: avg by ( app ) (cpu{app=~"teaching-vacancies-worker-production"}) > 75
     for: 10m
@@ -56,8 +54,6 @@ groups:
       environment: production
       severity: high
 
-- name: Disk-utilisation
-  rules:
   - alert: ProdDiskUtilisationHigh
     expr: avg by ( app ) ( disk_utilization{ app=~"teaching-vacancies-production|teaching-vacancies-worker-production" }) > 60
     for: 5m
@@ -70,8 +66,7 @@ groups:
       environment: production
       severity: high
 
-- name: Memory-utilisation
-  rules:
+
   - alert: ProdMemoryUtilizationHigh
     expr: avg by ( app ) (memory_utilization{app=~"teaching-vacancies-production|teaching-vacancies-worker-production"}) > 60
     for: 5m
@@ -84,8 +79,7 @@ groups:
       environment: production
       severity: high
 
-- name: Crashed-apps
-  rules:
+
   - alert: ProdAppsCrashed
     expr: rate(crash{app=~"teaching-vacancies-production|teaching-vacancies-worker-production"}[1m])*60 > 1
     annotations:
