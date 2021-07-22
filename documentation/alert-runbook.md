@@ -25,6 +25,10 @@ Alerts when either the `teaching-vacancies-production` or `teaching-vacancies-wo
 
 Alerts when either the `teaching-vacancies-production` or `teaching-vacancies-worker-production` app reports a crash.
 
+## ProdSlowRequests
+
+Alerts when the `teaching-vacancies-production` app http response time is slow.
+
 ## Action
 
 ### Metrics and Logging

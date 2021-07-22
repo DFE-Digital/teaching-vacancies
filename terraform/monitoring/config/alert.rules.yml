@@ -1,5 +1,6 @@
 groups:
-- name: Request-rates
+- name: Default
+
   rules:
   - alert: ProdRequestsFailuresElevated
     # Condition for alerting
@@ -15,8 +16,20 @@ groups:
       environment: production
       severity: high
 
-- name: CPU-usage
-  rules:
+  - alert: ProdSlowRequests
+  # Condition for alerting
+    expr: histogram_quantile(0.9, sum(rate(response_time_bucket{app="teaching-vacancies-production", status_range="2xx"}[5m])) by (le)) > 2
+    # Annotation - additional informational labels to store more information
+    annotations:
+      summary: Identify slow running request above 95 percentile
+      description: "Identify slow running http request above 95 percentile above 3sec (current value: {{ humanize $value}}s )"
+      runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/master/documentation/alert-runbook.md#ProdSlowRequests
+      dashboard: https://grafana-teaching-vacancies.london.cloudapps.digital/d/6Ac4lUWGk/teaching-vacancies-production?orgId=1&refresh=5s
+  # Labels - additional labels to be attached to the alert
+    labels:
+      environment: production
+      severity: high
+
   - alert: ProdAppCPUHigh
     expr: avg by ( app ) (cpu{app=~"teaching-vacancies-production"}) > 60
     for: 5m
@@ -28,6 +41,7 @@ groups:
     labels:
       environment: production
       severity: high
+
   - alert: ProdWorkerCPUHigh
     expr: avg by ( app ) (cpu{app=~"teaching-vacancies-worker-production"}) > 75
     for: 10m
@@ -40,8 +54,6 @@ groups:
       environment: production
       severity: high
 
-- name: Disk-utilisation
-  rules:
   - alert: ProdDiskUtilisationHigh
     expr: avg by ( app ) ( disk_utilization{ app=~"teaching-vacancies-production|teaching-vacancies-worker-production" }) > 60
     for: 5m
@@ -54,8 +66,7 @@ groups:
       environment: production
       severity: high
 
-- name: Memory-utilisation
-  rules:
+
   - alert: ProdMemoryUtilizationHigh
     expr: avg by ( app ) (memory_utilization{app=~"teaching-vacancies-production|teaching-vacancies-worker-production"}) > 60
     for: 5m
@@ -68,8 +79,7 @@ groups:
       environment: production
       severity: high
 
-- name: Crashed-apps
-  rules:
+
   - alert: ProdAppsCrashed
     expr: rate(crash{app=~"teaching-vacancies-production|teaching-vacancies-worker-production"}[1m])*60 > 1
     annotations:
