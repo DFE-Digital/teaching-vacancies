@@ -73,10 +73,6 @@ en:
         alert_frequency: >-
           You have set to receive this job alert %{frequency} when any jobs matching your criteria are listed.
         closing_date: "Closing date: %{closing_date}"
-        create_account:
-          heading: Create a Teaching Vacancies account
-          intro: "%{link_to} to see all your job alerts in one place, and save the jobs you are interested in"
-          link: Create an account
         edit_alert: You can %{edit_link} here.
         edit_link_text: manage your alert
         feedback:

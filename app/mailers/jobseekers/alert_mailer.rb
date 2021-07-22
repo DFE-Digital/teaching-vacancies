@@ -1,4 +1,6 @@
 class Jobseekers::AlertMailer < Jobseekers::BaseMailer
+  after_action :jobseeker
+
   self.delivery_job = AlertMailerJob
   helper DatesHelper
   helper VacanciesHelper
