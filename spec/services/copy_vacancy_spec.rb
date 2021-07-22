@@ -20,8 +20,7 @@ RSpec.describe CopyVacancy do
 
         described_class.new(vacancy).call
 
-        expect(Vacancy.find(vacancy.id).attributes == vacancy.attributes)
-          .to eq(true)
+        expect(vacancy.attributes == Vacancy.find(vacancy.id).attributes).to eq(true)
       end
     end
 
