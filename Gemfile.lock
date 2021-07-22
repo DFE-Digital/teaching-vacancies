@@ -75,7 +75,6 @@ GEM
     algoliasearch-rails (1.25.0)
       algoliasearch (>= 1.26.0, < 2.0.0)
       json (>= 1.5.1)
-    argon2-kdf (0.1.6)
     array_enum (1.3.0)
       activemodel
     ast (2.4.2)
@@ -119,9 +118,6 @@ GEM
     bcrypt (3.1.16)
     bindata (2.4.10)
     bindex (0.8.1)
-    blind_index (2.2.0)
-      activesupport (>= 5)
-      argon2-kdf (>= 0.1.1)
     brakeman (5.0.4)
     breasal (0.0.1)
     browser (5.3.1)
@@ -642,7 +638,6 @@ DEPENDENCIES
   axe-core-api
   axe-core-capybara
   axe-core-rspec
-  blind_index
   brakeman
   breasal
   browser
