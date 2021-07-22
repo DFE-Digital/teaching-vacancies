@@ -1,6 +1,4 @@
 class NavbarComponent < GovukComponent::Base
-  delegate :active_link_class, to: :helpers
-
   def initialize(classes: [], html_attributes: {})
     super(classes: classes, html_attributes: html_attributes)
   end
@@ -16,6 +14,14 @@ class NavbarComponent < GovukComponent::Base
   }
 
   private
+
+  def active_link_class(link_path)
+    if current_page?(link_path) || link_path == organisation_path && request.original_fullpath.include?("organisation/jobs")
+      return "govuk-header__navigation-item govuk-header__navigation-item--active"
+    end
+
+    "govuk-header__navigation-item"
+  end
 
   def default_classes
     %w[navbar-component]
