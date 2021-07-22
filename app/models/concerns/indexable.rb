@@ -34,7 +34,7 @@ module Indexable
       end
 
       attribute :about_school do
-        strip_tags(about_school)
+        strip_tags(about_school)&.truncate(256)
       end
 
       attribute :school_visits do
