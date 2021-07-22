@@ -236,7 +236,7 @@ en:
       description: Apply for jobs you are interested in, and check the status of your applications.
       title: Apply for jobs
     signed_out_jobseeker:
-      description_html: "%{link} or create an account to apply for jobs through Teaching Vacancies."
+      description_html: "%{link} or create an account to apply for jobs that use the Teaching Vacancies application form."
       title: Apply for jobs
     vacancy_facets:
       cities: Cities and towns with teaching jobs
