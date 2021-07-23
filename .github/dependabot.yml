@@ -27,3 +27,10 @@ updates:
       interval: "weekly"
       day: "wednesday"
     open-pull-requests-limit: 2
+
+  - package-ecosystem: "terraform"
+    directory: "/terraform"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+    open-pull-requests-limit: 2
