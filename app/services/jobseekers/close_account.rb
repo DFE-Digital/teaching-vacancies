@@ -23,7 +23,7 @@ class Jobseekers::CloseAccount
   def create_feedback
     return unless close_account_feedback_form_params.values.any?(&:present?)
 
-    jobseeker.feedbacks.create(close_account_feedback_form_params)
+    jobseeker.feedbacks.close_account.create(close_account_feedback_form_params)
   end
 
   def send_email_to_jobseeker
