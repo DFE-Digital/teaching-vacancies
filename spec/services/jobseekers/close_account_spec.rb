@@ -18,8 +18,12 @@ RSpec.describe Jobseekers::CloseAccount do
     context "when close_account_feedback_form_params are present" do
       let(:close_account_feedback_form_params) { { close_account_reason: "not_getting_any_value" } }
 
-      it "creates feedback" do
+      it "sets feedback_form_params on the created feedback" do
         expect(jobseeker.feedbacks.first.close_account_reason).to eq "not_getting_any_value"
+      end
+
+      it "sets feedback_type on the created feedback" do
+        expect(jobseeker.feedbacks.first.feedback_type).to eq "close_account"
       end
     end
 
