@@ -31,7 +31,7 @@ RSpec.describe "Jobseekers can review a job application" do
     end
 
     within ".review-component", text: I18n.t("jobseekers.job_applications.build.employment_history.heading") do
-      job_application.employments.each do |employment|
+      job_application.employments.job.each do |employment|
         expect(page).to have_content(employment.job_title)
         expect(page).to have_content(employment.organisation)
         expect(page).to have_content(employment.salary)
@@ -42,6 +42,14 @@ RSpec.describe "Jobseekers can review a job application" do
         expect(page).to have_content(employment.ended_on)
       end
     end
+
+    # within ".review-component", text: I18n.t("jobseekers.job_applications.build.employment_history.heading") do
+    #   job_application.employments.break.each do |employment|
+    #     expect(page).to have_content(employment.reason_for_break)
+    #     expect(page).to have_content(employment.started_on)
+    #     expect(page).to have_content(employment.ended_on)
+    #   end
+    # end
 
     within ".review-component", text: I18n.t("jobseekers.job_applications.build.personal_statement.heading") do
       expect(page).to have_content(job_application.personal_statement)

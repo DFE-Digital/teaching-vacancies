@@ -1,9 +1,9 @@
-class Jobseekers::JobApplications::EmploymentsController < Jobseekers::BaseController
+class Jobseekers::JobApplications::BreaksController < Jobseekers::BaseController
   helper_method :back_path, :employment, :form, :job_application
 
   def create
     if form.valid?
-      job_application.employments.job.create(employment_params)
+      job_application.employments.break.create(employment_params)
       redirect_to back_path
     else
       render :new
@@ -31,24 +31,28 @@ class Jobseekers::JobApplications::EmploymentsController < Jobseekers::BaseContr
   end
 
   def employment
-    job_application.employments.job.find(params[:id])
+    job_application.employments.break.find(params[:id])
   end
 
   def employment_params
-    params.require(:jobseekers_job_application_details_employment_form)
-          .permit(:organisation, :job_title, :salary, :subjects, :main_duties, :started_on, :current_role, :ended_on)
+    params.require(:jobseekers_job_application_details_break_form)
+          .permit(:reason_for_break, :started_on, :ended_on)
   end
 
   def form
-    @form ||= Jobseekers::JobApplication::Details::EmploymentForm.new(form_attributes)
+    @form ||= Jobseekers::JobApplication::Details::BreakForm.new(form_attributes)
   end
 
   def form_attributes
     case action_name
     when "new"
-      {}
+      if params[:started_on] && params[:ended_on]
+        { started_on: Date.parse(params[:started_on]), ended_on: Date.parse(params[:ended_on]) }
+      else
+        {}
+      end
     when "edit"
-      employment.slice(:organisation, :job_title, :salary, :subjects, :main_duties, :started_on, :current_role, :ended_on)
+      employment.slice(:reason_for_break, :started_on, :ended_on)
     when "create", "update"
       employment_params
     end
