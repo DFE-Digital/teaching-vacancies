@@ -188,7 +188,7 @@ en:
       one: Subject
       other: Subjects
     working_patterns: Working pattern
-    working_patterns_info_one: '%{patterns} only'
+    working_patterns_info_one: '%{patterns}'
     working_patterns_info_many: Will consider %{patterns}
     contract_type: Contract type
 
