@@ -2,11 +2,10 @@ ARG PROD_PACKAGES="libxml2 libxslt libpq tzdata nodejs shared-mime-info"
 
 FROM ruby:3.0.2-alpine AS builder
 
-ARG DEV_PACKAGES="gcc libc-dev make yarn postgresql-dev build-base libxml2-dev libxslt-dev"
-ARG PROD_PACKAGES
-
 WORKDIR /app
 
+ARG PROD_PACKAGES
+ENV DEV_PACKAGES="gcc libc-dev make yarn postgresql-dev build-base libxml2-dev libxslt-dev"
 RUN apk add --no-cache $PROD_PACKAGES $DEV_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
@@ -36,9 +35,9 @@ RUN rm -rf node_modules log tmp yarn.lock && \
 # this stage reduces the image size.
 FROM ruby:3.0.2-alpine AS production
 
-ARG PROD_PACKAGES
 WORKDIR /app
 
+ARG PROD_PACKAGES
 RUN apk update && apk add --no-cache $PROD_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
