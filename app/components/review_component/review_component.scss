@@ -65,6 +65,7 @@
     .govuk-accordion__section,
     .review-component__body--border {
       border-bottom: 1px solid $govuk-border-colour;
+      margin-top: -1px;
     }
 
     .govuk-accordion__section--expanded {
