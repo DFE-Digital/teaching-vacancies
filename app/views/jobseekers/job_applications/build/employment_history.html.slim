@@ -43,9 +43,9 @@
             p.govuk-body class="govuk-!-margin-bottom-0" = employment.reason_for_break
             p.govuk-hint class="govuk-!-margin-top-1 govuk-!-margin-bottom-1" #{employment.started_on} to #{employment.ended_on}
             = govuk_link_to t("buttons.change"), edit_jobseekers_job_application_break_path(job_application, employment), class: "govuk-link--no-visited-state govuk-!-margin-right-3"
-            = govuk_link_to t("buttons.delete"), jobseekers_job_application_break_path(job_application, employment), method: :delete
+            = govuk_link_to t("buttons.delete"), jobseekers_job_application_break_confirm_destroy_path(job_application, employment)
 
-        - if show_gap_question?(employment, employments[index + 1])
+        - if employment_history_gap?(employment, employments[index + 1])
           = govuk_inset_text do
             p.govuk-body class="govuk-!-margin-bottom-0" = t(".gap_with_duration", duration: gap_duration(employment, employments[index + 1]))
             p.govuk-body

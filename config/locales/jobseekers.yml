@@ -161,6 +161,10 @@ en:
         title: Withdraw application
       current_step: Step %{current} of %{total}
       breaks:
+        confirm_destroy:
+          caption: Current role and employment history
+          heading: Are you sure you want to delete this entry?
+          title: Confirm deletion of a break — Application
         edit:
           caption: Current role and employment history
           heading: Please tell us what you were doing over this period

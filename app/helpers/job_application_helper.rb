@@ -120,7 +120,7 @@ module JobApplicationHelper
     end
   end
 
-  def show_gap_question?(current_employment, next_employment)
+  def employment_history_gap?(current_employment, next_employment)
     return false if current_employment.current_role == "yes"
 
     return true if next_employment && current_employment.ended_on + 3.months < next_employment.started_on

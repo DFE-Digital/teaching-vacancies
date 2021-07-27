@@ -21,7 +21,7 @@ class Jobseekers::JobApplications::BreaksController < Jobseekers::BaseController
 
   def destroy
     employment_break.destroy
-    redirect_to back_path, success: t(".success")
+    redirect_to back_path
   end
 
   private
@@ -31,7 +31,7 @@ class Jobseekers::JobApplications::BreaksController < Jobseekers::BaseController
   end
 
   def employment_break
-    job_application.employments.break.find(params[:id])
+    job_application.employments.break.find(params[:id] || params[:break_id])
   end
 
   def employment_params

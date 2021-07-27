@@ -23,6 +23,7 @@ en:
     close_account: Close account
     change: Change
     complete_section: Complete section
+    confirm_destroy: Yes I am sure - delete this entry
     confirm_rejection: Confirm rejection
     continue: Continue
     continue_to_dsi: Continue to DfE Sign-in
