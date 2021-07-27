@@ -37,9 +37,6 @@ RUN rm -rf node_modules log tmp yarn.lock && \
 FROM ruby:3.0.2-alpine AS production
 
 ARG PROD_PACKAGES
-ARG COMMIT_SHA
-ENV COMMIT_SHA=$COMMIT_SHA
-
 WORKDIR /app
 
 RUN apk update && apk add --no-cache $PROD_PACKAGES
@@ -51,6 +48,9 @@ COPY --from=builder /app /app
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
 RUN echo export PATH=/usr/local/bundle/:/usr/local/bin/:$PATH > /root/.ashrc
 ENV ENV="/root/.ashrc"
+
+ARG COMMIT_SHA
+ENV COMMIT_SHA=$COMMIT_SHA
 
 EXPOSE 3000
 CMD bundle exec rails db:migrate && bundle exec rails s
