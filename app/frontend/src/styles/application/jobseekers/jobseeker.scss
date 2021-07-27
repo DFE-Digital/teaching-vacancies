@@ -16,4 +16,15 @@
       }
     }
   }
+
+  .employment-break {
+    .govuk-accordion__section-header {
+      display: none;
+    }
+
+    .employment-break__reason {
+      background-color: govuk-colour('light-grey');
+      padding: govuk-spacing(3) govuk-spacing(5);
+    }
+  }
 }

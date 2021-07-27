@@ -6,7 +6,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
                 :redirect_if_job_application_exists, only: %i[new create new_quick_apply quick_apply]
   before_action :redirect_unless_draft_job_application, only: %i[review]
 
-  helper_method :job_application, :qualification_form_param_key, :review_form, :vacancy, :withdraw_form
+  helper_method :employments, :job_application, :qualification_form_param_key, :review_form, :vacancy, :withdraw_form
 
   def new
     request_event.trigger(:vacancy_apply_clicked, vacancy_id: StringAnonymiser.new(vacancy.id))
@@ -94,6 +94,10 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
     form.valid?.tap do
       job_application.errors.merge!(form.errors)
     end
+  end
+
+  def employments
+    @employments ||= job_application.employments.order(:started_on)
   end
 
   def job_application
