@@ -1,9 +1,10 @@
-ARG PROD_PACKAGES="libxml2 libxslt libpq tzdata nodejs shared-mime-info"
+ARG PROD_PACKAGES="libxml2 libxslt libpq tzdata shared-mime-info"
+ARG DEV_PACKAGES="gcc libc-dev make yarn postgresql-dev build-base libxml2-dev libxslt-dev"
 
 FROM ruby:3.0.2-alpine AS builder
 
-ARG DEV_PACKAGES="gcc libc-dev make yarn postgresql-dev build-base libxml2-dev libxslt-dev"
 ARG PROD_PACKAGES
+ARG DEV_PACKAGES
 
 WORKDIR /app
 
@@ -37,6 +38,7 @@ RUN rm -rf node_modules log tmp yarn.lock && \
 FROM ruby:3.0.2-alpine AS production
 
 ARG PROD_PACKAGES
+
 WORKDIR /app
 
 RUN apk update && apk add --no-cache $PROD_PACKAGES
@@ -51,6 +53,6 @@ ENV ENV="/root/.ashrc"
 
 ARG COMMIT_SHA
 ENV COMMIT_SHA=$COMMIT_SHA
-
+# test caching
 EXPOSE 3000
 CMD bundle exec rails db:migrate && bundle exec rails s
