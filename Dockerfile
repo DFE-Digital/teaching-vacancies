@@ -1,4 +1,4 @@
-ARG PROD_PACKAGES="libxml2 libxslt libpq tzdata nodejs shared-mime-info"
+ARG PROD_PACKAGES="libxml2 libxslt libpq tzdata shared-mime-info"
 
 FROM ruby:3.0.2-alpine AS builder
 
