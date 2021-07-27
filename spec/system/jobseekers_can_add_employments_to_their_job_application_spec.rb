@@ -48,12 +48,12 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
     click_on I18n.t("buttons.add_another_break")
 
-    expect(page).to have_field('jobseekers_job_application_details_break_form_started_on_1i', with: "2021")
-    expect(page).to have_field('jobseekers_job_application_details_break_form_started_on_2i', with: "2")
-    expect(page).to have_field('jobseekers_job_application_details_break_form_started_on_3i', with: "1")
-    expect(page).to have_field('jobseekers_job_application_details_break_form_ended_on_1i', with: "2021")
-    expect(page).to have_field('jobseekers_job_application_details_break_form_ended_on_2i', with: "6")
-    expect(page).to have_field('jobseekers_job_application_details_break_form_ended_on_3i', with: "1")
+    expect(page).to have_field("jobseekers_job_application_details_break_form_started_on_1i", with: "2021")
+    expect(page).to have_field("jobseekers_job_application_details_break_form_started_on_2i", with: "2")
+    expect(page).to have_field("jobseekers_job_application_details_break_form_started_on_3i", with: "1")
+    expect(page).to have_field("jobseekers_job_application_details_break_form_ended_on_1i", with: "2021")
+    expect(page).to have_field("jobseekers_job_application_details_break_form_ended_on_2i", with: "6")
+    expect(page).to have_field("jobseekers_job_application_details_break_form_ended_on_3i", with: "1")
 
     fill_in "Enter reasons for break in work history", with: "Travelling around the world"
 
