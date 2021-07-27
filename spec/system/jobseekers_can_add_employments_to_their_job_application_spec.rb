@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Jobseekers can add employments to their job application" do
+RSpec.describe "Jobseekers can add employments and breaks to their job application" do
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
   let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
@@ -12,7 +12,7 @@ RSpec.describe "Jobseekers can add employments to their job application" do
 
     expect(page).to have_content("No employment specified")
 
-    click_on I18n.t("buttons.add_employment")
+    click_on I18n.t("buttons.add_another_job")
     expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :employment_history))
     validates_step_complete(button: I18n.t("buttons.save_employment"))
 
@@ -27,7 +27,7 @@ RSpec.describe "Jobseekers can add employments to their job application" do
   it "allows jobseekers to add employment history" do
     visit jobseekers_job_application_build_path(job_application, :employment_history)
 
-    click_on I18n.t("buttons.add_employment")
+    click_on I18n.t("buttons.add_another_job")
     validates_step_complete(button: I18n.t("buttons.save_employment"))
 
     fill_in_employment_history
@@ -39,15 +39,43 @@ RSpec.describe "Jobseekers can add employments to their job application" do
     expect(page).to have_content(Date.new(2020, 0o7, 30).to_s)
   end
 
-  it "allows jobseekers to add gaps in employment" do
+  it "allows jobseekers to add, change and delete gaps in employment with prefilled start and end date" do
+    Employment.destroy_all
+    create(:employment, :job, job_application: job_application, started_on: Date.parse("2021-01-01"), ended_on: Date.parse("2021-02-01"))
+    create(:employment, :job, job_application: job_application, started_on: Date.parse("2021-06-01"), current_role: "yes")
+
     visit jobseekers_job_application_build_path(job_application, :employment_history)
 
-    choose "Yes", name: "jobseekers_job_application_employment_history_form[gaps_in_employment]"
-    fill_in "jobseekers_job_application_employment_history_form[gaps_in_employment_details]", with: "Some details about gaps in employment"
-    click_on I18n.t("buttons.save_and_come_back")
+    click_on I18n.t("buttons.add_another_break")
 
-    expect(job_application.reload.gaps_in_employment).to eq("yes")
-    expect(job_application.reload.gaps_in_employment_details).to eq("Some details about gaps in employment")
+    expect(page).to have_field('jobseekers_job_application_details_break_form_started_on_1i', with: "2021")
+    expect(page).to have_field('jobseekers_job_application_details_break_form_started_on_2i', with: "2")
+    expect(page).to have_field('jobseekers_job_application_details_break_form_started_on_3i', with: "1")
+    expect(page).to have_field('jobseekers_job_application_details_break_form_ended_on_1i', with: "2021")
+    expect(page).to have_field('jobseekers_job_application_details_break_form_ended_on_2i', with: "6")
+    expect(page).to have_field('jobseekers_job_application_details_break_form_ended_on_3i', with: "1")
+
+    fill_in "Enter reasons for break in work history", with: "Travelling around the world"
+
+    click_on I18n.t("buttons.continue")
+
+    expect(page).to have_content("Travelling around the world")
+    expect(page).to have_content("1 February 2021 to 1 June 2021")
+
+    within(".govuk-inset-text") do
+      click_on I18n.t("buttons.change")
+    end
+
+    fill_in "Enter reasons for break in work history", with: "Looking after my needy turtle"
+    click_on I18n.t("buttons.continue")
+
+    expect(page).to have_content("Looking after my needy turtle")
+
+    within(".govuk-inset-text") do
+      click_on I18n.t("buttons.delete")
+    end
+
+    expect(page).not_to have_content("Looking after my needy turtle")
   end
 
   context "when there is at least one role" do
