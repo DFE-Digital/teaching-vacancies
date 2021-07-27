@@ -51,6 +51,6 @@ ENV ENV="/root/.ashrc"
 
 ARG COMMIT_SHA
 ENV COMMIT_SHA=$COMMIT_SHA
-
+# test caching
 EXPOSE 3000
 CMD bundle exec rails db:migrate && bundle exec rails s
