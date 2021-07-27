@@ -10,28 +10,50 @@
       p.govuk-body = t(".none")
     - else
       = govuk_accordion do |accordion|
-        - job_application.employments.order(:created_at).each do |employment|
-          - accordion.add_section title: employment.job_title do
-            = govuk_summary_list do |summary|
-              - summary.slot :row,
-                              key: t("helpers.label.jobseekers_job_application_details_employment_form.organisation"),
-                              value: employment.organisation
-              - summary.slot :row,
-                              key: t("helpers.label.jobseekers_job_application_details_employment_form.salary"),
-                              value: employment.salary.presence || t("jobseekers.job_applications.not_defined")
-              - summary.slot :row,
-                              key: t("helpers.label.jobseekers_job_application_details_employment_form.subjects"),
-                              value: employment.subjects.presence || t("jobseekers.job_applications.not_defined")
-              - summary.slot :row,
-                              key: t("helpers.label.jobseekers_job_application_details_employment_form.main_duties"),
-                              value: employment.main_duties
-              - summary.slot :row,
-                              key: t("helpers.legend.jobseekers_job_application_details_employment_form.started_on"),
-                              value: employment.started_on
-              - summary.slot :row,
-                              key: t("helpers.legend.jobseekers_job_application_details_employment_form.current_role"),
-                              value: employment.current_role.humanize
-              - if employment.current_role == "no"
+        - employments.each_with_index do |employment, index|
+          - if employment.job?
+            - accordion.add_section title: employment.job_title, html_attributes: { id: "#{employment.job_title}-#{index}" } do
+              = govuk_summary_list do |summary|
                 - summary.slot :row,
-                                key: t("helpers.legend.jobseekers_job_application_details_employment_form.ended_on"),
-                                value: employment.ended_on
+                                key: t("helpers.label.jobseekers_job_application_details_employment_form.organisation"),
+                                value: employment.organisation
+                - summary.slot :row,
+                                key: t("helpers.label.jobseekers_job_application_details_employment_form.salary"),
+                                value: employment.salary.presence || t("jobseekers.job_applications.not_defined")
+                - summary.slot :row,
+                                key: t("helpers.label.jobseekers_job_application_details_employment_form.subjects"),
+                                value: employment.subjects.presence || t("jobseekers.job_applications.not_defined")
+                - summary.slot :row,
+                                key: t("helpers.label.jobseekers_job_application_details_employment_form.main_duties"),
+                                value: employment.main_duties
+                - summary.slot :row,
+                                key: t("helpers.legend.jobseekers_job_application_details_employment_form.started_on"),
+                                value: employment.started_on
+                - summary.slot :row,
+                                key: t("helpers.legend.jobseekers_job_application_details_employment_form.current_role"),
+                                value: employment.current_role.humanize
+                - if employment.current_role == "no"
+                  - summary.slot :row,
+                                  key: t("helpers.legend.jobseekers_job_application_details_employment_form.ended_on"),
+                                  value: employment.ended_on
+          - elsif employment.break?
+            - accordion.add_section title: "", html_attributes: { class: "govuk-accordion__section--expanded employment-break", id: "employment-break-#{index}" } do
+              = govuk_inset_text classes: "govuk-!-margin-top-3 govuk-!-margin-bottom-3" do
+                h2.govuk-heading-s class="govuk-!-margin-bottom-1" = t("jobseekers.job_applications.build.employment_history.break")
+                p.govuk-hint class="govuk-!-margin-top-1 govuk-!-margin-bottom-1" #{employment.started_on} to #{employment.ended_on}
+              .employment-break__reason class="govuk-!-margin-bottom-5"
+                h2.govuk-heading-s = "Break in work history details"
+                p.govuk-body class="govuk-!-margin-bottom-0" = employment.reason_for_break
+
+          - if employment_history_gap?(employment, employments[index + 1])
+            - accordion.add_section title: "", html_attributes: { class: "govuk-accordion__section--expanded employment-break", id: "employment-break-#{index}" } do
+              = govuk_inset_text classes: "govuk-!-margin-top-3" do
+                - if "employment_history".in?(job_application.in_progress_steps)
+                  p.govuk-body class="govuk-!-margin-bottom-0" = t("jobseekers.job_applications.build.employment_history.gap_with_duration", duration: gap_duration(employment, employments[index + 1]))
+                  p.govuk-body
+                    = govuk_link_to t("buttons.add_another_job"), new_jobseekers_job_application_employment_path(job_application)
+                    = " or "
+                    = govuk_link_to t("buttons.add_another_break"), new_jobseekers_job_application_break_path(job_application, started_on: employment.ended_on, ended_on: employments[index + 1]&.started_on)
+                - else
+                  h2.govuk-heading-s class="govuk-!-margin-bottom-1" = t("jobseekers.job_applications.build.employment_history.break")
+                  p.govuk-hint class="govuk-!-margin-top-1 govuk-!-margin-bottom-1" #{employment.ended_on} to #{employments[index + 1]&.started_on ? employments[index + 1]&.started_on : "present"}
