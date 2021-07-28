@@ -48,10 +48,10 @@
             p.govuk-hint class="govuk-!-margin-top-0 govuk-!-margin-bottom-1" #{employment.started_on} to #{employment.ended_on}
             = govuk_link_to edit_jobseekers_job_application_break_path(job_application, employment), class: "govuk-link--no-visited-state govuk-!-margin-right-3"
               = t("buttons.change")
-              span.govuk-visually-hidden = " #{t(".break")} #{employment.started_on} to #{employment.ended_on}"
+              span.govuk-visually-hidden = " #{t('.break')} #{employment.started_on} to #{employment.ended_on}"
             = govuk_link_to jobseekers_job_application_break_confirm_destroy_path(job_application, employment), method: :delete
               = t("buttons.delete")
-              span.govuk-visually-hidden = " #{t(".break")} #{employment.started_on} to #{employment.ended_on}"
+              span.govuk-visually-hidden = " #{t('.break')} #{employment.started_on} to #{employment.ended_on}"
 
         - if employment_history_gap?(employment, employments[index + 1])
           = govuk_inset_text do
