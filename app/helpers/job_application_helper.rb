@@ -124,7 +124,7 @@ module JobApplicationHelper
     current_employment = employments[index]
     next_employment = employments[index + 1]
 
-    return false if employments.where(started_on: ..current_employment.started_on, current_role: "yes").any?
+    return false if employments.where(started_on: (..current_employment.started_on), current_role: "yes").any?
 
     return false if current_employment.current_role == "yes"
 
