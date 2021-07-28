@@ -1,0 +1,9 @@
+- accordion.add_section title: "", html_attributes: { class: "govuk-accordion__section--expanded employment-break", id: "employment-break-#{index}" } do
+  = govuk_inset_text classes: "govuk-!-margin-top-3 govuk-!-margin-bottom-3" do
+    h2.govuk-heading-s class="govuk-!-margin-bottom-1" = t("jobseekers.job_applications.build.employment_history.break")
+    p.govuk-hint class="govuk-!-margin-top-1 govuk-!-margin-bottom-1" #{employment.started_on} to #{employment.ended_on || "present"}
+
+  - unless employment.reason_for_break.empty?
+    .employment-break__reason class="govuk-!-margin-bottom-5"
+      h2.govuk-heading-s = "Break in work history details"
+      p.govuk-body class="govuk-!-margin-bottom-0" = employment.reason_for_break
