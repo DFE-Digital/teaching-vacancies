@@ -14,43 +14,60 @@
     p.govuk-body = t(".description1")
     p.govuk-body = t(".description2")
 
-    - if job_application.employments.any?
-      - job_application.employments.each do |employment|
-        = render DetailComponent.new title: employment.job_title do |detail|
-          - detail.body do
-            = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |c|
-              - attributes = %w[organisation salary subjects]
-              - attributes.each do |attribute|
-                - c.slot(:row, key: t("jobseekers.job_applications.employments.#{attribute}"), value: employment[attribute].presence || t("jobseekers.job_applications.not_defined"))
-              - c.slot(:row, key: t("jobseekers.job_applications.employments.started_on"), value: employment.started_on.to_s)
+    - if employments.any?
+      - employments.each_with_index do |employment, index|
+        - if employment.job?
+          = render DetailComponent.new title: employment.job_title do |detail|
+            - detail.body do
+              = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |c|
+                - attributes = %w[organisation salary subjects]
+                - attributes.each do |attribute|
+                  - c.slot(:row, key: t("jobseekers.job_applications.employments.#{attribute}"), value: employment[attribute].presence || t("jobseekers.job_applications.not_defined"))
+                - c.slot(:row, key: t("jobseekers.job_applications.employments.started_on"), value: employment.started_on.to_s)
 
-              - case employment.current_role
-              - when "yes"
-                - c.slot(:row, key: t("jobseekers.job_applications.employments.ended_on"), value: t("jobseekers.job_applications.employments.current_role"))
-              - when "no"
-                - c.slot(:row, key: t("jobseekers.job_applications.employments.ended_on"), value: employment.ended_on.to_s)
+                - case employment.current_role
+                - when "yes"
+                  - c.slot(:row, key: t("jobseekers.job_applications.employments.ended_on"), value: t("jobseekers.job_applications.employments.current_role"))
+                - when "no"
+                  - c.slot(:row, key: t("jobseekers.job_applications.employments.ended_on"), value: employment.ended_on.to_s)
 
-              - c.slot(:row, key: t("jobseekers.job_applications.employments.main_duties"), value: employment.main_duties)
+                - c.slot(:row, key: t("jobseekers.job_applications.employments.main_duties"), value: employment.main_duties)
 
-          - detail.actions do
-            = govuk_button_to t("buttons.delete"), jobseekers_job_application_employment_path(job_application, employment), method: :delete, class: "govuk-delete-link govuk-!-margin-bottom-0", form_class: "inline-block button_to"
-            = govuk_link_to t("buttons.change"), edit_jobseekers_job_application_employment_path(job_application, employment), class: "govuk-link--no-visited-state inline-block"
+            - detail.actions do
+              = govuk_link_to edit_jobseekers_job_application_employment_path(job_application, employment), class: "govuk-link--no-visited-state"
+                = t("buttons.change")
+                span.govuk-visually-hidden = " for #{employment.job_title}"
+              = govuk_link_to jobseekers_job_application_employment_path(job_application, employment), method: :delete
+                = t("buttons.delete")
+                span.govuk-visually-hidden = " for #{employment.job_title}"
 
-      = govuk_link_to t("buttons.add_another_employment"), new_jobseekers_job_application_employment_path(job_application), button: true, class: "govuk-button--secondary"
+        - elsif employment.break?
+          = govuk_inset_text do
+            h2.govuk-heading-s class="govuk-!-margin-bottom-1" = t(".break")
+            p.govuk-body class="govuk-!-margin-bottom-0" = employment.reason_for_break
+            p.govuk-hint class="govuk-!-margin-top-0 govuk-!-margin-bottom-1" #{employment.started_on} to #{employment.ended_on}
+            = govuk_link_to edit_jobseekers_job_application_break_path(job_application, employment), class: "govuk-link--no-visited-state govuk-!-margin-right-3"
+              = t("buttons.change")
+              span.govuk-visually-hidden = " #{t('.break')} #{employment.started_on} to #{employment.ended_on}"
+            = govuk_link_to jobseekers_job_application_break_confirm_destroy_path(job_application, employment), method: :delete
+              = t("buttons.delete")
+              span.govuk-visually-hidden = " #{t('.break')} #{employment.started_on} to #{employment.ended_on}"
+
+        - if employment_history_gap?(employment, employments[index + 1])
+          = govuk_inset_text do
+            p.govuk-body class="govuk-!-margin-bottom-0" = t(".gap_with_duration", duration: gap_duration(employment, employments[index + 1]))
+            p.govuk-body
+              = govuk_link_to t("buttons.add_another_job"), new_jobseekers_job_application_employment_path(job_application)
+              = " or "
+              = govuk_link_to t("buttons.add_another_break"), new_jobseekers_job_application_break_path(job_application, started_on: employment.ended_on, ended_on: (employments[index + 1]&.started_on || Date.current))
+
+      = govuk_link_to t("buttons.add_another_job"), new_jobseekers_job_application_employment_path(job_application), button: true, class: "govuk-button--secondary"
+
     - else
       = render EmptySectionComponent.new title: t(".no_employments") do
-        = govuk_link_to t("buttons.add_employment"), new_jobseekers_job_application_employment_path(job_application), button: true, class: "govuk-button--secondary govuk-!-margin-bottom-0"
+        = govuk_link_to t("buttons.add_another_job"), new_jobseekers_job_application_employment_path(job_application), button: true, class: "govuk-button--secondary govuk-!-margin-bottom-0"
 
     = form_for form, url: wizard_path, method: :patch do |f|
-      = hidden_field_tag :origin, request.referrer
-
-      = f.govuk_error_summary
-
-      = f.govuk_radio_buttons_fieldset :gaps_in_employment do
-        = f.govuk_radio_button :gaps_in_employment, :yes, link_errors: true do
-          = f.govuk_text_area :gaps_in_employment_details, form_group: { classes: "optional-field" }
-        = f.govuk_radio_button :gaps_in_employment, :no
-
       = f.govuk_submit job_application_build_submit_button_text do
         = f.govuk_submit t("buttons.save_and_come_back"), secondary: true
 
