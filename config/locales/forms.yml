@@ -2,7 +2,8 @@ en:
   buttons:
     accept_all_cookies: Accept all cookies
     accept_and_continue: Accept and continue
-    add_another_employment: Add another role
+    add_another_break: add a reason for this break
+    add_another_job: Add another job
     add_another_qualification: Add another qualification
     add_another_reference: Add another referee
     add_employment: Add a role
@@ -22,6 +23,7 @@ en:
     close_account: Close account
     change: Change
     complete_section: Complete section
+    confirm_destroy: Yes I am sure - delete this entry
     confirm_rejection: Confirm rejection
     continue: Continue
     continue_to_dsi: Continue to DfE Sign-in
@@ -104,6 +106,8 @@ en:
           You can find out whether you have the right to work in the UK on the
           <a href="https://www.gov.uk/" target="_blank">GOV.UK website (opens in new tab)</a>. You can apply for this role even if you do not have the
           right to work in the UK.
+      jobseekers_job_application_details_break_form:
+        reason_for_break: "For example, 'I was unemployed', 'I had health issues' or 'I was caring for a child'"
       jobseekers_job_application_details_employment_form:
         ended_on: For example, 01 01 2020
         main_duties: A very brief summary
@@ -113,10 +117,6 @@ en:
         institution: For example, a university or college
       jobseekers_job_application_details_reference_form:
         phone_number: Please only give a phone number that your referee is happy to be contacted on.
-      jobseekers_job_application_employment_history_form:
-        gaps_in_employment: >-
-          Select yes if you have had any gaps in employment since you left full-time education. For example, if you've
-          taken 3 months or more off for parental leave, illness or study.
       jobseekers_job_application_equal_opportunities_form:
         gender: If the options below do not reflect how you identify, please select ‘Other gender identity’.
         ethnicity: If the options below do not reflect how you identify, please select ‘Other ethnic group’.
@@ -303,6 +303,8 @@ en:
         close_relationships_options:
           "no": "No"
           "yes": "Yes"
+      jobseekers_job_application_details_break_form:
+        reason_for_break: Enter reasons for break in work history
       jobseekers_job_application_details_employment_form:
         current_role_options:
           "no": "No"
@@ -351,11 +353,6 @@ en:
         organisation: Organisation
         relationship: Relationship to applicant
         phone_number: Phone number
-      jobseekers_job_application_employment_history_form:
-        gaps_in_employment_details: Please provide details about any gaps in employment
-        gaps_in_employment_options:
-          "no": "No"
-          "yes": "Yes"
       jobseekers_job_application_equal_opportunities_form:
         age_options:
           under_twenty_five: Under 25
@@ -586,8 +583,6 @@ en:
       jobseekers_job_application_declarations_form:
         close_relationships: Do you have any family or close relationship with people within %{organisation}?
         right_to_work_in_uk: Do you have the right to work in the UK?
-      jobseekers_job_application_employment_history_form:
-        gaps_in_employment: Have you had any gaps in employment?
       jobseekers_job_application_equal_opportunities_form:
         age: How old are you?
         disability: Do you consider yourself to have a disability as defined by the Equality Act 2010?
@@ -595,6 +590,9 @@ en:
         gender: How would you describe your gender?
         orientation: How would you describe your sexual orientation?
         religion: What is your religion or belief?
+      jobseekers_job_application_details_break_form:
+        ended_on: End of break
+        started_on: Start of break
       jobseekers_job_application_details_employment_form:
         current_role: Is this your current role?
         ended_on: End date
