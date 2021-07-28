@@ -16,4 +16,19 @@
       }
     }
   }
+
+  .employment-break {
+    .govuk-accordion__section-header {
+      display: none;
+    }
+
+    .employment-break__reason {
+      background-color: govuk-colour('light-grey');
+      padding: govuk-spacing(3) govuk-spacing(5);
+    }
+  }
+
+  .employment-history-gap {
+    border-left: 10px solid govuk-colour('light-blue');
+  }
 }
