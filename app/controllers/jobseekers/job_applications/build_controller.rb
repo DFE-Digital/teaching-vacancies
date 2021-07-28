@@ -6,7 +6,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
   steps :personal_details, :professional_status, :qualifications, :employment_history, :personal_statement, :references,
         :equal_opportunities, :ask_for_support, :declarations
 
-  helper_method :back_path, :form, :job_application, :qualification_form_param_key, :redirect_to_review?, :vacancy
+  helper_method :back_path, :employments, :form, :job_application, :qualification_form_param_key, :redirect_to_review?, :vacancy
 
   def show
     render_wizard
@@ -51,6 +51,10 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
 
   def finish_wizard_path
     jobseekers_job_application_review_path(job_application)
+  end
+
+  def employments
+    @employments ||= job_application.employments.order(:started_on)
   end
 
   def job_application
