@@ -3,7 +3,7 @@ class Jobseekers::JobApplications::BreaksController < Jobseekers::BaseController
 
   def create
     if form.valid?
-      job_application.employments.break.create(employment_params)
+      job_application.employments.break.create(employment_break_params)
       redirect_to back_path
     else
       render :new
@@ -12,7 +12,7 @@ class Jobseekers::JobApplications::BreaksController < Jobseekers::BaseController
 
   def update
     if form.valid?
-      employment_break.update(employment_params)
+      employment_break.update(employment_break_params)
       redirect_to back_path
     else
       render :edit
@@ -34,7 +34,7 @@ class Jobseekers::JobApplications::BreaksController < Jobseekers::BaseController
     job_application.employments.break.find(params[:id] || params[:break_id])
   end
 
-  def employment_params
+  def employment_break_params
     params.require(:jobseekers_job_application_details_break_form)
           .permit(:reason_for_break, :started_on, :ended_on)
   end
@@ -54,7 +54,7 @@ class Jobseekers::JobApplications::BreaksController < Jobseekers::BaseController
     when "edit"
       employment_break.slice(:reason_for_break, :started_on, :ended_on)
     when "create", "update"
-      employment_params
+      employment_break_params
     end
   end
 
