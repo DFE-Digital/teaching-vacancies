@@ -64,6 +64,16 @@ module JobseekerHelpers
     fill_in "jobseekers_job_application_details_employment_form[ended_on(3i)]", with: "30"
   end
 
+  def fill_in_break_in_employment
+    fill_in "Enter reasons for break in work history", with: "Caring for a person"
+    fill_in "jobseekers_job_application_details_break_form[started_on(1i)]", with: "2020"
+    fill_in "jobseekers_job_application_details_break_form[started_on(2i)]", with: "08"
+    fill_in "jobseekers_job_application_details_break_form[started_on(3i)]", with: "1"
+    fill_in "jobseekers_job_application_details_break_form[ended_on(1i)]", with: "2020"
+    fill_in "jobseekers_job_application_details_break_form[ended_on(2i)]", with: "12"
+    fill_in "jobseekers_job_application_details_break_form[ended_on(3i)]", with: "31"
+  end
+
   def fill_in_equal_opportunities
     choose "Prefer not to say", name: "jobseekers_job_application_equal_opportunities_form[disability]"
     choose "Under 25", name: "jobseekers_job_application_equal_opportunities_form[age]"
