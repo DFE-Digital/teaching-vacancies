@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Jobseekers can add employments and breaks to their job application" do
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
-  let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
+  let!(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
 
   before { login_as(jobseeker, scope: :jobseeker) }
 
@@ -39,43 +39,55 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
     expect(page).to have_content(Date.new(2020, 0o7, 30).to_s)
   end
 
-  it "allows jobseekers to add, change and delete gaps in employment with prefilled start and end date" do
-    Employment.destroy_all
-    create(:employment, :job, job_application: job_application, started_on: Date.parse("2021-01-01"), ended_on: Date.parse("2021-02-01"))
-    create(:employment, :job, job_application: job_application, started_on: Date.parse("2021-06-01"), current_role: "yes")
-
-    visit jobseekers_job_application_build_path(job_application, :employment_history)
-
-    click_on I18n.t("buttons.add_another_break")
-
-    expect(page).to have_field("jobseekers_job_application_details_break_form_started_on_1i", with: "2021")
-    expect(page).to have_field("jobseekers_job_application_details_break_form_started_on_2i", with: "2")
-    expect(page).to have_field("jobseekers_job_application_details_break_form_started_on_3i", with: "1")
-    expect(page).to have_field("jobseekers_job_application_details_break_form_ended_on_1i", with: "2021")
-    expect(page).to have_field("jobseekers_job_application_details_break_form_ended_on_2i", with: "6")
-    expect(page).to have_field("jobseekers_job_application_details_break_form_ended_on_3i", with: "1")
-
-    fill_in "Enter reasons for break in work history", with: "Travelling around the world"
-
-    click_on I18n.t("buttons.continue")
-
-    expect(page).to have_content("Travelling around the world")
-    expect(page).to have_content("1 February 2021 to 1 June 2021")
-
-    within(".govuk-inset-text") do
-      click_on I18n.t("buttons.change")
+  context "managing employment history gaps" do
+    before do
+      create(:employment, :job, job_application: job_application, started_on: Date.parse("2021-01-01"), ended_on: Date.parse("2021-02-01"))
+      create(:employment, :job, job_application: job_application, started_on: Date.parse("2021-06-01"), current_role: "yes")
     end
 
-    fill_in "Enter reasons for break in work history", with: "Looking after my needy turtle"
-    click_on I18n.t("buttons.continue")
+    it "allows jobseekers to add, change and delete gaps in employment with prefilled start and end date" do
+      visit jobseekers_job_application_build_path(job_application, :employment_history)
 
-    expect(page).to have_content("Looking after my needy turtle")
+      click_on I18n.t("buttons.add_another_break")
 
-    within(".govuk-inset-text") do
-      click_on I18n.t("buttons.delete")
+      expect(page).to have_field("jobseekers_job_application_details_break_form_started_on_1i", with: "2021")
+      expect(page).to have_field("jobseekers_job_application_details_break_form_started_on_2i", with: "2")
+      expect(page).to have_field("jobseekers_job_application_details_break_form_started_on_3i", with: "1")
+      expect(page).to have_field("jobseekers_job_application_details_break_form_ended_on_1i", with: "2021")
+      expect(page).to have_field("jobseekers_job_application_details_break_form_ended_on_2i", with: "6")
+      expect(page).to have_field("jobseekers_job_application_details_break_form_ended_on_3i", with: "1")
+
+      click_on I18n.t("buttons.continue")
+
+      expect(page).to have_content("There is a problem")
+
+      fill_in "Enter reasons for break in work history", with: "Travelling around the world"
+      click_on I18n.t("buttons.continue")
+
+      expect(page).to have_content("Travelling around the world")
+      expect(page).to have_content("1 February 2021 to 1 June 2021")
+
+      within(".govuk-inset-text") do
+        click_on I18n.t("buttons.change")
+      end
+
+      fill_in "Enter reasons for break in work history", with: ""
+      click_on I18n.t("buttons.continue")
+
+      expect(page).to have_content("There is a problem")
+
+      fill_in "Enter reasons for break in work history", with: "Looking after my needy turtle"
+      click_on I18n.t("buttons.continue")
+
+      expect(page).to have_content("Looking after my needy turtle")
+
+      within(".govuk-inset-text") do
+        click_on I18n.t("buttons.delete")
+      end
+      click_on I18n.t("buttons.confirm_destroy")
+
+      expect(page).not_to have_content("Looking after my needy turtle")
     end
-
-    expect(page).not_to have_content("Looking after my needy turtle")
   end
 
   context "when there is at least one role" do
