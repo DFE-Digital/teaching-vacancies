@@ -51,7 +51,7 @@
               span.govuk-visually-hidden = " #{t(".break")} #{employment.started_on} to #{employment.ended_on}"
             = govuk_link_to jobseekers_job_application_break_confirm_destroy_path(job_application, employment)
               = t("buttons.delete")
-              span.govuk-visually-hidden = " #{t('.break')} #{employment.started_on} to #{employment.ended_on}"
+              span.govuk-visually-hidden = " #{t(".break")} #{employment.started_on} to #{employment.ended_on}"
 
         - if employment_history_gap?(employment, employments[index + 1])
           = govuk_inset_text classes: "employment-history-gap" do
