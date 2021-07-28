@@ -53,7 +53,7 @@
               = t("buttons.delete")
               span.govuk-visually-hidden = " #{t('.break')} #{employment.started_on} to #{employment.ended_on}"
 
-        - if employment_history_gap?(employment, employments[index + 1])
+        - if employment_history_gap?(index, employments)
           = govuk_inset_text do
             p.govuk-body class="govuk-!-margin-bottom-0" = t(".gap_with_duration", duration: gap_duration(employment, employments[index + 1]))
             p.govuk-body

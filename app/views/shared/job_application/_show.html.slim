@@ -96,7 +96,7 @@
                 h2.govuk-heading-s = "Break in work history details"
                 p.govuk-body class="govuk-!-margin-bottom-0" = employment.reason_for_break
 
-          - if employment_history_gap?(employment, employments[index + 1])
+          - if employment_history_gap?(index, employments)
             - accordion.add_section title: "", html_attributes: { class: "govuk-accordion__section--expanded employment-break", id: "employment-break-#{index}" } do
               = govuk_inset_text classes: "govuk-!-margin-top-3" do
                 h2.govuk-heading-s class="govuk-!-margin-bottom-1" = t("jobseekers.job_applications.build.employment_history.break")
