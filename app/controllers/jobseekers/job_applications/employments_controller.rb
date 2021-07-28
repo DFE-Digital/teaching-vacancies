@@ -3,7 +3,7 @@ class Jobseekers::JobApplications::EmploymentsController < Jobseekers::BaseContr
 
   def create
     if form.valid?
-      job_application.employments.create(employment_params)
+      job_application.employments.job.create(employment_params)
       redirect_to back_path
     else
       render :new
@@ -31,7 +31,7 @@ class Jobseekers::JobApplications::EmploymentsController < Jobseekers::BaseContr
   end
 
   def employment
-    job_application.employments.find(params[:id])
+    job_application.employments.job.find(params[:id])
   end
 
   def employment_params
