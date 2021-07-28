@@ -59,7 +59,7 @@
             p.govuk-body
               = govuk_link_to t("buttons.add_another_job"), new_jobseekers_job_application_employment_path(job_application)
               = " or "
-              = govuk_link_to t("buttons.add_another_break"), new_jobseekers_job_application_break_path(job_application, started_on: employment.ended_on, ended_on: employments[index + 1]&.started_on)
+              = govuk_link_to t("buttons.add_another_break"), new_jobseekers_job_application_break_path(job_application, started_on: employment.ended_on, ended_on: (employments[index + 1]&.started_on || Date.current))
 
       = govuk_link_to t("buttons.add_another_job"), new_jobseekers_job_application_employment_path(job_application), button: true, class: "govuk-button--secondary"
 

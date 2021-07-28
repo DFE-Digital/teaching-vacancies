@@ -54,7 +54,7 @@
                   p.govuk-body
                     = govuk_link_to t("buttons.add_another_job"), new_jobseekers_job_application_employment_path(job_application)
                     = " or "
-                    = govuk_link_to t("buttons.add_another_break"), new_jobseekers_job_application_break_path(job_application, started_on: employment.ended_on, ended_on: employments[index + 1]&.started_on)
+                    = govuk_link_to t("buttons.add_another_break"), new_jobseekers_job_application_break_path(job_application, started_on: employment.ended_on, ended_on: (employments[index + 1]&.started_on || Date.current))
                 - else
                   h2.govuk-heading-s class="govuk-!-margin-bottom-1" = t("jobseekers.job_applications.build.employment_history.break")
                   p.govuk-hint class="govuk-!-margin-top-1 govuk-!-margin-bottom-1" #{employment.ended_on} to #{employments[index + 1]&.started_on || "present"}
