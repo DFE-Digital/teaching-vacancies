@@ -489,7 +489,7 @@ en:
         application_link: Link to online application
         enable_job_applications_options:
           "false": Use another application process or form
-          "true": Apply using the Teaching Vacancies application form.
+          "true": Apply using the Teaching Vacancies application form
         contact_email: Contact email
         contact_number: Contact phone number
         how_to_apply: How to apply
