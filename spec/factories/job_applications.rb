@@ -32,10 +32,6 @@ FactoryBot.define do
     qualified_teacher_status_year { "1990" }
     statutory_induction_complete { "yes" }
 
-    # Employment history
-    gaps_in_employment { "yes" }
-    gaps_in_employment_details { Faker::Lorem.paragraph(sentence_count: 2) }
-
     # Personal statement
     personal_statement { Faker::Lorem.paragraph(sentence_count: 8) }
 
@@ -65,7 +61,8 @@ FactoryBot.define do
 
     after :create do |job_application, options|
       if options.create_details
-        create_list :employment, 3, job_application: job_application
+        create_list :employment, 3, :job, job_application: job_application
+        create_list :employment, 1, :break, job_application: job_application
         create_list :reference, 2, job_application: job_application
         create_list :qualification, 3, job_application: job_application
       end
@@ -105,10 +102,6 @@ FactoryBot.define do
     qualified_teacher_status { "" }
     qualified_teacher_status_year { "" }
     statutory_induction_complete { "" }
-
-    # Employment history
-    gaps_in_employment { "" }
-    gaps_in_employment_details { "" }
 
     # Personal statement
     personal_statement { "" }
