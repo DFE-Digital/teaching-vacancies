@@ -10,6 +10,7 @@ shared:
     - updated_at
   employments:
     - id
+    - employment_type
     - organisation
     - job_title
     - salary
@@ -19,6 +20,7 @@ shared:
     - started_on
     - ended_on
     - job_application_id
+    - reason_for_break
     - created_at
     - updated_at
   equal_opportunities:
