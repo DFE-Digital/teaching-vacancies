@@ -12,7 +12,7 @@ module Jobseekers::Wizardable
   end
 
   def employment_history_fields
-    %i[gaps_in_employment gaps_in_employment_details]
+    %i[]
   end
 
   def personal_statement_fields

@@ -72,27 +72,26 @@
       p.govuk-body = t(".employment_history.none")
     - else
       = govuk_accordion classes: "govuk-!-margin-bottom-2" do |accordion|
-        - job_application.employments.order(:created_at).each_with_index do |employment, index|
-          - accordion.add_section title: employment.job_title, html_attributes: { id: "#{employment.job_title}-#{index}" }
-            = govuk_summary_list do |summary|
-              - summary.slot :row, key: t(".employment_history.organisation"), value: employment.organisation
-              - if employment.salary.present?
-                - summary.slot :row, key: t(".employment_history.salary"), value: employment.salary
-              - if employment.subjects.present?
-                - summary.slot :row, key: t(".employment_history.subjects"), value: employment.subjects
-              - summary.slot :row, key: t(".employment_history.main_duties"), value: employment.main_duties
-              - summary.slot :row, key: t(".employment_history.started_on"), value: employment.started_on
-              - summary.slot :row, key: t(".employment_history.current_role"), value: employment.current_role.humanize
-              - if employment.current_role == "no"
-                - summary.slot :row, key: t(".employment_history.ended_on"), value: employment.ended_on
+        - employments.each_with_index do |employment, index|
+          - if employment.job?
+            - accordion.add_section title: employment.job_title, html_attributes: { id: "#{employment.job_title}-#{index}" }
+              = govuk_summary_list do |summary|
+                - summary.slot :row, key: t(".employment_history.organisation"), value: employment.organisation
+                - if employment.salary.present?
+                  - summary.slot :row, key: t(".employment_history.salary"), value: employment.salary
+                - if employment.subjects.present?
+                  - summary.slot :row, key: t(".employment_history.subjects"), value: employment.subjects
+                - summary.slot :row, key: t(".employment_history.main_duties"), value: employment.main_duties
+                - summary.slot :row, key: t(".employment_history.started_on"), value: employment.started_on
+                - summary.slot :row, key: t(".employment_history.current_role"), value: employment.current_role.humanize
+                - if employment.current_role == "no"
+                  - summary.slot :row, key: t(".employment_history.ended_on"), value: employment.ended_on
 
-    - if job_application.gaps_in_employment == "yes"
-      = govuk_summary_list classes: "summary-list--no-divider" do |summary|
-        - summary.slot :row, key: t(".employment_history.gaps_in_employment"), value: job_application.gaps_in_employment.capitalize
-        - summary.slot :row, key: "", value: job_application.gaps_in_employment_details
-    - else
-      = govuk_summary_list classes: "summary-list--no-divider" do |summary|
-        - summary.slot :row, key: t(".employment_history.gaps_in_employment"), value: job_application.gaps_in_employment.capitalize
+          - elsif employment.break?
+            = render "shared/job_application/explained_employment_break", accordion: accordion, employment: employment, index: index
+
+          - if employment_history_gap?(index, employments)
+            = render "shared/job_application/unexplained_employment_break", accordion: accordion, employment: employment, index: index
 
 = render ReviewComponent.new id: "personal_statement_summary" do |review|
   - review.heading title: t(".personal_statement.heading")
