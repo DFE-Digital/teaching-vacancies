@@ -22,12 +22,20 @@ RSpec.describe Publishers::VacancyStats do
       SQL
     end
 
-    before do
-      allow(big_query).to receive(:query).with(expected_sql).and_return(response)
+    context "when data is available from BigQuery" do
+      before { allow(big_query).to receive(:query).with(expected_sql).and_return(response) }
+
+      it "retrieves the vacancy view count from the BigQuery API" do
+        expect(subject.number_of_unique_views).to eq(42)
+      end
     end
 
-    it "retrieves the vacancy view count from the BigQuery API" do
-      expect(subject.number_of_unique_views).to eq(42)
+    context "when no data is available from BigQuery" do
+      before { allow(big_query).to receive(:query).with(expected_sql).and_return([]) }
+
+      it "returns 0" do
+        expect(subject.number_of_unique_views).to eq(0)
+      end
     end
   end
 end
