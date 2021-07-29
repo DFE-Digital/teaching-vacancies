@@ -219,6 +219,7 @@ en:
           submitted:
             one: Unread application
             other: Unread applications
+          statistics: Statistics
         index:
           deadline:
             after: Deadline passed
@@ -280,6 +281,19 @@ en:
         view_jobs: View your job listings
         what_happens_next: What happens next
       statistics:
+        show:
+          application_data: Application data
+          explanation: This is to ensure the anonymity of applications who submit equal opportunities information.
+          intro: This may include data from candidates who have withdrawn their applications.
+          listing_data: Listing data
+          rejected_applications: Rejected applications
+          saves_by_jobseeker: Saves by jobseeker
+          shortlisted_applications: Shortlisted applications
+          title: Statistics
+          total_applications: Total applications
+          unread_applications: Unread applications
+          views_by_jobseeker: Views by jobseeker
+          withdrawn_applications: Withdrawn applications
         update:
           success: Thank you for submitting your feedback for %{job_title}
 
