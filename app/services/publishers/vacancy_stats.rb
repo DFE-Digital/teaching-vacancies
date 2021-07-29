@@ -24,7 +24,7 @@ class Publishers::VacancyStats
         AND publish_on = "#{vacancy.publish_on.iso8601}"
       SQL
 
-      big_query.query(sql).first&.fetch(field)
+      big_query.query(sql).first&.fetch(field) || 0
     end
   rescue StandardError => e
     # Stats are a nice-to-have, return `nil` instead of failing hard if we can't get them

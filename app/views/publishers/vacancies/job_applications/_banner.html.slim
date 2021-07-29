@@ -42,9 +42,10 @@
           .govuk-heading-l = job_applications.unsuccessful.count
           h3.govuk-caption-s = t(".rejected", count: job_applications.unsuccessful.count)
 
-- if vacancy.enable_job_applications? && vacancy.published? && !vacancy.pending?
-  .govuk-grid-row
-    .govuk-grid-column-full
-      = render(DashboardComponent.new) do |dashboard|
-        - dashboard.navigation_item item: (link_to t("buttons.manage_listing"), organisation_job_path(vacancy.id), class: "dashboard-component-navigation__link", "aria-current": ("page" if controller_name == "vacancies"))
+.govuk-grid-row
+  .govuk-grid-column-full
+    = render(DashboardComponent.new) do |dashboard|
+      - dashboard.navigation_item item: (link_to t("buttons.manage_listing"), organisation_job_path(vacancy.id), class: "dashboard-component-navigation__link", "aria-current": ("page" if controller_name == "vacancies"))
+      - if vacancy.can_receive_job_applications?
         - dashboard.navigation_item item: (link_to t(".applications", count: vacancy.job_applications.where(status: %w[submitted reviewed shortlisted unsuccessful]).count), organisation_job_job_applications_path(vacancy.id), class: "dashboard-component-navigation__link", "aria-current": ("page" if controller_name == "job_applications"))
+      - dashboard.navigation_item item: (link_to t(".statistics"), organisation_job_statistics_path(vacancy.id), class: "dashboard-component-navigation__link", "aria-current": ("page" if controller_name == "statistics"))
