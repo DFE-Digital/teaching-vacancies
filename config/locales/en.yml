@@ -143,6 +143,7 @@ en:
   footer:
     for_job_seekers: For jobseekers
     for_schools: For schools
+    link_prefix_visually_hidden: view all vacancies for
     list_a_teaching_job: List a teaching job
     provide_feedback: Give feedback
     request_support: Report problems via email
