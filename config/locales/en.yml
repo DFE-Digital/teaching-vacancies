@@ -242,6 +242,7 @@ en:
       cities: Cities and towns with teaching jobs
       counties: Counties with teaching jobs
       job_roles: Current teaching jobs by role
+      link_prefix_visually_hidden: View all vacancies for
       subjects: Current teaching jobs by subject
 
   pages:
