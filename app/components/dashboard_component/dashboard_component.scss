@@ -91,13 +91,11 @@
     &__link {
       @include govuk-font(19);
 
-      color: $govuk-link-colour;
       display: block;
       font-weight: bold;
       padding-bottom: govuk-spacing(3);
       padding-top: govuk-spacing(3);
       position: relative;
-      text-decoration: none;
 
       @include govuk-media-query ($until: desktop) {
         padding: govuk-spacing(2);
@@ -142,5 +140,13 @@
     .filters-applied-text {
       line-height: 2em;
     }
+  }
+}
+
+.dashboard-component .govuk-link {
+  text-decoration: none;
+
+  &:visited {
+    color: $govuk-link-colour;
   }
 }

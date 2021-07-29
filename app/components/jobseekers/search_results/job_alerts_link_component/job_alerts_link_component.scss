@@ -24,6 +24,10 @@
 
     a {
       color: govuk-colour('white');
+
+      &:focus {
+        color: $govuk-focus-text-colour;
+      }
     }
 
     .alert-icon {
