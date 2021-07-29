@@ -187,8 +187,7 @@ data "aws_iam_policy_document" "deny_sensitive_data_in_s3" {
       variable = "s3:prefix"
 
       values = [
-        "",
-        "full"
+        "full/"
       ]
     }
   }
