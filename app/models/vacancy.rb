@@ -91,6 +91,10 @@ class Vacancy < ApplicationRecord
     published? && publish_on&.future?
   end
 
+  def can_receive_job_applications?
+    enable_job_applications? && published? && !pending?
+  end
+
   def application_link=(value)
     # Data may not include a scheme/protocol so we must be careful when creating
     # links that Rails doesn't make them incorrectly relative.
