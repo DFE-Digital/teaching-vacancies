@@ -296,10 +296,6 @@ en:
               blank: Give details about any close relationships with people within the organisation
             right_to_work_in_uk:
               inclusion: Select yes if you have the right to work in the UK
-        jobseekers/job_application/employment_history_form:
-          attributes:
-            gaps_in_employment:
-              inclusion: Select yes if you have had any gaps in employment
         jobseekers/job_application/equal_opportunities_form:
           attributes:
             age:
@@ -387,6 +383,19 @@ en:
           attributes:
             withdraw_reason:
               inclusion: Select why you are withdrawing your application
+        jobseekers/job_application/details/break_form:
+          attributes:
+            ended_on:
+              after: End date must be after the start date
+              on_or_before: "The end of break can't be in the future"
+              blank: Enter the date the break finished
+              invalid: Enter a date in the correct format
+            reason_for_break:
+              blank: Enter a reason for this break
+            started_on:
+              before: The date the break started must be in the past
+              blank: Enter the date you started the break
+              invalid: Enter a date in the correct format
         jobseekers/job_application/details/employment_form:
           attributes:
             current_role:
