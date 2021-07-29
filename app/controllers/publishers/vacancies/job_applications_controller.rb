@@ -2,7 +2,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   include QualificationFormConcerns
   include DatesHelper
 
-  helper_method :form, :job_application, :job_applications, :qualification_form_param_key, :sort, :sort_form, :vacancy
+  helper_method :employments, :form, :job_application, :job_applications, :qualification_form_param_key, :sort, :sort_form, :vacancy
 
   def reject
     raise ActionController::RoutingError, "Cannot reject a draft or withdrawn application" if
@@ -43,6 +43,10 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def form_params
     params.require(:publishers_job_application_update_status_form).permit(:further_instructions, :rejection_reasons)
+  end
+
+  def employments
+    @employments ||= job_application.employments.order(:started_on)
   end
 
   def job_application
