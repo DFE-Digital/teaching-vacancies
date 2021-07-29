@@ -326,7 +326,6 @@ en:
         employment_history:
           current_role: Is this your current role?
           ended_on: End date
-          gaps_in_employment: Gaps in employment
           heading: Current role and employment history
           main_duties: Main duties
           none: The candidate has not included any roles or employment history.
