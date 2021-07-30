@@ -149,4 +149,8 @@
   &:visited {
     color: $govuk-link-colour;
   }
+
+  &:focus {
+    color: $govuk-focus-text-colour;
+  }
 }
