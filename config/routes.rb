@@ -143,7 +143,7 @@ Rails.application.routes.draw do
       post :publish, to: "publishers/vacancies/publish#create"
       get :publish, to: "publishers/vacancies/publish#create"
       resource :feedback, only: %i[create], controller: "publishers/vacancies/feedbacks"
-      resource :statistics, only: %i[update], controller: "publishers/vacancies/statistics"
+      resource :statistics, only: %i[show update], controller: "publishers/vacancies/statistics"
       resource :copy, only: %i[new create], controller: "publishers/vacancies/copy"
       resource :end_listing, only: %i[show update], controller: "publishers/vacancies/end_listing"
       resource :extend_deadline, only: %i[show update], controller: "publishers/vacancies/extend_deadline"
