@@ -38,7 +38,7 @@ FROM ruby:3.0.2-alpine AS production
 WORKDIR /app
 
 ARG PROD_PACKAGES
-RUN apk update && apk add --no-cache $PROD_PACKAGES
+RUN apk -U upgrade && apk add --no-cache $PROD_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
 RUN gem install bundler:2.2.22 --no-document
