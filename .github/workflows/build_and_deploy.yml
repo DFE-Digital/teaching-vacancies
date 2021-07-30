@@ -146,12 +146,11 @@ jobs:
 
       - name: Scan ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }} image
         run: |
-          mkdir -p ~/.docker/cli-plugins && \
-          curl https://github.com/docker/scan-cli-plugin/releases/latest/download/docker-scan_linux_amd64 -L -s -S -o ~/.docker/cli-plugins/docker-scan &&\
-          chmod +x ~/.docker/cli-plugins/docker-scan
-          cd ~/.docker/cli-plugins/
-          docker scan --login --token ${{ secrets.SNYK_TOKEN }}
-          yes | docker scan ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }}
+          docker pull snyk/snyk-cli:docker
+          sudo docker run -t -e "SNYK_TOKEN=${{ secrets.SNYK_TOKEN }}" \
+          -v "/var/run/docker.sock:/var/run/docker.sock" \
+          -v "$GITHUB_WORKSPACE:/project"  \
+          snyk/snyk-cli:docker test --docker ${{ env.DOCKER_REPOSITORY }}:${{ env.GIT_BRANCH }}
 
 
 
