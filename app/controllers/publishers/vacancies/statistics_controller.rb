@@ -1,4 +1,8 @@
 class Publishers::Vacancies::StatisticsController < Publishers::Vacancies::BaseController
+  def show
+    @views_by_jobseeker = Publishers::VacancyStats.new(vacancy).number_of_unique_views
+  end
+
   def update
     if Publishers::VacancyStatisticsForm.new(statistics_params).valid?
       vacancy.listed_elsewhere = statistics_params[:listed_elsewhere]
