@@ -305,6 +305,40 @@ RSpec.describe Vacancy do
     end
   end
 
+  describe "#can_receive_job_applications?" do
+    context "when the vacancy can receive job applications" do
+      subject { create(:vacancy, :published, enable_job_applications: true) }
+
+      it "returns true" do
+        expect(subject.can_receive_job_applications?).to be true
+      end
+    end
+
+    context "when the vacancy does not enable_job_applications?" do
+      subject { create(:vacancy, :published, enable_job_applications: false) }
+
+      it "returns false" do
+        expect(subject.can_receive_job_applications?).to be false
+      end
+    end
+
+    context "when the vacancy is not published" do
+      subject { create(:vacancy, :draft) }
+
+      it "returns false" do
+        expect(subject.can_receive_job_applications?).to be false
+      end
+    end
+
+    context "when the vacancy is pending" do
+      subject { create(:vacancy, :published, publish_on: Date.tomorrow) }
+
+      it "returns false" do
+        expect(subject.can_receive_job_applications?).to be false
+      end
+    end
+  end
+
   describe "#application_link" do
     it "returns the url" do
       vacancy = create(:vacancy, application_link: "https://example.com")
