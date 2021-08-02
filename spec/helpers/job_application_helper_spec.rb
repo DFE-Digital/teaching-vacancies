@@ -178,7 +178,7 @@ RSpec.describe JobApplicationHelper do
       let(:job_application) { create(:job_application, :status_withdrawn) }
 
       it "renders the applicant name" do
-        expect(subject).to include(job_application.name)
+        expect(subject).to include(CGI.escapeHTML(job_application.name))
       end
 
       it "does not render a link" do
