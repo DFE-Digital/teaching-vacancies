@@ -4,7 +4,10 @@ class Qualification < ApplicationRecord
   belongs_to :job_application
   has_many :qualification_results, dependent: :delete_all, autosave: true
   accepts_nested_attributes_for :qualification_results
-  encrypts :finished_studying_details, migrating: true
+  encrypts :finished_studying_details
+
+  # remove this line after dropping unencrypted columns
+  self.ignored_columns = ["finished_studying_details"]
 
   SECONDARY_QUALIFICATIONS = %w[gcse as_level a_level other_secondary].freeze
 
