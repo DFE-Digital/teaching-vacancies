@@ -105,9 +105,14 @@ check-docker-tag:
 		$(if $(tag), , $(error Missing environment variable "tag"))
 		$(eval export TF_VAR_paas_app_docker_image=$(DOCKER_REPOSITORY):$(tag))
 
+ci:	## Run in automation environment
+	$(eval export DISABLE_PASSCODE=true)
+	$(eval export AUTO_APPROVE=-auto-approve)
+#$(DISABLE_PASSCODE)=$(passcode)
 .PHONY: terraform-app-init
 terraform-app-init:
-		$(if $(passcode), , $(error Missing environment variable "passcode"))
+		$(or $(DISABLE_PASSCODE),$(PASSCODE), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
+#		$(if $(passcode), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
 		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
 		cd terraform/app && rm -f .terraform.lock.hcl && terraform init -reconfigure -input=false $(backend_config)
 
