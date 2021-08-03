@@ -6,7 +6,6 @@ RSpec.describe Publishers::VacancyFormPageHeadingComponent, type: :component do
   let(:status) { :published }
   let(:current_step_number) { 1 }
   let(:current_publisher_is_part_of_school_group?) { true }
-  let(:steps_adjust) { current_publisher_is_part_of_school_group? ? 0 : 1 }
   let(:total_steps) { 2 }
 
   let(:steps) do

@@ -1,19 +1,20 @@
-- content_for :page_title_prefix, page_title_prefix(vacancy, form, steps_config[:job_location][:title])
+- content_for :page_title_prefix, page_title_prefix(vacancy, form, steps_config[:job_roles][:title])
 
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-full
       = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, adjusted_current_step_number, total_steps(steps_config))
-      = govuk_back_link text: session[:current_step] == :review ? t("buttons.cancel_and_return") : t("buttons.back_to_previous_step"), href: back_path
+      - if session[:current_step] == :review
+        = govuk_back_link text: t("buttons.cancel_and_return"), href: back_path
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = form_for form, url: wizard_path, method: :patch do |f|
         = f.govuk_error_summary
 
-        h2.govuk-heading-l = t("publishers.vacancies.steps.job_location")
+        h2.govuk-heading-l = t("publishers.vacancies.steps.job_roles")
 
-        = f.govuk_collection_radio_buttons :job_location, t("helpers.options.publishers_job_listing_job_location_form.job_location.#{current_organisation.group_type}"), :first, :last
+        = f.govuk_collection_radio_buttons :job_roles, options_with_bold_labels(form, :job_roles), :id, :name, :description
 
         = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 

@@ -1,2 +1,3 @@
 = render "publishers/vacancies/vacancy_form_partials/continue_or_update_submit", f: f
-= render "publishers/vacancies/vacancy_form_partials/save_and_return_submit", f: f
+- if !other_parts_of_step_remaining? && vacancy_can_be_saved?
+  = render "publishers/vacancies/vacancy_form_partials/save_and_return_submit", f: f
