@@ -542,7 +542,7 @@ en:
         job_roles_options:
           teacher: Teacher
           leadership: Leadership
-          sen_specialist: SEN specialist
+          sen_specialist: Special educational needs (SEN) specialist
           nqt_suitable: Suitable for NQTs
           nqt_suitable_hidden_prefix: Only show results
         job_title: Job title
