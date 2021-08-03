@@ -20,15 +20,15 @@ class VacancyPresenter < BasePresenter
   end
 
   def job_advert
-    simple_format(model.job_advert)
+    simple_format(fix_bullet_points(model.job_advert))
   end
 
   def about_school
-    simple_format(model.about_school)
+    simple_format(fix_bullet_points(model.about_school))
   end
 
   def school_visits
-    simple_format(model.school_visits) if model.school_visits.present?
+    simple_format(fix_bullet_points(model.school_visits)) if model.school_visits.present?
   end
 
   def how_to_apply
@@ -79,4 +79,28 @@ class VacancyPresenter < BasePresenter
     duration = model.fixed_term? ? "(#{model.contract_type_duration})" : nil
     [type, duration].compact.join(" ")
   end
+
+  private
+
+  # rubocop:disable Style/AsciiComments
+  def fix_bullet_points(text)
+    # This is a band-aid solution for the problem where (particularly) job adverts contain `•` but
+    # do not contain corresponding newlines, resulting in inline bullets.
+    text&.gsub("⁃", "•") # Normalize bullets. `⁃` is a hyphen bullet, not an en-dash or a hyphen.
+    return text unless text&.count("•")&.positive?
+
+    paragraphs = text.split("\n") # Presume newline signals end of unordered list
+    paragraphs.map { |para|
+      if para.count("•").zero?
+        para
+      else
+        first_bulleted_line_idx = para.gsub(/\s+/, "").first == "•" ? 0 : 1
+        para.split("•").reject(&:blank?).map.with_index { |line, index|
+          item = "<li>#{line}</li>"
+          index == first_bulleted_line_idx ? "<ul>#{item}" : item
+        }.join.concat("</ul>")
+      end
+    }.join("\n")
+  end
+  # rubocop:enable Style/AsciiComments
 end

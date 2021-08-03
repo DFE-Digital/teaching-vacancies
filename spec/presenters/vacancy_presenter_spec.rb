@@ -30,6 +30,35 @@ RSpec.describe VacancyPresenter do
 
       expect(presenter.job_advert).to eq("<p> call();Sanitized content</p>")
     end
+
+    it "transforms badly formatted inline `•` symbols into validly formatted <li> tags" do
+      vacancy = build(:vacancy, job_advert:
+        "Required skills: \n\n• Skill • Competency \n" \
+        "This is a paragraph that's not part of the bullet pointy bit. \n" \
+        "And this is going to have some more bullet points... \n" \
+        "• Interpersonal skills • Wonderfulness • Skill three \n" \
+        "There you go. No more bullet points.")
+      presenter = VacancyPresenter.new(vacancy)
+
+      expect(presenter.job_advert).to eq(
+        "<p>Required skills: </p>\n\n" \
+        "<p>" \
+          "<ul>\n<br />" \
+            "<li> Skill </li>\n<br />" \
+            "<li> Competency </li>\n<br />" \
+          "</ul>\n" \
+          "<br />This is a paragraph that's not part of the bullet pointy bit. \n" \
+          "<br />And this is going to have some more bullet points... \n<br />" \
+          "<ul>\n" \
+            "<br /><li> Interpersonal skills </li>\n" \
+            "<br /><li> Wonderfulness </li>\n" \
+            "<br /><li> Skill three </li>\n" \
+            "<br />" \
+          "</ul>\n" \
+        "<br />There you go. No more bullet points." \
+        "</p>",
+      )
+    end
   end
 
   describe "#about_school" do
