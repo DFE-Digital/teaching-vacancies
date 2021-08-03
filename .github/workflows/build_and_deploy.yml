@@ -111,7 +111,8 @@ jobs:
             ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
             ${{ env.DOCKER_REPOSITORY }}:${{ env.GIT_BRANCH }}
             ${{ env.DOCKER_REPOSITORY }}:master
-          push: true
+          push: false
+          load: true
           # Tag with branch name for reuse
           # Tag with branch name and commit sha for unique identification
           tags: |
@@ -138,32 +139,21 @@ jobs:
         if: github.event_name == 'pull_request'
         run: echo "MATRIX_ENVIRONMENTS={\"environment\":[\"review\"]}" >> $GITHUB_ENV
 
-  scan_docker_images:
-    name: Scan docker image
-    needs: [build]
-    runs-on: ubuntu-20.04
-    steps:
+      - uses: actions/checkout@v2
+        name: Checkout Code
 
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
-        with:
-            registry: ghcr.io
-            username: ${{ github.repository_owner }}
-            password: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
+      - name: Scan ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }} image
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        run: |
 
-      - uses: anchore/scan-action@v2
-        id: scan
-        with:
-          image: ${{ needs.build.outputs.scan_docker_image}}
-          acs-report-enable: true
-          fail-build: false
-          severity-cutoff: low
+          docker run -t -e "SNYK_TOKEN=${{ secrets.SNYK_TOKEN }}" \
+          -v "/var/run/docker.sock:/var/run/docker.sock" \
+          -v "$GITHUB_WORKSPACE:/project"  \
+          snyk/snyk-cli:docker test --docker ${{ env.DOCKER_REPOSITORY }}:${{ env.GIT_BRANCH }} --file=Dockerfile
 
-      - name: upload Anchore scan SARIF report
-        if: always()
-        uses: github/codeql-action/upload-sarif@v1
-        with:
-          sarif_file: ${{ steps.scan.outputs.sarif }}
+      - name: Push ${{ env.DOCKER_REPOSITORY }} images
+        if: ${{ success() }}
+        run: docker image push --all-tags ${{ env.DOCKER_REPOSITORY }}
 
   deploy:
     name: Deploy app
