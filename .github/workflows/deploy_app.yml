@@ -9,6 +9,9 @@ on:
       tag:
         description: Docker tag
         required: true
+      pr_id:
+        description: Pull Request
+        required: false
 
 env:
  DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
@@ -55,6 +58,8 @@ jobs:
         PARAMETER_STORE_ENVIRONMENT=dev
         TF_VAR_environment=${{ github.event.inputs.environment }}
         VAR_FILE=review
+        pr_id=${{ github.event.inputs.pr_id }}
+        echo "pr_id=${pr_id}" >> $GITHUB_ENV
         echo "BACKEND_CONFIG=${BACKEND_CONFIG}" >> $GITHUB_ENV
         echo "PARAMETER_STORE_ENVIRONMENT=${PARAMETER_STORE_ENVIRONMENT}" >> $GITHUB_ENV
         echo "TF_VAR_environment=${TF_VAR_environment}" >> $GITHUB_ENV
@@ -89,9 +94,6 @@ jobs:
         bin/fetch_config.rb -s aws-ssm-parameter-path:/teaching-vacancies/${{ env.PARAMETER_STORE_ENVIRONMENT }}/app -d quiet \
           && echo Data in "/teaching-vacancies/${{ env.PARAMETER_STORE_ENVIRONMENT }}" looks valid
 
-    - name: Deploy to environment
+    - name: Deploy to review app
       run: |
-        export TF_VAR_paas_app_docker_image=${{ env.DOCKER_REPOSITORY }}:${{ github.event.inputs.tag }}
-        terraform init -reconfigure -input=false ${{ env.BACKEND_CONFIG }}
-        terraform apply -var-file ../workspace-variables/${{ env.VAR_FILE }}.tfvars -auto-approve -input=false
-      working-directory: terraform/app
+        make ${{ env.VAR_FILE }} ci tag=${{ github.event.inputs.tag }} terraform-app-plan
