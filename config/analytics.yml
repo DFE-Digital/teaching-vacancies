@@ -313,3 +313,4 @@ shared:
     - personal_statement_guidance
     - end_listing_reason
     - candidate_hired_from
+    - completed_steps
