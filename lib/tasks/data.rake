@@ -46,3 +46,28 @@ namespace :ons do
     %i[regions counties cities].each { |api_location_type| ImportPolygons.new(api_location_type: api_location_type).call }
   end
 end
+
+namespace :vacancy_completed_steps do
+  desc "Migrate completed step data from integer to array of strings"
+  task migrate: :environment do
+    steps_config = {
+      job_location: "1",
+      schools: "1",
+      job_details: "2",
+      pay_package: "3",
+      important_dates: "4",
+      documents: "5",
+      applying_for_the_job: "6",
+      job_summary: "7",
+      review: "8",
+    }.freeze
+
+    Vacancy.find_each(batch_size: 100) do |vacancy|
+      completed_steps = vacancy.completed_steps | steps_config.select { |_step, number|
+        number.to_i == vacancy.completed_step
+      }.keys.map(&:to_s)
+      vacancy.completed_steps = completed_steps
+      vacancy.save
+    end
+  end
+end
