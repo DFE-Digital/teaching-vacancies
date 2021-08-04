@@ -8,9 +8,10 @@ export const getPostcodeFromCoordinates = (latitude, longitude) => axios.get('ht
     logger.log(`${error} Postcodes API`);
   });
 
-export const getLocationSuggestions = (query) => axios.get(`/api/v1/location_suggestion/${query}?format=json`)
+export const getLocationSuggestions = ({ query, populateResults }) => axios.get(`/api/v1/location_suggestion/${query}?format=json`)
   .then((response) => response.data)
   .then((data) => data.suggestions)
+  .then(populateResults)
   .catch((error) => {
     logger.log(`${error} Search query: ${query}`);
   });
