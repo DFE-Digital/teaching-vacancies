@@ -89,9 +89,20 @@ jobs:
         bin/fetch_config.rb -s aws-ssm-parameter-path:/teaching-vacancies/${{ env.PARAMETER_STORE_ENVIRONMENT }}/app -d quiet \
           && echo Data in "/teaching-vacancies/${{ env.PARAMETER_STORE_ENVIRONMENT }}" looks valid
 
-    - name: Deploy to environment
+    - name: Deploy to review app
+      if: startsWith(github.event.inputs.environment, 'review') != true || startsWith(github.event.inputs.environment, 'review')
       run: |
-        export TF_VAR_paas_app_docker_image=${{ env.DOCKER_REPOSITORY }}:${{ github.event.inputs.tag }}
-        terraform init -reconfigure -input=false ${{ env.BACKEND_CONFIG }}
-        terraform apply -var-file ../workspace-variables/${{ env.VAR_FILE }}.tfvars -auto-approve -input=false
-      working-directory: terraform/app
+        export pr_id=$(echo ${{ github.event.inputs.environment }} | cut -c 11-15)
+        echo $pr_id
+        make ${{ env.VAR_FILE }} ci tag=${{ github.event.inputs.tag }} terraform-app-apply
+
+#   - name: Deploy to standard environments
+#     if: startsWith(github.event.inputs.environment, 'review') != true
+#     run: |
+#
+#       make ${{ env.VAR_FILE }} ci tag=${{ github.event.inputs.tag }} terraform-app-apply
+
+#      working-directory: terraform/app
+#export TF_VAR_paas_app_docker_image=${{ env.DOCKER_REPOSITORY }}:${{ github.event.inputs.tag }}
+#        terraform init -reconfigure -input=false ${{ env.BACKEND_CONFIG }}
+#        terraform apply -var-file ../workspace-variables/${{ env.VAR_FILE }}.tfvars -auto-approve -input=false
