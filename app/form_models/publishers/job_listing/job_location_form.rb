@@ -5,7 +5,6 @@ class Publishers::JobListing::JobLocationForm < Publishers::JobListing::VacancyF
 
   def params_to_save
     {
-      completed_step: params[:completed_step],
       completed_steps: params[:completed_steps],
       job_location: params[:job_location] == "central_office" ? params[:job_location] : nil,
       readable_job_location: params[:readable_job_location],
