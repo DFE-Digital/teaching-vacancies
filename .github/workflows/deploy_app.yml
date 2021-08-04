@@ -54,16 +54,17 @@ jobs:
     - name: Set environment variables for review
       if: startsWith(github.event.inputs.environment, 'review')
       run: |
-        BACKEND_CONFIG=-backend-config="key=review/${{ github.event.inputs.environment }}.tfstate"
+
         PARAMETER_STORE_ENVIRONMENT=dev
         TF_VAR_environment=${{ github.event.inputs.environment }}
-        VAR_FILE=review
+
+        echo "DEPLOY_ENV=review" >> $GITHUB_ENV
         pr_id=${{ github.event.inputs.pr_id }}
         echo "pr_id=${pr_id}" >> $GITHUB_ENV
-        echo "BACKEND_CONFIG=${BACKEND_CONFIG}" >> $GITHUB_ENV
+
         echo "PARAMETER_STORE_ENVIRONMENT=${PARAMETER_STORE_ENVIRONMENT}" >> $GITHUB_ENV
         echo "TF_VAR_environment=${TF_VAR_environment}" >> $GITHUB_ENV
-        echo "VAR_FILE=${VAR_FILE}" >> $GITHUB_ENV
+
 
     - name: Set environment variables for non-review environments
       if: startsWith(github.event.inputs.environment, 'review') != true
@@ -96,4 +97,4 @@ jobs:
 
     - name: Deploy to review app
       run: |
-        make ${{ env.VAR_FILE }} ci tag=${{ github.event.inputs.tag }} terraform-app-plan
+        make ${{ env.DEPLOY_ENV }} ci tag=${{ github.event.inputs.tag }} terraform-app-plan
