@@ -1,11 +1,9 @@
-.js-location-finder {
-  .govuk-c-loader__spinner {
-    animation: spin 1.5s infinite linear;
-    left: 4px;
-    position: absolute;
-    top: 34px;
-    transform: translateZ(0);
-  }
+.govuk-c-loader__spinner {
+  animation: spin 1.5s infinite linear;
+  left: 4px;
+  position: absolute;
+  top: 4px;
+  transform: translateZ(0);
 }
 
 @keyframes spin {
