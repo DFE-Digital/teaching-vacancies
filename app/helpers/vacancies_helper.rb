@@ -87,10 +87,12 @@ module VacanciesHelper
     t("helpers.hint.publishers_job_listing_applying_for_the_job_form.#{organisation}_visits")
   end
 
-  def vacancy_step_completed?(vacancy, step_number)
-    return false if vacancy.completed_step.nil?
+  def vacancy_step_completed?(vacancy, step)
+    return false if vacancy.completed_step.nil? || step_current == :review
 
-    step_number <= vacancy.completed_step
+    steps_config[step][:number] <= steps_config.select { |_step, details|
+      details[:number] == vacancy.completed_step
+    }.first.second[:number]
   end
 
   def steps_to_display(steps, steps_adjust)
