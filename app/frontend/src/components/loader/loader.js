@@ -3,13 +3,11 @@ import './loader.scss';
 
 export const add = (targetEl, placeholder) => {
   targetEl.insertAdjacentHTML('afterend', loaderSvg);
-  targetEl.style.padding = '5px 5px 5px 36px';
   targetEl.placeholder = placeholder;
 };
 
 export const remove = (targetEl, placeholder) => {
   const loaderEl = document.getElementById('loader');
-  targetEl.style.padding = '5px';
   loaderEl.remove();
   targetEl.setAttribute('placeholder', placeholder);
 };

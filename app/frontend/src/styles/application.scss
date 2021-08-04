@@ -131,3 +131,10 @@ b {
     }
   }
 }
+
+.autocomplete__wrapper {
+  .autocomplete__input {
+    background-color: govuk-colour('white');
+    height: 2.5rem;
+  }
+}
