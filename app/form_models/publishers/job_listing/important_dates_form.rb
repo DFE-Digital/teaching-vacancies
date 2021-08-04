@@ -26,13 +26,12 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Vacan
 
   def params_to_save
     {
+      completed_steps: completed_steps,
       publish_on: publish_on,
       expires_at: expires_at,
       starts_on: (starts_on unless starts_asap == "true"),
       starts_asap: starts_asap,
-      completed_step: completed_step,
-      completed_steps: completed_steps,
-    }.delete_if { |k, v| k == :completed_step && v.blank? }
+    }
   end
 
   def expires_at=(value)

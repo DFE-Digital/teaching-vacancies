@@ -6,7 +6,6 @@ FactoryBot.define do
     about_school { "Great school with amazing people" }
     enable_job_applications { true }
     benefits { Faker::Lorem.paragraph(sentence_count: 4) }
-    completed_step { 7 }
     completed_steps do
       %w[job_location schools job_details pay_package important_dates documents applying_for_the_job job_summary]
     end
