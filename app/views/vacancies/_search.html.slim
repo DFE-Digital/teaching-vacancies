@@ -47,8 +47,8 @@ ruby:
   .filter-vacancies
     h2.govuk-heading-m = t("jobs.search.title")
 
-    = render "shared/search/keyword", f: f, wide: true
-    = render "shared/search/location", f: f, wide: true
+    = render "shared/search/keyword", f: f
+    = render "shared/search/location", f: f
     = render "shared/search/current_location", loaderElement: "location-field"
     = render "shared/search/radius", f: f, wide: true
 
