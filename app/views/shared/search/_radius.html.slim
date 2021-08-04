@@ -3,7 +3,7 @@
   :last,
   :first,
   label: { text: t("jobs.search.within_radius"), size: "s" },
-  class: "govuk-!-width-#{wide ? 'full' : 'one-third'}",
+  class: "govuk-!-width-#{wide ? 'full' : 'one-half'}",
   data: { "change-submit": "false" },
   form_group: { classes: "location-radius-select" },
   options: { selected: @form.radius || Search::LocationBuilder::DEFAULT_RADIUS }

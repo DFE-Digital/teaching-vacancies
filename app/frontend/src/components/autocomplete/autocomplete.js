@@ -1,37 +1,46 @@
-import 'es6-promise/auto';
-import view from './autocomplete.view';
+import accessibleAutocomplete from 'accessible-autocomplete';
+import 'accessible-autocomplete/dist/accessible-autocomplete.min.css';
+import './autocomplete.scss';
 
-export const renderAutocomplete = (widgetParams) => {
-  view.create(widgetParams.container, widgetParams.input, widgetParams.key);
+const AUTOCOMPLETE_THRESHOLD = 3;
 
-  widgetParams.input.addEventListener('input', () => {
-    if (isActive(widgetParams.threshold, widgetParams.input.value.length)) {
-      autocomplete.showOptions(widgetParams.getOptions, widgetParams.container, widgetParams.input, widgetParams.key);
-    } else {
-      autocomplete.clearOptions(widgetParams.container, widgetParams.input);
+const highlightRefinement = (text, refinement) => {
+  const index = text.toLowerCase().indexOf(refinement.toLowerCase());
+
+  if (index >= 0) {
+    /* eslint-disable */
+    return `${text.substring(0, index)}<span class='accessible-autocomplete__suggestion-highlight'>${text.substring(index, index + refinement.length)}</span>${text.substring(index + refinement.length, text.length)}`;
+    /* eslint-enable */
+  }
+
+  return text;
+};
+
+const init = (fieldIds, source) => {
+  fieldIds.forEach((elementId) => {
+    const formInput = document.getElementById(elementId);
+
+    if (formInput) {
+      let currentInputValue = formInput.value;
+      formInput.parentNode.removeChild(formInput);
+
+      accessibleAutocomplete({
+        element: document.querySelector('#accessible-autocomplete'),
+        id: elementId,
+        name: 'location',
+        defaultValue: currentInputValue,
+        source: (query, populateResults) => {
+          currentInputValue = query;
+          return source({ query, populateResults });
+        },
+        minLength: AUTOCOMPLETE_THRESHOLD,
+        templates: {
+          suggestion: (value) => highlightRefinement(value, currentInputValue),
+        },
+        tNoResults: () => 'Loading...',
+      });
     }
   });
 };
 
-export const removeUnwantedCharacters = (searchTerm) => searchTerm.replace('.', ' ');
-
-export const showOptions = (getOptions, container, input, key) => {
-  const searchTerm = removeUnwantedCharacters(input.value);
-  return getOptions(searchTerm).then((options) => view.show(options, container, input, key));
-};
-
-export const clearOptions = (container, input) => {
-  view.hide(container, input);
-};
-
-export const isActive = (threshold, inputLength) => inputLength >= threshold;
-
-const autocomplete = {
-  view,
-  renderAutocomplete,
-  removeUnwantedCharacters,
-  showOptions,
-  clearOptions,
-};
-
-export default autocomplete;
+export default init;
