@@ -1,12 +1,30 @@
 = f.govuk_text_field :location,
+  id: "form-location-field",
   label: { text: t("jobs.search.location"), size: "s" },
   hint: { text: t("jobs.search.location_hint"), size: "s" },
   class: %w[js-location-finder__input],
   form_group: { classes: "js-location-finder location-text" },
-  autocomplete: "off",
-  "aria-expanded": "false",
-  "aria-owns": "location__listbox",
-  "aria-autocomplete": "list",
-  role: "combobox",
-  "data-coordinates": @vacancies_search&.point_coordinates || @point_coordinates,
-  width: wide ? "full" : "two-thirds"
+  "data-coordinates": @vacancies_search&.point_coordinates || @point_coordinates
+
+= f.hidden_field :location, id: "location-id", value: nil
+
+  /   autocomplete: "off",
+  / "aria-expanded": "false",
+  / "aria-owns": "location__listbox",
+  / "aria-autocomplete": "list",
+  / role: "combobox",
+  / "data-coordinates": @vacancies_search&.point_coordinates || @point_coordinates,
+
+/ = f.govuk_collection_select :location,
+/   ['France','Germany','United Kingdom'],
+/   :last,
+/   :first,
+/   label: { text: t("jobs.search.location"), size: "s" },
+/   hint: { text: t("jobs.search.location_hint"), size: "s" },
+/   class: %w[js-location-finder__input],
+/   form_group: { classes: "js-location-finder location-text" },
+/   "data-coordinates": @vacancies_search&.point_coordinates || @point_coordinates,
+/   width: wide ? "full" : "two-thirds"
+
+.location-autocomplete-container style="position:relative"
+  #location-autocomplete.govuk-body class="govuk-!-margin-bottom-1"
