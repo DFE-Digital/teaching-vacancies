@@ -7,7 +7,7 @@ import { getPostcodeFromCoordinates } from '../../lib/api';
 import logger from '../../lib/logging';
 import './locationFinder.scss';
 
-const containerEl = document.getElementsByClassName('js-location-finder')[0];
+const containerEl = document.getElementsByClassName('accessible-autocomplete__container')[0];
 const inputEl = document.getElementsByClassName('js-location-finder__input')[0];
 
 export const ERROR_MESSAGE = 'Unable to find your location';
@@ -38,7 +38,6 @@ const getTargetElementId = () => {
 
 export const showLocationLink = (container) => {
   container.classList.add('js-geolocation-supported');
-  container.id = 'location-text';
 };
 
 export const showErrorMessage = (link) => {
