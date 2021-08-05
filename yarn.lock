@@ -2262,10 +2262,10 @@ babel-preset-jest@^27.0.6:
     babel-plugin-jest-hoist "^27.0.6"
     babel-preset-current-node-syntax "^1.0.0"
 
-backstopjs@^5.3.5:
-  version "5.3.5"
-  resolved "https://registry.yarnpkg.com/backstopjs/-/backstopjs-5.3.5.tgz#dd9c7d29d998c7d8de2214be67121343c11156eb"
-  integrity sha512-+ucYnXjl+UAb/r5Kz9tzX70gMsshB7iXBB1Tbi9Uce+I8U0epIiQU/GC87ceLCbjhKZvaJ2LLIXj1AuHYwSFVg==
+backstopjs@^5.3.7:
+  version "5.3.7"
+  resolved "https://registry.yarnpkg.com/backstopjs/-/backstopjs-5.3.7.tgz#49afea95155d933d9cfa4b570efc42ef0dfdcc70"
+  integrity sha512-rnYK4zNsmIfWrBmVfVgVw2W9HgMpaojsedcKweNwNz+8YfRDZCOQGn+ns8daS4YsxjX7mkgtiyhRfa8V5rNvEA==
   dependencies:
     "@mirzazeyrek/node-resemble-js" "^1.2.1"
     chalk "^1.1.3"
