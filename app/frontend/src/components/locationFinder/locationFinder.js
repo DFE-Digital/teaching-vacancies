@@ -41,11 +41,10 @@ export const showLocationLink = (container) => {
 };
 
 export const showErrorMessage = (link) => {
-  if (!document.querySelector('.js-location-finder__link .govuk-error-message')) {
+  if (!document.getElementById('js-location-finder__error')) {
     const errorMessage = document.createElement('div');
     errorMessage.setAttribute('role', 'alert');
     errorMessage.id = 'js-location-finder__error';
-    errorMessage.classList.add('govuk-error-message');
     errorMessage.classList.add('govuk-!-margin-top-2');
     errorMessage.innerHTML = ERROR_MESSAGE;
     link.after(errorMessage);
@@ -61,6 +60,7 @@ export const removeErrorMessage = () => {
 export const onSuccess = (postcode, element) => {
   element.value = postcode;
   locationFinder.stopLoading(containerEl, inputEl);
+  logger.log('location finder usage: success');
 };
 
 export const onFailure = () => {
