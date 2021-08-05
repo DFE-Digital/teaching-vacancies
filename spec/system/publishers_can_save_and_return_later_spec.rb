@@ -239,4 +239,37 @@ RSpec.describe "Publishers can save and return later" do
       end
     end
   end
+
+  describe "can temporarily omit a step by saving at an earlier step and returning on a later step" do
+    scenario "can edit the job details step and then the applying for this job step" do
+      visit organisation_path
+      click_on I18n.t("buttons.create_job")
+
+      fill_in "publishers_job_listing_job_details_form[job_title]", with: @vacancy.job_title
+      click_on I18n.t("buttons.save_and_return_later")
+      created_vacancy = Vacancy.find_by(job_title: @vacancy.job_title)
+
+      expect(page.current_path).to eq(jobs_with_type_organisation_path("draft"))
+
+      click_on @vacancy.job_title
+      within("#applying_for_the_job") do
+        click_on I18n.t("buttons.change")
+      end
+
+      expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
+      fill_in "publishers_job_listing_applying_for_the_job_form[application_link]", with: "some link"
+      click_on I18n.t("buttons.save_and_return_later")
+
+      expect(page.current_path).to eq(jobs_with_type_organisation_path("draft"))
+      expect(page.body).to include(I18n.t("messages.jobs.draft_saved_html", job_title: @vacancy.job_title))
+
+      click_on @vacancy.job_title
+      within("#applying_for_the_job") do
+        click_on I18n.t("buttons.change")
+      end
+
+      expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
+      expect(find_field("publishers_job_listing_applying_for_the_job_form[application_link]").value).to eq("some link")
+    end
+  end
 end
