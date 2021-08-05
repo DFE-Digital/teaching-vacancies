@@ -53,7 +53,8 @@ module Publishers::Wizardable
       job_location, school_name: current_organisation.name, schools_count: vacancy.organisation_ids.count
     )
     attributes_to_merge = {
-      completed_step: steps_config[step][:number],
+      completed_step: job_location == "central_office" ? nil : completed_step,
+      completed_steps: completed_steps,
       readable_job_location: job_location == "central_office" ? readable_job_location : nil,
       organisation_ids: job_location == "central_office" ? current_organisation.id : nil,
     }
@@ -71,9 +72,15 @@ module Publishers::Wizardable
                       params[:publishers_job_listing_schools_form][:organisation_ids].count
                     end
     readable_job_location = readable_job_location(job_location, school_name: school_name, schools_count: schools_count)
+    attributes_to_merge = {
+      completed_steps: completed_steps,
+      completed_step: completed_step,
+      job_location: job_location,
+      readable_job_location: readable_job_location,
+    }
     params.require(:publishers_job_listing_schools_form)
           .permit(:organisation_ids, organisation_ids: [])
-          .merge(completed_step: steps_config[step][:number], job_location: job_location, readable_job_location: readable_job_location)
+          .merge(attributes_to_merge.compact)
   end
 
   def job_details_params(params)
@@ -83,7 +90,8 @@ module Publishers::Wizardable
       params[:publishers_job_listing_job_details_form][:job_roles] |= [:nqt_suitable]
     end
     attributes_to_merge = {
-      completed_step: steps_config[step][:number],
+      completed_steps: completed_steps,
+      completed_step: completed_step,
       job_location: job_location,
       readable_job_location: readable_job_location,
       organisation_ids: vacancy.organisation_ids.blank? ? current_organisation.id : nil,
@@ -96,23 +104,35 @@ module Publishers::Wizardable
 
   def pay_package_params(params)
     params.require(:publishers_job_listing_pay_package_form)
-          .permit(:salary, :benefits).merge(completed_step: steps_config[step][:number])
+          .permit(:salary, :benefits)
+          .merge({ completed_steps: completed_steps, completed_step: completed_step })
   end
 
   def important_dates_params(params)
     params.require(:publishers_job_listing_important_dates_form)
           .permit(:starts_asap, :starts_on, :publish_on, :publish_on_day, :expires_at, :expiry_time)
-          .merge(completed_step: steps_config[step][:number])
+          .merge({ completed_steps: completed_steps, completed_step: completed_step })
   end
 
   def applying_for_the_job_params(params)
     params.require(:publishers_job_listing_applying_for_the_job_form)
           .permit(:application_link, :enable_job_applications, :contact_email, :contact_number, :personal_statement_guidance, :school_visits, :how_to_apply)
-          .merge(completed_step: steps_config[step][:number], current_organisation: current_organisation)
+          .merge({ completed_steps: completed_steps, completed_step: completed_step, current_organisation: current_organisation })
   end
 
   def job_summary_params(params)
     params.require(:publishers_job_listing_job_summary_form)
-          .permit(:job_advert, :about_school).merge(completed_step: steps_config[step][:number])
+          .permit(:job_advert, :about_school).merge({ completed_steps: completed_steps, completed_step: completed_step })
+  end
+
+  private
+
+  def completed_steps
+    completed_step = params[:commit] == t("buttons.save_and_return_later") ? nil : step.to_s
+    (vacancy.completed_steps | [completed_step]).compact
+  end
+
+  def completed_step
+    params[:commit] == t("buttons.save_and_return_later") ? nil : steps_config[step][:number]
   end
 end
