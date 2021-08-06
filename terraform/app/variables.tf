@@ -77,7 +77,7 @@ variable "paas_space_name" {
 }
 
 variable "paas_sso_passcode" {
-  default = null
+  default = ""
 }
 
 variable "paas_web_app_deployment_strategy" {

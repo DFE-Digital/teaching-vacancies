@@ -35,7 +35,7 @@ local: ## local # Same values as the deployed dev environment, adapted for local
 dev: ## dev
 		$(eval env=dev)
 		$(eval space=teaching-vacancies-dev)
-		$(eval var_file=$(env))
+		$(eval DEPLOY_ENV=$(env))
 		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
 
 .PHONY: review
@@ -44,14 +44,14 @@ review: ## review # Requires `pr_id=NNNN`
 		$(eval env=review-pr-$(pr_id))
 		$(eval space=teaching-vacancies-review)
 		$(eval export TF_VAR_environment=$(env))
-		$(eval var_file=review)
+		$(eval DEPLOY_ENV=review)
 		$(eval backend_config=-backend-config="key=review/$(env).tfstate")
 
 .PHONY: staging
 staging: ## staging
 		$(eval env=staging)
 		$(eval space=teaching-vacancies-staging)
-		$(eval var_file=$(env))
+		$(eval DEPLOY_ENV=$(env))
 		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
 
 .PHONY: production
@@ -59,14 +59,14 @@ production: ## production # Requires `CONFIRM_PRODUCTION=true`
 		$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
 		$(eval env=production)
 		$(eval space=teaching-vacancies-production)
-		$(eval var_file=$(env))
+		$(eval DEPLOY_ENV=$(env))
 		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
 
 .PHONY: qa
 qa: ## qa
 		$(eval env=qa)
 		$(eval space=teaching-vacancies-dev)
-		$(eval var_file=$(env))
+		$(eval DEPLOY_ENV=$(env))
 		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
 
 ##@ Docker - build, tag, and push an image from local code. Requires Docker CLI
@@ -105,23 +105,27 @@ check-docker-tag:
 		$(if $(tag), , $(error Missing environment variable "tag"))
 		$(eval export TF_VAR_paas_app_docker_image=$(DOCKER_REPOSITORY):$(tag))
 
+ci:	## Run in automation environment
+	$(eval export disable_passcode=true)
+	$(eval export AUTO_APPROVE=-auto-approve)
+#$(disable_passcode)=$(passcode)
 .PHONY: terraform-app-init
 terraform-app-init:
-		$(if $(passcode), , $(error Missing environment variable "passcode"))
+		$(if $(or $(disable_passcode),$(passcode)), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
 		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
-		cd terraform/app && rm -f .terraform.lock.hcl && terraform init -reconfigure -input=false $(backend_config)
+		cd terraform/app && rm -f .terraform.lock.hcl && echo $(passcode) && terraform init -reconfigure -input=false $(backend_config)
 
 .PHONY: terraform-app-plan
 terraform-app-plan: terraform-app-init check-docker-tag ## make passcode=MyPasscode tag=dev-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714 <env> terraform-app-plan
-		cd terraform/app && terraform plan -var-file ../workspace-variables/$(var_file).tfvars
+		cd terraform/app && terraform plan -var-file ../workspace-variables/$(DEPLOY_ENV).tfvars
 
 .PHONY: terraform-app-apply
 terraform-app-apply: terraform-app-init check-docker-tag ## make passcode=MyPasscode tag=47fd1475376bbfa16a773693133569b794408995 <env> terraform-app-apply
-		cd terraform/app && terraform apply -input=false -var-file ../workspace-variables/$(var_file).tfvars -auto-approve
+		cd terraform/app && terraform apply -input=false -var-file ../workspace-variables/$(DEPLOY_ENV).tfvars -auto-approve
 
 terraform-app-destroy: terraform-app-init ## make qa destroy passcode=MyPasscode
 	$(if $(CONFIRM_DESTROY), , $(error Can only run with CONFIRM_DESTROY))
-	cd terraform/app && terraform destroy -var-file ../workspace-variables/${var_file}.tfvars
+	cd terraform/app && terraform destroy -var-file ../workspace-variables/${DEPLOY_ENV}.tfvars
 
 ##@ terraform/common code. Requires privileged IAM account to run
 
