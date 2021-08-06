@@ -8,7 +8,7 @@ import logger from '../../lib/logging';
 import './locationFinder.scss';
 
 const containerEl = document.getElementsByClassName('accessible-autocomplete__container')[0];
-const inputEl = document.getElementsByClassName('js-location-finder__input')[0];
+let inputEl;
 
 export const ERROR_MESSAGE = 'Unable to find your location';
 export const LOGGING_MESSAGE = '[component: locationFinder]: Unable to find user location';
@@ -33,7 +33,7 @@ const getTargetElementId = () => {
     return document.getElementById('current-location').getAttribute('data-loader');
   }
 
-  return 'form-location-field';
+  return 'location-field';
 };
 
 export const showLocationLink = (container) => {
@@ -45,15 +45,15 @@ export const showErrorMessage = (link) => {
     const errorMessage = document.createElement('div');
     errorMessage.setAttribute('role', 'alert');
     errorMessage.id = 'js-location-finder__error';
-    errorMessage.classList.add('govuk-!-margin-top-2');
+    errorMessage.classList.add('js-location-finder__error');
     errorMessage.innerHTML = ERROR_MESSAGE;
     link.after(errorMessage);
   }
 };
 
 export const removeErrorMessage = () => {
-  if (document.querySelector('.js-location-finder__link .govuk-error-message')) {
-    document.querySelector('.js-location-finder__link .govuk-error-message').remove();
+  if (document.querySelector('.js-location-finder__error')) {
+    document.querySelector('.js-location-finder__error').remove();
   }
 };
 
@@ -71,7 +71,7 @@ export const onFailure = () => {
 
 export const postcodeFromPosition = (position, apiPromise) => apiPromise(position.coords.latitude, position.coords.longitude).then((response) => {
   if (response && response.result) {
-    onSuccess(response.result[0].postcode, document.getElementsByClassName('js-location-finder__input')[0]);
+    onSuccess(response.result[0].postcode, document.getElementsByClassName('autocomplete__input')[0]);
   } else {
     onFailure();
   }
@@ -82,6 +82,12 @@ export const postcodeFromPosition = (position, apiPromise) => apiPromise(positio
 export const init = () => {
   if (document.getElementById('current-location')) {
     document.getElementById('current-location').addEventListener('click', (event) => {
+      [inputEl] = document.getElementsByClassName('autocomplete__input');
+
+      inputEl.addEventListener('focus', () => {
+        removeErrorMessage();
+      });
+
       event.stopPropagation();
 
       startLoading(containerEl, inputEl);
@@ -92,10 +98,6 @@ export const init = () => {
         stopLoading(containerEl, inputEl);
         showErrorMessage(document.getElementById('current-location'));
       });
-    });
-
-    inputEl.addEventListener('focus', () => {
-      removeErrorMessage();
     });
   }
 };
