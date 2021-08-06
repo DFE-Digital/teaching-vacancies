@@ -1,3 +1,5 @@
+@import '~govuk-frontend/govuk/base';
+
 .js-location-finder {
 
   position: relative;
@@ -14,6 +16,10 @@
   .govuk-c-loader__label {
     line-height: 26px;
     vertical-align: top;
+  }
+
+  &__error {
+    margin-top: govuk-spacing(2);
   }
 }
 

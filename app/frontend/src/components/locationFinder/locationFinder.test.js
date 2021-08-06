@@ -27,10 +27,10 @@ describe('current location', () => {
     removeLoaderMock = jest.spyOn(loader, 'remove');
 
     document.body.innerHTML = `<div class="js-location-finder" id="test-container">
-<input type="text" id="form-location-field" class="js-location-finder__input" />
+<input type="text" id="location-field" class="autocomplete__input" />
 </div>`;
 
-    input = document.getElementById('form-location-field');
+    input = document.getElementById('location-field');
     container = document.getElementById('test-container');
   });
 
