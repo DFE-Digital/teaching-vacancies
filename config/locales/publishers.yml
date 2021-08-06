@@ -209,7 +209,6 @@ en:
           deadline:
             after: Deadline passed
             before: Application deadline
-            scheduled: Date to be listed
           rejected:
             one: Rejected application
             other: Rejected applications
