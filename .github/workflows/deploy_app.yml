@@ -69,6 +69,8 @@ jobs:
         DEPLOY_ENV=${{ github.event.inputs.environment }}
         echo "PARAMETER_STORE_ENVIRONMENT=${PARAMETER_STORE_ENVIRONMENT}" >> $GITHUB_ENV
         echo "DEPLOY_ENV=${DEPLOY_ENV}" >> $GITHUB_ENV
+        CONFIRM_PRODUCTION=yes
+        echo "CONFIRM_PRODUCTION=${CONFIRM_PRODUCTION}" >> $GITHUB_ENV
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
