@@ -26,9 +26,13 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
   end
 
   def all_steps_valid?
-    steps_config.except(:job_location, :schools, :supporting_documents, :documents, :review).keys.all? do |step|
-      step_valid?(step)
-    end
+    steps_to_skip = if current_organisation.is_a?(School)
+                      []
+                    else
+                      vacancy.job_location == "at_central_office" ? [:job_location] : %i[job_location schools]
+                    end
+    steps_to_skip.push(:documents, :review)
+    steps_config.except(*steps_to_skip).keys.all? { |step| step_valid?(step) }
   end
 
   def step_valid?(step)
