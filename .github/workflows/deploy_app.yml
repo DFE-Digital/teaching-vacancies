@@ -9,6 +9,9 @@ on:
       tag:
         description: Docker tag
         required: true
+      pr_id:
+        description: Pull Request
+        required: true
 
 env:
  DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
@@ -51,24 +54,21 @@ jobs:
     - name: Set environment variables for review
       if: startsWith(github.event.inputs.environment, 'review')
       run: |
-        BACKEND_CONFIG=-backend-config="key=review/${{ github.event.inputs.environment }}.tfstate"
+
         PARAMETER_STORE_ENVIRONMENT=dev
         TF_VAR_environment=${{ github.event.inputs.environment }}
-        VAR_FILE=review
-        echo "BACKEND_CONFIG=${BACKEND_CONFIG}" >> $GITHUB_ENV
+        pr_id=${{ github.event.inputs.pr_id }}
+        echo "pr_id=${pr_id}" >> $GITHUB_ENV
+
         echo "PARAMETER_STORE_ENVIRONMENT=${PARAMETER_STORE_ENVIRONMENT}" >> $GITHUB_ENV
         echo "TF_VAR_environment=${TF_VAR_environment}" >> $GITHUB_ENV
-        echo "VAR_FILE=${VAR_FILE}" >> $GITHUB_ENV
 
     - name: Set environment variables for non-review environments
       if: startsWith(github.event.inputs.environment, 'review') != true
       run: |
-        BACKEND_CONFIG=-backend-config="key=${{ github.event.inputs.environment }}/app.tfstate"
+
         PARAMETER_STORE_ENVIRONMENT=${{ github.event.inputs.environment }}
-        VAR_FILE=${{ github.event.inputs.environment }}
-        echo "BACKEND_CONFIG=${BACKEND_CONFIG}" >> $GITHUB_ENV
         echo "PARAMETER_STORE_ENVIRONMENT=${PARAMETER_STORE_ENVIRONMENT}" >> $GITHUB_ENV
-        echo "VAR_FILE=${VAR_FILE}" >> $GITHUB_ENV
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
@@ -89,9 +89,6 @@ jobs:
         bin/fetch_config.rb -s aws-ssm-parameter-path:/teaching-vacancies/${{ env.PARAMETER_STORE_ENVIRONMENT }}/app -d quiet \
           && echo Data in "/teaching-vacancies/${{ env.PARAMETER_STORE_ENVIRONMENT }}" looks valid
 
-    - name: Deploy to environment
+    - name: Deploy to review app
       run: |
-        export TF_VAR_paas_app_docker_image=${{ env.DOCKER_REPOSITORY }}:${{ github.event.inputs.tag }}
-        terraform init -reconfigure -input=false ${{ env.BACKEND_CONFIG }}
-        terraform apply -var-file ../workspace-variables/${{ env.VAR_FILE }}.tfvars -auto-approve -input=false
-      working-directory: terraform/app
+        make ${{ env.VAR_FILE }} ci tag=${{ github.event.inputs.tag }} terraform-app-plan
