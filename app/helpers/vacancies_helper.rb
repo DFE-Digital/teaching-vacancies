@@ -88,7 +88,7 @@ module VacanciesHelper
   end
 
   def vacancy_step_completed?(vacancy, step)
-    vacancy.completed_steps.include?(step)
+    vacancy.completed_steps.include?(step.to_s)
   end
 
   def steps_to_display(steps)
