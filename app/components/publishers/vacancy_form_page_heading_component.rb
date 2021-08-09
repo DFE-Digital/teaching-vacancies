@@ -22,6 +22,6 @@ class Publishers::VacancyFormPageHeadingComponent < ViewComponent::Base
   end
 
   def organisation_from_job_location
-    vacancy.job_location == "at_multiple_schools" ? "multiple schools" : vacancy.parent_organisation_name
+    vacancy.at_multiple_schools? ? "multiple schools" : vacancy.parent_organisation_name
   end
 end
