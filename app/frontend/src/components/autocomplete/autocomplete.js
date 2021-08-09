@@ -23,7 +23,7 @@ const autocomplete = (fieldIds, source) => {
       accessibleAutocomplete({
         element: document.querySelector('#accessible-autocomplete'),
         id: elementId,
-        name: 'location',
+        name: formInput.name,
         defaultValue: currentInputValue,
         source: (query, populateResults) => {
           currentInputValue = query;
