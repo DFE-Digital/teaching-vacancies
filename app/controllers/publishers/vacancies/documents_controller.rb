@@ -57,10 +57,10 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     if params[:commit] == t("buttons.save_and_return_later")
       redirect_saved_draft_with_message
     elsif params[:commit] == t("buttons.update_job")
-      vacancy.update(completed_step: steps_config[step][:number])
+      vacancy.update(completed_step: steps_config[step][:number], completed_steps: completed_steps)
       redirect_updated_job_with_message
     elsif params[:commit] == t("buttons.continue")
-      vacancy.update(completed_step: steps_config[step][:number])
+      vacancy.update(completed_step: steps_config[step][:number], completed_steps: completed_steps)
       redirect_to organisation_job_build_path(vacancy.id, :applying_for_the_job)
     end
   end
