@@ -7,14 +7,18 @@ class ApplicationRecord < ActiveRecord::Base
 
   DATA_ACCESS_PERIOD_FOR_PUBLISHERS = 1.year.freeze
 
+  def attributes_except_ciphertext
+    attributes.reject { |k, _v| k.include?("_ciphertext") }
+  end
+
   private
 
   def event_data
-    { table_name: self.class.table_name }.merge(anonymised_attributes)
+    { "table_name" => self.class.table_name }.merge(anonymised_attributes)
   end
 
   def anonymised_attributes
-    attributes.each_with_object({}) do |(key, value), anonymised|
+    attributes_except_ciphertext.each_with_object({}) do |(key, value), anonymised|
       next unless export?(key)
 
       value = value.to_s(:iso8601) if value.respond_to?(:strftime)
