@@ -179,6 +179,7 @@ RSpec.describe "Creating a vacancy" do
     fill_in_job_summary_form_fields(vacancy)
     click_on I18n.t("buttons.continue")
     expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
+    verify_all_vacancy_details(created_vacancy.reload)
 
     click_on I18n.t("buttons.submit_job_listing")
     expect(current_path).to eq(organisation_job_summary_path(created_vacancy.id))

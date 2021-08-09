@@ -27,6 +27,7 @@ RSpec.describe "Creating a vacancy" do
                                  working_patterns: %w[full_time part_time],
                                  publish_on: Date.current))
     end
+    let(:created_vacancy) { Vacancy.last }
 
     scenario "redirects to step 1, job details" do
       visit organisation_path
@@ -381,7 +382,7 @@ RSpec.describe "Creating a vacancy" do
         within("h2.govuk-heading-l") do
           expect(page).to have_content(I18n.t("jobs.review_heading"))
         end
-        verify_all_vacancy_details(vacancy)
+        verify_all_vacancy_details(created_vacancy.reload)
       end
     end
 
