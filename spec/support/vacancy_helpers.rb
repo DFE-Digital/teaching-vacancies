@@ -111,7 +111,20 @@ module VacancyHelpers
     fill_in "publishers_job_listing_copy_vacancy_form[starts_on(1i)]", with: vacancy.starts_on.year if vacancy.starts_on
   end
 
+  def verify_job_location_details(vacancy)
+    if vacancy.job_location == "at_multiple_schools"
+      expect(page).to have_content(t("school_groups.job_location_heading.at_multiple_schools", organisation_type: organisation_type_basic(vacancy.parent_organisation)))
+    else
+      expect(page).to have_content(I18n.t("school_groups.job_location_heading.#{vacancy.job_location}"))
+    end
+    expect(page).to have_content(vacancy.organisations.first.name)
+    expect(page).to have_content(full_address(vacancy.organisations.first))
+  end
+
   def verify_all_vacancy_details(vacancy)
+    unless vacancy.parent_organisation.school?
+      verify_job_location_details(vacancy)
+    end
     expect(page).to have_content(vacancy.job_title)
     expect(page).to have_content(vacancy.show_job_roles)
     expect(page).to have_content(vacancy.show_subjects)
