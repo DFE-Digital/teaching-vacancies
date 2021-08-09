@@ -8,7 +8,6 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   helper_method :back_path, :form
 
   before_action :strip_checkbox_params, only: %i[update]
-  before_action :set_multiple_schools
   before_action :set_school_options
 
   helper_method :current_publisher_preference
@@ -83,12 +82,6 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
     update_vacancy
     vacancy.save(validate: false)
     redirect_saved_draft_with_message
-  end
-
-  def set_multiple_schools
-    return unless step == :schools && current_organisation.school_group?
-
-    @multiple_schools = job_location == "at_multiple_schools"
   end
 
   def set_school_options

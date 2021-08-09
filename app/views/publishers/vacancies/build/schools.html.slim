@@ -13,7 +13,7 @@
 
         h2.govuk-heading-l = t("jobs.job_location")
 
-        = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_schools_form.organisation_id#{'s' if @multiple_schools}") } do
+        = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_schools_form.organisation_id#{'s' if vacancy.at_multiple_schools?}") } do
           - if current_organisation.local_authority?
             span.govuk-hint = t("helpers.hint.publishers_job_listing_schools_form.edit_schools")
             span.govuk-hint = govuk_link_to t("helpers.hint.publishers_job_listing_schools_form.add_school"),
@@ -26,7 +26,7 @@
             collection: @school_options,
             value_method: :id,
             text_method: :name,
-            hint_method: :address).with_variant(@multiple_schools ? :checkbox : :radiobutton)
+            hint_method: :address).with_variant(vacancy.at_multiple_schools? ? :checkbox : :radiobutton)
 
         div class="govuk-!-margin-top-6"
           = render "publishers/vacancies/vacancy_form_partials/continue_or_update_submit", f: f
