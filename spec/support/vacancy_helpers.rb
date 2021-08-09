@@ -112,6 +112,19 @@ module VacancyHelpers
   end
 
   def verify_all_vacancy_details(vacancy)
+    vacancy.reload
+    vacancy = VacancyPresenter.new(vacancy) unless vacancy.is_a?(VacancyPresenter)
+
+    unless vacancy.parent_organisation.school?
+      if vacancy.job_location == "at_multiple_schools"
+        expect(page).to have_content(t("school_groups.job_location_heading.at_multiple_schools", organisation_type: organisation_type_basic(vacancy.parent_organisation)))
+      else
+        expect(page).to have_content(I18n.t("school_groups.job_location_heading.#{vacancy.job_location}"))
+      end
+      expect(page).to have_content(vacancy.organisations.first.name)
+      expect(page).to have_content(full_address(vacancy.organisations.first))
+    end
+
     expect(page).to have_content(vacancy.job_title)
     expect(page).to have_content(vacancy.show_job_roles)
     expect(page).to have_content(vacancy.show_subjects)
@@ -169,9 +182,7 @@ module VacancyHelpers
     expect(page.html).to include(vacancy.job_advert)
     expect(page.html).to include(vacancy.about_school)
 
-    if vacancy.supporting_documents.any?
-      expect(page).to have_content(I18n.t("jobs.supporting_documents"))
-    end
+    expect(page).to have_content(I18n.t("jobs.supporting_documents")) if vacancy.supporting_documents.any?
 
     if vacancy.enable_job_applications?
       expect(page).to have_link(I18n.t("jobseekers.job_applications.apply"), href: new_jobseekers_job_job_application_path(vacancy.id))
