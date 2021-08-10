@@ -7,22 +7,28 @@
 
   - review.body do
     = govuk_summary_list do |component|
-      - component.slot(:row,
-        key: t("jobs.enable_job_applications"),
-        value: @vacancy.enable_job_applications? ? "Yes" : "No",
-        html_attributes: { id: "enable_job_applications" })
+      - unless current_organisation.group_type == "local_authority"
+        - component.slot(:row,
+          key: t("jobs.enable_job_applications"),
+          value: @vacancy.enable_job_applications? ? "Yes" : "No",
+          html_attributes: { id: "enable_job_applications" })
 
       - if @vacancy.enable_job_applications?
         - component.slot(:row,
           key: t("jobs.personal_statement_guidance"),
           value: @vacancy.personal_statement_guidance.presence || t("jobs.not_defined"),
           html_attributes: { id: "personal_statement_guidance" })
-
-      - elsif @vacancy.enable_job_applications == false # as opposed to nil
+      - else
         - component.slot(:row,
           key: t("jobs.application_link"),
           value: @vacancy.application_link.present? ? open_in_new_tab_link_to(@vacancy.application_link, @vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link")) : t("jobs.not_defined"),
           html_attributes: { id: "application_link" })
+
+      - if @vacancy.how_to_apply.present?
+        - component.slot(:row,
+          key: t("jobs.how_to_apply"),
+          value: @vacancy.how_to_apply,
+          html_attributes: { id: "how_to_apply" })
 
       - component.slot(:row,
         key: t("jobs.contact_email"),
