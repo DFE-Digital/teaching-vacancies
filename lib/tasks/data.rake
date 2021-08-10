@@ -27,6 +27,15 @@ namespace :dsi do
   end
 end
 
+namespace :column_encryption do
+  desc "Migrate encrypted columns"
+  task migrate: :environment do
+    [
+      Employment, JobApplication, Jobseeker, Publisher, Qualification, Reference
+    ].each { |klass| Lockbox.migrate(klass, batch_size: 100) }
+  end
+end
+
 namespace :gias do
   desc "Import schools, trusts and local authorities data"
   task import_schools: :environment do
