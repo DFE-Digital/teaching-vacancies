@@ -29,7 +29,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
 
     if all_steps_valid?
       session[:current_step] = :review
-      vacancy.update(completed_step: current_step_number, completed_steps: completed_steps)
+      vacancy.update(completed_steps: completed_steps)
     else
       session[:current_step] = :edit_incomplete
       redirect_to_incomplete_step
@@ -72,7 +72,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     return redirect_to organisation_job_build_path(vacancy.id, :job_details) unless step_valid?(:job_details)
     return redirect_to organisation_job_build_path(vacancy.id, :pay_package) unless step_valid?(:pay_package)
     return redirect_to organisation_job_build_path(vacancy.id, :important_dates) unless step_valid?(:important_dates)
-    return redirect_to organisation_job_build_path(vacancy.id, :documents) unless vacancy.completed_step >= steps_config[:documents][:number]
+    return redirect_to organisation_job_build_path(vacancy.id, :documents) unless vacancy.completed_steps.include?("documents")
     return redirect_to organisation_job_build_path(vacancy.id, :applying_for_the_job) unless step_valid?(:applying_for_the_job)
     return redirect_to organisation_job_build_path(vacancy.id, :job_summary) unless step_valid?(:job_summary)
   end

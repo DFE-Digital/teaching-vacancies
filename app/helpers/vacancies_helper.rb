@@ -88,11 +88,7 @@ module VacanciesHelper
   end
 
   def vacancy_step_completed?(vacancy, step)
-    return false if vacancy.completed_step.nil? || step == :review
-
-    steps_config[step][:number] <= steps_config.find { |_step, details|
-      details[:number] == vacancy.completed_step
-    }.second[:number]
+    vacancy.completed_steps.include?(step.to_s)
   end
 
   def steps_to_display(steps)
