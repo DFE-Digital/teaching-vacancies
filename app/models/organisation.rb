@@ -14,12 +14,12 @@ class Organisation < ApplicationRecord
   alias_attribute :data, :gias_data
 
   def all_vacancies
-    ids = is_a?(School) ? [id] : [id] + schools.pluck(:id) + schools_outside_local_authority.pluck(:id)
+    ids = school? ? [id] : [id] + schools.pluck(:id) + schools_outside_local_authority.pluck(:id)
     Vacancy.in_organisation_ids(ids)
   end
 
   def name
-    @name ||= read_attribute(:name)&.concat(group_type == "local_authority" ? " local authority" : "")
+    @name ||= read_attribute(:name)&.concat(local_authority? ? " local authority" : "")
   end
 
   def schools_outside_local_authority
