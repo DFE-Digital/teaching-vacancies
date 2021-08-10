@@ -1,33 +1,45 @@
+JOB_TITLES = ["Tutor of Science (opportunity exists for the right candidate for Head of Physics and/or KS4 Lead)",
+              "PROGRESS LEADER (HEAD OF DEPARTMENT) FOR RS, PSHE, RSE AND CITIZENSHIP EDUCATION WITH TLR 2 £6698",
+              "Tutor of Music (Part-time, permanent) to include Music Performance Enhancement project for 1 year",
+              "Tutor of Maths MPS (A recruitment and retention point will be offered to the successful candidate)",
+              "Tutor of PE (male)", "Games Design Tutor", "Team Leader of Maths", "KEY STAGE 2 Tutor",
+              "Lead in Health and Social Care", "Director of Learning - Science"].freeze
+
+SALARIES = ["Main pay range 1 to Upper pay range 3, £23,719 to £39,406 per year (full-time equivalent)",
+            "£6,084 to £6,084 per year (full-time equivalent)", "Main pay range 2 to Upper pay range 3, £30,113 to £44,541",
+            "Main pay range 1 to Upper pay range 3, £30,480 to £49,571", "MPR / UPR",
+            "MPS/UPS", "£25,543 to £41,635 per year (full-time equivalent)"].freeze
+
 FactoryBot.define do
   factory :vacancy do
     publisher
 
     job_location { "at_one_school" }
-    about_school { "Great school with amazing people" }
+    about_school { Faker::Lorem.paragraph(sentence_count: rand(5..10)) }
     enable_job_applications { true }
-    benefits { Faker::Lorem.paragraph(sentence_count: 4) }
+    benefits { Faker::Lorem.paragraph(sentence_count: rand(1..3)) }
     completed_steps do
       %w[job_location schools job_details pay_package important_dates documents applying_for_the_job job_summary]
     end
     contact_email { Faker::Internet.email }
     contact_number { "01234 123456" }
-    contract_type { :fixed_term }
+    contract_type { Vacancy.contract_types.keys.sample }
     contract_type_duration { "6 months" }
     expires_at { 6.months.from_now.change(hour: 9, minute: 0, second: 0) }
     hired_status { nil }
-    job_advert { Faker::Lorem.paragraph(sentence_count: 4) }
-    job_roles { [:teacher] }
-    job_title { Faker::Lorem.sentence[1...30].strip }
+    job_advert { Faker::Lorem.paragraph(sentence_count: rand(50..300)) }
+    job_roles { Vacancy.job_roles.keys.first(3).sample(rand(1..3)) }
+    job_title { JOB_TITLES.sample }
     listed_elsewhere { nil }
-    personal_statement_guidance { Faker::Lorem.paragraph(sentence_count: 4) }
+    personal_statement_guidance { Faker::Lorem.paragraph(sentence_count: rand(5..10)) }
     publish_on { Date.current }
-    salary { Faker::Lorem.sentence[1...30].strip }
-    school_visits { Faker::Lorem.paragraph(sentence_count: 4) }
+    salary { SALARIES.sample }
+    school_visits { Faker::Lorem.paragraph(sentence_count: rand(5..10)) }
     starts_on { 1.year.from_now.to_date }
     status { :published }
     subjects { SUBJECT_OPTIONS.sample(2).map(&:first).sort! }
     suitable_for_nqt { "no" }
-    working_patterns { %w[full_time] }
+    working_patterns { Vacancy.working_patterns.keys.sample(rand(1..3)) }
 
     trait :no_tv_applications do
       application_link { Faker::Internet.url(host: "example.com") }
@@ -48,7 +60,7 @@ FactoryBot.define do
 
     trait :at_multiple_schools do
       job_location { "at_multiple_schools" }
-      readable_job_location { "More than one school (3)" }
+      readable_job_location { "More than one school (2)" }
     end
 
     trait :fail_minimum_validation do
@@ -106,8 +118,8 @@ FactoryBot.define do
 
     trait :future_publish do
       status { :published }
-      publish_on { Date.current + 2.days }
-      expires_at { 2.months.from_now.change(hour: 9, minute: 0) }
+      publish_on { Date.current + 6.months }
+      expires_at { 2.years.from_now.change(hour: 9, minute: 0) }
     end
 
     trait :past_publish do
