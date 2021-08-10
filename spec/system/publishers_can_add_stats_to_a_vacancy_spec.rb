@@ -12,9 +12,9 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
   end
 
   context "when there are vacancies awaiting feedback" do
-    let!(:vacancy) { create(:vacancy, :expired, organisation_vacancies_attributes: [{ organisation: school }]) }
-    let!(:another_vacancy) { create(:vacancy, :expired, organisation_vacancies_attributes: [{ organisation: school }]) }
-    let!(:third_vacancy) { create(:vacancy, :expired, organisation_vacancies_attributes: [{ organisation: school }]) }
+    let!(:vacancy) { create(:vacancy, :expired, job_title: "Maths teacher", organisation_vacancies_attributes: [{ organisation: school }]) }
+    let!(:another_vacancy) { create(:vacancy, :expired, job_title: "English teacher", organisation_vacancies_attributes: [{ organisation: school }]) }
+    let!(:third_vacancy) { create(:vacancy, :expired, job_title: "Science teacher", organisation_vacancies_attributes: [{ organisation: school }]) }
 
     scenario "displays the vacancies awaiting feedback" do
       visit jobs_with_type_organisation_path(type: :awaiting_feedback)
