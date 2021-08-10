@@ -1,0 +1,56 @@
+class AddLockboxCiphertextColumns < ActiveRecord::Migration[6.1]
+  def change
+    change_column_null :employments, :organisation, true
+    change_column_null :employments, :job_title, true
+    change_column_null :employments, :main_duties, true
+    add_column :employments, :organisation_ciphertext, :text
+    add_column :employments, :job_title_ciphertext, :text
+    add_column :employments, :main_duties_ciphertext, :text
+    change_column_null :job_applications, :first_name, true
+    change_column_null :job_applications, :last_name, true
+    change_column_null :job_applications, :previous_names, true
+    change_column_null :job_applications, :street_address, true
+    change_column_null :job_applications, :city, true
+    change_column_null :job_applications, :postcode, true
+    change_column_null :job_applications, :phone_number, true
+    change_column_null :job_applications, :teacher_reference_number, true
+    change_column_null :job_applications, :national_insurance_number, true
+    change_column_null :job_applications, :personal_statement, true
+    change_column_null :job_applications, :support_needed_details, true
+    change_column_null :job_applications, :close_relationships_details, true
+    change_column_null :job_applications, :further_instructions, true
+    change_column_null :job_applications, :rejection_reasons, true
+    change_column_null :job_applications, :gaps_in_employment_details, true
+    add_column :job_applications, :first_name_ciphertext, :text
+    add_column :job_applications, :last_name_ciphertext, :text
+    add_column :job_applications, :previous_names_ciphertext, :text
+    add_column :job_applications, :street_address_ciphertext, :text
+    add_column :job_applications, :city_ciphertext, :text
+    add_column :job_applications, :postcode_ciphertext, :text
+    add_column :job_applications, :phone_number_ciphertext, :text
+    add_column :job_applications, :teacher_reference_number_ciphertext, :text
+    add_column :job_applications, :national_insurance_number_ciphertext, :text
+    add_column :job_applications, :personal_statement_ciphertext, :text
+    add_column :job_applications, :support_needed_details_ciphertext, :text
+    add_column :job_applications, :close_relationships_details_ciphertext, :text
+    add_column :job_applications, :further_instructions_ciphertext, :text
+    add_column :job_applications, :rejection_reasons_ciphertext, :text
+    add_column :job_applications, :gaps_in_employment_details_ciphertext, :text
+    add_column :jobseekers, :current_sign_in_ip_ciphertext, :text
+    add_column :jobseekers, :last_sign_in_ip_ciphertext, :text
+    add_column :publishers, :family_name_ciphertext, :text
+    add_column :publishers, :given_name_ciphertext, :text
+    change_column_null :qualifications, :finished_studying_details, true
+    add_column :qualifications, :finished_studying_details_ciphertext, :text
+    change_column_null :references, :name, true
+    change_column_null :references, :job_title, true
+    change_column_null :references, :organisation, true
+    change_column_null :references, :email, true
+    change_column_null :references, :phone_number, true
+    add_column :references, :name_ciphertext, :text
+    add_column :references, :job_title_ciphertext, :text
+    add_column :references, :organisation_ciphertext, :text
+    add_column :references, :email_ciphertext, :text
+    add_column :references, :phone_number_ciphertext, :text
+  end
+end
