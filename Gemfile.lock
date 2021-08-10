@@ -80,17 +80,17 @@ GEM
     ast (2.4.2)
     attr_required (1.0.1)
     aws-eventstream (1.1.1)
-    aws-partitions (1.479.0)
-    aws-sdk-core (3.117.0)
+    aws-partitions (1.483.0)
+    aws-sdk-core (3.119.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.239.0)
       aws-sigv4 (~> 1.1)
       jmespath (~> 1.0)
-    aws-sdk-kms (1.44.0)
-      aws-sdk-core (~> 3, >= 3.112.0)
+    aws-sdk-kms (1.46.0)
+      aws-sdk-core (~> 3, >= 3.119.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-s3 (1.96.1)
-      aws-sdk-core (~> 3, >= 3.112.0)
+    aws-sdk-s3 (1.98.0)
+      aws-sdk-core (~> 3, >= 3.119.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.1)
     aws-sdk-ssm (1.112.0)
@@ -579,8 +579,9 @@ GEM
       activemodel (>= 3.0.0)
       public_suffix
     vcr (6.0.0)
-    view_component (2.30.0)
-      activesupport (>= 5.0.0, < 7.0)
+    view_component (2.37.0)
+      activesupport (>= 5.0.0, < 8.0)
+      method_source (~> 1.0)
     virtus (2.0.0)
       axiom-types (~> 0.1)
       coercible (~> 1.0)
@@ -706,7 +707,7 @@ DEPENDENCIES
   tzinfo-data
   validate_url
   vcr
-  view_component (~> 2.30.0)
+  view_component (~> 2.37.0)
   web-console
   webmock
   webpacker
