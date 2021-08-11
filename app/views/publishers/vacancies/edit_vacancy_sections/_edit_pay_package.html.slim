@@ -8,9 +8,14 @@
   - review.body do
     = govuk_summary_list do |component|
       - component.slot(:row,
-        key: t("jobs.salary"),
+        key: t("jobs.annual_salary"),
         value: @vacancy.salary,
         html_attributes: { id: "salary" })
+
+      - component.slot(:row,
+        key: t("jobs.actual_salary"),
+        value: @vacancy.actual_salary.presence || t("jobs.not_defined"),
+        html_attributes: { id: "actual_salary" })
 
       - component.slot(:row,
         key: t("jobs.benefits"),

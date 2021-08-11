@@ -4,9 +4,15 @@ li.vacancy role="listitem" tab-index="0"
   p.govuk-body
     = vacancy_full_job_location(@vacancy)
   dl
-    dt = t("jobs.salary")
+    - if @vacancy.actual_salary?
+      dt = t("jobs.annual_salary")
+    - else
+      dt = t("jobs.salary")
     dd.double
       = @vacancy.salary
+      - if @vacancy.actual_salary?
+        span.govuk-hint class="govuk-!-margin-bottom-0 govuk-!-margin-top-1 govuk-!-font-size-16" = t("jobs.actual_salary")
+        = @vacancy.actual_salary
     dt = @vacancy.central_office? ? t("jobs.trust_type") : t("jobs.school_type")
     dd.double
       - if @vacancy.at_multiple_schools?
