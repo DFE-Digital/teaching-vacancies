@@ -44,6 +44,7 @@ module VacancyHelpers
 
   def fill_in_pay_package_form_fields(vacancy)
     fill_in "publishers_job_listing_pay_package_form[salary]", with: vacancy.salary
+    fill_in "publishers_job_listing_pay_package_form[actual_salary]", with: vacancy.actual_salary unless vacancy.working_patterns == ["full_time"]
     fill_in "publishers_job_listing_pay_package_form[benefits]", with: vacancy.benefits
   end
 

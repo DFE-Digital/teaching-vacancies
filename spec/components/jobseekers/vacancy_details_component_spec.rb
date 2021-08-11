@@ -46,8 +46,26 @@ RSpec.describe Jobseekers::VacancyDetailsComponent, type: :component do
     expect(rendered_component).to include(vacancy_presenter.working_patterns)
   end
 
-  it "renders the salary" do
-    expect(rendered_component).to include(vacancy.salary)
+  context "when actual_salary is present" do
+    it "renders the fte salary label" do
+      expect(rendered_component).to include(I18n.t("jobs.fte_salary"))
+    end
+
+    it "renders the salary" do
+      expect(rendered_component).to include(vacancy.salary)
+    end
+
+    it "renders the actual salary" do
+      expect(rendered_component).to include(vacancy.actual_salary)
+    end
+  end
+
+  context "when actual_salary is not present" do
+    let(:vacancy) { create(:vacancy, actual_salary: "") }
+
+    it "renders the salary" do
+      expect(rendered_component).to include(vacancy.salary)
+    end
   end
 
   it "renders the job summary" do

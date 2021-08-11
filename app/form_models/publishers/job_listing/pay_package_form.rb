@@ -1,7 +1,7 @@
 class Publishers::JobListing::PayPackageForm < Publishers::JobListing::VacancyForm
   include ActionView::Helpers::SanitizeHelper
 
-  attr_accessor :salary, :benefits
+  attr_accessor :actual_salary, :salary, :benefits
 
   validates :salary, presence: true
   validates :salary, length: { minimum: 1, maximum: 256 }, if: proc { salary.present? }
