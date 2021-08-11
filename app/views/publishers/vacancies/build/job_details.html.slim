@@ -23,6 +23,12 @@
           span#publishers_job_listing_job_details_form_job_title-info.govuk-hint.govuk-character-count__message aria-live="polite"
             | You can enter up to 100 characters
 
+        = f.govuk_radio_buttons_fieldset :contract_type do
+          = f.govuk_radio_button :contract_type, :permanent, link_errors: true
+
+          = f.govuk_radio_button :contract_type, :fixed_term do
+            = f.govuk_text_field :contract_type_duration, label: { size: "s" }
+
         = f.govuk_collection_check_boxes :job_roles, Vacancy.job_roles.except("nqt_suitable").keys, :to_s, :to_s, form_group: { classes: "optional-field" }
 
         = f.govuk_collection_radio_buttons :suitable_for_nqt, %w[yes no], :to_s, :capitalize
@@ -47,12 +53,6 @@
                 hint_method: :last).with_variant(:checkbox)
 
         = f.govuk_collection_check_boxes :working_patterns, Vacancy.working_patterns.keys, :to_s, :to_s
-
-        = f.govuk_radio_buttons_fieldset :contract_type do
-          = f.govuk_radio_button :contract_type, :permanent, link_errors: true
-
-          = f.govuk_radio_button :contract_type, :fixed_term do
-            = f.govuk_text_field :contract_type_duration, label: { size: "s" }
 
         = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
