@@ -50,9 +50,7 @@ class JobApplication < ApplicationRecord
   scope :after_submission, -> { where(status: %w[submitted reviewed shortlisted unsuccessful withdrawn]) }
 
   def name
-    # Insert string for staging environment so that on the job show page there is some text to make a
-    # link to the application. (Staging will have purged this from the database dump in sanitise.sql.)
-    Rails.configuration.app_role.staging? ? "Anonymous Anon" : "#{first_name} #{last_name}"
+    "#{first_name} #{last_name}"
   end
 
   def email
