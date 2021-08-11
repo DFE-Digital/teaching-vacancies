@@ -4,6 +4,7 @@ FactoryBot.define do
 
     job_location { "at_one_school" }
     about_school { "Great school with amazing people" }
+    actual_salary { rand(20_000..100_000) }
     enable_job_applications { true }
     benefits { Faker::Lorem.paragraph(sentence_count: 4) }
     completed_steps do
