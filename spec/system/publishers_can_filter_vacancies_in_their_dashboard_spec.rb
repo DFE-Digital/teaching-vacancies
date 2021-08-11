@@ -7,10 +7,10 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
   let(:local_authority2) { create(:local_authority) }
   let(:school1) { create(:school, name: "Happy Rainbows School") }
   let(:school2) { create(:school, name: "Dreary Grey School") }
-  let!(:school_group_vacancy) { create(:vacancy, :published, :central_office) }
-  let!(:school1_vacancy) { create(:vacancy, :published, :at_one_school) }
-  let!(:school1_draft_vacancy) { create(:vacancy, :draft, :at_one_school) }
-  let!(:school2_draft_vacancy) { create(:vacancy, :draft, :at_one_school) }
+  let!(:school_group_vacancy) { create(:vacancy, :published, :central_office, job_title: "Maths Teacher") }
+  let!(:school1_vacancy) { create(:vacancy, :published, :at_one_school, job_title: "English Teacher") }
+  let!(:school1_draft_vacancy) { create(:vacancy, :draft, :at_one_school, job_title: "Science Teacher") }
+  let!(:school2_draft_vacancy) { create(:vacancy, :draft, :at_one_school, job_title: "History Teacher") }
   let!(:publisher_preference_local_authority) { PublisherPreference.create(publisher: publisher, organisation: local_authority2) }
   let!(:publisher_preference_trust) { PublisherPreference.create(publisher: publisher, organisation: trust) }
 
