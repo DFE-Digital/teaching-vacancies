@@ -54,6 +54,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - uses: actions/checkout@v2
+        name: Checkout Code
+
       - name: Set environment variables (Push)
         if: github.event_name == 'push'
         run: |
@@ -139,17 +142,13 @@ jobs:
         if: github.event_name == 'pull_request'
         run: echo "MATRIX_ENVIRONMENTS={\"environment\":[\"review\"]}" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v2
-        name: Checkout Code
-
       - name: Scan ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }} image
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: |
-
           docker run -t -e "SNYK_TOKEN=${{ secrets.SNYK_TOKEN }}" \
-          -v "/var/run/docker.sock:/var/run/docker.sock" \
-          -v "$GITHUB_WORKSPACE:/project"  \
-          snyk/snyk-cli:docker test --docker ${{ env.DOCKER_REPOSITORY }}:${{ env.GIT_BRANCH }} --file=Dockerfile
+            -v "/var/run/docker.sock:/var/run/docker.sock" \
+            -v "$GITHUB_WORKSPACE:/project"  \
+            snyk/snyk-cli:docker test --docker ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }} --file=Dockerfile
 
       - name: Push ${{ env.DOCKER_REPOSITORY }} images
         if: ${{ success() }}
