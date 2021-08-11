@@ -6,9 +6,6 @@ class Qualification < ApplicationRecord
   accepts_nested_attributes_for :qualification_results
   encrypts :finished_studying_details
 
-  # remove this line after dropping unencrypted columns
-  self.ignored_columns = ["finished_studying_details"]
-
   SECONDARY_QUALIFICATIONS = %w[gcse as_level a_level other_secondary].freeze
 
   enum category: { gcse: 0, as_level: 1, a_level: 2, other_secondary: 3, undergraduate: 4, postgraduate: 5, other: 6 }
