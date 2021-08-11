@@ -112,7 +112,7 @@ RSpec.describe "Creating a vacancy" do
           expect(page).to have_content("There is a problem")
         end
 
-        within_row_for(text: I18n.t("jobs.salary")) do
+        within_row_for(text: I18n.t("helpers.label.publishers_job_listing_pay_package_form.salary")) do
           expect(page).to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.salary.blank"))
         end
       end

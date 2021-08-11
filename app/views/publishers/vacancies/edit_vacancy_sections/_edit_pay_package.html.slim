@@ -13,6 +13,11 @@
         html_attributes: { id: "salary" })
 
       - component.slot(:row,
+        key: t("jobs.actual_salary"),
+        value: @vacancy.actual_salary.presence || t("jobs.not_defined"),
+        html_attributes: { id: "actual_salary" })
+
+      - component.slot(:row,
         key: t("jobs.benefits"),
         value: @vacancy.benefits.presence || t("jobs.not_defined"),
         html_attributes: { id: "benefits" })
