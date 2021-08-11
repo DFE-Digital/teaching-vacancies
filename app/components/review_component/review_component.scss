@@ -100,3 +100,10 @@
 .action-required-tag {
   @extend .notification-tag;
 }
+
+.multiline {
+  .govuk-summary-list__value {
+    display: block;
+    width: 100%;
+  }
+}
