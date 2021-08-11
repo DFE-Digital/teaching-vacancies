@@ -490,6 +490,9 @@ en:
   vacancies:
     index:
       no_polygons: This search didn't use any polygons.
+      title:
+        zero: Find a job in teaching - Search results
+        other: Find a job in teaching - Search results page %{count}
       wider_search_suggestions:
         heading:
           keyword_html: Try browsing for <span class='text-wrap-apostrophe'>%{keyword}</span> in a wider location search
