@@ -192,6 +192,7 @@ en:
     working_patterns_info_many: Will consider %{patterns}
     contract_type: Contract type
 
+    actual_salary: Actual salary
     salary: Salary
     benefits: Additional allowances
     pay_package: Pay package
