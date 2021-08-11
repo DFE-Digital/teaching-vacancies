@@ -44,6 +44,7 @@ module VacancyHelpers
 
   def fill_in_pay_package_form_fields(vacancy)
     fill_in "publishers_job_listing_pay_package_form[salary]", with: vacancy.salary
+    fill_in "publishers_job_listing_pay_package_form[actual_salary]", with: vacancy.actual_salary
     fill_in "publishers_job_listing_pay_package_form[benefits]", with: vacancy.benefits
   end
 
@@ -166,6 +167,7 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.working_patterns)
 
     expect(page).to have_content(vacancy.salary)
+    expect(page).to have_content(vacancy.actual_salary)
     expect(page.html).to include(vacancy.benefits)
 
     expect(page).to have_content(vacancy.publish_on.to_s.strip)
