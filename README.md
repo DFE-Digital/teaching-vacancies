@@ -126,6 +126,7 @@ For local development, you can use a [dotenv-rails environment override](https:/
 ```
 DFE_SIGN_IN_REDIRECT_URL=https://localhost:3000/publishers/auth/dfe/callback
 DOMAIN=localhost:3000
+LOCKBOX_MASTER_KEY=0000000000000000000000000000000000000000000000000000000000000000
 ```
 
 ### Set up the database

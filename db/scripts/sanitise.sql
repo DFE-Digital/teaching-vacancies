@@ -2,21 +2,10 @@ TRUNCATE TABLE alert_runs;
 TRUNCATE TABLE emergency_login_keys;
 TRUNCATE TABLE sessions;
 
--- Columns encrypted with lockbox should be set to values that can be decrypted by the target environment.
--- These values are encrypted with the staging lockbox master key.
--- Change them if you are using this script for a different environment, as the key will be different.
--- There are multiple values in order to pass the different validations on each attribute.
-SET lorem_string_ciphertext = 'London'
-SET lorem_phone_number_ciphertext
-SET lorem_email_ciphertext
-SET lorem_teacher_reference_number_ciphertext
-SET lorem_national_insurance_number_ciphertext
-SET empty_string_ciphertext
-
 UPDATE employments
-       SET organisation='Example Organisation',
-           job_title='Example Job Title',
-           main_duties='Lorem ipsum dolor sit amet';
+       SET organisation_ciphertext='',
+           job_title_ciphertext='',
+           main_duties_ciphertext='';
 
 UPDATE equal_opportunities_reports
        SET disability_no=0,
@@ -53,26 +42,26 @@ UPDATE equal_opportunities_reports
 
 UPDATE feedbacks
        SET comment=NULL,
-           email=concat('anonymised-feedback-',id,'@example.org'),  -- encrypt. doesn't need id
+           email=concat('anonymised-feedback-',id,'@example.org'),
            other_unsubscribe_reason_comment=NULL,
            visit_purpose_comment=NULL;
 
 UPDATE job_applications
-       SET first_name='Anonymous', -- encrypt
-           last_name='Anon', -- encrypt
-           previous_names='', -- encrypt
-           street_address='1 Example Street', -- encrypt
-           city='Anonymised City', -- encrypt
-           postcode='P05T C0DE', -- encrypt
-           phone_number='01234567890',  -- encrypt
-           teacher_reference_number='1234567',  -- encrypt
-           national_insurance_number='QQ 12 34 56 C', -- encrypt
-           personal_statement='Lorem ipsum dolor sit amet', -- encrypt
-           support_needed_details='', -- encrypt
-           close_relationships_details='', -- encrypt
-           further_instructions='', -- encrypt
-           rejection_reasons='', -- encrypt
-           gaps_in_employment_details='', -- encrypt
+       SET first_name_ciphertext='',
+           last_name_ciphertext='',
+           previous_names_ciphertext='',
+           street_address_ciphertext='',
+           city_ciphertext='',
+           postcode_ciphertext='',
+           phone_number_ciphertext='',
+           teacher_reference_number_ciphertext='',
+           national_insurance_number_ciphertext='',
+           personal_statement_ciphertext='',
+           support_needed_details_ciphertext='',
+           close_relationships_details_ciphertext='',
+           further_instructions_ciphertext='',
+           rejection_reasons_ciphertext='',
+           gaps_in_employment_details_ciphertext='',
            disability='prefer_not_to_say',
            gender='prefer_not_to_say',
            gender_description='',
@@ -84,30 +73,29 @@ UPDATE job_applications
            religion_description='';
 
 UPDATE jobseekers
-       SET email=concat('anonymised-jobseeker-',id,'@example.org'), -- encrypt, and account for email LIKE '%education'
+       SET email=concat('anonymised-jobseeker-',id,'@example.org'),
            encrypted_password='ABCDEFGH12345',
            reset_password_token=concat('anonymised-reset-password-token-',id),
-           current_sign_in_ip='8.8.8.8',
-           last_sign_in_ip='8.8.4.4',
+           current_sign_in_ip_ciphertext='',
+           last_sign_in_ip_ciphertext='',
            confirmation_token=concat('anonymised-confirmation-token-',id),
-           unconfirmed_email='', -- encrypt
+           unconfirmed_email='',
            unlock_token=concat('anonymised-unlock-token-',id)
        WHERE email NOT LIKE '%education.gov.uk';
 
 UPDATE publishers
-       SET email=concat('anonymised-publisher-',id,'@example.org'), -- encrypt. no need for unique
-           family_name='anon', -- encrypt
-           given_name='anon'; -- encrypt
-           oid=;  -- encrypt (and add to sanitise.sql) (must match the original record)
+       SET email=concat('anonymised-publisher-',id,'@example.org'),
+           family_name_ciphertext='',
+           given_name_ciphertext='';
 
 UPDATE qualifications
-       SET finished_studying_details='';
+       SET finished_studying_details_ciphertext='';
 
 UPDATE "references"
-       SET name='Anonymous Anon',
-           job_title='Example Job Title',
-           email='anon@example.org',
-           phone_number='01234567890';
+       SET name_ciphertext='',
+           job_title_ciphertext='',
+           email_ciphertext='',
+           phone_number_ciphertext='';
 
 UPDATE subscriptions
        SET email=concat('anonymised-subscription-',id,'@example.org');
