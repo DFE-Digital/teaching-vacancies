@@ -4,7 +4,7 @@
 - elsif @landing_page.present?
   - content_for :page_title_prefix, t("landing_pages.heading", landing_page: @landing_page.humanize)
 - else
-  - content_for :page_title_prefix, t("home.index.title")
+  - content_for :page_title_prefix, t(".title", count: params[:page].to_i)
 
 - if @landing_page.present? && I18n.exists?("landing_pages.description.#{@landing_page_translation}")
   - content_for :page_description, t("landing_pages.description.#{@landing_page_translation}")
