@@ -20,4 +20,8 @@ class Publishers::JobListing::JobDetailsForm < Publishers::JobListing::VacancyFo
 
     errors.add(:job_title, I18n.t("job_details_errors.job_title.invalid_characters"))
   end
+
+  def params_to_save
+    super.except(:suitable_for_nqt)
+  end
 end

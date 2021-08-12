@@ -26,7 +26,6 @@ FactoryBot.define do
     starts_on { 1.year.from_now.to_date }
     status { :published }
     subjects { SUBJECT_OPTIONS.sample(2).map(&:first).sort! }
-    suitable_for_nqt { "no" }
     working_patterns { %w[full_time] }
 
     trait :no_tv_applications do
@@ -127,16 +126,6 @@ FactoryBot.define do
     trait :with_feedback do
       listed_elsewhere { :listed_paid }
       hired_status { :hired_tvs }
-    end
-
-    trait :suitable_for_nqt do
-      suitable_for_nqt { "yes" }
-      job_roles { %w[nqt_suitable] }
-    end
-
-    trait :not_suitable_for_nqt do
-      suitable_for_nqt { "no" }
-      job_roles { %w[] }
     end
 
     trait :with_supporting_documents do
