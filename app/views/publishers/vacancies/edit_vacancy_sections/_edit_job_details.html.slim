@@ -14,7 +14,7 @@
 
       - component.slot(:row,
         key: t("jobs.job_roles"),
-        value: @vacancy.show_job_roles.presence || t("jobs.not_defined"),
+        value: @vacancy.show_job_roles(exclude_nqt_suitable: true).presence || t("jobs.not_defined"),
         html_attributes: { id: "job_roles" })
 
       - component.slot(:row,
