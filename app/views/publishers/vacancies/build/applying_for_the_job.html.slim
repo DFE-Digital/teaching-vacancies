@@ -13,7 +13,18 @@
 
         h2.govuk-heading-l = t("publishers.vacancies.steps.applying_for_the_job")
 
-        - if vacancy.listed? || current_organisation.local_authority?
+        - if vacancy.primary_job_role == "education_support"
+          details class="govuk-details" data-module="govuk-details"
+            summary.govuk-details__summary
+              .govuk-details__summary-text = t(".education_support.reveal")
+            .govuk-details__text
+              - t(".education_support.infomation").each do |line|
+                p.govuk-body = line
+
+          = f.govuk_text_area :how_to_apply, label: { size: "s" }, rows: 10
+          = f.govuk_url_field :application_link, label: { size: "s" }, form_group: { classes: "optional-field" }
+
+        - elsif vacancy.listed? || current_organisation.local_authority?
           = f.hidden_field :enable_job_applications
           - if vacancy.enable_job_applications?
             = f.govuk_text_area :personal_statement_guidance, label: { size: "s" }
