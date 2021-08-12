@@ -292,6 +292,7 @@ shared:
     - stats_updated_at
     - publisher_id
     - expires_at
+    - actual_salary
     - salary
     - legacy_job_roles
     - about_school
