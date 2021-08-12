@@ -87,21 +87,27 @@ class VacancyPresenter < BasePresenter
   def fix_bullet_points(text)
     # This is a band-aid solution for the problem where (particularly) job adverts contain `•` but
     # do not contain corresponding newlines, resulting in inline bullets.
-    text&.gsub("⁃", "•") # Normalize bullets. `⁃` is a hyphen bullet, not an en-dash or a hyphen.
-    return text unless text&.count("•")&.positive?
+    bullet = "•"
+    text = normalize_bullets(text, bullet)
+    return text unless text&.count(bullet)&.positive?
 
     paragraphs = text.split("\n") # Presume newline signals end of unordered list
     paragraphs.map { |para|
-      if para.count("•").zero?
+      if para.count(bullet).zero?
         para
       else
-        first_bulleted_line_idx = para.gsub(/\s+/, "").first == "•" ? 0 : 1
-        para.split("•").reject(&:blank?).map.with_index { |line, index|
+        first_bulleted_line_idx = para.gsub(/\s+/, "").first == bullet ? 0 : 1
+        para.split(bullet).reject(&:blank?).map.with_index { |line, index|
           item = "<li>#{line}</li>"
           index == first_bulleted_line_idx ? "<ul>#{item}" : item
         }.join.concat("</ul>")
       end
     }.join("\n")
+  end
+
+  def normalize_bullets(text, normalized_bullet)
+    # `⁃` is a hyphen bullet, not an en-dash or a hyphen.
+    text&.gsub("⁃", normalized_bullet)&.gsub("·", normalized_bullet)&.gsub("∙", normalized_bullet)
   end
   # rubocop:enable Style/AsciiComments
 end
