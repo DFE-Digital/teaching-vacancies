@@ -26,8 +26,8 @@ RSpec.describe Publishers::FeedbackPromptMailer do
         expect(mail.to).to eq([email])
 
         expect(body).to match(/Dear vacancy publisher/)
-                    .and match(/\* #{vacancies.first.job_title}/)
-                    .and match(/\* #{vacancies.second.job_title}/)
+                    .and include(vacancies.first.job_title)
+                    .and include(vacancies.second.job_title)
       end
 
       it "triggers a `publisher_prompt_for_feedback` email event" do
