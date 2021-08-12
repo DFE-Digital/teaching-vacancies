@@ -16,7 +16,7 @@ FactoryBot.define do
     expires_at { 6.months.from_now.change(hour: 9, minute: 0, second: 0) }
     hired_status { nil }
     job_advert { Faker::Lorem.paragraph(sentence_count: 4) }
-    job_roles { [:teacher] }
+    job_roles { %i[teacher nqt_not_suitable] }
     job_title { Faker::Lorem.sentence[1...30].strip }
     listed_elsewhere { nil }
     personal_statement_guidance { Faker::Lorem.paragraph(sentence_count: 4) }

@@ -16,7 +16,7 @@ class Search::CriteriaDeviser
       radius: (@vacancy.parent_organisation.postcode.present? ? "10" : nil),
       working_patterns: @vacancy.working_patterns,
       phases: @vacancy.education_phases,
-      job_roles: @vacancy.job_roles,
+      job_roles: @vacancy.searchable_job_roles,
       subjects: get_subjects_from_vacancy,
       keyword: keyword,
     }.delete_if { |_k, v| v.blank? }
@@ -27,7 +27,7 @@ class Search::CriteriaDeviser
     return @vacancy.subjects.first if @vacancy.subjects&.one?
     return @subjects_from_job_title.first if @subjects_from_job_title.one?
 
-    get_keywords_from_job_title.presence unless @vacancy.job_roles.present?
+    get_keywords_from_job_title.presence unless @vacancy.searchable_job_roles.present?
   end
 
   def get_subjects_from_vacancy

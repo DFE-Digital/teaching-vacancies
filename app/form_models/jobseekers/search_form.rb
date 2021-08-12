@@ -43,7 +43,7 @@ class Jobseekers::SearchForm
   end
 
   def set_facet_options
-    @job_role_options = Vacancy.job_roles.except(:nqt_suitable).keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{option}")] }
+    @job_role_options = Vacancy.job_roles.except(:nqt_suitable, :nqt_not_suitable).keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{option}")] }
     @phase_options = [%w[primary Primary], %w[middle Middle], %w[secondary Secondary], %w[16-19 16-19]]
     @nqt_suitable_options = Vacancy.job_roles.slice(:nqt_suitable).keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{option}")] }
     @working_pattern_options = Vacancy.working_patterns.keys.map do |option|

@@ -38,7 +38,7 @@ class SitemapController < ApplicationController
   end
 
   def add_job_roles(map)
-    Vacancy.job_roles.each_key do |job_role|
+    Vacancy.job_roles.except(:nqt_not_suitable).each_key do |job_role|
       map.add job_role_path(job_role), period: "hourly"
     end
   end

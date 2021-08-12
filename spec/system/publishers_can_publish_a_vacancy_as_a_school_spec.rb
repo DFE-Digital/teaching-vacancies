@@ -19,7 +19,7 @@ RSpec.describe "Creating a vacancy" do
   end
 
   context "creating a new vacancy" do
-    let(:job_roles) { %i[teacher sen_specialist] }
+    let(:job_roles) { %i[teacher sen_specialist nqt_not_suitable] }
     let(:vacancy) do
       VacancyPresenter.new(build(:vacancy,
                                  job_roles: job_roles,

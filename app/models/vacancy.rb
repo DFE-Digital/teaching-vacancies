@@ -6,7 +6,7 @@ class Vacancy < ApplicationRecord
 
   friendly_id :slug_candidates, use: %w[slugged history]
 
-  array_enum job_roles: { teacher: 0, leadership: 1, sen_specialist: 2, nqt_suitable: 3 }
+  array_enum job_roles: { teacher: 0, leadership: 1, sen_specialist: 2, nqt_suitable: 3, nqt_not_suitable: 4 }
   array_enum working_patterns: { full_time: 0, part_time: 100, job_share: 101 }
   # Legacy vacancies can have these working_pattern options too: { compressed_hours: 102, staggered_hours: 103 }
   enum contract_type: { permanent: 0, fixed_term: 1 }
@@ -123,8 +123,16 @@ class Vacancy < ApplicationRecord
     job_applications.after_submission.count >= EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD
   end
 
+  def searchable_job_roles
+    job_roles.excluding("nqt_not_suitable")
+  end
+
   def suitable_for_nqt
-    job_roles.include?("nqt_suitable") ? "yes" : "no"
+    if job_roles.include?("nqt_suitable")
+      "yes"
+    elsif job_roles.include?("nqt_not_suitable")
+      "no"
+    end
   end
 
   private

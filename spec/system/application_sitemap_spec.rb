@@ -28,7 +28,7 @@ RSpec.describe "Application sitemap" do
         expect(nodes.search("loc:contains('#{url}')").map(&:text)).to include(url)
       end
 
-      Vacancy.job_roles.each_key do |job_role|
+      Vacancy.job_roles.except(:nqt_not_suitable).each_key do |job_role|
         url = job_role_url(job_role, protocol: "https")
         expect(nodes.search("loc:contains('#{url}')").map(&:text)).to include(url)
       end

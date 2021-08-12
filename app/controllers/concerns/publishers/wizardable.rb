@@ -83,9 +83,14 @@ module Publishers::Wizardable
   def job_details_params(params)
     job_location = vacancy.job_location.presence || "at_one_school"
     readable_job_location = vacancy.readable_job_location.presence || readable_job_location(job_location, school_name: current_organisation.name)
-    if params[:publishers_job_listing_job_details_form][:suitable_for_nqt] == "yes"
-      params[:publishers_job_listing_job_details_form][:job_roles] |= [:nqt_suitable]
-    end
+    params[:publishers_job_listing_job_details_form][:job_roles] |= case params[:publishers_job_listing_job_details_form][:suitable_for_nqt]
+                                                                    when "yes"
+                                                                      [:nqt_suitable]
+                                                                    when "no"
+                                                                      [:nqt_not_suitable]
+                                                                    else
+                                                                      []
+                                                                    end
     attributes_to_merge = {
       completed_steps: completed_steps,
       job_location: job_location,

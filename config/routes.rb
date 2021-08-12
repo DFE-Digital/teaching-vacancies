@@ -179,7 +179,7 @@ Rails.application.routes.draw do
 
   match "teaching-jobs-for-:job_role",
         to: "vacancies#index", as: :job_role, via: :get,
-        constraints: ->(request) { Vacancy.job_roles.key?(request.params[:job_role]) },
+        constraints: ->(request) { Vacancy.job_roles.except(:nqt_not_suitable).key?(request.params[:job_role]) },
         defaults: { pretty: :job_role }
 
   match "teaching-jobs-for-:subject",

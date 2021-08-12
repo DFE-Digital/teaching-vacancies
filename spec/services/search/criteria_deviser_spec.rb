@@ -15,7 +15,7 @@ RSpec.describe Search::CriteriaDeviser do
   let(:working_patterns) { %w[full_time part_time] }
   let(:subjects) { %w[English Maths] }
   let(:job_title) { "A wonderful job" }
-  let(:job_roles) { %w[teacher sen_specialist leadership] }
+  let(:job_roles) { %w[teacher sen_specialist leadership nqt_not_suitable] }
   let(:vacancy) do
     create(:vacancy, :at_one_school, organisation_vacancies_attributes: [{ organisation: school }],
                                      working_patterns: working_patterns,
@@ -55,8 +55,8 @@ RSpec.describe Search::CriteriaDeviser do
       expect(subject.criteria[:phases]).to eq(readable_phases)
     end
 
-    it "sets the job roles to the same as the vacancy" do
-      expect(subject.criteria[:job_roles]).to eq(job_roles)
+    it "sets the job roles to the same as the vacancy, excluding unsearchable job roles" do
+      expect(subject.criteria[:job_roles]).to eq(job_roles.excluding("nqt_not_suitable"))
     end
 
     describe "#keyword" do
@@ -94,8 +94,8 @@ RSpec.describe Search::CriteriaDeviser do
             it_behaves_like "no keyword in the criteria"
           end
 
-          context "when the job listing does not have at lease one job role" do
-            let(:job_roles) { [] }
+          context "when the job listing does not have at least one searchable job role" do
+            let(:job_roles) { ["nqt_not_suitable"] }
 
             context "when the job title contains pre-defined key words separated by spaces" do
               let(:job_title) { "Teacher of non-SEN-se, Principal-ity, getting a-Head, and of being a Teaching Assistant" }

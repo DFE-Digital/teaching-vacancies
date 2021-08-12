@@ -24,7 +24,7 @@ module VacancyHelpers
             visible: false
     end
 
-    vacancy.job_roles.excluding("nqt_suitable")&.each do |job_role|
+    vacancy.job_roles.excluding("nqt_suitable", "nqt_not_suitable")&.each do |job_role|
       check I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{job_role}"),
             name: "publishers_job_listing_job_details_form[job_roles][]",
             visible: false

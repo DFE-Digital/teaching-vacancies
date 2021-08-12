@@ -55,3 +55,16 @@ namespace :ons do
     %i[regions counties cities].each { |api_location_type| ImportPolygons.new(api_location_type: api_location_type).call }
   end
 end
+
+namespace :vacancy do
+  desc "Update job roles on published vacancies"
+  task update_job_roles: :environment do
+    # Not yet tested on a production-like database
+    Vacancy.published.find_each(batch_size: 100) do |vacancy|
+      nqt_suitable_role = vacancy.job_roles.include?("nqt_suitable") ? "nqt_suitable" : "nqt_not_suitable"
+      roles = vacancy.job_roles | [nqt_suitable_role]
+      roles_to_i = roles.map { |r| Vacancy.job_roles[r] }
+      vacancy.update_column(:job_roles, roles_to_i)
+    end
+  end
+end

@@ -29,7 +29,7 @@
           = f.govuk_radio_button :contract_type, :fixed_term do
             = f.govuk_text_field :contract_type_duration, label: { size: "s" }
 
-        = f.govuk_collection_check_boxes :job_roles, Vacancy.job_roles.except("nqt_suitable").keys, :to_s, :to_s, form_group: { classes: "optional-field" }
+        = f.govuk_collection_check_boxes :job_roles, Vacancy.job_roles.except(:nqt_suitable, :nqt_not_suitable).keys, :to_s, :to_s, form_group: { classes: "optional-field" }
 
         = f.govuk_collection_radio_buttons :suitable_for_nqt, %w[yes no], :to_s, :capitalize
 
