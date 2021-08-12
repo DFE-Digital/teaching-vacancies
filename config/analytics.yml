@@ -301,7 +301,6 @@ shared:
     - initially_indexed
     - job_location
     - readable_job_location
-    - suitable_for_nqt
     - job_roles
     - contact_number
     - publisher_organisation_id
