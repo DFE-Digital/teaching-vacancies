@@ -66,8 +66,9 @@ class VacancyPresenter < BasePresenter
     model_working_patterns.compact.map(&:upcase).join(", ")
   end
 
-  def show_job_roles
-    model.job_roles.map { |job_role| I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{job_role}") }.join(", ")
+  def show_job_roles(exclude_nqt_suitable: false)
+    roles = exclude_nqt_suitable ? model.job_roles.excluding("nqt_suitable") : model.job_roles
+    roles.map { |role| I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{role}") }.join(", ")
   end
 
   def show_subjects

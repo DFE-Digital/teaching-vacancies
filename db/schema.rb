@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_06_161056) do
+ActiveRecord::Schema.define(version: 2021_08_12_121255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -83,11 +83,11 @@ ActiveRecord::Schema.define(version: 2021_08_06_161056) do
     t.uuid "job_application_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "employment_type", default: 0
+    t.text "reason_for_break", default: ""
     t.text "organisation_ciphertext"
     t.text "job_title_ciphertext"
     t.text "main_duties_ciphertext"
-    t.integer "employment_type", default: 0
-    t.text "reason_for_break", default: ""
   end
 
   create_table "equal_opportunities_reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -454,7 +454,6 @@ ActiveRecord::Schema.define(version: 2021_08_06_161056) do
     t.boolean "initially_indexed", default: false
     t.integer "job_location"
     t.string "readable_job_location"
-    t.string "suitable_for_nqt"
     t.integer "job_roles", array: true
     t.string "contact_number"
     t.uuid "publisher_organisation_id"

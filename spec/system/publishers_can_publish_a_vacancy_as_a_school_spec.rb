@@ -19,11 +19,10 @@ RSpec.describe "Creating a vacancy" do
   end
 
   context "creating a new vacancy" do
-    let(:suitable_for_nqt) { "no" }
+    let(:job_roles) { %i[teacher sen_specialist] }
     let(:vacancy) do
       VacancyPresenter.new(build(:vacancy,
-                                 job_roles: %i[teacher sen_specialist],
-                                 suitable_for_nqt: suitable_for_nqt,
+                                 job_roles: job_roles,
                                  working_patterns: %w[full_time part_time],
                                  publish_on: Date.current))
     end
@@ -84,7 +83,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       context "when job is selected as suitable for NQTs" do
-        let(:suitable_for_nqt) { "yes" }
+        let(:job_roles) { %i[nqt_suitable teacher sen_specialist] }
 
         scenario "Suitable for NQTs is appended to the job roles" do
           visit organisation_path
