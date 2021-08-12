@@ -16,28 +16,26 @@
         - if vacancy.listed? || current_organisation.local_authority?
           = f.hidden_field :enable_job_applications
           - if vacancy.enable_job_applications?
-            = f.govuk_text_area :personal_statement_guidance, label: { size: "s" }, form_group: { classes: "optional-field" }
+            = f.govuk_text_area :personal_statement_guidance, label: { size: "s" }
           - else
             = f.govuk_text_area :how_to_apply, label: { size: "s" }, rows: 10
-            = f.govuk_url_field :application_link, label: { size: "s" }, form_group: { classes: "optional-field" }
+            = f.govuk_url_field :application_link, label: { size: "s" }
         - else
           = f.govuk_radio_buttons_fieldset :enable_job_applications do
             = f.govuk_radio_button :enable_job_applications, true, link_errors: true do
-              = f.govuk_text_area :personal_statement_guidance, label: { size: "s" }, form_group: { classes: "optional-field" }
+              = f.govuk_text_area :personal_statement_guidance, label: { size: "s" }
             = f.govuk_radio_button :enable_job_applications, "false" do
               = f.govuk_text_area :how_to_apply, label: { size: "s" }, rows: 10
-              = f.govuk_url_field :application_link, label: { size: "s" }, form_group: { classes: "optional-field" }
+              = f.govuk_url_field :application_link, label: { size: "s" }
 
         = f.govuk_email_field :contact_email, label: { size: "s" }, required: true, width: "two-thirds"
 
-        = f.govuk_phone_field :contact_number, label: { size: "s" }, width: "one-third", form_group: { classes: "optional-field" }
+        = f.govuk_phone_field :contact_number, label: { size: "s" }, width: "one-third"
 
         = f.govuk_text_area :school_visits,
           label: { id: "school-visits-label", text: t("helpers.label.publishers_job_listing_applying_for_the_job_form.#{school_or_trust_visits(vacancy.parent_organisation)}"), size: "s" },
           hint: { text: vacancy_school_visits_hint(vacancy) },
-          rows: 10,
-          form_group: { classes: "optional-field" }
-        trix-editor input="publishers-job-listing-applying-for-the-job-form-school-visits-field" aria-labelledby="school-visits-label" role="textbox" contenteditable="true" aria-multiline="true" class="govuk-textarea formatable-textarea js-action govuk-!-margin-bottom-6 govuk-!-margin-top-2"
+          rows: 10
 
         = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 

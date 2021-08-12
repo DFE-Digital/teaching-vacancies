@@ -36,7 +36,7 @@
 
         = f.govuk_collection_radio_buttons :rating, Feedback.ratings.keys, :to_s
 
-        = f.govuk_text_area :comment, label: { size: "s" }, rows: 10, form_group: { classes: "optional-field" }
+        = f.govuk_text_area :comment, label: { size: "s" }, rows: 10
 
         = f.govuk_radio_buttons_fieldset(:user_participation_response, legend: { size: "s" }) do
           = f.govuk_radio_button :user_participation_response, :interested, link_errors: true do

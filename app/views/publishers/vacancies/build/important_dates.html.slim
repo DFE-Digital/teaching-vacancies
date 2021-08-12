@@ -35,7 +35,7 @@
           ->(option) { option },
           ->(option) { t("helpers.options.publishers_job_listing_extend_deadline_form.expiry_time.#{option}") }
 
-        .clear-form.optional-field
+        .clear-form
           = f.govuk_date_field :starts_on
 
           .clear-form__checkbox
