@@ -143,7 +143,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         fill_in "publishers_job_listing_pay_package_form[salary]", with: ""
         click_on I18n.t("buttons.update_job")
 
-        within_row_for(text: I18n.t("jobs.salary")) do
+        within_row_for(text: I18n.t("helpers.label.publishers_job_listing_pay_package_form.salary")) do
           expect(page).to have_content(I18n.t("pay_package_errors.salary.blank"))
         end
       end

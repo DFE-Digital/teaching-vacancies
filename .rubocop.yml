@@ -111,7 +111,7 @@ Metrics/MethodLength:
     - "spec/**/*"
 
 Metrics/ModuleLength:
-  Max: 200
+  Max: 210
 
 Metrics/ParameterLists:
   Max: 8
