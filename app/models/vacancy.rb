@@ -123,6 +123,10 @@ class Vacancy < ApplicationRecord
     job_applications.after_submission.count >= EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD
   end
 
+  def suitable_for_nqt
+    job_roles.include?("nqt_suitable") ? "yes" : "no"
+  end
+
   private
 
   def slug_candidates
