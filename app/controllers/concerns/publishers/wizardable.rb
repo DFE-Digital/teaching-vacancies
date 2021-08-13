@@ -31,7 +31,7 @@ module Publishers::Wizardable
   end
 
   def pay_package_fields
-    %i[salary benefits]
+    %i[actual_salary salary benefits]
   end
 
   def important_dates_fields
@@ -100,7 +100,7 @@ module Publishers::Wizardable
 
   def pay_package_params(params)
     params.require(:publishers_job_listing_pay_package_form)
-          .permit(:salary, :benefits)
+          .permit(:actual_salary, :salary, :benefits)
           .merge(completed_steps: completed_steps)
   end
 

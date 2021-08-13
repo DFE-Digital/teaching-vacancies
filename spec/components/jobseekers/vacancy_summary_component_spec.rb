@@ -4,13 +4,9 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
   let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
 
   context "when vacancy job_location is at_one_school" do
-    let(:vacancy) do
-      create(:vacancy, :at_one_school, organisation_vacancies_attributes: [{ organisation: organisation }])
-    end
+    let(:vacancy) { create(:vacancy, :at_one_school, organisation_vacancies_attributes: [{ organisation: organisation }]) }
 
-    before do
-      render_inline(described_class.new(vacancy: vacancy_presenter))
-    end
+    before { render_inline(described_class.new(vacancy: vacancy_presenter)) }
 
     context "when vacancy parent_organisation is a School" do
       let(:organisation) { create(:school) }
@@ -19,8 +15,14 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
         expect(rendered_component).to include(vacancy_presenter.job_title)
       end
 
-      it "renders the salary" do
+      it "renders the annual salary" do
+        expect(rendered_component).to include(I18n.t("jobs.fte_salary"))
         expect(rendered_component).to include(vacancy_presenter.salary)
+      end
+
+      it "renders the actual salary" do
+        expect(rendered_component).to include(I18n.t("jobs.actual_salary"))
+        expect(rendered_component).to include(vacancy_presenter.actual_salary)
       end
 
       it "renders the address" do
@@ -41,6 +43,15 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
 
       it "renders the date and time it expires at" do
         expect(rendered_component).to include(format_time_to_datetime_at(vacancy.expires_at))
+      end
+
+      context "when vacancy has actual_salary not defined" do
+        let(:vacancy) { create(:vacancy, :at_one_school, actual_salary: "", organisation_vacancies_attributes: [{ organisation: organisation }]) }
+
+        it "does not renders the actual salary" do
+          expect(rendered_component).to include(I18n.t("jobs.salary"))
+          expect(rendered_component).not_to include(I18n.t("jobs.fte_salary"))
+        end
       end
     end
   end
