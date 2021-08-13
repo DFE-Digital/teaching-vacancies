@@ -6,7 +6,7 @@ RSpec.describe "Publishers can save and return later" do
 
   before do
     login_publisher(publisher: publisher, organisation: school)
-    @vacancy = VacancyPresenter.new(build(:vacancy, :draft))
+    @vacancy = VacancyPresenter.new(build(:vacancy, :draft, working_patterns: %w[full_time part_time]))
   end
 
   context "Create a job journey" do

@@ -14,6 +14,8 @@
         h2.govuk-heading-l = t("jobs.pay_package")
 
         = f.govuk_text_field :salary, label: { size: "s" }, required: true
+        - unless vacancy.working_patterns == ["full_time"]
+          = f.govuk_text_field :actual_salary, label: { size: "s" }, form_group: { classes: "optional-field" }
 
         = f.govuk_text_area :benefits, label: { size: "s", id: "benefits-label" }, form_group: { classes: "optional-field trix-remove" }
         trix-editor input="publishers-job-listing-pay-package-form-benefits-field" aria-labelledby="benefits-label" role="textbox" contenteditable="true" aria-multiline="true" class="govuk-textarea formatable-textarea js-action govuk-!-margin-bottom-6 govuk-!-margin-top-2"

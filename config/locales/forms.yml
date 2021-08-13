@@ -237,12 +237,10 @@ en:
           Give a brief summary of the job that jobseekers can quickly scan.
           This will be the first thing they see on the listing or in search engine results
       publishers_job_listing_pay_package_form:
+        actual_salary: For part-time or term-time roles this is what the candidate will actually be paid
         benefits: >-
           Include special educational needs (SEN) allowances and teaching and learning responsibility (TLR) payments,
           for example
-        salary: >-
-          Enter the annual salary or salary range, and/or pay scale range.
-          Where relevant, state if the salary is full-time equivalent
       publishers_job_listing_schools_form:
         add_school: Add a school to your account
         edit_schools: "Can't see the school you are looking for?"
@@ -555,8 +553,9 @@ en:
         about_organisation: About %{organisation}
         job_advert: Job advert
       publishers_job_listing_pay_package_form:
+        actual_salary: Actual salary
         benefits: Additional allowances
-        salary: Salary
+        salary: Annual or full-time equivalent (FTE) salary
 
       publishers_vacancy_statistics_form:
         hired_status: Job filled on Teaching Vacancies?
