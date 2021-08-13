@@ -465,6 +465,7 @@ ActiveRecord::Schema.define(version: 2021_08_12_121255) do
     t.integer "candidate_hired_from"
     t.boolean "enable_job_applications"
     t.string "completed_steps", default: [], null: false, array: true
+    t.string "actual_salary"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["initially_indexed"], name: "index_vacancies_on_initially_indexed"
     t.index ["publisher_id"], name: "index_vacancies_on_publisher_id"
