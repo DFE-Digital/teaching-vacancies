@@ -10,6 +10,14 @@ Rails.application.routes.draw do
   end
   mount Sidekiq::Web, at: "/sidekiq"
 
+  get "check" => "application#check"
+
+  if Rails.application.config.maintenance_mode
+    # If in maintenance mode, route *all* requests to maintenance page
+    match "*path", to: "errors#maintenance", via: :all
+    root to: "errors#maintenance", as: "maintenance_root", via: :all
+  end
+
   devise_for :jobseekers, controllers: {
     confirmations: "jobseekers/confirmations",
     passwords: "jobseekers/passwords",
@@ -92,7 +100,6 @@ Rails.application.routes.draw do
 
   root "home#index"
 
-  get "check" => "application#check"
   get "sitemap" => "sitemap#show", format: "xml"
 
   get "/pages/*id" => "pages#show", as: :page, format: false
@@ -171,6 +178,7 @@ Rails.application.routes.draw do
   match "/404", as: :not_found, to: "errors#not_found", via: :all
   match "/422", as: :unprocessable_entity, to: "errors#unprocessable_entity", via: :all
   match "/500", as: :internal_server_error, to: "errors#internal_server_error", via: :all
+  match "/maintenance", as: :maintenance, to: "errors#maintenance", via: :all
 
   # If parameters are used that are the same as those in the search form, pagination with kaminari will break
   match "teaching-jobs-in-:location_facet",
