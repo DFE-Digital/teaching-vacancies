@@ -80,6 +80,7 @@ en:
     withdraw_application: Withdraw application
 
   helpers:
+    optional_field_html: "%{label} (optional<span class='govuk-visually-hidden'> field</span>)</span>"
     hint:
       general_feedback_form:
         comment_html: >-
@@ -265,7 +266,7 @@ en:
         password: Password
 
       jobseekers_account_feedback_form:
-        comment: Do you have any suggestions on how we should improve the service?
+        comment_html: Do you have any suggestions on how we should improve the service? (optional<span class='govuk-visually-hidden'> field</span>)</span>
         email: What is your email address?
         rating_options:
           highly_dissatisfied: Highly dissatisfied
@@ -310,8 +311,8 @@ en:
         job_title: Job title
         main_duties: Main duties
         organisation: School or other organisation
-        salary: Salary
-        subjects: Subjects and key stages taught
+        salary_html: Salary (optional<span class='govuk-visually-hidden'> field</span>)</span>
+        subjects_html: Subjects and key stages taught (optional<span class='govuk-visually-hidden'> field</span>)</span>
       jobseekers_job_application_details_qualifications_category_form:
         category_options:
           gcse: GCSEs
@@ -398,7 +399,7 @@ en:
           sikh: Sikh
       jobseekers_job_application_feedback_form:
         email: What is your email address?
-        comment: Do you have any suggestions on how we should improve the service?
+        comment_html: Do you have any suggestions on how we should improve the service? (optional<span class='govuk-visually-hidden'> field</span>)</span>
         rating_options:
           highly_dissatisfied: Highly dissatisfied
           highly_satisfied: Highly satisfied
@@ -414,15 +415,15 @@ en:
         email_address: Email address
         first_name: First name
         last_name: Last name
-        national_insurance_number: National Insurance number
+        national_insurance_number_html: National Insurance number (optional<span class='govuk-visually-hidden'> field</span>)</span>
         phone_number: Phone number
-        previous_names: Previous names
+        previous_names_html: Previous names (optional<span class='govuk-visually-hidden'> field</span>)</span>
         street_address: Building and street
-        teacher_reference_number: Teacher reference number (TRN)
+        teacher_reference_number_html: Teacher reference number (TRN) (optional<span class='govuk-visually-hidden'> field</span>)</span>
       jobseekers_job_application_personal_statement_form:
         personal_statement: Your personal statement
       jobseekers_job_application_professional_status_form:
-        qualified_teacher_status_details: Please provide more detail
+        qualified_teacher_status_details_html: Please provide more detail (optional<span class='govuk-visually-hidden'> field</span>)</span>
         qualified_teacher_status_options:
           "no": "No"
           on_track: I'm on track to receive my QTS
@@ -470,27 +471,27 @@ en:
         full_name: Full name
         email: Work email address
         organisation_name: Your school, trust or local authority name
-        organisation_identifier: School unique reference number (URN) or trust unique identifier (UID)
+        organisation_identifier_html: School unique reference number (URN) or trust unique identifier (UID) (optional<span class='govuk-visually-hidden'> field</span>)</span>
 
       publishers_organisation_form:
         description: Description of %{organisation_type}
         website: '%{organisation_type} website'
 
       publishers_job_application_update_status_form:
-        further_instructions: Any further instructions?
-        rejection_reasons: What are the reasons for the rejection?
+        further_instructions_html: Any further instructions? (optional<span class='govuk-visually-hidden'> field</span>)</span>
+        rejection_reasons_html: What are the reasons for the rejection? (optional<span class='govuk-visually-hidden'> field</span>)</span>
 
       publishers_job_listing_applying_for_the_job_form:
-        application_link: Link to online application
+        application_link_html: Link to online application (optional<span class='govuk-visually-hidden'> field</span>)</span>
         enable_job_applications_options:
           "false": Use another application process or form
           "true": Apply using the Teaching Vacancies application form
         contact_email: Contact email
-        contact_number: Contact phone number
-        how_to_apply: How to apply
-        personal_statement_guidance: Help candidates to write their personal statement
-        school_visits: School visits
-        trust_visits: Trust visits
+        contact_number_html: Contact phone number (optional<span class='govuk-visually-hidden'> field</span>)</span>
+        how_to_apply_html: How to apply (optional<span class='govuk-visually-hidden'> field</span>)</span>
+        personal_statement_guidance_html: Help candidates to write their personal statement (optional<span class='govuk-visually-hidden'> field</span>)</span>
+        school_visits_html: School visits (optional<span class='govuk-visually-hidden'> field</span>)</span>
+        trust_visits_html: Trust visits (optional<span class='govuk-visually-hidden'> field</span>)</span>
       publishers_job_listing_copy_vacancy_form:
         job_title: Job title
         publish_on_day_options:
@@ -511,7 +512,7 @@ en:
           "true": As soon as possible
       publishers_job_listing_feedback_form:
         email: What is your email address?
-        comment: Do you have any suggestions on how we should improve the service?
+        comment_html: Do you have any suggestions on how we should improve the service? (optional<span class='govuk-visually-hidden'> field</span>)</span>
         rating_options:
           highly_dissatisfied: Highly dissatisfied
           highly_satisfied: Highly satisfied
@@ -554,7 +555,7 @@ en:
         job_advert: Job advert
       publishers_job_listing_pay_package_form:
         actual_salary: Actual salary
-        benefits: Additional allowances
+        benefits_html: Additional allowances (optional<span class='govuk-visually-hidden'> field</span>)</span>
         salary: Annual or full-time equivalent (FTE) salary
 
       publishers_vacancy_statistics_form:
@@ -629,13 +630,13 @@ en:
         expiry_time: Time application is due
         publish_on: What date will the job be listed?
         publish_on_day: Date job will be listed
-        starts_on: Date job starts
+        starts_on_html: Date job starts (optional<span class='govuk-visually-hidden'> field</span>)</span>
       publishers_job_listing_end_listing_form:
         end_listing_reason: Why would you like to end this job listing early?
       publishers_job_listing_extend_deadline_form:
         expires_at: Closing date
         expiry_time: Time application is due
-        starts_on: Date job starts
+        starts_on_html: Date job starts (optional<span class='govuk-visually-hidden'> field</span>)</span>
       publishers_job_listing_feedback_form:
         rating: How satisfied are you with the job listing process on Teaching Vacancies?
         report_a_problem: Do you need to report a problem, or request support with using Teaching Vacancies?
@@ -645,12 +646,12 @@ en:
         expiry_time: Time application is due
         publish_on: What date will the job be listed?
         publish_on_day: Date job will be listed
-        starts_on: Date job starts
+        starts_on_html: Date job starts (optional<span class='govuk-visually-hidden'> field</span>)</span>
       publishers_job_listing_job_details_form:
         contract_type: Contract type
         job_roles: Job role
         suitable_for_nqt: Is this job suitable for NQTs?
-        subjects: Subject(s)
+        subjects_html: Subject(s) (optional<span class='govuk-visually-hidden'> field</span>)</span>
         working_patterns: Working patterns
       publishers_job_listing_job_location_form:
         job_location: Where will the job be based?

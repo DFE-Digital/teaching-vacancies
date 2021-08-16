@@ -19,7 +19,6 @@
         = f.govuk_text_field :organisation_identifier,
           label: { size: "s" },
           hint: { text: t("helpers.hint.publishers_account_request_form.organisation_identifier_html", link: open_in_new_tab_link_to(t("help.gias"), t("help.gias_url"))) },
-          form_group: { classes: "optional-field" },
           width: "two-thirds"
 
         = f.govuk_submit t("buttons.request_account")

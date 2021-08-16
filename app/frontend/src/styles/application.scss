@@ -11,7 +11,6 @@ $govuk-image-url-function: frontend-image-url;
 $govuk-new-link-styles: true;
 
 @import '~govuk-frontend/govuk/all';
-@import '~trix/dist/trix';
 
 @import 'base/mixins';
 @import 'base/utilities';
@@ -110,6 +109,16 @@ b {
 
 .grey-cta-container {
   background-color: govuk-colour('light-grey');
+}
+
+.bracket-content {
+  &::before {
+    content: '(';
+  }
+
+  &::after {
+    content: ')';
+  }
 }
 
 .vacancies_index {

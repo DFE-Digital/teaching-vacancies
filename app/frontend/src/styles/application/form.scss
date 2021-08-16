@@ -4,26 +4,6 @@
   }
 }
 
-.optional-field {
-  .govuk-label,
-  .govuk-fieldset__heading {
-    &::after {
-      @include govuk-font($size: 19, $weight: regular);
-      content: '(optional)';
-      margin-left: govuk-spacing(1);
-    }
-  }
-
-  .govuk-checkboxes__label,
-  .govuk-radios__label,
-  .govuk-date-input__label {
-    &::after {
-      content: '';
-      margin-left: 0;
-    }
-  }
-}
-
 .button-link {
   background-color: transparent;
   border: 0;
