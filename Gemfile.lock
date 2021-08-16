@@ -577,8 +577,9 @@ GEM
       activemodel (>= 3.0.0)
       public_suffix
     vcr (6.0.0)
-    view_component (2.30.0)
-      activesupport (>= 5.0.0, < 7.0)
+    view_component (2.38.0)
+      activesupport (>= 5.0.0, < 8.0)
+      method_source (~> 1.0)
     virtus (2.0.0)
       axiom-types (~> 0.1)
       coercible (~> 1.0)
@@ -705,7 +706,7 @@ DEPENDENCIES
   tzinfo-data
   validate_url
   vcr
-  view_component (~> 2.30.0)
+  view_component (~> 2.38.0)
   web-console
   webmock
   webpacker
