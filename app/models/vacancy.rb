@@ -124,7 +124,16 @@ class Vacancy < ApplicationRecord
   end
 
   def suitable_for_nqt
-    job_roles.include?("nqt_suitable") ? "yes" : "no"
+    # For both (1) editing/reviewing a vacancy and (2) validating all steps when publishing a vacancy,
+    # we have to reconstruct the user's response to this question, because we don't store their
+    # boolean answer in its own separate column, but rather in the job_roles array column.
+    # But when we are showing the step for the first time, we should not pre-fill the NQT question with
+    # 'no', so we should return 'nil' here.
+    if job_roles.include?("nqt_suitable")
+      "yes"
+    elsif completed_steps.include?("job_details")
+      "no"
+    end
   end
 
   private
