@@ -69,6 +69,12 @@ qa: ## qa
 		$(eval var_file=$(env))
 		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
 
+research: ## research
+		$(eval env=research)
+		$(eval space=teaching-vacancies-dev)
+		$(eval var_file=$(env))
+		$(eval backend_config=-backend-config="key=dev/app-$(env).tfstate")
+
 ##@ Docker - build, tag, and push an image from local code. Requires Docker CLI
 
 .PHONY: build-local-image
