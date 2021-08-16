@@ -198,8 +198,8 @@ en:
     benefits: Additional allowances
     pay_package: Pay package
 
-    school_visits: School visits
-    trust_visits: Trust visits
+    school_visits_html: School visits
+    trust_visits_html: Trust visits
 
     important_dates: Important dates and deadlines
     application_deadline: Application deadline

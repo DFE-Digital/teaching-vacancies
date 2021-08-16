@@ -67,9 +67,9 @@ module OrganisationHelper
 
   def school_or_trust_visits(organisation)
     if organisation.trust?
-      "trust_visits"
+      "trust_visits_html"
     else
-      "school_visits"
+      "school_visits_html"
     end
   end
 

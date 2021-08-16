@@ -15,7 +15,7 @@
                       value: job_application.last_name,
                       html_attributes: { id: "last_name" }
       - summary.slot :row,
-                      key: t("helpers.label.jobseekers_job_application_personal_details_form.previous_names"),
+                      key: t("helpers.label.jobseekers_job_application_personal_details_form.previous_names_html"),
                       value: job_application.previous_names.presence || t("jobseekers.job_applications.not_defined"),
                       html_attributes: { id: "previous_names" }
       - summary.slot :row,
@@ -33,10 +33,10 @@
                       value: job_application.email,
                       html_attributes: { id: "email_address" }
       - summary.slot :row,
-                      key: t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number"),
+                      key: t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number_html"),
                       value: job_application.teacher_reference_number.presence || t("jobseekers.job_applications.not_defined"),
                       html_attributes: { id: "teacher_reference_number" }
       - summary.slot :row,
-                      key: t("helpers.label.jobseekers_job_application_personal_details_form.national_insurance_number"),
+                      key: t("helpers.label.jobseekers_job_application_personal_details_form.national_insurance_number_html"),
                       value: job_application.national_insurance_number.presence || t("jobseekers.job_applications.not_defined"),
                       html_attributes: { id: "national_insurance_number" }
