@@ -99,6 +99,8 @@ module TeacherVacancyService
 
     config.geocoder_lookup = :default
 
+    config.maintenance_mode = ActiveModel::Type::Boolean.new.cast(ENV["MAINTENANCE_MODE"])
+
     config.view_component.preview_paths << "#{Rails.root}/app/components/previews"
     config.view_component.preview_route = "/components"
     config.view_component.preview_controller = "PreviewsController"
