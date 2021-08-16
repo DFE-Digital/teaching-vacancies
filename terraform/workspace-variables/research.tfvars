@@ -1,6 +1,6 @@
 # Platform
 region                      = "eu-west-2"
-parameter_store_environment = "dev"
+parameter_store_environment = "research"
 app_environment             = "research"
 environment                 = "research" # For review, pass in TF_VAR_environment=review-pr-[PR number]
 
