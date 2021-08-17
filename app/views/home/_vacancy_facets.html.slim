@@ -5,9 +5,8 @@
       - @vacancy_facets.cities.each do |city, count|
         li
           = govuk_link_to location_path(city) do
-              span.govuk-visually-hidden
-                = "#{t('.link_prefix_visually_hidden')} "
-              = "#{city} (#{count})"
+            = "#{city} "
+            = t(".link_text_html", count: count)
 
   .govuk-grid-column-one-half data={ "facet-type": "counties" }
     h3.govuk-heading-s = t(".counties")
@@ -15,9 +14,8 @@
       - @vacancy_facets.counties.each do |county, count|
         li
           = govuk_link_to location_path(county) do
-            span.govuk-visually-hidden
-              = "#{t('.link_prefix_visually_hidden')} "
-            = "#{county} (#{count})"
+            = "#{county} "
+            = t(".link_text_html", count: count)
 
 .govuk-grid-row
   .govuk-grid-column-one-half data={ "facet-type": "subjects" }
@@ -26,9 +24,8 @@
       - @vacancy_facets.subjects.each do |subject, count|
         li
           = govuk_link_to subject_path(subject) do
-            span.govuk-visually-hidden
-              = "#{t('.link_prefix_visually_hidden')} "
-            = "#{subject} (#{count})"
+            = "#{subject} "
+            = t(".link_text_html", count: count)
 
   .govuk-grid-column-one-half data={ "facet-type": "job_roles" }
     h3.govuk-heading-s = t(".job_roles")
@@ -36,6 +33,5 @@
       - @vacancy_facets.job_roles.each do |job_role, count|
         li
           = govuk_link_to job_role_path(job_role) do
-            span.govuk-visually-hidden
-              = "#{t('.link_prefix_visually_hidden')} "
-            = "#{t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{job_role}")} (#{count})"
+            = "#{t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{job_role}")} "
+            = t(".link_text_html", count: count)

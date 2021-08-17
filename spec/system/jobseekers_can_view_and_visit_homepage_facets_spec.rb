@@ -19,11 +19,11 @@ RSpec.describe "Jobseekers can view and visit homepage facets", vcr: { cassette_
 
   describe "job roles" do
     it "has the expected facet" do
-      expect(page).to have_css("div[data-facet-type='job_roles']", text: "Teacher (1)")
+      expect(page).to have_css("div[data-facet-type='job_roles']", text: "Teacher view 1 vacancies listed")
     end
 
     it "goes to the correct landing page and checks the job roles filter" do
-      within "div[data-facet-type='job_roles']", text: "Teacher (1)" do
+      within "div[data-facet-type='job_roles']", text: "Teacher view 1 vacancies listed" do
         click_on "Teacher"
       end
 
@@ -34,11 +34,11 @@ RSpec.describe "Jobseekers can view and visit homepage facets", vcr: { cassette_
 
   describe "subjects" do
     it "has the expected facet" do
-      expect(page).to have_css("div[data-facet-type='subjects']", text: "Bengali (5)")
+      expect(page).to have_css("div[data-facet-type='subjects']", text: "Bengali view 5 vacancies listed")
     end
 
     it "goes to the correct landing page and checks the job roles filter" do
-      within "div[data-facet-type='subjects']", text: "Bengali (5)" do
+      within "div[data-facet-type='subjects']", text: "Bengali view 5 vacancies listed" do
         click_on "Bengali"
       end
 
@@ -49,11 +49,11 @@ RSpec.describe "Jobseekers can view and visit homepage facets", vcr: { cassette_
 
   describe "cities" do
     it "has the expected facet" do
-      expect(page).to have_css("div[data-facet-type='cities']", text: "London (10)")
+      expect(page).to have_css("div[data-facet-type='cities']", text: "London view 10 vacancies listed")
     end
 
     it "goes to the correct landing page and checks the job roles filter" do
-      within "div[data-facet-type='cities']", text: "London (10)" do
+      within "div[data-facet-type='cities']", text: "London view 10 vacancies listed" do
         click_on "London"
       end
 
@@ -64,11 +64,11 @@ RSpec.describe "Jobseekers can view and visit homepage facets", vcr: { cassette_
 
   describe "counties" do
     it "has the expected facet" do
-      expect(page).to have_css("div[data-facet-type='counties']", text: "Devon (15)")
+      expect(page).to have_css("div[data-facet-type='counties']", text: "Devon view 15 vacancies listed")
     end
 
     it "goes to the correct landing page and fills the location field" do
-      within "div[data-facet-type='counties']", text: "Devon (15)" do
+      within "div[data-facet-type='counties']", text: "Devon view 15 vacancies listed" do
         click_on "Devon"
       end
 
