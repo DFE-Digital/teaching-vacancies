@@ -151,7 +151,7 @@ jobs:
             snyk/snyk-cli:docker test --docker ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }} --file=Dockerfile
 
       - name: Push ${{ env.DOCKER_REPOSITORY }} images
-        if: ${{ always() }}
+        if: ${{ success() }}
         run: docker image push --all-tags ${{ env.DOCKER_REPOSITORY }}
 
   deploy:
