@@ -11,7 +11,9 @@
         dt.govuk-summary-list__key
           h4.govuk-heading-s = vacancy_job_location_heading(@vacancy)
 
-        - @vacancy.organisations.each do |organisation|
-          dd.govuk-summary-list__value
-            div class="govuk-!-font-weight-bold" = organisation.name
-            = full_address(organisation)
+        dd.govuk-summary-list__value
+          ul.govuk-list
+            - @vacancy.organisations.each do |organisation|
+              li class="govuk-!-font-weight-bold govuk-!-margin-bottom-4"
+                = organisation.name
+                span class="govuk-!-font-weight-regular" = full_address(organisation)
