@@ -53,7 +53,7 @@ RSpec.describe "Viewing a single published vacancy" do
       let(:vacancy) { create(:vacancy, :published, :with_supporting_documents) }
 
       scenario "can see the supporting documents section" do
-        expect(page).to have_content(I18n.t("jobs.supporting_documents"))
+        expect(page).to have_content(I18n.t("publishers.vacancies.steps.documents"))
         expect(page).to have_content(vacancy.supporting_documents.first.filename)
       end
     end

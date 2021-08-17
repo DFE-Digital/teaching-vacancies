@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("jobs.important_dates"))
+- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.important_dates"))
 
 .govuk-main-wrapper
   .govuk-grid-row
@@ -11,7 +11,7 @@
       = form_for form, url: wizard_path, method: :patch do |f|
         = f.govuk_error_summary
 
-        h2.govuk-heading-l = t("jobs.important_dates")
+        h2.govuk-heading-l = t("publishers.vacancies.steps.important_dates")
 
         - if form.disable_editing_publish_on?
           #publish_on

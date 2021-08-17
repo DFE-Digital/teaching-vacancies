@@ -14,7 +14,7 @@ RSpec.describe "Publishers can edit a vacancy" do
     scenario "redirects to the review vacancy page" do
       visit edit_organisation_job_path(vacancy.id)
 
-      expect(page).to have_content(I18n.t("jobs.review_heading"))
+      expect(page).to have_content(I18n.t("publishers.vacancies.steps.review_heading"))
     end
   end
 
@@ -68,7 +68,7 @@ RSpec.describe "Publishers can edit a vacancy" do
       scenario "can cancel and return from job details page" do
         visit edit_organisation_job_path(vacancy.id)
 
-        click_header_link(I18n.t("jobs.job_details"))
+        click_header_link(I18n.t("publishers.vacancies.steps.job_details"))
         expect(page).to have_content(I18n.t("buttons.cancel_and_return"))
 
         click_on I18n.t("buttons.cancel_and_return")
@@ -83,7 +83,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         within("h1.govuk-heading-m") do
           expect(page).to have_content(I18n.t("jobs.edit_job_title", job_title: vacancy.job_title))
         end
-        click_header_link(I18n.t("jobs.job_details"))
+        click_header_link(I18n.t("publishers.vacancies.steps.job_details"))
 
         fill_in "publishers_job_listing_job_details_form[job_title]", with: ""
         click_on I18n.t("buttons.update_job")
@@ -93,7 +93,7 @@ RSpec.describe "Publishers can edit a vacancy" do
 
       scenario "can be successfully edited" do
         visit edit_organisation_job_path(vacancy.id)
-        click_header_link(I18n.t("jobs.job_details"))
+        click_header_link(I18n.t("publishers.vacancies.steps.job_details"))
 
         fill_in "publishers_job_listing_job_details_form[job_title]", with: "Assistant Head Teacher"
         click_on I18n.t("buttons.update_job")
@@ -106,7 +106,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         vacancy = create(:vacancy, :published, slug: "the-vacancy-slug")
         vacancy.organisation_vacancies.create(organisation: school)
         visit edit_organisation_job_path(vacancy.id)
-        click_header_link(I18n.t("jobs.job_details"))
+        click_header_link(I18n.t("publishers.vacancies.steps.job_details"))
 
         fill_in "publishers_job_listing_job_details_form[job_title]", with: "Assistant Head Teacher"
         click_on I18n.t("buttons.update_job")
@@ -123,7 +123,7 @@ RSpec.describe "Publishers can edit a vacancy" do
           .to receive(:update_google_index).with(vacancy)
 
         visit edit_organisation_job_path(vacancy.id)
-        click_header_link(I18n.t("jobs.job_details"))
+        click_header_link(I18n.t("publishers.vacancies.steps.job_details"))
 
         fill_in "publishers_job_listing_job_details_form[job_title]", with: "Assistant Head Teacher"
         click_on I18n.t("buttons.update_job")
@@ -138,7 +138,7 @@ RSpec.describe "Publishers can edit a vacancy" do
           expect(page).to have_content(I18n.t("jobs.edit_job_title", job_title: vacancy.job_title))
         end
 
-        click_header_link(I18n.t("jobs.pay_package"))
+        click_header_link(I18n.t("publishers.vacancies.steps.pay_package"))
 
         fill_in "publishers_job_listing_pay_package_form[salary]", with: ""
         click_on I18n.t("buttons.update_job")
@@ -150,7 +150,7 @@ RSpec.describe "Publishers can edit a vacancy" do
 
       scenario "can be successfully edited" do
         visit edit_organisation_job_path(vacancy.id)
-        click_header_link(I18n.t("jobs.pay_package"))
+        click_header_link(I18n.t("publishers.vacancies.steps.pay_package"))
 
         fill_in "publishers_job_listing_pay_package_form[salary]", with: "Pay scale 1 to Pay scale 2"
         click_on I18n.t("buttons.update_job")
@@ -164,7 +164,7 @@ RSpec.describe "Publishers can edit a vacancy" do
           .to receive(:update_google_index).with(vacancy)
 
         visit edit_organisation_job_path(vacancy.id)
-        click_header_link(I18n.t("jobs.pay_package"))
+        click_header_link(I18n.t("publishers.vacancies.steps.pay_package"))
 
         fill_in "publishers_job_listing_pay_package_form[salary]", with: "Pay scale 1 to Pay scale 2"
         click_on I18n.t("buttons.update_job")
@@ -185,7 +185,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         within("h1.govuk-heading-m") do
           expect(page).to have_content(I18n.t("jobs.edit_job_title", job_title: vacancy.job_title))
         end
-        click_header_link(I18n.t("jobs.important_dates"))
+        click_header_link(I18n.t("publishers.vacancies.steps.important_dates"))
 
         edit_date("expires_at", nil)
 
@@ -197,7 +197,7 @@ RSpec.describe "Publishers can edit a vacancy" do
 
       scenario "can be successfully edited" do
         visit edit_organisation_job_path(vacancy.id)
-        click_header_link(I18n.t("jobs.important_dates"))
+        click_header_link(I18n.t("publishers.vacancies.steps.important_dates"))
 
         expiry_date = Date.current + 1.week
         edit_date("expires_at", expiry_date)
@@ -213,7 +213,7 @@ RSpec.describe "Publishers can edit a vacancy" do
           .to receive(:update_google_index).with(vacancy)
 
         visit edit_organisation_job_path(vacancy.id)
-        click_header_link(I18n.t("jobs.important_dates"))
+        click_header_link(I18n.t("publishers.vacancies.steps.important_dates"))
 
         expiry_date = Date.current + 1.week
         edit_date("expires_at", expiry_date)
@@ -228,7 +228,7 @@ RSpec.describe "Publishers can edit a vacancy" do
             vacancy = VacancyPresenter.new(vacancy)
             visit edit_organisation_job_path(vacancy.id)
 
-            click_header_link(I18n.t("jobs.important_dates"))
+            click_header_link(I18n.t("publishers.vacancies.steps.important_dates"))
             expect(page).to have_content(format_date(vacancy.publish_on))
 
             fill_in "publishers_job_listing_important_dates_form[expires_at(3i)]", with: vacancy.expires_at.day
@@ -245,7 +245,7 @@ RSpec.describe "Publishers can edit a vacancy" do
             vacancy.organisation_vacancies.create(organisation: school)
             vacancy = VacancyPresenter.new(vacancy)
             visit edit_organisation_job_path(vacancy.id)
-            click_header_link(I18n.t("jobs.important_dates"))
+            click_header_link(I18n.t("publishers.vacancies.steps.important_dates"))
 
             expect(page).to have_css("#publishers_job_listing_important_dates_form_publish_on_3i")
 
@@ -267,7 +267,7 @@ RSpec.describe "Publishers can edit a vacancy" do
       scenario "can edit documents" do
         visit edit_organisation_job_path(vacancy.id)
 
-        click_header_link(I18n.t("jobs.supporting_documents"))
+        click_header_link(I18n.t("publishers.vacancies.steps.documents"))
 
         expect(page).to have_content(I18n.t("helpers.label.publishers_job_listing_documents_form.documents"))
 
@@ -291,7 +291,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         within("h1.govuk-heading-m") do
           expect(page).to have_content(I18n.t("jobs.edit_job_title", job_title: vacancy.job_title))
         end
-        click_header_link(I18n.t("jobs.applying_for_the_job"))
+        click_header_link(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
 
         fill_in "publishers_job_listing_applying_for_the_job_form[contact_email]", with: "some email"
         click_on I18n.t("buttons.update_job")
@@ -302,7 +302,7 @@ RSpec.describe "Publishers can edit a vacancy" do
       scenario "can be successfully edited" do
         visit edit_organisation_job_path(vacancy.id)
 
-        click_header_link(I18n.t("jobs.applying_for_the_job"))
+        click_header_link(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
         vacancy.contact_email = "new-test@email.com"
 
         fill_in "publishers_job_listing_applying_for_the_job_form[contact_email]", with: vacancy.contact_email
@@ -318,7 +318,7 @@ RSpec.describe "Publishers can edit a vacancy" do
           .to receive(:update_google_index).with(vacancy)
 
         visit edit_organisation_job_path(vacancy.id)
-        click_header_link(I18n.t("jobs.applying_for_the_job"))
+        click_header_link(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
         vacancy.contact_email = "new-test@email.com"
 
         fill_in "publishers_job_listing_applying_for_the_job_form[contact_email]", with: vacancy.contact_email
@@ -333,7 +333,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         within("h1.govuk-heading-m") do
           expect(page).to have_content(I18n.t("jobs.edit_job_title", job_title: vacancy.job_title))
         end
-        click_header_link(I18n.t("jobs.job_summary"))
+        click_header_link(I18n.t("publishers.vacancies.steps.job_summary"))
 
         fill_in "publishers_job_listing_job_summary_form[job_advert]", with: ""
         click_on I18n.t("buttons.update_job")
@@ -345,7 +345,7 @@ RSpec.describe "Publishers can edit a vacancy" do
 
       scenario "can be successfully edited" do
         visit edit_organisation_job_path(vacancy.id)
-        click_header_link(I18n.t("jobs.job_summary"))
+        click_header_link(I18n.t("publishers.vacancies.steps.job_summary"))
 
         fill_in "publishers_job_listing_job_summary_form[job_advert]", with: "A summary about the job."
         click_on I18n.t("buttons.update_job")
@@ -359,7 +359,7 @@ RSpec.describe "Publishers can edit a vacancy" do
           .to receive(:update_google_index).with(vacancy)
 
         visit edit_organisation_job_path(vacancy.id)
-        click_header_link(I18n.t("jobs.job_summary"))
+        click_header_link(I18n.t("publishers.vacancies.steps.job_summary"))
 
         fill_in "publishers_job_listing_job_summary_form[job_advert]", with: "A summary about the job."
         click_on I18n.t("buttons.update_job")

@@ -265,6 +265,16 @@ en:
       show:
         view_live_listing_link: View this listing
         view_live_listing_title: View the live listing
+      steps:
+        job_location: Job location
+        schools: Job location
+        job_details: Job details
+        pay_package: Pay package
+        important_dates: Important dates and deadlines
+        documents: Supporting documents
+        applying_for_the_job: Applying for the job
+        job_summary: Job summary
+        review_heading: Review the job listing
       summary:
         date_expires: >-
           The listing will appear on the service until %{application_deadline}, after which it will no longer be

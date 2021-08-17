@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("jobs.applying_for_the_job"))
+- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.applying_for_the_job"))
 
 .govuk-main-wrapper
   .govuk-grid-row
@@ -11,7 +11,7 @@
       = form_for form, url: wizard_path, method: :patch do |f|
         = f.govuk_error_summary
 
-        h2.govuk-heading-l = t("jobs.applying_for_the_job")
+        h2.govuk-heading-l = t("publishers.vacancies.steps.applying_for_the_job")
 
         - if vacancy.listed? || current_organisation.local_authority?
           = f.hidden_field :enable_job_applications
