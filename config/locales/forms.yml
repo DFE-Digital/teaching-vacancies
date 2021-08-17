@@ -137,7 +137,7 @@ en:
         national_insurance_number: >-
           If you have a National Insurance number you should enter it here. It's on your National Insurance card,
           benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
-        phone_number: Please only give a phone number that you are happy to be contacted on.
+        phone_number: Enter a phone number you are happy to be contacted on, like 01632 960 001, 07700 900 982 or +44 0808 157 0192.
         previous_names: For example maiden name or name at birth, if different from the name you have now.
         teacher_reference_number: Enter the 7 numbers of your TRN, excluding any letters and symbols.
       jobseekers_job_alert_further_feedback_form:

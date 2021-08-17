@@ -17,8 +17,8 @@ RSpec.describe Jobseekers::JobApplication::PersonalDetailsForm, type: :model do
   it { is_expected.not_to allow_value("david at example.com").for(:email_address) }
 
   it { is_expected.to validate_presence_of(:phone_number) }
-  it { is_expected.to allow_value("01234 123456").for(:phone_number) }
-  it { is_expected.not_to allow_value("01234 12345678").for(:phone_number) }
+  it { is_expected.to allow_value("01234 12345678").for(:phone_number) }
+  it { is_expected.not_to allow_value("01234 123456789").for(:phone_number) }
 
   it { is_expected.to allow_value("1234567").for(:teacher_reference_number) }
   it { is_expected.to allow_value("").for(:teacher_reference_number) }
