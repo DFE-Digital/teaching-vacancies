@@ -38,6 +38,8 @@ export const init = (removeButtonSelector, clearButtonId, closeButtonId, showFil
 
   if (document.documentElement.clientWidth <= MOBILE_BREAKPOINT) {
     setFiltersHiddenState(document.getElementById(showFilterPanelId), document.getElementsByClassName('filters-component')[0], false);
+  } else {
+    filtersUnfocusble();
   }
 
   if (document.getElementById(closeButtonId)) {
@@ -66,7 +68,7 @@ export const init = (removeButtonSelector, clearButtonId, closeButtonId, showFil
         } else {
           addAutoSubmit();
           filtersUnfocusble();
-          document.getElementsByClassName('filters-component')[0].removeAttribute('aria-hidden', 'true');
+          document.getElementsByClassName('filters-component')[0].removeAttribute('aria-hidden');
         }
       });
     }
