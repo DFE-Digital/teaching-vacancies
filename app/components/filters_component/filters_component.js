@@ -38,6 +38,8 @@ export const init = (removeButtonSelector, clearButtonId, closeButtonId, showFil
 
   if (document.documentElement.clientWidth <= MOBILE_BREAKPOINT) {
     setFiltersHiddenState(document.getElementById(showFilterPanelId), document.getElementsByClassName('filters-component')[0], false);
+  } else {
+    filtersUnfocusable();
   }
 
   if (document.getElementById(closeButtonId)) {
@@ -60,13 +62,13 @@ export const init = (removeButtonSelector, clearButtonId, closeButtonId, showFil
       mediaQueryList.addEventListener('change', (e) => {
         if (e.matches) {
           removeAutoSubmit();
-          filtersFocusble();
+          filtersFocusable();
           document.getElementsByClassName('filters-component')[0].setAttribute('aria-hidden', 'true');
           document.getElementById(showFilterPanelId).setAttribute('aria-expanded', 'false');
         } else {
           addAutoSubmit();
-          filtersUnfocusble();
-          document.getElementsByClassName('filters-component')[0].removeAttribute('aria-hidden', 'true');
+          filtersUnfocusable();
+          document.getElementsByClassName('filters-component')[0].removeAttribute('aria-hidden');
         }
       });
     }
@@ -77,11 +79,11 @@ export const togglePanel = (actionEl) => Array.from(document.getElementsByClassN
   element.classList.toggle('filters-component--show-mobile') ? setFiltersVisibleState(actionEl, element) : setFiltersHiddenState(actionEl, element);
 });
 
-export const filtersFocusble = () => {
+export const filtersFocusable = () => {
   document.getElementsByClassName('filters-component')[0].setAttribute('tabindex', '-1');
 };
 
-export const filtersUnfocusble = () => {
+export const filtersUnfocusable = () => {
   document.getElementsByClassName('filters-component')[0].removeAttribute('tabindex');
 };
 
