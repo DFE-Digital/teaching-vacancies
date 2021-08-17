@@ -236,6 +236,10 @@
           width: 0;
         }
 
+        &:focus {
+          outline: $govuk-focus-width solid $govuk-focus-colour;
+        }
+
         &.icon--left {
           background-position: govuk-spacing(1);
           padding-left: 28px;
