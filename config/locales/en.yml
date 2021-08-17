@@ -242,7 +242,7 @@ en:
       cities: Cities and towns with teaching jobs
       counties: Counties with teaching jobs
       job_roles: Current teaching jobs by role
-      link_prefix_visually_hidden: View all vacancies for
+      link_text_html: <span class="govuk-visually-hidden"> view </span><span class="bracket-content">%{count}</span><span class="govuk-visually-hidden"> vacancies listed</span>
       subjects: Current teaching jobs by subject
 
   pages:
