@@ -156,7 +156,7 @@ RSpec.describe "Publishers can save and return later" do
         expect(page.body).to include(I18n.t("messages.jobs.draft_saved_html", job_title: @vacancy.job_title))
 
         click_on @vacancy.job_title
-        within(".review-component#supporting_documents") do
+        within(".review-component#documents") do
           click_on I18n.t("buttons.change")
         end
 

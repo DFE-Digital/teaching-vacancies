@@ -34,6 +34,10 @@ module Publishers::Wizardable
     %i[actual_salary salary benefits]
   end
 
+  def documents_fields
+    []
+  end
+
   def important_dates_fields
     %i[starts_asap starts_on publish_on expires_at]
   end
