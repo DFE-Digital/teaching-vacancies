@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe DestroyInactiveAccountsJob do
-  subject(:job) { described_class.perform_later }
-
   let!(:jobseeker) { create(:jobseeker, last_sign_in_at: last_sign_in_at) }
   let!(:subscription) { create(:subscription, email: jobseeker.email) }
   let!(:feedback) { create(:feedback, jobseeker_id: jobseeker.id) }
@@ -11,7 +9,8 @@ RSpec.describe DestroyInactiveAccountsJob do
 
   before do
     allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false)
-    perform_enqueued_jobs { job }
+
+    described_class.perform_now
   end
 
   context "with inactive jobseeker for 5 years and 2 weeks" do
