@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("jobs.job_summary"))
+- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.job_summary"))
 
 .govuk-main-wrapper
   .govuk-grid-row
@@ -11,7 +11,7 @@
       = form_for form, url: wizard_path, method: :patch do |f|
         = f.govuk_error_summary
 
-        h2.govuk-heading-l = t("jobs.job_summary")
+        h2.govuk-heading-l = t("publishers.vacancies.steps.job_summary")
 
         = f.govuk_text_area :job_advert, label: { size: "s", id: "job-advert-label" }, rows: 10, required: true
 

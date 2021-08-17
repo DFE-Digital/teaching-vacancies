@@ -39,7 +39,7 @@ RSpec.describe "Creating a vacancy" do
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
         within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.job_location"))
+          expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_location"))
         end
 
         fill_in_job_location_form_field(vacancy, "Multi-academy trust")
@@ -47,7 +47,7 @@ RSpec.describe "Creating a vacancy" do
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 8))
         within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.job_details"))
+          expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_details"))
         end
       end
     end
@@ -63,7 +63,7 @@ RSpec.describe "Creating a vacancy" do
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
         within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.job_location"))
+          expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_location"))
         end
 
         fill_in_job_location_form_field(vacancy, "Multi-academy trust")
@@ -71,14 +71,14 @@ RSpec.describe "Creating a vacancy" do
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
         within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.job_location"))
+          expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_location"))
         end
 
         click_on I18n.t("buttons.continue")
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
         within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.job_location"))
+          expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_location"))
         end
         within("div.govuk-error-summary") do
           expect(page).to have_content(I18n.t("schools_errors.organisation_ids.blank"))
@@ -89,7 +89,7 @@ RSpec.describe "Creating a vacancy" do
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 8))
         within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.job_details"))
+          expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_details"))
         end
       end
     end
@@ -105,7 +105,7 @@ RSpec.describe "Creating a vacancy" do
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
         within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.job_location"))
+          expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_location"))
         end
 
         fill_in_job_location_form_field(vacancy, "Multi-academy trust")
@@ -113,7 +113,7 @@ RSpec.describe "Creating a vacancy" do
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
         within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.job_location"))
+          expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_location"))
         end
 
         check school1.name, name: "publishers_job_listing_schools_form[organisation_ids][]", visible: false
@@ -121,7 +121,7 @@ RSpec.describe "Creating a vacancy" do
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
         within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.job_location"))
+          expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_location"))
         end
         within("div.govuk-error-summary") do
           expect(page).to have_content(I18n.t("schools_errors.organisation_ids.invalid"))
@@ -133,7 +133,7 @@ RSpec.describe "Creating a vacancy" do
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 8))
         within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.job_details"))
+          expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_details"))
         end
       end
     end

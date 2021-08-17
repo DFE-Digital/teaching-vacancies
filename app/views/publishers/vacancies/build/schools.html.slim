@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("jobs.job_location"))
+- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.job_location"))
 
 .govuk-main-wrapper
   .govuk-grid-row
@@ -11,7 +11,7 @@
       = form_for form, url: wizard_path, method: :patch do |f|
         = f.govuk_error_summary
 
-        h2.govuk-heading-l = t("jobs.job_location")
+        h2.govuk-heading-l = t("publishers.vacancies.steps.job_location")
 
         = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_schools_form.organisation_id#{'s' if @multiple_schools}") } do
           - if current_organisation.local_authority?

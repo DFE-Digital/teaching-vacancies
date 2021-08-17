@@ -26,7 +26,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 7))
         within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.pay_package"))
+          expect(page).to have_content(I18n.t("publishers.vacancies.steps.pay_package"))
         end
       end
 
@@ -41,7 +41,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 3, total: 7))
         within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.important_dates"))
+          expect(page).to have_content(I18n.t("publishers.vacancies.steps.important_dates"))
         end
       end
 
@@ -63,7 +63,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 4, total: 7))
         within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.supporting_documents"))
+          expect(page).to have_content(I18n.t("publishers.vacancies.steps.documents"))
         end
       end
 
@@ -87,7 +87,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 7))
         within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.applying_for_the_job"))
+          expect(page).to have_content(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
         end
       end
 
@@ -117,7 +117,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 6, total: 7))
         within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.job_summary"))
+          expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_summary"))
         end
       end
     end
@@ -154,7 +154,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         published_vacancy = create(:vacancy, :published)
         published_vacancy.organisation_vacancies.create(organisation: school)
         visit edit_organisation_job_path(published_vacancy.id)
-        click_header_link(I18n.t("jobs.applying_for_the_job"))
+        click_header_link(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
 
         fill_in "publishers_job_listing_applying_for_the_job_form[personal_statement_guidance]", with: "Some different guidance"
         click_on I18n.t("buttons.update_job")
@@ -173,7 +173,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
       scenario "can cancel and return from job details page" do
         visit organisation_job_review_path(vacancy.id)
 
-        click_header_link(I18n.t("jobs.job_details"))
+        click_header_link(I18n.t("publishers.vacancies.steps.job_details"))
         expect(page).to have_content(I18n.t("buttons.cancel_and_return"))
 
         click_on I18n.t("buttons.cancel_and_return")

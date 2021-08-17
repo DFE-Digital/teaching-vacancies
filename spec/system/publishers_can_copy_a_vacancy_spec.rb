@@ -72,7 +72,7 @@ RSpec.describe "Copying a vacancy" do
     click_on I18n.t("buttons.continue")
 
     within("h2.govuk-heading-l") do
-      expect(page).to have_content(I18n.t("jobs.review_heading"))
+      expect(page).to have_content(I18n.t("publishers.vacancies.steps.review_heading"))
     end
     click_on I18n.t("buttons.submit_job_listing")
 
@@ -107,7 +107,7 @@ RSpec.describe "Copying a vacancy" do
       click_on I18n.t("buttons.continue")
 
       within("h2.govuk-heading-l") do
-        expect(page).to have_content(I18n.t("jobs.review_heading"))
+        expect(page).to have_content(I18n.t("publishers.vacancies.steps.review_heading"))
       end
       expect(page).to have_content("Some description about the school")
 
@@ -134,7 +134,7 @@ RSpec.describe "Copying a vacancy" do
       click_on I18n.t("buttons.continue")
 
       within("h2.govuk-heading-l") do
-        expect(page).to have_content(I18n.t("jobs.review_heading"))
+        expect(page).to have_content(I18n.t("publishers.vacancies.steps.review_heading"))
       end
     end
   end
@@ -163,7 +163,7 @@ RSpec.describe "Copying a vacancy" do
       click_on I18n.t("buttons.continue")
 
       within("h2.govuk-heading-l") do
-        expect(page).to have_content(I18n.t("jobs.review_heading"))
+        expect(page).to have_content(I18n.t("publishers.vacancies.steps.review_heading"))
       end
     end
   end

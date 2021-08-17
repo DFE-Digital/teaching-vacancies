@@ -172,14 +172,11 @@ en:
     manage_listing: Manage listing
     new_job_listing_details: New job listing details
     review_page_title: Review the job listing — Create a job listing for %{organisation}
-    review_heading: Review the job listing
     edit_job_title: Edit %{job_title}
     current_step: Step %{step} of %{total}
 
-    job_location: Job location
     location: Location
 
-    job_details: Job details
     job_title: Job title
     job_roles: Job role
     suitable_for_nqt: Is this job suitable for NQTs?
@@ -196,12 +193,10 @@ en:
     annual_salary: Annual or full-time equivalent (FTE) salary
     salary: Salary
     benefits: Additional allowances
-    pay_package: Pay package
 
     school_visits_html: School visits
     trust_visits_html: Trust visits
 
-    important_dates: Important dates and deadlines
     application_deadline: Application deadline
     days_to_apply:
       remaining: '%{days_remaining} days remaining to apply'
@@ -215,7 +210,6 @@ en:
     expires_at: Closing date
     time_at: at
 
-    supporting_documents: Supporting documents
     supporting_documents_accessibility: If you need these documents in an accessible format, please contact the school.
     no_files_message: No files selected
     no_supporting_documents: No documents uploaded
@@ -240,7 +234,6 @@ en:
         remove: Remove
         removing: Removing...
 
-    applying_for_the_job: Applying for the job
     apply: More on how to apply
     application_link: Link to online application
     contact_email: Contact email
@@ -252,7 +245,6 @@ en:
     school_visits_heading: Arranging a visit to %{school}
     how_to_apply: Application instructions
 
-    job_summary: Job summary
     job_advert: Job advert
     about_school: About %{school}
 

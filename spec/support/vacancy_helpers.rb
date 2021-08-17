@@ -5,7 +5,7 @@ module VacancyHelpers
 
   def change_job_location(vacancy, location, group_type)
     vacancy.job_location = location
-    click_header_link(I18n.t("jobs.job_location"))
+    click_header_link(I18n.t("publishers.vacancies.steps.job_location"))
     fill_in_job_location_form_field(vacancy, group_type)
     click_on I18n.t("buttons.continue")
   end
@@ -142,7 +142,7 @@ module VacancyHelpers
       expect(page).to have_content(I18n.t("jobs.starts_asap"))
     end
 
-    expect(page).to have_content(I18n.t("jobs.supporting_documents"))
+    expect(page).to have_content(I18n.t("publishers.vacancies.steps.documents"))
 
     expect(page).to have_content(vacancy.contact_email)
     expect(page).to have_content(vacancy.contact_number)
@@ -183,7 +183,7 @@ module VacancyHelpers
     expect(page.html).to include(vacancy.job_advert)
     expect(page.html).to include(vacancy.about_school)
 
-    expect(page).to have_content(I18n.t("jobs.supporting_documents")) if vacancy.supporting_documents.any?
+    expect(page).to have_content(I18n.t("publishers.vacancies.steps.documents")) if vacancy.supporting_documents.any?
 
     if vacancy.enable_job_applications?
       expect(page).to have_link(I18n.t("jobseekers.job_applications.apply"), href: new_jobseekers_job_job_application_path(vacancy.id))

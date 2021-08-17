@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("jobs.job_details"))
+- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.job_details"))
 
 .govuk-main-wrapper
   .govuk-grid-row
@@ -12,7 +12,7 @@
       = form_for form, url: wizard_path, method: :patch do |f|
         = f.govuk_error_summary
 
-        h2.govuk-heading-l = t("jobs.job_details")
+        h2.govuk-heading-l = t("publishers.vacancies.steps.job_details")
 
         .govuk-character-count data-module="govuk-character-count" data-maxlength=100
           = f.govuk_text_field :job_title,

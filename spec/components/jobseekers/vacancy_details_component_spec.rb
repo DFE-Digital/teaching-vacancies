@@ -94,7 +94,7 @@ RSpec.describe Jobseekers::VacancyDetailsComponent, type: :component do
     let(:vacancy) { create(:vacancy, :no_tv_applications) }
 
     it "renders the how_to_apply label" do
-      expect(rendered_component).to include(I18n.t("jobs.applying_for_the_job"))
+      expect(rendered_component).to include(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
     end
 
     it "renders the how_to_apply" do
@@ -122,7 +122,7 @@ RSpec.describe Jobseekers::VacancyDetailsComponent, type: :component do
     let(:vacancy) { create(:vacancy, :expired) }
 
     it "does not render the application headings" do
-      expect(rendered_component).not_to include(I18n.t("jobs.applying_for_the_job"))
+      expect(rendered_component).not_to include(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
       expect(rendered_component).not_to include(I18n.t("jobseekers.job_applications.applying_for_the_role_heading"))
     end
 

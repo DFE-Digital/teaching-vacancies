@@ -19,7 +19,7 @@ RSpec.describe "Publishers can save and return later" do
         expect(page).to have_content(I18n.t("jobs.create_a_job_title_no_org"))
         expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 7))
         within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.job_details"))
+          expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_details"))
         end
 
         fill_in "publishers_job_listing_job_details_form[job_title]", with: @vacancy.job_title

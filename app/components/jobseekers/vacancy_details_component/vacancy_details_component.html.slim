@@ -1,6 +1,6 @@
 section#job-details class="govuk-!-margin-bottom-5"
   h3.govuk-heading-l.section-heading
-    = t("jobs.job_details")
+    = t("publishers.vacancies.steps.job_details")
 
   = render GovukComponent::SummaryList.new do |component|
     - if @vacancy.job_roles.any?
@@ -16,7 +16,7 @@ section#job-details class="govuk-!-margin-bottom-5"
     - else
       = component.slot(:row, key: I18n.t("jobs.salary"), value: @vacancy.salary)
 
-  h4.govuk-heading-m = t("jobs.job_summary")
+  h4.govuk-heading-m = t("publishers.vacancies.steps.job_summary")
   p = @vacancy.job_advert
 
   - if @vacancy.benefits.present?
@@ -31,7 +31,7 @@ section#job-details class="govuk-!-margin-bottom-5"
 
     - else
       - if @vacancy.how_to_apply.present?
-        h4.govuk-heading-m = t("jobs.applying_for_the_job")
+        h4.govuk-heading-m = t("publishers.vacancies.steps.applying_for_the_job")
         p = @vacancy.how_to_apply
 
       - if @vacancy.application_link.present?
@@ -41,7 +41,7 @@ section#job-details class="govuk-!-margin-bottom-5"
 
   - if @vacancy.supporting_documents.any?
     section#supporting-documents
-      h3.govuk-heading-l.section-heading = t("jobs.supporting_documents")
+      h3.govuk-heading-l.section-heading = t("publishers.vacancies.steps.documents")
       p.govuk-body = t("jobs.supporting_documents_accessibility")
       .grey-border-box--thin
         = render SupportingDocumentComponent.with_collection(@vacancy.supporting_documents)
