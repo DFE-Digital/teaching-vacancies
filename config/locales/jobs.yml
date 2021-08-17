@@ -56,7 +56,7 @@ en:
         one: '%{count} mile'
         other: '%{count} miles'
       title: Search job listings
-      use_current_location: use current location
+      use_current_location_html: use current location<span class="govuk-visually-hidden"> to search teaching vacancies</span>
       within_radius: Search radius
 
     search_result_heading:
