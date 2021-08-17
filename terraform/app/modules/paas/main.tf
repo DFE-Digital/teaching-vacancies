@@ -3,6 +3,11 @@ resource "cloudfoundry_service_instance" "postgres_instance" {
   space        = data.cloudfoundry_space.space.id
   service_plan = data.cloudfoundry_service.postgres.service_plans[var.postgres_service_plan]
   json_params  = "{\"enable_extensions\": [\"pgcrypto\", \"fuzzystrmatch\", \"plpgsql\", \"pg_trgm\", \"postgis\"]}"
+  timeouts {
+    create = "30m"
+    delete = "30m"
+    update = "60m"
+  }
 }
 
 resource "cloudfoundry_service_instance" "redis_cache_instance" {
