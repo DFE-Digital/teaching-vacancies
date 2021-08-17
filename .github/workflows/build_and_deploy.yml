@@ -93,9 +93,9 @@ jobs:
             BUILDKIT_INLINE_CACHE=1
           # Cache from builder target tagged with branch name, may be empty first time branch is pushed
           # Cache from builder target tagged with master branch name, always present, maybe less recent
-          cache-from: |
-            ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
-            ${{ env.DOCKER_REPOSITORY }}:builder-master
+          #cache-from: |
+          #  ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
+          #  ${{ env.DOCKER_REPOSITORY }}:builder-master
           push: true
           # Tag with branch name for reuse
           tags: ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
@@ -110,10 +110,10 @@ jobs:
           # Cache from builder target built above, always present
           # Cache from production target tagged with branch name, may be empty first time branch is pushed
           # Cache from production target tagged with master branch name, always present, maybe less recent
-          cache-from: |
-            ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
-            ${{ env.DOCKER_REPOSITORY }}:${{ env.GIT_BRANCH }}
-            ${{ env.DOCKER_REPOSITORY }}:master
+          #cache-from: |
+          #  ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
+          #  ${{ env.DOCKER_REPOSITORY }}:${{ env.GIT_BRANCH }}
+          #  ${{ env.DOCKER_REPOSITORY }}:master
           push: false
           load: true
           # Tag with branch name for reuse
