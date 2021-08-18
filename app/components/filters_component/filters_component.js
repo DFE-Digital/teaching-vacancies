@@ -63,12 +63,12 @@ export const init = (removeButtonSelector, clearButtonId, closeButtonId, showFil
         if (e.matches) {
           removeAutoSubmit();
           filtersFocusable();
-          document.getElementsByClassName('filters-component')[0].setAttribute('aria-hidden', 'true');
+          Array.from(document.getElementsByClassName('filters-component')).forEach((el) => el.setAttribute('aria-hidden', 'true'));
           document.getElementById(showFilterPanelId).setAttribute('aria-expanded', 'false');
         } else {
           addAutoSubmit();
           filtersUnfocusable();
-          document.getElementsByClassName('filters-component')[0].removeAttribute('aria-hidden');
+          Array.from(document.getElementsByClassName('filters-component')).forEach((el) => el.removeAttribute('aria-hidden'));
         }
       });
     }
@@ -80,19 +80,19 @@ export const togglePanel = (actionEl) => Array.from(document.getElementsByClassN
 });
 
 export const filtersFocusable = () => {
-  document.getElementsByClassName('filters-component')[0].setAttribute('tabindex', '-1');
+  Array.from(document.getElementsByClassName('filters-component')).forEach((el) => el.setAttribute('tabindex', '-1'));
 };
 
 export const filtersUnfocusable = () => {
-  document.getElementsByClassName('filters-component')[0].removeAttribute('tabindex');
+  Array.from(document.getElementsByClassName('filters-component')).forEach((el) => el.removeAttribute('tabindex'));
 };
 
 export const addAutoSubmit = () => {
-  document.getElementsByClassName('filters-component')[0].closest('form').setAttribute('data-auto-submit', 'true');
+  Array.from(document.getElementsByClassName('filters-component')).forEach((el) => el.closest('form').setAttribute('data-auto-submit', 'true'));
 };
 
 export const removeAutoSubmit = () => {
-  document.getElementsByClassName('filters-component')[0].closest('form').removeAttribute('data-auto-submit');
+  Array.from(document.getElementsByClassName('filters-component')).forEach((el) => el.closest('form').removeAttribute('data-auto-submit'));
 };
 
 export const setFiltersVisibleState = (actionEl, filtersEl) => {
