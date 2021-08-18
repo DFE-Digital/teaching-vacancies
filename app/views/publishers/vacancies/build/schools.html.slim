@@ -1,9 +1,9 @@
-- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.job_location"))
+- content_for :page_title_prefix, page_title_prefix(vacancy, form, steps_config[:schools][:title])
 
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-full
-      = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, current_step_number, total_steps(steps_config))
+      = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, adjusted_current_step_number, total_steps(steps_config))
       = govuk_back_link text: session[:current_step] == :review ? t("buttons.cancel_and_return") : t("buttons.back_to_previous_step"), href: back_path
 
   .govuk-grid-row
@@ -29,7 +29,7 @@
             hint_method: :address).with_variant(@multiple_schools ? :checkbox : :radiobutton)
 
         div class="govuk-!-margin-top-6"
-          = render "publishers/vacancies/vacancy_form_partials/continue_or_update_submit", f: f
+          = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
     - unless vacancy.published?
       .govuk-grid-column-one-third

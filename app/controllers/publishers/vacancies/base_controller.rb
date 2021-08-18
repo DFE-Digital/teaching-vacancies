@@ -2,37 +2,26 @@ require "indexing"
 
 class Publishers::Vacancies::BaseController < Publishers::BaseController
   include Publishers::Wizardable
+  include VacanciesStepsHelper
 
-  helper_method :current_step_number, :step_current, :steps_adjust, :steps_config, :vacancy
-
-  def steps_adjust
-    current_organisation.school_group? ? 0 : 1
-  end
-
-  def step_current
-    if defined?(step)
-      step == :schools ? :job_location : step
-    else
-      :review
-    end
-  end
-
-  def current_step_number
-    steps_config[step_current][:number] - steps_adjust
-  end
+  helper_method :adjusted_current_step_number, :current_step_number, :other_parts_of_step_remaining?, :steps_config,
+                :updating_vacancy?, :vacancy, :vacancy_can_be_saved?
 
   def vacancy
     @vacancy ||= current_organisation.all_vacancies.find(params[:job_id].presence || params[:id])
   end
 
   def all_steps_valid?
-    steps_to_skip = if current_organisation.is_a?(School)
-                      []
-                    else
-                      vacancy.job_location == "at_central_office" ? [:job_location] : %i[job_location schools]
-                    end
-    steps_to_skip.push(:documents, :review)
-    steps_config.except(*steps_to_skip).keys.all? { |step| step_valid?(step) }
+    steps_config.except(*steps_not_to_validate).keys.all? { |step| step_valid?(step) }
+  end
+
+  def steps_not_to_validate
+    irrelevant_steps = if current_organisation.school?
+                         []
+                       else
+                         vacancy.job_location == "at_central_office" ? [:job_location] : %i[job_location schools]
+                       end
+    irrelevant_steps + %i[review]
   end
 
   def step_valid?(step)
@@ -88,5 +77,15 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
 
     url = job_url(job)
     UpdateGoogleIndexQueueJob.perform_later(url)
+  end
+
+  def updating_vacancy?
+    vacancy.published? || session[:current_step].in?(%i[review])
+  end
+
+  def vacancy_can_be_saved?
+    # Until a vacancy has something to distinguish it (i.e., a job title), users shouldn't be able to
+    # 'save and return to' the vacancy.
+    vacancy.job_title.present?
   end
 end

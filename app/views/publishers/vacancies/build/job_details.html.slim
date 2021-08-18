@@ -1,9 +1,9 @@
-- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.job_details"))
+- content_for :page_title_prefix, page_title_prefix(vacancy, form, steps_config[:job_details][:title])
 
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-full
-      = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, current_step_number, total_steps(steps_config))
+      = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, adjusted_current_step_number, total_steps(steps_config))
       - if session[:current_step] == :review || !current_organisation.school?
         = govuk_back_link text: session[:current_step] == :review ? t("buttons.cancel_and_return") : t("buttons.back_to_previous_step"), href: back_path
 
