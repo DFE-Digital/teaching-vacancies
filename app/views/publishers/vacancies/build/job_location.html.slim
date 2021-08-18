@@ -1,9 +1,9 @@
-- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.job_location"))
+- content_for :page_title_prefix, page_title_prefix(vacancy, form, steps_config[:job_location][:title])
 
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-full
-      = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, current_step_number, total_steps(steps_config))
+      = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, adjusted_current_step_number, total_steps(steps_config))
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
@@ -14,7 +14,7 @@
 
         = f.govuk_collection_radio_buttons :job_location, t("helpers.options.publishers_job_listing_job_location_form.job_location.#{current_organisation.group_type}"), :first, :last
 
-        = f.govuk_submit t("buttons.continue")
+        = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
     - unless vacancy.published?
       .govuk-grid-column-one-third

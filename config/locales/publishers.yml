@@ -260,7 +260,6 @@ en:
       live:
         notice: You can only view active jobs
       review:
-        heading: Review the job listing
         steps: Create a job listing steps
       show:
         view_live_listing_link: View this listing
