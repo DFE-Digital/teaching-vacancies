@@ -128,8 +128,7 @@ module Publishers::Wizardable
   private
 
   def completed_steps
-    defined_step = defined?(step) ? step : :review
-    completed_step = params[:commit] == I18n.t("buttons.save_and_return_later") ? nil : defined_step.to_s
+    completed_step = params[:commit] == I18n.t("buttons.save_and_return_later") ? nil : step.to_s
     (vacancy.completed_steps | [completed_step]).compact
   end
 end

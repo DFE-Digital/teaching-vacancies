@@ -5,10 +5,12 @@ class Publishers::JobListing::JobLocationForm < Publishers::JobListing::VacancyF
 
   def params_to_save
     {
-      completed_steps: params[:completed_steps],
-      job_location: params[:job_location] == "central_office" ? params[:job_location] : nil,
-      readable_job_location: params[:readable_job_location],
-      organisation_ids: params[:organisation_ids],
+      completed_steps: completed_steps,
+      # Require users to complete entire steps before saving this param, not just the first part of a step,
+      # because completing the first part of a step requires different responses in the second part:
+      job_location: job_location == "central_office" ? job_location : nil,
+      readable_job_location: readable_job_location,
+      organisation_ids: organisation_ids,
     }.compact
   end
 end

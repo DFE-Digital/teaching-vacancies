@@ -10,6 +10,7 @@ class PublishVacancy
   def call
     vacancy.publisher_organisation = current_organisation
     vacancy.publisher = current_publisher
+    vacancy.completed_steps = (vacancy.completed_steps | [:review]).compact
     vacancy.status = :published
     vacancy.save
   end
