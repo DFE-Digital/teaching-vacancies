@@ -6,7 +6,8 @@ class Vacancy < ApplicationRecord
 
   friendly_id :slug_candidates, use: %w[slugged history]
 
-  array_enum job_roles: { teacher: 0, leadership: 1, sen_specialist: 2, nqt_suitable: 3 }
+  # 'sen_specialist' role is being retired but still exists on vacancies.
+  array_enum job_roles: { teacher: 0, leadership: 1, sen_specialist: 2, nqt_suitable: 3, education_support: 4, sendco: 5, send_responsible: 6 }
   array_enum working_patterns: { full_time: 0, part_time: 100, job_share: 101 }
   # Legacy vacancies can have these working_pattern options too: { compressed_hours: 102, staggered_hours: 103 }
   enum contract_type: { permanent: 0, fixed_term: 1 }
@@ -134,6 +135,25 @@ class Vacancy < ApplicationRecord
     elsif completed_steps.include?("job_details")
       "no"
     end
+  end
+
+  # rubocop:disable Naming/PredicateName
+  def has_send_responsibilities
+    # For both (1) editing/reviewing a vacancy and (2) validating all steps when publishing a vacancy,
+    # we have to reconstruct the user's response to this question, because we don't store their
+    # boolean answer in its own separate column, but rather in the job_roles array column.
+    # But when we are showing the step for the first time, we should not pre-fill the SEND
+    # responsibilities question with 'no', so we should return 'nil' here.
+    if job_roles.include?("send_responsible")
+      "yes"
+    elsif completed_steps.include?("job_roles_more")
+      "no"
+    end
+  end
+  # rubocop:enable Naming/PredicateName
+
+  def sendco?
+    job_roles.include?("sendco")
   end
 
   private

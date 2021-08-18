@@ -1,0 +1,19 @@
+= render "publishers/vacancies/error_tag", attributes: (job_roles_fields + job_roles_more_fields)
+
+= render ReviewComponent.new id: "job_roles" do |review|
+  - review.heading title: t("publishers.vacancies.steps.job_roles"),
+    text: t("buttons.change"),
+    href: organisation_job_build_path(@vacancy.id, :job_roles)
+
+  - review.body do
+    = govuk_summary_list do |component|
+      - component.slot(:row,
+        key: t("jobs.job_roles"),
+        value: @vacancy.main_job_role,
+        html_attributes: { id: "job_roles" })
+
+      - unless @vacancy.sendco?
+        - component.slot(:row,
+          key: t("jobs.job_role_details"),
+          value: @vacancy.job_role_details.presence || "None",
+          html_attributes: { id: "job_roles" })

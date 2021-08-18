@@ -66,9 +66,23 @@ class VacancyPresenter < BasePresenter
     model_working_patterns.compact.map(&:upcase).join(", ")
   end
 
-  def show_job_roles(exclude_nqt_suitable: false)
-    roles = exclude_nqt_suitable ? model.job_roles.excluding("nqt_suitable") : model.job_roles
-    roles.map { |role| I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{role}") }.join(", ")
+  def main_job_role
+    I18n.t("helpers.label.publishers_job_listing_job_roles_form.job_roles_options").keys.filter_map { |role|
+      return I18n.t("helpers.label.publishers_job_listing_job_roles_form.job_roles_options.#{role}") if role.to_s.in?(model.job_roles)
+    }.join(", ")
+  end
+
+  def job_role_details
+    show_job_roles(exclude: I18n.t("helpers.label.publishers_job_listing_job_roles_form.job_roles_options").keys, join: "<br/>").html_safe
+  end
+
+  def show_job_roles(exclude: [], join: ", ")
+    options = I18n.t("helpers.label.publishers_job_listing_job_roles_form.job_roles_options").merge(
+      I18n.t("helpers.label.publishers_job_listing_job_roles_more_form.job_roles_options"),
+    )
+    model.job_roles.excluding(*exclude.map(&:to_s)).filter_map { |role|
+      options[role.to_sym] if role.to_sym.in?(options.keys)
+    }.join(join)
   end
 
   def show_subjects
