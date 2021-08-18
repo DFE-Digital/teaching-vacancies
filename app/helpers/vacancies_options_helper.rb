@@ -1,4 +1,8 @@
 module VacanciesOptionsHelper
+  def job_roles_more_options
+    t("helpers.label.publishers_job_listing_job_roles_more_form.job_roles_options").keys
+  end
+
   def hired_status_options
     Vacancy.hired_statuses.keys.map { |k| [t("jobs.feedback.hired_status.#{k}"), k] }.unshift(["--", ""])
   end

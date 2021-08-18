@@ -220,7 +220,6 @@ en:
       publishers_job_listing_job_details_form:
         contract_type_duration: >-
           Contract length should be more than 12 weeks. Short term cover should not be advertised on Teaching Vacancies
-        job_roles: Select all that describe the role
         job_title: >-
           For secondary school roles include subject and, if relevant,
           level of seniority (‘Subject leader for science’, for example).
@@ -228,6 +227,13 @@ en:
         working_patterns: >-
           Select all working patterns you will consider for the role.
           Flexible working options may attract more candidates.
+      publishers_job_listing_job_roles_form:
+        job_roles_options:
+          leadership: Includes Head of Year/Subject, Deputy/Assistant Head, Headteacher, and trust-level roles
+          education_support: Includes Teaching assistant and Learning support
+          sendco: Special educational needs and disabilities coordinator
+      publishers_job_listing_job_roles_more_form:
+        job_roles: Select all that apply
       publishers_job_listing_job_summary_form:
         about_organisation: >-
           This will appear next to the job details under ‘%{organisation_type} overview’. Feel free to adapt this text
@@ -538,18 +544,22 @@ en:
         contract_type_options:
           fixed_term: Fixed term
           permanent: Permanent
-        job_roles_options:
-          teacher: Teacher
-          leadership: Leadership
-          sen_specialist: Special educational needs (SEN) specialist
-          nqt_suitable: Suitable for early career teachers
-          nqt_suitable_hidden_prefix: Only show results
         job_title: Job title
         suitable_for_nqt: Is this job suitable for NQTs?
         working_patterns_options:
           full_time: Full-time
           part_time: Part-time
           job_share: Job share
+      publishers_job_listing_job_roles_form:
+        job_roles_options:
+          teacher: Teacher
+          leadership: Leadership
+          sendco: SENDCo
+          education_support: Education support
+      publishers_job_listing_job_roles_more_form:
+        job_roles_options:
+          nqt_suitable: Suitable for early career teachers
+          send_responsible: SEND responsibilities (special educational needs and disabilities)
       publishers_job_listing_job_summary_form:
         about_organisation: About %{organisation}
         job_advert: Job advert
@@ -653,6 +663,11 @@ en:
         suitable_for_nqt: Is this job suitable for NQTs?
         subjects_html: Subject(s) (optional<span class='govuk-visually-hidden'> field</span>)</span>
         working_patterns: Working patterns
+      publishers_job_listing_job_roles_form:
+        job_roles: What is the job role?
+      publishers_job_listing_job_roles_more_form:
+        job_roles: Tell us more about the role
+        has_send_responsibilities: Does the role have SEND responsibilities (special educational needs and disabilities)?
       publishers_job_listing_job_location_form:
         job_location: Where will the job be based?
       publishers_job_listing_schools_form:
@@ -717,7 +732,6 @@ en:
             at_one_school: At one school in the trust
             central_office: At the trust's head office
             at_multiple_schools: At more than one school in the trust
-
     placeholder:
       jobseekers_nqt_job_alerts_form:
         keywords: Humanities, KS3, primary teacher, for example

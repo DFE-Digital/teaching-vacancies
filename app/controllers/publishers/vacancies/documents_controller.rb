@@ -2,6 +2,7 @@ require "google/apis/drive_v3"
 
 class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseController
   include Publishers::Wizardable
+  include VacanciesStepsHelper
 
   helper_method :form
 

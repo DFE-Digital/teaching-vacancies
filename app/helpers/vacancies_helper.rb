@@ -16,7 +16,7 @@ module VacanciesHelper
 
   def page_title_prefix(vacancy, form_object, page_heading)
     if vacancy.published?
-      "#{form_object.errors.present? ? 'Error: ' : ''}Edit the #{page_heading} for #{vacancy.job_title}"
+      "#{form_object.errors.present? ? 'Error: ' : ''}Edit the #{page_heading.downcase} for #{vacancy.job_title}"
     else
       "#{form_object.errors.present? ? 'Error: ' : ''}#{page_heading} — #{t('jobs.create_a_job_title', organisation: current_organisation.name)}"
     end
@@ -83,18 +83,5 @@ module VacanciesHelper
   def vacancy_school_visits_hint(vacancy)
     organisation = organisation_type_basic(vacancy.parent_organisation).tr(" ", "_")
     t("helpers.hint.publishers_job_listing_applying_for_the_job_form.#{organisation}_visits")
-  end
-
-  def vacancy_step_completed?(vacancy, step)
-    vacancy.completed_steps.include?(step.to_s)
-  end
-
-  def steps_to_display(steps)
-    steps_to_skip = current_organisation.is_a?(School) ? %i[job_location schools review] : %i[schools review]
-    steps.except(*steps_to_skip).keys
-  end
-
-  def total_steps(steps)
-    steps.values.map { |step| step[:number] }.max - steps_adjust
   end
 end
