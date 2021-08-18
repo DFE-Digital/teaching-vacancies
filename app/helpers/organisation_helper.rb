@@ -15,7 +15,7 @@ module OrganisationHelper
       job_details: 2,
       pay_package: 3,
       important_dates: 4,
-      supporting_documents: 5,
+      documents: 5,
       applying_for_the_job: 6,
       job_summary: 7,
     }
