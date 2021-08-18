@@ -4,7 +4,8 @@ module VacanciesStepsHelper
   end
 
   def total_steps(steps)
-    steps_to_display(steps).map { |_step, details| details[:number] }.max
+    review_step = steps_to_display(steps)[:review]
+    adjust_step(review_step)[:number]
   end
 
   def steps_to_display(steps)
