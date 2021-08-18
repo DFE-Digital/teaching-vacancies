@@ -54,10 +54,6 @@ module Publishers::Wizardable
     %i[starts_asap starts_on publish_on expires_at]
   end
 
-  def documents_fields
-    []
-  end
-
   def applying_for_the_job_fields
     %i[application_link enable_job_applications contact_email contact_number personal_statement_guidance school_visits how_to_apply]
   end
