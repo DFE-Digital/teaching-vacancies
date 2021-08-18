@@ -14,12 +14,11 @@ class ApplicationController < ActionController::Base
 
   after_action :trigger_page_visited_event, unless: :request_is_healthcheck?
 
-  helper_method :cookies_preference_set?, :options_with_bold_labels, :referred_from_jobs_path?, :user_type, :utm_parameters, :current_variant?
+  helper_method :cookies_preference_set?, :referred_from_jobs_path?, :user_type, :utm_parameters, :current_variant?
 
   include Publishers::AuthenticationConcerns
   include DeviseFlashConcerns
   include AbTestable
-  include GovukDesignSystemFormBuilderHelper
 
   def check
     render json: { status: "OK" }, status: :ok

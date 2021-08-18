@@ -1,11 +1,10 @@
 module GovukDesignSystemFormBuilderHelper
-  def options_with_bold_labels(form, field)
+  def collection_options_with_hints(form, field)
     # https://govuk-form-builder.netlify.app/form-elements/radios/#radio-buttons-collection-with-descriptions
     I18n.t("helpers.label.#{underscore_form_name(form)}.#{field}_options").map do |key, value|
-      option = { id: key, name: value }
-      hint = I18n.t("helpers.hints.#{underscore_form_name(form)}.#{field}_options.#{key}")
-      option.merge({ description: hint }) unless hint.count("translation missing").positive?
-      OpenStruct.new(option)
+      hint = I18n.t("helpers.hints.#{underscore_form_name(form)}.#{field}_options.#{key}", default: nil)
+
+      OpenStruct.new(id: key, name: value, hint: hint)
     end
   end
 
