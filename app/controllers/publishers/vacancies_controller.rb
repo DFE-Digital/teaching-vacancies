@@ -4,7 +4,8 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   before_action :redirect_if_published, only: %i[preview review]
   before_action :devise_job_alert_search_criteria, only: %i[show preview]
 
-  helper_method :applying_for_the_job_fields, :documents_fields, :important_dates_fields, :job_details_fields, :job_location_fields, :job_summary_fields, :pay_package_fields, :schools_fields
+  helper_method :applying_for_the_job_fields, :documents_fields, :important_dates_fields, :job_roles_fields, :job_roles_more_fields,
+                :job_details_fields, :job_location_fields, :job_summary_fields, :pay_package_fields, :schools_fields, :step
 
   def show
     @vacancy = VacancyPresenter.new(vacancy)
@@ -13,7 +14,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   def create
     reset_session_vacancy!
     vacancy = Vacancy.create(organisation_vacancies_attributes: [{ organisation: current_organisation }])
-    redirect_to organisation_job_build_path(vacancy.id, :job_location)
+    redirect_to organisation_job_build_path(vacancy.id, :job_roles)
   end
 
   def edit
@@ -25,14 +26,14 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   end
 
   def review
+    @step = :review
     reset_session_vacancy!
 
     if all_steps_valid?
       session[:current_step] = :review
-      vacancy.update(completed_steps: completed_steps)
     else
       session[:current_step] = :edit_incomplete
-      redirect_to_incomplete_step
+      redirect_to_invalid_step
     end
 
     @vacancy = VacancyPresenter.new(vacancy)
@@ -58,6 +59,8 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
 
   private
 
+  attr_reader :step
+
   def devise_job_alert_search_criteria
     @devised_job_alert_search_criteria = Search::CriteriaDeviser.new(vacancy).criteria
   end
@@ -68,17 +71,18 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     redirect_to organisation_job_path(vacancy.id), notice: t("messages.jobs.already_published")
   end
 
-  def redirect_to_incomplete_step
-    return redirect_to organisation_job_build_path(vacancy.id, :job_details) unless step_valid?(:job_details)
-    return redirect_to organisation_job_build_path(vacancy.id, :pay_package) unless step_valid?(:pay_package)
-    return redirect_to organisation_job_build_path(vacancy.id, :important_dates) unless step_valid?(:important_dates)
+  def redirect_to_invalid_step
+    return redirect_to organisation_job_build_path(vacancy.id, :job_roles, errors: true) unless step_valid?(:job_roles)
+    return redirect_to organisation_job_build_path(vacancy.id, :job_details, errors: true) unless step_valid?(:job_details)
+    return redirect_to organisation_job_build_path(vacancy.id, :pay_package, errors: true) unless step_valid?(:pay_package)
+    return redirect_to organisation_job_build_path(vacancy.id, :important_dates, errors: true) unless step_valid?(:important_dates)
     return redirect_to organisation_job_build_path(vacancy.id, :documents) unless vacancy.completed_steps.include?("documents")
-    return redirect_to organisation_job_build_path(vacancy.id, :applying_for_the_job) unless step_valid?(:applying_for_the_job)
-    return redirect_to organisation_job_build_path(vacancy.id, :job_summary) unless step_valid?(:job_summary)
+    return redirect_to organisation_job_build_path(vacancy.id, :applying_for_the_job, errors: true) unless step_valid?(:applying_for_the_job)
+    return redirect_to organisation_job_build_path(vacancy.id, :job_summary, errors: true) unless step_valid?(:job_summary)
   end
 
   def validate_all_steps
-    steps_config.except(:job_location, :schools, :supporting_documents, :documents, :review).each_key do |step|
+    steps_config.except(*steps_not_to_validate).each_key do |step|
       step_valid?(step)
     end
   end

@@ -177,6 +177,8 @@ en:
           step_title: Important dates and deadlines
         job_details:
           step_title: Job details
+        job_roles:
+          step_title: Job role
         job_location:
           step_title: Job location
         job_summary:
@@ -260,12 +262,13 @@ en:
       live:
         notice: You can only view active jobs
       review:
-        heading: Review the job listing
         steps: Create a job listing steps
       show:
         view_live_listing_link: View this listing
         view_live_listing_title: View the live listing
       steps:
+        job_roles: Job role
+        job_roles_more: Job role
         job_location: Job location
         schools: Job location
         job_details: Job details

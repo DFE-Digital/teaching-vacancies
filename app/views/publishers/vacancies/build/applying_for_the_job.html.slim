@@ -1,9 +1,9 @@
-- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.applying_for_the_job"))
+- content_for :page_title_prefix, page_title_prefix(vacancy, form, steps_config[:applying_for_the_job][:title])
 
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-full
-      = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, current_step_number, total_steps(steps_config))
+      = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, adjusted_current_step_number, total_steps(steps_config))
       = govuk_back_link text: session[:current_step] == :review ? t("buttons.cancel_and_return") : t("buttons.back_to_previous_step"), href: back_path
 
   .govuk-grid-row
@@ -12,8 +12,7 @@
         = f.govuk_error_summary
 
         h2.govuk-heading-l = t("publishers.vacancies.steps.applying_for_the_job")
-
-        - if vacancy.listed? || current_organisation.local_authority?
+        - if vacancy.listed? || current_organisation.local_authority? || vacancy.job_roles.include?("education_support")
           = f.hidden_field :enable_job_applications
           - if vacancy.enable_job_applications?
             = f.govuk_text_area :personal_statement_guidance, label: { size: "s" }

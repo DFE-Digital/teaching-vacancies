@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, page_title_prefix(vacancy, form, steps_config[:job_location][:title])
+- content_for :page_title_prefix, page_title_prefix(vacancy, form, steps_config[:job_roles_more][:title])
 
 .govuk-main-wrapper
   .govuk-grid-row
@@ -11,9 +11,12 @@
       = form_for form, url: wizard_path, method: :patch do |f|
         = f.govuk_error_summary
 
-        h2.govuk-heading-l = t("publishers.vacancies.steps.job_location")
+        h2.govuk-heading-l = t("publishers.vacancies.steps.job_roles_more")
 
-        = f.govuk_collection_radio_buttons :job_location, t("helpers.options.publishers_job_listing_job_location_form.job_location.#{current_organisation.group_type}"), :first, :last
+        - if job_roles.include?("teacher")
+          = f.govuk_collection_check_boxes :job_roles, job_roles_more_options, :to_s, :to_s
+        - else
+          = f.govuk_collection_radio_buttons :has_send_responsibilities, %w[yes no], :to_s, :capitalize, form_group: { classes: "govuk-!-width-two-thirds" }
 
         = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
