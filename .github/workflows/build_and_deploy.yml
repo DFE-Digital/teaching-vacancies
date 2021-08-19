@@ -41,6 +41,7 @@ jobs:
       docker_image_tag: ${{ env.DOCKER_IMAGE_TAG }}
       commit_sha: ${{ env.COMMIT_SHA }}
       scan_docker_image: ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }}
+      LINK_TO_RUN: ${{ env.LINK_TO_RUN }}
     runs-on: ubuntu-20.04
 
     steps:
@@ -73,8 +74,10 @@ jobs:
           # This is the latest commit on the actual PR branch
           echo "COMMIT_SHA=${{ github.event.pull_request.head.sha }}" >> $GITHUB_ENV
 
-      - name: Set DOCKER_IMAGE_TAG environment variable
-        run: echo "DOCKER_IMAGE_TAG=${GIT_BRANCH}-${COMMIT_SHA}" >> $GITHUB_ENV
+      - name: Set common environment variables
+        run: |
+          echo "DOCKER_IMAGE_TAG=${GIT_BRANCH}-${COMMIT_SHA}" >> $GITHUB_ENV
+          echo "LINK_TO_RUN=https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -151,22 +154,22 @@ jobs:
             -v "$GITHUB_WORKSPACE:/project"  \
             snyk/snyk-cli:docker test --docker ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }} --file=Dockerfile
 
-      - name: Notify twd_tv_dev channel on ${{ env.ENVIRONMENT }} scan failure
-        if: steps.scan_docker_image.outputs.conclusion != 'success'
+      - name: Push ${{ env.DOCKER_REPOSITORY }} images
+        if: ${{ success() }}
+        run: docker image push --all-tags ${{ env.DOCKER_REPOSITORY }}
+
+      - name: Notify twd_tv_dev channel on build workflow failure
+        if: always()
         uses: rtCamp/action-slack-notify@v2.2.0
         env:
           SLACK_CHANNEL: twd_tv_dev
           SLACK_USERNAME: CI Deployment
-          SLACK_TITLE: Docker scan failure
-          SLACK_MESSAGE: 'Docker image scanner failure <!channel>'
+          SLACK_TITLE: Build failure
+          SLACK_MESSAGE: |
+            Build failure on branch ${{env.GIT_BRANCH}} <!channel>
+            See: <${{ env.LINK_TO_RUN }}|Workflow run>
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-
-      - name: Print step conclusion
-        run: echo steps.wait_for_deploy_app.outputs.conclusion
-
-      - name: Push ${{ env.DOCKER_REPOSITORY }} images
-        if: ${{ success() }}
-        run: docker image push --all-tags ${{ env.DOCKER_REPOSITORY }}
+          SLACK_COLOR: failure
 
   deploy:
     name: Deploy app
@@ -187,6 +190,7 @@ jobs:
         echo "COMMIT_SHA=${{ needs.build.outputs.commit_sha }}" >> $GITHUB_ENV
         echo "DOCKER_IMAGE_TAG=${{ needs.build.outputs.docker_image_tag }}" >> $GITHUB_ENV
         echo "BUILD_GIT_TAG=${{ needs.build.outputs.build_git_tag}}" >> $GITHUB_ENV
+        echo "LINK_TO_RUN=${{ needs.build.outputs.LINK_TO_RUN}}" >> $GITHUB_ENV
 
     - name: Set environment variable (Push)
       if: github.event_name == 'push'
@@ -262,52 +266,61 @@ jobs:
           Review app deployed to <https://teaching-vacancies-${{ env.ENVIRONMENT }}.london.cloudapps.digital>
 
     - name: Send job status message to twd_tv_dev channel
-      if: failure()
+      if: always()
       uses: rtCamp/action-slack-notify@v2.2.0
       env:
         SLACK_CHANNEL: twd_tv_dev
         SLACK_USERNAME: CI Deployment
         SLACK_TITLE: Deployment ${{ job.status }}
-        SLACK_MESSAGE: 'Deployment of Docker image ${{ env.DOCKER_IMAGE_TAG }} to ${{matrix.environment}} - ${{ job.status }}'
+        SLACK_MESSAGE: |
+          Deployment of Docker image ${{ env.DOCKER_IMAGE_TAG }} to ${{matrix.environment}} - ${{ job.status }}
+          See: <${{ env.LINK_TO_RUN }}|Workflow run>
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_COLOR: failure
 
   post_deployment:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+#   if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'pull_request'
     name: Post deployment steps
-    needs: deploy
+    needs: [build, deploy]
     runs-on: ubuntu-20.04
 
     steps:
       - uses: actions/checkout@v2
         name: Checkout Code
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-2
-          role-to-assume: Deployments
-          role-duration-seconds: 3600
-          role-skip-session-tagging: true
-
-      - name: Terraform pin version
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: 0.15.5
-
-      - name: Deploy monitoring
+      - name: Set environment variables from build output
         run: |
-          terraform init -upgrade=true -reconfigure -input=false
-          terraform apply -input=false -auto-approve
-        working-directory: terraform/monitoring
+          echo "DOCKER_IMAGE_TAG=${{ needs.build.outputs.docker_image_tag }}" >> $GITHUB_ENV
+          echo "LINK_TO_RUN=${{ needs.build.outputs.LINK_TO_RUN}}" >> $GITHUB_ENV
 
-      - name: Download and extract Gov.UK frontend archive
-        run: bin/regenerate-offline
-
-      - name: Sync offline S3 bucket
-        run: bin/sync-offline
-
+#      - name: Configure AWS credentials
+#        uses: aws-actions/configure-aws-credentials@v1
+#        with:
+#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          aws-region: eu-west-2
+#          role-to-assume: Deployments
+#          role-duration-seconds: 3600
+#          role-skip-session-tagging: true
+#
+#      - name: Terraform pin version
+#        uses: hashicorp/setup-terraform@v1
+#        with:
+#          terraform_version: 0.15.5
+#
+#      - name: Deploy monitoring
+#        run: |
+#          terraform init -upgrade=true -reconfigure -input=false
+#          terraform apply -input=false -auto-approve
+#        working-directory: terraform/monitoring
+#
+#      - name: Download and extract Gov.UK frontend archive
+#        run: bin/regenerate-offline
+#
+#      - name: Sync offline S3 bucket
+#        run: bin/sync-offline
+#
       - name: Send job status message to twd_tv_dev channel
         if: always()
         uses: rtCamp/action-slack-notify@v2.2.0
@@ -315,5 +328,8 @@ jobs:
           SLACK_CHANNEL: twd_tv_dev
           SLACK_USERNAME: CI Deployment
           SLACK_TITLE: Deployment ${{ job.status }}
-          SLACK_MESSAGE: 'Deployment of Docker tag ${{ github.sha }} to Staging, Prod and QA - ${{ job.status }}'
+          SLACK_MESSAGE: |
+            Deployment of Docker tag ${{ env.DOCKER_IMAGE_TAG }} - ${{ job.status }}
+            See: <${{ env.LINK_TO_RUN }}|Workflow run>
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_COLOR: ${{ job.status }}
