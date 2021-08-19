@@ -10,7 +10,7 @@ shared:
   documents:
     - id
     - vacancy_id
-  equal_opportunities:
+  equal_opportunities_reports:
     - id
     - vacancy_id
   employments:
