@@ -4,7 +4,7 @@ ruby:
       title: t("jobs.filters.job_roles"),
       key: "job_roles",
       attribute: :job_roles,
-      selected: @form.job_roles,
+      selected: @form.job_roles.reject { |role| role == "nqt_suitable" },
       options: @form.job_role_options,
       value_method: :first,
       text_method: :last,
