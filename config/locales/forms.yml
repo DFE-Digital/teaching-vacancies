@@ -488,7 +488,7 @@ en:
           "true": Apply using the Teaching Vacancies application form
         contact_email: Contact email
         contact_number_html: Contact phone number (optional<span class='govuk-visually-hidden'> field</span>)</span>
-        how_to_apply_html: How to apply (optional<span class='govuk-visually-hidden'> field</span>)</span>
+        how_to_apply: How to apply
         personal_statement_guidance_html: Help candidates to write their personal statement (optional<span class='govuk-visually-hidden'> field</span>)</span>
         school_visits_html: School visits (optional<span class='govuk-visually-hidden'> field</span>)</span>
         trust_visits_html: Trust visits (optional<span class='govuk-visually-hidden'> field</span>)</span>
