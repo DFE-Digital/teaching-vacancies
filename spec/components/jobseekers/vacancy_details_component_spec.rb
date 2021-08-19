@@ -12,7 +12,7 @@ RSpec.describe Jobseekers::VacancyDetailsComponent, type: :component do
 
   context "when a job role is present" do
     it "renders the job title label" do
-      expect(rendered_component).to include(I18n.t("jobs.job_roles"))
+      expect(rendered_component).to include(I18n.t("jobs.job_role"))
     end
 
     it "renders the job role" do
@@ -24,7 +24,7 @@ RSpec.describe Jobseekers::VacancyDetailsComponent, type: :component do
     let(:vacancy) { create(:vacancy, job_roles: %w[]) }
 
     it "does not render the job title label" do
-      expect(rendered_component).not_to include(I18n.t("jobs.job_roles"))
+      expect(rendered_component).not_to include(I18n.t("jobs.job_role"))
     end
   end
 
