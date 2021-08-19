@@ -143,12 +143,23 @@ jobs:
         run: echo "MATRIX_ENVIRONMENTS={\"environment\":[\"review\"]}" >> $GITHUB_ENV
 
       - name: Scan ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }} image
+        id: scan_docker_image
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: |
           docker run -t -e "SNYK_TOKEN=${{ secrets.SNYK_TOKEN }}" \
             -v "/var/run/docker.sock:/var/run/docker.sock" \
             -v "$GITHUB_WORKSPACE:/project"  \
             snyk/snyk-cli:docker test --docker ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }} --file=Dockerfile
+
+      - name: Notify twd_tv_dev channel on ${{ env.ENVIRONMENT }} scan failure
+        if: steps.scan_docker_image.outputs.conclusion != 'success'
+        uses: rtCamp/action-slack-notify@v2.2.0
+        env:
+          SLACK_CHANNEL: twd_tv_dev
+          SLACK_USERNAME: CI Deployment
+          SLACK_TITLE: Docker scan failure
+          SLACK_MESSAGE: 'Docker image scanner failure <!channel>'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
       - name: Push ${{ env.DOCKER_REPOSITORY }} images
         if: ${{ success() }}
