@@ -29,6 +29,7 @@ on:
 
 env:
  DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
+ LINK_TO_RUN: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}
 
 jobs:
 
@@ -73,8 +74,10 @@ jobs:
           # This is the latest commit on the actual PR branch
           echo "COMMIT_SHA=${{ github.event.pull_request.head.sha }}" >> $GITHUB_ENV
 
-      - name: Set DOCKER_IMAGE_TAG environment variable
-        run: echo "DOCKER_IMAGE_TAG=${GIT_BRANCH}-${COMMIT_SHA}" >> $GITHUB_ENV
+      - name: Set common environment variables
+        run: |
+          echo "DOCKER_IMAGE_TAG=${GIT_BRANCH}-${COMMIT_SHA}" >> $GITHUB_ENV
+#          echo "LINK_TO_RUN=https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -151,22 +154,21 @@ jobs:
             -v "$GITHUB_WORKSPACE:/project"  \
             snyk/snyk-cli:docker test --docker ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }} --file=Dockerfile
 
-      - name: Notify twd_tv_dev channel on ${{ env.ENVIRONMENT }} scan failure
-        if: steps.scan_docker_image.outputs.conclusion != 'success'
+      - name: Push ${{ env.DOCKER_REPOSITORY }} images
+        if: ${{ success() }}
+        run: docker image push --all-tags ${{ env.DOCKER_REPOSITORY }}
+
+      - name: Notify twd_tv_dev channel on build workflow failure
+        if: failure()
         uses: rtCamp/action-slack-notify@v2.2.0
         env:
           SLACK_CHANNEL: twd_tv_dev
           SLACK_USERNAME: CI Deployment
           SLACK_TITLE: Docker scan failure
-          SLACK_MESSAGE: 'Docker image scanner failure <!channel>'
+          SLACK_MESSAGE: |
+            Build failure on branch ${GIT_BRANCH} <!channel>
+            See: <${{ env.LINK_TO_RUN }}|Workflow run>
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-
-      - name: Print step conclusion
-        run: echo steps.wait_for_deploy_app.outputs.conclusion
-
-      - name: Push ${{ env.DOCKER_REPOSITORY }} images
-        if: ${{ success() }}
-        run: docker image push --all-tags ${{ env.DOCKER_REPOSITORY }}
 
   deploy:
     name: Deploy app
@@ -315,5 +317,7 @@ jobs:
           SLACK_CHANNEL: twd_tv_dev
           SLACK_USERNAME: CI Deployment
           SLACK_TITLE: Deployment ${{ job.status }}
-          SLACK_MESSAGE: 'Deployment of Docker tag ${{ github.sha }} to Staging, Prod and QA - ${{ job.status }}'
+          SLACK_MESSAGE: |
+            Deployment of Docker tag ${{ env.DOCKER_IMAGE_TAG }} ${{ job.status }}
+            See: <${{ env.LINK_TO_RUN }}|Workflow run>
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
