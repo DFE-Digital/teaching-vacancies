@@ -291,3 +291,5 @@ To enable this, the following formatting must be used:
 this should be automatically added for you. Ex: `[TEVA-1155] Document Jira-Github integration`
 
 The branch, commit or pull request will then appear in the `Development` side panel within the issue.
+
+Adding content to raise a PR to create a review app
