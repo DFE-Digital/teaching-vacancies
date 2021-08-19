@@ -161,6 +161,9 @@ jobs:
           SLACK_MESSAGE: 'Docker image scanner failure <!channel>'
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
+      - name: Print step conclusion
+        run: echo steps.wait_for_deploy_app.outputs.conclusion
+
       - name: Push ${{ env.DOCKER_REPOSITORY }} images
         if: ${{ success() }}
         run: docker image push --all-tags ${{ env.DOCKER_REPOSITORY }}
