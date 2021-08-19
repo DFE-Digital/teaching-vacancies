@@ -2,8 +2,8 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   include Wicked::Wizard
   include OrganisationHelper
 
-  steps :job_location, :schools, :job_details, :pay_package, :important_dates, :documents, :applying_for_the_job,
-        :job_summary
+  steps :job_role, :job_location, :schools, :job_details, :pay_package, :important_dates,
+        :documents, :applying_for_the_job, :job_summary
 
   helper_method :back_path, :form
 
@@ -49,6 +49,8 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
                      finish_wizard_path
                    elsif step == :job_details && !current_organisation.school?
                      vacancy.central_office? ? wizard_path(:job_location) : wizard_path(:schools)
+                   elsif step == :job_details
+                     wizard_path(:job_role)
                    else
                      previous_wizard_path
                    end
