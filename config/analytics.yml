@@ -23,7 +23,7 @@ shared:
     - reason_for_break
     - created_at
     - updated_at
-  equal_opportunities:
+  equal_opportunities_reports:
     - id
     - vacancy_id
     - total_submissions
@@ -60,6 +60,13 @@ shared:
     - religion_other_descriptions
     - created_at
     - updated_at
+    - age_under_twenty_five
+    - age_twenty_five_to_twenty_nine
+    - age_prefer_not_to_say
+    - age_thirty_to_thirty_nine
+    - age_forty_to_forty_nine
+    - age_fifty_to_fifty_nine
+    - age_sixty_and_over
   feedbacks:
     - id
     - created_at
