@@ -8,6 +8,10 @@
   - review.body do
     = govuk_summary_list do |component|
       - component.slot(:row,
-        key: t("jobs.job_role"),
+        key: t("jobs.primary_job_role"),
         value: @vacancy.show_primary_job_role || t("jobs.not_defined"),
         html_attributes: { id: "primary_job_role" })
+      - component.slot(:row,
+        key: t("jobs.additional_job_roles"),
+        value: @vacancy.show_additional_job_roles.presence || t("jobs.not_defined"),
+        html_attributes: { id: "additional_job_roles" })

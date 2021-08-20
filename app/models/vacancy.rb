@@ -12,7 +12,7 @@ class Vacancy < ApplicationRecord
   # TODO: This is a compromise to keep changes to the data model minimal for now. Once
   # the legacy vacancies are gone, we should refactor the data model.
   PRIMARY_JOB_ROLES =  { teacher: 0, leadership: 1, education_support: 4, sendco: 5 }.freeze
-  ADDITIONAL_JOB_ROLES = { sen_specialist: 2, nqt_suitable: 3 }.freeze
+  ADDITIONAL_JOB_ROLES = { send_responsible: 2, nqt_suitable: 3 }.freeze
   array_enum job_roles: PRIMARY_JOB_ROLES.merge(ADDITIONAL_JOB_ROLES)
 
   array_enum working_patterns: { full_time: 0, part_time: 100, job_share: 101 }
@@ -83,6 +83,10 @@ class Vacancy < ApplicationRecord
     PRIMARY_JOB_ROLES.keys.map(&:to_s)
   end
 
+  def self.additional_job_role_options
+    ADDITIONAL_JOB_ROLES.keys.map(&:to_s)
+  end
+
   def organisation
     organisation_vacancies.first&.organisation
   end
@@ -128,6 +132,7 @@ class Vacancy < ApplicationRecord
       "working_patterns" => working_patterns,
       "job_roles" => job_roles,
       "primary_job_role" => primary_job_role,
+      "additional_job_roles" => additional_job_roles,
     )
   end
 
@@ -138,8 +143,19 @@ class Vacancy < ApplicationRecord
   end
 
   def primary_job_role=(role)
-    # Completely reset job_roles when changing primary role as additional roles may no longer be valid
+    # Do nothing if the primary job role is unchanged.
+    # Otherwise completely reset job_roles as additional roles may no longer be valid
+    return if role == primary_job_role
+
     self.job_roles = [role]
+  end
+
+  def additional_job_roles
+    job_roles.select { |role| role.in?(self.class.additional_job_role_options) }
+  end
+
+  def additional_job_roles=(roles)
+    self.job_roles = [primary_job_role] + roles
   end
 
   def education_phases

@@ -115,6 +115,9 @@ en:
     primary_job_role:
       inclusion: Select a job role
       blank: Select a job role
+  job_role_details_errors: &job_role_details_errors
+    send_responsible:
+      inclusion: Select whether the role has SEND responsibilities
   job_location_errors: &job_location_errors
     job_location:
       inclusion: Select the location where the job will be based
@@ -232,6 +235,9 @@ en:
         publishers/job_listing/job_role_form:
           attributes:
             <<: *job_role_errors
+        publishers/job_listing/job_role_details_form:
+          attributes:
+            <<: *job_role_details_errors
         publishers/job_listing/job_location_form:
           attributes:
             <<: *job_location_errors
