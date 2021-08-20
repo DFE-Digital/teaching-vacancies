@@ -232,6 +232,8 @@ en:
           leadership: Includes Head of Year/Subject, Deputy/Assistant Head, Headteacher, and trust-level roles
           education_support: Includes Teaching assistant and Learning support
           sendco: Special educational needs and disabilities coordinator
+      publishers_job_listing_job_role_details_form:
+        additional_job_roles: Select all that apply
       publishers_job_listing_job_summary_form:
         about_organisation: >-
           This will appear next to the job details under ‘%{organisation_type} overview’. Feel free to adapt this text
@@ -543,7 +545,6 @@ en:
           fixed_term: Fixed term
           permanent: Permanent
         job_title: Job title
-        suitable_for_nqt: Is this job suitable for NQTs?
         working_patterns_options:
           full_time: Full-time
           part_time: Part-time
@@ -554,6 +555,10 @@ en:
           leadership: Leadership
           sendco: SENDCo
           education_support: Education support
+      publishers_job_listing_job_role_details_form:
+        additional_job_roles_options:
+          nqt_suitable: Suitable for early career teachers
+          send_responsible: SEND responsibilities (special educational needs and disabilities)
       publishers_job_listing_job_summary_form:
         about_organisation: About %{organisation}
         job_advert: Job advert
@@ -658,6 +663,9 @@ en:
         working_patterns: Working patterns
       publishers_job_listing_job_role_form:
         primary_job_role: What is the job role?
+      publishers_job_listing_job_role_details_form:
+        additional_job_roles: Tell us more about the role
+        send_responsible: Does the role have SEND responsibilities (special educational needs and disabilities)?
       publishers_job_listing_job_location_form:
         job_location: Where will the job be based?
       publishers_job_listing_schools_form:
