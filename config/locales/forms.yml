@@ -549,6 +549,16 @@ en:
           full_time: Full-time
           part_time: Part-time
           job_share: Job share
+        # TODO: These job_roles_options are no longer on this form, but are used throughout the
+        #  app and need to be refactored later
+        job_roles_options:
+          education_support: Education support
+          leadership: Leadership
+          nqt_suitable: Suitable for early career teachers
+          sen_specialist: Special educational needs (SEN) specialist
+          send_responsible: SEND responsibilities (special educational needs and disabilities)
+          sendco: SENDCo
+          teacher: Teacher
       publishers_job_listing_job_role_form:
         primary_job_role_options:
           teacher: Teacher
