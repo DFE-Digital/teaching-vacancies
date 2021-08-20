@@ -1,0 +1,23 @@
+- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.job_roles"))
+
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-full
+      = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, current_step_number, total_steps(steps_config))
+      - if session[:current_step] == :review || !current_organisation.school?
+        = govuk_back_link text: t("buttons.cancel_and_return"), href: back_path if session[:current_step] == :review
+
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form_for form, url: wizard_path, method: :patch do |f|
+        = f.govuk_error_summary
+
+        h2.govuk-heading-l = t("publishers.vacancies.steps.job_roles")
+
+        = f.govuk_collection_radio_buttons :primary_job_role, form.job_roles_options, :to_s, bold_labels: true
+
+        = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+
+    - unless vacancy.published?
+      .govuk-grid-column-one-third
+        = render "steps"

@@ -68,7 +68,7 @@ class VacancyPresenter < BasePresenter
 
   def show_job_roles(exclude_nqt_suitable: false)
     roles = exclude_nqt_suitable ? model.job_roles.excluding("nqt_suitable") : model.job_roles
-    roles.map { |role| I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{role}") }.join(", ")
+    roles.map { |role| I18n.t("helpers.label.publishers_job_listing_job_roles_form.primary_job_role_options.#{role}") }.join(", ")
   end
 
   def show_subjects

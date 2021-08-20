@@ -6,6 +6,9 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
   helper_method :current_step_number, :step_current, :steps_adjust, :steps_config, :vacancy
 
   def steps_adjust
+    # Only adjust *after* job roles step as the extra step for school groups comes after that
+    return 0 if defined?(step) && step == :job_roles
+
     current_organisation.school_group? ? 0 : 1
   end
 
@@ -79,8 +82,10 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
   end
 
   def reset_session_vacancy!
-    session[:job_location] = nil
     session[:current_step] = nil
+
+    session[:job_roles] = nil
+    session[:job_location] = nil
   end
 
   def update_google_index(job)

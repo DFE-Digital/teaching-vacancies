@@ -111,6 +111,10 @@ en:
       inclusion: Please indicate if you'd like to participate in user research
 
   # Publishers journey
+  job_roles_errors: &job_roles_errors
+    primary_job_role:
+      inclusion: Select a job role
+      blank: Select a job role
   job_location_errors: &job_location_errors
     job_location:
       inclusion: Select the location where the job will be based
@@ -229,6 +233,9 @@ en:
               blank: Enter your school, trust or local authority name
 
         # Publishers journey
+        publishers/job_listing/job_roles_form:
+          attributes:
+            <<: *job_roles_errors
         publishers/job_listing/job_location_form:
           attributes:
             <<: *job_location_errors
