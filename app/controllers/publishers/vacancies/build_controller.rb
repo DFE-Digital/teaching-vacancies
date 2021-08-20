@@ -2,8 +2,8 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   include Wicked::Wizard
   include OrganisationHelper
 
-  steps :job_location, :schools, :job_details, :pay_package, :important_dates, :documents, :applying_for_the_job,
-        :job_summary
+  steps :job_role, :job_role_details, :job_location, :schools, :job_details, :pay_package,
+        :important_dates, :documents, :applying_for_the_job, :job_summary
 
   helper_method :back_path, :form
 
@@ -15,6 +15,8 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
 
   def show
     case step
+    when :job_role_details
+      skip_step if vacancy.primary_job_role == "sendco"
     when :job_location
       skip_step if current_organisation.school?
     when :schools
@@ -45,13 +47,20 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   private
 
   def back_path
-    @back_path ||= if session[:current_step] == :review
-                     finish_wizard_path
-                   elsif step == :job_details && !current_organisation.school?
-                     vacancy.central_office? ? wizard_path(:job_location) : wizard_path(:schools)
-                   else
-                     previous_wizard_path
-                   end
+    return finish_wizard_path if session[:current_step] == :review
+
+    case step
+    when :job_details
+      if current_organisation.school?
+        vacancy.primary_job_role == "sendco" ? wizard_path(:job_role) : wizard_path(:job_role_details)
+      else
+        vacancy.central_office? ? wizard_path(:job_location) : wizard_path(:schools)
+      end
+    when :job_location
+      vacancy.primary_job_role == "sendco" ? wizard_path(:job_role) : wizard_path(:job_role_details)
+    else
+      previous_wizard_path
+    end
   end
 
   def form
@@ -114,6 +123,8 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
     vacancy.save
     if step == :job_location && job_location != "central_office"
       redirect_to wizard_path(:schools)
+    elsif step == :job_role && vacancy.primary_job_role != "sendco"
+      redirect_to wizard_path(:job_role_details)
     else
       redirect_updated_job_with_message
     end
