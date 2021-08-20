@@ -179,6 +179,8 @@ en:
           step_title: Job details
         job_location:
           step_title: Job location
+        job_roles:
+          step_title: Job role
         job_summary:
           step_title: Job summary
         pay_package:
@@ -266,6 +268,7 @@ en:
         view_live_listing_link: View this listing
         view_live_listing_title: View the live listing
       steps:
+        job_roles: Job role
         job_location: Job location
         schools: Job location
         job_details: Job details
