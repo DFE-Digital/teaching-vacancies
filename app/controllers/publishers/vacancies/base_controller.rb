@@ -82,10 +82,8 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
   end
 
   def reset_session_vacancy!
-    session[:current_step] = nil
-
-    session[:job_roles] = nil
     session[:job_location] = nil
+    session[:current_step] = nil
   end
 
   def update_google_index(job)
