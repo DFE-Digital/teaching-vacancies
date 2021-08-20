@@ -18,14 +18,14 @@ RSpec.describe NavbarComponent, type: :component do
     end
 
     it "renders the navigation items" do
-      expect(page).to have_css("nav", class: "navbar-component") do |items|
-        expect(items).to have_css("ul", class: "navbar-component__items") do |item|
-          expect(item).to have_css("li", class: "navbar-component__navigation-item--left", text: "A nav item") do |link|
-            expect(link).to have_css("a[href='/1']")
+      expect(page).to have_css("nav", class: "navbar-component") do |nav|
+        expect(nav).to have_css("ul", class: "navbar-component__items") do |list|
+          expect(list).to have_css("li", class: "navbar-component__navigation-item--left", text: "A nav item") do |item|
+            expect(item).to have_css("a[href='/1']")
           end
-          expect(item).to have_css("li", class: "navbar-component__items-spacer")
-          expect(item).to have_css("li", class: "navbar-component__navigation-item--right", text: "Another nav item") do |link|
-            expect(link).to have_css("a[href='/2']")
+          expect(list).to have_css("li", class: "navbar-component__items-spacer")
+          expect(list).to have_css("li", class: "navbar-component__navigation-item--right", text: "Another nav item") do |item|
+            expect(item).to have_css("a[href='/2']")
           end
         end
       end
