@@ -7,7 +7,7 @@ class NavbarComponent < GovukComponent::Base
     if link_text == :spacer
       tag.li class: "navbar-component__items-spacer", "aria-hidden": "true", "tab-index": "-1"
     else
-      tag.li class: "navbar-component__navigation-item--#{align} govuk-header__navigation-item #{active_link_class(path)}" do
+      tag.li class: "navbar-component__navigation-item--#{align} navbar-component-#{link_text.downcase} govuk-header__navigation-item #{active_link_class(path)}" do
         link_to link_text, path, class: "govuk-header__link", method: method, aria: aria
       end
     end

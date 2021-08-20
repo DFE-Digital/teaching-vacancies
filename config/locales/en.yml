@@ -192,7 +192,10 @@ en:
     find_job: Find a teaching job
     for_schools: For schools
     jobseekers_index_link: View public jobs
-    notifications_index_link: Notifications
+    notifications_index_link_html:
+      zero: Notifications
+      one: Notifications <span class="notification-badge">%{count}<span class="govuk-visually-hidden"> unread</span></span>
+      other: Notifications <span class="notification-badge">%{count}<span class="govuk-visually-hidden"> unread</span></span>
     school_group_index_link: Schools in your %{organisation_type}
     school_page_link: Manage jobs
     sign_in: List a teaching job

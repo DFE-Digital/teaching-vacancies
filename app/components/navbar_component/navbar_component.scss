@@ -3,10 +3,10 @@
 nav.navbar-component {
   .notification-badge {
     background-color: govuk-colour('white');
-    border-radius: 75%;
+    border-radius: govuk-spacing(1);
     color: govuk-colour('black');
     font-weight: bold;
-    margin-left: govuk-spacing(2);
+    margin-left: govuk-spacing(1);
     padding: 0 govuk-spacing(1);
   }
 
