@@ -1,5 +1,6 @@
 module Publishers::Wizardable
   STRIP_CHECKBOXES = {
+    job_role_details: %i[additional_job_roles],
     schools: %i[organisation_ids],
     job_details: %i[subjects working_patterns],
   }.freeze
@@ -7,6 +8,7 @@ module Publishers::Wizardable
   def steps_config
     {
       job_role: { number: 1, title: I18n.t("publishers.vacancies.steps.job_role") },
+      job_role_details: { number: 1, title: I18n.t("publishers.vacancies.steps.job_role") },
       job_location: { number: 2, title: I18n.t("publishers.vacancies.steps.job_location") },
       schools: { number: 2, title: I18n.t("publishers.vacancies.steps.job_location") },
       job_details: { number: 3, title: I18n.t("publishers.vacancies.steps.job_details") },
@@ -21,6 +23,10 @@ module Publishers::Wizardable
 
   def job_role_fields
     %i[primary_job_role]
+  end
+
+  def job_role_details_fields
+    %i[additional_job_roles]
   end
 
   def job_location_fields
@@ -58,6 +64,11 @@ module Publishers::Wizardable
   def job_role_params(params)
     params.require(:publishers_job_listing_job_role_form)
           .permit(:primary_job_role).merge(completed_steps: completed_steps)
+  end
+
+  def job_role_details_params(params)
+    params.require(:publishers_job_listing_job_role_details_form)
+          .permit(:send_responsible, additional_job_roles: []).merge(completed_steps: completed_steps)
   end
 
   def job_location_params(params)

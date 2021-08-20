@@ -75,6 +75,12 @@ class VacancyPresenter < BasePresenter
     I18n.t("helpers.label.publishers_job_listing_job_role_form.primary_job_role_options.#{primary_job_role}")
   end
 
+  def show_additional_job_roles
+    model.additional_job_roles.map do |role|
+      I18n.t("helpers.label.publishers_job_listing_job_role_details_form.additional_job_roles_options.#{role}")
+    end.join(", ")
+  end
+
   def show_subjects
     model.subjects&.join(", ")
   end
