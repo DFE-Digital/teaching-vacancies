@@ -179,7 +179,9 @@ en:
     location: Location
 
     job_title: Job title
-    job_roles: Job role
+    job_role: Job role
+    primary_job_role: Job role
+    additional_job_roles: Job role details
     suitable_for_nqt: Is this job suitable for NQTs?
     subjects: Subject(s)
     subject:
