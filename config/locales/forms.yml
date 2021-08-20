@@ -228,6 +228,11 @@ en:
         working_patterns: >-
           Select all working patterns you will consider for the role.
           Flexible working options may attract more candidates.
+      publishers_job_listing_job_role_form:
+        primary_job_role_options:
+          leadership: Includes Head of Year/Subject, Deputy/Assistant Head, Headteacher, and trust-level roles
+          education_support: Includes Teaching assistant and Learning support
+          sendco: Special educational needs and disabilities coordinator
       publishers_job_listing_job_summary_form:
         about_organisation: >-
           This will appear next to the job details under ‘%{organisation_type} overview’. Feel free to adapt this text
@@ -550,6 +555,12 @@ en:
           full_time: Full-time
           part_time: Part-time
           job_share: Job share
+      publishers_job_listing_job_role_form:
+        primary_job_role_options:
+          teacher: Teacher
+          leadership: Leadership
+          sendco: SENDCo
+          education_support: Education support
       publishers_job_listing_job_summary_form:
         about_organisation: About %{organisation}
         job_advert: Job advert
@@ -653,6 +664,8 @@ en:
         suitable_for_nqt: Is this job suitable for NQTs?
         subjects_html: Subject(s) (optional<span class='govuk-visually-hidden'> field</span>)</span>
         working_patterns: Working patterns
+      publishers_job_listing_job_role_form:
+        primary_job_role: What is the job role?
       publishers_job_listing_job_location_form:
         job_location: Where will the job be based?
       publishers_job_listing_schools_form:
