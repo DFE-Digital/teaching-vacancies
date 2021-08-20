@@ -18,6 +18,7 @@
         = govuk_link_to(t("buttons.delete"), organisation_job_path(vacancy.id), method: :delete, data: { confirm: t("jobs.manage.are_you_sure", job_title: vacancy.job_title) }, button: true, class: "govuk-button--secondary")
 
     ol.app-task-list
+      li = render "publishers/vacancies/edit_vacancy_sections/edit_job_roles"
       - if current_organisation.school_group?
         li.multiline = render "publishers/vacancies/edit_vacancy_sections/edit_job_location"
       li = render "publishers/vacancies/edit_vacancy_sections/edit_job_details"
