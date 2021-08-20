@@ -21,7 +21,7 @@ module Publishers::Wizardable
   end
 
   def job_roles_fields
-    %i[job_roles]
+    %i[primary_job_role]
   end
 
   def job_location_fields

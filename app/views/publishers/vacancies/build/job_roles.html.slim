@@ -14,7 +14,7 @@
 
         h2.govuk-heading-l = t("publishers.vacancies.steps.job_roles")
 
-        = f.govuk_collection_radio_buttons :primary_job_role, form.job_roles_options, :to_s, bold_labels: true
+        = f.govuk_collection_radio_buttons :primary_job_role, Vacancy.primary_job_role_options, :to_s, bold_labels: true
 
         = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
