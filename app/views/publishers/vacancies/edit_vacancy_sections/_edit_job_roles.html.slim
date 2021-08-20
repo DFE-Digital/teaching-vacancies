@@ -1,0 +1,13 @@
+= render "publishers/vacancies/error_tag", attributes: job_details_fields
+
+= render ReviewComponent.new id: "job_details" do |review|
+  - review.heading title: t("publishers.vacancies.steps.job_roles"),
+                   text: t("buttons.change"),
+                   href: organisation_job_build_path(@vacancy.id, :job_roles)
+
+  - review.body do
+    = govuk_summary_list do |component|
+      - component.slot(:row,
+        key: t("jobs.job_roles"),
+        value: @vacancy.show_job_roles(exclude_nqt_suitable: true).presence || t("jobs.not_defined"),
+        html_attributes: { id: "job_roles" })

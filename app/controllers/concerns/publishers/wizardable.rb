@@ -1,21 +1,27 @@
 module Publishers::Wizardable
   STRIP_CHECKBOXES = {
+    job_roles: %i[job_roles],
     schools: %i[organisation_ids],
     job_details: %i[job_roles subjects working_patterns],
   }.freeze
 
   def steps_config
     {
-      job_location: { number: 1, title: I18n.t("publishers.vacancies.steps.job_location") },
-      schools: { number: 1, title: I18n.t("publishers.vacancies.steps.job_location") },
-      job_details: { number: 2, title: I18n.t("publishers.vacancies.steps.job_details") },
-      pay_package: { number: 3, title: I18n.t("publishers.vacancies.steps.pay_package") },
-      important_dates: { number: 4, title: I18n.t("publishers.vacancies.steps.important_dates") },
-      documents: { number: 5, title: I18n.t("publishers.vacancies.steps.documents") },
-      applying_for_the_job: { number: 6, title: I18n.t("publishers.vacancies.steps.applying_for_the_job") },
-      job_summary: { number: 7, title: I18n.t("publishers.vacancies.steps.job_summary") },
-      review: { number: 8, title: I18n.t("publishers.vacancies.steps.review_heading") },
+      job_roles: { number: 1, title: I18n.t("publishers.vacancies.steps.job_roles") },
+      job_location: { number: 2, title: I18n.t("publishers.vacancies.steps.job_location") },
+      schools: { number: 2, title: I18n.t("publishers.vacancies.steps.job_location") },
+      job_details: { number: 3, title: I18n.t("publishers.vacancies.steps.job_details") },
+      pay_package: { number: 4, title: I18n.t("publishers.vacancies.steps.pay_package") },
+      important_dates: { number: 5, title: I18n.t("publishers.vacancies.steps.important_dates") },
+      documents: { number: 6, title: I18n.t("publishers.vacancies.steps.documents") },
+      applying_for_the_job: { number: 7, title: I18n.t("publishers.vacancies.steps.applying_for_the_job") },
+      job_summary: { number: 8, title: I18n.t("publishers.vacancies.steps.job_summary") },
+      review: { number: 9, title: I18n.t("publishers.vacancies.steps.review_heading") },
     }.freeze
+  end
+
+  def job_roles_fields
+    %i[primary_job_role]
   end
 
   def job_location_fields
@@ -27,7 +33,7 @@ module Publishers::Wizardable
   end
 
   def job_details_fields
-    %i[job_title suitable_for_nqt contract_type contract_type_duration job_roles working_patterns subjects]
+    %i[job_title contract_type contract_type_duration working_patterns subjects]
   end
 
   def pay_package_fields
@@ -48,6 +54,12 @@ module Publishers::Wizardable
 
   def job_summary_fields
     %i[job_advert about_school]
+  end
+
+  def job_roles_params(params)
+    session[:job_roles] = params[:publishers_job_listing_job_roles_form][:job_roles]
+    params.require(:publishers_job_listing_job_roles_form)
+          .permit(:primary_job_role).merge(completed_steps: completed_steps)
   end
 
   def job_location_params(params)
@@ -87,9 +99,6 @@ module Publishers::Wizardable
   def job_details_params(params)
     job_location = vacancy.job_location.presence || "at_one_school"
     readable_job_location = vacancy.readable_job_location.presence || readable_job_location(job_location, school_name: current_organisation.name)
-    if params[:publishers_job_listing_job_details_form][:suitable_for_nqt] == "yes"
-      params[:publishers_job_listing_job_details_form][:job_roles] |= [:nqt_suitable]
-    end
     attributes_to_merge = {
       completed_steps: completed_steps,
       job_location: job_location,
@@ -98,7 +107,7 @@ module Publishers::Wizardable
       status: vacancy.status.blank? ? "draft" : nil,
     }
     params.require(:publishers_job_listing_job_details_form)
-          .permit(:job_title, :suitable_for_nqt, :contract_type, :contract_type_duration, job_roles: [], working_patterns: [], subjects: [])
+          .permit(:job_title, :contract_type, :contract_type_duration, working_patterns: [], subjects: [])
           .merge(attributes_to_merge.compact)
   end
 
