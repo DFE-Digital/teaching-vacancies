@@ -1,6 +1,5 @@
 import '../../frontend/src/lib/polyfill/closest.polyfill';
 import '../../frontend/src/lib/polyfill/from.polyfill';
-import logger from '../../frontend/src/lib/logging';
 import 'classlist-polyfill';
 
 export const CHECKBOX_CLASS_SELECTOR = 'govuk-checkboxes__input';
@@ -19,81 +18,76 @@ window.addEventListener(
 );
 
 export const init = (removeButtonSelector, clearButtonId, closeButtonId, showFilterPanelId) => {
+  const clearFiltersEl = document.getElementById(clearButtonId);
+  const closeFilterPanelEl = document.getElementById(closeButtonId);
+  const showFilterPanelEl = document.getElementById(showFilterPanelId);
+
   Array.from(document.getElementsByClassName(removeButtonSelector)).forEach((removeButton) => filterGroup.addRemoveFilterEvent(removeButton));
 
-  const clearButton = document.getElementById(clearButtonId);
-  if (clearButton) {
-    filterGroup.addRemoveAllFiltersEvent(clearButton);
+  if (clearFiltersEl) {
+    filterGroup.addRemoveAllFiltersEvent(clearFiltersEl);
   }
 
-  if (document.getElementById(showFilterPanelId)) {
-    document.getElementById(showFilterPanelId).addEventListener('click', (e) => {
+  if (showFilterPanelEl) {
+    showFilterPanelEl.addEventListener('click', (e) => {
       togglePanel(e.target);
-
-      if (document.getElementsByClassName('filters-component--show-mobile').length) {
-        removeAutoSubmit();
-      }
     });
   }
 
-  if (document.documentElement.clientWidth <= MOBILE_BREAKPOINT) {
-    setFiltersHiddenState(document.getElementById(showFilterPanelId), document.getElementsByClassName('filters-component')[0], false);
-  } else {
-    filtersUnfocusable();
-  }
-
-  if (document.getElementById(closeButtonId)) {
-    document.getElementById(closeButtonId).addEventListener('click', () => {
-      togglePanel(document.getElementById(showFilterPanelId));
+  if (closeFilterPanelEl) {
+    closeFilterPanelEl.addEventListener('click', () => {
+      togglePanel(showFilterPanelEl);
     });
 
     document.addEventListener('keydown', (e) => {
       if (['Esc', 'Escape'].includes(e.key)) {
-        togglePanel(document.getElementById(showFilterPanelId));
+        togglePanel(showFilterPanelEl);
       }
     });
   }
 
-  if (window.matchMedia && document.getElementsByClassName('filters-component').length) {
-    const mediaQuery = `(max-width: ${MOBILE_BREAKPOINT}px)`;
-    const mediaQueryList = window.matchMedia(mediaQuery);
-
-    if (mediaQueryList.addEventListener) {
-      mediaQueryList.addEventListener('change', (e) => {
-        if (e.matches) {
-          removeAutoSubmit();
-          filtersFocusable();
-          Array.from(document.getElementsByClassName('filters-component')).forEach((el) => el.setAttribute('aria-hidden', 'true'));
-          document.getElementById(showFilterPanelId).setAttribute('aria-expanded', 'false');
-        } else {
-          addAutoSubmit();
-          filtersUnfocusable();
-          Array.from(document.getElementsByClassName('filters-component')).forEach((el) => el.removeAttribute('aria-hidden'));
-        }
-      });
+  Array.from(document.getElementsByClassName('filters-component')).forEach((filtersEl) => {
+    if (document.documentElement.clientWidth <= MOBILE_BREAKPOINT) {
+      mobileFiltersBehaviour(filtersEl);
+    } else {
+      desktopFiltersBehaviour(filtersEl);
     }
-  }
+
+    if (window.matchMedia) {
+      const mediaQuery = `(max-width: ${MOBILE_BREAKPOINT}px)`;
+      const mediaQueryList = window.matchMedia(mediaQuery);
+
+      if (mediaQueryList.addEventListener) {
+        mediaQueryList.addEventListener('change', (e) => {
+          if (e.matches) {
+            mobileFiltersBehaviour(filtersEl);
+
+            if (filtersEl.classList.contains('filters-component--show-mobile')) {
+              setFiltersVisibleState(showFilterPanelEl, filtersEl);
+            }
+          } else {
+            desktopFiltersBehaviour(filtersEl);
+            setFiltersHiddenState(filtersEl, showFilterPanelEl);
+          }
+        });
+      }
+    }
+  });
+};
+
+const mobileFiltersBehaviour = (filtersEl) => {
+  filtersEl.closest('form').removeAttribute('data-auto-submit');
+  filtersEl.setAttribute('tabindex', '-1');
+};
+
+const desktopFiltersBehaviour = (filtersEl) => {
+  filtersEl.closest('form').setAttribute('data-auto-submit', 'true');
+  filtersEl.removeAttribute('tabindex');
 };
 
 export const togglePanel = (actionEl) => Array.from(document.getElementsByClassName('filters-component')).forEach((element) => {
-  element.classList.toggle('filters-component--show-mobile') ? setFiltersVisibleState(actionEl, element) : setFiltersHiddenState(actionEl, element);
+  element.classList.toggle('filters-component--show-mobile') ? setFiltersVisibleState(actionEl, element) : setFiltersHiddenState(actionEl, element, true);
 });
-
-export const filtersFocusable = () => {
-  Array.from(document.getElementsByClassName('filters-component')).forEach((el) => el.setAttribute('tabindex', '-1'));
-};
-
-export const filtersUnfocusable = () => {
-  Array.from(document.getElementsByClassName('filters-component')).forEach((el) => el.removeAttribute('tabindex'));
-};
-
-export const addAutoSubmit = () => {
-  Array.from(document.getElementsByClassName('filters-component')).forEach((el) => el.closest('form').setAttribute('data-auto-submit', 'true'));
-};
-
-export const removeAutoSubmit = () => {
-  Array.from(document.getElementsByClassName('filters-component')).forEach((el) => el.closest('form').removeAttribute('data-auto-submit'));
-};
 
 export const setFiltersVisibleState = (actionEl, filtersEl) => {
   filtersEl.focus();
@@ -101,17 +95,13 @@ export const setFiltersVisibleState = (actionEl, filtersEl) => {
   actionEl.setAttribute('aria-expanded', 'true');
 };
 
-export const setFiltersHiddenState = (actionEl, filtersEl, shouldFocus = true) => {
+export const setFiltersHiddenState = (actionEl, filtersEl, shouldFocus) => {
   if (shouldFocus) {
     actionEl.focus();
   }
 
-  try {
-    filtersEl.setAttribute('aria-hidden', 'true');
-    actionEl.setAttribute('aria-expanded', 'false');
-  } catch (e) {
-    logger.log('setFiltersHiddenState', e);
-  }
+  filtersEl.setAttribute('aria-hidden', 'true');
+  actionEl.setAttribute('aria-expanded', 'false');
 };
 
 export const addRemoveFilterEvent = (el, onClear) => {
