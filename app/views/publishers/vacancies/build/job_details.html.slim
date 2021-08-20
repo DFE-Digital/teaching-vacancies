@@ -4,8 +4,7 @@
   .govuk-grid-row
     .govuk-grid-column-full
       = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, current_step_number, total_steps(steps_config))
-      - if session[:current_step] == :review || !current_organisation.school?
-        = govuk_back_link text: session[:current_step] == :review ? t("buttons.cancel_and_return") : t("buttons.back_to_previous_step"), href: back_path
+      = govuk_back_link text: session[:current_step] == :review ? t("buttons.cancel_and_return") : t("buttons.back_to_previous_step"), href: back_path
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
@@ -28,10 +27,6 @@
 
           = f.govuk_radio_button :contract_type, :fixed_term do
             = f.govuk_text_field :contract_type_duration, label: { size: "s" }
-
-        = f.govuk_collection_check_boxes :job_roles, Vacancy.job_roles.except("nqt_suitable").keys, :to_s, :to_s
-
-        = f.govuk_collection_radio_buttons :suitable_for_nqt, %w[yes no], :to_s, :capitalize
 
         = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_job_details_form.subjects_html") } do
 

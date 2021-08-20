@@ -111,6 +111,10 @@ en:
       inclusion: Please indicate if you'd like to participate in user research
 
   # Publishers journey
+  job_role_errors: &job_role_errors
+    primary_job_role:
+      inclusion: Select a job role
+      blank: Select a job role
   job_location_errors: &job_location_errors
     job_location:
       inclusion: Select the location where the job will be based
@@ -129,10 +133,6 @@ en:
       too_short: Job title must be at least %{count} characters
       too_long: Job title must not be more than %{count} characters
       invalid_characters: Job title must not contain any HTML tags
-    job_roles:
-      blank: Select a job role
-    suitable_for_nqt:
-      inclusion: Please indicate whether or not the job is suitable for NQTs
     working_patterns:
       blank: Select a working pattern
   pay_package_errors: &pay_package_errors
@@ -229,6 +229,9 @@ en:
               blank: Enter your school, trust or local authority name
 
         # Publishers journey
+        publishers/job_listing/job_role_form:
+          attributes:
+            <<: *job_role_errors
         publishers/job_listing/job_location_form:
           attributes:
             <<: *job_location_errors
