@@ -6,7 +6,15 @@ class Vacancy < ApplicationRecord
 
   friendly_id :slug_candidates, use: %w[slugged history]
 
-  array_enum job_roles: { teacher: 0, leadership: 1, sen_specialist: 2, nqt_suitable: 3 }
+  # Each vacancy must have *exactly* one primary job role. It may have zero or multiple
+  # additional job roles. Legacy vacancies *may* have more than one primary job role as
+  # we used to allow multiple.
+  # TODO: This is a compromise to keep changes to the data model minimal for now. Once
+  # the legacy vacancies are gone, we should refactor the data model.
+  PRIMARY_JOB_ROLES =  { teacher: 0, leadership: 1, education_support: 4, sendco: 5 }.freeze
+  ADDITIONAL_JOB_ROLES = { sen_specialist: 2, nqt_suitable: 3 }.freeze
+  array_enum job_roles: PRIMARY_JOB_ROLES.merge(ADDITIONAL_JOB_ROLES)
+
   array_enum working_patterns: { full_time: 0, part_time: 100, job_share: 101 }
   # Legacy vacancies can have these working_pattern options too: { compressed_hours: 102, staggered_hours: 103 }
   enum contract_type: { permanent: 0, fixed_term: 1 }
@@ -71,6 +79,10 @@ class Vacancy < ApplicationRecord
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[7:00 8:00 9:00 10:00 11:00 12:00 13:00 14:00 15:00 16:00 17:00 23:59].freeze
 
+  def self.primary_job_role_options
+    PRIMARY_JOB_ROLES.keys.map(&:to_s)
+  end
+
   def organisation
     organisation_vacancies.first&.organisation
   end
@@ -112,7 +124,22 @@ class Vacancy < ApplicationRecord
   end
 
   def attributes
-    super().merge("working_patterns" => working_patterns, "job_roles" => job_roles)
+    super().merge(
+      "working_patterns" => working_patterns,
+      "job_roles" => job_roles,
+      "primary_job_role" => primary_job_role,
+    )
+  end
+
+  def primary_job_role
+    # Legacy vacancies may have more than one primary job role defined, but we still only care
+    # about the first
+    job_roles.find { |role| role.in?(self.class.primary_job_role_options) }
+  end
+
+  def primary_job_role=(role)
+    # Completely reset job_roles when changing primary role as additional roles may no longer be valid
+    self.job_roles = [role]
   end
 
   def education_phases
