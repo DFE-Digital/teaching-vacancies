@@ -41,7 +41,7 @@ RSpec.describe "Main navigation for users to sign in and out" do
       within ".navbar-component" do
         expect(page).to have_content(I18n.t("nav.school_page_link"))
         expect(page).to have_content(I18n.t("nav.jobseekers_index_link"))
-        expect(page).to have_content(I18n.t("nav.notifications_index_link"))
+        expect(page).to have_content(I18n.t("nav.notifications_index_link_html"))
         expect(page).to have_content(I18n.t("nav.sign_out"))
       end
     end

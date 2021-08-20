@@ -47,9 +47,10 @@ html.govuk-template.app-html-class lang="en"
               - if current_organisation.school_group?
                 - navigation.item link_text: t("nav.school_group_index_link", organisation_type: organisation_type_basic(current_organisation)), align: :left, path: organisation_schools_path
               - navigation.item link_text: t("nav.jobseekers_index_link"), align: :left, path: root_path
-              - navigation.item link_text: t("nav.notifications_index_link"), aria: { label: "#{current_publisher.notifications.unread.count} unread notifications" }, align: :left, path: publishers_notifications_path
-              - if current_publisher.notifications.unread.any?
-                span.notification-badge = current_publisher.notifications.unread.count
+              - navigation.item link_text: t("nav.notifications_index_link_html", count: current_publisher.notifications.unread.any? ? current_publisher.notifications.unread.count : 0),
+                  aria: { label: "#{current_publisher.notifications.unread.count} unread notifications" },
+                  align: :left,
+                  path: publishers_notifications_path
               - navigation.item link_text: :spacer
               - navigation.item link_text: t("nav.sign_out"), align: :right, path: destroy_publisher_session_path, method: :delete
 
