@@ -29,7 +29,19 @@ FactoryBot.define do
     expires_at { 6.months.from_now.change(hour: 9, minute: 0, second: 0) }
     hired_status { nil }
     job_advert { Faker::Lorem.paragraph(sentence_count: rand(50..300)) }
-    job_roles { Vacancy.job_roles.keys.first(3).sample(rand(1..3)) }
+
+    primary_job_role { Vacancy.primary_job_role_options.sample }
+    additional_job_roles do
+      case primary_job_role
+      when "teacher"
+        Vacancy.additional_job_role_options.sample(rand(0..2))
+      when "sendco"
+        []
+      else
+        ["send_responsible"].sample(rand(0..1))
+      end
+    end
+
     job_title { JOB_TITLES.sample }
     listed_elsewhere { nil }
     personal_statement_guidance { Faker::Lorem.paragraph(sentence_count: rand(5..10)) }
