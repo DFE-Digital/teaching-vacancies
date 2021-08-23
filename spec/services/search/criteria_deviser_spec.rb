@@ -15,7 +15,7 @@ RSpec.describe Search::CriteriaDeviser do
   let(:working_patterns) { %w[full_time part_time] }
   let(:subjects) { %w[English Maths] }
   let(:job_title) { "A wonderful job" }
-  let(:job_roles) { %w[teacher sen_specialist leadership] }
+  let(:job_roles) { %w[teacher send_responsible] }
   let(:vacancy) do
     create(:vacancy, :at_one_school, organisation_vacancies_attributes: [{ organisation: school }],
                                      working_patterns: working_patterns,

@@ -6,7 +6,8 @@ RSpec.describe "Publishers can edit a draft vacancy" do
   let!(:vacancy) do
     VacancyPresenter.new(build(:vacancy,
                                job_title: "Draft vacancy",
-                               working_patterns: %w[full_time part_time]))
+                               working_patterns: %w[full_time part_time],
+                               job_roles: %w[teacher]))
   end
   let(:draft_vacancy) { Vacancy.find_by(job_title: vacancy.job_title) }
 
@@ -16,6 +17,11 @@ RSpec.describe "Publishers can edit a draft vacancy" do
     before do
       visit organisation_path
       click_on I18n.t("buttons.create_job")
+
+      fill_in_job_role_form_fields(vacancy)
+      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.continue")
+
       fill_in_job_details_form_fields(vacancy)
       click_on I18n.t("buttons.continue")
     end
@@ -24,7 +30,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
       scenario "incomplete pay package step" do
         visit edit_organisation_job_path(id: draft_vacancy.id)
 
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 7))
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 3, total: 8))
         within("h2.govuk-heading-l") do
           expect(page).to have_content(I18n.t("publishers.vacancies.steps.pay_package"))
         end
@@ -39,7 +45,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         fill_in_pay_package_form_fields(draft_vacancy)
         click_on I18n.t("buttons.continue")
 
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 3, total: 7))
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 4, total: 8))
         within("h2.govuk-heading-l") do
           expect(page).to have_content(I18n.t("publishers.vacancies.steps.important_dates"))
         end
@@ -61,7 +67,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         fill_in_important_dates_fields(draft_vacancy)
         click_on I18n.t("buttons.continue")
 
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 4, total: 7))
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 8))
         within("h2.govuk-heading-l") do
           expect(page).to have_content(I18n.t("publishers.vacancies.steps.documents"))
         end
@@ -85,7 +91,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
 
         click_on I18n.t("buttons.continue")
 
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 7))
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 6, total: 8))
         within("h2.govuk-heading-l") do
           expect(page).to have_content(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
         end
@@ -115,7 +121,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         fill_in_applying_for_the_job_form_fields(draft_vacancy)
         click_on I18n.t("buttons.continue")
 
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 6, total: 7))
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 7, total: 8))
         within("h2.govuk-heading-l") do
           expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_summary"))
         end
@@ -147,7 +153,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
 
       scenario "then editing the draft redirects to incomplete step" do
         visit edit_organisation_job_path(id: draft_vacancy.id)
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 7))
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 6, total: 8))
       end
 
       def edit_a_published_vacancy
@@ -165,7 +171,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
   end
 
   context "editing a complete draft vacancy" do
-    let(:vacancy) { create(:vacancy, :draft) }
+    let(:vacancy) { create(:vacancy, :draft, job_roles: %w[teacher]) }
 
     before { vacancy.organisation_vacancies.create(organisation: school) }
 

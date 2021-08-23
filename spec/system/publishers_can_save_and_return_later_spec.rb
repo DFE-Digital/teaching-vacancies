@@ -6,43 +6,18 @@ RSpec.describe "Publishers can save and return later" do
 
   before do
     login_publisher(publisher: publisher, organisation: school)
-    @vacancy = VacancyPresenter.new(build(:vacancy, :draft, working_patterns: %w[full_time part_time]))
+    @vacancy = VacancyPresenter.new(build(:vacancy, :draft, working_patterns: %w[full_time part_time], job_roles: %w[teacher]))
   end
 
   context "Create a job journey" do
-    describe "#job_details" do
-      scenario "can save and return later" do
-        visit organisation_path
-        click_on I18n.t("buttons.create_job")
-
-        expect(page.current_path).to eq(organisation_job_build_path(Vacancy.last.id, :job_details))
-        expect(page).to have_content(I18n.t("jobs.create_a_job_title_no_org"))
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 7))
-        within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_details"))
-        end
-
-        fill_in "publishers_job_listing_job_details_form[job_title]", with: @vacancy.job_title
-        click_on I18n.t("buttons.save_and_return_later")
-        created_vacancy = Vacancy.find_by(job_title: @vacancy.job_title)
-
-        expect(page.current_path).to eq(jobs_with_type_organisation_path("draft"))
-        expect(page.body).to include(I18n.t("messages.jobs.draft_saved_html", job_title: @vacancy.job_title))
-
-        click_on @vacancy.job_title
-        within("#job_details") do
-          click_on I18n.t("buttons.change")
-        end
-
-        expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_details))
-        expect(find_field("publishers_job_listing_job_details_form[job_title]").value).to eq(@vacancy.job_title)
-      end
-    end
-
     describe "#pay_package" do
       scenario "can save and return later" do
         visit organisation_path
         click_on I18n.t("buttons.create_job")
+
+        fill_in_job_role_form_fields(@vacancy)
+        click_on I18n.t("buttons.continue")
+        click_on I18n.t("buttons.continue")
 
         fill_in_job_details_form_fields(@vacancy)
         click_on I18n.t("buttons.continue")
@@ -70,6 +45,10 @@ RSpec.describe "Publishers can save and return later" do
       scenario "can save and return later" do
         visit organisation_path
         click_on I18n.t("buttons.create_job")
+
+        fill_in_job_role_form_fields(@vacancy)
+        click_on I18n.t("buttons.continue")
+        click_on I18n.t("buttons.continue")
 
         fill_in_job_details_form_fields(@vacancy)
         click_on I18n.t("buttons.continue")
@@ -102,6 +81,10 @@ RSpec.describe "Publishers can save and return later" do
       scenario "redirected to important_dates if not valid" do
         visit organisation_path
         click_on I18n.t("buttons.create_job")
+
+        fill_in_job_role_form_fields(@vacancy)
+        click_on I18n.t("buttons.continue")
+        click_on I18n.t("buttons.continue")
 
         fill_in_job_details_form_fields(@vacancy)
         click_on I18n.t("buttons.continue")
@@ -138,6 +121,10 @@ RSpec.describe "Publishers can save and return later" do
         visit organisation_path
         click_on I18n.t("buttons.create_job")
 
+        fill_in_job_role_form_fields(@vacancy)
+        click_on I18n.t("buttons.continue")
+        click_on I18n.t("buttons.continue")
+
         fill_in_job_details_form_fields(@vacancy)
         click_on I18n.t("buttons.continue")
         created_vacancy = Vacancy.find_by(job_title: @vacancy.job_title)
@@ -168,6 +155,10 @@ RSpec.describe "Publishers can save and return later" do
       scenario "can save and return later" do
         visit organisation_path
         click_on I18n.t("buttons.create_job")
+
+        fill_in_job_role_form_fields(@vacancy)
+        click_on I18n.t("buttons.continue")
+        click_on I18n.t("buttons.continue")
 
         fill_in_job_details_form_fields(@vacancy)
         click_on I18n.t("buttons.continue")
@@ -203,6 +194,10 @@ RSpec.describe "Publishers can save and return later" do
       scenario "can save and return later" do
         visit organisation_path
         click_on I18n.t("buttons.create_job")
+
+        fill_in_job_role_form_fields(@vacancy)
+        click_on I18n.t("buttons.continue")
+        click_on I18n.t("buttons.continue")
 
         fill_in_job_details_form_fields(@vacancy)
         click_on I18n.t("buttons.continue")
@@ -241,13 +236,19 @@ RSpec.describe "Publishers can save and return later" do
   end
 
   describe "can temporarily omit a step by saving at an earlier step and returning on a later step" do
-    scenario "can edit the job details step and then the applying for this job step" do
+    scenario "can edit the pay package step and then the applying for this job step" do
       visit organisation_path
       click_on I18n.t("buttons.create_job")
 
-      fill_in "publishers_job_listing_job_details_form[job_title]", with: @vacancy.job_title
+      fill_in_job_role_form_fields(@vacancy)
+      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.continue")
+
+      fill_in_job_details_form_fields(@vacancy)
+      click_on I18n.t("buttons.continue")
+
       click_on I18n.t("buttons.save_and_return_later")
-      created_vacancy = Vacancy.find_by(job_title: @vacancy.job_title)
+      created_vacancy = Vacancy.last
 
       expect(page.current_path).to eq(jobs_with_type_organisation_path("draft"))
 

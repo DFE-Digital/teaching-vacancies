@@ -495,6 +495,8 @@ en:
               too_short: Enter a password that is at least 8 characters long
         vacancy:
           attributes:
+            <<: *job_role_errors
+            <<: *job_role_details_errors
             <<: *job_location_errors
             <<: *schools_errors
             <<: *job_details_errors

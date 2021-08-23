@@ -31,7 +31,7 @@ RSpec.describe "Publisher session" do
     travel(Publisher.timeout_in - 1.minute) do
       click_on I18n.t("buttons.continue")
 
-      expect(page.current_path).to eq organisation_job_build_path(Vacancy.last.id, :job_details)
+      expect(page.current_path).to eq organisation_job_build_path(Vacancy.last.id, :job_role)
     end
   end
 end

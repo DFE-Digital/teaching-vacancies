@@ -69,7 +69,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   end
 
   def redirect_to_incomplete_step
-    return redirect_to organisation_job_build_path(vacancy.id, :job_role) unless step_valid?(:job_roles)
+    return redirect_to organisation_job_build_path(vacancy.id, :job_role) unless step_valid?(:job_role)
     return redirect_to organisation_job_build_path(vacancy.id, :job_details) unless step_valid?(:job_details)
     return redirect_to organisation_job_build_path(vacancy.id, :pay_package) unless step_valid?(:pay_package)
     return redirect_to organisation_job_build_path(vacancy.id, :important_dates) unless step_valid?(:important_dates)

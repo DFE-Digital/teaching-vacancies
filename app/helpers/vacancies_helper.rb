@@ -95,6 +95,6 @@ module VacanciesHelper
   end
 
   def total_steps(steps)
-    steps.values.map { |step| step[:number] }.max - steps_adjust
+    steps_to_display(steps).count + 1 # #steps_to_display excludes review step
   end
 end
