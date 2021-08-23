@@ -14,6 +14,7 @@ en:
       job_filters: Job Filters
       job_roles: Job role
       nqt_suitable: Suitable for early career teachers
+      nqt_suitable_hidden_prefix: Only show results
       phases: Education phase
       working_patterns: Working pattern
 
@@ -179,7 +180,9 @@ en:
     location: Location
 
     job_title: Job title
-    job_roles: Job role
+    job_role: Job role
+    primary_job_role: Job role
+    additional_job_roles: Job role details
     suitable_for_nqt: Is this job suitable for NQTs?
     subjects: Subject(s)
     subject:
