@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby "3.0.2"
 
-RAILS_VERSION = "~> 6.1.4".freeze
+RAILS_VERSION = "~> 6.1.4.1".freeze
 gem "actionmailer", RAILS_VERSION
 gem "actionpack", RAILS_VERSION
 gem "activejob", RAILS_VERSION
