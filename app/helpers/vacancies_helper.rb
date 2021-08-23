@@ -90,11 +90,11 @@ module VacanciesHelper
   end
 
   def steps_to_display(steps)
-    steps_to_skip = current_organisation.is_a?(School) ? %i[job_location schools review] : %i[schools review]
+    steps_to_skip = current_organisation.is_a?(School) ? %i[job_role_details job_location schools review] : %i[job_role_details schools review]
     steps.except(*steps_to_skip).keys
   end
 
   def total_steps(steps)
-    steps.values.map { |step| step[:number] }.max - steps_adjust
+    steps_to_display(steps).count + 1 # #steps_to_display excludes review step
   end
 end

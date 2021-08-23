@@ -14,6 +14,25 @@ module VacancyHelpers
     choose school.name
   end
 
+  def fill_in_job_role_form_fields(vacancy)
+    # find("input[value='#{vacancy.primary_job_role}']").click
+    choose I18n.t("helpers.label.publishers_job_listing_job_role_form.primary_job_role_options.#{vacancy.primary_job_role}")
+  end
+
+  def fill_in_job_role_details_form_fields(vacancy)
+    if vacancy.primary_job_role == "teacher"
+      # Fill in checkboxes
+      vacancy.job_roles.excluding("nqt_suitable")&.each do |job_role|
+        check I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{job_role}"),
+        name: "publishers_job_listing_job_details_form[job_roles][]",
+        visible: false
+      end
+    elsif vacancy.primary_job_role.in?(%w[leadership education_support])
+      value = vacancy.job_roles.include?("send_responsible") ? "yes" : "no"
+      find("label[for='publishers-job-listing-job-role-details-form-send-responsible-#{value}-field']").click
+    end
+  end
+
   def fill_in_job_details_form_fields(vacancy)
     fill_in "publishers_job_listing_job_details_form[job_title]", with: vacancy.job_title
 
@@ -23,14 +42,6 @@ module VacancyHelpers
             name: "publishers_job_listing_job_details_form[working_patterns][]",
             visible: false
     end
-
-    vacancy.job_roles.excluding("nqt_suitable")&.each do |job_role|
-      check I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{job_role}"),
-            name: "publishers_job_listing_job_details_form[job_roles][]",
-            visible: false
-    end
-
-    find("label[for='publishers-job-listing-job-details-form-suitable-for-nqt-#{vacancy.suitable_for_nqt}-field']").click
 
     vacancy.subjects&.each do |subject|
       check subject,
@@ -127,7 +138,8 @@ module VacancyHelpers
     end
 
     expect(page).to have_content(vacancy.job_title)
-    expect(page).to have_content(vacancy.show_job_roles)
+    expect(page).to have_content(vacancy.show_primary_job_role)
+    expect(page).to have_content(vacancy.show_additional_job_roles)
     expect(page).to have_content(vacancy.show_subjects)
     expect(page).to have_content(vacancy.working_patterns)
 

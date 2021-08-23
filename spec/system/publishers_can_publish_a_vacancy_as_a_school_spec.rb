@@ -15,11 +15,11 @@ RSpec.describe "Creating a vacancy" do
 
     click_on I18n.t("buttons.create_job")
 
-    expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 7))
+    expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
   end
 
   context "creating a new vacancy" do
-    let(:job_roles) { %i[teacher sen_specialist] }
+    let(:job_roles) { %i[teacher send_responsible] }
     let(:vacancy) do
       VacancyPresenter.new(build(:vacancy,
                                  job_roles: job_roles,
@@ -28,368 +28,111 @@ RSpec.describe "Creating a vacancy" do
     end
     let(:created_vacancy) { Vacancy.last }
 
-    scenario "redirects to step 1, job details" do
+    scenario "follows the flow" do
       visit organisation_path
       click_on I18n.t("buttons.create_job")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_role))
 
-      expect(page.current_path).to eq(organisation_job_build_path(Vacancy.last.id, :job_details))
-      expect(page).to have_content(I18n.t("jobs.create_a_job_title_no_org"))
-      expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 7))
+      click_on I18n.t("buttons.continue")
+      expect(page).to have_content("There is a problem")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_role))
+
+      fill_in_job_role_form_fields(vacancy)
+      click_on I18n.t("buttons.continue")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_role_details))
+
+      click_on I18n.t("buttons.continue")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_details))
+
+      click_on I18n.t("buttons.continue")
+      expect(page).to have_content("There is a problem")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_details))
+
+      fill_in_job_details_form_fields(vacancy)
+      click_on I18n.t("buttons.continue")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :pay_package))
+
+      click_on I18n.t("buttons.continue")
+      expect(page).to have_content("There is a problem")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :pay_package))
+
+      fill_in_pay_package_form_fields(vacancy)
+      click_on I18n.t("buttons.continue")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :important_dates))
+
+      click_on I18n.t("buttons.continue")
+      expect(page).to have_content("There is a problem")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :important_dates))
+
+      fill_in_important_dates_fields(vacancy)
+      click_on I18n.t("buttons.continue")
+      expect(current_path).to eq(organisation_job_documents_path(created_vacancy.id))
+
+      click_on I18n.t("buttons.continue")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
+
+      click_on I18n.t("buttons.continue")
+      expect(page).to have_content("There is a problem")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
+
+      fill_in_applying_for_the_job_form_fields(vacancy)
+      click_on I18n.t("buttons.continue")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_summary))
+
+      click_on I18n.t("buttons.continue")
+      expect(page).to have_content("There is a problem")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_summary))
+
+      fill_in_job_summary_form_fields(vacancy)
+      click_on I18n.t("buttons.continue")
+      expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
+      verify_all_vacancy_details(created_vacancy)
+
+      click_on I18n.t("buttons.submit_job_listing")
+      expect(current_path).to eq(organisation_job_summary_path(created_vacancy.id))
     end
 
-    scenario "resets session current_step" do
-      page.set_rack_session(current_step: :review)
-
+    scenario "redirects to the vacancy review page when submitted successfully" do
       visit organisation_path
       click_on I18n.t("buttons.create_job")
+
+      fill_in_job_role_form_fields(vacancy)
+      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.continue")
 
       fill_in_job_details_form_fields(vacancy)
       click_on I18n.t("buttons.continue")
 
-      expect(page.get_rack_session["current_step"]).to be nil
-    end
+      fill_in_pay_package_form_fields(vacancy)
+      click_on I18n.t("buttons.continue")
 
-    describe "#job_details" do
-      scenario "is invalid unless all mandatory fields are submitted" do
-        visit organisation_path
-        click_on I18n.t("buttons.create_job")
+      fill_in_important_dates_fields(vacancy)
+      click_on I18n.t("buttons.continue")
 
-        click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.continue")
 
-        mandatory_fields = %w[job_title working_patterns]
+      fill_in_applying_for_the_job_form_fields(vacancy)
+      click_on I18n.t("buttons.continue")
 
-        within(".govuk-error-summary") do
-          expect(page).to have_content("There is a problem")
-        end
+      fill_in_job_summary_form_fields(vacancy)
+      click_on I18n.t("buttons.continue")
 
-        mandatory_fields.each do |field|
-          within_row_for(element: field == "job_title" ? "label" : "legend", text: I18n.t("jobs.#{field}")) do
-            expect(page).to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.#{field}.blank"))
-          end
-        end
+      expect(page).to have_content(I18n.t("jobs.current_step", step: 8, total: 8))
+      within("h2.govuk-heading-l") do
+        expect(page).to have_content(I18n.t("publishers.vacancies.steps.review_heading"))
       end
-
-      scenario "redirects to step 2, pay package, when submitted successfully" do
-        visit organisation_path
-        click_on I18n.t("buttons.create_job")
-
-        fill_in_job_details_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 7))
-        within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("publishers.vacancies.steps.pay_package"))
-        end
-      end
-
-      context "when job is selected as suitable for NQTs" do
-        let(:job_roles) { %i[nqt_suitable teacher sen_specialist] }
-
-        scenario "Suitable for NQTs is appended to the job roles" do
-          visit organisation_path
-          click_on I18n.t("buttons.create_job")
-
-          fill_in_job_details_form_fields(vacancy)
-          click_on I18n.t("buttons.continue")
-
-          expect(Vacancy.last.job_roles).to include("nqt_suitable")
-        end
-      end
-    end
-
-    describe "#pay_package" do
-      scenario "is invalid unless all mandatory fields are submitted" do
-        visit organisation_path
-        click_on I18n.t("buttons.create_job")
-
-        fill_in_job_details_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        click_on I18n.t("buttons.continue")
-
-        within(".govuk-error-summary") do
-          expect(page).to have_content("There is a problem")
-        end
-
-        within_row_for(text: I18n.t("helpers.label.publishers_job_listing_pay_package_form.salary")) do
-          expect(page).to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.salary.blank"))
-        end
-      end
-
-      scenario "redirects to step 3, important dates, when submitted successfuly" do
-        visit organisation_path
-        click_on I18n.t("buttons.create_job")
-
-        fill_in_job_details_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        fill_in_pay_package_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 3, total: 7))
-        within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("publishers.vacancies.steps.important_dates"))
-        end
-      end
-    end
-
-    describe "#important_dates" do
-      scenario "is invalid unless all mandatory fields are submitted" do
-        visit organisation_path
-        click_on I18n.t("buttons.create_job")
-
-        fill_in_job_details_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        fill_in_pay_package_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        click_on I18n.t("buttons.continue")
-
-        within(".govuk-error-summary") do
-          expect(page).to have_content("There is a problem")
-        end
-
-        within_row_for(element: "legend",
-                       text: strip_tags(I18n.t("helpers.legend.publishers_job_listing_important_dates_form.publish_on_day"))) do
-          expect(page).to have_content(I18n.t("important_dates_errors.publish_on_day.inclusion"))
-        end
-
-        within_row_for(element: "legend",
-                       text: strip_tags(I18n.t("helpers.legend.publishers_job_listing_important_dates_form.expires_at"))) do
-          expect(page).to have_content(I18n.t("important_dates_errors.expires_at.blank"))
-        end
-
-        within_row_for(element: "legend",
-                       text: strip_tags(I18n.t("helpers.legend.publishers_job_listing_important_dates_form.expiry_time"))) do
-          expect(page).to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.expiry_time.inclusion"))
-        end
-      end
-
-      scenario "redirects to step 4, supporting documents, when submitted successfuly" do
-        visit organisation_path
-        click_on I18n.t("buttons.create_job")
-
-        fill_in_job_details_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        fill_in_pay_package_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        fill_in_important_dates_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 4, total: 7))
-        within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("publishers.vacancies.steps.documents"))
-        end
-      end
-    end
-
-    describe "#documents" do
-      let(:documents_vacancy) { create(:vacancy) }
-
-      before { documents_vacancy.organisation_vacancies.create(organisation: school) }
-
-      scenario "Publishers can select a file for upload" do
-        visit organisation_job_documents_path(documents_vacancy.id)
-        page.attach_file("publishers-job-listing-documents-form-documents-field", Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"))
-        expect(page.find("#publishers-job-listing-documents-form-documents-field").value).to_not be nil
-      end
-
-      context "when uploading files" do
-        let(:filename) { "blank_job_spec.pdf" }
-
-        scenario "displays uploaded file in a table" do
-          visit organisation_job_documents_path(documents_vacancy.id)
-
-          allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
-          upload_document(
-            "new_publishers_job_listing_documents_form",
-            "publishers-job-listing-documents-form-documents-field",
-            "spec/fixtures/files/#{filename}",
-          )
-
-          expect(page).to have_content(filename)
-        end
-
-        scenario "displays error message when invalid file type is uploaded" do
-          visit organisation_job_documents_path(documents_vacancy.id)
-
-          upload_document(
-            "new_publishers_job_listing_documents_form",
-            "publishers-job-listing-documents-form-documents-field",
-            "spec/fixtures/files/mime_types/invalid_plain_text_file.txt",
-          )
-
-          expect(page).to have_content(I18n.t("jobs.file_type_error_message", filename: "invalid_plain_text_file.txt"))
-        end
-
-        scenario "displays error message when large file is uploaded" do
-          stub_const("#{Publishers::JobListing::DocumentsForm}::FILE_SIZE_LIMIT", 1.kilobyte)
-          visit organisation_job_documents_path(documents_vacancy.id)
-
-          upload_document(
-            "new_publishers_job_listing_documents_form",
-            "publishers-job-listing-documents-form-documents-field",
-            "spec/fixtures/files/#{filename}",
-          )
-
-          expect(page).to have_content(I18n.t("jobs.file_size_error_message", filename: filename, size_limit: "1 KB"))
-        end
-
-        scenario "displays error message when virus file is uploaded" do
-          allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: false))
-
-          visit organisation_job_documents_path(documents_vacancy.id)
-
-          upload_document(
-            "new_publishers_job_listing_documents_form",
-            "publishers-job-listing-documents-form-documents-field",
-            "spec/fixtures/files/#{filename}",
-          )
-
-          expect(page).to have_content(I18n.t("jobs.file_virus_error_message", filename: filename))
-        end
-      end
-
-      context "when deleting uploaded files", js: true do
-        before do
-          documents_vacancy.supporting_documents.attach(io: StringIO.new("delete_me"), filename: "delete_me.pdf", content_type: "application/pdf")
-          documents_vacancy.supporting_documents.attach(io: StringIO.new("do_not_delete_me"), filename: "do_not_delete_me.pdf", content_type: "application/pdf")
-
-          visit organisation_job_documents_path(documents_vacancy.id)
-        end
-
-        scenario "deletes them" do
-          attachment = documents_vacancy.supporting_documents.first { |doc| doc.filename == "delete_me.pdf" }
-          find("tr[data-document-id=\"#{attachment.id}\"] a[data-method=delete]").click
-          expect(page).to have_content "delete_me.pdf was removed"
-          expect(documents_vacancy.supporting_documents.count).to eq(1)
-        end
-      end
-    end
-
-    describe "#applying_for_the_job" do
-      scenario "is invalid unless all mandatory fields are submitted" do
-        visit organisation_path
-        click_on I18n.t("buttons.create_job")
-
-        fill_in_job_details_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        fill_in_pay_package_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        fill_in_important_dates_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        click_on I18n.t("buttons.continue")
-
-        click_on I18n.t("buttons.continue")
-
-        within(".govuk-error-summary") do
-          expect(page).to have_content("There is a problem")
-        end
-
-        within_row_for(text: strip_tags(I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.contact_email"))) do
-          expect(page).to have_content(I18n.t("applying_for_the_job_errors.contact_email.blank"))
-        end
-      end
-
-      scenario "redirects to the job summary page when submitted successfully" do
-        visit organisation_path
-        click_on I18n.t("buttons.create_job")
-
-        fill_in_job_details_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        fill_in_pay_package_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        fill_in_important_dates_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        click_on I18n.t("buttons.continue")
-
-        fill_in_applying_for_the_job_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 6, total: 7))
-        within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_summary"))
-        end
-      end
-    end
-
-    describe "#job_summary" do
-      scenario "is invalid unless all mandatory fields are submitted" do
-        visit organisation_path
-        click_on I18n.t("buttons.create_job")
-
-        fill_in_job_details_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        fill_in_pay_package_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        fill_in_important_dates_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        click_on I18n.t("buttons.continue")
-
-        fill_in_applying_for_the_job_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        click_on I18n.t("buttons.continue")
-
-        within(".govuk-error-summary") do
-          expect(page).to have_content("There is a problem")
-        end
-
-        within_row_for(text: I18n.t("jobs.job_advert")) do
-          expect(page).to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.job_advert.blank"))
-        end
-
-        within_row_for(text: I18n.t("jobs.about_school", school: school.name)) do
-          expect(page).to have_content(school.description)
-        end
-      end
-
-      scenario "redirects to the vacancy review page when submitted successfully" do
-        visit organisation_path
-        click_on I18n.t("buttons.create_job")
-
-        fill_in_job_details_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        fill_in_pay_package_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        fill_in_important_dates_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        click_on I18n.t("buttons.continue")
-
-        fill_in_applying_for_the_job_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        fill_in_job_summary_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 7, total: 7))
-        within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("publishers.vacancies.steps.review_heading"))
-        end
-        verify_all_vacancy_details(created_vacancy)
-      end
+      verify_all_vacancy_details(created_vacancy)
     end
 
     describe "#review" do
       context "redirects the user back to the last incomplete step" do
-        scenario "redirects to step 2, pay package, when that step has not been completed" do
+        scenario "redirects to pay package when that step has not been completed" do
           visit organisation_path
           click_on I18n.t("buttons.create_job")
+
+          fill_in_job_role_form_fields(vacancy)
+          click_on I18n.t("buttons.continue")
+          click_on I18n.t("buttons.continue")
 
           fill_in_job_details_form_fields(vacancy)
           click_on I18n.t("buttons.continue")
@@ -397,15 +140,19 @@ RSpec.describe "Creating a vacancy" do
           v = Vacancy.find_by(job_title: vacancy.job_title)
           visit edit_organisation_job_path(id: v.id)
 
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 7))
+          expect(page).to have_content(I18n.t("jobs.current_step", step: 3, total: 8))
           within("h2.govuk-heading-l") do
             expect(page).to have_content(I18n.t("publishers.vacancies.steps.pay_package"))
           end
         end
 
-        scenario "redirects to step 5, application details, when that step has not been completed" do
+        scenario "redirects to application details when that step has not been completed" do
           visit organisation_path
           click_on I18n.t("buttons.create_job")
+
+          fill_in_job_role_form_fields(vacancy)
+          click_on I18n.t("buttons.continue")
+          click_on I18n.t("buttons.continue")
 
           fill_in_job_details_form_fields(vacancy)
           click_on I18n.t("buttons.continue")
@@ -421,15 +168,19 @@ RSpec.describe "Creating a vacancy" do
           v = Vacancy.find_by(job_title: vacancy.job_title)
           visit edit_organisation_job_path(id: v.id)
 
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 7))
+          expect(page).to have_content(I18n.t("jobs.current_step", step: 6, total: 8))
           within("h2.govuk-heading-l") do
             expect(page).to have_content(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
           end
         end
 
-        scenario "redirects to step 6, job summary, when that step has not been completed" do
+        scenario "redirects to job summary, when that step has not been completed" do
           visit organisation_path
           click_on I18n.t("buttons.create_job")
+
+          fill_in_job_role_form_fields(vacancy)
+          click_on I18n.t("buttons.continue")
+          click_on I18n.t("buttons.continue")
 
           fill_in_job_details_form_fields(vacancy)
           click_on I18n.t("buttons.continue")
@@ -448,7 +199,7 @@ RSpec.describe "Creating a vacancy" do
           v = Vacancy.find_by(job_title: vacancy.job_title)
           visit edit_organisation_job_path(id: v.id)
 
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 6, total: 7))
+          expect(page).to have_content(I18n.t("jobs.current_step", step: 7, total: 8))
           within("h2.govuk-heading-l") do
             expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_summary"))
           end
@@ -544,7 +295,7 @@ RSpec.describe "Creating a vacancy" do
           visit organisation_job_review_path(vacancy.id)
           click_header_link(I18n.t("publishers.vacancies.steps.job_details"))
 
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 7))
+          expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 8))
 
           fill_in "publishers_job_listing_job_details_form[job_title]", with: "An edited job title"
           click_on I18n.t("buttons.update_job")
@@ -577,6 +328,10 @@ RSpec.describe "Creating a vacancy" do
           visit organisation_path
           click_on I18n.t("buttons.create_job")
 
+          fill_in_job_role_form_fields(vacancy)
+          click_on I18n.t("buttons.continue")
+          click_on I18n.t("buttons.continue")
+
           fill_in_job_details_form_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
@@ -598,7 +353,7 @@ RSpec.describe "Creating a vacancy" do
 
           click_header_link(I18n.t("publishers.vacancies.steps.documents"))
 
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 4, total: 7))
+          expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 8))
           expect(page).to have_content(I18n.t("helpers.label.publishers_job_listing_documents_form.documents"))
 
           click_on I18n.t("buttons.update_job")
@@ -614,7 +369,7 @@ RSpec.describe "Creating a vacancy" do
           visit organisation_job_review_path(vacancy.id)
           click_header_link(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
 
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 7))
+          expect(page).to have_content(I18n.t("jobs.current_step", step: 6, total: 8))
 
           fill_in "publishers_job_listing_applying_for_the_job_form[contact_email]", with: "not a valid email"
           click_on I18n.t("buttons.update_job")
@@ -634,7 +389,7 @@ RSpec.describe "Creating a vacancy" do
           visit organisation_job_review_path(vacancy.id)
           click_header_link(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
 
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 7))
+          expect(page).to have_content(I18n.t("jobs.current_step", step: 6, total: 8))
 
           fill_in "publishers_job_listing_applying_for_the_job_form[contact_email]", with: "an@email.com"
           click_on I18n.t("buttons.update_job")
@@ -645,7 +400,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "redirects to the summary page when published" do
-        vacancy = create(:vacancy, :draft)
+        vacancy = create(:vacancy, :draft, job_roles: %w[teacher])
         vacancy.organisation_vacancies.create(organisation: school)
         visit organisation_job_review_path(vacancy.id)
         click_on I18n.t("buttons.submit_job_listing")
@@ -657,14 +412,14 @@ RSpec.describe "Creating a vacancy" do
     describe "#publish" do
       scenario "cannot be published unless the details are valid" do
         yesterday_date = Time.zone.yesterday
-        vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow)
+        vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow, job_roles: %w[teacher])
         vacancy.organisation_vacancies.create(organisation: school)
         vacancy.assign_attributes expires_at: yesterday_date
         vacancy.save(validate: false)
 
         visit organisation_job_review_path(vacancy.id)
 
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 3, total: 7))
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 4, total: 8))
         within("h2.govuk-heading-l") do
           expect(page).to have_content(I18n.t("publishers.vacancies.steps.important_dates"))
         end
@@ -698,7 +453,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "can be published at a later date" do
-        vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow)
+        vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow, job_roles: %w[teacher])
         vacancy.organisation_vacancies.create(organisation: school)
 
         visit organisation_job_review_path(vacancy.id)
@@ -710,7 +465,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "displays the expiration date and time on the confirmation page" do
-        vacancy = create(:vacancy, :draft, expires_at: 5.days.from_now.change(hour: 9, minute: 0))
+        vacancy = create(:vacancy, :draft, expires_at: 5.days.from_now.change(hour: 9, minute: 0), job_roles: %w[teacher])
         vacancy.organisation_vacancies.create(organisation: school)
         visit organisation_job_review_path(vacancy.id)
         click_on I18n.t("buttons.submit_job_listing")
@@ -721,7 +476,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "a published vacancy cannot be republished" do
-        vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow)
+        vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow, job_roles: %w[teacher])
         vacancy.organisation_vacancies.create(organisation: school)
 
         visit organisation_job_review_path(vacancy.id)
@@ -744,7 +499,7 @@ RSpec.describe "Creating a vacancy" do
 
       context "adds a job to update the Google index in the queue" do
         scenario "if the vacancy is published immediately" do
-          vacancy = create(:vacancy, :draft, publish_on: Date.current)
+          vacancy = create(:vacancy, :draft, publish_on: Date.current, job_roles: %w[teacher])
           vacancy.organisation_vacancies.create(organisation: school)
 
           expect_any_instance_of(Publishers::Vacancies::BaseController)
