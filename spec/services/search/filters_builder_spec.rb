@@ -17,7 +17,7 @@ RSpec.describe Search::FiltersBuilder do
 
   let(:from_date) { Date.current }
   let(:to_date) { Date.current }
-  let(:job_roles) { %w[teacher sen_specialist] }
+  let(:job_roles) { %w[teacher send_responsible] }
   let(:phases) { %w[secondary primary] }
   let(:working_patterns) { %w[full_time part_time] }
   let(:subjects) { %w[Science Biology] }
@@ -104,7 +104,7 @@ RSpec.describe Search::FiltersBuilder do
           " expires_at_timestamp > #{expired_now_filter}) AND "\
           "(publication_date_timestamp >= #{from_date.to_time.to_i} AND" \
           " publication_date_timestamp <= #{to_date.to_time.to_i}) AND " \
-          "(job_roles:'teacher' OR job_roles:'sen_specialist') AND " \
+          "(job_roles:'teacher' OR job_roles:'send_responsible') AND " \
           "(education_phases:'secondary' OR education_phases:'primary') AND " \
           "(working_patterns:'full_time' OR working_patterns:'part_time') AND " \
           "(subjects:'Science' OR subjects:'Biology')",
