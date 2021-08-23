@@ -674,7 +674,7 @@ en:
       publishers_job_listing_job_role_form:
         primary_job_role: What is the job role?
       publishers_job_listing_job_role_details_form:
-        additional_job_roles: Tell us more about the role
+        additional_job_roles_html: Tell us more about the role (optional<span class='govuk-visually-hidden'> field</span>)</span>
         send_responsible: Does the role have SEND responsibilities (special educational needs and disabilities)?
       publishers_job_listing_job_location_form:
         job_location: Where will the job be based?
