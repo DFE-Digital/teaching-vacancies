@@ -53,9 +53,9 @@ class Jobseekers::SubscriptionForm
   private
 
   def set_facet_options
-    @job_role_options = Vacancy.job_roles.except(:nqt_suitable).keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{option}")] }
+    @job_role_options = Vacancy.primary_job_role_options.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.primary_job_role_options.#{option}")] }
     @phase_options = [%w[primary Primary], %w[middle Middle], %w[secondary Secondary], %w[16-19 16-19]]
-    @nqt_suitable_options = Vacancy.job_roles.slice(:nqt_suitable).keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{option}")] }
+    @nqt_suitable_options = Vacancy.job_roles.slice(:nqt_suitable).keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_details_form.additional_job_roles_options.#{option}")] }
     @working_pattern_options = Vacancy.working_patterns.keys.map do |option|
       [option, I18n.t("helpers.label.publishers_job_listing_job_details_form.working_patterns_options.#{option}")]
     end

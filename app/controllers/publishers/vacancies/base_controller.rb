@@ -6,14 +6,22 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
   helper_method :current_step_number, :step_current, :steps_adjust, :steps_config, :vacancy
 
   def steps_adjust
+    # Only adjust *after* job role step as the extra step for school groups comes after that
+    return 0 if defined?(step) && step.in?(%i[job_role job_role_details])
+
     current_organisation.school_group? ? 0 : 1
   end
 
   def step_current
-    if defined?(step)
-      step == :schools ? :job_location : step
+    return :review unless defined?(step)
+
+    case step
+    when :schools
+      :job_location
+    when :job_role_details
+      :job_role
     else
-      :review
+      step
     end
   end
 
