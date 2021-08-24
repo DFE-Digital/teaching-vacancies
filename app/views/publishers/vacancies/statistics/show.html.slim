@@ -10,6 +10,8 @@
         = t(".intro")
         br
         = t(".explanation")
+    - elsif vacancy.draft?
+      = govuk_inset_text text: t(".draft_vacancy")
 
   .govuk-grid-column-two-thirds
     h3.govuk-heading-m = t(".listing_data")
