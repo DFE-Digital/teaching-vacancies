@@ -140,3 +140,15 @@ b {
     }
   }
 }
+
+.home_index {
+  .vacancy-facets {
+    .govuk-link {
+      display: inline-block;
+
+      &:visited * {
+        color: $govuk-link-visited-colour;
+      }
+    }
+  }
+}
