@@ -4,6 +4,7 @@
   .govuk-grid-row
     .govuk-grid-column-full
       = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, current_step_number, total_steps(steps_config))
+      = govuk_back_link text: session[:current_step] == :review ? t("buttons.cancel_and_return") : t("buttons.back_to_previous_step"), href: back_path
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds

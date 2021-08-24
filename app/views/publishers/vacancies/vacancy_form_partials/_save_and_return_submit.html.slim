@@ -1,2 +1,2 @@
-- unless vacancy.published?
+- unless vacancy.published? || !vacancy.completed_steps.include?("job_details")
   = f.govuk_submit t("buttons.save_and_return_later"), secondary: true, classes: "button-link save-and-return-listing-gtm"

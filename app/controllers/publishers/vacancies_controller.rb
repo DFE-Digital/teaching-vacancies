@@ -4,7 +4,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   before_action :redirect_if_published, only: %i[preview review]
   before_action :devise_job_alert_search_criteria, only: %i[show preview]
 
-  helper_method :applying_for_the_job_fields, :documents_fields, :important_dates_fields, :job_details_fields, :job_location_fields, :job_summary_fields, :pay_package_fields, :schools_fields
+  helper_method :applying_for_the_job_fields, :documents_fields, :important_dates_fields, :job_details_fields, :job_location_fields, :job_role_fields, :job_summary_fields, :pay_package_fields, :schools_fields
 
   def show
     @vacancy = VacancyPresenter.new(vacancy)
@@ -13,7 +13,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   def create
     reset_session_vacancy!
     vacancy = Vacancy.create(organisation_vacancies_attributes: [{ organisation: current_organisation }])
-    redirect_to organisation_job_build_path(vacancy.id, :job_location)
+    redirect_to organisation_job_build_path(vacancy.id, :job_role)
   end
 
   def edit
@@ -69,6 +69,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   end
 
   def redirect_to_incomplete_step
+    return redirect_to organisation_job_build_path(vacancy.id, :job_role) unless step_valid?(:job_role)
     return redirect_to organisation_job_build_path(vacancy.id, :job_details) unless step_valid?(:job_details)
     return redirect_to organisation_job_build_path(vacancy.id, :pay_package) unless step_valid?(:pay_package)
     return redirect_to organisation_job_build_path(vacancy.id, :important_dates) unless step_valid?(:important_dates)
