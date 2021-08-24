@@ -157,7 +157,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
       end
 
       def edit_a_published_vacancy
-        published_vacancy = create(:vacancy, :published)
+        published_vacancy = create(:vacancy, :published, job_roles: %w[teacher])
         published_vacancy.organisation_vacancies.create(organisation: school)
         visit edit_organisation_job_path(published_vacancy.id)
         click_header_link(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
