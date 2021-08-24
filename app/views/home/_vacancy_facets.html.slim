@@ -1,37 +1,47 @@
-.govuk-grid-row
-  .govuk-grid-column-one-half data={ "facet-type": "cities" }
-    h3.govuk-heading-s = t(".cities")
-    ul.govuk-list.two-column-list aria-label="#{t(".cities")} list"
-      - @vacancy_facets.cities.each do |city, count|
-        li
-          = govuk_link_to location_path(city) do
-            = "#{city} "
-            = t(".link_text_html", count: count)
+.vacancy-facets
+  .govuk-grid-row
+    .govuk-grid-column-one-half data={ "facet-type": "cities" }
+      h3.govuk-heading-s = t(".cities")
+      ul.govuk-list.two-column-list aria-label="#{t(".cities")} list"
+        - @vacancy_facets.cities.each do |city, count|
+          li
+            = govuk_link_to location_path(city) do
+              = "#{city} "
+              = t(".link_text_html", count: count)
 
-  .govuk-grid-column-one-half data={ "facet-type": "counties" }
-    h3.govuk-heading-s = t(".counties")
-    ul.govuk-list.two-column-list aria-label="#{t(".counties")} list"
-      - @vacancy_facets.counties.each do |county, count|
-        li
-          = govuk_link_to location_path(county) do
-            = "#{county} "
-            = t(".link_text_html", count: count)
+    .govuk-grid-column-one-half data={ "facet-type": "subjects" }
+      h3.govuk-heading-s = t(".subjects")
+      ul.govuk-list.two-column-list aria-label="#{t(".subjects")} list"
+        - @vacancy_facets.subjects.each do |subject, count|
+          li
+            = govuk_link_to subject_path(subject) do
+              = "#{subject} "
+              = t(".link_text_html", count: count)
 
-.govuk-grid-row
-  .govuk-grid-column-one-half data={ "facet-type": "subjects" }
-    h3.govuk-heading-s = t(".subjects")
-    ul.govuk-list.two-column-list aria-label="#{t(".subjects")} list"
-      - @vacancy_facets.subjects.each do |subject, count|
-        li
-          = govuk_link_to subject_path(subject) do
-            = "#{subject} "
-            = t(".link_text_html", count: count)
+  .govuk-grid-row
+    .govuk-grid-column-one-half data={ "facet-type": "counties" }
+      h3.govuk-heading-s = t(".counties")
+      ul.govuk-list.two-column-list aria-label="#{t(".counties")} list"
+        - @vacancy_facets.counties.each do |county, count|
+          li
+            = govuk_link_to location_path(county) do
+              = "#{county} "
+              = t(".link_text_html", count: count)
 
-  .govuk-grid-column-one-half data={ "facet-type": "job_roles" }
-    h3.govuk-heading-s = t(".job_roles")
-    ul.govuk-list.two-column-list aria-label="#{t(".job_roles")} list"
-      - @vacancy_facets.job_roles.each do |job_role, count|
+    .govuk-grid-column-one-half data={ "facet-type": "job_roles" }
+      h3.govuk-heading-s = t(".job_roles")
+      ul.govuk-list.two-column-list aria-label="#{t(".job_roles")} list"
+        - @vacancy_facets.job_roles.each do |job_role, count|
+          li
+            = govuk_link_to job_role_path(job_role) do
+              = "#{t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{job_role}")} "
+              = t(".link_text_html", count: count)
+      ul.govuk-list
         li
-          = govuk_link_to job_role_path(job_role) do
-            = "#{t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{job_role}")} "
-            = t(".link_text_html", count: count)
+          = govuk_link_to job_role_path("nqt_suitable") do
+            = "Current jobs suitable for early career teachers "
+            = t(".link_text_html", count: 1)
+        li
+          = govuk_link_to job_role_path("send_responsible") do
+            = "Current jobs with SEND responsibilities "
+            = t(".link_text_html", count: 2)

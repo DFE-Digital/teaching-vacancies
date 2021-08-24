@@ -2,18 +2,25 @@ en:
   landing_pages:
     description:
       job_role:
+        education_support: >-
+          Find education support jobs, such as teaching assistant or learning mentor roles, in England.
+          Teaching Vacancies is a free job-listing service from the Department for Education.
         leadership: >-
           Find middle and senior leadership jobs at schools and trusts in England. Teaching Vacancies is a free
           job-listing service from the Department for Education.
-        nqt_suitable: >-
-          Find NQT jobs at schools in England. Teaching Vacancies is a free job-listing service from the Department
-          for Education.
-        sen_specialist: >-
-          Find special educational needs (SEN) specialist and SENCO jobs in England. Teaching Vacancies is a free job-listing service from the
-          Department for Education.
+        sendco: >-
+          Find jobs with SEND responsibilities in England.
+          Teaching Vacancies is a free job-listing service from the Department for Education.
         teacher: >-
           Find teaching jobs at schools and trusts in England. Teaching Vacancies is a free job-listing service from
           the Department for Education.
+      additional_job_role:
+        nqt_suitable: >-
+          Find teaching jobs suitable for early career teachers and NQTs in England.
+          Teaching Vacancies is a free job-listing service from the Department for Education.
+        sen_specialist: >-
+          Find special educational needs (SEN) and SENDCo jobs in England.
+          Teaching Vacancies is a free job-listing service from the Department for Education.
       subject:
         design_and_technology: >-
           Find design and technology teaching jobs in England. Teaching Vacancies is a free job-listing service from
