@@ -556,8 +556,9 @@ en:
           education_support: Education support
           leadership: Leadership
           nqt_suitable: Suitable for early career teachers
-          sen_specialist: Special educational needs (SEN) specialist
-          send_responsible: SEND responsibilities (special educational needs and disabilities)
+          nqt_suitable_hidden_prefix: Only show results
+          sen_specialist: Special Educational Needs and Disability Coordinator (SENDCo)
+          send_responsible: Special Educational Needs and Disability Coordinator (SENDCo)
           teaching_assistant: Teaching assistant
           sendco: SENDCo
           teacher: Teacher
