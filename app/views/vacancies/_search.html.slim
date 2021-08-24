@@ -13,12 +13,21 @@ ruby:
     {
       title: t("jobs.filters.nqt_suitable"),
       key: "nqt_suitable",
-      hidden_text: t("jobs.filters.nqt_suitable_hidden_prefix"),
       attribute: :job_roles,
       selected: @form.job_roles.include?("nqt_suitable") ? @form.job_roles : [],
       options: @form.nqt_suitable_options,
       value_method: :first,
-      text_method: :last,
+      text_method: :second,
+      selected_method: :last,
+    },
+    {
+      title: t("jobs.filters.send_responsible"),
+      key: "send_responsible",
+      attribute: :job_roles,
+      selected: @form.job_roles.include?("send_responsible") ? @form.job_roles : [],
+      options: @form.send_responsible_options,
+      value_method: :first,
+      text_method: :second,
       selected_method: :last,
     },
     {
