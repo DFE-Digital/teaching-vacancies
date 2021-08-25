@@ -171,7 +171,7 @@ en:
               content_with_no_link: You can choose for candidates to apply for the job through Teaching Vacancies.
               link: Preview the application form
           education_support:
-            reveal: You can't accept Education support applications directly through Teaching Vacancies at this time
+            reveal: You can't accept Teaching assistant or Education support applications directly through Teaching Vacancies at this time
             infomation:
               - This option will be available to hiring staff in the future.
               - For now ensure to include details on how candidates can apply through your own process.

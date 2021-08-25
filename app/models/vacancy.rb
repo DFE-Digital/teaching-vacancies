@@ -11,7 +11,7 @@ class Vacancy < ApplicationRecord
   # we used to allow multiple.
   # TODO: This is a compromise to keep changes to the data model minimal for now. Once
   # the legacy vacancies are gone, we should refactor the data model.
-  PRIMARY_JOB_ROLES =  { teacher: 0, leadership: 1, education_support: 4, sendco: 5 }.freeze
+  PRIMARY_JOB_ROLES =  { teacher: 0, leadership: 1, teaching_assistant: 6, education_support: 4, sendco: 5 }.freeze
   ADDITIONAL_JOB_ROLES = { send_responsible: 2, nqt_suitable: 3 }.freeze
   array_enum job_roles: PRIMARY_JOB_ROLES.merge(ADDITIONAL_JOB_ROLES)
 
@@ -105,6 +105,10 @@ class Vacancy < ApplicationRecord
 
   def pending?
     published? && publish_on&.future?
+  end
+
+  def allow_enabling_job_applications?
+    %w[teacher leadership sendco].include?(primary_job_role)
   end
 
   def can_receive_job_applications?
