@@ -13,7 +13,7 @@
 
         h2.govuk-heading-l = t("publishers.vacancies.steps.applying_for_the_job")
 
-        - if vacancy.primary_job_role == "education_support"
+        - if !vacancy.allow_enabling_job_applications?
           details class="govuk-details" data-module="govuk-details"
             summary.govuk-details__summary
               .govuk-details__summary-text = t(".education_support.reveal")
