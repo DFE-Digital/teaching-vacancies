@@ -26,6 +26,16 @@ ruby:
       selected_method: :last,
     },
     {
+      title: t("jobs.filters.send_responsible"),
+      key: "send_responsible",
+      attribute: :job_roles,
+      selected: @form.job_roles.include?("send_responsible") ? @form.job_roles : [],
+      options: @form.send_responsible_options,
+      value_method: :first,
+      text_method: :last,
+      selected_method: :last,
+    },
+    {
       title: t("jobs.filters.phases"),
       key: "education_phase",
       attribute: :phases,
