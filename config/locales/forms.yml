@@ -230,7 +230,7 @@ en:
       publishers_job_listing_job_role_form:
         primary_job_role_options:
           leadership: Includes Head of Year/Subject, Deputy/Assistant Head, Headteacher, and trust-level roles
-          education_support: Includes Teaching assistant and Learning support
+          education_support: Includes Learning support
           sendco: Special educational needs and disabilities coordinator
       publishers_job_listing_job_role_details_form:
         additional_job_roles: Select all that apply
@@ -557,12 +557,14 @@ en:
           nqt_suitable: Suitable for early career teachers
           sen_specialist: Special educational needs (SEN) specialist
           send_responsible: SEND responsibilities (special educational needs and disabilities)
+          teaching_assistant: Teaching assistant
           sendco: SENDCo
           teacher: Teacher
       publishers_job_listing_job_role_form:
         primary_job_role_options:
           teacher: Teacher
           leadership: Leadership
+          teaching_assistant: Teaching assistant
           sendco: SENDCo
           education_support: Education support
       publishers_job_listing_job_role_details_form:
