@@ -230,7 +230,7 @@ en:
       publishers_job_listing_job_role_form:
         primary_job_role_options:
           leadership: Includes Head of Year/Subject, Deputy/Assistant Head, Headteacher, and trust-level roles
-          education_support: Includes Learning support
+          education_support: Includes learning support and tutors
           sendco: Special educational needs and disabilities coordinator
       publishers_job_listing_job_role_details_form:
         additional_job_roles: Select all that apply
