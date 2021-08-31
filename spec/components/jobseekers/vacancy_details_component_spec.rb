@@ -16,7 +16,7 @@ RSpec.describe Jobseekers::VacancyDetailsComponent, type: :component do
     end
 
     it "renders the job role" do
-      expect(rendered_component).to include(vacancy_presenter.show_job_roles)
+      expect(rendered_component).to include(vacancy_presenter.all_job_roles)
     end
   end
 
