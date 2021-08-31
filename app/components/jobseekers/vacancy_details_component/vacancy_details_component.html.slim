@@ -4,7 +4,7 @@ section#job-details class="govuk-!-margin-bottom-5"
 
   = render GovukComponent::SummaryList.new do |component|
     - if @vacancy.job_roles.any?
-      = component.slot(:row, key: I18n.t("jobs.job_role"), value: @vacancy.show_job_roles)
+      = component.slot(:row, key: I18n.t("jobs.job_role"), value: @vacancy.all_job_roles)
     - if @vacancy.subjects.any?
       = component.slot(:row, key: I18n.t("jobs.subject", count: @vacancy.subjects.count), value: @vacancy.show_subjects)
     = component.slot(:row, key: I18n.t("jobs.working_patterns"), value: @vacancy.working_patterns)
