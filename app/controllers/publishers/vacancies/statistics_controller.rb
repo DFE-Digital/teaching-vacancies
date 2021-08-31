@@ -1,6 +1,11 @@
 class Publishers::Vacancies::StatisticsController < Publishers::Vacancies::BaseController
   def show
-    @views_by_jobseeker = Publishers::VacancyStats.new(vacancy).number_of_unique_views
+    @number_of_unique_views = Publishers::VacancyStats.new(vacancy).number_of_unique_views
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data Publishers::ExportVacancyToCsv.new(vacancy, @number_of_unique_views).call, filename: "#{vacancy.slug}-statistics.csv" }
+    end
   end
 
   def update
