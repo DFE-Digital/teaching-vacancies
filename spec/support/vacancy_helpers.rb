@@ -135,7 +135,7 @@ module VacancyHelpers
 
     expect(page).to have_content(vacancy.job_title)
     expect(page).to have_content(vacancy.show_primary_job_role)
-    expect(page).to have_content(vacancy.show_additional_job_roles)
+    expect(page).to have_content(strip_tags(vacancy.show_additional_job_roles))
     expect(page).to have_content(vacancy.show_subjects)
     expect(page).to have_content(vacancy.working_patterns)
 

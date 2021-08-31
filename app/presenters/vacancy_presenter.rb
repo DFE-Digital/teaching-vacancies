@@ -76,9 +76,15 @@ class VacancyPresenter < BasePresenter
   end
 
   def show_additional_job_roles
-    model.additional_job_roles.map { |role|
-      I18n.t("helpers.label.publishers_job_listing_job_role_details_form.additional_job_roles_options.#{role}")
-    }.join(", ")
+    tag.ul safe_join(model.additional_job_roles.map { |role| tag.li additional_job_role(role) }), class: "govuk-list"
+  end
+
+  def additional_job_role(role)
+    I18n.t("helpers.label.publishers_job_listing_job_role_details_form.additional_job_roles_options.#{role}")
+  end
+
+  def all_job_roles
+    safe_join [show_primary_job_role, tag.br, model.additional_job_roles.map { |role| greyed_additional_job_role(role) }]
   end
 
   def show_subjects
@@ -92,6 +98,10 @@ class VacancyPresenter < BasePresenter
   end
 
   private
+
+  def greyed_additional_job_role(role)
+    tag.span additional_job_role(role), class: "govuk-hint govuk-!-margin-bottom-0"
+  end
 
   # rubocop:disable Style/AsciiComments
   def fix_bullet_points(text)
