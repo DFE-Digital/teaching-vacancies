@@ -33,6 +33,7 @@ en:
     delete: Delete
     delete_subject: Delete subject
     dismiss: Dismiss
+    download_stats: Download statistics (csv, 0.2KB)
     edit: Edit
     end_listing: End job listing
     end_listing_early: End listing early
