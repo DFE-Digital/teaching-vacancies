@@ -88,6 +88,22 @@ RSpec.describe VacancyPresenter do
     end
   end
 
+  describe "#public_job_roles" do
+    subject { VacancyPresenter.new(vacancy) }
+
+    let(:vacancy) { build(:vacancy) }
+
+    it "returns a the primary job role" do
+      expect(subject.public_job_roles).to include subject.show_primary_job_role
+    end
+
+    it "returns a the primary the additional job roles" do
+      vacancy.additional_job_roles.each do |additional_job_role|
+        expect(subject.public_job_roles).to include subject.additional_job_role(additional_job_role)
+      end
+    end
+  end
+
   describe "#working_patterns" do
     it "returns nil if working_patterns is unset" do
       vacancy = VacancyPresenter.new(create(:vacancy, :without_working_patterns))
