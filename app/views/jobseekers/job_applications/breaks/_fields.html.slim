@@ -1,3 +1,3 @@
-= f.govuk_date_field :started_on
-= f.govuk_date_field :ended_on
+= f.govuk_date_field :started_on, omit_day: true
+= f.govuk_date_field :ended_on, omit_day: true
 = f.govuk_text_area :reason_for_break, label: { size: "s" }, required: true

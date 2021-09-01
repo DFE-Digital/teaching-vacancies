@@ -36,7 +36,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
     expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :employment_history))
     expect(page).to have_content("The Best Teacher")
-    expect(page).to have_content(Date.new(2020, 0o7, 30).to_s)
+    expect(page).to have_content(Date.new(2020, 0o7, 1).to_s(:month_year))
   end
 
   context "managing employment history gaps" do
@@ -52,10 +52,8 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
       expect(page).to have_field("jobseekers_job_application_details_break_form_started_on_1i", with: "2021")
       expect(page).to have_field("jobseekers_job_application_details_break_form_started_on_2i", with: "2")
-      expect(page).to have_field("jobseekers_job_application_details_break_form_started_on_3i", with: "1")
       expect(page).to have_field("jobseekers_job_application_details_break_form_ended_on_1i", with: "2021")
       expect(page).to have_field("jobseekers_job_application_details_break_form_ended_on_2i", with: "6")
-      expect(page).to have_field("jobseekers_job_application_details_break_form_ended_on_3i", with: "1")
 
       click_on I18n.t("buttons.continue")
 
@@ -65,7 +63,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
       click_on I18n.t("buttons.continue")
 
       expect(page).to have_content("Travelling around the world")
-      expect(page).to have_content("1 February 2021 to 1 June 2021")
+      expect(page).to have_content("February 2021 to June 2021")
 
       within(".govuk-inset-text") do
         click_on I18n.t("buttons.change")
