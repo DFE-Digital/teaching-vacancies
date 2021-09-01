@@ -82,10 +82,10 @@
                 - if employment.subjects.present?
                   - summary.slot :row, key: t(".employment_history.subjects"), value: employment.subjects
                 - summary.slot :row, key: t(".employment_history.main_duties"), value: employment.main_duties
-                - summary.slot :row, key: t(".employment_history.started_on"), value: employment.started_on
+                - summary.slot :row, key: t(".employment_history.started_on"), value: employment.started_on.to_s(:month_year)
                 - summary.slot :row, key: t(".employment_history.current_role"), value: employment.current_role.humanize
                 - if employment.current_role == "no"
-                  - summary.slot :row, key: t(".employment_history.ended_on"), value: employment.ended_on
+                  - summary.slot :row, key: t(".employment_history.ended_on"), value: employment.ended_on.to_s(:month_year)
 
           - elsif employment.break?
             = render "shared/job_application/explained_employment_break", accordion: accordion, employment: employment, index: index
