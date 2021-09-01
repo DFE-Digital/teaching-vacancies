@@ -32,6 +32,8 @@ RSpec.describe Publishers::JobListing::JobRoleDetailsForm, type: :model do
   context "when primary job role is teacher" do
     let(:vacancy) { build(:vacancy, primary_job_role: "teacher") }
 
+    it { is_expected.not_to validate_inclusion_of(:send_responsible).in_array(%w[yes no]) }
+
     describe "#params_to_save" do
       let(:additional_roles) { %w[send_responsible nqt_suitable] }
 
@@ -40,6 +42,12 @@ RSpec.describe Publishers::JobListing::JobRoleDetailsForm, type: :model do
         expect(subject.params_to_save).to include(additional_job_roles: additional_roles)
       end
     end
+  end
+
+  context "when primary job role is sendco" do
+    let(:vacancy) { build(:vacancy, primary_job_role: "sendco") }
+
+    it { is_expected.not_to validate_inclusion_of(:send_responsible).in_array(%w[yes no]) }
   end
 
   context "when primary job role is leadership" do
