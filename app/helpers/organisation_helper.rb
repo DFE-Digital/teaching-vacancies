@@ -85,6 +85,16 @@ module OrganisationHelper
     I18n.t("schools.no_information")
   end
 
+  def website_link(school)
+    if school.website.present?
+      open_in_new_tab_link_to(school.website, school.website, class: "wordwrap")
+    elsif school.url.present?
+      open_in_new_tab_link_to(school.url, school.url, class: "wordwrap")
+    else
+      t("jobs.not_defined")
+    end
+  end
+
   private
 
   def number_of_pupils(school)

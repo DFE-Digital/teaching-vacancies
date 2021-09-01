@@ -1,52 +1,22 @@
-table.govuk-table
-  thead.govuk-table__head
-    tr.govuk-table__row
-      th.govuk-table__header colspan="2"
-        h2.govuk-heading-l
-          = current_organisation.name
-      th.govuk-table__header
-  tbody.govuk-table__body
-    tr.govuk-table__row
-      td.govuk-table__cell
-        strong.strong = t("school_groups.description")
-      td.govuk-table__cell
-        - if current_organisation.description.present?
-          = truncate(current_organisation.description, length: 130)
-          br
-        = govuk_link_to(t("organisation.view_more_or_change"), edit_organisation_school_path(current_organisation), class: "govuk-link--no-visited-state")
-      td.govuk-table__cell
-    - unless current_organisation.local_authority?
-      tr.govuk-table__row
-        td.govuk-table__cell
-          strong.strong = t("school_groups.address")
-        td.govuk-table__cell
-          = full_address(current_organisation)
-        td.govuk-table__cell
-    tr.govuk-table__row
-      td.govuk-table__cell
-        strong.strong = t("school_groups.website", organisation_type: organisation_type_basic(current_organisation).humanize)
-      td.govuk-table__cell.change_answer
-        - if current_organisation.website.present?
-          = open_in_new_tab_link_to(current_organisation.website, current_organisation.website, class: "wordwrap")
-        - elsif current_organisation.url.present?
-          = open_in_new_tab_link_to(current_organisation.url, current_organisation.url, class: "wordwrap")
-        - else
-          = t("jobs.not_defined")
-      td.govuk-table__cell.change-answer
-        = govuk_link_to edit_organisation_school_path(current_organisation), class: "govuk-link--no-visited-state" do
-          = t("buttons.change")
-          span.govuk-visually-hidden
-            = t("publishers.organisations.aria_change_website", organisation_type: organisation_type_basic(current_organisation))
-    - unless current_organisation.local_authority?
-      tr.govuk-table__row
-        td.govuk-table__cell
-          strong.strong = t("school_groups.group_type")
-        td.govuk-table__cell
-          = current_organisation.group_type
-        td.govuk-table__cell
-      tr.govuk-table__row
-        td.govuk-table__cell
-          strong.strong = t("school_groups.uid")
-        td.govuk-table__cell
-          = current_organisation.uid
-        td.govuk-table__cell
+h2.govuk-heading-l = current_organisation.name
+= govuk_summary_list do |summary|
+  - summary.slot :row,
+              key: t("schools.description"),
+              value: safe_join([tag.div(truncate(current_organisation.description, length: 130), class: "govuk-body"),
+                                tag.div(govuk_link_to(t("organisation.view_more_or_change"), edit_organisation_school_path(current_organisation), class: "govuk-link--no-visited-state"))])
+  - unless current_organisation.local_authority?
+    - summary.slot :row,
+                key: t("schools.address"),
+                value: full_address(current_organisation)
+  - summary.slot :row,
+              key: t("school_groups.website", organisation_type: organisation_type_basic(current_organisation).humanize),
+              value: website_link(current_organisation),
+              action: safe_join([tag.div(govuk_link_to(t("buttons.change"), edit_organisation_school_path(current_organisation)), class: "govuk-link--no-visited-state"),
+                  tag.span(t("publishers.organisations.aria_change_website", organisation_type: organisation_type_basic(current_organisation)), class: "govuk-visually-hidden")])
+  - unless current_organisation.local_authority?
+    - summary.slot :row,
+                key: t("school_groups.group_type"),
+                value: current_organisation.group_type
+    - summary.slot :row,
+                key: t("school_groups.uid"),
+                value: current_organisation.uid
