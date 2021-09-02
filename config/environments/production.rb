@@ -76,10 +76,10 @@ Rails.application.configure do
   config.active_record.logger = nil # Don't log SQL in production
 
   # Use Semantic_Logger for cleaner logging
-  config.rails_semantic_logger.format = :json
-  config.semantic_logger.backtrace_level = :error
-  config.semantic_logger.add_appender(io: $stdout, level: config.log_level, formatter: config.rails_semantic_logger.format)
-  config.logger = ActiveSupport::Logger.new($stdout)
+  #config.rails_semantic_logger.format = :json
+  #config.semantic_logger.backtrace_level = :error
+  #config.semantic_logger.add_appender(io: $stdout, level: config.log_level, formatter: config.rails_semantic_logger.format)
+  #config.logger = ActiveSupport::Logger.new($stdout)
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
