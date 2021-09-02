@@ -4,14 +4,13 @@
 }
 
 .schools {
-  border-top: 5px solid govuk-colour('orange');
   margin-top: govuk-spacing(2);
   padding: govuk-spacing(2) 0;
-}
 
-.school-table {
-  border: 10px solid $govuk-border-colour;
-  margin-bottom: govuk-spacing(3);
-  margin-top: govuk-spacing(2);
-  padding: govuk-spacing(2);
+  .school {
+    border: govuk-spacing(1) solid govuk-colour('light-grey');
+    margin-bottom: govuk-spacing(3);
+    margin-top: govuk-spacing(2);
+    padding: govuk-spacing(2);
+  }
 }
