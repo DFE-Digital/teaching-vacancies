@@ -64,7 +64,8 @@ gem "wicked"
 gem "xml-sitemap"
 
 # Logging
-#gem "rails_semantic_logger", "4.6.1"
+gem "amazing_print"
+gem "rails_semantic_logger"
 
 group :development do
   gem "aws-sdk-ssm"

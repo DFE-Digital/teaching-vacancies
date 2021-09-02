@@ -69,17 +69,11 @@ Rails.application.configure do
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
 
-  # Logging
-  config.log_level = :info
-  config.log_tags = [:request_id] # Prepend all log lines with the following tags.
-  config.logger = ActiveSupport::Logger.new($stdout)
-  config.active_record.logger = nil # Don't log SQL in production
-
   # Use Semantic_Logger for cleaner logging
-  #config.rails_semantic_logger.format = :json
-  #config.semantic_logger.backtrace_level = :error
-  #config.semantic_logger.add_appender(io: $stdout, level: config.log_level, formatter: config.rails_semantic_logger.format)
-  #config.logger = ActiveSupport::Logger.new($stdout)
+  config.rails_semantic_logger.format = :json
+  config.semantic_logger.backtrace_level = :error
+  config.semantic_logger.add_appender(io: $stdout, level: config.log_level, formatter: config.rails_semantic_logger.format)
+
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
