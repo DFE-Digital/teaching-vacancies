@@ -8,6 +8,7 @@ resource "cloudfoundry_service_instance" "postgres_instance" {
     delete = "30m"
     update = "60m"
   }
+
 }
 
 resource "cloudfoundry_service_instance" "redis_cache_instance" {
