@@ -76,10 +76,10 @@ Rails.application.configure do
   config.active_record.logger = nil # Don't log SQL in production
 
   # Use Lograge for cleaner logging
-  config.lograge.enabled = true
-  config.lograge.formatter = ColourLogFormatter.new
-  config.lograge.ignore_actions = ["ApplicationController#check"]
-  config.lograge.logger = ActiveSupport::Logger.new($stdout)
+  config.rails_semantic_logger.format = :json
+  config.semantic_logger.backtrace_level = :error
+  config.semantic_logger.add_appender(io: $stdout, level: config.log_level, formatter: config.rails_semantic_logger.format)
+  config.logger = ActiveSupport::Logger.new($stdout)
 
   # Include params in logs: https://github.com/roidrage/lograge#what-it-doesnt-do
   config.lograge.custom_options = lambda do |event|

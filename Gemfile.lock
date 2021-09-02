@@ -343,7 +343,7 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.1.1)
     nio4r (2.5.8)
-    nokogiri (1.12.3)
+    nokogiri (1.12.4)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
     noticed (1.4.1)
@@ -427,8 +427,12 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.4.1)
+    rails-html-sanitizer (1.4.2)
       loofah (~> 2.3)
+    rails_semantic_logger (4.6.1)
+      rack
+      railties (>= 3.2)
+      semantic_logger (~> 4.8)
     railties (6.1.4.1)
       actionpack (= 6.1.4.1)
       activesupport (= 6.1.4.1)
@@ -510,6 +514,8 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
+    semantic_logger (4.8.2)
+      concurrent-ruby (~> 1.0)
     semantic_range (3.0.0)
     shoulda-matchers (5.0.0)
       activesupport (>= 5.2.0)
@@ -682,6 +688,7 @@ DEPENDENCIES
   rack_session_access
   rails-controller-testing
   rails-html-sanitizer
+  rails_semantic_logger (= 4.6.1)
   railties (~> 6.1.4.1)
   recaptcha
   redis
