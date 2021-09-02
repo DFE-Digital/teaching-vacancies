@@ -70,26 +70,16 @@ Rails.application.configure do
   config.active_support.deprecation = :notify
 
   # Logging
-  config.log_level = :info
-  config.log_tags = [:request_id] # Prepend all log lines with the following tags.
+  #config.log_level = :info
+  #config.log_tags = [:request_id] # Prepend all log lines with the following tags.
+  #config.logger = ActiveSupport::Logger.new($stdout)
+  #config.active_record.logger = nil # Don't log SQL in production
+
+  # Use Semantic_Logger for cleaner logging
+  config.rails_semantic_logger.format = :json
+  config.semantic_logger.backtrace_level = :error
+  config.semantic_logger.add_appender(io: $stdout, level: config.log_level, formatter: config.rails_semantic_logger.format)
   config.logger = ActiveSupport::Logger.new($stdout)
-  config.active_record.logger = nil # Don't log SQL in production
-
-  # Use Lograge for cleaner logging
-  config.lograge.enabled = true
-  config.lograge.formatter = ColourLogFormatter.new
-  config.lograge.ignore_actions = ["ApplicationController#check"]
-  config.lograge.logger = ActiveSupport::Logger.new($stdout)
-
-  # Include params in logs: https://github.com/roidrage/lograge#what-it-doesnt-do
-  config.lograge.custom_options = lambda do |event|
-    exceptions = %w[controller action format id]
-    {
-      ip: event.payload[:remote_ip],
-      session_id: event.payload[:session_id],
-      params: event.payload[:params].except(*exceptions),
-    }
-  end
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false

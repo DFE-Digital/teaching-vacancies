@@ -61,6 +61,7 @@ jobs:
         echo "pr_id=${pr_id}" >> $GITHUB_ENV
         echo "PARAMETER_STORE_ENVIRONMENT=${PARAMETER_STORE_ENVIRONMENT}" >> $GITHUB_ENV
         echo "TF_VAR_environment=${TF_VAR_environment}" >> $GITHUB_ENV
+    #    echo TF_VAR_papertrail_url=${{secrets.TEST_LOGIT}} >> $GITHUB_ENV
 
     - name: Set environment variables for non-review environments
       if: startsWith(github.event.inputs.environment, 'review') != true
