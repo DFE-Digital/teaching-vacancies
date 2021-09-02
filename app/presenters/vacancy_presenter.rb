@@ -86,6 +86,9 @@ class VacancyPresenter < BasePresenter
   end
 
   def all_job_roles
+    # TODO: This line can go after the 30th of September 2021 when all the legacy vacancies have expired
+    return show_job_roles unless primary_job_role
+
     safe_join [show_primary_job_role, tag.br, model.additional_job_roles.map { |role| greyed_additional_job_role(role) }]
   end
 
