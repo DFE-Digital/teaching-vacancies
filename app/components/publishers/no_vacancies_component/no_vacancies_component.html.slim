@@ -4,18 +4,4 @@
   .govuk-grid-column-full
     h2.govuk-heading-m = t(".heading")
 
-    = govuk_button_to t("buttons.create_job"), organisation_jobs_path, class: "govuk-!-margin-bottom-0"
-
-    p = t(".intro")
-
-  .govuk-grid-column-one-third
-    h2.govuk-heading-s Required
-    ul.govuk-list.govuk-list--bullet
-      - t(".bullets.required").each do |bullet|
-        li = bullet
-
-  .govuk-grid-column-one-third
-    h2.govuk-heading-s Optional
-    ul.govuk-list.govuk-list--bullet
-      - t(".bullets.optional").each do |bullet|
-        li = bullet
+    = govuk_button_to t("buttons.create_job"), organisation_jobs_path

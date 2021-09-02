@@ -21,7 +21,7 @@ RSpec.describe Publishers::NoVacanciesComponent, type: :component do
     let(:no_vacancies) { true }
 
     it "renders the no vacancies component" do
-      expect(rendered_component).to include(I18n.t("publishers.no_vacancies_component.intro"))
+      expect(rendered_component).to include(I18n.t("publishers.no_vacancies_component.heading"))
     end
   end
 end

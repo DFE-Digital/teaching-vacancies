@@ -47,28 +47,7 @@ en:
           description_fallback: Enter your email below and we will send you a link that will take you straight into your account.
           title: Hiring staff sign in
     no_vacancies_component:
-      bullets:
-        required:
-          - job title
-          - job role
-          - working pattern
-          - salary
-          - date job will be listed
-          - closing date
-          - time application is due
-          - contact email
-          - job summary
-          - information about the school
-        optional:
-          - subject
-          - employee benefits
-          - date job starts
-          - supporting documents to attach
-          - how to arrange a school visit
-          - how to apply
-          - link to online application
       heading: You have no job listings to manage
-      intro: 'To create a job listing for your school, you will need the following information:'
     organisations:
       aria_change_description: '%{organisation_type} description'
       aria_change_website: '%{organisation_type} website'
