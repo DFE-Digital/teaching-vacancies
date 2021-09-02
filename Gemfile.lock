@@ -310,11 +310,6 @@ GEM
       ffi-compiler (~> 1.0)
       rake (~> 13.0)
     lockbox (0.6.5)
-    lograge (0.11.2)
-      actionpack (>= 4)
-      activesupport (>= 4)
-      railties (>= 4)
-      request_store (~> 1.0)
     loofah (2.12.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -343,7 +338,7 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.1.1)
     nio4r (2.5.8)
-    nokogiri (1.12.3)
+    nokogiri (1.12.4)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
     noticed (1.4.1)
@@ -427,7 +422,7 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.4.1)
+    rails-html-sanitizer (1.4.2)
       loofah (~> 2.3)
     railties (6.1.4.1)
       actionpack (= 6.1.4.1)
@@ -448,8 +443,6 @@ GEM
       declarative (< 0.1.0)
       trailblazer-option (>= 0.1.1, < 0.2.0)
       uber (< 0.2.0)
-    request_store (1.5.0)
-      rack (>= 1.4)
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
@@ -666,7 +659,6 @@ DEPENDENCIES
   launchy
   listen
   lockbox
-  lograge
   mail-notify
   mimemagic
   noticed
