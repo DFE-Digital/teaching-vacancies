@@ -70,10 +70,10 @@ Rails.application.configure do
   config.active_support.deprecation = :notify
 
   # Use Semantic_Logger for cleaner logging
+  Rails.application.config.semantic_logger.application = ""
   config.rails_semantic_logger.format = :json
   config.semantic_logger.backtrace_level = :error
   config.semantic_logger.add_appender(io: $stdout, level: config.log_level, formatter: config.rails_semantic_logger.format)
-
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
