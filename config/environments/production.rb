@@ -74,7 +74,6 @@ Rails.application.configure do
   config.semantic_logger.backtrace_level = :error
   config.semantic_logger.add_appender(io: $stdout, level: config.log_level, formatter: config.rails_semantic_logger.format)
 
-
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
