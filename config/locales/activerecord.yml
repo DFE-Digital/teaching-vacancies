@@ -136,6 +136,7 @@ en:
       too_short: Job title must be at least %{count} characters
       too_long: Job title must not be more than %{count} characters
       invalid_characters: Job title must not contain any HTML tags
+  working_patterns_errors: &working_patterns_errors
     working_patterns:
       blank: Select a working pattern
   pay_package_errors: &pay_package_errors
@@ -247,6 +248,9 @@ en:
         publishers/job_listing/job_details_form:
           attributes:
             <<: *job_details_errors
+        publishers/job_listing/working_patterns_form:
+          attributes:
+            <<: *working_patterns_errors
         publishers/job_listing/pay_package_form:
           attributes:
             <<: *pay_package_errors
