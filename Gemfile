@@ -49,6 +49,7 @@ gem "puma"
 gem "rack-attack"
 gem "rack-cors"
 gem "rails-html-sanitizer"
+gem "rails_semantic_logger"
 gem "recaptcha"
 gem "redis"
 gem "rollbar"
@@ -63,11 +64,8 @@ gem "webpacker"
 gem "wicked"
 gem "xml-sitemap"
 
-# Logging
-gem "amazing_print"
-gem "rails_semantic_logger"
-
 group :development do
+  gem "amazing_print" # optional dependency of `rails_semantic_logger`
   gem "aws-sdk-ssm"
   gem "launchy"
   gem "listen"
