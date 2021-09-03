@@ -1,0 +1,13 @@
+= render "publishers/vacancies/error_tag", attributes: job_details_fields
+
+= render ReviewComponent.new id: "working_patterns" do |review|
+  - review.heading title: t("publishers.vacancies.steps.working_patterns"),
+                   text: t("buttons.change"),
+                   href: organisation_job_build_path(@vacancy.id, :working_patterns)
+
+  - review.body do
+    = govuk_summary_list do |component|
+      - component.slot(:row,
+        key: t("jobs.working_patterns"),
+        value: @vacancy.show_working_patterns,
+        html_attributes: { id: "working_patterns" })
