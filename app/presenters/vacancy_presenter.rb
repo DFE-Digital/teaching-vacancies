@@ -62,6 +62,14 @@ class VacancyPresenter < BasePresenter
         .capitalize
   end
 
+  def show_working_patterns
+    if model.working_patterns_details?
+      safe_join([working_patterns, tag.br, tag.span(model.working_patterns_details, class: "govuk-hint govuk-!-margin-bottom-0")])
+    else
+      working_patterns
+    end
+  end
+
   def working_patterns_for_job_schema
     model_working_patterns.compact.map(&:upcase).join(", ")
   end
