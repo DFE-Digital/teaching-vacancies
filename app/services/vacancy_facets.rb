@@ -2,7 +2,7 @@ class VacancyFacets
   CACHE_DURATION = 24.hours
 
   def job_roles
-    cached(:job_roles) { sort_and_limit(job_role_facet.select { |role| role.in?(Vacancy.primary_job_role_options) }, 4) }
+    cached(:job_roles) { sort_and_limit(job_role_facet.select { |role| role.in?(Vacancy.primary_job_role_options) }, Vacancy.primary_job_role_options.count) }
   end
 
   def subjects
