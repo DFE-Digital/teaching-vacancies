@@ -21,6 +21,10 @@ RSpec.describe "Publishers can save and return later" do
 
         fill_in_job_details_form_fields(@vacancy)
         click_on I18n.t("buttons.continue")
+
+        fill_in_working_patterns_form_fields(@vacancy)
+        click_on I18n.t("buttons.continue")
+
         created_vacancy = Vacancy.find_by(job_title: @vacancy.job_title)
 
         expect(page.current_path).to eq(organisation_job_build_path(created_vacancy.id, :pay_package))
@@ -51,6 +55,9 @@ RSpec.describe "Publishers can save and return later" do
         click_on I18n.t("buttons.continue")
 
         fill_in_job_details_form_fields(@vacancy)
+        click_on I18n.t("buttons.continue")
+
+        fill_in_working_patterns_form_fields(@vacancy)
         click_on I18n.t("buttons.continue")
         created_vacancy = Vacancy.find_by(job_title: @vacancy.job_title)
 
@@ -87,6 +94,9 @@ RSpec.describe "Publishers can save and return later" do
         click_on I18n.t("buttons.continue")
 
         fill_in_job_details_form_fields(@vacancy)
+        click_on I18n.t("buttons.continue")
+
+        fill_in_working_patterns_form_fields(@vacancy)
         click_on I18n.t("buttons.continue")
         created_vacancy = Vacancy.find_by(job_title: @vacancy.job_title)
 
@@ -127,6 +137,9 @@ RSpec.describe "Publishers can save and return later" do
 
         fill_in_job_details_form_fields(@vacancy)
         click_on I18n.t("buttons.continue")
+
+        fill_in_working_patterns_form_fields(@vacancy)
+        click_on I18n.t("buttons.continue")
         created_vacancy = Vacancy.find_by(job_title: @vacancy.job_title)
 
         fill_in_pay_package_form_fields(@vacancy)
@@ -161,6 +174,9 @@ RSpec.describe "Publishers can save and return later" do
         click_on I18n.t("buttons.continue")
 
         fill_in_job_details_form_fields(@vacancy)
+        click_on I18n.t("buttons.continue")
+
+        fill_in_working_patterns_form_fields(@vacancy)
         click_on I18n.t("buttons.continue")
         created_vacancy = Vacancy.find_by(job_title: @vacancy.job_title)
 
@@ -200,6 +216,9 @@ RSpec.describe "Publishers can save and return later" do
         click_on I18n.t("buttons.continue")
 
         fill_in_job_details_form_fields(@vacancy)
+        click_on I18n.t("buttons.continue")
+
+        fill_in_working_patterns_form_fields(@vacancy)
         click_on I18n.t("buttons.continue")
         created_vacancy = Vacancy.find_by(job_title: @vacancy.job_title)
 

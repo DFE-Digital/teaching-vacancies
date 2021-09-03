@@ -52,6 +52,7 @@ FactoryBot.define do
     status { :published }
     subjects { SUBJECT_OPTIONS.sample(2).map(&:first).sort! }
     working_patterns { Vacancy.working_patterns.keys.sample(rand(1..3)) }
+    working_patterns_details { Faker::Lorem.paragraph(sentence_count: 1) }
 
     trait :no_tv_applications do
       application_link { Faker::Internet.url(host: "example.com") }
