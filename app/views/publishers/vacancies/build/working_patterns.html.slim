@@ -1,0 +1,25 @@
+- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.pay_package"))
+
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-full
+      = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, current_step_number, total_steps(steps_config))
+      = govuk_back_link text: session[:current_step] == :review ? t("buttons.cancel_and_return") : t("buttons.back_to_previous_step"), href: back_path
+
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form_for form, url: wizard_path, method: :patch do |f|
+        = f.govuk_error_summary
+
+        h2.govuk-heading-l = t("publishers.vacancies.steps.working_patterns")
+
+        / TODO: Sort out label translation. Not finding it for some reason
+        = f.govuk_collection_check_boxes :working_patterns, Vacancy.working_patterns.keys, :to_s, :to_s
+
+        = f.govuk_text_area :working_patterns_details, label: { size: "s", id: "working-pattern-details-label" }
+
+        = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+
+    - unless vacancy.published?
+      .govuk-grid-column-one-third
+        = render "steps"
