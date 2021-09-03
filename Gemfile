@@ -39,7 +39,6 @@ gem "jquery-rails"
 gem "kaminari"
 gem "kramdown"
 gem "lockbox"
-gem "lograge"
 gem "mail-notify"
 gem "mimemagic"
 gem "noticed"
@@ -63,6 +62,10 @@ gem "view_component", "~> 2.30.0"
 gem "webpacker"
 gem "wicked"
 gem "xml-sitemap"
+
+# Logging
+gem "amazing_print"
+gem "rails_semantic_logger"
 
 group :development do
   gem "aws-sdk-ssm"
