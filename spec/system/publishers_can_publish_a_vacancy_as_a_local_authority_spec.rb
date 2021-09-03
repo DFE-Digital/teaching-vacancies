@@ -42,7 +42,7 @@ RSpec.describe "Creating a vacancy" do
         click_on I18n.t("buttons.continue")
         click_on I18n.t("buttons.continue")
 
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 9))
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 10))
         within("h2.govuk-heading-l") do
           expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_location"))
         end
@@ -50,14 +50,14 @@ RSpec.describe "Creating a vacancy" do
         fill_in_job_location_form_field(vacancy, "local_authority")
         click_on I18n.t("buttons.continue")
 
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 9))
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 10))
         within("h2.govuk-heading-l") do
           expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_location"))
         end
 
         click_on I18n.t("buttons.continue")
 
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 9))
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 10))
         within("h2.govuk-heading-l") do
           expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_location"))
         end
@@ -68,7 +68,7 @@ RSpec.describe "Creating a vacancy" do
         fill_in_school_form_field(school2)
         click_on I18n.t("buttons.continue")
 
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 3, total: 9))
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 3, total: 10))
         within("h2.govuk-heading-l") do
           expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_details"))
         end
@@ -88,7 +88,7 @@ RSpec.describe "Creating a vacancy" do
         click_on I18n.t("buttons.continue")
         click_on I18n.t("buttons.continue")
 
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 9))
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 10))
         within("h2.govuk-heading-l") do
           expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_location"))
         end
@@ -96,7 +96,7 @@ RSpec.describe "Creating a vacancy" do
         fill_in_job_location_form_field(vacancy, "local_authority")
         click_on I18n.t("buttons.continue")
 
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 9))
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 10))
         within("h2.govuk-heading-l") do
           expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_location"))
         end
@@ -104,7 +104,7 @@ RSpec.describe "Creating a vacancy" do
         check school1.name, name: "publishers_job_listing_schools_form[organisation_ids][]", visible: false
         click_on I18n.t("buttons.continue")
 
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 9))
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 10))
         within("h2.govuk-heading-l") do
           expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_location"))
         end
@@ -116,7 +116,7 @@ RSpec.describe "Creating a vacancy" do
         check school2.name, name: "publishers_job_listing_schools_form[organisation_ids][]", visible: false
         click_on I18n.t("buttons.continue")
 
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 3, total: 9))
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 3, total: 10))
         within("h2.govuk-heading-l") do
           expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_details"))
         end
@@ -160,6 +160,14 @@ RSpec.describe "Creating a vacancy" do
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_details))
 
     fill_in_job_details_form_fields(vacancy)
+    click_on I18n.t("buttons.continue")
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :working_patterns))
+
+    click_on I18n.t("buttons.continue")
+    expect(page).to have_content("There is a problem")
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :working_patterns))
+
+    fill_in_working_patterns_form_fields(vacancy)
     click_on I18n.t("buttons.continue")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :pay_package))
 

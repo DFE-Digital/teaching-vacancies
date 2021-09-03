@@ -112,12 +112,24 @@ RSpec.describe VacancyPresenter do
       expect(vacancy.working_patterns).to be_nil
     end
 
-    it "returns a working patterns string if working_patterns is set" do
-      vacancy = VacancyPresenter.new(create(:vacancy, working_patterns: %w[full_time part_time]))
-      vacancy.organisation_vacancies.create(organisation: create(:school, name: "Smith High School"))
+    context "when only working_patterns is set" do
+      it "returns a string only containing the working pattern" do
+        vacancy = VacancyPresenter.new(create(:vacancy, working_patterns: %w[full_time part_time], working_patterns_details: nil))
+        vacancy.organisation_vacancies.create(organisation: create(:school, name: "Smith High School"))
 
-      expect(vacancy.working_patterns).to eq(I18n.t("jobs.working_patterns_info_many",
-                                                    patterns: "full-time, part-time"))
+        expect(vacancy.show_working_patterns).to eq(I18n.t("jobs.working_patterns_info", patterns: "full-time, part-time", count: vacancy.model_working_patterns.count))
+      end
+    end
+
+    context "when both working_patterns and working_patterns_details have been set" do
+      it "returns a string containing the working pattern and working_patterns_details" do
+        vacancy = VacancyPresenter.new(create(:vacancy, working_patterns: %w[full_time part_time]))
+        vacancy.organisation_vacancies.create(organisation: create(:school, name: "Smith High School"))
+
+        expect(vacancy.show_working_patterns).to eq(safe_join([vacancy.working_patterns,
+                                                               tag.br,
+                                                               tag.span(vacancy.working_patterns_details, class: "govuk-hint govuk-!-margin-bottom-0")]))
+      end
     end
   end
 

@@ -166,6 +166,8 @@ en:
           step_title: Pay package
         review:
           step_title: Review the job listing
+        working_patterns:
+          step_title: Working patterns
       destroy:
         success_html: >-
           %{job_title} has been <span class="govuk-!-font-weight-bold delete-listing-success-gtm">deleted</span>
@@ -250,6 +252,7 @@ en:
         job_role: Job role
         job_location: Job location
         schools: Job location
+        working_patterns: Working patterns
         job_details: Job details
         pay_package: Pay package
         important_dates: Important dates and deadlines

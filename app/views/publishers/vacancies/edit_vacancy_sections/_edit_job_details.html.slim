@@ -23,11 +23,6 @@
         html_attributes: { id: "subjects" })
 
       - component.slot(:row,
-        key: t("jobs.working_patterns"),
-        value: @vacancy.working_patterns,
-        html_attributes: { id: "working_patterns" })
-
-      - component.slot(:row,
         key: t("jobs.contract_type"),
         value: @vacancy.contract_type_with_duration,
         html_attributes: { id: "contract_type" })

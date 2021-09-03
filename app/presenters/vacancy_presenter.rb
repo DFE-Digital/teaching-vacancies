@@ -58,8 +58,15 @@ class VacancyPresenter < BasePresenter
       Vacancy.human_attribute_name("working_patterns.#{working_pattern}").downcase
     }.join(", ")
 
-    I18n.t("jobs.working_patterns_info_#{model_working_patterns.count > 1 ? 'many' : 'one'}", patterns: patterns)
-        .capitalize
+    I18n.t("jobs.working_patterns_info", patterns: patterns, count: model_working_patterns.count).capitalize
+  end
+
+  def show_working_patterns
+    if model.working_patterns_details?
+      safe_join([working_patterns, tag.br, tag.span(model.working_patterns_details, class: "govuk-hint govuk-!-margin-bottom-0")])
+    else
+      working_patterns
+    end
   end
 
   def working_patterns_for_job_schema
