@@ -314,6 +314,12 @@ Publisher.create(oid: "7AEC8E8D-6036-4E6E-92A4-800E381A12E0",
                  family_name: "Mackworth-Young",
                  given_name: "Rose")
 
+Publisher.create(oid: "C20E1526-FEB0-4A7C-9651-2ADF03FC57BF",
+                 email: "danny.chadburn@digital.education.gov.uk",
+                 organisation_publishers_attributes: organisation_publishers_attributes,
+                 family_name: "Chadburn",
+                 given_name: "Danny")
+
 publishers = Publisher.all
 
 # Vacancies
