@@ -24,7 +24,7 @@ variable "docker_password" {
 variable "papertrail_service_binding_enable" {
 }
 
-variable "papertrail_url" {
+variable "logit_url" {
 }
 
 variable "parameter_store_environment" {
