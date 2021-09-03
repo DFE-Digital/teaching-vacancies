@@ -24,13 +24,16 @@ RSpec.describe "Publishers can edit a draft vacancy" do
 
       fill_in_job_details_form_fields(vacancy)
       click_on I18n.t("buttons.continue")
+
+      fill_in_working_patterns_form_fields(vacancy)
+      click_on I18n.t("buttons.continue")
     end
 
     describe "#redirects_to" do
       scenario "incomplete pay package step" do
         visit edit_organisation_job_path(id: draft_vacancy.id)
 
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 3, total: 8))
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 4, total: 9))
         within("h2.govuk-heading-l") do
           expect(page).to have_content(I18n.t("publishers.vacancies.steps.pay_package"))
         end
@@ -45,7 +48,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         fill_in_pay_package_form_fields(draft_vacancy)
         click_on I18n.t("buttons.continue")
 
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 4, total: 8))
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 9))
         within("h2.govuk-heading-l") do
           expect(page).to have_content(I18n.t("publishers.vacancies.steps.important_dates"))
         end
@@ -67,7 +70,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         fill_in_important_dates_fields(draft_vacancy)
         click_on I18n.t("buttons.continue")
 
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 8))
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 6, total: 9))
         within("h2.govuk-heading-l") do
           expect(page).to have_content(I18n.t("publishers.vacancies.steps.documents"))
         end
@@ -91,7 +94,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
 
         click_on I18n.t("buttons.continue")
 
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 6, total: 8))
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 7, total: 9))
         within("h2.govuk-heading-l") do
           expect(page).to have_content(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
         end
@@ -121,7 +124,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         fill_in_applying_for_the_job_form_fields(draft_vacancy)
         click_on I18n.t("buttons.continue")
 
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 7, total: 8))
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 8, total: 9))
         within("h2.govuk-heading-l") do
           expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_summary"))
         end
@@ -153,7 +156,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
 
       scenario "then editing the draft redirects to incomplete step" do
         visit edit_organisation_job_path(id: draft_vacancy.id)
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 6, total: 8))
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 7, total: 9))
       end
 
       def edit_a_published_vacancy

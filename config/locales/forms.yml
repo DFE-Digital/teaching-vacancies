@@ -227,9 +227,6 @@ en:
           For secondary school roles include subject and, if relevant,
           level of seniority (‘Subject leader for science’, for example).
         subjects: What subject(s) will the teacher focus on?
-        working_patterns: >-
-          Select all working patterns you will consider for the role.
-          Flexible working options may attract more candidates.
       publishers_job_listing_job_role_form:
         primary_job_role_options:
           leadership: Includes Head of Year/Subject, Deputy/Assistant Head, Headteacher, and trust-level roles
@@ -254,6 +251,9 @@ en:
       publishers_job_listing_schools_form:
         add_school: Add a school to your account
         edit_schools: "Can't see the school you are looking for?"
+      publishers_job_listing_working_patterns_form:
+        working_patterns: Select all working patterns you will consider for the role. Flexible working options may attract more candidates
+        working_patterns_details: For example, '20 hours a week' or 'Tuesday and Wednesday mornings'
 
     label:
       general_feedback_form:
@@ -548,10 +548,6 @@ en:
           fixed_term: Fixed term
           permanent: Permanent
         job_title: Job title
-        working_patterns_options:
-          full_time: Full-time
-          part_time: Part-time
-          job_share: Job share
         # TODO: These job_roles_options are no longer on this form, but are used throughout the
         #  app and need to be refactored later
         job_roles_options:
@@ -582,6 +578,13 @@ en:
         actual_salary_html: Actual salary (optional<span class='govuk-visually-hidden'> field</span>)</span>
         benefits_html: Additional allowances (optional<span class='govuk-visually-hidden'> field</span>)</span>
         salary: Annual or full-time equivalent (FTE) salary
+      publishers_job_listing_working_patterns_form:
+        working_patterns_details_html: How many hours or days does the role cover? (optional<span class='govuk-visually-hidden'> field</span>)</span>
+        working_patterns_options:
+          full_time: Full time
+          part_time: Part time
+          term_time: Term time
+          job_share: Job share
 
       publishers_vacancy_statistics_form:
         hired_status: Job filled on Teaching Vacancies?
@@ -676,7 +679,6 @@ en:
         contract_type: Contract type
         suitable_for_nqt: Is this job suitable for NQTs?
         subjects_html: Subject(s) (optional<span class='govuk-visually-hidden'> field</span>)</span>
-        working_patterns: Working patterns
       publishers_job_listing_job_role_form:
         primary_job_role: What is the job role?
       publishers_job_listing_job_role_details_form:
@@ -687,6 +689,8 @@ en:
       publishers_job_listing_schools_form:
         organisation_ids: In which schools will the job be based?
         organisation_id: In which school will the job be based?
+      publishers_job_listing_working_patterns_form:
+        working_patterns: Working patterns
 
     options:
       publishers_job_listing_end_listing_form:
