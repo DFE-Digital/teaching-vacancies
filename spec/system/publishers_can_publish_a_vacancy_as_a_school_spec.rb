@@ -15,7 +15,7 @@ RSpec.describe "Creating a vacancy" do
 
     click_on I18n.t("buttons.create_job")
 
-    expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 8))
+    expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 9))
   end
 
   context "creating a new vacancy" do
@@ -49,6 +49,14 @@ RSpec.describe "Creating a vacancy" do
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_details))
 
       fill_in_job_details_form_fields(vacancy)
+      click_on I18n.t("buttons.continue")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :working_patterns))
+
+      click_on I18n.t("buttons.continue")
+      expect(page).to have_content("There is a problem")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :working_patterns))
+
+      fill_in_working_patterns_form_fields(vacancy)
       click_on I18n.t("buttons.continue")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :pay_package))
 
@@ -103,6 +111,9 @@ RSpec.describe "Creating a vacancy" do
       fill_in_job_details_form_fields(vacancy)
       click_on I18n.t("buttons.continue")
 
+      fill_in_working_patterns_form_fields(vacancy)
+      click_on I18n.t("buttons.continue")
+
       fill_in_pay_package_form_fields(vacancy)
       click_on I18n.t("buttons.continue")
 
@@ -117,7 +128,7 @@ RSpec.describe "Creating a vacancy" do
       fill_in_job_summary_form_fields(vacancy)
       click_on I18n.t("buttons.continue")
 
-      expect(page).to have_content(I18n.t("jobs.current_step", step: 8, total: 8))
+      expect(page).to have_content(I18n.t("jobs.current_step", step: 9, total: 9))
       within("h2.govuk-heading-l") do
         expect(page).to have_content(I18n.t("publishers.vacancies.steps.review_heading"))
       end
@@ -140,7 +151,7 @@ RSpec.describe "Creating a vacancy" do
           v = Vacancy.find_by(job_title: vacancy.job_title)
           visit edit_organisation_job_path(id: v.id)
 
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 3, total: 8))
+          expect(page).to have_content(I18n.t("jobs.current_step", step: 4, total: 9))
           within("h2.govuk-heading-l") do
             expect(page).to have_content(I18n.t("publishers.vacancies.steps.pay_package"))
           end
@@ -157,6 +168,9 @@ RSpec.describe "Creating a vacancy" do
           fill_in_job_details_form_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
+          fill_in_working_patterns_form_fields(vacancy)
+          click_on I18n.t("buttons.continue")
+
           fill_in_pay_package_form_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
@@ -168,7 +182,7 @@ RSpec.describe "Creating a vacancy" do
           v = Vacancy.find_by(job_title: vacancy.job_title)
           visit edit_organisation_job_path(id: v.id)
 
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 6, total: 8))
+          expect(page).to have_content(I18n.t("jobs.current_step", step: 7, total: 9))
           within("h2.govuk-heading-l") do
             expect(page).to have_content(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
           end
@@ -185,6 +199,9 @@ RSpec.describe "Creating a vacancy" do
           fill_in_job_details_form_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
+          fill_in_working_patterns_form_fields(vacancy)
+          click_on I18n.t("buttons.continue")
+
           fill_in_pay_package_form_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
@@ -199,7 +216,7 @@ RSpec.describe "Creating a vacancy" do
           v = Vacancy.find_by(job_title: vacancy.job_title)
           visit edit_organisation_job_path(id: v.id)
 
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 7, total: 8))
+          expect(page).to have_content(I18n.t("jobs.current_step", step: 8, total: 9))
           within("h2.govuk-heading-l") do
             expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_summary"))
           end
@@ -295,7 +312,7 @@ RSpec.describe "Creating a vacancy" do
           visit organisation_job_review_path(vacancy.id)
           click_header_link(I18n.t("publishers.vacancies.steps.job_details"))
 
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 8))
+          expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 9))
 
           fill_in "publishers_job_listing_job_details_form[job_title]", with: "An edited job title"
           click_on I18n.t("buttons.update_job")
@@ -335,6 +352,9 @@ RSpec.describe "Creating a vacancy" do
           fill_in_job_details_form_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
+          fill_in_working_patterns_form_fields(vacancy)
+          click_on I18n.t("buttons.continue")
+
           fill_in_pay_package_form_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
@@ -353,7 +373,7 @@ RSpec.describe "Creating a vacancy" do
 
           click_header_link(I18n.t("publishers.vacancies.steps.documents"))
 
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 8))
+          expect(page).to have_content(I18n.t("jobs.current_step", step: 6, total: 9))
           expect(page).to have_content(I18n.t("helpers.label.publishers_job_listing_documents_form.documents"))
 
           click_on I18n.t("buttons.update_job")
@@ -369,7 +389,7 @@ RSpec.describe "Creating a vacancy" do
           visit organisation_job_review_path(vacancy.id)
           click_header_link(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
 
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 6, total: 8))
+          expect(page).to have_content(I18n.t("jobs.current_step", step: 7, total: 9))
 
           fill_in "publishers_job_listing_applying_for_the_job_form[contact_email]", with: "not a valid email"
           click_on I18n.t("buttons.update_job")
@@ -389,7 +409,7 @@ RSpec.describe "Creating a vacancy" do
           visit organisation_job_review_path(vacancy.id)
           click_header_link(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
 
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 6, total: 8))
+          expect(page).to have_content(I18n.t("jobs.current_step", step: 7, total: 9))
 
           fill_in "publishers_job_listing_applying_for_the_job_form[contact_email]", with: "an@email.com"
           click_on I18n.t("buttons.update_job")
@@ -419,7 +439,7 @@ RSpec.describe "Creating a vacancy" do
 
         visit organisation_job_review_path(vacancy.id)
 
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 4, total: 8))
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 9))
         within("h2.govuk-heading-l") do
           expect(page).to have_content(I18n.t("publishers.vacancies.steps.important_dates"))
         end
