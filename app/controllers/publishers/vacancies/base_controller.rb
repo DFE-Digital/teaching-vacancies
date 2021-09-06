@@ -65,10 +65,6 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
     end
   end
 
-  def redirect_saved_draft_with_message
-    redirect_to jobs_with_type_organisation_path("draft"), success: t("messages.jobs.draft_saved_html", job_title: vacancy.job_title)
-  end
-
   def redirect_updated_job_with_message
     updated_job_path = vacancy.published? ? edit_organisation_job_path(vacancy.id) : organisation_job_review_path(vacancy.id)
     redirect_to updated_job_path,
