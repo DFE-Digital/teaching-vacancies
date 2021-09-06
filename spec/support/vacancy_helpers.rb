@@ -32,13 +32,6 @@ module VacancyHelpers
   def fill_in_job_details_form_fields(vacancy)
     fill_in "publishers_job_listing_job_details_form[job_title]", with: vacancy.job_title
 
-    working_patterns = vacancy.try(:model_working_patterns).presence || vacancy.working_patterns
-    working_patterns.each do |working_pattern|
-      check Vacancy.human_attribute_name("working_patterns.#{working_pattern}"),
-            name: "publishers_job_listing_job_details_form[working_patterns][]",
-            visible: false
-    end
-
     vacancy.subjects&.each do |subject|
       check subject,
             name: "publishers_job_listing_job_details_form[subjects][]",
@@ -47,6 +40,15 @@ module VacancyHelpers
 
     choose I18n.t("helpers.label.publishers_job_listing_job_details_form.contract_type_options.#{vacancy.contract_type}")
     fill_in "publishers_job_listing_job_details_form[contract_type_duration]", with: vacancy.contract_type_duration
+  end
+
+  def fill_in_working_patterns_form_fields(vacancy)
+    working_patterns = vacancy.try(:model_working_patterns).presence || vacancy.working_patterns
+    working_patterns.each do |working_pattern|
+      check Vacancy.human_attribute_name(working_pattern.to_s), name: "publishers_job_listing_working_patterns_form[working_patterns][]", visible: false
+    end
+
+    fill_in "publishers_job_listing_working_patterns_form[working_patterns_details]", with: vacancy.working_patterns_details
   end
 
   def fill_in_pay_package_form_fields(vacancy)
@@ -137,7 +139,9 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.show_primary_job_role)
     expect(page).to have_content(strip_tags(vacancy.show_additional_job_roles)) if vacancy.additional_job_roles.any?
     expect(page).to have_content(vacancy.show_subjects)
-    expect(page).to have_content(vacancy.working_patterns)
+
+    expect(page).to have_content(strip_tags(vacancy.working_patterns))
+    expect(page).to have_content(strip_tags(vacancy.working_patterns_details))
 
     expect(page).to have_content(vacancy.salary)
     expect(page.html).to include(vacancy.benefits)
@@ -172,7 +176,8 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.job_title)
     expect(page).to have_content(strip_tags(vacancy.all_job_roles))
     expect(page).to have_content(vacancy.show_subjects)
-    expect(page).to have_content(vacancy.working_patterns)
+
+    expect(page).to have_content(strip_tags(vacancy.show_working_patterns))
 
     expect(page).to have_content(vacancy.salary)
     expect(page.html).to include(vacancy.benefits)
@@ -235,24 +240,5 @@ module VacancyHelpers
       },
       validThrough: vacancy.expires_at.to_time.iso8601,
     }
-  end
-
-  def verify_vacancy_list_page_details(vacancy)
-    expect(page.find(".vacancy")).not_to have_content(vacancy.publish_on)
-    expect(page.find(".vacancy")).not_to have_content(vacancy.starts_on) if vacancy.starts_on?
-    expect(page.find(".vacancy")).to have_content(vacancy.parent_organisation.school_type.singularize)
-
-    verify_shared_vacancy_list_page_details(vacancy)
-  end
-
-  private
-
-  def verify_shared_vacancy_list_page_details(vacancy)
-    expect(page.find(".vacancy")).to have_content(vacancy.job_title)
-    expect(page.find(".vacancy")).to have_content(vacancy.location)
-    expect(page.find(".vacancy")).to have_content(vacancy.salary)
-    expect(page.find(".vacancy")).to have_content(vacancy.working_patterns)
-    expect(page.find(".vacancy")).to have_content(vacancy.expires_at.to_date)
-    expect(page.find(".vacancy")).to have_content(vacancy.expires_at.strftime("%-l:%M %P"))
   end
 end

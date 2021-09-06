@@ -49,7 +49,7 @@ class Jobseekers::SearchForm
     @nqt_suitable_options = [["nqt_suitable", I18n.t("jobs.filters.nqt_suitable_only"), I18n.t("jobs.filters.nqt_suitable")]]
     @send_responsible_options = [["send_responsible", I18n.t("jobs.filters.send_responsible_only"), I18n.t("jobs.filters.send_responsible")]]
     @working_pattern_options = Vacancy.working_patterns.keys.map do |option|
-      [option, I18n.t("helpers.label.publishers_job_listing_job_details_form.working_patterns_options.#{option}")]
+      [option, I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.#{option}")]
     end
   end
 

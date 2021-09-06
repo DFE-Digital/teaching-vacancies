@@ -7,7 +7,7 @@ section#job-details class="govuk-!-margin-bottom-5"
       = component.slot(:row, key: I18n.t("jobs.job_role"), value: @vacancy.all_job_roles)
     - if @vacancy.subjects.any?
       = component.slot(:row, key: I18n.t("jobs.subject", count: @vacancy.subjects.count), value: @vacancy.show_subjects)
-    = component.slot(:row, key: I18n.t("jobs.working_patterns"), value: @vacancy.working_patterns)
+    = component.slot(:row, key: I18n.t("jobs.working_patterns"), value: @vacancy.show_working_patterns)
     - if @vacancy.contract_type
       = component.slot(:row, key: I18n.t("jobs.contract_type"), value: @vacancy.contract_type_with_duration)
     - if @vacancy.actual_salary?
