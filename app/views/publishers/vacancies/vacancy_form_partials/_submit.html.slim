@@ -1,2 +1,5 @@
-= render "publishers/vacancies/vacancy_form_partials/continue_or_update_submit", f: f
-= render "publishers/vacancies/vacancy_form_partials/save_and_return_submit", f: f
+.govuk-button-group
+  = render "publishers/vacancies/vacancy_form_partials/continue_or_update_submit", f: f
+
+  - unless vacancy.published?
+    = govuk_link_to t("buttons.cancel_and_return_to_jobs"), jobs_with_type_organisation_path(:draft), class: "govuk-link--no-visited-state"

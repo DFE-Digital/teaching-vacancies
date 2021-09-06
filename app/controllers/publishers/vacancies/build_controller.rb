@@ -29,9 +29,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   end
 
   def update
-    if params[:commit] == t("buttons.save_and_return_later")
-      save_listing_and_return_later
-    elsif form.valid?
+    if form.valid?
       update_vacancy
       if params[:commit] == t("buttons.update_job") ||
          (params[:commit] == t("buttons.continue") && session[:current_step].in?(%i[edit_incomplete review]))
@@ -86,12 +84,6 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
 
   def finish_wizard_path
     edit_organisation_job_path(vacancy.id)
-  end
-
-  def save_listing_and_return_later
-    update_vacancy
-    vacancy.save(validate: false)
-    redirect_saved_draft_with_message
   end
 
   def set_multiple_schools
