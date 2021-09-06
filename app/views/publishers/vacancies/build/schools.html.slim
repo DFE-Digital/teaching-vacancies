@@ -29,7 +29,7 @@
             hint_method: :address).with_variant(@multiple_schools ? :checkbox : :radiobutton)
 
         div class="govuk-!-margin-top-6"
-          = render "publishers/vacancies/vacancy_form_partials/continue_or_update_submit", f: f
+          = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
     - unless vacancy.published?
       .govuk-grid-column-one-third

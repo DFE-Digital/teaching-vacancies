@@ -54,9 +54,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
   end
 
   def redirect_to_next_step
-    if params[:commit] == t("buttons.save_and_return_later")
-      redirect_saved_draft_with_message
-    elsif params[:commit] == t("buttons.update_job")
+    if params[:commit] == t("buttons.update_job")
       vacancy.update(completed_steps: completed_steps)
       redirect_updated_job_with_message
     elsif params[:commit] == t("buttons.continue")
