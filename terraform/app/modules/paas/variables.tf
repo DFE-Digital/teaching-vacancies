@@ -115,6 +115,7 @@ locals {
   app_service_bindings = concat(
     local.app_cloudfoundry_service_instances,
     local.app_user_provided_service_bindings
+
   )
   papertrail_service_name  = "${var.service_name}-papertrail-${var.environment}"
   postgres_service_name    = "${var.service_name}-postgres-${var.environment}"
