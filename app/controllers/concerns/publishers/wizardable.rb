@@ -2,7 +2,8 @@ module Publishers::Wizardable
   STRIP_CHECKBOXES = {
     job_role_details: %i[additional_job_roles],
     schools: %i[organisation_ids],
-    job_details: %i[subjects working_patterns],
+    job_details: %i[subjects],
+    working_patterns: %i[working_patterns],
   }.freeze
 
   def steps_config
@@ -12,12 +13,13 @@ module Publishers::Wizardable
       job_location: { number: 2, title: I18n.t("publishers.vacancies.steps.job_location") },
       schools: { number: 2, title: I18n.t("publishers.vacancies.steps.job_location") },
       job_details: { number: 3, title: I18n.t("publishers.vacancies.steps.job_details") },
-      pay_package: { number: 4, title: I18n.t("publishers.vacancies.steps.pay_package") },
-      important_dates: { number: 5, title: I18n.t("publishers.vacancies.steps.important_dates") },
-      documents: { number: 6, title: I18n.t("publishers.vacancies.steps.documents") },
-      applying_for_the_job: { number: 7, title: I18n.t("publishers.vacancies.steps.applying_for_the_job") },
-      job_summary: { number: 8, title: I18n.t("publishers.vacancies.steps.job_summary") },
-      review: { number: 9, title: I18n.t("publishers.vacancies.steps.review_heading") },
+      working_patterns: { number: 4, title: I18n.t("publishers.vacancies.steps.working_patterns") },
+      pay_package: { number: 5, title: I18n.t("publishers.vacancies.steps.pay_package") },
+      important_dates: { number: 6, title: I18n.t("publishers.vacancies.steps.important_dates") },
+      documents: { number: 7, title: I18n.t("publishers.vacancies.steps.documents") },
+      applying_for_the_job: { number: 8, title: I18n.t("publishers.vacancies.steps.applying_for_the_job") },
+      job_summary: { number: 9, title: I18n.t("publishers.vacancies.steps.job_summary") },
+      review: { number: 10, title: I18n.t("publishers.vacancies.steps.review_heading") },
     }.freeze
   end
 
@@ -37,8 +39,12 @@ module Publishers::Wizardable
     %i[organisation_ids]
   end
 
+  def working_patterns_fields
+    %i[working_patterns working_patterns_details]
+  end
+
   def job_details_fields
-    %i[job_title contract_type contract_type_duration working_patterns subjects]
+    %i[job_title contract_type contract_type_duration subjects]
   end
 
   def pay_package_fields
@@ -116,8 +122,14 @@ module Publishers::Wizardable
       status: vacancy.status.blank? ? "draft" : nil,
     }
     params.require(:publishers_job_listing_job_details_form)
-          .permit(:job_title, :contract_type, :contract_type_duration, working_patterns: [], subjects: [])
+          .permit(:job_title, :contract_type, :contract_type_duration, subjects: [])
           .merge(attributes_to_merge.compact)
+  end
+
+  def working_patterns_params(params)
+    params.require(:publishers_job_listing_working_patterns_form)
+          .permit(:working_patterns_details, working_patterns: [])
+          .merge(completed_steps: completed_steps)
   end
 
   def pay_package_params(params)
