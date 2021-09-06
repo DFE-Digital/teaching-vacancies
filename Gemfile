@@ -30,7 +30,7 @@ gem "google-apis-indexing_v3"
 gem "google-cloud-bigquery"
 gem "google_drive", require: false
 gem "govuk-components"
-gem "govuk_design_system_formbuilder", "~> 2.6.0"
+gem "govuk_design_system_formbuilder", "~> 2.7.3"
 gem "high_voltage"
 gem "httparty"
 gem "ipaddr"
