@@ -44,7 +44,7 @@ class Jobseekers::SearchForm
   end
 
   def set_facet_options
-    @job_role_options = Vacancy.primary_job_role_options.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.primary_job_role_options.#{option}")] }
+    @job_role_options = Vacancy.main_job_role_options.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.main_job_role_options.#{option}")] }
     @phase_options = [%w[primary Primary], %w[middle Middle], %w[secondary Secondary], %w[16-19 16-19]]
     @nqt_suitable_options = [["nqt_suitable", I18n.t("jobs.filters.nqt_suitable_only"), I18n.t("jobs.filters.nqt_suitable")]]
     @send_responsible_options = [["send_responsible", I18n.t("jobs.filters.send_responsible_only"), I18n.t("jobs.filters.send_responsible")]]

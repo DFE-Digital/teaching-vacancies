@@ -22,7 +22,7 @@ module Publishers::Wizardable
   end
 
   def job_role_fields
-    %i[primary_job_role]
+    %i[main_job_role]
   end
 
   def job_role_details_fields
@@ -63,7 +63,7 @@ module Publishers::Wizardable
 
   def job_role_params(params)
     params.require(:publishers_job_listing_job_role_form)
-          .permit(:primary_job_role).merge(completed_steps: completed_steps)
+          .permit(:main_job_role).merge(completed_steps: completed_steps)
   end
 
   def job_role_details_params(params)

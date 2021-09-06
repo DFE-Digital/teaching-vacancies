@@ -6,14 +6,14 @@ class Vacancy < ApplicationRecord
 
   friendly_id :slug_candidates, use: %w[slugged history]
 
-  # Each vacancy must have *exactly* one primary job role. It may have zero or multiple
-  # additional job roles. Legacy vacancies *may* have more than one primary job role as
+  # Each vacancy must have *exactly* one main job role. It may have zero or multiple
+  # additional job roles. Legacy vacancies *may* have more than one main job role as
   # we used to allow multiple.
   # TODO: This is a compromise to keep changes to the data model minimal for now. Once
   # the legacy vacancies are gone, we should refactor the data model.
-  PRIMARY_JOB_ROLES =  { teacher: 0, leadership: 1, teaching_assistant: 6, education_support: 4, sendco: 5 }.freeze
+  MAIN_JOB_ROLES = { teacher: 0, leadership: 1, teaching_assistant: 6, education_support: 4, sendco: 5 }.freeze
   ADDITIONAL_JOB_ROLES = { send_responsible: 2, nqt_suitable: 3 }.freeze
-  array_enum job_roles: PRIMARY_JOB_ROLES.merge(ADDITIONAL_JOB_ROLES)
+  array_enum job_roles: MAIN_JOB_ROLES.merge(ADDITIONAL_JOB_ROLES)
 
   array_enum working_patterns: { full_time: 0, part_time: 100, job_share: 101 }
   # Legacy vacancies can have these working_pattern options too: { compressed_hours: 102, staggered_hours: 103 }
@@ -79,8 +79,8 @@ class Vacancy < ApplicationRecord
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[7:00 8:00 9:00 10:00 11:00 12:00 13:00 14:00 15:00 16:00 17:00 23:59].freeze
 
-  def self.primary_job_role_options
-    PRIMARY_JOB_ROLES.keys.map(&:to_s)
+  def self.main_job_role_options
+    MAIN_JOB_ROLES.keys.map(&:to_s)
   end
 
   def self.additional_job_role_options
@@ -108,7 +108,7 @@ class Vacancy < ApplicationRecord
   end
 
   def allow_enabling_job_applications?
-    %w[teacher leadership sendco].include?(primary_job_role)
+    %w[teacher leadership sendco].include?(main_job_role)
   end
 
   def can_receive_job_applications?
@@ -135,21 +135,21 @@ class Vacancy < ApplicationRecord
     super().merge(
       "working_patterns" => working_patterns,
       "job_roles" => job_roles,
-      "primary_job_role" => primary_job_role,
+      "main_job_role" => main_job_role,
       "additional_job_roles" => additional_job_roles,
     )
   end
 
-  def primary_job_role
-    # Legacy vacancies may have more than one primary job role defined, but we still only care
+  def main_job_role
+    # Legacy vacancies may have more than one main job role defined, but we still only care
     # about the first
-    job_roles.find { |role| role.in?(self.class.primary_job_role_options) }
+    job_roles.find { |role| role.in?(self.class.main_job_role_options) }
   end
 
-  def primary_job_role=(role)
-    # Do nothing if the primary job role is unchanged.
+  def main_job_role=(role)
+    # Do nothing if the main job role is unchanged.
     # Otherwise completely reset job_roles as additional roles may no longer be valid
-    return if role == primary_job_role
+    return if role == main_job_role
 
     self.job_roles = [role]
   end
@@ -159,7 +159,7 @@ class Vacancy < ApplicationRecord
   end
 
   def additional_job_roles=(roles)
-    self.job_roles = [primary_job_role] + roles
+    self.job_roles = [main_job_role] + roles
   end
 
   def education_phases
