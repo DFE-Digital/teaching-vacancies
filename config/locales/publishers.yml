@@ -188,7 +188,9 @@ en:
           success: "The deadline for %{job_title} has been extended"
       job_applications:
         banner:
-          applications: Applications (%{count})
+          applications:
+            hide_count: Applications
+            show_count: Applications (%{count})
           deadline:
             after: Deadline passed
             before: Application deadline
@@ -206,6 +208,7 @@ en:
           deadline:
             after: Deadline passed
             before: Application deadline
+          expired_more_than_year: In line with our data retention policy you are no longer able to view applications for this job.
           no_applicants: Nobody has applied for this job yet
           received: Received on
           rejected:
