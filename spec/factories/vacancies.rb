@@ -30,9 +30,9 @@ FactoryBot.define do
     hired_status { nil }
     job_advert { Faker::Lorem.paragraph(sentence_count: rand(50..300)) }
 
-    primary_job_role { Vacancy.primary_job_role_options.sample }
+    main_job_role { Vacancy.main_job_role_options.sample }
     additional_job_roles do
-      case primary_job_role
+      case main_job_role
       when "teacher"
         Vacancy.additional_job_role_options.sample(rand(0..2))
       when "sendco"

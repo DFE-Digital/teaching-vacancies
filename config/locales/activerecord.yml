@@ -112,7 +112,7 @@ en:
 
   # Publishers journey
   job_role_errors: &job_role_errors
-    primary_job_role:
+    main_job_role:
       inclusion: Select a job role
       blank: Select a job role
   job_role_details_errors: &job_role_details_errors

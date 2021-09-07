@@ -16,7 +16,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   def show
     case step
     when :job_role_details
-      skip_step if vacancy.primary_job_role == "sendco"
+      skip_step if vacancy.main_job_role == "sendco"
     when :job_location
       skip_step if current_organisation.school?
     when :schools
@@ -50,12 +50,12 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
     case step
     when :job_details
       if current_organisation.school?
-        vacancy.primary_job_role == "sendco" ? wizard_path(:job_role) : wizard_path(:job_role_details)
+        vacancy.main_job_role == "sendco" ? wizard_path(:job_role) : wizard_path(:job_role_details)
       else
         vacancy.central_office? ? wizard_path(:job_location) : wizard_path(:schools)
       end
     when :job_location
-      vacancy.primary_job_role == "sendco" ? wizard_path(:job_role) : wizard_path(:job_role_details)
+      vacancy.main_job_role == "sendco" ? wizard_path(:job_role) : wizard_path(:job_role_details)
     else
       previous_wizard_path
     end
@@ -115,7 +115,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
     vacancy.save
     if step == :job_location && job_location != "central_office"
       redirect_to wizard_path(:schools)
-    elsif step == :job_role && vacancy.primary_job_role != "sendco"
+    elsif step == :job_role && vacancy.main_job_role != "sendco"
       redirect_to wizard_path(:job_role_details)
     else
       redirect_updated_job_with_message

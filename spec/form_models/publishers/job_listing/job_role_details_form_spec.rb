@@ -29,8 +29,8 @@ RSpec.describe Publishers::JobListing::JobRoleDetailsForm, type: :model do
     end
   end
 
-  context "when primary job role is teacher" do
-    let(:vacancy) { build(:vacancy, primary_job_role: "teacher") }
+  context "when main job role is teacher" do
+    let(:vacancy) { build(:vacancy, main_job_role: "teacher") }
 
     it { is_expected.not_to validate_inclusion_of(:send_responsible).in_array(%w[yes no]) }
 
@@ -44,20 +44,20 @@ RSpec.describe Publishers::JobListing::JobRoleDetailsForm, type: :model do
     end
   end
 
-  context "when primary job role is sendco" do
-    let(:vacancy) { build(:vacancy, primary_job_role: "sendco") }
+  context "when main job role is sendco" do
+    let(:vacancy) { build(:vacancy, main_job_role: "sendco") }
 
     it { is_expected.not_to validate_inclusion_of(:send_responsible).in_array(%w[yes no]) }
   end
 
-  context "when primary job role is leadership" do
-    let(:vacancy) { build(:vacancy, primary_job_role: "leadership") }
+  context "when main job role is leadership" do
+    let(:vacancy) { build(:vacancy, main_job_role: "leadership") }
 
     it_behaves_like "a form with send_responsible radios"
   end
 
-  context "when primary job role is education support" do
-    let(:vacancy) { build(:vacancy, primary_job_role: "education_support") }
+  context "when main job role is education support" do
+    let(:vacancy) { build(:vacancy, main_job_role: "education_support") }
 
     it_behaves_like "a form with send_responsible radios"
   end

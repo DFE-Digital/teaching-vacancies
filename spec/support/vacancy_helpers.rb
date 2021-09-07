@@ -15,15 +15,15 @@ module VacancyHelpers
   end
 
   def fill_in_job_role_form_fields(vacancy)
-    choose I18n.t("helpers.label.publishers_job_listing_job_role_form.primary_job_role_options.#{vacancy.primary_job_role}")
+    choose I18n.t("helpers.label.publishers_job_listing_job_role_form.main_job_role_options.#{vacancy.main_job_role}")
   end
 
   def fill_in_job_role_details_form_fields(vacancy)
-    if vacancy.primary_job_role == "teacher"
+    if vacancy.main_job_role == "teacher"
       vacancy.additional_job_roles&.each do |job_role|
         check I18n.t("helpers.label.publishers_job_listing_job_role_details_form.additional_job_roles_options.#{job_role}")
       end
-    elsif vacancy.primary_job_role.in?(%w[leadership education_support])
+    elsif vacancy.main_job_role.in?(%w[leadership education_support])
       value = vacancy.job_roles.include?("send_responsible") ? "yes" : "no"
       find("label[for='publishers-job-listing-job-role-details-form-send-responsible-#{value}-field']").click
     end
@@ -136,7 +136,7 @@ module VacancyHelpers
     end
 
     expect(page).to have_content(vacancy.job_title)
-    expect(page).to have_content(vacancy.show_primary_job_role)
+    expect(page).to have_content(vacancy.show_main_job_role)
     expect(page).to have_content(strip_tags(vacancy.show_additional_job_roles)) if vacancy.additional_job_roles.any?
     expect(page).to have_content(vacancy.show_subjects)
 

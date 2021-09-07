@@ -93,8 +93,8 @@ RSpec.describe VacancyPresenter do
 
     let(:vacancy) { build(:vacancy) }
 
-    it "returns the primary job role" do
-      expect(subject.all_job_roles).to include subject.show_primary_job_role
+    it "returns the main job role" do
+      expect(subject.all_job_roles).to include subject.show_main_job_role
     end
 
     it "returns the additional job roles" do

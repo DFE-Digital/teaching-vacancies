@@ -78,8 +78,8 @@ class VacancyPresenter < BasePresenter
     roles.map { |role| I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{role}") }.join(", ")
   end
 
-  def show_primary_job_role
-    I18n.t("helpers.label.publishers_job_listing_job_role_form.primary_job_role_options.#{primary_job_role}")
+  def show_main_job_role
+    I18n.t("helpers.label.publishers_job_listing_job_role_form.main_job_role_options.#{main_job_role}")
   end
 
   def show_additional_job_roles
@@ -94,9 +94,9 @@ class VacancyPresenter < BasePresenter
 
   def all_job_roles
     # TODO: This line can go after the 30th of September 2021 when all the legacy vacancies have expired
-    return show_job_roles unless primary_job_role
+    return show_job_roles unless main_job_role
 
-    safe_join [show_primary_job_role, tag.br, model.additional_job_roles.map { |role| greyed_additional_job_role(role) }]
+    safe_join [show_main_job_role, tag.br, model.additional_job_roles.map { |role| greyed_additional_job_role(role) }]
   end
 
   def show_subjects

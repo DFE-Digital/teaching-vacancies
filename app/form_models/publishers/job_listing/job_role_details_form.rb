@@ -4,7 +4,7 @@ class Publishers::JobListing::JobRoleDetailsForm < Publishers::JobListing::Vacan
 
   validates :send_responsible,
             inclusion: { in: %w[yes no] },
-            if: -> { vacancy.primary_job_role.in?(%w[leadership teaching_assistant education_support]) }
+            if: -> { vacancy.main_job_role.in?(%w[leadership teaching_assistant education_support]) }
 
   def teacher_additional_job_roles_options
     %w[nqt_suitable send_responsible]
@@ -23,7 +23,7 @@ class Publishers::JobListing::JobRoleDetailsForm < Publishers::JobListing::Vacan
   end
 
   def additional_job_roles_to_save
-    if vacancy.primary_job_role == "teacher"
+    if vacancy.main_job_role == "teacher"
       additional_job_roles
     else
       @send_responsible == "yes" ? ["send_responsible"] : []

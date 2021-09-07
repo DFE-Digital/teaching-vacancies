@@ -228,7 +228,7 @@ en:
           level of seniority (‘Subject leader for science’, for example).
         subjects: What subject(s) will the teacher focus on?
       publishers_job_listing_job_role_form:
-        primary_job_role_options:
+        main_job_role_options:
           leadership: Includes Head of Year/Subject, Deputy/Assistant Head, Headteacher, and trust-level roles
           education_support: Includes learning support and tutors
           sendco: Special educational needs and disabilities coordinator
@@ -561,7 +561,7 @@ en:
           sendco: SENDCo
           teacher: Teacher
       publishers_job_listing_job_role_form:
-        primary_job_role_options:
+        main_job_role_options:
           teacher: Teacher
           leadership: Leadership
           teaching_assistant: Teaching assistant
@@ -680,7 +680,7 @@ en:
         suitable_for_nqt: Is this job suitable for NQTs?
         subjects_html: Subject(s) (optional<span class='govuk-visually-hidden'> field</span>)</span>
       publishers_job_listing_job_role_form:
-        primary_job_role: What is the job role?
+        main_job_role: What is the job role?
       publishers_job_listing_job_role_details_form:
         additional_job_roles_html: Tell us more about the role (optional<span class='govuk-visually-hidden'> field</span>)</span>
         send_responsible: Does the role have SEND responsibilities (special educational needs and disabilities)?
