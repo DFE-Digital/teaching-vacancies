@@ -18,6 +18,7 @@ en:
     cancel: Cancel
     cancel_copy: Cancel job listing copy
     cancel_and_return: Cancel and return
+    cancel_and_return_to_jobs: Cancel and return to manage jobs
     cancel_end_listing: Cancel ending job listing
     cancel_extend_deadline: Cancel deadline extension
     close_account: Close account
@@ -51,7 +52,6 @@ en:
     save: Save
     save_and_continue: Save and continue
     save_and_come_back: Save and come back later
-    save_and_return_later: Save and return later
     save_changes: Save changes
     save_employment: Save role
     save_qualification:

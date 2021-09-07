@@ -1,2 +1,6 @@
-= render "publishers/vacancies/vacancy_form_partials/continue_or_update_submit", f: f
-= render "publishers/vacancies/vacancy_form_partials/save_and_return_submit", f: f
+.govuk-button-group
+  - if vacancy.published? || session[:current_step] == :review
+    = f.govuk_submit t("buttons.update_job"), classes: "update-listing-gtm"
+  - else
+    = f.govuk_submit t("buttons.continue"), classes: "govuk-!-margin-bottom-5 save-listing-gtm"
+    = govuk_link_to t("buttons.cancel_and_return_to_jobs"), jobs_with_type_organisation_path(:draft), class: "govuk-link--no-visited-state"
