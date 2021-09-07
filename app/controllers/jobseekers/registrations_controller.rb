@@ -50,11 +50,11 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
   end
 
   def password_update?
-    params[:password_update] == "true" || params[:commit] == t("buttons.update_password")
+    params[:password_update] == "true" || params.dig(resource_name, :password)
   end
 
   def set_correct_update_message
-    flash[:notice] = t("devise.passwords.updated") if flash[:notice] && params[:commit] == t("buttons.update_password")
+    flash[:notice] = t("devise.passwords.updated") if flash[:notice] && params.dig(resource_name, :password)
   end
 
   def after_inactive_sign_up_path_for(resource)

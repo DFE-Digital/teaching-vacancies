@@ -54,12 +54,9 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def status
-    case params[:commit]
-    when t("buttons.shortlist")
-      "shortlisted"
-    when t("buttons.confirm_rejection")
-      "unsuccessful"
-    end
+    return "shortlisted" if form_params.key?("further_instructions")
+
+    "unsuccessful" if form_params.key?("rejection_reasons")
   end
 
   def sort
