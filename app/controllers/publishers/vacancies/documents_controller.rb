@@ -54,11 +54,12 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
   end
 
   def redirect_to_next_step
-    if params[:commit] == t("buttons.update_job")
-      vacancy.update(completed_steps: completed_steps)
+    return if params[:publishers_job_listing_documents_form]
+
+    vacancy.update(completed_steps: completed_steps)
+    if session[:current_step] == :review
       redirect_updated_job_with_message
-    elsif params[:commit] == t("buttons.continue")
-      vacancy.update(completed_steps: completed_steps)
+    else
       redirect_to organisation_job_build_path(vacancy.id, :applying_for_the_job)
     end
   end
