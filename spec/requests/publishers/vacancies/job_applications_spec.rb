@@ -11,20 +11,6 @@ RSpec.describe "Job applications" do
     sign_in(publisher, scope: :publisher)
   end
 
-  describe "GET #index" do
-    context "when the vacancy expired outside the data access period" do
-      let(:vacancy) do
-        create(:vacancy, :expired_years_ago, organisation_vacancies_attributes: [{ organisation: organisation }])
-      end
-
-      it "returns not found" do
-        get(organisation_job_job_applications_path(vacancy.id))
-
-        expect(response).to have_http_status(:not_found)
-      end
-    end
-  end
-
   describe "GET #reject" do
     context "when the job application status is not draft or withdrawn" do
       it "renders the reject page" do
@@ -83,18 +69,6 @@ RSpec.describe "Job applications" do
     context "when the job application status is not draft or withdrawn" do
       it "renders the show page" do
         expect(get(organisation_job_job_application_path(vacancy.id, job_application.id))).to render_template(:show)
-      end
-
-      context "when the vacancy expired more than a year ago" do
-        let(:vacancy) do
-          create(:vacancy, :expired_years_ago, organisation_vacancies_attributes: [{ organisation: organisation }])
-        end
-
-        it "returns not found" do
-          get(organisation_job_job_application_path(vacancy.id, job_application.id))
-
-          expect(response).to have_http_status(:not_found)
-        end
       end
     end
 

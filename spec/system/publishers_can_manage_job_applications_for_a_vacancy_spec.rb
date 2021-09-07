@@ -232,4 +232,29 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       end
     end
   end
+
+  context "when a vacancy has expired more than 1 year ago and it has applications" do
+    let!(:vacancy) { create(:vacancy, :expired, expires_at: 1.year.ago, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+    let!(:job_application_submitted) { create(:job_application, :status_submitted, vacancy: vacancy) }
+
+    before { visit organisation_job_job_applications_path(vacancy.id) }
+
+    describe "the summary section" do
+      it "shows no application cards" do
+        expect(page).not_to have_css(".card-component")
+      end
+
+      it "shows no sort applications control" do
+        expect(page).not_to have_css("#sort-column-field")
+      end
+
+      it "shows no application counts" do
+        expect(page).to have_css(".job-applications-summary .govuk-grid-column-one-quarter", count: 1)
+      end
+
+      it "shows text to tell user can no longer see applications" do
+        expect(page).to have_css(".govuk-inset-text p", text: I18n.t("publishers.vacancies.job_applications.index.expired_more_than_year"))
+      end
+    end
+  end
 end

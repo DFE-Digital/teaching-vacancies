@@ -111,6 +111,10 @@ class Vacancy < ApplicationRecord
     %w[teacher leadership sendco].include?(main_job_role)
   end
 
+  def within_data_access_period?
+    expires_at > DATA_ACCESS_PERIOD_FOR_PUBLISHERS.ago
+  end
+
   def can_receive_job_applications?
     enable_job_applications? && published? && !pending?
   end
