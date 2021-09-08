@@ -5,7 +5,7 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
     @vacancy = vacancy
     @organisation = organisation
 
-    create_vacancy_step_groups = {
+    super(current_step, {
       job_role: job_role_steps,
       job_location: job_location_steps,
       job_details: %i[job_details],
@@ -16,9 +16,7 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
       applying_for_the_job: %i[applying_for_the_job],
       job_summary: %i[job_summary],
       review: %i[review],
-    }
-
-    super(current_step, create_vacancy_step_groups)
+    })
   end
 
   private
