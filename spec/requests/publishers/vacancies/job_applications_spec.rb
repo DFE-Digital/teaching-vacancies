@@ -134,12 +134,9 @@ RSpec.describe "Job applications" do
   end
 
   describe "POST #update_status" do
-    let(:commit) { I18n.t("buttons.shortlist") }
-    let(:params) { { publishers_job_application_update_status_form: { test: "param" }, commit: commit } }
-
     context "when the job application status is not draft or withdrawn" do
       context "when shortlisting a job application" do
-        let(:commit) { I18n.t("buttons.shortlist") }
+        let(:params) { { publishers_job_application_update_status_form: { further_instructions: "do this" } } }
 
         it "updates the status" do
           expect { post(organisation_job_job_application_update_status_path(vacancy.id, job_application.id), params: params) }
@@ -159,7 +156,7 @@ RSpec.describe "Job applications" do
       end
 
       context "when rejecting a job application" do
-        let(:commit) { I18n.t("buttons.confirm_rejection") }
+        let(:params) { { publishers_job_application_update_status_form: { rejection_reasons: "second choice" } } }
 
         it "updates the status" do
           expect { post(organisation_job_job_application_update_status_path(vacancy.id, job_application.id), params: params) }
@@ -181,6 +178,7 @@ RSpec.describe "Job applications" do
 
     context "when the job application status is draft" do
       let(:job_application) { create(:job_application, :status_draft, vacancy: vacancy) }
+      let(:params) { { publishers_job_application_update_status_form: { rejection_reasons: "second choice" } } }
 
       it "raises an error" do
         expect { post(organisation_job_job_application_update_status_path(vacancy.id, job_application.id), params: params) }
@@ -190,6 +188,7 @@ RSpec.describe "Job applications" do
 
     context "when the job application status is withdrawn" do
       let(:job_application) { create(:job_application, :status_withdrawn, vacancy: vacancy) }
+      let(:params) { { publishers_job_application_update_status_form: { rejection_reasons: "second choice" } } }
 
       it "raises an error" do
         expect { post(organisation_job_job_application_update_status_path(vacancy.id, job_application.id), params: params) }
