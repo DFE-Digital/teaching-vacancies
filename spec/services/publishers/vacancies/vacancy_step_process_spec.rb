@@ -1,12 +1,13 @@
 require "rails_helper"
 
 RSpec.describe Publishers::Vacancies::VacancyStepProcess do
-  subject { described_class.new(current_step, vacancy: vacancy, organisation: organisation) }
+  subject { described_class.new(current_step, vacancy: vacancy, organisation: organisation, session: session) }
 
   let(:current_step) { :job_details }
 
   let(:vacancy) { build_stubbed(:vacancy, job_roles: %w[teacher]) }
   let(:organisation) { build_stubbed(:school) }
+  let(:session) { {} }
 
   describe "#step_groups" do
     let(:all_possible_step_groups) do
@@ -77,6 +78,15 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
 
         it "skips the `schools` step" do
           expect(subject.steps).to eq(all_possible_steps - %i[schools])
+        end
+      end
+
+      context "when the job location has changed from central_office in the session" do
+        let(:vacancy) { build_stubbed(:vacancy, job_roles: %w[teacher], job_location: "central_office") }
+        let(:session) { { job_location: "at_multiple_schools" } }
+
+        it "skips the `schools` step" do
+          expect(subject.steps).to eq(all_possible_steps)
         end
       end
     end
