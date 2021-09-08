@@ -21,16 +21,9 @@
                 = tag.div(card.labelled_item(t(".last_edited"), format_time_to_datetime_at(draft_application.updated_at)))
                 = tag.div(card.labelled_item(t(".closing_date"), OrganisationVacancyPresenter.new(draft_application.vacancy).application_deadline))
 
-              - card.actions do
-                - if draft_application.vacancy.expires_at.future?
-                  .card-component__action
-                    = govuk_link_to jobseekers_job_application_review_path(draft_application) do
-                      = t(".continue_application")
-                      span.govuk-visually-hidden = " for #{draft_application.vacancy.job_title}"
-                .card-component__action
-                  = govuk_link_to jobseekers_job_application_confirm_destroy_path(draft_application) do
-                    = t("buttons.delete")
-                    span.govuk-visually-hidden = " application for #{draft_application.vacancy.job_title}"
+              - if draft_application.vacancy.expires_at.future?
+                - card.action_item link: govuk_link_to(safe_join([t(".continue_application"), tag.span(" for #{draft_application.vacancy.job_title}", class: "govuk-visually-hidden")]), jobseekers_job_application_review_path(draft_application))
+              - card.action_item link: govuk_link_to(safe_join([t("buttons.delete"), tag.span(" application for #{draft_application.vacancy.job_title}", class: "govuk-visually-hidden")]), jobseekers_job_application_confirm_destroy_path(draft_application))
 
           - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).not_draft.each do |submitted_application|
             = render CardComponent.new do |card|
@@ -43,16 +36,9 @@
                 = tag.div(card.labelled_item(t(".submitted"), format_time_to_datetime_at(submitted_application.submitted_at)))
                 = tag.div(card.labelled_item(t(".closing_date"), OrganisationVacancyPresenter.new(submitted_application.vacancy).application_deadline))
 
-              - card.actions do
-                .card-component__action
-                  = govuk_link_to jobseekers_job_application_path(submitted_application) do
-                    = t(".view_application")
-                    span.govuk-visually-hidden = " for #{submitted_application.vacancy.job_title}"
-                - if submitted_application.status.in?(%w[shortlisted submitted])
-                  .card-component__action
-                    = govuk_link_to jobseekers_job_application_confirm_withdraw_path(submitted_application) do
-                      = t(".withdraw")
-                      span.govuk-visually-hidden = " application for #{submitted_application.vacancy.job_title}"
+              - card.action_item link: govuk_link_to(safe_join([t(".view_application"), tag.span(" for #{submitted_application.vacancy.job_title}", class: "govuk-visually-hidden")]), jobseekers_job_application_path(submitted_application))
+              - if submitted_application.status.in?(%w[shortlisted submitted])
+                - card.action_item link: govuk_link_to(safe_join([t(".withdraw"), tag.span(" application for #{submitted_application.vacancy.job_title}", class: "govuk-visually-hidden")]), jobseekers_job_application_confirm_withdraw_path(submitted_application))
 
         - else
           = render EmptySectionComponent.new title: t(".no_job_applications") do
