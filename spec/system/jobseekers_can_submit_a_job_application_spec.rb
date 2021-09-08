@@ -46,11 +46,10 @@ RSpec.describe "Jobseekers can submit a job application" do
       expect(page).to have_content("There is a problem")
     end
 
-    it "allows jobseekers to save application and go to dashboard" do
-      click_on I18n.t("buttons.save_and_come_back")
+    it "allows jobseekers to cancel and go to my applications tab" do
+      click_on I18n.t("buttons.cancel_and_return_to_account")
 
       expect(JobApplication.first.status).to eq("draft")
-      expect(page).to have_content(I18n.t("messages.jobseekers.job_applications.saved"))
       expect(current_path).to eq(jobseekers_job_applications_path)
     end
   end
@@ -69,14 +68,6 @@ RSpec.describe "Jobseekers can submit a job application" do
       expect(page).to have_content(I18n.t("messages.jobs.action_required.message.jobseeker"))
       expect(page).to have_link(I18n.t("activemodel.errors.models.jobseekers/job_application/professional_status_form.attributes.statutory_induction_complete.inclusion"),
                                 href: "#statutory_induction_complete")
-    end
-
-    it "allows jobseekers to save application and go to dashboard" do
-      click_on I18n.t("buttons.save_and_come_back")
-
-      expect(JobApplication.first.status).to eq("draft")
-      expect(page).to have_content(I18n.t("messages.jobseekers.job_applications.saved"))
-      expect(current_path).to eq(jobseekers_job_applications_path)
     end
   end
 end

@@ -45,7 +45,7 @@ RSpec.describe "Job applications references" do
   end
 
   describe "POST #create" do
-    let(:params) { { commit: I18n.t("buttons.save_reference"), jobseekers_job_application_details_reference_form: { name: name } } }
+    let(:params) { { jobseekers_job_application_details_reference_form: { name: name } } }
     let(:name) { "Reference Bloggs" }
 
     context "when the form is valid" do
@@ -81,7 +81,7 @@ RSpec.describe "Job applications references" do
 
   describe "PATCH #update" do
     let!(:reference) { create(:reference, job_application: job_application, name: "Testing Bloggs") }
-    let(:params) { { commit: I18n.t("buttons.save_reference"), jobseekers_job_application_details_reference_form: { name: name } } }
+    let(:params) { { jobseekers_job_application_details_reference_form: { name: name } } }
     let(:name) { "Reference Bloggs" }
 
     context "when the form is valid" do
