@@ -1,4 +1,4 @@
-class Publishers::Vacancies::CreateVacancyStepProcess < StepProcess
+class Publishers::Vacancies::VacancyStepProcess < StepProcess
   attr_reader :vacancy, :organisation
 
   def initialize(current_step, vacancy:, organisation:)

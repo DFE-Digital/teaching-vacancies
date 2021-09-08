@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Publishers::Vacancies::CreateVacancyStepProcess do
+RSpec.describe Publishers::Vacancies::VacancyStepProcess do
   subject { described_class.new(current_step, vacancy: vacancy, organisation: organisation) }
 
   let(:current_step) { :job_details }
