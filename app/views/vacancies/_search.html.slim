@@ -1,7 +1,7 @@
 ruby:
   items = [
     {
-      title: t("jobs.filters.job_roles"),
+      legend: t("jobs.filters.job_roles"),
       key: "job_roles",
       attribute: :job_roles,
       selected: @form.job_roles.reject { |role| role == "nqt_suitable" },
@@ -11,7 +11,7 @@ ruby:
       selected_method: :last,
     },
     {
-      title: t("jobs.filters.nqt_suitable"),
+      legend: t("jobs.filters.nqt_suitable"),
       key: "nqt_suitable",
       attribute: :job_roles,
       selected: @form.job_roles.include?("nqt_suitable") ? @form.job_roles : [],
@@ -21,7 +21,7 @@ ruby:
       selected_method: :last,
     },
     {
-      title: t("jobs.filters.send_responsible"),
+      legend: t("jobs.filters.send_responsible"),
       key: "send_responsible",
       attribute: :job_roles,
       selected: @form.job_roles.include?("send_responsible") ? @form.job_roles : [],
@@ -31,7 +31,7 @@ ruby:
       selected_method: :last,
     },
     {
-      title: t("jobs.filters.phases"),
+      legend: t("jobs.filters.phases"),
       key: "education_phase",
       attribute: :phases,
       selected: @form.phases,
@@ -41,7 +41,7 @@ ruby:
       selected_method: :last,
     },
     {
-      title: t("jobs.filters.working_patterns"),
+      legend: t("jobs.filters.working_patterns"),
       key: "working_patterns",
       attribute: :working_patterns,
       selected: @form.working_patterns,

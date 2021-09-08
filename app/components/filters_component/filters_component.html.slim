@@ -39,17 +39,13 @@
 
   .filters-component__groups
     - items.each do |group|
-      legend.govuk-fieldset__legend.govuk-fieldset__legend--s
-        - if group[:hidden_text]
-          span.govuk-visually-hidden = "#{group[:hidden_text]} "
-        = group[:title]
       .filters-component__groups__group data-group=group[:key]
         = form.govuk_collection_check_boxes group[:attribute],
           group[:options],
           group[:value_method],
           group[:text_method],
           small: true,
-          legend: nil,
+          legend: { text: group[:legend] },
           hint: nil
 
   .filters-component__submit

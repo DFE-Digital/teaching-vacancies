@@ -15,7 +15,7 @@
             = render(FiltersComponent.new(filters: { total_count: @publisher_preference.organisations.count,
                                                               title: t("jobs.filters.job_filters") },
                                                               form: f,
-                                                              items: [{ title: "Locations",
+                                                              items: [{ legend: "Locations",
                                                                         key: "locations",
                                                                         search: true,
                                                                         scroll: true,
