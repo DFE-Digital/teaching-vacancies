@@ -45,7 +45,7 @@ RSpec.describe "Job applications employments" do
   end
 
   describe "POST #create" do
-    let(:params) { { commit: I18n.t("buttons.save_employment"), jobseekers_job_application_details_employment_form: { organisation: organisation } } }
+    let(:params) { { jobseekers_job_application_details_employment_form: { organisation: organisation } } }
     let(:organisation) { "Awesome academy" }
 
     context "when the form is valid" do
@@ -81,7 +81,7 @@ RSpec.describe "Job applications employments" do
 
   describe "PATCH #update" do
     let!(:employment) { create(:employment, job_application: job_application, organisation: "Cool school") }
-    let(:params) { { commit: I18n.t("buttons.save_employment"), jobseekers_job_application_details_employment_form: { organisation: organisation } } }
+    let(:params) { { jobseekers_job_application_details_employment_form: { organisation: organisation } } }
     let(:organisation) { "Awesome academy" }
 
     context "when the form is valid" do

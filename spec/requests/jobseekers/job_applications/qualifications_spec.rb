@@ -29,7 +29,7 @@ RSpec.describe "Job applications qualifications" do
 
   describe "POST #submit_category" do
     let(:params) do
-      { commit: I18n.t("buttons.continue"), jobseekers_job_application_details_qualifications_category_form: { category: "other" } }
+      { jobseekers_job_application_details_qualifications_category_form: { category: "other" } }
     end
 
     context "when the form is valid" do
@@ -94,7 +94,7 @@ RSpec.describe "Job applications qualifications" do
   describe "POST #create" do
     context "when creating a non-secondary qualification" do
       let(:params) do
-        { commit: I18n.t("buttons.save_qualification.one"), category: "undergraduate", jobseekers_job_application_details_qualifications_degree_form: { subject: "Scaring" } }
+        { category: "undergraduate", jobseekers_job_application_details_qualifications_degree_form: { subject: "Scaring" } }
       end
 
       context "when the job application status is not draft" do
@@ -130,8 +130,7 @@ RSpec.describe "Job applications qualifications" do
 
     context "when creating a secondary qualification" do
       let(:params) do
-        { commit: I18n.t("buttons.save_qualification.other"),
-          category: "gcse",
+        { category: "gcse",
           jobseekers_job_application_details_qualifications_secondary_common_form: {
             category: "gcse",
             qualification_results_attributes: {
@@ -193,7 +192,7 @@ RSpec.describe "Job applications qualifications" do
       end
       let(:original_finished_studying) { "true" }
       let(:params) do
-        { commit: I18n.t("buttons.save_qualification.one"), jobseekers_job_application_details_qualifications_degree_form: { subject: "Spooking", finished_studying: new_finished_studying } }
+        { jobseekers_job_application_details_qualifications_degree_form: { subject: "Spooking", finished_studying: new_finished_studying } }
       end
       let(:new_finished_studying) { "true" }
 
@@ -258,7 +257,7 @@ RSpec.describe "Job applications qualifications" do
       let!(:result0) { qualification.qualification_results.first }
       let!(:result1) { qualification.qualification_results.second }
       let(:params) do
-        { commit: I18n.t("buttons.save_qualification.other"), category: "a_level",
+        { category: "a_level",
           jobseekers_job_application_details_qualifications_secondary_common_form: {
             category: "a_level",
             year: "2018",
