@@ -74,10 +74,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
   end
 
   def update_params
-    form_params.merge(
-      completed_steps: job_application.completed_steps.append(step.to_s).uniq,
-      in_progress_steps: job_application.in_progress_steps.delete_if { |in_progress_step| in_progress_step == step.to_s },
-    )
+    form_params.merge(completed_steps: job_application.completed_steps.append(step.to_s).uniq)
   end
 
   def vacancy

@@ -123,7 +123,6 @@ shared:
     - rejection_reasons
     - gaps_in_employment
     - gaps_in_employment_details
-    - in_progress_steps
     - reviewed_at
     - country
     - email_address

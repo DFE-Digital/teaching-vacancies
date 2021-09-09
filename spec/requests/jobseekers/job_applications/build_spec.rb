@@ -41,7 +41,6 @@ RSpec.describe "Job applications build" do
           expect { patch jobseekers_job_application_build_path(job_application, :personal_details), params: params }
             .to change { job_application.reload.first_name }.from("").to("Cool name")
             .and change { job_application.completed_steps }.from([]).to(["personal_details"])
-            .and(not_change { job_application.in_progress_steps })
 
           expect(response).to redirect_to(jobseekers_job_application_review_path(job_application))
         end
@@ -56,7 +55,6 @@ RSpec.describe "Job applications build" do
             expect { patch jobseekers_job_application_build_path(job_application, :personal_details), params: params }
               .to change { job_application.reload.first_name }.from("").to("Cool name")
               .and change { job_application.completed_steps }.from([]).to(["personal_details"])
-              .and(not_change { job_application.in_progress_steps })
 
             expect(response).to redirect_to(jobseekers_job_application_review_path(job_application))
           end
@@ -67,7 +65,6 @@ RSpec.describe "Job applications build" do
             expect { patch jobseekers_job_application_build_path(job_application, :personal_details), params: params }
               .to change { job_application.reload.first_name }.from("").to("Cool name")
               .and change { job_application.completed_steps }.from([]).to(["personal_details"])
-              .and(not_change { job_application.in_progress_steps })
 
             expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :professional_status))
           end
@@ -90,7 +87,6 @@ RSpec.describe "Job applications build" do
         expect { patch jobseekers_job_application_build_path(job_application, :personal_details), params: params }
           .to not_change { job_application.reload.first_name }
           .and(not_change { job_application.completed_steps })
-          .and(not_change { job_application.in_progress_steps })
 
         expect(response).to render_template(:personal_details)
       end
