@@ -20,6 +20,10 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
     })
   end
 
+  def validatable_steps
+    steps - %i[documents review]
+  end
+
   private
 
   def job_role_steps
