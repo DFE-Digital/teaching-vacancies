@@ -20,7 +20,7 @@ FactoryBot.define do
     enable_job_applications { true }
     benefits { Faker::Lorem.paragraph(sentence_count: rand(1..3)) }
     completed_steps do
-      %w[job_location schools job_details pay_package important_dates documents applying_for_the_job job_summary]
+      %w[job_role job_role_details job_location schools job_details working_patterns pay_package important_dates documents applying_for_the_job job_summary]
     end
     contact_email { Faker::Internet.email }
     contact_number { "01234 123456" }
