@@ -7,4 +7,5 @@
       == body
 
     .card-component__actions
-      == actions
+      - action_items.each do |link|
+        = link
