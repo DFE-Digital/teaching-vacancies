@@ -13,11 +13,6 @@
         html_attributes: { id: "job_title" })
 
       - component.slot(:row,
-        key: t("jobs.suitable_for_nqt"),
-        value: @vacancy.suitable_for_nqt&.capitalize || t("jobs.not_defined"),
-        html_attributes: { id: "suitable_for_nqt" })
-
-      - component.slot(:row,
         key: t("jobs.subjects"),
         value: @vacancy.show_subjects.presence || t("jobs.not_defined"),
         html_attributes: { id: "subjects" })
