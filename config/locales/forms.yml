@@ -81,7 +81,7 @@ en:
     withdraw_application: Withdraw application
 
   helpers:
-    optional_field_html: "%{label} (optional<span class='govuk-visually-hidden'> field</span>)</span>"
+    optional_field_html: "%{label} (optional<span class='govuk-visually-hidden'> field</span>)"
     hint:
       general_feedback_form:
         comment_html: >-
