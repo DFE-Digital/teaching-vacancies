@@ -23,12 +23,18 @@ RSpec.describe "Subscriptions" do
     end
 
     context "when hit via the nqt job alerts url" do
-      let(:origin) { "/sign-up-for-NQT-job-alerts" }
-      let(:params) { { "nqt_job_alert" => true, "origin" => "/sign-up-for-NQT-job-alerts", "search_criteria" => { "job_roles" => ["nqt_suitable"] } } }
+      before { get "/sign-up-for-NQT-job-alerts" }
 
-      before do
-        get nqt_job_alerts_path
+      it "redirects to the ect job alerts url" do
+        expect(response).to redirect_to(ect_job_alerts_path)
       end
+    end
+
+    context "when hit via the ECT job alerts url" do
+      let(:origin) { "/sign-up-for-ECT-job-alerts" }
+      let(:params) { { "ect_job_alert" => true, "origin" => "/sign-up-for-ECT-job-alerts", "search_criteria" => { "job_roles" => ["nqt_suitable"] } } }
+
+      before { get ect_job_alerts_path }
 
       it "includes the correct parameters" do
         expect(request.parameters).to include(params)
