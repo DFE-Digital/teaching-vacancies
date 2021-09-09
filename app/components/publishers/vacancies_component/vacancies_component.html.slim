@@ -42,7 +42,7 @@
               label: { text: t("jobs.sort_by.label"), size: "s", class: "govuk-label inline govuk-!-margin-right-2" }
 
             = f.govuk_submit t("jobs.sort_by.submit")
-        section
+        section#vacancy-results
           - if vacancies.none?
             = render EmptySectionComponent.new do
               = no_jobs_text

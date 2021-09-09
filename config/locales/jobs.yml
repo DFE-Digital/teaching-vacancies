@@ -9,6 +9,7 @@ en:
       Find teaching jobs in %{location} with Teaching Vacancies, a free job-listing service from the Department for
       Education
     location_search_heading: Teaching jobs in %{location}
+    skip_link: Skip to search results
 
     filters:
       job_filters: Job Filters
