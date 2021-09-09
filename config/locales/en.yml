@@ -8,6 +8,9 @@ en:
       On Teaching Vacancies, early career teachers, experienced teachers and leaders can search for a job at a school or Trust in England and set up job alerts.
     govuk: GOV.UK
     menu: Menu
+    skip_link:
+      cookie: Skip to cookie consent
+      main: Skip to main content
     title: Teaching Vacancies
     environment_html: This is not the live Teaching Vacancies website. You are currently viewing the <strong>%{environment}</strong> version of the site.
 
