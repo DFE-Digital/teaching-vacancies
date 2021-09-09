@@ -67,7 +67,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
         end
 
         it "does not render the filters sidebar" do
-          expect(inline_component.css('.edit_publisher_preference input[type="submit"]')).to be_blank
+          expect(inline_component.css('.edit_publisher_preference button[type="submit"]')).to be_blank
         end
 
         context "when there are no jobs within the selected vacancy type" do
@@ -121,7 +121,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
 
         it "renders the filters sidebar" do
           expect(
-            inline_component.css('.edit_publisher_preference input[type="submit"]').attribute("value").value,
+            inline_component.css('.edit_publisher_preference button[type="submit"]').first.text,
           ).to eq(I18n.t("buttons.apply_filters"))
         end
 
@@ -181,7 +181,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
 
         it "renders the filters sidebar" do
           expect(
-            inline_component.css('.edit_publisher_preference input[type="submit"]').attribute("value").value,
+            inline_component.css('.edit_publisher_preference button[type="submit"]').first.text,
           ).to eq(I18n.t("buttons.apply_filters"))
         end
 

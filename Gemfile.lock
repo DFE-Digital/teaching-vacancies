@@ -249,7 +249,7 @@ GEM
       activemodel (>= 6.0)
       railties (>= 6.0)
       view_component (~> 2.20)
-    govuk_design_system_formbuilder (2.6.0)
+    govuk_design_system_formbuilder (2.7.3)
       actionview (>= 6.0)
       activemodel (>= 6.0)
       activesupport (>= 6.0)
@@ -343,7 +343,7 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.1.1)
     nio4r (2.5.8)
-    nokogiri (1.12.3)
+    nokogiri (1.12.4)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
     noticed (1.4.1)
@@ -427,7 +427,7 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.4.1)
+    rails-html-sanitizer (1.4.2)
       loofah (~> 2.3)
     railties (6.1.4.1)
       actionpack (= 6.1.4.1)
@@ -655,7 +655,7 @@ DEPENDENCIES
   google-cloud-bigquery
   google_drive
   govuk-components
-  govuk_design_system_formbuilder (~> 2.6.0)
+  govuk_design_system_formbuilder
   high_voltage
   httparty
   ipaddr
