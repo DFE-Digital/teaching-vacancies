@@ -1,5 +1,8 @@
 - content_for :page_title_prefix, current_organisation.name
 
+- content_for :skip_links do
+  a.govuk-skip-link href="#vacancy-results" Skip to #{t("publishers.vacancies_component.#{@selected_type}.tab_heading")}
+
 - unless current_organisation.local_authority?
   = govuk_notification_banner title: t("banners.important"), classes: "govuk-!-margin-top-3" do
     = t(".job_applications")

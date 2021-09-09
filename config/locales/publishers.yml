@@ -15,6 +15,7 @@ en:
       index:
         heading: Notifications
         no_notifications: You have no notifications.
+        skip_link: Skip to notifications
         title:
           zero: No unread notifications
           one: 1 unread notification
