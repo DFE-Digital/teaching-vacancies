@@ -4,7 +4,8 @@ class Publishers::OrganisationsController < Publishers::BaseController
   helper_method :vacancy_statistics_form
 
   def show
-    @selected_type = params[:type]
+    @selected_type = params[:type] || :published
+    # binding.pry
     @publisher_preference = PublisherPreference.find_or_create_by(publisher: current_publisher, organisation: current_organisation)
     @sort = Publishers::VacancySort.new(current_organisation, @selected_type).update(column: params[:sort_column])
     @sort_form = SortForm.new(@sort.column)
