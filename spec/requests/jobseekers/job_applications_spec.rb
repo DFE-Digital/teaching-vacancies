@@ -202,7 +202,6 @@ RSpec.describe "Job applications" do
       {
         jobseekers_job_application_review_form:
           { confirm_data_accurate: confirm_data_accurate, confirm_data_usage: confirm_data_usage },
-        commit: button,
       }
     end
 
@@ -230,20 +229,7 @@ RSpec.describe "Job applications" do
       end
     end
 
-    context "when the commit param is `Save and come back later`" do
-      let(:button) { I18n.t("buttons.save_and_come_back") }
-
-      it "does not submit the job application and redirects to applications dashboard" do
-        assert_emails 0 do
-          expect { post jobseekers_job_application_submit_path(job_application.id), params: params }
-            .to(not_change { job_application.reload.status })
-
-          expect(response).to redirect_to(jobseekers_job_applications_path)
-        end
-      end
-    end
-
-    context "when the commit param is `Submit application`" do
+    context "when `Submit application`" do
       context "when the review form is invalid" do
         let(:confirm_data_usage) { 0 }
 
@@ -368,8 +354,7 @@ RSpec.describe "Job applications" do
     let(:withdraw_reason) { "other" }
     let(:origin) { "" }
     let(:params) do
-      { commit: I18n.t("buttons.withdraw_application"),
-        jobseekers_job_application_withdraw_form: { withdraw_reason: withdraw_reason },
+      { jobseekers_job_application_withdraw_form: { withdraw_reason: withdraw_reason },
         origin: origin }
     end
 

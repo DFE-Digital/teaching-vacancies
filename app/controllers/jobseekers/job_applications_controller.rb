@@ -36,9 +36,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
     raise ActionController::RoutingError, "Cannot submit application for non-listed job" unless vacancy.listed?
     raise ActionController::RoutingError, "Cannot submit non-draft application" unless job_application.draft?
 
-    if params[:commit] == t("buttons.save_and_come_back")
-      redirect_to jobseekers_job_applications_path, success: t("messages.jobseekers.job_applications.saved")
-    elsif review_form.valid? && completed_steps_valid?
+    if review_form.valid? && completed_steps_valid?
       job_application.submit!
       @application_feedback_form = Jobseekers::JobApplication::FeedbackForm.new
     else

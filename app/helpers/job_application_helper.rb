@@ -85,8 +85,6 @@ module JobApplicationHelper
   def job_application_review_section_tag(job_application, step)
     tag_attributes = if send("#{step}_fields".to_sym).any? { |field| field.in?(job_application.errors.messages.keys) }
                        { text: t("messages.jobs.action_required.label"), colour: "orange" }
-                     elsif step.to_s.in?(job_application.in_progress_steps)
-                       { text: "in progress", colour: "yellow" }
                      elsif step.to_s.in?(job_application.completed_steps)
                        { text: "complete" }
                      else

@@ -128,11 +128,7 @@ RSpec.describe JobApplicationHelper do
   describe "#job_application_review_section_tag" do
     subject { helper.job_application_review_section_tag(job_application, step) }
 
-    let(:job_application) do
-      build_stubbed(:job_application,
-                    completed_steps: %w[personal_details professional_status],
-                    in_progress_steps: %w[ask_for_support])
-    end
+    let(:job_application) { build_stubbed(:job_application, completed_steps: %w[personal_details professional_status]) }
 
     context "when there is an error on an attribute in the step" do
       let(:step) { :personal_details }
@@ -149,14 +145,6 @@ RSpec.describe JobApplicationHelper do
 
       it "returns 'complete' tag" do
         expect(subject).to eq(helper.govuk_tag(text: "complete"))
-      end
-    end
-
-    context "when the step is in progress" do
-      let(:step) { :ask_for_support }
-
-      it "returns in 'progress' tag" do
-        expect(subject).to eq(helper.govuk_tag(text: "in progress", colour: "yellow"))
       end
     end
 
