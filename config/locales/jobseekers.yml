@@ -210,6 +210,7 @@ en:
         no_job_applications: You have not applied for any teaching jobs
         no_job_applications_body_html: "%{link_to} for a teaching job"
         page_title: My applications
+        skip_link: Skip to my job applications
         submitted: Submitted
         view_application: View application
         withdraw: Withdraw
@@ -434,6 +435,7 @@ en:
         delete: Delete
         link_find: Find a teaching job
         page_title: Saved jobs
+        skip_link: Skip to my saved jobs
         view: View application
         zero_saved_jobs_body_html: '%{link_to} and start saving jobs you may want to review and apply for later.'
         zero_saved_jobs_title: You have no saved teaching jobs
@@ -472,6 +474,7 @@ en:
         link_unsubscribe: Unsubscribe
         page_title: Job alerts
         receiving: Receiving
+        skip_link: Skip to my job alerts
         zero_subscriptions_body_html: '%{link_to} to be made aware of future listings.'
         zero_subscriptions_title: You have no job alerts set up
     unlocks:

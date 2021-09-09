@@ -1,5 +1,5 @@
 - unless cookies_preference_set?
-  a.govuk-skip-link href="#cookie-consent" Skip to cookie consent
-a.govuk-skip-link href="#main-content" Skip to main content
-- if params[:controller] == "vacancies" && params[:action] == "index"
-  a.govuk-skip-link href="#search-results" Skip to search results
+  a.govuk-skip-link href="#cookie-consent" = t("app.skip_link.cookie")
+a.govuk-skip-link href="#main-content" = t("app.skip_link.main")
+- if content_for?(:skip_links)
+  = yield(:skip_links)
