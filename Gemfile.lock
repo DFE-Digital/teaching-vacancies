@@ -655,7 +655,7 @@ DEPENDENCIES
   google-cloud-bigquery
   google_drive
   govuk-components
-  govuk_design_system_formbuilder (~> 2.6.0)
+  govuk_design_system_formbuilder
   high_voltage
   httparty
   ipaddr
