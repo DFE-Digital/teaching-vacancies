@@ -65,7 +65,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
           expect(message_delivery).to receive(:deliver_later)
 
           fill_in "publisher[email]", with: publisher.email
-          click_on "commit"
+          click_on I18n.t("buttons.submit")
           expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
           # Expect that the link in the email goes to the landing page
@@ -102,7 +102,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
         visit new_login_key_path
         fill_in "publisher[email]", with: publisher.email
         expect(message_delivery).to receive(:deliver_later)
-        click_on "commit"
+        click_on I18n.t("buttons.submit")
         travel 5.hours do
           visit login_key_path(login_key)
           expect(page).to have_content("expired")
@@ -125,7 +125,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
             expect(message_delivery).to receive(:deliver_later)
 
             fill_in "publisher[email]", with: publisher.email
-            click_on "commit"
+            click_on I18n.t("buttons.submit")
             expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
             # Expect that the link in the email goes to the landing page
@@ -156,7 +156,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
             expect(message_delivery).to receive(:deliver_later)
 
             fill_in "publisher[email]", with: publisher.email
-            click_on "commit"
+            click_on I18n.t("buttons.submit")
             expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
             # Expect that the link in the email goes to the landing page
@@ -190,7 +190,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
             expect(message_delivery).to receive(:deliver_later)
 
             fill_in "publisher[email]", with: publisher.email
-            click_on "commit"
+            click_on I18n.t("buttons.submit")
             expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
             # Expect that the link in the email goes to the landing page
