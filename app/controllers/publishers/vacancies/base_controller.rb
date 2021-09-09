@@ -3,20 +3,7 @@ require "indexing"
 class Publishers::Vacancies::BaseController < Publishers::BaseController
   include Publishers::Wizardable
 
-  helper_method :step_current, :steps_config, :step_process, :vacancy
-
-  def step_current
-    return :review unless defined?(step)
-
-    case step
-    when :schools
-      :job_location
-    when :job_role_details
-      :job_role
-    else
-      step
-    end
-  end
+  helper_method :steps_config, :step_process, :vacancy
 
   def step_process
     # TODO: We currently have to do this kinda thing in a lot of places thanks to `wicked`
