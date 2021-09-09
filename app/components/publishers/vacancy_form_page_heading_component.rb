@@ -1,10 +1,9 @@
 class Publishers::VacancyFormPageHeadingComponent < ViewComponent::Base
   delegate :current_organisation, to: :helpers
 
-  def initialize(vacancy, current, total)
+  def initialize(vacancy, step_process)
     @vacancy = vacancy
-    @current = current
-    @total = total
+    @step_process = step_process
   end
 
   def heading

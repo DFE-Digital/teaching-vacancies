@@ -3,14 +3,7 @@ require "indexing"
 class Publishers::Vacancies::BaseController < Publishers::BaseController
   include Publishers::Wizardable
 
-  helper_method :current_step_number, :step_current, :steps_adjust, :steps_config, :vacancy
-
-  def steps_adjust
-    # Only adjust *after* job role step as the extra step for school groups comes after that
-    return 0 if defined?(step) && step.in?(%i[job_role job_role_details])
-
-    current_organisation.school_group? ? 0 : 1
-  end
+  helper_method :step_current, :steps_config, :step_process, :vacancy
 
   def step_current
     return :review unless defined?(step)
@@ -25,8 +18,17 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
     end
   end
 
-  def current_step_number
-    steps_config[step_current][:number] - steps_adjust
+  def step_process
+    # TODO: We currently have to do this kinda thing in a lot of places thanks to `wicked`
+    #       Find a better way!
+    current_step = defined?(step) ? step : :review
+
+    ::Publishers::Vacancies::VacancyStepProcess.new(
+      current_step || :review,
+      vacancy: vacancy,
+      organisation: current_organisation,
+      session: session,
+    )
   end
 
   def vacancy

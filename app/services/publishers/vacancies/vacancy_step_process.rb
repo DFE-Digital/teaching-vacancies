@@ -1,9 +1,10 @@
 class Publishers::Vacancies::VacancyStepProcess < StepProcess
-  attr_reader :vacancy, :organisation
+  attr_reader :vacancy, :organisation, :session
 
-  def initialize(current_step, vacancy:, organisation:)
+  def initialize(current_step, vacancy:, organisation:, session:)
     @vacancy = vacancy
     @organisation = organisation
+    @session = session
 
     super(current_step, {
       job_role: job_role_steps,
@@ -32,7 +33,9 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
   def job_location_steps
     return nil if organisation.school?
 
-    if vacancy.job_location == "central_office"
+    job_location_changed_in_session = session[:job_location].present? && session[:job_location] != vacancy.job_location
+
+    if vacancy.job_location == "central_office" && !job_location_changed_in_session
       %i[job_location]
     else
       %i[job_location schools]
