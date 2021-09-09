@@ -88,9 +88,4 @@ module VacanciesHelper
   def vacancy_step_completed?(vacancy, step)
     vacancy.completed_steps.include?(step.to_s)
   end
-
-  def steps_to_display(steps)
-    steps_to_skip = current_organisation.is_a?(School) ? %i[job_role_details job_location schools review] : %i[job_role_details schools review]
-    steps.except(*steps_to_skip).keys
-  end
 end
