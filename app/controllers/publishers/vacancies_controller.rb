@@ -80,7 +80,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   end
 
   def validate_all_steps
-    steps_config.except(:job_location, :schools, :supporting_documents, :documents, :review).each_key do |step|
+    step_process.validatable_steps.each do |step|
       step_valid?(step)
     end
   end
