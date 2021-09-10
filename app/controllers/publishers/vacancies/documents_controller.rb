@@ -1,8 +1,6 @@
 require "google/apis/drive_v3"
 
 class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseController
-  include Publishers::Wizardable
-
   helper_method :form
 
   before_action :redirect_to_next_step, only: %i[create]

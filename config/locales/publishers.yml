@@ -251,7 +251,7 @@ en:
         steps: Create a job listing steps
       show:
         view_live_listing_link: View this listing
-        view_live_listing_title: View the live listing
+        view_live_listing_title: View the live job listing
       steps:
         job_role: Job role
         job_location: Job location
@@ -266,7 +266,7 @@ en:
         review_heading: Review the job listing
       summary:
         date_expires: >-
-          The listing will appear on the service until %{application_deadline}, after which it will no longer be
+          The job listing will appear on the service until %{application_deadline}, after which it will no longer be
           visible to jobseekers
         date_posted: Your job listing will be posted on %{date}.
         date_posted_now: Your job listing has been posted.

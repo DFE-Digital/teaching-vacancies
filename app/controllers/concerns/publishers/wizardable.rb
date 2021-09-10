@@ -6,23 +6,6 @@ module Publishers::Wizardable
     working_patterns: %i[working_patterns],
   }.freeze
 
-  def steps_config
-    {
-      job_role: { number: 1, title: I18n.t("publishers.vacancies.steps.job_role") },
-      job_role_details: { number: 1, title: I18n.t("publishers.vacancies.steps.job_role") },
-      job_location: { number: 2, title: I18n.t("publishers.vacancies.steps.job_location") },
-      schools: { number: 2, title: I18n.t("publishers.vacancies.steps.job_location") },
-      job_details: { number: 3, title: I18n.t("publishers.vacancies.steps.job_details") },
-      working_patterns: { number: 4, title: I18n.t("publishers.vacancies.steps.working_patterns") },
-      pay_package: { number: 5, title: I18n.t("publishers.vacancies.steps.pay_package") },
-      important_dates: { number: 6, title: I18n.t("publishers.vacancies.steps.important_dates") },
-      documents: { number: 7, title: I18n.t("publishers.vacancies.steps.documents") },
-      applying_for_the_job: { number: 8, title: I18n.t("publishers.vacancies.steps.applying_for_the_job") },
-      job_summary: { number: 9, title: I18n.t("publishers.vacancies.steps.job_summary") },
-      review: { number: 10, title: I18n.t("publishers.vacancies.steps.review_heading") },
-    }.freeze
-  end
-
   def job_role_params(params)
     params.require(:publishers_job_listing_job_role_form)
           .permit(:main_job_role).merge(completed_steps: completed_steps)
