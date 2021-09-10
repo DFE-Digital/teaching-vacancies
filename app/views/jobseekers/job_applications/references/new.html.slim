@@ -14,4 +14,4 @@
         = render "fields", f: f
 
         = f.govuk_submit t("buttons.save_reference")
-        = govuk_link_to t("buttons.cancel"), jobseekers_job_application_build_path(job_application, :references), button: true, class: "govuk-button--secondary govuk-!-margin-left-3"
+        = govuk_button_link_to t("buttons.cancel"), jobseekers_job_application_build_path(job_application, :references), class: "govuk-button--secondary govuk-!-margin-left-3"

@@ -5,7 +5,7 @@
       = job_application_review_section_tag(job_application, :ask_for_support)
 
   - review.body do
-    = govuk_summary_list do |summary|
-      - summary.slot :row,
-                     key: t("helpers.legend.jobseekers_job_application_ask_for_support_form.support_needed"),
-                     value: job_application_support_needed_info(job_application)
+    = govuk_summary_list do |summary_list|
+      - summary_list.row do |row|
+        - row.key text: t("helpers.legend.jobseekers_job_application_ask_for_support_form.support_needed")
+        - row.value text: job_application_support_needed_info(job_application)

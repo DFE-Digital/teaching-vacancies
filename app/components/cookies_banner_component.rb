@@ -1,5 +1,4 @@
 class CookiesBannerComponent < GovukComponent::Base
-  include ViewComponent::SlotableV2
   attr_reader :create_path, :reject_path, :preferences_path
 
   renders_one :body
