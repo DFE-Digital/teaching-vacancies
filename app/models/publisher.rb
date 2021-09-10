@@ -15,8 +15,8 @@ class Publisher < ApplicationRecord
   self.timeout_in = 60.minutes # Overrides default Devise configuration
 
   def vacancies_with_job_applications_submitted_yesterday
-    vacancies.distinct
-             .joins(:job_applications)
+    vacancies.joins(:job_applications)
              .where("DATE(job_applications.submitted_at) = ? AND job_applications.status = ?", Date.yesterday, 1)
+             .group(:id)
   end
 end
