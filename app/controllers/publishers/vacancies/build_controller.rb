@@ -46,18 +46,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   def back_path
     return finish_wizard_path if session[:current_step] == :review
 
-    case step
-    when :job_details
-      if current_organisation.school?
-        vacancy.main_job_role == "sendco" ? wizard_path(:job_role) : wizard_path(:job_role_details)
-      else
-        vacancy.central_office? ? wizard_path(:job_location) : wizard_path(:schools)
-      end
-    when :job_location
-      vacancy.main_job_role == "sendco" ? wizard_path(:job_role) : wizard_path(:job_role_details)
-    else
-      previous_wizard_path
-    end
+    wizard_path(step_process.previous_step)
   end
 
   def form
