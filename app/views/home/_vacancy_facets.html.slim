@@ -38,14 +38,14 @@
                 = "#{t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{job_role}")} "
                 = t(".link_text_html", count: count)
 
-      - if @vacancy_facets.additional_job_roles["nqt_suitable"]&.positive?
-        div data={ "facet-type": "nqt_suitable" }
-          h3.govuk-heading-s = t(".nqt_suitable.heading")
+      - if @vacancy_facets.additional_job_roles["ect_suitable"]&.positive?
+        div data={ "facet-type": "ect_suitable" }
+          h3.govuk-heading-s = t(".ect_suitable.heading")
           ul.govuk-list
             li
-              = govuk_link_to job_role_path("nqt_suitable") do
-                = t(".nqt_suitable.link")
-                = t(".link_text_html", count: @vacancy_facets.additional_job_roles["nqt_suitable"])
+              = govuk_link_to job_role_path("ect_suitable") do
+                = t(".ect_suitable.link")
+                = t(".link_text_html", count: @vacancy_facets.additional_job_roles["ect_suitable"])
 
       - if @vacancy_facets.additional_job_roles["send_responsible"]&.positive?
         div data={ "facet-type": "send_responsible" }

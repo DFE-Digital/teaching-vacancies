@@ -157,7 +157,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
         select "25 miles", from: "radius"
       end
       check I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.teacher")
-      check I18n.t("jobs.filters.nqt_suitable_only")
+      check I18n.t("jobs.filters.ect_suitable_only")
       check I18n.t("jobs.filters.send_responsible_only")
       check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.full_time")
       click_on I18n.t("buttons.search")
@@ -172,7 +172,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
       expect(page.find_field("jobseekers-subscription-form-radius-field").value).to eq("25")
     end
     expect(page.find_field("jobseekers-subscription-form-job-roles-teacher-field")).to be_checked
-    expect(page.find_field("jobseekers-subscription-form-job-roles-nqt-suitable-field")).to be_checked
+    expect(page.find_field("jobseekers-subscription-form-job-roles-ect-suitable-field")).to be_checked
     expect(page.find_field("jobseekers-subscription-form-working-patterns-full-time-field")).to be_checked
   end
 

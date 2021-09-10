@@ -14,8 +14,8 @@ en:
     filters:
       job_filters: Job Filters
       job_roles: Job role
-      nqt_suitable: Suitable for early career teachers
-      nqt_suitable_only: Only show results suitable for early career teachers
+      ect_suitable: Suitable for early career teachers
+      ect_suitable_only: Only show results suitable for early career teachers
       send_responsible: SEND responsibilities
       send_responsible_option: Has SEND responsibilities (special educational needs and disabilities)
       send_responsible_only: Only show results with SEND responsibilities (special educational needs and disabilities)
@@ -187,7 +187,7 @@ en:
     job_role: Job role
     main_job_role: Job role
     additional_job_roles: Job role details
-    suitable_for_nqt: Is this job suitable for NQTs?
+    suitable_for_ect: Is this job suitable for ECTs?
     subjects: Subject(s)
     subject:
       one: Subject

@@ -7,7 +7,7 @@ class Publishers::JobListing::JobRoleDetailsForm < Publishers::JobListing::Vacan
             if: -> { vacancy.main_job_role.in?(%w[leadership teaching_assistant education_support]) }
 
   def teacher_additional_job_roles_options
-    %w[nqt_suitable send_responsible]
+    %w[ect_suitable send_responsible]
   end
 
   def send_responsible

@@ -81,8 +81,8 @@ RSpec.describe Search::FiltersBuilder do
     context "when subscription was created before algolia" do
       let(:newly_qualified_teacher) { "true" }
 
-      it "filters NQT jobs" do
-        expect(subject.filter_query).to match(/job_roles:'nqt_suitable'/)
+      it "filters ECT jobs" do
+        expect(subject.filter_query).to match(/job_roles:'ect_suitable'/)
       end
     end
 
