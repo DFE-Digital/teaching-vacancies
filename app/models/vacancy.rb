@@ -63,7 +63,7 @@ class Vacancy < ApplicationRecord
   scope :expired, (-> { published.where("expires_at < ?", Time.current) })
   scope :expired_yesterday, (-> { where("expires_at BETWEEN ? AND ?", Time.zone.yesterday.midnight, Date.current.midnight) })
   scope :expires_within_data_access_period, (-> { where("expires_at >= ?", Time.current - DATA_ACCESS_PERIOD_FOR_PUBLISHERS) })
-  scope :in_organisation_ids, (->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { organisation_id: ids }).distinct })
+  scope :in_organisation_ids, (->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { organisation_id: ids }).group(:id) })
   scope :listed, (-> { published.where("publish_on <= ?", Date.current) })
   scope :live, (-> { listed.applicable })
   scope :pending, (-> { published.where("publish_on > ?", Date.current) })
