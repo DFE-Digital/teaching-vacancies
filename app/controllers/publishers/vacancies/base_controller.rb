@@ -3,7 +3,7 @@ require "indexing"
 class Publishers::Vacancies::BaseController < Publishers::BaseController
   include Publishers::Wizardable
 
-  helper_method :steps_config, :step_process, :vacancy
+  helper_method :step_process, :vacancy
 
   def step_process
     # TODO: We currently have to do this kinda thing in a lot of places thanks to `wicked`

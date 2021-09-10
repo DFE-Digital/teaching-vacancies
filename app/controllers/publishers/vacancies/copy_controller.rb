@@ -26,7 +26,6 @@ class Publishers::Vacancies::CopyController < Publishers::Vacancies::BaseControl
   def copy_form_params
     params.require(:publishers_job_listing_copy_vacancy_form)
           .permit(:job_title, :publish_on, :publish_on_day, :expires_at, :expiry_time, :starts_on, :starts_asap)
-          .merge(completed_steps: [])
   end
 
   def set_up_copy_form
