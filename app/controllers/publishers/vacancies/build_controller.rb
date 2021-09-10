@@ -101,12 +101,11 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
 
   def update_listing
     vacancy.save
-    if step == :job_location && job_location != "central_office"
-      redirect_to wizard_path(:schools)
-    elsif step == :job_role && vacancy.main_job_role != "sendco"
-      redirect_to wizard_path(:job_role_details)
-    else
+
+    if step_process.last_of_group?
       redirect_updated_job_with_message
+    else
+      redirect_to wizard_path(step_process.next_step)
     end
   end
 
