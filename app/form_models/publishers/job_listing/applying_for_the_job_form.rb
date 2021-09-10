@@ -12,6 +12,13 @@ class Publishers::JobListing::ApplyingForTheJobForm < Publishers::JobListing::Va
 
   validates :contact_number, format: { with: /\A\+?(?:\d\s?){10,12}\z/ }, if: proc { contact_number.present? }
 
+  def self.fields
+    %i[
+      application_link enable_job_applications contact_email contact_number
+      personal_statement_guidance school_visits how_to_apply
+    ]
+  end
+
   private
 
   def override_enable_job_applications!

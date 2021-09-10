@@ -1,4 +1,4 @@
-= render "publishers/vacancies/error_tag", attributes: job_details_fields
+= render "publishers/vacancies/error_tag", attributes: Publishers::JobListing::JobDetailsForm.fields
 
 = render ReviewComponent.new id: "job_details" do |review|
   - review.heading title: t("publishers.vacancies.steps.job_details"),

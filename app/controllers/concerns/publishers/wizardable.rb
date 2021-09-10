@@ -23,50 +23,6 @@ module Publishers::Wizardable
     }.freeze
   end
 
-  def job_role_fields
-    %i[main_job_role]
-  end
-
-  def job_role_details_fields
-    %i[additional_job_roles]
-  end
-
-  def job_location_fields
-    %i[job_location]
-  end
-
-  def schools_fields
-    %i[organisation_ids]
-  end
-
-  def working_patterns_fields
-    %i[working_patterns working_patterns_details]
-  end
-
-  def job_details_fields
-    %i[job_title contract_type contract_type_duration subjects]
-  end
-
-  def pay_package_fields
-    %i[actual_salary salary benefits]
-  end
-
-  def documents_fields
-    []
-  end
-
-  def important_dates_fields
-    %i[starts_asap starts_on publish_on expires_at]
-  end
-
-  def applying_for_the_job_fields
-    %i[application_link enable_job_applications contact_email contact_number personal_statement_guidance school_visits how_to_apply]
-  end
-
-  def job_summary_fields
-    %i[job_advert about_school]
-  end
-
   def job_role_params(params)
     params.require(:publishers_job_listing_job_role_form)
           .permit(:main_job_role).merge(completed_steps: completed_steps)

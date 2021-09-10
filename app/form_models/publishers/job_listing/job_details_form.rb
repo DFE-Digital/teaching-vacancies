@@ -10,6 +10,10 @@ class Publishers::JobListing::JobDetailsForm < Publishers::JobListing::VacancyFo
   validates :contract_type, inclusion: { in: Vacancy.contract_types.keys }
   validates :contract_type_duration, presence: true, if: -> { contract_type == "fixed_term" }
 
+  def self.fields
+    %i[job_title contract_type contract_type_duration subjects]
+  end
+
   def job_title_has_no_tags?
     job_title_without_escaped_characters = job_title.delete("&")
     return if job_title_without_escaped_characters == sanitize(job_title_without_escaped_characters, tags: [])

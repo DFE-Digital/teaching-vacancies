@@ -3,6 +3,10 @@ class Publishers::JobListing::JobLocationForm < Publishers::JobListing::VacancyF
 
   validates :job_location, presence: true
 
+  def self.fields
+    %i[job_location]
+  end
+
   def params_to_save
     {
       completed_steps: params[:completed_steps],
