@@ -204,28 +204,6 @@ en:
     sign_in: List a teaching job
     sign_out: Sign out
 
-  nqt_job_alerts:
-    confirm:
-      heading: What happens next
-      splash:
-        heading: Your job alert has been set up
-        message: We sent a confirmation email to %{email}
-      keywords: "Keywords:"
-      location: "Location:"
-      intro: "We'll email you any teaching jobs suitable for NQTs that match your search criteria:"
-      unsubscribe: You can unsubscribe by following the link at the bottom of the email.
-    heading: Sign up for NQT job alerts
-    intro:
-      content: >-
-        Setting up an alert can help make your search for a teaching job easier. You’ll receive an email every morning
-        with any new job that’s been listed that matches your search criteria.
-      teaching_vacancies: >-
-        Teaching Vacancies is a free national job-listing service from the Department for Education. It helps schools to
-        save money on recruitment and is here to help you to take the first step in your career.
-      unsubscribe: >-
-        You can unsubscribe at any time by following the instructions in the job alert
-    page_title: Sign up for NQT job alerts
-
   number:
     currency:
       format:
