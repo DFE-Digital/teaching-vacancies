@@ -1,6 +1,5 @@
 class Publishers::JobListing::CopyVacancyForm < Publishers::JobListing::ImportantDatesForm
   include ActionView::Helpers::SanitizeHelper
-  include Publishers::Wizardable
 
   attr_accessor :job_title
 
@@ -9,7 +8,8 @@ class Publishers::JobListing::CopyVacancyForm < Publishers::JobListing::Importan
   validate :job_title_has_no_tags?, if: proc { job_title.present? }
 
   def params_to_save
-    super.merge(job_title: job_title, completed_steps: steps_config.except(:review).keys)
+    # `completed_steps` is nil by default and would overwrite the copied vacancy's value
+    super.except(:completed_steps).merge(job_title: job_title)
   end
 
   private
