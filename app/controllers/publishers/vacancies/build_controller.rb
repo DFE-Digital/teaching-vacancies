@@ -50,13 +50,17 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   end
 
   def form
-    @form ||= "Publishers::JobListing::#{step.to_s.camelize}Form".constantize.new(form_attributes, vacancy)
+    @form ||= form_class.new(form_attributes, vacancy)
+  end
+
+  def form_class
+    "publishers/job_listing/#{step}_form".camelize.constantize
   end
 
   def form_attributes
     case action_name
     when "show"
-      vacancy.slice(*send("#{step}_fields"))
+      vacancy.slice(*form_class.fields)
     when "update"
       form_params
     end

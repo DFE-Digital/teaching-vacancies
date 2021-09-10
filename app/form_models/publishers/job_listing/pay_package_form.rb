@@ -7,6 +7,10 @@ class Publishers::JobListing::PayPackageForm < Publishers::JobListing::VacancyFo
   validates :salary, length: { minimum: 1, maximum: 256 }, if: proc { salary.present? }
   validate :salary_has_no_tags?, if: proc { salary.present? }
 
+  def self.fields
+    %i[actual_salary salary benefits]
+  end
+
   def salary_has_no_tags?
     salary_without_escaped_characters = salary.delete("&")
     return if salary_without_escaped_characters == sanitize(salary_without_escaped_characters, tags: [])

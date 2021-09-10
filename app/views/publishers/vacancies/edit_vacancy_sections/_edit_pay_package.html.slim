@@ -1,4 +1,4 @@
-= render "publishers/vacancies/error_tag", attributes: pay_package_fields
+= render "publishers/vacancies/error_tag", attributes: Publishers::JobListing::PayPackageForm.fields
 
 = render ReviewComponent.new id: "pay_package" do |review|
   - review.heading title: t("publishers.vacancies.steps.pay_package"),

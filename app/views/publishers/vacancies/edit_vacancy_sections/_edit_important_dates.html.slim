@@ -1,4 +1,4 @@
-= render "publishers/vacancies/error_tag", attributes: important_dates_fields
+= render "publishers/vacancies/error_tag", attributes: Publishers::JobListing::ImportantDatesForm.fields
 
 #expiry_time
 = render ReviewComponent.new id: "important_dates" do |review|

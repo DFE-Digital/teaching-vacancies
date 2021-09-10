@@ -14,6 +14,10 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Vacan
                         if: proc { starts_asap == "0" }
   validate :starts_on_and_starts_asap_not_present
 
+  def self.fields
+    %i[starts_asap starts_on publish_on expires_at]
+  end
+
   def initialize(params, vacancy)
     @expiry_time = params[:expiry_time] || vacancy.expires_at&.strftime("%k:%M")&.strip
 

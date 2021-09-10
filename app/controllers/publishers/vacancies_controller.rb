@@ -1,10 +1,6 @@
 class Publishers::VacanciesController < Publishers::Vacancies::BaseController
-  include Publishers::Wizardable
-
   before_action :redirect_if_published, only: %i[preview review]
   before_action :devise_job_alert_search_criteria, only: %i[show preview]
-
-  helper_method :applying_for_the_job_fields, :documents_fields, :important_dates_fields, :job_details_fields, :job_location_fields, :job_role_fields, :job_summary_fields, :pay_package_fields, :schools_fields
 
   def show
     session[:current_step] = :review

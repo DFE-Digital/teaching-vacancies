@@ -4,6 +4,10 @@ class Publishers::JobListing::SchoolsForm < Publishers::JobListing::VacancyForm
   validates :organisation_ids, presence: true
   validate :more_than_one_school_present_multiple_schools, if: proc { organisation_ids.present? }
 
+  def self.fields
+    %i[organisation_ids]
+  end
+
   def initialize(params, vacancy)
     @organisation_ids = if params[:job_location] == "at_one_school" && params[:organisation_ids].is_a?(Array)
                           params[:organisation_ids].first

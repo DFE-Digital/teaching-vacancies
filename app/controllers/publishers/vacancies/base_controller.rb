@@ -30,7 +30,7 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
     step_form = "publishers/job_listing/#{step}_form".camelize.constantize
 
     # We need to merge in the current organisation otherwise the form will always be invalid for local authority users
-    form = step_form.new(vacancy.slice(*send("#{step}_fields")).merge(current_organisation: current_organisation), vacancy)
+    form = step_form.new(vacancy.slice(*step_form.fields).merge(current_organisation: current_organisation), vacancy)
 
     form.valid?.tap do
       vacancy.errors.merge!(form.errors)
