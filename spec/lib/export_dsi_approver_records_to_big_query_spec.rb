@@ -41,7 +41,7 @@ RSpec.describe ExportDsiApproversToBigQuery do
       "update_datetime" => 2.weeks.ago,
       "given_name" => Faker::Name.first_name,
       "family_name" => Faker::Name.last_name,
-      "email" => Faker::Internet.email,
+      "email" => Faker::Internet.email(domain: "example.com"),
       "organisation" => {
         "urn" => 100_000,
         "uid" => 999_999,

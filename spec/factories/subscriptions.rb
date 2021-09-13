@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :subscription do
-    email { Faker::Internet.email }
+    email { Faker::Internet.email(domain: "example.com") }
     frequency { %i[daily weekly].sample }
     search_criteria do
       { keyword: Faker::Lorem.word,

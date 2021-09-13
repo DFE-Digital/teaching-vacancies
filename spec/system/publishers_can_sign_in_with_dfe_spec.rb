@@ -31,7 +31,7 @@ end
 
 RSpec.describe "Publishers can sign in with DfE Sign In" do
   let(:user_oid) { "161d1f6a-44f1-4a1a-940d-d1088c439da7" }
-  let(:dsi_email_address) { Faker::Internet.email }
+  let(:dsi_email_address) { Faker::Internet.email(domain: "example.com") }
 
   before do
     allow(AuthenticationFallback).to receive(:enabled?) { false }
