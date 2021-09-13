@@ -25,8 +25,8 @@ section#job-details class="govuk-!-margin-bottom-5"
 
   - if @vacancy.expires_at.future?
     - if @vacancy.enable_job_applications?
-      h4.govuk-heading-m = t("jobseekers.job_applications.applying_for_the_role_heading")
-      p = t("jobseekers.job_applications.applying_for_the_role_paragraph")
+      h4.govuk-heading-m = t("jobseekers.job_applications.applying_for_the_job_heading")
+      p = t("jobseekers.job_applications.applying_for_the_job_paragraph")
       = govuk_link_to t("jobseekers.job_applications.apply"), new_jobseekers_job_job_application_path(@vacancy.id), button: true
 
     - else

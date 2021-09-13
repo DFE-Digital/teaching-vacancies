@@ -108,8 +108,8 @@ RSpec.describe Jobseekers::VacancyDetailsComponent, type: :component do
 
   context "when vacancy enables job applications" do
     it "renders the how_to_apply label and description" do
-      expect(rendered_component).to include(I18n.t("jobseekers.job_applications.applying_for_the_role_heading"))
-      expect(rendered_component).to include(I18n.t("jobseekers.job_applications.applying_for_the_role_paragraph"))
+      expect(rendered_component).to include(I18n.t("jobseekers.job_applications.applying_for_the_job_heading"))
+      expect(rendered_component).to include(I18n.t("jobseekers.job_applications.applying_for_the_job_paragraph"))
     end
 
     it "renders the application link" do
