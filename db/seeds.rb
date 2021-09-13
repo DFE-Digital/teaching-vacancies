@@ -335,7 +335,7 @@ publishers = Publisher.all
 ### Published
 
 7.times do
-  FactoryBot.create(:vacancy, :published,
+  FactoryBot.create(:vacancy, :published, :at_one_school,
                     publisher_organisation: single_school_one,
                     publisher: publishers.sample,
                     organisation_vacancies_attributes: [{ organisation: single_school_one }])
@@ -343,15 +343,15 @@ end
 
 2.times do
   FactoryBot.create(:vacancy, :published, :no_tv_applications,
-                    publisher_organisation: single_school_one,
-                    publisher: publishers.sample,
-                    organisation_vacancies_attributes: [{ organisation: single_school_one }])
+                    :at_one_school, publisher_organisation: single_school_one,
+                                    publisher: publishers.sample,
+                                    organisation_vacancies_attributes: [{ organisation: single_school_one }])
 end
 
 ### Scheduled
 
 4.times do
-  FactoryBot.create(:vacancy, :future_publish,
+  FactoryBot.create(:vacancy, :future_publish, :at_one_school,
                     publisher_organisation: single_school_one,
                     publisher: publishers.sample,
                     organisation_vacancies_attributes: [{ organisation: single_school_one }])
@@ -360,7 +360,7 @@ end
 ### Draft
 
 4.times do
-  FactoryBot.create(:vacancy, :draft,
+  FactoryBot.create(:vacancy, :draft, :at_one_school,
                     publisher_organisation: single_school_one,
                     publisher: publishers.sample,
                     organisation_vacancies_attributes: [{ organisation: single_school_one }])
@@ -369,7 +369,7 @@ end
 ### Expired
 
 4.times do
-  expired_vacancy = FactoryBot.build(:vacancy, :expired,
+  expired_vacancy = FactoryBot.build(:vacancy, :expired, :at_one_school,
                                      publisher_organisation: single_school_one,
                                      publisher: publishers.sample,
                                      organisation_vacancies_attributes: [{ organisation: single_school_one }])
@@ -388,7 +388,7 @@ weydon_schools = trust_one.schools
 8.times do
   school = weydon_schools.sample
 
-  FactoryBot.create(:vacancy, :published,
+  FactoryBot.create(:vacancy, :published, :at_one_school,
                     publisher_organisation: school,
                     publisher: publishers.sample,
                     organisation_vacancies_attributes: [{ organisation: school }])
@@ -397,7 +397,7 @@ end
 4.times do
   school = weydon_schools.sample
 
-  FactoryBot.create(:vacancy, :published, :no_tv_applications,
+  FactoryBot.create(:vacancy, :published, :no_tv_applications, :at_one_school,
                     publisher_organisation: school,
                     publisher: publishers.sample,
                     organisation_vacancies_attributes: [{ organisation: school }])
@@ -408,7 +408,7 @@ end
 4.times do
   school = weydon_schools.sample
 
-  FactoryBot.create(:vacancy, :future_publish,
+  FactoryBot.create(:vacancy, :future_publish, :at_one_school,
                     publish_on: Date.current + 6.months,
                     expires_at: 2.years.from_now.change(hour: 9, minute: 0),
                     publisher_organisation: school,
@@ -421,7 +421,7 @@ end
 4.times do
   school = weydon_schools.sample
 
-  FactoryBot.create(:vacancy, :draft,
+  FactoryBot.create(:vacancy, :draft, :at_one_school,
                     publisher_organisation: school,
                     publisher: publishers.sample,
                     organisation_vacancies_attributes: [{ organisation: school }])
@@ -432,7 +432,7 @@ end
 4.times do
   school = weydon_schools.sample
 
-  expired_vacancy = FactoryBot.build(:vacancy, :expired,
+  expired_vacancy = FactoryBot.build(:vacancy, :expired, :at_one_school,
                                      publisher_organisation: school,
                                      publisher: publishers.sample,
                                      organisation_vacancies_attributes: [{ organisation: school }])
@@ -475,7 +475,7 @@ la_schools = local_authority_one.schools
 4.times do
   school = la_schools.sample
 
-  FactoryBot.create(:vacancy, :published,
+  FactoryBot.create(:vacancy, :published, :at_one_school,
                     publisher_organisation: school,
                     publisher: publishers.sample,
                     organisation_vacancies_attributes: [{ organisation: school }])
@@ -486,7 +486,7 @@ end
 4.times do
   school = la_schools.sample
 
-  FactoryBot.create(:vacancy, :future_publish,
+  FactoryBot.create(:vacancy, :future_publish, :at_one_school,
                     publisher_organisation: school,
                     publisher: publishers.sample,
                     organisation_vacancies_attributes: [{ organisation: school }])
@@ -497,7 +497,7 @@ end
 4.times do
   school = la_schools.sample
 
-  FactoryBot.create(:vacancy, :draft,
+  FactoryBot.create(:vacancy, :draft, :at_one_school,
                     publisher_organisation: school,
                     publisher: publishers.sample,
                     organisation_vacancies_attributes: [{ organisation: school }])
@@ -508,7 +508,7 @@ end
 4.times do
   school = la_schools.sample
 
-  expired_vacancy = FactoryBot.build(:vacancy, :expired,
+  expired_vacancy = FactoryBot.build(:vacancy, :expired, :at_one_school,
                                      publisher_organisation: school,
                                      publisher: publishers.sample,
                                      organisation_vacancies_attributes: [{ organisation: school }])
