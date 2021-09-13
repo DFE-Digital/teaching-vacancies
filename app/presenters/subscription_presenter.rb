@@ -39,7 +39,7 @@ class SubscriptionPresenter < BasePresenter
     return render_job_roles_filter(value) if field.eql?("job_roles")
     return render_working_patterns_filter(value) if field.eql?("working_patterns")
     return render_phases_filter(value) if field.eql?("phases")
-    return render_nqt_filter(value) if field.eql?("newly_qualified_teacher")
+    return render_ect_filter(value) if field.eql?("newly_qualified_teacher")
 
     { "#{field}": value }
   end
@@ -63,7 +63,7 @@ class SubscriptionPresenter < BasePresenter
     { education_phases: value.map { |role| I18n.t("jobs.education_phase_options.#{role}") }.join(", ") }
   end
 
-  def render_nqt_filter(value)
-    { '': "Suitable for NQTs" } if value.eql?("true")
+  def render_ect_filter(value)
+    { '': "Suitable for ECTs" } if value.eql?("true")
   end
 end

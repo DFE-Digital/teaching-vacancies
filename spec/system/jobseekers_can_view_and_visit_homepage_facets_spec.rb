@@ -5,7 +5,7 @@ RSpec.describe "Jobseekers can view and visit homepage facets", vcr: { cassette_
   let(:vacancy_facets) do
     instance_double(
       VacancyFacets,
-      additional_job_roles: { "nqt_suitable" => 2, "send_responsible" => 3 },
+      additional_job_roles: { "ect_suitable" => 2, "send_responsible" => 3 },
       job_roles: { "teacher" => 1 },
       subjects: { "Bengali" => 5 },
       cities: { "London" => 10 },
@@ -35,17 +35,17 @@ RSpec.describe "Jobseekers can view and visit homepage facets", vcr: { cassette_
 
   describe "additional job roles" do
     it "has the expected facets" do
-      expect(page).to have_css("div[data-facet-type='nqt_suitable']", text: "Suitable for early career teachers view 2 vacancies listed")
+      expect(page).to have_css("div[data-facet-type='ect_suitable']", text: "Suitable for early career teachers view 2 vacancies listed")
       expect(page).to have_css("div[data-facet-type='send_responsible']", text: "SEND responsibilities view 3 vacancies listed")
     end
 
     it "early career teachers link goes to the correct landing page and checks the job roles filter" do
-      within "div[data-facet-type='nqt_suitable']", text: "Suitable for early career teachers view 2 vacancies listed" do
+      within "div[data-facet-type='ect_suitable']", text: "Suitable for early career teachers view 2 vacancies listed" do
         click_on "Suitable for early career teachers"
       end
 
-      expect(current_path).to eq(job_role_path("nqt_suitable"))
-      expect(page.find("#job-roles-nqt-suitable-field")).to be_checked
+      expect(current_path).to eq(job_role_path("ect_suitable"))
+      expect(page.find("#job-roles-ect-suitable-field")).to be_checked
     end
 
     it "send responsible link goes to the correct landing page and checks the job roles filter" do

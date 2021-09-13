@@ -8,7 +8,7 @@ class ConvertLegacyJobRolesToJobRolesOnVacancies < ActiveRecord::Migration[5.2]
           1
         elsif job_role == I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.sen_specialist")
           2
-        elsif job_role == I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.nqt_suitable")
+        elsif job_role == I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.ect_suitable")
           3
         end
       end

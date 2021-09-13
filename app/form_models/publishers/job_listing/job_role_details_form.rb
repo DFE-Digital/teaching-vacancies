@@ -11,7 +11,7 @@ class Publishers::JobListing::JobRoleDetailsForm < Publishers::JobListing::Vacan
   end
 
   def teacher_additional_job_roles_options
-    %w[nqt_suitable send_responsible]
+    %w[ect_suitable send_responsible]
   end
 
   def send_responsible

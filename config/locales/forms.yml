@@ -148,14 +148,6 @@ en:
         email: >-
           We'll only use this to tell you about opportunities to take part in user research that helps us improve
           Department for Education services.
-      jobseekers_nqt_job_alerts_form:
-        email: Enter your email address. We will only use it to send you job alerts.
-        keywords: >-
-          Tell us what teaching job you’re looking for and what kind of school you’d like to teach in.
-          You can use any keywords that describe your ideal role. This alert is especially for NQT suitable jobs, so you
-          don’t need to add NQT as a keyword.
-        location: >-
-          Tell us where you’re looking for a job and we’ll email you any results within a 10 mile radius.
       jobseekers_subscription_form:
         email: Enter your email address. We'll only use it to send you job alerts.
       jobseekers_unsubscribe_feedback_form:
@@ -448,10 +440,6 @@ en:
           another_role: I have found another role
           changed_mind: I have changed my mind
           other: Some other reason
-      jobseekers_nqt_job_alerts_form:
-        email: Email address
-        keywords: Keywords
-        location: Location
       jobseekers_sign_in_form:
         email: Email address
         password: Password
@@ -553,8 +541,8 @@ en:
         job_roles_options:
           education_support: Education support
           leadership: Leadership
-          nqt_suitable: Suitable for early career teachers
-          nqt_suitable_hidden_prefix: Only show results
+          ect_suitable: Suitable for early career teachers
+          ect_suitable_hidden_prefix: Only show results
           sen_specialist: Special Educational Needs and Disability Coordinator (SENDCo)
           send_responsible: Special Educational Needs and Disability Coordinator (SENDCo)
           teaching_assistant: Teaching assistant
@@ -569,7 +557,7 @@ en:
           education_support: Education support
       publishers_job_listing_job_role_details_form:
         additional_job_roles_options:
-          nqt_suitable: Suitable for early career teachers
+          ect_suitable: Suitable for early career teachers
           send_responsible: SEND responsibilities (special educational needs and disabilities)
       publishers_job_listing_job_summary_form:
         about_organisation: About %{organisation}
@@ -677,7 +665,7 @@ en:
         starts_on_html: Date job starts (optional<span class='govuk-visually-hidden'> field</span>)</span>
       publishers_job_listing_job_details_form:
         contract_type: Contract type
-        suitable_for_nqt: Is this job suitable for NQTs?
+        suitable_for_ect: Is this job suitable for ECTs?
         subjects_html: Subject(s) (optional<span class='govuk-visually-hidden'> field</span>)</span>
       publishers_job_listing_job_role_form:
         main_job_role: What is the job role?
@@ -752,6 +740,3 @@ en:
             at_multiple_schools: At more than one school in the trust
 
     placeholder:
-      jobseekers_nqt_job_alerts_form:
-        keywords: Humanities, KS3, primary teacher, for example
-        location: City, town or postcode, for example

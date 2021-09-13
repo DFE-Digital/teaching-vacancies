@@ -2,7 +2,7 @@ en:
   cookies_preferences_errors: &cookies_preferences_errors
     cookies_consent:
       inclusion: Please select an option
-  nqt_job_alert_errors: &nqt_job_alert_errors
+  ect_job_alert_errors: &ect_job_alert_errors
     keywords:
       blank: Enter keyword(s)
     location:
@@ -213,9 +213,9 @@ en:
         jobseekers/job_application/feedback_form:
           attributes:
             <<: *jobseekers_job_application_feedback_form_errors
-        jobseekers/nqt_job_alerts_form:
+        jobseekers/ect_job_alerts_form:
           attributes:
-            <<: *nqt_job_alert_errors
+            <<: *ect_job_alert_errors
         jobseekers/subscription_form:
           attributes:
             <<: *subscription_errors

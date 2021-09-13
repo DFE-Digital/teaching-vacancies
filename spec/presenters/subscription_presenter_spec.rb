@@ -47,11 +47,11 @@ RSpec.describe SubscriptionPresenter do
       end
     end
 
-    context "with the NQT filter" do
+    context "with the ECT filter" do
       let(:search_criteria) { { newly_qualified_teacher: "true" } }
 
       it "formats and returns the working pattern" do
-        expect(presenter.filtered_search_criteria[""]).to eq("Suitable for NQTs")
+        expect(presenter.filtered_search_criteria[""]).to eq("Suitable for ECTs")
       end
     end
 
@@ -75,7 +75,7 @@ RSpec.describe SubscriptionPresenter do
           "job_title" => "leader",
           "working_patterns" => "Part time",
           "education_phases" => "Secondary, 16-19",
-          "" => "Suitable for NQTs",
+          "" => "Suitable for ECTs",
         )
       end
     end
@@ -98,7 +98,7 @@ RSpec.describe SubscriptionPresenter do
           "location" => "Within 10 miles of EC2 9AN",
           "subject" => "maths",
           "job_title" => "leader",
-          "" => "Suitable for NQTs",
+          "" => "Suitable for ECTs",
           "something" => "test",
           "something_else" => "testing",
         )

@@ -35,7 +35,7 @@ RSpec.describe Publishers::JobListing::JobRoleDetailsForm, type: :model do
     it { is_expected.not_to validate_inclusion_of(:send_responsible).in_array(%w[yes no]) }
 
     describe "#params_to_save" do
-      let(:additional_roles) { %w[send_responsible nqt_suitable] }
+      let(:additional_roles) { %w[send_responsible ect_suitable] }
 
       it "includes additional job roles" do
         subject.additional_job_roles = additional_roles
