@@ -319,3 +319,4 @@ shared:
     - end_listing_reason
     - candidate_hired_from
     - completed_steps
+    - working_patterns_details
