@@ -175,7 +175,7 @@ en:
     create_a_job_title: Create a job listing for %{organisation}
     create_a_job_title_no_org: Create a job listing
     copy_job_title: Copy %{job_title}
-    manage_listing: Manage listing
+    manage_listing: Manage job listing
     new_job_listing_details: New job listing details
     review_page_title: Review the job listing — Create a job listing for %{organisation}
     edit_job_title: Edit %{job_title}
@@ -258,7 +258,7 @@ en:
     job_advert: Job advert
     about_school: About %{school}
 
-    review: Review your entries for each section below, making any changes needed before you publish the listing.
+    review: Review your entries for each section below, making any changes needed before you publish the job listing.
     review_future:
       Review your entries for each section below, making any changes before you submit the listing for publication.
     not_defined: Not provided (will not be seen on published listing)
@@ -287,15 +287,15 @@ en:
             You can make changes or, if you are happy with it and agree to our <a href='/pages/terms-and-conditions'
             class='govuk-link' target='blank'>terms and conditions</a>, you can submit it for publication on %{date}.
         data_retention: >-
-          You will have access to candidates' applications for this job for one year after the closing data of the
-          listing.
+          You will have access to candidates' applications for this job for one year after the closing date of the
+          job listing.
 
     submit_listing:
       data_retention: >-
         You will have access to candidates' applications for this job for one year after the closing date of the
         listing.
       heading:
-        zero: Submit this listing for publication now (%{date})
+        zero: Submit this job listing for publication now (%{date})
         one: Submit this listing for publication on %{date}
       message_html: >-
         By publishing this job you agree to our <a href='/pages/terms-and-conditions'
