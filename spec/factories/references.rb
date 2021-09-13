@@ -4,7 +4,7 @@ FactoryBot.define do
     job_title { Faker::Company.profession }
     organisation { Faker::Educator.secondary_school }
     relationship { "Line Manager" }
-    email { Faker::Internet.email }
+    email { Faker::Internet.email(domain: "example.com") }
     phone_number { "01234 567890" }
 
     job_application

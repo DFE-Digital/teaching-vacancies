@@ -14,7 +14,7 @@ RSpec.describe "Users can only be signed in to one type of account" do
     before { login_as(jobseeker, scope: :jobseeker) }
 
     context "when email fallback is disabled" do
-      let(:dsi_email_address) { Faker::Internet.email }
+      let(:dsi_email_address) { Faker::Internet.email(domain: "example.com") }
 
       before do
         OmniAuth.config.test_mode = true

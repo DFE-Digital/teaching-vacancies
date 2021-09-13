@@ -22,7 +22,7 @@ FactoryBot.define do
     completed_steps do
       %w[job_role job_role_details job_location schools job_details working_patterns pay_package important_dates documents applying_for_the_job job_summary]
     end
-    contact_email { Faker::Internet.email }
+    contact_email { Faker::Internet.email(domain: "example.com") }
     contact_number { "01234 123456" }
     contract_type { Vacancy.contract_types.keys.sample }
     contract_type_duration { "6 months" }
