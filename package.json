@@ -10,12 +10,12 @@
     "not dead"
   ],
   "dependencies": {
-    "@rails/webpacker": "5.3.0",
+    "@rails/webpacker": "^5.4.2",
     "accessible-autocomplete": "^2.0.3",
     "axios": "^0.21.4",
     "classlist-polyfill": "^1.2.0",
     "es6-promise": "^4.2.8",
-    "govuk-frontend": "3.13.1",
+    "govuk-frontend": "^3.13.1",
     "jquery": "^3.5.0",
     "jsdom": "^17.0.0",
     "rails-ujs": "^5.2.6",
