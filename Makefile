@@ -133,6 +133,10 @@ terraform-app-destroy: terraform-app-init ## make qa destroy passcode=MyPasscode
 	$(if $(CONFIRM_DESTROY), , $(error Can only run with CONFIRM_DESTROY))
 	cd terraform/app && terraform destroy -var-file ../workspace-variables/${var_file}.tfvars
 
+terraform-app-database-replace: terraform-app-init ## make qa destroy passcode=MyPasscode
+	$(if $(CONFIRM_REPLACE), , $(error Can only run with CONFIRM_REPLACE))
+	cd terraform/app && terraform apply -replace="module.paas.cloudfoundry_service_instance.postgres_instance" -var-file ../workspace-variables/${var_file}.tfvars
+
 ##@ terraform/common code. Requires privileged IAM account to run
 
 .PHONY: terraform-common-init
