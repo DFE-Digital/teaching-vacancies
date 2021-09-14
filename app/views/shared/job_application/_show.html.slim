@@ -11,62 +11,87 @@
 
 = render ReviewComponent.new id: "personal_details_summary" do |review|
   - review.heading title: t(".personal_details.heading")
+
   - review.body do
-    = govuk_summary_list do |summary|
-      - summary.slot :row, key: t(".personal_details.first_name"), value: job_application.first_name
-      - summary.slot :row, key: t(".personal_details.last_name"), value: job_application.last_name
+    = govuk_summary_list do |summary_list|
+      - summary_list.row do |row|
+        - row.key text: t(".personal_details.first_name")
+        - row.value text: job_application.first_name
+
+      - summary_list.row do |row|
+        - row.key text: t(".personal_details.last_name")
+        - row.value text: job_application.last_name
+
       - if job_application.previous_names.present?
-        - summary.slot :row, key: t(".personal_details.previous_names"), value: job_application.previous_names
-      - summary.slot :row,
-                     key: t(".personal_details.your_address"),
-                     value: safe_join([tag.div(job_application.street_address, class: "govuk-body"),
-                                       tag.div(job_application.city, class: "govuk-body"),
-                                       tag.div(job_application.postcode, class: "govuk-body")])
-      - summary.slot :row, key: t(".personal_details.phone_number"), value: job_application.phone_number
-      - summary.slot :row,
-                     key: t(".personal_details.email"),
-                     value: govuk_mail_to(job_application.email, job_application.email)
+        - summary_list.row do |row|
+          - row.key text: t(".personal_details.previous_names")
+          - row.value text: job_application.previous_names
+
+      - summary_list.row do |row|
+        - row.key text: t(".personal_details.your_address")
+        - row.value text: safe_join([tag.div(job_application.street_address, class: "govuk-body"), tag.div(job_application.city, class: "govuk-body"), tag.div(job_application.postcode, class: "govuk-body")])
+
+      - summary_list.row do |row|
+        - row.key text: t(".personal_details.phone_number")
+        - row.value text: job_application.phone_number
+
+      - summary_list.row do |row|
+        - row.key text: t(".personal_details.email")
+        - row.value text: govuk_mail_to(job_application.email, job_application.email)
+
       - if job_application.teacher_reference_number.present?
-        - summary.slot :row, key: t(".personal_details.teacher_reference_number"), value: job_application.teacher_reference_number
+        - summary_list.row do |row|
+          - row.key text: t(".personal_details.teacher_reference_number")
+          - row.value text: job_application.teacher_reference_number
+
       - if job_application.national_insurance_number.present?
-        - summary.slot :row, key: t(".personal_details.national_insurance_number"), value: job_application.national_insurance_number
+        - summary_list.row do |row|
+          - row.key text: t(".personal_details.national_insurance_number")
+          - row.value text: job_application.national_insurance_number
 
 = render ReviewComponent.new id: "professional_status_summary" do |review|
   - review.heading title: t(".professional_status.heading")
+
   - review.body do
-    = govuk_summary_list do |summary|
-      - summary.slot :row, key: t(".professional_status.qualified_teacher_status"), value: job_application_qualified_teacher_status_info(job_application)
-      - summary.slot :row, key: t(".professional_status.statutory_induction_complete"), value: job_application.statutory_induction_complete.humanize
+    = govuk_summary_list do |summary_list|
+      - summary_list.row do |row|
+        - row.key text: t(".professional_status.qualified_teacher_status")
+        - row.value text: job_application_qualified_teacher_status_info(job_application)
+
+      - summary_list.row do |row|
+        - row.key text: t(".professional_status.statutory_induction_complete")
+        - row.value text: job_application.statutory_induction_complete.humanize
 
 = render ReviewComponent.new id: "qualifications_summary" do |review|
   - review.heading title: t(".qualifications.heading")
+
   - review.body do
     - if job_application.qualifications.none?
       p.govuk-body = t(".qualifications.none")
     - else
       = govuk_accordion do |accordion|
         - job_application.qualifications.each do |qualification|
-          - accordion.add_section title: qualification.name do
-            = govuk_summary_list do |summary|
+          - accordion.section heading_text: qualification.name do
+            = govuk_summary_list do |summary_list|
               - if qualification.secondary?
-                - summary.slot :row,
-                               key: t(".qualifications.subjects_and_grades"),
-                               value: safe_join(qualification.qualification_results.map { |result| tag.div("#{result.subject} - #{result.grade}") })
+                - summary_list.row do |row|
+                  - row.key text: t(".qualifications.subjects_and_grades")
+                  - row.value text: safe_join(qualification.qualification_results.map { |result| tag.div("#{result.subject} - #{result.grade}") })
 
               - qualification.display_attributes.each do |attribute|
                 - if qualification[attribute].present?
-                  - summary.slot :row,
-                                 key: t("helpers.label.#{qualification_form_param_key(qualification.category)}.#{attribute}"),
-                                 value: qualification[attribute]
+                  - summary_list.row do |row|
+                    - row.key text: t("helpers.label.#{qualification_form_param_key(qualification.category)}.#{attribute}")
+                    - row.value text: qualification[attribute]
 
               - unless qualification.finished_studying.nil?
-                - summary.slot :row,
-                               key: t("helpers.legend.#{qualification_form_param_key(qualification.category)}.finished_studying"),
-                               value: safe_join([tag.div(I18n.t("helpers.label.jobseekers_job_application_details_qualifications_shared_labels.finished_studying_options.#{qualification.finished_studying}")),
-                                                 tag.div(qualification.finished_studying_details.presence)])
+                - summary_list.row do |row|
+                  - row.key text: t("helpers.legend.#{qualification_form_param_key(qualification.category)}.finished_studying")
+                  - row.value text: safe_join([tag.div(t("helpers.label.jobseekers_job_application_details_qualifications_shared_labels.finished_studying_options.#{qualification.finished_studying}")), tag.div(qualification.finished_studying_details.presence)])
 
 = render ReviewComponent.new id: "employment_history_summary" do |review|
   - review.heading title: t(".employment_history.heading")
+
   - review.body do
     - if job_application.employments.none?
       p.govuk-body = t(".employment_history.none")
@@ -74,18 +99,38 @@
       = govuk_accordion classes: "govuk-!-margin-bottom-2" do |accordion|
         - employments.each_with_index do |employment, index|
           - if employment.job?
-            - accordion.add_section title: employment.job_title, html_attributes: { id: "#{employment.job_title}-#{index}" }
-              = govuk_summary_list do |summary|
-                - summary.slot :row, key: t(".employment_history.organisation"), value: employment.organisation
+            - accordion.section heading_text: employment.job_title, html_attributes: { id: "#{employment.job_title}-#{index}" }
+              = govuk_summary_list do |summary_list|
+                - summary_list.row do |row|
+                  - row.key text: t(".employment_history.organisation")
+                  - row.value text: employment.organisation
+
                 - if employment.salary.present?
-                  - summary.slot :row, key: t(".employment_history.salary"), value: employment.salary
+                  - summary_list.row do |row|
+                    - row.key text: t(".employment_history.salary")
+                    - row.value text: employment.salary
+
                 - if employment.subjects.present?
-                  - summary.slot :row, key: t(".employment_history.subjects"), value: employment.subjects
-                - summary.slot :row, key: t(".employment_history.main_duties"), value: employment.main_duties
-                - summary.slot :row, key: t(".employment_history.started_on"), value: employment.started_on.to_s(:month_year)
-                - summary.slot :row, key: t(".employment_history.current_role"), value: employment.current_role.humanize
+                  - summary_list.row do |row|
+                    - row.key text: t(".employment_history.subjects")
+                    - row.value text: employment.subjects
+
+                - summary_list.row do |row|
+                  - row.key text: t(".employment_history.main_duties")
+                  - row.value text: employment.main_duties
+
+                - summary_list.row do |row|
+                  - row.key text: t(".employment_history.started_on")
+                  - row.value text: employment.started_on.to_s(:month_year)
+
+                - summary_list.row do |row|
+                  - row.key text: t(".employment_history.current_role")
+                  - row.value text: employment.current_role.humanize
+
                 - if employment.current_role == "no"
-                  - summary.slot :row, key: t(".employment_history.ended_on"), value: employment.ended_on.to_s(:month_year)
+                  - summary_list.row do |row|
+                    - row.key text: t(".employment_history.ended_on")
+                    - row.value text: employment.ended_on.to_s(:month_year)
 
           - elsif employment.break?
             = render "shared/job_application/explained_employment_break", accordion: accordion, employment: employment, index: index
@@ -95,6 +140,7 @@
 
 = render ReviewComponent.new id: "personal_statement_summary" do |review|
   - review.heading title: t(".personal_statement.heading")
+
   - review.body do
     p.govuk-body.review-component__body--border class="govuk-!-padding-bottom-3" = job_application.personal_statement
 
@@ -103,25 +149,46 @@
   - review.body do
     = govuk_accordion classes: "govuk-!-margin-bottom-5" do |accordion|
       - job_application.references.order(:created_at).each do |reference|
-        - accordion.add_section title: reference.name do
-          = govuk_summary_list do |summary|
-            - summary.slot :row, key: t(".references.job_title"), value: reference.job_title
-            - summary.slot :row, key: t(".references.organisation"), value: reference.organisation
-            - summary.slot :row, key: t(".references.relationship"), value: reference.relationship
-            - summary.slot :row, key: t(".references.email"), value: reference.email
-            - summary.slot :row, key: t(".references.phone_number"), value: reference.phone_number
+        - accordion.section heading_text: reference.name do
+          = govuk_summary_list do |summary_list|
+            - summary_list.row do |row|
+              - row.key text: t(".references.job_title")
+              - row.value text: reference.job_title
+
+            - summary_list.row do |row|
+              - row.key text: t(".references.organisation")
+              - row.value text: reference.organisation
+
+            - summary_list.row do |row|
+              - row.key text: t(".references.relationship")
+              - row.value text: reference.relationship
+
+            - summary_list.row do |row|
+              - row.key text: t(".references.email")
+              - row.value text: reference.email
+
+            - summary_list.row do |row|
+              - row.key text: t(".references.phone_number")
+              - row.value text: reference.phone_number
 
 = render ReviewComponent.new id: "ask_for_support_summary" do |review|
   - review.heading title: t(".ask_for_support.heading")
+
   - review.body do
-    = govuk_summary_list do |summary|
-      - summary.slot :row, key: t(".ask_for_support.support_needed"), value: job_application_support_needed_info(job_application)
+    = govuk_summary_list do |summary_list|
+      - summary_list.row do |row|
+        - row.key text: t(".ask_for_support.support_needed")
+        - row.value text: job_application_support_needed_info(job_application)
 
 = render ReviewComponent.new id: "declarations_summary" do |review|
   - review.heading title: t(".declarations.heading")
+
   - review.body do
-    = govuk_summary_list do |summary|
-      - summary.slot :row,
-                     key: t(".declarations.close_relationships", organisation: vacancy.organisation.name),
-                     value: job_application_close_relationships_info(job_application)
-      - summary.slot :row, key: t(".declarations.right_to_work_in_uk"), value: job_application.right_to_work_in_uk.humanize
+    = govuk_summary_list do |summary_list|
+      - summary_list.row do |row|
+        - row.key text: t(".declarations.close_relationships", organisation: vacancy.organisation.name)
+        - row.value text: job_application_close_relationships_info(job_application)
+
+      - summary_list.row do |row|
+        - row.key text: t(".declarations.right_to_work_in_uk")
+        - row.value text: job_application.right_to_work_in_uk.humanize

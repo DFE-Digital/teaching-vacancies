@@ -12,30 +12,37 @@
       = govuk_accordion do |accordion|
         - employments.each_with_index do |employment, index|
           - if employment.job?
-            - accordion.add_section title: employment.job_title, html_attributes: { id: "#{employment.job_title}-#{index}" } do
-              = govuk_summary_list do |summary|
-                - summary.slot :row,
-                                key: t("helpers.label.jobseekers_job_application_details_employment_form.organisation"),
-                                value: employment.organisation
-                - summary.slot :row,
-                                key: t("helpers.label.jobseekers_job_application_details_employment_form.salary_html"),
-                                value: employment.salary.presence || t("jobseekers.job_applications.not_defined")
-                - summary.slot :row,
-                                key: t("helpers.label.jobseekers_job_application_details_employment_form.subjects_html"),
-                                value: employment.subjects.presence || t("jobseekers.job_applications.not_defined")
-                - summary.slot :row,
-                                key: t("helpers.label.jobseekers_job_application_details_employment_form.main_duties"),
-                                value: employment.main_duties
-                - summary.slot :row,
-                                key: t("helpers.legend.jobseekers_job_application_details_employment_form.started_on"),
-                                value: employment.started_on
-                - summary.slot :row,
-                                key: t("helpers.legend.jobseekers_job_application_details_employment_form.current_role"),
-                                value: employment.current_role.humanize
+            - accordion.section heading_text: employment.job_title, html_attributes: { id: "#{employment.job_title}-#{index}" } do
+              = govuk_summary_list do |summary_list|
+                - summary_list.row do |row|
+                  - row.key text: t("helpers.label.jobseekers_job_application_details_employment_form.organisation")
+                  - row.value text: employment.organisation
+
+                - summary_list.row do |row|
+                  - row.key text: t("helpers.label.jobseekers_job_application_details_employment_form.salary_html")
+                  - row.value text: employment.salary.presence || t("jobseekers.job_applications.not_defined")
+
+                - summary_list.row do |row|
+                  - row.key text: t("helpers.label.jobseekers_job_application_details_employment_form.subjects_html")
+                  - row.value text: employment.subjects.presence || t("jobseekers.job_applications.not_defined")
+
+                - summary_list.row do |row|
+                  - row.key text: t("helpers.label.jobseekers_job_application_details_employment_form.main_duties")
+                  - row.value text: employment.main_duties
+
+                - summary_list.row do |row|
+                  - row.key text: t("helpers.legend.jobseekers_job_application_details_employment_form.started_on")
+                  - row.value text: employment.started_on
+
+                - summary_list.row do |row|
+                  - row.key text: t("helpers.legend.jobseekers_job_application_details_employment_form.current_role")
+                  - row.value text: employment.current_role.humanize
+
                 - if employment.current_role == "no"
-                  - summary.slot :row,
-                                  key: t("helpers.legend.jobseekers_job_application_details_employment_form.ended_on"),
-                                  value: employment.ended_on
+                  - summary_list.row do |row|
+                    - row.key text: t("helpers.legend.jobseekers_job_application_details_employment_form.ended_on")
+                    - row.value text: employment.ended_on
+
           - elsif employment.break?
             = render "shared/job_application/explained_employment_break", accordion: accordion, employment: employment, index: index
 

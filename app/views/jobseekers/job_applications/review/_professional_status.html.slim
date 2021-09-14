@@ -5,11 +5,12 @@
       = job_application_review_section_tag(job_application, :professional_status)
 
   - review.body do
-    = govuk_summary_list do |summary|
-      - summary.slot :row,
-                      key: t("helpers.legend.jobseekers_job_application_professional_status_form.qualified_teacher_status"),
-                      value: job_application_qualified_teacher_status_info(job_application)
-      - summary.slot :row,
-                      key: t("helpers.legend.jobseekers_job_application_professional_status_form.statutory_induction_complete"),
-                      value: job_application.statutory_induction_complete.humanize,
-                      html_attributes: { id: "statutory_induction_complete" }
+    = govuk_summary_list do |summary_list|
+      - summary_list.row do |row|
+        - row.key text: t("helpers.legend.jobseekers_job_application_professional_status_form.qualified_teacher_status")
+        - row.value text: job_application_qualified_teacher_status_info(job_application)
+
+      - summary_list.row do |row|
+        - row.key text: t("helpers.legend.jobseekers_job_application_professional_status_form.statutory_induction_complete")
+        - row.value text: job_application.statutory_induction_complete.humanize
+        - row.html_attributes { { id: "statutory_induction_complete" } }

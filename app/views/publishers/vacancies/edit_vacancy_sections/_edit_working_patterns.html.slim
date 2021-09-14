@@ -6,13 +6,13 @@
                    href: organisation_job_build_path(@vacancy.id, :working_patterns)
 
   - review.body do
-    = govuk_summary_list do |component|
-      - component.slot(:row,
-        key: t("jobs.working_patterns"),
-        value: @vacancy.working_patterns,
-        html_attributes: { id: "working_patterns" })
+    = govuk_summary_list do |summary_list|
+      - summary_list.row do |row|
+        - row.key text: t("jobs.working_patterns")
+        - row.value text: @vacancy.working_patterns
+        - row.html_attributes { { id: "working_patterns" } }
 
-      - component.slot(:row,
-        key: t("jobs.working_patterns_details"),
-        value: @vacancy.working_patterns_details,
-        html_attributes: { id: "working_patterns_details" })
+      - summary_list.row do |row|
+        - row.key text: t("jobs.working_patterns_details")
+        - row.value text: @vacancy.working_patterns_details
+        - row.html_attributes { { id: "working_patterns_details" } }

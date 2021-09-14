@@ -39,7 +39,7 @@ class Publishers::VacanciesComponent < ViewComponent::Base
   end
 
   def no_jobs_text
-    I18n.t("jobs.manage.#{selected_type}.no_jobs.#{publisher_preference.organisations.any? ? 'with' : 'no'}_filters")
+    t("jobs.manage.#{selected_type}.no_jobs.#{publisher_preference.organisations.any? ? 'with' : 'no'}_filters")
   end
 
   def view_applicants(vacancy)
@@ -48,8 +48,8 @@ class Publishers::VacanciesComponent < ViewComponent::Base
 
     applications = vacancy.job_applications.where(status: %w[submitted reviewed shortlisted unsuccessful])
 
-    link = govuk_link_to(tag.span(I18n.t("jobs.manage.view_applicants.hidden_text"), class: "govuk-visually-hidden") \
-                          + I18n.t("jobs.manage.view_applicants", count: applications.count) \
+    link = govuk_link_to(tag.span(t("jobs.manage.view_applicants.hidden_text"), class: "govuk-visually-hidden") \
+                          + t("jobs.manage.view_applicants", count: applications.count) \
                           + tag.span(" for #{vacancy.job_title}", class: "govuk-visually-hidden"),
                          organisation_job_job_applications_path(vacancy.id),
                          class: "govuk-link--no-visited-state govuk-!-font-size-19")

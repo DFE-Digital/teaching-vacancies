@@ -3,8 +3,8 @@
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      = govuk_notification_banner title: t("banners.warning"), classes: "govuk-notification-banner--warning" do |banner|
-        - banner.add_heading text: t("publishers.temp_login.heading")
+      = govuk_notification_banner title_text: t("banners.warning"), classes: "govuk-notification-banner--warning" do |banner|
+        - banner.heading text: t("publishers.temp_login.heading")
         span class="govuk-!-margin-top-3" = t("publishers.temp_login.please_use_email")
 
       h1.govuk-heading-l = t("publishers.sessions.new.sign_in.title")

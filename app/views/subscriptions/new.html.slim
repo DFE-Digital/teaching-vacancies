@@ -12,7 +12,7 @@
 
         .location-search = render "fields", f: f
 
-        = govuk_notification_banner title: t("banners.important") do
+        = govuk_notification_banner title_text: t("banners.important") do
           = t("subscriptions.info")
 
         = recaptcha
