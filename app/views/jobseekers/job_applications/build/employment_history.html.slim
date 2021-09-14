@@ -19,19 +19,30 @@
         - if employment.job?
           = render DetailComponent.new title: employment.job_title do |detail|
             - detail.body do
-              = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |c|
+              = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
                 - attributes = %w[organisation salary subjects]
                 - attributes.each do |attribute|
-                  - c.slot(:row, key: t("jobseekers.job_applications.employments.#{attribute}"), value: employment[attribute].presence || t("jobseekers.job_applications.not_defined"))
-                - c.slot(:row, key: t("jobseekers.job_applications.employments.started_on"), value: employment.started_on.to_s(:month_year))
+                  - summary_list.row do |row|
+                    - row.key text: t("jobseekers.job_applications.employments.#{attribute}")
+                    - row.value text: employment[attribute].presence || t("jobseekers.job_applications.not_defined")
+
+                - summary_list.row do |row|
+                  - row.key text: t("jobseekers.job_applications.employments.started_on")
+                  - row.value text: employment.started_on.to_s(:month_year)
 
                 - case employment.current_role
                 - when "yes"
-                  - c.slot(:row, key: t("jobseekers.job_applications.employments.ended_on"), value: t("jobseekers.job_applications.employments.current_role"))
+                  - summary_list.row do |row|
+                    - row.key text: t("jobseekers.job_applications.employments.ended_on")
+                    - row.value text: t("jobseekers.job_applications.employments.current_role")
                 - when "no"
-                  - c.slot(:row, key: t("jobseekers.job_applications.employments.ended_on"), value: employment.ended_on.to_s(:month_year))
+                  - summary_list.row do |row|
+                    - row.key text: t("jobseekers.job_applications.employments.ended_on")
+                    - row.value text: employment.ended_on.to_s(:month_year)
 
-                - c.slot(:row, key: t("jobseekers.job_applications.employments.main_duties"), value: employment.main_duties)
+                - summary_list.row do |row|
+                  - row.key text: t("jobseekers.job_applications.employments.main_duties")
+                  - row.value text: employment.main_duties
 
             - detail.actions do
               = govuk_link_to edit_jobseekers_job_application_employment_path(job_application, employment), class: "govuk-link--no-visited-state"
@@ -61,11 +72,11 @@
               = " or "
               = govuk_link_to t("buttons.add_another_break"), new_jobseekers_job_application_break_path(job_application, started_on: employment.ended_on, ended_on: (employments[index + 1]&.started_on || Date.current))
 
-      = govuk_link_to t("buttons.add_another_job"), new_jobseekers_job_application_employment_path(job_application), button: true, class: "govuk-button--secondary"
+      = govuk_button_link_to t("buttons.add_another_job"), new_jobseekers_job_application_employment_path(job_application), class: "govuk-button--secondary"
 
     - else
       = render EmptySectionComponent.new title: t(".no_employments") do
-        = govuk_link_to t("buttons.add_another_job"), new_jobseekers_job_application_employment_path(job_application), button: true, class: "govuk-button--secondary govuk-!-margin-bottom-0"
+        = govuk_button_link_to t("buttons.add_another_job"), new_jobseekers_job_application_employment_path(job_application), class: "govuk-button--secondary govuk-!-margin-bottom-0"
 
     = form_for form, url: wizard_path, method: :patch do |f|
       = f.govuk_submit job_application_build_submit_button_text do

@@ -6,18 +6,18 @@
                    href: organisation_job_build_path(@vacancy.id, :job_details)
 
   - review.body do
-    = govuk_summary_list do |component|
-      - component.slot(:row,
-        key: t("jobs.job_title"),
-        value: @vacancy.job_title,
-        html_attributes: { id: "job_title" })
+    = govuk_summary_list do |summary_list|
+      - summary_list.row do |row|
+        - row.key text: t("jobs.job_title")
+        - row.value text: @vacancy.job_title
+        - row.html_attributes { { id: "job_title" } }
 
-      - component.slot(:row,
-        key: t("jobs.subjects"),
-        value: @vacancy.show_subjects.presence || t("jobs.not_defined"),
-        html_attributes: { id: "subjects" })
+      - summary_list.row do |row|
+        - row.key text: t("jobs.subjects")
+        - row.value text: @vacancy.show_subjects.presence || t("jobs.not_defined")
+        - row.html_attributes { { id: "subjects" } }
 
-      - component.slot(:row,
-        key: t("jobs.contract_type"),
-        value: @vacancy.contract_type_with_duration,
-        html_attributes: { id: "contract_type" })
+      - summary_list.row do |row|
+        - row.key text: t("jobs.contract_type")
+        - row.value text: @vacancy.contract_type_with_duration
+        - row.html_attributes { { id: "contract_type" } }

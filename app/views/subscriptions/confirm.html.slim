@@ -3,7 +3,7 @@
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      = govuk_panel title: t(".header.#{action_name}"), body: t(".body", email: @subscription.email)
+      = govuk_panel title_text: t(".header.#{action_name}"), text: t(".body", email: @subscription.email)
 
       h2.govuk-heading-m = t(".next_step")
       p.govuk-body = t(".next_step_details")

@@ -3,18 +3,18 @@
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      = govuk_panel title: t(".panel.title"), body: t(".panel.body", email: current_jobseeker.email)
+      = govuk_panel title_text: t(".panel.title"), text: t(".panel.body", email: current_jobseeker.email)
 
     .govuk-grid-column-two-thirds
       h2.govuk-heading-l = t(".next_step.heading")
 
-      = govuk_notification_banner title: t("banners.important") do |banner|
-        - banner.add_heading(text: t(".notice.title"))
+      = govuk_notification_banner title_text: t("banners.important") do |banner|
+        - banner.heading(text: t(".notice.title"))
         span class="govuk-!-margin-top-3" = t(".notice.body")
 
       p.govuk-body = t(".next_step.shortlisted", organisation: vacancy.parent_organisation.name)
 
-      = govuk_link_to t(".next_step.view_applications"), jobseekers_job_applications_path, class: "govuk-button--secondary govuk-!-margin-bottom-3", button: true
+      = govuk_button_link_to t(".next_step.view_applications"), jobseekers_job_applications_path, class: "govuk-button--secondary govuk-!-margin-bottom-3"
 
       hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
 

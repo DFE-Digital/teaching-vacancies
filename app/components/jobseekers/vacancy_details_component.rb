@@ -1,5 +1,5 @@
 class Jobseekers::VacancyDetailsComponent < ViewComponent::Base
-  delegate :open_in_new_tab_link_to, to: :helpers
+  delegate :open_in_new_tab_link_to, :open_in_new_tab_button_link_to, to: :helpers
 
   attr_accessor :vacancy
 

@@ -1,0 +1,28 @@
+= tag.div(class: classes, **html_attributes) do
+  div class="#{border_class} #{scrollable_class}"
+    - if searchable
+      .searchable-collection-component__search
+        input.govuk-input.searchable-collection-component__search-input.icon.icon--left.icon--search.js-action placeholder="Search" aria-label="#{label_text}"
+
+    - case input_type
+    - when :checkbox
+      = form.govuk_collection_check_boxes attribute_name,
+        collection,
+        value_method,
+        text_method,
+        hint_method,
+        small: small,
+        classes: "checkbox-label__bold",
+        legend: nil,
+        hint: nil
+
+    - when :radio_button
+      = form.govuk_collection_radio_buttons attribute_name,
+        collection,
+        value_method,
+        text_method,
+        hint_method,
+        small: small,
+        classes: "radiobutton-label__bold",
+        legend: nil,
+        hint: nil

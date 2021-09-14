@@ -13,39 +13,44 @@
     - elsif vacancy.draft?
       = govuk_inset_text text: t(".draft_vacancy")
 
-    = govuk_link_to(t("buttons.download_stats"), organisation_job_statistics_path(vacancy.id, format: :csv), class: "govuk-button--secondary", button: true)
+    = govuk_button_link_to t("buttons.download_stats"), organisation_job_statistics_path(vacancy.id, format: :csv), class: "govuk-button--secondary"
 
   .govuk-grid-column-two-thirds
     h3.govuk-heading-m = t(".listing_data")
 
     = render DetailComponent.new do |detail|
       - detail.body do
-        = govuk_summary_list classes: "govuk-!-margin-bottom-0", html_attributes: { id: "vacancy_statistics" } do |c|
-          - c.slot(:row,
-            key: t(".views_by_jobseeker"),
-            value: @number_of_unique_views)
-          - c.slot(:row,
-            key: t(".saves_by_jobseeker"),
-            value: vacancy.saved_jobs.count)
+        = govuk_summary_list classes: "govuk-!-margin-bottom-0", html_attributes: { id: "vacancy_statistics" } do |summary_list|
+          - summary_list.row do |row|
+            - row.key text: t(".views_by_jobseeker")
+            - row.value text: @number_of_unique_views
+
+          - summary_list.row do |row|
+            - row.key text: t(".saves_by_jobseeker")
+            - row.value text: vacancy.saved_jobs.count
 
     - if vacancy.can_receive_job_applications?
       h3.govuk-heading-m = t(".application_data")
 
       = render DetailComponent.new do |detail|
         - detail.body do
-          = govuk_summary_list classes: "govuk-!-margin-bottom-0", html_attributes: { id: "job_applications_statistics" } do |c|
-            - c.slot(:row,
-              key: t(".total_applications"),
-              value: vacancy.job_applications.not_draft.count)
-            - c.slot(:row,
-              key: t(".unread_applications"),
-              value: vacancy.job_applications.submitted.count)
-            - c.slot(:row,
-              key: t(".shortlisted_applications"),
-              value: vacancy.job_applications.shortlisted.count)
-            - c.slot(:row,
-              key: t(".rejected_applications"),
-              value: vacancy.job_applications.unsuccessful.count)
-            - c.slot(:row,
-              key: t(".withdrawn_applications"),
-              value: vacancy.job_applications.withdrawn.count)
+          = govuk_summary_list classes: "govuk-!-margin-bottom-0", html_attributes: { id: "job_applications_statistics" } do |summary_list|
+            - summary_list.row do |row|
+              - row.key text: t(".total_applications")
+              - row.value text: vacancy.job_applications.not_draft.count
+
+            - summary_list.row do |row|
+              - row.key text: t(".unread_applications")
+              - row.value text: vacancy.job_applications.submitted.count
+
+            - summary_list.row do |row|
+              - row.key text: t(".shortlisted_applications")
+              - row.value text: vacancy.job_applications.shortlisted.count
+
+            - summary_list.row do |row|
+              - row.key text: t(".rejected_applications")
+              - row.value text: vacancy.job_applications.unsuccessful.count
+
+            - summary_list.row do |row|
+              - row.key text: t(".withdrawn_applications")
+              - row.value text: vacancy.job_applications.withdrawn.count

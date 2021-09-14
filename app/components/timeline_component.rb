@@ -1,5 +1,7 @@
 class TimelineComponent < GovukComponent::Base
-  include ViewComponent::SlotableV2
+  def initialize(classes: [], html_attributes: {})
+    super(classes: classes, html_attributes: html_attributes)
+  end
 
   renders_one :heading, lambda { |title:|
     tag.h3(class: "timeline-component__heading govuk-heading-s") { title }

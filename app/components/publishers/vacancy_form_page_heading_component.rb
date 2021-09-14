@@ -15,9 +15,9 @@ class Publishers::VacancyFormPageHeadingComponent < ViewComponent::Base
   attr_reader :vacancy, :copy
 
   def page_title
-    return I18n.t("jobs.edit_job_title", job_title: vacancy.job_title) if vacancy.published?
+    return t("jobs.edit_job_title", job_title: vacancy.job_title) if vacancy.published?
 
-    I18n.t("jobs.create_a_job_title", organisation: organisation_from_job_location)
+    t("jobs.create_a_job_title", organisation: organisation_from_job_location)
   end
 
   def organisation_from_job_location

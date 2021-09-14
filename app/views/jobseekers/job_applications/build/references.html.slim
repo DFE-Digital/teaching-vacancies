@@ -17,19 +17,21 @@
       - job_application.references.each do |reference|
         = render DetailComponent.new title: reference.name do |detail|
           - detail.body do
-            = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |c|
+            = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
               - attributes = %w[job_title organisation relationship phone_number email]
               - attributes.each do |attribute|
-                - c.slot(:row, key: t("jobseekers.job_applications.references.#{attribute}"), value: reference[attribute])
+                - summary_list.row do |row|
+                  - row.key text: t("jobseekers.job_applications.references.#{attribute}")
+                  - row.value text: reference[attribute]
 
           - detail.actions do
             = govuk_link_to t("buttons.change"), edit_jobseekers_job_application_reference_path(job_application, reference), class: "govuk-link--no-visited-state"
             = govuk_link_to t("buttons.delete"), jobseekers_job_application_reference_path(job_application, reference), method: :delete
 
-      = govuk_link_to t("buttons.add_another_reference"), new_jobseekers_job_application_reference_path(job_application), button: true
+      = govuk_button_link_to t("buttons.add_another_reference"), new_jobseekers_job_application_reference_path(job_application)
     - else
       = render EmptySectionComponent.new title: t(".no_references") do
-        = govuk_link_to t("buttons.add_reference"), new_jobseekers_job_application_reference_path(job_application), button: true, class: "govuk-!-margin-bottom-0"
+        = govuk_button_link_to t("buttons.add_reference"), new_jobseekers_job_application_reference_path(job_application), class: "govuk-!-margin-bottom-0"
 
     = form_for form, url: wizard_path, method: :patch do |f|
       = hidden_field_tag :origin, request.referrer

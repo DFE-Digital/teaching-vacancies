@@ -57,7 +57,7 @@
   .govuk-grid-column-two-thirds
 
     - if @vacancy.organisations.many?
-      = govuk_notification_banner title: t("banners.important"), classes: "govuk-!-margin-bottom-5" do
+      = govuk_notification_banner title_text: t("banners.important"), classes: "govuk-!-margin-bottom-5" do
         = t("messages.jobs.multi_school_job_notification_html", organisation_type: organisation_type_basic(@vacancy.parent_organisation))
 
     - if current_variant?(:"2021_07_contents_tabs_on_job_listing_test", :present)

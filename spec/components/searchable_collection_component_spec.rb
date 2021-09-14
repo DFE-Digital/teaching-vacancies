@@ -10,11 +10,10 @@ RSpec.describe SearchableCollectionComponent, type: :component do
     allow(form).to receive(:govuk_collection_check_boxes)
   end
 
-  let(:variant_mapping) { { radiobutton: :govuk_collection_radio_buttons, checkbox: :govuk_collection_check_boxes } }
-
   let(:base) do
     {
       form: form,
+      input_type: input_type,
       label_text: "search colllection",
       attribute_name: :attributes,
       collection: collection,
@@ -24,26 +23,15 @@ RSpec.describe SearchableCollectionComponent, type: :component do
     }
   end
 
-  let(:kwargs) { { collection: collection, form: form, attribute_name: :attributes, text_method: :first, hint_method: :first, value_method: :first } }
+  let(:kwargs) { { collection: collection, form: form, input_type: :checkbox, attribute_name: :attributes, text_method: :first, hint_method: :first, value_method: :first } }
 
-  %i[radiobutton checkbox].each do |variant_name|
-    context "when initialised with #{variant_name} variant" do
-      it_behaves_like "a component that accepts custom classes", variant_name
-      it_behaves_like "a component that accepts custom HTML attributes", variant_name
-
-      subject! { render_inline(described_class.new(**kwargs).with_variant(variant_name)) }
-
-      it "the correct formbuilder collection is used" do
-        expect(form).to have_received(variant_mapping[variant_name])
-      end
-    end
-  end
+  it_behaves_like "a component that accepts custom classes"
+  it_behaves_like "a component that accepts custom HTML attributes"
 
   context "when using an item threshold of higher than collection size" do
+    let(:input_type) { :radio_button }
     let(:options) { { threshold: 10 } }
-    let(:radio_collection) do
-      described_class.new(**base.merge(options)).with_variant(:checkbox)
-    end
+    let(:radio_collection) { described_class.new(**base.merge(options)) }
 
     let!(:inline_component) { render_inline(radio_collection) }
 
@@ -63,11 +51,10 @@ RSpec.describe SearchableCollectionComponent, type: :component do
   end
 
   context "when using an item threshold of lower or equal than collection size" do
+    let(:input_type) { :checkbox }
     let(:options) { { threshold: 5 } }
 
-    let(:checkbox_collection) do
-      described_class.new(**base.merge(options)).with_variant(:checkbox)
-    end
+    let(:checkbox_collection) { described_class.new(**base.merge(options)) }
 
     let!(:inline_component) { render_inline(checkbox_collection) }
 

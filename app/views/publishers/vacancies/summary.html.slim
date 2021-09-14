@@ -3,7 +3,7 @@
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      = govuk_panel title: t(".success"), body: ""
+      = govuk_panel title_text: t(".success"), text: ""
 
       h2.govuk-heading-m = t(".what_happens_next")
 
@@ -15,7 +15,7 @@
       p.govuk-body
         = t(".date_expires", application_deadline: OrganisationVacancyPresenter.new(@vacancy).application_deadline)
 
-      = govuk_link_to t(".view_jobs"), jobs_with_type_organisation_path(:published), button: true, class: "govuk-button--secondary"
+      = govuk_button_link_to t(".view_jobs"), jobs_with_type_organisation_path(:published), class: "govuk-button--secondary"
 
       .divider-bottom
 

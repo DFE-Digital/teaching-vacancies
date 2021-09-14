@@ -19,10 +19,10 @@
   .govuk-grid-column-two-thirds
     .job-application-actions class="govuk-!-display-none-print"
       - if job_application.status.in?(%w[submitted reviewed])
-        = govuk_link_to t("buttons.shortlist"), organisation_job_job_application_shortlist_path(vacancy.id, job_application.id), button: true, class: "govuk-!-margin-right-3"
+        = govuk_button_link_to t("buttons.shortlist"), organisation_job_job_application_shortlist_path(vacancy.id, job_application.id), class: "govuk-!-margin-right-3"
       - if job_application.status.in?(%w[submitted reviewed shortlisted])
-        = govuk_link_to t("buttons.reject"), organisation_job_job_application_reject_path(vacancy.id, job_application.id), button: true, class: "govuk-button--warning govuk-!-margin-right-3"
-      = govuk_link_to t("buttons.print_download_application"), "#", button: true, class: "govuk-button--secondary js-action print-application"
+        = govuk_button_link_to t("buttons.reject"), organisation_job_job_application_reject_path(vacancy.id, job_application.id), class: "govuk-button--warning govuk-!-margin-right-3"
+      = govuk_button_link_to t("buttons.print_download_application"), "#", class: "govuk-button--secondary js-action print-application"
 
     = render "shared/job_application/show"
 

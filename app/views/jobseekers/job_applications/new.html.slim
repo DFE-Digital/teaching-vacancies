@@ -15,7 +15,7 @@
     p.govuk-body = t(".description.closing")
     p.govuk-body = t(".description.save_and_return")
 
-    = govuk_notification_banner title: t("banners.important") do
+    = govuk_notification_banner title_text: t("banners.important") do
       = t(".privacy_info")
 
     = govuk_button_to t("buttons.start_application"), jobseekers_job_job_application_path(vacancy.id)
