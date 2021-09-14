@@ -84,7 +84,7 @@ cf login --sso -a $CF_API_ENDPOINT -o $CF_ORG -s $CF_SPACE
 If you need to login with a service account to access production environment:
 
 ```bash
-cf login -a $CF_API_ENDPOINT -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE
+cf login -a $CF_API_ENDPOINT -u $CF_USERNAME_PROD -p $CF_PASSWORD_PROD -o $CF_ORG -s $CF_SPACE
 ```
 
 ## Check space users
