@@ -37,8 +37,8 @@ jobs:
     - name: Setup cf cli
       uses: DFE-Digital/github-actions/setup-cf-cli@master
       with:
-        CF_USERNAME: ${{ secrets.CF_USERNAME }}
-        CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+        CF_USERNAME: ${{ secrets.CF_USERNAME_PROD }}
+        CF_PASSWORD: ${{ secrets.CF_PASSWORD_PROD }}
         CF_SPACE_NAME: teaching-vacancies-production
         INSTALL_CONDUIT: true
 
