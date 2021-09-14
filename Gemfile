@@ -12,6 +12,7 @@ gem "activestorage", RAILS_VERSION
 gem "activesupport", RAILS_VERSION
 gem "railties", RAILS_VERSION
 
+gem "activerecord-postgis-adapter"
 gem "activerecord-session_store"
 gem "addressable"
 gem "algoliasearch-rails", "~> 1.25.0"
