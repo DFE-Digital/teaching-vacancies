@@ -63,7 +63,7 @@ class Vacancy < ApplicationRecord
   scope :expired, (-> { published.where("expires_at < ?", Time.current) })
   scope :expired_yesterday, (-> { where("expires_at BETWEEN ? AND ?", Time.zone.yesterday.midnight, Date.current.midnight) })
   scope :expires_within_data_access_period, (-> { where("expires_at >= ?", Time.current - DATA_ACCESS_PERIOD_FOR_PUBLISHERS) })
-  scope :in_organisation_ids, (->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { organisation_id: ids }).distinct })
+  scope :in_organisation_ids, (->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { organisation_id: ids }).group(:id) })
   scope :listed, (-> { published.where("publish_on <= ?", Date.current) })
   scope :live, (-> { listed.applicable })
   scope :pending, (-> { published.where("publish_on > ?", Date.current) })
@@ -172,6 +172,17 @@ class Vacancy < ApplicationRecord
 
   def publish_equal_opportunities_report?
     job_applications.after_submission.count >= EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD
+  end
+
+  def set_mean_geolocation!
+    # When SimilarJobs searches for jobs similar to a multi-school job, we need to derive a location to search around.
+    # Take the mean of the geolocations of the school(s) the vacancy is at.
+    return if central_office?
+
+    coords = organisations.reload.schools.filter_map(&:geolocation).map { |loc| [loc.x, loc.y] }.reject { |coord| coord == [0, 0] }
+    self.mean_geolocation = [(coords.sum(&:first) / coords.length), (coords.sum(&:second) / coords.length)] if coords.any?
+
+    save
   end
 
   private

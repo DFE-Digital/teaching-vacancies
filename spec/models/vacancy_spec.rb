@@ -440,4 +440,44 @@ RSpec.describe Vacancy do
       end
     end
   end
+
+  describe "#set_mean_geolocation!" do
+    let(:school) { create(:school, geolocation: [1, 2]) }
+
+    context "when at a single school" do
+      subject { create(:vacancy, organisation_vacancies_attributes: [{ organisation: school }]) }
+
+      it "uses the school's geolocation" do
+        expect(subject.mean_geolocation.x).to eq(1)
+        expect(subject.mean_geolocation.y).to eq(2)
+      end
+    end
+
+    context "when in a trust" do
+      let(:trust) { create(:trust) }
+
+      before { SchoolGroupMembership.create(school: school, school_group: trust) }
+
+      context "when at a single school in a trust" do
+        subject { create(:vacancy, :at_one_school, organisation_vacancies_attributes: [{ organisation: school }]) }
+
+        it "uses the school's geolocation" do
+          expect(subject.mean_geolocation.x).to eq(1)
+          expect(subject.mean_geolocation.y).to eq(2)
+        end
+      end
+
+      context "when at multiple schools in a school group" do
+        subject { create(:vacancy, :at_multiple_schools, organisation_vacancies_attributes: [{ organisation: school }, { organisation: school2 }]) }
+        let(:school2) { create(:school, geolocation: [5, 6]) }
+
+        before { SchoolGroupMembership.create(school: school2, school_group: trust) }
+
+        it "uses the average of the schools' geolocations" do
+          expect(subject.mean_geolocation.x).to eq(3)
+          expect(subject.mean_geolocation.y).to eq(4)
+        end
+      end
+    end
+  end
 end

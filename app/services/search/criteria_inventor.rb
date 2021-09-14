@@ -1,25 +1,31 @@
+require "geocoding"
+
 # Based on a vacancy, devise a plausible set of search criteria for a job alert subscription
-class Search::CriteriaDeviser
+class Search::CriteriaInventor
   attr_reader :criteria
+
+  DEFAULT_RADIUS_IN_MILES = 25
 
   def initialize(vacancy)
     @vacancy = vacancy
-    @subjects_from_job_title = get_subjects_from_job_title
-    @criteria = devise_search_criteria
+    @location = if @vacancy.organisations.many?
+                  Geocoding.new(@vacancy.mean_geolocation.to_a).postcode_from_coordinates
+                else
+                  @vacancy.organisation.postcode
+                end
+    @criteria = set_criteria
   end
 
   private
 
-  def devise_search_criteria
-    {
-      location: @vacancy.parent_organisation.postcode,
-      radius: (@vacancy.parent_organisation.postcode.present? ? "10" : nil),
+  def set_criteria
+    { location: @location,
+      radius: (@location.present? ? DEFAULT_RADIUS_IN_MILES.to_s : nil),
       working_patterns: @vacancy.working_patterns,
       phases: @vacancy.education_phases,
       job_roles: @vacancy.job_roles,
       subjects: get_subjects_from_vacancy,
-      keyword: keyword,
-    }.delete_if { |_k, v| v.blank? }
+      keyword: keyword }.delete_if { |_k, v| v.blank? }
   end
 
   def keyword
@@ -34,6 +40,7 @@ class Search::CriteriaDeviser
     return if @vacancy.subjects&.one?
     return @vacancy.subjects if @vacancy.subjects&.many?
 
+    get_subjects_from_job_title
     @subjects_from_job_title if @subjects_from_job_title.many?
   end
 
@@ -44,7 +51,7 @@ class Search::CriteriaDeviser
     subjects = get_strings_from_job_title(single_word_subjects, multi_word_subjects)
     # Hard code synonym 'Maths' for 'Mathematics' - SUBJECT_OPTIONS only contains 'Mathematics'
     subjects << "Mathematics" if normalize(@vacancy.job_title).include?(normalize("Maths"))
-    subjects
+    @subjects_from_job_title = subjects
   end
 
   def get_keywords_from_job_title
