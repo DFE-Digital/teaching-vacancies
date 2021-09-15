@@ -8,6 +8,7 @@ describe('searchCheckbox', () => {
   beforeEach(() => {
     document.body.innerHTML = `<div class="accordion-content__group">
 <input type="text" class="searchable-collection-component__search-input" />
+<div class="govuk-visually-hidden" aria-live="polite" role="status" id="search-results"></div>
 <div class="govuk-checkboxes__item">
 <input type="checkbox" value="abc" class="govuk-checkboxes__input" />
 </div>
@@ -24,11 +25,13 @@ describe('searchCheckbox', () => {
     test('shows elements that match user input', () => {
       init(document.getElementsByClassName('accordion-content__group')[0], searchableClassNames);
       document.getElementsByClassName('searchable-collection-component__search-input')[0].value = 'abc';
-      document.getElementsByClassName('searchable-collection-component__search-input')[0].dispatchEvent(new Event('input'));
+      document.getElementsByClassName('searchable-collection-component__search-input')[0].dispatchEvent(new Event('keyup'));
 
       expect(document.getElementsByClassName('govuk-checkboxes__input')[0].parentElement.style.display).toBe('block');
       expect(document.getElementsByClassName('govuk-radiobuttons__input')[0].parentElement.style.display).toBe('none');
       expect(document.getElementsByClassName('govuk-checkboxes__input')[1].parentElement.style.display).toBe('block');
+
+      expect(document.getElementById('search-results').innerHTML).toBe('2 subjects match abc');
     });
   });
 
