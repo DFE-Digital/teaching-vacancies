@@ -219,6 +219,7 @@ en:
           For secondary school roles include subject and, if relevant,
           level of seniority (‘Subject leader for science’, for example).
         subjects: What subject(s) will the teacher focus on?
+        subjects_placeholder: Search
       publishers_job_listing_job_role_form:
         main_job_role_options:
           leadership: Includes Head of Year/Subject, Deputy/Assistant Head, Headteacher, and trust-level roles
