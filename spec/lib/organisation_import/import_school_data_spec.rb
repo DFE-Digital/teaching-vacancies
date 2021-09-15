@@ -102,6 +102,15 @@ RSpec.describe ImportSchoolData do
       expect(example_school.url).to eq("http://www.sirjohncassprimary.org")
     end
 
+    context "updating an existing school's geolocation" do
+      let!(:school) { create(:school, urn: "100000", geolocation: [1, 2]) }
+      let!(:vacancy) { create(:vacancy, postcode_from_mean_geolocation: "Old postcode", organisation_vacancies_attributes: [{ organisation: school }]) }
+
+      it "changes the postcode_from_mean_geolocation on the school's vacancies" do
+        expect { subject.run! }.to change { vacancy.reload.postcode_from_mean_geolocation }.to("EC3A 5DE")
+      end
+    end
+
     context "when the CSV contains smart-quotes using Windows 1252 encoding" do
       before do
         stub_request(
