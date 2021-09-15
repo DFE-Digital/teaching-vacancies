@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_09_080637) do
+ActiveRecord::Schema.define(version: 2021_09_15_115630) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -466,7 +466,7 @@ ActiveRecord::Schema.define(version: 2021_09_09_080637) do
     t.string "completed_steps", default: [], null: false, array: true
     t.string "actual_salary"
     t.text "working_patterns_details"
-    t.point "mean_geolocation"
+    t.string "postcode_from_mean_geolocation"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["initially_indexed"], name: "index_vacancies_on_initially_indexed"
     t.index ["publisher_id"], name: "index_vacancies_on_publisher_id"
