@@ -10,7 +10,7 @@ class Search::SimilarJobs
 
   def criteria
     # For now, similar jobs are retrieved based on the same set of rules that define similar job alerts
-    @criteria ||= Search::CriteriaDeviser.new(vacancy).criteria
+    @criteria ||= Search::CriteriaInventor.new(vacancy).criteria
   end
 
   def similar_jobs
