@@ -72,6 +72,8 @@ Rails.application.configure do
   # Use Semantic_Logger for cleaner logging
   Rails.application.config.semantic_logger.application = ""
   config.rails_semantic_logger.format = :json
+  config.rails_semantic_logger.add_file_appender = false
+  config.active_record.logger = nil # Don't log SQL in production
   config.semantic_logger.backtrace_level = :error
   config.semantic_logger.add_appender(io: $stdout, level: config.log_level, formatter: config.rails_semantic_logger.format)
 
