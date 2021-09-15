@@ -7,7 +7,7 @@ RSpec.describe Search::SimilarJobs do
   let(:vacancy) { create(:vacancy, :at_one_school, organisation_vacancies_attributes: [{ organisation: school }]) }
 
   it "calls Search::CriteriaDeviser" do
-    expect(Search::CriteriaDeviser).to receive(:new).with(vacancy).and_call_original
+    expect(Search::CriteriaInventor).to receive(:new).with(vacancy).and_call_original
     subject.similar_jobs
   end
 
