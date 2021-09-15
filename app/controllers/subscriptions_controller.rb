@@ -115,7 +115,6 @@ class SubscriptionsController < ApplicationController
   def subscription_params
     params.require(:jobseekers_subscription_form)
           .permit(:email, :frequency, :keyword, :location, :radius, job_roles: [], phases: [], working_patterns: [])
-          .merge(variant: ab_variant_for(:"2021_06_mandatory_job_alert_fields_test"))
   end
 
   def token

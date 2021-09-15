@@ -123,42 +123,21 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
       end
     end
 
-    context "when default variant has been applied" do
-      let(:params) { { variant: :default } }
+    context "when location and no other field are selected" do
+      let(:params) { { location: "London" } }
 
-      context "when no criteria are selected" do
-        it "validates job alert criteria selected" do
-          expect(subject).not_to be_valid
-          expect(subject.errors.messages[:base]).to include(I18n.t("subscriptions.errors.no_criteria_selected"))
-        end
-      end
-
-      context "when location and no other field are selected" do
-        let(:params) { { variant: :default, location: "London" } }
-
-        it "does not set no_location_and_other_criterion_selected error" do
-          expect(subject.errors.messages[:base]).not_to include(I18n.t("subscriptions.errors.no_location_and_other_criterion_selected"))
-        end
+      it "validates location_and_one_other_criterion_selected" do
+        expect(subject).not_to be_valid
+        expect(subject.errors.messages[:base]).to include(I18n.t("subscriptions.errors.no_location_and_other_criterion_selected"))
       end
     end
 
-    context "when mandatory_location_and_one_other_field variant has been applied" do
-      context "when location and no other field are selected" do
-        let(:params) { { variant: :mandatory_location_and_one_other_field, location: "London" } }
+    context "when one other field selected but no location" do
+      let(:params) { { keyword: "Maths" } }
 
-        it "validates location_and_one_other_criterion_selected" do
-          expect(subject).not_to be_valid
-          expect(subject.errors.messages[:base]).to include(I18n.t("subscriptions.errors.no_location_and_other_criterion_selected"))
-        end
-      end
-
-      context "when one other field selected but no location" do
-        let(:params) { { variant: :mandatory_location_and_one_other_field, keyword: "Maths" } }
-
-        it "validates location_and_one_other_criterion_selected" do
-          expect(subject).not_to be_valid
-          expect(subject.errors.messages[:base]).to include(I18n.t("subscriptions.errors.no_location_and_other_criterion_selected"))
-        end
+      it "validates location_and_one_other_criterion_selected" do
+        expect(subject).not_to be_valid
+        expect(subject.errors.messages[:base]).to include(I18n.t("subscriptions.errors.no_location_and_other_criterion_selected"))
       end
     end
   end
