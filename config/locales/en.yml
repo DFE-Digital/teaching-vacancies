@@ -222,9 +222,9 @@ en:
       description_html: "%{link} or create an account to apply for jobs that use the Teaching Vacancies application form."
       title: Apply for jobs
     vacancy_facets:
-      cities: Cities and towns with teaching jobs
-      counties: Counties with teaching jobs
-      job_roles: Current teaching jobs by role
+      cities: Cities and towns with teaching and education support jobs
+      counties: Counties with teaching and education support jobs
+      job_roles: Current jobs by role
       link_text_html: <span class="govuk-visually-hidden"> view </span><span class="bracket-content">%{count}</span><span class="govuk-visually-hidden"> vacancies listed</span>
       ect_suitable:
         heading: Current jobs suitable for early career teachers
@@ -232,7 +232,7 @@ en:
       send_responsible:
         heading: Current jobs with SEND responsibilities
         link: "SEND responsibilities "
-      subjects: Current teaching jobs by subject
+      subjects: Current jobs by subject
 
   pages:
     accessibility:
