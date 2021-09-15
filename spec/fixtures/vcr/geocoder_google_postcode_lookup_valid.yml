@@ -1,0 +1,727 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/geocode/json?key=placeholder_key&language=en&latlng=54.5399146,-1.0435559&sensor=false
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Wed, 08 Sep 2021 16:24:20 GMT
+      Pragma:
+      - no-cache
+      Expires:
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - mafe
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Server-Timing:
+      - gfet4t7; dur=122
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000,h3-T051=":443"; ma=2592000,h3-Q050=":443";
+        ma=2592000,h3-Q046=":443"; ma=2592000,h3-Q043=":443"; ma=2592000,quic=":443";
+        ma=2592000; v="46,43"
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "plus_code" : {
+              "compound_code" : "GXQ4+XH Guisborough, UK",
+              "global_code" : "9C6WGXQ4+XH"
+           },
+           "results" : [
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "Lawrence Jackson School",
+                       "short_name" : "Lawrence Jackson School",
+                       "types" : [ "premise" ]
+                    },
+                    {
+                       "long_name" : "Church Lane",
+                       "short_name" : "Church Ln",
+                       "types" : [ "route" ]
+                    },
+                    {
+                       "long_name" : "Guisborough",
+                       "short_name" : "Guisborough",
+                       "types" : [ "postal_town" ]
+                    },
+                    {
+                       "long_name" : "Redcar and Cleveland",
+                       "short_name" : "Redcar and Cleveland",
+                       "types" : [ "administrative_area_level_2", "political" ]
+                    },
+                    {
+                       "long_name" : "England",
+                       "short_name" : "England",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "United Kingdom",
+                       "short_name" : "GB",
+                       "types" : [ "country", "political" ]
+                    },
+                    {
+                       "long_name" : "TS14 6RE",
+                       "short_name" : "TS14 6RE",
+                       "types" : [ "postal_code" ]
+                    }
+                 ],
+                 "formatted_address" : "Lawrence Jackson School, Church Ln, Guisborough TS14 6RE, UK",
+                 "geometry" : {
+                    "bounds" : {
+                       "northeast" : {
+                          "lat" : 54.541841,
+                          "lng" : -1.043671
+                       },
+                       "southwest" : {
+                          "lat" : 54.5405741,
+                          "lng" : -1.045685
+                       }
+                    },
+                    "location" : {
+                       "lat" : 54.5412336,
+                       "lng" : -1.0444932
+                    },
+                    "location_type" : "ROOFTOP",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 54.5425565302915,
+                          "lng" : -1.043329019708498
+                       },
+                       "southwest" : {
+                          "lat" : 54.5398585697085,
+                          "lng" : -1.046026980291502
+                       }
+                    }
+                 },
+                 "place_id" : "ChIJpXuqZY3lfkgRlpMCl5bfQHo",
+                 "types" : [ "premise" ]
+              },
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "23-41",
+                       "short_name" : "23-41",
+                       "types" : [ "street_number" ]
+                    },
+                    {
+                       "long_name" : "Mackie Drive",
+                       "short_name" : "Mackie Dr",
+                       "types" : [ "route" ]
+                    },
+                    {
+                       "long_name" : "Guisborough",
+                       "short_name" : "Guisborough",
+                       "types" : [ "postal_town" ]
+                    },
+                    {
+                       "long_name" : "Redcar and Cleveland",
+                       "short_name" : "Redcar and Cleveland",
+                       "types" : [ "administrative_area_level_2", "political" ]
+                    },
+                    {
+                       "long_name" : "England",
+                       "short_name" : "England",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "United Kingdom",
+                       "short_name" : "GB",
+                       "types" : [ "country", "political" ]
+                    },
+                    {
+                       "long_name" : "TS14 6DJ",
+                       "short_name" : "TS14 6DJ",
+                       "types" : [ "postal_code" ]
+                    }
+                 ],
+                 "formatted_address" : "23-41 Mackie Dr, Guisborough TS14 6DJ, UK",
+                 "geometry" : {
+                    "bounds" : {
+                       "northeast" : {
+                          "lat" : 54.54115119999999,
+                          "lng" : -1.0468241
+                       },
+                       "southwest" : {
+                          "lat" : 54.5396668,
+                          "lng" : -1.0478261
+                       }
+                    },
+                    "location" : {
+                       "lat" : 54.5402847,
+                       "lng" : -1.0468254
+                    },
+                    "location_type" : "GEOMETRIC_CENTER",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 54.5417579802915,
+                          "lng" : -1.045976119708498
+                       },
+                       "southwest" : {
+                          "lat" : 54.5390600197085,
+                          "lng" : -1.048674080291502
+                       }
+                    }
+                 },
+                 "place_id" : "ChIJnWUqIo3lfkgRzhqXSEWzut4",
+                 "types" : [ "route" ]
+              },
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "TS14 6RD",
+                       "short_name" : "TS14 6RD",
+                       "types" : [ "postal_code" ]
+                    },
+                    {
+                       "long_name" : "Guisborough",
+                       "short_name" : "Guisborough",
+                       "types" : [ "postal_town" ]
+                    },
+                    {
+                       "long_name" : "Redcar and Cleveland",
+                       "short_name" : "Redcar and Cleveland",
+                       "types" : [ "administrative_area_level_2", "political" ]
+                    },
+                    {
+                       "long_name" : "England",
+                       "short_name" : "England",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "United Kingdom",
+                       "short_name" : "GB",
+                       "types" : [ "country", "political" ]
+                    }
+                 ],
+                 "formatted_address" : "Guisborough TS14 6RD, UK",
+                 "geometry" : {
+                    "bounds" : {
+                       "northeast" : {
+                          "lat" : 54.543448,
+                          "lng" : -1.0404833
+                       },
+                       "southwest" : {
+                          "lat" : 54.5376663,
+                          "lng" : -1.0460044
+                       }
+                    },
+                    "location" : {
+                       "lat" : 54.54111109999999,
+                       "lng" : -1.0450923
+                    },
+                    "location_type" : "APPROXIMATE",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 54.543448,
+                          "lng" : -1.0404833
+                       },
+                       "southwest" : {
+                          "lat" : 54.5376663,
+                          "lng" : -1.0460044
+                       }
+                    }
+                 },
+                 "place_id" : "ChIJ7cn_ZI3lfkgRd7rKuzvYZWM",
+                 "types" : [ "postal_code" ]
+              },
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "Guisborough",
+                       "short_name" : "Guisborough",
+                       "types" : [ "locality", "political" ]
+                    },
+                    {
+                       "long_name" : "Guisborough",
+                       "short_name" : "Guisborough",
+                       "types" : [ "postal_town" ]
+                    },
+                    {
+                       "long_name" : "Redcar and Cleveland",
+                       "short_name" : "Redcar and Cleveland",
+                       "types" : [ "administrative_area_level_2", "political" ]
+                    },
+                    {
+                       "long_name" : "England",
+                       "short_name" : "England",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "United Kingdom",
+                       "short_name" : "GB",
+                       "types" : [ "country", "political" ]
+                    },
+                    {
+                       "long_name" : "TS14",
+                       "short_name" : "TS14",
+                       "types" : [ "postal_code", "postal_code_prefix" ]
+                    }
+                 ],
+                 "formatted_address" : "Guisborough TS14, UK",
+                 "geometry" : {
+                    "bounds" : {
+                       "northeast" : {
+                          "lat" : 54.544582,
+                          "lng" : -1.0298017
+                       },
+                       "southwest" : {
+                          "lat" : 54.51455370000001,
+                          "lng" : -1.090526
+                       }
+                    },
+                    "location" : {
+                       "lat" : 54.536241,
+                       "lng" : -1.049544
+                    },
+                    "location_type" : "APPROXIMATE",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 54.544582,
+                          "lng" : -1.0298017
+                       },
+                       "southwest" : {
+                          "lat" : 54.51455370000001,
+                          "lng" : -1.090526
+                       }
+                    }
+                 },
+                 "place_id" : "ChIJt7TrSVjvfkgRpxDyGGYILwQ",
+                 "types" : [ "locality", "political" ]
+              },
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "Guisborough",
+                       "short_name" : "Guisborough",
+                       "types" : [ "postal_town" ]
+                    },
+                    {
+                       "long_name" : "Redcar and Cleveland",
+                       "short_name" : "Redcar and Cleveland",
+                       "types" : [ "administrative_area_level_2", "political" ]
+                    },
+                    {
+                       "long_name" : "England",
+                       "short_name" : "England",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "United Kingdom",
+                       "short_name" : "GB",
+                       "types" : [ "country", "political" ]
+                    }
+                 ],
+                 "formatted_address" : "Guisborough, UK",
+                 "geometry" : {
+                    "bounds" : {
+                       "northeast" : {
+                          "lat" : 54.5760796,
+                          "lng" : -0.9991781
+                       },
+                       "southwest" : {
+                          "lat" : 54.493327,
+                          "lng" : -1.1487358
+                       }
+                    },
+                    "location" : {
+                       "lat" : 54.5388712,
+                       "lng" : -1.0844066
+                    },
+                    "location_type" : "APPROXIMATE",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 54.5760796,
+                          "lng" : -0.9991781
+                       },
+                       "southwest" : {
+                          "lat" : 54.493327,
+                          "lng" : -1.1487358
+                       }
+                    }
+                 },
+                 "place_id" : "ChIJ30n3dEPvfkgR2i30qM90nLQ",
+                 "types" : [ "postal_town" ]
+              },
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "TS14",
+                       "short_name" : "TS14",
+                       "types" : [ "postal_code", "postal_code_prefix" ]
+                    },
+                    {
+                       "long_name" : "Guisborough",
+                       "short_name" : "Guisborough",
+                       "types" : [ "postal_town" ]
+                    },
+                    {
+                       "long_name" : "Redcar and Cleveland",
+                       "short_name" : "Redcar and Cleveland",
+                       "types" : [ "administrative_area_level_2", "political" ]
+                    },
+                    {
+                       "long_name" : "England",
+                       "short_name" : "England",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "United Kingdom",
+                       "short_name" : "GB",
+                       "types" : [ "country", "political" ]
+                    }
+                 ],
+                 "formatted_address" : "Guisborough TS14, UK",
+                 "geometry" : {
+                    "bounds" : {
+                       "northeast" : {
+                          "lat" : 54.5812542,
+                          "lng" : -0.9975316
+                       },
+                       "southwest" : {
+                          "lat" : 54.49373629999999,
+                          "lng" : -1.1471183
+                       }
+                    },
+                    "location" : {
+                       "lat" : 54.5280358,
+                       "lng" : -1.0706225
+                    },
+                    "location_type" : "APPROXIMATE",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 54.5812542,
+                          "lng" : -0.9975316
+                       },
+                       "southwest" : {
+                          "lat" : 54.49373629999999,
+                          "lng" : -1.1471183
+                       }
+                    }
+                 },
+                 "place_id" : "ChIJ30eyd4blfkgRlRJjSnqnVEU",
+                 "types" : [ "postal_code", "postal_code_prefix" ]
+              },
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "Guisborough",
+                       "short_name" : "Guisborough",
+                       "types" : [ "administrative_area_level_4", "political" ]
+                    },
+                    {
+                       "long_name" : "Redcar and Cleveland",
+                       "short_name" : "Redcar and Cleveland",
+                       "types" : [ "administrative_area_level_2", "political" ]
+                    },
+                    {
+                       "long_name" : "England",
+                       "short_name" : "England",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "United Kingdom",
+                       "short_name" : "GB",
+                       "types" : [ "country", "political" ]
+                    }
+                 ],
+                 "formatted_address" : "Guisborough, UK",
+                 "geometry" : {
+                    "bounds" : {
+                       "northeast" : {
+                          "lat" : 54.5772395,
+                          "lng" : -0.9897662
+                       },
+                       "southwest" : {
+                          "lat" : 54.4940313,
+                          "lng" : -1.1650018
+                       }
+                    },
+                    "location" : {
+                       "lat" : 54.5388712,
+                       "lng" : -1.0844066
+                    },
+                    "location_type" : "APPROXIMATE",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 54.5772395,
+                          "lng" : -0.9897662
+                       },
+                       "southwest" : {
+                          "lat" : 54.4940313,
+                          "lng" : -1.1650018
+                       }
+                    }
+                 },
+                 "place_id" : "ChIJ30eyd4blfkgR7zESqC91Mio",
+                 "types" : [ "administrative_area_level_4", "political" ]
+              },
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "Redcar and Cleveland",
+                       "short_name" : "Redcar and Cleveland",
+                       "types" : [ "administrative_area_level_2", "political" ]
+                    },
+                    {
+                       "long_name" : "England",
+                       "short_name" : "England",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "United Kingdom",
+                       "short_name" : "GB",
+                       "types" : [ "country", "political" ]
+                    }
+                 ],
+                 "formatted_address" : "Redcar and Cleveland, UK",
+                 "geometry" : {
+                    "bounds" : {
+                       "northeast" : {
+                          "lat" : 54.6479756,
+                          "lng" : -0.7884143
+                       },
+                       "southwest" : {
+                          "lat" : 54.48783479999999,
+                          "lng" : -1.2017289
+                       }
+                    },
+                    "location" : {
+                       "lat" : 54.59713439999999,
+                       "lng" : -1.0775997
+                    },
+                    "location_type" : "APPROXIMATE",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 54.6479756,
+                          "lng" : -0.7884143
+                       },
+                       "southwest" : {
+                          "lat" : 54.48783479999999,
+                          "lng" : -1.2017289
+                       }
+                    }
+                 },
+                 "place_id" : "ChIJPWx3MfrkfkgR0KBv7Z75DAM",
+                 "types" : [ "administrative_area_level_2", "political" ]
+              },
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "England",
+                       "short_name" : "England",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "United Kingdom",
+                       "short_name" : "GB",
+                       "types" : [ "country", "political" ]
+                    }
+                 ],
+                 "formatted_address" : "England, UK",
+                 "geometry" : {
+                    "bounds" : {
+                       "northeast" : {
+                          "lat" : 55.81165979999999,
+                          "lng" : 1.7629159
+                       },
+                       "southwest" : {
+                          "lat" : 49.8647411,
+                          "lng" : -6.4185458
+                       }
+                    },
+                    "location" : {
+                       "lat" : 52.3555177,
+                       "lng" : -1.1743197
+                    },
+                    "location_type" : "APPROXIMATE",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 55.81165979999999,
+                          "lng" : 1.7629159
+                       },
+                       "southwest" : {
+                          "lat" : 49.8647411,
+                          "lng" : -6.4185458
+                       }
+                    }
+                 },
+                 "place_id" : "ChIJ39UebIqp0EcRqI4tMyWV4fQ",
+                 "types" : [ "administrative_area_level_1", "political" ]
+              },
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "Great Britain",
+                       "short_name" : "Great Britain",
+                       "types" : [ "establishment", "natural_feature" ]
+                    },
+                    {
+                       "long_name" : "United Kingdom",
+                       "short_name" : "GB",
+                       "types" : [ "country", "political" ]
+                    }
+                 ],
+                 "formatted_address" : "Great Britain, United Kingdom",
+                 "geometry" : {
+                    "bounds" : {
+                       "northeast" : {
+                          "lat" : 58.6721945,
+                          "lng" : 1.7561726
+                       },
+                       "southwest" : {
+                          "lat" : 49.9588004,
+                          "lng" : -6.2279292
+                       }
+                    },
+                    "location" : {
+                       "lat" : 53.8337367,
+                       "lng" : -2.4290148
+                    },
+                    "location_type" : "APPROXIMATE",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 58.6721945,
+                          "lng" : 1.7561726
+                       },
+                       "southwest" : {
+                          "lat" : 49.9588004,
+                          "lng" : -6.2279292
+                       }
+                    }
+                 },
+                 "place_id" : "ChIJAc8Rblc_YkgRBbyOF5ySMQs",
+                 "types" : [ "establishment", "natural_feature" ]
+              },
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "United Kingdom",
+                       "short_name" : "GB",
+                       "types" : [ "country", "political" ]
+                    }
+                 ],
+                 "formatted_address" : "United Kingdom",
+                 "geometry" : {
+                    "bounds" : {
+                       "northeast" : {
+                          "lat" : 60.91569999999999,
+                          "lng" : 33.9165549
+                       },
+                       "southwest" : {
+                          "lat" : 34.5614,
+                          "lng" : -8.8988999
+                       }
+                    },
+                    "location" : {
+                       "lat" : 55.378051,
+                       "lng" : -3.435973
+                    },
+                    "location_type" : "APPROXIMATE",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 60.91569999999999,
+                          "lng" : 33.9165549
+                       },
+                       "southwest" : {
+                          "lat" : 34.5614,
+                          "lng" : -8.8988999
+                       }
+                    }
+                 },
+                 "place_id" : "ChIJqZHHQhE7WgIReiWIMkOg-MQ",
+                 "types" : [ "country", "political" ]
+              },
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "GXQ4+XH",
+                       "short_name" : "GXQ4+XH",
+                       "types" : [ "plus_code" ]
+                    },
+                    {
+                       "long_name" : "Guisborough",
+                       "short_name" : "Guisborough",
+                       "types" : [ "postal_town" ]
+                    },
+                    {
+                       "long_name" : "Redcar and Cleveland",
+                       "short_name" : "Redcar and Cleveland",
+                       "types" : [ "administrative_area_level_2", "political" ]
+                    },
+                    {
+                       "long_name" : "England",
+                       "short_name" : "England",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "United Kingdom",
+                       "short_name" : "GB",
+                       "types" : [ "country", "political" ]
+                    }
+                 ],
+                 "formatted_address" : "GXQ4+XH Guisborough, UK",
+                 "geometry" : {
+                    "bounds" : {
+                       "northeast" : {
+                          "lat" : 54.54,
+                          "lng" : -1.0435
+                       },
+                       "southwest" : {
+                          "lat" : 54.53987499999999,
+                          "lng" : -1.043625
+                       }
+                    },
+                    "location" : {
+                       "lat" : 54.5399146,
+                       "lng" : -1.0435559
+                    },
+                    "location_type" : "ROOFTOP",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 54.5412864802915,
+                          "lng" : -1.042213519708498
+                       },
+                       "southwest" : {
+                          "lat" : 54.5385885197085,
+                          "lng" : -1.044911480291502
+                       }
+                    }
+                 },
+                 "place_id" : "GhIJA9Hu6xtFS0AR-sPgq2ey8L8",
+                 "plus_code" : {
+                    "compound_code" : "GXQ4+XH Guisborough, UK",
+                    "global_code" : "9C6WGXQ4+XH"
+                 },
+                 "types" : [ "plus_code" ]
+              }
+           ],
+           "status" : "OK"
+        }
+  recorded_at: Wed, 08 Sep 2021 16:24:19 GMT
+recorded_with: VCR 6.0.0

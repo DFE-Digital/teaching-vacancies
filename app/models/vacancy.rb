@@ -1,3 +1,5 @@
+require "geocoding"
+
 class Vacancy < ApplicationRecord
   extend FriendlyId
   extend ArrayEnum
@@ -172,6 +174,25 @@ class Vacancy < ApplicationRecord
 
   def publish_equal_opportunities_report?
     job_applications.after_submission.count >= EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD
+  end
+
+  def set_postcode_from_mean_geolocation!
+    # When SimilarJobs searches for jobs similar to a multi-school job, we need to derive a location to search around.
+    # Take the mean of the geolocations of the school(s) the vacancy is at, and use it to look up a human-readable
+    # version of that geolocation (i.e. a postcode).
+    return if central_office?
+
+    coords = organisations.reload.schools.filter_map(&:geolocation).map { |loc| [loc.x, loc.y] }.reject { |coord| coord == [0, 0] }
+    return unless coords.any?
+
+    mean_geolocation = [(coords.sum(&:first) / coords.length), (coords.sum(&:second) / coords.length)]
+    self.postcode_from_mean_geolocation = if at_one_school?
+                                            reload
+                                            organisation.postcode
+                                          else
+                                            Geocoding.new(mean_geolocation.to_a).postcode_from_coordinates || postcode_from_mean_geolocation
+                                          end
+    save
   end
 
   private

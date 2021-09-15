@@ -55,3 +55,10 @@ namespace :ons do
     %i[regions counties cities].each { |api_location_type| ImportPolygons.new(api_location_type: api_location_type).call }
   end
 end
+
+namespace :migrate_mean_geolocation do
+  desc "Calculate and set mean geolocations from postcode"
+  task set_postcode_from_mean_geolocation: :environment do
+    Vacancy.find_each(&:set_postcode_from_mean_geolocation!)
+  end
+end
