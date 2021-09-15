@@ -34,9 +34,6 @@ shared:
     bottom: 1
     right_blue: 1
     right_grey: 1
-  2021_06_mandatory_job_alert_fields_test:
-    mandatory_location_and_one_other_field: 1
-    default: 1
   2021_07_contents_tabs_on_job_listing_test:
     present: 1
     absent: 1

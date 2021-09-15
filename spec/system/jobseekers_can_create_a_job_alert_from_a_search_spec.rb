@@ -1,12 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: true, vcr: { cassette_name: "algoliasearch" } do
-  let(:location) { nil }
+  let(:location) { "London" }
   let(:search_with_polygons?) { false }
   let(:jobseeker_signed_in?) { false }
   let(:jobseeker) { build_stubbed(:jobseeker) }
-
-  before { allow_any_instance_of(Jobseekers::SubscriptionForm).to receive(:variant).and_return(:default) }
 
   describe "recaptcha" do
     context "when verify_recaptcha is false" do
@@ -15,7 +13,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
       end
 
       it "redirects to invalid_recaptcha path" do
-        visit new_subscription_path(search_criteria: { keyword: "test" })
+        visit new_subscription_path(search_criteria: { keyword: "test", location: "London" })
         fill_in_subscription_fields
         click_on I18n.t("buttons.subscribe")
         expect(page).to have_current_path(invalid_recaptcha_path(form_name: "Subscription"))

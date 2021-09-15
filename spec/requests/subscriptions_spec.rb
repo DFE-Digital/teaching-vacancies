@@ -3,8 +3,6 @@ require "rails_helper"
 RSpec.describe "Subscriptions" do
   let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
 
-  before { allow_any_instance_of(Jobseekers::SubscriptionForm).to receive(:variant).and_return(:default) }
-
   describe "GET #new" do
     context "with valid origin" do
       let(:origin) { "/jobs/#{vacancy.id}/#{vacancy.slug}" }
@@ -64,6 +62,7 @@ RSpec.describe "Subscriptions" do
         jobseekers_subscription_form: {
           email: "foo@email.com",
           frequency: "daily",
+          location: "London",
           keyword: "english",
         }.symbolize_keys,
       }
@@ -83,7 +82,7 @@ RSpec.describe "Subscriptions" do
     it "creates a subscription" do
       expect { subject }.to change { Subscription.count }.by(1)
       expect(created_subscription.email).to eq("foo@email.com")
-      expect(created_subscription.search_criteria.symbolize_keys).to eq({ keyword: "english" })
+      expect(created_subscription.search_criteria.symbolize_keys).to eq({ keyword: "english", location: "London", radius: "10" })
     end
 
     it "triggers a `job_alert_subscription_created` event" do
@@ -103,6 +102,7 @@ RSpec.describe "Subscriptions" do
           jobseekers_subscription_form: {
             email: "<script>foo@email.com</script>",
             frequency: "daily",
+            location: "London",
             search_criteria: "<body onload=alert('test1')>Text</body>",
           },
         }
@@ -123,6 +123,7 @@ RSpec.describe "Subscriptions" do
       {
         email: "jimi@hendrix.com",
         frequency: "weekly",
+        location: "London",
         keyword: "english",
       }
     end
@@ -130,7 +131,7 @@ RSpec.describe "Subscriptions" do
     it "updates the subscription" do
       expect { subject }.not_to(change { Subscription.count })
       expect(subscription.reload.email).to eq("jimi@hendrix.com")
-      expect(subscription.reload.search_criteria.symbolize_keys).to eq({ keyword: "english" })
+      expect(subscription.reload.search_criteria.symbolize_keys).to eq({ keyword: "english", location: "London", radius: "10" })
     end
 
     it "triggers a `job_alert_subscription_updated` event" do
