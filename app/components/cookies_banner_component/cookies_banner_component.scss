@@ -5,9 +5,12 @@
   background-color: govuk-colour('light-grey');
   bottom: 0;
   padding-top: 0;
-  position: sticky;
   width: 100%;
   z-index: 1000;
+
+  @media screen and (min-height: 600px) {
+    position: sticky;
+  }
 
   @include govuk-media-query($until: tablet) {
     .govuk-button--primary {
