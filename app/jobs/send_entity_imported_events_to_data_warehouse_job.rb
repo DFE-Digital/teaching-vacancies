@@ -3,6 +3,8 @@ class SendEntityImportedEventsToDataWarehouseJob < ApplicationJob
 
   queue_as :low
 
+  self.logger = ActiveSupport::TaggedLogging.new(Logger.new(IO::NULL))
+
   def perform
     bq = Google::Cloud::Bigquery.new
     dataset = bq.dataset(Rails.configuration.big_query_dataset, skip_lookup: true)
