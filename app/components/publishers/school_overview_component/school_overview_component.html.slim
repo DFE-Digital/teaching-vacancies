@@ -1,51 +1,24 @@
-table.check-your-answers.govuk-table
-  thead.govuk-table__head
-    tr.govuk-table__row
-      th.govuk-table__header colspan="2"
-        h2.govuk-heading-m
-          = t("schools.info", organisation: @organisation.name)
-      th.govuk-table__header
-  tbody.govuk-table__body
-    tr.govuk-table__row
-      td.govuk-table__cell
-        strong.strong = t("schools.description")
-      td.govuk-table__cell
-        = @organisation.description.presence || "Not provided"
-      td.govuk-table__cell.change-answer
-        = govuk_link_to edit_organisation_school_path(@organisation), class: "govuk-link--no-visited-state" do
-          = t("buttons.change")
-          span.govuk-visually-hidden
-            =< t("publishers.organisations.aria_change_description", organisation_type: organisation_type_basic(@organisation))
-    tr.govuk-table__row
-      td.govuk-table__cell
-        strong.strong = t("schools.address")
-      td.govuk-table__cell
-        = full_address(@organisation)
-      td.govuk-table__cell
-    tr.govuk-table__row
-      td.govuk-table__cell
-        strong.strong = t("schools.school_age")
-      td.govuk-table__cell
-        = age_range(@organisation)
-      td.govuk-table__cell
-    tr.govuk-table__row
-      td.govuk-table__cell
-        strong.strong = t("schools.type")
-      td.govuk-table__cell
-        = @organisation.school_type
-      td.govuk-table__cell
-    tr.govuk-table__row
-      td.govuk-table__cell
-        strong.strong = t("schools.website")
-      td.govuk-table__cell
-        - if @organisation.website.present?
-          = open_in_new_tab_link_to(@organisation.website, @organisation.website, class: "wordwrap")
-        - elsif @organisation.url.present?
-          = open_in_new_tab_link_to(@organisation.url, @organisation.url, class: "wordwrap")
-        - else
-          = t("jobs.not_defined")
-      td.govuk-table__cell.change-answer
-        = govuk_link_to edit_organisation_school_path(@organisation), class: "govuk-link--no-visited-state" do
-          = t("buttons.change")
-          span.govuk-visually-hidden
-            = t("publishers.organisations.aria_change_website", organisation_type: organisation_type_basic(@organisation))
+h2.govuk-heading-m = t("schools.info", organisation: @organisation.name)
+
+= govuk_summary_list do |summary_list|
+  - summary_list.row do |row|
+    - row.key text: t("schools.description")
+    - row.value text: @organisation.description.presence || "Not provided"
+    - row.action text: change_description(@organisation), href: edit_organisation_school_path(@organisation), classes: "govuk-link--no-visited-state"
+
+  - summary_list.row do |row|
+    - row.key text: t("schools.address")
+    - row.value text: full_address(@organisation)
+
+  - summary_list.row do |row|
+    - row.key text: t("schools.school_age")
+    - row.value text: age_range(@organisation)
+
+  - summary_list.row do |row|
+    - row.key text: t("schools.type")
+    - row.value text: @organisation.school_type
+
+  - summary_list.row do |row|
+    - row.key text: t("school_groups.website", organisation_type: organisation_type_basic(@organisation).humanize)
+    - row.value text: link_to_organisation
+    - row.action text: change_website_url(@organisation), href: edit_organisation_school_path(@organisation), classes: "govuk-link--no-visited-state"
