@@ -27,6 +27,22 @@
     word-wrap: break-word;
   }
 
+  .govuk-link {
+    text-decoration: none;
+
+    &:visited {
+      color: $govuk-link-colour;
+
+      &[aria-current] {
+        color: govuk-colour('black');
+      }
+    }
+
+    &:focus {
+      color: $govuk-focus-text-colour;
+    }
+  }
+
   &--background {
     @include full-width-mast;
     background-color: govuk-colour('light-grey');
@@ -102,8 +118,6 @@
       }
 
       &[aria-current] {
-        color: govuk-colour('black');
-
         @include govuk-media-query ($until: desktop) {
           border-left: govuk-spacing(1) solid govuk-colour('light-blue');
         }
@@ -140,17 +154,5 @@
     .filters-applied-text {
       line-height: 2em;
     }
-  }
-}
-
-.dashboard-component .govuk-link {
-  text-decoration: none;
-
-  &:visited {
-    color: $govuk-link-colour;
-  }
-
-  &:focus {
-    color: $govuk-focus-text-colour;
   }
 }
