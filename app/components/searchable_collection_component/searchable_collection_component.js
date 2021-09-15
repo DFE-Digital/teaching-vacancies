@@ -12,8 +12,33 @@ export const init = (container, classNames) => {
 
   const input = container.getElementsByClassName('searchable-collection-component__search-input')[0];
 
-  input.addEventListener('input', (e) => {
+  input.addEventListener('keydown', () => {
+    collection.forEach((item) => {
+      item.removeAttribute('aria-setsize');
+      item.removeAttribute('aria-posinset');
+    });
+  });
+
+  input.addEventListener('keyup', (e) => {
     filterCollection(collection, e.target);
+
+    const visibleItems = collection.filter((item) => item.parentElement.style.display === 'block');
+
+    Array.from(container.getElementsByClassName('govuk-checkboxes')).forEach((el) => {
+      el.setAttribute('role', 'listbox');
+      el.id = 'subjects__listbox';
+    });
+
+    visibleItems.forEach((item, i) => {
+      item.setAttribute('aria-posinset', i + 1);
+      item.setAttribute('aria-setsize', visibleItems.length);
+    });
+
+    if (e.target.value.length) {
+      document.getElementById('search-results').innerHTML = `${visibleItems.length} subjects match ${e.target.value}`;
+    } else {
+      document.getElementById('search-results').innerHTML = '';
+    }
   });
 
   input.addEventListener('click', (e) => {
@@ -36,6 +61,8 @@ export const getStringForMatch = (item) => {
 };
 
 export const itemDisplay = (item, input) => {
+  item.parentElement.setAttribute('role', 'option');
+
   if (substringExistsInString(getStringForMatch(item), input.value)) {
     item.parentElement.style.display = 'block';
   } else {
