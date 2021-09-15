@@ -1,6 +1,5 @@
 class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
   include Wicked::Wizard
-  include Jobseekers::Wizardable
   include QualificationFormConcerns
 
   steps :personal_details, :professional_status, :qualifications, :employment_history, :personal_statement, :references,
@@ -37,20 +36,26 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
   end
 
   def form
-    @form ||= "Jobseekers::JobApplication::#{step.to_s.camelize}Form".constantize.new(form_attributes)
+    @form ||= form_class.new(form_attributes)
+  end
+
+  def form_class
+    "jobseekers/job_application/#{step}_form".camelize.constantize
   end
 
   def form_attributes
     case action_name
     when "show"
-      job_application.slice(*send("#{step}_fields"))
+      job_application.slice(form_class.fields)
     when "update"
       form_params
     end
   end
 
   def form_params
-    (params["jobseekers_job_application_#{step}_form".to_sym] || params).permit(*send("#{step}_fields"))
+    param_key = ActiveModel::Naming.param_key(form_class)
+
+    (params[param_key] || params).permit(form_class.fields)
   end
 
   def finish_wizard_path

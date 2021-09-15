@@ -1,6 +1,4 @@
 class Jobseekers::JobApplications::QuickApply
-  include Jobseekers::Wizardable
-
   attr_reader :jobseeker, :vacancy
 
   def initialize(jobseeker, vacancy)
@@ -28,7 +26,10 @@ class Jobseekers::JobApplications::QuickApply
   end
 
   def attributes_to_copy
-    personal_details_fields + professional_status_fields + employment_history_fields + ask_for_support_fields
+    Jobseekers::JobApplication::PersonalDetailsForm.fields +
+      Jobseekers::JobApplication::ProfessionalStatusForm.fields +
+      Jobseekers::JobApplication::EmploymentHistoryForm.fields +
+      Jobseekers::JobApplication::AskForSupportForm.fields
   end
 
   def completed_steps

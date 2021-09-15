@@ -1,6 +1,4 @@
 module JobApplicationHelper
-  include Jobseekers::Wizardable
-
   PUBLISHER_STATUS_MAPPINGS = {
     submitted: "unread",
     reviewed: "reviewed",
@@ -83,7 +81,8 @@ module JobApplicationHelper
   end
 
   def job_application_review_section_tag(job_application, step)
-    tag_attributes = if send("#{step}_fields".to_sym).any? { |field| field.in?(job_application.errors.messages.keys) }
+    form_class = "jobseekers/job_application/#{step}_form".camelize.constantize
+    tag_attributes = if form_class.fields.any? { |field| field.in?(job_application.errors.messages.keys) }
                        { text: t("messages.jobs.action_required.label"), colour: "orange" }
                      elsif step.to_s.in?(job_application.completed_steps)
                        { text: "complete" }

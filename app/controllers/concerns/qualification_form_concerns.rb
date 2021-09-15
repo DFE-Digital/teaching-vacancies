@@ -2,10 +2,10 @@ module QualificationFormConcerns
   extend ActiveSupport::Concern
 
   def qualification_form_param_key(category)
-    form_class(category).to_s.underscore.tr("/", "_").to_sym
+    ActiveModel::Naming.param_key(category_form_class(category))
   end
 
-  def form_class(category)
+  def category_form_class(category)
     name = if %w[select_category submit_category].include?(action_name)
              "CategoryForm"
            else

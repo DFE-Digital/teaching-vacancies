@@ -68,7 +68,7 @@ class JobApplication < ApplicationRecord
 
   def fill_in_report
     report = vacancy.equal_opportunities_report || vacancy.build_equal_opportunities_report
-    Jobseekers::JobApplication::EqualOpportunitiesForm::ATTRIBUTES.each do |attr|
+    Jobseekers::JobApplication::EqualOpportunitiesForm.fields.each do |attr|
       attr_value = public_send(attr)
       next unless attr_value.present?
 
@@ -84,7 +84,7 @@ class JobApplication < ApplicationRecord
   end
 
   def reset_equal_opportunities_attributes
-    Jobseekers::JobApplication::EqualOpportunitiesForm::ATTRIBUTES.each { |attr| self[attr] = "" }
+    Jobseekers::JobApplication::EqualOpportunitiesForm.fields.each { |attr| self[attr] = "" }
   end
 
   def reset_support_needed_details

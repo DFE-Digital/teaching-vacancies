@@ -1,8 +1,10 @@
-class Jobseekers::JobApplication::PersonalDetailsForm
+class Jobseekers::JobApplication::PersonalDetailsForm < Jobseekers::JobApplication::BaseForm
   include ActiveModel::Model
 
-  attr_accessor :city, :country, :email_address, :first_name, :last_name, :national_insurance_number,
-                :phone_number, :previous_names, :postcode, :street_address, :teacher_reference_number
+  def self.fields
+    %i[city country email_address first_name last_name national_insurance_number phone_number previous_names postcode street_address teacher_reference_number]
+  end
+  attr_accessor(*fields)
 
   validates :city, :country, :email_address, :first_name, :last_name,
             :phone_number, :postcode, :street_address, presence: true

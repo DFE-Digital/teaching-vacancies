@@ -1,10 +1,10 @@
-class Jobseekers::JobApplication::EqualOpportunitiesForm
+class Jobseekers::JobApplication::EqualOpportunitiesForm < Jobseekers::JobApplication::BaseForm
   include ActiveModel::Model
 
-  ATTRIBUTES = %i[disability age gender gender_description orientation orientation_description
-                  ethnicity ethnicity_description religion religion_description].freeze
-
-  attr_accessor(*ATTRIBUTES)
+  def self.fields
+    %i[disability age gender gender_description orientation orientation_description ethnicity ethnicity_description religion religion_description]
+  end
+  attr_accessor(*fields)
 
   validates :disability, inclusion: { in: %w[no prefer_not_to_say yes] }
   validates :age, inclusion: { in: %w[under_twenty_five twenty_five_to_twenty_nine thirty_to_thirty_nine forty_to_forty_nine fifty_to_fifty_nine sixty_and_over prefer_not_to_say] }
