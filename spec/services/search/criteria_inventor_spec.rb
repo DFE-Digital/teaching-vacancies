@@ -26,7 +26,7 @@ RSpec.describe Search::CriteriaInventor do
   let(:organisation_vacancies_attributes) { [{ organisation: school }] }
   let(:vacancy) do
     create(:vacancy, location_trait, organisation_vacancies_attributes: organisation_vacancies_attributes,
-                                     mean_geolocation: [1, 2],
+                                     postcode_from_mean_geolocation: "OX14 1EJ",
                                      working_patterns: working_patterns,
                                      subjects: subjects,
                                      job_title: job_title,
@@ -57,7 +57,7 @@ RSpec.describe Search::CriteriaInventor do
         end
 
         it "calls the Geocoding class to calculate the postcode from the mean location" do
-          expect(subject.criteria[:location]).to eq(Geocoder::DEFAULT_LOCATION)
+          expect(subject.criteria[:location]).to eq(vacancy.postcode_from_mean_geolocation)
         end
 
         it_behaves_like "radius is set"

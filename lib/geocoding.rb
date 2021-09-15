@@ -25,7 +25,10 @@ class Geocoding
       result = Geocoder.search(location, lookup: :google).first
       return no_postcode_match if result.nil?
 
-      result.data["address_components"].find { |line| "postal_code".in?(line["types"]) }["short_name"]
+      postcode_line = result.data["address_components"].find { |line| "postal_code".in?(line["types"]) }
+      return no_postcode_match if postcode_line.nil?
+
+      postcode_line["short_name"]
     rescue Geocoder::OverQueryLimitError
       Rails.logger.error("Google Geocoding API responded with OVER_QUERY_LIMIT")
       result = Geocoder.search(location, lookup: :nominatim).first.data
