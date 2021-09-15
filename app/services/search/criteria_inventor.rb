@@ -7,7 +7,7 @@ class Search::CriteriaInventor
   def initialize(vacancy)
     @vacancy = vacancy
     @location = if @vacancy.organisations.many?
-                  @vacancy.postcode_from_mean_geolocation || ""
+                  @vacancy.postcode_from_mean_geolocation || @vacancy.parent_organisation.postcode
                 else
                   @vacancy.organisation.postcode
                 end

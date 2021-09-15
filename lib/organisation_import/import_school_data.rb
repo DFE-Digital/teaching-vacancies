@@ -60,7 +60,7 @@ class ImportSchoolData < ImportOrganisationData
     set_readable_phases(school)
     if school.geolocation_changed?
       school.save
-      school.vacancies.each(&:set_mean_geolocation!)
+      school.vacancies.each(&:set_postcode_from_mean_geolocation!)
     end
     school
   end
