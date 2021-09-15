@@ -1,6 +1,5 @@
 class Jobseekers::JobApplicationsController < Jobseekers::BaseController
   include QualificationFormConcerns
-  include Jobseekers::Wizardable
 
   before_action :raise_unless_vacancy_enable_job_applications,
                 :redirect_if_job_application_exists, only: %i[new create new_quick_apply quick_apply]
@@ -87,7 +86,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
 
   def step_valid?(step)
     step_form = "jobseekers/job_application/#{step}_form".camelize.constantize
-    form = step_form.new(job_application.slice(*send("#{step}_fields")))
+    form = step_form.new(job_application.slice(step_form.fields))
 
     form.valid?.tap do
       job_application.errors.merge!(form.errors)

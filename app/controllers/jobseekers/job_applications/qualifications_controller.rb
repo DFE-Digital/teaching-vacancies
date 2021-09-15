@@ -37,7 +37,7 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
   private
 
   def form
-    @form ||= form_class(category).new(form_attributes)
+    @form ||= category_form_class(category).new(form_attributes)
   end
 
   def form_attributes

@@ -1,7 +1,10 @@
-class Jobseekers::JobApplication::PersonalStatementForm
+class Jobseekers::JobApplication::PersonalStatementForm < Jobseekers::JobApplication::BaseForm
   include ActiveModel::Model
 
-  attr_accessor :personal_statement
+  def self.fields
+    %i[personal_statement]
+  end
+  attr_accessor(*fields)
 
   validates :personal_statement, presence: true
 end
