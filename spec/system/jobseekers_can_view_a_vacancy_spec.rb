@@ -1,32 +1,22 @@
 require "rails_helper"
 
 RSpec.describe "Viewing a single published vacancy" do
-  let(:school_group) { create(:local_authority) }
-  let(:school1) { create(:school) }
-  let(:school2) { create(:school) }
-  let(:vacancy) do
-    create(:vacancy, vacancy_trait, :at_multiple_schools, :with_supporting_documents, :no_tv_applications,
-           organisation_vacancies_attributes: [{ organisation: school1 }, { organisation: school2 }],
-           working_patterns: %w[full_time part_time],
-           subjects: %w[Physics])
-  end
+  let(:school) { create(:school) }
 
   before do
-    SchoolGroupMembership.find_or_create_by(school_id: school1.id, school_group_id: school_group.id)
-    SchoolGroupMembership.find_or_create_by(school_id: school2.id, school_group_id: school_group.id)
-    vacancy.reload
+    vacancy.organisation_vacancies.create(organisation: school)
     visit job_path(vacancy)
   end
 
   context "when the vacancy status is published" do
-    let(:vacancy_trait) { :published }
+    let(:vacancy) { create(:vacancy, :published) }
 
     scenario "jobseekers can view the vacancy" do
       verify_vacancy_show_page_details(vacancy)
     end
 
     context "when the publish_on date is in the future" do
-      let(:vacancy_trait) { :future_publish }
+      let(:vacancy) { create(:vacancy, :future_publish) }
 
       scenario "Job post with a future publish_on date are not accessible" do
         expect(page).to have_content("Page not found")
@@ -35,7 +25,7 @@ RSpec.describe "Viewing a single published vacancy" do
     end
 
     context "when the vacancy has expired" do
-      let(:vacancy_trait) { :expired }
+      let(:vacancy) { create(:vacancy, :expired) }
 
       scenario "it shows warnings that the post has expired" do
         expect(page).to have_content("EXPIRED")
@@ -51,6 +41,8 @@ RSpec.describe "Viewing a single published vacancy" do
     end
 
     context "with multiple working patterns" do
+      let(:vacancy) { create(:vacancy, working_patterns: %w[full_time part_time]) }
+
       scenario "the page contains correct JobPosting schema.org mark up" do
         expect(script_tag_content(wrapper_class: ".jobref"))
           .to eq(vacancy_json_ld(VacancyPresenter.new(vacancy)).to_json)
@@ -58,6 +50,8 @@ RSpec.describe "Viewing a single published vacancy" do
     end
 
     context "with supporting documents attached" do
+      let(:vacancy) { create(:vacancy, :published, :with_supporting_documents) }
+
       scenario "can see the supporting documents section" do
         expect(page).to have_content(I18n.t("publishers.vacancies.steps.documents"))
         expect(page).to have_content(vacancy.supporting_documents.first.filename)
@@ -65,6 +59,8 @@ RSpec.describe "Viewing a single published vacancy" do
     end
 
     context "when there is an application link set" do
+      let(:vacancy) { create(:vacancy, :no_tv_applications) }
+
       scenario "a jobseeker can click on the application link" do
         click_on I18n.t("jobs.apply")
 
@@ -92,7 +88,7 @@ RSpec.describe "Viewing a single published vacancy" do
   end
 
   context "when the vacancy status is draft" do
-    let(:vacancy_trait) { :draft }
+    let(:vacancy) { create(:vacancy, :draft) }
 
     scenario "jobseekers cannot view the vacancy" do
       expect(page).to have_content("Page not found")

@@ -1,5 +1,3 @@
-require "geocoding"
-
 # Based on a vacancy, devise a plausible set of search criteria for a job alert subscription
 class Search::CriteriaInventor
   attr_reader :criteria
@@ -9,7 +7,7 @@ class Search::CriteriaInventor
   def initialize(vacancy)
     @vacancy = vacancy
     @location = if @vacancy.organisations.many?
-                  Geocoding.new(@vacancy.mean_geolocation.to_a).postcode_from_coordinates
+                  @vacancy.postcode_from_mean_geolocation
                 else
                   @vacancy.organisation.postcode
                 end
