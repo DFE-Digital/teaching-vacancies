@@ -85,26 +85,6 @@ RSpec.describe "Viewing a single published vacancy" do
           .to eq(strip_tags(vacancy.job_advert))
       end
     end
-
-    context "when creating a job alert" do
-      let(:vacancy) { create(:vacancy, subjects: %w[Physics]) }
-
-      scenario "can click on the first link to create a job alert" do
-        click_on I18n.t("jobs.alert.similar.terse")
-        expect(page).to have_content(I18n.t("subscriptions.new.title"))
-        expect(page.find_field("jobseekers-subscription-form-keyword-field").value).to eq("Physics")
-        expect(page.find_field("jobseekers-subscription-form-location-field").value).to eq(school.postcode)
-        expect(page.find_field("jobseekers-subscription-form-radius-field").value).to eq("10")
-      end
-
-      scenario "can click on the second link to create a job alert" do
-        click_on I18n.t("jobs.alert.similar.verbose.link_text")
-        expect(page).to have_content(I18n.t("subscriptions.new.title"))
-        expect(page.find_field("jobseekers-subscription-form-keyword-field").value).to eq("Physics")
-        expect(page.find_field("jobseekers-subscription-form-location-field").value).to eq(school.postcode)
-        expect(page.find_field("jobseekers-subscription-form-radius-field").value).to eq("10")
-      end
-    end
   end
 
   context "when the vacancy status is draft" do
