@@ -1,13 +1,15 @@
 require "organisation_import/import_organisation_data"
 
 class ImportSchoolData < ImportOrganisationData
-  private
-
-  def csv_metadata
-    [{ csv_url: "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv",
-       csv_file_location: "./tmp/#{datestring}-schools-data.csv",
-       method: :create_school_and_local_authority }]
+  def run!
+    import_data(
+      csv_url: "#{GIAS_BASE_URL}edubasealldata#{datestring}.csv",
+      csv_file_location: "./tmp/#{datestring}-schools-data.csv",
+      method: :create_school_and_local_authority,
+    )
   end
+
+  private
 
   def create_school_and_local_authority(row)
     school = create_organisation(row)
