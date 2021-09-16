@@ -331,6 +331,8 @@ ActiveRecord::Schema.define(version: 2021_09_15_115630) do
     t.string "group_type"
     t.string "local_authority_within"
     t.string "establishment_status"
+    t.geography "geopoint", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
+    t.index ["geopoint"], name: "index_organisations_on_geopoint", using: :gist
     t.index ["uid"], name: "index_organisations_on_uid"
     t.index ["urn"], name: "index_organisations_on_urn"
   end
