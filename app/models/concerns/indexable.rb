@@ -140,7 +140,7 @@ module Indexable
   end
 
   def _geoloc
-    organisations.select { |organisation| organisation.geolocation.present? }
-                 .map { |organisation| { lat: organisation.geolocation.x.to_f, lng: organisation.geolocation.y.to_f } }
+    organisations.select { |organisation| organisation.geopoint.present? }
+                 .map { |organisation| { lat: organisation.geopoint.lat, lng: organisation.geopoint.lon } }
   end
 end
