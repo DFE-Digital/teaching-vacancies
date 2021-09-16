@@ -132,11 +132,11 @@ RSpec.describe Jobseekers::OrganisationOverviews::SchoolComponent, type: :compon
     end
 
     it "contains the school latitude" do
-      expect(data["lat"]).to eq organisation.geolocation.x
+      expect(data["lat"].round(13)).to eq organisation.geolocation.x.round(13)
     end
 
     it "contains the school longitude" do
-      expect(data["lng"]).to eq organisation.geolocation.y
+      expect(data["lng"].round(13)).to eq organisation.geolocation.y.round(13)
     end
   end
 end
