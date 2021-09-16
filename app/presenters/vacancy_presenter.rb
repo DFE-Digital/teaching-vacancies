@@ -6,6 +6,8 @@ class VacancyPresenter < BasePresenter
   delegate :working_patterns, to: :model, prefix: true
   delegate :job_roles, to: :model, prefix: true
 
+  HTML_STRIP_REGEX = %r{(&nbsp;|<div>|</div>|<!--block-->)+}
+
   def share_url(utm_source: nil, utm_medium: nil, utm_campaign: nil, utm_content: nil)
     params = {}
     if utm_source.present?
@@ -36,7 +38,7 @@ class VacancyPresenter < BasePresenter
   end
 
   def benefits
-    simple_format(model.benefits) if model.benefits.present?
+    simple_format(fix_bullet_points(model.benefits)) if model.benefits.present?
   end
 
   def expired?
@@ -115,31 +117,32 @@ class VacancyPresenter < BasePresenter
     tag.span additional_job_role(role), class: "govuk-hint govuk-!-margin-bottom-0"
   end
 
-  # rubocop:disable Style/AsciiComments
   def fix_bullet_points(text)
-    # This is a band-aid solution for the problem where (particularly) job adverts contain `•` but
-    # do not contain corresponding newlines, resulting in inline bullets.
+    # This is a band-aid solution for the problem where (particularly) job adverts contain bullet point characters
+    # (not list elements), but do not contain corresponding newlines, resulting in inline bullets.
     bullet = "•"
     text = normalize_bullets(text, bullet)
     return text unless text&.count(bullet)&.positive?
 
-    paragraphs = text.split("\n") # Presume newline signals end of unordered list
-    paragraphs.map { |para|
-      if para.count(bullet).zero?
-        para
-      else
-        first_bulleted_line_idx = para.gsub(/\s+/, "").first == bullet ? 0 : 1
-        para.split(bullet).reject(&:blank?).map.with_index { |line, index|
-          item = "<li>#{line}</li>"
-          index == first_bulleted_line_idx ? "<ul>#{item}" : item
-        }.join.concat("</ul>")
-      end
-    }.join("\n")
+    text.split("<br>").map { |para|
+      next para if para.count(bullet) <= 1 # If paragraph only has one bullet point it is probably correctly formatted
+
+      first_bulleted_line_idx = strip(para).first == bullet ? 0 : 1
+      para.split(bullet).reject { |line| strip(line).blank? }.map.with_index { |line, index|
+        item = "<li>#{line.gsub(HTML_STRIP_REGEX, '')}</li>"
+        index == first_bulleted_line_idx ? "<ul>#{item}" : item
+      }.join.concat("</ul>")
+    }.join("<br>")
   end
 
+  # rubocop:disable Style/AsciiComments
   def normalize_bullets(text, normalized_bullet)
     # `⁃` is a hyphen bullet, not an en-dash or a hyphen.
     text&.gsub("⁃", normalized_bullet)&.gsub("·", normalized_bullet)&.gsub("∙", normalized_bullet)
   end
   # rubocop:enable Style/AsciiComments
+
+  def strip(text)
+    text.gsub(/\s+/, "").gsub(HTML_STRIP_REGEX, "")
+  end
 end
