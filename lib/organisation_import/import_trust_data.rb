@@ -1,6 +1,22 @@
 require "organisation_import/import_organisation_data"
 
 class ImportTrustData < ImportOrganisationData
+  def run!
+    # Trust data
+    import_data(
+      csv_url: "#{GIAS_BASE_URL}allgroupsdata#{datestring}.csv",
+      csv_file_location: "./tmp/school-group-data.csv",
+      method: :create_organisation,
+    )
+
+    # Trust membership data
+    import_data(
+      csv_url: "#{GIAS_BASE_URL}alllinksdata#{datestring}.csv",
+      csv_file_location: "./tmp/school-group-membership-data.csv",
+      method: :create_school_group_membership,
+    )
+  end
+
   private
 
   def column_name_mappings
@@ -52,21 +68,5 @@ class ImportTrustData < ImportOrganisationData
     trust.postcode = postcode
     coordinates = Geocoding.new(trust.postcode).coordinates
     trust.geolocation = coordinates unless coordinates == [0, 0]
-  end
-
-  def csv_metadata
-    [trust_csv_metadata, membership_csv_metadata]
-  end
-
-  def trust_csv_metadata
-    { csv_url: "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/allgroupsdata#{datestring}.csv",
-      csv_file_location: "./tmp/school-group-data.csv",
-      method: :create_organisation }
-  end
-
-  def membership_csv_metadata
-    { csv_url: "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/alllinksdata#{datestring}.csv",
-      csv_file_location: "./tmp/school-group-membership-data.csv",
-      method: :create_school_group_membership }
   end
 end

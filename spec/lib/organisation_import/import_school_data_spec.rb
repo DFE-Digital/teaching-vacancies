@@ -3,47 +3,6 @@ require "rails_helper"
 RSpec.describe ImportSchoolData do
   subject { described_class.new }
 
-  describe "#save_csv_file" do
-    let(:csv_url) { "https://csv_endpoint.csv/magic_endpoint/test.csv" }
-    let(:temp_file_location) { "/some_temporary_location/test.csv" }
-    let(:request_body) { "Not found" }
-
-    before do
-      stub_request(:get, csv_url).to_return(body: request_body, status: request_status)
-    end
-
-    context "when the csv file is unavailable" do
-      let(:request_status) { 404 }
-
-      it "raises an HTTP error" do
-        expect { subject.send(:save_csv_file, csv_url, temp_file_location) }
-          .to raise_error(HTTParty::ResponseError).with_message("CSV file not found at #{csv_url}.")
-      end
-    end
-
-    context "when an unexpected response is returned" do
-      let(:request_status) { 500 }
-
-      it "raises an HTTP error" do
-        expect { subject.send(:save_csv_file, csv_url, temp_file_location) }
-          .to raise_error(HTTParty::ResponseError).with_message("Unexpected problem downloading CSV file from #{csv_url}.")
-      end
-    end
-
-    context "when the request is OK" do
-      let(:request_status) { 200 }
-
-      before do
-        allow(File).to receive(:write).with(temp_file_location, request_body, hash_including(mode: "wb"))
-      end
-
-      it "opens a file" do
-        expect(File).to receive(:write).with(temp_file_location, request_body, hash_including(mode: "wb"))
-        subject.send(:save_csv_file, csv_url, temp_file_location)
-      end
-    end
-  end
-
   describe "#run!" do
     let(:csv) { File.read(test_file_path) }
     let(:datestring) { Time.current.strftime("%Y%m%d") }

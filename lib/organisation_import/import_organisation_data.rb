@@ -1,12 +1,9 @@
 require "csv"
 require "geocoding"
 require "httparty"
-require "open-uri"
 
 class ImportOrganisationData
-  def run!
-    csv_metadata.each { |metadata| import_data(**metadata) }
-  end
+  GIAS_BASE_URL = "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/".freeze
 
   def self.mark_all_school_group_memberships_to_be_deleted!
     SchoolGroupMembership.update_all(do_not_delete: false)
@@ -38,7 +35,7 @@ class ImportOrganisationData
 
   def import_data(csv_url:, csv_file_location:, method:)
     save_csv_file(csv_url, csv_file_location)
-    CSV.foreach(csv_file_location, headers: true, encoding: "windows-1252:utf-8").each do |row|
+    CSV.foreach(csv_file_location, headers: true, encoding: "windows-1252:utf-8") do |row|
       Organisation.transaction do
         send(method, row)
       end
@@ -53,15 +50,11 @@ class ImportOrganisationData
   end
 
   def save_csv_file(url, location)
-    request = HTTParty.get(url)
-    case request.code
-    when 200
-      File.write(location, request.body, mode: "wb")
-    when 404
-      raise HTTParty::ResponseError, "CSV file not found at #{url}."
-    else
-      raise HTTParty::ResponseError, "Unexpected problem downloading CSV file from #{url}."
-    end
+    response = HTTParty.get(url)
+
+    raise "Couldn't download GIAS CSV from #{url} (code #{response.code})" unless response.ok?
+
+    File.write(location, response.body, mode: "wb")
   end
 
   def set_gias_data_as_json(organisation, row)
