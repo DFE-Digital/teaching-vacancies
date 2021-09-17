@@ -55,6 +55,9 @@ RSpec.describe School do
 
           expect(school.geolocation.x).to eq(51.51396894535262)
           expect(school.geolocation.y).to eq(-0.07751626505544208)
+
+          expect(school.geopoint.lat).to eq(51.51396894535262)
+          expect(school.geopoint.lon).to eq(-0.07751626505544208)
         end
       end
 
@@ -84,6 +87,9 @@ RSpec.describe School do
 
           expect(school.geolocation.x).to eq(51.51396894535262)
           expect(school.geolocation.y).to eq(-0.07751626505544208)
+
+          expect(school.geopoint.lat).to eq(51.51396894535262)
+          expect(school.geopoint.lon).to eq(-0.07751626505544208)
         end
       end
 

@@ -22,7 +22,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:11.6-alpine
+        image: postgis/postgis:12-3.1
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: ''
