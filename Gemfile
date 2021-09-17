@@ -85,6 +85,7 @@ group :development, :test do
   gem "pry"
   gem "pry-byebug"
   gem "pry-rails"
+  gem "rack-mini-profiler"
   gem "rails-controller-testing"
   gem "rspec-rails"
   gem "rspec-sonarqube-formatter", require: false
