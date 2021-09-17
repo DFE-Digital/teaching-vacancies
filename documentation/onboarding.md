@@ -33,6 +33,13 @@ The new developer will be added to [teaching-vacancies-developers](https://githu
 * teaching-vacancies-monitoring
 * teaching-vacancies-review
 
+## Google groups
+
+If the developer is allowed to reset the password of the various service account, they must be added as member of the relevant Google groups as
+member. To be able to add and remove member, they may be added as owner.
+
+See [service accounts](service_accounts.md) for the list of groups.
+
 ## Other services
 
 Any team member can invite the new developer to the following services:

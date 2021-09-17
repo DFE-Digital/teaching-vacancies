@@ -39,7 +39,8 @@ Bear in mind that if a migration fails, the current state of the database will b
 Create a **new** database using the latest snapshot of the RDS instance. See [GDS paas documentation](https://docs.cloud.service.gov.uk/deploying_services/postgresql/#restoring-a-postgresql-service-snapshot). This is a self-service option.
 
 ### Restore point-in-time backup
-GDS have access to the RDS instances and can restore point-in-time with a resolution of 1 second. It's a manual process and must be requested from paas support.
+Create a **new** database using a point-in-time backup of the RDS instance. It uses a snapshot and transaction log, up to the desired time.
+See [GDS paas documentation](https://docs.cloud.service.gov.uk/deploying_services/postgresql/#restoring-a-postgresql-service-snapshot). This is a self-service option.
 
 ### Restore from S3 backup
 We keep our own nightly backups in S3. In case the RDS instance and all its backups are gone, we still have
