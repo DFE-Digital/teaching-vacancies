@@ -51,7 +51,12 @@ class Vacancy < ApplicationRecord
 
   has_many :job_applications, dependent: :destroy
   has_one :equal_opportunities_report, dependent: :destroy
-  has_noticed_notifications
+
+  # TODO: This is equivalent to the behaviour of the noticed` gem's `has_noticed_notification`
+  #       method. However, the gem does not support the PostGIS adapter so until that is fixed
+  #       we need to do this manually.
+  #       c.f. https://github.com/excid3/noticed/pull/150
+  before_destroy { Notification.where("params @> ?", Noticed::Coder.dump(vacancy: self).to_json).destroy_all }
 
   has_many :organisation_vacancies, dependent: :destroy
   has_many :organisations, through: :organisation_vacancies, dependent: :destroy

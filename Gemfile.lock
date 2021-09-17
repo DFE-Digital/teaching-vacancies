@@ -47,6 +47,9 @@ GEM
     activerecord (6.1.4.1)
       activemodel (= 6.1.4.1)
       activesupport (= 6.1.4.1)
+    activerecord-postgis-adapter (7.1.1)
+      activerecord (~> 6.1)
+      rgeo-activerecord (~> 7.0.0)
     activerecord-session_store (2.0.0)
       actionpack (>= 5.2.4.1)
       activerecord (>= 5.2.4.1)
@@ -453,6 +456,10 @@ GEM
       railties (>= 5.0)
     retriable (3.1.2)
     rexml (3.2.5)
+    rgeo (2.3.0)
+    rgeo-activerecord (7.0.1)
+      activerecord (>= 5.0)
+      rgeo (>= 1.0.0)
     rollbar (3.2.0)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
@@ -627,6 +634,7 @@ DEPENDENCIES
   activejob (~> 6.1.4.1)
   activemodel (~> 6.1.4.1)
   activerecord (~> 6.1.4.1)
+  activerecord-postgis-adapter
   activerecord-session_store
   activestorage (~> 6.1.4.1)
   activesupport (~> 6.1.4.1)
