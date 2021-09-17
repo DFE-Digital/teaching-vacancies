@@ -3,7 +3,15 @@ require "rails_helper"
 RSpec.describe ImportPolygonDataJob do
   subject(:job) { described_class.perform_later }
 
-  before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(disable_expensive_jobs_enabled?) }
+  let(:importer) { double(call: nil) }
+
+  before do
+    allow(DisableExpensiveJobs).to receive(:enabled?).and_return(disable_expensive_jobs_enabled?)
+
+    expect(OnsDataImport::ImportCities).to receive(:new).and_return(importer)
+    expect(OnsDataImport::ImportCounties).to receive(:new).and_return(importer)
+    expect(OnsDataImport::ImportRegions).to receive(:new).and_return(importer)
+  end
 
   context "when DisableExpensiveJobs is not enabled" do
     let(:disable_expensive_jobs_enabled?) { false }
