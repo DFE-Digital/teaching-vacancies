@@ -185,7 +185,7 @@ RSpec.describe "Api::Vacancies" do
 
           hiring_organization = {
             hiringOrganization: {
-              "@type": "School",
+              "@type": "Organization",
               name: vacancy.parent_organisation.name,
               identifier: vacancy.parent_organisation.urn,
               description: "<p>#{vacancy.about_school}</p>",

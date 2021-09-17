@@ -233,7 +233,7 @@ module VacancyHelpers
       },
       url: job_url(vacancy),
       hiringOrganization: {
-        "@type": "School",
+        "@type": "Organization",
         name: vacancy.parent_organisation.name,
         identifier: vacancy.parent_organisation.urn,
         description: vacancy.about_school,
