@@ -2,11 +2,6 @@ FactoryBot.define do
   factory :job_application do
     transient do
       draft_at { 2.weeks.ago }
-      reviewed_at { 3.days.ago }
-      shortlisted_at { 2.days.ago }
-      submitted_at { 4.days.ago }
-      unsuccessful_at { 1.day.ago }
-      withdrawn_at { 1.week.ago }
       create_details { true }
     end
 
@@ -129,24 +124,50 @@ FactoryBot.define do
   end
 
   trait :status_reviewed do
+    transient do
+      submitted_at { 4.days.ago }
+      reviewed_at { 3.days.ago }
+    end
+
     status { :reviewed }
   end
 
   trait :status_shortlisted do
+    transient do
+      submitted_at { 4.days.ago }
+      reviewed_at { 3.days.ago }
+      shortlisted_at { 2.days.ago }
+    end
+
     status { :shortlisted }
     further_instructions { Faker::Lorem.paragraph(sentence_count: 2) }
   end
 
   trait :status_submitted do
+    transient do
+      submitted_at { 4.days.ago }
+    end
+
     status { :submitted }
   end
 
   trait :status_unsuccessful do
+    transient do
+      submitted_at { 4.days.ago }
+      reviewed_at { 3.days.ago }
+      unsuccessful_at { 2.days.ago }
+    end
+
     status { :unsuccessful }
     rejection_reasons { Faker::Lorem.paragraph(sentence_count: 1) }
   end
 
   trait :status_withdrawn do
+    transient do
+      submitted_at { 4.days.ago }
+      withdrawn_at { 2.days.ago }
+    end
+
     status { :withdrawn }
   end
 end

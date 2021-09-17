@@ -56,7 +56,7 @@ RSpec.describe JobApplication do
 
     it "updates status timestamp" do
       freeze_time do
-        expect { subject.submitted! }.to change { subject.submitted_at }.from(4.days.ago).to(Time.current)
+        expect { subject.submitted! }.to change { subject.submitted_at }.from(nil).to(Time.current)
       end
     end
   end
