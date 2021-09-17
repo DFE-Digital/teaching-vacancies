@@ -56,8 +56,10 @@ class School < Organisation
       ).to_wgs84
 
       geolocation = [wgs84[:latitude], wgs84[:longitude]]
+      geopoint = "POINT(#{wgs84[:longitude]} #{wgs84[:latitude]})"
     end
 
     self.geolocation = geolocation
+    self.geopoint = geopoint
   end
 end
