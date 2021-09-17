@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_15_115630) do
+ActiveRecord::Schema.define(version: 2021_09_16_104613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  enable_extension "postgis"
   enable_extension "uuid-ossp"
 
   create_table "account_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -330,6 +331,8 @@ ActiveRecord::Schema.define(version: 2021_09_15_115630) do
     t.string "group_type"
     t.string "local_authority_within"
     t.string "establishment_status"
+    t.geography "geopoint", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
+    t.index ["geopoint"], name: "index_organisations_on_geopoint", using: :gist
     t.index ["uid"], name: "index_organisations_on_uid"
     t.index ["urn"], name: "index_organisations_on_urn"
   end
