@@ -56,6 +56,7 @@ You must install GnuPG to verify the authenticity of the downloaded archives bef
 Make sure you have the following services configured and running on your development background:
 
 * [PostgreSQL](https://www.postgresql.org)
+* [Postgis](https://postgis.net/install/)
 * [Redis](https://redis.io)
 
 If using Homebrew to install PostgreSQL, run `brew services start postgresql` in order to have `launchd` start PostgreSQL and restart whenever you log in.
@@ -135,12 +136,14 @@ LOCKBOX_MASTER_KEY=0000000000000000000000000000000000000000000000000000000000000
 bundle exec rails db:create db:schema:load
 ```
 
-[/config/database.yml](./config/database.yml) sets the default for `DATABASE_URL` to `postgres://postgres@localhost:5432`, which should work without any additional configuration on a Mac. 
+[/config/database.yml](./config/database.yml) sets the default for `DATABASE_URL` to `postgis://postgres@localhost:5432`, which should work without any additional configuration on a Mac.
 
 If you set up your local Postgres with a custom user and password, such as in Ubuntu 20.04, set this in `.env.local`:
 ```
-DATABASE_URL=postgres://mylocaluser:mylocalpassword@localhost:5432
+DATABASE_URL=postgis://mylocaluser:mylocalpassword@localhost:5432
 ```
+
+⚠ Note that the database URL has `postgis` as its adapter, not `postgres`!
 
 
 ### Seed the database
