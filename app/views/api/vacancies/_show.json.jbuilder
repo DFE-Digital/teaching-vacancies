@@ -25,7 +25,7 @@ end
 json.url job_url(vacancy)
 
 json.hiringOrganization do
-  json.set! "@type", "School"
+  json.set! "@type", "Organization"
   json.name vacancy.parent_organisation&.name
   json.identifier vacancy.parent_organisation&.urn || vacancy.parent_organisation&.uid
   json.description vacancy.about_school
