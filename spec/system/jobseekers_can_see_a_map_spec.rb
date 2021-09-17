@@ -5,7 +5,7 @@ RSpec.describe "Viewing a vacancy" do
     school = create(:school,
                     easting: "537224",
                     northing: "177395",
-                    geolocation: "51.4788757883318, 0.0253328559417984")
+                    geopoint: "POINT(0.0253328559417984 51.4788757883318)")
     vacancy = create(:vacancy)
     vacancy.organisation_vacancies.create(organisation: school)
     visit job_path(vacancy)
