@@ -71,7 +71,7 @@ Rails.application.configure do
 
   # Use Semantic_Logger for cleaner logging
   config.log_level = :info
-  Rails.application.config.semantic_logger.application = ""
+  config.semantic_logger.application = "" # No need to send the application name as logstash reads it from Cloud Foundry log tags
   config.rails_semantic_logger.format = :json
   config.rails_semantic_logger.add_file_appender = false
   config.active_record.logger = nil # Don't log SQL in production
