@@ -1,14 +1,14 @@
 name: Check users in space developer role
 
 on:
-  schedule: # 1700hrs Mon-Fri
-    - cron: '00 17 * * 1-5'
+  schedule: # Midnight every day
+    - cron: '0 0 * * *'
 
 jobs:
   CHECK-SPACE-USER:
     runs-on: ubuntu-latest
     env:
-      CF_SPACE_NAME: "teaching-vacancies-production"
+      CF_SPACE_NAME: teaching-vacancies-production
 
     steps:
       - uses: DFE-Digital/github-actions/setup-cf-cli@master
@@ -27,4 +27,8 @@ jobs:
           path: ./remote-checkout
 
       - name: Run powershell script
-        run: ./remote-checkout/scripts/check-users-in-space-developer-role.ps1 -space "${{ env.CF_SPACE_NAME }}" -slack_webhook "${{secrets.SLACK_WEBHOOK}}"
+        run: ./remote-checkout/scripts/check-users-in-space-developer-role.ps1 \
+          -space "${{ env.CF_SPACE_NAME }}" \
+          -slack_webhook "${{secrets.SLACK_WEBHOOK}}" \
+          -unset true \
+          -whitelist "${{secrets.PAAS_USER_WHITELIST}}"
