@@ -86,7 +86,7 @@ cf marketplace -e postgres
 
 Choose a plan which is
 - Highly-available (`ha`)
-- The same PostgreSQL version number (`11`) plan
+- The same PostgreSQL version number (e.g. `12`) plan
 
 Change the value for `paas_postgres_service_plan`.
 
@@ -100,6 +100,6 @@ cf marketplace -e redis
 
 Choose a plan which is
 - Highly-available (`ha`)
-- The same Redis version number (`4.x`) plan
+- The same Redis version number (e.g. `5.x`) plan
 
-Change the value for `paas_redis_service_plan`. Note that the `4.x` plans use an underscore rather than a dot (e.g. `small-ha-4_x`).
+Change the value for `paas_redis_service_plan`. Note that the `5.x` plans use an underscore rather than a dot (e.g. `small-ha-5_x`).
