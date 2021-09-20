@@ -17,6 +17,8 @@
       - if vacancy.draft? || vacancy.pending?
         = govuk_button_link_to t("buttons.delete"), organisation_job_path(vacancy.id), method: :delete, data: { confirm: t("jobs.manage.are_you_sure", job_title: vacancy.job_title) }, class: "govuk-button--secondary"
 
+    = render "shared/error_messages", errors: @vacancy.errors
+
     ol.app-task-list
       li = render "publishers/vacancies/edit_vacancy_sections/edit_job_role"
       - if current_organisation.school_group?
