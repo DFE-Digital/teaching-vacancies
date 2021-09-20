@@ -66,13 +66,13 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   end
 
   def redirect_to_incomplete_step
-    return redirect_to organisation_job_build_path(vacancy.id, :job_role) unless step_valid?(:job_role)
-    return redirect_to organisation_job_build_path(vacancy.id, :job_details) unless step_valid?(:job_details)
-    return redirect_to organisation_job_build_path(vacancy.id, :pay_package) unless step_valid?(:pay_package)
-    return redirect_to organisation_job_build_path(vacancy.id, :important_dates) unless step_valid?(:important_dates)
-    return redirect_to organisation_job_build_path(vacancy.id, :documents) unless vacancy.completed_steps.include?("documents")
-    return redirect_to organisation_job_build_path(vacancy.id, :applying_for_the_job) unless step_valid?(:applying_for_the_job)
-    return redirect_to organisation_job_build_path(vacancy.id, :job_summary) unless step_valid?(:job_summary)
+    step_process.steps.excluding(:review).each do |step|
+      if step == :documents
+        return redirect_to organisation_job_build_path(vacancy.id, :documents) unless vacancy.completed_steps.include?("documents")
+      else
+        return redirect_to organisation_job_build_path(vacancy.id, step) unless step_valid?(step)
+      end
+    end
   end
 
   def validate_all_steps

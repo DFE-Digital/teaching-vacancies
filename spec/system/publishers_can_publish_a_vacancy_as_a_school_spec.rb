@@ -137,6 +137,26 @@ RSpec.describe "Creating a vacancy" do
 
     describe "#review" do
       context "redirects the user back to the last incomplete step" do
+        scenario "redirects to working patterns when that step has not been completed" do
+          visit organisation_path
+          click_on I18n.t("buttons.create_job")
+
+          fill_in_job_role_form_fields(vacancy)
+          click_on I18n.t("buttons.continue")
+          click_on I18n.t("buttons.continue")
+
+          fill_in_job_details_form_fields(vacancy)
+          click_on I18n.t("buttons.continue")
+
+          v = Vacancy.find_by(job_title: vacancy.job_title)
+          visit edit_organisation_job_path(id: v.id)
+
+          expect(page).to have_content(I18n.t("jobs.current_step", step: 3, total: 9))
+          within("h2.govuk-heading-l") do
+            expect(page).to have_content(I18n.t("publishers.vacancies.steps.working_patterns"))
+          end
+        end
+
         scenario "redirects to pay package when that step has not been completed" do
           visit organisation_path
           click_on I18n.t("buttons.create_job")
@@ -146,6 +166,9 @@ RSpec.describe "Creating a vacancy" do
           click_on I18n.t("buttons.continue")
 
           fill_in_job_details_form_fields(vacancy)
+          click_on I18n.t("buttons.continue")
+
+          fill_in_working_patterns_form_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
           v = Vacancy.find_by(job_title: vacancy.job_title)
