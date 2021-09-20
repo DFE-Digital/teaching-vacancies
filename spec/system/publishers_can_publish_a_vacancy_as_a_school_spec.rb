@@ -149,7 +149,7 @@ RSpec.describe "Creating a vacancy" do
           click_on I18n.t("buttons.continue")
 
           v = Vacancy.find_by(job_title: vacancy.job_title)
-          visit edit_organisation_job_path(id: v.id)
+          visit organisation_job_review_path(job_id: v.id)
 
           expect(page).to have_content(I18n.t("jobs.current_step", step: 3, total: 9))
           within("h2.govuk-heading-l") do
@@ -172,7 +172,7 @@ RSpec.describe "Creating a vacancy" do
           click_on I18n.t("buttons.continue")
 
           v = Vacancy.find_by(job_title: vacancy.job_title)
-          visit edit_organisation_job_path(id: v.id)
+          visit organisation_job_path(id: v.id)
 
           expect(page).to have_content(I18n.t("jobs.current_step", step: 4, total: 9))
           within("h2.govuk-heading-l") do
@@ -203,7 +203,7 @@ RSpec.describe "Creating a vacancy" do
           click_on I18n.t("buttons.continue")
 
           v = Vacancy.find_by(job_title: vacancy.job_title)
-          visit edit_organisation_job_path(id: v.id)
+          visit organisation_job_path(id: v.id)
 
           expect(page).to have_content(I18n.t("jobs.current_step", step: 7, total: 9))
           within("h2.govuk-heading-l") do
@@ -237,7 +237,7 @@ RSpec.describe "Creating a vacancy" do
           click_on I18n.t("buttons.continue")
 
           v = Vacancy.find_by(job_title: vacancy.job_title)
-          visit edit_organisation_job_path(id: v.id)
+          visit organisation_job_path(id: v.id)
 
           expect(page).to have_content(I18n.t("jobs.current_step", step: 8, total: 9))
           within("h2.govuk-heading-l") do
