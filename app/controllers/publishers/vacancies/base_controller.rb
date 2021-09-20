@@ -49,7 +49,8 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
   end
 
   def redirect_updated_job_with_message
-    updated_job_path = vacancy.published? ? edit_organisation_job_path(vacancy.id) : organisation_job_review_path(vacancy.id)
+    updated_job_path = vacancy.published? ? organisation_job_path(vacancy.id) : organisation_job_review_path(vacancy.id)
+
     redirect_to updated_job_path,
                 success: t("messages.jobs.listing_updated_html",
                            job_title: vacancy.job_title,

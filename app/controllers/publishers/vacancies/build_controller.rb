@@ -75,7 +75,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   end
 
   def finish_wizard_path
-    edit_organisation_job_path(vacancy.id)
+    organisation_job_review_path(vacancy.id)
   end
 
   def set_multiple_schools

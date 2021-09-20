@@ -30,10 +30,6 @@ class OrganisationVacancyPresenter < BasePresenter
     url_helpers.organisation_job_path(model.id)
   end
 
-  def edit_path
-    url_helpers.edit_organisation_job_path(model.id)
-  end
-
   def copy_path
     url_helpers.new_organisation_job_copy_path(model.id)
   end

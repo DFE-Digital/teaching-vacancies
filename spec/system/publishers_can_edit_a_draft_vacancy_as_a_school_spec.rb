@@ -29,9 +29,9 @@ RSpec.describe "Publishers can edit a draft vacancy" do
       click_on I18n.t("buttons.continue")
     end
 
-    describe "#redirects_to" do
-      scenario "incomplete pay package step" do
-        visit edit_organisation_job_path(id: draft_vacancy.id)
+    describe "redirect" do
+      scenario "pay package is the first incomplete step" do
+        click_on_draft_vacancy_from_dashboard(draft_vacancy)
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 4, total: 9))
         within("h2.govuk-heading-l") do
@@ -39,8 +39,8 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         end
       end
 
-      scenario "incomplete important dates step" do
-        visit edit_organisation_job_path(id: draft_vacancy.id)
+      scenario "important dates step is the first incomplete step" do
+        visit organisation_job_review_path(job_id: draft_vacancy.id)
 
         draft_vacancy.salary = "Pay scale 1 to Pay scale 2"
         draft_vacancy.benefits = "Gym, health insurance"
@@ -48,14 +48,16 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         fill_in_pay_package_form_fields(draft_vacancy)
         click_on I18n.t("buttons.continue")
 
+        click_on_draft_vacancy_from_dashboard(draft_vacancy)
+
         expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 9))
         within("h2.govuk-heading-l") do
           expect(page).to have_content(I18n.t("publishers.vacancies.steps.important_dates"))
         end
       end
 
-      scenario "documents step not completed" do
-        visit edit_organisation_job_path(id: draft_vacancy.id)
+      scenario "documents step is the first incomplete step" do
+        visit organisation_job_review_path(job_id: draft_vacancy.id)
 
         draft_vacancy.salary = "Pay scale 1 to Pay scale 2"
         draft_vacancy.benefits = "Gym, health insurance"
@@ -69,6 +71,8 @@ RSpec.describe "Publishers can edit a draft vacancy" do
 
         fill_in_important_dates_fields(draft_vacancy)
         click_on I18n.t("buttons.continue")
+
+        click_on_draft_vacancy_from_dashboard(draft_vacancy)
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 6, total: 9))
         within("h2.govuk-heading-l") do
@@ -77,7 +81,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
       end
 
       scenario "incomplete application details step" do
-        visit edit_organisation_job_path(id: draft_vacancy.id)
+        visit organisation_job_review_path(job_id: draft_vacancy.id)
 
         draft_vacancy.salary = "Pay scale 1 to Pay scale 2"
         draft_vacancy.benefits = "Gym, health insurance"
@@ -94,6 +98,8 @@ RSpec.describe "Publishers can edit a draft vacancy" do
 
         click_on I18n.t("buttons.continue")
 
+        click_on_draft_vacancy_from_dashboard(draft_vacancy)
+
         expect(page).to have_content(I18n.t("jobs.current_step", step: 7, total: 9))
         within("h2.govuk-heading-l") do
           expect(page).to have_content(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
@@ -101,7 +107,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
       end
 
       scenario "incomplete job summary step" do
-        visit edit_organisation_job_path(id: draft_vacancy.id)
+        visit organisation_job_review_path(job_id: draft_vacancy.id)
 
         draft_vacancy.salary = "Pay scale 1 to Pay scale 2"
         draft_vacancy.benefits = "Gym, health insurance"
@@ -124,6 +130,8 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         fill_in_applying_for_the_job_form_fields(draft_vacancy)
         click_on I18n.t("buttons.continue")
 
+        click_on_draft_vacancy_from_dashboard(draft_vacancy)
+
         expect(page).to have_content(I18n.t("jobs.current_step", step: 8, total: 9))
         within("h2.govuk-heading-l") do
           expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_summary"))
@@ -134,7 +142,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
     context "after editing a different vacancy" do
       # We use the session to store vacancy attributes, make sure it doesn't leak between edits.
       before do
-        visit edit_organisation_job_path(id: draft_vacancy.id)
+        visit organisation_job_review_path(job_id: draft_vacancy.id)
 
         draft_vacancy.salary = "Pay scale 1 to Pay scale 2"
         draft_vacancy.benefits = "Gym, health insurance"
@@ -155,20 +163,20 @@ RSpec.describe "Publishers can edit a draft vacancy" do
       end
 
       scenario "then editing the draft redirects to incomplete step" do
-        visit edit_organisation_job_path(id: draft_vacancy.id)
+        visit organisation_job_review_path(job_id: draft_vacancy.id)
         expect(page).to have_content(I18n.t("jobs.current_step", step: 7, total: 9))
       end
 
       def edit_a_published_vacancy
         published_vacancy = create(:vacancy, :published, job_roles: %w[teacher])
         published_vacancy.organisation_vacancies.create(organisation: school)
-        visit edit_organisation_job_path(published_vacancy.id)
+        visit organisation_job_path(published_vacancy.id)
         click_header_link(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
 
         fill_in "publishers_job_listing_applying_for_the_job_form[personal_statement_guidance]", with: "Some different guidance"
         click_on I18n.t("buttons.update_job")
 
-        expect(current_path).to eq(edit_organisation_job_path(published_vacancy.id))
+        expect(current_path).to eq(organisation_job_path(published_vacancy.id))
       end
     end
   end
@@ -189,5 +197,11 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         expect(page.current_path).to eq(organisation_job_review_path(vacancy.id))
       end
     end
+  end
+
+  def click_on_draft_vacancy_from_dashboard(draft_vacancy)
+    visit organisation_path(job_id: draft_vacancy.id, type: :draft)
+
+    click_on vacancy.job_title
   end
 end
