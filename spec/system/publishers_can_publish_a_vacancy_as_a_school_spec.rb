@@ -137,27 +137,7 @@ RSpec.describe "Creating a vacancy" do
 
     describe "#review" do
       context "redirects the user back to the last incomplete step" do
-        scenario "redirects to working patterns when that step has not been completed" do
-          visit organisation_path
-          click_on I18n.t("buttons.create_job")
-
-          fill_in_job_role_form_fields(vacancy)
-          click_on I18n.t("buttons.continue")
-          click_on I18n.t("buttons.continue")
-
-          fill_in_job_details_form_fields(vacancy)
-          click_on I18n.t("buttons.continue")
-
-          v = Vacancy.find_by(job_title: vacancy.job_title)
-          visit edit_organisation_job_path(id: v.id)
-
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 3, total: 9))
-          within("h2.govuk-heading-l") do
-            expect(page).to have_content(I18n.t("publishers.vacancies.steps.working_patterns"))
-          end
-        end
-
-        scenario "redirects to pay package when that step has not been completed" do
+        scenario "redirects to working details when that step has not been completed" do
           visit organisation_path
           click_on I18n.t("buttons.create_job")
 
@@ -172,11 +152,11 @@ RSpec.describe "Creating a vacancy" do
           click_on I18n.t("buttons.continue")
 
           v = Vacancy.find_by(job_title: vacancy.job_title)
-          visit edit_organisation_job_path(id: v.id)
+          visit organisation_job_review_path(job_id: v.id)
 
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 4, total: 9))
+          expect(page).to have_content(I18n.t("jobs.current_step", step: 3, total: 9))
           within("h2.govuk-heading-l") do
-            expect(page).to have_content(I18n.t("publishers.vacancies.steps.pay_package"))
+            expect(page).to have_content(I18n.t("publishers.vacancies.steps.working_patterns"))
           end
         end
 
@@ -203,7 +183,7 @@ RSpec.describe "Creating a vacancy" do
           click_on I18n.t("buttons.continue")
 
           v = Vacancy.find_by(job_title: vacancy.job_title)
-          visit edit_organisation_job_path(id: v.id)
+          visit organisation_job_review_path(job_id: v.id)
 
           expect(page).to have_content(I18n.t("jobs.current_step", step: 7, total: 9))
           within("h2.govuk-heading-l") do
@@ -237,7 +217,7 @@ RSpec.describe "Creating a vacancy" do
           click_on I18n.t("buttons.continue")
 
           v = Vacancy.find_by(job_title: vacancy.job_title)
-          visit edit_organisation_job_path(id: v.id)
+          visit organisation_job_review_path(job_id: v.id)
 
           expect(page).to have_content(I18n.t("jobs.current_step", step: 8, total: 9))
           within("h2.govuk-heading-l") do
@@ -250,7 +230,9 @@ RSpec.describe "Creating a vacancy" do
         vacancy = create(:vacancy, :published)
         vacancy.organisation_vacancies.create(organisation: school)
 
-        visit organisation_job_review_path(vacancy.id)
+        visit organisation_path(vacancy.id, type: :published)
+
+        click_on vacancy.job_title
 
         expect(page).to have_current_path(organisation_job_path(vacancy.id))
       end
@@ -503,7 +485,7 @@ RSpec.describe "Creating a vacancy" do
         click_on "Confirm and submit job"
 
         expect(page).to have_content("Your job listing will be posted on #{format_date(vacancy.publish_on)}.")
-        visit organisation_job_path(vacancy.id)
+        visit organisation_job_review_path(vacancy.id)
         expect(page).to have_content(format_date(vacancy.publish_on).to_s)
       end
 
