@@ -143,7 +143,8 @@ RSpec.describe "Creating a vacancy" do
         vacancy.assign_attributes expires_at: yesterday_date
         vacancy.save(validate: false)
 
-        visit organisation_job_review_path(vacancy.id)
+        visit organisation_job_path(vacancy.id)
+        visit organisation_job_build_path(vacancy.id, :important_dates)
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 9))
         within("h2.govuk-heading-l") do
@@ -154,7 +155,7 @@ RSpec.describe "Creating a vacancy" do
         expect(find_field("publishers_job_listing_important_dates_form[expires_at(2i)]").value).to eq(yesterday_date.month.to_s)
         expect(find_field("publishers_job_listing_important_dates_form[expires_at(1i)]").value).to eq(yesterday_date.year.to_s)
 
-        click_on I18n.t("buttons.continue")
+        click_on I18n.t("buttons.update_job")
 
         within(".govuk-error-summary") do
           expect(page).to have_content("There is a problem")
@@ -172,7 +173,7 @@ RSpec.describe "Creating a vacancy" do
         fill_in "publishers_job_listing_important_dates_form[expires_at(1i)]", with: expiry_date.year
         choose "9am", name: "publishers_job_listing_important_dates_form[expiry_time]"
 
-        click_on I18n.t("buttons.continue")
+        click_on I18n.t("buttons.update_job")
 
         click_on I18n.t("buttons.submit_job_listing")
         expect(current_path).to eq(organisation_job_summary_path(vacancy.id))
