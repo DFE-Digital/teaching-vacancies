@@ -4,6 +4,8 @@ class School < Organisation
   has_many :school_group_memberships
   has_many :school_groups, through: :school_group_memberships
 
+  before_save :set_geolocation_from_easting_and_northing
+
   validates :urn, uniqueness: true
 
   enum phase: {
@@ -27,16 +29,6 @@ class School < Organisation
     sixteen_plus: %w[16-19],
     all_through: %w[primary secondary 16-19],
   }.freeze
-
-  def easting=(easting)
-    self[:easting] = easting
-    set_geolocation_from_easting_and_northing
-  end
-
-  def northing=(northing)
-    self[:northing] = northing
-    set_geolocation_from_easting_and_northing
-  end
 
   def religious_character
     return if !respond_to?(:gias_data) || gias_data.nil?
