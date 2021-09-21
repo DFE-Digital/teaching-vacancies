@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, review_page_title_prefix(@vacancy)
+- content_for :page_title_prefix, review_page_title_prefix(vacancy)
 
 = render "publishers/vacancies/job_applications/banner", vacancy: vacancy, job_applications: vacancy.job_applications
 
@@ -17,6 +17,8 @@
       - if vacancy.draft? || vacancy.pending?
         = govuk_button_link_to t("buttons.delete"), organisation_job_path(vacancy.id), method: :delete, data: { confirm: t("jobs.manage.are_you_sure", job_title: vacancy.job_title) }, class: "govuk-button--secondary"
 
+    = render "shared/error_messages", errors: vacancy.errors
+
     ol.app-task-list
       li = render "publishers/vacancies/edit_vacancy_sections/edit_job_role"
       - if current_organisation.school_group?
@@ -28,6 +30,17 @@
       li = render "publishers/vacancies/edit_vacancy_sections/edit_documents"
       li = render "publishers/vacancies/edit_vacancy_sections/edit_applying_for_the_job"
       li = render "publishers/vacancies/edit_vacancy_sections/edit_job_summary"
+
+    - if vacancy.draft? && vacancy.errors.none?
+      h3.govuk-heading-m = t("jobs.preview_listing.heading")
+      p.govuk-body = t("jobs.preview_listing.message")
+      = govuk_button_link_to t("buttons.preview_job_listing"), organisation_job_preview_path(@vacancy.id), class: "preview-listing-gtm", id: "vacancy-review-preview"
+
+      h3.govuk-heading-m = t("jobs.submit_listing.heading", count: @vacancy.publish_on.today? ? 0 : 1, date: @vacancy.publish_on.to_s.strip)
+      p.govuk-body = t("jobs.submit_listing.message_html")
+      - if @vacancy.enable_job_applications?
+        p.govuk-body = t("jobs.submit_listing.data_retention")
+      = govuk_button_to t("buttons.submit_job_listing"), organisation_job_publish_path(@vacancy.id), class: "govuk-button--secondary submit-listing-without-preview-gtm", id: "vacancy-review-submit"
 
     = render "publishers/vacancies/back_to_manage_jobs"
 
