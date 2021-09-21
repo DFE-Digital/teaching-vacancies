@@ -16,15 +16,8 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
 
   def review
     reset_session_vacancy!
-
-    if all_steps_valid?
-      session[:current_step] = :review
-      vacancy.update(completed_steps: completed_steps)
-    else
-      session[:current_step] = :edit_incomplete
-      redirect_to_incomplete_step
-    end
-
+    session[:current_step] = :review
+    vacancy.update(completed_steps: completed_steps) if all_steps_valid?
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
@@ -56,16 +49,6 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     return unless vacancy.published?
 
     redirect_to organisation_job_path(vacancy.id), notice: t("messages.jobs.already_published")
-  end
-
-  def redirect_to_incomplete_step
-    step_process.steps.excluding(:review).each do |step|
-      if step == :documents
-        return redirect_to organisation_job_build_path(vacancy.id, :documents) unless vacancy.completed_steps.include?("documents")
-      else
-        return redirect_to organisation_job_build_path(vacancy.id, step) unless step_valid?(step)
-      end
-    end
   end
 
   def validate_all_steps

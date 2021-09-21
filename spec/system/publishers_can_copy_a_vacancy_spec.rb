@@ -103,8 +103,13 @@ RSpec.describe "Copying a vacancy" do
       fill_in_copy_vacancy_form_fields(new_vacancy)
       click_on I18n.t("buttons.continue")
 
+      expect(page).to have_content(I18n.t("job_summary_errors.about_school.blank", organisation: "school"))
+
+      new_persisted_vacancy = Vacancy.find_by(job_title: "A new job title")
+      visit organisation_job_build_path(new_persisted_vacancy.id, :job_summary)
+
       fill_in "publishers_job_listing_job_summary_form[about_school]", with: "Some description about the school"
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.update_job")
 
       within("h2.govuk-heading-l") do
         expect(page).to have_content(I18n.t("publishers.vacancies.steps.review_heading"))
