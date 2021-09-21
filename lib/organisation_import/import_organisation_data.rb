@@ -73,9 +73,7 @@ class ImportOrganisationData
                 row[column_name]
               end
 
-      # Using `send` for this  because `easting` and `northing` are both overloaded setters that look up lat/long when
-      # you set them.
-      organisation.send("#{attribute_name}=", value.presence)
+      organisation[attribute_name] = value.presence
     end
   end
 
