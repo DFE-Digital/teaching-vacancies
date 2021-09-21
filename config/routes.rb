@@ -143,7 +143,7 @@ Rails.application.routes.draw do
       get "jobs(/:type)", to: "publishers/organisations#show", defaults: { type: :published }, as: :jobs_with_type
     end
 
-    resources :jobs, only: %i[create edit destroy delete show], controller: "publishers/vacancies" do
+    resources :jobs, only: %i[create destroy delete show], controller: "publishers/vacancies" do
       resources :build, only: %i[show update], controller: "publishers/vacancies/build"
       resource :documents, only: %i[create destroy show], controller: "publishers/vacancies/documents"
       get :review
