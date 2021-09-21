@@ -3,6 +3,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   before_action :invent_job_alert_search_criteria, only: %i[show preview]
 
   def show
+    validate_all_steps
     session[:current_step] = :review
     @vacancy = VacancyPresenter.new(vacancy)
   end
@@ -11,14 +12,6 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     reset_session_vacancy!
     vacancy = Vacancy.create(organisation_vacancies_attributes: [{ organisation: current_organisation }])
     redirect_to organisation_job_build_path(vacancy.id, :job_role)
-  end
-
-  def edit
-    return redirect_to organisation_job_review_path(vacancy.id) unless vacancy.published?
-
-    validate_all_steps
-    session[:current_step] = :review
-    @vacancy = VacancyPresenter.new(vacancy)
   end
 
   def review

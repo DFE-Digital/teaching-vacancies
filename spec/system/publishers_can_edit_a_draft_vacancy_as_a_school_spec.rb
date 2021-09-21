@@ -14,179 +14,43 @@ RSpec.describe "Publishers can edit a draft vacancy" do
   before { login_publisher(publisher: publisher, organisation: school) }
 
   context "editing an incomplete draft vacancy" do
-    before do
-      visit organisation_path
-      click_on I18n.t("buttons.create_job")
+    let(:incomplete_vacancy) { create(:vacancy, :draft, job_roles: %w[teacher], salary: nil) }
 
-      fill_in_job_role_form_fields(vacancy)
-      click_on I18n.t("buttons.continue")
-      click_on I18n.t("buttons.continue")
+    before { incomplete_vacancy.organisation_vacancies.create(organisation: school) }
 
-      fill_in_job_details_form_fields(vacancy)
-      click_on I18n.t("buttons.continue")
+    scenario "cannot submit a incomplete draft from the manage job listing page" do
+      visit organisation_job_path(incomplete_vacancy.id)
 
-      fill_in_working_patterns_form_fields(vacancy)
-      click_on I18n.t("buttons.continue")
-    end
-
-    describe "#redirects_to" do
-      scenario "incomplete pay package step" do
-        visit edit_organisation_job_path(id: draft_vacancy.id)
-
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 4, total: 9))
-        within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("publishers.vacancies.steps.pay_package"))
-        end
-      end
-
-      scenario "incomplete important dates step" do
-        visit edit_organisation_job_path(id: draft_vacancy.id)
-
-        draft_vacancy.salary = "Pay scale 1 to Pay scale 2"
-        draft_vacancy.benefits = "Gym, health insurance"
-
-        fill_in_pay_package_form_fields(draft_vacancy)
-        click_on I18n.t("buttons.continue")
-
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 9))
-        within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("publishers.vacancies.steps.important_dates"))
-        end
-      end
-
-      scenario "documents step not completed" do
-        visit edit_organisation_job_path(id: draft_vacancy.id)
-
-        draft_vacancy.salary = "Pay scale 1 to Pay scale 2"
-        draft_vacancy.benefits = "Gym, health insurance"
-
-        fill_in_pay_package_form_fields(draft_vacancy)
-        click_on I18n.t("buttons.continue")
-
-        draft_vacancy.starts_on = 1.year.from_now
-        draft_vacancy.expires_at = 6.months.from_now.change(hour: 9, minute: 0)
-        draft_vacancy.publish_on = 1.day.from_now
-
-        fill_in_important_dates_fields(draft_vacancy)
-        click_on I18n.t("buttons.continue")
-
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 6, total: 9))
-        within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("publishers.vacancies.steps.documents"))
-        end
-      end
-
-      scenario "incomplete application details step" do
-        visit edit_organisation_job_path(id: draft_vacancy.id)
-
-        draft_vacancy.salary = "Pay scale 1 to Pay scale 2"
-        draft_vacancy.benefits = "Gym, health insurance"
-
-        fill_in_pay_package_form_fields(draft_vacancy)
-        click_on I18n.t("buttons.continue")
-
-        draft_vacancy.starts_on = 1.year.from_now
-        draft_vacancy.expires_at = 6.months.from_now.change(hour: 9, minute: 0)
-        draft_vacancy.publish_on = 1.day.from_now
-
-        fill_in_important_dates_fields(draft_vacancy)
-        click_on I18n.t("buttons.continue")
-
-        click_on I18n.t("buttons.continue")
-
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 7, total: 9))
-        within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
-        end
-      end
-
-      scenario "incomplete job summary step" do
-        visit edit_organisation_job_path(id: draft_vacancy.id)
-
-        draft_vacancy.salary = "Pay scale 1 to Pay scale 2"
-        draft_vacancy.benefits = "Gym, health insurance"
-
-        fill_in_pay_package_form_fields(draft_vacancy)
-        click_on I18n.t("buttons.continue")
-
-        draft_vacancy.starts_on = 1.year.from_now
-        draft_vacancy.expires_at = 6.months.from_now.change(hour: 9, minute: 0)
-        draft_vacancy.publish_on = 1.day.from_now
-
-        fill_in_important_dates_fields(draft_vacancy)
-        click_on I18n.t("buttons.continue")
-
-        click_on I18n.t("buttons.continue")
-
-        draft_vacancy.contact_email = "test@email.com"
-        draft_vacancy.enable_job_applications = true
-
-        fill_in_applying_for_the_job_form_fields(draft_vacancy)
-        click_on I18n.t("buttons.continue")
-
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 8, total: 9))
-        within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_summary"))
-        end
-      end
-    end
-
-    context "after editing a different vacancy" do
-      # We use the session to store vacancy attributes, make sure it doesn't leak between edits.
-      before do
-        visit edit_organisation_job_path(id: draft_vacancy.id)
-
-        draft_vacancy.salary = "Pay scale 1 to Pay scale 2"
-        draft_vacancy.benefits = "Gym, health insurance"
-
-        fill_in_pay_package_form_fields(draft_vacancy)
-        click_on I18n.t("buttons.continue")
-
-        draft_vacancy.starts_on = 1.year.from_now
-        draft_vacancy.expires_at = 6.months.from_now.change(hour: 9, minute: 0)
-        draft_vacancy.publish_on = 1.day.from_now
-
-        fill_in_important_dates_fields(draft_vacancy)
-        click_on I18n.t("buttons.continue")
-
-        click_on I18n.t("buttons.continue")
-
-        edit_a_published_vacancy
-      end
-
-      scenario "then editing the draft redirects to incomplete step" do
-        visit edit_organisation_job_path(id: draft_vacancy.id)
-        expect(page).to have_content(I18n.t("jobs.current_step", step: 7, total: 9))
-      end
-
-      def edit_a_published_vacancy
-        published_vacancy = create(:vacancy, :published, job_roles: %w[teacher])
-        published_vacancy.organisation_vacancies.create(organisation: school)
-        visit edit_organisation_job_path(published_vacancy.id)
-        click_header_link(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
-
-        fill_in "publishers_job_listing_applying_for_the_job_form[personal_statement_guidance]", with: "Some different guidance"
-        click_on I18n.t("buttons.update_job")
-
-        expect(current_path).to eq(edit_organisation_job_path(published_vacancy.id))
-      end
+      expect(page).to have_content(I18n.t("pay_package_errors.salary.blank"))
+      expect(page).to_not have_content(I18n.t("buttons.submit_job_listing"))
     end
   end
 
   context "editing a complete draft vacancy" do
-    let(:vacancy) { create(:vacancy, :draft, job_roles: %w[teacher]) }
+    let(:complete_vacancy) { create(:vacancy, :draft, job_roles: %w[teacher]) }
 
-    before { vacancy.organisation_vacancies.create(organisation: school) }
+    before { complete_vacancy.organisation_vacancies.create(organisation: school) }
 
+    # TODO: Currently we visit the review page with this test. Revisit this when fixing the buttons
     describe "#cancel_and_return_later" do
       scenario "can cancel and return from job details page" do
-        visit organisation_job_review_path(vacancy.id)
+        visit organisation_job_review_path(complete_vacancy.id)
 
         click_header_link(I18n.t("publishers.vacancies.steps.job_details"))
         expect(page).to have_content(I18n.t("buttons.cancel_and_return"))
 
         click_on I18n.t("buttons.cancel_and_return")
-        expect(page.current_path).to eq(organisation_job_review_path(vacancy.id))
+        expect(page.current_path).to eq(organisation_job_review_path(complete_vacancy.id))
+      end
+    end
+
+    describe "submitting a completed draft" do
+      scenario "can submit a completed draft from the manage job listing page" do
+        visit organisation_job_path(complete_vacancy.id)
+
+        click_on I18n.t("buttons.submit_job_listing")
+
+        expect(page.current_path).to eq(organisation_job_summary_path(complete_vacancy.id))
       end
     end
   end
