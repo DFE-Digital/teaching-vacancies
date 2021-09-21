@@ -8,7 +8,7 @@ class Search::CriteriaInventor
     @vacancy = vacancy
     @working_patterns_variant = working_patterns_variant
     @location = if @vacancy.organisations.many?
-                  @vacancy.postcode_from_mean_geolocation || @vacancy.parent_organisation.postcode
+                  @vacancy.postcode_from_mean_geolocation || @vacancy.set_postcode_from_mean_geolocation || @vacancy.parent_organisation.postcode
                 else
                   @vacancy.organisation.postcode
                 end

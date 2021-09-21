@@ -53,7 +53,7 @@ RSpec.describe "Extend deadline" do
     let(:params) { { publishers_job_listing_extend_deadline_form: form_params } }
 
     context "when the vacancy does not belong to the current organisation" do
-      let(:vacancy) { create(:vacancy, :published, organisation_vacancies_attributes: [{ organisation: build_stubbed(:school) }]) }
+      let(:vacancy) { create(:vacancy, :published, organisation_vacancies_attributes: [{ organisation: create(:school) }]) }
 
       it "returns not_found" do
         patch organisation_job_extend_deadline_path(vacancy.id), params: params

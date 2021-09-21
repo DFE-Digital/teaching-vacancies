@@ -114,7 +114,7 @@ RSpec.describe "Subscriptions" do
     end
   end
 
-  describe "PUT #update" do
+  describe "PATCH #update" do
     subject { put subscription_path(subscription.token), params: { jobseekers_subscription_form: params } }
 
     let!(:subscription) { create(:subscription, email: "bob@dylan.com", frequency: :daily) }

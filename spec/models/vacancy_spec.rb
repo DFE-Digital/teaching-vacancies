@@ -441,11 +441,13 @@ RSpec.describe Vacancy do
     end
   end
 
-  describe "#set_mean_geolocation_from_postcode!" do
-    let(:school) { create(:school, postcode: "A12 B34", geolocation: [1, 2]) }
+  describe "#set_mean_geolocation_from_postcode" do
+    let(:school) { create(:school, geopoint: "POINT(1 2)", postcode: "A12 B34") }
 
     context "when at a single school" do
       subject { create(:vacancy, organisation_vacancies_attributes: [{ organisation: school }]) }
+
+      before { subject.set_postcode_from_mean_geolocation }
 
       it "uses the school's postcode" do
         expect(subject.postcode_from_mean_geolocation).to eq("A12 B34")
@@ -460,24 +462,29 @@ RSpec.describe Vacancy do
       context "when at a single school in a trust" do
         subject { create(:vacancy, :at_one_school, organisation_vacancies_attributes: [{ organisation: school }]) }
 
+        before { subject.set_postcode_from_mean_geolocation }
+
         it "uses the school's postcode" do
           expect(subject.postcode_from_mean_geolocation).to eq("A12 B34")
         end
       end
 
       context "when at multiple schools in a school group" do
-        subject { create(:vacancy, :at_multiple_schools, organisation_vacancies_attributes: [{ organisation: school }, { organisation: school2 }]) }
-        let(:school2) { create(:school, geolocation: [5, 6]) }
+        subject { create(:vacancy, :at_multiple_schools) }
+        let(:school2) { create(:school, geopoint: "POINT(5 6)") }
         let(:geocoding) { instance_double(Geocoding) }
 
         before do
-          allow(geocoding).to receive(:postcode_from_coordinates).and_return(Geocoder::DEFAULT_LOCATION)
+          SchoolGroupMembership.create(school: school2, school_group: trust)
+          OrganisationVacancy.create(organisation: school, vacancy: subject)
+          allow(Geocoding).to receive(:new).with([3.0, 4.0]).and_return(geocoding)
+          allow(geocoding).to receive(:postcode_from_coordinates).and_return("New postcode")
+          OrganisationVacancy.create(organisation: school2, vacancy: subject)
+          subject.set_postcode_from_mean_geolocation
         end
 
         it "sets postcode_from_mean_geolocation to the output of Geocoding#postcode_from_coordinates, using the mean of the two geolocations" do
-          expect(Geocoding).to receive(:new).with([3, 4]).at_least(:once).and_return(geocoding)
-          SchoolGroupMembership.create(school: school2, school_group: trust)
-          expect(subject.postcode_from_mean_geolocation).to eq(Geocoder::DEFAULT_LOCATION)
+          expect(subject.postcode_from_mean_geolocation).to eq("New postcode")
         end
       end
     end

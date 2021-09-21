@@ -8,11 +8,10 @@ class Vacancy < ApplicationRecord
 
   friendly_id :slug_candidates, use: %w[slugged history]
 
-  # Each vacancy must have *exactly* one main job role. It may have zero or multiple
-  # additional job roles. Legacy vacancies *may* have more than one main job role as
-  # we used to allow multiple.
-  # TODO: This is a compromise to keep changes to the data model minimal for now. Once
-  # the legacy vacancies are gone, we should refactor the data model.
+  # Each vacancy must have *exactly* one main job role. It may have zero or multiple additional job roles. Legacy
+  # vacancies *may* have more than one main job role as we used to allow multiple.
+  # TODO: This is a compromise to keep changes to the data model minimal for now. Once the legacy vacancies are gone,
+  #       we should refactor the data model.
   MAIN_JOB_ROLES = { teacher: 0, leadership: 1, teaching_assistant: 6, education_support: 4, sendco: 5 }.freeze
   ADDITIONAL_JOB_ROLES = { send_responsible: 2, ect_suitable: 3 }.freeze
 
@@ -54,10 +53,8 @@ class Vacancy < ApplicationRecord
   has_many :job_applications, dependent: :destroy
   has_one :equal_opportunities_report, dependent: :destroy
 
-  # TODO: This is equivalent to the behaviour of the noticed` gem's `has_noticed_notification`
-  #       method. However, the gem does not support the PostGIS adapter so until that is fixed
-  #       we need to do this manually.
-  #       c.f. https://github.com/excid3/noticed/pull/150
+  # TODO: This is equivalent to the behaviour of the noticed` gem's `has_noticed_notification` method. However, the gem
+  #       does not support the PostGIS adapter so until that is fixed we need to do this manually. c.f. https://github.com/excid3/noticed/pull/150
   before_destroy { Notification.where("params @> ?", Noticed::Coder.dump(vacancy: self).to_json).destroy_all }
 
   has_many :organisation_vacancies, dependent: :destroy
@@ -129,8 +126,7 @@ class Vacancy < ApplicationRecord
   end
 
   def application_link=(value)
-    # Data may not include a scheme/protocol so we must be careful when creating
-    # links that Rails doesn't make them incorrectly relative.
+    # Data may not include a scheme/protocol so we must be careful when creating links that Rails doesn't make them incorrectly relative.
     begin
       value = Addressable::URI.heuristic_parse(value).to_s
     rescue Addressable::URI::InvalidURIError
@@ -154,14 +150,12 @@ class Vacancy < ApplicationRecord
   end
 
   def main_job_role
-    # Legacy vacancies may have more than one main job role defined, but we still only care
-    # about the first
+    # Legacy vacancies may have more than one main job role defined, but we still only care about the first
     job_roles.find { |role| role.in?(self.class.main_job_role_options) }
   end
 
   def main_job_role=(role)
-    # Do nothing if the main job role is unchanged.
-    # Otherwise completely reset job_roles as additional roles may no longer be valid
+    # Do nothing if main job role is unchanged. Else completely reset job_roles as additional roles may no longer be valid
     return if role == main_job_role
 
     self.job_roles = [role]
@@ -183,33 +177,32 @@ class Vacancy < ApplicationRecord
     job_applications.after_submission.count >= EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD
   end
 
-  def set_postcode_from_mean_geolocation!
+  def set_postcode_from_mean_geolocation(persist: true)
     # When SimilarJobs searches for jobs similar to a multi-school job, we need to derive a location to search around.
     # Take the mean of the geolocations of the school(s) the vacancy is at, and use it to look up a human-readable
     # version of that geolocation (i.e. a postcode).
     return if central_office?
 
-    coords = organisations.reload.schools.filter_map(&:geolocation).map { |loc| [loc.x, loc.y] }.reject { |coord| coord == [0, 0] }
-    return unless coords.any?
+    if at_one_school?
+      postcode = organisation.postcode
+    else
+      schools = organisations.schools.where.not(geopoint: nil)
+      centroid = schools.pluck(Arel.sql("ST_Centroid(ST_Collect(geopoint::geometry))::geography")).first
+      return unless centroid
 
-    mean_geolocation = [(coords.sum(&:first) / coords.length), (coords.sum(&:second) / coords.length)]
-    self.postcode_from_mean_geolocation = if at_one_school?
-                                            reload
-                                            organisation.postcode
-                                          else
-                                            Geocoding.new(mean_geolocation.to_a).postcode_from_coordinates || postcode_from_mean_geolocation
-                                          end
-    save
+      postcode = Geocoding.new([centroid.x, centroid.y]).postcode_from_coordinates
+    end
+    return unless postcode
+
+    self.postcode_from_mean_geolocation = postcode
+    save if persist
+    postcode
   end
 
   private
 
   def slug_candidates
-    [
-      :job_title,
-      %i[job_title parent_organisation_name],
-      %i[job_title location],
-    ]
+    [:job_title, %i[job_title parent_organisation_name], %i[job_title location]]
   end
 
   def on_expired_vacancy_feedback_submitted_update_stats_updated_at
