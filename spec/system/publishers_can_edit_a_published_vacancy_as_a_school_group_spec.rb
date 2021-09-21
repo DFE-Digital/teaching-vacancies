@@ -16,7 +16,7 @@ RSpec.describe "Editing a published vacancy" do
 
   describe "#job_location" do
     scenario "can edit job location" do
-      visit edit_organisation_job_path(vacancy.id)
+      visit organisation_job_path(vacancy.id)
 
       expect(page).to have_content(I18n.t("school_groups.job_location_heading.central_office"))
       expect(page).to have_content(full_address(school_group))
@@ -30,7 +30,7 @@ RSpec.describe "Editing a published vacancy" do
       fill_in_school_form_field(school1)
       click_on I18n.t("buttons.update_job")
 
-      expect(page.current_path).to eq(edit_organisation_job_path(vacancy.id))
+      expect(page.current_path).to eq(organisation_job_path(vacancy.id))
       expect(page).to have_content(I18n.t("school_groups.job_location_heading.at_one_school"))
       expect(page).to have_content(full_address(school1))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eq(school1.name)
@@ -41,7 +41,7 @@ RSpec.describe "Editing a published vacancy" do
       fill_in_school_form_field(school2)
       click_on I18n.t("buttons.update_job")
 
-      expect(page.current_path).to eq(edit_organisation_job_path(vacancy.id))
+      expect(page.current_path).to eq(organisation_job_path(vacancy.id))
       expect(page).to have_content(I18n.t("school_groups.job_location_heading.at_one_school"))
       expect(page).to have_content(full_address(school2))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eq(school2.name)
@@ -53,14 +53,14 @@ RSpec.describe "Editing a published vacancy" do
       check school2.name, name: "publishers_job_listing_schools_form[organisation_ids][]", visible: false
       click_on I18n.t("buttons.update_job")
 
-      expect(page.current_path).to eq(edit_organisation_job_path(vacancy.id))
+      expect(page.current_path).to eq(organisation_job_path(vacancy.id))
       expect(page).to have_content(I18n.t("school_groups.job_location_heading.at_multiple_schools",
                                           organisation_type: "trust"))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eq("More than one school (2)")
 
       change_job_location(vacancy, "central_office", "Multi-academy trust")
 
-      expect(page.current_path).to eq(edit_organisation_job_path(vacancy.id))
+      expect(page.current_path).to eq(organisation_job_path(vacancy.id))
       expect(page).to have_content(I18n.t("school_groups.job_location_heading.central_office"))
       expect(page).to have_content(full_address(school_group))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eq(
@@ -70,7 +70,7 @@ RSpec.describe "Editing a published vacancy" do
 
     context "when job_location is central_office and is updated to at_one_school" do
       scenario "job_location is not updated until the school is selected" do
-        visit edit_organisation_job_path(vacancy.id)
+        visit organisation_job_path(vacancy.id)
 
         expect(page).to have_content(I18n.t("school_groups.job_location_heading.central_office"))
         expect(page).to have_content(full_address(school_group))
@@ -82,7 +82,7 @@ RSpec.describe "Editing a published vacancy" do
 
         click_on I18n.t("buttons.cancel_and_return")
 
-        expect(page.current_path).to eq(edit_organisation_job_path(vacancy.id))
+        expect(page.current_path).to eq(organisation_job_path(vacancy.id))
         expect(page).to have_content(I18n.t("school_groups.job_location_heading.central_office"))
         expect(page).to have_content(full_address(school_group))
         expect(Vacancy.find(vacancy.id).readable_job_location).to eq(
@@ -94,7 +94,7 @@ RSpec.describe "Editing a published vacancy" do
         fill_in_school_form_field(school2)
         click_on I18n.t("buttons.update_job")
 
-        expect(page.current_path).to eq(edit_organisation_job_path(vacancy.id))
+        expect(page.current_path).to eq(organisation_job_path(vacancy.id))
         expect(page).to have_content(I18n.t("school_groups.job_location_heading.at_one_school"))
         expect(page).to have_content(full_address(school2))
         expect(Vacancy.find(vacancy.id).readable_job_location).to eq(school2.name)
