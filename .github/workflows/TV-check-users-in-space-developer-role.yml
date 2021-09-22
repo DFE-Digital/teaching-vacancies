@@ -27,8 +27,9 @@ jobs:
           path: ./remote-checkout
 
       - name: Run powershell script
-        run: ./remote-checkout/scripts/check-users-in-space-developer-role.ps1 \
-          -space "${{ env.CF_SPACE_NAME }}" \
-          -slack_webhook "${{secrets.SLACK_WEBHOOK}}" \
-          -unset true \
-          -whitelist "${{secrets.PAAS_USER_WHITELIST}}"
+        run: |
+          ./remote-checkout/scripts/check-users-in-space-developer-role.ps1 \
+            -space "${{ env.CF_SPACE_NAME }}" \
+            -slack_webhook "${{secrets.SLACK_WEBHOOK}}" \
+            -unset true \
+            -whitelist "${{secrets.PAAS_USER_WHITELIST}}"
