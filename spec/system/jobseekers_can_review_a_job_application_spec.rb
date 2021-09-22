@@ -34,7 +34,6 @@ RSpec.describe "Jobseekers can review a job application" do
       job_application.employments.job.each do |employment|
         expect(page).to have_content(employment.job_title)
         expect(page).to have_content(employment.organisation)
-        expect(page).to have_content(employment.salary)
         expect(page).to have_content(employment.subjects)
         expect(page).to have_content(employment.main_duties)
         expect(page).to have_content(employment.started_on)
