@@ -31,7 +31,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   def update
     if form.valid?
       update_vacancy
-      if session[:current_step].in?(%i[edit_incomplete review])
+      if session[:current_step] == :review
         update_listing
       else
         render_wizard vacancy
