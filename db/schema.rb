@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_16_104613) do
+ActiveRecord::Schema.define(version: 2021_09_22_140134) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -333,8 +333,9 @@ ActiveRecord::Schema.define(version: 2021_09_16_104613) do
     t.string "establishment_status"
     t.geography "geopoint", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
     t.index ["geopoint"], name: "index_organisations_on_geopoint", using: :gist
-    t.index ["uid"], name: "index_organisations_on_uid"
-    t.index ["urn"], name: "index_organisations_on_urn"
+    t.index ["local_authority_code"], name: "index_organisations_on_local_authority_code", unique: true
+    t.index ["uid"], name: "index_organisations_on_uid", unique: true
+    t.index ["urn"], name: "index_organisations_on_urn", unique: true
   end
 
   create_table "publisher_preferences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -406,6 +407,7 @@ ActiveRecord::Schema.define(version: 2021_09_16_104613) do
     t.boolean "do_not_delete"
     t.datetime "created_at", precision: 6
     t.datetime "updated_at", precision: 6
+    t.index ["school_id", "school_group_id"], name: "index_school_group_memberships_on_school_id_and_school_group_id", unique: true
   end
 
   create_table "sessions", force: :cascade do |t|

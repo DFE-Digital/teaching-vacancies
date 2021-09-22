@@ -30,13 +30,7 @@ end
 namespace :gias do
   desc "Import schools, trusts and local authorities data"
   task import_schools: :environment do
-    require "organisation_import/import_school_data"
-    require "organisation_import/import_trust_data"
-
-    ImportOrganisationData.mark_all_school_group_memberships_to_be_deleted!
-    ImportSchoolData.new.run!
-    ImportTrustData.new.run!
-    ImportOrganisationData.delete_marked_school_group_memberships!
+    ImportOrganisationDataJob.perform_now
   end
 end
 
