@@ -20,12 +20,12 @@
           = render DetailComponent.new title: employment.job_title do |detail|
             - detail.body do
               = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
-                - attributes = %w[organisation salary subjects]
-                - attributes.each do |attribute|
-                  - summary_list.row do |row|
-                    - row.key text: t("jobseekers.job_applications.employments.#{attribute}")
-                    - row.value text: employment[attribute].presence || t("jobseekers.job_applications.not_defined")
-
+                - summary_list.row do |row|
+                  - row.key text: t("jobseekers.job_applications.employments.organisation")
+                  - row.value text: employment.organisation.presence
+                - summary_list.row do |row|
+                  - row.key text: t("jobseekers.job_applications.employments.subjects")
+                  - row.value text: employment.subjects.presence || t("jobseekers.job_applications.not_defined")
                 - summary_list.row do |row|
                   - row.key text: t("jobseekers.job_applications.employments.started_on")
                   - row.value text: employment.started_on.to_s(:month_year)
