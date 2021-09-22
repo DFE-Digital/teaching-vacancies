@@ -1,5 +1,5 @@
 class Jobseekers::OrganisationOverviews::BaseComponent < ViewComponent::Base
-  include OrganisationHelper
+  include OrganisationsHelper
   include VacanciesHelper
 
   delegate :open_in_new_tab_link_to, to: :helpers

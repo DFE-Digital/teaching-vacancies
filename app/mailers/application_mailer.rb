@@ -1,6 +1,6 @@
 class ApplicationMailer < Mail::Notify::Mailer
-  helper NotifyViewHelper
-  helper OrganisationHelper
+  helper NotifyViewsHelper
+  helper OrganisationsHelper
 
   helper_method :uid, :utm_campaign
 

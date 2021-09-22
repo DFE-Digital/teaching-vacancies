@@ -1,5 +1,5 @@
 class Publishers::SchoolOverviewComponent < ViewComponent::Base
-  include OrganisationHelper
+  include OrganisationsHelper
 
   delegate :open_in_new_tab_link_to, to: :helpers
 

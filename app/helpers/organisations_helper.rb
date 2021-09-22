@@ -1,4 +1,4 @@
-module OrganisationHelper
+module OrganisationsHelper
   include AddressHelper
 
   OFSTED_REPORT_ENDPOINT = "https://reports.ofsted.gov.uk/oxedu_providers/full/(urn)/".freeze
