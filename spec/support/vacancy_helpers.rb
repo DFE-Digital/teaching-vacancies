@@ -219,6 +219,7 @@ module VacancyHelpers
       datePosted: vacancy.publish_on.to_time.iso8601,
       description: vacancy.job_advert,
       occupationalCategory: vacancy.job_roles&.join(", "),
+      directApply: vacancy.enable_job_applications,
       employmentType: vacancy.working_patterns_for_job_schema,
       industry: "Education",
       jobLocation: {
