@@ -28,7 +28,6 @@ class Jobseekers::JobApplications::QuickApply
   def attributes_to_copy
     Jobseekers::JobApplication::PersonalDetailsForm.fields +
       Jobseekers::JobApplication::ProfessionalStatusForm.fields +
-      Jobseekers::JobApplication::EmploymentHistoryForm.fields +
       Jobseekers::JobApplication::AskForSupportForm.fields
   end
 
@@ -51,7 +50,7 @@ class Jobseekers::JobApplications::QuickApply
   def copy_employments
     recent_job_application.employments.each do |employment|
       new_employment = employment.dup
-      new_employment.update(job_application: new_job_application)
+      new_employment.update(job_application: new_job_application, salary: "")
     end
   end
 
