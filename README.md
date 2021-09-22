@@ -125,7 +125,7 @@ To run the command above you need [AWS credentials](#aws-credentials-mfa-and-rol
 For local development, you can use a [dotenv-rails environment override](https://github.com/bkeepers/dotenv#frequently-answered-questions):
 - create the file `.env.local`, with contents
 ```
-DFE_SIGN_IN_REDIRECT_URL=https://localhost:3000/publishers/auth/dfe/callback
+DFE_SIGN_IN_REDIRECT_URL=http://localhost:3000/publishers/auth/dfe/callback
 DOMAIN=localhost:3000
 LOCKBOX_MASTER_KEY=0000000000000000000000000000000000000000000000000000000000000000
 ```
