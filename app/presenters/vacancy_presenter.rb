@@ -121,10 +121,11 @@ class VacancyPresenter < BasePresenter
     # This is a band-aid solution for the problem where (particularly) job adverts contain bullet point characters
     # (not list elements), but do not contain corresponding newlines, resulting in inline bullets.
     bullet = "•"
+    text = normalize_newlines(text)
     text = normalize_bullets(text, bullet)
     return text unless text&.count(bullet)&.positive?
 
-    text.split("<br>").map { |para|
+    text.split("\n").map { |para|
       next para if para.count(bullet) <= 1 # If paragraph only has one bullet point it is probably correctly formatted
 
       first_bulleted_line_idx = strip(para).first == bullet ? 0 : 1
@@ -132,7 +133,7 @@ class VacancyPresenter < BasePresenter
         item = "<li>#{line.gsub(HTML_STRIP_REGEX, '')}</li>"
         index == first_bulleted_line_idx ? "<ul>#{item}" : item
       }.join.concat("</ul>")
-    }.join("<br>")
+    }.join("\n")
   end
 
   # rubocop:disable Style/AsciiComments
@@ -141,6 +142,11 @@ class VacancyPresenter < BasePresenter
     text&.gsub("⁃", normalized_bullet)&.gsub("·", normalized_bullet)&.gsub("∙", normalized_bullet)
   end
   # rubocop:enable Style/AsciiComments
+
+  def normalize_newlines(text)
+    # Required for backwards-compatibility for fields created with a rich-text editor
+    text&.gsub("<br>", "\n")
+  end
 
   def strip(text)
     text.gsub(/\s+/, "").gsub(HTML_STRIP_REGEX, "")
