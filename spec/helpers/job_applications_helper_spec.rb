@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe JobApplicationHelper do
+RSpec.describe JobApplicationsHelper do
   describe "#job_application_qualified_teacher_status_info" do
     subject { helper.job_application_qualified_teacher_status_info(job_application) }
 

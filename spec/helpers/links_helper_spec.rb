@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe LinkHelper do
+RSpec.describe LinksHelper do
   describe "#open_in_new_tab_link_to" do
     subject { helper.open_in_new_tab_link_to(text, href, **kwargs) }
 

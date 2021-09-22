@@ -85,7 +85,7 @@ RSpec.configure do |config|
   config.include DistanceHelper
   config.include FactoryBot::Syntax::Methods
   config.include MailerHelpers
-  config.include OrganisationHelper
+  config.include OrganisationsHelper
   config.include SearchHelper
   config.include VacanciesHelper
   config.include VacancyHelpers

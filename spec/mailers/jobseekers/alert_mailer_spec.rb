@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Jobseekers::AlertMailer do
   include DatesHelper
-  include OrganisationHelper
+  include OrganisationsHelper
   include ERB::Util
 
   let(:body) { mail.body.raw_source }

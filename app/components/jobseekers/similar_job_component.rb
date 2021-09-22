@@ -1,5 +1,5 @@
 class Jobseekers::SimilarJobComponent < ViewComponent::Base
-  include OrganisationHelper
+  include OrganisationsHelper
 
   attr_reader :vacancy
 

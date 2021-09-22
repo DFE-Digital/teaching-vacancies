@@ -1,4 +1,4 @@
-module JobApplicationHelper
+module JobApplicationsHelper
   PUBLISHER_STATUS_MAPPINGS = {
     submitted: "unread",
     reviewed: "reviewed",
