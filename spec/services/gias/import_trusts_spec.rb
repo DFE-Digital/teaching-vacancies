@@ -1,32 +1,9 @@
 require "rails_helper"
 
-RSpec.describe ImportTrustData do
+RSpec.describe Gias::ImportTrusts do
   subject { described_class.new }
 
-  describe "#set_geolocation" do
-    let(:trust) { create(:trust, postcode: "some postcode") }
-
-    context "when coordinates are not found" do
-      before do
-        allow_any_instance_of(Geocoding).to receive(:coordinates).and_return([0, 0])
-      end
-
-      it "does not set the coordinates" do
-        subject.send(:set_geolocation, trust, "postcode")
-        expect(trust.geolocation).to be_blank
-      end
-    end
-
-    context "when coordinates are found" do
-      it "sets the coordinates" do
-        subject.send(:set_geolocation, trust, "postcode")
-        expect(trust.geolocation.x).to eq(Geocoder::DEFAULT_STUB_COORDINATES[0])
-        expect(trust.geolocation.y).to eq(Geocoder::DEFAULT_STUB_COORDINATES[1])
-      end
-    end
-  end
-
-  describe "#run!" do
+  describe "#call" do
     let(:todays_date) { Time.current.strftime("%Y%m%d") }
     let(:groups_csv) { File.read(groups_file_path) }
     let(:groups_file_path) { Rails.root.join("spec/fixtures/example_groups_data.csv") }
@@ -49,25 +26,27 @@ RSpec.describe ImportTrustData do
         :get,
         "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/alllinksdata#{todays_date}.csv",
       ).to_return(body: links_csv)
+
+      allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false)
     end
 
     it "creates SchoolGroups" do
-      expect { subject.run! }.to change(SchoolGroup, :count).to eq(3)
+      expect { subject.call }.to change(SchoolGroup, :count).to eq(3)
     end
 
     it "creates SchoolGroupMemberships" do
-      expect { subject.run! }.to change(SchoolGroupMembership, :count).to eq(3)
+      expect { subject.call }.to change(SchoolGroupMembership, :count).to eq(3)
     end
 
     it "links the correct schools and trusts" do
-      subject.run!
+      subject.call
       expect(trust1.schools).to include(school1)
       expect(trust1.schools).to include(school2)
       expect(trust2.schools).to include(school3)
     end
 
     it "stores the expected attributes" do
-      subject.run!
+      subject.call
       expect(trust1).not_to be_blank
       expect(trust1.gias_data).not_to be_blank
       expect(trust1.name).to eq("Abbey Academies Trust")
