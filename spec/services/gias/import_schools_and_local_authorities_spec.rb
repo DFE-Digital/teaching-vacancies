@@ -1,9 +1,9 @@
 require "rails_helper"
 
-RSpec.describe ImportSchoolData do
+RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
   subject { described_class.new }
 
-  describe "#run!" do
+  describe "#call" do
     let(:csv) { File.read(test_file_path) }
     let(:datestring) { Time.current.strftime("%Y%m%d") }
     let(:example_school) { School.find_by(urn: "100000") }
@@ -20,19 +20,19 @@ RSpec.describe ImportSchoolData do
     end
 
     it "creates Schools" do
-      expect { subject.run! }.to change(School, :count).to eq(9)
+      expect { subject.call }.to change(School, :count).to eq(9)
     end
 
     it "creates SchoolGroups" do
-      expect { subject.run! }.to change(SchoolGroup, :count).to eq(2)
+      expect { subject.call }.to change(SchoolGroup, :count).to eq(2)
     end
 
     it "creates SchoolGroupMemberships" do
-      expect { subject.run! }.to change(SchoolGroupMembership, :count).to eq(9)
+      expect { subject.call }.to change(SchoolGroupMembership, :count).to eq(9)
     end
 
     it "links the correct schools and local authorities" do
-      subject.run!
+      subject.call
       expect(local_authority1.schools).to include(School.find_by(urn: "100000"))
       expect(local_authority1.schools).to include(School.find_by(urn: "100001"))
       expect(local_authority1.schools).to include(School.find_by(urn: "100002"))
@@ -45,7 +45,7 @@ RSpec.describe ImportSchoolData do
     end
 
     it "stores the expected attributes" do
-      subject.run!
+      subject.call
       expect(example_school).not_to be_blank
       expect(example_school.gias_data).not_to be_blank
       expect(example_school.address3).to be_nil
@@ -61,15 +61,6 @@ RSpec.describe ImportSchoolData do
       expect(example_school.url).to eq("http://www.sirjohncassprimary.org")
     end
 
-    context "updating an existing school's geolocation" do
-      let!(:school) { create(:school, urn: "100000", geolocation: [1, 2]) }
-      let!(:vacancy) { create(:vacancy, postcode_from_mean_geolocation: "Old postcode", organisation_vacancies_attributes: [{ organisation: school }]) }
-
-      it "changes the postcode_from_mean_geolocation on the school's vacancies" do
-        expect { subject.run! }.to change { vacancy.reload.postcode_from_mean_geolocation }.to("EC3A 5DE")
-      end
-    end
-
     context "when the CSV contains smart-quotes using Windows 1252 encoding" do
       before do
         stub_request(
@@ -83,7 +74,7 @@ RSpec.describe ImportSchoolData do
       end
 
       it "converts the file to UTF-8" do
-        subject.run!
+        subject.call
         expect(example_school.name).to eq("St John’s School")
       end
     end
@@ -98,7 +89,7 @@ RSpec.describe ImportSchoolData do
                     "TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street," \
                     "Town,Postcode\n" \
                     "100000,St John\x92s School,999,999,ZZZ,test.com,?,?,?")
-        subject.run!
+        subject.call
         expect(example_school.url).to eq("http://test.com")
       end
 
@@ -111,7 +102,7 @@ RSpec.describe ImportSchoolData do
                     "TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street," \
                     "Town,Postcode\n" \
                     "100000,St John\x92s School,999,999,ZZZ,,?,?,?")
-        subject.run!
+        subject.call
         expect(example_school.url).to be_nil
       end
     end
