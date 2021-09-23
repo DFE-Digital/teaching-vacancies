@@ -46,12 +46,3 @@ namespace :ons do
     %i[regions counties cities].each { |api_location_type| ImportPolygons.new(api_location_type: api_location_type).call }
   end
 end
-
-namespace :job_application_schema do
-  desc "Remove salary data from all draft applications"
-  task remove_salary: :environment do
-    Employment.includes(:job_application).find_each(batch_size: 100) do |employment|
-      employment.update_columns(salary: "") if employment.job_application.draft?
-    end
-  end
-end
