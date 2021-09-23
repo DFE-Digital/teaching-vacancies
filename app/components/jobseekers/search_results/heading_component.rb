@@ -6,27 +6,28 @@ class Jobseekers::SearchResults::HeadingComponent < ViewComponent::Base
     @polygon_boundaries = @vacancies_search.location_search.polygon_boundaries
     @radius = @vacancies_search.search_criteria[:radius]
     @total_count = @vacancies_search.total_count
+    @readable_count = number_with_delimiter(@total_count)
   end
 
   def heading
     if @keyword.present? && @polygon_boundaries.present?
-      t("jobs.search_result_heading.keyword_location_polygon_html",
-        jobs_count: number_with_delimiter(@total_count), location: @location, keyword: @keyword, count: @total_count, radius: @radius, units: t("jobs.search_result_heading.unit_of_length").pluralize(@radius.to_i))
+      t("jobs.search_result_heading.keyword_location_polygon_html", jobs_count: @readable_count, location: @location, keyword: @keyword, count: @total_count, radius: @radius, units: units)
     elsif @keyword.present? && @location.present?
-      t("jobs.search_result_heading.keyword_location_html",
-        jobs_count: number_with_delimiter(@total_count), location: @location, keyword: @keyword, count: @total_count, radius: @radius, units: t("jobs.search_result_heading.unit_of_length").pluralize(@radius.to_i))
+      t("jobs.search_result_heading.keyword_location_html", jobs_count: @readable_count, location: @location, keyword: @keyword, count: @total_count, radius: @radius, units: units)
     elsif @keyword.present?
-      t("jobs.search_result_heading.keyword_html",
-        jobs_count: number_with_delimiter(@total_count), keyword: @keyword, count: @total_count)
+      t("jobs.search_result_heading.keyword_html", jobs_count: @readable_count, keyword: @keyword, count: @total_count)
     elsif @polygon_boundaries.present?
-      t("jobs.search_result_heading.location_polygon_html",
-        jobs_count: number_with_delimiter(@total_count), location: @location, count: @total_count, radius: @radius, units: t("jobs.search_result_heading.unit_of_length").pluralize(@radius.to_i))
+      t("jobs.search_result_heading.location_polygon_html", jobs_count: @readable_count, location: @location, count: @total_count, radius: @radius, units: units)
     elsif @location.present?
-      t("jobs.search_result_heading.location_html",
-        jobs_count: number_with_delimiter(@total_count), location: @location, count: @total_count, radius: @radius, units: t("jobs.search_result_heading.unit_of_length").pluralize(@radius.to_i))
+      t("jobs.search_result_heading.location_html", jobs_count: @readable_count, location: @location, count: @total_count, radius: @radius, units: units)
     else
-      t("jobs.search_result_heading.without_search_html",
-        jobs_count: number_with_delimiter(@total_count), count: @total_count)
+      t("jobs.search_result_heading.without_search_html", jobs_count: @readable_count, count: @total_count)
     end
+  end
+
+  private
+
+  def units
+    t("jobs.search_result_heading.unit_of_length").pluralize(@radius.to_i)
   end
 end

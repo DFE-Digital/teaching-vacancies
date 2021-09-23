@@ -61,7 +61,7 @@ RSpec.describe SubscriptionsController, recaptcha: true do
         end
 
         it "sets the recaptcha score on the Subscription record" do
-          expect(subscription).to receive(:recaptcha_score=).with(recaptcha_score)
+          expect(subscription).to receive(:update).with(recaptcha_score: recaptcha_score)
           subject
         end
       end

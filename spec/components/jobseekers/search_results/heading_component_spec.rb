@@ -22,7 +22,7 @@ RSpec.describe Jobseekers::SearchResults::HeadingComponent, type: :component do
   context "when keyword and search polygon boundaries are present" do
     it "renders correct heading" do
       expect(rendered_component).to include(
-        I18n.t("jobs.search_result_heading.keyword_location_polygon_html", keyword: keyword, location: location, count: count, radius: radius, units: I18n.t("jobs.search_result_heading.unit_of_length").pluralize(radius.to_i)),
+        I18n.t("jobs.search_result_heading.keyword_location_polygon_html", jobs_count: count, keyword: keyword, location: location, count: count, radius: radius, units: I18n.t("jobs.search_result_heading.unit_of_length").pluralize(radius.to_i)),
       )
     end
   end
@@ -32,7 +32,7 @@ RSpec.describe Jobseekers::SearchResults::HeadingComponent, type: :component do
 
     it "renders correct heading" do
       expect(rendered_component).to include(
-        I18n.t("jobs.search_result_heading.keyword_location_html", keyword: keyword, location: location, count: count, radius: radius, units: I18n.t("jobs.search_result_heading.unit_of_length").pluralize(radius.to_i)),
+        I18n.t("jobs.search_result_heading.keyword_location_html", jobs_count: count, keyword: keyword, location: location, count: count, radius: radius, units: I18n.t("jobs.search_result_heading.unit_of_length").pluralize(radius.to_i)),
       )
     end
   end
@@ -43,7 +43,7 @@ RSpec.describe Jobseekers::SearchResults::HeadingComponent, type: :component do
 
     it "renders correct heading" do
       expect(rendered_component).to include(
-        I18n.t("jobs.search_result_heading.keyword_html", keyword: keyword, count: count),
+        I18n.t("jobs.search_result_heading.keyword_html", jobs_count: count, keyword: keyword, count: count),
       )
     end
   end
@@ -55,7 +55,7 @@ RSpec.describe Jobseekers::SearchResults::HeadingComponent, type: :component do
 
     it "renders correct heading" do
       expect(rendered_component).to include(
-        I18n.t("jobs.search_result_heading.location_polygon_html", location: location, count: count, radius: radius, units: I18n.t("jobs.search_result_heading.unit_of_length").pluralize(radius.to_i)),
+        I18n.t("jobs.search_result_heading.location_polygon_html", jobs_count: count, location: location, count: count, radius: radius, units: I18n.t("jobs.search_result_heading.unit_of_length").pluralize(radius.to_i)),
       )
     end
   end
@@ -68,7 +68,7 @@ RSpec.describe Jobseekers::SearchResults::HeadingComponent, type: :component do
 
     it "renders correct heading" do
       expect(rendered_component).to include(
-        I18n.t("jobs.search_result_heading.location_html", location: location, count: count, radius: radius, units: I18n.t("jobs.search_result_heading.unit_of_length").pluralize(radius.to_i)),
+        I18n.t("jobs.search_result_heading.location_html", jobs_count: count, location: location, count: count, radius: radius, units: I18n.t("jobs.search_result_heading.unit_of_length").pluralize(radius.to_i)),
       )
     end
   end
@@ -80,7 +80,7 @@ RSpec.describe Jobseekers::SearchResults::HeadingComponent, type: :component do
 
     it "renders correct heading" do
       expect(rendered_component).to include(
-        I18n.t("jobs.search_result_heading.without_search_html", count: count),
+        I18n.t("jobs.search_result_heading.without_search_html", jobs_count: count, count: count),
       )
     end
   end
