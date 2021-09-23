@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, review_page_title_prefix(@vacancy)
+- content_for :page_title_prefix, review_page_title_prefix(vacancy)
 
 .govuk-main-wrapper
   .govuk-grid-row
@@ -8,40 +8,18 @@
   .vacancy.govuk-grid-row
     .govuk-grid-column-two-thirds
       h2.govuk-heading-l = t("publishers.vacancies.steps.review_heading")
-      = render "shared/error_messages", errors: @vacancy.errors
+      = render "shared/error_messages", errors: vacancy.errors
 
       p.govuk-body-l
-        - if @vacancy.publish_on.today?
+        - if vacancy.publish_on&.today?
           = t("jobs.review")
         - else
           = t("jobs.review_future")
 
-      ol.app-task-list
-        li = render "publishers/vacancies/edit_vacancy_sections/edit_job_role"
+      = render "edit_sections"
+      = render "publish_buttons"
 
-        - if current_organisation.school_group?
-          li.multiline = render "publishers/vacancies/edit_vacancy_sections/edit_job_location"
-
-        li = render "publishers/vacancies/edit_vacancy_sections/edit_job_details"
-        li = render "publishers/vacancies/edit_vacancy_sections/edit_working_patterns"
-        li = render "publishers/vacancies/edit_vacancy_sections/edit_pay_package"
-        li = render "publishers/vacancies/edit_vacancy_sections/edit_important_dates"
-        li = render "publishers/vacancies/edit_vacancy_sections/edit_documents"
-        li = render "publishers/vacancies/edit_vacancy_sections/edit_applying_for_the_job"
-        li = render "publishers/vacancies/edit_vacancy_sections/edit_job_summary"
-
-      h3.govuk-heading-m = t("jobs.preview_listing.heading")
-      p.govuk-body = t("jobs.preview_listing.message")
-      = govuk_button_link_to t("buttons.preview_job_listing"), organisation_job_preview_path(@vacancy.id), class: "preview-listing-gtm", id: "vacancy-review-preview"
-
-      h3.govuk-heading-m = t("jobs.submit_listing.heading", count: @vacancy.publish_on.today? ? 0 : 1, date: @vacancy.publish_on.to_s.strip)
-      p.govuk-body = t("jobs.submit_listing.message_html")
-      - if @vacancy.enable_job_applications?
-        p.govuk-body = t("jobs.submit_listing.data_retention")
-      = govuk_button_to t("buttons.submit_job_listing"), organisation_job_publish_path(@vacancy.id), class: "govuk-button--secondary submit-listing-without-preview-gtm", id: "vacancy-review-submit"
-
-      br
-      = govuk_link_to t("buttons.back_to_manage_jobs"), jobs_with_type_organisation_path("draft", from_review: @vacancy.id), class: "govuk-link--no-visited-state"
+      = govuk_link_to t("buttons.back_to_manage_jobs"), jobs_with_type_organisation_path("draft", from_review: vacancy.id), class: "govuk-link--no-visited-state"
 
     - unless vacancy.published?
       .govuk-grid-column-one-third
