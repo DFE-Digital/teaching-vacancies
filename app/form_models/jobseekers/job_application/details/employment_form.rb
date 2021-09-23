@@ -3,7 +3,7 @@ class Jobseekers::JobApplication::Details::EmploymentForm
   include ActiveRecord::AttributeAssignment
   include DateAttributeAssignment
 
-  attr_accessor :organisation, :job_title, :salary, :subjects, :main_duties, :current_role
+  attr_accessor :organisation, :job_title, :subjects, :main_duties, :current_role
   attr_reader :started_on, :ended_on
 
   validates :organisation, :job_title, :main_duties, presence: true
