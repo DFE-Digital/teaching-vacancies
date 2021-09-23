@@ -21,6 +21,8 @@ class ImportSchoolData < ImportOrganisationData
     membership.update!(do_not_delete: true)
   end
 
+  # No point refactoring this method to be shorter as this class is currently being rewritten elsewhere.
+  # rubocop:disable Metrics/MethodLength
   def column_name_mappings
     {
       address: "Street",
@@ -43,6 +45,7 @@ class ImportSchoolData < ImportOrganisationData
       url: "SchoolWebsite",
     }.freeze
   end
+  # rubocop:enable Metrics/MethodLength
 
   def column_value_transformations
     {

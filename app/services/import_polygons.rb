@@ -79,17 +79,15 @@ class ImportPolygons
       "geometries" => [{ "rings" => [coords] }],
     }
 
-    params = { "geometries" => geometries_param.to_s,
-               "inSR" => "4326",
-               "outSR" => "4326",
-               "bufferSR" => "3857",
-               "distances" => distance.to_s,
-               "unit" => "",
-               "unionResults" => "true",
-               "geodesic" => "false",
-               "f" => "json" }.to_param
-
-    api_endpoint = BUFFER_API_URL + params
+    api_endpoint = BUFFER_API_URL + { "geometries" => geometries_param.to_s,
+                                      "inSR" => "4326",
+                                      "outSR" => "4326",
+                                      "bufferSR" => "3857",
+                                      "distances" => distance.to_s,
+                                      "unit" => "",
+                                      "unionResults" => "true",
+                                      "geodesic" => "false",
+                                      "f" => "json" }.to_param
 
     if api_endpoint.length > URL_MAXIMUM_LENGTH
       # Reduce number of coordinates in order to have not too many characters in request url
