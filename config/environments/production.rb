@@ -70,7 +70,6 @@ Rails.application.configure do
   config.active_support.deprecation = :notify
 
   # Use Semantic_Logger for cleaner logging
-  config.log_level = :info
   config.semantic_logger.application = "" # No need to send the application name as logstash reads it from Cloud Foundry log tags
   config.rails_semantic_logger.format = :json
   config.rails_semantic_logger.add_file_appender = false
