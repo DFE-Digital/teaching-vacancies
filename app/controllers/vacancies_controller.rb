@@ -1,17 +1,13 @@
 class VacanciesController < ApplicationController
   helper_method :job_application
 
+  before_action :set_landing_page_description, :set_map_display, only: %i[index]
+
   def index
-    set_map_display
     params[:location] = params[:location_facet] if params[:location_facet]
-    if params.key?(:pretty) && params.key?(params[:pretty])
-      @landing_page = params[params[:pretty]]
-      @landing_page_translation = "#{params[:pretty]}.#{@landing_page.parameterize.underscore}"
-    end
-    @form = Jobseekers::SearchForm.new(algolia_search_params)
     @vacancies_search = Search::VacancySearch.new(
-      @form.to_hash,
-      sort_by: @form.jobs_sort,
+      search_form.to_hash,
+      sort_by: search_form.jobs_sort,
       page: params[:page],
       pg_search: ActiveModel::Type::Boolean.new.cast(params[:pg_search]),
     )
@@ -46,6 +42,10 @@ class VacanciesController < ApplicationController
                   job_role: [], job_roles: [], phases: [], working_patterns: [])
   end
 
+  def search_form
+    @form = Jobseekers::SearchForm.new(algolia_search_params)
+  end
+
   def job_application
     @job_application ||= current_jobseeker&.job_applications&.find_by(vacancy_id: vacancy.id)
   end
@@ -66,12 +66,11 @@ class VacanciesController < ApplicationController
     response.set_header("X-Robots-Tag", "noarchive")
   end
 
-  def valid_search?
-    @vacancies_search.active_criteria? && !smoke_test?
-  end
+  def set_landing_page_description
+    return unless params.key?(:pretty) && params.key?(params[:pretty])
 
-  def smoke_test?
-    cookies[:smoke_test] != nil
+    @landing_page = params[params[:pretty]]
+    @landing_page_translation = "#{params[:pretty]}.#{@landing_page.parameterize.underscore}"
   end
 
   def set_map_display

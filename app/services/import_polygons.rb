@@ -24,28 +24,7 @@ class ImportPolygons
       next unless location_in_scope?
 
       geometry_rings = region_response.dig("geometry", "rings")
-
-      # When the ONS API returns multiple 'rings' for a location, some of these are small islands or similar. Some of
-      # these islands are inhabited and have a school on, and others do not. (E.g. Mersea Island in Essex, Hayling Island
-      # in Hampshire, Sheppey Island in Kent, St Mary's in the Isles of Scilly.)
-      #
-      # Store the 'rings' in a hash because Postgres doesn't support multidimensional arrays of varying extents.
-      #
-      # If algolia searches by polygon are slow, (some of) these boundaries could be downsampled significantly.
-      #
-
-      polygons = []
-      geometry_rings.each do |ring|
-        polygon = []
-        ring.each do |point|
-          # API returns coords in an unconventional lng,lat order
-          # Coordinates rounded as they are stored as double precision floats which have a precision of
-          # 15 decimal digits. All UK coordinates only have a maximum of 2 digits before decimal point.
-          polygon.push(*point.reverse.map { |coord| coord.round(13) })
-        end
-        polygons.push(polygon)
-      end
-
+      polygons = transform_geometry_rings_to_polygons(geometry_rings)
       location_polygon = LocationPolygon.find_or_create_by(name: location_name)
 
       # Update location_type separately to reduce chance of creating duplicate LocationPolygons for the same location
@@ -65,7 +44,19 @@ class ImportPolygons
       api_location_type == :cities && DOWNCASE_ONS_CITIES.include?(location_name)
   end
 
+  def transform_geometry_rings_to_polygons(geometry_rings)
+    # When the ONS API returns multiple 'rings' for a location, some of these are small islands or similar. Some of
+    # these islands are inhabited and have a school on, and others do not. (E.g. Mersea Island in Essex, Hayling Island
+    # in Hampshire, Sheppey Island in Kent, St Mary's in the Isles of Scilly.)
+    # We reverse the point because the API returns coords in an unconventional lng,lat order.
+    # Coordinates are rounded as they are stored as double precision floats which have a precision of
+    # 15 decimal digits. All UK coordinates only have a maximum of 2 digits before decimal point.
+    # We flatten each ring into a 1D array as this is how Algolia will consume that polygon.
+    geometry_rings.map { |ring| ring.map { |point| point.reverse.map { |coord| coord.round(13) } }.flatten }
+  end
+
   def buffered_polygons(polygons)
+    # Store the 'rings' in a hash because Postgres doesn't support multidimensional arrays of varying extents.
     buffers = {}
     BUFFER_RADII.each { |distance| buffers[distance.to_s] = get_buffered_polygons(polygons, distance) }
     buffers
@@ -91,6 +82,7 @@ class ImportPolygons
 
     if api_endpoint.length > URL_MAXIMUM_LENGTH
       # Reduce number of coordinates in order to have not too many characters in request url
+      # If algolia searches by polygon are slow, (some of) these boundaries could be downsampled further.
       condensed_coords = take_every_nth_coord(coords, 5)
       api_endpoint = buffer_api_endpoint(condensed_coords, distance)
     end
