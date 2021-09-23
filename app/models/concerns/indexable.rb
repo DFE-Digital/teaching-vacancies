@@ -57,10 +57,6 @@ module Indexable
           towns: organisations.map(&:town).reject(&:blank?).uniq }
       end
 
-      attribute :permalink do
-        slug
-      end
-
       attribute :publication_date do
         publish_on&.to_s
       end
