@@ -7,10 +7,10 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Vacan
   attr_writer :publish_on_day
 
   validates :publish_on_day, inclusion: { in: %w[today tomorrow another_day] }, unless: :disable_editing_publish_on?
-  validates :publish_on, date: { on_or_after: :today }, if: proc { !disable_editing_publish_on? && publish_on_day == "another_day" }
-  validates :expires_at, date: { on_or_after: :now, after: :publish_on }
+  validates :publish_on, date: { on_or_after: :today, on_or_before: :far_future }, if: proc { !disable_editing_publish_on? && publish_on_day == "another_day" }
+  validates :expires_at, date: { on_or_after: :now, on_or_before: :far_future, after: :publish_on }
   validates :expiry_time, inclusion: { in: Vacancy::EXPIRY_TIME_OPTIONS }
-  validates :starts_on, date: { on_or_after: :today, after: :expires_at }, allow_blank: true,
+  validates :starts_on, date: { on_or_after: :today, on_or_before: :far_future, after: :expires_at }, allow_blank: true,
                         if: proc { starts_asap == "0" }
   validate :starts_on_and_starts_asap_not_present
 

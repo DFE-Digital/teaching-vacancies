@@ -133,8 +133,8 @@ FactoryBot.define do
     trait :future_publish do
       status { :published }
       publish_on { Date.current + 6.months }
-      expires_at { 2.years.from_now.change(hour: 9, minute: 0) }
-      starts_on { 2.years.from_now + 2.months }
+      expires_at { 18.months.from_now.change(hour: 9, minute: 0) }
+      starts_on { 18.months.from_now + 2.months }
     end
 
     trait :past_publish do

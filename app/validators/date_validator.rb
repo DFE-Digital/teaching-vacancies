@@ -9,6 +9,7 @@ class DateValidator < ActiveModel::EachValidator
   DEFAULT_CHECK_VALUES = {
     today: Date.current,
     now: Time.current,
+    far_future: 2.years.from_now,
   }.freeze
 
   def validate_each(record, attribute, value)
