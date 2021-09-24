@@ -1,10 +1,11 @@
 class VacanciesController < ApplicationController
   helper_method :job_application
 
-  before_action :set_landing_page_description, :set_map_display, only: %i[index]
+  before_action :set_landing_page_description, :set_map_display, :set_params_from_pretty_landing_page_params, only: %i[index]
 
   def index
-    params[:location] = params[:location_facet] if params[:location_facet]
+    set_params_from_pretty_landing_page_params
+
     @vacancies_search = Search::VacancySearch.new(
       search_form.to_hash,
       sort_by: search_form.jobs_sort,
@@ -32,6 +33,12 @@ class VacanciesController < ApplicationController
   end
 
   private
+
+  def set_params_from_pretty_landing_page_params
+    params[:location] = params[:location_facet].titleize if params[:location_facet]
+    params[:job_roles] = params[:job_role].parameterize.underscore if params[:job_role]
+    params[:subject]&.titleize
+  end
 
   def algolia_search_params
     strip_empty_checkboxes(%i[job_roles phases working_patterns])

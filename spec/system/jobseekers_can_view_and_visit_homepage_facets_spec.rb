@@ -7,7 +7,7 @@ RSpec.describe "Jobseekers can view and visit homepage facets", vcr: { cassette_
       VacancyFacets,
       additional_job_roles: { "ect_suitable" => 2, "send_responsible" => 3 },
       job_roles: { "teacher" => 1 },
-      subjects: { "Economics" => 5 },
+      subjects: { "English" => 5 },
       cities: { "London" => 10 },
       counties: { "Devon" => 15 },
     )
@@ -44,7 +44,7 @@ RSpec.describe "Jobseekers can view and visit homepage facets", vcr: { cassette_
         click_on "Suitable for early career teachers"
       end
 
-      expect(current_path).to eq(job_role_path("ect_suitable"))
+      expect(current_path).to eq(job_role_path("ect-suitable"))
       expect(page.find("#job-roles-ect-suitable-field")).to be_checked
     end
 
@@ -53,23 +53,23 @@ RSpec.describe "Jobseekers can view and visit homepage facets", vcr: { cassette_
         click_on "SEND responsibilities"
       end
 
-      expect(current_path).to eq(job_role_path("send_responsible"))
+      expect(current_path).to eq(job_role_path("send-responsible"))
       expect(page.find("#job-roles-send-responsible-field")).to be_checked
     end
   end
 
   describe "subjects" do
     it "has the expected facet" do
-      expect(page).to have_css("div[data-facet-type='subjects']", text: "Economics view 5 vacancies listed")
+      expect(page).to have_css("div[data-facet-type='subjects']", text: "English view 5 vacancies listed")
     end
 
     it "goes to the correct landing page and checks the job roles filter" do
-      within "div[data-facet-type='subjects']", text: "Economics view 5 vacancies listed" do
-        click_on "Economics"
+      within "div[data-facet-type='subjects']", text: "English view 5 vacancies listed" do
+        click_on "English"
       end
 
-      expect(current_path).to eq(subject_path("Economics"))
-      expect(page.find("#keyword-field").value).to eq("Economics")
+      expect(current_path).to eq(subject_path("english"))
+      expect(page.find("#keyword-field").value).to eq("english")
     end
   end
 
@@ -83,7 +83,7 @@ RSpec.describe "Jobseekers can view and visit homepage facets", vcr: { cassette_
         click_on "London"
       end
 
-      expect(current_path).to eq(location_path("London"))
+      expect(current_path).to eq(location_path("london"))
       expect(page.find("#location-field").value).to eq("London")
     end
   end
@@ -98,7 +98,7 @@ RSpec.describe "Jobseekers can view and visit homepage facets", vcr: { cassette_
         click_on "Devon"
       end
 
-      expect(current_path).to eq(location_path("Devon"))
+      expect(current_path).to eq(location_path("devon"))
       expect(page.find("#location-field").value).to eq("Devon")
     end
   end
