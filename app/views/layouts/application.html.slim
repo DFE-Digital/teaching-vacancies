@@ -28,50 +28,28 @@ html.govuk-template.app-html-class lang="en"
 
     = render EnvironmentBannerComponent.new
 
-    header.govuk-header data-module="govuk-header"
-      .govuk-header__container.govuk-width-container
-        .govuk-header__logo
-          a.govuk-header__link.govuk-header__link--homepage href="https://www.gov.uk"
-            span.govuk-header__logotype
-              img.govuk-header__logotype-crown src=asset_pack_path("media/images/svg/govuk-logo-crown.svg") alt="GOV.UK crown logo" height="26" width="32" aria-hidden="true"
-              span.govuk-header__logotype-text
-                | GOV.UK
-        .govuk-header__content
-          a.govuk-header__link.govuk-header__link--service-name href="/"
-            = t("app.title")
-          button.govuk-header__menu-button.govuk-js-header-toggle data-module="govuk-button" type="button" role="button" aria-controls="navigation" aria-label="Show or hide Top Level Navigation"
-            | Menu
-          = render NavbarComponent.new(html_attributes: { role: "navigation" }) do |navigation|
-            - if publisher_signed_in?
-              - navigation.item link_text: t("nav.school_page_link"), align: :left, path: organisation_path
-              - if current_organisation.school_group?
-                - navigation.item link_text: t("nav.school_group_index_link", organisation_type: organisation_type_basic(current_organisation)), align: :left, path: organisation_schools_path
-              - navigation.item link_text: t("nav.jobseekers_index_link"), align: :left, path: root_path
-              - navigation.item link_text: t("nav.notifications_index_link_html", count: current_publisher.notifications.unread.count),
-                  aria: { label: "#{current_publisher.notifications.unread.count} unread notifications" },
-                  align: :left,
-                  path: publishers_notifications_path
-              - navigation.item link_text: :spacer
-              - navigation.item link_text: t("nav.sign_out"), align: :right, path: destroy_publisher_session_path, method: :delete
+    = govuk_header(service_name: t("app.title")) do |header|
+      - if publisher_signed_in?
+        = header.navigation_item text: t("nav.school_page_link"), href: organisation_path, active: false
+        - if current_organisation.school_group?
+          = header.navigation_item text: t("nav.school_group_index_link", organisation_type: organisation_type_basic(current_organisation)), href: organisation_schools_path, active: false
+        = header.navigation_item text: t("nav.jobseekers_index_link"), href: root_path, active: false
+        = header.navigation_item text: t("nav.notifications_index_link_html", count: current_publisher.notifications.unread.count), href: publishers_notifications_path, active: false
+        = header.navigation_item text: t("nav.sign_out"), href: destroy_publisher_session_path, options: { method: :delete }, active: false, classes: "navigation-item--right"
 
-            - if jobseeker_signed_in?
-              - navigation.item link_text: t("nav.find_job"), align: :left, path: root_path
-              - navigation.item link_text: t("footer.your_account"), align: :left, path: jobseeker_root_path
-              - navigation.item link_text: :spacer
-              - navigation.item link_text: t("nav.sign_out"), method: :delete, align: :right, path: destroy_jobseeker_session_path
+      - if jobseeker_signed_in?
+        = header.navigation_item text: t("nav.find_job"), href: root_path, active: find_jobs_active?
+        = header.navigation_item text: t("footer.your_account"), href: jobseeker_root_path, active: your_account_active?
+        = header.navigation_item text: t("nav.sign_out"), href: destroy_jobseeker_session_path, options: { method: :delete }, active: false, classes: "navigation-item--right"
 
-            - if !jobseeker_signed_in? && !publisher_signed_in?
-              - navigation.item link_text: t("nav.find_job"), align: :left, path: root_path
-              - navigation.item link_text: :spacer
-              - navigation.item link_text: t("buttons.sign_in"), align: :right, path: page_path("sign-in")
+      - if !jobseeker_signed_in? && !publisher_signed_in?
+        = header.navigation_item text: t("nav.find_job"), href: root_path, active: find_jobs_active?
+        = header.navigation_item text: t("buttons.sign_in"), href: page_path("sign-in"), active: false, classes: "navigation-item--right"
 
-      .govuk-phase-banner role="banner"
-        .govuk-width-container
-          p.govuk-phase-banner__content
-            strong.govuk-tag.govuk-phase-banner__content__tag
-              | beta
-            span.govuk-phase-banner__text
-              | This is a new service - #{govuk_link_to "your feedback", new_feedback_path} will help us to improve it.
+    .govuk-width-container.phase-banner
+      = govuk_phase_banner(tag: { text: "beta" }) do
+        span.govuk-phase-banner__text
+          | This is a new service - #{govuk_link_to "your feedback", new_feedback_path} will help us to improve it.
 
     .govuk-width-container
       main.govuk-main-wrapper#main-content role="main" class="govuk-!-padding-top-0"
