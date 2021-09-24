@@ -9,7 +9,7 @@ RSpec.describe "Main navigation for users to sign in and out" do
     before { visit root_path }
 
     it "renders the correct links" do
-      within ".navbar-component" do
+      within "nav" do
         expect(page).to have_content(I18n.t("nav.find_job"))
         expect(page).to have_content(I18n.t("buttons.sign_in"))
       end
@@ -23,7 +23,7 @@ RSpec.describe "Main navigation for users to sign in and out" do
     end
 
     it "renders the correct links" do
-      within ".navbar-component" do
+      within "nav" do
         expect(page).to have_content(I18n.t("nav.find_job"))
         expect(page).to have_content(I18n.t("footer.your_account"))
         expect(page).to have_content(I18n.t("nav.sign_out"))
@@ -38,7 +38,7 @@ RSpec.describe "Main navigation for users to sign in and out" do
     end
 
     it "renders the correct links" do
-      within ".navbar-component" do
+      within "nav" do
         expect(page).to have_content(I18n.t("nav.school_page_link"))
         expect(page).to have_content(I18n.t("nav.jobseekers_index_link"))
         expect(page).to have_content(I18n.t("nav.notifications_index_link_html", count: 0))
