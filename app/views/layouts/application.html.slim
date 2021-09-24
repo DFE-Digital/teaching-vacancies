@@ -35,18 +35,18 @@ html.govuk-template.app-html-class lang="en"
           = header.navigation_item text: t("nav.school_group_index_link", organisation_type: organisation_type_basic(current_organisation)), href: organisation_schools_path, active: false
         = header.navigation_item text: t("nav.jobseekers_index_link"), href: root_path, active: false
         = header.navigation_item text: t("nav.notifications_index_link_html", count: current_publisher.notifications.unread.count), href: publishers_notifications_path, active: false
-        = header.navigation_item text: t("nav.sign_out"), href: destroy_publisher_session_path, options: { method: :delete }, active: false
+        = header.navigation_item text: t("nav.sign_out"), href: destroy_publisher_session_path, options: { method: :delete }, active: false, classes: "navigation-item--right"
 
       - if jobseeker_signed_in?
         = header.navigation_item text: t("nav.find_job"), href: root_path, active: find_jobs_active?
         = header.navigation_item text: t("footer.your_account"), href: jobseeker_root_path, active: your_account_active?
-        = header.navigation_item text: t("nav.sign_out"), href: destroy_jobseeker_session_path, options: { method: :delete }, active: false
+        = header.navigation_item text: t("nav.sign_out"), href: destroy_jobseeker_session_path, options: { method: :delete }, active: false, classes: "navigation-item--right"
 
       - if !jobseeker_signed_in? && !publisher_signed_in?
         = header.navigation_item text: t("nav.find_job"), href: root_path, active: find_jobs_active?
-        = header.navigation_item text: t("buttons.sign_in"), href: page_path("sign-in"), active: false
+        = header.navigation_item text: t("buttons.sign_in"), href: page_path("sign-in"), active: false, classes: "navigation-item--right"
 
-    .govuk-width-container
+    .govuk-width-container.phase-banner
       = govuk_phase_banner(tag: { text: "beta" }) do
         span.govuk-phase-banner__text
           | This is a new service - #{govuk_link_to "your feedback", new_feedback_path} will help us to improve it.
