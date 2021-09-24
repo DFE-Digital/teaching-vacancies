@@ -24,6 +24,8 @@ Rails.application.routes.draw do
     registrations: "jobseekers/registrations",
     sessions: "jobseekers/sessions",
     unlocks: "jobseekers/unlocks",
+  }, path_names: {
+    sign_in: "sign-in",
   }
 
   get "/jobseekers/saved_jobs", to: "jobseekers/saved_jobs#index", as: :jobseeker_root
@@ -88,9 +90,9 @@ Rails.application.routes.draw do
 
   scope :publishers do
     devise_scope :publisher do
-      get "sign_in", to: "publishers/sessions#new", as: :new_publisher_session
+      get "sign-in", to: "publishers/sessions#new", as: :new_publisher_session
       get "auth", to: "publishers/sessions#create", as: :create_publisher_session
-      delete "sign_out", to: "publishers/sessions#destroy", as: :destroy_publisher_session
+      delete "sign-out", to: "publishers/sessions#destroy", as: :destroy_publisher_session
     end
 
     resources :login_keys, only: %i[show new create], controller: "publishers/login_keys"
@@ -169,8 +171,14 @@ Rails.application.routes.draw do
     resources :schools, only: %i[index edit update], controller: "publishers/organisations/schools"
   end
 
-  # Legacy publisher sign in path (users may still have this bookmarked)
-  get "/identifications/new", to: redirect("/publishers/sign_in")
+  # Legacy authentication paths (users may still have this bookmarked)
+  get "/identifications/new", to: redirect("/publishers/sign-in")
+  get "/publishers/sign_in", to: redirect("/publishers/sign-in")
+  get "/publishers/sign_out", to: redirect("/publishers/sign-out")
+  get "/publishers/account_requests/new", to: redirect("/publishers/account-requests/new")
+  get "/jobseekers/sign_in", to: redirect("/jobseekers/sign-in")
+  get "/teaching-jobs-for-:job_role", to: redirect { |path_params| "/teaching-jobs-for-#{path_params[:job_role].tr('_', '-')}" },
+                                      constraints: ->(request) { request.params[:job_role].include?("_") }
 
   # Well known URLs
   get ".well-known/change-password", to: redirect(status: 302) { Rails.application.routes.url_helpers.edit_jobseeker_registration_path(password_update: true) }
@@ -186,15 +194,15 @@ Rails.application.routes.draw do
   # If parameters are used that are the same as those in the search form, pagination with kaminari will break
   match "teaching-jobs-in-:location_facet",
         to: "vacancies#index", as: :location, via: :get,
-        constraints: ->(request) { LocationPolygon.include?(request.params[:location_facet]) }
+        constraints: ->(request) { LocationPolygon.include?(request.params[:location_facet].tr("-", " ")) }
 
   match "teaching-jobs-for-:job_role",
         to: "vacancies#index", as: :job_role, via: :get,
-        constraints: ->(request) { Vacancy.job_roles.key?(request.params[:job_role]) },
+        constraints: ->(request) { Vacancy.job_roles.key?(request.params[:job_role].tr("-", "_")) },
         defaults: { pretty: :job_role }
 
   match "teaching-jobs-for-:subject",
         to: "vacancies#index", as: :subject, via: :get,
-        constraints: ->(request) { SUBJECT_OPTIONS.map(&:first).include?(request.params[:subject]) },
+        constraints: ->(request) { SUBJECT_OPTIONS.map(&:first).include?(request.params[:subject].tr("-", " ")) },
         defaults: { pretty: :subject }
 end
