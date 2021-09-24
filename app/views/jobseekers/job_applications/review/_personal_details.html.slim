@@ -9,17 +9,14 @@
       - summary_list.row do |row|
         - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.first_name")
         - row.value text: job_application.first_name
-        - row.html_attributes { { id: "first_name" } }
 
       - summary_list.row do |row|
         - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.last_name")
         - row.value text: job_application.last_name
-        - row.html_attributes { { id: "last_name" } }
 
       - summary_list.row do |row|
         - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.previous_names_html")
         - row.value text: job_application.previous_names.presence || t("jobseekers.job_applications.not_defined")
-        - row.html_attributes { { id: "previous_names" } }
 
       - summary_list.row do |row|
         - row.key text: t("helpers.legend.jobseekers_job_application_personal_details_form.your_address")
@@ -28,19 +25,15 @@
       - summary_list.row do |row|
         - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.phone_number")
         - row.value text: job_application.phone_number
-        - row.html_attributes { { id: "phone_number" } }
 
       - summary_list.row do |row|
         - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.email_address")
         - row.value text: job_application.email
-        - row.html_attributes { { id: "email_address" } }
 
       - summary_list.row do |row|
         - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number_html")
         - row.value text: job_application.teacher_reference_number.presence || t("jobseekers.job_applications.not_defined")
-        - row.html_attributes { { id: "teacher_reference_number" } }
 
       - summary_list.row do |row|
         - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.national_insurance_number_html")
         - row.value text: job_application.national_insurance_number.presence || t("jobseekers.job_applications.not_defined")
-        - row.html_attributes { { id: "national_insurance_number" } }
