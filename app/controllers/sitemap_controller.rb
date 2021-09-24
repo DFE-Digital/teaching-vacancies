@@ -27,19 +27,19 @@ class SitemapController < ApplicationController
 
   def add_locations(map)
     ALL_IMPORTED_LOCATIONS.each do |location|
-      map.add location_path(location), period: "hourly"
+      map.add location_path(location).tr(" ", "-"), period: "hourly"
     end
   end
 
   def add_subjects(map)
     SUBJECT_OPTIONS.map(&:first).each do |subject|
-      map.add subject_path(subject), period: "hourly"
+      map.add subject_path(subject).tr(" ", "-"), period: "hourly"
     end
   end
 
   def add_job_roles(map)
     Vacancy.job_roles.each_key do |job_role|
-      map.add job_role_path(job_role), period: "hourly"
+      map.add job_role_path(job_role).tr("_", "-"), period: "hourly"
     end
   end
 
