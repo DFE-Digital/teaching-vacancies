@@ -69,6 +69,7 @@ class Vacancy < ApplicationRecord
   validate :enable_job_applications_cannot_be_changed_once_listed
 
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
+  after_save :drop_phase_if_no_longer_applicable
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[7:00 8:00 9:00 10:00 11:00 12:00 13:00 14:00 15:00 16:00 17:00 23:59].freeze
@@ -157,6 +158,10 @@ class Vacancy < ApplicationRecord
     self.job_roles = [main_job_role] + roles
   end
 
+  def allow_phase_to_be_set?
+    central_office? || organisation_phases.many? || organisation_phases.none?
+  end
+
   def education_phases
     if multiple_phases? || phase.blank?
       organisation_phases
@@ -211,5 +216,9 @@ class Vacancy < ApplicationRecord
     return unless persisted? && listed? && enable_job_applications_changed?
 
     errors.add(:enable_job_applications, :cannot_be_changed_once_listed)
+  end
+
+  def drop_phase_if_no_longer_applicable
+    update_columns(phase: nil) unless allow_phase_to_be_set?
   end
 end
