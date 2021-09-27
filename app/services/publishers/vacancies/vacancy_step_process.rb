@@ -52,7 +52,7 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
   end
 
   def job_details_steps
-    if vacancy.central_office? || !vacancy.organisation_phases.one?
+    if vacancy.allow_phase_to_be_set?
       %i[education_phases job_details]
     else
       %i[job_details]
