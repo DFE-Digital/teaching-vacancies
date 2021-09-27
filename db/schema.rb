@@ -470,6 +470,7 @@ ActiveRecord::Schema.define(version: 2021_09_28_163324) do
     t.string "actual_salary"
     t.text "working_patterns_details"
     t.string "postcode_from_mean_geolocation"
+    t.integer "phase"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["initially_indexed"], name: "index_vacancies_on_initially_indexed"
     t.index ["publisher_id"], name: "index_vacancies_on_publisher_id"
