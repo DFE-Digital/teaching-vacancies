@@ -17,9 +17,9 @@ class NavbarComponent < GovukComponent::Base
 
   def active_link_class(link_path)
     if current_page?(link_path) ||
-       link_path == organisation_path && request.original_fullpath.include?("organisation/jobs") ||
-       link_path == root_path && request.original_fullpath =~ %r{jobs[/?]} ||
-       link_path == jobseeker_root_path && request.original_fullpath.start_with?("/jobseekers")
+       (link_path == organisation_path && request.original_fullpath.include?("organisation/jobs")) ||
+       (link_path == root_path && request.original_fullpath =~ %r{jobs[/?]}) ||
+       (link_path == jobseeker_root_path && request.original_fullpath.start_with?("/jobseekers"))
       return "govuk-header__navigation-item govuk-header__navigation-item--active"
     end
 

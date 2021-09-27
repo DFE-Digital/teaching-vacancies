@@ -39,9 +39,9 @@ class ImportPolygons
   private
 
   def location_in_scope?
-    api_location_type == :regions && DOWNCASE_ONS_REGIONS.include?(location_name) ||
-      api_location_type == :counties && DOWNCASE_ONS_COUNTIES_AND_UNITARY_AUTHORITIES.include?(location_name) ||
-      api_location_type == :cities && DOWNCASE_ONS_CITIES.include?(location_name)
+    (api_location_type == :regions && DOWNCASE_ONS_REGIONS.include?(location_name)) ||
+      (api_location_type == :counties && DOWNCASE_ONS_COUNTIES_AND_UNITARY_AUTHORITIES.include?(location_name)) ||
+      (api_location_type == :cities && DOWNCASE_ONS_CITIES.include?(location_name))
   end
 
   def transform_geometry_rings_to_polygons(geometry_rings)

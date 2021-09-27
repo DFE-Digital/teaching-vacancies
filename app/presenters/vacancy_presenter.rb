@@ -136,12 +136,10 @@ class VacancyPresenter < BasePresenter
     }.join("\n")
   end
 
-  # rubocop:disable Style/AsciiComments
   def normalize_bullets(text, normalized_bullet)
     # `⁃` is a hyphen bullet, not an en-dash or a hyphen.
     text&.gsub("⁃", normalized_bullet)&.gsub("·", normalized_bullet)&.gsub("∙", normalized_bullet)
   end
-  # rubocop:enable Style/AsciiComments
 
   def normalize_newlines(text)
     # Required for backwards-compatibility for fields created with a rich-text editor
