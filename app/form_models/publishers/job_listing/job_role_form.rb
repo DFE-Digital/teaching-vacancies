@@ -1,11 +1,10 @@
 class Publishers::JobListing::JobRoleForm < Publishers::JobListing::VacancyForm
-  attr_accessor :main_job_role
-
   validates :main_job_role, inclusion: { in: Vacancy.main_job_role_options }
 
   def self.fields
     %i[main_job_role]
   end
+  attr_accessor(*fields)
 
   def params_to_save
     {

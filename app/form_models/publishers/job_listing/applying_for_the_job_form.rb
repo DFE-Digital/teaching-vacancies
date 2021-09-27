@@ -1,6 +1,4 @@
 class Publishers::JobListing::ApplyingForTheJobForm < Publishers::JobListing::VacancyForm
-  attr_accessor :application_link, :enable_job_applications, :contact_email, :contact_number, :personal_statement_guidance, :school_visits, :how_to_apply, :current_organisation
-
   before_validation :override_enable_job_applications!
 
   validates :enable_job_applications, inclusion: { in: [true, false, "true", "false"] }, if: proc { vacancy.allow_enabling_job_applications? }
@@ -18,6 +16,7 @@ class Publishers::JobListing::ApplyingForTheJobForm < Publishers::JobListing::Va
       personal_statement_guidance school_visits how_to_apply
     ]
   end
+  attr_accessor(*fields)
 
   private
 

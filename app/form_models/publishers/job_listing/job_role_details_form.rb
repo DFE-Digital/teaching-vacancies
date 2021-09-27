@@ -1,5 +1,4 @@
 class Publishers::JobListing::JobRoleDetailsForm < Publishers::JobListing::VacancyForm
-  attr_accessor :additional_job_roles
   attr_writer :send_responsible
 
   validates :send_responsible,
@@ -9,6 +8,7 @@ class Publishers::JobListing::JobRoleDetailsForm < Publishers::JobListing::Vacan
   def self.fields
     %i[additional_job_roles]
   end
+  attr_accessor(*fields)
 
   def teacher_additional_job_roles_options
     %w[ect_suitable send_responsible]
