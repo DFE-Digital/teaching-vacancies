@@ -25,14 +25,16 @@ class ImportPolygons
 
       geometry_rings = region_response.dig("geometry", "rings")
       polygons = transform_geometry_rings_to_polygons(geometry_rings)
-      location_polygon = LocationPolygon.find_or_create_by(name: location_name)
 
+      location_polygon = LocationPolygon.find_or_create_by(name: location_name)
       # Update location_type separately to reduce chance of creating duplicate LocationPolygons for the same location
       # when we change a location's location-type mapping.
       location_polygon.update(location_type: LOCATIONS_MAPPED_TO_HUMAN_FRIENDLY_TYPES[location_name])
 
       # Skip buffers API call if the BUFFER_RADII have not changed since last time we used them to calculate the buffers.
-      location_polygon.update(buffers: buffered_polygons(polygons)) if polygons_have_changed?(location_polygon, polygons) || location_polygon.buffers&.keys&.map(&:to_i) != BUFFER_RADII
+      if polygons_have_changed?(polygons, location_polygon) || radii_have_changed?(location_polygon)
+        location_polygon.update(buffers: buffered_polygons(polygons))
+      end
     end
   end
 
@@ -42,6 +44,10 @@ class ImportPolygons
     (api_location_type == :regions && DOWNCASE_ONS_REGIONS.include?(location_name)) ||
       (api_location_type == :counties && DOWNCASE_ONS_COUNTIES_AND_UNITARY_AUTHORITIES.include?(location_name)) ||
       (api_location_type == :cities && DOWNCASE_ONS_CITIES.include?(location_name))
+  end
+
+  def radii_have_changed?(location_polygon)
+    location_polygon.buffers&.keys&.map(&:to_i) != BUFFER_RADII
   end
 
   def transform_geometry_rings_to_polygons(geometry_rings)
@@ -94,7 +100,7 @@ class ImportPolygons
     coords.each_with_index.filter_map { |item, index| item if (index % number).zero? }
   end
 
-  def polygons_have_changed?(location_polygon, polygons)
+  def polygons_have_changed?(polygons, location_polygon)
     return true if location_polygon&.buffers.nil? || location_polygon.buffers&.fetch(BUFFER_RADII.first.to_s, nil).nil?
 
     get_buffered_polygons(polygons, BUFFER_RADII.first) != location_polygon.buffers[BUFFER_RADII.first.to_s]

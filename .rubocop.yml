@@ -83,17 +83,17 @@ Naming/AccessorMethodName:
 # We should consider slowly moving closer to the default settings.
 
 Metrics/AbcSize:
-  Max: 32 # Default 17
+  Max: 31 # Default 17
   Exclude:
     - "config/**/*"
-    - "lib/**/*"
     - "spec/**/*"
 
 Metrics/BlockLength:
-  Max: 70 # Default 25
+  Max: 25 # Default 25
   Exclude:
     - "config/**/*"
     - "spec/**/*"
+    - "app/models/concerns/indexable.rb"
 
 Metrics/ClassLength:
   Max: 156 # Default 100
