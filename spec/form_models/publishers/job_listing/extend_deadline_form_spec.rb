@@ -79,6 +79,15 @@ RSpec.describe Publishers::JobListing::ExtendDeadlineForm, type: :model do
         expect(subject.errors.of_kind?(:expires_at, :on_or_after)).to be true
       end
     end
+
+    context "when date is too far in the future" do
+      let(:expires_at) { 25.months.from_now }
+
+      it "is invalid" do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:expires_at, :on_or_before)).to be true
+      end
+    end
   end
 
   describe "starts_on" do
@@ -106,6 +115,15 @@ RSpec.describe Publishers::JobListing::ExtendDeadlineForm, type: :model do
       it "is invalid" do
         expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:starts_on, :on_or_after)).to be true
+      end
+    end
+
+    context "when date is too far in the future" do
+      let(:starts_on) { 25.months.from_now }
+
+      it "is invalid" do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:starts_on, :on_or_before)).to be true
       end
     end
 
