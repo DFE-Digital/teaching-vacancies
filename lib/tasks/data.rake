@@ -46,3 +46,20 @@ namespace :ons do
     %i[regions counties cities].each { |api_location_type| ImportPolygons.new(api_location_type: api_location_type).call }
   end
 end
+
+namespace :fix_subscriptions do
+  desc "Fix subscriptions search criteria by updating NQT working pattern to ECT"
+  task fix_nqt_suitable: :environment do
+    nqt_suitable_string = "nqt_suitable"
+    Subscription.find_each(batch_size: 100) do |subscription|
+      criteria = subscription.search_criteria
+      job_roles = criteria["job_roles"]
+      if job_roles&.include?(nqt_suitable_string)
+        job_roles.delete(nqt_suitable_string)
+        job_roles.push("ect_suitable")
+        criteria["job_roles"] = job_roles
+        subscription.update_columns(search_criteria: criteria)
+      end
+    end
+  end
+end
