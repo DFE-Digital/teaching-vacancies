@@ -239,8 +239,9 @@ en:
         job_role: Job role
         job_location: Job location
         schools: Job location
-        working_patterns: Working patterns
+        education_phases: Job details
         job_details: Job details
+        working_patterns: Working patterns
         pay_package: Pay package
         important_dates: Important dates and deadlines
         documents: Supporting documents

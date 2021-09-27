@@ -37,14 +37,8 @@ class Vacancy < ApplicationRecord
 
   has_many :saved_jobs, dependent: :destroy
   has_many :saved_by, through: :saved_jobs, source: :jobseeker
-
   has_many :job_applications, dependent: :destroy
   has_one :equal_opportunities_report, dependent: :destroy
-
-  # TODO: This is equivalent to the behaviour of the noticed` gem's `has_noticed_notification` method. However, the gem
-  #       does not support the PostGIS adapter so until that is fixed we need to do this manually. c.f. https://github.com/excid3/noticed/pull/150
-  before_destroy { Notification.where("params @> ?", Noticed::Coder.dump(vacancy: self).to_json).destroy_all }
-
   has_many :organisation_vacancies, dependent: :destroy
   has_many :organisations, through: :organisation_vacancies, dependent: :destroy
   accepts_nested_attributes_for :organisation_vacancies
@@ -68,6 +62,9 @@ class Vacancy < ApplicationRecord
   validates :slug, presence: true
   validate :enable_job_applications_cannot_be_changed_once_listed
 
+  # TODO: This is equivalent to the behaviour of the noticed` gem's `has_noticed_notification` method. However, the gem
+  #       does not support the PostGIS adapter so until that is fixed we need to do this manually. c.f. https://github.com/excid3/noticed/pull/150
+  before_destroy { Notification.where("params @> ?", Noticed::Coder.dump(vacancy: self).to_json).destroy_all }
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
   after_save :drop_phase_if_no_longer_applicable
 
@@ -102,16 +99,20 @@ class Vacancy < ApplicationRecord
     published? && publish_on&.future?
   end
 
+  def can_receive_job_applications?
+    enable_job_applications? && published? && !pending?
+  end
+
   def allow_enabling_job_applications?
     %w[teacher leadership sendco].include?(main_job_role)
   end
 
-  def within_data_access_period?
-    expires_at > DATA_ACCESS_PERIOD_FOR_PUBLISHERS.ago
+  def allow_phase_to_be_set?
+    central_office? || organisation_phases.many? || organisation_phases.none?
   end
 
-  def can_receive_job_applications?
-    enable_job_applications? && published? && !pending?
+  def within_data_access_period?
+    expires_at > DATA_ACCESS_PERIOD_FOR_PUBLISHERS.ago
   end
 
   def application_link=(value)
@@ -158,16 +159,8 @@ class Vacancy < ApplicationRecord
     self.job_roles = [main_job_role] + roles
   end
 
-  def allow_phase_to_be_set?
-    central_office? || organisation_phases.many? || organisation_phases.none?
-  end
-
   def education_phases
-    if multiple_phases? || phase.blank?
-      organisation_phases
-    else
-      [phase]
-    end
+    multiple_phases? || phase.blank? ? organisation_phases : [phase]
   end
 
   def organisation_phases
