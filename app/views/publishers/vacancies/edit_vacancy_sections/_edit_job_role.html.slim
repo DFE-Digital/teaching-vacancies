@@ -1,5 +1,7 @@
 = render "publishers/vacancies/error_tag", attributes: Publishers::JobListing::JobRoleForm.fields
 
+#main_job_role
+#additional_job_roles
 = render ReviewComponent.new id: "job_role" do |review|
   - review.heading title: t("publishers.vacancies.steps.job_role"),
                    text: t("buttons.change"),
@@ -10,10 +12,8 @@
       - summary_list.row do |row|
         - row.key text: t("jobs.main_job_role")
         - row.value text: @vacancy.show_main_job_role || t("jobs.not_defined")
-        - row.html_attributes { { id: "main_job_role" } }
 
       - unless @vacancy.main_job_role == "sendco"
         - summary_list.row do |row|
           - row.key text: t("jobs.additional_job_roles")
           - row.value text: @vacancy.show_additional_job_roles.presence || t("jobs.not_defined")
-          - row.html_attributes { { id: "additional_job_roles" } }

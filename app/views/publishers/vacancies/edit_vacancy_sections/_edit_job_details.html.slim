@@ -1,5 +1,8 @@
 = render "publishers/vacancies/error_tag", attributes: Publishers::JobListing::JobDetailsForm.fields
 
+#job_title
+#subjects
+#contract_type
 = render ReviewComponent.new id: "job_details" do |review|
   - review.heading title: t("publishers.vacancies.steps.job_details"),
                    text: t("buttons.change"),
@@ -10,14 +13,11 @@
       - summary_list.row do |row|
         - row.key text: t("jobs.job_title")
         - row.value text: @vacancy.job_title
-        - row.html_attributes { { id: "job_title" } }
 
       - summary_list.row do |row|
         - row.key text: t("jobs.subjects")
         - row.value text: @vacancy.show_subjects.presence || t("jobs.not_defined")
-        - row.html_attributes { { id: "subjects" } }
 
       - summary_list.row do |row|
         - row.key text: t("jobs.contract_type")
         - row.value text: @vacancy.contract_type_with_duration
-        - row.html_attributes { { id: "contract_type" } }
