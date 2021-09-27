@@ -51,7 +51,7 @@ class Search::VacancySearch
   end
 
   def page_from
-    (page - 1) * per_page + 1
+    ((page - 1) * per_page) + 1
   end
 
   def page_to
