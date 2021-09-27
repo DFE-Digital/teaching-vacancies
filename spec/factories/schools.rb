@@ -55,6 +55,11 @@ FactoryBot.define do
       readable_phases { %w[secondary] }
     end
 
+    trait :all_through do
+      phase { :all_through }
+      readable_phases { %w[primary secondary 16-19] }
+    end
+
     trait :in_london do
       association :region, name: "London"
     end
