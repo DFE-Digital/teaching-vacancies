@@ -1,3 +1,10 @@
+#first_name
+#last_name
+#previous_names
+#phone_number
+#email_address
+#teacher_reference_number
+#national_insurance_number
 = render ReviewComponent.new id: "jobseekers-job-application-review-form-personal-details-field-error" do |review|
   - review.heading title: t("jobseekers.job_applications.build.personal_details.heading"),
                     text: job_application_review_edit_section_text(job_application, :personal_details),
