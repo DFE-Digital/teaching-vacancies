@@ -9,7 +9,7 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
     super(current_step, {
       job_role: job_role_steps,
       job_location: job_location_steps,
-      job_details: %i[job_details],
+      job_details: job_details_steps,
       working_patterns: %i[working_patterns],
       pay_package: %i[pay_package],
       important_dates: %i[important_dates],
@@ -48,6 +48,14 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
       %i[job_location]
     else
       %i[job_location schools]
+    end
+  end
+
+  def job_details_steps
+    if vacancy.central_office? || !vacancy.organisation_phases.one?
+      %i[education_phases job_details]
+    else
+      %i[job_details]
     end
   end
 end
