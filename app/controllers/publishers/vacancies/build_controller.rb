@@ -2,8 +2,8 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   include Wicked::Wizard
   include OrganisationsHelper
 
-  steps :job_role, :job_role_details, :job_location, :schools, :job_details, :working_patterns, :pay_package,
-        :important_dates, :documents, :applying_for_the_job, :job_summary
+  steps :job_role, :job_role_details, :job_location, :schools, :education_phases, :job_details, :working_patterns,
+        :pay_package, :important_dates, :documents, :applying_for_the_job, :job_summary
 
   helper_method :back_path, :form
 

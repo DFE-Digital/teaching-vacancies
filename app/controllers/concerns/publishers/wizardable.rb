@@ -7,13 +7,12 @@ module Publishers::Wizardable
   }.freeze
 
   def job_role_params(params)
-    params.require(:publishers_job_listing_job_role_form)
-          .permit(:main_job_role).merge(completed_steps: completed_steps)
+    params.require(:publishers_job_listing_job_role_form).permit(:main_job_role).merge(completed_steps: completed_steps)
   end
 
   def job_role_details_params(params)
-    params.require(:publishers_job_listing_job_role_details_form)
-          .permit(:send_responsible, additional_job_roles: []).merge(completed_steps: completed_steps)
+    params.require(:publishers_job_listing_job_role_details_form).permit(:send_responsible, additional_job_roles: [])
+          .merge(completed_steps: completed_steps)
   end
 
   def job_location_params(params)
@@ -45,9 +44,17 @@ module Publishers::Wizardable
       job_location: job_location,
       readable_job_location: readable_job_location,
     }
-    params.require(:publishers_job_listing_schools_form)
-          .permit(:organisation_ids, organisation_ids: [])
+    params.require(:publishers_job_listing_schools_form).permit(:organisation_ids, organisation_ids: [])
           .merge(attributes_to_merge.compact)
+  end
+
+  def education_phases_params(params)
+    # Forms containing only radio buttons do not send the form key param when they're submitted and no radio is selected
+    if params["publishers_job_listing_education_phases_form"]
+      params.require(:publishers_job_listing_education_phases_form).permit(:phase).merge(completed_steps: completed_steps)
+    else
+      {}
+    end
   end
 
   def job_details_params(params)
@@ -66,14 +73,12 @@ module Publishers::Wizardable
   end
 
   def working_patterns_params(params)
-    params.require(:publishers_job_listing_working_patterns_form)
-          .permit(:working_patterns_details, working_patterns: [])
+    params.require(:publishers_job_listing_working_patterns_form).permit(:working_patterns_details, working_patterns: [])
           .merge(completed_steps: completed_steps)
   end
 
   def pay_package_params(params)
-    params.require(:publishers_job_listing_pay_package_form)
-          .permit(:actual_salary, :salary, :benefits)
+    params.require(:publishers_job_listing_pay_package_form).permit(:actual_salary, :salary, :benefits)
           .merge(completed_steps: completed_steps)
   end
 
@@ -90,8 +95,8 @@ module Publishers::Wizardable
   end
 
   def job_summary_params(params)
-    params.require(:publishers_job_listing_job_summary_form)
-          .permit(:job_advert, :about_school).merge(completed_steps: completed_steps)
+    params.require(:publishers_job_listing_job_summary_form).permit(:job_advert, :about_school)
+          .merge(completed_steps: completed_steps)
   end
 
   private
