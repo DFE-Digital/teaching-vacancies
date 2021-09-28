@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   SUSPICIOUS_RECAPTCHA_THRESHOLD = 0.5
+  VALID_CLICK_EVENT_TYPES = %w[vacancy_save_to_account_clicked].freeze
 
   add_flash_types :success, :warning
 
@@ -106,6 +107,8 @@ class ApplicationController < ActionController::Base
   end
 
   def trigger_click_event
+    return unless VALID_CLICK_EVENT_TYPES.include?(click_event_param)
+
     request_event.trigger(click_event_param.to_sym, click_event_data_params.to_h)
   end
 
