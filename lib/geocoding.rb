@@ -26,17 +26,21 @@ class Geocoding
       result.data["address_components"].find { |line| "postal_code".in?(line["types"]) }&.dig("short_name") unless result.nil?
     rescue Geocoder::OverQueryLimitError
       Rails.logger.error("Google Geocoding API responded with OVER_QUERY_LIMIT")
-      result = Geocoder.search(location, lookup: :nominatim).first.data
-      if result["error"].present?
-        Rails.logger.error("Geocoding Nominatim API responded with error: #{result['error']}")
-        no_postcode_match
-      else
-        result["address"]["postcode"]
-      end
+      fallback_postcode_from_coords
     end || no_postcode_match
   end
 
   private
+
+  def fallback_postcode_from_coords(service: :nominatim)
+    result = Geocoder.search(location, lookup: service).first.data
+    if result["error"].present?
+      Rails.logger.error("Geocoding Nominatim API responded with error: #{result['error']}")
+      no_postcode_match
+    else
+      result["address"]["postcode"]
+    end
+  end
 
   def no_coordinates_match
     Rails.logger.info("The Geocoder API returned no coordinates match (0, 0) for '#{location}'. This was not cached.")

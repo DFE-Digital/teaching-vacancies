@@ -21,7 +21,6 @@ class ImportSchoolData < ImportOrganisationData
     membership.update!(do_not_delete: true)
   end
 
-  # No point refactoring this method to be shorter as this class is currently being rewritten elsewhere.
   # rubocop:disable Metrics/MethodLength
   def column_name_mappings
     {

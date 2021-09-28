@@ -27,11 +27,15 @@ class RequestEvent < Event
       request_ab_tests: ab_tests,
       response_content_type: response.content_type,
       response_status: response.status,
-      user_anonymised_request_identifier: anonymise([user_agent, request.remote_ip].join),
+      user_anonymised_request_identifier: anonymise(request_identifier),
       user_anonymised_session_id: anonymise(session.id),
       user_anonymised_jobseeker_id: anonymise(current_jobseeker&.id),
       user_anonymised_publisher_id: anonymise(current_publisher&.oid),
     )
+  end
+
+  def request_identifier
+    [user_agent, request.remote_ip].join
   end
 
   def user_agent
