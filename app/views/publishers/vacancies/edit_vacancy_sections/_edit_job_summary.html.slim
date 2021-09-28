@@ -1,5 +1,7 @@
 = render "publishers/vacancies/error_tag", attributes: Publishers::JobListing::JobSummaryForm.fields
 
+= render_divs_for_fields(Publishers::JobListing::JobSummaryForm)
+
 = render ReviewComponent.new id: "job_summary" do |review|
   - review.heading title: t("publishers.vacancies.steps.job_summary"),
                    text: t("buttons.change"),
@@ -10,9 +12,7 @@
       - summary_list.row do |row|
         - row.key text: t("jobs.job_advert")
         - row.value text: @vacancy.job_advert
-        - row.html_attributes { { id: "job_advert" } }
 
       - summary_list.row do |row|
         - row.key text: t("jobs.about_school", school: vacancy_about_school_label_organisation(@vacancy))
         - row.value text: @vacancy.about_school
-        - row.html_attributes { { id: "about_school" } }
