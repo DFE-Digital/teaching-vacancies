@@ -1,5 +1,6 @@
-= render "publishers/vacancies/error_tag", attributes: Publishers::JobListing::JobDetailsForm.fields
+= render "publishers/vacancies/error_tag", attributes: Publishers::JobListing::EducationPhasesForm.fields + Publishers::JobListing::JobDetailsForm.fields
 
+= render_divs_for_fields(Publishers::JobListing::EducationPhasesForm)
 = render_divs_for_fields(Publishers::JobListing::JobDetailsForm)
 
 = render ReviewComponent.new id: "job_details" do |review|
@@ -9,6 +10,11 @@
 
   - review.body do
     = govuk_summary_list do |summary_list|
+      - if vacancy.allow_phase_to_be_set?
+        - summary_list.row do |row|
+          - row.key text: t("jobs.filters.phases")
+          - row.value text: vacancy.phase&.humanize.presence || t("jobs.not_defined")
+
       - summary_list.row do |row|
         - row.key text: t("jobs.job_title")
         - row.value text: vacancy.job_title
@@ -20,3 +26,13 @@
       - summary_list.row do |row|
         - row.key text: t("jobs.contract_type")
         - row.value text: vacancy.contract_type_with_duration
+
+      - if vacancy.allow_key_stages?
+        - summary_list.row do |row|
+          - row.key text: t("jobs.key_stage", count: 1)
+          - row.value text: vacancy.show_key_stages.presence || t("jobs.not_defined")
+
+      - if vacancy.allow_subjects?
+        - summary_list.row do |row|
+          - row.key text: t("jobs.subjects")
+          - row.value text: vacancy.show_subjects.presence || t("jobs.not_defined")

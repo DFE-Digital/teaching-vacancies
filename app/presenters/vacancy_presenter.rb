@@ -101,6 +101,12 @@ class VacancyPresenter < BasePresenter
     safe_join [show_main_job_role, tag.br, model.additional_job_roles.map { |role| greyed_additional_job_role(role) }]
   end
 
+  def show_key_stages
+    model.key_stages&.map { |key_stage|
+      I18n.t("helpers.label.publishers_job_listing_job_details_form.key_stages_options.#{key_stage}")
+    }&.join(", ")
+  end
+
   def show_subjects
     model.subjects&.join(", ")
   end

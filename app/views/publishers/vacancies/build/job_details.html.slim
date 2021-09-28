@@ -10,11 +10,19 @@
 
         h2.govuk-heading-l = t("publishers.vacancies.steps.job_details")
 
+        = govuk_inset_text do
+          - if vacancy.one_phase?
+            = t("publishers.vacancies.build.job_details.phase_inset_text.one_phase", phase: vacancy.education_phases.first.humanize)
+          - elsif allow_phase_to_be_set?
+            = t("publishers.vacancies.build.job_details.phase_inset_text.multiple_phases_html",
+            link: govuk_link_to(t("publishers.vacancies.build.job_details.phase_inset_text.link_text"), organisation_job_build_path(vacancy.id, :education_phases)))
+
         .govuk-character-count data-module="govuk-character-count" data-maxlength=100
           = f.govuk_text_field :job_title,
             id: "publishers_job_listing_job_details_form_job_title",
             label: { size: "s" },
             class: "govuk-input string required govuk-js-character-count",
+            hint: { text: t("helpers.hint.publishers_job_listing_job_details_form.job_title.#{vacancy.one_phase? ? vacancy.education_phases.first : 'multiple_phases'}") },
             required: true
           span#publishers_job_listing_job_details_form_job_title-info.govuk-hint.govuk-character-count__message aria-live="polite"
             | You can enter up to 100 characters
@@ -25,24 +33,29 @@
           = f.govuk_radio_button :contract_type, :fixed_term do
             = f.govuk_text_field :contract_type_duration, label: { size: "s" }
 
-        = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_job_details_form.subjects_html") } do
+        - unless vacancy.allow_key_stages?
+          = f.govuk_collection_check_boxes :key_stages, Vacancy.key_stages.keys, :to_s, :to_s,
+            hint: { text: t("helpers.hint.publishers_job_listing_job_details_form.key_stages.#{vacancy.one_phase? ? vacancy.education_phases.first : 'multiple_phases'}") }
 
-          label for="publishers-job-listing-job-details-form-subject-search"
-            span.govuk-visually-hidden | Subject filter
-          span.govuk-hint#publishers-job-listing-job-details-form-subjects-hint
-            = t("helpers.hint.publishers_job_listing_job_details_form.subjects")
+        - unless vacancy.allow_subjects?
+          = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_job_details_form.subjects_html") } do
 
-          div class="govuk-!-margin-bottom-6"
-            = render SearchableCollectionComponent.new form: f,
-              input_type: :checkbox,
-              label_text: "search subjects",
-              threshold: 10,
-              scrollable: true,
-              attribute_name: :subjects,
-              collection: SUBJECT_OPTIONS,
-              value_method: :first,
-              text_method: :first,
-              hint_method: :last
+            label for="publishers-job-listing-job-details-form-subject-search"
+              span.govuk-visually-hidden | Subject filter
+            span.govuk-hint#publishers-job-listing-job-details-form-subjects-hint
+              = t("helpers.hint.publishers_job_listing_job_details_form.subjects")
+
+            div class="govuk-!-margin-bottom-6"
+              = render SearchableCollectionComponent.new form: f,
+                input_type: :checkbox,
+                label_text: "search subjects",
+                threshold: 10,
+                scrollable: true,
+                attribute_name: :subjects,
+                collection: SUBJECT_OPTIONS,
+                value_method: :first,
+                text_method: :first,
+                hint_method: :last
 
         = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 

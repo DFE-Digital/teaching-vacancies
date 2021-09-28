@@ -68,7 +68,7 @@ module Publishers::Wizardable
       status: vacancy.status.blank? ? "draft" : nil,
     }
     params.require(:publishers_job_listing_job_details_form)
-          .permit(:job_title, :contract_type, :contract_type_duration, subjects: [])
+          .permit(:job_title, :contract_type, :contract_type_duration, key_stages: [], subjects: [])
           .merge(attributes_to_merge.compact)
   end
 
