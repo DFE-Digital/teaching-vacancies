@@ -43,12 +43,6 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
 
   private
 
-  def back_path
-    return finish_wizard_path if session[:current_step] == :review
-
-    wizard_path(step_process.previous_step)
-  end
-
   def form
     @form ||= form_class.new(form_attributes, vacancy)
   end

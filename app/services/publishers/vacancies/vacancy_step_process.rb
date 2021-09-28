@@ -24,6 +24,12 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
     steps - %i[documents review]
   end
 
+  def previous_step_or_review
+    return steps.last if session[:current_step] == :review && first_of_group?
+
+    previous_step
+  end
+
   private
 
   def job_role_steps
