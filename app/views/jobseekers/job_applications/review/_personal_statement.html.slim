@@ -1,3 +1,5 @@
+= render_divs_for_fields(obseekers::JobApplication::PersonalStatementForm)
+
 = render ReviewComponent.new id: "jobseekers-job-application-review-form-personal-statement-field-error" do |review|
   - review.heading title: t("jobseekers.job_applications.build.personal_statement.heading"),
                    text: job_application_review_edit_section_text(job_application, :personal_statement),

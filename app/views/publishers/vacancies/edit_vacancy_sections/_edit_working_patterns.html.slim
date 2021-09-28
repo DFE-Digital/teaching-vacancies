@@ -1,6 +1,7 @@
 = render "publishers/vacancies/error_tag", attributes: Publishers::JobListing::WorkingPatternsForm.fields
 
-#working_patterns_details
+= render_divs_for_fields(Publishers::JobListing::WorkingPatternsForm)
+
 = render ReviewComponent.new id: "working_patterns" do |review|
   - review.heading title: t("publishers.vacancies.steps.working_patterns"),
                    text: t("buttons.change"),

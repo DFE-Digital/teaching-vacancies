@@ -1,5 +1,7 @@
 = render "publishers/vacancies/error_tag", attributes: (Publishers::JobListing::JobLocationForm.fields + Publishers::JobListing::SchoolsForm.fields)
 
+= render_divs_for_fields(Publishers::JobListing::JobLocationForm)
+
 = render ReviewComponent.new id: "job_location" do |review|
   - review.heading title: t("publishers.vacancies.steps.job_location"),
                    text: t("buttons.change"),

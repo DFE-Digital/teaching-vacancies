@@ -1,7 +1,7 @@
 = render "publishers/vacancies/error_tag", attributes: Publishers::JobListing::JobRoleForm.fields
 
-#main_job_role
-#additional_job_roles
+= render_divs_for_fields(Publishers::JobListing::JobRoleForm)
+
 = render ReviewComponent.new id: "job_role" do |review|
   - review.heading title: t("publishers.vacancies.steps.job_role"),
                    text: t("buttons.change"),

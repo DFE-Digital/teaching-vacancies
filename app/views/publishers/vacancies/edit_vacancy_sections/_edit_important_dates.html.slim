@@ -1,10 +1,7 @@
 = render "publishers/vacancies/error_tag", attributes: Publishers::JobListing::ImportantDatesForm.fields
 
-#expiry_time
-#publish_on
-#publish_on_day
-#expires_at
-#starts_on
+= render_divs_for_fields(Publishers::JobListing::ImportantDatesForm)
+
 = render ReviewComponent.new id: "important_dates" do |review|
   - review.heading title: t("publishers.vacancies.steps.important_dates"),
                    text: t("buttons.change"),

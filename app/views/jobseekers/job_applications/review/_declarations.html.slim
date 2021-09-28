@@ -1,4 +1,5 @@
-#right_to_work_in_uk
+= render_divs_for_fields(Jobseekers::JobApplication::DeclarationsForm)
+
 = render ReviewComponent.new id: "jobseekers-job-application-review-form-declarations-field-error" do |review|
   - review.heading title: t("jobseekers.job_applications.build.declarations.heading"),
                    text: job_application_review_edit_section_text(job_application, :declarations),
