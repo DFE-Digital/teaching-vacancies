@@ -1,12 +1,11 @@
 class Publishers::JobListing::JobSummaryForm < Publishers::JobListing::VacancyForm
-  attr_accessor :job_advert, :about_school
-
   validates :job_advert, presence: true
   validate :about_school_must_not_be_blank
 
   def self.fields
     %i[job_advert about_school]
   end
+  attr_accessor(*fields)
 
   def about_school_must_not_be_blank
     return if about_school.present?
