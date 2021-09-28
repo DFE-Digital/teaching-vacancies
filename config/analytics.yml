@@ -319,3 +319,4 @@ shared:
     - completed_steps
     - working_patterns_details
     - phase
+    - key_stages
