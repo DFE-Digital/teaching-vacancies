@@ -30,7 +30,7 @@ class Publishers::VacancySort < RecordSort
   end
 
   def job_title_option
-    SortOption.new("job_title", "asc", I18n.t("jobs.sort_by.job_title_option.ascending"))
+    SortOption.new("job_title", "asc", I18n.t("jobs.sort_by.job_title.ascending"))
   end
 
   def most_recent_draft_date_option
