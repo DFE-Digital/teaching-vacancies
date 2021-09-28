@@ -13,7 +13,7 @@ on:
 
   pull_request:
     branches:
-    - master1
+    - master
     types:
       - labeled
       - opened
