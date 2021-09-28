@@ -7,7 +7,7 @@ FactoryBot.define do
     county { Faker::Address.state_abbr }
     description { Faker::Lorem.paragraph(sentence_count: 1) }
     establishment_status { "Open" }
-    easting { "1" }
+    geolocation { [1, 2] }
     gias_data do
       {
         CloseDate: nil,
@@ -27,7 +27,6 @@ FactoryBot.define do
     minimum_age { 11 }
     maximum_age { 18 }
     name { Faker::Educator.secondary_school.strip.delete("'") }
-    northing { "1" }
     phase { :secondary }
     readable_phases { %w[secondary] }
     region { "South-East England" }
@@ -84,8 +83,7 @@ FactoryBot.define do
     end
 
     trait :no_geolocation do
-      easting { nil }
-      northing { nil }
+      geolocation { nil }
     end
   end
 

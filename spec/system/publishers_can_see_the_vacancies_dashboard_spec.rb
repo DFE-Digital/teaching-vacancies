@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe "Publishers can see the vacancies dashboard" do
   let(:publisher) { create(:publisher) }
 
-  scenario "school with geolocation" do
-    school = create(:school, northing: "1", easting: "2")
+  scenario "school" do
+    school = create(:school)
 
     login_publisher(publisher: publisher, organisation: school)
     vacancy = create(:vacancy, status: "published")

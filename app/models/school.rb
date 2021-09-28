@@ -4,8 +4,6 @@ class School < Organisation
   has_many :school_group_memberships
   has_many :school_groups, through: :school_group_memberships
 
-  before_save :set_geolocation_from_easting_and_northing
-
   validates :urn, uniqueness: true
 
   enum phase: {
@@ -35,23 +33,5 @@ class School < Organisation
     return if ["None", "Does not apply"].include?(gias_data["ReligiousCharacter (name)"])
 
     gias_data["ReligiousCharacter (name)"]
-  end
-
-  private
-
-  def set_geolocation_from_easting_and_northing
-    if easting && northing
-      wgs84 = Breasal::EastingNorthing.new(
-        easting: easting.to_i,
-        northing: northing.to_i,
-        type: :gb,
-      ).to_wgs84
-
-      geolocation = [wgs84[:latitude], wgs84[:longitude]]
-      geopoint = "POINT(#{wgs84[:longitude]} #{wgs84[:latitude]})"
-    end
-
-    self.geolocation = geolocation
-    self.geopoint = geopoint
   end
 end
