@@ -12,7 +12,7 @@ class Publishers::VacancyFormPageHeadingComponent < ViewComponent::Base
 
   private
 
-  attr_reader :vacancy, :copy
+  attr_reader :vacancy, :copy, :step_process
 
   def page_title
     return t("jobs.edit_job_title", job_title: vacancy.job_title) if vacancy.published?
@@ -22,5 +22,15 @@ class Publishers::VacancyFormPageHeadingComponent < ViewComponent::Base
 
   def organisation_from_job_location
     vacancy.at_multiple_schools? ? "multiple schools" : vacancy.parent_organisation_name
+  end
+
+  def back_path
+    if step_process.previous_step_or_review == :review
+      return organisation_job_path(vacancy.id) if vacancy.completed_steps.size != step_process.steps.size
+
+      organisation_job_review_path(vacancy.id)
+    else
+      organisation_job_build_path(vacancy.id, step_process.previous_step)
+    end
   end
 end
