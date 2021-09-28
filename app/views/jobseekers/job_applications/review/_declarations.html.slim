@@ -1,3 +1,4 @@
+#right_to_work_in_uk
 = render ReviewComponent.new id: "jobseekers-job-application-review-form-declarations-field-error" do |review|
   - review.heading title: t("jobseekers.job_applications.build.declarations.heading"),
                    text: job_application_review_edit_section_text(job_application, :declarations),
@@ -13,4 +14,3 @@
       - summary_list.row do |row|
         - row.key text: t("helpers.legend.jobseekers_job_application_declarations_form.right_to_work_in_uk")
         - row.value text: job_application.right_to_work_in_uk.humanize
-        - row.html_attributes { { id: "right_to_work_in_uk" } }

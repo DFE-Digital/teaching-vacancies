@@ -1,6 +1,10 @@
 = render "publishers/vacancies/error_tag", attributes: Publishers::JobListing::ImportantDatesForm.fields
 
 #expiry_time
+#publish_on
+#publish_on_day
+#expires_at
+#starts_on
 = render ReviewComponent.new id: "important_dates" do |review|
   - review.heading title: t("publishers.vacancies.steps.important_dates"),
                    text: t("buttons.change"),
@@ -11,14 +15,11 @@
       - summary_list.row do |row|
         - row.key text: t("jobs.publication_date")
         - row.value text: format_date(@vacancy.publish_on)
-        - row.html_attributes { { id: "publish_on" } }
 
       - summary_list.row do |row|
         - row.key text: t("jobs.application_deadline")
         - row.value text: format_time_to_datetime_at(@vacancy.expires_at)
-        - row.html_attributes { { id: "expires_at" } }
 
       - summary_list.row do |row|
         - row.key text: t("jobs.starts_on")
         - row.value text: @vacancy.starts_asap? ? t("jobs.starts_asap") : format_date(@vacancy.starts_on)
-        - row.html_attributes { { id: "starts_on" } }

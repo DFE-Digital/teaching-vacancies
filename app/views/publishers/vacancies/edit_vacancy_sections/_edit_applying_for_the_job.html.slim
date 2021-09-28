@@ -1,5 +1,12 @@
 = render "publishers/vacancies/error_tag", attributes: Publishers::JobListing::ApplyingForTheJobForm.fields
 
+#enable_job_applications
+#personal_statement_guidance
+#application_link
+#how_to_apply
+#contact_email
+#contact_number
+#school_visits
 = render ReviewComponent.new id: "applying_for_the_job" do |review|
   - review.heading title: t("publishers.vacancies.steps.applying_for_the_job"),
                    text: t("buttons.change"),
@@ -11,37 +18,30 @@
         - summary_list.row do |row|
           - row.key text: t("jobs.enable_job_applications")
           - row.value text: @vacancy.enable_job_applications? ? "Yes" : "No"
-          - row.html_attributes { { id: "enable_job_applications" } }
 
       - if @vacancy.enable_job_applications?
         - summary_list.row do |row|
           - row.key text: t("jobs.personal_statement_guidance")
           - row.value text: @vacancy.personal_statement_guidance.presence || t("jobs.not_defined")
-          - row.html_attributes { { id: "personal_statement_guidance" } }
 
       - else
         - summary_list.row do |row|
           - row.key text: t("jobs.application_link")
           - row.value text: @vacancy.application_link.present? ? open_in_new_tab_link_to(@vacancy.application_link, @vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link")) : t("jobs.not_defined")
-          - row.html_attributes { { id: "application_link" } }
 
       - if @vacancy.how_to_apply.present?
         - summary_list.row do |row|
           - row.key text: t("jobs.how_to_apply")
           - row.value text: @vacancy.how_to_apply
-          - row.html_attributes { { id: "how_to_apply" } }
 
       - summary_list.row do |row|
         - row.key text: t("jobs.contact_email")
         - row.value text: govuk_mail_to("Job contact email", @vacancy.contact_email, "aria-label": t("jobs.aria_labels.contact_email_link", email: @vacancy.contact_email))
-        - row.html_attributes { { id: "contact_email" } }
 
       - summary_list.row do |row|
         - row.key text: t("jobs.contact_number")
         - row.value text: @vacancy.contact_number.present? ? govuk_link_to(@vacancy.contact_number, "tel:#{@vacancy.contact_number}") : t("jobs.not_defined")
-        - row.html_attributes { { id: "contact_number" } }
 
       - summary_list.row do |row|
         - row.key text: t("jobs.#{school_or_trust_visits(@vacancy.parent_organisation)}")
         - row.value text: @vacancy.school_visits.presence || t("jobs.not_defined")
-        - row.html_attributes { { id: "school_visits" } }
