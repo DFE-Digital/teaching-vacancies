@@ -1,3 +1,5 @@
+= render_divs_for_fields(Jobseekers::JobApplication::EqualOpportunitiesForm)
+
 = render ReviewComponent.new id: "jobseekers-job-application-review-form-equal-opportunities-field-error" do |review|
   - review.heading title: t("jobseekers.job_applications.build.equal_opportunities.heading"),
                    text: job_application_review_edit_section_text(job_application, :equal_opportunities),
@@ -9,25 +11,23 @@
       - summary_list.row do |row|
         - row.key text: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.disability")
         - row.value text: job_application.disability.humanize
-        - row.html_attributes { { id: "disability" } }
 
       - summary_list.row do |row|
         - row.key text: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.age")
         - row.value text: job_application.age.humanize
-        - row.html_attributes { { id: "age" } }
 
       - summary_list.row do |row|
         - row.key text: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.gender")
-        - row.value text: safe_join([tag.div(job_application.gender.humanize, class: "govuk-body", id: "gender"), tag.div(job_application.gender_description, class: "govuk-body", id: "gender_description")])
+        - row.value text: safe_join([tag.div(job_application.gender.humanize, class: "govuk-body"), tag.div(job_application.gender_description, class: "govuk-body")])
 
       - summary_list.row do |row|
         - row.key text: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.orientation")
-        - row.value text: safe_join([tag.div(job_application.orientation.humanize, class: "govuk-body", id: "orientation"), tag.div(job_application.orientation_description, class: "govuk-body", id: "orientation_description")])
+        - row.value text: safe_join([tag.div(job_application.orientation.humanize, class: "govuk-body"), tag.div(job_application.orientation_description, class: "govuk-body")])
 
       - summary_list.row do |row|
         - row.key text: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.ethnicity")
-        - row.value text: safe_join([tag.div(job_application.ethnicity.humanize, class: "govuk-body", id: "ethnicity"), tag.div(job_application.ethnicity_description, class: "govuk-body", id: "ethnicity_description")])
+        - row.value text: safe_join([tag.div(job_application.ethnicity.humanize, class: "govuk-body"), tag.div(job_application.ethnicity_description, class: "govuk-body")])
 
       - summary_list.row do |row|
         - row.key text: t("helpers.legend.jobseekers_job_application_equal_opportunities_form.religion")
-        - row.value text: safe_join([tag.div(job_application.religion.humanize, class: "govuk-body", id: "religion"), tag.div(job_application.religion_description, class: "govuk-body", id: "religion_description")])
+        - row.value text: safe_join([tag.div(job_application.religion.humanize, class: "govuk-body"), tag.div(job_application.religion_description, class: "govuk-body")])
