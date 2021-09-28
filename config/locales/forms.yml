@@ -211,9 +211,22 @@ en:
       publishers_job_listing_job_details_form:
         contract_type_duration: >-
           Contract length should be more than 12 weeks. Short term cover should not be advertised on Teaching Vacancies
-        job_title: >-
-          For secondary school roles include subject and, if relevant,
-          level of seniority (‘Subject leader for science’, for example).
+        job_title:
+          middle: >-
+            Include subject and level of seniority, if relevant. For example, ‘Subject leader for science’. You should
+            also include the key stage, if relevant.
+          multiple_phases: >-
+            Include subject and level of seniority, if relevant. For example, ‘Subject leader for science’. You should
+            also include the key stage, if relevant.
+          primary: Include key stage, if relevant.
+          secondary: Include subject and level of seniority, if relevant. For example, ‘Subject leader for science’.
+          16-19: Include subject and level of seniority, if relevant. For example, ‘Subject leader for science’.
+        key_stages:
+          middle: Only complete this field if it’s relevant to the role.
+          multiple_phases: What key stages will the role focus on?
+          primary: What key stages will the role focus on?
+          secondary: What key stages will the role focus on?
+          16-19: What key stages will the role focus on?
         subjects: What subject(s) will the teacher focus on?
         subjects_placeholder: Search
       publishers_job_listing_job_role_form:
@@ -518,7 +531,7 @@ en:
         phase_options:
           primary: Primary
           secondary: Secondary
-          sixteen_plus: 16 to 19
+          "16-19": 16 to 19
           multiple_phases: More than one phase
       publishers_job_listing_important_dates_form:
         publish_on_day_options:
@@ -545,6 +558,10 @@ en:
           teaching_assistant: Teaching assistant
           sendco: SENDCo
           teacher: Teacher
+        key_stages_options:
+          early_years: Early years
+          ks1: KS1
+          ks2: KS2
       publishers_job_listing_job_role_form:
         main_job_role_options:
           teacher: Teacher
@@ -665,6 +682,7 @@ en:
       publishers_job_listing_job_details_form:
         contract_type: Contract type
         suitable_for_ect: Is this job suitable for ECTs?
+        key_stages_html: Key stage (optional<span class='govuk-visually-hidden'> field</span>)</span>
         subjects_html: Subject(s) (optional<span class='govuk-visually-hidden'> field</span>)</span>
       publishers_job_listing_job_role_form:
         main_job_role: What is the job role?

@@ -6,6 +6,7 @@ class Vacancy < ApplicationRecord
 
   include Indexable
   include Resettable
+  include Vacancy::Phaseable
 
   friendly_id :slug_candidates, use: %w[slugged history]
 
@@ -18,6 +19,7 @@ class Vacancy < ApplicationRecord
 
   # When removing a job_role or working_pattern, remember to update *subscriptions* that have the old values.
   array_enum job_roles: MAIN_JOB_ROLES.merge(ADDITIONAL_JOB_ROLES)
+  array_enum key_stages: { early_years: 0, ks1: 1, ks2: 2 }
   array_enum working_patterns: { full_time: 0, part_time: 100, job_share: 101, term_time: 102 }
   # Legacy vacancies can have these working_pattern options too: { compressed_hours: 102, staggered_hours: 103 }
 
@@ -27,7 +29,7 @@ class Vacancy < ApplicationRecord
   enum hired_status: { hired_tvs: 0, hired_other_free: 1, hired_paid: 2, hired_no_listing: 3, not_filled_ongoing: 4, not_filled_not_looking: 5, hired_dont_know: 6 }
   enum job_location: { at_one_school: 0, at_multiple_schools: 1, central_office: 2 }
   enum listed_elsewhere: { listed_paid: 0, listed_free: 1, listed_mix: 2, not_listed: 3, listed_dont_know: 4 }
-  enum phase: { primary: 0, secondary: 1, sixteen_plus: 2, multiple_phases: 3 }
+  enum phase: { primary: 0, secondary: 1, "16-19": 2, multiple_phases: 3 }
   enum status: { published: 0, draft: 1, trashed: 2 }
 
   belongs_to :publisher, optional: true
@@ -66,7 +68,7 @@ class Vacancy < ApplicationRecord
   #       does not support the PostGIS adapter so until that is fixed we need to do this manually. c.f. https://github.com/excid3/noticed/pull/150
   before_destroy { Notification.where("params @> ?", Noticed::Coder.dump(vacancy: self).to_json).destroy_all }
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
-  after_save :drop_phase_if_no_longer_applicable
+  before_save :drop_attributes_if_no_longer_applicable
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[7:00 8:00 9:00 10:00 11:00 12:00 13:00 14:00 15:00 16:00 17:00 23:59].freeze
@@ -107,8 +109,12 @@ class Vacancy < ApplicationRecord
     %w[teacher leadership sendco].include?(main_job_role)
   end
 
-  def allow_phase_to_be_set?
-    central_office? || organisation_phases.many? || organisation_phases.none?
+  def allow_key_stages?
+    !one_phase? || education_phases == %w[primary] || education_phases == %w[middle]
+  end
+
+  def allow_subjects?
+    education_phases != ["primary"]
   end
 
   def within_data_access_period?
@@ -159,14 +165,6 @@ class Vacancy < ApplicationRecord
     self.job_roles = [main_job_role] + roles
   end
 
-  def education_phases
-    multiple_phases? || phase.blank? ? organisation_phases : [phase]
-  end
-
-  def organisation_phases
-    organisations.map(&:readable_phases).flatten.uniq
-  end
-
   def publish_equal_opportunities_report?
     job_applications.after_submission.count >= EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD
   end
@@ -211,7 +209,9 @@ class Vacancy < ApplicationRecord
     errors.add(:enable_job_applications, :cannot_be_changed_once_listed)
   end
 
-  def drop_phase_if_no_longer_applicable
-    update_columns(phase: nil) unless allow_phase_to_be_set?
+  def drop_attributes_if_no_longer_applicable
+    self.phase = nil unless allow_phase_to_be_set?
+    self.key_stages = [] unless allow_key_stages?
+    self.subjects = [] unless allow_subjects?
   end
 end
