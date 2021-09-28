@@ -80,9 +80,8 @@ RSpec.describe "Editing a published vacancy" do
 
         change_job_location(vacancy, "at_one_school", "Multi-academy trust")
 
-        click_on I18n.t("buttons.cancel_and_return")
+        visit organisation_job_path(vacancy.id)
 
-        expect(page.current_path).to eq(organisation_job_path(vacancy.id))
         expect(page).to have_content(I18n.t("school_groups.job_location_heading.central_office"))
         expect(page).to have_content(full_address(school_group))
         expect(Vacancy.find(vacancy.id).readable_job_location).to eq(
