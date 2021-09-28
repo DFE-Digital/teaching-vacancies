@@ -47,6 +47,8 @@ GEM
     activerecord (6.1.4.1)
       activemodel (= 6.1.4.1)
       activesupport (= 6.1.4.1)
+    activerecord-import (1.2.0)
+      activerecord (>= 3.2)
     activerecord-postgis-adapter (7.1.1)
       activerecord (~> 6.1)
       rgeo-activerecord (~> 7.0.0)
@@ -635,6 +637,7 @@ DEPENDENCIES
   activejob (~> 6.1.4.1)
   activemodel (~> 6.1.4.1)
   activerecord (~> 6.1.4.1)
+  activerecord-import
   activerecord-postgis-adapter
   activerecord-session_store
   activestorage (~> 6.1.4.1)
