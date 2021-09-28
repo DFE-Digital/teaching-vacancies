@@ -67,7 +67,8 @@ body {
     border-bottom: 0;
 
     &__container {
-      border-bottom: govuk-spacing(2) solid govuk-colour('orange');
+      border-bottom: 0;
+      margin-bottom: 0;
     }
 
     .govuk-header__logotype-text {
@@ -83,6 +84,14 @@ body {
       .govuk-width-container {
         border-bottom: 1px solid $govuk-border-colour;
         padding-bottom: govuk-spacing(2);
+      }
+    }
+
+    .govuk-header__navigation {
+      .navigation-item--right {
+        @include govuk-media-query($from: tablet) {
+          float: right;
+        }
       }
     }
   }
@@ -119,6 +128,10 @@ b {
   &::after {
     content: ')';
   }
+}
+
+.phase-banner {
+  border-top: govuk-spacing(2) solid govuk-colour('orange');
 }
 
 .vacancies_index {

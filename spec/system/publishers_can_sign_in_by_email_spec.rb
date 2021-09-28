@@ -5,7 +5,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
 
   it "can reach email authentication page" do
     visit root_path
-    within(".navbar-component") { click_on I18n.t("buttons.sign_in") }
+    within("nav") { click_on I18n.t("buttons.sign_in") }
     click_on I18n.t("buttons.sign_in_publisher")
 
     expect(page).to have_content(I18n.t("publishers.temp_login.heading"))
@@ -58,7 +58,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
       it "can sign in, choose an org, sign out" do
         freeze_time do
           visit root_path
-          within(".navbar-component") { click_on I18n.t("buttons.sign_in") }
+          within("nav") { click_on I18n.t("buttons.sign_in") }
           click_on I18n.t("buttons.sign_in_publisher")
 
           # Expect to send an email
@@ -87,7 +87,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
           # Can sign out
           click_on(I18n.t("nav.sign_out"))
 
-          within(".govuk-header__navigation") { expect(page).to have_content(I18n.t("buttons.sign_in")) }
+          within("nav") { expect(page).to have_content(I18n.t("buttons.sign_in")) }
 
           expect(page).to have_content(I18n.t("devise.sessions.signed_out"))
 
@@ -118,7 +118,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
         it "can sign in and bypass choice of org" do
           freeze_time do
             visit root_path
-            within(".navbar-component") { click_on I18n.t("buttons.sign_in") }
+            within("nav") { click_on I18n.t("buttons.sign_in") }
             click_on I18n.t("buttons.sign_in_publisher")
 
             # Expect to send an email
@@ -149,7 +149,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
         it "can sign in and bypass choice of org" do
           freeze_time do
             visit root_path
-            within(".navbar-component") { click_on I18n.t("buttons.sign_in") }
+            within("nav") { click_on I18n.t("buttons.sign_in") }
             click_on I18n.t("buttons.sign_in_publisher")
 
             # Expect to send an email
@@ -183,7 +183,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
         it "can sign in and bypass choice of org" do
           freeze_time do
             visit root_path
-            within(".navbar-component") { click_on I18n.t("buttons.sign_in") }
+            within("nav") { click_on I18n.t("buttons.sign_in") }
             click_on I18n.t("buttons.sign_in_publisher")
 
             # Expect to send an email
