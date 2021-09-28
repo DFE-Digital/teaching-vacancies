@@ -1,10 +1,7 @@
 - content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.job_role"))
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-full
-      = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
-      = govuk_back_link text: t("buttons.cancel_and_return"), href: back_path if session[:current_step] == :review
+.govuk-main-wrapper class=("govuk-!-padding-top-0" if vacancy.completed_steps.include?("review"))
+  = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
