@@ -169,6 +169,10 @@ en:
           step_title: Review the job listing
         working_patterns:
           step_title: Working patterns
+      confirm_destroy:
+        are_you_sure: Are you sure you want to delete the draft listing?
+        confirm_delete: Confirm deletion
+        page_title: Delete draft listing
       destroy:
         success_html: >-
           %{job_title} has been <span class="govuk-!-font-weight-bold delete-listing-success-gtm">deleted</span>

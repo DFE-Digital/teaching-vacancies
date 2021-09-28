@@ -21,6 +21,8 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
+  def confirm_destroy; end
+
   def destroy
     vacancy.supporting_documents.purge_later
     vacancy.trashed!
