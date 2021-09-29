@@ -165,3 +165,14 @@ b {
     }
   }
 }
+
+.govuk-header__navigation {
+  .count-badge {
+    background-color: govuk-colour('white');
+    border-radius: govuk-spacing(1);
+    color: govuk-colour('black');
+    font-weight: bold;
+    margin-left: govuk-spacing(1);
+    padding: 0 govuk-spacing(1);
+  }
+}
