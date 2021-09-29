@@ -4,6 +4,9 @@ class VacanciesController < ApplicationController
   before_action :set_landing_page_description, :set_map_display, only: %i[index]
 
   def index
+    if params[:job_role]
+      params[:job_role] = params[:job_role].tr("-", "_")
+    end
     params[:location] = params[:location_facet] if params[:location_facet]
     @vacancies_search = Search::VacancySearch.new(
       search_form.to_hash,
