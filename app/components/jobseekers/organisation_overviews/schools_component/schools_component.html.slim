@@ -70,7 +70,7 @@ section#school-overview class="govuk-!-margin-bottom-5"
       = t("schools.schools_visits")
     = vacancy.school_visits
 
-  - if vacancy.organisations.any?(&:geolocation)
+  - if vacancy.organisations.any?(&:geopoint)
     section#school-location
       h3.govuk-heading-l.section-heading = t("schools.school_location.other")
 

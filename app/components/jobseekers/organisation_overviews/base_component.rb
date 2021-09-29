@@ -12,6 +12,6 @@ class Jobseekers::OrganisationOverviews::BaseComponent < ViewComponent::Base
   end
 
   def organisation_map_data
-    { name: organisation&.name, lat: organisation.geolocation&.x, lng: organisation.geolocation&.y }.to_json
+    { name: organisation&.name, lat: organisation.geopoint&.lat, lng: organisation.geopoint&.lon }.to_json
   end
 end
