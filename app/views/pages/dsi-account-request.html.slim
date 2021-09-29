@@ -1,0 +1,38 @@
+- content_for :page_title_prefix do
+  | Request a Teaching Vacancies account
+
+= govuk_back_link text: t("buttons.back"), href: new_publisher_session_path
+
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+
+      h1.govuk-heading-l Request a Teaching Vacancies account
+
+      p.govuk-body A DfE Sign-in account is required to list jobs for free on Teaching Vacancies.
+
+      p.govuk-body You can reqest an account if you work:
+
+      ul.govuk-list.govuk-list--bullet class="govuk-!-margin-bottom-8"
+        li at a state-funded school or trust in England, or
+        li if you work at a local authority and list job vacancies on behalf of schools
+
+      = govuk_button_link_to t("buttons.request_account"), "https://profile.signin.education.gov.uk/register"
+
+      h2.govuk-heading-m Useful information
+
+      p.govuk-body
+        | After creating your account, you need to request access to an organisation (if you aren't already
+        | assigned to one). You can search organisations by name or unique reference number (URN).
+
+      p.govuk-body
+        | Once access to an organisation has ben granted, you can request access to the Teaching Vacancies
+        | service. This will be reviewed by one of your organisation's nominated approvers.
+
+      p.govuk-body
+        | Details of approvers within your organisation(s) are available within DfE Sign-in if you need to contact
+        | someone regarding your request.
+
+      h3.govuk-heading-s Need help logging in?
+
+      p.govuk-body Contact us at #{govuk_mail_to("teaching.vacancies@education.gov.uk")}
