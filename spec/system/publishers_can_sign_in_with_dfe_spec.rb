@@ -10,8 +10,8 @@ RSpec.shared_examples "a successful sign in" do
       .with_base_data(user_anonymised_publisher_id: anonymised_form_of(user_oid))
       .and_data(success: "true", sign_in_type: "dsi")
 
-    within(".govuk-header__navigation") { expect(page).to have_selector(:link_or_button, I18n.t("nav.sign_out")) }
-    within(".govuk-header__navigation") { expect(page).to have_selector(:link_or_button, I18n.t("nav.school_page_link")) }
+    within("nav") { expect(page).to have_selector(:link_or_button, I18n.t("nav.sign_out")) }
+    within("nav") { expect(page).to have_selector(:link_or_button, I18n.t("nav.school_page_link")) }
   end
 end
 
@@ -25,7 +25,7 @@ RSpec.shared_examples "a failed sign in" do |options|
 
     expect(page).to have_content(/The email you're signed in with isn't authorised to list jobs for this school/i)
     expect(page).to have_content(options[:email])
-    within(".govuk-header__navigation") { expect(page).not_to have_content(I18n.t("nav.school_page_link")) }
+    within("nav") { expect(page).not_to have_content(I18n.t("nav.school_page_link")) }
   end
 end
 
