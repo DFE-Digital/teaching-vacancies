@@ -226,16 +226,6 @@ en:
           attributes:
             <<: *unsubscribe_feedback_errors
 
-        publishers/account_request_form:
-          attributes:
-            full_name:
-              blank: Enter your full name
-            email:
-              blank: Enter your work email address
-              invalid: Enter an email address in the correct format, like name@example.com
-            organisation_name:
-              blank: Enter your school, trust or local authority name
-
         # Publishers journey
         publishers/job_listing/job_role_form:
           attributes:
