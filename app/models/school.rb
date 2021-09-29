@@ -13,7 +13,7 @@ class School < Organisation
     middle_deemed_primary: 3,
     secondary: 4,
     middle_deemed_secondary: 5,
-    sixteen_plus: 6,
+    "16-19": 6,
     all_through: 7,
   }
 
@@ -24,7 +24,7 @@ class School < Organisation
     middle_deemed_primary: %w[middle],
     middle_deemed_secondary: %w[middle],
     secondary: %w[secondary],
-    sixteen_plus: %w[16-19],
+    "16-19": %w[16-19],
     all_through: %w[primary secondary 16-19],
   }.freeze
 
