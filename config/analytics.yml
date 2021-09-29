@@ -176,8 +176,6 @@ shared:
     - postcode
     - locality
     - address3
-    - easting
-    - northing
     - geolocation
     - gias_data
     - created_at

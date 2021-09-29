@@ -104,14 +104,12 @@ class Gias::ImportSchoolsAndLocalAuthorities
       address3: row["Address3"],
       county: row["County (name)"],
       detailed_school_type: row["TypeOfEstablishment (name)"],
-      easting: row["Easting"],
       establishment_status: row["EstablishmentStatus (name)"],
       local_authority_within: row["LA (name)"],
       locality: row["Locality"],
       maximum_age: row["StatutoryHighAge"],
       minimum_age: row["StatutoryLowAge"],
       name: row["EstablishmentName"],
-      northing: row["Northing"],
       postcode: row["Postcode"],
       region: row["GOR (name)"],
       school_type: row["EstablishmentTypeGroup (name)"],
@@ -120,7 +118,22 @@ class Gias::ImportSchoolsAndLocalAuthorities
       readable_phases: School::READABLE_PHASE_MAPPINGS[phase_symbol],
       url: Addressable::URI.heuristic_parse(row["SchoolWebsite"]).to_s,
       gias_data: row.to_h,
-    }.transform_values(&:presence)
+    }.merge(school_location_data(row)).transform_values(&:presence)
+  end
+
+  def school_location_data(row)
+    return {} unless row["Easting"] && row["Northing"]
+
+    wgs84 = Breasal::EastingNorthing.new(
+      easting: row["Easting"].to_i,
+      northing: row["Northing"].to_i,
+      type: :gb,
+    ).to_wgs84
+
+    {
+      geolocation: [wgs84[:latitude], wgs84[:longitude]],
+      geopoint: "POINT(#{wgs84[:longitude]} #{wgs84[:latitude]})",
+    }
   end
 
   def membership_data(row)

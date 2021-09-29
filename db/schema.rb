@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_22_140134) do
+ActiveRecord::Schema.define(version: 2021_09_28_163324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -316,8 +316,6 @@ ActiveRecord::Schema.define(version: 2021_09_22_140134) do
     t.string "postcode"
     t.text "locality"
     t.text "address3"
-    t.text "easting"
-    t.text "northing"
     t.point "geolocation"
     t.json "gias_data"
     t.datetime "created_at", null: false
