@@ -1,5 +1,6 @@
 require "rails_helper"
 RSpec.describe "Application sitemap" do
+  include SeoHelper
   context "sitemap.xml" do
     scenario "generates a sitemap of the application" do
       published_jobs = (1..4).map { |i| create(:vacancy, :published, job_title: "Title#{i}") }
@@ -19,17 +20,17 @@ RSpec.describe "Application sitemap" do
       end
 
       ALL_IMPORTED_LOCATIONS.each do |location|
-        url = location_url(location, protocol: "https")
+        url = seo_friendly_url(location_url(location, protocol: "https"))
         expect(nodes.search("loc:contains('#{url}')").map(&:text)).to include(url)
       end
 
       SUBJECT_OPTIONS.map(&:first).each do |subject|
-        url = subject_url(subject, protocol: "https")
+        url = seo_friendly_url(subject_url(subject, protocol: "https"))
         expect(nodes.search("loc:contains('#{url}')").map(&:text)).to include(url)
       end
 
       Vacancy.job_roles.each_key do |job_role|
-        url = job_role_url(job_role, protocol: "https")
+        url = seo_friendly_url(job_role_url(job_role, protocol: "https"))
         expect(nodes.search("loc:contains('#{url}')").map(&:text)).to include(url)
       end
 
