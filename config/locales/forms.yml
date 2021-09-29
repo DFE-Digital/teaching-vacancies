@@ -24,6 +24,7 @@ en:
     close_account: Close account
     change: Change
     complete_section: Complete section
+    confirm_deletion: Confirm deletion
     confirm_destroy: Yes I am sure - delete this entry
     confirm_rejection: Confirm rejection
     continue: Continue
@@ -32,6 +33,7 @@ en:
     create_job: Create a job listing
     create_account: Create an account
     delete: Delete
+    delete_draft: Delete draft
     delete_subject: Delete subject
     dismiss: Dismiss
     download_stats: Download statistics (csv, 0.2KB)
