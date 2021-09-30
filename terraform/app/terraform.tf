@@ -71,8 +71,10 @@ module "paas" {
   app_stopped                       = var.paas_app_stopped
   docker_username                   = local.infra_secrets.github_packages_username
   docker_password                   = local.infra_secrets.github_packages_token
-  logit_url                    = local.infra_secrets.logit_url
+  papertrail_url                    = local.infra_secrets.papertrail_url
   papertrail_service_binding_enable = var.paas_papertrail_service_binding_enable
+  logit_url                         = local.infra_secrets.logit_url
+  logit_service_binding_enable      = var.paas_logit_service_binding_enable
   parameter_store_environment       = var.parameter_store_environment
   service_name                      = local.service_name
   service_abbreviation              = local.service_abbreviation
