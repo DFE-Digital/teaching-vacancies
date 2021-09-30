@@ -80,14 +80,13 @@ module JobApplicationsHelper
     t("buttons.complete_section")
   end
 
-  def job_application_review_section_tag(job_application, step)
-    form_class = "jobseekers/job_application/#{step}_form".camelize.constantize
+  def job_application_review_section_tag(job_application, step, form_class)
     tag_attributes = if form_class.fields.any? { |field| field.in?(job_application.errors.messages.keys) }
-                       { text: t("messages.jobs.action_required.label"), colour: "orange" }
+                       { text: t("shared.status_tags.action_required"), colour: "orange" }
                      elsif step.to_s.in?(job_application.completed_steps)
-                       { text: "complete" }
+                       { text: t("shared.status_tags.complete") }
                      else
-                       { text: "not started", colour: "red" }
+                       { text: t("shared.status_tags.not_started"), colour: "red" }
                      end
 
     govuk_tag(**tag_attributes)

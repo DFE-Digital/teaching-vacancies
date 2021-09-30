@@ -3,26 +3,26 @@ require "rails_helper"
 RSpec.describe "Publishers can edit a draft vacancy" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school) }
-  let!(:vacancy) do
-    VacancyPresenter.new(build(:vacancy,
-                               job_title: "Draft vacancy",
-                               working_patterns: %w[full_time part_time],
-                               job_roles: %w[teacher]))
-  end
-  let(:draft_vacancy) { Vacancy.find_by(job_title: vacancy.job_title) }
 
   before { login_publisher(publisher: publisher, organisation: school) }
 
   context "editing an incomplete draft vacancy" do
-    let(:incomplete_vacancy) { create(:vacancy, :draft, job_roles: %w[teacher], salary: nil) }
+      let(:incomplete_vacancy) { create(:vacancy, :draft, job_roles: %w[teacher], salary: nil) }
 
-    before { incomplete_vacancy.organisation_vacancies.create(organisation: school) }
+    before do
+      incomplete_vacancy.organisation_vacancies.create(organisation: school)
+      visit organisation_job_path(incomplete_vacancy.id)
+    end
 
     scenario "cannot submit a incomplete draft from the manage job listing page" do
-      visit organisation_job_path(incomplete_vacancy.id)
-
       expect(page).to have_content(I18n.t("pay_package_errors.salary.blank"))
       expect(page).to_not have_content(I18n.t("buttons.submit_job_listing"))
+    end
+
+    scenario "correct status tag is displayed" do
+      within(".review-component#pay_package") do
+        expect(page).to have_content(I18n.t("shared.status_tags.action_required"))
+      end
     end
   end
 
@@ -44,12 +44,24 @@ RSpec.describe "Publishers can edit a draft vacancy" do
     end
 
     describe "submitting a completed draft" do
-      scenario "can submit a completed draft from the manage job listing page" do
-        visit organisation_job_path(complete_vacancy.id)
+      let(:completed_steps) do
+        %w[job_role job_details pay_package working_patterns important_dates documents applying_for_the_job job_summary]
+      end
 
+      before { visit organisation_job_path(complete_vacancy.id) }
+
+      scenario "can submit a completed draft from the manage job listing page" do
         click_on I18n.t("buttons.submit_job_listing")
 
         expect(page.current_path).to eq(organisation_job_summary_path(complete_vacancy.id))
+      end
+
+      scenario "correct status tag is displayed" do
+        completed_steps.each do |step|
+          within(".review-component##{step}") do
+            expect(page).to have_content(I18n.t("shared.status_tags.complete"))
+          end
+        end
       end
     end
   end
