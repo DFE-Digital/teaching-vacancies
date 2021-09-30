@@ -48,4 +48,12 @@ RSpec.describe Publishers::SchoolOverviewComponent, type: :component do
       expect(rendered_component).to include(organisation.url)
     end
   end
+
+  context "when organisation does not have a url or website" do
+    let(:organisation) { create(:school, website: nil, url: nil) }
+
+    it "renders the school website is not provided" do
+      expect(rendered_component).to include(I18n.t("jobs.not_defined"))
+    end
+  end
 end
