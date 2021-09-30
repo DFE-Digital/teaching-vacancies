@@ -49,7 +49,7 @@ class Search::LocationBuilder
           @polygon_boundaries.push(polygon)
         end
       rescue NoMethodError
-        Rollbar.log(:error, "LocationPolygon buffer missing for radius #{radius.to_s} for LocationPolygon #{location.name}") if polygons.nil?
+        Rollbar.log(:error, "LocationPolygon buffer missing for radius #{radius} for LocationPolygon #{location.name}") if polygons.nil?
       end
     end
   end
