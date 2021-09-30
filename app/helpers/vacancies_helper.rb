@@ -80,6 +80,18 @@ module VacanciesHelper
     t("school_groups.job_location_heading.at_multiple_schools", organisation_type: organisation_type_basic(vacancy.parent_organisation))
   end
 
+  def vacancy_review_section_tag(vacancy, step, form_class)
+    tag_attributes = if form_class.fields.any? { |field| field.in?(vacancy.errors.messages.keys) }
+                       { text: t("shared.status_tags.action_required"), colour: "red" }
+                     elsif vacancy_step_completed?(vacancy, step)
+                       { text: t("shared.status_tags.complete") }
+                     else
+                       { text: t("shared.status_tags.not_started"), colour: "grey" }
+                     end
+
+    govuk_tag(**tag_attributes)
+  end
+
   def vacancy_school_visits_hint(vacancy)
     organisation = organisation_type_basic(vacancy.parent_organisation).tr(" ", "_")
     t("helpers.hint.publishers_job_listing_applying_for_the_job_form.#{organisation}_visits")
