@@ -117,6 +117,7 @@ ci:	## Run in automation environment
 
 .PHONY: terraform-app-init
 terraform-app-init:
+		$(if $(tag), , $(eval export tag=master))
 		$(if $(or $(disable_passcode),$(passcode)), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
 		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
 		cd terraform/app && rm -f .terraform.lock.hcl && terraform init -reconfigure -input=false $(backend_config)
