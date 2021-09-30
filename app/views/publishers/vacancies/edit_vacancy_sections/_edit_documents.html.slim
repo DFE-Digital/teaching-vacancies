@@ -3,16 +3,16 @@
 = render ReviewComponent.new id: "documents" do |review|
   - review.heading title: t("publishers.vacancies.steps.documents"),
                    text: t("buttons.change"),
-                   href: organisation_job_build_path(@vacancy.id, :documents)
+                   href: organisation_job_build_path(vacancy.id, :documents)
 
   - review.body do
     dl.govuk-summary-list
-      - if @vacancy.supporting_documents.none?
+      - if vacancy.supporting_documents.none?
         .govuk-summary-list__row
           dt.govuk-summary-list__key class="govuk-!-font-weight-regular"
             = t("jobs.no_supporting_documents")
       - else
-        - @vacancy.supporting_documents.each_with_index do |document, index|
+        - vacancy.supporting_documents.each_with_index do |document, index|
           .govuk-summary-list__row
             dt.govuk-summary-list__key class=(index.zero? && "first-question")
               h4.govuk-heading-s = "Document #{index + 1}"

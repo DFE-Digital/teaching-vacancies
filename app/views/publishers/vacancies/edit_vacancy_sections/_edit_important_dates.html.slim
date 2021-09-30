@@ -5,18 +5,18 @@
 = render ReviewComponent.new id: "important_dates" do |review|
   - review.heading title: t("publishers.vacancies.steps.important_dates"),
                    text: t("buttons.change"),
-                   href: organisation_job_build_path(@vacancy.id, :important_dates)
+                   href: organisation_job_build_path(vacancy.id, :important_dates)
 
   - review.body do
     = govuk_summary_list do |summary_list|
       - summary_list.row do |row|
         - row.key text: t("jobs.publication_date")
-        - row.value text: format_date(@vacancy.publish_on)
+        - row.value text: format_date(vacancy.publish_on)
 
       - summary_list.row do |row|
         - row.key text: t("jobs.application_deadline")
-        - row.value text: format_time_to_datetime_at(@vacancy.expires_at)
+        - row.value text: format_time_to_datetime_at(vacancy.expires_at)
 
       - summary_list.row do |row|
         - row.key text: t("jobs.starts_on")
-        - row.value text: @vacancy.starts_asap? ? t("jobs.starts_asap") : format_date(@vacancy.starts_on)
+        - row.value text: vacancy.starts_asap? ? t("jobs.starts_asap") : format_date(vacancy.starts_on)
