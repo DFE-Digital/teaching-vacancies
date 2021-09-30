@@ -5,38 +5,38 @@
 = render ReviewComponent.new id: "applying_for_the_job" do |review|
   - review.heading title: t("publishers.vacancies.steps.applying_for_the_job"),
                    text: t("buttons.change"),
-                   href: organisation_job_build_path(@vacancy.id, :applying_for_the_job)
+                   href: organisation_job_build_path(vacancy.id, :applying_for_the_job)
 
   - review.body do
     = govuk_summary_list do |summary_list|
       - unless current_organisation.group_type == "local_authority"
         - summary_list.row do |row|
           - row.key text: t("jobs.enable_job_applications")
-          - row.value text: @vacancy.enable_job_applications? ? "Yes" : "No"
+          - row.value text: vacancy.enable_job_applications? ? "Yes" : "No"
 
-      - if @vacancy.enable_job_applications?
+      - if vacancy.enable_job_applications?
         - summary_list.row do |row|
           - row.key text: t("jobs.personal_statement_guidance")
-          - row.value text: @vacancy.personal_statement_guidance.presence || t("jobs.not_defined")
+          - row.value text: vacancy.personal_statement_guidance.presence || t("jobs.not_defined")
 
       - else
         - summary_list.row do |row|
           - row.key text: t("jobs.application_link")
-          - row.value text: @vacancy.application_link.present? ? open_in_new_tab_link_to(@vacancy.application_link, @vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link")) : t("jobs.not_defined")
+          - row.value text: vacancy.application_link.present? ? open_in_new_tab_link_to(vacancy.application_link, vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link")) : t("jobs.not_defined")
 
-      - if @vacancy.how_to_apply.present?
+      - if vacancy.how_to_apply.present?
         - summary_list.row do |row|
           - row.key text: t("jobs.how_to_apply")
-          - row.value text: @vacancy.how_to_apply
+          - row.value text: vacancy.how_to_apply
 
       - summary_list.row do |row|
         - row.key text: t("jobs.contact_email")
-        - row.value text: govuk_mail_to("Job contact email", @vacancy.contact_email, "aria-label": t("jobs.aria_labels.contact_email_link", email: @vacancy.contact_email))
+        - row.value text: govuk_mail_to("Job contact email", vacancy.contact_email, "aria-label": t("jobs.aria_labels.contact_email_link", email: vacancy.contact_email))
 
       - summary_list.row do |row|
         - row.key text: t("jobs.contact_number")
-        - row.value text: @vacancy.contact_number.present? ? govuk_link_to(@vacancy.contact_number, "tel:#{@vacancy.contact_number}") : t("jobs.not_defined")
+        - row.value text: vacancy.contact_number.present? ? govuk_link_to(vacancy.contact_number, "tel:#{vacancy.contact_number}") : t("jobs.not_defined")
 
       - summary_list.row do |row|
-        - row.key text: t("jobs.#{school_or_trust_visits(@vacancy.parent_organisation)}")
-        - row.value text: @vacancy.school_visits.presence || t("jobs.not_defined")
+        - row.key text: t("jobs.#{school_or_trust_visits(vacancy.parent_organisation)}")
+        - row.value text: vacancy.school_visits.presence || t("jobs.not_defined")
