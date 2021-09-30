@@ -117,6 +117,7 @@ ci:	## Run in automation environment
 
 .PHONY: terraform-app-init
 terraform-app-init:
+		$(if $(tag), , $(eval export tag=master))
 		$(if $(or $(disable_passcode),$(passcode)), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
 		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
 		cd terraform/app && rm -f .terraform.lock.hcl && terraform init -reconfigure -input=false $(backend_config)
@@ -132,6 +133,12 @@ terraform-app-apply: terraform-app-init check-docker-tag ## make passcode=MyPass
 terraform-app-destroy: terraform-app-init ## make qa destroy passcode=MyPasscode
 	$(if $(CONFIRM_DESTROY), , $(error Can only run with CONFIRM_DESTROY))
 	cd terraform/app && terraform destroy -var-file ../workspace-variables/${var_file}.tfvars
+
+terraform-app-database-replace: terraform-app-init check-docker-tag
+	$(if $(CONFIRM_REPLACE), , $(error Can only run with CONFIRM_REPLACE)) \
+	cd terraform/app && terraform apply -replace="module.paas.cloudfoundry_service_instance.postgres_instance" \
+	-replace="module.paas.cloudfoundry_app.web_app" -replace="module.paas.cloudfoundry_app.worker_app" \
+	-var-file ../workspace-variables/${var_file}.tfvars -auto-approve
 
 ##@ terraform/common code. Requires privileged IAM account to run
 
