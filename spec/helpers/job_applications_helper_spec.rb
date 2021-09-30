@@ -136,7 +136,7 @@ RSpec.describe JobApplicationsHelper do
       before { allow(job_application).to receive_message_chain(:errors, :messages).and_return({ city: "Invalid city" }) }
 
       it "returns 'action required' tag" do
-        expect(subject).to eq(helper.govuk_tag(text: t("messages.jobs.action_required.label"), colour: "orange"))
+        expect(subject).to eq(helper.govuk_tag(text: t("shared.status_tags.action_required"), colour: "orange"))
       end
     end
 
