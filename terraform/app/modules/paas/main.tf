@@ -24,8 +24,8 @@ resource "cloudfoundry_service_instance" "redis_queue_instance" {
   json_params  = "{\"maxmemory_policy\": \"noeviction\"}"
 }
 
-resource "cloudfoundry_user_provided_service" "papertrail" {
-  name             = local.papertrail_service_name
+resource "cloudfoundry_user_provided_service" "logit" {
+  name             = local.logit_service_name
   space            = data.cloudfoundry_space.space.id
   syslog_drain_url = var.logit_url
 }
