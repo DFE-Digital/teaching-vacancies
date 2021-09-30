@@ -61,6 +61,10 @@ variable "paas_papertrail_service_binding_enable" {
   default = true
 }
 
+variable "paas_logit_service_binding_enable" {
+  default = true
+}
+
 variable "paas_postgres_service_plan" {
   default = "tiny-unencrypted-11"
 }
