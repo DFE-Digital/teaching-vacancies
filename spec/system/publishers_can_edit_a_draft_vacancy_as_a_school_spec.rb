@@ -7,48 +7,21 @@ RSpec.describe "Publishers can edit a draft vacancy" do
   before { login_publisher(publisher: publisher, organisation: school) }
 
   context "editing an incomplete draft vacancy" do
-    context "when there are steps with errors" do
-      let(:vacancy_with_errors) do
-        create(:vacancy, :draft, job_roles: %w[teacher], salary: nil)
-      end
+      let(:incomplete_vacancy) { create(:vacancy, :draft, job_roles: %w[teacher], salary: nil) }
 
-      before do
-        vacancy_with_errors.organisation_vacancies.create(organisation: school)
-        visit organisation_job_path(vacancy_with_errors.id)
-      end
-
-      scenario "cannot submit a incomplete draft from the manage job listing page" do
-        expect(page).to have_content(I18n.t("pay_package_errors.salary.blank"))
-        expect(page).to_not have_content(I18n.t("buttons.submit_job_listing"))
-      end
-
-      scenario "correct status tag is displayed" do
-        within(".review-component#pay_package") do
-          expect(page).to have_content(I18n.t("shared.status_tags.action_required"))
-        end
-      end
+    before do
+      incomplete_vacancy.organisation_vacancies.create(organisation: school)
+      visit organisation_job_path(incomplete_vacancy.id)
     end
 
-    context "when no questions have been answered in a step" do
-      let(:incomplete_vacancy) { create(:vacancy, :draft, job_roles: %w[teacher], salary: nil, completed_steps: completed_steps) }
-      let(:completed_steps) do
-        %w[job_role job_details pay_package important_dates documents applying_for_the_job job_summary]
-      end
+    scenario "cannot submit a incomplete draft from the manage job listing page" do
+      expect(page).to have_content(I18n.t("pay_package_errors.salary.blank"))
+      expect(page).to_not have_content(I18n.t("buttons.submit_job_listing"))
+    end
 
-      before do
-        incomplete_vacancy.organisation_vacancies.create(organisation: school)
-        visit organisation_job_path(incomplete_vacancy.id)
-      end
-
-      scenario "cannot submit a incomplete draft from the manage job listing page" do
-        expect(page).to have_content(I18n.t("pay_package_errors.salary.blank"))
-        expect(page).to_not have_content(I18n.t("buttons.submit_job_listing"))
-      end
-
-      scenario "correct status tag is displayed" do
-        within(".review-component#working_patterns") do
-          expect(page).to have_content(I18n.t("shared.status_tags.not_started"))
-        end
+    scenario "correct status tag is displayed" do
+      within(".review-component#pay_package") do
+        expect(page).to have_content(I18n.t("shared.status_tags.action_required"))
       end
     end
   end
