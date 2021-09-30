@@ -44,8 +44,12 @@ class Search::LocationBuilder
     @polygon_boundaries = []
     locations.compact.each do |location|
       polygons = location.buffers[radius.to_s]
-      polygons.each do |polygon|
-        @polygon_boundaries.push(polygon)
+      begin
+        polygons.each do |polygon|
+          @polygon_boundaries.push(polygon)
+        end
+      rescue NoMethodError
+        Rollbar.log(:error, "LocationPolygon buffer missing for radius #{radius} for LocationPolygon #{location.name}") if polygons.nil?
       end
     end
   end
