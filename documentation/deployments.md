@@ -82,6 +82,10 @@ Requirements:
 
 ## Deploy a pre-built image
 
+### Default tag
+
+If no docker image tag is specified, the makefile defaults to using the `master` tag - as specified in the makfile's `terraform-app-init:` target
+
 ### Refresh an environment with updated Parameter Store secrets
 
 The [refresh.yml](/.github/workflows/refresh.yml) workflow:
