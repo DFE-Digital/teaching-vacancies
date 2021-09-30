@@ -27,6 +27,14 @@ module OrganisationsHelper
     address_join([organisation.address, organisation.town, organisation.county, organisation.postcode])
   end
 
+  def change_description(organisation)
+    safe_join([t("buttons.change"), tag.span(t("publishers.organisations.aria_change_description", organisation_type: organisation_type_basic(organisation)), class: "govuk-visually-hidden")])
+  end
+
+  def change_website_url(organisation)
+    safe_join([t("buttons.change"), tag.span(t("publishers.organisations.aria_change_website", organisation_type: organisation_type_basic(organisation)), class: "govuk-visually-hidden")])
+  end
+
   def location(organisation)
     address_join([organisation.name, organisation.town, organisation.county])
   end
@@ -85,13 +93,13 @@ module OrganisationsHelper
     I18n.t("schools.no_information")
   end
 
-  def website_link(school)
+  def url(school)
     if school.website?
-      open_in_new_tab_link_to(school.website, school.website, class: "wordwrap")
+      school.website
     elsif school.url?
-      open_in_new_tab_link_to(school.url, school.url, class: "wordwrap")
+      school.url
     else
-      t("jobs.not_defined")
+      false
     end
   end
 

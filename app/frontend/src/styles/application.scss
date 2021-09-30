@@ -116,6 +116,15 @@ b {
   }
 }
 
+.govuk-summary-list {
+  border-collapse: collapse;
+
+  .govuk-summary-list__row {
+    border-bottom: 1px solid $govuk-border-colour;
+    padding-bottom: govuk-spacing(2);
+  }
+}
+
 .grey-cta-container {
   background-color: govuk-colour('light-grey');
 }
