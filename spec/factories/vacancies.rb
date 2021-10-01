@@ -1,14 +1,14 @@
 JOB_TITLES = ["Tutor of Science (opportunity exists for the right candidate for Head of Physics and/or KS4 Lead)",
               "PROGRESS LEADER (HEAD OF DEPARTMENT) FOR RS, PSHE, RSE AND CITIZENSHIP EDUCATION WITH TLR 2 £6698",
-              "Tutor of Music (Part-time, permanent) to include Music Performance Enhancement project for 1 year",
+              "Tutor of Music (Part time, permanent) to include Music Performance Enhancement project for 1 year",
               "Tutor of Maths MPS (A recruitment and retention point will be offered to the successful candidate)",
               "Tutor of PE (male)", "Games Design Tutor", "Team Leader of Maths", "KEY STAGE 2 Tutor",
               "Lead in Health and Social Care", "Director of Learning - Science"].freeze
 
-SALARIES = ["Main pay range 1 to Upper pay range 3, £23,719 to £39,406 per year (full-time equivalent)",
-            "£6,084 to £6,084 per year (full-time equivalent)", "Main pay range 2 to Upper pay range 3, £30,113 to £44,541",
+SALARIES = ["Main pay range 1 to Upper pay range 3, £23,719 to £39,406 per year (full time equivalent)",
+            "£6,084 to £6,084 per year (full time equivalent)", "Main pay range 2 to Upper pay range 3, £30,113 to £44,541",
             "Main pay range 1 to Upper pay range 3, £30,480 to £49,571", "MPR / UPR",
-            "MPS/UPS", "£25,543 to £41,635 per year (full-time equivalent)"].freeze
+            "MPS/UPS", "£25,543 to £41,635 per year (full time equivalent)"].freeze
 
 FactoryBot.define do
   factory :vacancy do
