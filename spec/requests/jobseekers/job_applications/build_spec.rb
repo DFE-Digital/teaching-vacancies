@@ -27,8 +27,7 @@ RSpec.describe "Job applications build" do
   end
 
   describe "PATCH #update" do
-    let(:params) { { origin: origin, jobseekers_job_application_personal_details_form: { first_name: "Cool name" } } }
-    let(:origin) { "" }
+    let(:params) { { jobseekers_job_application_personal_details_form: { first_name: "Cool name" } } }
 
     context "when the form is valid" do
       before { allow_any_instance_of(Jobseekers::JobApplication::PersonalDetailsForm).to receive(:valid?).and_return(true) }
@@ -47,9 +46,10 @@ RSpec.describe "Job applications build" do
       end
 
       context "when the jobseeker has not previously submitted a job application" do
-        context "when origin param is `jobseekers_job_application_review_url`" do
-          let(:origin) { jobseekers_job_application_review_url(job_application) }
+        context "when coming from the review page" do
           let(:button) { I18n.t("buttons.save") }
+
+          before { get jobseekers_job_application_review_path(job_application) }
 
           it "updates the job application and redirects to the review page" do
             expect { patch jobseekers_job_application_build_path(job_application, :personal_details), params: params }
@@ -60,7 +60,7 @@ RSpec.describe "Job applications build" do
           end
         end
 
-        context "when origin param is not `jobseekers_job_application_review_url`" do
+        context "when not coming from the review page" do
           it "updates the job application and redirects to the next step" do
             expect { patch jobseekers_job_application_build_path(job_application, :personal_details), params: params }
               .to change { job_application.reload.first_name }.from("").to("Cool name")

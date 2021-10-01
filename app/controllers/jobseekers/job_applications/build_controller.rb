@@ -26,7 +26,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
   private
 
   def back_path
-    @back_path ||= if referrer_is_finish_wizard_path?
+    @back_path ||= if redirect_to_review?
                      finish_wizard_path
                    elsif step == :personal_details
                      new_jobseekers_job_job_application_path(vacancy.id)
@@ -71,11 +71,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
   end
 
   def redirect_to_review?
-    current_jobseeker.job_applications.not_draft.any? || referrer_is_finish_wizard_path?
-  end
-
-  def referrer_is_finish_wizard_path?
-    URI(request.referrer || "").path == finish_wizard_path || URI(params[:origin] || "").path == finish_wizard_path
+    current_jobseeker.job_applications.not_draft.any? || session[:back_to_review]&.include?(job_application.id)
   end
 
   def update_params
