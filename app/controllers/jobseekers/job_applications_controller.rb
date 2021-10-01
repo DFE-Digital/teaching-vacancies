@@ -18,6 +18,10 @@ class Jobseekers::JobApplicationsController < Jobseekers::BaseController
     redirect_to jobseekers_job_application_build_path(new_job_application, :personal_details)
   end
 
+  def review
+    session[:back_to_review] = (session[:back_to_review] || []).push(job_application.id).uniq
+  end
+
   def new_quick_apply
     raise ActionController::RoutingError, "Cannot quick apply if there are no non-draft applications" unless
       current_jobseeker.job_applications.not_draft.any?
