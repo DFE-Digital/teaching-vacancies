@@ -187,7 +187,7 @@ RSpec.describe VacancyPresenter do
       let(:vacancy) { create(:vacancy, working_patterns: %w[full_time part_time], working_patterns_details: nil) }
 
       it "returns a string only containing the working pattern" do
-        expect(subject.show_working_patterns).to eq(I18n.t("jobs.working_patterns_info", patterns: "full-time, part-time", count: 2))
+        expect(subject.show_working_patterns).to eq(I18n.t("jobs.working_patterns_info", patterns: "full time, part time", count: 2))
       end
     end
 
