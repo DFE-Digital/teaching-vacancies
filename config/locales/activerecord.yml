@@ -482,9 +482,6 @@ en:
   activerecord:
     attributes:
       vacancy/expires_at: Application deadline (time)
-      vacancy/working_patterns:
-        full_time: Full-time
-        part_time: Part-time
     errors:
       models:
         jobseeker:

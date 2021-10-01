@@ -237,7 +237,7 @@ en:
           Give a brief summary of the job that jobseekers can quickly scan.
           This will be the first thing they see on the listing or in search engine results
       publishers_job_listing_pay_package_form:
-        actual_salary: For part-time or term-time roles this is what the candidate will actually be paid
+        actual_salary: For part time or term time roles this is what the candidate will actually be paid
         benefits: >-
           Include special educational needs (SEN) allowances and teaching and learning responsibility (TLR) payments,
           for example
@@ -566,7 +566,7 @@ en:
       publishers_job_listing_pay_package_form:
         actual_salary_html: Actual salary (optional<span class='govuk-visually-hidden'> field</span>)</span>
         benefits_html: Additional allowances (optional<span class='govuk-visually-hidden'> field</span>)</span>
-        salary: Annual or full-time equivalent (FTE) salary
+        salary: Annual or full time equivalent (FTE) salary
       publishers_job_listing_working_patterns_form:
         working_patterns_details_html: How many hours or days does the role cover? (optional<span class='govuk-visually-hidden'> field</span>)</span>
         working_patterns_options:
