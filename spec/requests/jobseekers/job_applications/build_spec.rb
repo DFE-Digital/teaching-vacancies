@@ -46,31 +46,6 @@ RSpec.describe "Job applications build" do
         end
       end
 
-      context "when the jobseeker has not previously submitted a job application" do
-        context "when origin param is `jobseekers_job_application_review_url`" do
-          let(:origin) { jobseekers_job_application_review_url(job_application) }
-          let(:button) { I18n.t("buttons.save") }
-
-          it "updates the job application and redirects to the review page" do
-            expect { patch jobseekers_job_application_build_path(job_application, :personal_details), params: params }
-              .to change { job_application.reload.first_name }.from("").to("Cool name")
-              .and change { job_application.completed_steps }.from([]).to(["personal_details"])
-
-            expect(response).to redirect_to(jobseekers_job_application_review_path(job_application))
-          end
-        end
-
-        context "when origin param is not `jobseekers_job_application_review_url`" do
-          it "updates the job application and redirects to the next step" do
-            expect { patch jobseekers_job_application_build_path(job_application, :personal_details), params: params }
-              .to change { job_application.reload.first_name }.from("").to("Cool name")
-              .and change { job_application.completed_steps }.from([]).to(["personal_details"])
-
-            expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :professional_status))
-          end
-        end
-      end
-
       context "when the job application status is not draft" do
         let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
