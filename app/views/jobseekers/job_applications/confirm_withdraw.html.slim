@@ -7,8 +7,6 @@
       h1.govuk-heading-xl = t(".heading")
 
       = form_for withdraw_form, url: jobseekers_job_application_withdraw_path(job_application), method: :post do |f|
-        = hidden_field_tag :origin, request.referrer
-
         = f.govuk_error_summary
 
         = f.govuk_radio_buttons_fieldset :withdraw_reason do

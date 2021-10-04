@@ -1,7 +1,7 @@
 - content_for :page_title_prefix, job_application_page_title_prefix(form, t(".title"))
 
 = render BannerComponent.new do
-  = govuk_back_link text: t("buttons.back_to_previous_step"), href: back_path, classes: "govuk-!-margin-top-3"
+  = govuk_back_link text: t("buttons.back"), href: back_path, classes: "govuk-!-margin-top-3"
   .govuk-caption-l class="govuk-!-margin-top-5" = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
   h1.govuk-heading-xl class="govuk-!-margin-bottom-5" = t("jobseekers.job_applications.heading")
 
@@ -19,8 +19,6 @@
     p.govuk-body = t(".closing")
 
     = form_for form, url: wizard_path, method: :patch do |f|
-      = hidden_field_tag :origin, request.referrer
-
       = f.govuk_error_summary
 
       = f.govuk_radio_buttons_fieldset :support_needed do
