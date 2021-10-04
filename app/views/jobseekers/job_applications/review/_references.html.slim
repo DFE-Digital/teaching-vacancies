@@ -2,7 +2,7 @@
   - review.heading title: t("jobseekers.job_applications.build.references.heading"),
                    text: job_application_review_edit_section_text(job_application, :references),
                    href: jobseekers_job_application_build_path(job_application, :references) do
-    = job_application_review_section_tag(job_application, :references, Jobseekers::JobApplication::ReferencesForm)
+    = review_section_tag(job_application, [:references], [Jobseekers::JobApplication::ReferencesForm])
 
   - review.body do
     - if job_application.references.none?

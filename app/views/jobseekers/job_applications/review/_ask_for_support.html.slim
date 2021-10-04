@@ -4,7 +4,7 @@
   - review.heading title: t("jobseekers.job_applications.build.ask_for_support.heading"),
                    text: job_application_review_edit_section_text(job_application, :ask_for_support),
                    href: jobseekers_job_application_build_path(job_application, :ask_for_support) do
-      = job_application_review_section_tag(job_application, :ask_for_support, Jobseekers::JobApplication::AskForSupportForm)
+      = review_section_tag(job_application, [:ask_for_support], [Jobseekers::JobApplication::AskForSupportForm])
 
   - review.body do
     = govuk_summary_list do |summary_list|

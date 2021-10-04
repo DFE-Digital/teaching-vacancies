@@ -4,7 +4,7 @@
   - review.heading title: t("publishers.vacancies.steps.job_role"),
                    text: t("buttons.change"),
                    href: organisation_job_build_path(vacancy.id, :job_role)
-    = vacancy_review_section_tag(vacancy, %i[job_role])
+    = review_section_tag(vacancy, %i[job_role], [Publishers::JobListing::JobRoleForm])
 
   - review.body do
     = govuk_summary_list do |summary_list|

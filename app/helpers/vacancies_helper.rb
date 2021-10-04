@@ -80,24 +80,6 @@ module VacanciesHelper
     t("school_groups.job_location_heading.at_multiple_schools", organisation_type: organisation_type_basic(vacancy.parent_organisation))
   end
 
-  def vacancy_review_section_tag(vacancy, steps)
-    form_classes = steps.map { |step| "publishers/job_listing/#{step}_form".camelize.constantize }
-
-    return govuk_tag(text: t("shared.status_tags.not_started"), colour: "grey") if steps.none? { |step| vacancy_step_completed?(vacancy, step) }
-
-    return govuk_tag(text: t("shared.status_tags.action_required"), colour: "red") if vacancy_forms_contain_errors?(vacancy, form_classes)
-
-    govuk_tag(text: t("shared.status_tags.complete"))
-  end
-
-  def vacancy_forms_contain_errors?(vacancy, form_classes)
-    form_classes.each do |form_class|
-      return true if form_class.fields.any? { |field| field.in?(vacancy.errors.messages.keys) }
-    end
-
-    false
-  end
-
   def vacancy_school_visits_hint(vacancy)
     organisation = organisation_type_basic(vacancy.parent_organisation).tr(" ", "_")
     t("helpers.hint.publishers_job_listing_applying_for_the_job_form.#{organisation}_visits")

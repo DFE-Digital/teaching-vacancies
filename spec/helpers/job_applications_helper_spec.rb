@@ -125,41 +125,6 @@ RSpec.describe JobApplicationsHelper do
     end
   end
 
-  describe "#job_application_review_section_tag" do
-    subject { helper.job_application_review_section_tag(job_application, step, form_class) }
-
-    let(:job_application) { build_stubbed(:job_application, completed_steps: %w[personal_details professional_status]) }
-
-    context "when there is an error on an attribute in the step" do
-      let(:form_class) { Jobseekers::JobApplication::PersonalDetailsForm }
-      let(:step) { :personal_details }
-
-      before { allow(job_application).to receive_message_chain(:errors, :messages).and_return({ city: "Invalid city" }) }
-
-      it "returns 'action required' tag" do
-        expect(subject).to eq(helper.govuk_tag(text: I18n.t("shared.status_tags.action_required"), colour: "orange"))
-      end
-    end
-
-    context "when the step is completed" do
-      let(:form_class) { Jobseekers::JobApplication::PersonalDetailsForm }
-      let(:step) { :personal_details }
-
-      it "returns 'complete' tag" do
-        expect(subject).to eq(helper.govuk_tag(text: I18n.t("shared.status_tags.complete")))
-      end
-    end
-
-    context "when the step is not started" do
-      let(:form_class) { Jobseekers::JobApplication::PersonalDetailsForm }
-      let(:step) { :personal_statement }
-
-      it "returns 'not started' tag" do
-        expect(subject).to eq(helper.govuk_tag(text: I18n.t("shared.status_tags.not_started"), colour: "red"))
-      end
-    end
-  end
-
   describe "#job_application_view_applicant" do
     subject { helper.job_application_view_applicant(vacancy, job_application) }
 
