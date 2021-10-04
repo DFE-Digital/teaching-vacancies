@@ -14,7 +14,7 @@ class ImportPolygons
   end
 
   def call
-    response = JSON.parse(HTTParty.get(LOCATION_POLYGON_SETTINGS[api_location_type][:boundary_api]))
+    response = JSON.parse(HTTParty.get(LOCATION_POLYGON_SETTINGS[api_location_type][:boundary_api]).to_s)
 
     raise ArcgisResponseError, response.dig("error", "message") if response.dig("error", "code").present?
 
