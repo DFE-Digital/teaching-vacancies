@@ -126,6 +126,10 @@ en:
     organisation_ids:
       blank: Select the schools where the job will be based
       invalid: Select more than one school
+  education_phases_errors: &education_phases_errors
+    phase:
+      blank: Select an education phase
+      inclusion: Select an education phase
   job_details_errors: &job_details_errors
     contract_type:
       inclusion: Select if the contract type is permanent or fixed term
@@ -249,6 +253,9 @@ en:
         publishers/job_listing/schools_form:
           attributes:
             <<: *schools_errors
+        publishers/job_listing/education_phases_form:
+          attributes:
+            <<: *education_phases_errors
         publishers/job_listing/job_details_form:
           attributes:
             <<: *job_details_errors

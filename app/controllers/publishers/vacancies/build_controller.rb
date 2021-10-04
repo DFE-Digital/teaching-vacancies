@@ -2,8 +2,8 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   include Wicked::Wizard
   include OrganisationsHelper
 
-  steps :job_role, :job_role_details, :job_location, :schools, :job_details, :working_patterns, :pay_package,
-        :important_dates, :documents, :applying_for_the_job, :job_summary
+  steps :job_role, :job_role_details, :job_location, :schools, :education_phases, :job_details, :working_patterns,
+        :pay_package, :important_dates, :documents, :applying_for_the_job, :job_summary
 
   helper_method :back_path, :form
 
@@ -14,16 +14,9 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   helper_method :current_publisher_preference
 
   def show
-    case step
-    when :job_role_details
-      skip_step if vacancy.main_job_role == "sendco"
-    when :job_location
-      skip_step if current_organisation.school?
-    when :schools
-      skip_step if current_organisation.school? || job_location == "central_office"
-    when :documents
-      return redirect_to(organisation_job_documents_path(vacancy.id))
-    end
+    skip_step_if_missing
+
+    return redirect_to(organisation_job_documents_path(vacancy.id)) if step == :documents
 
     render_wizard
   end
@@ -112,5 +105,11 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
     vacancy.set_postcode_from_mean_geolocation(persist: false)
     vacancy.refresh_slug
     update_google_index(vacancy) if vacancy.listed?
+  end
+
+  def skip_step_if_missing
+    step_process
+  rescue MissingStepError
+    skip_step
   end
 end

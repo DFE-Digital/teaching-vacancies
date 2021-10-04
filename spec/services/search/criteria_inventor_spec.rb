@@ -24,9 +24,10 @@ RSpec.describe Search::CriteriaInventor do
   let(:job_roles) { %w[teacher send_responsible] }
   let(:location_trait) { :at_one_school }
   let(:organisation_vacancies_attributes) { [{ organisation: school }] }
+  let(:postcode_from_mean_geolocation) { "OX14 JE1" }
   let(:vacancy) do
     create(:vacancy, location_trait, organisation_vacancies_attributes: organisation_vacancies_attributes,
-                                     postcode_from_mean_geolocation: "OX14 1EJ",
+                                     postcode_from_mean_geolocation: postcode_from_mean_geolocation,
                                      working_patterns: working_patterns,
                                      subjects: subjects,
                                      job_title: job_title,
@@ -55,13 +56,23 @@ RSpec.describe Search::CriteriaInventor do
         before do
           SchoolGroupMembership.create(school: school1, school_group: trust)
           SchoolGroupMembership.create(school: school2, school_group: trust)
+          vacancy.reload
         end
 
-        it "calls the Geocoding class to calculate the postcode from the mean location" do
-          expect(subject.criteria[:location]).to eq(vacancy.postcode_from_mean_geolocation)
+        it "uses the vacancy's postcode_from_mean_geolocation attribute" do
+          expect(subject.criteria[:location]).to eq(postcode_from_mean_geolocation)
         end
 
         it_behaves_like "radius is set"
+
+        context "and the vacancy does not already have a postcode_from_mean_geolocation attribute" do
+          let(:postcode_from_mean_geolocation) { nil }
+
+          it "calls the Geocoding class to calculate the postcode from the mean location and sets the vacancy attribute" do
+            expect(subject.criteria[:location]).to eq(Geocoder::DEFAULT_LOCATION)
+            expect(vacancy.postcode_from_mean_geolocation).to eq(Geocoder::DEFAULT_LOCATION)
+          end
+        end
       end
 
       context "when the vacancy is at the central office of a trust" do
@@ -94,7 +105,8 @@ RSpec.describe Search::CriteriaInventor do
       end
     end
 
-    it "sets the phases to the same as the school" do
+    it "sets the phases to the same as the vacancy" do
+      vacancy.reload
       expect(subject.criteria[:phases]).to eq(readable_phases)
     end
 

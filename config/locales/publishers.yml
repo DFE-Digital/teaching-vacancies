@@ -157,6 +157,10 @@ en:
           step_title: Important dates and deadlines
         job_details:
           step_title: Job details
+          phase_inset_text:
+            link_text: Change the education phase.
+            one_phase: You are listing a %{phase} phase role.
+            multiple_phases_html: You are listing a role covering more than one phase. %{link}
         job_location:
           step_title: Job location
         job_role:
@@ -259,8 +263,9 @@ en:
         job_role: Job role
         job_location: Job location
         schools: Job location
-        working_patterns: Working patterns
+        education_phases: Job details
         job_details: Job details
+        working_patterns: Working patterns
         pay_package: Pay package
         important_dates: Important dates and deadlines
         documents: Supporting documents
