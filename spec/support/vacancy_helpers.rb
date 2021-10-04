@@ -18,8 +18,8 @@ module VacancyHelpers
     choose I18n.t("helpers.label.publishers_job_listing_job_role_form.main_job_role_options.#{vacancy.main_job_role}")
   end
 
-  def fill_in_education_phases_form_fields(vacancy)
-    choose I18n.t("helpers.label.publishers_job_listing_education_phases_form.phase_options.#{vacancy.phase}")
+  def fill_in_education_phases_form_fields(vacancy, phase: vacancy.phase)
+    choose I18n.t("helpers.label.publishers_job_listing_education_phases_form.phase_options.#{phase}")
   end
 
   def fill_in_job_role_details_form_fields(vacancy)
@@ -33,7 +33,7 @@ module VacancyHelpers
     end
   end
 
-  def fill_in_job_details_form_fields(vacancy)
+  def fill_in_job_details_form_fields(vacancy, include_key_stages: true)
     fill_in "publishers_job_listing_job_details_form[job_title]", with: vacancy.job_title
 
     vacancy.subjects&.each do |subject|
@@ -43,6 +43,11 @@ module VacancyHelpers
     end
 
     choose I18n.t("helpers.label.publishers_job_listing_job_details_form.contract_type_options.#{vacancy.contract_type}")
+    if include_key_stages
+      vacancy.key_stages.each do |key_stage|
+        check I18n.t("helpers.label.publishers_job_listing_job_role_details_form.additional_job_roles_options.#{key_stage}")
+      end
+    end
     fill_in "publishers_job_listing_job_details_form[contract_type_duration]", with: vacancy.contract_type_duration
   end
 
