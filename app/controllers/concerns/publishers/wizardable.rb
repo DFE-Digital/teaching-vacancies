@@ -11,7 +11,8 @@ module Publishers::Wizardable
   end
 
   def job_role_details_params(params)
-    params.require(:publishers_job_listing_job_role_details_form).permit(:send_responsible, additional_job_roles: [])
+    params.require(:publishers_job_listing_job_role_details_form)
+          .permit(:send_responsible, additional_job_roles: [])
           .merge(completed_steps: completed_steps)
   end
 
@@ -44,7 +45,8 @@ module Publishers::Wizardable
       job_location: job_location,
       readable_job_location: readable_job_location,
     }
-    params.require(:publishers_job_listing_schools_form).permit(:organisation_ids, organisation_ids: [])
+    params.require(:publishers_job_listing_schools_form)
+          .permit(:organisation_ids, organisation_ids: [])
           .merge(attributes_to_merge.compact)
   end
 
@@ -73,12 +75,14 @@ module Publishers::Wizardable
   end
 
   def working_patterns_params(params)
-    params.require(:publishers_job_listing_working_patterns_form).permit(:working_patterns_details, working_patterns: [])
+    params.require(:publishers_job_listing_working_patterns_form)
+          .permit(:working_patterns_details, working_patterns: [])
           .merge(completed_steps: completed_steps)
   end
 
   def pay_package_params(params)
-    params.require(:publishers_job_listing_pay_package_form).permit(:actual_salary, :salary, :benefits)
+    params.require(:publishers_job_listing_pay_package_form)
+          .permit(:actual_salary, :salary, :benefits)
           .merge(completed_steps: completed_steps)
   end
 
@@ -95,7 +99,8 @@ module Publishers::Wizardable
   end
 
   def job_summary_params(params)
-    params.require(:publishers_job_listing_job_summary_form).permit(:job_advert, :about_school)
+    params.require(:publishers_job_listing_job_summary_form)
+          .permit(:job_advert, :about_school)
           .merge(completed_steps: completed_steps)
   end
 
