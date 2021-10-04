@@ -1,8 +1,4 @@
 class SitemapController < ApplicationController
-  include SeoHelper
-
-  helper_method :seo_friendly_url
-
   def show
     map = XmlSitemap::Map.new(DOMAIN, secure: !Rails.env.development?) do |m|
       add_vacancies(m)
@@ -31,19 +27,19 @@ class SitemapController < ApplicationController
 
   def add_locations(map)
     ALL_IMPORTED_LOCATIONS.each do |location|
-      map.add seo_friendly_url(location_path(location)), period: "hourly"
+      map.add location_path(location.parameterize), period: "hourly"
     end
   end
 
   def add_subjects(map)
     SUBJECT_OPTIONS.map(&:first).each do |subject|
-      map.add seo_friendly_url(subject_path(subject)), period: "hourly"
+      map.add subject_path(subject.parameterize), period: "hourly"
     end
   end
 
   def add_job_roles(map)
     Vacancy.job_roles.each_key do |job_role|
-      map.add seo_friendly_url(job_role_path(job_role)), period: "hourly"
+      map.add job_role_path(job_role.dasherize), period: "hourly"
     end
   end
 
