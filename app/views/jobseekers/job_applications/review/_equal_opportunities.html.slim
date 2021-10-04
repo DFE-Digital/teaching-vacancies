@@ -4,7 +4,7 @@
   - review.heading title: t("jobseekers.job_applications.build.equal_opportunities.heading"),
                    text: job_application_review_edit_section_text(job_application, :equal_opportunities),
                    href: jobseekers_job_application_build_path(job_application, :equal_opportunities) do
-      = job_application_review_section_tag(job_application, :equal_opportunities)
+      = review_section_tag(job_application, [:equal_opportunities], [Jobseekers::JobApplication::EqualOpportunitiesForm])
 
   - review.body do
     = govuk_summary_list do |summary_list|

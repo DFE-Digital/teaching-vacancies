@@ -53,4 +53,39 @@ RSpec.describe VacanciesHelper do
       end
     end
   end
+
+  describe "#vacancy_review_section_tag" do
+    subject { helper.vacancy_review_section_tag(vacancy, step) }
+
+    let(:vacancy) { build_stubbed(:vacancy, completed_steps: %w[job_role job_details]) }
+
+    context "when there is an error on an attribute in the step" do
+      let(:form_class) { Publishers::JobListing::JobDetailsForm }
+      let(:step) { %i[job_details] }
+
+      before { allow(vacancy).to receive_message_chain(:errors, :messages).and_return({ job_title: "Enter a job title" }) }
+
+      it "returns 'action required' tag" do
+        expect(subject).to eq(helper.govuk_tag(text: t("shared.status_tags.action_required"), colour: "red"))
+      end
+    end
+
+    context "when the step is completed" do
+      let(:form_class) { Publishers::JobListing::JobDetailsForm }
+      let(:step) { %i[job_details] }
+
+      it "returns 'complete' tag" do
+        expect(subject).to eq(helper.govuk_tag(text: I18n.t("shared.status_tags.complete")))
+      end
+    end
+
+    context "when the step is not started" do
+      let(:form_class) { Publishers::JobListing::WorkingPatternsForm }
+      let(:step) { %i[working_patterns] }
+
+      it "returns 'not started' tag" do
+        expect(subject).to eq(helper.govuk_tag(text: I18n.t("shared.status_tags.not_started"), colour: "grey"))
+      end
+    end
+  end
 end
