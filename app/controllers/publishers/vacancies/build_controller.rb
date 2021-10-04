@@ -14,16 +14,9 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   helper_method :current_publisher_preference
 
   def show
-    case step
-    when :job_role_details
-      skip_step if vacancy.main_job_role == "sendco"
-    when :job_location
-      skip_step if current_organisation.school?
-    when :schools
-      skip_step if current_organisation.school? || job_location == "central_office"
-    when :documents
-      return redirect_to(organisation_job_documents_path(vacancy.id))
-    end
+    skip_step if step_process.steps.exclude?(step)
+
+    return redirect_to(organisation_job_documents_path(vacancy.id)) if step == :documents
 
     render_wizard
   end
