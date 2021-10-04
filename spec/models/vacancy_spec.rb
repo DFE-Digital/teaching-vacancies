@@ -558,6 +558,8 @@ RSpec.describe Vacancy do
         create(:vacancy, organisation_vacancies_attributes: [{ organisation: school }])
       end
 
+      before { subject.reload }
+
       context "when the school has a single education phase" do
         let(:phase) { :secondary }
         let(:school) { create(:school, phase) }
@@ -601,6 +603,7 @@ RSpec.describe Vacancy do
     context "when the vacancy is at multiple schools" do
       let(:school) { create(:school, :secondary) }
       subject { create(:vacancy, organisation_vacancies_attributes: [{ organisation: school }, { organisation: school2 }]) }
+      before { subject.reload }
 
       context "when the schools have the same phase (secondary)" do
         let(:school2) { create(:school, :secondary) }

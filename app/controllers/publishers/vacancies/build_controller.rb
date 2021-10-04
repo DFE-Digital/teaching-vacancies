@@ -14,7 +14,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   helper_method :current_publisher_preference
 
   def show
-    skip_step if step_process.steps.exclude?(step)
+    skip_step_if_missing
 
     return redirect_to(organisation_job_documents_path(vacancy.id)) if step == :documents
 
@@ -105,5 +105,11 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
     vacancy.set_postcode_from_mean_geolocation(persist: false)
     vacancy.refresh_slug
     update_google_index(vacancy) if vacancy.listed?
+  end
+
+  def skip_step_if_missing
+    step_process
+  rescue MissingStepError
+    skip_step
   end
 end
