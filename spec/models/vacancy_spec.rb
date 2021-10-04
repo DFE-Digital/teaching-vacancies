@@ -410,6 +410,28 @@ RSpec.describe Vacancy do
     end
   end
 
+  describe "#reset_dependent_fields" do
+    context "when changing working pattern to full time" do
+      subject { create(:vacancy, working_patterns: ["part_time"], actual_salary: "50000") }
+
+      before { subject.update working_patterns: ["full_time"] }
+
+      it "resets actual_salary field" do
+        expect(subject.actual_salary).to be_blank
+      end
+    end
+
+    context "when changing contract type to permanent" do
+      subject { create(:vacancy, contract_type: "fixed_term", contract_type_duration: "8 months") }
+
+      before { subject.update contract_type: "permanent" }
+
+      it "resets contract_type_duration field" do
+        expect(subject.contract_type_duration).to be_blank
+      end
+    end
+  end
+
   describe "validations" do
     describe "changing enable_job_applications" do
       subject { build_stubbed(:vacancy, status, enable_job_applications: true) }
