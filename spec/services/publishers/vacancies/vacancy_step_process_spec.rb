@@ -85,8 +85,17 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
         let(:vacancy) { build_stubbed(:vacancy, job_roles: %w[teacher], job_location: "central_office") }
         let(:session) { { job_location: "at_multiple_schools" } }
 
-        it "skips the `schools` step" do
+        it "includes the `schools` step" do
           expect(subject.steps).to eq(all_possible_steps)
+        end
+      end
+
+      context "when the job location has changed to central_office in the session" do
+        let(:vacancy) { build_stubbed(:vacancy, job_roles: %w[teacher], job_location: "at_multiple_schools") }
+        let(:session) { { job_location: "central_office" } }
+
+        it "skips the `schools` step" do
+          expect(subject.steps).to eq(all_possible_steps - %i[schools])
         end
       end
     end
