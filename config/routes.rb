@@ -24,6 +24,8 @@ Rails.application.routes.draw do
     registrations: "jobseekers/registrations",
     sessions: "jobseekers/sessions",
     unlocks: "jobseekers/unlocks",
+  }, path_names: {
+    sign_in: "sign-in",
   }
 
   get "/jobseekers/saved_jobs", to: "jobseekers/saved_jobs#index", as: :jobseeker_root
@@ -88,9 +90,9 @@ Rails.application.routes.draw do
 
   scope :publishers do
     devise_scope :publisher do
-      get "sign_in", to: "publishers/sessions#new", as: :new_publisher_session
+      get "sign-in", to: "publishers/sessions#new", as: :new_publisher_session
       get "auth", to: "publishers/sessions#create", as: :create_publisher_session
-      delete "sign_out", to: "publishers/sessions#destroy", as: :destroy_publisher_session
+      delete "sign-out", to: "publishers/sessions#destroy", as: :destroy_publisher_session
     end
 
     resources :login_keys, only: %i[show new create], controller: "publishers/login_keys"
@@ -169,8 +171,12 @@ Rails.application.routes.draw do
     resources :schools, only: %i[index edit update], controller: "publishers/organisations/schools"
   end
 
-  # Legacy publisher sign in path (users may still have this bookmarked)
-  get "/identifications/new", to: redirect("/publishers/sign_in")
+  # Legacy authentication paths (users may still have this bookmarked)
+  get "/identifications/new", to: redirect("/publishers/sign-in")
+  get "/publishers/sign_in", to: redirect("/publishers/sign-in")
+  get "/publishers/sign_out", to: redirect("/publishers/sign-out")
+  get "/publishers/account_requests/new", to: redirect("/publishers/account-requests/new")
+  get "/jobseekers/sign_in", to: redirect("/jobseekers/sign-in")
 
   # Well known URLs
   get ".well-known/change-password", to: redirect(status: 302) { Rails.application.routes.url_helpers.edit_jobseeker_registration_path(password_update: true) }
@@ -183,18 +189,24 @@ Rails.application.routes.draw do
   match "/500", as: :internal_server_error, to: "errors#internal_server_error", via: :all
   match "/maintenance", as: :maintenance, to: "errors#maintenance", via: :all
 
-  # If parameters are used that are the same as those in the search form, pagination with kaminari will break
-  match "teaching-jobs-in-:location_facet",
-        to: "vacancies#index", as: :location, via: :get,
-        constraints: ->(request) { LocationPolygon.include?(request.params[:location_facet]) }
+  get "/teaching-jobs-:not_normalized",
+      to: redirect { |params| "/teaching-jobs-#{params[:not_normalized].parameterize.dasherize}" },
+      constraints: ->(request) { request.params[:not_normalized] != request.params[:not_normalized].parameterize.dasherize }
 
-  match "teaching-jobs-for-:job_role",
-        to: "vacancies#index", as: :job_role, via: :get,
-        constraints: ->(request) { Vacancy.job_roles.key?(request.params[:job_role]) },
+  with_options(to: "vacancies#index") do
+    # If parameters are used that are the same as those in the search form, pagination with kaminari will break
+    get "teaching-jobs-in-:location_facet",
+        as: :location,
+        constraints: ->(request) { LocationPolygon.include?(request.params[:location_facet].titleize) }
+
+    get "teaching-jobs-for-:job_role",
+        as: :job_role,
+        constraints: ->(request) { Vacancy.job_roles.key?(request.params[:job_role].dasherize) },
         defaults: { pretty: :job_role }
 
-  match "teaching-jobs-for-:subject",
-        to: "vacancies#index", as: :subject, via: :get,
-        constraints: ->(request) { SUBJECT_OPTIONS.map(&:first).include?(request.params[:subject]) },
+    get "teaching-jobs-for-:subject",
+        as: :subject,
+        constraints: ->(request) { SUBJECT_OPTIONS.map(&:first).map(&:parameterize).include?(request.params[:subject].parameterize) },
         defaults: { pretty: :subject }
+  end
 end

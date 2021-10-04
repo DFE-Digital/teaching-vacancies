@@ -1,6 +1,6 @@
 class SitemapController < ApplicationController
   def show
-    map = XmlSitemap::Map.new(DOMAIN, secure: true) do |m|
+    map = XmlSitemap::Map.new(DOMAIN, secure: !Rails.env.development?) do |m|
       add_vacancies(m)
       add_new_session(m)
       add_locations(m)
@@ -27,19 +27,19 @@ class SitemapController < ApplicationController
 
   def add_locations(map)
     ALL_IMPORTED_LOCATIONS.each do |location|
-      map.add location_path(location), period: "hourly"
+      map.add location_path(location.parameterize), period: "hourly"
     end
   end
 
   def add_subjects(map)
     SUBJECT_OPTIONS.map(&:first).each do |subject|
-      map.add subject_path(subject), period: "hourly"
+      map.add subject_path(subject.parameterize), period: "hourly"
     end
   end
 
   def add_job_roles(map)
     Vacancy.job_roles.each_key do |job_role|
-      map.add job_role_path(job_role), period: "hourly"
+      map.add job_role_path(job_role.dasherize), period: "hourly"
     end
   end
 
