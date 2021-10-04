@@ -5,6 +5,8 @@
 // https://github.com/ministryofjustice/moj-frontend/blob/280a4b7b0ffdba4b0bcee21a6194a7b3e23fe398/src/moj/objects/_scrollable-pane.scss
 
 // Shadow mixin lifted verbatim from MoJ code:
+@use 'sass:math';
+
 @mixin moj-scrollable-pane {
   .moj-scrollable-pane {
     clear: both; // Fixes render bug
@@ -46,7 +48,7 @@
 // If filter sidebar is hidden, apply shadow mixin to dashboard table only for certain device-widths.
 .govuk-grid-column-full.moj-filter-layout__content {
   // The 0.9 comes from the class .publishers .govuk-width-container 'width: 90%'.
-  $breakpoint-when-filters-hidden: $desktop-container-width / 0.9;
+  $breakpoint-when-filters-hidden: math.div($desktop-container-width, 0.9);
 
   @include govuk-media-query($until: $breakpoint-when-filters-hidden) {
     @include moj-scrollable-pane;
