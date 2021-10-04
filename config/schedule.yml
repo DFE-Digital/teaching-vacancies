@@ -43,6 +43,11 @@ queue_weekly_alerts:
   class: 'SendWeeklyAlertEmailJob'
   queue: default
 
+refresh_organisations_gias_data_hash:
+  cron: '0 23 * * *'
+  class: 'RefreshOrganisationsGiasDataHashJob'
+  queue: low
+
 remove_invalid_subscriptions:
   cron: '0 05 * * *'
   class: 'RemoveInvalidSubscriptionsJob'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_29_121317) do
+ActiveRecord::Schema.define(version: 2021_10_04_133748) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -321,6 +321,7 @@ ActiveRecord::Schema.define(version: 2021_09_29_121317) do
     t.string "local_authority_within"
     t.string "establishment_status"
     t.geography "geopoint", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
+    t.text "gias_data_hash"
     t.index ["geopoint"], name: "index_organisations_on_geopoint", using: :gist
     t.index ["local_authority_code"], name: "index_organisations_on_local_authority_code", unique: true
     t.index ["uid"], name: "index_organisations_on_uid", unique: true
