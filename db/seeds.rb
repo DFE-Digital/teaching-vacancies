@@ -281,11 +281,11 @@ Publisher.create(oid: "DF97F25C-3A3E-4655-B7D3-5CDBDCBBBC69",
                  family_name: "Hull",
                  given_name: "Joseph")
 
-Publisher.create(oid: "CA300D6A-4FC1-4C1E-97E5-D6BD4FDB80D9",
-                 email: "judith.thrasher@digital.education.gov.uk",
+Publisher.create(oid: "CA300D6A-4FC1-4C1E-97E5-D6BD4FDB80FF",
+                 email: "leonie.shanks@digital.education.gov.uk",
                  organisation_publishers_attributes: organisation_publishers_attributes,
-                 family_name: "Thrasher",
-                 given_name: "Judith")
+                 family_name: "Shanks",
+                 given_name: "Leonie")
 
 Publisher.create(oid: "EC3312BA-E33B-4791-A815-4D1907DD578E",
                  email: "mili.malde@digital.education.gov.uk",
