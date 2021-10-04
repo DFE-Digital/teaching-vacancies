@@ -580,6 +580,8 @@ RSpec.describe Vacancy do
         create(:vacancy, organisation_vacancies_attributes: [{ organisation: school }])
       end
 
+      before { subject.reload }
+
       context "when the school has a single education phase" do
         let(:phase) { :secondary }
         let(:school) { create(:school, phase) }
@@ -623,6 +625,7 @@ RSpec.describe Vacancy do
     context "when the vacancy is at multiple schools" do
       let(:school) { create(:school, :secondary) }
       subject { create(:vacancy, organisation_vacancies_attributes: [{ organisation: school }, { organisation: school2 }]) }
+      before { subject.reload }
 
       context "when the schools have the same phase (secondary)" do
         let(:school2) { create(:school, :secondary) }
@@ -638,6 +641,19 @@ RSpec.describe Vacancy do
         it_behaves_like "allows the user to set the education phase of the vacancy"
 
         it_behaves_like "allows the user to set the key stage"
+      end
+    end
+
+    context "when an attribute depended on by another is changed" do
+      subject { create(:vacancy, phase: "primary", subjects: %w[English]) }
+
+      before do
+        subject.assign_attributes(phase: "secondary")
+        subject.save
+      end
+
+      it "drops the dependent attribute" do
+        expect(subject.subjects).to be_empty
       end
     end
   end
