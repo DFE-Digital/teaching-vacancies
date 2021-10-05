@@ -155,9 +155,6 @@ en:
           We'll only use this to tell you about opportunities to take part in user research that helps us improve
           Department for Education services.
 
-      publishers_account_request_form:
-        organisation_identifier_html: You can find these details on %{link}
-
       publishers_organisation_form:
         description: Jobseekers will see this description of the %{organisation_type} in the job listing
 
@@ -463,12 +460,6 @@ en:
 
       publisher:
         email: Email address
-
-      publishers_account_request_form:
-        full_name: Full name
-        email: Work email address
-        organisation_name: Your school, trust or local authority name
-        organisation_identifier_html: School unique reference number (URN) or trust unique identifier (UID) (optional<span class='govuk-visually-hidden'> field</span>)</span>
 
       publishers_organisation_form:
         description: Description of %{organisation_type}

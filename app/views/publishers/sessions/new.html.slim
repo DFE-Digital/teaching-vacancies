@@ -12,4 +12,5 @@
 
     .govuk-grid-column-one-third.grey-cta-container
       h2.account-sidebar__heading = t(".no_account.heading")
-      p.govuk-body = t(".no_account.content_html", link: govuk_link_to(t(".no_account.link_text"), new_publishers_account_request_path))
+      p.govuk-body = t("publishers.sessions.new.no_account.content_html", link: govuk_link_to(t(".no_account.login_link_text"), "https://services.signin.education.gov.uk/"))
+      p.govuk-body = t(".no_account.request_account_html", link: govuk_link_to(t(".no_account.account_creation_link_text"), page_path("dsi-account-request")))
