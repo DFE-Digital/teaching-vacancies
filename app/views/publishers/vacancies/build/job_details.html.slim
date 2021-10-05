@@ -13,7 +13,7 @@
         = govuk_inset_text do
           - if vacancy.one_phase?
             = t("publishers.vacancies.build.job_details.phase_inset_text.one_phase", phase: vacancy.education_phases.first.humanize)
-          - elsif allow_phase_to_be_set?
+          - elsif vacancy.allow_phase_to_be_set?
             = t("publishers.vacancies.build.job_details.phase_inset_text.multiple_phases_html",
             link: govuk_link_to(t("publishers.vacancies.build.job_details.phase_inset_text.link_text"), organisation_job_build_path(vacancy.id, :education_phases)))
 
@@ -33,11 +33,11 @@
           = f.govuk_radio_button :contract_type, :fixed_term do
             = f.govuk_text_field :contract_type_duration, label: { size: "s" }
 
-        - unless vacancy.allow_key_stages?
+        - if vacancy.allow_key_stages?
           = f.govuk_collection_check_boxes :key_stages, Vacancy.key_stages.keys, :to_s, :to_s,
             hint: { text: t("helpers.hint.publishers_job_listing_job_details_form.key_stages.#{vacancy.one_phase? ? vacancy.education_phases.first : 'multiple_phases'}") }
 
-        - unless vacancy.allow_subjects?
+        - if vacancy.allow_subjects?
           = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_job_details_form.subjects_html") } do
 
             label for="publishers-job-listing-job-details-form-subject-search"

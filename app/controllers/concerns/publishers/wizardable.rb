@@ -65,8 +65,9 @@ module Publishers::Wizardable
     attributes_to_merge = {
       completed_steps: completed_steps,
       job_location: job_location,
-      readable_job_location: readable_job_location,
+      key_stages: params[:publishers_job_listing_job_details_form][:key_stages].reject(&:blank?),
       organisation_ids: vacancy.organisation_ids.blank? ? current_organisation.id : nil,
+      readable_job_location: readable_job_location,
       status: vacancy.status.blank? ? "draft" : nil,
     }
     params.require(:publishers_job_listing_job_details_form)
