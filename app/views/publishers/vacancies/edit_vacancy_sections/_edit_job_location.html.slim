@@ -1,5 +1,3 @@
-= render "publishers/vacancies/error_tag", attributes: (Publishers::JobListing::JobLocationForm.fields + Publishers::JobListing::SchoolsForm.fields)
-
 = render_divs_for_fields(Publishers::JobListing::JobLocationForm)
 = render_divs_for_fields(Publishers::JobListing::SchoolsForm)
 
@@ -7,6 +5,9 @@
   - review.heading title: t("publishers.vacancies.steps.job_location"),
                    text: t("buttons.change"),
                    href: organisation_job_build_path(vacancy.id, :job_location)
+    = review_section_tag(vacancy,
+                        %i[job_location schools],
+                        [Publishers::JobListing::JobLocationForm, Publishers::JobListing::SchoolsForm])
 
   - review.body do
     dl.govuk-summary-list

@@ -5,7 +5,7 @@
                    text: job_application_review_edit_section_text(job_application, :personal_statement),
                    href: jobseekers_job_application_build_path(job_application, :personal_statement),
                    html_attributes: { id: "personal_statement" } do
-      = job_application_review_section_tag(job_application, :personal_statement)
+      = review_section_tag(job_application, [:personal_statement], [Jobseekers::JobApplication::PersonalStatementForm])
 
   - review.body do
     - if job_application.personal_statement.present?

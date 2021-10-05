@@ -350,6 +350,10 @@ en:
           organisation: Organisation
           phone_number: Phone number
           relationship: Relationship to applicant
+    status_tags:
+      action_required: action required
+      complete: complete
+      not_started: not started
 
   shares:
     new:

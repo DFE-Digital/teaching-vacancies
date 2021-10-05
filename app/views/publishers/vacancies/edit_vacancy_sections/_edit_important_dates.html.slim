@@ -1,11 +1,10 @@
-= render "publishers/vacancies/error_tag", attributes: Publishers::JobListing::ImportantDatesForm.fields
-
 = render_divs_for_fields(Publishers::JobListing::ImportantDatesForm)
 
 = render ReviewComponent.new id: "important_dates" do |review|
   - review.heading title: t("publishers.vacancies.steps.important_dates"),
                    text: t("buttons.change"),
                    href: organisation_job_build_path(vacancy.id, :important_dates)
+    = review_section_tag(vacancy, %i[important_dates], [Publishers::JobListing::ImportantDatesForm])
 
   - review.body do
     = govuk_summary_list do |summary_list|
