@@ -1,0 +1,17 @@
+= govuk_header(service_name: t("app.title")) do |header|
+  - if publisher_signed_in?
+    = header.navigation_item text: t("nav.school_page_link"), href: organisation_path, active: manage_jobs_active?
+    - if current_organisation.school_group?
+      = header.navigation_item text: t("nav.school_group_index_link", organisation_type: organisation_type_basic(current_organisation)), href: organisation_schools_path, active: schools_in_your_trust_active?
+    = header.navigation_item text: t("nav.jobseekers_index_link"), href: root_path, active: find_jobs_active?
+    = header.navigation_item text: t("nav.notifications_index_link_html", count: current_publisher.notifications.unread.count), href: publishers_notifications_path
+    = header.navigation_item text: t("nav.sign_out"), href: destroy_publisher_session_path, options: { method: :delete }, classes: "navigation-item--right"
+
+  - if jobseeker_signed_in?
+    = header.navigation_item text: t("nav.find_job"), href: root_path, active: find_jobs_active?
+    = header.navigation_item text: t("footer.your_account"), href: jobseeker_root_path, active: your_account_active?
+    = header.navigation_item text: t("nav.sign_out"), href: destroy_jobseeker_session_path, options: { method: :delete }, classes: "navigation-item--right"
+
+  - if !jobseeker_signed_in? && !publisher_signed_in?
+    = header.navigation_item text: t("nav.find_job"), href: root_path, active: find_jobs_active?
+    = header.navigation_item text: t("buttons.sign_in"), href: page_path("sign-in"), classes: "navigation-item--right"
