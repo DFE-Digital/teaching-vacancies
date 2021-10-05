@@ -466,6 +466,19 @@ RSpec.describe Vacancy do
         expect(subject.contract_type_duration).to be_blank
       end
     end
+
+    context "when phase is changed from primary to secondary" do
+      subject { create(:vacancy, phase: "primary", subjects: %w[English]) }
+
+      before do
+        subject.assign_attributes(phase: "secondary")
+        subject.save
+      end
+
+      it "drops the subjects" do
+        expect(subject.subjects).to be_empty
+      end
+    end
   end
 
   describe "validations" do
@@ -641,19 +654,6 @@ RSpec.describe Vacancy do
         it_behaves_like "allows the user to set the education phase of the vacancy"
 
         it_behaves_like "allows the user to set the key stage"
-      end
-    end
-
-    context "when an attribute depended on by another is changed" do
-      subject { create(:vacancy, phase: "primary", subjects: %w[English]) }
-
-      before do
-        subject.assign_attributes(phase: "secondary")
-        subject.save
-      end
-
-      it "drops the dependent attribute" do
-        expect(subject.subjects).to be_empty
       end
     end
   end
