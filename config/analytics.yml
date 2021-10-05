@@ -1,13 +1,5 @@
 # This file lists all the attributes to be exported, including those to be anonymised.
 shared:
-  account_requests:
-    - id
-    - full_name
-    - email
-    - organisation_name
-    - organisation_identifier
-    - created_at
-    - updated_at
   employments:
     - id
     - employment_type
