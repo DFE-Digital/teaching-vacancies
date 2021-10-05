@@ -5,15 +5,6 @@ en:
       on recruitment and you to take the next step in your career.
 
   admins:
-    account_mailer:
-      account_creation_request:
-        email: "Work email address: %{email}"
-        full_name: "Full name: %{full_name}"
-        heading: Teaching Vacancies account request
-        intro: "A user has requested an account with the following details:"
-        organisation_identifier: "School URN or Trust UID: %{organisation_identifier}"
-        organisation_name: "School, trust, or local authority: %{organisation_name}"
-        subject: Teaching Vacancies account request
   jobseekers:
     account_mailer:
       account_closed:
