@@ -1,0 +1,40 @@
+= govuk_footer(meta_licence: false) do |footer|
+  - footer.meta_html do
+    .govuk-grid-row
+      .govuk-grid-column-one-third
+        h2.govuk-heading-m
+          = t("footer.for_job_seekers")
+        ul.govuk-footer__inline-list.hide-bullet-points
+          li.govuk-footer-list-item
+            = link_to t("footer.search_teaching_vacancies"), root_url, class: "govuk-footer__link"
+          - unless publisher_signed_in?
+            li.govuk-footer-list-item
+              - if jobseeker_signed_in?
+                = link_to t("footer.your_account"), jobseekers_account_path, class: "govuk-footer__link"
+              - else
+                = link_to t("footer.sign_in"), new_jobseeker_session_path, class: "govuk-footer__link"
+      .govuk-grid-column-one-third
+        h2.govuk-heading-m
+          = t("footer.for_schools")
+        ul.govuk-footer__inline-list
+          li.govuk-footer__inline-list-item
+            = link_to t("footer.list_a_teaching_job"), new_publisher_session_path, class: "govuk-footer__link"
+
+      .govuk-grid-column-one-third
+        h2.govuk-heading-m
+          = t("footer.service_support")
+        ul.govuk-footer__inline-list.hide-bullet-points
+          li.govuk-footer-list-item
+            = mail_to t("help.email"), t("footer.request_support"), class: "govuk-footer__link"
+          li.govuk-footer-list-item
+            = link_to t("footer.provide_feedback"), new_feedback_path, class: "govuk-footer__link"
+          li.govuk-footer-list-item
+            = link_to "Cookies", cookies_preferences_path, class: "govuk-footer__link"
+          li.govuk-footer-list-item
+            = link_to "Privacy policy", page_path("privacy-policy"), class: "govuk-footer__link"
+          li.govuk-footer-list-item
+            = link_to "Terms and Conditions", page_path("terms-and-conditions"), class: "govuk-footer__link"
+          li.govuk-footer-list-item
+            = link_to "Accessibility", page_path("accessibility"), class: "govuk-footer__link"
+          li.govuk-footer-list-item
+            = link_to t("footer.updates"), updates_path, class: "govuk-footer__link"
