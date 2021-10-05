@@ -6,7 +6,7 @@ class Vacancy < ApplicationRecord
 
   include Indexable
   include Resettable
-  include Vacancy::Phaseable
+  include Phaseable
 
   friendly_id :slug_candidates, use: %w[slugged history]
 
