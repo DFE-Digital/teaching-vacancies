@@ -111,6 +111,6 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
     # Calling step_process will initialize a StepProcess, which will raise if the current step is missing.
     step_process
   rescue StepProcess::MissingStepError
-    skip_step
+    skip_step unless step == "wicked_finish"
   end
 end
