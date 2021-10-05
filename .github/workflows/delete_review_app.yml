@@ -77,7 +77,7 @@ jobs:
     - name: Terraform pin version
       uses: hashicorp/setup-terraform@v1
       with:
-        terraform_version: 0.15.5
+        terraform_version: 1.0.8
 
     - name: Terraform destroy (on PR closed)
       run: |
