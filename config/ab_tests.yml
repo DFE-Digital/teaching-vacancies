@@ -30,10 +30,6 @@ shared:
     foo: 1
     bar: 1
     baz: 1
-  2021_05_job_alert_account_creation_prompt_test:
-    bottom: 1
-    right_blue: 1
-    right_grey: 1
   2021_07_contents_tabs_on_job_listing_test:
     present: 1
     absent: 1
@@ -48,10 +44,6 @@ test:
     bottom_blue: 0
     modal: 0
     gds: 0
-  2021_05_job_alert_account_creation_prompt_test:
-    bottom: 1
-    right_blue: 0
-    right_grey: 0
   2021_07_contents_tabs_on_job_listing_test:
     present: 1
     absent: 0

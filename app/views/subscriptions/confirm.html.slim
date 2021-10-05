@@ -13,28 +13,4 @@
         p.govuk-body = t(".unsubscribe")
         = govuk_link_to t(".back_to_search_results"), jobs_path(@subscription.search_criteria), class: "govuk-!-font-size-19"
 
-      = render "jobseeker_account_prompt" if current_variant?(:"2021_05_job_alert_account_creation_prompt_test", :bottom)
-
-    .govuk-grid-column-one-third
-      - if current_variant?(:"2021_05_job_alert_account_creation_prompt_test", :right_blue) || current_variant?(:"2021_05_job_alert_account_creation_prompt_test", :right_grey)
-        .job-alert-signin class="job-alert-signin--#{ab_variant_for(:"2021_05_job_alert_account_creation_prompt_test").to_s.split("_").last}"
-
-          h2.govuk-heading-m = t(".account_creation_cta.title")
-          p.govuk-body = t(".account_creation_cta.description")
-
-          = form_for Jobseeker.new, as: :jobseeker, url: jobseeker_registration_path, method: :post do |f|
-
-            .govuk-heading-s class="govuk-!-margin-bottom-1"
-              = t(".account_creation_cta.email")
-            .govuk-body.wrap-email = @subscription.email
-
-            = f.hidden_field :email, value: @subscription.email
-
-            = f.govuk_password_field :password, label: { size: "s" }
-
-            = hidden_field_tag :redirect_to, jobseekers_subscriptions_path
-
-            = f.govuk_submit t("buttons.create_account"), classes: "govuk-!-margin-bottom-0 job-alert-signin__submit"
-
-            .govuk-body class="govuk-!-margin-top-5 job-alert-signin__prompt"
-              = t(".account_creation_cta.sign_in.content_html", link: govuk_link_to(t(".account_creation_cta.sign_in.link"), new_jobseeker_session_path))
+      = render "jobseeker_account_prompt"
