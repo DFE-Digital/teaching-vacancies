@@ -19,19 +19,15 @@
         - row.value text: vacancy.job_title
 
       - summary_list.row do |row|
-        - row.key text: t("jobs.subjects")
-        - row.value text: vacancy.show_subjects.presence || t("jobs.not_defined")
-
-      - summary_list.row do |row|
         - row.key text: t("jobs.contract_type")
         - row.value text: vacancy.contract_type_with_duration
 
       - if vacancy.allow_key_stages?
         - summary_list.row do |row|
-          - row.key text: t("jobs.key_stage", count: 1)
+          - row.key text: t("jobs.key_stage", count: vacancy.key_stages.count)
           - row.value text: vacancy.show_key_stages.presence || t("jobs.not_defined")
 
       - if vacancy.allow_subjects?
         - summary_list.row do |row|
-          - row.key text: t("jobs.subjects")
+          - row.key text: t("jobs.subject", count: vacancy.subjects.count)
           - row.value text: vacancy.show_subjects.presence || t("jobs.not_defined")

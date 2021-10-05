@@ -18,8 +18,8 @@ module VacancyHelpers
     choose I18n.t("helpers.label.publishers_job_listing_job_role_form.main_job_role_options.#{vacancy.main_job_role}")
   end
 
-  def fill_in_education_phases_form_fields(vacancy, phase: vacancy.phase)
-    choose I18n.t("helpers.label.publishers_job_listing_education_phases_form.phase_options.#{phase}")
+  def fill_in_education_phases_form_fields(vacancy)
+    choose I18n.t("helpers.label.publishers_job_listing_education_phases_form.phase_options.#{vacancy.phase}")
   end
 
   def fill_in_job_role_details_form_fields(vacancy)
