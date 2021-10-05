@@ -381,13 +381,6 @@ en:
     create:
       success: Your job alert has been created
     confirm:
-      account_creation_cta:
-        description: If you have an account you can see all your job alerts in one place, and save and apply for jobs you are interested in.
-        email: Email address
-        sign_in:
-          content_html: Already have an account? %{link}
-          link: Sign in
-        title: Create a Teaching Vacancies account
       back_to_search_results: Return to your search results
       body: We sent an email confirmation to %{email}.
       header:
