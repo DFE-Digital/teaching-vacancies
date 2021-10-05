@@ -68,7 +68,6 @@ class Vacancy < ApplicationRecord
   #       does not support the PostGIS adapter so until that is fixed we need to do this manually. c.f. https://github.com/excid3/noticed/pull/150
   before_destroy { Notification.where("params @> ?", Noticed::Coder.dump(vacancy: self).to_json).destroy_all }
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
-  before_save :drop_attributes_if_no_longer_applicable
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[7:00 8:00 9:00 10:00 11:00 12:00 13:00 14:00 15:00 16:00 17:00 23:59].freeze
@@ -207,11 +206,5 @@ class Vacancy < ApplicationRecord
     return unless persisted? && listed? && enable_job_applications_changed?
 
     errors.add(:enable_job_applications, :cannot_be_changed_once_listed)
-  end
-
-  def drop_attributes_if_no_longer_applicable
-    self.phase = nil unless allow_phase_to_be_set?
-    self.key_stages = [] unless allow_key_stages?
-    self.subjects = [] unless allow_subjects?
   end
 end
