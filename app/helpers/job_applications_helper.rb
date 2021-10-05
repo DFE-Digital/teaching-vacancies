@@ -80,19 +80,6 @@ module JobApplicationsHelper
     t("buttons.complete_section")
   end
 
-  def job_application_review_section_tag(job_application, step)
-    form_class = "jobseekers/job_application/#{step}_form".camelize.constantize
-    tag_attributes = if form_class.fields.any? { |field| field.in?(job_application.errors.messages.keys) }
-                       { text: t("messages.jobs.action_required.label"), colour: "orange" }
-                     elsif step.to_s.in?(job_application.completed_steps)
-                       { text: "complete" }
-                     else
-                       { text: "not started", colour: "red" }
-                     end
-
-    govuk_tag(**tag_attributes)
-  end
-
   def job_application_build_submit_button_text
     if redirect_to_review?
       t("buttons.save")

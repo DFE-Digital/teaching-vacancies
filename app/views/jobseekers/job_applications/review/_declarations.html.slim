@@ -4,7 +4,7 @@
   - review.heading title: t("jobseekers.job_applications.build.declarations.heading"),
                    text: job_application_review_edit_section_text(job_application, :declarations),
                    href: jobseekers_job_application_build_path(job_application, :declarations) do
-      = job_application_review_section_tag(job_application, :declarations)
+      = review_section_tag(job_application, [:declarations], [Jobseekers::JobApplication::DeclarationsForm])
 
   - review.body do
     = govuk_summary_list do |summary_list|
