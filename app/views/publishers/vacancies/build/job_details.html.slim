@@ -11,11 +11,11 @@
         h2.govuk-heading-l = t("publishers.vacancies.steps.job_details")
 
         = govuk_inset_text do
+          - link = vacancy.allow_phase_to_be_set? ? govuk_link_to(t("publishers.vacancies.build.job_details.phase_inset_text.link_text"), organisation_job_build_path(vacancy.id, :education_phases)) : ""
           - if vacancy.one_phase?
-            = t("publishers.vacancies.build.job_details.phase_inset_text.one_phase", phase: vacancy.education_phases.first.humanize)
-          - elsif vacancy.allow_phase_to_be_set?
-            = t("publishers.vacancies.build.job_details.phase_inset_text.multiple_phases_html",
-            link: govuk_link_to(t("publishers.vacancies.build.job_details.phase_inset_text.link_text"), organisation_job_build_path(vacancy.id, :education_phases)))
+            = t("publishers.vacancies.build.job_details.phase_inset_text.one_phase_html", phase: vacancy.education_phases.first.humanize, link: link)
+          - else
+            = t("publishers.vacancies.build.job_details.phase_inset_text.multiple_phases_html", link: link)
 
         .govuk-character-count data-module="govuk-character-count" data-maxlength=100
           = f.govuk_text_field :job_title,

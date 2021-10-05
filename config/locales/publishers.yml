@@ -139,7 +139,7 @@ en:
           step_title: Job details
           phase_inset_text:
             link_text: Change the education phase.
-            one_phase: You are listing a %{phase} phase role.
+            one_phase_html: You are listing a %{phase} phase role. %{link}
             multiple_phases_html: You are listing a role covering more than one phase. %{link}
         job_location:
           step_title: Job location
