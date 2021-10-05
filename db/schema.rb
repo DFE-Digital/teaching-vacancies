@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_28_163324) do
+ActiveRecord::Schema.define(version: 2021_09_29_121317) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -19,15 +19,6 @@ ActiveRecord::Schema.define(version: 2021_09_28_163324) do
   enable_extension "plpgsql"
   enable_extension "postgis"
   enable_extension "uuid-ossp"
-
-  create_table "account_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "full_name", null: false
-    t.string "email", null: false
-    t.string "organisation_name", null: false
-    t.string "organisation_identifier"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
 
   create_table "active_storage_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false

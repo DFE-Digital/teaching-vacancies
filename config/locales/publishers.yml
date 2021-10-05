@@ -1,16 +1,5 @@
 en:
   publishers:
-    account_requests:
-      create:
-        acknowledge: We will send you an email once your account has been set up. You will then be able to sign in and start listing jobs for free.
-        problems_html: If you have not heard from us after 5 working days, please email %{link}.
-        success: Success
-        success_message: Thank you for requesting a Teaching Vacancies account
-        title: Account creation request created
-      new:
-        title: Request a Teaching Vacancies account
-        intro_request: Request an account to list jobs for free on Teaching Vacancies.
-        intro_conditions: You can get an account if you work at a state-funded school or trust in England, or if you work at a local authority and list job vacancies on behalf of schools.
     notifications:
       index:
         heading: Notifications
@@ -28,9 +17,11 @@ en:
         not_authorised: You are not authorised to log in
       new:
         no_account:
-          content_html: "If you do not yet have access to Teaching Vacancies you can %{link}."
+          account_creation_link_text: request an account
+          content_html: If you have a DfE Sign-in account but can't access Teaching Vacancies, %{link} and select 'Request access to a service'
           heading: Don't have an account yet?
-          link_text: request an account
+          login_link_text: log in
+          request_account_html: If you don't yet have access to Teaching Vacancies you can %{link}
         page_description: If you already have a Teaching Vacancies account you can sign in to the service here.
         request_account_title: Request an account
         request_account_html: &request_account_html >-
