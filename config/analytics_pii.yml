@@ -1,12 +1,6 @@
 # This file lists the attributes which should be anonymised when exported.
 # If an attribute is not listed in analytics.yml, it will not exported, even if it is listed here.
 shared:
-  account_requests:
-    - id
-    - full_name
-    - email
-    - organisation_name
-    - organisation_identifier
   documents:
     - id
     - vacancy_id

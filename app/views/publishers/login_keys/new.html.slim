@@ -16,7 +16,7 @@
 
         = f.govuk_submit t("buttons.submit"), classes: "fallback-authentication-submit-email-gtm govuk-!-margin-bottom-0"
 
-    .govuk-grid-column-one-third
+    .govuk-grid-column-one-third.grey-cta-container
       h2.account-sidebar__heading = t("publishers.sessions.new.no_account.heading")
-
-      p.govuk-body = t("publishers.sessions.new.no_account.content_html", link: govuk_link_to(t("publishers.sessions.new.no_account.link_text"), new_publishers_account_request_path))
+      p.govuk-body = t("publishers.sessions.new.no_account.content_html", link: govuk_link_to(t("publishers.sessions.new.no_account.login_link_text"), publisher_dfe_omniauth_authorize_path))
+      p.govuk-body = t("publishers.sessions.new.no_account.account_request_html", link: govuk_link_to(t("publishers.sessions.new.no_account.account_request_link_text"), page_path("dsi-account-request")))
