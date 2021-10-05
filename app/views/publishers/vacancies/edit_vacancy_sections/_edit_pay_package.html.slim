@@ -12,9 +12,10 @@
         - row.key text: t("jobs.annual_salary")
         - row.value text: vacancy.salary
 
-      - summary_list.row do |row|
-        - row.key text: t("jobs.actual_salary")
-        - row.value text: vacancy.actual_salary.presence || t("jobs.not_defined")
+      - unless vacancy.model_working_patterns == ["full_time"]
+        - summary_list.row do |row|
+          - row.key text: t("jobs.actual_salary")
+          - row.value text: vacancy.actual_salary.presence || t("jobs.not_defined")
 
       - summary_list.row do |row|
         - row.key text: t("jobs.benefits")

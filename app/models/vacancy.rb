@@ -5,6 +5,7 @@ class Vacancy < ApplicationRecord
   extend ArrayEnum
 
   include Indexable
+  include Resettable
 
   friendly_id :slug_candidates, use: %w[slugged history]
 
