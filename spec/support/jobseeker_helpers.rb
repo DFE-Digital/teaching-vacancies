@@ -76,7 +76,7 @@ module JobseekerHelpers
     choose "Bisexual", name: "jobseekers_job_application_equal_opportunities_form[orientation]"
     choose "Mixed", name: "jobseekers_job_application_equal_opportunities_form[ethnicity]"
     choose "Other", name: "jobseekers_job_application_equal_opportunities_form[religion]"
-    fill_in I18n.t("helpers.label.jobseekers_job_application_equal_opportunities_form.religion_description"), with: "Jainism"
+    fill_in strip_tags(I18n.t("helpers.label.jobseekers_job_application_equal_opportunities_form.religion_description_html")), with: "Jainism"
   end
 
   def fill_in_personal_details

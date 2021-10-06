@@ -376,7 +376,7 @@ en:
           "no": "No"
           "yes": "Yes"
           prefer_not_to_say: Prefer not to say
-        ethnicity_description: Please describe your ethnic group
+        ethnicity_description_html: Please describe your ethnic group (optional<span class='govuk-visually-hidden'> field</span>)
         ethnicity_options:
           asian: Asian or Asian British
           black: Black African, Caribbean or Black British
@@ -384,20 +384,20 @@ en:
           other: Other ethnic group
           prefer_not_to_say: Prefer not to say
           white: White
-        gender_description: Please describe your gender identity
+        gender_description_html: Please describe your gender identity (optional<span class='govuk-visually-hidden'> field</span>)
         gender_options:
           man: Man
           other: Other gender identity
           prefer_not_to_say: Prefer not to say
           woman: Woman
-        orientation_description: Please describe your sexual orientation
+        orientation_description_html: Please describe your sexual orientation (optional<span class='govuk-visually-hidden'> field</span>)
         orientation_options:
           bisexual: Bisexual
           gay_or_lesbian: Gay or lesbian
           heterosexual: Heterosexual
           other: Other sexual orientation
           prefer_not_to_say: Prefer not to say
-        religion_description: Please describe your religion or belief
+        religion_description_html: Please describe your religion or belief (optional<span class='govuk-visually-hidden'> field</span>)
         religion_options:
           buddhist: Buddhist
           christian: Christian
