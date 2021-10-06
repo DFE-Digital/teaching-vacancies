@@ -172,6 +172,14 @@ RSpec.describe "Creating a vacancy" do
 
     fill_in_job_location_form_field(vacancy, "Multi-academy trust")
     click_on I18n.t("buttons.continue")
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :education_phases))
+
+    click_on I18n.t("buttons.continue")
+    expect(page).to have_content("There is a problem")
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :education_phases))
+
+    fill_in_education_phases_form_fields(vacancy)
+    click_on I18n.t("buttons.continue")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_details))
 
     click_on I18n.t("buttons.continue")

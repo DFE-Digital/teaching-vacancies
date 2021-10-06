@@ -62,6 +62,7 @@ FactoryBot.define do
     end
 
     trait :central_office do
+      phase { "multiple_phases" }
       job_location { "central_office" }
       readable_job_location { I18n.t("publishers.organisations.readable_job_location.central_office") }
     end
