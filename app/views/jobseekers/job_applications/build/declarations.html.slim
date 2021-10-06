@@ -19,7 +19,7 @@
           = f.govuk_text_field :close_relationships_details
         = f.govuk_radio_button :close_relationships, :no
 
-      = f.govuk_collection_radio_buttons :right_to_work_in_uk, %w[yes no], :to_s, :capitalize, inline: true
+      = f.govuk_collection_radio_buttons :right_to_work_in_uk, %w[yes no], :to_s, :capitalize
 
       = f.govuk_submit job_application_build_submit_button_text do
         = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
