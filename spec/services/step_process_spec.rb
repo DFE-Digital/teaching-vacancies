@@ -16,7 +16,7 @@ RSpec.describe StepProcess do
 
   describe "#initialize" do
     it "makes sure the current step is included in all steps" do
-      expect { described_class.new(:seven, step_groups) }.to raise_error(ArgumentError)
+      expect { described_class.new(:seven, step_groups) }.to raise_error(MissingStepError)
     end
   end
 
