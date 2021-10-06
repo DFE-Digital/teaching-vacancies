@@ -63,7 +63,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
       let(:vacancy) do
         create(:vacancy,
                job_roles: %w[teacher],
-               organisation_vacancies_attributes: [{ organisation: organisation }])
+               organisations: [organisation])
       end
 
       it "returns the expected steps" do
@@ -79,7 +79,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
         let(:vacancy) do
           create(:vacancy,
                  job_roles: %w[teacher],
-                 organisation_vacancies_attributes: [{ organisation: school }])
+                 organisations: [school])
         end
 
         it "returns the expected steps" do
@@ -135,7 +135,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
 
       context "when the vacancy is at multiple schools" do
         let(:school) { create(:school, :secondary) }
-        let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: school }, { organisation: school2 }]) }
+        let(:vacancy) { create(:vacancy, organisations: [school, school2]) }
 
         context "when the schools have the same phase" do
           let(:school2) { create(:school, :secondary) }
@@ -153,7 +153,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
           end
 
           context "when the vacancy has a phase already" do
-            let(:vacancy) { create(:vacancy, phase: "secondary", organisation_vacancies_attributes: [{ organisation: school }, { organisation: school2 }]) }
+            let(:vacancy) { create(:vacancy, phase: "secondary", organisations: [school, school2]) }
 
             it "still includes the `education_phases` step" do
               expect(subject.steps).to include(:education_phases)

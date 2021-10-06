@@ -23,10 +23,10 @@ RSpec.describe Search::CriteriaInventor do
   let(:job_title) { "A wonderful job" }
   let(:job_roles) { %w[teacher send_responsible] }
   let(:location_trait) { :at_one_school }
-  let(:organisation_vacancies_attributes) { [{ organisation: school }] }
+  let(:associated_orgs) { [school] }
   let(:postcode_from_mean_geolocation) { "OX14 JE1" }
   let(:vacancy) do
-    create(:vacancy, location_trait, organisation_vacancies_attributes: organisation_vacancies_attributes,
+    create(:vacancy, location_trait, organisations: associated_orgs,
                                      postcode_from_mean_geolocation: postcode_from_mean_geolocation,
                                      working_patterns: working_patterns,
                                      subjects: subjects,
@@ -50,13 +50,12 @@ RSpec.describe Search::CriteriaInventor do
       context "when the vacancy is associated to multiple schools in a school group" do
         let(:school1) { create(:school) }
         let(:school2) { create(:school) }
-        let(:organisation_vacancies_attributes) { [{ organisation: trust }, { organisation: school1 }, { organisation: school2 }] }
+        let(:associated_orgs) { [school1, school2] }
         let(:location_trait) { :at_multiple_schools }
 
         before do
           SchoolGroupMembership.create(school: school1, school_group: trust)
           SchoolGroupMembership.create(school: school2, school_group: trust)
-          vacancy.reload
         end
 
         it "uses the vacancy's postcode_from_mean_geolocation attribute" do
@@ -77,7 +76,7 @@ RSpec.describe Search::CriteriaInventor do
 
       context "when the vacancy is at the central office of a trust" do
         let(:location_trait) { :central_office }
-        let(:organisation_vacancies_attributes) { [{ organisation: trust }] }
+        let(:associated_orgs) { [trust] }
 
         it "sets the location to the trust's postcode" do
           expect(subject.criteria[:location]).to eq(trust.postcode)
@@ -106,7 +105,6 @@ RSpec.describe Search::CriteriaInventor do
     end
 
     it "sets the phases to the same as the vacancy" do
-      vacancy.reload
       expect(subject.criteria[:phases]).to eq(readable_phases)
     end
 

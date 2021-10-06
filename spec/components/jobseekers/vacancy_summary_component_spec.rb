@@ -61,16 +61,12 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
     let(:school1) { create(:school, :catholic, school_type: "Academy") }
     let(:school2) { create(:school, :catholic, school_type: "Academy") }
     let(:school3) { create(:school, :catholic, school_type: "Academy", minimum_age: 16) }
-    let(:vacancy) do
-      create(:vacancy, :at_multiple_schools, organisation_vacancies_attributes: [
-        { organisation: school1 }, { organisation: school2 }, { organisation: school3 }
-      ])
-    end
+    let(:vacancy) { create(:vacancy, :at_multiple_schools, organisations: [school1, school2, school3]) }
 
     before do
-      SchoolGroupMembership.find_or_create_by(school_id: school1.id, school_group_id: organisation.id)
-      SchoolGroupMembership.find_or_create_by(school_id: school2.id, school_group_id: organisation.id)
-      SchoolGroupMembership.find_or_create_by(school_id: school3.id, school_group_id: organisation.id)
+      [school1, school2, school3].each do |school|
+        SchoolGroupMembership.find_or_create_by(school_id: school.id, school_group_id: organisation.id)
+      end
       render_inline(described_class.new(vacancy: vacancy_presenter))
     end
 
