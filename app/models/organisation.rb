@@ -12,6 +12,7 @@ class Organisation < ApplicationRecord
   scope :school_groups, -> { where(type: "SchoolGroup") }
   scope :trusts, -> { school_groups.where.not(uid: nil) }
   scope :local_authorities, -> { school_groups.where.not(local_authority_code: nil) }
+  scope :within_polygon, ->(location_polygon) { where("ST_Covers(?, geopoint)", location_polygon.area) }
 
   alias_attribute :data, :gias_data
 
