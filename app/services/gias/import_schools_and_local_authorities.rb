@@ -91,6 +91,7 @@ class Gias::ImportSchoolsAndLocalAuthorities
       local_authority_code: row["LA (code)"],
       name: row["LA (name)"],
       group_type: "local_authority",
+      gias_data: row.to_h.slice("LA (code)", "LA (name)"),
     }
   end
 
