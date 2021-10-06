@@ -77,7 +77,7 @@ en:
     update_alert: Update alert
     update_password: Update password
     upload_files: Upload files
-    view_account: View your account
+    view_account: View my account
     withdraw_application: Withdraw application
 
   helpers:
