@@ -63,8 +63,6 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
 
     it "sets geolocation" do
       subject.call
-      expect(example_school.geolocation.x).to be_within(0.0001).of(51.51396894535262)
-      expect(example_school.geolocation.y).to be_within(0.0001).of(-0.07751626505544208)
       expect(example_school.geopoint.lat).to be_within(0.0001).of(51.51396894535262)
       expect(example_school.geopoint.lon).to be_within(0.0001).of(-0.07751626505544208)
     end

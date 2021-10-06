@@ -93,7 +93,6 @@ class Gias::ImportTrusts
 
         {
           uid: trust[:uid],
-          geolocation: coordinates,
           geopoint: "POINT(#{coordinates.second} #{coordinates.first})",
         }
       }.compact

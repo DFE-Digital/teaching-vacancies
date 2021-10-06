@@ -180,8 +180,8 @@ class Vacancy < ApplicationRecord
 
   def set_postcode_from_mean_geolocation(persist: true)
     # When SimilarJobs searches for jobs similar to a multi-school job, we need to derive a location to search around.
-    # Take the mean of the geolocations of the school(s) the vacancy is at, and use it to look up a human-readable
-    # version of that geolocation (i.e. a postcode).
+    # Take the mean of the geopoints of the school(s) the vacancy is at, and use it to look up a human-readable
+    # version of that location (i.e. a postcode).
     return if central_office?
 
     if at_one_school?

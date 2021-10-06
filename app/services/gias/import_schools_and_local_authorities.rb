@@ -131,10 +131,7 @@ class Gias::ImportSchoolsAndLocalAuthorities
       type: :gb,
     ).to_wgs84
 
-    {
-      geolocation: [wgs84[:latitude], wgs84[:longitude]],
-      geopoint: "POINT(#{wgs84[:longitude]} #{wgs84[:latitude]})",
-    }
+    { geopoint: "POINT(#{wgs84[:longitude]} #{wgs84[:latitude]})" }
   end
 
   def membership_data(row)
