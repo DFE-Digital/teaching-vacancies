@@ -47,6 +47,8 @@ RSpec.describe Jobseekers::VacancyDetailsComponent, type: :component do
   end
 
   context "when actual_salary is present" do
+    let(:vacancy) { create(:vacancy, working_patterns: ["part_time"], actual_salary: "5000") }
+
     it "renders the fte salary label" do
       expect(rendered_component).to include(I18n.t("jobs.annual_salary"))
     end
@@ -61,7 +63,7 @@ RSpec.describe Jobseekers::VacancyDetailsComponent, type: :component do
   end
 
   context "when actual_salary is not present" do
-    let(:vacancy) { create(:vacancy, actual_salary: "") }
+    let(:vacancy) { create(:vacancy, working_patterns: ["full_time"], actual_salary: "") }
 
     it "renders the salary" do
       expect(rendered_component).to include(vacancy.salary)
