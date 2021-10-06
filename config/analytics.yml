@@ -168,7 +168,7 @@ shared:
     - postcode
     - locality
     - address3
-    - geolocation
+    - geopoint
     - gias_data
     - created_at
     - updated_at
