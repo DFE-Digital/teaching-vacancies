@@ -7,7 +7,6 @@ FactoryBot.define do
     county { Faker::Address.state_abbr }
     description { Faker::Lorem.paragraph(sentence_count: 1) }
     establishment_status { "Open" }
-    geolocation { [1, 2] }
     geopoint { "POINT(2 1)" }
     gias_data do
       {
@@ -84,7 +83,6 @@ FactoryBot.define do
     end
 
     trait :no_geolocation do
-      geolocation { nil }
       geopoint { nil }
     end
   end
