@@ -214,7 +214,6 @@ module VacancyHelpers
       "@context": "http://schema.org",
       "@type": "JobPosting",
       title: vacancy.job_title,
-      salary: vacancy.salary,
       jobBenefits: vacancy.benefits,
       datePosted: vacancy.publish_on.to_time.iso8601,
       description: vacancy.job_advert,
