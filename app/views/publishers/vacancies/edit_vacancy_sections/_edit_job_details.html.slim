@@ -1,21 +1,33 @@
+= render_divs_for_fields(Publishers::JobListing::EducationPhasesForm)
 = render_divs_for_fields(Publishers::JobListing::JobDetailsForm)
 
 = render ReviewComponent.new id: "job_details" do |review|
   - review.heading title: t("publishers.vacancies.steps.job_details"),
                    text: t("buttons.change"),
                    href: organisation_job_build_path(vacancy.id, :job_details)
-    = review_section_tag(vacancy, %i[job_details], [Publishers::JobListing::JobDetailsForm])
+    = review_section_tag(vacancy, %i[education_phases job_details], [Publishers::JobListing::EducationPhasesForm, Publishers::JobListing::JobDetailsForm])
 
   - review.body do
     = govuk_summary_list do |summary_list|
+      - if vacancy.allow_phase_to_be_set?
+        - summary_list.row do |row|
+          - row.key text: t("jobs.filters.phases")
+          - row.value text: vacancy.phase&.humanize.presence || t("jobs.not_defined")
+
       - summary_list.row do |row|
         - row.key text: t("jobs.job_title")
         - row.value text: vacancy.job_title
 
       - summary_list.row do |row|
-        - row.key text: t("jobs.subjects")
-        - row.value text: vacancy.show_subjects.presence || t("jobs.not_defined")
-
-      - summary_list.row do |row|
         - row.key text: t("jobs.contract_type")
         - row.value text: vacancy.contract_type_with_duration
+
+      - if vacancy.allow_key_stages?
+        - summary_list.row do |row|
+          - row.key text: t("jobs.key_stage", count: vacancy.key_stages.count)
+          - row.value text: vacancy.show_key_stages.presence || t("jobs.not_defined")
+
+      - if vacancy.allow_subjects?
+        - summary_list.row do |row|
+          - row.key text: t("jobs.subject", count: vacancy.subjects.count)
+          - row.value text: vacancy.show_subjects.presence || t("jobs.not_defined")

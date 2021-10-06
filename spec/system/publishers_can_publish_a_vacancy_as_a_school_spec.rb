@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Creating a vacancy" do
   let(:publisher) { create(:publisher) }
-  let(:school) { create(:school, name: "Salisbury School") }
+  let(:school) { create(:school, :all_through, name: "Salisbury School") }
 
   before { login_publisher(publisher: publisher, organisation: school) }
 
@@ -23,6 +23,7 @@ RSpec.describe "Creating a vacancy" do
     let(:vacancy) do
       VacancyPresenter.new(build(:vacancy,
                                  job_roles: job_roles,
+                                 phase: "multiple_phases",
                                  working_patterns: %w[full_time part_time],
                                  publish_on: Date.current))
     end
@@ -41,6 +42,14 @@ RSpec.describe "Creating a vacancy" do
       click_on I18n.t("buttons.continue")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_role_details))
 
+      click_on I18n.t("buttons.continue")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :education_phases))
+
+      click_on I18n.t("buttons.continue")
+      expect(page).to have_content("There is a problem")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :education_phases))
+
+      fill_in_education_phases_form_fields(vacancy)
       click_on I18n.t("buttons.continue")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_details))
 
@@ -108,6 +117,9 @@ RSpec.describe "Creating a vacancy" do
       click_on I18n.t("buttons.continue")
       click_on I18n.t("buttons.continue")
 
+      fill_in_education_phases_form_fields(vacancy)
+      click_on I18n.t("buttons.continue")
+
       fill_in_job_details_form_fields(vacancy)
       click_on I18n.t("buttons.continue")
 
@@ -138,7 +150,7 @@ RSpec.describe "Creating a vacancy" do
     describe "#publish" do
       scenario "cannot be published unless the details are valid" do
         yesterday_date = Time.zone.yesterday
-        vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow, job_roles: %w[teacher])
+        vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow, job_roles: %w[teacher], phase: "multiple_phases")
         vacancy.organisation_vacancies.create(organisation: school)
         vacancy.assign_attributes expires_at: yesterday_date
         vacancy.save(validate: false)
@@ -180,7 +192,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "can be published at a later date" do
-        vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow, job_roles: %w[teacher])
+        vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow, job_roles: %w[teacher], phase: "multiple_phases")
         vacancy.organisation_vacancies.create(organisation: school)
 
         visit organisation_job_review_path(vacancy.id)
@@ -192,7 +204,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "displays the expiration date and time on the confirmation page" do
-        vacancy = create(:vacancy, :draft, expires_at: 5.days.from_now.change(hour: 9, minute: 0), job_roles: %w[teacher])
+        vacancy = create(:vacancy, :draft, expires_at: 5.days.from_now.change(hour: 9, minute: 0), job_roles: %w[teacher], phase: "multiple_phases")
         vacancy.organisation_vacancies.create(organisation: school)
         visit organisation_job_review_path(vacancy.id)
         click_on I18n.t("buttons.submit_job_listing")
@@ -203,7 +215,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "a published vacancy cannot be republished" do
-        vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow, job_roles: %w[teacher])
+        vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow, job_roles: %w[teacher], phase: "multiple_phases")
         vacancy.organisation_vacancies.create(organisation: school)
 
         visit organisation_job_review_path(vacancy.id)
@@ -226,7 +238,7 @@ RSpec.describe "Creating a vacancy" do
 
       context "adds a job to update the Google index in the queue" do
         scenario "if the vacancy is published immediately" do
-          vacancy = create(:vacancy, :draft, publish_on: Date.current, job_roles: %w[teacher])
+          vacancy = create(:vacancy, :draft, publish_on: Date.current, job_roles: %w[teacher], phase: "multiple_phases")
           vacancy.organisation_vacancies.create(organisation: school)
 
           expect_any_instance_of(Publishers::Vacancies::BaseController)
