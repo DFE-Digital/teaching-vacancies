@@ -1,6 +1,5 @@
 - if errors.any?
-  = govuk_notification_banner title_text: t("banners.warning"), classes: "govuk-notification-banner--warning" do |banner|
-    - banner.heading text: t("messages.jobs.action_required.heading")
+  = govuk_notification_banner title_text: t("banners.action_required"), classes: "govuk-notification-banner--warning" do
     span class="govuk-!-margin-top-3" = t("messages.jobs.action_required.message")[user_type]
     div class="govuk-!-margin-top-3"
       - errors.each do |error|
