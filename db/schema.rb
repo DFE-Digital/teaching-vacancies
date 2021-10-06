@@ -256,6 +256,8 @@ ActiveRecord::Schema.define(version: 2021_10_06_100816) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "buffers"
+    t.geography "area", limit: {:srid=>4326, :type=>"geometry", :geographic=>true}
+    t.index ["area"], name: "index_location_polygons_on_area", using: :gist
   end
 
   create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
