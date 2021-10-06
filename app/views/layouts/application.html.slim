@@ -28,23 +28,7 @@ html.govuk-template.app-html-class lang="en"
 
     = render EnvironmentBannerComponent.new
 
-    = govuk_header(service_name: t("app.title")) do |header|
-      - if publisher_signed_in?
-        = header.navigation_item text: t("nav.school_page_link"), href: organisation_path, active: manage_jobs_active?
-        - if current_organisation.school_group?
-          = header.navigation_item text: t("nav.school_group_index_link", organisation_type: organisation_type_basic(current_organisation)), href: organisation_schools_path, active: schools_in_your_trust_active?
-        = header.navigation_item text: t("nav.jobseekers_index_link"), href: root_path, active: find_jobs_active?
-        = header.navigation_item text: t("nav.notifications_index_link_html", count: current_publisher.notifications.unread.count), href: publishers_notifications_path
-        = header.navigation_item text: t("nav.sign_out"), href: destroy_publisher_session_path, options: { method: :delete }, classes: "navigation-item--right"
-
-      - if jobseeker_signed_in?
-        = header.navigation_item text: t("nav.find_job"), href: root_path, active: find_jobs_active?
-        = header.navigation_item text: t("footer.your_account"), href: jobseeker_root_path, active: your_account_active?
-        = header.navigation_item text: t("nav.sign_out"), href: destroy_jobseeker_session_path, options: { method: :delete }, classes: "navigation-item--right"
-
-      - if !jobseeker_signed_in? && !publisher_signed_in?
-        = header.navigation_item text: t("nav.find_job"), href: root_path, active: find_jobs_active?
-        = header.navigation_item text: t("buttons.sign_in"), href: page_path("sign-in"), classes: "navigation-item--right"
+    = render "layouts/header"
 
     .govuk-width-container.phase-banner
       = govuk_phase_banner(tag: { text: "beta" }) do
@@ -60,57 +44,7 @@ html.govuk-template.app-html-class lang="en"
 
       = content_for :after_main
 
-    footer.govuk-footer role="contentinfo"
-      .govuk-width-container
-        .govuk-footer__meta
-          .govuk-footer__meta-item.govuk-footer__meta-item--grow
-            .govuk-grid-row
-              .govuk-grid-column-one-third
-                h2.govuk-heading-m
-                  = t("footer.for_job_seekers")
-                ul.govuk-footer__inline-list.hide-bullet-points
-                  li.govuk-footer-list-item
-                    =link_to t("footer.search_teaching_vacancies"), root_url, class: "govuk-footer__link"
-                  - unless publisher_signed_in?
-                    li.govuk-footer-list-item
-                      - if jobseeker_signed_in?
-                        =link_to t("footer.your_account"), jobseekers_account_path, class: "govuk-footer__link"
-                      - else
-                        =link_to t("footer.sign_in"), new_jobseeker_session_path, class: "govuk-footer__link"
-              .govuk-grid-column-one-third
-                h2.govuk-heading-m
-                  = t("footer.for_schools")
-                ul.govuk-footer__inline-list
-                  li.govuk-footer__inline-list-item
-                    = link_to t("footer.list_a_teaching_job"), new_publisher_session_path, class: "govuk-footer__link"
-
-              .govuk-grid-column-one-third
-                h2.govuk-heading-m
-                  = t("footer.service_support")
-                ul.govuk-footer__inline-list.hide-bullet-points
-                  li.govuk-footer-list-item
-                    = mail_to t("help.email"), t("footer.request_support"), class: "govuk-footer__link"
-                  li.govuk-footer-list-item
-                    = link_to t("footer.provide_feedback"), new_feedback_path, class: "govuk-footer__link"
-                  li.govuk-footer-list-item
-                    = link_to "Cookies", cookies_preferences_path, class: "govuk-footer__link"
-                  li.govuk-footer-list-item
-                    = link_to "Privacy policy", page_path("privacy-policy"), class: "govuk-footer__link"
-                  li.govuk-footer-list-item
-                    = link_to "Terms and Conditions", page_path("terms-and-conditions"), class: "govuk-footer__link"
-                  li.govuk-footer-list-item
-                    = link_to "Accessibility", page_path("accessibility"), class: "govuk-footer__link"
-                  li.govuk-footer-list-item
-                    = link_to t("footer.updates"), updates_path, class: "govuk-footer__link"
-
-            svg.govuk-footer__licence-logo focusable="false" height="17" role="presentation" viewbox="0 0 483.2 195.7" width="41" xmlns="http://www.w3.org/2000/svg"
-              path d="M421.5 142.8V.1l-50.7 32.3v161.1h112.4v-50.7zm-122.3-9.6A47.12 47.12 0 0 1 221 97.8c0-26 21.1-47.1 47.1-47.1 16.7 0 31.4 8.7 39.7 21.8l42.7-27.2A97.63 97.63 0 0 0 268.1 0c-36.5 0-68.3 20.1-85.1 49.7A98 98 0 0 0 97.8 0C43.9 0 0 43.9 0 97.8s43.9 97.8 97.8 97.8c36.5 0 68.3-20.1 85.1-49.7a97.76 97.76 0 0 0 149.6 25.4l19.4 22.2h3v-87.8h-80l24.3 27.5zM97.8 145c-26 0-47.1-21.1-47.1-47.1s21.1-47.1 47.1-47.1 47.2 21 47.2 47S123.8 145 97.8 145" fill="currentColor"
-            .govuk-footer__licence-description
-              span> All content is available under the
-              a.govuk-footer__link href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license" Open Government Licence v3.0
-          .govuk-footer__meta-item
-            a.govuk-footer__link.govuk-footer__copyright-logo href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/"
-              | © Crown copyright
+    = render "layouts/footer"
 
     - unless cookies_preference_set?
       = render(CookiesBannerComponent.new(create_path: create_cookies_preferences_path(cookies_consent: "yes", **utm_parameters), reject_path: create_cookies_preferences_path(cookies_consent: "no", **utm_parameters), preferences_path: cookies_preferences_path(**utm_parameters)))
