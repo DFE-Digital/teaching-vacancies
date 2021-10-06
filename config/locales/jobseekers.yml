@@ -8,7 +8,7 @@ en:
           content_html: "%{link} to get help with problems you are having with your account."
           heading: Need assistance?
           link_text: Contact our support team
-        close_account: Close your account
+        close_account: Close account
         delete_account: Delete your account
         page_title: Account details
         summary_list:
@@ -394,7 +394,7 @@ en:
         title: Check your email
       confirm_destroy:
         feedback_title: Tell us why you are closing your account
-        page_title: Close your account
+        page_title: Close account
         page_description_1: If you do not want to use your Teaching Vacancies account any more you can close your account.
         page_description_2: You will no longer receive any job alerts you have subscribed to, and any job applications you have made will be withdrawn.
       destroy:
