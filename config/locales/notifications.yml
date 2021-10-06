@@ -5,7 +5,6 @@ en:
       publisher_signed_out_for_inactivity: You have been signed out because you have been inactive for %{duration}
     jobs:
       action_required:
-        heading: Action required
         label: action required
         message:
           jobseeker: You must complete the required actions below in order to submit this application.
