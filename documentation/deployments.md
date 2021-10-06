@@ -176,7 +176,7 @@ List, then delete, services
 cf services
 cf delete-service teaching-vacancies-postgres-review-pr-3134
 cf delete-service teaching-vacancies-redis-review-pr-3134
-cf delete-service teaching-vacancies-papertrail-review-pr-3134
+cf delete-service teaching-vacancies-logit-review-pr-3134
 ```
 
 Note: removing apps and services outside of Terraform will require removing the review terraform state file
