@@ -18,6 +18,7 @@ en:
     important: Important
     success: Success
     warning: Warning
+    action_required: Action required
 
   breadcrumbs:
     active_jobs: Active jobs
