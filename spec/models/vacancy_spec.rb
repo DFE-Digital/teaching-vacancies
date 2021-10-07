@@ -1,5 +1,41 @@
 require "rails_helper"
 
+RSpec.shared_examples "allows the user to set the education phase of the vacancy" do
+  it "allows the user to set the education phase of the vacancy" do
+    expect(subject.allow_phase_to_be_set?).to be(true)
+  end
+end
+
+RSpec.shared_examples "does not allow the user to set the education phase of the vacancy" do
+  it "does not allow the user to set the education phase of the vacancy" do
+    expect(subject.allow_phase_to_be_set?).to be(false)
+  end
+end
+
+RSpec.shared_examples "allows the user to set the key stage" do
+  it "allows the user to set the key stage" do
+    expect(subject.allow_key_stages?).to be(true)
+  end
+end
+
+RSpec.shared_examples "does not allow the user to set the key stage" do
+  it "does not allow the user to set the key stage" do
+    expect(subject.allow_key_stages?).to be(false)
+  end
+end
+
+RSpec.shared_examples "allows the user to set the subjects" do
+  it "allows the user to set the subjects" do
+    expect(subject.allow_subjects?).to be(true)
+  end
+end
+
+RSpec.shared_examples "does not allow the user to set the subjects" do
+  it "does not allow the user to set the subjects" do
+    expect(subject.allow_subjects?).to be(false)
+  end
+end
+
 RSpec.describe Vacancy do
   it { is_expected.to belong_to(:publisher_organisation).optional }
   it { is_expected.to belong_to(:publisher).optional }
@@ -430,6 +466,19 @@ RSpec.describe Vacancy do
         expect(subject.contract_type_duration).to be_blank
       end
     end
+
+    context "when phase is changed from primary to secondary" do
+      subject { create(:vacancy, phase: "primary", subjects: %w[English]) }
+
+      before do
+        subject.assign_attributes(phase: "secondary")
+        subject.save
+      end
+
+      it "drops the subjects" do
+        expect(subject.subjects).to be_empty
+      end
+    end
   end
 
   describe "validations" do
@@ -508,6 +557,100 @@ RSpec.describe Vacancy do
         it "sets postcode_from_mean_geolocation to the output of Geocoding#postcode_from_coordinates, using the mean of the two geolocations" do
           expect(subject.postcode_from_mean_geolocation).to eq("New postcode")
         end
+      end
+    end
+  end
+
+  context "publishers can set certain attributes under certain conditions" do
+    context "when the vacancy is at the central office of a trust" do
+      subject { build_stubbed(:vacancy, :central_office) }
+
+      it_behaves_like "allows the user to set the education phase of the vacancy"
+    end
+
+    context "when the vacancy itself has a phase" do
+      subject { build_stubbed(:vacancy, phase: phase) }
+
+      context "when the phase is primary" do
+        let(:phase) { "primary" }
+
+        it_behaves_like "does not allow the user to set the subjects"
+
+        it_behaves_like "allows the user to set the key stage"
+      end
+
+      context "when the phase is secondary" do
+        let(:phase) { "secondary" }
+
+        it_behaves_like "allows the user to set the subjects"
+
+        it_behaves_like "does not allow the user to set the key stage"
+      end
+    end
+
+    context "when the vacancy is at a single school" do
+      subject do
+        create(:vacancy, organisations: [school])
+      end
+
+      context "when the school has a single education phase" do
+        let(:phase) { :secondary }
+        let(:school) { create(:school, phase) }
+
+        it_behaves_like "does not allow the user to set the education phase of the vacancy"
+
+        context "when the school is primary" do
+          let(:phase) { :primary }
+
+          it_behaves_like "does not allow the user to set the subjects"
+
+          it_behaves_like "allows the user to set the key stage"
+        end
+
+        context "when the phase is middle" do
+          let(:phase) { :middle }
+
+          it_behaves_like "allows the user to set the subjects"
+
+          it_behaves_like "allows the user to set the key stage"
+        end
+
+        context "when the phase is secondary" do
+          it_behaves_like "allows the user to set the subjects"
+
+          it_behaves_like "does not allow the user to set the key stage"
+        end
+      end
+
+      context "when the school is all-through" do
+        let(:school) { create(:school, :all_through) }
+
+        it_behaves_like "allows the user to set the education phase of the vacancy"
+
+        it_behaves_like "allows the user to set the subjects"
+
+        it_behaves_like "allows the user to set the key stage"
+      end
+    end
+
+    context "when the vacancy is at multiple schools" do
+      let(:school) { create(:school, :secondary) }
+      subject { create(:vacancy, organisations: [school, school2]) }
+
+      context "when the schools have the same phase (secondary)" do
+        let(:school2) { create(:school, :secondary) }
+
+        it_behaves_like "does not allow the user to set the education phase of the vacancy"
+
+        it_behaves_like "does not allow the user to set the key stage"
+      end
+
+      context "when the schools have different phases" do
+        let(:school2) { create(:school, :primary) }
+
+        it_behaves_like "allows the user to set the education phase of the vacancy"
+
+        it_behaves_like "allows the user to set the key stage"
       end
     end
   end

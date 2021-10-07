@@ -185,6 +185,9 @@ en:
 
     job_title: Job title
     job_role: Job role
+    key_stage:
+      one: Key stage
+      other: Key stages
     main_job_role: Job role
     additional_job_roles: Job role details
     suitable_for_ect: Is this job suitable for ECTs?
