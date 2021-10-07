@@ -1,0 +1,43 @@
+{
+  "type" : "FeatureCollection",
+  "features" : [
+    {
+      "type" : "Feature",
+      "geometry" :
+      {
+        "type" : "Polygon",
+        "coordinates" :
+        [
+          [
+            [0,0],
+            [1,1],
+            [1,-1],
+            [0,0]
+          ]
+        ]
+      },
+      "properties" : {
+        "GOR10NM" : "East Midlands"
+      }
+    },
+    {
+      "type" : "Feature",
+      "geometry" :
+      {
+        "type" : "Polygon",
+        "coordinates" :
+        [
+          [
+            [0,0],
+            [1,1],
+            [1,-1],
+            [0,0]
+          ]
+        ]
+      },
+      "properties" : {
+        "GOR10NM" : "Mid Eastlands"
+      }
+    }
+  ]
+}
