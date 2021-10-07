@@ -12,7 +12,6 @@ RSpec.describe "Publishers can edit a draft vacancy" do
     before { visit organisation_job_path(incomplete_vacancy.id) }
 
     scenario "cannot submit a incomplete draft from the manage job listing page" do
-      expect(page).to have_content(I18n.t("pay_package_errors.salary.blank"))
       expect(page).to_not have_content(I18n.t("buttons.submit_job_listing"))
     end
 
