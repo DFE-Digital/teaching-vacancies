@@ -215,6 +215,12 @@ en:
   home:
     index:
       browse_all: Browse all teaching jobs in England
+      publisher_signin: 
+        title: Advertise a school job
+        description_html: "%{signin_link} to manage your job listings and applicants or %{signup_link}."
+        link_text:
+          sign_in: Sign in
+          sign_up: sign up
       title: Find a job in teaching
     signed_in_jobseeker:
       description: Apply for jobs you are interested in, and check the status of your applications.
