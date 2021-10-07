@@ -237,7 +237,7 @@ RSpec.describe VacancyPresenter do
   end
 
   describe "#contract_type_with_duration" do
-    let(:vacancy) { create(:vacancy, contract_type: contract_type, contract_type_duration: contract_type_duration) }
+    let(:vacancy) { build_stubbed(:vacancy, contract_type: contract_type, contract_type_duration: contract_type_duration) }
 
     context "when permanent" do
       let(:contract_type) { :permanent }
@@ -254,6 +254,38 @@ RSpec.describe VacancyPresenter do
 
       it "returns Fixed term (duration)" do
         expect(subject.contract_type_with_duration).to eq "Fixed term (6 months)"
+      end
+    end
+  end
+
+  describe "#show_subjects" do
+    let(:vacancy) { build_stubbed(:vacancy, subjects: %w[Acrobatics Tapestry]) }
+
+    it "joins them correctly" do
+      expect(subject.show_subjects).to eq("Acrobatics, Tapestry")
+    end
+
+    context "when there are no subjects" do
+      let(:vacancy) { build_stubbed(:vacancy, subjects: []) }
+
+      it "returns empty string" do
+        expect(subject.show_subjects).to be_blank
+      end
+    end
+  end
+
+  describe "#show_key_stages" do
+    let(:vacancy) { build_stubbed(:vacancy, key_stages: %w[ks1 early_years]) }
+
+    it "joins them correctly" do
+      expect(subject.show_key_stages).to eq("KS1, Early years")
+    end
+
+    context "when there are no subjects" do
+      let(:vacancy) { build_stubbed(:vacancy, key_stages: []) }
+
+      it "returns empty string" do
+        expect(subject.show_key_stages).to be_blank
       end
     end
   end

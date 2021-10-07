@@ -75,9 +75,12 @@ class VacancyPresenter < BasePresenter
     model_working_patterns.compact.map(&:upcase).join(", ")
   end
 
-  def show_job_roles(exclude_ect_suitable: false)
-    roles = exclude_ect_suitable ? model.job_roles.excluding("ect_suitable") : model.job_roles
-    roles.map { |role| I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{role}") }.join(", ")
+  def all_job_roles
+    # TODO: This line can go at some point after the 30th of September 2021 (when all the legacy vacancies have expired)
+    #       and once people no longer need to view the legacy vacancies for reference.
+    return show_job_roles unless main_job_role
+
+    safe_join [show_main_job_role, tag.br, model.additional_job_roles.map { |role| greyed_additional_job_role(role) }]
   end
 
   def show_main_job_role
@@ -94,11 +97,9 @@ class VacancyPresenter < BasePresenter
     I18n.t("helpers.label.publishers_job_listing_job_role_details_form.additional_job_roles_options.#{role}")
   end
 
-  def all_job_roles
-    # TODO: This line can go after the 30th of September 2021 when all the legacy vacancies have expired
-    return show_job_roles unless main_job_role
-
-    safe_join [show_main_job_role, tag.br, model.additional_job_roles.map { |role| greyed_additional_job_role(role) }]
+  def show_job_roles(exclude_ect_suitable: false)
+    roles = exclude_ect_suitable ? model.job_roles.excluding("ect_suitable") : model.job_roles
+    roles.map { |role| I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{role}") }.join(", ")
   end
 
   def show_key_stages
