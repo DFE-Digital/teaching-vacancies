@@ -21,7 +21,7 @@
           = f.govuk_text_area :qualified_teacher_status_details
         = f.govuk_radio_button :qualified_teacher_status, :on_track
 
-      = f.govuk_collection_radio_buttons :statutory_induction_complete, %w[yes no], :to_s, :capitalize, inline: true
+      = f.govuk_collection_radio_buttons :statutory_induction_complete, %w[yes no], :to_s, :capitalize
 
       = f.govuk_submit job_application_build_submit_button_text do
         = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
