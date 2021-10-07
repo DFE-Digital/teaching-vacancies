@@ -19,6 +19,13 @@ namespace :algolia do
   end
 end
 
+namespace :db do
+  desc "Import schools, trusts, local authorities data and creates publishers, vacancies, jobseekers and job applications"
+  task async_seed: :environment do
+    SeedDatabaseJob.perform_later
+  end
+end
+
 namespace :dsi do
   desc "Update DfE Sign-in users data"
   task update_users: :environment do
