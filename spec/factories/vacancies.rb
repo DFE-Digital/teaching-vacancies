@@ -29,7 +29,6 @@ FactoryBot.define do
     expires_at { 6.months.from_now.change(hour: 9, minute: 0, second: 0) }
     hired_status { nil }
     job_advert { Faker::Lorem.paragraph(sentence_count: rand(50..300)) }
-
     main_job_role { Vacancy.main_job_role_options.sample }
     additional_job_roles do
       case main_job_role

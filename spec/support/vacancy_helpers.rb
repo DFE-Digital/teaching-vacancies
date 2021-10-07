@@ -144,9 +144,13 @@ module VacancyHelpers
       expect(page).to have_content(full_address(vacancy.organisations.first))
     end
 
-    expect(page).to have_content(vacancy.job_title)
     expect(page).to have_content(vacancy.show_main_job_role)
     expect(page).to have_content(strip_tags(vacancy.show_additional_job_roles)) if vacancy.additional_job_roles.any?
+
+    expect(page).to have_content(vacancy.phase&.humanize) if vacancy.phase.present?
+    expect(page).to have_content(vacancy.contract_type_with_duration)
+    expect(page).to have_content(vacancy.job_title)
+    expect(page).to have_content(vacancy.show_key_stages) if vacancy.key_stages.present?
     expect(page).to have_content(vacancy.show_subjects)
 
     expect(page).to have_content(strip_tags(vacancy.working_patterns))
