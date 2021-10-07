@@ -19,6 +19,13 @@ namespace :algolia do
   end
 end
 
+namespace :db do
+  desc "Asynchronously import organisations from GIAS and seed the database"
+  task async_seed: :environment do
+    SeedDatabaseJob.perform_later
+  end
+end
+
 namespace :dsi do
   desc "Update DfE Sign-in users data"
   task update_users: :environment do
