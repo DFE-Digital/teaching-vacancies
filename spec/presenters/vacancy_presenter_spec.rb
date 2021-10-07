@@ -5,7 +5,7 @@ RSpec.describe VacancyPresenter do
 
   describe "#expired?" do
     context "when the vacancy has expired by now" do
-      let(:vacancy) { build(:vacancy, expires_at: 1.hour.ago) }
+      let(:vacancy) { build_stubbed(:vacancy, expires_at: 1.hour.ago) }
 
       it "returns true" do
         expect(subject).to be_expired
@@ -13,7 +13,7 @@ RSpec.describe VacancyPresenter do
     end
 
     context "when the vacancy expires later today" do
-      let(:vacancy) { build(:vacancy, expires_at: 1.hour.from_now) }
+      let(:vacancy) { build_stubbed(:vacancy, expires_at: 1.hour.from_now) }
 
       it "returns false" do
         expect(subject).not_to be_expired
@@ -22,7 +22,7 @@ RSpec.describe VacancyPresenter do
   end
 
   describe "#publish_today?" do
-    let(:vacancy) { build(:vacancy, publish_on: Date.current) }
+    let(:vacancy) { build_stubbed(:vacancy, publish_on: Date.current) }
 
     it "verifies that the publish_on is set to today" do
       expect(subject.publish_today?).to eq(true)
@@ -30,7 +30,7 @@ RSpec.describe VacancyPresenter do
   end
 
   describe "#job_advert" do
-    let(:vacancy) { build(:vacancy, job_advert: "<script> call();</script>Sanitized content") }
+    let(:vacancy) { build_stubbed(:vacancy, job_advert: "<script> call();</script>Sanitized content") }
 
     it "sanitizes and transforms the job_advert into HTML" do
       expect(subject.job_advert).to eq("<p> call();Sanitized content</p>")
@@ -88,7 +88,7 @@ RSpec.describe VacancyPresenter do
     context "when the advert was made using a rich text editor" do
       context "when the advert is well-formatted (has line breaks between list items)" do
         let(:vacancy) do
-          build(:vacancy, job_advert:
+          build_stubbed(:vacancy, job_advert:
             "<div><!--block-->&nbsp;</div><div><!--block--><strong>Deputy Head Teacher</strong>&nbsp;<br><br></div>" \
          "<div><!--block-->To be successful, you will:&nbsp;<br><br></div>" \
          "<div><!--block-->· &nbsp; Have quality one;&nbsp;<br><br></div>" \
@@ -111,7 +111,7 @@ RSpec.describe VacancyPresenter do
 
       context "when the advert is badly formatted" do
         let(:vacancy) do
-          build(:vacancy, job_advert:
+          build_stubbed(:vacancy, job_advert:
             "<div><!--block-->&nbsp;</div><div><!--block-->Sentence one. Sentence two.&nbsp;<br><br></div>" \
           "<div><!--block-->Paragraph two. Qualifications:&nbsp;<br><br></div>" \
           "<div><!--block-->•&nbsp; &nbsp; Skill one.&nbsp;</div>" \
@@ -137,7 +137,7 @@ RSpec.describe VacancyPresenter do
   end
 
   describe "#about_school" do
-    let(:vacancy) { build(:vacancy, about_school: "<script> call();</script>Sanitized content") }
+    let(:vacancy) { build_stubbed(:vacancy, about_school: "<script> call();</script>Sanitized content") }
 
     it "sanitizes and transforms about_school into HTML" do
       expect(subject.about_school).to eq("<p> call();Sanitized content</p>")
@@ -145,7 +145,7 @@ RSpec.describe VacancyPresenter do
   end
 
   describe "#school_visits" do
-    let(:vacancy) { build(:vacancy, school_visits: "<script> call();</script>Sanitized content") }
+    let(:vacancy) { build_stubbed(:vacancy, school_visits: "<script> call();</script>Sanitized content") }
 
     it "sanitizes and transforms school_visits into HTML" do
       expect(subject.school_visits).to eq("<p> call();Sanitized content</p>")
@@ -153,7 +153,7 @@ RSpec.describe VacancyPresenter do
   end
 
   describe "#how_to_apply" do
-    let(:vacancy) { build(:vacancy, how_to_apply: "<script> call();</script>Sanitized content") }
+    let(:vacancy) { build_stubbed(:vacancy, how_to_apply: "<script> call();</script>Sanitized content") }
 
     it "sanitizes and transforms school_visits into HTML" do
       expect(subject.how_to_apply).to eq("<p> call();Sanitized content</p>")
@@ -161,7 +161,7 @@ RSpec.describe VacancyPresenter do
   end
 
   describe "#all_job_roles" do
-    let(:vacancy) { build(:vacancy) }
+    let(:vacancy) { build_stubbed(:vacancy) }
 
     it "returns the main job role" do
       expect(subject.all_job_roles).to include subject.show_main_job_role
@@ -176,7 +176,7 @@ RSpec.describe VacancyPresenter do
 
   describe "#working_patterns" do
     context "when working_patterns is unset" do
-      let(:vacancy) { create(:vacancy, :without_working_patterns) }
+      let(:vacancy) { build_stubbed(:vacancy, :without_working_patterns) }
 
       it "returns nil" do
         expect(subject.working_patterns).to be_nil
@@ -184,7 +184,7 @@ RSpec.describe VacancyPresenter do
     end
 
     context "when only working_patterns is set" do
-      let(:vacancy) { create(:vacancy, working_patterns: %w[full_time part_time], working_patterns_details: nil) }
+      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time], working_patterns_details: nil) }
 
       it "returns a string only containing the working pattern" do
         expect(subject.show_working_patterns).to eq(I18n.t("jobs.working_patterns_info", patterns: "full time, part time", count: 2))
@@ -192,7 +192,7 @@ RSpec.describe VacancyPresenter do
     end
 
     context "when both working_patterns and working_patterns_details have been set" do
-      let(:vacancy) { create(:vacancy, working_patterns: %w[full_time part_time]) }
+      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time]) }
 
       it "returns a string containing the working pattern and working_patterns_details" do
         expect(subject.show_working_patterns).to eq(safe_join([subject.working_patterns,
@@ -204,7 +204,7 @@ RSpec.describe VacancyPresenter do
 
   describe "#working_patterns_for_job_schema" do
     context "when working_patterns is unset" do
-      let(:vacancy) { create(:vacancy, :without_working_patterns) }
+      let(:vacancy) { build_stubbed(:vacancy, :without_working_patterns) }
 
       it "returns blank" do
         expect(subject.working_patterns_for_job_schema).to be_blank
@@ -212,7 +212,7 @@ RSpec.describe VacancyPresenter do
     end
 
     context "when working_patterns is set" do
-      let(:vacancy) { create(:vacancy, working_patterns: %w[full_time part_time]) }
+      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time]) }
 
       it "returns a string containing the working pattern" do
         expect(subject.working_patterns_for_job_schema).to eq("FULL_TIME, PART_TIME")
@@ -237,7 +237,7 @@ RSpec.describe VacancyPresenter do
   end
 
   describe "#contract_type_with_duration" do
-    let(:vacancy) { create(:vacancy, contract_type: contract_type, contract_type_duration: contract_type_duration) }
+    let(:vacancy) { build_stubbed(:vacancy, contract_type: contract_type, contract_type_duration: contract_type_duration) }
 
     context "when permanent" do
       let(:contract_type) { :permanent }
@@ -254,6 +254,38 @@ RSpec.describe VacancyPresenter do
 
       it "returns Fixed term (duration)" do
         expect(subject.contract_type_with_duration).to eq "Fixed term (6 months)"
+      end
+    end
+  end
+
+  describe "#show_subjects" do
+    let(:vacancy) { build_stubbed(:vacancy, subjects: %w[Acrobatics Tapestry]) }
+
+    it "joins them correctly" do
+      expect(subject.show_subjects).to eq("Acrobatics, Tapestry")
+    end
+
+    context "when there are no subjects" do
+      let(:vacancy) { build_stubbed(:vacancy, subjects: []) }
+
+      it "returns empty string" do
+        expect(subject.show_subjects).to be_blank
+      end
+    end
+  end
+
+  describe "#show_key_stages" do
+    let(:vacancy) { build_stubbed(:vacancy, key_stages: %w[ks1 early_years]) }
+
+    it "joins them correctly" do
+      expect(subject.show_key_stages).to eq("KS1, Early years")
+    end
+
+    context "when there are no subjects" do
+      let(:vacancy) { build_stubbed(:vacancy, key_stages: []) }
+
+      it "returns empty string" do
+        expect(subject.show_key_stages).to be_blank
       end
     end
   end
