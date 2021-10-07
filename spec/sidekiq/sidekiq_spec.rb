@@ -15,6 +15,7 @@ RSpec.describe "Sidekiq configuration" do
       MigrateVacancyDocumentsToActiveStorageJob
       PerformancePlatformTransactionsQueueJob
       RemoveGoogleIndexQueueJob
+      SeedDatabaseJob
       SendEntityImportedEventsToDataWarehouseJob
       SendEventToDataWarehouseJob
       UpdateGoogleIndexQueueJob
