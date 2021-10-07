@@ -3,12 +3,11 @@
 = render "publishers/vacancies/job_applications/banner", vacancy: vacancy, job_applications: vacancy.job_applications
 
 .govuk-grid-row.vacancy class="govuk-!-margin-top-7"
-  .govuk-grid-column-full
-    h2.govuk-heading-l = t("jobs.manage_listing")
-
   .govuk-grid-column-two-thirds
+    h2.govuk-heading-l = t("jobs.manage_listing")
     = render "actions"
-    = render "shared/error_messages", errors: vacancy.errors
+    - unless vacancy.draft? || vacancy.expired?
+      = render "shared/error_messages", errors: vacancy.errors
     = render "edit_sections"
     = render "publish_buttons"
 
