@@ -6,12 +6,7 @@ RSpec.describe Jobseekers::OrganisationOverviews::SchoolsComponent, type: :compo
   let(:school1) { create(:school, geolocation_trait, name: "Oxford Uni", website: "https://this-is-a-test-url.tvs") }
   let(:school2) { create(:school, geolocation_trait, name: "Cambridge Uni") }
   let(:school3) { create(:school, geolocation_trait, name: "London LSE") }
-
-  let(:vacancy) do
-    create(:vacancy, :at_multiple_schools, organisation_vacancies_attributes: [
-      { organisation: school1 }, { organisation: school2 }, { organisation: school3 }
-    ])
-  end
+  let(:vacancy) { create(:vacancy, :at_multiple_schools, organisations: [school1, school2, school3]) }
   let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
 
   let!(:inline_component) do

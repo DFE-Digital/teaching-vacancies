@@ -7,13 +7,13 @@ module Publishers::Wizardable
   }.freeze
 
   def job_role_params(params)
-    params.require(:publishers_job_listing_job_role_form)
-          .permit(:main_job_role).merge(completed_steps: completed_steps)
+    params.require(:publishers_job_listing_job_role_form).permit(:main_job_role).merge(completed_steps: completed_steps)
   end
 
   def job_role_details_params(params)
     params.require(:publishers_job_listing_job_role_details_form)
-          .permit(:send_responsible, additional_job_roles: []).merge(completed_steps: completed_steps)
+          .permit(:send_responsible, additional_job_roles: [])
+          .merge(completed_steps: completed_steps)
   end
 
   def job_location_params(params)
@@ -50,19 +50,29 @@ module Publishers::Wizardable
           .merge(attributes_to_merge.compact)
   end
 
+  def education_phases_params(params)
+    # Forms containing only radio buttons do not send the form key param when they're submitted and no radio is selected
+    if params["publishers_job_listing_education_phases_form"]
+      params.require(:publishers_job_listing_education_phases_form).permit(:phase).merge(completed_steps: completed_steps)
+    else
+      {}
+    end
+  end
+
   def job_details_params(params)
     job_location = vacancy.job_location.presence || "at_one_school"
     readable_job_location = vacancy.readable_job_location.presence || readable_job_location(job_location, school_name: current_organisation.name)
     attributes_to_merge = {
       completed_steps: completed_steps,
       job_location: job_location,
-      readable_job_location: readable_job_location,
       organisation_ids: vacancy.organisation_ids.blank? ? current_organisation.id : nil,
+      readable_job_location: readable_job_location,
       status: vacancy.status.blank? ? "draft" : nil,
     }
     params.require(:publishers_job_listing_job_details_form)
-          .permit(:job_title, :contract_type, :contract_type_duration, subjects: [])
+          .permit(:job_title, :contract_type, :contract_type_duration, key_stages: [], subjects: [])
           .merge(attributes_to_merge.compact)
+          .merge(key_stages: params[:publishers_job_listing_job_details_form][:key_stages]&.reject(&:blank?))
   end
 
   def working_patterns_params(params)
@@ -91,7 +101,8 @@ module Publishers::Wizardable
 
   def job_summary_params(params)
     params.require(:publishers_job_listing_job_summary_form)
-          .permit(:job_advert, :about_school).merge(completed_steps: completed_steps)
+          .permit(:job_advert, :about_school)
+          .merge(completed_steps: completed_steps)
   end
 
   private
