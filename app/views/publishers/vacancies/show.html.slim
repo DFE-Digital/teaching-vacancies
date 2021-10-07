@@ -8,7 +8,8 @@
 
   .govuk-grid-column-two-thirds
     = render "actions"
-    = render "shared/error_messages", errors: vacancy.errors
+    - unless vacancy.draft?
+      = render "shared/error_messages", errors: vacancy.errors
     = render "edit_sections"
     = render "publish_buttons"
 
