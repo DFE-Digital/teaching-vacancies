@@ -654,4 +654,56 @@ RSpec.describe Vacancy do
       end
     end
   end
+
+  describe "#geolocation" do
+    subject { create(:vacancy, job_location: job_location, organisations: organisations) }
+
+    context "for single school vacancies" do
+      let(:job_location) { :at_one_school }
+      let(:organisations) { [create(:school, geopoint: "POINT(1 2)")] }
+
+      it "is set to a point" do
+        expect(subject.geolocation.lat).to eq(2)
+        expect(subject.geolocation.lon).to eq(1)
+      end
+    end
+
+    context "for trust central office vacancies" do
+      let(:job_location) { :central_office }
+      let(:organisations) { [create(:trust, geopoint: "POINT(1 2)")] }
+
+      it "is set to a point" do
+        expect(subject.geolocation.lat).to eq(2)
+        expect(subject.geolocation.lon).to eq(1)
+      end
+    end
+
+    context "for multi school vacancies" do
+      let(:job_location) { :at_multiple_schools }
+      let(:organisations) { [create(:school, geopoint: "POINT(1 2)"), create(:school, geopoint: "POINT(3 4)")] }
+
+      it "is set to a multipoint" do
+        expect(subject.geolocation.map(&:lat)).to contain_exactly(2, 4)
+        expect(subject.geolocation.map(&:lon)).to contain_exactly(1, 3)
+      end
+    end
+
+    context "if there is no organisation" do
+      let(:job_location) { :at_one_school }
+      let(:organisations) { [] }
+
+      it "is set to nil" do
+        expect(subject.geolocation).to be_nil
+      end
+    end
+
+    context "if all organisations have no geopoint" do
+      let(:job_location) { :at_multiple_schools }
+      let(:organisations) { [create(:school, geopoint: nil)] }
+
+      it "is set to nil" do
+        expect(subject.geolocation).to be_nil
+      end
+    end
+  end
 end
