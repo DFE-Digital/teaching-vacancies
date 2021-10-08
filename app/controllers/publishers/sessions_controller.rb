@@ -19,6 +19,7 @@ class Publishers::SessionsController < Devise::SessionsController
     @publisher_dsi_token = session[:publisher_dsi_token]
     session.delete(:publisher_organisation_id)
     session.delete(:visited_new_features_page)
+    session.delete(:visited_application_feature_reminder_page)
     super
   end
 
