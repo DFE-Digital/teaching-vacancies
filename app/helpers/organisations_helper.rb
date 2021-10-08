@@ -2,6 +2,7 @@ module OrganisationsHelper
   include AddressHelper
 
   OFSTED_REPORT_ENDPOINT = "https://reports.ofsted.gov.uk/oxedu_providers/full/(urn)/".freeze
+  APPLICATION_PACK_FILENAME = "teaching-vacancies-application-form-guide-sept-21.pdf".freeze
 
   def age_range(school)
     return t("schools.not_given") unless school.minimum_age? && school.maximum_age?
@@ -101,6 +102,14 @@ module OrganisationsHelper
     else
       false
     end
+  end
+
+  def application_pack_asset_size
+    (File.size("public/#{APPLICATION_PACK_FILENAME}") / 1.0.megabyte).round(2)
+  end
+
+  def application_pack_asset_path
+    ActionController::Base.helpers.asset_path(APPLICATION_PACK_FILENAME)
   end
 
   private
