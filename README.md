@@ -148,7 +148,7 @@ DATABASE_URL=postgis://mylocaluser:mylocalpassword@localhost:5432
 
 ### Seed the database
 
-To create a few vacancies in your database run:
+This will first import all the organisations from [GIAS](https://get-information-schools.service.gov.uk/) and then will create publishers, vacancies, jobseekers and job applications:
 
 ```bash
 bundle exec rails db:seed
@@ -164,16 +164,6 @@ Run these rake tasks to populate your database with location polygons. These are
 
 ```bash
 bundle exec rails ons:import_location_polygons
-```
-
-#### GIAS data (schools, trusts and local authorities)
-
-:hourglass_flowing_sand: This is optional, and takes a while.
-
-To populate your environment with real school data, taken from [GIAS](https://get-information-schools.service.gov.uk/):
-
-```bash
-bundle exec rails gias:import_schools
 ```
 
 ### Run the server
