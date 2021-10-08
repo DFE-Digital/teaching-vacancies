@@ -8,7 +8,7 @@ namespace :algolia do
   task remove_indices: :environment do
     replicas = Vacancy.index.get_settings["replicas"]
     Vacancy.index.set_settings({ replicas: [] })
-    Algolia.client.delete_index(Vacancy::Indexable::INDEX_NAME)
+    Algolia.client.delete_index(Indexable::INDEX_NAME)
     sleep(5) # Needed otherwise replicas are still bound to the primary
     replicas.each { |replica| Algolia.client.delete_index(replica) }
   end

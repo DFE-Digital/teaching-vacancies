@@ -1,4 +1,4 @@
-module Vacancy::Phaseable
+module Phaseable
   extend ActiveSupport::Concern
 
   def allow_phase_to_be_set?
