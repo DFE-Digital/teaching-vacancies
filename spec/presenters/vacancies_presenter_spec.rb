@@ -4,7 +4,7 @@ RSpec.describe VacanciesPresenter do
 
   describe "#each" do
     it "is delegated to the decorated collection" do
-      create_list(:vacancy, 3)
+      build_stubbed_list(:vacancy, 3)
       vacancies = Vacancy.all.page(1)
       decorated_vacancies = vacancies.map { |v| VacancyPresenter.new(v) }
       vacancies_presenter = VacanciesPresenter.new(vacancies)
