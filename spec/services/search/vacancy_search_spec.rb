@@ -20,6 +20,7 @@ RSpec.describe Search::VacancySearch do
   let(:fuzzy) { true }
   let(:filter_query) { Search::FiltersBuilder.new(form_hash).filter_query }
   let!(:location_polygon) { create(:location_polygon, name: "london") }
+  let(:buffered_polygon) { LocationPolygon.buffered(radius).find(location_polygon.id) }
 
   describe "pagination helpers" do
     let(:per_page) { 20 }
@@ -100,7 +101,7 @@ RSpec.describe Search::VacancySearch do
         let(:search_params) do
           {
             keyword: keyword,
-            polygons: location_polygon.buffers[radius.to_s],
+            polygons: buffered_polygon.to_algolia_polygons,
             filters: filter_query,
             per_page: 20,
             page: page,
@@ -160,7 +161,7 @@ RSpec.describe Search::VacancySearch do
 
         let(:arguments_to_algolia) do
           {
-            insidePolygon: location_polygon.buffers[radius.to_s],
+            insidePolygon: buffered_polygon.to_algolia_polygons,
             filters: filter_query,
             hitsPerPage: 20,
             page: page,
@@ -184,7 +185,7 @@ RSpec.describe Search::VacancySearch do
         let(:search_params) do
           {
             keyword: keyword,
-            polygons: location_polygon.buffers[radius.to_s],
+            polygons: buffered_polygon.to_algolia_polygons,
             filters: filter_query,
             per_page: 20,
             page: page,

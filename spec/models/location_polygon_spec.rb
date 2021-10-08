@@ -61,4 +61,14 @@ RSpec.describe LocationPolygon do
       end
     end
   end
+
+  describe "#to_algolia_polygons" do
+    before do
+      subject.area = "POLYGON((0 0, 1 1, 0 1, 0 0))"
+    end
+
+    it "returns an Algolia representation of the area field" do
+      expect(subject.to_algolia_polygons).to eq([[0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0]])
+    end
+  end
 end
