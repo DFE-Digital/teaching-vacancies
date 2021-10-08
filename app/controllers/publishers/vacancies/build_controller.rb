@@ -18,6 +18,8 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
 
     return redirect_to(organisation_job_documents_path(vacancy.id)) if step == :documents
 
+    return redirect_to(reminder_new_features_path) if show_application_reminder?
+
     render_wizard
   end
 
@@ -35,6 +37,15 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   end
 
   private
+
+  def show_application_reminder?
+    most_recent_vacancy = current_publisher.vacancies.order("created_at").last
+
+    !session[:visited_application_feature_reminder_page] &&
+      current_publisher.viewed_new_features_page_at &&
+      most_recent_vacancy&.created_at > current_publisher.viewed_new_features_page_at &&
+      !most_recent_vacancy.enable_job_applications
+  end
 
   def form
     @form ||= form_class.new(form_attributes, vacancy)
