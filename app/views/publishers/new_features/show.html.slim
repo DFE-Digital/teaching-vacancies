@@ -10,13 +10,13 @@
 
         h2.govuk-heading-m = t("new_features.applications")
 
-        p.govuk-body-l = t("new_features.content")
+        p.govuk-body = t("new_features.content")
 
-        = t("application_pack.link_html")
+        = govuk_link_to t("new_features.application_pack_link", size: application_pack_asset_size), application_pack_asset_path, target: "_blank", class: "govuk-body"
 
         = f.govuk_check_boxes_fieldset :dismiss,
           legend: nil,
-          classes: "govuk-!-margin-top-8 govuk-!-margin-bottom-2" do
+          classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2" do
 
           = f.govuk_check_box :dismiss,
             true,
