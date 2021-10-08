@@ -1,10 +1,10 @@
 require "rails_helper"
 RSpec.describe OrganisationVacancyPresenter do
-  let(:vacancy) { create(:vacancy) }
+  let(:vacancy) { build_stubbed(:vacancy) }
   let(:presenter) { described_class.new(vacancy) }
 
   describe "application_deadline" do
-    let(:vacancy) { create(:vacancy, expires_at: Time.current + 5.days) }
+    let(:vacancy) { build_stubbed(:vacancy, expires_at: Time.current + 5.days) }
     let(:expected_deadline) { "#{format_date(Date.current + 5.days)} at #{format_time(Time.current + 5.days)}" }
 
     it "displays the application deadline date" do
@@ -13,7 +13,7 @@ RSpec.describe OrganisationVacancyPresenter do
   end
 
   describe "days_to_apply" do
-    let(:vacancy) { create(:vacancy, expires_at: time_to_apply) }
+    let(:vacancy) { build_stubbed(:vacancy, expires_at: time_to_apply) }
 
     context "when the deadline is today" do
       let(:time_to_apply) { (Date.current + 12.hours) }
