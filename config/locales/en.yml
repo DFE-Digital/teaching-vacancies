@@ -247,7 +247,7 @@ en:
 
   new_features:
     applications: Applications
-    application_pack_link: Download more information about the application form (2.7MB, PDF).
+    application_pack_link: Download more information about the application form (%{size} MB, PDF).
     content: >-
       You can now receive and manage job applications on Teaching Vacancies. You can
       do this for all jobs except education support roles.
