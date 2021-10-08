@@ -42,7 +42,7 @@ class Vacancy < ApplicationRecord
   has_many :job_applications, dependent: :destroy
   has_one :equal_opportunities_report, dependent: :destroy
   has_many :organisation_vacancies, dependent: :destroy
-  has_many :organisations, through: :organisation_vacancies, dependent: :destroy
+  has_many :organisations, through: :organisation_vacancies, dependent: :destroy, after_add: :refresh_geolocation, after_remove: :refresh_geolocation
   accepts_nested_attributes_for :organisation_vacancies
 
   delegate :name, to: :parent_organisation, prefix: true, allow_nil: true
@@ -68,6 +68,7 @@ class Vacancy < ApplicationRecord
   #       does not support the PostGIS adapter so until that is fixed we need to do this manually. c.f. https://github.com/excid3/noticed/pull/150
   before_destroy { Notification.where("params @> ?", Noticed::Coder.dump(vacancy: self).to_json).destroy_all }
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
+  before_save :refresh_geolocation, if: -> { job_location_changed? }
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[7:00 8:00 9:00 10:00 11:00 12:00 13:00 14:00 15:00 16:00 17:00 23:59].freeze
@@ -206,5 +207,18 @@ class Vacancy < ApplicationRecord
     return unless persisted? && listed? && enable_job_applications_changed?
 
     errors.add(:enable_job_applications, :cannot_be_changed_once_listed)
+  end
+
+  # This method is used as a callback when either:
+  #   * an organisation association is added or removed, or
+  #   * the job location was changed to "central office"
+  # In the former case, it gets an argument, which we don't need and thus ignore
+  def refresh_geolocation(_school_added_or_removed = nil)
+    self.geolocation = if central_office? || at_one_school?
+                         organisation&.geopoint
+                       else
+                         points = organisations.filter_map(&:geopoint)
+                         points.presence && points.first.factory.multi_point(points)
+                       end
   end
 end
