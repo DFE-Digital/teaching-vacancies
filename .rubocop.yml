@@ -93,7 +93,7 @@ Metrics/BlockLength:
   Exclude:
     - "config/**/*"
     - "spec/**/*"
-    - "app/models/concerns/vacancy/indexable.rb"
+    - "app/models/concerns/indexable.rb"
 
 Metrics/ClassLength:
   Max: 156 # Default 100

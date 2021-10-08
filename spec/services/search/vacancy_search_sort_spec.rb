@@ -20,7 +20,7 @@ RSpec.describe Search::VacancySearchSort do
       it { is_expected.to eq(Search::VacancySearchSort::PUBLISH_ON_DESC) }
 
       it "uses the default search replica" do
-        expect(subject.algolia_replica).to eq("#{Vacancy::Indexable::INDEX_NAME}_publish_on_desc")
+        expect(subject.algolia_replica).to eq("#{Indexable::INDEX_NAME}_publish_on_desc")
       end
     end
   end
@@ -31,7 +31,7 @@ RSpec.describe Search::VacancySearchSort do
     it { is_expected.to eq(Search::VacancySearchSort::PUBLISH_ON_DESC) }
 
     it "uses the default search replica" do
-      expect(subject.algolia_replica).to eq("#{Vacancy::Indexable::INDEX_NAME}_publish_on_desc")
+      expect(subject.algolia_replica).to eq("#{Indexable::INDEX_NAME}_publish_on_desc")
     end
   end
 
@@ -41,7 +41,7 @@ RSpec.describe Search::VacancySearchSort do
     it { is_expected.to eq(Search::VacancySearchSort::EXPIRES_AT_DESC) }
 
     it "uses the specified search replica" do
-      expect(subject.algolia_replica).to eq("#{Vacancy::Indexable::INDEX_NAME}_expires_at_desc")
+      expect(subject.algolia_replica).to eq("#{Indexable::INDEX_NAME}_expires_at_desc")
     end
 
     context "and a keyword is specified" do
@@ -50,7 +50,7 @@ RSpec.describe Search::VacancySearchSort do
       it { is_expected.to eq(Search::VacancySearchSort::EXPIRES_AT_DESC) }
 
       it "uses the specified search replica" do
-        expect(subject.algolia_replica).to eq("#{Vacancy::Indexable::INDEX_NAME}_expires_at_desc")
+        expect(subject.algolia_replica).to eq("#{Indexable::INDEX_NAME}_expires_at_desc")
       end
     end
   end
