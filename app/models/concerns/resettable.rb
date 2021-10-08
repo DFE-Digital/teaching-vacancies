@@ -1,4 +1,4 @@
-module Vacancy::Resettable
+module Resettable
   extend ActiveSupport::Concern
 
   included do

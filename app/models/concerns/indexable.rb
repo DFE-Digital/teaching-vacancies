@@ -1,4 +1,4 @@
-module Vacancy::Indexable
+module Indexable
   extend ActiveSupport::Concern
 
   INDEX_NAME = [Rails.configuration.algolia_index_prefix, DOMAIN, Vacancy].compact.join("-").freeze
