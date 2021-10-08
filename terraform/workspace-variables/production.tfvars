@@ -24,19 +24,19 @@ channel_list = {
 documents_s3_bucket_force_destroy = false
 
 # Gov.UK PaaS
-paas_space_name                        = "teaching-vacancies-production"
-paas_papertrail_service_binding_enable = true
-paas_postgres_service_plan             = "medium-ha-12"
-paas_redis_cache_service_plan          = "small-ha-5_x"
-paas_redis_queue_service_plan          = "micro-ha-5_x"
-paas_app_start_timeout                 = "180"
-paas_app_stopped                       = false
-paas_web_app_deployment_strategy       = "blue-green-v2"
-paas_web_app_instances                 = 4
-paas_worker_app_deployment_strategy    = "blue-green-v2"
-paas_worker_app_instances              = 2
-paas_worker_app_memory                 = 1536
-paas_web_app_memory                    = 1536
+paas_space_name                     = "teaching-vacancies-production"
+paas_papertrail_service_binding_enable   = true
+paas_postgres_service_plan          = "medium-ha-12"
+paas_redis_cache_service_plan       = "small-ha-5_x"
+paas_redis_queue_service_plan       = "micro-ha-5_x"
+paas_app_start_timeout              = "180"
+paas_app_stopped                    = false
+paas_web_app_deployment_strategy    = "blue-green-v2"
+paas_web_app_instances              = 4
+paas_worker_app_deployment_strategy = "blue-green-v2"
+paas_worker_app_instances           = 2
+paas_worker_app_memory              = 1536
+paas_web_app_memory                 = 1536
 
 # StatusCake
 

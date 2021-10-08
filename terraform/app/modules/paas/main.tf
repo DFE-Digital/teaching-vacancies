@@ -30,6 +30,12 @@ resource "cloudfoundry_user_provided_service" "papertrail" {
   syslog_drain_url = var.papertrail_url
 }
 
+resource "cloudfoundry_user_provided_service" "logit" {
+  name             = local.logit_service_name
+  space            = data.cloudfoundry_space.space.id
+  syslog_drain_url = var.logit_url
+}
+
 resource "aws_s3_bucket" "documents_s3_bucket" {
   bucket        = local.documents_s3_bucket_name
   force_destroy = var.documents_s3_bucket_force_destroy
