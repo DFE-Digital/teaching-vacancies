@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_06_100816) do
+ActiveRecord::Schema.define(version: 2021_10_07_155322) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -258,6 +258,7 @@ ActiveRecord::Schema.define(version: 2021_10_06_100816) do
     t.jsonb "buffers"
     t.geography "area", limit: {:srid=>4326, :type=>"geometry", :geographic=>true}
     t.index ["area"], name: "index_location_polygons_on_area", using: :gist
+    t.index ["name"], name: "index_location_polygons_on_name"
   end
 
   create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
