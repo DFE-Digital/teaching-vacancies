@@ -42,6 +42,20 @@ RSpec.describe Jobseekers::VacancyDetailsComponent, type: :component do
     end
   end
 
+  context "when key stages are present" do
+    let(:vacancy) { create(:vacancy, key_stages: %w[ks1]) }
+
+    it "renders the key stages label" do
+      expect(rendered_component).to include(I18n.t("jobs.key_stage", count: vacancy.key_stages&.count))
+    end
+  end
+
+  context "when key stages are not present" do
+    it "does not render the subjects label" do
+      expect(rendered_component).not_to include(I18n.t("jobs.key_stage", count: vacancy.key_stages&.count))
+    end
+  end
+
   it "renders the working pattern" do
     expect(rendered_component).to include(vacancy_presenter.working_patterns)
   end

@@ -56,6 +56,6 @@ class Search::VacancySearchSort
   def algolia_replica
     return nil unless algolia_replica_suffix.present?
 
-    [Indexable::INDEX_NAME, algolia_replica_suffix].join("_")
+    [Vacancy::Indexable::INDEX_NAME, algolia_replica_suffix].join("_")
   end
 end

@@ -18,6 +18,10 @@ module VacancyHelpers
     choose I18n.t("helpers.label.publishers_job_listing_job_role_form.main_job_role_options.#{vacancy.main_job_role}")
   end
 
+  def fill_in_education_phases_form_fields(vacancy)
+    choose I18n.t("helpers.label.publishers_job_listing_education_phases_form.phase_options.#{vacancy.phase}")
+  end
+
   def fill_in_job_role_details_form_fields(vacancy)
     if vacancy.main_job_role == "teacher"
       vacancy.additional_job_roles&.each do |job_role|
@@ -29,7 +33,7 @@ module VacancyHelpers
     end
   end
 
-  def fill_in_job_details_form_fields(vacancy)
+  def fill_in_job_details_form_fields(vacancy, include_key_stages: true)
     fill_in "publishers_job_listing_job_details_form[job_title]", with: vacancy.job_title
 
     vacancy.subjects&.each do |subject|
@@ -39,6 +43,11 @@ module VacancyHelpers
     end
 
     choose I18n.t("helpers.label.publishers_job_listing_job_details_form.contract_type_options.#{vacancy.contract_type}")
+    if include_key_stages
+      vacancy.key_stages.each do |key_stage|
+        check I18n.t("helpers.label.publishers_job_listing_job_role_details_form.additional_job_roles_options.#{key_stage}")
+      end
+    end
     fill_in "publishers_job_listing_job_details_form[contract_type_duration]", with: vacancy.contract_type_duration
   end
 
@@ -135,9 +144,13 @@ module VacancyHelpers
       expect(page).to have_content(full_address(vacancy.organisations.first))
     end
 
-    expect(page).to have_content(vacancy.job_title)
     expect(page).to have_content(vacancy.show_main_job_role)
     expect(page).to have_content(strip_tags(vacancy.show_additional_job_roles)) if vacancy.additional_job_roles.any?
+
+    expect(page).to have_content(vacancy.phase&.humanize) if vacancy.phase.present?
+    expect(page).to have_content(vacancy.contract_type_with_duration)
+    expect(page).to have_content(vacancy.job_title)
+    expect(page).to have_content(vacancy.show_key_stages) if vacancy.key_stages.present?
     expect(page).to have_content(vacancy.show_subjects)
 
     expect(page).to have_content(strip_tags(vacancy.working_patterns))

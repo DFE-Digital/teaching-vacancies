@@ -1,4 +1,4 @@
-module Indexable
+module Vacancy::Indexable
   extend ActiveSupport::Concern
 
   INDEX_NAME = [Rails.configuration.algolia_index_prefix, DOMAIN, Vacancy].compact.join("-").freeze
@@ -13,6 +13,14 @@ module Indexable
     algoliasearch index_name: INDEX_NAME, auto_index: !Rails.env.test?, auto_remove: !Rails.env.test?, if: :listed? do
       attributes :education_phases, :job_roles, :job_title, :parent_organisation_name, :salary, :subjects, :working_patterns, :_geoloc
 
+      attribute :about_school do
+        strip_tags(about_school)&.truncate(256)
+      end
+
+      attribute :benefits do
+        strip_tags(benefits)
+      end
+
       attribute :expires_at do
         format_time_to_datetime_at(expires_at)
       end
@@ -22,23 +30,15 @@ module Indexable
       end
 
       attribute :job_roles_for_display do
-        VacancyPresenter.new(self).show_job_roles
+        presenter.show_job_roles
       end
 
       attribute :job_advert do
         strip_tags(job_advert)&.truncate(256)
       end
 
-      attribute :benefits do
-        strip_tags(benefits)
-      end
-
-      attribute :about_school do
-        strip_tags(about_school)&.truncate(256)
-      end
-
-      attribute :school_visits do
-        strip_tags(school_visits)
+      attribute :key_stages do
+        presenter.show_key_stages
       end
 
       attribute :last_updated_at do
@@ -65,6 +65,10 @@ module Indexable
         publish_on&.to_time&.to_i
       end
 
+      attribute :school_visits do
+        strip_tags(school_visits)
+      end
+
       attribute :start_date do
         starts_on&.to_s
       end
@@ -74,11 +78,11 @@ module Indexable
       end
 
       attribute :subjects_for_display do
-        VacancyPresenter.new(self).show_subjects
+        presenter.show_subjects
       end
 
       attribute :working_patterns_for_display do
-        VacancyPresenter.new(self).working_patterns
+        presenter.working_patterns
       end
 
       attributesForFaceting %i[job_roles working_patterns education_phases subjects]
@@ -95,6 +99,15 @@ module Indexable
         ranking ["asc(expires_at_timestamp)"]
       end
     end
+  end
+
+  def _geoloc
+    organisations.select { |organisation| organisation.geopoint.present? }
+                 .map { |organisation| { lat: organisation.geopoint.lat, lng: organisation.geopoint.lon } }
+  end
+
+  def presenter
+    @presenter ||= VacancyPresenter.new(self)
   end
 
   class_methods do
@@ -133,10 +146,5 @@ module Indexable
     def remove_vacancies_that_expired_yesterday!
       index.delete_objects(expired_yesterday.map(&:id)) if expired_yesterday&.any?
     end
-  end
-
-  def _geoloc
-    organisations.select { |organisation| organisation.geopoint.present? }
-                 .map { |organisation| { lat: organisation.geopoint.lat, lng: organisation.geopoint.lon } }
   end
 end

@@ -7,11 +7,8 @@ class Search::CriteriaInventor
   def initialize(vacancy, working_patterns_variant = :default)
     @vacancy = vacancy
     @working_patterns_variant = working_patterns_variant
-    @location = if @vacancy.organisations.many?
-                  @vacancy.postcode_from_mean_geolocation || @vacancy.set_postcode_from_mean_geolocation || @vacancy.parent_organisation.postcode
-                else
-                  @vacancy.organisation.postcode
-                end
+    @location = location
+    @subjects = subjects
     @criteria = set_criteria
   end
 
@@ -23,7 +20,7 @@ class Search::CriteriaInventor
       working_patterns: @working_patterns_variant == :default ? @vacancy.working_patterns : [],
       phases: @vacancy.education_phases,
       job_roles: @vacancy.job_roles,
-      subjects: get_subjects_from_vacancy,
+      subjects: @subjects,
       keyword: keyword }.delete_if { |_k, v| v.blank? }
   end
 
@@ -35,7 +32,13 @@ class Search::CriteriaInventor
     get_keywords_from_job_title.presence unless @vacancy.job_roles.present?
   end
 
-  def get_subjects_from_vacancy
+  def location
+    return @vacancy.organisation.postcode if @vacancy.organisations.one?
+
+    @vacancy.postcode_from_mean_geolocation || @vacancy.set_postcode_from_mean_geolocation || @vacancy.parent_organisation.postcode
+  end
+
+  def subjects
     return if @vacancy.subjects&.one?
     return @vacancy.subjects if @vacancy.subjects&.many?
 
