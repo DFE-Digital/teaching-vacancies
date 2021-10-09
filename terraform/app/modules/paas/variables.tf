@@ -27,6 +27,12 @@ variable "papertrail_service_binding_enable" {
 variable "papertrail_url" {
 }
 
+variable "logit_service_binding_enable" {
+}
+
+variable "logit_url" {
+}
+
 variable "parameter_store_environment" {
   default = "dev"
 }
@@ -111,15 +117,14 @@ locals {
     cloudfoundry_service_instance.redis_cache_instance.id,
     cloudfoundry_service_instance.redis_queue_instance.id,
   ]
-  app_user_provided_service_bindings = var.papertrail_service_binding_enable ? [cloudfoundry_user_provided_service.papertrail.id] : []
-  app_service_bindings = concat(
-    local.app_cloudfoundry_service_instances,
-    local.app_user_provided_service_bindings
-  )
-  papertrail_service_name  = "${var.service_name}-papertrail-${var.environment}"
-  postgres_service_name    = "${var.service_name}-postgres-${var.environment}"
-  redis_cache_service_name = "${var.service_name}-redis-cache-${var.environment}"
-  redis_queue_service_name = "${var.service_name}-redis-queue-${var.environment}"
+  app_user_provided_service_bindings          = var.papertrail_service_binding_enable ? [cloudfoundry_user_provided_service.papertrail.id] : []
+  app_user_provided_service_bindings_non_prod = var.logit_service_binding_enable ? [cloudfoundry_user_provided_service.logit.id] : []
+  app_service_bindings                        = var.environment == "production" ? concat(local.app_cloudfoundry_service_instances, local.app_user_provided_service_bindings) : concat(local.app_cloudfoundry_service_instances, local.app_user_provided_service_bindings_non_prod)
+  papertrail_service_name                     = "${var.service_name}-papertrail-${var.environment}"
+  logit_service_name                          = "${var.service_name}-logit-${var.environment}"
+  postgres_service_name                       = "${var.service_name}-postgres-${var.environment}"
+  redis_cache_service_name                    = "${var.service_name}-redis-cache-${var.environment}"
+  redis_queue_service_name                    = "${var.service_name}-redis-queue-${var.environment}"
   # S3 bucket name uses abbreviation so we don't run into 63 character bucket name limit
   documents_s3_bucket_name = "${data.aws_caller_identity.current.account_id}-${var.service_abbreviation}-attachments-documents-${var.environment}"
   web_app_name             = "${var.service_name}-${var.environment}"
