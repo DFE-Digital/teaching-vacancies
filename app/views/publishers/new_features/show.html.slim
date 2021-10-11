@@ -1,0 +1,27 @@
+- content_for :page_title_prefix, t("new_features.page_title")
+
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form_for @new_features_form, url: new_features_path, method: :patch do |f|
+        = f.govuk_error_summary
+
+        h1.govuk-heading-l = t("new_features.page_title")
+
+        h2.govuk-heading-m = t("new_features.applications")
+
+        p.govuk-body-l = t("new_features.content")
+
+        = govuk_link_to(t("new_features.application_pack_link"), "teaching-vacancies-application-form-guide-sept-21.pdf", target: "_blank")
+
+        = f.govuk_check_boxes_fieldset :dismiss,
+          legend: nil,
+          classes: "govuk-!-margin-top-8 govuk-!-margin-bottom-2" do
+
+          = f.govuk_check_box :dismiss,
+            true,
+            multiple: false,
+            link_errors: true,
+            label: { text: t("new_features.label") }
+
+        = f.govuk_submit t("buttons.continue_to_account")
