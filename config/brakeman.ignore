@@ -7,7 +7,7 @@
       "check_name": "Secrets",
       "message": "Hardcoded value for `NOTIFY_JOBSEEKER_RESET_PASSWORD_TEMPLATE` in source code",
       "file": "config/initializers/notifications.rb",
-      "line": 8,
+      "line": 10,
       "link": "https://brakemanscanner.org/docs/warning_types/authentication/",
       "code": null,
       "render_path": null,
@@ -15,26 +15,6 @@
       "user_input": null,
       "confidence": "Medium",
       "note": ""
-    },
-    {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "28a605b685b3304875c4e468575bd9fe0660146602c24c3a1a90b74cd349c706",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/controllers/jobseekers/saved_jobs_controller.rb",
-      "line": 26,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "current_jobseeker.saved_jobs.includes(:vacancy).order(\"#{sort.column} #{sort.order}\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Jobseekers::SavedJobsController",
-        "method": "saved_jobs"
-      },
-      "user_input": "sort.column",
-      "confidence": "Weak",
-      "note": "Sort columns and orders come from an allowed list of values, so SQL injection risk can be ignored"
     },
     {
       "warning_type": "Authentication",
@@ -53,66 +33,26 @@
       "note": "Intended behaviour: Only applicable in test enviroment"
     },
     {
-      "warning_type": "Remote Code Execution",
-      "warning_code": 24,
-      "fingerprint": "b7ec265a81d6ec5e915e12b3c3de640959fad7af20f43459e3b82cdffa3e33f5",
-      "check_name": "UnsafeReflection",
-      "message": "Unsafe reflection method `constantize` called with parameter value",
-      "file": "app/controllers/jobseekers/job_applications/qualifications_controller.rb",
-      "line": 84,
-      "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
-      "code": "\"Jobseekers::JobApplication::Details::Qualifications::#{(\"CategoryForm\" or case params[:category]\nwhen \"gcse\", \"a_level\", \"as_level\" then\n  \"Secondary::CommonForm\"\nwhen \"other_secondary\" then\n  \"Secondary::OtherForm\"\nwhen \"undergraduate\", \"postgraduate\" then\n  \"DegreeForm\"\nwhen \"other\" then\n  \"OtherForm\"\nelse\n  # do nothing\nend)}\".constantize",
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "8e2c1f91d02bb1633f5456dc0983e24f4972cf73213afa01b9e7bcdf7b1c3fcc",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/location_polygon.rb",
+      "line": 9,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "select(\"*, ST_Buffer(area, #{convert_miles_to_metres(radius_in_miles)}) AS area\")",
       "render_path": null,
       "location": {
         "type": "method",
-        "class": "Jobseekers::JobApplications::QualificationsController",
-        "method": "form_class"
+        "class": "LocationPolygon",
+        "method": "buffered"
       },
-      "user_input": "params[:category]",
+      "user_input": "convert_miles_to_metres(radius_in_miles)",
       "confidence": "Medium",
-      "note": "The interpolated value is not from user input. The resulting classes are limited to a small selection by the case statement."
-    },
-    {
-      "warning_type": "Unscoped Find",
-      "warning_code": 82,
-      "fingerprint": "bf1d7742f40279b562896b8525f65146600b1d023d0b97dfead87cda98c72688",
-      "check_name": "UnscopedFind",
-      "message": "Unscoped call to `Document#find`",
-      "file": "app/controllers/documents_controller.rb",
-      "line": 3,
-      "link": "https://brakemanscanner.org/docs/warning_types/unscoped_find/",
-      "code": "Document.find(params[:id])",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "DocumentsController",
-        "method": "show"
-      },
-      "user_input": "params[:id]",
-      "confidence": "Weak",
-      "note": ""
-    },
-    {
-      "warning_type": "Redirect",
-      "warning_code": 18,
-      "fingerprint": "cf7bde7a61c65e868a4d023f43dfd95d66babce5c92fcbc8a23aa0168b1ee18e",
-      "check_name": "Redirect",
-      "message": "Possible unprotected redirect",
-      "file": "app/controllers/documents_controller.rb",
-      "line": 5,
-      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
-      "code": "redirect_to(Document.find(params[:id]).download_url)",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "DocumentsController",
-        "method": "show"
-      },
-      "user_input": "Document.find(params[:id]).download_url",
-      "confidence": "High",
-      "note": ""
+      "note": "Helper forces conversion to integer, temporary method that will be removed so"
     }
   ],
-  "updated": "2021-04-08 17:19:42 +0100",
-  "brakeman_version": "5.0.0"
+  "updated": "2021-10-11 16:38:31 +0100",
+  "brakeman_version": "5.1.1"
 }
