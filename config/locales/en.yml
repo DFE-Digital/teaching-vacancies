@@ -231,6 +231,7 @@ en:
     vacancy_facets:
       cities: Cities and towns with teaching and education support jobs
       counties: Counties with teaching and education support jobs
+      education_phases: Current jobs by education phase
       job_roles: Current jobs by role
       link_text_html: <span class="govuk-visually-hidden"> view </span><span class="bracket-content">%{count}</span><span class="govuk-visually-hidden"> vacancies listed</span>
       ect_suitable:

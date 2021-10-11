@@ -1,24 +1,28 @@
 class VacancyFacets
   CACHE_DURATION = 24.hours
 
-  def job_roles
-    cached(:job_roles) { sort_and_limit(job_role_facet.select { |role| role.in?(Vacancy.main_job_role_options) }, Vacancy.main_job_role_options.count) }
-  end
-
-  def subjects
-    cached(:subjects) { sort_and_limit(subject_facet, 10) }
+  def additional_job_roles
+    cached(:additional_job_roles) { job_role_facet.select { |role| role.in?(Vacancy.additional_job_role_options) }.to_h }
   end
 
   def cities
-    cached(:cities) { sort_and_limit(city_facet, 20) }
+    cached(:cities) { sort_and_limit(city_facet, number_of_results: 20) }
   end
 
   def counties
-    cached(:counties) { sort_and_limit(county_facet, 20) }
+    cached(:counties) { sort_and_limit(county_facet, number_of_results: 20) }
   end
 
-  def additional_job_roles
-    cached(:additional_job_roles) { job_role_facet.select { |role| role.in?(Vacancy.additional_job_role_options) }.to_h }
+  def education_phases
+    cached(:education_phases) { without_empty_results(education_phase_facet).to_h }
+  end
+
+  def job_roles
+    cached(:job_roles) { sort_and_limit(job_role_facet.select { |role| role.in?(Vacancy.main_job_role_options) }) }
+  end
+
+  def subjects
+    cached(:subjects) { sort_and_limit(subject_facet, number_of_results: 10) }
   end
 
   private
@@ -27,21 +31,16 @@ class VacancyFacets
     Rails.cache.fetch([:vacancy_facets, facet_name], expires_in: CACHE_DURATION, &block)
   end
 
-  def sort_and_limit(facet, number_of_results)
-    facet
-      .reject { |_, count| count.zero? }
+  def sort_and_limit(facet, number_of_results: facet.count)
+    without_empty_results(facet)
       .sort_by { |_, count| -count }
       .first(number_of_results)
       .sort
       .to_h
   end
 
-  def job_role_facet
-    Vacancy.job_roles.keys.each_with_object({}) { |job_role, facets| facets[job_role] = algolia_facet_count(job_roles: [job_role]) }
-  end
-
-  def subject_facet
-    SUBJECT_OPTIONS.each_with_object({}) { |subject, facets| facets[subject.first] = algolia_facet_count(keyword: subject.first) }
+  def without_empty_results(facet)
+    facet.reject { |_, count| count.zero? }
   end
 
   def city_facet
@@ -50,6 +49,18 @@ class VacancyFacets
 
   def county_facet
     COUNTIES.each_with_object({}) { |county, facets| facets[county] = algolia_facet_count(location: county) }
+  end
+
+  def education_phase_facet
+    School.available_readable_phases.each_with_object({}) { |phase, facets| facets[phase] = algolia_facet_count(education_phases: [phase]) }
+  end
+
+  def job_role_facet
+    Vacancy.job_roles.keys.each_with_object({}) { |job_role, facets| facets[job_role] = algolia_facet_count(job_roles: [job_role]) }
+  end
+
+  def subject_facet
+    SUBJECT_OPTIONS.each_with_object({}) { |subject, facets| facets[subject.first] = algolia_facet_count(keyword: subject.first) }
   end
 
   def algolia_facet_count(query)
