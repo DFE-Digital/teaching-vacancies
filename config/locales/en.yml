@@ -241,6 +241,16 @@ en:
         link: "SEND responsibilities "
       subjects: Current jobs by subject
 
+  new_features:
+    applications: Applications
+    application_pack_link: Download more information about the application form (2.7MB, PDF).
+    content: >-
+      You can now receive and manage job applications on Teaching Vacancies. You can
+      do this for all jobs except education support roles.
+    label: Do not show this information again
+    page_title: New features for hiring staff
+
+
   pages:
     accessibility:
       page_description:
