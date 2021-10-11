@@ -6,7 +6,7 @@
 
 - [Sidekiq](https://teaching-vacancies.service.gov.uk/sidekiq)
 - [Check the Rollbar dashboard](https://rollbar.com/dfe/teacher-vacancies/) to see if any Errors are being logged.
-- [Check the Logit event log](https://dashboard.logit.io/a/eeeb8311-79d8-49ab-9410-9b6d76b26f72) - Open Teaching Vacancy stack.
+- [Check the Logit event log](https://dashboard.logit.io) - Open Teaching Vacancy stack.
 
 ### Deployment logs
 
