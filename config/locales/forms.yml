@@ -28,6 +28,7 @@ en:
     confirm_destroy: Yes I am sure - delete this entry
     confirm_rejection: Confirm rejection
     continue: Continue
+    continue_to_account: Continue to my account
     continue_to_dsi: Continue to DfE Sign-in
     copy_listing: Copy job listing
     create_job: Create a job listing
