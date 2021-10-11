@@ -5,3 +5,4 @@ Disallow: /check
 Disallow: /subscriptions/
 Disallow: /documents/
 Disallow: /attachments/
+Disallow: /teaching-jobs-in-*?location=*
