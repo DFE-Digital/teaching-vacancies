@@ -7,6 +7,18 @@
   padding-top: govuk-spacing(1);
   position: relative;
   width: 100vw;
+
+  h1,
+  h2,
+  label,
+  p,
+  .govuk-hint,
+  .govuk-link,
+  .govuk-link:not(:focus),
+  .govuk-label.govuk-label--s,
+  .js-location-finder__link {
+    color: govuk-colour('white');
+  }
 }
 
 .search-panel {
@@ -15,16 +27,6 @@
 
   h1 {
     margin-bottom: govuk-spacing(3);
-  }
-
-  h1,
-  label,
-  p,
-  .govuk-hint,
-  .govuk-link,
-  .govuk-label.govuk-label--s,
-  .js-location-finder__link {
-    color: govuk-colour('white');
   }
 
   .govuk-button--start {
