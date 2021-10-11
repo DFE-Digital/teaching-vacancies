@@ -200,6 +200,11 @@ Rails.application.routes.draw do
         as: :location,
         constraints: ->(request) { LocationPolygon.include?(request.params[:location_facet].titleize) }
 
+    get "teaching-jobs-for-:education_phase",
+        as: :education_phase,
+        constraints: ->(request) { School.available_readable_phases.keys.map(&:parameterize).include?(request.params[:education_phase].parameterize) },
+        defaults: { pretty: :education_phase }
+
     get "teaching-jobs-for-:job_role",
         as: :job_role,
         constraints: ->(request) { Vacancy.job_roles.keys.map(&:dasherize).include?(request.params[:job_role].dasherize) },
