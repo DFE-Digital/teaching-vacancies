@@ -1,7 +1,7 @@
 .vacancy-facets
   .govuk-grid-row
     .govuk-grid-column-one-half
-      div data={ "facet-type": "cities" }
+      div
         h3.govuk-heading-s = t(".cities")
         ul.govuk-list.two-column-list aria-label="#{t(".cities")} list"
           - @vacancy_facets.cities.each do |city, count|
@@ -10,7 +10,7 @@
                 = "#{city} "
                 = t(".link_text_html", count: count)
 
-      div data={ "facet-type": "counties" }
+      div
         h3.govuk-heading-s = t(".counties")
         ul.govuk-list.two-column-list aria-label="#{t(".counties")} list"
           - @vacancy_facets.counties.each do |county, count|
@@ -20,7 +20,7 @@
                 = t(".link_text_html", count: count)
 
     .govuk-grid-column-one-half
-      div data={ "facet-type": "subjects" }
+      div
         h3.govuk-heading-s = t(".subjects")
         ul.govuk-list.two-column-list aria-label="#{t(".subjects")} list"
           - @vacancy_facets.subjects.each do |subject, count|
@@ -29,7 +29,7 @@
                 = "#{subject} "
                 = t(".link_text_html", count: count)
 
-      div data={ "facet-type": "job_roles" }
+      div
         h3.govuk-heading-s = t(".job_roles")
         ul.govuk-list.two-column-list aria-label="#{t(".job_roles")} list"
           - @vacancy_facets.job_roles.each do |job_role, count|
@@ -39,7 +39,7 @@
                 = t(".link_text_html", count: count)
 
       - if @vacancy_facets.additional_job_roles["ect_suitable"]&.positive?
-        div data={ "facet-type": "ect_suitable" }
+        div
           h3.govuk-heading-s = t(".ect_suitable.heading")
           ul.govuk-list
             li
@@ -48,10 +48,19 @@
                 = t(".link_text_html", count: @vacancy_facets.additional_job_roles["ect_suitable"])
 
       - if @vacancy_facets.additional_job_roles["send_responsible"]&.positive?
-        div data={ "facet-type": "send_responsible" }
+        div
           h3.govuk-heading-s = t(".send_responsible.heading")
           ul.govuk-list
             li
               = govuk_link_to job_role_path("send-responsible") do
                 = t(".send_responsible.link")
                 = t(".link_text_html", count: @vacancy_facets.additional_job_roles["send_responsible"])
+
+      div
+        h3.govuk-heading-s = t(".education_phases")
+        ul.govuk-list.two-column-list aria-label="#{t(".education_phases")} list"
+          - @vacancy_facets.education_phases.each do |phase, count|
+            li
+              = govuk_link_to education_phase_path(phase.parameterize) do
+                = "#{phase.humanize}"
+                = t(".link_text_html", count: count)
