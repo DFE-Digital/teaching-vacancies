@@ -5,7 +5,7 @@
   - content_for :page_title_prefix, t("jobs.location_search_heading", location: format_location_name(@vacancies_search.location_search.location), keyword: @vacancies_search.keyword)
   - content_for :page_description,  t("jobs.location_description", location: format_location_name(@vacancies_search.location_search.location))
 - elsif @landing_page.present?
-  - content_for :page_title_prefix, t("landing_pages.heading", landing_page: @landing_page.humanize)
+  - content_for :page_title_prefix, t("landing_pages.title", landing_page: @landing_page.humanize)
 - else
   - content_for :page_title_prefix, t(".title", count: params[:page].to_i)
 
