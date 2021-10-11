@@ -21,7 +21,8 @@
             = f.govuk_text_area :how_to_apply, label: { size: "s" }, rows: 10, required: true
             = f.govuk_url_field :application_link, label: { size: "s" }
         - else
-          = f.govuk_radio_buttons_fieldset :enable_job_applications do
+          = f.govuk_radio_buttons_fieldset :enable_job_applications,
+            hint: { text: t("helpers.hint.publishers_job_listing_applying_for_the_job_form.enable_job_applications_html", link: t("application_pack.link_html")) } do
             = f.govuk_radio_button :enable_job_applications, true, link_errors: true do
               = f.govuk_text_area :personal_statement_guidance, label: { size: "s" }
             = f.govuk_radio_button :enable_job_applications, "false" do

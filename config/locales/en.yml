@@ -14,6 +14,9 @@ en:
     title: Teaching Vacancies
     environment_html: This is not the live Teaching Vacancies website. You are currently viewing the <strong>%{environment}</strong> version of the site.
 
+  application_pack:
+    link_html: <a class="govuk-link" download="Teaching Vacancies application form guide" href="/teaching-vacancies-application-form-guide-sept-21.pdf">Download more information about the application form (2.7 MB, PDF)</a>
+
   banners:
     important: Important
     success: Success
