@@ -10,15 +10,9 @@ RSpec.describe VacancyFacets do
     allow(Search::VacancySearch).to receive(:new).and_return(search_builder)
   end
 
-  describe "#job_roles" do
+  describe "#additional_job_roles" do
     it "returns the expected facets" do
-      expect(subject.job_roles.values.uniq).to eq([42])
-    end
-  end
-
-  describe "#subjects" do
-    it "returns the expected facets" do
-      expect(subject.subjects.values.uniq).to eq([42])
+      expect(subject.additional_job_roles.values.uniq).to eq([42])
     end
   end
 
@@ -34,20 +28,32 @@ RSpec.describe VacancyFacets do
     end
   end
 
+  describe "#education_phases" do
+    it "returns the expected facets" do
+      expect(subject.education_phases.values.uniq).to eq([42])
+    end
+  end
+
+  describe "#job_roles" do
+    it "returns the expected facets" do
+      expect(subject.job_roles.values.uniq).to eq([42])
+    end
+  end
+
+  describe "#subjects" do
+    it "returns the expected facets" do
+      expect(subject.subjects.values.uniq).to eq([42])
+    end
+  end
+
   context "when caching is disabled" do
     before do
       allow(Rails.application.config.action_controller).to receive(:perform_caching).and_return(false)
     end
 
-    describe "#job_roles" do
+    describe "#additional_job_roles" do
       it "does not perform a search" do
-        expect(subject.job_roles.values.uniq).to be_empty
-      end
-    end
-
-    describe "#subjects" do
-      it "does not perform a search" do
-        expect(subject.subjects.values.uniq).to be_empty
+        expect(subject.additional_job_roles.values.uniq).to eq([0])
       end
     end
 
@@ -60,6 +66,24 @@ RSpec.describe VacancyFacets do
     describe "#counties" do
       it "does not perform a search" do
         expect(subject.counties.values.uniq).to be_empty
+      end
+    end
+
+    describe "#education_phases" do
+      it "does not perform a search" do
+        expect(subject.education_phases.values.uniq).to be_empty
+      end
+    end
+
+    describe "#job_roles" do
+      it "does not perform a search" do
+        expect(subject.job_roles.values.uniq).to be_empty
+      end
+    end
+
+    describe "#subjects" do
+      it "does not perform a search" do
+        expect(subject.subjects.values.uniq).to be_empty
       end
     end
   end
