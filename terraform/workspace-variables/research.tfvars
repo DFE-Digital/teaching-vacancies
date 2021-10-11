@@ -17,8 +17,8 @@ distribution_list = {
 documents_s3_bucket_force_destroy = true
 
 # Gov.UK PaaS
-paas_space_name                        = "teaching-vacancies-dev"
-paas_papertrail_service_binding_enable = false
-paas_app_start_timeout                 = "180"
-paas_web_app_instances                 = 2
-paas_worker_app_instances              = 2
+paas_space_name                     = "teaching-vacancies-dev"
+paas_logging_service_binding_enable = false
+paas_app_start_timeout              = "180"
+paas_web_app_instances              = 2
+paas_worker_app_instances           = 2
