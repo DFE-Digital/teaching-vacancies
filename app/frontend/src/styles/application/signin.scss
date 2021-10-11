@@ -1,12 +1,9 @@
 .signin {
   @include govuk-responsive-padding(5);
-  background-color: govuk-colour('dark-blue');
   margin-bottom: govuk-spacing(5);
   margin-top: govuk-spacing(3);
 
-  h2,
-  p,
-  .govuk-link:not(:focus) {
-    color: govuk-colour('white');
+  &__jobseeker {
+    background-color: govuk-colour('dark-blue');
   }
 }
