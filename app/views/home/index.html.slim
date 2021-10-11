@@ -6,7 +6,7 @@
       .govuk-grid-column-two-thirds
         .search-panel.location-search = render "search"
       .govuk-grid-column-one-third
-        .signin.signin__jobseeker
+        .signin.signin--jobseeker
           - if jobseeker_signed_in?
               = render "signed_in_jobseeker"
           - else
