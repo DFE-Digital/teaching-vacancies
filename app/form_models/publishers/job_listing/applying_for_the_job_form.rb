@@ -18,6 +18,10 @@ class Publishers::JobListing::ApplyingForTheJobForm < Publishers::JobListing::Va
   end
   attr_accessor(*fields)
 
+  def application_link=(link)
+    @application_link = Addressable::URI.heuristic_parse(link).to_s
+  end
+
   private
 
   def override_enable_job_applications!
