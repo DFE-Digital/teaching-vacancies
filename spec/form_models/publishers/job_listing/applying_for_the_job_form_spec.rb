@@ -7,6 +7,7 @@ RSpec.describe Publishers::JobListing::ApplyingForTheJobForm, type: :model do
   let(:vacancy) { build_stubbed(:vacancy) }
 
   it { is_expected.to allow_value("https://www.this-is-a-test-url.example.com").for(:application_link) }
+  it { is_expected.to allow_value("www.this-is-a-test-url.example.com").for(:application_link) }
   it { is_expected.to allow_value("").for(:application_link) }
   it { is_expected.not_to allow_value("invalid_link").for(:application_link) }
 

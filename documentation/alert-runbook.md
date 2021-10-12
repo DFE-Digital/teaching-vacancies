@@ -35,7 +35,7 @@ Alerts when the `teaching-vacancies-production` app http response time is slow.
 
 - [Check the Grafana panel](https://grafana-teaching-vacancies.london.cloudapps.digital/d/6Ac4lUWGk/teaching-vacancies-production?orgId=1&refresh=5s) to see this alert in the context of all the metrics.
 - [Check the Rollbar dashboard](https://rollbar.com/dfe/teacher-vacancies/) to see if any Errors are being logged.
-- [Check the Papertrail event log](https://papertrailapp.com/events) to see in real-time if any Errors are being logged.
+- [Check the Logit event log](https://dashboard.logit.io) to see in real-time if any Errors are being logged.
 - [Check the GitHub Deploy workflow](https://github.com/DFE-Digital/teaching-vacancies/actions?query=workflow%3ADeploy) to determine if any recent deployments may have caused the issue.
 - [Check the Gov.UK PaaS `teaching-vacancies-production` space](https://admin.london.cloud.service.gov.uk/organisations/386a9502-d9b6-4aba-b3c3-ebe4fa3f963e/spaces/ebce88e9-8d3e-424b-8da3-c8dc0072b900/applications)
 
@@ -47,7 +47,7 @@ Further information on setting up and logging in to CloudFoundry are in the [hos
 - Choose `teaching-vacancies-production` from the numeric menu.
 - List apps with `cf apps`.
 - Check if any apps are crashed (e.g. `processes` may list 3 of 4 apps running: `web:3/4`)
-- Get the logs for the app (gives the same view as Papertrail above)
+- Get the logs for the app
 ```bash
 cf logs teaching-vacancies-production
 ```
