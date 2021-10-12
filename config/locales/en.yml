@@ -488,7 +488,7 @@ en:
         other: Find a job in teaching - Search results page %{count}
       wider_search_suggestions:
         heading:
-          keyword_html: Try browsing for <span class='text-wrap-apostrophe'>%{keyword}</span> in a wider location search
+          keyword_html: Try browsing for &lsquo;%{keyword}&rsquo; in a wider location search
           no_keyword: Try browsing in a wider location search
         suggestion_html: '%{search_link} %{count}'
         radius_distance: '%{radius} miles'
