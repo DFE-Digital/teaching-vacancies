@@ -39,8 +39,8 @@ window.initMap = () => {
   const polygonBoundaries = getPolygonBoundaries();
   const searchPointCoordinates = getSearchPointCoordinates();
   const mapTypeControlOptions = { mapTypeIds: [] };
-  const tvsOrange = '#f47738';
-  const tvsBlue = '#1d70b8';
+  const tvOrange = '#f47738';
+  const tvBlue = '#1d70b8';
 
   if (school !== false) {
     // A map for a single location
@@ -125,10 +125,10 @@ window.initMap = () => {
       // Construct the polygon
       const visiblePolygon = new google.maps.Polygon({
         paths: polygonBoundary,
-        strokeColor: tvsOrange,
+        strokeColor: tvOrange,
         strokeOpacity: 0.8,
         strokeWeight: 2,
-        fillColor: tvsBlue,
+        fillColor: tvBlue,
         fillOpacity: 0.35,
       });
 
@@ -156,4 +156,3 @@ window.initMap = () => {
 
   /* eslint-enable */
 };
-

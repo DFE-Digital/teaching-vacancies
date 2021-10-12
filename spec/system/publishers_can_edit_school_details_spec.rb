@@ -16,11 +16,11 @@ RSpec.describe "Editing a School’s details" do
     click_link("Change", match: :first)
     expect(find_field("publishers_organisation_form[website]").value).to eq(school.url)
     fill_in "publishers_organisation_form[description]", with: "Our school prides itself on excellence."
-    fill_in "publishers_organisation_form[website]", with: "https://www.this-is-a-test-url.tvs"
+    fill_in "publishers_organisation_form[website]", with: "https://www.this-is-a-test-url.example.com"
     click_on I18n.t("buttons.save_changes")
 
     expect(page).to have_content("Our school prides itself on excellence.")
-    expect(page).to have_content("https://www.this-is-a-test-url.tvs")
+    expect(page).to have_content("https://www.this-is-a-test-url.example.com")
     expect(page).to have_content("Details updated for #{school.name}")
     expect(page.current_path).to eq(organisation_path)
   end

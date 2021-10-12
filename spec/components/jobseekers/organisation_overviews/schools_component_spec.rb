@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Jobseekers::OrganisationOverviews::SchoolsComponent, type: :component do
   let(:organisation) { create(:trust) }
   let(:geolocation_trait) { nil }
-  let(:school1) { create(:school, geolocation_trait, name: "Oxford Uni", website: "https://this-is-a-test-url.tvs") }
+  let(:school1) { create(:school, geolocation_trait, name: "Oxford Uni", website: "https://this-is-a-test-url.example.com") }
   let(:school2) { create(:school, geolocation_trait, name: "Cambridge Uni") }
   let(:school3) { create(:school, geolocation_trait, name: "London LSE") }
   let(:vacancy) { create(:vacancy, :at_multiple_schools, organisations: [school1, school2, school3]) }

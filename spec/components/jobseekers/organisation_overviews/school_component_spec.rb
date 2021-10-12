@@ -69,7 +69,7 @@ RSpec.describe Jobseekers::OrganisationOverviews::SchoolComponent, type: :compon
   end
 
   context "when GIAS-obtained website has been overwritten" do
-    let(:organisation) { create(:school, website: "https://this-is-a-test-url.tvs") }
+    let(:organisation) { create(:school, website: "https://this-is-a-test-url.example.com") }
 
     it "renders a link to the school website" do
       expect(rendered_component).to include(vacancy.parent_organisation.website)
