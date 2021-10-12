@@ -1,5 +1,6 @@
 class Publishers::OrganisationsController < Publishers::BaseController
   before_action :show_publisher_preferences
+  before_action :redirect_to_new_features_page, only: %i[show]
 
   helper_method :vacancy_statistics_form
 
@@ -32,6 +33,18 @@ class Publishers::OrganisationsController < Publishers::BaseController
     else
       @vacancy_statistics_form ||= Publishers::VacancyStatisticsForm.new
     end
+  end
+
+  def redirect_to_new_features_page
+    redirect_to new_features_path if session[:visited_new_features_page].nil? && show_new_features_page?
+  end
+
+  def show_new_features_page?
+    return false if current_organisation.local_authority?
+
+    return false if current_publisher.vacancies.any?(&:enable_job_applications?)
+
+    current_publisher.dismissed_new_features_page_at.blank?
   end
 
   def statistics_params
