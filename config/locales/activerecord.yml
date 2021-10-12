@@ -28,7 +28,7 @@ en:
       not_a_number: Enter the year the qualification was awarded
   organisation_errors: &organisation_errors
     website:
-      url: Enter a link in the correct format, like http://www.school.ac.uk
+      url: Enter a link in the correct format, like www.school.ac.uk
   subscription_errors: &subscription_errors
     email:
       blank: Enter your email address
@@ -173,7 +173,7 @@ en:
       on_or_before: The date the job starts must be less than two years in the future
   applying_for_the_job_errors: &applying_for_the_job_errors
     application_link:
-      url: Enter a link in the correct format, like http://www.school.ac.uk
+      url: Enter a link in the correct format, like www.school.ac.uk
     enable_job_applications:
       cannot_be_changed_once_listed: >-
         You cannot change how you would like candidates to apply now that your listing is published
