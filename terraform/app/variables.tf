@@ -57,7 +57,7 @@ variable "parameter_store_environment" {
   default = "dev"
 }
 
-variable "paas_papertrail_service_binding_enable" {
+variable "paas_logging_service_binding_enable" {
   default = true
 }
 

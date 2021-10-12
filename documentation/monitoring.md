@@ -6,7 +6,7 @@
 
 - [Sidekiq](https://teaching-vacancies.service.gov.uk/sidekiq)
 - [Check the Rollbar dashboard](https://rollbar.com/dfe/teacher-vacancies/) to see if any Errors are being logged.
-- [Check the Papertrail event log](https://papertrailapp.com/events) to see in real-time if any Errors are being logged.
+- [Check the Logit event log](https://dashboard.logit.io) - Open Teaching Vacancy stack.
 
 ### Deployment logs
 
