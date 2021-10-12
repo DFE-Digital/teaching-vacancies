@@ -28,6 +28,7 @@ en:
     confirm_destroy: Yes I am sure - delete this entry
     confirm_rejection: Confirm rejection
     continue: Continue
+    continue_to_account: Continue to my account
     continue_to_dsi: Continue to DfE Sign-in
     copy_listing: Copy job listing
     create_job: Create a job listing
@@ -259,6 +260,10 @@ en:
         working_patterns_details: For example, '20 hours a week' or 'Tuesday and Wednesday mornings'
 
     label:
+      publishers_new_features_form:
+        dismiss_options:
+          "true": Do not show this information again
+
       general_feedback_form:
         comment: How could we improve this service?
         email: What is your email address?
