@@ -17,22 +17,22 @@ RSpec.shared_examples "a successful edit" do
     expect(page).to have_content(school_group.name)
 
     fill_in "publishers_organisation_form[description]", with: "New description of the trust"
-    fill_in "publishers_organisation_form[website]", with: "https://www.this-is-a-test-url.tvs"
+    fill_in "publishers_organisation_form[website]", with: "https://www.this-is-a-test-url.example.com"
     click_button I18n.t("buttons.save_changes")
 
     expect(page).to have_content("New description of the trust")
     expect(page).to have_content("Details updated for #{school_group.name}")
-    expect(page).to have_content("https://www.this-is-a-test-url.tvs")
+    expect(page).to have_content("https://www.this-is-a-test-url.example.com")
     expect(page.current_path).to eq(organisation_schools_path)
 
     visit edit_organisation_school_path(school1)
 
     fill_in "publishers_organisation_form[description]", with: "New description of the school"
-    fill_in "publishers_organisation_form[website]", with: "https://www.this-is-a-test-url.tvs"
+    fill_in "publishers_organisation_form[website]", with: "https://www.this-is-a-test-url.example.com"
     click_button I18n.t("buttons.save_changes")
 
     expect(page).to have_content("New description of the school")
-    expect(page).to have_content("https://www.this-is-a-test-url.tvs")
+    expect(page).to have_content("https://www.this-is-a-test-url.example.com")
     expect(page).to have_content("Details updated for #{school1.name}")
     expect(page.current_path).to eq(organisation_schools_path)
   end
