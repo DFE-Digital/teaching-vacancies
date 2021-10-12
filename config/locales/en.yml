@@ -236,10 +236,10 @@ en:
       link_text_html: <span class="govuk-visually-hidden"> view </span><span class="bracket-content">%{count}</span><span class="govuk-visually-hidden"> vacancies listed</span>
       ect_suitable:
         heading: Current jobs suitable for early career teachers
-        link: "Suitable for early career teachers "
+        link: Suitable for early career teachers
       send_responsible:
         heading: Current jobs with SEND responsibilities
-        link: "SEND responsibilities "
+        link: SEND responsibilities
       subjects: Current jobs by subject
 
   new_features:
