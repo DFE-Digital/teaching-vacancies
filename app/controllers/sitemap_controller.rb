@@ -6,6 +6,7 @@ class SitemapController < ApplicationController
       add_locations(m)
       add_subjects(m)
       add_job_roles(m)
+      add_education_phases(m)
       add_pages(m)
     end
 
@@ -40,6 +41,12 @@ class SitemapController < ApplicationController
   def add_job_roles(map)
     Vacancy.job_roles.each_key do |job_role|
       map.add job_role_path(job_role.dasherize), period: "hourly"
+    end
+  end
+
+  def add_education_phases(map)
+    School.available_readable_phases.each do |phase|
+      map.add education_phase_path(phase.dasherize), period: "hourly"
     end
   end
 

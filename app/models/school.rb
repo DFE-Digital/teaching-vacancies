@@ -34,4 +34,8 @@ class School < Organisation
 
     gias_data["ReligiousCharacter (name)"]
   end
+
+  def self.available_readable_phases
+    READABLE_PHASE_MAPPINGS.values.flatten.uniq
+  end
 end
