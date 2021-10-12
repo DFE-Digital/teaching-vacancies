@@ -25,7 +25,7 @@ documents_s3_bucket_force_destroy = false
 
 # Gov.UK PaaS
 paas_space_name                        = "teaching-vacancies-production"
-paas_papertrail_service_binding_enable = true
+paas_papertrail_service_binding_enable = false
 paas_postgres_service_plan             = "medium-ha-12"
 paas_redis_cache_service_plan          = "small-ha-5_x"
 paas_redis_queue_service_plan          = "micro-ha-5_x"
