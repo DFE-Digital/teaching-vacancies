@@ -19,5 +19,5 @@
           ul.govuk-list
             - vacancy.organisations.each do |organisation|
               li class="govuk-!-font-weight-bold govuk-!-margin-bottom-4"
-                = organisation.name
+                => organisation.name
                 span class="govuk-!-font-weight-regular" = full_address(organisation)
