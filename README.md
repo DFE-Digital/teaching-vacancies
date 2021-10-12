@@ -148,7 +148,7 @@ DATABASE_URL=postgis://mylocaluser:mylocalpassword@localhost:5432
 
 ### Seed the database
 
-To create a few vacancies in your database run:
+This will first import all the organisations from [GIAS](https://get-information-schools.service.gov.uk/) and then will create publishers, vacancies, jobseekers and job applications:
 
 ```bash
 bundle exec rails db:seed
