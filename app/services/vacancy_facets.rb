@@ -52,7 +52,7 @@ class VacancyFacets
   end
 
   def education_phase_facet
-    School.available_readable_phases.each_with_object({}) { |phase, facets| facets[phase] = algolia_facet_count(education_phases: [phase]) }
+    School.available_readable_phases.each_with_object({}) { |phase, facets| facets[phase] = algolia_facet_count(phases: [phase]) }
   end
 
   def job_role_facet
