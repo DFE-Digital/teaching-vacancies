@@ -188,8 +188,6 @@ Rails.application.routes.draw do
   match "/500", as: :internal_server_error, to: "errors#internal_server_error", via: :all
   match "/maintenance", as: :maintenance, to: "errors#maintenance", via: :all
 
-  get "teaching-jobs-for-nqt_suitable", to: redirect("/teaching-jobs-for-ect-suitable")
-
   get "/teaching-jobs-:not_normalized",
       to: redirect { |params| "/teaching-jobs-#{params[:not_normalized].parameterize.dasherize}" },
       constraints: ->(request) { request.params[:not_normalized] != request.params[:not_normalized].parameterize.dasherize }
