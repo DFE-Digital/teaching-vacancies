@@ -2,7 +2,8 @@ require "rails_helper"
 
 RSpec.shared_examples "a search using polygons" do
   it "sets the correct attributes" do
-    expect(subject.polygon_boundaries).to eq(location_polygon.buffers[radius.to_s])
+    buffered_polygon = LocationPolygon.buffered(radius).find_by(name: location_polygon.name)
+    expect(subject.polygon_boundaries).to eq(buffered_polygon.to_algolia_polygons)
     expect(subject.location_filter).to eq({})
     expect(subject.radius).to eq(radius)
   end
@@ -43,7 +44,11 @@ RSpec.describe Search::LocationBuilder do
 
       it "sets the correct attributes" do
         expect(subject.location).to eq(location)
-        expect(subject.polygon_boundaries).to contain_exactly([14, 15], [17, 18], [20, 21])
+        expect(subject.polygon_boundaries).to contain_exactly(
+          *LocationPolygon.buffered(radius).where(name: [
+            "bedford", "central bedfordshire", "luton"
+          ]).flat_map(&:to_algolia_polygons),
+        )
         expect(subject.location_filter).to eq({})
         expect(subject.radius).to eq(radius)
       end
@@ -63,7 +68,7 @@ RSpec.describe Search::LocationBuilder do
       context "and no radius specified" do
         let(:location) { point_location }
         let(:radius) { 10 }
-        let(:expected_radius) { 16_093 }
+        let(:expected_radius) { 16_090 }
 
         it "sets location filter around the location with the default radius" do
           expect(subject.polygon_boundaries).to be_nil
@@ -77,7 +82,7 @@ RSpec.describe Search::LocationBuilder do
       context "and radius specified" do
         let(:location) { point_location }
         let(:radius) { 30 }
-        let(:expected_radius) { 48_280 }
+        let(:expected_radius) { 48_270 }
 
         it "carries out geographical search around a coordinate location with the specified radius" do
           expect(subject.polygon_boundaries).to be_nil

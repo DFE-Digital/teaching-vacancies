@@ -10,7 +10,7 @@ class Search::LocationBuilder
 
   def initialize(location, radius)
     @location = location
-    @radius = (radius || DEFAULT_RADIUS).to_i
+    @radius = Integer(radius || DEFAULT_RADIUS).abs
     @location_filter = {}
 
     if NATIONWIDE_LOCATIONS.include?(@location&.downcase)
@@ -33,21 +33,11 @@ class Search::LocationBuilder
   private
 
   def initialize_polygon_boundaries
-    locations = [LocationPolygon.with_name(location)]
+    location_names = LocationPolygon.component_location_names(location) ||
+                     [LocationPolygon.mapped_name(location)]
+    locations = LocationPolygon.buffered(radius).where(name: location_names.map(&:downcase))
 
-    if locations.none? && LocationPolygon.composite?(location)
-      locations = LocationPolygon.component_location_names(location).map do |component_location_name|
-        LocationPolygon.find_by(name: component_location_name.downcase)
-      end
-    end
-
-    @polygon_boundaries = []
-    locations.compact.each do |location|
-      polygons = location.buffers[radius.to_s]
-      polygons.each do |polygon|
-        @polygon_boundaries.push(polygon)
-      end
-    end
+    @polygon_boundaries = locations.compact.flat_map(&:to_algolia_polygons)
   end
 
   def build_location_filter
