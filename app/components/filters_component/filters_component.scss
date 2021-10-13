@@ -32,7 +32,7 @@
         @include govuk-media-query($until: desktop) {
           border: 1px solid govuk-colour('mid-grey');
           bottom: 5px;
-          min-width: 300px;
+          max-width: 320px;
           overflow-y: scroll;
           position: fixed;
           right: 5px;
