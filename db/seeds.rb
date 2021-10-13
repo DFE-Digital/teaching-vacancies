@@ -3,7 +3,9 @@ raise "Aborting seeds - running in production with existing vacancies" if Rails.
 require "faker"
 require "factory_bot_rails"
 
-# Make sure that organisations from GIAS are imported
+Gias::ImportSchoolsAndLocalAuthorities.new.call
+Gias::ImportTrusts.new.call
+
 bexleyheath_school = School.find_by!(urn: "137138")
 weydon_trust = SchoolGroup.find_by!(uid: "16644")
 southampton_la = SchoolGroup.find_by!(local_authority_code: "852")
