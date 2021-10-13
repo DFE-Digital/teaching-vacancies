@@ -1,0 +1,13 @@
+- content_for :page_title_prefix, t("jobs.reminder_title")
+
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-m
+        = t("jobs.create_a_job_title", organisation: @organisation)
+      h2.govuk-heading-l class="govuk-!-margin-top-7"
+        = t("jobs.reminder_title")
+      p class="govuk-!-font-size-19"
+        = t("jobs.reminder_body")
+      = govuk_link_to t("new_features.application_pack_link", size: application_pack_asset_size), application_pack_asset_path, target: "_blank", class: "govuk-!-font-size-19"
+      = govuk_button_to t("jobs.reminder_continue_button"), organisation_jobs_path, class: "govuk-!-margin-top-8"
