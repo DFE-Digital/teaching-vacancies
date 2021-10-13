@@ -98,6 +98,10 @@ body {
   }
 }
 
+button:not(.govuk-button) {
+  font-family: 'GDS Transport', arial, sans-serif;
+}
+
 input[type='search'] {
   box-sizing: border-box;
 }
