@@ -18,9 +18,10 @@ $govuk-new-link-styles: true;
 
 @import 'application/accordion';
 @import 'application/applications';
-@import 'application/govuk-notification-banner';
-@import 'application/full-width-mast';
 @import 'application/form';
+@import 'application/full-width-mast';
+@import 'application/govuk-notification-banner';
+@import 'application/govuk-phase-banner';
 @import 'application/icons';
 @import 'application/pagination';
 @import 'application/panel';
@@ -34,8 +35,8 @@ $govuk-new-link-styles: true;
 @import 'application/jobseekers/feedback-form';
 @import 'application/jobseekers/filter-vacancies';
 @import 'application/jobseekers/jobseeker';
-@import 'application/jobseekers/location-search';
 @import 'application/jobseekers/keyword-search';
+@import 'application/jobseekers/location-search';
 @import 'application/jobseekers/search-header';
 @import 'application/jobseekers/search-panel';
 @import 'application/jobseekers/vacancies';
@@ -164,10 +165,6 @@ b {
 }
 
 .home_index {
-  .govuk-phase-banner {
-    border-bottom: 0;
-  }
-
   .vacancy-facets {
     .govuk-link {
       display: inline-block;
