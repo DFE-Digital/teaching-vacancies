@@ -164,6 +164,10 @@ b {
 }
 
 .home_index {
+  .govuk-phase-banner {
+    border-bottom: 0;
+  }
+
   .vacancy-facets {
     .govuk-link {
       display: inline-block;
