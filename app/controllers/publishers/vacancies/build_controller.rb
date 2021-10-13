@@ -18,7 +18,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
 
     return redirect_to(organisation_job_documents_path(vacancy.id)) if step == :documents
 
-    return redirect_to(new_features_reminder_path) if show_application_reminder
+    return redirect_to(reminder_new_features_path) if show_application_reminder
 
     case step
     when :job_role_details

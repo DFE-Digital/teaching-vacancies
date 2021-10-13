@@ -1,5 +1,5 @@
 class Publishers::NewFeaturesController < Publishers::BaseController
-  skip_before_action :check_terms_and_conditions, only: %i[show update]
+  skip_before_action :check_terms_and_conditions, only: %i[show update reminder]
 
   def show
     @new_features_form = Publishers::NewFeaturesForm.new
