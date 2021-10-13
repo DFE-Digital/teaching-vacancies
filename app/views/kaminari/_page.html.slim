@@ -7,4 +7,7 @@
 /    per_page:      number of items to fetch per page
 /    remote:        data-remote
 li
-  = link_to page, url, remote: remote, rel: page.rel, class: "pagination__item#{' current' if page.current?}"
+  - if page.current?
+    span.pagination__item.current = page
+  - else
+    = link_to page, url, remote: remote, rel: page.rel, class: "pagination__item"
