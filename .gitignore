@@ -85,6 +85,7 @@ dump.rdb
 *.sql
 *backup*
 !bin/upload-db-backup
+!.github/workflows/backup_production_db.yml
 *dump*
 
 # VSCode
