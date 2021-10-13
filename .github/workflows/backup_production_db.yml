@@ -1,4 +1,4 @@
-name: Sync staging database
+name: Backup production database
 
 on:
   schedule:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   sync:
-    name: Sync staging database from production
+    name: Backup production database
     runs-on: ubuntu-20.04
     services:
       postgres:
@@ -73,14 +73,6 @@ jobs:
         PGHOST: localhost
         PGPORT: 5432
 
-    - name: Restore the sanitised database to staging environment
-      shell: bash
-      run: bin/restore-db
-      env:
-        CF_DESTINATION_ENVIRONMENT: staging
-        CF_SPACE_NAME: teaching-vacancies-staging
-        BACKUP_TYPE: sanitised
-
     - name: Upload sanitised backup to S3
       run: bin/upload-db-backup
       env:
@@ -93,5 +85,5 @@ jobs:
         SLACK_CHANNEL: twd_tv_dev
         SLACK_USERNAME: CI Deployment
         SLACK_TITLE: Deployment ${{ job.status }}
-        SLACK_MESSAGE: 'DB backup and sync production->staging - ${{ job.status }}'
+        SLACK_MESSAGE: 'Backup production database - ${{ job.status }}'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
