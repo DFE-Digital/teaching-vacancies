@@ -4,7 +4,7 @@ class DocumentsController < ApplicationController
                           vacancy_id: StringAnonymiser.new(vacancy.id),
                           document_id: StringAnonymiser.new(document.id),
                           filename: document.filename)
-    redirect_to(document)
+    redirect_to document, status: :moved_permanently
   end
 
   private

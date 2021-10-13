@@ -5,10 +5,11 @@ RSpec.describe "Documents" do
   let(:document) { vacancy.supporting_documents.first }
 
   describe "GET #show" do
-    it "redirects to the document link" do
+    it "redirects to the document link, with a 301 status (in order to save it from being crawled)" do
       get job_document_path(vacancy, document)
 
       expect(response).to redirect_to(document)
+      expect(response.status).to eq(301)
     end
 
     it "triggers a `vacancy_document_downloaded` event" do
