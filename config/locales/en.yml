@@ -196,6 +196,7 @@ en:
     view_more_or_change: View more or change
 
   nav:
+    create_a_job_alert: Create a job alert
     find_job: Find a teaching job
     for_schools: For schools
     jobseekers_index_link: View public jobs
@@ -218,7 +219,7 @@ en:
   home:
     index:
       browse_all: Browse all teaching jobs in England
-      publisher_signin: 
+      publisher_signin:
         title: Advertise a school job
         description_html: "%{signin_link} to manage your job listings and applicants or %{signup_link}."
         link_text:
