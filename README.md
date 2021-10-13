@@ -148,13 +148,7 @@ DATABASE_URL=postgis://mylocaluser:mylocalpassword@localhost:5432
 
 ### Seed the database
 
-Populate your environment with real school data, taken from [GIAS](https://get-information-schools.service.gov.uk/):
-
-```bash
-bundle exec rails gias:import_schools
-```
-
-Then you can run the standard `db:seed` rake task to populate the database with publishers, vacancies, jobseekers and job applications:
+Populate your environment with real school data, taken from [GIAS](https://get-information-schools.service.gov.uk/), and publishers, vacancies, jobseekers and job applications:
 
 ```bash
 bundle exec rails db:seed
