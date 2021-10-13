@@ -5,7 +5,7 @@ RSpec.describe "Documents" do
 
   let(:publisher) { create(:publisher) }
   let(:organisation) { build(:school) }
-  let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+  let(:vacancy) { create(:vacancy, organisations: [organisation]) }
 
   before do
     allow_any_instance_of(Publishers::AuthenticationConcerns).to receive(:current_organisation).and_return(organisation)

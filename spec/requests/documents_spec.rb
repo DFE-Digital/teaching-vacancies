@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Documents" do
-  let(:vacancy) { create(:vacancy, :with_supporting_documents, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+  let(:vacancy) { create(:vacancy, :with_supporting_documents, organisations: [build(:school)]) }
   let(:document) { vacancy.supporting_documents.first }
 
   describe "GET #show" do

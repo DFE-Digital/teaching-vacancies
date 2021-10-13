@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Publishers::JobApplicationDataExpiryNotification do
   let(:organisation) { create(:school) }
   let(:publisher) { create(:publisher) }
-  let(:vacancy) { create(:vacancy, publisher: publisher, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+  let(:vacancy) { create(:vacancy, publisher: publisher, organisations: [organisation]) }
 
   describe "#message" do
     subject { Notification.last.to_notification.message }

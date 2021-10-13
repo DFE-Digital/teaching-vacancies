@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "School deleting vacancies" do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }
-  let!(:vacancy) { create(:vacancy, :with_supporting_documents, :future_publish, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+  let!(:vacancy) { create(:vacancy, :with_supporting_documents, :future_publish, organisations: [organisation]) }
 
   before do
     login_publisher(publisher: publisher, organisation: organisation)

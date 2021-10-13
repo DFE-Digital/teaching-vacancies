@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Job applications employments" do
-  let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+  let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
   let(:jobseeker) { create(:jobseeker) }
   let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
   let(:employment) { create(:employment, job_application: job_application) }

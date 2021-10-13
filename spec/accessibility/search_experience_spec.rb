@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Jobseeker experience", type: :system, accessibility: true do
   let(:school) { create(:school) }
-  let!(:job1) { create(:vacancy, :past_publish, job_title: "Teacher of Potions", organisation_vacancies_attributes: [{ organisation: school }]) }
+  let!(:job1) { create(:vacancy, :past_publish, job_title: "Teacher of Potions", organisations: [school]) }
 
   context "Not signed in" do
     describe "visits the home page" do

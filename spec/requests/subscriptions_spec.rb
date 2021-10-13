@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Subscriptions" do
-  let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+  let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
 
   describe "GET #new" do
     context "with valid origin" do

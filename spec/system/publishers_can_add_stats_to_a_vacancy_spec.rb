@@ -12,9 +12,9 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
   end
 
   context "when there are vacancies awaiting feedback" do
-    let!(:vacancy) { create(:vacancy, :expired, job_title: "Maths teacher", organisation_vacancies_attributes: [{ organisation: school }]) }
-    let!(:another_vacancy) { create(:vacancy, :expired, job_title: "English teacher", organisation_vacancies_attributes: [{ organisation: school }]) }
-    let!(:third_vacancy) { create(:vacancy, :expired, job_title: "Science teacher", organisation_vacancies_attributes: [{ organisation: school }]) }
+    let!(:vacancy) { create(:vacancy, :expired, job_title: "Maths teacher", organisations: [school]) }
+    let!(:another_vacancy) { create(:vacancy, :expired, job_title: "English teacher", organisations: [school]) }
+    let!(:third_vacancy) { create(:vacancy, :expired, job_title: "Science teacher", organisations: [school]) }
 
     scenario "displays the vacancies awaiting feedback" do
       visit jobs_with_type_organisation_path(type: :awaiting_feedback)
@@ -56,7 +56,7 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
 
     context "when adding feedback to an invalid vacancy" do
       let!(:invalid_vacancy) do
-        create(:vacancy, :expired, starts_on: 10.days.ago, organisation_vacancies_attributes: [{ organisation: school }])
+        create(:vacancy, :expired, starts_on: 10.days.ago, organisations: [school])
       end
 
       scenario "it saves the feedback to the model without triggering validation errors" do
@@ -76,7 +76,7 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
       create(:vacancy, :expired,
              hired_status: "hired_tvs",
              listed_elsewhere: "listed_paid",
-             organisation_vacancies_attributes: [{ organisation: school }])
+             organisations: [school])
     end
 
     scenario "the no vacancies component is displayed" do

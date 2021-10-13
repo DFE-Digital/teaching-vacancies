@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Main navigation for users to sign in and out" do
   let(:jobseeker) { create(:jobseeker) }
   let(:organisation) { create(:school) }
-  let!(:publisher) { create(:publisher, organisation_publishers_attributes: [{ organisation: organisation }]) }
+  let!(:publisher) { create(:publisher, organisations: [organisation]) }
 
   context "when user is not signed in" do
     before { visit root_path }

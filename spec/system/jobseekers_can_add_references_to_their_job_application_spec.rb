@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers can add references to their job application" do
   let(:jobseeker) { create(:jobseeker) }
-  let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+  let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
   let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
 
   before { login_as(jobseeker, scope: :jobseeker) }

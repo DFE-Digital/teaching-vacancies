@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "End job listing early" do
   let(:organisation) { build(:school) }
-  let(:vacancy) { create(:vacancy, :published, expires_at: 1.week.from_now, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+  let(:vacancy) { create(:vacancy, :published, expires_at: 1.week.from_now, organisations: [organisation]) }
   let(:publisher) { create(:publisher) }
 
   before do
@@ -13,7 +13,7 @@ RSpec.describe "End job listing early" do
 
   describe "GET #show" do
     context "when the vacancy does not belong to the current organisation" do
-      let(:vacancy) { create(:vacancy, :published, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+      let(:vacancy) { create(:vacancy, :published, organisations: [build(:school)]) }
 
       it "returns not_found" do
         get organisation_job_end_listing_path(vacancy.id)
@@ -23,7 +23,7 @@ RSpec.describe "End job listing early" do
     end
 
     context "when the vacancy is not live" do
-      let(:vacancy) { create(:vacancy, :expired, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+      let(:vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
 
       it "returns not_found" do
         get(organisation_job_end_listing_path(vacancy.id))
@@ -41,7 +41,7 @@ RSpec.describe "End job listing early" do
     let(:params) { { publishers_job_listing_end_listing_form: { end_listing_reason: "end_early" } } }
 
     context "when the vacancy does not belong to the current organisation" do
-      let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+      let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
 
       it "returns not_found" do
         patch(organisation_job_end_listing_path(vacancy.id), params: params)
@@ -51,7 +51,7 @@ RSpec.describe "End job listing early" do
     end
 
     context "when the vacancy is not live" do
-      let(:vacancy) { create(:vacancy, :expired, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+      let(:vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
 
       it "returns not_found" do
         patch(organisation_job_end_listing_path(vacancy.id), params: params)

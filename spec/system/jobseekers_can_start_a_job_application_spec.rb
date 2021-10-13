@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers can start or continue a job application" do
   let(:jobseeker) { build_stubbed(:jobseeker) }
-  let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: school }]) }
+  let(:vacancy) { create(:vacancy, organisations: [school]) }
   let(:school) { create(:school) }
   let(:created_job_application) { JobApplication.first }
 

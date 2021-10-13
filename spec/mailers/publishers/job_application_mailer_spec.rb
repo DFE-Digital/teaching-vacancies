@@ -4,7 +4,7 @@ RSpec.describe Publishers::JobApplicationMailer do
   let(:publisher) { create(:publisher, email: email) }
   let(:email) { "test@email.com" }
   let(:organisation) { create(:school) }
-  let!(:vacancy) { create(:vacancy, publisher: publisher, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+  let!(:vacancy) { create(:vacancy, publisher: publisher, organisations: [organisation]) }
   let(:contact_email) { vacancy.contact_email }
 
   let(:expected_data) do

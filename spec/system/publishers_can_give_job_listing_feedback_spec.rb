@@ -11,7 +11,7 @@ RSpec.describe "Publishers can give job listing feedback" do
   end
 
   context "when the vacancy is not published" do
-    let(:vacancy) { create(:vacancy, :draft, organisation_vacancies_attributes: [{ organisation: organisation }], publisher: publisher) }
+    let(:vacancy) { create(:vacancy, :draft, organisations: [organisation], publisher: publisher) }
 
     it "redirects to review page" do
       expect(current_path).to eq(organisation_job_review_path(vacancy.id))
@@ -19,7 +19,7 @@ RSpec.describe "Publishers can give job listing feedback" do
   end
 
   context "when the vacancy is published" do
-    let(:vacancy) { create(:vacancy, :published, organisation_vacancies_attributes: [{ organisation: organisation }], publisher: publisher) }
+    let(:vacancy) { create(:vacancy, :published, organisations: [organisation], publisher: publisher) }
 
     it "submits blank feedback, renders error and then submits feedback successfully" do
       click_on I18n.t("buttons.submit_feedback")

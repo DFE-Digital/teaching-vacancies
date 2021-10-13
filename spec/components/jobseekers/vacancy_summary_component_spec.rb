@@ -4,7 +4,7 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
   let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
 
   context "when vacancy job_location is at_one_school" do
-    let(:vacancy) { create(:vacancy, :at_one_school, working_patterns: ["part_time"], organisation_vacancies_attributes: [{ organisation: organisation }]) }
+    let(:vacancy) { create(:vacancy, :at_one_school, working_patterns: ["part_time"], organisations: [organisation]) }
 
     before { render_inline(described_class.new(vacancy: vacancy_presenter)) }
 
@@ -46,7 +46,7 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
       end
 
       context "when vacancy has actual_salary not defined" do
-        let(:vacancy) { create(:vacancy, :at_one_school, working_patterns: ["full_time"], actual_salary: "", organisation_vacancies_attributes: [{ organisation: organisation }]) }
+        let(:vacancy) { create(:vacancy, :at_one_school, working_patterns: ["full_time"], actual_salary: "", organisations: [organisation]) }
 
         it "does not renders the actual salary" do
           expect(rendered_component).to include(I18n.t("jobs.salary"))
@@ -82,7 +82,7 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
   context "when vacancy job_location is central_office" do
     let(:organisation) { create(:trust) }
     let(:vacancy) do
-      create(:vacancy, :central_office, organisation_vacancies_attributes: [{ organisation: organisation }])
+      create(:vacancy, :central_office, organisations: [organisation])
     end
 
     before do

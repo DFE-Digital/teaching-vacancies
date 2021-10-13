@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Job applications" do
-  let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+  let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
   let(:jobseeker) { create(:jobseeker) }
 
   before do
@@ -10,7 +10,7 @@ RSpec.describe "Job applications" do
 
   describe "GET #new" do
     context "when the job is not live" do
-      let(:vacancy) { create(:vacancy, :expired, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+      let(:vacancy) { create(:vacancy, :expired, organisations: [build(:school)]) }
 
       it "does not trigger a `vacancy_apply_clicked` event and returns not found" do
         expect { get new_jobseekers_job_job_application_path(vacancy.id) }.to not_have_triggered_event(:vacancy_apply_clicked)
@@ -35,7 +35,7 @@ RSpec.describe "Job applications" do
 
       context "when a non-draft job application already exists" do
         let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
-        let(:new_vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+        let(:new_vacancy) { create(:vacancy, organisations: [build(:school)]) }
 
         it "redirects to `new_quick_apply_jobseekers_job_job_application_path`" do
           expect(get(new_jobseekers_job_job_application_path(new_vacancy.id)))
@@ -44,7 +44,7 @@ RSpec.describe "Job applications" do
       end
 
       context "when the vacancy does not enable job applications" do
-        let(:vacancy) { create(:vacancy, enable_job_applications: false, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+        let(:vacancy) { create(:vacancy, enable_job_applications: false, organisations: [build(:school)]) }
 
         it "raises an error" do
           expect { get new_jobseekers_job_job_application_path(vacancy.id) }
@@ -56,7 +56,7 @@ RSpec.describe "Job applications" do
 
   describe "POST #create" do
     context "when the job is not live" do
-      let(:vacancy) { create(:vacancy, :expired, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+      let(:vacancy) { create(:vacancy, :expired, organisations: [build(:school)]) }
 
       it "does not create a job application and returns not found" do
         expect { post new_jobseekers_job_job_application_path(vacancy.id) }.to(not_change { JobApplication.count })
@@ -74,7 +74,7 @@ RSpec.describe "Job applications" do
     end
 
     context "when the vacancy does not enable job applications" do
-      let(:vacancy) { create(:vacancy, enable_job_applications: false, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+      let(:vacancy) { create(:vacancy, enable_job_applications: false, organisations: [build(:school)]) }
 
       it "raises an error" do
         expect { post(jobseekers_job_job_application_path(vacancy.id)) }
@@ -102,7 +102,7 @@ RSpec.describe "Job applications" do
     end
 
     context "when there are no non-draft applications" do
-      let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+      let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
 
       it "raises an error" do
         expect { get new_quick_apply_jobseekers_job_job_application_path(vacancy.id) }
@@ -111,7 +111,7 @@ RSpec.describe "Job applications" do
     end
 
     context "when the vacancy does not enable job applications" do
-      let(:vacancy) { create(:vacancy, enable_job_applications: false, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+      let(:vacancy) { create(:vacancy, enable_job_applications: false, organisations: [build(:school)]) }
 
       it "raises an error" do
         expect { get new_jobseekers_job_job_application_path(vacancy.id) }
@@ -120,11 +120,11 @@ RSpec.describe "Job applications" do
     end
 
     context "when there are non-draft applications" do
-      let(:old_vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+      let(:old_vacancy) { create(:vacancy, organisations: [build(:school)]) }
       let!(:recent_job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: old_vacancy) }
 
       context "when the job is not listed" do
-        let(:vacancy) { create(:vacancy, :expired, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+        let(:vacancy) { create(:vacancy, :expired, organisations: [build(:school)]) }
 
         it "returns not found" do
           get new_quick_apply_jobseekers_job_job_application_path(vacancy.id)
@@ -152,7 +152,7 @@ RSpec.describe "Job applications" do
     end
 
     context "when there are no non-draft applications" do
-      let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+      let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
 
       it "raises an error" do
         expect { post quick_apply_jobseekers_job_job_application_path(vacancy.id) }
@@ -161,7 +161,7 @@ RSpec.describe "Job applications" do
     end
 
     context "when the vacancy does not enable job applications" do
-      let(:vacancy) { create(:vacancy, enable_job_applications: false, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+      let(:vacancy) { create(:vacancy, enable_job_applications: false, organisations: [build(:school)]) }
 
       it "raises an error" do
         expect { post quick_apply_jobseekers_job_job_application_path(vacancy.id) }
@@ -170,11 +170,11 @@ RSpec.describe "Job applications" do
     end
 
     context "when there are non-draft applications" do
-      let(:old_vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+      let(:old_vacancy) { create(:vacancy, organisations: [build(:school)]) }
       let!(:recent_job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: old_vacancy) }
 
       context "when the job is not listed" do
-        let(:vacancy) { create(:vacancy, :expired, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+        let(:vacancy) { create(:vacancy, :expired, organisations: [build(:school)]) }
 
         it "returns not found" do
           post quick_apply_jobseekers_job_job_application_path(vacancy.id)
@@ -206,7 +206,7 @@ RSpec.describe "Job applications" do
     end
 
     context "when the job is not listed" do
-      let(:vacancy) { create(:vacancy, :expired, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+      let(:vacancy) { create(:vacancy, :expired, organisations: [build(:school)]) }
 
       it "raises an error and does not submit the job application or send email" do
         assert_emails 0 do

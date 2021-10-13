@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Jobseekers can apply for a vacancy" do
   let(:vacancy) do
     create(:vacancy, :published, :no_tv_applications,
-           application_link: "www.google.com", organisation_vacancies_attributes: [{ organisation: build(:school) }])
+           application_link: "www.google.com", organisations: [build(:school)])
   end
 
   before { visit job_path(vacancy) }
@@ -14,7 +14,7 @@ RSpec.describe "Jobseekers can apply for a vacancy" do
 
   let(:expired_vacancy) do
     create(:vacancy, :expired, :no_tv_applications,
-           application_link: "www.google.com", organisation_vacancies_attributes: [{ organisation: build(:school) }])
+           application_link: "www.google.com", organisations: [build(:school)])
   end
 
   scenario "the application links are not present for expired vacancy" do

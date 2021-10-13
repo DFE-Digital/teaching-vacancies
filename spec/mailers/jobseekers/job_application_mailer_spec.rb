@@ -4,7 +4,7 @@ RSpec.describe Jobseekers::JobApplicationMailer do
   let(:jobseeker) { create(:jobseeker, email: email) }
   let(:email) { "test@email.com" }
   let(:organisation) { build(:school) }
-  let(:vacancy) { build(:vacancy, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+  let(:vacancy) { build(:vacancy, organisations: [organisation]) }
   let(:contact_email) { vacancy.contact_email }
 
   let(:expected_data) do

@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Publishers can view a job application" do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }
-  let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+  let(:vacancy) { create(:vacancy, organisations: [organisation]) }
 
   before do
     create(:saved_job, vacancy: vacancy)

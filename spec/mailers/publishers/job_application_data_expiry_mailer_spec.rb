@@ -6,7 +6,7 @@ RSpec.describe Publishers::JobApplicationDataExpiryMailer do
   let(:organisation) { create(:school) }
   let(:params) { { vacancy: vacancy, publisher: publisher } }
   let(:publisher) { create(:publisher, email: email) }
-  let(:vacancy) { create(:vacancy, publisher: publisher, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+  let(:vacancy) { create(:vacancy, publisher: publisher, organisations: [organisation]) }
   let(:vacancy_data_expiration_date) { (vacancy.expires_at + 1.year).to_date }
 
   describe "#job_application_data_expiry" do

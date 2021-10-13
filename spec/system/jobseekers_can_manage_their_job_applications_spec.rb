@@ -4,10 +4,10 @@ RSpec.describe "Jobseekers can manage their job applications" do
   let(:jobseeker) { create(:jobseeker) }
   let(:organisation) { create(:school) }
 
-  let(:vacancy1) { create(:vacancy, job_title: "Team Leader of Maths", organisation_vacancies_attributes: [{ organisation: organisation }]) }
-  let(:vacancy2) { create(:vacancy, :expired, job_title: "Teacher of History", organisation_vacancies_attributes: [{ organisation: organisation }]) }
-  let(:vacancy3) { create(:vacancy, job_title: "Teacher of Design & Technology", organisation_vacancies_attributes: [{ organisation: organisation }]) }
-  let(:vacancy4) { create(:vacancy, job_title: "Teacher of RE & PSHE", organisation_vacancies_attributes: [{ organisation: organisation }]) }
+  let(:vacancy1) { create(:vacancy, job_title: "Team Leader of Maths", organisations: [organisation]) }
+  let(:vacancy2) { create(:vacancy, :expired, job_title: "Teacher of History", organisations: [organisation]) }
+  let(:vacancy3) { create(:vacancy, job_title: "Teacher of Design & Technology", organisations: [organisation]) }
+  let(:vacancy4) { create(:vacancy, job_title: "Teacher of RE & PSHE", organisations: [organisation]) }
 
   context "when logged in" do
     before { login_as(jobseeker, scope: :jobseeker) }

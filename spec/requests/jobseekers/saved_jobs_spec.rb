@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Saved jobs" do
-  let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+  let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
   let(:jobseeker) { create(:jobseeker) }
 
   before { sign_in(jobseeker, scope: :jobseeker) }

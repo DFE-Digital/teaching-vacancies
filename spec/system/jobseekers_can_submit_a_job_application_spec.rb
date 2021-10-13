@@ -5,7 +5,7 @@ RSpec.describe "Jobseekers can submit a job application" do
 
   let(:jobseeker) { create(:jobseeker) }
   let(:organisation) { create(:school) }
-  let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+  let(:vacancy) { create(:vacancy, organisations: [organisation]) }
 
   before do
     login_as(jobseeker, scope: :jobseeker)
