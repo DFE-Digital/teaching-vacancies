@@ -7,12 +7,11 @@
     "attributesToIndex": [
       "unordered(_geoloc.lat)",
       "unordered(_geoloc.lng)",
+      "unordered(education_phases)",
+      "unordered(job_roles)",
       "unordered(job_title)",
       "unordered(subjects)",
-      "unordered(job_roles)",
-      "unordered(working_patterns)",
-      "unordered(education_phases)",
-      "unordered(parent_organisation_name)",
+      "unordered(key_stages)",
       "unordered(organisations.detailed_school_types)",
       "unordered(organisations.local_authorities_within)",
       "unordered(organisations.school_types)",
@@ -20,7 +19,9 @@
       "unordered(organisations.towns)",
       "unordered(organisations.counties)",
       "unordered(organisations.regions)",
-      "unordered(organisations.religious_characters)"
+      "unordered(organisations.religious_characters)",
+      "unordered(parent_organisation_name)",
+      "unordered(working_patterns)"
     ],
     "numericAttributesToIndex": null,
     "attributesToRetrieve": null,
@@ -69,6 +70,7 @@
       "ks2",
       "languages",
       "leadership",
+      "math",
       "mathematics",
       "maths",
       "mfl",
@@ -127,22 +129,6 @@
   },
   "rules": [],
   "synonyms": [
-    {
-      "type": "onewaysynonym",
-      "input": "ks2",
-      "synonyms": [
-        "primary"
-      ],
-      "objectID": "syn-1626273585224-26"
-    },
-    {
-      "type": "onewaysynonym",
-      "input": "ks1",
-      "synonyms": [
-        "primary"
-      ],
-      "objectID": "syn-1626273515462-21"
-    },
     {
       "type": "onewaysynonym",
       "input": "primary",
@@ -418,7 +404,10 @@
       "type": "synonym",
       "synonyms": [
         "TA",
-        "teaching assistant"
+        "teaching assistant",
+        "classroom assistant",
+        "class-room assistant",
+        "class room assistant "
       ],
       "objectID": "1604052658511_13"
     },
@@ -430,7 +419,9 @@
         "trainee",
         "newly qualified",
         "newly-qualified",
-        "Suitable for NQTs"
+        "Suitable for NQTs",
+        "ECT",
+        "early career teacher"
       ],
       "objectID": "1604052658511_12"
     },
