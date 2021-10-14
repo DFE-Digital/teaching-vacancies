@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe SendJobApplicationDataExpiryNotificationJob do
   let(:notification) { instance_double(Publishers::JobApplicationDataExpiryNotification) }
   let(:organisation) { create(:school) }
-  let(:publisher) { create(:publisher, organisation_publishers_attributes: [{ organisation: organisation }]) }
-  let!(:vacancy) { create(:vacancy, expires_at: 351.days.ago, publisher: publisher, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+  let(:publisher) { create(:publisher, organisations: [organisation]) }
+  let!(:vacancy) { create(:vacancy, expires_at: 351.days.ago, publisher: publisher, organisations: [organisation]) }
 
   before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false) }
 
@@ -27,7 +27,7 @@ RSpec.describe SendJobApplicationDataExpiryNotificationJob do
     end
 
     context "when the vacancy did not expire 351 days ago" do
-      let!(:vacancy) { create(:vacancy, expires_at: 1.day.ago, publisher: publisher, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+      let!(:vacancy) { create(:vacancy, expires_at: 1.day.ago, publisher: publisher, organisations: [organisation]) }
 
       it "does not send notifications" do
         expect(Publishers::JobApplicationDataExpiryNotification).not_to receive(:with).with(vacancy: vacancy, publisher: publisher)

@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Publishers can manage job applications for a vacancy" do
   let(:organisation) { create(:school, name: "A school with a vacancy") }
-  let!(:vacancy) { create(:vacancy, vacancy_trait, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+  let!(:vacancy) { create(:vacancy, vacancy_trait, organisations: [organisation]) }
   let(:publisher) { create(:publisher) }
 
   before do
@@ -234,7 +234,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
   end
 
   context "when a vacancy has expired more than 1 year ago and it has applications" do
-    let!(:vacancy) { create(:vacancy, :expired, expires_at: 1.year.ago, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+    let!(:vacancy) { create(:vacancy, :expired, expires_at: 1.year.ago, organisations: [organisation]) }
     let!(:job_application_submitted) { create(:job_application, :status_submitted, vacancy: vacancy) }
 
     before { visit organisation_job_job_applications_path(vacancy.id) }

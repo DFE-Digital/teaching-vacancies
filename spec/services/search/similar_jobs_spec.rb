@@ -4,7 +4,7 @@ RSpec.describe Search::SimilarJobs do
   subject { described_class.new(vacancy) }
 
   let(:school) { create(:school) }
-  let(:vacancy) { create(:vacancy, :at_one_school, organisation_vacancies_attributes: [{ organisation: school }]) }
+  let(:vacancy) { create(:vacancy, :at_one_school, organisations: [school]) }
 
   it "calls Search::CriteriaDeviser" do
     expect(Search::CriteriaInventor).to receive(:new).with(vacancy).and_call_original

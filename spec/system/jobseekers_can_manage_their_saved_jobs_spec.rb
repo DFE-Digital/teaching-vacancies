@@ -4,9 +4,9 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
   let(:jobseeker) { create(:jobseeker) }
   let(:organisation) { create(:school) }
 
-  let(:vacancy1) { create(:vacancy, enable_job_applications: false, organisation_vacancies_attributes: [{ organisation: organisation }]) }
-  let(:vacancy2) { create(:vacancy, enable_job_applications: true, organisation_vacancies_attributes: [{ organisation: organisation }]) }
-  let(:expired_vacancy) { create(:vacancy, :expired, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+  let(:vacancy1) { create(:vacancy, enable_job_applications: false, organisations: [organisation]) }
+  let(:vacancy2) { create(:vacancy, enable_job_applications: true, organisations: [organisation]) }
+  let(:expired_vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
 
   context "when logged in" do
     before { login_as(jobseeker, scope: :jobseeker) }

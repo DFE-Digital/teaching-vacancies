@@ -7,8 +7,6 @@ class Publisher < ApplicationRecord
   has_many :publisher_preferences, dependent: :destroy
   has_many :vacancies
 
-  accepts_nested_attributes_for :organisation_publishers
-
   encrypts :family_name, :given_name
 
   devise :omniauthable, :timeoutable, omniauth_providers: %i[dfe]

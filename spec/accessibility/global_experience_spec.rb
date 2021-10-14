@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Global experience", type: :system, accessibility: true do
   let(:school) { create(:school) }
-  let!(:job1) { create(:vacancy, :past_publish, job_title: "Teacher of Potions", organisation_vacancies_attributes: [{ organisation: school }]) }
+  let!(:job1) { create(:vacancy, :past_publish, job_title: "Teacher of Potions", organisations: [school]) }
 
   context "A global user" do
     describe "visits the T&C page" do

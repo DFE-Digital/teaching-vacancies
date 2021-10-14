@@ -17,7 +17,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
     let(:other_school) { create(:school, name: "Some other school") }
     let(:trust) { create(:trust) }
     let(:local_authority) { create(:local_authority, local_authority_code: "100") }
-    let(:publisher) { create(:publisher, organisation_publishers_attributes: organisation_publishers, accepted_terms_at: 1.day.ago) }
+    let(:publisher) { create(:publisher, organisations: organisations, accepted_terms_at: 1.day.ago) }
 
     let(:login_key) do
       publisher.emergency_login_keys.create(
@@ -38,14 +38,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
     end
 
     context "when a publisher has multiple organisations" do
-      let(:organisation_publishers) do
-        [
-          { organisation: school },
-          { organisation: other_school },
-          { organisation: trust },
-          { organisation: local_authority },
-        ]
-      end
+      let(:organisations) { [school, other_school, trust, local_authority] }
 
       before { allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference)) }
 
@@ -113,7 +106,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
 
     context "when a publisher has only one organisation" do
       context "organisation is a School" do
-        let(:organisation_publishers) { [{ organisation: school }] }
+        let(:organisations) { [school] }
 
         it "can sign in and bypass choice of org" do
           freeze_time do
@@ -142,7 +135,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
       end
 
       context "when the organisation is a Trust" do
-        let(:organisation_publishers) { [{ organisation: trust }] }
+        let(:organisations) { [trust] }
 
         before { allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference)) }
 
@@ -173,7 +166,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
       end
 
       context "when the organisation is a Local Authority" do
-        let(:organisation_publishers) { [{ organisation: local_authority }] }
+        let(:organisations) { [local_authority] }
 
         before do
           allow(Rails.configuration).to receive(:enforce_local_authority_allowlist).and_return(true)

@@ -5,7 +5,7 @@ RSpec.describe "Publishers::Vacancies::BuildController" do
   let(:school_group) { create(:trust) }
   let(:school1) { create(:school, name: "First school") }
   let(:school2) { create(:school, name: "Second school") }
-  let(:vacancy) { create(:vacancy, :at_one_school, :draft, postcode_from_mean_geolocation: "Old postcode", organisation_vacancies_attributes: [{ organisation: school1 }]) }
+  let(:vacancy) { create(:vacancy, :at_one_school, :draft, postcode_from_mean_geolocation: "Old postcode", organisations: [school1]) }
 
   before do
     SchoolGroupMembership.find_or_create_by(school_id: school1.id, school_group_id: school_group.id)

@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Jobseekers::SimilarJobComponent, type: :component do
   let(:school) { create(:school) }
-  let(:vacancy) { create(:vacancy, :at_one_school, organisation_vacancies_attributes: [{ organisation: school }]) }
+  let(:vacancy) { create(:vacancy, :at_one_school, organisations: [school]) }
 
   before do
     render_inline(described_class.new(vacancy: vacancy))

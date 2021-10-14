@@ -1,14 +1,14 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: true do
-  let(:school) { create(:school, :primary) }
+  let(:school) { create(:school, :secondary) }
   let(:vacancy) do
     create(:vacancy,
            job_roles: ["teacher"],
            job_title: "Teacher",
            subjects: ["English"],
            working_patterns: ["full_time"],
-           organisation_vacancies_attributes: [{ organisation: school }])
+           organisations: [school])
   end
 
   before do
@@ -47,7 +47,7 @@ RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: tr
     expect(page.find_field("jobseekers-subscription-form-radius-field").value).to eq(Search::CriteriaInventor::DEFAULT_RADIUS_IN_MILES.to_s)
     expect(page.find_field("jobseekers-subscription-form-job-roles-teacher-field")).to be_checked
     expect(page.find_field("jobseekers-subscription-form-job-roles-ect-suitable-field")).not_to be_checked
-    expect(page.find_field("jobseekers-subscription-form-phases-primary-field")).to be_checked
+    expect(page.find_field("jobseekers-subscription-form-phases-secondary-field")).to be_checked
     expect(page.find_field("jobseekers-subscription-form-working-patterns-full-time-field")).to be_checked
   end
 

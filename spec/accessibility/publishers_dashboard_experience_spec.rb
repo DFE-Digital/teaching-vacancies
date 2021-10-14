@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Publisher dashboard experience", type: :system, accessibility: true do
   let(:organisation) { create(:school, name: "A school with a vacancy") }
   let(:publisher) { create(:publisher) }
-  let(:vacancy) { create(:vacancy, :published, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+  let(:vacancy) { create(:vacancy, :published, organisations: [organisation]) }
 
   before { login_publisher(publisher: publisher, organisation: organisation) }
 

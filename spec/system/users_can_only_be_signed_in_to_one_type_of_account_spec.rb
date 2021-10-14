@@ -4,7 +4,7 @@ RSpec.describe "Users can only be signed in to one type of account" do
   let(:school) { create(:school, urn: "110627") }
 
   let(:jobseeker) { create(:jobseeker) }
-  let!(:publisher) { create(:publisher, organisation_publishers_attributes: [{ organisation: school }]) }
+  let!(:publisher) { create(:publisher, organisations: [school]) }
 
   let(:authentication_fallback_enabled?) { false }
 

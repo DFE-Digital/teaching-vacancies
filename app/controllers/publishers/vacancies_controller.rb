@@ -10,7 +10,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
 
   def create
     reset_session_vacancy!
-    vacancy = Vacancy.create(organisation_vacancies_attributes: [{ organisation: current_organisation }])
+    vacancy = Vacancy.create(organisations: [current_organisation])
     redirect_to organisation_job_build_path(vacancy.id, :job_role)
   end
 

@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Publishers can extend a deadline" do
   let(:organisation) { create(:school) }
-  let!(:vacancy) { create(:vacancy, :published, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+  let!(:vacancy) { create(:vacancy, :published, organisations: [organisation]) }
   let(:publisher) { create(:publisher) }
   let(:expires_at) { vacancy.expires_at + 1.month }
 

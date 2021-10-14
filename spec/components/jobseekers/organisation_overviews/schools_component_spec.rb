@@ -34,11 +34,7 @@ RSpec.describe Jobseekers::OrganisationOverviews::SchoolsComponent, type: :compo
     end
 
     context "when vacancy job_location is at_multiple_schools" do
-      let(:vacancy) do
-        create(:vacancy, :at_multiple_schools, organisation_vacancies_attributes: [
-          { organisation: school1 }, { organisation: school2 }, { organisation: school3 }
-        ])
-      end
+      let(:vacancy) { create(:vacancy, :at_multiple_schools, organisations: [school1, school2, school3]) }
 
       it "renders the component" do
         expect(rendered_component).not_to be_blank

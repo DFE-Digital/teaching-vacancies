@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Shares" do
-  let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+  let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
   let(:vacancy_share_url) { CGI.escape(job_url(vacancy)) }
 
   describe "GET #new" do

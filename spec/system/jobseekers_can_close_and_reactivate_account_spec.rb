@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Jobseekers can close and reactivate their account" do
   let(:jobseeker) { create(:jobseeker) }
   let(:organisation) { create(:school) }
-  let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+  let(:vacancy) { create(:vacancy, organisations: [organisation]) }
   let!(:job_application) { create(:job_application, :reviewed, jobseeker: jobseeker, vacancy: vacancy) }
   let!(:subscription) { create(:subscription, email: jobseeker.email, active: true) }
 

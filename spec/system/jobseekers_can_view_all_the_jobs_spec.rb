@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers can view all the jobs" do
   let!(:school) { create(:school) }
-  let!(:published_jobs) { create_list(:vacancy, 5, :past_publish, expires_at: 2.years.from_now, organisation_vacancies_attributes: [{ organisation: school }]) }
+  let!(:published_jobs) { create_list(:vacancy, 5, :past_publish, expires_at: 2.years.from_now, organisations: [school]) }
   let!(:draft_jobs) { create_list(:vacancy, 2, :draft) }
 
   it "jobseekers can visit the home page, perform an empty search and view jobs" do
@@ -82,8 +82,8 @@ RSpec.describe "Jobseekers can view all the jobs" do
   end
 
   describe "sorting" do
-    let!(:newest_job) { create(:vacancy, :past_publish, publish_on: Date.current, expires_at: 1.year.from_now, organisation_vacancies_attributes: [{ organisation: school }]) }
-    let!(:expires_tomorrow_job) { create(:vacancy, :past_publish, :expires_tomorrow, organisation_vacancies_attributes: [{ organisation: school }]) }
+    let!(:newest_job) { create(:vacancy, :past_publish, publish_on: Date.current, expires_at: 1.year.from_now, organisations: [school]) }
+    let!(:expires_tomorrow_job) { create(:vacancy, :past_publish, :expires_tomorrow, organisations: [school]) }
 
     context "when visiting the home page and performing an empty search" do
       before do

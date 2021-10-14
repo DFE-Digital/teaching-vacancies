@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Job listing statistics" do
   let(:organisation) { build(:school) }
-  let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+  let(:vacancy) { create(:vacancy, organisations: [organisation]) }
   let(:publisher) { create(:publisher, accepted_terms_at: 1.day.ago) }
 
   before do

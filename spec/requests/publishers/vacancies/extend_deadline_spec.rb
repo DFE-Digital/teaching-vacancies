@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Extend deadline" do
   let(:organisation) { create(:school) }
-  let(:vacancy) { create(:vacancy, :published, publish_on: publish_on, expires_at: 1.month.from_now, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+  let(:vacancy) { create(:vacancy, :published, publish_on: publish_on, expires_at: 1.month.from_now, organisations: [organisation]) }
   let(:publisher) { create(:publisher) }
   let(:publish_on) { 1.month.ago }
 
@@ -14,7 +14,7 @@ RSpec.describe "Extend deadline" do
 
   describe "GET #show" do
     context "when the vacancy does not belong to the current organisation" do
-      let(:vacancy) { create(:vacancy, :published, organisation_vacancies_attributes: [{ organisation: create(:school) }]) }
+      let(:vacancy) { create(:vacancy, :published, organisations: [create(:school)]) }
 
       it "returns not_found" do
         get organisation_job_extend_deadline_path(vacancy.id)
@@ -53,7 +53,7 @@ RSpec.describe "Extend deadline" do
     let(:params) { { publishers_job_listing_extend_deadline_form: form_params } }
 
     context "when the vacancy does not belong to the current organisation" do
-      let(:vacancy) { create(:vacancy, :published, organisation_vacancies_attributes: [{ organisation: create(:school) }]) }
+      let(:vacancy) { create(:vacancy, :published, organisations: [create(:school)]) }
 
       it "returns not_found" do
         patch organisation_job_extend_deadline_path(vacancy.id), params: params

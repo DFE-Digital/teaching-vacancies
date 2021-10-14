@@ -116,14 +116,10 @@ RSpec.describe Vacancy do
         green_school = create(:school, name: "Green school", town: "Greenway", county: "Mars")
         blue_school = create(:school, name: "Blue school")
 
-        first_maths_teacher = create(:vacancy, :published, job_title: "Maths Teacher",
-                                                           organisation_vacancies_attributes: [{ organisation: blue_school }])
-        second_maths_teacher = create(:vacancy, :published, job_title: "Maths Teacher",
-                                                            organisation_vacancies_attributes: [{ organisation: green_school }])
-        third_maths_teacher = create(:vacancy, :published, job_title: "Maths Teacher",
-                                                           organisation_vacancies_attributes: [{ organisation: green_school }])
-        fourth_maths_teacher = create(:vacancy, :published, job_title: "Maths Teacher",
-                                                            organisation_vacancies_attributes: [{ organisation: green_school }])
+        first_maths_teacher = create(:vacancy, :published, job_title: "Maths Teacher", organisations: [blue_school])
+        second_maths_teacher = create(:vacancy, :published, job_title: "Maths Teacher", organisations: [green_school])
+        third_maths_teacher = create(:vacancy, :published, job_title: "Maths Teacher", organisations: [green_school])
+        fourth_maths_teacher = create(:vacancy, :published, job_title: "Maths Teacher", organisations: [green_school])
 
         expect(first_maths_teacher.slug).to eq("maths-teacher")
         expect(second_maths_teacher.slug).to eq("maths-teacher-green-school")
@@ -516,7 +512,7 @@ RSpec.describe Vacancy do
     let(:school) { create(:school, geopoint: "POINT(1 2)", postcode: "A12 B34") }
 
     context "when at a single school" do
-      subject { create(:vacancy, organisation_vacancies_attributes: [{ organisation: school }]) }
+      subject { create(:vacancy, organisations: [school]) }
 
       before { subject.set_postcode_from_mean_geolocation }
 
@@ -531,7 +527,7 @@ RSpec.describe Vacancy do
       before { SchoolGroupMembership.create(school: school, school_group: trust) }
 
       context "when at a single school in a trust" do
-        subject { create(:vacancy, :at_one_school, organisation_vacancies_attributes: [{ organisation: school }]) }
+        subject { create(:vacancy, :at_one_school, organisations: [school]) }
 
         before { subject.set_postcode_from_mean_geolocation }
 

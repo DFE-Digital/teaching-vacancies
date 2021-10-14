@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Publishers can view their notifications" do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }
-  let(:vacancy) { create(:vacancy, :published, organisation_vacancies_attributes: [{ organisation: organisation }], publisher: publisher) }
+  let(:vacancy) { create(:vacancy, :published, organisations: [organisation], publisher: publisher) }
   let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
 
   before { login_publisher(publisher: publisher, organisation: organisation) }

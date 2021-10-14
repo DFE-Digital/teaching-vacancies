@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Job applications" do
   let(:organisation) { build(:school) }
-  let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+  let(:vacancy) { create(:vacancy, organisations: [organisation]) }
   let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
   let(:publisher) { create(:publisher, accepted_terms_at: 1.day.ago) }
 
@@ -109,7 +109,7 @@ RSpec.describe "Job applications" do
 
   describe "GET #index" do
     context "when the vacancy does not belong to the current organisation" do
-      let(:vacancy) { create(:vacancy, :published, organisation_vacancies_attributes: [{ organisation: build(:school) }]) }
+      let(:vacancy) { create(:vacancy, :published, organisations: [build(:school)]) }
 
       it "returns not_found" do
         get organisation_job_job_applications_path(vacancy.id)
@@ -119,7 +119,7 @@ RSpec.describe "Job applications" do
     end
 
     context "when the vacancy is not listed" do
-      let(:vacancy) { create(:vacancy, publish_on: 1.day.from_now, organisation_vacancies_attributes: [{ organisation: organisation }]) }
+      let(:vacancy) { create(:vacancy, publish_on: 1.day.from_now, organisations: [organisation]) }
 
       it "returns not_found" do
         get organisation_job_job_applications_path(vacancy.id)

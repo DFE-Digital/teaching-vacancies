@@ -10,7 +10,7 @@ RSpec.describe Organisation do
     context "when the organisation is a school" do
       let!(:school1) { create(:school) }
       let!(:school2) { create(:school) }
-      let(:vacancy) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: school1 }]) }
+      let(:vacancy) { create(:vacancy, organisations: [school1]) }
 
       it "returns all vacancies from the school" do
         expect(school1.all_vacancies).to eq [vacancy]
@@ -25,9 +25,9 @@ RSpec.describe Organisation do
       let!(:school1) { create(:school) }
       let!(:school2) { create(:school) }
       let!(:trust) { create(:trust) }
-      let(:vacancy1) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: school1 }]) }
-      let(:vacancy2) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: trust }]) }
-      let(:vacancy3) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: school2 }]) }
+      let(:vacancy1) { create(:vacancy, organisations: [school1]) }
+      let(:vacancy2) { create(:vacancy, organisations: [trust]) }
+      let(:vacancy3) { create(:vacancy, organisations: [school2]) }
 
       before { SchoolGroupMembership.create(school_group: trust, school: school1) }
 
@@ -43,10 +43,10 @@ RSpec.describe Organisation do
       let!(:school2) { create(:school, urn: "654") }
       let!(:school3) { create(:school) }
       let!(:school4) { create(:school) }
-      let(:vacancy1) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: school1 }]) }
-      let(:vacancy2) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: school2 }]) }
-      let(:vacancy3) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: school3 }]) }
-      let(:vacancy4) { create(:vacancy, organisation_vacancies_attributes: [{ organisation: school4 }]) }
+      let(:vacancy1) { create(:vacancy, organisations: [school1]) }
+      let(:vacancy2) { create(:vacancy, organisations: [school2]) }
+      let(:vacancy3) { create(:vacancy, organisations: [school3]) }
+      let(:vacancy4) { create(:vacancy, organisations: [school4]) }
       let(:local_authorities_extra_schools) { { 111 => [123] } }
 
       before do

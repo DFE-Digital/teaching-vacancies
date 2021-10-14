@@ -6,7 +6,7 @@ RSpec.describe Publishers::ExportVacancyToCsv do
   let(:school) { create(:school) }
   let(:jobseeker) { create(:jobseeker) }
   let(:job_title) { "Example job title without commas so we can ignore whether to expect this to be wrapped in quotes" }
-  let(:vacancy) { create(:vacancy, job_title: job_title, organisation_vacancies_attributes: [{ organisation: school }]) }
+  let(:vacancy) { create(:vacancy, job_title: job_title, organisations: [school]) }
   let(:number_of_unique_views) { 64 }
   let(:number_of_saves) { 1 }
 
