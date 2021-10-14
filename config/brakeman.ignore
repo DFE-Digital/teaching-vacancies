@@ -35,6 +35,26 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
+      "fingerprint": "549d2779be79702f98156c6ec1a388b35ff19d87b0978910d4fad9d59a424cb9",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/services/ons_data_import/create_composites.rb",
+      "line": 14,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.exec_update(\"\\n        UPDATE location_polygons\\n        SET area=(\\n              SELECT ST_Union(area::geometry)::geography\\n              FROM location_polygons\\n              WHERE name IN (#{constituents.map do\n ActiveRecord::Base.connection.quote(c.downcase)\n end.join(\", \")})\\n            ),\\n            location_type='composite'\\n        WHERE id='#{LocationPolygon.find_or_create_by(:name => name).id}'\\n      \")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "OnsDataImport::CreateComposites",
+        "method": "call"
+      },
+      "user_input": "constituents.map do\n ActiveRecord::Base.connection.quote(c.downcase)\n end.join(\", \")",
+      "confidence": "Medium",
+      "note": "This is our own static data with no user input provided in the query"
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
       "fingerprint": "8e2c1f91d02bb1633f5456dc0983e24f4972cf73213afa01b9e7bcdf7b1c3fcc",
       "check_name": "SQL",
       "message": "Possible SQL injection",
@@ -53,6 +73,6 @@
       "note": "Helper forces conversion to integer, temporary method that will be removed so"
     }
   ],
-  "updated": "2021-10-11 16:38:31 +0100",
+  "updated": "2021-10-14 17:41:12 +0100",
   "brakeman_version": "5.1.1"
 }

@@ -43,7 +43,7 @@ end
 
 namespace :ons do
   desc "Import all ONS areas"
-  task import_all: %i[import_counties import_cities import_regions]
+  task import_all: %i[import_counties import_cities import_regions create_composites]
 
   desc "Import ONS counties"
   task import_counties: :environment do
@@ -58,5 +58,10 @@ namespace :ons do
   desc "Import ONS regions"
   task import_regions: :environment do
     OnsDataImport::ImportRegions.new.call
+  end
+
+  desc "Create composites from ONS polygons"
+  task create_composites: :environment do
+    OnsDataImport::CreateComposites.new.call
   end
 end

@@ -5,5 +5,6 @@ class ImportPolygonDataJob < ApplicationJob
     OnsDataImport::ImportCounties.new.call
     OnsDataImport::ImportCities.new.call
     OnsDataImport::ImportRegions.new.call
+    OnsDataImport::CreateComposites.new.call
   end
 end
