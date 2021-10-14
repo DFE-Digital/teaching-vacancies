@@ -81,7 +81,7 @@ class Vacancy < ApplicationRecord
   end
 
   def organisation
-    organisation_vacancies.first&.organisation
+    organisations.first
   end
 
   def parent_organisation

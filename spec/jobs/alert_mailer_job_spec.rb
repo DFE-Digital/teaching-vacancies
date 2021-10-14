@@ -2,12 +2,10 @@ require "rails_helper"
 
 RSpec.describe AlertMailerJob do
   let(:school) { create(:school) }
-  let(:vacancies) { create_list(:vacancy, 5) }
+  let!(:vacancies) { create_list(:vacancy, 5, organisations: [school]) }
   let(:subscription) { create(:daily_subscription) }
   let(:alert_run) { create(:alert_run, subscription: subscription) }
   let(:job) { Jobseekers::AlertMailer.alert(subscription.id, vacancies.pluck(:id)).deliver_later! }
-
-  before { vacancies.each { |vacancy| vacancy.organisation_vacancies.create(organisation: school) } }
 
   it "creates a run" do
     job_id = "ABC1234"

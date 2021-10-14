@@ -3,17 +3,12 @@ require "rails_helper"
 RSpec.describe "Publishers can preview a vacancy" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school) }
-  let(:vacancy) { create(:vacancy, :draft, job_roles: %w[teacher]) }
+  let(:vacancy) { create(:vacancy, :draft, job_roles: %w[teacher], organisations: [school]) }
 
-  before do
-    login_publisher(publisher: publisher, organisation: school)
-    vacancy.organisation_vacancies.create(organisation: school)
-  end
+  before { login_publisher(publisher: publisher, organisation: school) }
 
   context "when reviewing a draft vacancy" do
-    before do
-      visit organisation_job_review_path(vacancy.id)
-    end
+    before { visit organisation_job_review_path(vacancy.id) }
 
     scenario "review page shows preview, submit and save calls to action" do
       expect(page).to have_selector(:link_or_button, I18n.t("buttons.preview_job_listing"))
@@ -42,9 +37,7 @@ RSpec.describe "Publishers can preview a vacancy" do
   end
 
   context "when previewing a vacancy" do
-    before do
-      visit organisation_job_preview_path(vacancy.id)
-    end
+    before { visit organisation_job_preview_path(vacancy.id) }
 
     scenario "users can make changes to the listing" do
       click_on I18n.t("buttons.make_changes")
