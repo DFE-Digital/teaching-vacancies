@@ -2,6 +2,8 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: true, vcr: { cassette_name: "algoliasearch" } do
   let(:location) { "London" }
+  let!(:location_polygon) { create(:location_polygon, name: "london") }
+
   let(:search_with_polygons?) { false }
   let(:jobseeker_signed_in?) { false }
   let(:jobseeker) { build_stubbed(:jobseeker) }
@@ -92,7 +94,6 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
     context "when a polygon search is carried out" do
       let(:search_with_polygons?) { true }
       let(:location) { "London" }
-      let!(:location_polygon) { create(:location_polygon, name: "london") }
 
       it "successfully creates a job alert" do
         visit jobs_path

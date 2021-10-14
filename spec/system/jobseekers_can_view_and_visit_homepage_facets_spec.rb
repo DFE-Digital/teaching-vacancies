@@ -14,6 +14,9 @@ RSpec.describe "Jobseekers can view and visit homepage facets", vcr: { cassette_
     )
   end
 
+  let!(:london) { create(:location_polygon, name: "london") }
+  let!(:devon) { create(:location_polygon, name: "devon") }
+
   before do
     allow(VacancyFacets).to receive(:new).and_return(vacancy_facets)
     visit root_path

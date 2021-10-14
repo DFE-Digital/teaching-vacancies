@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Searching on the home page", vcr: { cassette_name: "algoliasearch" } do
+  let!(:bristol) { create(:location_polygon, name: "bristol") }
+
   before do
     visit root_path
   end

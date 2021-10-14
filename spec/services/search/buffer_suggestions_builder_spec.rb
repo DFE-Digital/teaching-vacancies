@@ -50,30 +50,5 @@ RSpec.describe Search::BufferSuggestionsBuilder do
         end
       end
     end
-
-    context "when searching in a composite location" do
-      let(:location) { "Bedfordshire" }
-      let(:districts) { ["Bedford", "Central Bedfordshire", "Luton"] }
-      let(:search_hits) { [0, 1, 1, 2, 3, 0, 0] }
-
-      before do
-        districts.each do |name|
-          create(:location_polygon, name: name.downcase, location_type: "counties")
-        end
-
-        Search::RadiusSuggestionsBuilder::RADIUS_OPTIONS.each_with_index do |radius, idx|
-          buffered_polygons = LocationPolygon.buffered(radius).where(name: districts.map(&:downcase))
-
-          mock_algolia_search(
-            double("vacancies", none?: false), search_hits[idx], nil,
-            arguments_for_algolia.merge(insidePolygon: buffered_polygons.flat_map(&:to_algolia_polygons))
-          )
-        end
-      end
-
-      it "returns the appropriate buffer suggestions" do
-        expect(subject.buffer_suggestions).to eq([["5", 1], ["25", 2], ["50", 3]])
-      end
-    end
   end
 end
