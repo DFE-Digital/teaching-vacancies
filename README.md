@@ -148,16 +148,14 @@ DATABASE_URL=postgis://mylocaluser:mylocalpassword@localhost:5432
 
 ### Seed the database
 
-Populate your environment with real school data, taken from [GIAS](https://get-information-schools.service.gov.uk/), and publishers, vacancies, jobseekers and job applications:
+Populate your environment with:
+
+* real school data, taken from [GIAS](https://get-information-schools.service.gov.uk/)
+* real location polygon data from the ONS
+* fake publishers, vacancies, jobseekers and job applications
 
 ```bash
 bundle exec rails db:seed
-```
-
-Run the following rake task to populate your database with location polygons taken from ONS. These are required in some cases to search by location.
-
-```bash
-bundle exec rails ons:import_location_polygons
 ```
 
 ### Run the server
