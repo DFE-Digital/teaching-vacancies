@@ -59,11 +59,4 @@ namespace :ons do
   task import_regions: :environment do
     OnsDataImport::ImportRegions.new.call
   end
-
-  # TODO: Legacy task - remove after Algolia migration. Depends on the new task to make them both
-  # run.
-  desc "Import all location polygons"
-  task import_location_polygons: %i[environment import_all] do
-    %i[regions counties cities].each { |api_location_type| ImportPolygons.new(api_location_type: api_location_type).call }
-  end
 end

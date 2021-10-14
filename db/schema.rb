@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_08_104739) do
+ActiveRecord::Schema.define(version: 2021_10_14_081404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -255,7 +255,6 @@ ActiveRecord::Schema.define(version: 2021_10_08_104739) do
     t.string "location_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.jsonb "buffers"
     t.geography "area", limit: {:srid=>4326, :type=>"geometry", :geographic=>true}
     t.index ["area"], name: "index_location_polygons_on_area", using: :gist
     t.index ["name"], name: "index_location_polygons_on_name"

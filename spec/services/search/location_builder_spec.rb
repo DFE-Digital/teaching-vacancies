@@ -30,16 +30,13 @@ RSpec.describe Search::LocationBuilder do
       before do
         create(:location_polygon,
                name: "bedford",
-               location_type: "counties",
-               buffers: { "5" => [[10, 11], [12, 13]], "10" => [[14, 15]] })
+               location_type: "counties")
         create(:location_polygon,
                name: "central bedfordshire",
-               location_type: "counties",
-               buffers: { "5" => [[16, 17]], "10" => [[17, 18]] })
+               location_type: "counties")
         create(:location_polygon,
                name: "luton",
-               location_type: "counties",
-               buffers: { "5" => [[18, 19]], "10" => [[20, 21]] })
+               location_type: "counties")
       end
 
       it "sets the correct attributes" do

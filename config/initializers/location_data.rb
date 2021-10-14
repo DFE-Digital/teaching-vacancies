@@ -15,21 +15,6 @@ DOWNCASE_COMPOSITE_LOCATIONS = composite_locations.transform_keys(&:downcase).fr
 ALL_IMPORTED_LOCATIONS =
   (DOWNCASE_ONS_REGIONS + DOWNCASE_COMPOSITE_LOCATIONS.keys + DOWNCASE_ONS_COUNTIES_AND_UNITARY_AUTHORITIES + DOWNCASE_ONS_CITIES).uniq.freeze
 
-LOCATION_POLYGON_SETTINGS = { # ESMARspQHYMw9BZ9 is not an API key
-  regions: {
-    boundary_api: "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/regions/FeatureServer/0/query?where=1%3D1&outFields=GOR10NM&outSR=4326&f=json",
-    name_key: "GOR10NM",
-  },
-  counties: {
-    boundary_api: "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Counties_and_Unitary_Authorities_April_2019_EW_BUC_v2/FeatureServer/0/query?where=1%3D1&outFields=ctyua19nm&outSR=4326&f=json",
-    name_key: "CTYUA19NM",
-  },
-  cities: {
-    boundary_api: "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Major_Towns_and_Cities_December_2015_Boundaries/FeatureServer/0/query?where=1%3D1&outFields=tcity15nm,shape&outSR=4326&f=json",
-    name_key: "TCITY15NM",
-  },
-}.freeze
-
 # See documentation/business-analyst-activities.md
 MAPPED_LOCATIONS = YAML.load_file(base_path.join("mapped_locations.yml")).to_h
 
