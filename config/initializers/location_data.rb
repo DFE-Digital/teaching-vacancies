@@ -1,4 +1,4 @@
-base_path = Rails.root.join("lib/tasks/data")
+base_path = Rails.root.join("config/data/ons_mappings")
 
 # ONS API config
 ons_cities = YAML.load_file(base_path.join("ons_cities.yml"))
