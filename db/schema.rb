@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_14_081404) do
+ActiveRecord::Schema.define(version: 2021_10_14_152432) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -441,7 +441,6 @@ ActiveRecord::Schema.define(version: 2021_10_14_081404) do
     t.datetime "stats_updated_at"
     t.uuid "publisher_id"
     t.datetime "expires_at"
-    t.string "legacy_job_roles", array: true
     t.string "salary"
     t.text "about_school"
     t.string "subjects", array: true
