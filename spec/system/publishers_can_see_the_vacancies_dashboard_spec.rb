@@ -2,13 +2,11 @@ require "rails_helper"
 
 RSpec.describe "Publishers can see the vacancies dashboard" do
   let(:publisher) { create(:publisher) }
+  let(:school) { create(:school) }
 
   scenario "school" do
-    school = create(:school)
-
     login_publisher(publisher: publisher, organisation: school)
-    vacancy = create(:vacancy, status: "published")
-    vacancy.organisation_vacancies.create(organisation: school)
+    vacancy = create(:vacancy, status: "published", organisations: [school])
 
     visit organisation_path
 
@@ -19,10 +17,9 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
   end
 
   context "with no jobs" do
-    scenario "Publishers see a message informing them they have no jobs" do
-      school = create(:school)
+    before { login_publisher(publisher: publisher, organisation: school) }
 
-      login_publisher(publisher: publisher, organisation: school)
+    scenario "Publishers see a message informing them they have no jobs" do
       visit organisation_path
 
       expect(page).to have_content(I18n.t("publishers.no_vacancies_component.heading"))
@@ -30,28 +27,19 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
   end
 
   context "viewing the lists of jobs on the school page" do
-    let(:school) { create(:school) }
-
-    let!(:published_vacancy) { create(:vacancy, :published) }
-    let!(:draft_vacancy) { create(:vacancy, :draft) }
-    let!(:pending_vacancy) { create(:vacancy, :future_publish) }
+    let!(:published_vacancy) { create(:vacancy, :published, organisations: [school]) }
+    let!(:draft_vacancy) { create(:vacancy, :draft, organisations: [school]) }
+    let!(:pending_vacancy) { create(:vacancy, :future_publish, organisations: [school]) }
     let!(:expired_vacancy) do
-      expired_vacancy = build(:vacancy, :expired)
+      expired_vacancy = build(:vacancy, :expired, organisations: [school])
       expired_vacancy.save(validate: false)
       expired_vacancy
     end
 
-    before do
-      published_vacancy.organisation_vacancies.create(organisation: school)
-      draft_vacancy.organisation_vacancies.create(organisation: school)
-      pending_vacancy.organisation_vacancies.create(organisation: school)
-      expired_vacancy.organisation_vacancies.create(organisation: school)
-      login_publisher(publisher: publisher, organisation: school)
-    end
+    before { login_publisher(publisher: publisher, organisation: school) }
 
     scenario "jobs are split into sections" do
-      vacancies = create_list(:vacancy, 5, :published)
-      vacancies.each { |vacancy| vacancy.organisation_vacancies.create(organisation: school) }
+      create_list(:vacancy, 5, :published, organisations: [school])
 
       visit organisation_path
 
@@ -123,11 +111,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
     end
 
     context "when a draft vacancy has been updated" do
-      let!(:draft_vacancy) do
-        create(:vacancy, :draft, created_at: 3.days.ago, updated_at: 1.day.ago)
-      end
-
-      before { draft_vacancy.organisation_vacancies.create(organisation: school) }
+      let!(:draft_vacancy) { create(:vacancy, :draft, organisations: [school], created_at: 3.days.ago, updated_at: 1.day.ago) }
 
       scenario "shows the last updated at" do
         draft_vacancy

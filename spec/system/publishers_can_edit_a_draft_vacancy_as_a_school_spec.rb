@@ -7,12 +7,9 @@ RSpec.describe "Publishers can edit a draft vacancy" do
   before { login_publisher(publisher: publisher, organisation: school) }
 
   context "editing an incomplete draft vacancy" do
-    let(:incomplete_vacancy) { create(:vacancy, :draft, job_roles: %w[teacher], salary: nil) }
+    let(:incomplete_vacancy) { create(:vacancy, :draft, organisations: [school], job_roles: %w[teacher], salary: nil) }
 
-    before do
-      incomplete_vacancy.organisation_vacancies.create(organisation: school)
-      visit organisation_job_path(incomplete_vacancy.id)
-    end
+    before { visit organisation_job_path(incomplete_vacancy.id) }
 
     scenario "cannot submit a incomplete draft from the manage job listing page" do
       expect(page).to have_content(I18n.t("pay_package_errors.salary.blank"))
@@ -27,12 +24,9 @@ RSpec.describe "Publishers can edit a draft vacancy" do
   end
 
   context "editing a complete draft vacancy" do
-    let(:complete_vacancy) { create(:vacancy, :draft, job_roles: %w[teacher]) }
+    let(:complete_vacancy) { create(:vacancy, :draft, organisations: [school], job_roles: %w[teacher]) }
 
-    before do
-      complete_vacancy.organisation_vacancies.create(organisation: school)
-      visit organisation_job_path(complete_vacancy.id)
-    end
+    before { visit organisation_job_path(complete_vacancy.id) }
 
     describe "cancel_and_return_later" do
       xscenario "can cancel and return from job details page" do

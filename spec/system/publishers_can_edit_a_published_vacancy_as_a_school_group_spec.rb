@@ -2,17 +2,12 @@ require "rails_helper"
 
 RSpec.describe "Editing a published vacancy" do
   let(:publisher) { create(:publisher) }
-  let(:school_group) { create(:trust) }
+  let(:school_group) { create(:trust, schools: [school1, school2]) }
   let(:school1) { create(:school, name: "First school") }
   let(:school2) { create(:school, name: "Second school") }
-  let(:vacancy) { create(:vacancy, :central_office, :published) }
+  let(:vacancy) { create(:vacancy, :central_office, :published, organisations: [school_group], job_roles: %w[teacher]) }
 
-  before do
-    login_publisher(publisher: publisher, organisation: school_group)
-    vacancy.organisation_vacancies.create(organisation: school_group)
-    SchoolGroupMembership.find_or_create_by(school_id: school1.id, school_group_id: school_group.id)
-    SchoolGroupMembership.find_or_create_by(school_id: school2.id, school_group_id: school_group.id)
-  end
+  before { login_publisher(publisher: publisher, organisation: school_group) }
 
   describe "#job_location" do
     scenario "can edit job location" do

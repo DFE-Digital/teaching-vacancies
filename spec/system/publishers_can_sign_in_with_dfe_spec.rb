@@ -95,14 +95,11 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
   end
 
   context "with DSI data including a school group (trust or local authority) that the school belongs to" do
-    let(:publisher) { Publisher.find_by(oid: user_oid) }
-    let(:school) { create(:school, urn: "246757") }
+    let!(:publisher) { Publisher.find_by(oid: user_oid) }
+    let!(:school) { create(:school, urn: "246757") }
 
     before do
-      SchoolGroupMembership.create(school_group: school_group, school: school)
-      OrganisationPublisher.create(organisation: school, publisher: publisher)
-      OrganisationPublisher.create(organisation: school_group, publisher: publisher)
-
+      publisher.update organisations: [school, school_group]
       stub_authentication_step(school_urn: "246757", email: dsi_email_address)
       stub_authorisation_step
       stub_sign_in_with_multiple_organisations
@@ -112,7 +109,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
     end
 
     context "with trust" do
-      let(:school_group) { create(:trust, uid: "14323") }
+      let!(:school_group) { create(:trust, uid: "14323", schools: [school]) }
 
       it "associates the user with the trust instead of the school" do
         expect(current_path).to eq(organisation_path)
@@ -124,7 +121,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
     end
 
     context "with local_authority" do
-      let(:school_group) { create(:local_authority, local_authority_code: "323") }
+      let!(:school_group) { create(:local_authority, local_authority_code: "323", schools: [school]) }
 
       it "associates the user with the local_authority instead of the school" do
         expect(current_path).to eq(new_publisher_preference_path)
