@@ -1,157 +1,158 @@
----
+# Mapping from a location name to the type of location to import as
+
 # Counties, Unitary Authorities, and London boroughs are all sourced from the same dataset/endpoint at ONS' API.
 
 # 'other' can refer to a sub-part of a county, e.g. Calderdale which is part of West Yorkshire, or a part of a city,
 # e.g. a borough of Manchester, or a unitary authority that doesn't share its name with a city.
 
-- ['Barking and Dagenham', 'other']
-- ['Barnet', 'other']
-- ['Barnsley', 'cities']
-- ['Bath and North East Somerset', 'other']
-- ['Bedford', 'cities']
-- ['Bexley', 'other']
-- ['Birmingham', 'cities']
-- ['Blackburn with Darwen', 'cities']
-- ['Blackpool', 'cities']
-- ['Bolton', 'cities']
-- ['Bournemouth, Christchurch and Poole', 'cities']
-- ['Bracknell Forest', 'other']
-- ['Bradford', 'cities']
-- ['Brent', 'other']
-- ['Brighton and Hove', 'cities']
-- ['Bristol, City of', 'cities']
-- ['Bromley', 'other']
-- ['Buckinghamshire', 'counties']
-- ['Bury', 'cities']
-- ['Calderdale', 'other']
-- ['Cambridgeshire', 'counties']
-- ['Camden', 'other']
-- ['Central Bedfordshire', 'other']
-- ['Cheshire East', 'other']
-- ['Cheshire West and Chester', 'other']
-- ['City of London', 'other']
-- ['Cornwall', 'counties']
-- ['County Durham', 'counties']
-- ['Coventry', 'cities']
-- ['Croydon', 'cities']
-- ['Cumbria', 'counties']
-- ['Darlington', 'cities']
-- ['Derby', 'cities']
-- ['Derbyshire', 'counties']
-- ['Devon', 'counties']
-- ['Doncaster', 'counties']
-- ['Dorset', 'counties']
-- ['Dudley', 'cities']
-- ['Ealing', 'other']
-- ['East Riding of Yorkshire', 'counties']
-- ['East Sussex', 'other']
-- ['Enfield', 'cities']
-- ['Essex', 'counties']
-- ['Gateshead', 'cities']
-- ['Gloucestershire', 'counties']
-- ['Greenwich', 'other']
-- ['Hackney', 'other']
-- ['Halton', 'cities']
-- ['Hammersmith and Fulham', 'other']
-- ['Hampshire', 'counties']
-- ['Haringey', 'other']
-- ['Harrow', 'cities']
-- ['Hartlepool', 'cities']
-- ['Havering', 'other']
-- ['Herefordshire, County of', 'counties']
-- ['Hertfordshire', 'counties']
-- ['Hillingdon', 'other']
-- ['Hounslow', 'other']
-- ['Isle of Wight', 'counties']
-- ['Isles of Scilly', 'counties']
-- ['Islington', 'other']
-- ['Kensington and Chelsea', 'other']
-- ['Kent', 'counties']
-- ['Kingston upon Hull, City of', 'other']
-- ['Kingston upon Thames', 'cities']
-- ['Kirklees', 'other']
-- ['Knowsley', 'other']
-- ['Lambeth', 'other']
-- ['Lancashire', 'counties']
-- ['Leeds', 'cities']
-- ['Leicester', 'cities']
-- ['Leicestershire', 'counties']
-- ['Lewisham', 'other']
-- ['Lincolnshire', 'counties']
-- ['Liverpool', 'cities']
-- ['Luton', 'cities']
-- ['Manchester', 'cities']
-- ['Medway', 'cities']
-- ['Merton', 'other']
-- ['Middlesbrough', 'cities']
-- ['Milton Keynes', 'cities']
-- ['Newcastle upon Tyne', 'cities']
-- ['Newham', 'other']
-- ['Norfolk', 'cities']
-- ['North East Lincolnshire', 'other']
-- ['North Lincolnshire', 'other']
-- ['North Somerset', 'other']
-- ['North Tyneside', 'other']
-- ['North Yorkshire', 'counties']
-- ['Northamptonshire', 'counties']
-- ['Northumberland', 'counties']
-- ['Nottingham', 'cities']
-- ['Nottinghamshire', 'counties']
-- ['Oldham', 'cities']
-- ['Oxfordshire', 'counties']
-- ['Peterborough', 'cities']
-- ['Plymouth', 'cities']
-- ['Portsmouth', 'cities']
-- ['Reading', 'cities']
-- ['Redbridge', 'other']
-- ['Redcar and Cleveland', 'cities']
-- ['Richmond upon Thames', 'other']
-- ['Rochdale', 'cities']
-- ['Rotherham', 'cities']
-- ['Rutland', 'counties']
-- ['Salford', 'cities']
-- ['Sandwell', 'other']
-- ['Sefton', 'other']
-- ['Sheffield', 'cities']
-- ['Shropshire', 'counties']
-- ['Slough', 'cities']
-- ['Solihull', 'cities']
-- ['Somerset', 'counties']
-- ['South Gloucestershire', 'counties']
-- ['South Tyneside', 'other']
-- ['Southampton', 'cities']
-- ['Southend-on-Sea', 'cities']
-- ['Southwark', 'other']
-- ['St. Helens', 'cities']
-- ['Staffordshire', 'counties']
-- ['Stockport', 'cities']
-- ['Stockton-on-Tees', 'cities']
-- ['Stoke-on-Trent', 'cities']
-- ['Suffolk', 'counties']
-- ['Sunderland', 'counties']
-- ['Surrey', 'counties']
-- ['Sutton', 'cities']
-- ['Swindon', 'cities']
-- ['Tameside', 'other']
-- ['Telford and Wrekin', 'cities']
-- ['Thurrock', 'other']
-- ['Torbay', 'other']
-- ['Tower Hamlets', 'other']
-- ['Trafford', 'other']
-- ['Wakefield', 'cities']
-- ['Walsall', 'cities']
-- ['Waltham Forest', 'other']
-- ['Wandsworth', 'other']
-- ['Warrington', 'cities']
-- ['Warwickshire', 'counties']
-- ['West Berkshire', 'other']
-- ['West Sussex', 'other']
-- ['Westminster', 'cities']
-- ['Wigan', 'cities']
-- ['Wiltshire', 'counties']
-- ['Windsor and Maidenhead', 'cities']
-- ['Wirral', 'other']
-- ['Wokingham', 'cities']
-- ['Wolverhampton', 'cities']
-- ['Worcestershire', 'cities']
-- ['York', 'cities']
+"Barking and Dagenham": other
+"Barnet": other
+"Barnsley": cities
+"Bath and North East Somerset": other
+"Bedford": cities
+"Bexley": other
+"Birmingham": cities
+"Blackburn with Darwen": cities
+"Blackpool": cities
+"Bolton": cities
+"Bournemouth, Christchurch and Poole": cities
+"Bracknell Forest": other
+"Bradford": cities
+"Brent": other
+"Brighton and Hove": cities
+"Bristol, City of": cities
+"Bromley": other
+"Buckinghamshire": counties
+"Bury": cities
+"Calderdale": other
+"Cambridgeshire": counties
+"Camden": other
+"Central Bedfordshire": other
+"Cheshire East": other
+"Cheshire West and Chester": other
+"City of London": other
+"Cornwall": counties
+"County Durham": counties
+"Coventry": cities
+"Croydon": cities
+"Cumbria": counties
+"Darlington": cities
+"Derby": cities
+"Derbyshire": counties
+"Devon": counties
+"Doncaster": counties
+"Dorset": counties
+"Dudley": cities
+"Ealing": other
+"East Riding of Yorkshire": counties
+"East Sussex": other
+"Enfield": cities
+"Essex": counties
+"Gateshead": cities
+"Gloucestershire": counties
+"Greenwich": other
+"Hackney": other
+"Halton": cities
+"Hammersmith and Fulham": other
+"Hampshire": counties
+"Haringey": other
+"Harrow": cities
+"Hartlepool": cities
+"Havering": other
+"Herefordshire, County of": counties
+"Hertfordshire": counties
+"Hillingdon": other
+"Hounslow": other
+"Isle of Wight": counties
+"Isles of Scilly": counties
+"Islington": other
+"Kensington and Chelsea": other
+"Kent": counties
+"Kingston upon Hull, City of": other
+"Kingston upon Thames": cities
+"Kirklees": other
+"Knowsley": other
+"Lambeth": other
+"Lancashire": counties
+"Leeds": cities
+"Leicester": cities
+"Leicestershire": counties
+"Lewisham": other
+"Lincolnshire": counties
+"Liverpool": cities
+"Luton": cities
+"Manchester": cities
+"Medway": cities
+"Merton": other
+"Middlesbrough": cities
+"Milton Keynes": cities
+"Newcastle upon Tyne": cities
+"Newham": other
+"Norfolk": cities
+"North East Lincolnshire": other
+"North Lincolnshire": other
+"North Somerset": other
+"North Tyneside": other
+"North Yorkshire": counties
+"Northamptonshire": counties
+"Northumberland": counties
+"Nottingham": cities
+"Nottinghamshire": counties
+"Oldham": cities
+"Oxfordshire": counties
+"Peterborough": cities
+"Plymouth": cities
+"Portsmouth": cities
+"Reading": cities
+"Redbridge": other
+"Redcar and Cleveland": cities
+"Richmond upon Thames": other
+"Rochdale": cities
+"Rotherham": cities
+"Rutland": counties
+"Salford": cities
+"Sandwell": other
+"Sefton": other
+"Sheffield": cities
+"Shropshire": counties
+"Slough": cities
+"Solihull": cities
+"Somerset": counties
+"South Gloucestershire": counties
+"South Tyneside": other
+"Southampton": cities
+"Southend-on-Sea": cities
+"Southwark": other
+"St. Helens": cities
+"Staffordshire": counties
+"Stockport": cities
+"Stockton-on-Tees": cities
+"Stoke-on-Trent": cities
+"Suffolk": counties
+"Sunderland": counties
+"Surrey": counties
+"Sutton": cities
+"Swindon": cities
+"Tameside": other
+"Telford and Wrekin": cities
+"Thurrock": other
+"Torbay": other
+"Tower Hamlets": other
+"Trafford": other
+"Wakefield": cities
+"Walsall": cities
+"Waltham Forest": other
+"Wandsworth": other
+"Warrington": cities
+"Warwickshire": counties
+"West Berkshire": other
+"West Sussex": other
+"Westminster": cities
+"Wigan": cities
+"Wiltshire": counties
+"Windsor and Maidenhead": cities
+"Wirral": other
+"Wokingham": cities
+"Wolverhampton": cities
+"Worcestershire": cities
+"York": cities

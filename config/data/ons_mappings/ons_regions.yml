@@ -1,11 +1,11 @@
----
-# - ['Location': 'the location type from a human point of view for VacancyFacets']
-- ['London', 'cities']
-- ['South East', 'regions']
-- ['Yorkshire and the Humber', 'regions']
-- ['East of England', 'regions']
-- ['West Midlands', 'regions']
-- ['North West', 'regions']
-- ['North East', 'regions']
-- ['South West', 'regions']
-- ['East Midlands', 'regions']
+# Mapping from a location name to the type of location to import as
+
+"London": cities
+"South East": regions
+"Yorkshire and the Humber": regions
+"East of England": regions
+"West Midlands": regions
+"North West": regions
+"North East": regions
+"South West": regions
+"East Midlands": regions

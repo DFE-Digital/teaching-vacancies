@@ -1,113 +1,113 @@
----
 # See documentation/business-analyst-activities.md
-- ['barking', 'barking and dagenham']
-- ['bradford, west yorkshire', 'bradford']
-- ['brighton', 'brighton and hove']
-- ['bromley, london', 'bromley']
-- ['burton', 'burton upon trent']
-- ['burton-on-trent', 'burton upon trent']
-- ['burton on trent', 'burton upon trent']
-- ['burton upon trent, burton-on-trent', 'burton upon trent']
-- ['bury saint edmunds', 'bury']
-- ['bury st edmunds', 'bury']
-- ['bury st edmunds, bury saint edmunds', 'bury']
-- ['camden, london', 'camden']
-- ['camden town, london', 'camden']
-- ['chelsea', 'kensington and chelsea']
-- ['chelsea, london', 'kensington and chelsea']
-- ['cheltenham spa', 'cheltenham']
-- ['cheltenham spa, cheltenham', 'cheltenham']
-- ['city of london, london', 'city of london']
-- ['city of westminster, london', 'westminster']
-- ['cleveland', 'redcar and cleveland']
-- ['croydon, london', 'croydon']
-- ['dagenham', 'barking and dagenham']
-- ['ealing, london', 'ealing']
-- ['east cheshire', 'cheshire east']
-- ['east riding', 'east riding of yorkshire']
-- ['enfield, london', 'enfield']
-- ['exeter, devon', 'exeter']
-- ['fulham', 'hammersmith and fulham']
-- ['greater london', 'london']
-- ['greenwich, london', 'greenwich']
-- ['hackney, london', 'hackney']
-- ['hammersmith', 'hammersmith and fulham']
-- ['hammersmith and fulham, london', 'hammersmith and fulham']
-- ['haringey, london', 'haringey']
-- ['herefordshire', 'herefordshire, county of']
-- ['hull', 'kingston upon hull']
-- ['islington, london', 'islington']
-- ['isle of wight, newport', 'isle of wight']
-- ['kensington', 'kensington and chelsea']
-- ['kensington and chelsea, london', 'kensington and chelsea']
-- ['kingston', 'kingston upon thames']
-- ['kingston upon hull, hull', 'kingston upon hull']
-- ['kingston-upon-thames', 'kingston upon thames']
-- ['lambeth, london', 'lambeth']
-- ['lewisham, london', 'lewisham']
-- ['london borough of barking and dagenham', 'barking and dagenham']
-- ['london borough of barnet', 'barnet']
-- ['london borough of bexley', 'bexley']
-- ['london borough of brent', 'brent']
-- ['london borough of bromley', 'bromley']
-- ['london borough of camden, london', 'camden']
-- ['london borough of croydon', 'croydon']
-- ['london borough of ealing', 'ealing']
-- ['london borough of enfield', 'enfield']
-- ['london borough of greenwich', 'greenwich']
-- ['london borough of hackney, london', 'hackney']
-- ['london borough of hammersmith and fulham, london', 'hammersmith and fulham']
-- ['london borough of haringey, london', 'haringey']
-- ['london borough of harrow', 'harrow']
-- ['london borough of havering', 'havering']
-- ['london borough of hillingdon', 'hillingdon']
-- ['london borough of hounslow', 'hounslow']
-- ['london borough of islington, london', 'islington']
-- ['london borough of kensington and chelsea, london', 'kensington and chelsea']
-- ['london borough of kingston upon thames', 'kingston upon thames']
-- ['london borough of lambeth, london', 'lambeth']
-- ['london borough of lewisham', 'lewisham']
-- ['london borough of merton', 'merton']
-- ['london borough of newham', 'newham']
-- ['london borough of redbridge', 'redbridge']
-- ['london borough of richmond upon thames', 'richmond upon thames']
-- ['london borough of southwark', 'southwark']
-- ['london borough of sutton', 'sutton']
-- ['london borough of tower hamlets', 'tower hamlets']
-- ['london borough of waltham forest', 'waltham forest']
-- ['london borough of wandsworth, london', 'wandsworth']
-- ['royal borough of kensington and chelsea, london', 'kensington and chelsea']
-- ['royal borough of kingston upon thames', 'kingston upon thames']
-- ['royal borough of greenwich', 'greenwich']
-- ['newcastle', 'newcastle upon tyne']
-- ['newcastle under lyme', 'newcastle-under-lyme']
-- ['north east england', 'north east']
-- ['north east, england', 'north east']
-- ['north tyneside district', 'north tyneside'] 
-- ['north west england', 'north west']
-- ['north west, england', 'north west']
-- ['nottinghamshire, nottingham', 'nottinghamshire']
-- ['maidenhead', 'windsor and maidenhead']
-- ['manchester', 'greater manchester']
-- ['redcar', 'redcar and cleveland']
-- ['redbridge, ilford', 'redbridge']
-- ['richmond', 'richmond upon thames']
-- ['scilly', 'isles of scilly']
-- ['south east england', 'south east']
-- ['south east, england', 'south east']
-- ['south east, uk', 'south east']
-- ['south west england', 'south west']
-- ['south west, england', 'south west']
-- ['st helens', 'st. helens']
-- ['st helens, lancashire', 'st. helens']
-- ['st helens, saint helens', 'st. helens']
-- ['stockton on tees', 'stockton-on-tees']
-- ['stoke', 'stoke-on-trent']
-- ['telford', 'telford and wrekin']
-- ['wandsworth, london', 'wandsworth']
-- ['west cheshire', 'cheshire west and chester']
-- ['westminster, london', 'westminster']
-- ['weston super mare', 'weston-super-mare']
-- ['windsor', 'windsor and maidenhead']
-- ['worthing, west sussex', 'worthing']
-- ['wrekin', 'telford and wrekin']
+
+"barking": "barking and dagenham"
+"bradford, west yorkshire": "bradford"
+"brighton": "brighton and hove"
+"bromley, london": "bromley"
+"burton": "burton upon trent"
+"burton-on-trent": "burton upon trent"
+"burton on trent": "burton upon trent"
+"burton upon trent, burton-on-trent": "burton upon trent"
+"bury saint edmunds": "bury"
+"bury st edmunds": "bury"
+"bury st edmunds, bury saint edmunds": "bury"
+"camden, london": "camden"
+"camden town, london": "camden"
+"chelsea": "kensington and chelsea"
+"chelsea, london": "kensington and chelsea"
+"cheltenham spa": "cheltenham"
+"cheltenham spa, cheltenham": "cheltenham"
+"city of london, london": "city of london"
+"city of westminster, london": "westminster"
+"cleveland": "redcar and cleveland"
+"croydon, london": "croydon"
+"dagenham": "barking and dagenham"
+"ealing, london": "ealing"
+"east cheshire": "cheshire east"
+"east riding": "east riding of yorkshire"
+"enfield, london": "enfield"
+"exeter, devon": "exeter"
+"fulham": "hammersmith and fulham"
+"greater london": "london"
+"greenwich, london": "greenwich"
+"hackney, london": "hackney"
+"hammersmith": "hammersmith and fulham"
+"hammersmith and fulham, london": "hammersmith and fulham"
+"haringey, london": "haringey"
+"herefordshire": "herefordshire, county of"
+"hull": "kingston upon hull"
+"islington, london": "islington"
+"isle of wight, newport": "isle of wight"
+"kensington": "kensington and chelsea"
+"kensington and chelsea, london": "kensington and chelsea"
+"kingston": "kingston upon thames"
+"kingston upon hull, hull": "kingston upon hull"
+"kingston-upon-thames": "kingston upon thames"
+"lambeth, london": "lambeth"
+"lewisham, london": "lewisham"
+"london borough of barking and dagenham": "barking and dagenham"
+"london borough of barnet": "barnet"
+"london borough of bexley": "bexley"
+"london borough of brent": "brent"
+"london borough of bromley": "bromley"
+"london borough of camden, london": "camden"
+"london borough of croydon": "croydon"
+"london borough of ealing": "ealing"
+"london borough of enfield": "enfield"
+"london borough of greenwich": "greenwich"
+"london borough of hackney, london": "hackney"
+"london borough of hammersmith and fulham, london": "hammersmith and fulham"
+"london borough of haringey, london": "haringey"
+"london borough of harrow": "harrow"
+"london borough of havering": "havering"
+"london borough of hillingdon": "hillingdon"
+"london borough of hounslow": "hounslow"
+"london borough of islington, london": "islington"
+"london borough of kensington and chelsea, london": "kensington and chelsea"
+"london borough of kingston upon thames": "kingston upon thames"
+"london borough of lambeth, london": "lambeth"
+"london borough of lewisham": "lewisham"
+"london borough of merton": "merton"
+"london borough of newham": "newham"
+"london borough of redbridge": "redbridge"
+"london borough of richmond upon thames": "richmond upon thames"
+"london borough of southwark": "southwark"
+"london borough of sutton": "sutton"
+"london borough of tower hamlets": "tower hamlets"
+"london borough of waltham forest": "waltham forest"
+"london borough of wandsworth, london": "wandsworth"
+"royal borough of kensington and chelsea, london": "kensington and chelsea"
+"royal borough of kingston upon thames": "kingston upon thames"
+"royal borough of greenwich": "greenwich"
+"newcastle": "newcastle upon tyne"
+"newcastle under lyme": "newcastle-under-lyme"
+"north east england": "north east"
+"north east, england": "north east"
+"north tyneside district": "north tyneside"
+"north west england": "north west"
+"north west, england": "north west"
+"nottinghamshire, nottingham": "nottinghamshire"
+"maidenhead": "windsor and maidenhead"
+"manchester": "greater manchester"
+"redcar": "redcar and cleveland"
+"redbridge, ilford": "redbridge"
+"richmond": "richmond upon thames"
+"scilly": "isles of scilly"
+"south east england": "south east"
+"south east, england": "south east"
+"south east, uk": "south east"
+"south west england": "south west"
+"south west, england": "south west"
+"st helens": "st. helens"
+"st helens, lancashire": "st. helens"
+"st helens, saint helens": "st. helens"
+"stockton on tees": "stockton-on-tees"
+"stoke": "stoke-on-trent"
+"telford": "telford and wrekin"
+"wandsworth, london": "wandsworth"
+"west cheshire": "cheshire west and chester"
+"westminster, london": "westminster"
+"weston super mare": "weston-super-mare"
+"windsor": "windsor and maidenhead"
+"worthing, west sussex": "worthing"
+"wrekin": "telford and wrekin"
