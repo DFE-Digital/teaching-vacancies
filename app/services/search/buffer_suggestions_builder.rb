@@ -8,19 +8,14 @@ class Search::BufferSuggestionsBuilder
   end
 
   def get_buffers_suggestions
-    locations = if LocationPolygon.composite?(location)
-                  LocationPolygon.component_location_names(location).map do |component_region_name|
-                    LocationPolygon.find_by(name: component_region_name.downcase)
-                  end
-                else
-                  [LocationPolygon.with_name(location)]
-                end
+    location_names = LocationPolygon.component_location_names(location) ||
+                     [LocationPolygon.mapped_name(location)]
+
     buffer_vacancy_count = Search::RadiusSuggestionsBuilder::RADIUS_OPTIONS.map do |distance|
-      buffered_polygons = []
-      locations.each do |location|
-        location.buffers[distance.to_s].each { |buffer| buffered_polygons.push(buffer) }
-      end
-      [distance.to_s, Search::Strategies::Algolia.new(search_params.merge(polygons: buffered_polygons)).total_count]
+      locations = LocationPolygon.buffered(distance).where(name: location_names.map(&:downcase))
+      polygon_boundaries = locations.compact.flat_map(&:to_algolia_polygons)
+
+      [distance.to_s, Search::Strategies::Algolia.new(search_params.merge(polygons: polygon_boundaries)).total_count]
     end
 
     buffer_vacancy_count&.uniq(&:last)&.reject { |array| array.last.zero? }

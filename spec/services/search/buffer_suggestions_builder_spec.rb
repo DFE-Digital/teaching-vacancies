@@ -9,37 +9,19 @@ RSpec.describe Search::BufferSuggestionsBuilder do
         per_page: 10,
       }
     end
-    let(:buffer_coordinates_one_mile) { [[1.004562496029994090, 56.50833566307333], [1.005710530794815389, 56.5051084208278]] }
-    let(:buffer_coordinates_five_miles) { [[2.004562496029994090, 56.50833566307333], [2.005710530794815389, 56.5051084208278]] }
-    let(:buffer_coordinates_ten_miles) { [[3.004562496029994090, 56.50833566307333], [3.005710530794815389, 56.5051084208278]] }
-    let(:buffer_coordinates_twenty_five_miles) { [[6.004562496029994090, 56.50833566307333], [6.005710530794815389, 56.5051084208278]] }
-    let(:buffer_coordinates_fifty_miles) { [[11.004562496029994090, 56.50833566307333], [11.005710530794815389, 56.5051084208278]] }
-    let(:buffer_coordinates_one_hundred_miles) { [[17.004562496029994090, 56.50833566307333], [17.005710530794815389, 56.5051084208278]] }
-    let(:buffer_coordinates_two_hundred_miles) { [[17.004562496029994090, 56.50833566307333], [18.005710530794815389, 56.5051084208278]] }
-
-    let(:all_buffer_coordinates) do
-      [
-        buffer_coordinates_one_mile,
-        buffer_coordinates_five_miles,
-        buffer_coordinates_ten_miles,
-        buffer_coordinates_twenty_five_miles,
-        buffer_coordinates_fifty_miles,
-        buffer_coordinates_one_hundred_miles,
-        buffer_coordinates_two_hundred_miles,
-      ]
-    end
-    let(:buffer_hash) { Search::RadiusSuggestionsBuilder::RADIUS_OPTIONS.map(&:to_s).zip(all_buffer_coordinates).to_h }
     let(:arguments_for_algolia) { { hitsPerPage: 10 } }
 
     context "when searching in a location that corresponds to a polygon" do
       let(:location) { "Tower Hamlets" }
+      let!(:polygon) { create(:location_polygon, name: "tower hamlets") }
 
       before do
-        allow(LocationPolygon).to receive_message_chain(:with_name, :buffers).and_return(buffer_hash)
-        search_hits.zip(all_buffer_coordinates).each do |search_hits_count, buffered_polygons|
+        Search::RadiusSuggestionsBuilder::RADIUS_OPTIONS.each_with_index do |radius, idx|
+          buffered_polygon = LocationPolygon.buffered(radius).with_name(location)
+
           mock_algolia_search(
-            double("vacancies", none?: false), search_hits_count, nil,
-            arguments_for_algolia.merge(insidePolygon: buffered_polygons)
+            double("vacancies", none?: false), search_hits[idx], nil,
+            arguments_for_algolia.merge(insidePolygon: buffered_polygon.to_algolia_polygons)
           )
         end
       end
@@ -76,15 +58,15 @@ RSpec.describe Search::BufferSuggestionsBuilder do
 
       before do
         districts.each do |name|
-          create(:location_polygon, name: name.downcase, location_type: "counties", buffers: buffer_hash)
+          create(:location_polygon, name: name.downcase, location_type: "counties")
         end
 
-        search_hits.zip(all_buffer_coordinates).each do |search_hits_count, buffered_polygons|
-          buffer_coordinates_for_all_districts = []
-          districts.length.times { buffered_polygons.each { |polygon| buffer_coordinates_for_all_districts.push(polygon) } }
+        Search::RadiusSuggestionsBuilder::RADIUS_OPTIONS.each_with_index do |radius, idx|
+          buffered_polygons = LocationPolygon.buffered(radius).where(name: districts.map(&:downcase))
+
           mock_algolia_search(
-            double("vacancies", none?: false), search_hits_count, nil,
-            arguments_for_algolia.merge(insidePolygon: buffer_coordinates_for_all_districts)
+            double("vacancies", none?: false), search_hits[idx], nil,
+            arguments_for_algolia.merge(insidePolygon: buffered_polygons.flat_map(&:to_algolia_polygons))
           )
         end
       end
