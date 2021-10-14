@@ -18,7 +18,9 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha
     end
 
     it "creates a job alert and redirects to the subscriptions index page" do
-      click_on I18n.t("jobseekers.subscriptions.index.link_create")
+      within ".empty-section-component" do
+        click_on I18n.t("jobseekers.subscriptions.index.link_create")
+      end
       an_invalid_form_is_rejected
       expect { create_a_job_alert }.to change { Subscription.count }.by(1)
       and_the_job_alert_is_on_the_index_page
@@ -30,7 +32,9 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha
       end
 
       it "redirects to invalid_recaptcha path" do
-        click_on I18n.t("jobseekers.subscriptions.index.link_create")
+        within ".empty-section-component" do
+          click_on I18n.t("jobseekers.subscriptions.index.link_create")
+        end
         create_a_job_alert
         expect(page).to have_current_path(invalid_recaptcha_path(form_name: "Subscription"))
       end
@@ -47,7 +51,9 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha
     end
 
     it "creates a job alert and redirects to the subscriptions index page" do
-      click_on I18n.t("jobseekers.subscriptions.index.button_create")
+      within ".create-alert__button" do
+        click_on I18n.t("jobseekers.subscriptions.index.button_create")
+      end
       an_invalid_form_is_rejected
       expect { create_a_job_alert }.to change { Subscription.count }.by(1)
       and_the_job_alert_is_on_the_index_page
