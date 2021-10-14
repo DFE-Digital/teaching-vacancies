@@ -218,14 +218,14 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
   end
 
   context "when filtering results" do
-    let(:organisation) { create(:trust) }
-    let(:school_oxford) { create(:school, name: "Oxford", school_groups: [organisation]) }
-    let(:school_cambridge) { create(:school, name: "Cambridge", school_groups: [organisation]) }
+    let(:organisation) { create(:trust, schools: [school_oxford, school_cambridge]) }
+    let(:school_oxford) { create(:school, name: "Oxford") }
+    let(:school_cambridge) { create(:school, name: "Cambridge") }
     let!(:organisation_publisher_preference) { OrganisationPublisherPreference.create(organisation: school_oxford, publisher_preference: publisher_preference) }
-    let!(:vacancy_cambridge) { create(:vacancy, :published, :at_one_school, organisations: [school_cambridge], readable_job_location: school_cambridge.name) }
+    let!(:vacancy_cambridge) { create(:vacancy, :published, :at_one_school, organisations: [school_cambridge], job_title: "Scientist") }
 
     context "when a relevant job exists" do
-      let!(:vacancy_oxford) { create(:vacancy, :published, :at_one_school, organisations: [school_oxford], readable_job_location: school_oxford.name) }
+      let!(:vacancy_oxford) { create(:vacancy, :published, :at_one_school, organisations: [school_oxford], job_title: "Mathematician") }
 
       let!(:inline_component) { render_inline(subject) }
 
