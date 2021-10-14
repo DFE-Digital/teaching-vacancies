@@ -25,7 +25,7 @@
           = f.govuk_submit t("jobs.sort_by.submit")
 
       .govuk-grid-column-one-third.create-alert__button
-        = govuk_button_link_to t(".button_create"), new_subscription_path(email: current_jobseeker.email, origin: jobseekers_subscriptions_path)
+        = govuk_button_link_to t(".button_create"), new_subscription_path(origin: jobseekers_subscriptions_path)
 
   .govuk-grid-row
     .govuk-grid-column-full
@@ -45,7 +45,7 @@
 
         - else
           = render EmptySectionComponent.new title: t(".zero_subscriptions_title") do
-            = t(".zero_subscriptions_body_html", link_to: govuk_link_to(t(".link_create"), new_subscription_path(email: current_jobseeker.email, origin: jobseekers_subscriptions_path)))
+            = t(".zero_subscriptions_body_html", link_to: govuk_link_to(t(".link_create"), new_subscription_path(origin: jobseekers_subscriptions_path)))
 
 .govuk-grid-row
   .govuk-grid-column-full
