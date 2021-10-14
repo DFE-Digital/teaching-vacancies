@@ -317,21 +317,19 @@ RSpec.describe Vacancy do
 
   describe "#parent_organisation_name" do
     context "when vacancy has a school" do
-      it "returns the school name for the vacancy" do
-        school = create(:school, name: "St James School")
-        vacancy = create(:vacancy)
-        vacancy.organisation_vacancies.create(organisation: school)
+      let(:school) { create(:school, name: "St James School") }
+      let(:vacancy) { create(:vacancy, organisations: [school]) }
 
+      it "returns the school name for the vacancy" do
         expect(vacancy.parent_organisation_name).to eq(school.name)
       end
     end
 
     context "when vacancy has a school_group" do
-      it "returns the school_group name for the vacancy" do
-        trust = create(:trust)
-        vacancy = create(:vacancy, :central_office)
-        vacancy.organisation_vacancies.create(organisation: trust)
+      let(:trust) { create(:trust) }
+      let(:vacancy) { create(:vacancy, :central_office, organisations: [trust]) }
 
+      it "returns the school_group name for the vacancy" do
         expect(vacancy.parent_organisation_name).to eq(trust.name)
       end
     end
@@ -522,9 +520,7 @@ RSpec.describe Vacancy do
     end
 
     context "when in a trust" do
-      let(:trust) { create(:trust) }
-
-      before { SchoolGroupMembership.create(school: school, school_group: trust) }
+      let(:trust) { create(:trust, schools: [school]) }
 
       context "when at a single school in a trust" do
         subject { create(:vacancy, :at_one_school, organisations: [school]) }
@@ -537,16 +533,15 @@ RSpec.describe Vacancy do
       end
 
       context "when at multiple schools in a school group" do
-        subject { create(:vacancy, :at_multiple_schools) }
+        subject { create(:vacancy, :at_multiple_schools, organisations: [school, school2]) }
+
+        let(:trust) { create(:trust, schools: [school, school2]) }
         let(:school2) { create(:school, geopoint: "POINT(5 6)") }
         let(:geocoding) { instance_double(Geocoding) }
 
         before do
-          SchoolGroupMembership.create(school: school2, school_group: trust)
-          OrganisationVacancy.create(organisation: school, vacancy: subject)
           allow(Geocoding).to receive(:new).with([3.0, 4.0]).and_return(geocoding)
           allow(geocoding).to receive(:postcode_from_coordinates).and_return("New postcode")
-          OrganisationVacancy.create(organisation: school2, vacancy: subject)
           subject.set_postcode_from_mean_geolocation
         end
 

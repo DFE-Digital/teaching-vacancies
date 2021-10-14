@@ -3,15 +3,13 @@ RSpec.describe "Publishers can edit a vacancy" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school) }
 
-  before do
-    login_publisher(publisher: publisher, organisation: school)
-    vacancy.organisation_vacancies.create(organisation: school)
-  end
+  before { login_publisher(publisher: publisher, organisation: school) }
 
   context "when editing a published vacancy" do
     let(:vacancy) do
       VacancyPresenter.new(
-        create(:vacancy, job_location: "at_one_school",
+        create(:vacancy, organisations: [school],
+                         job_location: "at_one_school",
                          job_roles: %i[teacher send_responsible], working_patterns: %w[full_time part_time],
                          publish_on: Date.current, expires_at: 1.day.from_now.change(hour: 9, minute: 0)),
       )
@@ -93,8 +91,7 @@ RSpec.describe "Publishers can edit a vacancy" do
       end
 
       scenario "ensures the vacancy slug is updated when the title is saved" do
-        vacancy = create(:vacancy, :published, slug: "the-vacancy-slug")
-        vacancy.organisation_vacancies.create(organisation: school)
+        vacancy = create(:vacancy, :published, slug: "the-vacancy-slug", organisations: [school])
         visit organisation_job_path(vacancy.id)
         click_header_link(I18n.t("publishers.vacancies.steps.job_details"))
 
@@ -212,9 +209,8 @@ RSpec.describe "Publishers can edit a vacancy" do
       context "when the job post has already been published" do
         context "when the publication date is in the past" do
           scenario "renders the publication date as text and does not allow editing" do
-            vacancy = build(:vacancy, :published, slug: "test-slug", publish_on: 1.day.ago)
+            vacancy = build(:vacancy, :published, organisations: [school], slug: "test-slug", publish_on: 1.day.ago)
             vacancy.save(validate: false)
-            vacancy.organisation_vacancies.create(organisation: school)
             vacancy = VacancyPresenter.new(vacancy)
             visit organisation_job_path(vacancy.id)
 
@@ -231,8 +227,7 @@ RSpec.describe "Publishers can edit a vacancy" do
 
         context "when the publication date is in the future" do
           scenario "renders the publication date as text and allows editing" do
-            vacancy = create(:vacancy, :published, publish_on: Time.current + 3.days)
-            vacancy.organisation_vacancies.create(organisation: school)
+            vacancy = create(:vacancy, :future_publish, organisations: [school])
             vacancy = VacancyPresenter.new(vacancy)
             visit organisation_job_path(vacancy.id)
             click_header_link(I18n.t("publishers.vacancies.steps.important_dates"))
