@@ -3,13 +3,10 @@ require "rails_helper"
 RSpec.describe Jobseekers::OrganisationOverviews::SchoolComponent, type: :component do
   let(:geolocation_trait) { nil }
   let(:organisation) { create(:school, geolocation_trait) }
-  let(:vacancy) { create(:vacancy, :at_one_school) }
+  let(:vacancy) { create(:vacancy, :at_one_school, organisations: [organisation]) }
   let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
 
-  let!(:inline_component) do
-    vacancy.organisation_vacancies.create(organisation: organisation)
-    render_inline(described_class.new(vacancy: vacancy_presenter))
-  end
+  let!(:inline_component) { render_inline(described_class.new(vacancy: vacancy_presenter)) }
 
   describe "#render?" do
     context "when vacancy is at a trust head office" do
@@ -22,7 +19,7 @@ RSpec.describe Jobseekers::OrganisationOverviews::SchoolComponent, type: :compon
     end
 
     context "when vacancy is at a single school in a trust" do
-      let(:vacancy) { create(:vacancy, :at_one_school) }
+      let(:vacancy) { create(:vacancy, :at_one_school, organisations: [organisation]) }
 
       it "renders the component" do
         expect(rendered_component).not_to be_blank

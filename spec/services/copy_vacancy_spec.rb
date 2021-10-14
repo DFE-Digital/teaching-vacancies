@@ -2,14 +2,17 @@ require "rails_helper"
 
 RSpec.describe CopyVacancy do
   describe "#call" do
+    let(:school) { create(:school) }
+
     it "creates a new vacancy as draft" do
-      vacancy = create(:vacancy, job_title: "Maths teacher")
+      vacancy = create(:vacancy, organisations: [school], job_title: "Maths teacher")
 
       result = described_class.new(vacancy).call
 
       expect(result).to be_kind_of(Vacancy)
       expect(Vacancy.count).to eq(2)
-      expect(Vacancy.find(result.id).status).to eq("draft")
+      expect(result.status).to eq("draft")
+      expect(result.organisations).to eq [school]
     end
 
     it "does not change the original vacancy" do

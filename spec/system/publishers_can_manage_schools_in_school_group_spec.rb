@@ -45,11 +45,6 @@ RSpec.describe "Schools in your school group" do
   let(:school4) { create(:school, :closed, name: "Closed school") }
 
   before do
-    SchoolGroupMembership.find_or_create_by(school_id: school1.id, school_group_id: school_group.id)
-    SchoolGroupMembership.find_or_create_by(school_id: school2.id, school_group_id: school_group.id)
-    SchoolGroupMembership.find_or_create_by(school_id: school3.id, school_group_id: school_group.id)
-    SchoolGroupMembership.find_or_create_by(school_id: school4.id, school_group_id: school_group.id)
-
     stub_accepted_terms_and_conditions
     OmniAuth.config.test_mode = true
 
@@ -68,12 +63,12 @@ RSpec.describe "Schools in your school group" do
   end
 
   context "when school group is a trust" do
-    let(:school_group) { create(:trust) }
+    let(:school_group) { create(:trust, schools: [school1, school2, school3, school4]) }
     it_behaves_like "a successful edit"
   end
 
   context "when school group is a local authority" do
-    let(:school_group) { create(:local_authority) }
+    let(:school_group) { create(:local_authority, schools: [school1, school2, school3, school4]) }
     it_behaves_like "a successful edit"
   end
 end
