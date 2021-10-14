@@ -6,6 +6,8 @@ require "factory_bot_rails"
 Gias::ImportSchoolsAndLocalAuthorities.new.call
 Gias::ImportTrusts.new.call
 
+ImportPolygonDataJob.perform_now
+
 bexleyheath_school = School.find_by!(urn: "137138")
 weydon_trust = SchoolGroup.find_by!(uid: "16644")
 southampton_la = SchoolGroup.find_by!(local_authority_code: "852")
