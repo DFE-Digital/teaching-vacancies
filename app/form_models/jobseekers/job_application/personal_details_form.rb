@@ -12,5 +12,5 @@ class Jobseekers::JobApplication::PersonalDetailsForm < Jobseekers::JobApplicati
   validates :national_insurance_number, format: { with: /\A\s*[a-zA-Z]{2}(?:\s*\d\s*){6}[a-zA-Z]?\s*\z/ }, allow_blank: true
   validates :phone_number, format: { with: /\A\+?(?:\d\s?){10,13}\z/ }
   validates_format_of :teacher_reference_number, with: /\A\d{7}\z/, allow_blank: true
-  validates_format_of :email_address, with: Devise.email_regexp
+  validates :email_address, email_address: true
 end
