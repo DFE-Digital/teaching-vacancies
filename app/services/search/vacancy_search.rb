@@ -64,7 +64,14 @@ class Search::VacancySearch
     @search_strategy ||= if active_criteria?
                            Search::Strategies::Experiment.new(
                              Search::Strategies::Algolia.new(algolia_params),
-                             Search::Strategies::PgSearch.new(keyword, page: page, per_page: per_page),
+                             Search::Strategies::PgSearch.new(
+                               keyword,
+                               location: search_criteria[:location],
+                               radius: search_criteria[:radius],
+                               page: page,
+                               per_page: per_page,
+                               sort_by: sort_by,
+                             ),
                              search_criteria: search_criteria,
                              use_experiment: pg_search,
                            )
