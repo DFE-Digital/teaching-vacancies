@@ -96,10 +96,10 @@ Metrics/BlockLength:
     - "app/models/concerns/indexable.rb"
 
 Metrics/ClassLength:
-  Max: 156 # Default 100
+  Max: 155 # Default 100
 
 Metrics/CyclomaticComplexity:
-  Max: 18 # Default 7
+  Max: 15 # Default 7
   Exclude:
     - "spec/**/*"
 
@@ -118,6 +118,6 @@ Metrics/ParameterLists:
   Max: 7 # Default 5
 
 Metrics/PerceivedComplexity:
-  Max: 18 # Default 8
+  Max: 15 # Default 8
   Exclude:
     - "spec/**/*"

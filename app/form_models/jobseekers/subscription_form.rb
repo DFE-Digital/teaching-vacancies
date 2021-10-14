@@ -15,16 +15,16 @@ class Jobseekers::SubscriptionForm
   validate :location_and_one_other_criterion_selected
 
   def initialize(params = {})
-    search_criteria = params[:search_criteria]&.symbolize_keys || {}
+    search_criteria = (params[:search_criteria] || {}).symbolize_keys.merge(params)
 
-    @email = params[:email]
-    @frequency = params[:frequency]
-    @keyword = params[:keyword] || search_criteria[:keyword]
-    @location = params[:location] || search_criteria[:location]
-    @radius = ((params[:radius] || search_criteria[:radius]) if @location.present?) || Search::LocationBuilder::DEFAULT_RADIUS.to_s
-    @job_roles = params[:job_roles]&.reject(&:blank?) || search_criteria[:job_roles] || []
-    @phases = params[:phases]&.reject(&:blank?) || search_criteria[:phases]
-    @working_patterns = params[:working_patterns]&.reject(&:blank?) || search_criteria[:working_patterns]
+    @email = search_criteria[:email]
+    @frequency = search_criteria[:frequency]
+    @keyword = search_criteria[:keyword]
+    @location = search_criteria[:location]
+    @radius = (search_criteria[:radius] if @location.present?) || Search::LocationBuilder::DEFAULT_RADIUS.to_s
+    @job_roles = search_criteria[:job_roles]&.reject(&:blank?) || []
+    @phases = search_criteria[:phases]&.reject(&:blank?)
+    @working_patterns = search_criteria[:working_patterns]&.reject(&:blank?)
 
     set_facet_options
   end
