@@ -11,10 +11,38 @@ class EmailAddressValidator < ActiveModel::EachValidator
 
   EMAIL_ADDRESS_PATTERN = %r,^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~\\-]+@[^.@][^@\s]+$,
 
+  class << self
+    def valid?(email_address)
+      !invalid?(email_address)
+    end
+
+    def invalid?(email_address)
+      email_address.include?("..") || !EMAIL_ADDRESS_PATTERN.match?(email_address) || wrong_length(email_address)
+    end
+
+    private
+
+    def wrong_length(email_address)
+      overall_length = email_address.length
+
+      _local_part, hostname_parts, other_parts = email_address.split("@")
+
+      hostname_parts = hostname_parts.split(".")
+      tld_part = hostname_parts.last
+
+      overall_length > MAX_OVERALL_LENGTH ||
+        other_parts.present? ||
+        hostname_parts.count < MIN_HOSTNAME_PART_COUNT ||
+        hostname_parts.any? { |part| part.length > MAX_HOSTNAME_PART_LENGTH } ||
+        hostname_parts.any? { |part| !HOSTNAME_PART_PATTERN.match?(part) } ||
+        !TLD_PATTERN.match?(tld_part)
+    end
+  end
+
   def validate_each(record, attribute, value)
     if check_presence? && value.blank?
       error_message(record, attribute, blank_email_message)
-    elsif value.include?("..") || !EMAIL_ADDRESS_PATTERN.match?(value) || wrong_length(value)
+    elsif self.class.invalid?(value)
       error_message(record, attribute, invalid_error_message)
     end
   end
@@ -27,21 +55,5 @@ class EmailAddressValidator < ActiveModel::EachValidator
 
   def invalid_error_message
     I18n.t("activerecord.errors.models.general_feedback.attributes.email.invalid")
-  end
-
-  def wrong_length(email_address)
-    overall_length = email_address.length
-
-    _local_part, hostname_parts, other_parts = email_address.split("@")
-
-    hostname_parts = hostname_parts.split(".")
-    tld_part = hostname_parts.last
-
-    overall_length > MAX_OVERALL_LENGTH ||
-      other_parts.present? ||
-      hostname_parts.count < MIN_HOSTNAME_PART_COUNT ||
-      hostname_parts.any? { |part| part.length > MAX_HOSTNAME_PART_LENGTH } ||
-      hostname_parts.any? { |part| !HOSTNAME_PART_PATTERN.match?(part) } ||
-      !TLD_PATTERN.match?(tld_part)
   end
 end
