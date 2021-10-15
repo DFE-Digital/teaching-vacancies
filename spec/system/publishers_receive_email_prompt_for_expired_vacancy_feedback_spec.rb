@@ -14,15 +14,8 @@ RSpec.describe "Creating a vacancy" do
 
   context "Publisher has expired vacancy that is not older than 2 weeks" do
     scenario "does not receive feedback prompt e-mail" do
-      vacancy = create(
-        :vacancy,
-        :published,
-        job_title: "Vacancy",
-        publish_on: 2.weeks.ago,
-        expires_at: 1.week.ago,
-        publisher_id: publisher.id,
-      )
-      vacancy.organisation_vacancies.create(organisation: school)
+      create(:vacancy, :published, organisations: [school], publisher_id: publisher.id,
+                                   job_title: "Vacancy", publish_on: 2.weeks.ago, expires_at: 1.week.ago)
 
       perform_enqueued_jobs do
         SendExpiredVacancyFeedbackEmailJob.new.perform
@@ -34,35 +27,14 @@ RSpec.describe "Creating a vacancy" do
 
   context "Publisher has 2 expired vacancies that are older than 2 weeks" do
     scenario "receives feedback prompt email with 2 vacancies" do
-      vacancy = create(
-        :vacancy,
-        :published,
-        job_title: "Job one",
-        publish_on: 2.months.ago,
-        expires_at: 2.weeks.ago,
-        publisher_id: publisher.id,
-      )
-      vacancy.organisation_vacancies.create(organisation: school)
+      create(:vacancy, :published, organisations: [school], publisher_id: publisher.id,
+                                   job_title: "Job one", publish_on: 2.months.ago, expires_at: 2.weeks.ago)
 
-      vacancy = create(
-        :vacancy,
-        :published,
-        job_title: "Job two",
-        publish_on: 2.months.ago,
-        expires_at: 2.weeks.ago,
-        publisher_id: publisher.id,
-      )
-      vacancy.organisation_vacancies.create(organisation: school)
+      create(:vacancy, :published, organisations: [school], publisher_id: publisher.id,
+                                   job_title: "Job two", publish_on: 2.months.ago, expires_at: 2.weeks.ago)
 
-      vacancy = create(
-        :vacancy,
-        :published,
-        job_title: "Job three",
-        publish_on: 2.weeks.ago,
-        expires_at: 1.week.ago,
-        publisher_id: publisher.id,
-      )
-      vacancy.organisation_vacancies.create(organisation: school)
+      create(:vacancy, :published, organisations: [school], publisher_id: publisher.id,
+                                   job_title: "Job three", publish_on: 2.weeks.ago, expires_at: 1.week.ago)
 
       perform_enqueued_jobs do
         SendExpiredVacancyFeedbackEmailJob.new.perform
@@ -79,25 +51,12 @@ RSpec.describe "Creating a vacancy" do
   context "Two expired vacancies for two users that are older than 2 weeks" do
     scenario "both receives feedback prompt emails" do
       another_user = create(:publisher, email: "another@user.com")
-      vacancy = create(
-        :vacancy,
-        :published,
-        job_title: "Job one",
-        publish_on: 2.months.ago,
-        expires_at: 2.weeks.ago,
-        publisher_id: publisher.id,
-      )
-      vacancy.organisation_vacancies.create(organisation: school)
 
-      vacancy = create(
-        :vacancy,
-        :published,
-        job_title: "Job two",
-        publish_on: 2.months.ago,
-        expires_at: 2.weeks.ago,
-        publisher_id: another_user.id,
-      )
-      vacancy.organisation_vacancies.create(organisation: school)
+      create(:vacancy, :published, organisations: [school], publisher_id: publisher.id,
+                                   job_title: "Job one", publish_on: 2.months.ago, expires_at: 2.weeks.ago)
+
+      create(:vacancy, :published, organisations: [school], publisher_id: another_user.id,
+                                   job_title: "Job two", publish_on: 2.months.ago, expires_at: 2.weeks.ago)
 
       perform_enqueued_jobs do
         SendExpiredVacancyFeedbackEmailJob.new.perform

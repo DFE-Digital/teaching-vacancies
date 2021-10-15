@@ -2,29 +2,17 @@ require "rails_helper"
 
 RSpec.describe "Publishers can filter vacancies in their dashboard" do
   let(:publisher) { create(:publisher) }
-  let(:trust) { create(:trust) }
-  let(:local_authority1) { create(:local_authority) }
+  let(:trust) { create(:trust, schools: [school1, school2]) }
+  let(:local_authority1) { create(:local_authority, schools: [school1, school2]) }
   let(:local_authority2) { create(:local_authority) }
   let(:school1) { create(:school, name: "Happy Rainbows School") }
   let(:school2) { create(:school, name: "Dreary Grey School") }
-  let!(:school_group_vacancy) { create(:vacancy, :published, :central_office, job_title: "Maths Teacher") }
-  let!(:school1_vacancy) { create(:vacancy, :published, :at_one_school, job_title: "English Teacher") }
-  let!(:school1_draft_vacancy) { create(:vacancy, :draft, :at_one_school, job_title: "Science Teacher") }
-  let!(:school2_draft_vacancy) { create(:vacancy, :draft, :at_one_school, job_title: "History Teacher") }
-  let!(:publisher_preference_local_authority) { PublisherPreference.create(publisher: publisher, organisation: local_authority2) }
-  let!(:publisher_preference_trust) { PublisherPreference.create(publisher: publisher, organisation: trust) }
+  let!(:school_group_vacancy) { create(:vacancy, :published, :central_office, organisations: [trust], job_title: "Maths Teacher") }
+  let!(:school1_vacancy) { create(:vacancy, :published, :at_one_school, organisations: [school1], job_title: "English Teacher") }
+  let!(:school1_draft_vacancy) { create(:vacancy, :draft, :at_one_school, organisations: [school1], job_title: "Science Teacher") }
+  let!(:school2_draft_vacancy) { create(:vacancy, :draft, :at_one_school, organisations: [school2], job_title: "History Teacher") }
 
-  before do
-    login_publisher(publisher: publisher, organisation: trust)
-
-    school_group_vacancy.organisation_vacancies.create(organisation: trust)
-    school1_vacancy.organisation_vacancies.create(organisation: school1)
-    school1_draft_vacancy.organisation_vacancies.create(organisation: school1)
-    school2_draft_vacancy.organisation_vacancies.create(organisation: school2)
-
-    SchoolGroupMembership.create(school: school1, school_group: trust)
-    SchoolGroupMembership.create(school: school2, school_group: trust)
-  end
+  before { login_publisher(publisher: publisher, organisation: trust) }
 
   context "when no organisations have been previously selected" do
     context "when viewing active jobs tab" do
@@ -71,10 +59,7 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
   end
 
   context "when organisations have been previously selected" do
-    before do
-      OrganisationPublisherPreference.create(organisation: school1, publisher_preference: publisher_preference_trust)
-      OrganisationPublisherPreference.create(organisation: school2, publisher_preference: publisher_preference_trust)
-    end
+    let!(:publisher_preference_trust) { PublisherPreference.create(publisher: publisher, organisation: trust, organisations: [school1, school2]) }
 
     scenario "it shows filtered published vacancies" do
       visit organisation_path
@@ -94,9 +79,6 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
 
     before do
       login_publisher(publisher: publisher, organisation: local_authority1)
-
-      SchoolGroupMembership.create(school: school1, school_group: local_authority1)
-      SchoolGroupMembership.create(school: school2, school_group: local_authority1)
 
       allow(Rails.configuration).to receive(:local_authorities_extra_schools).and_return(local_authorities_extra_schools)
     end

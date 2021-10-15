@@ -26,10 +26,9 @@ RSpec.describe "Jobseeker dashboardexperience", type: :system, accessibility: tr
 
   context "Jobseeker visits their dashboard and views saved jobs" do
     let(:school) { create(:school) }
-    let(:vacancy) { create(:vacancy, :published) }
+    let(:vacancy) { create(:vacancy, :published, organisations: [school]) }
 
     before do
-      vacancy.organisation_vacancies.create(organisation: school)
       visit job_path(vacancy)
       click_on I18n.t("jobseekers.saved_jobs.save")
       visit jobseeker_root_path
@@ -43,11 +42,10 @@ RSpec.describe "Jobseeker dashboardexperience", type: :system, accessibility: tr
   context "Jobseeker visits their dashboard and views my applications" do
     let(:jobseeker_applications_enabled?) { true }
     let(:school) { create(:school) }
-    let(:vacancy) { create(:vacancy, :published) }
+    let(:vacancy) { create(:vacancy, :published, organisations: [school]) }
     let!(:submitted_job_application) { create(:job_application, :status_submitted, submitted_at: 1.day.ago, jobseeker: jobseeker, vacancy: vacancy) }
 
     before do
-      vacancy.organisation_vacancies.create(organisation: school)
       visit jobseekers_job_applications_path
     end
 
