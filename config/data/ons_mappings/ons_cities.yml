@@ -1,62 +1,64 @@
----
+# Mapping from a location name to the type of location to import as
+
 # We omit cities whose names are duplicated by unitary authorities, in order to import that larger polygon.
-- ['Basildon', 'cities']
-- ['Basingstoke', 'cities']
-- ['Bath', 'cities']
-- ['Birkenhead', 'cities']
-- ['Blackburn', 'cities']
-- ['Bournemouth', 'cities']
-- ['Bracknell', 'cities']
-- ['Bristol', 'cities']
-- ['Burnley', 'cities']
-- ['Burton upon Trent', 'cities']
-- ['Cambridge', 'cities']
-- ['Carlisle', 'cities']
-- ['Chatham', 'cities']
-- ['Chelmsford', 'cities']
-- ['Cheltenham', 'cities']
-- ['Chester', 'cities']
-- ['Chesterfield', 'cities']
-- ['Colchester', 'cities']
-- ['Crawley', 'cities']
-- ['Eastbourne', 'cities']
-- ['Exeter', 'cities']
-- ['Gillingham', 'cities']
-- ['Gloucester', 'cities']
-- ['Grimsby', 'cities']
-- ['Guildford', 'cities']
-- ['Halifax', 'cities']
-- ['Harlow', 'cities']
-- ['Harrogate', 'cities']
-- ['Hastings', 'cities']
-- ['Hemel Hempstead', 'cities']
-- ['High Wycombe', 'cities']
-- ['Huddersfield', 'cities']
-- ['Ipswich', 'cities']
-- ['Kingston upon Hull', 'cities']
-- ['Lincoln', 'cities']
-- ['Maidstone', 'cities']
-- ['Mansfield', 'cities']
-- ['Newcastle-under-Lyme', 'cities']
-- ['Northampton', 'cities']
-- ['Norwich', 'cities']
-- ['Nuneaton', 'cities']
-- ['Oxford', 'cities']
-- ['Poole', 'cities']
-- ['Preston', 'cities']
-- ['Redditch', 'cities']
-- ['Scunthorpe', 'cities']
-- ['Shrewsbury', 'cities']
-- ['South Shields', 'cities']
-- ['Southport', 'cities']
-- ['St Albans', 'cities']
-- ['St Helens', 'cities']
-- ['Stevenage', 'cities']
-- ['Sutton Coldfield', 'cities']
-- ['Telford', 'cities']
-- ['Watford', 'cities']
-- ['West Bromwich', 'cities']
-- ['Weston-Super-Mare', 'cities']
-- ['Woking', 'cities']
-- ['Worcester', 'cities']
-- ['Worthing', 'cities']
+
+"Basildon": cities
+"Basingstoke": cities
+"Bath": cities
+"Birkenhead": cities
+"Blackburn": cities
+"Bournemouth": cities
+"Bracknell": cities
+"Bristol": cities
+"Burnley": cities
+"Burton upon Trent": cities
+"Cambridge": cities
+"Carlisle": cities
+"Chatham": cities
+"Chelmsford": cities
+"Cheltenham": cities
+"Chester": cities
+"Chesterfield": cities
+"Colchester": cities
+"Crawley": cities
+"Eastbourne": cities
+"Exeter": cities
+"Gillingham": cities
+"Gloucester": cities
+"Grimsby": cities
+"Guildford": cities
+"Halifax": cities
+"Harlow": cities
+"Harrogate": cities
+"Hastings": cities
+"Hemel Hempstead": cities
+"High Wycombe": cities
+"Huddersfield": cities
+"Ipswich": cities
+"Kingston upon Hull": cities
+"Lincoln": cities
+"Maidstone": cities
+"Mansfield": cities
+"Newcastle-under-Lyme": cities
+"Northampton": cities
+"Norwich": cities
+"Nuneaton": cities
+"Oxford": cities
+"Poole": cities
+"Preston": cities
+"Redditch": cities
+"Scunthorpe": cities
+"Shrewsbury": cities
+"South Shields": cities
+"Southport": cities
+"St Albans": cities
+"St Helens": cities
+"Stevenage": cities
+"Sutton Coldfield": cities
+"Telford": cities
+"Watford": cities
+"West Bromwich": cities
+"Weston-Super-Mare": cities
+"Woking": cities
+"Worcester": cities
+"Worthing": cities
