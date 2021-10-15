@@ -37,31 +37,6 @@ RSpec.describe LocationPolygon do
     end
   end
 
-  describe ".component_location_names" do
-    before do
-      stub_const("DOWNCASE_COMPOSITE_LOCATIONS", downcase_composite_locations)
-    end
-
-    let(:downcase_composite_locations) do
-      { "yorkshire" => ["west yorkshire", "rest of yorkshire"],
-        "greater manchester" => ["west manchester", "rest of manchester"] }
-    end
-
-    context "when location is a composite location" do
-      context "when location is mapped" do
-        it "returns the list of component locations" do
-          expect(described_class.component_location_names("Manchester")).to eq(["west manchester", "rest of manchester"])
-        end
-      end
-
-      context "when location is not mapped" do
-        it "returns the list of component locations" do
-          expect(described_class.component_location_names("Yorkshire")).to eq(["west yorkshire", "rest of yorkshire"])
-        end
-      end
-    end
-  end
-
   describe "#to_algolia_polygons" do
     before do
       subject.area = "POLYGON((0 0, 1 1, 0 1, 0 0))"

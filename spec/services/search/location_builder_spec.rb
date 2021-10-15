@@ -24,33 +24,6 @@ RSpec.describe Search::LocationBuilder do
       it_behaves_like "a search using polygons"
     end
 
-    context "when a composite location is specified" do
-      let(:location) { "Bedfordshire" }
-
-      before do
-        create(:location_polygon,
-               name: "bedford",
-               location_type: "counties")
-        create(:location_polygon,
-               name: "central bedfordshire",
-               location_type: "counties")
-        create(:location_polygon,
-               name: "luton",
-               location_type: "counties")
-      end
-
-      it "sets the correct attributes" do
-        expect(subject.location).to eq(location)
-        expect(subject.polygon_boundaries).to contain_exactly(
-          *LocationPolygon.buffered(radius).where(name: [
-            "bedford", "central bedfordshire", "luton"
-          ]).flat_map(&:to_algolia_polygons),
-        )
-        expect(subject.location_filter).to eq({})
-        expect(subject.radius).to eq(radius)
-      end
-    end
-
     context "when a mapped location is specified" do
       let(:location) { "Map this location" }
 
