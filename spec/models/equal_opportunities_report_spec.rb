@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe EqualOpportunitiesReport do
-  subject { FactoryBot.create(:equal_opportunities_report) }
+  subject { create(:equal_opportunities_report) }
   it { is_expected.to belong_to(:vacancy) }
 
   describe "#trigger_event" do

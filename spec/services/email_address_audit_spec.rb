@@ -7,23 +7,23 @@ RSpec.describe EmailAddressAudit do
 
   let!(:valid_records) do
     [
-      FactoryBot.create(:feedback, email: "test@example.com"),
-      FactoryBot.create(:job_application, email_address: "test@example.com"),
-      FactoryBot.create(:jobseeker, email: "test@example.com"),
-      FactoryBot.create(:publisher, email: "test@example.com"),
-      FactoryBot.create(:subscription, email: "test@example.com"),
-      FactoryBot.create(:vacancy, contact_email: "test@example.com"),
+      create(:feedback, email: "test@example.com"),
+      create(:job_application, email_address: "test@example.com"),
+      create(:jobseeker, email: "test@example.com"),
+      create(:publisher, email: "test@example.com"),
+      create(:subscription, email: "test@example.com"),
+      create(:vacancy, contact_email: "test@example.com"),
     ]
   end
 
   let!(:invalid_records) do
     [
-      FactoryBot.create(:feedback, email: "test@example"),
-      FactoryBot.create(:job_application, email_address: "test@example"),
-      FactoryBot.create(:jobseeker, email: "test@example"),
-      FactoryBot.create(:publisher, email: "test@example"),
-      FactoryBot.create(:subscription, email: "test@example"),
-      FactoryBot.create(:vacancy, contact_email: "test@example"),
+      create(:feedback, email: "test@example"),
+      create(:job_application, email_address: "test@example"),
+      create(:jobseeker, email: "test@example"),
+      create(:publisher, email: "test@example"),
+      create(:subscription, email: "test@example"),
+      create(:vacancy, contact_email: "test@example"),
     ]
   end
 
