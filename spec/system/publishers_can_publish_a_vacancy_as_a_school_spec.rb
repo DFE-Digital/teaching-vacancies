@@ -150,8 +150,7 @@ RSpec.describe "Creating a vacancy" do
     describe "#publish" do
       scenario "cannot be published unless the details are valid" do
         yesterday_date = Time.zone.yesterday
-        vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow, job_roles: %w[teacher], phase: "multiple_phases")
-        vacancy.organisation_vacancies.create(organisation: school)
+        vacancy = create(:vacancy, :draft, organisations: [school], publish_on: Time.zone.tomorrow, job_roles: %w[teacher], phase: "multiple_phases")
         vacancy.assign_attributes expires_at: yesterday_date
         vacancy.save(validate: false)
 
@@ -192,8 +191,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "can be published at a later date" do
-        vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow, job_roles: %w[teacher], phase: "multiple_phases")
-        vacancy.organisation_vacancies.create(organisation: school)
+        vacancy = create(:vacancy, :draft, organisations: [school], publish_on: Time.zone.tomorrow, job_roles: %w[teacher], phase: "multiple_phases")
 
         visit organisation_job_review_path(vacancy.id)
         click_on "Confirm and submit job"
@@ -204,8 +202,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "displays the expiration date and time on the confirmation page" do
-        vacancy = create(:vacancy, :draft, expires_at: 5.days.from_now.change(hour: 9, minute: 0), job_roles: %w[teacher], phase: "multiple_phases")
-        vacancy.organisation_vacancies.create(organisation: school)
+        vacancy = create(:vacancy, :draft, organisations: [school], expires_at: 5.days.from_now.change(hour: 9, minute: 0), job_roles: %w[teacher], phase: "multiple_phases")
         visit organisation_job_review_path(vacancy.id)
         click_on I18n.t("buttons.submit_job_listing")
 
@@ -215,8 +212,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "a published vacancy cannot be republished" do
-        vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow, job_roles: %w[teacher], phase: "multiple_phases")
-        vacancy.organisation_vacancies.create(organisation: school)
+        vacancy = create(:vacancy, :draft, organisations: [school], publish_on: Time.zone.tomorrow, job_roles: %w[teacher], phase: "multiple_phases")
 
         visit organisation_job_review_path(vacancy.id)
         click_on "Confirm and submit job"
@@ -228,8 +224,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "a published vacancy cannot be edited" do
-        vacancy = create(:vacancy, :published)
-        vacancy.organisation_vacancies.create(organisation: school)
+        vacancy = create(:vacancy, :published, organisations: [school])
 
         visit organisation_job_review_path(vacancy.id)
         expect(page.current_path).to eq(organisation_job_path(vacancy.id))
@@ -238,8 +233,7 @@ RSpec.describe "Creating a vacancy" do
 
       context "adds a job to update the Google index in the queue" do
         scenario "if the vacancy is published immediately" do
-          vacancy = create(:vacancy, :draft, publish_on: Date.current, job_roles: %w[teacher], phase: "multiple_phases")
-          vacancy.organisation_vacancies.create(organisation: school)
+          vacancy = create(:vacancy, :draft, organisations: [school], publish_on: Date.current, job_roles: %w[teacher], phase: "multiple_phases")
 
           expect_any_instance_of(Publishers::Vacancies::BaseController)
             .to receive(:update_google_index).with(vacancy)

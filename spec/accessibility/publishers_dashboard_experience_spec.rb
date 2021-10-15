@@ -9,8 +9,7 @@ RSpec.describe "Publisher dashboard experience", type: :system, accessibility: t
 
   context "Publisher visits the vacancy dashboard page" do
     before do
-      vacancies = create_list(:vacancy, 5, :published)
-      vacancies.each { |vacancy| vacancy.organisation_vacancies.create(organisation: organisation) }
+      create_list(:vacancy, 5, :published, organisations: [organisation])
       visit organisation_path
     end
 

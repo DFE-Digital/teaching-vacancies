@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Publishers::VacancyFormPageHeadingComponent, type: :component do
   let(:organisation) { create(:school, name: "Teaching Vacancies Academy") }
-  let(:vacancy) { create(:vacancy, status, job_title: "Test job title", completed_steps: %w[step_one step_two]) }
+  let(:vacancy) { create(:vacancy, status, organisations: [organisation], job_title: "Test job title", completed_steps: %w[step_one step_two]) }
   let(:status) { :published }
   let(:current_publisher_is_part_of_school_group?) { true }
   let(:steps) { %i[step_one step_two] }
@@ -18,8 +18,6 @@ RSpec.describe Publishers::VacancyFormPageHeadingComponent, type: :component do
 
   before do
     allow(subject).to receive(:current_organisation).and_return(organisation)
-    vacancy.organisation_vacancies.create(organisation: organisation) if vacancy.present?
-
     allow(vacancy_step_process).to receive(:previous_step).and_return(previous_step)
     allow(vacancy_step_process).to receive(:previous_step_or_review).and_return(previous_step)
     allow(vacancy_step_process).to receive(:steps).and_return(steps)
