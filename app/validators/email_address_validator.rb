@@ -17,6 +17,8 @@ class EmailAddressValidator < ActiveModel::EachValidator
     end
 
     def invalid?(email_address)
+      return if email_address.blank?
+
       email_address.include?("..") || !EMAIL_ADDRESS_PATTERN.match?(email_address) || wrong_length(email_address)
     end
 
