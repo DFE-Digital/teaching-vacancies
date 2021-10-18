@@ -3,10 +3,9 @@ raise "Aborting seeds - running in production with existing vacancies" if Rails.
 require "faker"
 require "factory_bot_rails"
 
+# Import school data from GIAS
 Gias::ImportSchoolsAndLocalAuthorities.new.call
 Gias::ImportTrusts.new.call
-
-ImportPolygonDataJob.perform_now
 
 bexleyheath_school = School.find_by!(urn: "137138")
 weydon_trust = SchoolGroup.find_by!(uid: "16644")
@@ -83,3 +82,6 @@ Vacancy.listed.each do |vacancy|
     FactoryBot.create(:job_application, :"status_#{application_status}", jobseeker: jobseeker, vacancy: vacancy)
   end
 end
+
+# Import location polygon data from ONS
+ImportPolygonDataJob.perform_now
