@@ -14,10 +14,8 @@ RSpec.describe "School viewing vacancies" do
   end
 
   scenario "A school publisher can see a list of vacancies" do
-    vacancy1 = create(:vacancy)
-    vacancy1.organisation_vacancies.create(organisation: school)
-    vacancy2 = create(:vacancy)
-    vacancy2.organisation_vacancies.create(organisation: school)
+    vacancy1 = create(:vacancy, organisations: [school])
+    vacancy2 = create(:vacancy, organisations: [school])
 
     visit organisation_path
 
@@ -27,8 +25,7 @@ RSpec.describe "School viewing vacancies" do
   end
 
   scenario "A published vacancy show page does not show a flash message with the status" do
-    vacancy = create(:vacancy, status: "published")
-    vacancy.organisation_vacancies.create(organisation: school)
+    vacancy = create(:vacancy, status: "published", organisations: [school])
 
     visit organisation_job_path(vacancy.id)
 
