@@ -12,7 +12,7 @@ RSpec.describe Jobseekers::UnsubscribeFeedbackForm, type: :model do
   end
 
   it { is_expected.to validate_presence_of(:email) }
-  it { is_expected.to allow_value("email@example").for(:email) }
+  it { is_expected.to allow_value("email@example.com").for(:email) }
   it { is_expected.to_not allow_value("invalid@email@com").for(:email) }
   it { is_expected.to validate_inclusion_of(:unsubscribe_reason).in_array(Feedback.unsubscribe_reasons.keys) }
   it { is_expected.to validate_length_of(:comment).is_at_most(1200) }

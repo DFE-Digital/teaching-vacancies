@@ -12,7 +12,7 @@ RSpec.describe Publishers::JobListing::FeedbackForm, type: :model do
   end
 
   it { is_expected.to validate_presence_of(:email) }
-  it { is_expected.to allow_value("email@example").for(:email) }
+  it { is_expected.to allow_value("email@example.com").for(:email) }
   it { is_expected.to_not allow_value("invalid@email@com").for(:email) }
   it { is_expected.to validate_inclusion_of(:rating).in_array(Feedback.ratings.keys) }
   it { is_expected.to validate_inclusion_of(:report_a_problem).in_array(%w[yes no]) }
