@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Jobseekers::OrganisationOverviews::SchoolsComponent, type: :component do
-  let(:organisation) { create(:trust) }
+  let!(:organisation) { create(:trust, schools: [school1, school2, school3]) }
   let(:geolocation_trait) { nil }
   let(:school1) { create(:school, geolocation_trait, name: "Oxford Uni", website: "https://this-is-a-test-url.example.com") }
   let(:school2) { create(:school, geolocation_trait, name: "Cambridge Uni") }
@@ -9,12 +9,7 @@ RSpec.describe Jobseekers::OrganisationOverviews::SchoolsComponent, type: :compo
   let(:vacancy) { create(:vacancy, :at_multiple_schools, organisations: [school1, school2, school3]) }
   let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
 
-  let!(:inline_component) do
-    organisation.school_group_memberships.create(school: school1)
-    organisation.school_group_memberships.create(school: school2)
-    organisation.school_group_memberships.create(school: school3)
-    render_inline(described_class.new(vacancy: vacancy_presenter))
-  end
+  let!(:inline_component) { render_inline(described_class.new(vacancy: vacancy_presenter)) }
 
   describe "#render?" do
     context "when vacancy job_location is central_office" do

@@ -48,15 +48,10 @@ RSpec.describe Search::CriteriaInventor do
       end
 
       context "when the vacancy is associated to multiple schools in a school group" do
-        let(:school1) { create(:school) }
-        let(:school2) { create(:school) }
+        let(:school1) { create(:school, school_groups: [trust]) }
+        let(:school2) { create(:school, school_groups: [trust]) }
         let(:associated_orgs) { [school1, school2] }
         let(:location_trait) { :at_multiple_schools }
-
-        before do
-          SchoolGroupMembership.create(school: school1, school_group: trust)
-          SchoolGroupMembership.create(school: school2, school_group: trust)
-        end
 
         it "uses the vacancy's postcode_from_mean_geolocation attribute" do
           expect(subject.criteria[:location]).to eq(postcode_from_mean_geolocation)

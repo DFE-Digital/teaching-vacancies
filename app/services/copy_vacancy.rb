@@ -2,7 +2,6 @@ class CopyVacancy
   def initialize(vacancy)
     @vacancy = vacancy
     setup_new_vacancy
-    setup_organisation_vacancies
   end
 
   def call
@@ -23,11 +22,6 @@ class CopyVacancy
   def setup_new_vacancy
     @new_vacancy = @vacancy.dup
     @new_vacancy.status = :draft
-  end
-
-  def setup_organisation_vacancies
-    @vacancy.organisation_vacancies.each do |organisation_vacancy|
-      @new_vacancy.organisation_vacancies.build(organisation: organisation_vacancy.organisation)
-    end
+    @new_vacancy.organisations = @vacancy.organisations
   end
 end
