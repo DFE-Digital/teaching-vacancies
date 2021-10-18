@@ -2,11 +2,10 @@ require "rails_helper"
 
 RSpec.describe Jobseekers::VacancyDetailsComponent, type: :component do
   let(:organisation) { create(:school) }
-  let(:vacancy) { create(:vacancy) }
+  let(:vacancy) { create(:vacancy, organisations: [organisation]) }
   let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
 
   before do
-    vacancy.organisation_vacancies.create(organisation: organisation)
     render_inline(described_class.new(vacancy: vacancy_presenter))
   end
 

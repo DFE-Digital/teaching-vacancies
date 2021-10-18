@@ -57,18 +57,13 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
   end
 
   context "when vacancy job_location is at_multiple_schools" do
-    let(:organisation) { create(:trust) }
+    let!(:organisation) { create(:trust, schools: [school1, school2, school3]) }
     let(:school1) { create(:school, :catholic, school_type: "Academy") }
     let(:school2) { create(:school, :catholic, school_type: "Academy") }
     let(:school3) { create(:school, :catholic, school_type: "Academy", minimum_age: 16) }
     let(:vacancy) { create(:vacancy, :at_multiple_schools, organisations: [school1, school2, school3]) }
 
-    before do
-      [school1, school2, school3].each do |school|
-        SchoolGroupMembership.find_or_create_by(school_id: school.id, school_group_id: organisation.id)
-      end
-      render_inline(described_class.new(vacancy: vacancy_presenter))
-    end
+    before { render_inline(described_class.new(vacancy: vacancy_presenter)) }
 
     it "renders the job location" do
       expect(rendered_component).to include("#{I18n.t('publishers.organisations.readable_job_location.at_multiple_schools')}, #{organisation.name}")

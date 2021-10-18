@@ -24,12 +24,10 @@ RSpec.describe Organisation do
     context "when the organisation is a trust" do
       let!(:school1) { create(:school) }
       let!(:school2) { create(:school) }
-      let!(:trust) { create(:trust) }
+      let!(:trust) { create(:trust, schools: [school1]) }
       let(:vacancy1) { create(:vacancy, organisations: [school1]) }
       let(:vacancy2) { create(:vacancy, organisations: [trust]) }
       let(:vacancy3) { create(:vacancy, organisations: [school2]) }
-
-      before { SchoolGroupMembership.create(school_group: trust, school: school1) }
 
       it "returns all vacancies from the trust and the schools of the trust" do
         expect(trust.all_vacancies).to include(vacancy1, vacancy2)
@@ -38,21 +36,18 @@ RSpec.describe Organisation do
     end
 
     context "when the organisation is a local authority" do
-      let(:local_authority) { create(:local_authority, local_authority_code: "111") }
-      let!(:school1) { create(:school, urn: "123") }
-      let!(:school2) { create(:school, urn: "654") }
-      let!(:school3) { create(:school) }
-      let!(:school4) { create(:school) }
-      let(:vacancy1) { create(:vacancy, organisations: [school1]) }
-      let(:vacancy2) { create(:vacancy, organisations: [school2]) }
-      let(:vacancy3) { create(:vacancy, organisations: [school3]) }
-      let(:vacancy4) { create(:vacancy, organisations: [school4]) }
+      let!(:local_authority) { create(:local_authority, local_authority_code: "111", schools: [school3]) }
+      let(:school1) { create(:school, urn: "123") }
+      let(:school2) { create(:school, urn: "654") }
+      let(:school3) { create(:school) }
+      let(:school4) { create(:school) }
+      let!(:vacancy1) { create(:vacancy, organisations: [school1]) }
+      let!(:vacancy2) { create(:vacancy, organisations: [school2]) }
+      let!(:vacancy3) { create(:vacancy, organisations: [school3]) }
+      let!(:vacancy4) { create(:vacancy, organisations: [school4]) }
       let(:local_authorities_extra_schools) { { 111 => [123] } }
 
-      before do
-        allow(Rails.configuration).to receive(:local_authorities_extra_schools).and_return(local_authorities_extra_schools)
-        SchoolGroupMembership.create(school_group: local_authority, school: school3)
-      end
+      before { allow(Rails.configuration).to receive(:local_authorities_extra_schools).and_return(local_authorities_extra_schools) }
 
       it "returns all vacancies from the schools inside and outside of the local authority" do
         expect(local_authority.all_vacancies).to include(vacancy1, vacancy3)

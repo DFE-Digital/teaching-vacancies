@@ -50,10 +50,8 @@ RSpec.describe "Api::Vacancies" do
     end
 
     it "retrieves all live vacancies" do
-      published_vacancy = create(:vacancy)
-      published_vacancy.organisation_vacancies.create(organisation: school)
-      expired_vacancy = create(:vacancy, :expired)
-      expired_vacancy.organisation_vacancies.create(organisation: school)
+      published_vacancy = create(:vacancy, organisations: [school])
+      create(:vacancy, :expired, organisations: [school])
 
       get api_jobs_path(api_version: 1), params: { format: :json }
 
@@ -105,9 +103,7 @@ RSpec.describe "Api::Vacancies" do
   end
 
   describe "GET /api/v1/jobs/:id.json", json: true do
-    let(:vacancy) { create(:vacancy) }
-
-    before { vacancy.organisation_vacancies.create(organisation: school) }
+    let(:vacancy) { create(:vacancy, organisations: [school]) }
 
     it "returns status :not_found if the request format is not JSON" do
       get api_job_path(vacancy.slug, api_version: 1), params: { format: :html }
