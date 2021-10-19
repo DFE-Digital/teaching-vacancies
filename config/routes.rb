@@ -127,6 +127,8 @@ Rails.application.routes.draw do
     resources :unsubscribe_feedbacks, only: %i[new create], controller: "jobseekers/unsubscribe_feedbacks"
   end
 
+  get "teaching-jobs-for-nqt_suitable", to: redirect("teaching-jobs-for-ect-suitable")
+
   get "sign-up-for-NQT-job-alerts", to: redirect("/sign-up-for-ECT-job-alerts")
 
   get "sign-up-for-ECT-job-alerts", to: "subscriptions#new", as: "ect_job_alerts", defaults: { ect_job_alert: true, origin: "/sign-up-for-ECT-job-alerts", search_criteria: { job_roles: ["ect_suitable"] } }
