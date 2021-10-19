@@ -33,9 +33,6 @@ shared:
   2021_07_contents_tabs_on_job_listing_test:
     present: 1
     absent: 1
-  2021_10_working_patterns_in_similar_jobs_test:
-    absent: 1
-    default: 1
 test:
   2021_04_cookie_consent_test:
     none: 0
@@ -47,6 +44,3 @@ test:
   2021_07_contents_tabs_on_job_listing_test:
     present: 1
     absent: 0
-  2021_10_working_patterns_in_similar_jobs_test:
-    absent: 0
-    default: 1

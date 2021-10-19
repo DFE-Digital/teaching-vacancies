@@ -4,9 +4,8 @@ class Search::CriteriaInventor
 
   DEFAULT_RADIUS_IN_MILES = 25
 
-  def initialize(vacancy, working_patterns_variant = :default)
+  def initialize(vacancy)
     @vacancy = vacancy
-    @working_patterns_variant = working_patterns_variant
     @location = location
     @subjects = subjects
     @criteria = set_criteria
@@ -17,7 +16,7 @@ class Search::CriteriaInventor
   def set_criteria
     { location: @location,
       radius: (@location.present? ? DEFAULT_RADIUS_IN_MILES.to_s : nil),
-      working_patterns: @working_patterns_variant == :default ? @vacancy.working_patterns : [],
+      working_patterns: [],
       phases: @vacancy.education_phases,
       job_roles: @vacancy.job_roles,
       subjects: @subjects,
