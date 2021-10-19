@@ -53,7 +53,11 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   end
 
   def redirect_to_reminder_new_features_path
-    redirect_to reminder_new_features_path if show_application_reminder_page?
+    if show_application_reminder_page?
+      redirect_to reminder_new_features_path
+    else
+      current_publisher.update(viewed_application_feature_reminder_page_at: nil)
+    end
   end
 
   def show_application_reminder?(vacancies, publisher)

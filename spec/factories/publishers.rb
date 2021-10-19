@@ -7,6 +7,5 @@ FactoryBot.define do
     given_name { Faker::Name.first_name }
     oid { Faker::Crypto.md5 }
     viewed_new_features_page_at { 2.days.ago }
-    viewed_application_feature_reminder_page_at { 6.days.ago }
   end
 end
