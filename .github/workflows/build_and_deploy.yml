@@ -20,13 +20,6 @@ on:
       - synchronize
       - reopened
 
-    paths-ignore:
-    - 'bigquery/**'
-    - 'documentation/**'
-    - 'terraform/common/**'
-    - 'terraform/monitoring/**'
-    - '**.md'
-
 env:
  DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
 

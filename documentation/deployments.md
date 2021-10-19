@@ -40,19 +40,20 @@ The GitHub actions workflow [deploy_branch.yml](/.github/workflows/deploy_branch
 
 ### Checks before merging to master branch - GitHub Actions
 
-- There are GitHub Action checks, which must pass before a merge is allowed to the master branch
+- There are GitHub Action checks, which must pass before a merge is allowed to the master branch. This is configured through GitHub's settings > Braches > Edit branch protection rules. From here, you can add or remove checks to perform before merging
 
 ### Build and deploy to staging and production - GitHub Actions
 
-When a PR is approved and merged into `master` branch, the GitHub actions workflow [deploy.yml](/.github/workflows/deploy) performs these steps:
+When a PR is approved and merged into `master` branch, the GitHub actions workflow [build_and_deploy.yml](../.github/workflows/build_and_deploy.yml) performs these steps:
 
 - Builds and tags a Docker image from code in the `master` branch
 - Tags the Docker image with the commit SHA as the tag
 - Logs in to Github's container registry as the service account `twd-tv-ci`
 - Pushes the image to GitHub packages
-- Calls the [deploy_app.yml](/.github/workflows/deploy_app.yml) workflow to use Terraform to update the `web` and `worker` apps to use the new Docker image, and apply any changes to the `staging` environment
+- Calls the [deploy_app.yml](../.github/workflows/deploy_app.yml) workflow to use Terraform to update the `web` and `worker` apps to use the new Docker image, and apply any changes to the `staging` environment
 - Runs a smoke test against the `staging` environment
-- Calls the [deploy_app.yml](/.github/workflows/deploy_app.yml) workflow to use Terraform to update the `web` and `worker` apps to use the new Docker image, and apply any changes to the `production` environment, same is done for `QA` and `research` environments.
+- Calls the [deploy_app.yml](../.github/workflows/deploy_app.yml) workflow to use Terraform to update the `web` and `worker` apps to use the new Docker image, and apply any changes to the `production` environment, same is done for `QA` and `research` environments.
+- Performs Post Deployment steps e.g. deploy teraform/monitoring module, which is responsible for deploying Prometheus, influxDB and Grafana.
 - Sends a Slack notification to the `#twd_tv_dev` channel
 
 ### Merge and concurrency deployment management
@@ -141,7 +142,7 @@ Requirements:
 
 ## Replace PostgresDB
 
-- A new feature has been added, which allows for the database in a particular environment to destroyed and redeploy
+- A new logic (target) has been added to the makefile, which allows for the database in a particular environment to destroyed and recreated
 ```bash
 make review ci terraform-app-database-replace pr_id=3982 tag=master CONFIRM_REPLACE=yes
 ```
