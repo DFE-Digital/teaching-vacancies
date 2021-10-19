@@ -48,7 +48,7 @@ RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: tr
     expect(page.find_field("jobseekers-subscription-form-job-roles-teacher-field")).to be_checked
     expect(page.find_field("jobseekers-subscription-form-job-roles-ect-suitable-field")).not_to be_checked
     expect(page.find_field("jobseekers-subscription-form-phases-secondary-field")).to be_checked
-    expect(page.find_field("jobseekers-subscription-form-working-patterns-full-time-field")).to be_checked
+    expect(page.find_field("jobseekers-subscription-form-working-patterns-full-time-field")).not_to be_checked
   end
 
   def fill_in_subscription_fields

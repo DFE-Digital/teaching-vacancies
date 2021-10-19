@@ -28,7 +28,7 @@ class VacanciesController < ApplicationController
 
     @saved_job = current_jobseeker&.saved_jobs&.find_by(vacancy_id: vacancy.id)
     @vacancy = VacancyPresenter.new(vacancy)
-    @invented_job_alert_search_criteria = Search::CriteriaInventor.new(vacancy, ab_variant_for(:"2021_10_working_patterns_in_similar_jobs_test")).criteria
+    @invented_job_alert_search_criteria = Search::CriteriaInventor.new(vacancy).criteria
     @similar_jobs = Search::SimilarJobs.new(vacancy).similar_jobs
   end
 
