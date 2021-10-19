@@ -112,15 +112,6 @@ module OrganisationsHelper
     ActionController::Base.helpers.asset_path(APPLICATION_PACK_FILENAME)
   end
 
-  def show_application_reminder?(vacancy, publisher, session_show)
-    !vacancy.nil? &&
-      session_show &&
-      !publisher.viewed_application_feature_reminder_page_at &&
-      publisher.viewed_new_features_page_at &&
-      vacancy.updated_at > publisher.viewed_new_features_page_at &&
-      !vacancy.enable_job_applications
-  end
-
   private
 
   def number_of_pupils(school)

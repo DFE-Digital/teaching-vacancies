@@ -2,13 +2,10 @@ require "rails_helper"
 
 RSpec.describe "Application feature reminder" do
   let(:organisation) { create(:school, name: "A school with a vacancy") }
-  let!(:vacancy) { create(:vacancy, :published, enable_job_applications: false, created_at: 1.days.ago, publisher_id: publisher.id) }
+  let!(:vacancy) { create(:vacancy, :published, enable_job_applications: false, created_at: 1.days.ago, publisher_id: publisher.id, organisations: [organisation]) }
   let(:publisher) { create(:publisher, viewed_application_feature_reminder_page_at: false) }
 
-  before do
-    login_publisher(publisher: publisher, organisation: organisation)
-    vacancy.organisation_vacancies.create(organisation: organisation)
-  end
+  before { login_publisher(publisher: publisher, organisation: organisation) }
 
   context "Visiting the school page" do
     context "Create a vacancy" do
