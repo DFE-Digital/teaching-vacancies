@@ -5,52 +5,55 @@
 .govuk-grid-row.vacancy class="govuk-!-margin-top-7"
   .govuk-grid-column-full
     h2.govuk-heading-l = t(".title")
-    - if vacancy.can_receive_job_applications?
-      p.govuk-body
-        = t(".intro")
-        br
-        = t(".explanation")
-    - elsif vacancy.draft?
+    - if vacancy.draft? || vacancy.pending?
       = govuk_inset_text text: t(".draft_vacancy")
 
-    = govuk_button_link_to t("buttons.download_stats"), organisation_job_statistics_path(vacancy.id, format: :csv), class: "govuk-button--secondary"
+    - else
+      - if vacancy.can_receive_job_applications?
+        p.govuk-body
+          = t(".intro")
+          br
+          = t(".explanation")
 
-  .govuk-grid-column-two-thirds
-    h3.govuk-heading-m = t(".listing_data")
+      = govuk_button_link_to t("buttons.download_stats"), organisation_job_statistics_path(vacancy.id, format: :csv), class: "govuk-button--secondary"
 
-    = render DetailComponent.new do |detail|
-      - detail.body do
-        = govuk_summary_list classes: "govuk-!-margin-bottom-0", html_attributes: { id: "vacancy_statistics" } do |summary_list|
-          - summary_list.row do |row|
-            - row.key text: t(".views_by_jobseeker")
-            - row.value text: @number_of_unique_views
-
-          - summary_list.row do |row|
-            - row.key text: t(".saves_by_jobseeker")
-            - row.value text: vacancy.saved_jobs.count
-
-    - if vacancy.can_receive_job_applications?
-      h3.govuk-heading-m = t(".application_data")
+  - unless vacancy.draft? || vacancy.pending?
+    .govuk-grid-column-two-thirds
+      h3.govuk-heading-m = t(".listing_data")
 
       = render DetailComponent.new do |detail|
         - detail.body do
-          = govuk_summary_list classes: "govuk-!-margin-bottom-0", html_attributes: { id: "job_applications_statistics" } do |summary_list|
+          = govuk_summary_list classes: "govuk-!-margin-bottom-0", html_attributes: { id: "vacancy_statistics" } do |summary_list|
             - summary_list.row do |row|
-              - row.key text: t(".total_applications")
-              - row.value text: vacancy.job_applications.not_draft.count
+              - row.key text: t(".views_by_jobseeker")
+              - row.value text: @number_of_unique_views
 
             - summary_list.row do |row|
-              - row.key text: t(".unread_applications")
-              - row.value text: vacancy.job_applications.submitted.count
+              - row.key text: t(".saves_by_jobseeker")
+              - row.value text: vacancy.saved_jobs.count
 
-            - summary_list.row do |row|
-              - row.key text: t(".shortlisted_applications")
-              - row.value text: vacancy.job_applications.shortlisted.count
+      - if vacancy.can_receive_job_applications?
+        h3.govuk-heading-m = t(".application_data")
 
-            - summary_list.row do |row|
-              - row.key text: t(".rejected_applications")
-              - row.value text: vacancy.job_applications.unsuccessful.count
+        = render DetailComponent.new do |detail|
+          - detail.body do
+            = govuk_summary_list classes: "govuk-!-margin-bottom-0", html_attributes: { id: "job_applications_statistics" } do |summary_list|
+              - summary_list.row do |row|
+                - row.key text: t(".total_applications")
+                - row.value text: vacancy.job_applications.not_draft.count
 
-            - summary_list.row do |row|
-              - row.key text: t(".withdrawn_applications")
-              - row.value text: vacancy.job_applications.withdrawn.count
+              - summary_list.row do |row|
+                - row.key text: t(".unread_applications")
+                - row.value text: vacancy.job_applications.submitted.count
+
+              - summary_list.row do |row|
+                - row.key text: t(".shortlisted_applications")
+                - row.value text: vacancy.job_applications.shortlisted.count
+
+              - summary_list.row do |row|
+                - row.key text: t(".rejected_applications")
+                - row.value text: vacancy.job_applications.unsuccessful.count
+
+              - summary_list.row do |row|
+                - row.key text: t(".withdrawn_applications")
+                - row.value text: vacancy.job_applications.withdrawn.count
