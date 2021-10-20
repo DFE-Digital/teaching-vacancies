@@ -19,7 +19,7 @@
         li at a state-funded school or trust in England, or
         li if you work at a local authority and list job vacancies on behalf of schools
 
-      = govuk_button_link_to t("buttons.request_dsi_account"), "https://profile.signin.education.gov.uk/register"
+      = govuk_button_link_to t("buttons.request_dsi_account"), ENV.fetch("DFE_SIGN_IN_REGISTRATION_URL", "https://profile.signin.education.gov.uk/register")
 
       h3.govuk-heading-m If you already have a DfE Sign-in account
 
