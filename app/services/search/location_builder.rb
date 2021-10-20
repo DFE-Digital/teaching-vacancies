@@ -33,7 +33,7 @@ class Search::LocationBuilder
   private
 
   def initialize_polygon_boundaries
-    @polygon_boundaries = LocationPolygon.buffered(radius).with_name(location).to_algolia_polygons
+    @polygon_boundaries = LocationPolygon.buffered(radius).with_name(location)&.to_algolia_polygons
   end
 
   def build_location_filter
