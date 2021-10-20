@@ -140,7 +140,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :new_features, only: %i[show update], controller: "publishers/new_features"
+  resource :new_features, only: %i[show update], controller: "publishers/new_features" do
+    get :reminder
+  end
 
   resource :terms_and_conditions, only: %i[show update], controller: "publishers/terms_and_conditions"
 
