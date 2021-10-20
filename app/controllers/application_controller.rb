@@ -1,3 +1,5 @@
+puts "test"
+
 class ApplicationController < ActionController::Base
   SUSPICIOUS_RECAPTCHA_THRESHOLD = 0.5
   VALID_CLICK_EVENT_TYPES = %w[vacancy_save_to_account_clicked].freeze
