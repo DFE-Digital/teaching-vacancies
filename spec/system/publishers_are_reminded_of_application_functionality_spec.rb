@@ -3,13 +3,13 @@ require "rails_helper"
 RSpec.describe "Application feature reminder" do
   let(:organisation) { create(:school, name: "A school with a vacancy") }
   let!(:vacancy) { create(:vacancy, :published, enable_job_applications: false, created_at: 1.days.ago, publisher_id: publisher.id, organisations: [organisation]) }
-  let(:publisher) { create(:publisher) }
+  let(:publisher) { create(:publisher, viewed_application_feature_reminder_page_at: nil) }
 
   before { login_publisher(publisher: publisher, organisation: organisation) }
 
   context "Visiting the school page" do
     context "Create a vacancy" do
-      it "Displays application feature reminder" do
+      it "Displays application feature reminder before first build step" do
         visit organisation_path
         click_on I18n.t("buttons.create_job")
 
@@ -19,6 +19,11 @@ RSpec.describe "Application feature reminder" do
         click_on I18n.t("jobs.reminder_continue_button")
 
         expect(current_path).to eq(organisation_job_build_path(Vacancy.order("created_at").last.id, :job_role))
+
+        choose find(:css, ".govuk-radios .govuk-radios__item label", match: :first).text
+        click_on I18n.t("buttons.continue")
+
+        expect(page).not_to have_content(I18n.t("jobs.reminder_title"))
       end
     end
 
