@@ -17,12 +17,16 @@ RSpec.describe VacancyFacets do
   end
 
   describe "#cities" do
+    before { create(:location_polygon) }
+
     it "returns the expected facets" do
       expect(subject.cities.values.uniq).to eq([42])
     end
   end
 
   describe "#counties" do
+    before { create(:location_polygon) }
+
     it "returns the expected facets" do
       expect(subject.counties.values.uniq).to eq([42])
     end
