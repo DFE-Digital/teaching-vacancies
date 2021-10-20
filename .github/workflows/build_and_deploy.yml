@@ -166,7 +166,6 @@ jobs:
 
   deploy:
     name: Deploy app
-    if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name != 'pull_request'
     strategy:
       max-parallel: 1
       # Creates a variable 'environment' from the build job output 'matrix_environments'
