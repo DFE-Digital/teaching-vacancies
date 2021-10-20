@@ -1,0 +1,31 @@
+name: Do not run CI-CD
+
+on:
+  push:
+    branches:
+    - master
+    - dev     # Push to branch other than master deploys directly to environment with the same name. ie 'dev' branch deploys to 'dev' environment
+    paths-ignore:
+    - 'bigquery/**'
+    - 'documentation/**'
+    - 'terraform/common/**'
+    - '**.md'
+
+  pull_request:
+    branches:
+    - master
+
+    paths-ignore:
+    - 'bigquery/**'
+    - 'documentation/**'
+    - 'terraform/common/**'
+    - 'terraform/monitoring/**'
+    - '**.md'
+
+jobs:
+  docs:
+    name: Ignore_path
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Do not run CI/CD
+        run: echo "Do not run CI/CD"
