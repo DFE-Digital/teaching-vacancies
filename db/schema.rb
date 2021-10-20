@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_14_152432) do
+ActiveRecord::Schema.define(version: 2021_10_18_141753) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -348,6 +348,8 @@ ActiveRecord::Schema.define(version: 2021_10_14_152432) do
     t.text "family_name_ciphertext"
     t.text "given_name_ciphertext"
     t.datetime "dismissed_new_features_page_at"
+    t.datetime "viewed_new_features_page_at"
+    t.datetime "viewed_application_feature_reminder_page_at"
     t.index ["oid"], name: "index_publishers_on_oid", unique: true
   end
 
