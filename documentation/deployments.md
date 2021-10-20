@@ -38,17 +38,22 @@ The GitHub actions workflow [deploy_branch.yml](/.github/workflows/deploy_branch
 - Calls the [deploy_app.yml](/.github/workflows/deploy_app.yml) workflow to use Terraform to update the `web` and `worker` apps to use the new Docker image, and apply any changes to the `dev` environment
 - Sends a Slack notification to the `#twd_tv_dev` channel
 
+### Checks before merging to master branch - GitHub Actions
+
+- There are GitHub Action checks, which must pass before a merge is allowed to the master branch. This is configured through GitHub's settings > Braches > Edit branch protection rules. From here, you can add or remove checks to perform before merging
+
 ### Build and deploy to staging and production - GitHub Actions
 
-When a PR is approved and merged into `master` branch, the GitHub actions workflow [deploy.yml](/.github/workflows/deploy) performs these steps:
+When a PR is approved and merged into `master` branch, the GitHub actions workflow [build_and_deploy.yml](../.github/workflows/build_and_deploy.yml) performs these steps:
 
 - Builds and tags a Docker image from code in the `master` branch
 - Tags the Docker image with the commit SHA as the tag
 - Logs in to Github's container registry as the service account `twd-tv-ci`
 - Pushes the image to GitHub packages
-- Calls the [deploy_app.yml](/.github/workflows/deploy_app.yml) workflow to use Terraform to update the `web` and `worker` apps to use the new Docker image, and apply any changes to the `staging` environment
+- Calls the [deploy_app.yml](../.github/workflows/deploy_app.yml) workflow to use Terraform to update the `web` and `worker` apps to use the new Docker image, and apply any changes to the `staging` environment
 - Runs a smoke test against the `staging` environment
-- Calls the [deploy_app.yml](/.github/workflows/deploy_app.yml) workflow to use Terraform to update the `web` and `worker` apps to use the new Docker image, and apply any changes to the `production` environment
+- Calls the [deploy_app.yml](../.github/workflows/deploy_app.yml) workflow to use Terraform to update the `web` and `worker` apps to use the new Docker image, and apply any changes to the `production` environment, same is done for `QA` and `research` environments.
+- Performs Post Deployment steps e.g. deploy terraform/monitoring module, which is responsible for deploying Prometheus, influxDB and Grafana.
 - Sends a Slack notification to the `#twd_tv_dev` channel
 
 ### Merge and concurrency deployment management
@@ -75,10 +80,11 @@ performs these steps:
 
 Requirements:
 - docker CLI of at least version `19.03`
-- [terraform CLI](https://www.terraform.io/downloads.html) of at least version `0.15.5`
+- [terraform CLI](https://www.terraform.io/downloads.html) of at least version `1.0.8`
 - Write access to Docker Hub `dfedigital/teaching-vacancies` repository. Ask in #digital-tools-support should you require it.
 - Log in to Container registry (with `docker login ghcr.io -u USERNAME` - use PAT token as passoword)
 - Log in to GOV.UK PaaS (with `cf login --sso`). You will need a [Passcode](https://login.london.cloud.service.gov.uk/passcode)
+
 
 ## Deploy a pre-built image
 
@@ -96,6 +102,7 @@ The [refresh.yml](/.github/workflows/refresh.yml) workflow:
 
 Go to the [Refresh environment](https://github.com/DFE-Digital/teaching-vacancies/actions?query=workflow%3A%22Refresh+environment%22) workflow:
 Click "Run workflow", and choose:
+
 - Use workflow from `Branch: master`
 - Environment: e.g. `production` (or `staging`, `qa`, or `dev`)
 
@@ -131,6 +138,16 @@ Requirements:
 - [terraform CLI](https://www.terraform.io/downloads.html) of at least version `0.15.5`
 - Log in to GitHub Packages (with `docker login ghcr.io -u USERNAME` - use PAT token as passoword)
 - Log in to GOV.UK PaaS (with `cf login --sso`). You will need a [Passcode](https://login.london.cloud.service.gov.uk/passcode)
+
+
+## Replace PostgresDB
+
+- A new logic (target) has been added to the makefile, which allows for the database in a particular environment to destroyed and recreated
+```bash
+make review ci terraform-app-database-replace pr_id=3982 tag=master CONFIRM_REPLACE=yes
+```
+There is also a corresponding GitHub Action workflow - .github/workflows/recreate-qa-database.yml
+
 
 ## Remove review app
 
