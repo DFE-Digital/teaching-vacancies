@@ -132,7 +132,7 @@ Requirements:
 - Log in to GitHub Packages (with `docker login ghcr.io -u USERNAME` - use PAT token as passoword)
 - Log in to GOV.UK PaaS (with `cf login --sso`). You will need a [Passcode](https://login.london.cloud.service.gov.uk/passcode)
 
-## Remove review app
+## Remove review appxxxx
 
 ### Remove review app - GitHub Actions
 
