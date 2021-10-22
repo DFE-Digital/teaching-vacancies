@@ -178,7 +178,7 @@ jobs:
     - uses: actions/checkout@v2
       name: Checkout Code
 
-    - name: Set environment variables from build output
+    - name: Set environment variables from build outputxx
       run: |
         echo "COMMIT_SHA=${{ needs.build.outputs.commit_sha }}" >> $GITHUB_ENV
         echo "DOCKER_IMAGE_TAG=${{ needs.build.outputs.docker_image_tag }}" >> $GITHUB_ENV
