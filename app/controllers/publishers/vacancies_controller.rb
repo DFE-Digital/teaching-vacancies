@@ -1,6 +1,7 @@
 class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   before_action :redirect_if_published, only: %i[preview review]
   before_action :invent_job_alert_search_criteria, only: %i[show preview]
+  before_action :redirect_to_new_features_reminder, only: %i[create]
 
   def show
     validate_all_steps
@@ -49,6 +50,20 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     return unless vacancy.published?
 
     redirect_to organisation_job_path(vacancy.id), notice: t("messages.jobs.already_published")
+  end
+
+  def redirect_to_new_features_reminder
+    redirect_to reminder_new_features_path if show_application_reminder_page?
+  end
+
+  def show_application_reminder_page?
+    return false if current_publisher.viewed_application_feature_reminder_page_at.present?
+    return false if (viewed_at = current_publisher.viewed_new_features_page_at).blank?
+
+    Vacancy.published
+      .where(created_at: viewed_at..)
+      .where(enable_job_applications: true)
+      .any?
   end
 
   def validate_all_steps
