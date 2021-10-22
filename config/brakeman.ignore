@@ -71,8 +71,28 @@
       "user_input": "convert_miles_to_metres(radius_in_miles)",
       "confidence": "Medium",
       "note": "Helper forces conversion to integer, temporary method that will be removed so"
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "e78cf0e304d252b88e78e94073acc31bbcc36810630ecd67bdac0c44d50d1e75",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/queries/vacancy_location_query.rb",
+      "line": 24,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "scope.joins(\"\\n          INNER JOIN location_polygons\\n          ON ST_DWithin(vacancies.geolocation, location_polygons.area, #{convert_miles_to_metres(radius_in_miles.to_i)})\\n        \")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "VacancyLocationQuery",
+        "method": "call"
+      },
+      "user_input": "convert_miles_to_metres(radius_in_miles.to_i)",
+      "confidence": "Weak",
+      "note": "User input is coerced to integer"
     }
   ],
-  "updated": "2021-10-14 17:41:12 +0100",
+  "updated": "2021-10-22 13:54:05 +0100",
   "brakeman_version": "5.1.1"
 }

@@ -58,6 +58,8 @@ class Vacancy < ApplicationRecord
   scope :pending, (-> { published.where("publish_on > ?", Date.current) })
   scope :published_on_count, (->(date) { published.where(publish_on: date.all_day).count })
 
+  scope :search_by_location, VacancyLocationQuery
+
   paginates_per 10
 
   validates :slug, presence: true
