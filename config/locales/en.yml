@@ -219,7 +219,7 @@ en:
   home:
     index:
       browse_all: Browse all teaching jobs in England
-      publisher_signin: 
+      publisher_signin:
         title: Advertise a school job
         description_html: "%{signin_link} to manage your job listings and applicants or %{signup_link}."
         link_text:
@@ -509,3 +509,5 @@ en:
         results:
           one: (%{count} result)
           other: (%{count} results)
+    show:
+      page_description: '%{job_title} job from %{organisation}. Apply by %{deadline}.'
