@@ -4,6 +4,7 @@ class Publishers::JobListing::ApplyingForTheJobForm < Publishers::JobListing::Va
   validates :enable_job_applications, inclusion: { in: [true, false, "true", "false"] }, if: proc { vacancy.allow_enabling_job_applications? }
   validates :how_to_apply, presence: true, unless: proc { enable_job_applications.in?(["true", true]) }
   validates :application_link, url: true, if: proc { application_link.present? }
+  validate :application_link_valid_uri, if: proc { application_link.present? }
 
   validates :contact_email, presence: true
   validates :contact_email, email_address: true, if: proc { contact_email.present? }
@@ -20,9 +21,17 @@ class Publishers::JobListing::ApplyingForTheJobForm < Publishers::JobListing::Va
 
   def application_link=(link)
     @application_link = Addressable::URI.heuristic_parse(link).to_s
+  rescue Addressable::URI::InvalidURIError
+    @application_link = link
   end
 
   private
+
+  def application_link_valid_uri
+    Addressable::URI.heuristic_parse(application_link)
+  rescue Addressable::URI::InvalidURIError
+    errors.add(:application_link, I18n.t("applying_for_the_job_errors.application_link.url"))
+  end
 
   def override_enable_job_applications!
     # If a publisher is signed in as an LA, we do not allow them to set the job applications feature.
