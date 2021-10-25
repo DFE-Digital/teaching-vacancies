@@ -1,6 +1,4 @@
-class Publishers::JobListing::FeedbackForm
-  include ActiveModel::Model
-
+class Publishers::JobListing::FeedbackForm < BaseForm
   attr_accessor :comment, :email, :rating, :report_a_problem, :user_participation_response
 
   validates :report_a_problem, inclusion: { in: %w[yes no] }
