@@ -13,7 +13,7 @@ class CardComponent < GovukComponent::Base
   def labelled_item(label, value)
     tag.dl do
       safe_join([
-        tag.dt(label, class: "card-component__item-label govuk-!-font-weight-bold"),
+        tag.dt(label),
         tag.dd(value),
       ])
     end
