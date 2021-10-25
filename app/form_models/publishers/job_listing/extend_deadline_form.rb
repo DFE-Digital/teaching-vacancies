@@ -1,5 +1,4 @@
-class Publishers::JobListing::ExtendDeadlineForm
-  include ActiveModel::Model
+class Publishers::JobListing::ExtendDeadlineForm < BaseForm
   include ActiveRecord::AttributeAssignment
   include DateAttributeAssignment
 

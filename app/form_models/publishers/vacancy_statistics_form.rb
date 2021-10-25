@@ -1,6 +1,4 @@
-class Publishers::VacancyStatisticsForm
-  include ActiveModel::Model
-
+class Publishers::VacancyStatisticsForm < BaseForm
   attr_accessor :hired_status, :listed_elsewhere
 
   validate :all_questions_completed
