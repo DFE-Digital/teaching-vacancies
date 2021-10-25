@@ -1,4 +1,4 @@
-class CookiesPreferencesForm
+class CookiesPreferencesForm < BaseForm
   include ActiveModel::Model
 
   attr_accessor :cookies_consent

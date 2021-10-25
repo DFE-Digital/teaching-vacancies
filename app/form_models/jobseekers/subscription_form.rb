@@ -1,6 +1,4 @@
-class Jobseekers::SubscriptionForm
-  include ActiveModel::Model
-
+class Jobseekers::SubscriptionForm < BaseForm
   attr_accessor :email, :frequency,
                 :keyword, :location, :radius,
                 :job_roles, :phases, :working_patterns,
