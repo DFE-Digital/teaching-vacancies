@@ -27,11 +27,15 @@ class Publishers::LoginKeysController < ApplicationController
   private
 
   def redirect_signed_in_publishers
-    redirect_to organisation_path if publisher_signed_in? && current_organisation.present?
+    return unless publisher_signed_in? && current_organisation.present?
+
+    redirect_to organisation_path
   end
 
   def redirect_for_dsi_authentication
-    redirect_to new_publisher_session_path unless AuthenticationFallback.enabled?
+    return if AuthenticationFallback.enabled?
+
+    redirect_to new_publisher_session_path
   end
 
   def send_login_key(publisher:)
