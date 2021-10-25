@@ -1,7 +1,4 @@
-class Publishers::JobListing::VacancyForm
-  include ActiveModel::Model
-  include ActiveModel::Validations::Callbacks
-
+class Publishers::JobListing::VacancyForm < BaseForm
   attr_accessor :params, :vacancy, :completed_steps, :current_organisation
 
   def initialize(params = {}, vacancy = nil)
