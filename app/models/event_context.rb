@@ -12,7 +12,7 @@ class EventContext < ActiveSupport::CurrentAttributes
   end
 
   def trigger_event(event_type, data = {})
-    return unless Rails.configuration.analytics.key?(data["table_name"].to_sym)
+    return if data["table_name"] && !Rails.configuration.analytics.key?(data["table_name"].to_sym)
     return if events_suppressed
 
     event.trigger(event_type, data)
