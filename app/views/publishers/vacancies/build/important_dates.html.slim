@@ -32,11 +32,11 @@
           ->(option) { option },
           ->(option) { t("helpers.options.publishers_job_listing_extend_deadline_form.expiry_time.#{option}") }
 
-        .clear-form
-          = f.govuk_date_field :starts_on
+        = f.govuk_radio_buttons_fieldset :starts_asap, legend: { text: "Date job starts (optional)" } do
+          = f.govuk_radio_button :starts_asap, 0, link_errors: true, label: { text: "On a specific day" } do
+            = f.govuk_date_field :starts_on, legend: { text: "Enter date" }
 
-          .clear-form__checkbox
-            = f.govuk_check_box :starts_asap, "true", 0, multiple: false, link_errors: false
+          = f.govuk_radio_button :starts_asap, 1, label: { text: "As soon as possible" }
 
         = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
