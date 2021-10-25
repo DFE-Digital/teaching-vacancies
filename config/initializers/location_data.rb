@@ -15,8 +15,12 @@ DOWNCASE_COMPOSITE_LOCATIONS = composite_locations.transform_keys(&:downcase).fr
 ALL_IMPORTED_LOCATIONS =
   (DOWNCASE_ONS_REGIONS + DOWNCASE_COMPOSITE_LOCATIONS.keys + DOWNCASE_ONS_COUNTIES_AND_UNITARY_AUTHORITIES + DOWNCASE_ONS_CITIES).uniq.freeze
 
-# See documentation/business-analyst-activities.md
-MAPPED_LOCATIONS = YAML.load_file(base_path.join("mapped_locations.yml"))
+# Map from a user-inputted search term to a location polygon's name.
+# We also need to map landing page location params to the location polygon's name, since these are `#parameterize`d in
+# the routes and `#titleize`d in VacanciesController, but those operations are not symmetrical.
+# See also documentation/business-analyst-activities.md
+landing_page_location_params_mapping = ALL_IMPORTED_LOCATIONS.map { |location| [location.parameterize.titleize.downcase, location] }.to_h
+MAPPED_LOCATIONS = YAML.load_file(base_path.join("mapped_locations.yml")).merge(landing_page_location_params_mapping)
 
 # Locations with the location type from a human point of view for VacancyFacets
 LOCATIONS_MAPPED_TO_HUMAN_FRIENDLY_TYPES = [

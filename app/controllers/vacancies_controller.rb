@@ -4,8 +4,6 @@ class VacanciesController < ApplicationController
   before_action :set_landing_page_description, :set_map_display, :set_params_from_pretty_landing_page_params, only: %i[index]
 
   def index
-    set_params_from_pretty_landing_page_params
-
     @vacancies_search = Search::VacancySearch.new(
       search_form.to_hash,
       sort_by: search_form.jobs_sort,
