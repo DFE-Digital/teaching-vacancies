@@ -18,6 +18,12 @@
   .govuk-label.govuk-label--s,
   .js-location-finder__link {
     color: govuk-colour('white');
+
+    .govuk-link {
+      &:focus {
+        color: $govuk-focus-text-colour;
+      }
+    }
   }
 }
 
