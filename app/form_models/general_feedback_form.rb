@@ -1,6 +1,4 @@
-class GeneralFeedbackForm
-  include ActiveModel::Model
-
+class GeneralFeedbackForm < BaseForm
   attr_accessor :comment, :email, :report_a_problem, :user_participation_response, :visit_purpose, :visit_purpose_comment
 
   validates :report_a_problem, inclusion: { in: %w[yes no] }

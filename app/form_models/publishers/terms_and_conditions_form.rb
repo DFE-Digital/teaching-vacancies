@@ -1,6 +1,4 @@
-class Publishers::TermsAndConditionsForm
-  include ActiveModel::Model
-
+class Publishers::TermsAndConditionsForm < BaseForm
   attr_accessor :terms
 
   validates :terms, presence: true

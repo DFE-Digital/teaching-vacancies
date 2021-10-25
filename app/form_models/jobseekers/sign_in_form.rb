@@ -1,6 +1,4 @@
-class Jobseekers::SignInForm
-  include ActiveModel::Model
-
+class Jobseekers::SignInForm < BaseForm
   attr_accessor :email, :password
 
   validates :email, presence: true, email_address: true
