@@ -14,7 +14,7 @@
         = f.govuk_text_field :email_address, required: true
 
         = f.govuk_radio_buttons_fieldset(:is_for_whole_site, legend: { size: "m" }) do
-          = f.govuk_radio_button :is_for_whole_site, :yes, link_errors: true do
+          = f.govuk_radio_button :is_for_whole_site, :yes, link_errors: true
           = f.govuk_radio_button :is_for_whole_site, :no
             = f.govuk_text_field :page, required: true
 
