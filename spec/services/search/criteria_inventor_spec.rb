@@ -13,7 +13,7 @@ RSpec.shared_examples "radius is set" do
 end
 
 RSpec.describe Search::CriteriaInventor do
-  subject { described_class.new(vacancy, working_patterns_variant) }
+  subject { described_class.new(vacancy) }
 
   let(:postcode) { "ab12 3cd" }
   let(:readable_phases) { %w[secondary primary] }
@@ -33,7 +33,6 @@ RSpec.describe Search::CriteriaInventor do
                                      job_title: job_title,
                                      job_roles: job_roles)
   end
-  let(:working_patterns_variant) { :default }
 
   describe "#criteria" do
     context "location" do
@@ -48,15 +47,10 @@ RSpec.describe Search::CriteriaInventor do
       end
 
       context "when the vacancy is associated to multiple schools in a school group" do
-        let(:school1) { create(:school) }
-        let(:school2) { create(:school) }
+        let(:school1) { create(:school, school_groups: [trust]) }
+        let(:school2) { create(:school, school_groups: [trust]) }
         let(:associated_orgs) { [school1, school2] }
         let(:location_trait) { :at_multiple_schools }
-
-        before do
-          SchoolGroupMembership.create(school: school1, school_group: trust)
-          SchoolGroupMembership.create(school: school2, school_group: trust)
-        end
 
         it "uses the vacancy's postcode_from_mean_geolocation attribute" do
           expect(subject.criteria[:location]).to eq(postcode_from_mean_geolocation)
@@ -87,20 +81,8 @@ RSpec.describe Search::CriteriaInventor do
     end
 
     describe "working_patterns" do
-      context "when working_patterns_variant is set to default" do
-        let(:working_patterns_variant) { :default }
-
-        it "sets the working patterns to the same as the vacancy" do
-          expect(subject.criteria[:working_patterns]).to eq(working_patterns)
-        end
-      end
-
-      context "when working_patterns_variant is set to absent" do
-        let(:working_patterns_variant) { :absent }
-
-        it "does not set working_patterns" do
-          expect(subject.criteria[:working_patterns]).to eq(nil)
-        end
+      it "does not set working_patterns" do
+        expect(subject.criteria[:working_patterns]).to eq(nil)
       end
     end
 

@@ -2,7 +2,6 @@ class SitemapController < ApplicationController
   def show
     map = XmlSitemap::Map.new(DOMAIN, secure: !Rails.env.development?) do |m|
       add_vacancies(m)
-      add_new_session(m)
       add_locations(m)
       add_subjects(m)
       add_job_roles(m)
@@ -20,10 +19,6 @@ class SitemapController < ApplicationController
     Vacancy.listed.applicable.find_each do |vacancy|
       map.add job_path(vacancy), updated: vacancy.updated_at, expires: vacancy.expires_at, period: "hourly", priority: 0.7
     end
-  end
-
-  def add_new_session(map)
-    map.add new_publisher_session_path, period: "weekly", priority: 0.8
   end
 
   def add_locations(map)

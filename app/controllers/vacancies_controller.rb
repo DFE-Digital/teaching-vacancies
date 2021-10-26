@@ -4,8 +4,6 @@ class VacanciesController < ApplicationController
   before_action :set_landing_page_description, :set_map_display, :set_params_from_pretty_landing_page_params, only: %i[index]
 
   def index
-    set_params_from_pretty_landing_page_params
-
     @vacancies_search = Search::VacancySearch.new(
       search_form.to_hash,
       sort_by: search_form.jobs_sort,
@@ -28,7 +26,7 @@ class VacanciesController < ApplicationController
 
     @saved_job = current_jobseeker&.saved_jobs&.find_by(vacancy_id: vacancy.id)
     @vacancy = VacancyPresenter.new(vacancy)
-    @invented_job_alert_search_criteria = Search::CriteriaInventor.new(vacancy, ab_variant_for(:"2021_10_working_patterns_in_similar_jobs_test")).criteria
+    @invented_job_alert_search_criteria = Search::CriteriaInventor.new(vacancy).criteria
     @similar_jobs = Search::SimilarJobs.new(vacancy).similar_jobs
   end
 

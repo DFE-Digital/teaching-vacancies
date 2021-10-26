@@ -29,10 +29,8 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
     context "when job applications have been received" do
       context "when organisation is a school" do
         let(:organisation) { create(:school, name: "A school with jobs") }
-        let(:vacancy) { create(:vacancy, :published) }
+        let(:vacancy) { create(:vacancy, :published, organisations: [organisation]) }
         let!(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
-
-        before { vacancy.organisation_vacancies.create(organisation: organisation) }
 
         let!(:inline_component) { render_inline(subject) }
 
@@ -80,16 +78,11 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       end
 
       context "when organisation is a trust" do
-        let(:organisation) { create(:trust) }
+        let(:organisation) { create(:trust, schools: [open_school, closed_school]) }
         let(:open_school) { create(:school, name: "Open school") }
         let(:closed_school) { create(:school, :closed, name: "Closed school") }
         let!(:vacancy) { create(:vacancy, :published, :central_office, organisations: [organisation]) }
         let!(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
-
-        before do
-          organisation.school_group_memberships.create(school: open_school)
-          organisation.school_group_memberships.create(school: closed_school)
-        end
 
         let!(:inline_component) { render_inline(subject) }
 
@@ -136,18 +129,12 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       end
 
       context "when the organisation is a local authority" do
-        let(:organisation) { create(:local_authority) }
+        let(:organisation) { create(:local_authority, schools: [open_school, closed_school]) }
         let(:open_school) { create(:school, name: "Open school") }
         let(:closed_school) { create(:school, :closed, name: "Closed school") }
-        let(:publisher_preference) { create(:publisher_preference, publisher: publisher, organisation: organisation) }
+        let(:publisher_preference) { create(:publisher_preference, publisher: publisher, organisation: organisation, schools: [open_school]) }
         let!(:vacancy) { create(:vacancy, :published, :at_one_school, organisations: [open_school]) }
         let!(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
-
-        before do
-          organisation.school_group_memberships.create(school: open_school)
-          organisation.school_group_memberships.create(school: closed_school)
-          publisher_preference.local_authority_publisher_schools.create(school_id: open_school.id)
-        end
 
         let!(:inline_component) { render_inline(subject) }
 
@@ -203,12 +190,9 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
 
     context "when job applications have not been received" do
       let(:organisation) { create(:school, name: "A school with jobs") }
-      let(:vacancy) { create(:vacancy, :published) }
+      let!(:vacancy) { create(:vacancy, :published, organisations: [organisation]) }
 
-      before do
-        vacancy.organisation_vacancies.create(organisation: organisation)
-        render_inline(subject)
-      end
+      before { render_inline(subject) }
 
       it "renders plain text of 0 applicants" do
         expect(rendered_component).to include(I18n.t("jobs.manage.view_applicants", count: 0))
@@ -221,8 +205,9 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
     let(:organisation) { create(:trust, schools: [school_oxford, school_cambridge]) }
     let(:school_oxford) { create(:school, name: "Oxford") }
     let(:school_cambridge) { create(:school, name: "Cambridge") }
-    let!(:organisation_publisher_preference) { OrganisationPublisherPreference.create(organisation: school_oxford, publisher_preference: publisher_preference) }
     let!(:vacancy_cambridge) { create(:vacancy, :published, :at_one_school, organisations: [school_cambridge], job_title: "Scientist") }
+
+    before { publisher_preference.update organisations: [school_oxford] }
 
     context "when a relevant job exists" do
       let!(:vacancy_oxford) { create(:vacancy, :published, :at_one_school, organisations: [school_oxford], job_title: "Mathematician") }

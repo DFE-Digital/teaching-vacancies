@@ -3,6 +3,7 @@ require "sidekiq/cron/web"
 
 Rails.application.routes.draw do
   unless Rails.env.development?
+    Sidekiq::Web.use ActionDispatch::Session::ActiveRecordStore
     Sidekiq::Web.use Rack::Auth::Basic do |username, password|
       ActiveSupport::SecurityUtils.secure_compare(::Digest::SHA256.hexdigest(username), ::Digest::SHA256.hexdigest(ENV["SIDEKIQ_USERNAME"])) &
         ActiveSupport::SecurityUtils.secure_compare(::Digest::SHA256.hexdigest(password), ::Digest::SHA256.hexdigest(ENV["SIDEKIQ_PASSWORD"]))
@@ -126,6 +127,8 @@ Rails.application.routes.draw do
     resources :job_alert_feedbacks, only: %i[new update edit], controller: "jobseekers/job_alert_feedbacks"
     resources :unsubscribe_feedbacks, only: %i[new create], controller: "jobseekers/unsubscribe_feedbacks"
   end
+
+  get "teaching-jobs-for-nqt_suitable", to: redirect("teaching-jobs-for-ect-suitable")
 
   get "sign-up-for-NQT-job-alerts", to: redirect("/sign-up-for-ECT-job-alerts")
 

@@ -4,8 +4,6 @@
 # delegated types in the future, which won't require this workaround so we'll be able
 # to delete this.
 
-SINGLE_TABLE_INHERITANCE_LEAVES = %w[school school_group].freeze
-
-SINGLE_TABLE_INHERITANCE_LEAVES.each do |leaf|
-  Rails.autoloaders.main.preload(Rails.root.join("app", "models", "#{leaf}.rb"))
+Rails.autoloaders.main.on_setup do
+  [School, SchoolGroup]
 end

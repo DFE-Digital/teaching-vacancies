@@ -88,7 +88,7 @@ module Indexable
       attributesForFaceting %i[job_roles working_patterns education_phases subjects]
 
       add_replica "#{INDEX_NAME}_publish_on_desc", inherit: true do
-        ranking ["desc(publication_date_timestamp)"]
+        ranking %w[desc(publication_date_timestamp) desc(last_updated_at)]
       end
 
       add_replica "#{INDEX_NAME}_expires_at_desc", inherit: true do
