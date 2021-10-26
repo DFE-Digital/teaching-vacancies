@@ -111,11 +111,11 @@ class Vacancy < ApplicationRecord
   end
 
   def allow_key_stages?
-    !one_phase? || education_phases == %w[primary] || education_phases == %w[middle]
+    !one_phase? || readable_phases == %w[primary] || readable_phases == %w[middle]
   end
 
   def allow_subjects?
-    education_phases != ["primary"]
+    readable_phases != ["primary"]
   end
 
   def within_data_access_period?

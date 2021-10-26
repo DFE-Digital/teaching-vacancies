@@ -11,7 +11,7 @@ module Indexable
     scope :unindexed, (-> { live.where(initially_indexed: false) })
 
     algoliasearch index_name: INDEX_NAME, auto_index: !Rails.env.test?, auto_remove: !Rails.env.test?, if: :listed? do
-      attributes :education_phases, :job_roles, :job_title, :parent_organisation_name, :salary, :subjects, :working_patterns, :_geoloc
+      attributes :job_roles, :job_title, :parent_organisation_name, :salary, :subjects, :working_patterns, :_geoloc
 
       attribute :about_school do
         strip_tags(about_school)&.truncate(256)
@@ -19,6 +19,10 @@ module Indexable
 
       attribute :benefits do
         strip_tags(benefits)
+      end
+
+      attribute :education_phases do
+        readable_phases
       end
 
       attribute :expires_at do
