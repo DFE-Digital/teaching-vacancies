@@ -19,6 +19,16 @@ namespace :algolia do
   end
 end
 
+namespace :data do
+  desc "Set `readable_location` column for all existing vacancies"
+  task populate_vacancy_readable_location: :environment do
+    Vacancy.find_each do |vacancy|
+      # update_column so as to not update timestamps/run other callbacks
+      vacancy.update_column(:readable_phases, vacancy.education_phases)
+    end
+  end
+end
+
 namespace :db do
   desc "Asynchronously import organisations from GIAS and seed the database"
   task async_seed: :environment do
