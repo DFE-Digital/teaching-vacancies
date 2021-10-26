@@ -40,7 +40,6 @@ module ApplicationHelper
       "Privacy policy" => page_path("privacy-policy"),
       "Terms and Conditions" => page_path("terms-and-conditions"),
       "Accessibility" => page_path("accessibility"),
-      t("footer.updates") => updates_path,
     }
   end
 end
