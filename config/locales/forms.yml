@@ -62,6 +62,7 @@ en:
     save_reference: Save referee
     search: Search
     select_file: Select a file
+    send_message: Send message
     set_preferences: Set your preferences
     shortlist: Shortlist
     sign_in: Sign in
@@ -593,10 +594,18 @@ en:
           part_time: Part time
           term_time: Term time
           job_share: Job share
-
       publishers_vacancy_statistics_form:
         hired_status: Job filled on Teaching Vacancies?
         listed_elsewhere: Listed elsewhere?
+      support_request_form:
+        email_address: Email address
+        is_for_whole_site_options:
+          "no": "A specific page"
+          "yes": "The whole site"
+        issue: Tell us about your problem or question
+        name: Name
+        page: Enter the URL or the name of the page
+        screenshot: Upload a file
 
     legend:
       general_feedback_form:
@@ -702,6 +711,9 @@ en:
         organisation_id: In which school will the job be based?
       publishers_job_listing_working_patterns_form:
         working_patterns: Working patterns
+      support_request_form:
+        is_for_whole_site: What area of the website is your problem or question about?
+        screenshot: Upload screenshots (optional)
 
     options:
       publishers_job_listing_end_listing_form:

@@ -118,6 +118,7 @@ Rails.application.routes.draw do
   resources :shares, only: %i[new]
 
   resource :feedback, only: %i[new create], controller: "general_feedbacks"
+  resource :support_request, only: %i[new create]
 
   resources :subscriptions, except: %i[index show] do
     get :unsubscribe, on: :member

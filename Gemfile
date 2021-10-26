@@ -31,7 +31,8 @@ gem "google-apis-drive_v3"
 gem "google-apis-indexing_v3"
 gem "google-cloud-bigquery"
 gem "google_drive", require: false
-gem "govuk-components"
+# TODO: Replace this with a version number when this commit of the gem has been released
+gem "govuk-components", git: "https://github.com/DFE-Digital/govuk-components", ref: "3902fc7b64e882acadf15d35de269d2d656e9c69"
 gem "govuk_design_system_formbuilder"
 gem "high_voltage"
 gem "httparty"
@@ -65,6 +66,7 @@ gem "view_component"
 gem "webpacker"
 gem "wicked"
 gem "xml-sitemap"
+gem "zendesk_api"
 
 group :development do
   gem "amazing_print" # optional dependency of `rails_semantic_logger`
@@ -99,6 +101,7 @@ end
 
 group :test do
   gem "capybara"
+  gem "climate_control"
   gem "rack_session_access"
   gem "selenium-webdriver"
   gem "shoulda-matchers"

@@ -91,6 +91,7 @@ RSpec.configure do |config|
   config.include VacanciesHelper
   config.include VacancyHelpers
   config.include ViewComponent::TestHelpers, type: :component
+  config.include WithEnv
 end
 
 VCR.configure do |config|

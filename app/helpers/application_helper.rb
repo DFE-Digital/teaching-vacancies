@@ -33,4 +33,14 @@ module ApplicationHelper
   def recaptcha
     recaptcha_v3(action: controller_name, nonce: request.content_security_policy_nonce)
   end
+
+  def footer_links
+    {
+      "Cookies" => cookies_preferences_path,
+      "Privacy policy" => page_path("privacy-policy"),
+      "Terms and Conditions" => page_path("terms-and-conditions"),
+      "Accessibility" => page_path("accessibility"),
+      t("footer.updates") => updates_path,
+    }
+  end
 end

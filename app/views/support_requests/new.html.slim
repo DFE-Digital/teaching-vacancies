@@ -1,0 +1,35 @@
+- content_for :page_title_prefix, t(".title")
+
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form_for @form, url: support_request_path do |f|
+        = f.govuk_error_summary
+
+        h1.govuk-heading-xl = t(".heading")
+
+        = t(".intro_html", give_feedback_link: govuk_link_to(t(".give_feedback"), new_feedback_path))
+
+        = f.govuk_text_field :name, required: true
+        = f.govuk_text_field :email_address, required: true
+
+        = f.govuk_radio_buttons_fieldset(:is_for_whole_site, legend: { size: "m" }) do
+          = f.govuk_radio_button :is_for_whole_site, :yes, link_errors: true do
+          = f.govuk_radio_button :is_for_whole_site, :no
+            = f.govuk_text_field :page, required: true
+
+        = f.govuk_text_area :issue,
+          label: { size: "m" },
+          rows: 5,
+          max_chars: 1200,
+          required: true
+
+        = f.govuk_fieldset legend: { text: t("helpers.legend.support_request_form.screenshot"), size: "m" }
+          p.govuk-body = t(".screenshot_description")
+          = f.govuk_file_field :screenshot,
+            accept: "image/jpeg, image/png",
+            enctype: "multipart/form-data"
+
+        = recaptcha
+
+        = f.govuk_submit t("buttons.send_message")
