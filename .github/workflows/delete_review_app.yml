@@ -39,8 +39,13 @@ jobs:
        timeoutSeconds: 1800
        intervalSeconds: 15
 
+    - name: check review status
+      run: |
+        HTTP_CODE=$(curl -o/dev/null -s -w  "%{http_code}" https://teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital)
+        echo "HTTP_CODE=$HTTP_CODE"  >> $GITHUB_ENV
+
     - name: Exit whole workflow if wait was not successful
-      if: steps.wait_for_deployment.outputs.conclusion != 'success'
+      if: steps.wait_for_deployment.outputs.conclusion != 'success' && ${{ env.HTTP_CODE != '200'}}
       run: exit 1
 
     - uses: actions/checkout@v2
