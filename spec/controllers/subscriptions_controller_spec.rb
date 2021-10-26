@@ -5,7 +5,7 @@ RSpec.describe SubscriptionsController, recaptcha: true do
     let(:params) do
       {
         jobseekers_subscription_form: {
-          email: "foo@email.com",
+          email: "foo@example.net",
           frequency: "daily",
           keyword: "english",
         }.symbolize_keys,
@@ -22,7 +22,7 @@ RSpec.describe SubscriptionsController, recaptcha: true do
       let(:recaptcha_score) { 0.9 }
       let(:job_alert_params) do
         {
-          email: "foo@email.com",
+          email: "foo@example.net",
           frequency: "daily",
           search_criteria: { keyword: "english" },
         }

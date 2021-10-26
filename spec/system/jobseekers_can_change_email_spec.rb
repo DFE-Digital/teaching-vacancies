@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can change email" do
-  let(:jobseeker) { create(:jobseeker, email: "old@email.com", password: "password") }
+  let(:jobseeker) { create(:jobseeker, email: "old@example.net", password: "password") }
   let(:created_jobseeker) { Jobseeker.first }
 
   before do
@@ -14,16 +14,16 @@ RSpec.describe "Jobseekers can change email" do
       update_jobseeker_email(jobseeker.email, jobseeker.password)
       expect(page).to have_content("There is a problem")
 
-      expect { update_jobseeker_email("new@email.com", jobseeker.password) }.to change { delivered_emails.count }.by(2)
+      expect { update_jobseeker_email("new@example.net", jobseeker.password) }.to change { delivered_emails.count }.by(2)
       expect(delivered_emails.first.subject).to eq(I18n.t("jobseekers.account_mailer.email_changed.subject"))
       expect(delivered_emails.first.to.first).to eq(jobseeker.email)
       expect(delivered_emails.second.subject).to eq(I18n.t("jobseekers.account_mailer.confirmation_instructions.reconfirmation.subject"))
-      expect(delivered_emails.second.to.first).to eq("new@email.com")
+      expect(delivered_emails.second.to.first).to eq("new@example.net")
       expect(current_path).to eq(jobseekers_check_your_email_path)
 
       visit first_link_from_last_mail
 
-      expect(created_jobseeker.reload.email).to eq("new@email.com")
+      expect(created_jobseeker.reload.email).to eq("new@example.net")
       expect(current_path).to eq(jobseeker_root_path)
       expect(page).to have_content(I18n.t("devise.confirmations.confirmed"))
     end
