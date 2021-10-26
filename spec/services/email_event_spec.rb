@@ -4,8 +4,8 @@ RSpec.describe EmailEvent do
   subject { described_class.new(notify_template, email, uid, jobseeker: jobseeker, publisher: publisher) }
 
   let(:notify_template) { "test_template" }
-  let(:email) { "test@email.com" }
-  let(:jobseeker) { instance_double(Jobseeker, id: 1234, email: "test@email.com") }
+  let(:email) { "test@example.net" }
+  let(:jobseeker) { instance_double(Jobseeker, id: 1234, email: "test@example.net") }
   let(:publisher) { instance_double(Publisher, oid: 4321) }
   let(:uid) { SecureRandom.uuid }
 
@@ -17,7 +17,7 @@ RSpec.describe EmailEvent do
         data: [
           { key: "uid", value: uid },
           { key: "notify_template", value: notify_template },
-          { key: "email_identifier", value: anonymised_form_of("test@email.com") },
+          { key: "email_identifier", value: anonymised_form_of("test@example.net") },
           { key: "user_anonymised_jobseeker_id", value: anonymised_form_of("1234") },
           { key: "user_anonymised_publisher_id", value: anonymised_form_of("4321") },
           { key: "foozy", value: "barzy" },

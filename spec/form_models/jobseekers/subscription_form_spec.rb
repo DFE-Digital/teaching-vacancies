@@ -113,7 +113,7 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
     it { is_expected.not_to allow_value("invalid_email").for(:email) }
 
     context "when job alert already exists" do
-      let(:params) { { email: "test@email.com", frequency: "daily", keyword: "maths" } }
+      let(:params) { { email: "test@example.net", frequency: "daily", keyword: "maths" } }
 
       before { allow(Subscription).to receive_message_chain(:where, :exists?).and_return(true) }
 

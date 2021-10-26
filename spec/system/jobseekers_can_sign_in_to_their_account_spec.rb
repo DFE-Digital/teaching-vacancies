@@ -73,7 +73,7 @@ RSpec.describe "Jobseekers can sign in to their account" do
     end
 
     context "when the account does not exist" do
-      let(:email) { "fake@email.com" }
+      let(:email) { "fake@example.net" }
       let(:password) { jobseeker.password }
 
       it "does not sign in the jobseeker and displays a general error message" do
