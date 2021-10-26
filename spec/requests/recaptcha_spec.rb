@@ -11,9 +11,9 @@ RSpec.describe "General feedback can interface with recaptcha", recaptcha: true 
     allow(feedback_form).to receive(:class).and_return(GeneralFeedbackForm)
   end
 
-  it "sends the Feedback instance, action, and minimum score (all required) when it verifies the recaptcha" do
+  it "sends the action, and minimum score (all required) when it verifies the recaptcha" do
     expect_any_instance_of(ApplicationController).to receive(:verify_recaptcha)
-                      .with(model: feedback,
+                      .with(model: nil,
                             action: "general_feedbacks",
                             minimum_score: ApplicationController::SUSPICIOUS_RECAPTCHA_THRESHOLD)
     post feedback_path, params: { general_feedback_form: attributes_for(:feedback) }

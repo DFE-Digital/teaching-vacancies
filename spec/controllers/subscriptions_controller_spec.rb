@@ -52,9 +52,9 @@ RSpec.describe SubscriptionsController, recaptcha: true do
           subject
         end
 
-        it "sends the Subscription instance and action (both required) when it verifies the recaptcha" do
+        it "sends the action when it verifies the recaptcha" do
           expect(controller).to receive(:verify_recaptcha)
-                                  .with(model: subscription,
+                                  .with(model: nil,
                                         action: "subscriptions",
                                         minimum_score: ApplicationController::SUSPICIOUS_RECAPTCHA_THRESHOLD)
           subject

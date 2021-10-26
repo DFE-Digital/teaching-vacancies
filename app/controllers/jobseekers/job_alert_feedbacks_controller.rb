@@ -20,7 +20,7 @@ class Jobseekers::JobAlertFeedbacksController < ApplicationController
 
     if @feedback_form.invalid?
       render :edit
-    elsif recaptcha_is_invalid?(@feedback)
+    elsif recaptcha_is_invalid?
       redirect_to invalid_recaptcha_path(form_name: @feedback_form.class.name.gsub("::", "").underscore.humanize)
     else
       @feedback.update(further_feedback_form_params)
