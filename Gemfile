@@ -31,8 +31,7 @@ gem "google-apis-drive_v3"
 gem "google-apis-indexing_v3"
 gem "google-cloud-bigquery"
 gem "google_drive", require: false
-# TODO: Replace this with a version number when this commit of the gem has been released
-gem "govuk-components", git: "https://github.com/DFE-Digital/govuk-components", ref: "3902fc7b64e882acadf15d35de269d2d656e9c69"
+gem "govuk-components"
 gem "govuk_design_system_formbuilder"
 gem "high_voltage"
 gem "httparty"
