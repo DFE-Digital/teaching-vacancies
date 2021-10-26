@@ -147,18 +147,19 @@ en:
     unprocessable_entity: We're unable to process your request.
 
   footer:
-    list_a_teaching_job: List a teaching job
-    provide_feedback: Provide feedback on Teaching Vacancies
-    request_support: Get help or report a problem
-    search_teaching_vacancies: Find a teaching job
-    service_support: Get support
-    sign_in: Sign in
-    your_account: My account
+    create_a_job_alert: Create a job alert
     headings:
       feedback: Feedback
       for_job_seekers: Job seekers
       for_schools: Hiring staff
       support: Support
+    list_a_teaching_job: List a job
+    manage_job_listings: Manage job listings
+    provide_feedback: Provide feedback on Teaching Vacancies
+    request_support: Get help or report a problem
+    search_teaching_vacancies: Find a job
+    service_support: Get support
+    sign_in: Sign in
 
   general_feedbacks:
     create:
