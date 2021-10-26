@@ -53,16 +53,34 @@ ruby:
   ]
 
 = form_for @form, as: "", url: jobs_path, method: :get, html: { id: "filter-form", data: { "auto-submit": true }, class: "filters-form", role: "search", aria: { label: "Search criteria" } } do |f|
-  .filter-vacancies
-    h2.govuk-heading-m = t("jobs.search.title")
+  - if current_variant?(:"2021_10_mobile_search_filters_test", :overlay)
+    button#search-panel.search-panel__button.govuk-button.govuk-button--secondary type="button"
+      = "Edit search"
+    .panel-component tabindex="-1"
+      .panel-component__heading
+        .panel-component__heading-container
+          h2.govuk-heading-m = t("jobs.search.title")
+          button.panel-component__close-button.icon--close.panel-component--show-mobile-open id="panel-component-close-panel" type="button"
+            span.govuk-body-s = "Close"
+      .panel-component__fields
+        = render "shared/search/keyword", f: f
+        = render "shared/search/location", f: f
+        = render "shared/search/current_location", loaderElement: "location-field"
+        = render "shared/search/radius", f: f, wide: true
 
-    = render "shared/search/keyword", f: f
-    = render "shared/search/location", f: f
-    = render "shared/search/current_location", loaderElement: "location-field"
-    = render "shared/search/radius", f: f, wide: true
+        = f.hidden_field :jobs_sort, value: @form.jobs_sort
+        = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"
+  - else
+    .filter-vacancies
+      h2.govuk-heading-m = t("jobs.search.title")
 
-    = f.hidden_field :jobs_sort, value: @form.jobs_sort
-    = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"
+      = render "shared/search/keyword", f: f
+      = render "shared/search/location", f: f
+      = render "shared/search/current_location", loaderElement: "location-field"
+      = render "shared/search/radius", f: f, wide: true
+
+      = f.hidden_field :jobs_sort, value: @form.jobs_sort
+      = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"
 
   = render(FiltersComponent.new(form: f,
     filters: { total_count: @form.total_filters, title: "Filter results" },
