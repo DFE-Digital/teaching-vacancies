@@ -53,7 +53,7 @@ ruby:
   ]
 
 = form_for @form, as: "", url: jobs_path, method: :get, html: { id: "filter-form", data: { "auto-submit": true }, class: "filters-form", role: "search", aria: { label: "Search criteria" } } do |f|
-  .filter-vacancies
+  .search-panel--filters
     h2.govuk-heading-m = t("jobs.search.title")
 
     = render "shared/search/keyword", f: f
