@@ -25,11 +25,6 @@ module ApplicationHelper
     end
   end
 
-  def meta_keywords
-    "teacher,maths,primary,history,english,science,geography,\
-    teaching,assistant,headteacher,class,French,job,vacancy,school,nqt"
-  end
-
   def recaptcha
     recaptcha_v3(action: controller_name, nonce: request.content_security_policy_nonce)
   end
