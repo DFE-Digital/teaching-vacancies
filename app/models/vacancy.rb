@@ -1,6 +1,6 @@
 require "geocoding"
 
-class Vacancy < ApplicationRecord
+class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
   extend FriendlyId
   extend ArrayEnum
 
@@ -58,6 +58,7 @@ class Vacancy < ApplicationRecord
   scope :pending, (-> { published.where("publish_on > ?", Date.current) })
   scope :published_on_count, (->(date) { published.where(publish_on: date.all_day).count })
 
+  scope :search_by_filter, VacancyFilterQuery
   scope :search_by_location, VacancyLocationQuery
 
   paginates_per 10
