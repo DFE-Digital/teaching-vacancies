@@ -1,6 +1,10 @@
 module Phaseable
   extend ActiveSupport::Concern
 
+  included do
+    before_save :update_readable_phases
+  end
+
   def allow_phase_to_be_set?
     central_office? || organisation_phases.many? || organisation_phases.none?
   end
@@ -19,7 +23,11 @@ module Phaseable
     [phase]
   end
 
+  def update_readable_phases
+    self.readable_phases = education_phases
+  end
+
   def organisation_phases
-    organisations.map(&:readable_phases).flatten.uniq
+    organisations.map(&:readable_phases).flatten.uniq.compact
   end
 end

@@ -475,6 +475,52 @@ RSpec.describe Vacancy do
     end
   end
 
+  describe "#readable_phases" do
+    subject { build(:vacancy, organisations: [organisation], phase: phase) }
+    let!(:organisation) { create(:school, readable_phases: %w[primary middle]) }
+
+    context "if the vacancy has a single phase" do
+      let(:phase) { :"16-19" }
+
+      it "is updated on save" do
+        expect(subject.readable_phases).to be_empty
+        subject.save
+        expect(subject.readable_phases).to contain_exactly("16-19")
+      end
+    end
+
+    context "if the vacancy has multiple phases" do
+      let(:phase) { :multiple_phases }
+
+      it "is updated on save" do
+        expect(subject.readable_phases).to be_empty
+        subject.save
+        expect(subject.readable_phases).to contain_exactly("primary", "middle")
+      end
+    end
+
+    context "if the vacancy has no phase" do
+      let(:phase) { nil }
+
+      it "is updated on save" do
+        expect(subject.readable_phases).to be_empty
+        subject.save
+        expect(subject.readable_phases).to contain_exactly("primary", "middle")
+      end
+    end
+
+    context "if neither vacancy nor organisation have a phase" do
+      let(:phase) { nil }
+      let!(:organisation) { create(:school, readable_phases: nil) }
+
+      it "is updated on save" do
+        expect(subject.readable_phases).to be_empty
+        subject.save
+        expect(subject.readable_phases).to be_empty
+      end
+    end
+  end
+
   describe "validations" do
     describe "changing enable_job_applications" do
       subject { build_stubbed(:vacancy, status, enable_job_applications: true) }
