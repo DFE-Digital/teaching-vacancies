@@ -71,7 +71,7 @@ RSpec.describe "Jobseekers can view and visit homepage facets", vcr: { cassette_
       click_on "Teacher"
 
       expect(current_path).to eq(job_role_path("teacher"))
-      expect(page.title).to include(I18n.t("landing_pages.title", landing_page: "Teacher"))
+      expect(page.title).to include(I18n.t("landing_pages.title_for_job_roles", landing_page: "Teacher"))
       expect(page.find("#job-roles-teacher-field")).to be_checked
     end
   end
