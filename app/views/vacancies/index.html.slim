@@ -1,21 +1,12 @@
 - content_for :skip_links do
   a.govuk-skip-link href="#search-results" = t("jobs.skip_link")
 
-- if @vacancies_search.location_search.search_with_polygons?
-  - content_for :page_title_prefix, t("jobs.location_search_heading", location: format_location_name(@vacancies_search.location_search.location), keyword: @vacancies_search.keyword)
-  - content_for :page_description,  t("jobs.location_description", location: format_location_name(@vacancies_search.location_search.location))
-- elsif @landing_page.present?
-  - content_for :page_title_prefix, t("landing_pages.title", landing_page: @landing_page.humanize)
-- else
-  - content_for :page_title_prefix, t(".title", count: params[:page].to_i)
-
-- if @landing_page.present? && I18n.exists?("landing_pages.description.#{@landing_page_translation}")
-  - content_for :page_description, t("landing_pages.description.#{@landing_page_translation}")
+= render "title_and_description"
 
 .govuk-main-wrapper class="govuk-!-padding-top-3"
   = govuk_breadcrumbs breadcrumbs: { "#{t("breadcrumbs.home")}": root_path, "#{t("breadcrumbs.jobs")}": "" }
 
-  = render(Jobseekers::SearchResults::HeadingComponent.new(vacancies_search: @vacancies_search))
+  = render(Jobseekers::SearchResults::HeadingComponent.new(vacancies_search: @vacancies_search, landing_page: @landing_page))
 
   .grid-row
     .grid-column-left class="govuk-!-margin-bottom-3"
