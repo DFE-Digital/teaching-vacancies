@@ -39,6 +39,24 @@ Layout/LineLength:
 Layout/MultilineMethodCallIndentation:
   Enabled: false
 
+# List as per https://docs.rubocop.org/rubocop/cops_naming.html#namingmethodparametername
+# plus `as`.
+Naming/MethodParameterName:
+  AllowedNames:
+    - as
+    - at
+    - by
+    - db
+    - id
+    - in
+    - io
+    - ip
+    - of
+    - on
+    - os
+    - pp
+    - to
+
 Style/BlockDelimiters:
   EnforcedStyle: braces_for_chaining
 

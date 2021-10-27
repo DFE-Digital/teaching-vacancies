@@ -6,7 +6,7 @@ RSpec.describe Jobseekers::AlertMailer do
   include ERB::Util
 
   let(:body) { mail.body.raw_source }
-  let(:email) { "an@email.com" }
+  let(:email) { "an@example.net" }
   let(:frequency) { :daily }
   let(:search_criteria) { { keyword: "English" } }
   let(:subscription) do

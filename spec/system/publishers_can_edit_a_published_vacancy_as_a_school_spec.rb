@@ -288,7 +288,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         visit organisation_job_path(vacancy.id)
 
         click_header_link(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
-        vacancy.contact_email = "new-test@email.com"
+        vacancy.contact_email = "new-test@example.net"
 
         fill_in "publishers_job_listing_applying_for_the_job_form[contact_email]", with: vacancy.contact_email
         click_on I18n.t("buttons.update_job")
@@ -304,7 +304,7 @@ RSpec.describe "Publishers can edit a vacancy" do
 
         visit organisation_job_path(vacancy.id)
         click_header_link(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
-        vacancy.contact_email = "new-test@email.com"
+        vacancy.contact_email = "new-test@example.net"
 
         fill_in "publishers_job_listing_applying_for_the_job_form[contact_email]", with: vacancy.contact_email
         click_on I18n.t("buttons.update_job")

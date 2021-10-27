@@ -86,7 +86,9 @@ class ApplicationController < ActionController::Base
     response.set_header("X-Robots-Tag", "noindex, nofollow")
   end
 
-  def recaptcha_is_invalid?(model)
+  # https://github.com/ambethia/recaptcha#verify_recaptcha
+  # https://github.com/ambethia/recaptcha#recaptcha_reply
+  def recaptcha_is_invalid?(model = nil)
     !verify_recaptcha(model: model, action: controller_name, minimum_score: SUSPICIOUS_RECAPTCHA_THRESHOLD) && recaptcha_reply
   end
 
