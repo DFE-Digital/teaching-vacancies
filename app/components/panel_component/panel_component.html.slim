@@ -1,0 +1,9 @@
+button#search-panel.search-panel__button.govuk-button.govuk-button--secondary type="button"
+= @button_text
+.panel-component tabindex="-1"
+    .panel-component__heading
+    .panel-component__heading-container
+        h2.govuk-heading-m = t(@heading_text)
+        button.panel-component__close-button.icon--close.panel-component--show-mobile-open id="panel-component-close-panel" type="button"
+        span.govuk-body-s = "Close"
+    .panel-component__fields

@@ -5,7 +5,6 @@ const LOCALSTORAGE_COMPONENT_KEY = 'panel';
 const ERROR_LOGGING_MESSAGE = '[Module: dashboard panel]: local storage not available';
 
 export const togglePanel = (options) => {
-  console.log("Toggle panel called")
   if (storageAvailable('localStorage', ERROR_LOGGING_MESSAGE) && !localStorage.getItem(LOCALSTORAGE_COMPONENT_KEY)) {
     localStorage.setItem(LOCALSTORAGE_COMPONENT_KEY, '{}');
     localStorage.setItem(
