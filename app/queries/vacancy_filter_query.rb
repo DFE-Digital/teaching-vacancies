@@ -16,8 +16,8 @@ class VacancyFilterQuery < ApplicationQuery
     built_scope = scope
 
     # Job alert specific filters
-    built_scope = built_scope.where(publish_on >= from_date) if from_date
-    built_scope = built_scope.where(publish_on <= to_date) if to_date
+    built_scope = built_scope.where(publish_on: (from_date..)) if from_date
+    built_scope = built_scope.where(publish_on: (..to_date)) if to_date
     built_scope = built_scope.where("subjects && ARRAY[?]::varchar[]", filters[:subjects]) if filters[:subjects].present?
 
     # General filters
