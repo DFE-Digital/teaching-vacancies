@@ -13,7 +13,7 @@ class Publishers::OmniauthCallbacksController < Devise::OmniauthCallbacksControl
     if authorisation.authorised? && organisation
       sign_in_publisher(organisation)
       trigger_publisher_sign_in_event(:success, :dsi)
-      redirect_to organisation_path
+      redirect_to after_sign_in_path_for(:publisher)
     else
       trigger_publisher_sign_in_event(:failure, :dsi, user_id)
       render "not_authorised", locals: { email: auth_hash["info"]["email"] }

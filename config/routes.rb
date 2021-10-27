@@ -31,6 +31,8 @@ Rails.application.routes.draw do
 
   get "/jobseekers/saved_jobs", to: "jobseekers/saved_jobs#index", as: :jobseeker_root
 
+  get "/organisation", to: "publishers/organisations#show", as: :publisher_root
+
   get "/sha", to: "sha#sha"
 
   namespace :jobseekers do
