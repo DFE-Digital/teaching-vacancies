@@ -76,6 +76,13 @@ en:
         other: >-
           <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> jobs match
           <span class='govuk-!-font-weight-bold'>&lsquo;%{keyword}&rsquo;</span>
+      landing_page_html:
+        one: >-
+          <span class='govuk-!-font-weight-bold'>%{jobs_count}</span>
+          <span class='govuk-!-font-weight-bold'>%{landing_page} job</span>
+        other: >-
+          <span class='govuk-!-font-weight-bold'>%{jobs_count}</span>
+          <span class='govuk-!-font-weight-bold'>%{landing_page} jobs</span>
       location_html:
         one: >-
           <span class="govuk-!-font-weight-bold">%{jobs_count}</span> job found within

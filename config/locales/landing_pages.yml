@@ -25,6 +25,9 @@ en:
         teacher: >-
           Find teaching jobs at schools and trusts in England. Teaching Vacancies is a free job-listing service from
           the Department for Education.
+        teaching_assistant: >-
+          Find teaching assistant jobs at schools near you on Teaching Vacancies. Search for TA jobs, apply online,
+          and set up email alerts for the latest vacancies.
       subject:
         design_and_technology: >-
           Find design and technology teaching jobs in England. Teaching Vacancies is a free job-listing service from
@@ -48,3 +51,4 @@ en:
           Find science teaching jobs with Teaching Vacancies, a free job-listing service from the Department for
           Education. Search for jobs teaching biology, chemistry or physics.
     title: Teaching jobs for %{landing_page}
+    title_for_job_roles: "%{landing_page} jobs"
