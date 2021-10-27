@@ -348,6 +348,8 @@ ActiveRecord::Schema.define(version: 2021_10_25_152805) do
     t.text "family_name_ciphertext"
     t.text "given_name_ciphertext"
     t.datetime "dismissed_new_features_page_at"
+    t.datetime "viewed_new_features_page_at"
+    t.datetime "viewed_application_feature_reminder_page_at"
     t.index ["oid"], name: "index_publishers_on_oid", unique: true
   end
 
