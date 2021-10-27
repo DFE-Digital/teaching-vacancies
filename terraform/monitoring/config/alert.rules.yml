@@ -2,13 +2,28 @@ groups:
 - name: Default
 
   rules:
-  - alert: ProdRequestsFailuresElevated
+  - alert: ProdRequestsFailuresElevated_http_0xx_4xx
     # Condition for alerting
-    expr: (sum(rate(requests{app="teaching-vacancies-production", status_range=~"0xx|4xx|5xx"}[5m]))) / (sum(rate(requests{app="teaching-vacancies-production"}[5m])) ) > 0.1
+    expr: (sum(rate(requests{app="teaching-vacancies-production", status_range=~"0xx|4xx"}[5m]))) / (sum(rate(requests{app="teaching-vacancies-production"}[5m])) ) > 0.4
     # Annotation - additional informational labels to store more information
     annotations:
       summary: High rate of failing requests
-      description: "The proportion of failed HTTP requests in the past 5 min is above 10% (current value: {{ humanizePercentage $value }})"
+      description: "The proportion of failed 4xx HTTP requests in the past 5 min is above 40% (current value: {{ humanizePercentage $value }})"
+      runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/master/documentation/alert-runbook.md#ProdRequestsFailuresElevated
+      dashboard: https://grafana-teaching-vacancies.london.cloudapps.digital/d/6Ac4lUWGk/teaching-vacancies-production?orgId=1&refresh=5s
+    # Labels - additional labels to be attached to the alert
+    labels:
+      environment: production
+      period: out-of-hours
+      severity: high
+
+  - alert: ProdRequestsFailuresElevated_http_5xx
+    # Condition for alerting
+    expr: (sum(rate(requests{app="teaching-vacancies-production", status_range=~"5xx"}[5m]))) / (sum(rate(requests{app="teaching-vacancies-production"}[5m])) ) > 0.1
+    # Annotation - additional informational labels to store more information
+    annotations:
+      summary: High rate of failing requests
+      description: "The proportion of failed 5xx HTTP requests in the past 5 min is above 10% (current value: {{ humanizePercentage $value }})"
       runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/master/documentation/alert-runbook.md#ProdRequestsFailuresElevated
       dashboard: https://grafana-teaching-vacancies.london.cloudapps.digital/d/6Ac4lUWGk/teaching-vacancies-production?orgId=1&refresh=5s
     # Labels - additional labels to be attached to the alert
