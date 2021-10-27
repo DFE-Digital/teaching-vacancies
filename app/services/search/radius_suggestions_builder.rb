@@ -1,5 +1,4 @@
 class Search::RadiusSuggestionsBuilder
-  LEGACY_RADIUS_OPTIONS = [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 70, 80, 90, 100, 200].freeze
   RADIUS_OPTIONS = [1, 5, 10, 25, 50, 100, 200].freeze
 
   include DistanceHelper
