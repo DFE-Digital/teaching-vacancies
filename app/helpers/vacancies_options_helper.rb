@@ -1,4 +1,6 @@
 module VacanciesOptionsHelper
+  RADIUS_OPTIONS = [0, 1, 5, 10, 25, 50, 100, 200].freeze
+
   def hired_status_options
     Vacancy.hired_statuses.keys.map { |k| [t("jobs.feedback.hired_status.#{k}"), k] }.unshift(["--", ""])
   end
@@ -8,7 +10,7 @@ module VacanciesOptionsHelper
   end
 
   def radius_filter_options
-    Search::RadiusSuggestionsBuilder::RADIUS_OPTIONS.inject([]) do |radii, radius|
+    RADIUS_OPTIONS.inject([]) do |radii, radius|
       radii << [t("jobs.search.number_of_miles", count: radius), radius]
     end
   end

@@ -1,7 +1,6 @@
 require "geocoding"
 
 class Search::LocationBuilder
-  DEFAULT_RADIUS = 10
   NATIONWIDE_LOCATIONS = ["england", "uk", "united kingdom", "britain", "great britain"].freeze
 
   include DistanceHelper
@@ -10,7 +9,7 @@ class Search::LocationBuilder
 
   def initialize(location, radius)
     @location = location
-    @radius = Integer(radius || DEFAULT_RADIUS).abs
+    @radius = Search::RadiusBuilder.new(location, radius).radius
     @location_filter = {}
 
     if NATIONWIDE_LOCATIONS.include?(@location&.downcase)
@@ -23,7 +22,7 @@ class Search::LocationBuilder
   end
 
   def search_with_polygons?
-    location && LocationPolygon.include?(location)
+    location.present? && LocationPolygon.include?(location)
   end
 
   def point_coordinates
