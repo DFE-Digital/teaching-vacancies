@@ -20,7 +20,7 @@ class Jobseekers::SubscriptionForm
     @frequency = params[:frequency]
     @keyword = params[:keyword] || search_criteria[:keyword]
     @location = params[:location] || search_criteria[:location]
-    @radius = ((params[:radius] || search_criteria[:radius]) if @location.present?) || Search::LocationBuilder::DEFAULT_RADIUS.to_s
+    @radius = location_builder((params[:radius] || search_criteria[:radius])).radius.to_s
     @job_roles = params[:job_roles]&.reject(&:blank?) || search_criteria[:job_roles] || []
     @phases = params[:phases]&.reject(&:blank?) || search_criteria[:phases]
     @working_patterns = params[:working_patterns]&.reject(&:blank?) || search_criteria[:working_patterns]
@@ -69,5 +69,9 @@ class Jobseekers::SubscriptionForm
     return unless Subscription.where(job_alert_params).exists?
 
     errors.add(:base, I18n.t("subscriptions.errors.duplicate_alert"))
+  end
+
+  def location_builder(radius)
+    Search::LocationBuilder.new(location, radius)
   end
 end

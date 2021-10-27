@@ -6,4 +6,4 @@
   class: "govuk-!-width-#{wide ? 'full' : 'one-half'}",
   data: { "change-submit": "false" },
   form_group: { classes: "location-radius-select" },
-  options: { selected: @form.radius || Search::LocationBuilder::DEFAULT_RADIUS }
+  options: { selected: @form.radius || Search::LocationBuilder::DEFAULT_BUFFER_FOR_POLYGON_SEARCHES }

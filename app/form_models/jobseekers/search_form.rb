@@ -13,14 +13,13 @@ class Jobseekers::SearchForm
     @keyword = params[:keyword] || params[:subject]
 
     @location = params[:location]
-
-    @radius = (params[:radius].presence if @location.present?) || Search::LocationBuilder::DEFAULT_RADIUS.to_s
+    @radius = location_builder(params[:radius]).radius.to_s
 
     @job_roles = params[:job_roles] || params[:job_role] || []
     @phases = params[:phases]
     @working_patterns = params[:working_patterns]
 
-    @jobs_sort = Search::VacancySearchSort.for(params[:jobs_sort], keyword: @keyword)
+    @jobs_sort = Search::VacancySearchSort.for(params[:jobs_sort], keyword: keyword)
 
     set_facet_options
     set_total_filters
@@ -55,5 +54,9 @@ class Jobseekers::SearchForm
 
   def set_total_filters
     @total_filters = [@job_roles&.count, @phases&.count, @working_patterns&.count].reject(&:nil?).sum
+  end
+
+  def location_builder(radius)
+    Search::LocationBuilder.new(location, radius)
   end
 end
