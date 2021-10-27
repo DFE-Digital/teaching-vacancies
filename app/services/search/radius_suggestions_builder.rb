@@ -1,7 +1,6 @@
 class Search::RadiusSuggestionsBuilder
-  RADIUS_OPTIONS = [1, 5, 10, 25, 50, 100, 200].freeze
-
   include DistanceHelper
+  include VacanciesOptionsHelper
 
   attr_reader :radius, :radius_suggestions, :search_params
 
@@ -12,10 +11,10 @@ class Search::RadiusSuggestionsBuilder
   end
 
   def get_radius_suggestions
-    radius_index = RADIUS_OPTIONS.find_index(radius)
+    radius_index = radius_options.find_index(radius)
     return if radius_index.nil?
 
-    wider_radii = (1..5).map { |index| RADIUS_OPTIONS[radius_index + index] }
+    wider_radii = (1..5).map { |index| radius_options[radius_index + index] }
     wider_radii_counts = wider_radii&.map { |wider_radius|
       unless wider_radius.nil?
         [
@@ -26,5 +25,11 @@ class Search::RadiusSuggestionsBuilder
     }&.reject(&:nil?)
 
     @radius_suggestions = wider_radii_counts&.uniq(&:last)&.reject { |array| array.last.zero? }
+  end
+
+  private
+
+  def radius_options
+    RADIUS_OPTIONS - [0]
   end
 end

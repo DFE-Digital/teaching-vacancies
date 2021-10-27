@@ -36,17 +36,16 @@ class Jobseekers::SearchResults::HeadingComponent < ViewComponent::Base
   end
 
   def location_phrase
-    if @location.present?
-      t("jobs.search_result_heading.location_html", location: @location)
-    end
+    return unless @location.present?
+
+    t("jobs.search_result_heading.location_html", location: @location)
   end
 
   def radius_phrase
-    # A radius of 0 is only possible for polygon searches.
+    return unless @location.present?
 
-    if @location.present?
-      t("jobs.search_result_heading.radius_html", count: @radius, units: units)
-    end
+    # A radius of 0 is only possible for polygon searches.
+    t("jobs.search_result_heading.radius_html", count: @radius, units: units)
   end
 
   def units

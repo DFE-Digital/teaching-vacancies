@@ -2,20 +2,26 @@ require "rails_helper"
 
 RSpec.shared_examples "a search using polygons" do
   it "sets the correct attributes" do
-    buffered_polygon = LocationPolygon.buffered(radius).find_by(name: location_polygon.name)
+    buffered_polygon = LocationPolygon.buffered(expected_radius).find_by(name: location_polygon.name)
     expect(subject.polygon_boundaries).to eq(buffered_polygon.to_algolia_polygons)
     expect(subject.location_filter).to eq({})
-    expect(subject.radius).to eq(radius)
+    expect(subject.radius).to eq(expected_radius)
   end
 end
 
 RSpec.describe Search::LocationBuilder do
   subject { described_class.new(location, radius) }
 
-  let(:location) { nil }
   let(:point_location) { "SW1A 1AA" }
   let(:radius) { 10 }
+  let(:expected_radius) { 1000 }
   let!(:location_polygon) { create(:location_polygon, name: "london") }
+  let(:radius_builder) { instance_double(Search::RadiusBuilder) }
+
+  before do
+    allow(Search::RadiusBuilder).to receive(:new).and_return(radius_builder)
+    allow(radius_builder).to receive(:radius).and_return(1000)
+  end
 
   describe "#initialize" do
     context "when a polygonable location is specified" do
@@ -31,36 +37,20 @@ RSpec.describe Search::LocationBuilder do
         allow(MAPPED_LOCATIONS).to receive(:[]).with(location.downcase).and_return(location_polygon.name)
       end
 
-      it_behaves_like "a search using polygons", location: "Map this location"
+      it_behaves_like "a search using polygons"
     end
 
     context "when a non-polygonable location is specified" do
-      context "and no radius specified" do
-        let(:location) { point_location }
-        let(:radius) { 10 }
-        let(:expected_radius) { 16_090 }
+      let(:radius_in_metres) { 1_609 * expected_radius }
+      let(:location) { point_location }
 
-        it "sets location filter around the location with the default radius" do
-          expect(subject.polygon_boundaries).to be_nil
-          expect(subject.location_filter).to eq({
-            point_coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
-            radius: expected_radius,
-          })
-        end
-      end
-
-      context "and radius specified" do
-        let(:location) { point_location }
-        let(:radius) { 30 }
-        let(:expected_radius) { 48_270 }
-
-        it "carries out geographical search around a coordinate location with the specified radius" do
-          expect(subject.polygon_boundaries).to be_nil
-          expect(subject.location_filter).to eq({
-            point_coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
-            radius: expected_radius,
-          })
-        end
+      it "sets radius attribute, and location filter around the location" do
+        expect(subject.polygon_boundaries).to be_nil
+        expect(subject.location_filter).to eq({
+          point_coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
+          radius: radius_in_metres,
+        })
+        expect(subject.radius).to eq(expected_radius)
       end
     end
 
