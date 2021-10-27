@@ -476,6 +476,22 @@ en:
               invalid:  Enter a phone number in the correct format
             relationship:
               blank: Enter the referee's relationship to you, for example line manager
+
+        support_request_form:
+          attributes:
+            email_address:
+              blank: Enter your email address
+              invalid: Enter an email address in the correct format, like name@example.com
+            is_for_whole_site:
+              inclusion: Choose whether this issue is for the whole site or a specific page
+            issue:
+              blank: Tell us about your problem or question
+              too_long: Feedback must not be more than 1,200 characters
+            name:
+              blank: Enter your name
+            page:
+              blank: Enter the URL or the name of the page
+
   activerecord:
     attributes:
       vacancy/expires_at: Application deadline (time)
