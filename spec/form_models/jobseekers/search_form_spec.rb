@@ -1,44 +1,52 @@
 require "rails_helper"
 
+RSpec.shared_examples "a form that correctly calls Search::RadiusBuilder" do
+  it "sets the radius and location attributes" do
+    expect(Search::RadiusBuilder).to receive(:new).with(location, radius).and_return(radius_builder)
+    expect(subject.radius).to eq(expected_radius)
+    expect(subject.location).to eq(location)
+  end
+end
+
 RSpec.describe Jobseekers::SearchForm, type: :model do
   subject { described_class.new(params) }
 
   describe "#initialize" do
-    before { stub_const("Search::LocationBuilder::DEFAULT_RADIUS", "32") }
+    let(:radius_builder) { instance_double(Search::RadiusBuilder) }
+    let(:expected_radius) { "1000" }
+    let(:params) { { radius: radius, location: location } }
 
-    context "when a radius is provided" do
-      context "when a location is provided" do
-        let(:params) { { radius: "1", location: "North Nowhere" } }
+    before { allow(radius_builder).to receive(:radius).and_return(expected_radius) }
 
-        it "assigns the radius attribute to the radius param" do
-          expect(subject.radius).to eq("1")
-        end
+    context "when location param is provided" do
+      let(:location) { "North Nowhere" }
+
+      context "when radius param is provided" do
+        let(:radius) { "1" }
+
+        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
       end
 
-      context "when a location is not provided" do
-        let(:params) { { radius: "1" } }
+      context "when radius param is not provided" do
+        let(:radius) { nil }
 
-        it "assigns the radius to the default radius" do
-          expect(subject.radius).to eq("32")
-        end
+        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
       end
     end
 
-    context "when a radius is not provided" do
-      context "when a location is provided" do
-        let(:params) { { location: "North Nowhere" } }
+    context "when location param is not provided" do
+      let(:location) { nil }
 
-        it "assigns the radius attribute to the default radius" do
-          expect(subject.radius).to eq("32")
-        end
+      context "when radius param is provided" do
+        let(:radius) { "1" }
+
+        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
       end
 
-      context "when a location is not provided" do
-        let(:params) { {} }
+      context "when radius param is not provided" do
+        let(:radius) { nil }
 
-        it "assigns the radius to the default radius" do
-          expect(subject.radius).to eq("32")
-        end
+        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
       end
     end
   end

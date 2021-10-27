@@ -21,7 +21,7 @@ RSpec.describe Jobseekers::SearchResults::HeadingComponent, type: :component do
     let(:landing_page) { "teaching-assistant" }
 
     it "renders correct heading" do
-      expect(subject.text).to eq(I18n.t("jobs.search_result_heading.landing_page_html", jobs_count: count, landing_page: landing_page.titleize.downcase, count: count))
+      expect(subject.text).to eq("10 teaching assistant jobs")
     end
   end
 

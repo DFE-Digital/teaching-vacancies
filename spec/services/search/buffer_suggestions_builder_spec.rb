@@ -16,7 +16,7 @@ RSpec.describe Search::BufferSuggestionsBuilder do
       let!(:polygon) { create(:location_polygon, name: "tower hamlets") }
 
       before do
-        Search::RadiusSuggestionsBuilder::RADIUS_OPTIONS.each_with_index do |radius, idx|
+        RADIUS_OPTIONS.each_with_index do |radius, idx|
           buffered_polygon = LocationPolygon.buffered(radius).with_name(location)
 
           mock_algolia_search(

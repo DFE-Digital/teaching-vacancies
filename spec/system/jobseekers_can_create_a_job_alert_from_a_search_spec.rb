@@ -14,7 +14,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
         allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(false)
       end
 
-      it "redirects to invalid_recaptcha path" do
+      scenario "redirects to invalid_recaptcha path" do
         visit new_subscription_path(search_criteria: { keyword: "test", location: "London" })
         fill_in_subscription_fields
         click_on I18n.t("buttons.subscribe")
@@ -39,13 +39,13 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
       context "when jobseeker is signed in" do
         let(:jobseeker_signed_in?) { true }
 
-        it "redirects to job alerts dashboard" do
+        scenario "redirects to job alerts dashboard" do
           expect(current_path).to eq(jobseekers_subscriptions_path)
         end
       end
 
       context "when jobseeker is signed out" do
-        it "renders a sign in prompt form that redirects to job alerts dashboard" do
+        scenario "renders a sign in prompt form that redirects to job alerts dashboard" do
           within "div[data-account-prompt='sign-in']" do
             expect(page).to have_content(I18n.t("subscriptions.jobseeker_account_prompt.heading.sign_in"))
             fill_in "Password", with: jobseeker.password
@@ -56,7 +56,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
           expect(current_path).to eq(jobseekers_subscriptions_path)
         end
 
-        it "renders a sign in prompt form that redirects to sign in page on error then redirects to job alerts dashboard" do
+        scenario "renders a sign in prompt form that redirects to sign in page on error then redirects to job alerts dashboard" do
           within "div[data-account-prompt='sign-in']" do
             expect(page).to have_content(I18n.t("subscriptions.jobseeker_account_prompt.heading.sign_in"))
             click_on I18n.t("buttons.sign_in")
@@ -68,7 +68,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
     end
 
     context "when jobseeker does not have an account" do
-      it "renders a create an account prompt form that redirects to job alerts dashboard" do
+      scenario "renders a create an account prompt form that redirects to job alerts dashboard" do
         within "div[data-account-prompt='sign-up']" do
           expect(page).to have_content(I18n.t("subscriptions.jobseeker_account_prompt.heading.sign_up"))
           fill_in "Password", with: jobseeker.password
@@ -78,7 +78,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
         expect(current_path).to eq(jobseekers_subscriptions_path)
       end
 
-      it "renders a create an account prompt form that redirects to sign up page on error then redirects to job alerts dashboard" do
+      scenario "renders a create an account prompt form that redirects to sign up page on error then redirects to job alerts dashboard" do
         within "div[data-account-prompt='sign-up']" do
           expect(page).to have_content(I18n.t("subscriptions.jobseeker_account_prompt.heading.sign_up"))
           click_on I18n.t("buttons.create_account")
@@ -91,15 +91,17 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
   end
 
   describe "location search" do
+    before do
+      visit jobs_path
+      and_perform_a_search
+      and_click_job_alert_link
+    end
+
     context "when a polygon search is carried out" do
       let(:search_with_polygons?) { true }
       let(:location) { "London" }
 
-      it "successfully creates a job alert" do
-        visit jobs_path
-        and_perform_a_search
-        and_click_job_alert_link
-
+      scenario "successfully creates a job alert" do
         expect(page).to have_content(I18n.t("subscriptions.new.title"))
         and_the_search_criteria_are_populated
 
@@ -115,15 +117,11 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
       end
     end
 
-    context "when a point-and-radius search is carried out" do
+    context "when a point location search is carried out" do
       let(:search_with_polygons?) { false }
       let(:location) { "SW1A 1AA" }
 
-      it "successfully creates a job alert" do
-        visit jobs_path
-        and_perform_a_search
-        and_click_job_alert_link
-
+      scenario "successfully creates a job alert" do
         expect(page).to have_content(I18n.t("subscriptions.new.title"))
         and_the_search_criteria_are_populated
 
@@ -136,6 +134,17 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
         expect(Jobseekers::SubscriptionMailer).to receive(:confirmation) { message_delivery }
         expect(message_delivery).to receive(:deliver_later)
         click_on I18n.t("buttons.subscribe")
+      end
+
+      context "and the user submits a radius of 0 on the create a job alert page" do
+        scenario "sets radius to a default radius" do
+          fill_in_subscription_fields
+          select I18n.t("jobs.search.number_of_miles", count: 0), from: "radius"
+
+          click_on I18n.t("buttons.subscribe")
+
+          expect(page).to have_content(I18n.t("jobs.search.number_of_miles", count: Search::RadiusBuilder::DEFAULT_RADIUS_FOR_POINT_SEARCHES))
+        end
       end
     end
   end
