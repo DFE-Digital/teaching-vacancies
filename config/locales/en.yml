@@ -518,10 +518,6 @@ en:
   vacancies:
     index:
       no_polygons: This search didn't use any polygons.
-      title:
-        zero: Find a job in teaching - Search results
-        one: Find a job in teaching - Search results
-        other: Find a job in teaching - Search results page %{count}
       wider_search_suggestions:
         heading:
           keyword_html: Try browsing for &lsquo;%{keyword}&rsquo; in a wider location search
@@ -533,3 +529,8 @@ en:
           other: (%{count} results)
     show:
       page_description: '%{job_title} job from %{organisation}. Apply by %{deadline}.'
+    title_and_description:
+      title:
+        zero: Find a job in teaching - Search results
+        one: Find a job in teaching - Search results
+        other: Find a job in teaching - Search results page %{count}
