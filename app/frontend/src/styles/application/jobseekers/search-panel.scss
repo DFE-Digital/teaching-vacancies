@@ -54,4 +54,16 @@
       color: govuk-colour('black');
     }
   }
+
+  &--filters {
+    background-color: govuk-colour('light-grey');
+    border-bottom: 1px solid govuk-colour('mid-grey');
+    margin-bottom: 0;
+    margin-top: 0;
+    padding: $govuk-gutter-half;
+
+    @include govuk-media-query($until: desktop) {
+      margin-bottom: $govuk-gutter;
+    }
+  }
 }
