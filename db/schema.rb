@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_25_152805) do
+ActiveRecord::Schema.define(version: 2021_10_26_151619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -467,11 +467,13 @@ ActiveRecord::Schema.define(version: 2021_10_25_152805) do
     t.integer "key_stages", array: true
     t.geography "geolocation", limit: {:srid=>4326, :type=>"geometry", :geographic=>true}
     t.string "readable_phases", default: [], array: true
+    t.tsvector "searchable_content"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["geolocation"], name: "index_vacancies_on_geolocation", using: :gist
     t.index ["initially_indexed"], name: "index_vacancies_on_initially_indexed"
     t.index ["publisher_id"], name: "index_vacancies_on_publisher_id"
     t.index ["publisher_organisation_id"], name: "index_vacancies_on_publisher_organisation_id"
+    t.index ["searchable_content"], name: "index_vacancies_on_searchable_content", using: :gin
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
