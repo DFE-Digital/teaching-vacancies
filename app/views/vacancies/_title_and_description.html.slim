@@ -1,0 +1,12 @@
+- if @vacancies_search.location_search.search_with_polygons?
+  - content_for :page_title_prefix, t("jobs.location_search_heading", location: format_location_name(@vacancies_search.location_search.location), keyword: @vacancies_search.keyword)
+  - content_for :page_description,  t("jobs.location_description", location: format_location_name(@vacancies_search.location_search.location))
+- elsif @landing_page.present? && Vacancy.job_roles.keys.include?(@landing_page.underscore)
+  - content_for :page_title_prefix, t("landing_pages.title_for_job_roles", landing_page: @landing_page.titleize)
+- elsif @landing_page.present?
+  - content_for :page_title_prefix, t("landing_pages.title", landing_page: @landing_page.humanize)
+- else
+  - content_for :page_title_prefix, t(".title", count: params[:page].to_i)
+
+- if @landing_page.present? && I18n.exists?("landing_pages.description.#{@landing_page_translation}")
+  - content_for :page_description, t("landing_pages.description.#{@landing_page_translation}")
