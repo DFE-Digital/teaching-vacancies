@@ -174,7 +174,8 @@ en:
     email: teaching.vacancies@education.gov.uk
     gias: Get information about schools
     gias_url: https://www.get-information-schools.service.gov.uk/
-    report_a_problem_html: To report a problem, or for support using Teaching Vacancies, please email %{mail_to}
+    report_a_problem_html: To report a problem, or for support using Teaching Vacancies, please use the %{get_help_link}
+    get_help_form: support form
 
   jobseekers:
     passwords:
