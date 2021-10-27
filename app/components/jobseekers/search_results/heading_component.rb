@@ -4,18 +4,18 @@ class Jobseekers::SearchResults::HeadingComponent < ViewComponent::Base
     @landing_page = landing_page
     @keyword = @vacancies_search.keyword
     @location = @vacancies_search.location_search.location
-    @radius = @vacancies_search.search_criteria[:radius]
+    @radius = @vacancies_search.location_search.radius
     @total_count = @vacancies_search.total_count
     @readable_count = number_with_delimiter(@total_count)
   end
 
   def heading
-    if @keyword.blank? && @location.blank?
-      return t("jobs.search_result_heading.without_search_html", jobs_count: @readable_count, count: @total_count)
+    if @landing_page.present? && Vacancy.job_roles.key?(@landing_page.underscore)
+      return t("jobs.search_result_heading.landing_page_html", jobs_count: @readable_count, landing_page: job_role(@landing_page), count: @total_count)
     end
 
-    if @landing_page.present? && Vacancy.job_roles.key?(@landing_page.underscore)
-      t("jobs.search_result_heading.landing_page_html", jobs_count: @readable_count, landing_page: job_role(@landing_page), count: @total_count)
+    if @keyword.blank? && @location.blank?
+      return t("jobs.search_result_heading.without_search_html", jobs_count: @readable_count, count: @total_count)
     end
 
     [count_phrase, keyword_phrase, radius_phrase, location_phrase].compact.join(" ")
@@ -36,17 +36,16 @@ class Jobseekers::SearchResults::HeadingComponent < ViewComponent::Base
   end
 
   def location_phrase
-    if @location.present?
-      t("jobs.search_result_heading.location_html", location: @location)
-    end
+    return unless @location.present?
+
+    t("jobs.search_result_heading.location_html", location: @location)
   end
 
   def radius_phrase
-    # A radius of 0 is only possible for polygon searches.
+    return unless @location.present?
 
-    if @location.present?
-      t("jobs.search_result_heading.radius_html", count: @radius, units: units)
-    end
+    # A radius of 0 is only possible for polygon searches.
+    t("jobs.search_result_heading.radius_html", count: @radius, units: units)
   end
 
   def units

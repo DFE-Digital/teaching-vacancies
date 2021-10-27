@@ -14,14 +14,14 @@ RSpec.describe Jobseekers::SearchResults::HeadingComponent, type: :component do
     allow(vacancies_search).to receive(:keyword).and_return(keyword)
     allow(vacancies_search).to receive_message_chain(:location_search, :location).and_return(location)
     allow(vacancies_search).to receive_message_chain(:total_count).and_return(count)
-    allow(vacancies_search).to receive_message_chain(:search_criteria, :[]).and_return(radius)
+    allow(vacancies_search).to receive_message_chain(:location_search, :radius).and_return(radius)
   end
 
   context "when landing_page is a job role" do
     let(:landing_page) { "teaching-assistant" }
 
     it "renders correct heading" do
-      expect(subject.text).to eq(I18n.t("jobs.search_result_heading.landing_page_html", jobs_count: count, landing_page: landing_page.titleize.downcase, count: count))
+      expect(subject.text).to eq("10 teaching assistant jobs")
     end
   end
 

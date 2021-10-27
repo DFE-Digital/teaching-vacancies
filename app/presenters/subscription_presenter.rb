@@ -47,8 +47,11 @@ class SubscriptionPresenter < BasePresenter
   def render_location_filter(location, radius)
     return if location.blank?
 
-    return { location: I18n.t("subscriptions.location_polygon_text", location: location) } if LocationPolygon.include?(location)
-    return { location: I18n.t("subscriptions.location_radius_text", radius: radius, location: location) } if radius
+    if radius.present? && radius.to_s != "0"
+      { location: I18n.t("subscriptions.location_with_radius", radius: radius, location: location) }
+    elsif LocationPolygon.include?(location)
+      { location: I18n.t("subscriptions.location_in", location: location) }
+    end
   end
 
   def render_job_roles_filter(value)
