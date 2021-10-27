@@ -1,16 +1,32 @@
-const showSearchPanelEl = document.getElementById("search-panel");
-const closeSearchPanelEl = document.getElementById('panel-component-close-panel');
+window.addEventListener(
+  'DOMContentLoaded',
+  () => init(),
+);
+
+export const init = () => {
+  Array.from(document.getElementsByClassName('panel-component__toggle')).forEach((actionEl) => {
+    const panelContainerEl = document.getElementById(actionEl.dataset.panelId);
+    const closePanelEl = panelContainerEl.getElementsByClassName('panel-component__close-button')[0];
+
+    actionEl.addEventListener('click', (e) => {
+      togglePanel(e.target);
+    });
+
+    closePanelEl.addEventListener('click', () => {
+      togglePanel(actionEl);
+    });
+
+    panelContainerEl.addEventListener('keydown', (e) => {
+      if (['Esc', 'Escape'].includes(e.key)) {
+        panelContainerEl.classList.remove('panel-component--show-mobile');
+        setPanelHiddenState(actionEl, panelContainerEl, true);
+      }
+    });
+  });
+};
 
 export const togglePanel = (actionEl) => Array.from(document.getElementsByClassName('panel-component')).forEach((element) => {
   element.classList.toggle('panel-component--show-mobile') ? setPanelVisibleState(actionEl, element) : setPanelHiddenState(actionEl, element, true);
-});
-
-showSearchPanelEl.addEventListener('click', (e) => {
-  togglePanel(e.target);
-});
-
-closeSearchPanelEl.addEventListener('click', () => {
-  togglePanel(showSearchPanelEl);
 });
 
 export const setPanelVisibleState = (actionEl, panelEl) => {
