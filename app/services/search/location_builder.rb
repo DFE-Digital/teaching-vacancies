@@ -1,7 +1,8 @@
 require "geocoding"
 
 class Search::LocationBuilder
-  DEFAULT_RADIUS = 10
+  DEFAULT_RADIUS_FOR_POINT_SEARCHES = 10
+  DEFAULT_BUFFER_FOR_POLYGON_SEARCHES = 0
   NATIONWIDE_LOCATIONS = ["england", "uk", "united kingdom", "britain", "great britain"].freeze
 
   include DistanceHelper
@@ -10,7 +11,7 @@ class Search::LocationBuilder
 
   def initialize(location, radius)
     @location = location
-    @radius = Integer(radius || DEFAULT_RADIUS).abs
+    @radius = get_radius(radius)
     @location_filter = {}
 
     if NATIONWIDE_LOCATIONS.include?(@location&.downcase)
@@ -23,7 +24,7 @@ class Search::LocationBuilder
   end
 
   def search_with_polygons?
-    location && LocationPolygon.include?(location)
+    location.present? && LocationPolygon.include?(location)
   end
 
   def point_coordinates
@@ -41,5 +42,19 @@ class Search::LocationBuilder
       point_coordinates: Geocoding.new(location).coordinates,
       radius: convert_miles_to_metres(radius),
     }
+  end
+
+  def get_radius(radius)
+    return DEFAULT_BUFFER_FOR_POLYGON_SEARCHES unless location.present?
+
+    if !search_with_polygons? && radius.to_s == DEFAULT_BUFFER_FOR_POLYGON_SEARCHES.to_s
+      DEFAULT_RADIUS_FOR_POINT_SEARCHES
+    else
+      Integer(radius || default_radius).abs
+    end
+  end
+
+  def default_radius
+    search_with_polygons? ? DEFAULT_BUFFER_FOR_POLYGON_SEARCHES : DEFAULT_RADIUS_FOR_POINT_SEARCHES
   end
 end
