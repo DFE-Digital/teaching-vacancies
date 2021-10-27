@@ -1,62 +1,119 @@
 require "rails_helper"
 
+RSpec.shared_examples "a form that correctly calls Search::RadiusBuilder" do
+  it "sets the radius and location attributes" do
+    expect(Search::RadiusBuilder).to receive(:new).with(location, radius).and_return(radius_builder)
+    expect(subject.radius).to eq(expected_radius)
+    expect(subject.location).to eq(location)
+  end
+end
+
+RSpec.shared_examples "a form with the correct attributes" do
+  it "sets the keyword, job_roles, phases, and working_patterns attributes" do
+    expect(subject.keyword).to eq(keyword)
+    expect(subject.job_roles).to eq(job_roles)
+    expect(subject.phases).to eq(phases)
+    expect(subject.working_patterns).to eq(working_patterns)
+  end
+end
+
 RSpec.describe Jobseekers::SubscriptionForm, type: :model do
   subject { described_class.new(params) }
 
   describe "#initialize" do
-    before { stub_const("Search::LocationBuilder::DEFAULT_RADIUS", "32") }
+    let(:radius_builder) { instance_double(Search::RadiusBuilder) }
+    let(:expected_radius) { "1000" }
+    let(:keyword) { "jobs" }
+    let(:job_roles) { %w[teacher wizard] }
+    let(:phases) { %w[primary ternary] }
+    let(:working_patterns) { %w[twenty_four_seven] }
 
-    context "when a radius is provided" do
-      context "when a location is provided" do
-        let(:params) { { radius: "1", location: "North Nowhere" } }
+    before { allow(radius_builder).to receive(:radius).and_return(expected_radius) }
 
-        it "assigns the radius attribute to the radius param" do
-          expect(subject.radius).to eq("1")
-        end
+    context "when keyword, job_roles, phases, working_patterns are provided in the params" do
+      let(:params) { { keyword: keyword, job_roles: job_roles, phases: phases, working_patterns: working_patterns } }
+
+      it_behaves_like "a form with the correct attributes"
+    end
+
+    context "when keyword, job_roles, phases, working_patterns are provided in the search_criteria param" do
+      let(:params) { { search_criteria: { keyword: keyword, job_roles: job_roles, phases: phases, working_patterns: working_patterns } } }
+
+      it_behaves_like "a form with the correct attributes"
+    end
+
+    context "when a radius is provided in the params" do
+      let(:radius) { "1" }
+
+      context "when a location is provided in the params" do
+        let(:location) { "North Nowhere" }
+        let(:params) { { radius: radius, location: location } }
+
+        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
+      end
+
+      context "when a location is provided in the search_criteria param" do
+        let(:location) { "North Nowhere" }
+        let(:params) { { radius: radius, search_criteria: { location: location } } }
+
+        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
       end
 
       context "when a location is not provided" do
-        let(:params) { { radius: "1" } }
+        let(:location) { nil }
+        let(:params) { { radius: radius } }
 
-        it "assigns the radius to the default radius" do
-          expect(subject.radius).to eq("32")
-        end
+        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
+      end
+    end
+
+    context "when a radius is provided in the search_criteria param" do
+      let(:radius) { "1" }
+
+      context "when a location is provided in the params" do
+        let(:location) { "North Nowhere" }
+        let(:params) { { search_criteria: { radius: radius }, location: location } }
+
+        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
+      end
+
+      context "when a location is provided in the search_criteria param" do
+        let(:location) { "North Nowhere" }
+        let(:params) { { search_criteria: { radius: radius, location: location } } }
+
+        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
+      end
+
+      context "when a location is not provided" do
+        let(:location) { nil }
+        let(:params) { { search_criteria: { radius: radius } } }
+
+        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
       end
     end
 
     context "when a radius is not provided" do
-      context "when a location is provided" do
-        let(:params) { { location: "North Nowhere" } }
+      let(:radius) { nil }
 
-        it "assigns the radius attribute to the default radius" do
-          expect(subject.radius).to eq("32")
-        end
+      context "when a location is provided in the params" do
+        let(:location) { "North Nowhere" }
+        let(:params) { { location: location } }
+
+        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
+      end
+
+      context "when a location is provided in the search_criteria param" do
+        let(:location) { "North Nowhere" }
+        let(:params) { { search_criteria: { location: location } } }
+
+        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
       end
 
       context "when a location is not provided" do
+        let(:location) { nil }
         let(:params) { {} }
 
-        it "assigns the radius to the default radius" do
-          expect(subject.radius).to eq("32")
-        end
-      end
-    end
-
-    context "when a radius is provided in the search criteria param" do
-      context "when a location is provided" do
-        let(:params) { { search_criteria: { radius: "1" }, location: "North Nowhere" } }
-
-        it "assigns the radius attribute to the radius param" do
-          expect(subject.radius).to eq("1")
-        end
-      end
-
-      context "when a location is not provided" do
-        let(:params) { { search_criteria: { radius: "1" } } }
-
-        it "assigns the radius to the default radius" do
-          expect(subject.radius).to eq("32")
-        end
+        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
       end
     end
   end
@@ -124,7 +181,7 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
     end
 
     context "when location and no other field are selected" do
-      let(:params) { { location: "London" } }
+      let(:params) { { location: "Anywhere but a polygon" } }
 
       it "validates location_and_one_other_criterion_selected" do
         expect(subject).not_to be_valid
