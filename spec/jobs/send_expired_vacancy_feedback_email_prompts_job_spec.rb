@@ -71,8 +71,8 @@ RSpec.describe SendExpiredVacancyFeedbackEmailJob do
   end
 
   context "for two publishers" do
-    let(:first_publisher) { create(:publisher, email: "first_publishers@email.com") }
-    let(:second_publisher) { create(:publisher, email: "second_publishers@email.com") }
+    let(:first_publisher) { create(:publisher, email: "first_publishers@example.net") }
+    let(:second_publisher) { create(:publisher, email: "second_publishers@example.net") }
 
     context "with one expired vacancy each" do
       let(:first_expired_vacancy) do

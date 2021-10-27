@@ -40,6 +40,10 @@ member. To be able to add and remove member, they may be added as owner.
 
 See [service accounts](service_accounts.md) for the list of groups.
 
+## Zendesk
+
+Someone on the support team can add developers to Zendesk as and when needed (as there are limited seats available).
+
 ## Other services
 
 Any team member can invite the new developer to the following services:
@@ -48,4 +52,3 @@ Any team member can invite the new developer to the following services:
 * GOV.UK Notify
 * Rollbar
 * Skylight
-* Zendesk

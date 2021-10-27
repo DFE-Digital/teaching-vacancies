@@ -6,23 +6,23 @@ en:
     add_another_job: Add another job
     add_another_qualification: Add another qualification
     add_another_reference: Add another referee
+    add_another_subject: + Add another subject
     add_job: Add a job
     add_qualification: Add a qualification
     add_reference: Add a referee
-    add_another_subject: + Add another subject
     apply_filters: Apply filters
     back: Back
     back_to_manage_jobs: Back to manage jobs
     back_to_teaching_vacancies: Back to Teaching Vacancies
     cancel: Cancel
-    cancel_copy: Cancel job listing copy
     cancel_and_return: Cancel and return
     cancel_and_return_to_account: Cancel and return to my account
     cancel_and_return_to_jobs: Cancel and return to manage jobs
+    cancel_copy: Cancel job listing copy
     cancel_end_listing: Cancel ending job listing
     cancel_extend_deadline: Cancel deadline extension
-    close_account: Close account
     change: Change
+    close_account: Close account
     complete_section: Complete section
     confirm_deletion: Confirm deletion
     confirm_destroy: Yes I am sure - delete this entry
@@ -31,8 +31,8 @@ en:
     continue_to_account: Continue to my account
     continue_to_dsi: Continue to DfE Sign-in
     copy_listing: Copy job listing
-    create_job: Create a job listing
     create_account: Create an account
+    create_job: Create a job listing
     delete: Delete
     delete_draft: Delete draft
     delete_subject: Delete subject
@@ -62,6 +62,7 @@ en:
     save_reference: Save referee
     search: Search
     select_file: Select a file
+    send_message: Send message
     set_preferences: Set your preferences
     shortlist: Shortlist
     sign_in: Sign in
@@ -72,11 +73,11 @@ en:
     submit: Submit
     submit_application: Submit application
     submit_feedback: Submit feedback
-    submit_job_listing: Confirm and submit job
     submit_for_publication: Submit for publication
+    submit_job_listing: Confirm and submit job
     subscribe: Subscribe
-    update_job: Update listing
     update_alert: Update alert
+    update_job: Update listing
     update_password: Update password
     upload_files: Upload files
     view_account: View my account
@@ -593,10 +594,18 @@ en:
           part_time: Part time
           term_time: Term time
           job_share: Job share
-
       publishers_vacancy_statistics_form:
         hired_status: Job filled on Teaching Vacancies?
         listed_elsewhere: Listed elsewhere?
+      support_request_form:
+        email_address: Email address
+        is_for_whole_site_options:
+          "no": "A specific page"
+          "yes": "The whole site"
+        issue: Tell us about your problem or question
+        name: Name
+        page: Enter the URL or the name of the page
+        screenshot: Upload a file
 
     legend:
       general_feedback_form:
@@ -702,6 +711,9 @@ en:
         organisation_id: In which school will the job be based?
       publishers_job_listing_working_patterns_form:
         working_patterns: Working patterns
+      support_request_form:
+        is_for_whole_site: What area of the website is your problem or question about?
+        screenshot: Upload screenshots (optional)
 
     options:
       publishers_job_listing_end_listing_form:

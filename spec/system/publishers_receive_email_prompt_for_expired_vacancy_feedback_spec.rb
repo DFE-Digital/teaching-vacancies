@@ -50,7 +50,7 @@ RSpec.describe "Creating a vacancy" do
 
   context "Two expired vacancies for two users that are older than 2 weeks" do
     scenario "both receives feedback prompt emails" do
-      another_user = create(:publisher, email: "another@user.com")
+      another_user = create(:publisher, email: "another@example.com")
 
       create(:vacancy, :published, organisations: [school], publisher_id: publisher.id,
                                    job_title: "Job one", publish_on: 2.months.ago, expires_at: 2.weeks.ago)
@@ -63,7 +63,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       expect(ApplicationMailer.deliveries.map(&:to)).to match a_collection_containing_exactly(
-        ["another@user.com"], ["test@mail.com"]
+        ["another@example.com"], ["test@mail.com"]
       )
       expect(ApplicationMailer.deliveries.count).to eq(2)
     end
