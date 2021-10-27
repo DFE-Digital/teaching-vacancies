@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Publishers::JobApplicationMailer do
   let(:publisher) { create(:publisher, email: email) }
-  let(:email) { "test@email.com" }
+  let(:email) { "test@example.net" }
   let(:organisation) { create(:school) }
   let!(:vacancy) { create(:vacancy, publisher: publisher, organisations: [organisation]) }
   let(:contact_email) { vacancy.contact_email }
@@ -25,7 +25,7 @@ RSpec.describe Publishers::JobApplicationMailer do
 
     it "sends a `publisher_applications_received` email" do
       expect(mail.subject).to eq(I18n.t("publishers.job_application_mailer.applications_received.subject", count: 2))
-      expect(mail.to).to eq(["test@email.com"])
+      expect(mail.to).to eq(["test@example.net"])
       expect(mail.body.encoded).to include(vacancy.job_title)
                                .and include(organisation_job_job_applications_url(vacancy))
                                .and include(I18n.t("publishers.job_application_mailer.applications_received.view_applications", count: 2))

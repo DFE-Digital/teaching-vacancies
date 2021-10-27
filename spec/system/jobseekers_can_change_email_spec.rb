@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can change email" do
-  let(:jobseeker) { create(:jobseeker, email: "old@email.com", password: "password") }
+  let(:jobseeker) { create(:jobseeker, email: "old@example.net", password: "password") }
   let(:created_jobseeker) { Jobseeker.first }
   let!(:subscription) { create(:subscription, email: jobseeker.email) }
   let(:new_email_address) { "new@email.com" }

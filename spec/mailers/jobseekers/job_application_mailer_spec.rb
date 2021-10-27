@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Jobseekers::JobApplicationMailer do
   let(:jobseeker) { create(:jobseeker, email: email) }
-  let(:email) { "test@email.com" }
+  let(:email) { "test@example.net" }
   let(:organisation) { build(:school) }
   let(:vacancy) { build(:vacancy, organisations: [organisation]) }
   let(:contact_email) { vacancy.contact_email }
@@ -23,7 +23,7 @@ RSpec.describe Jobseekers::JobApplicationMailer do
 
     it "sends a `jobseeker_application_shortlisted` email" do
       expect(mail.subject).to eq(I18n.t("jobseekers.job_application_mailer.application_shortlisted.subject"))
-      expect(mail.to).to eq(["test@email.com"])
+      expect(mail.to).to eq(["test@example.net"])
       expect(mail.body.encoded).to include(I18n.t("jobseekers.job_application_mailer.application_shortlisted.heading"))
                                .and include(I18n.t("jobseekers.job_application_mailer.shared.more_info.description",
                                                    email: "[#{contact_email}](mailto:#{contact_email})"))
@@ -41,7 +41,7 @@ RSpec.describe Jobseekers::JobApplicationMailer do
 
     it "sends a `jobseeker_application_submitted` email" do
       expect(mail.subject).to eq(I18n.t("jobseekers.job_application_mailer.application_submitted.subject"))
-      expect(mail.to).to eq(["test@email.com"])
+      expect(mail.to).to eq(["test@example.net"])
       expect(mail.body.encoded).to include(I18n.t("jobseekers.job_application_mailer.application_submitted.heading",
                                                   organisation_name: organisation.name))
                                .and include(I18n.t("jobseekers.job_application_mailer.shared.more_info.description",
@@ -60,7 +60,7 @@ RSpec.describe Jobseekers::JobApplicationMailer do
 
     it "sends a `jobseeker_application_unsuccessful` email" do
       expect(mail.subject).to eq(I18n.t("jobseekers.job_application_mailer.application_unsuccessful.subject"))
-      expect(mail.to).to eq(["test@email.com"])
+      expect(mail.to).to eq(["test@example.net"])
       expect(mail.body.encoded).to include(I18n.t("jobseekers.job_application_mailer.application_unsuccessful.heading"))
                                .and include(I18n.t("jobseekers.job_application_mailer.shared.more_info.description",
                                                    email: "[#{contact_email}](mailto:#{contact_email})"))
