@@ -69,6 +69,12 @@ RSpec.configure do |config|
     allow(Rails.application.config).to receive(:geocoder_lookup).and_return(:default)
   end
 
+  config.around(:each, zendesk: true) do |example|
+    with_env("ZENDESK_API_KEY" => SecureRandom.uuid) do
+      example.run
+    end
+  end
+
   config.include AccessibilityHelpers, type: :system
   config.include ActionView::Helpers::NumberHelper
   config.include ActionView::Helpers::TextHelper

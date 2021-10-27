@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Requesting support", recaptcha: true, vcr: true do
+RSpec.describe "Requesting support", recaptcha: true, vcr: true, zendesk: true do
   let(:issue) { "Help!" }
   let(:email) { "test@example.com" }
 

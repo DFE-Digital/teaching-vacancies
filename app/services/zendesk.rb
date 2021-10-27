@@ -6,6 +6,8 @@ class Zendesk
   end
 
   def initialize(as:)
+    raise ConfigurationError, "Please set ZENDESK_API_KEY for this environment." if api_key.blank?
+
     @as = as
   end
 
@@ -35,7 +37,13 @@ class Zendesk
       #
       # https://developer.zendesk.com/api-reference/ticketing/tickets/ticket-requests/#api-token
       config.username = @as
-      config.token = ENV["ZENDESK_API_KEY"]
+      config.token = api_key
     end
   end
+
+  def api_key
+    @api_key ||= ENV["ZENDESK_API_KEY"]
+  end
+
+  class ConfigurationError < StandardError; end
 end

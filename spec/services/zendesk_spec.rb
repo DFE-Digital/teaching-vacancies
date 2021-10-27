@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Zendesk do
+RSpec.describe Zendesk, zendesk: true do
   subject(:service) { described_class }
 
   let(:client) { double(ZendeskAPI::Client) }
@@ -107,6 +107,16 @@ RSpec.describe Zendesk do
       it "sets the API token" do
         service.create_request!(**kwargs)
         expect(config).to have_received(:token=).with(api_key)
+      end
+
+      context "if the key is not set" do
+        let(:api_key) { nil }
+
+        it "raises a configuration error" do
+          expect {
+            service.create_request!(**kwargs)
+          }.to raise_error(Zendesk::ConfigurationError)
+        end
       end
     end
   end
