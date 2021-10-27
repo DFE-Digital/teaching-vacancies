@@ -39,9 +39,10 @@ export const init = (removeButtonSelector, clearButtonId, closeButtonId, showFil
       togglePanel(showFilterPanelEl);
     });
 
-    document.addEventListener('keydown', (e) => {
+    document.getElementsByClassName('filters-component')[0].addEventListener('keydown', (e) => {
       if (['Esc', 'Escape'].includes(e.key)) {
-        togglePanel(showFilterPanelEl);
+        document.getElementsByClassName('filters-component')[0].classList.remove('filters-component--show-mobile');
+        setFiltersHiddenState(showFilterPanelEl, document.getElementsByClassName('filters-component')[0], true);
       }
     });
   }

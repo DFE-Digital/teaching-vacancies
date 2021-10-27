@@ -1,0 +1,7 @@
+= tag.div(class: classes, **html_attributes) do
+  .panel-component__heading
+    h2.govuk-heading-m = @heading_text
+    button.panel-component__close-button.icon--close.panel-component--show-mobile-open type="button"
+      span.govuk-body-s = "Close"
+  .panel-component__body
+    = body

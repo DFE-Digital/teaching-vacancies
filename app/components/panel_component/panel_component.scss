@@ -1,0 +1,83 @@
+@import 'base_component';
+
+.vacancies_index {
+  .panel-component__toggle {
+    width: 100%;
+    
+    @include govuk-media-query($from: desktop) {
+      display: none;
+    }
+  }
+
+  .search-controls {
+    .search-controls__panel {
+      border-bottom: 1px solid $govuk-border-colour;
+
+      &:last-of-type {
+        border-bottom: 0;
+      }
+    }
+  }
+}
+  
+.panel-component {
+  background-color: govuk-colour('light-grey');
+  overflow: hidden;
+  padding: govuk-spacing(3);
+  @include govuk-media-query($until: desktop) {
+    display: none;
+  }
+
+  &:focus {
+    outline: $govuk-focus-width solid $govuk-focus-colour;
+  }
+
+  &.panel-component--show-mobile {
+    display: block;
+
+    @include govuk-media-query($until: desktop) {
+      border: 1px solid govuk-colour('mid-grey');
+      bottom: 5px;
+      max-width: 320px;
+      overflow-y: scroll;
+      position: fixed;
+      right: 5px;
+      top: 5px;
+      z-index: 100;
+
+      .panel-component--show-mobile-open {
+        display: block;
+      }
+    }
+  }
+
+  &--show-mobile-open {
+    display: none;
+  }
+
+  &__close-button {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: 0;
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    span {
+      line-height: 1em;
+      padding-left: govuk-spacing(4);
+    }
+  }
+
+  &__heading {
+    display: block;
+    position: relative;
+
+    .govuk-heading-m {
+      display: block;
+    }
+  }
+}
