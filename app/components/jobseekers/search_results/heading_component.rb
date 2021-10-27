@@ -1,6 +1,7 @@
 class Jobseekers::SearchResults::HeadingComponent < ViewComponent::Base
-  def initialize(vacancies_search:)
+  def initialize(vacancies_search:, landing_page:)
     @vacancies_search = vacancies_search
+    @landing_page = landing_page
     @keyword = @vacancies_search.keyword
     @location = @vacancies_search.location_search.location
     @polygon_boundaries = @vacancies_search.location_search.polygon_boundaries
@@ -10,7 +11,9 @@ class Jobseekers::SearchResults::HeadingComponent < ViewComponent::Base
   end
 
   def heading
-    if @keyword.present? && @polygon_boundaries.present?
+    if @landing_page.present? && Vacancy.job_roles.key?(@landing_page.underscore)
+      t("jobs.search_result_heading.landing_page_html", jobs_count: @readable_count, landing_page: @landing_page.titleize.downcase, count: @total_count)
+    elsif @keyword.present? && @polygon_boundaries.present?
       t("jobs.search_result_heading.keyword_location_polygon_html", jobs_count: @readable_count, location: @location, keyword: @keyword, count: @total_count, radius: @radius, units: units)
     elsif @keyword.present? && @location.present?
       t("jobs.search_result_heading.keyword_location_html", jobs_count: @readable_count, location: @location, keyword: @keyword, count: @total_count, radius: @radius, units: units)
