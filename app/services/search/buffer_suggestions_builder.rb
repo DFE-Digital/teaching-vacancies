@@ -1,4 +1,6 @@
 class Search::BufferSuggestionsBuilder
+  include VacanciesOptionsHelper
+
   attr_reader :location, :buffer_suggestions, :search_params
 
   def initialize(location, search_params)
@@ -8,7 +10,7 @@ class Search::BufferSuggestionsBuilder
   end
 
   def get_buffers_suggestions
-    buffer_vacancy_count = Search::RadiusSuggestionsBuilder::RADIUS_OPTIONS.map do |distance|
+    buffer_vacancy_count = RADIUS_OPTIONS.map do |distance|
       polygons = LocationPolygon.buffered(distance).with_name(location).to_algolia_polygons
 
       [distance.to_s, Search::Strategies::Algolia.new(search_params.merge(polygons: polygons)).total_count]

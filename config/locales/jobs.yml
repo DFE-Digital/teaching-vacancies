@@ -59,6 +59,7 @@ en:
       location: Location
       location_hint: For example, city, county or postcode
       number_of_miles:
+        zero: This area only
         one: '%{count} mile'
         other: '%{count} miles'
       title: Search job listings

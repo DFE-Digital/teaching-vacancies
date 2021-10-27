@@ -1,7 +1,6 @@
 class Search::RadiusSuggestionsBuilder
-  RADIUS_OPTIONS = [1, 5, 10, 25, 50, 100, 200].freeze
-
   include DistanceHelper
+  include VacanciesOptionsHelper
 
   attr_reader :radius, :radius_suggestions, :search_params
 
