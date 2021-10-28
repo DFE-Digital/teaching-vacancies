@@ -4,6 +4,7 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
   extend FriendlyId
   extend ArrayEnum
 
+  include DatabaseIndexable
   include Indexable
   include Resettable
   include Phaseable
@@ -60,6 +61,7 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   scope :search_by_filter, VacancyFilterQuery
   scope :search_by_location, VacancyLocationQuery
+  scope :search_by_full_text, VacancyFullTextSearchQuery
 
   paginates_per 10
 

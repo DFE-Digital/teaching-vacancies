@@ -24,13 +24,10 @@ class Search::Strategies::PgSearch
   private
 
   def scope
-    # This strategy can currently only search by location (not keywords yet) so this avoids
-    # polluting our metrics for now
-    return Vacancy.none if keyword.present?
-
     scope = Vacancy.live
     scope = scope.search_by_location(location, radius) if location
     scope = scope.search_by_filter(filters) if filters.any?
+    scope = scope.search_by_full_text(keyword) if keyword.present?
     scope = scope.order(sort_by.column => sort_by.order) if sort_by&.column
 
     # Adds an additional order by updated at for searches so a non-deterministic order column
