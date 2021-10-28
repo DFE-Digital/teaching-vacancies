@@ -5,8 +5,7 @@
   border-bottom: 1px solid $govuk-border-colour;
   color: $govuk-secondary-text-colour;
   display: flex;
-  margin: 0 0 govuk-spacing(4);
-  padding-bottom: govuk-spacing(3);
+  padding: govuk-spacing(4) 0;
 
   &__content {
     display: flex;
@@ -41,16 +40,6 @@
     margin-right: govuk-spacing(2);
   }
 
-  dl,
-  dd {
-    margin: 0;
-  }
-
-  dt,
-  dd {
-    display: inline-block;
-  }
-
   &__actions {
     margin-left: 0;
 
@@ -75,13 +64,6 @@
           border-right: 0;
         }
       }
-    }
-  }
-
-  &__item-label {
-    &::after {
-      content: ':';
-      margin-right: govuk-spacing(1);
     }
   }
 }

@@ -41,6 +41,7 @@ $govuk-new-link-styles: true;
 @import 'application/jobseekers/vacancies';
 @import 'application/jobseekers/vacancy';
 
+@import 'application/publishers/awaiting-feedback';
 @import 'application/publishers/information-summary';
 @import 'application/publishers/interruption-card';
 @import 'application/publishers/og-preview';
@@ -110,8 +111,31 @@ p {
 }
 
 strong,
-b {
+b,
+dt {
+  color: $govuk-text-colour;
   font-weight: bold;
+}
+
+dd {
+  color: $govuk-secondary-text-colour;
+}
+
+dt {
+  &::after {
+    content: ':';
+    margin-right: govuk-spacing(1);
+  }
+}
+
+dl,
+dd {
+  margin: 0;
+}
+
+dt,
+dd {
+  display: inline-block;
 }
 
 .govuk-section-break {
@@ -125,7 +149,7 @@ b {
 
   .govuk-summary-list__row {
     border-bottom: 1px solid $govuk-border-colour;
-    padding-bottom: govuk-spacing(2);
+    padding: govuk-spacing(4) 0;
   }
 }
 

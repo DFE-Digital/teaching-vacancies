@@ -1,0 +1,30 @@
+.publisher {
+  .awaiting-feedback {
+    display: block;
+    padding: govuk-spacing(4) 0;
+
+    .govuk-form-group {
+      margin-bottom: govuk-spacing(2);
+    }
+
+    &__options {
+      @media (min-width: 1000px) {
+        display: flex;
+
+        &__select {
+          flex-grow: 1;
+          margin: 0 govuk-spacing(2) 0 0;
+        }
+
+        &__submit {
+          align-self: center;
+          margin-top: govuk-spacing(3);
+        }
+      }
+
+      .govuk-button {
+        margin: 0;
+      }
+    }
+  }
+}
