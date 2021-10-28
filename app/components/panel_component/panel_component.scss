@@ -32,7 +32,7 @@
     outline: $govuk-focus-width solid $govuk-focus-colour;
   }
 
-  &.panel-component--show-mobile {
+  &.panel-component--visible {
     display: block;
 
     @include govuk-media-query($until: desktop) {
@@ -45,14 +45,10 @@
       top: 5px;
       z-index: 100;
 
-      .panel-component--show-mobile-open {
+      .panel-component__close-button {
         display: block;
       }
     }
-  }
-
-  &--show-mobile-open {
-    display: none;
   }
 
   &__close-button {
@@ -60,6 +56,7 @@
     background-repeat: no-repeat;
     border: 0;
     cursor: pointer;
+    display: none;
     font-size: 0.9rem;
     padding: 0;
     position: absolute;

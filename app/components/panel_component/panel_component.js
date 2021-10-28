@@ -18,7 +18,7 @@ export const init = () => {
 
     panelContainerEl.addEventListener('keydown', (e) => {
       if (['Esc', 'Escape'].includes(e.key)) {
-        panelContainerEl.classList.remove('panel-component--show-mobile');
+        panelContainerEl.classList.remove('panel-component--visible');
         setPanelHiddenState(actionEl, panelContainerEl, true);
       }
     });
@@ -26,7 +26,7 @@ export const init = () => {
 };
 
 export const togglePanel = (actionEl) => Array.from(document.getElementsByClassName('panel-component')).forEach((element) => {
-  element.classList.toggle('panel-component--show-mobile') ? setPanelVisibleState(actionEl, element) : setPanelHiddenState(actionEl, element, true);
+  element.classList.toggle('panel-component--visible') ? setPanelVisibleState(actionEl, element) : setPanelHiddenState(actionEl, element, true);
 });
 
 export const setPanelVisibleState = (actionEl, panelEl) => {
