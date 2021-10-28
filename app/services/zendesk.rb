@@ -1,8 +1,6 @@
 class Zendesk
-  class << self
-    def create_request!(**kwargs)
-      new(as: kwargs[:email_address]).create_request!(**kwargs)
-    end
+  def self.create_request!(**kwargs)
+    new(as: kwargs[:email_address]).create_request!(**kwargs)
   end
 
   def initialize(as:)
