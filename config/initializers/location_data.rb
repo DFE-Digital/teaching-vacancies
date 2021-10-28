@@ -21,7 +21,8 @@ ALL_IMPORTED_LOCATIONS =
 # Some of these basic mappings are overwritten in mapped_locations.yml, e.g. "manchester": "greater manchester".
 # See also documentation/business-analyst-activities.md
 landing_page_location_params_mapping = ALL_IMPORTED_LOCATIONS.map { |location| [location.parameterize.titleize.downcase, location] }.to_h
-MAPPED_LOCATIONS = landing_page_location_params_mapping.merge(YAML.load_file(base_path.join("mapped_locations.yml")))
+mapped_locations_from_file = YAML.load_file(base_path.join("mapped_locations.yml"))
+MAPPED_LOCATIONS = landing_page_location_params_mapping.merge(mapped_locations_from_file)
 
 # Locations with the location type from a human point of view for VacancyFacets
 LOCATIONS_MAPPED_TO_HUMAN_FRIENDLY_TYPES = [
@@ -31,8 +32,14 @@ LOCATIONS_MAPPED_TO_HUMAN_FRIENDLY_TYPES = [
 ].inject(&:merge).transform_keys(&:downcase).freeze
 
 ons_counties = ons_counties_and_unitary_authorities.select { |_k, v| v == "counties" }.map(&:first)
-COUNTIES = (composite_locations.keys + ons_counties)
+COUNTIES = (composite_locations.keys + ons_counties).reject do |county|
+  # Reject duplicates caused by mapping locations, e.g. use Telford & Wrekin instead of Telford as location facets, rather than both.
+  mapped_locations_from_file.include?(county.downcase)
+end
 
 ons_region_cities = ons_regions.select { |_k, v| v == "cities" }.map(&:first)
 ons_unitary_authority_cities = ons_counties_and_unitary_authorities.select { |_k, v| v == "cities" }.map(&:first)
-CITIES = (ons_cities.map(&:first) + ons_region_cities + ons_unitary_authority_cities)
+CITIES = (ons_cities.map(&:first) + ons_region_cities + ons_unitary_authority_cities).reject do |city|
+  # Reject duplicates caused by mapping locations, e.g. use Telford & Wrekin instead of Telford as location facets, rather than both.
+  mapped_locations_from_file.include?(city.downcase)
+end
