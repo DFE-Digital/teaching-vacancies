@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Jobseekers::SubscriptionMailer do
   include ERB::Util
 
-  let(:email) { "an@email.com" }
+  let(:email) { "an@example.net" }
   let(:search_criteria) { { keyword: "English" } }
   let(:subscription) do
     subscription = Subscription.create(email: email, frequency: "daily", search_criteria: search_criteria)

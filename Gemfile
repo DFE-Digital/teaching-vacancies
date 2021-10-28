@@ -65,6 +65,7 @@ gem "view_component"
 gem "webpacker"
 gem "wicked"
 gem "xml-sitemap"
+gem "zendesk_api"
 
 group :development do
   gem "amazing_print" # optional dependency of `rails_semantic_logger`
@@ -99,6 +100,7 @@ end
 
 group :test do
   gem "capybara"
+  gem "climate_control"
   gem "rack_session_access"
   gem "selenium-webdriver"
   gem "shoulda-matchers"

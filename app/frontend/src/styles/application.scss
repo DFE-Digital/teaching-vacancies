@@ -213,3 +213,8 @@ dd {
     padding: 0 govuk-spacing(1);
   }
 }
+
+// Per https://gov.uk footer
+.govuk-footer__list {
+  padding-bottom: 40px;
+}
