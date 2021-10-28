@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Giving general feedback for the service", recaptcha: true do
   let(:comment) { "Keep going!" }
-  let(:email) { "test@test.com" }
+  let(:email) { "test@example.com" }
   let(:visit_purpose_comment) { "testing" }
 
   context "when all required fields are complete" do

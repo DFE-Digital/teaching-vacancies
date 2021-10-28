@@ -9,7 +9,7 @@ class GeneralFeedbacksController < ApplicationController
 
     if @general_feedback_form.invalid?
       render :new
-    elsif recaptcha_is_invalid?(@feedback)
+    elsif recaptcha_is_invalid?
       redirect_to invalid_recaptcha_path(form_name: @general_feedback_form.class.name.underscore.humanize)
     else
       @feedback.recaptcha_score = recaptcha_reply["score"]

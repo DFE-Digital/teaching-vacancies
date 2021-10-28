@@ -1,0 +1,89 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://teachingjobs.zendesk.com/api/v2/requests
+    body:
+      encoding: UTF-8
+      string: '{"request":{"requester":{"name":"User In-Need","email":"test@example.com"},"subject":"[Support
+        request] Some page","comment":{"body":"Help!"}}}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - ZendeskAPI Ruby 1.33.0
+      Authorization:
+      - Basic jdkkJduWhnCCioLpWWnJiOw=
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Thu, 21 Oct 2021 13:14:56 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '580'
+      Connection:
+      - keep-alive
+      X-Zendesk-Api-Version:
+      - v2
+      X-Zendesk-Application-Version:
+      - v10039
+      X-Frame-Options:
+      - SAMEORIGIN
+      Location:
+      - https://teachingjobs.zendesk.com/api/v2/requests/20932.json
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - X-Zendesk-API-Warn,X-Zendesk-User-Id,X-Zendesk-User-Session-Expires-At
+      X-Rate-Limit:
+      - '400'
+      X-Rate-Limit-Remaining:
+      - '400'
+      Strict-Transport-Security:
+      - max-age=31536000;
+      Etag:
+      - W/"572a99bf724a5d20e56cfc5140d3a811"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Zendesk-Origin-Server:
+      - classic-app-server-67c7f4d985-tkl95
+      X-Request-Id:
+      - 6a1ac06e3c92e648-DUS
+      - 6a1ac06e3c92e648-DUS
+      X-Runtime:
+      - '0.863567'
+      X-Zendesk-Zorg:
+      - 'yes'
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=ADIlr36z9U8q5ZTi51cAjDAYp3%2FhbMFgNCJnA43uZxrbyP6Mt1xPo1jTy0fwrpYM5JQpplZEQdmT1Ak%2Fd66jqw4kBOH27sE%2BnEyBtLzNAQAjxCfUTO9FiNXRPaU4a9pqqxs6%2B5%2B%2BmOrc7A%3D%3D"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}'
+      Set-Cookie:
+      - __cfruid=fdfc23ea34f74c576957912ffafcb095c351da60-1634822096; path=/; domain=.teachingjobs.zendesk.com;
+        HttpOnly; Secure; SameSite=None
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 6a1ac06e3c92e648-LHR
+    body:
+      encoding: UTF-8
+      string: '{"request":{"url":"https://teachingjobs.zendesk.com/api/v2/requests/20932.json","id":20932,"status":"new","priority":"normal","type":null,"subject":"[Support
+        request] Some page","description":"Help!","organization_id":null,"via":{"channel":"api","source":{"from":{},"to":{},"rel":null}},"custom_fields":[],"requester_id":389521004560,"collaborator_ids":[],"email_cc_ids":[],"is_public":true,"due_at":null,"can_be_solved_by_me":false,"created_at":"2021-10-21T13:14:55Z","updated_at":"2021-10-21T13:14:55Z","recipient":null,"followup_source_id":null,"assignee_id":null,"fields":[]}}'
+  recorded_at: Thu, 21 Oct 2021 13:14:56 GMT
+recorded_with: VCR 6.0.0

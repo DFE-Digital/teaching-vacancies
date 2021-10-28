@@ -147,15 +147,19 @@ en:
     unprocessable_entity: We're unable to process your request.
 
   footer:
-    for_job_seekers: For jobseekers
-    for_schools: For schools
-    list_a_teaching_job: List a teaching job
-    provide_feedback: Give feedback
-    request_support: Report problems via email
-    search_teaching_vacancies: Find a teaching job
-    service_support: Service support
+    create_a_job_alert: Create a job alert
+    headings:
+      feedback: Feedback
+      for_job_seekers: Job seekers
+      for_schools: Hiring staff
+      support: Support
+    list_a_teaching_job: List a job
+    manage_job_listings: Manage job listings
+    provide_feedback: Provide feedback on Teaching Vacancies
+    request_support: Get help or report a problem
+    search_teaching_vacancies: Find a job
+    service_support: Get support
     sign_in: Sign in
-    updates: Updates
     your_account: My account
 
   general_feedbacks:
@@ -170,7 +174,8 @@ en:
     email: teaching.vacancies@education.gov.uk
     gias: Get information about schools
     gias_url: https://www.get-information-schools.service.gov.uk/
-    report_a_problem_html: To report a problem, or for support using Teaching Vacancies, please email %{mail_to}
+    report_a_problem_html: To report a problem, or for support using Teaching Vacancies, please use the %{get_help_link}
+    get_help_form: support form
 
   jobseekers:
     passwords:
@@ -466,6 +471,23 @@ en:
       title: Unsubscribe from this job alert
     update:
       success: Your job alert has been updated
+
+  support_requests:
+    new:
+      screenshot_description: You can help us undestand your query by providing images of your screen.
+      intro_html: |
+        <p>
+          You can use this form to ask a question or report a problem.
+          If you have particular feedback about Teaching Vacancies, please use the %{give_feedback_link} form.
+        </p>
+
+        <p>We will aim to resolve your issue as soon as possible.</p>
+      give_feedback: give feedback
+      title: Get help
+      heading: Get help
+    create:
+      success: Your request for help has been sent
+
 
   terms_and_conditions:
     intro_html: >-

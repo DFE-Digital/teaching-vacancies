@@ -6,7 +6,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
   let(:selected_type) { "published" }
   let(:publisher_preference) { create(:publisher_preference, publisher: publisher, organisation: organisation) }
   let(:sort_form) { SortForm.new(sort.column) }
-  let(:email) { "publisher@email.com" }
+  let(:email) { "publisher@example.net" }
 
   subject do
     described_class.new(
