@@ -1,4 +1,6 @@
 class Publishers::SessionsController < Devise::SessionsController
+  before_action :redirect_to_authentication_fallback, only: %i[new]
+
   def create
     publisher = Publisher.find(session[:publisher_id])
     organisation = publisher.organisations.find(params[:organisation_id])
@@ -19,6 +21,7 @@ class Publishers::SessionsController < Devise::SessionsController
     @publisher_dsi_token = session[:publisher_dsi_token]
     session.delete(:publisher_organisation_id)
     session.delete(:visited_new_features_page)
+    session.delete(:viewed_new_features_reminder_at)
     super
   end
 
@@ -34,5 +37,11 @@ class Publishers::SessionsController < Devise::SessionsController
 
   def after_sign_in_path_for(_resource)
     organisation_path
+  end
+
+  def redirect_to_authentication_fallback
+    return unless AuthenticationFallback.enabled?
+
+    redirect_to new_login_key_path
   end
 end

@@ -18,9 +18,10 @@ ALL_IMPORTED_LOCATIONS =
 # Map from a user-inputted search term to a location polygon's name.
 # We also need to map landing page location params to the location polygon's name, since these are `#parameterize`d in
 # the routes and `#titleize`d in VacanciesController, but those operations are not symmetrical.
+# Some of these basic mappings are overwritten in mapped_locations.yml, e.g. "manchester": "greater manchester".
 # See also documentation/business-analyst-activities.md
 landing_page_location_params_mapping = ALL_IMPORTED_LOCATIONS.map { |location| [location.parameterize.titleize.downcase, location] }.to_h
-MAPPED_LOCATIONS = YAML.load_file(base_path.join("mapped_locations.yml")).merge(landing_page_location_params_mapping)
+MAPPED_LOCATIONS = landing_page_location_params_mapping.merge(YAML.load_file(base_path.join("mapped_locations.yml")))
 
 # Locations with the location type from a human point of view for VacancyFacets
 LOCATIONS_MAPPED_TO_HUMAN_FRIENDLY_TYPES = [

@@ -15,7 +15,8 @@ en:
     environment_html: This is not the live Teaching Vacancies website. You are currently viewing the <strong>%{environment}</strong> version of the site.
 
   application_pack:
-    link_html: <a class="govuk-link" download="Teaching Vacancies application form guide" href="/teaching-vacancies-application-form-guide-sept-21.pdf">Download more information about the application form (2.7 MB, PDF)</a>
+    link_text: Download more information about the application form (%{size} MB, PDF)
+    link_download_attr: Teaching Vacancies application form guide
 
   banners:
     important: Important
@@ -253,7 +254,6 @@ en:
 
   new_features:
     applications: Applications
-    application_pack_link: Download more information about the application form (2.7MB, PDF).
     content: >-
       You can now receive and manage job applications on Teaching Vacancies. You can
       do this for all jobs except education support roles.
@@ -531,3 +531,5 @@ en:
         results:
           one: (%{count} result)
           other: (%{count} results)
+    show:
+      page_description: '%{job_title} job from %{organisation}. Apply by %{deadline}.'

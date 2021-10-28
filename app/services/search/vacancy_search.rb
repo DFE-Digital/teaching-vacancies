@@ -66,6 +66,7 @@ class Search::VacancySearch
                              Search::Strategies::Algolia.new(algolia_params),
                              Search::Strategies::PgSearch.new(
                                keyword,
+                               filters: search_criteria,
                                location: search_criteria[:location],
                                radius: search_criteria[:radius],
                                page: page,

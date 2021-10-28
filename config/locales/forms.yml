@@ -597,6 +597,7 @@ en:
       publishers_vacancy_statistics_form:
         hired_status: Job filled on Teaching Vacancies?
         listed_elsewhere: Listed elsewhere?
+        submit_hidden_text: feedback for %{job_title}
       support_request_form:
         email_address: Email address
         is_for_whole_site_options:

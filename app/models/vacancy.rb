@@ -1,9 +1,10 @@
 require "geocoding"
 
-class Vacancy < ApplicationRecord
+class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
   extend FriendlyId
   extend ArrayEnum
 
+  include DatabaseIndexable
   include Indexable
   include Resettable
   include Phaseable
@@ -58,7 +59,9 @@ class Vacancy < ApplicationRecord
   scope :pending, (-> { published.where("publish_on > ?", Date.current) })
   scope :published_on_count, (->(date) { published.where(publish_on: date.all_day).count })
 
+  scope :search_by_filter, VacancyFilterQuery
   scope :search_by_location, VacancyLocationQuery
+  scope :search_by_full_text, VacancyFullTextSearchQuery
 
   paginates_per 10
 
@@ -111,11 +114,11 @@ class Vacancy < ApplicationRecord
   end
 
   def allow_key_stages?
-    !one_phase? || education_phases == %w[primary] || education_phases == %w[middle]
+    !one_phase? || readable_phases == %w[primary] || readable_phases == %w[middle]
   end
 
   def allow_subjects?
-    education_phases != ["primary"]
+    readable_phases != ["primary"]
   end
 
   def within_data_access_period?

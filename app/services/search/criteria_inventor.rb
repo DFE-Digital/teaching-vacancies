@@ -17,7 +17,7 @@ class Search::CriteriaInventor
     { location: @location,
       radius: (@location.present? ? DEFAULT_RADIUS_IN_MILES.to_s : nil),
       working_patterns: [],
-      phases: @vacancy.education_phases,
+      phases: @vacancy.readable_phases,
       job_roles: @vacancy.job_roles,
       subjects: @subjects,
       keyword: keyword }.delete_if { |_k, v| v.blank? }

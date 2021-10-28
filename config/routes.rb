@@ -31,6 +31,8 @@ Rails.application.routes.draw do
 
   get "/jobseekers/saved_jobs", to: "jobseekers/saved_jobs#index", as: :jobseeker_root
 
+  get "/organisation", to: "publishers/organisations#show", as: :publisher_root
+
   get "/sha", to: "sha#sha"
 
   namespace :jobseekers do
@@ -141,7 +143,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :new_features, only: %i[show update], controller: "publishers/new_features"
+  resource :new_features, only: %i[show update], controller: "publishers/new_features" do
+    get :reminder
+  end
 
   resource :terms_and_conditions, only: %i[show update], controller: "publishers/terms_and_conditions"
 

@@ -63,7 +63,7 @@ RSpec.describe Vacancy do
     end
   end
 
-  context "indexing for search" do
+  context "indexing for legacy Algolia search" do
     describe "#update_index!" do
       it { is_expected.to have_db_column(:initially_indexed) }
       it { is_expected.to have_db_index(:initially_indexed) }
@@ -107,6 +107,22 @@ RSpec.describe Vacancy do
         expect(described_class).to receive_message_chain(:index, :delete_objects).with(%w[ABC123])
         described_class.remove_vacancies_that_expired_yesterday!
       end
+    end
+  end
+
+  describe "indexing for search" do
+    subject { build(:vacancy) }
+
+    let(:generator) { instance_double(Search::Postgres::TsvectorGenerator, tsvector: "'Hello'") }
+
+    before do
+      expect(Search::Postgres::TsvectorGenerator).to receive(:new).with(Hash).and_return(generator)
+    end
+
+    it "updates the searchable_content column on save" do
+      expect(subject.searchable_content).to be_nil
+      subject.save
+      expect(subject.searchable_content).to eq("'Hello'")
     end
   end
 
@@ -482,9 +498,7 @@ RSpec.describe Vacancy do
     context "if the vacancy has a single phase" do
       let(:phase) { :"16-19" }
 
-      it "is updated on save" do
-        expect(subject.readable_phases).to be_empty
-        subject.save
+      it "has the expected phases" do
         expect(subject.readable_phases).to contain_exactly("16-19")
       end
     end
@@ -492,9 +506,7 @@ RSpec.describe Vacancy do
     context "if the vacancy has multiple phases" do
       let(:phase) { :multiple_phases }
 
-      it "is updated on save" do
-        expect(subject.readable_phases).to be_empty
-        subject.save
+      it "has the expected phases" do
         expect(subject.readable_phases).to contain_exactly("primary", "middle")
       end
     end
@@ -502,9 +514,7 @@ RSpec.describe Vacancy do
     context "if the vacancy has no phase" do
       let(:phase) { nil }
 
-      it "is updated on save" do
-        expect(subject.readable_phases).to be_empty
-        subject.save
+      it "has the expected phases" do
         expect(subject.readable_phases).to contain_exactly("primary", "middle")
       end
     end
@@ -513,10 +523,19 @@ RSpec.describe Vacancy do
       let(:phase) { nil }
       let!(:organisation) { create(:school, readable_phases: nil) }
 
-      it "is updated on save" do
+      it "has no phases" do
         expect(subject.readable_phases).to be_empty
-        subject.save
-        expect(subject.readable_phases).to be_empty
+      end
+    end
+
+    context "when the organisation changes" do
+      let(:phase) { :multiple_phases }
+      let(:other_organisation) { create(:school, readable_phases: ["16-19"]) }
+
+      it "updates the phases on save" do
+        expect(subject.readable_phases).to contain_exactly("primary", "middle")
+        subject.update(organisations: [other_organisation])
+        expect(subject.readable_phases).to contain_exactly("16-19")
       end
     end
   end
