@@ -14,7 +14,7 @@ class SubscriptionsController < ApplicationController
 
     if @form.invalid?
       render :new
-    elsif recaptcha_is_invalid?(subscription)
+    elsif recaptcha_is_invalid?
       redirect_to invalid_recaptcha_path(form_name: subscription.class.name.underscore.humanize)
     else
       subscription.update(recaptcha_score: recaptcha_reply&.dig("score"))

@@ -69,10 +69,16 @@ RSpec.configure do |config|
     allow(Rails.application.config).to receive(:geocoder_lookup).and_return(:default)
   end
 
+  config.around(:each, zendesk: true) do |example|
+    with_env("ZENDESK_API_KEY" => SecureRandom.uuid) do
+      example.run
+    end
+  end
+
   config.include AccessibilityHelpers, type: :system
-  config.include ActiveJob::TestHelper, type: :job
   config.include ActionView::Helpers::NumberHelper
   config.include ActionView::Helpers::TextHelper
+  config.include ActiveJob::TestHelper, type: :job
   config.include ActiveSupport::Testing::Assertions # required for ActiveJob::TestHelper#perform_enqueued_jobs
   config.include ActiveSupport::Testing::TimeHelpers
   config.include ApplicationHelpers
@@ -84,13 +90,14 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include DistanceHelper
   config.include FactoryBot::Syntax::Methods
+  config.include JobseekerHelpers
   config.include MailerHelpers
   config.include OrganisationsHelper
   config.include SearchHelper
   config.include VacanciesHelper
   config.include VacancyHelpers
-  config.include JobseekerHelpers
   config.include ViewComponent::TestHelpers, type: :component
+  config.include WithEnv
 end
 
 VCR.configure do |config|

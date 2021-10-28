@@ -12,7 +12,7 @@
 
         = f.govuk_radio_buttons_fieldset(:report_a_problem, legend: { size: "s" }) do
           = f.govuk_radio_button :report_a_problem, :yes, link_errors: true do
-            p.govuk-body = t("help.report_a_problem_html", mail_to: govuk_mail_to(t("help.email"), t("help.email")))
+            p.govuk-body = t("help.report_a_problem_html", get_help_link: govuk_link_to(t("help.get_help_form"), new_support_request_path))
           = f.govuk_radio_button :report_a_problem, :no, link_errors: true
 
         = f.govuk_collection_radio_buttons :rating, Feedback.ratings.keys, :to_s

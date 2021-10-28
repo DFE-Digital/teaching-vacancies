@@ -60,7 +60,7 @@ RSpec.describe "Subscriptions" do
     let(:params) do
       {
         jobseekers_subscription_form: {
-          email: "foo@email.com",
+          email: "foo@example.net",
           frequency: "daily",
           location: "London",
           keyword: "english",
@@ -81,13 +81,13 @@ RSpec.describe "Subscriptions" do
 
     it "creates a subscription" do
       expect { subject }.to change { Subscription.count }.by(1)
-      expect(created_subscription.email).to eq("foo@email.com")
+      expect(created_subscription.email).to eq("foo@example.net")
       expect(created_subscription.search_criteria.symbolize_keys).to eq({ keyword: "english", location: "London", radius: "10" })
     end
 
     it "triggers a `job_alert_subscription_created` event" do
       expect { subject }.to have_triggered_event(:job_alert_subscription_created).and_data(
-        email_identifier: anonymised_form_of("foo@email.com"),
+        email_identifier: anonymised_form_of("foo@example.net"),
         frequency: "daily",
         subscription_identifier: anything,
         recaptcha_score: 0.9,
@@ -100,7 +100,7 @@ RSpec.describe "Subscriptions" do
       let(:params) do
         {
           jobseekers_subscription_form: {
-            email: "<script>foo@email.com</script>",
+            email: "<script>foo@example.net</script>",
             frequency: "daily",
             location: "London",
             search_criteria: "<body onload=alert('test1')>Text</body>",
@@ -146,7 +146,7 @@ RSpec.describe "Subscriptions" do
     context "with unsafe params" do
       let(:params) do
         {
-          email: "<script>foo@email.com</script>",
+          email: "<script>foo@example.net</script>",
           frequency: "daily",
           search_criteria: "<body onload=alert('test1')>Text</body>",
         }
