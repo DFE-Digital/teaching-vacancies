@@ -212,7 +212,7 @@ Rails.application.routes.draw do
         constraints: ->(request) { School.available_readable_phases.map(&:parameterize).include?(request.params[:education_phase].parameterize) },
         defaults: { pretty: :education_phase }
 
-    get "teaching-jobs-for-:job_role",
+    get ":job_role-jobs",
         as: :job_role,
         constraints: ->(request) { Vacancy.job_roles.keys.map(&:dasherize).include?(request.params[:job_role].dasherize) },
         defaults: { pretty: :job_role }
@@ -222,4 +222,8 @@ Rails.application.routes.draw do
         constraints: ->(request) { SUBJECT_OPTIONS.map(&:first).map(&:parameterize).include?(request.params[:subject].parameterize) },
         defaults: { pretty: :subject }
   end
+
+  get "/teaching-jobs-for-:job_role",
+      to: redirect { |params| "/#{params[:job_role].parameterize.dasherize}-jobs" },
+      constraints: ->(request) { Vacancy.job_roles.keys.map(&:dasherize).include?(request.params[:job_role].dasherize) }
 end
