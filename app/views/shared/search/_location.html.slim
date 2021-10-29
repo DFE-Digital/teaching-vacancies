@@ -2,7 +2,7 @@
   label: { text: t("jobs.search.location"), size: "s" },
   hint: { text: t("jobs.search.location_hint"), size: "s" },
   class: %w[js-location-finder__input],
-  form_group: { classes: "js-location-finder location-text" },
+  form_group: { classes: "js-location-finder location-text govuk-!-margin-bottom-0" },
   "data-coordinates": @vacancies_search&.point_coordinates || @point_coordinates
 
 .accessible-autocomplete__container
