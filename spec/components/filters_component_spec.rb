@@ -36,10 +36,6 @@ RSpec.describe FiltersComponent, type: :component do
       expect(subject.css(".filters-component__remove .govuk-heading-s").to_html).to include("Group 1")
       expect(subject.css(".filters-component__remove .govuk-heading-s").to_html).to include("Group 2")
     end
-
-    it "renders count of number of filters applied" do
-      expect(subject.css(".filters-component__heading-applied").to_html).to include("(2 applied)")
-    end
   end
 
   context "when there are no selected filters" do

@@ -9,11 +9,11 @@ export const init = () => {
     const closePanelEl = panelContainerEl.getElementsByClassName('panel-component__close-button')[0];
 
     actionEl.addEventListener('click', (e) => {
-      togglePanel(e.target);
+      togglePanel(e.target, panelContainerEl);
     });
 
     closePanelEl.addEventListener('click', () => {
-      togglePanel(actionEl);
+      togglePanel(actionEl, panelContainerEl);
     });
 
     panelContainerEl.addEventListener('keydown', (e) => {
@@ -25,9 +25,7 @@ export const init = () => {
   });
 };
 
-export const togglePanel = (actionEl) => Array.from(document.getElementsByClassName('panel-component')).forEach((element) => {
-  element.classList.toggle('panel-component--visible') ? setPanelVisibleState(actionEl, element) : setPanelHiddenState(actionEl, element, true);
-});
+export const togglePanel = (actionEl, panelEl) => { panelEl.classList.toggle('panel-component--visible') ? setPanelVisibleState(actionEl, panelEl) : setPanelHiddenState(actionEl, panelEl, true); };
 
 export const setPanelVisibleState = (actionEl, panelEl) => {
   panelEl.focus();
