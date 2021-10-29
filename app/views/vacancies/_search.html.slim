@@ -56,9 +56,7 @@ ruby:
   .search-controls
     .search-controls__panel
       - if current_variant?(:"2021_10_mobile_search_panel_test", :overlay)
-        button.panel-component__toggle.govuk-button.govuk-button--secondary type="button" data-panel-id="search-panel" aria-controls="search-component"
-          = "Edit search"
-        = render(PanelComponent.new(heading_text: t("jobs.search.title"), html_attributes: { id: "search-panel", tabindex: "-1" })) do |panel|
+        = render(PanelComponent.new(panel_id: "search-panel", button_text: "Edit search", heading_text: t("jobs.search.title"), html_attributes: { id: "search-panel", tabindex: "-1" })) do |panel|
           - panel.body do
             = render "shared/search/keyword", f: f
             = render "shared/search/location", f: f
@@ -68,7 +66,7 @@ ruby:
             = f.hidden_field :jobs_sort, value: @form.jobs_sort
             = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"
       - else
-        .search-panel--filters
+        .search-controls__panel__filters
           h2.govuk-heading-m = t("jobs.search.title")
 
           = render "shared/search/keyword", f: f
@@ -80,8 +78,10 @@ ruby:
           = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"
 
     .search-controls__panel
-      = render(FiltersComponent.new(form: f,
-        filters: { total_count: @form.total_filters, title: "Filter results" },
-        items: items,
-        options: { remove_buttons: true, mobile_variant: true, close_all: true },
-        html_attributes: { tabindex: "-1", id: "filters-component" }))
+      = render(PanelComponent.new(panel_id: "filters-panel", button_text: t("buttons.filters_toggle_text", count: @form.total_filters), heading_text: "Filter results", html_attributes: { id: "filters-panel", tabindex: "-1" })) do |panel|
+        - panel.body do
+          = render(FiltersComponent.new(form: f,
+            filters: { total_count: @form.total_filters },
+            items: items,
+            options: { remove_buttons: true, mobile_variant: true, close_all: true },
+            html_attributes: { tabindex: "-1", id: "filters-component" }))
