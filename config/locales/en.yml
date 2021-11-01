@@ -451,8 +451,8 @@ en:
         link: get notified
         text_html: Or %{link_to} when a job like this gets listed
       text: Receive a job alert
-    location_polygon_text: In %{location}
-    location_radius_text: Within %{radius} miles of %{location}
+    location_in: In %{location}
+    location_with_radius: Within %{radius} miles of %{location}
     manage: Manage your subscription
     new:
       description: You can change the search criteria you have used by amending the keywords, location or filters before you create your alert.
