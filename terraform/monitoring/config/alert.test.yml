@@ -9,49 +9,60 @@ tests:
       # Series data.
       input_series:
           - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="0",organisation="dfe",space="teaching-vacancies-production",status_range="0xx"}'
-            values: '0+0x4 0+10x4 50+50x4 300+100x4 800+200x4 1800'
+            values: '0+0x4    0+0x4         0+0x4'
           - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="0",organisation="dfe",space="teaching-vacancies-production",status_range="2xx"}'
-            values: '0+1000x4 0+1000x4 500+1000x4 1000+1000x4 6000+1000x4'
+            values: '0+1000x4 5000+1000x4   10000+1000x4      15000+1000x4 20000+1000x4 25000'
           - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="0",organisation="dfe",space="teaching-vacancies-production",status_range="3xx"}'
-            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
+            values: '0+0x4    0+0x4         0+0x4'
           - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="0",organisation="dfe",space="teaching-vacancies-production",status_range="4xx"}'
-            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
+            values: '0+0x4    800+200x4     1800+2000x4       11800+0x4    11800+0x4   11800+0x4'
           - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="0",organisation="dfe",space="teaching-vacancies-production",status_range="5xx"}'
-            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
+            values: '0+0x4    0+0x4         0+0x4             0+100x4      500+200x4 1500'
           - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="1",organisation="dfe",space="teaching-vacancies-production",status_range="0xx"}'
-            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
+            values: '0+0x4    0+0x4         0+0x4'
           - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="1",organisation="dfe",space="teaching-vacancies-production",status_range="2xx"}'
-            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
+            values: '0+0x4    0+0x4         0+0x4'
           - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="1",organisation="dfe",space="teaching-vacancies-production",status_range="3xx"}'
-            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
+            values: '0+0x4    0+0x4         0+0x4'
           - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="1",organisation="dfe",space="teaching-vacancies-production",status_range="4xx"}'
-            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
+            values: '0+0x4    0+0x4         0+0x4'
           - series: 'requests{app="teaching-vacancies-production",guid="c95fd761-9b05-4527-829b-fd691a6c755a",instance="1",organisation="dfe",space="teaching-vacancies-production",status_range="5xx"}'
-            values: '0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4 0+0x4'
-
-
+            values: '0+0x4    0+0x4         0+0x4'
 
       # Unit test for alerting rules.
       alert_rule_test:
-          - alertname: ProdRequestsFailuresElevated
-            eval_time: 5m # Only 200 requests - 1000 per minute
-          - alertname: ProdRequestsFailuresElevated
-            eval_time: 10m # 10 failed requests per minute (0.99% total)
-          - alertname: ProdRequestsFailuresElevated
-            eval_time: 15m # 50 failed requests per minute (4.76% total)
-          - alertname: ProdRequestsFailuresElevated
-            eval_time: 20m # 100 failed requests per minute (9.09% total)
-          - alertname: ProdRequestsFailuresElevated
-            eval_time: 25m # 200 failed requests per minute (16.67% total)
+          - alertname: ProdRequestsFailuresElevated_http_0xx_4xx
+            eval_time: 5m # Only successful (status_range=2xx) requests - rate: 1000 per minute
+          - alertname: ProdRequestsFailuresElevated_http_0xx_4xx
+            eval_time: 10m # Failed requests (status_range=4xx) - rate: 200 per minute (16.67% total)
+          - alertname: ProdRequestsFailuresElevated_http_0xx_4xx
+            eval_time: 15m # Failed requests (status_range=4xx) - rate: 2000 per minute (66.67% total)
             exp_alerts:
             - exp_annotations:
                 summary: High rate of failing requests
-                description: "The proportion of failed HTTP requests in the past 5 min is above 10% (current value: 16.67%)"
+                description: "The proportion of failed 4xx HTTP requests in the past 5 min is above 40% (current value: 66.67%)"
+                runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/master/documentation/alert-runbook.md#ProdRequestsFailuresElevated
+                dashboard: https://grafana-teaching-vacancies.london.cloudapps.digital/d/6Ac4lUWGk/teaching-vacancies-production?orgId=1&refresh=5s
+              exp_labels:
+                environment: production
+                period: out-of-hours
+                severity: high
+
+          - alertname: ProdRequestsFailuresElevated_http_5xx
+            eval_time: 20m # Failed requests (status_range=5xx) - rate: 2000 per minute (66.67% total)
+          - alertname: ProdRequestsFailuresElevated_http_5xx
+            eval_time: 25m # Failed requests (status_range=4xx) - rate: 2000 per minute (66.67% total)
+            exp_alerts:
+            - exp_annotations:
+                summary: High rate of failing requests
+                description: "The proportion of failed 5xx HTTP requests in the past 5 min is above 10% (current value: 16.67%)"
                 runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/master/documentation/alert-runbook.md#ProdRequestsFailuresElevated
                 dashboard: https://grafana-teaching-vacancies.london.cloudapps.digital/d/6Ac4lUWGk/teaching-vacancies-production?orgId=1&refresh=5s
               exp_labels:
                 environment: production
                 severity: high
+
+
 
     - name: Test ProdSlowRequests alert
       interval: 1m
