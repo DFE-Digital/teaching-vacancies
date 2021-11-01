@@ -80,6 +80,10 @@ module VacanciesHelper
     t("school_groups.job_location_heading.at_multiple_schools", organisation_type: organisation_type_basic(vacancy.parent_organisation))
   end
 
+  def vacancy_listing_page_title_prefix(vacancy)
+    "#{vacancy.job_title} - #{vacancy.at_one_school? ? vacancy.parent_organisation.town : vacancy.parent_organisation.name}"
+  end
+
   def vacancy_school_visits_hint(vacancy)
     organisation = organisation_type_basic(vacancy.parent_organisation).tr(" ", "_")
     t("helpers.hint.publishers_job_listing_applying_for_the_job_form.#{organisation}_visits")
