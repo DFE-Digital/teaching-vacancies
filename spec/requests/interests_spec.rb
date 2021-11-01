@@ -9,6 +9,7 @@ RSpec.describe "Interests" do
       get new_job_interest_path(vacancy.id)
 
       expect(response).to redirect_to(application_link)
+      expect(response).to have_http_status(301)
     end
 
     it "triggers a `vacancy_get_more_info_clicked` event" do
