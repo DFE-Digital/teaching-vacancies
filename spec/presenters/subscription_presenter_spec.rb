@@ -15,10 +15,28 @@ RSpec.describe SubscriptionPresenter do
     end
 
     context "when the location is a LocationPolygon" do
-      let(:search_criteria) { { location: "Barnet" } }
+      context "when the radius is present" do
+        let(:search_criteria) { { location: "Barnet", radius: "10" } }
 
-      it "formats and returns the search criteria" do
-        expect(presenter.filtered_search_criteria["location"]).to eq("In Barnet")
+        it "formats and returns the search criteria" do
+          expect(presenter.filtered_search_criteria["location"]).to eq("Within 10 miles of Barnet")
+        end
+
+        context "when the radius is 0" do
+          let(:search_criteria) { { location: "Barnet", radius: "0" } }
+
+          it "formats and returns the search criteria" do
+            expect(presenter.filtered_search_criteria["location"]).to eq("In Barnet")
+          end
+        end
+      end
+
+      context "when the radius does not exist" do
+        let(:search_criteria) { { location: "Barnet" } }
+
+        it "formats and returns the search criteria" do
+          expect(presenter.filtered_search_criteria["location"]).to eq("In Barnet")
+        end
       end
     end
 

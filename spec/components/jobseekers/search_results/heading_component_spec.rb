@@ -1,93 +1,64 @@
 require "rails_helper"
 
 RSpec.describe Jobseekers::SearchResults::HeadingComponent, type: :component do
-  subject { described_class.new(vacancies_search: vacancies_search, landing_page: landing_page) }
+  subject { render_inline(described_class.new(vacancies_search: vacancies_search, landing_page: landing_page)) }
 
   let(:vacancies_search) { instance_double(Search::VacancySearch) }
   let(:landing_page) { nil }
   let(:keyword) { "maths" }
   let(:location) { "London" }
-  let(:polygon_boundaries) { [[51.0, 51.0]] }
   let(:count) { 10 }
   let(:radius) { 10 }
 
   before do
     allow(vacancies_search).to receive(:keyword).and_return(keyword)
     allow(vacancies_search).to receive_message_chain(:location_search, :location).and_return(location)
-    allow(vacancies_search).to receive_message_chain(:location_search, :polygon_boundaries).and_return(polygon_boundaries)
     allow(vacancies_search).to receive_message_chain(:total_count).and_return(count)
-    allow(vacancies_search).to receive_message_chain(:search_criteria, :[]).and_return(radius)
-    render_inline(subject)
+    allow(vacancies_search).to receive_message_chain(:location_search, :location).and_return(radius)
   end
 
   context "when landing_page is a job role" do
     let(:landing_page) { "teaching-assistant" }
 
     it "renders correct heading" do
-      expect(rendered_component).to include(
-        I18n.t("jobs.search_result_heading.landing_page_html", jobs_count: count, landing_page: landing_page.titleize.downcase, count: count),
-      )
+      expect(subject.text).to eq("10 teaching assistant jobs")
     end
   end
 
-  context "when keyword and search polygon boundaries are present" do
-    it "renders correct heading" do
-      expect(rendered_component).to include(
-        I18n.t("jobs.search_result_heading.keyword_location_polygon_html", jobs_count: count, keyword: keyword, location: location, count: count, radius: radius, units: I18n.t("jobs.search_result_heading.unit_of_length").pluralize(radius.to_i)),
-      )
+  context "when searching with a keyword and a location with no radius (a polygon search)" do
+    let(:radius) { 0 }
+
+    it "renders correct heading text" do
+      expect(subject.text).to eq("#{count} jobs match ‘#{keyword}’ in ‘#{location}’")
     end
   end
 
-  context "when keyword and location are present" do
-    let(:polygon_boundaries) { nil }
-
-    it "renders correct heading" do
-      expect(rendered_component).to include(
-        I18n.t("jobs.search_result_heading.keyword_location_html", jobs_count: count, keyword: keyword, location: location, count: count, radius: radius, units: I18n.t("jobs.search_result_heading.unit_of_length").pluralize(radius.to_i)),
-      )
+  context "when searching with a keyword and a location with a radius (polygon or point)" do
+    it "renders correct heading text" do
+      expect(subject.text).to eq("#{count} jobs match ‘#{keyword}’ within #{radius} miles of ‘#{location}’")
     end
   end
 
-  context "when only keyword is present" do
+  context "when searching with a keyword and no location" do
     let(:location) { nil }
-    let(:polygon_boundaries) { nil }
 
-    it "renders correct heading" do
-      expect(rendered_component).to include(
-        I18n.t("jobs.search_result_heading.keyword_html", jobs_count: count, keyword: keyword, count: count),
-      )
+    it "renders correct heading text" do
+      expect(subject.text).to eq("#{count} jobs match ‘#{keyword}’")
     end
   end
 
-  context "when search polygon boundaries is present but keyword is not present" do
-    let(:keyword) do
-      nil
-    end
+  context "when searching with a location and no keyword" do
+    let(:keyword) { nil }
 
-    it "renders correct heading" do
-      expect(rendered_component).to include(
-        I18n.t("jobs.search_result_heading.location_polygon_html", jobs_count: count, location: location, count: count, radius: radius, units: I18n.t("jobs.search_result_heading.unit_of_length").pluralize(radius.to_i)),
-      )
-    end
-  end
-
-  context "when only location is present" do
-    let(:keyword) do
-      nil
-    end
-    let(:polygon_boundaries) { nil }
-
-    it "renders correct heading" do
-      expect(rendered_component).to include(
-        I18n.t("jobs.search_result_heading.location_html", jobs_count: count, location: location, count: count, radius: radius, units: I18n.t("jobs.search_result_heading.unit_of_length").pluralize(radius.to_i)),
-      )
+    it "renders correct heading text" do
+      expect(subject.text).to eq("#{count} jobs found within #{radius} miles of ‘#{location}’")
     end
   end
 
   context "when neither keyword and location are present" do
     let(:keyword) { nil }
     let(:location) { nil }
-    let(:polygon_boundaries) { nil }
+    before { subject }
 
     it "renders correct heading" do
       expect(rendered_component).to include(
