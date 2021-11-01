@@ -1,6 +1,4 @@
-class Jobseekers::JobAlertFurtherFeedbackForm
-  include ActiveModel::Model
-
+class Jobseekers::JobAlertFurtherFeedbackForm < BaseForm
   attr_accessor :comment, :email, :user_participation_response
 
   validates :comment, presence: true, length: { maximum: 1200 }

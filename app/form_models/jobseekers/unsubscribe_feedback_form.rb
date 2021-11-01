@@ -1,6 +1,4 @@
-class Jobseekers::UnsubscribeFeedbackForm
-  include ActiveModel::Model
-
+class Jobseekers::UnsubscribeFeedbackForm < BaseForm
   attr_accessor :comment, :email, :other_unsubscribe_reason_comment, :unsubscribe_reason, :user_participation_response
 
   validates :comment, length: { maximum: 1200 }

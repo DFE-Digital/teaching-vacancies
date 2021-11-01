@@ -1,6 +1,4 @@
-class Jobseekers::AccountFeedbackForm
-  include ActiveModel::Model
-
+class Jobseekers::AccountFeedbackForm < BaseForm
   attr_accessor :comment, :email, :origin, :rating, :report_a_problem, :user_participation_response
 
   validates :report_a_problem, inclusion: { in: %w[yes no] }

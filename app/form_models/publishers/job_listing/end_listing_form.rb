@@ -1,6 +1,4 @@
-class Publishers::JobListing::EndListingForm
-  include ActiveModel::Model
-
+class Publishers::JobListing::EndListingForm < BaseForm
   attr_accessor :end_listing_reason, :candidate_hired_from
 
   validates :end_listing_reason, inclusion: { in: Vacancy.end_listing_reasons.keys }
