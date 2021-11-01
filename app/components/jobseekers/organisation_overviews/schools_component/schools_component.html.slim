@@ -73,6 +73,6 @@ section#school-overview class="govuk-!-margin-bottom-5"
   - if vacancy.organisations.any?(&:geopoint)
     section#school-location
       h3.govuk-heading-l.section-heading = t("schools.school_location.other")
-
-      div id="map" role="presentation" aria-hidden="true" aria-label=t("schools.map_aria_label") data-schools=organisation_map_data
-      script defer=true src="https://maps.googleapis.com/maps/api/js?key=#{GOOGLE_MAPS_API_KEY}&callback=initMap"
+      = render(MapComponent.new(items: [{type: 'vacancy', params: { type: 'organisation', id: vacancy.id }}].to_json, zoom: 11))
+      / div id="map" role="presentation" aria-hidden="true" aria-label=t("schools.map_aria_label") data-schools=organisation_map_data
+      / script defer=true src="https://maps.googleapis.com/maps/api/js?key=#{GOOGLE_MAPS_API_KEY}&callback=initMap"

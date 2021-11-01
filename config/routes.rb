@@ -143,6 +143,8 @@ Rails.application.routes.draw do
     scope "v:api_version", api_version: /1/ do
       resources :jobs, only: %i[index show], controller: "vacancies"
       get "/location_suggestion(/:location)", to: "location_suggestion#show", as: :location_suggestion
+      get "/map/location/:location/:radius", to: "map#location", as: :map1
+      get "/map/vacancy/:type/:id", to: "map#vacancy", as: :map2
     end
   end
 
