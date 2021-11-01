@@ -2,7 +2,7 @@ class InterestsController < ApplicationController
   def new
     request_event.trigger(:vacancy_get_more_info_clicked, vacancy_id: StringAnonymiser.new(vacancy.id))
 
-    redirect_to(vacancy.application_link)
+    redirect_to vacancy.application_link, status: :moved_permanently
   end
 
   private

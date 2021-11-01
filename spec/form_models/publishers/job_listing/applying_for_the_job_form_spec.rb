@@ -9,7 +9,7 @@ RSpec.describe Publishers::JobListing::ApplyingForTheJobForm, type: :model do
   it { is_expected.to allow_value("https://www.this-is-a-test-url.example.com").for(:application_link) }
   it { is_expected.to allow_value("www.this-is-a-test-url.example.com").for(:application_link) }
   it { is_expected.to allow_value("").for(:application_link) }
-  it { is_expected.not_to allow_value("invalid_link").for(:application_link) }
+  it { is_expected.not_to allow_value("email@school.com").for(:application_link) }
   it { is_expected.not_to allow_value("A full application pack can be found at www.website.co.uk").for(:application_link) }
 
   it { is_expected.to validate_presence_of(:contact_email) }
