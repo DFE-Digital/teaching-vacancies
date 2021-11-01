@@ -4,7 +4,6 @@ class Jobseekers::SearchResults::HeadingComponent < ViewComponent::Base
     @landing_page = landing_page
     @keyword = @vacancies_search.keyword
     @location = @vacancies_search.location_search.location
-    @polygon_boundaries = @vacancies_search.location_search.polygon_boundaries
     @radius = @vacancies_search.search_criteria[:radius]
     @total_count = @vacancies_search.total_count
     @readable_count = number_with_delimiter(@total_count)
@@ -12,23 +11,42 @@ class Jobseekers::SearchResults::HeadingComponent < ViewComponent::Base
 
   def heading
     if @landing_page.present? && Vacancy.job_roles.key?(@landing_page.underscore)
-      t("jobs.search_result_heading.landing_page_html", jobs_count: @readable_count, landing_page: job_role(@landing_page), count: @total_count)
-    elsif @keyword.present? && @polygon_boundaries.present?
-      t("jobs.search_result_heading.keyword_location_polygon_html", jobs_count: @readable_count, location: @location, keyword: @keyword, count: @total_count, radius: @radius, units: units)
-    elsif @keyword.present? && @location.present?
-      t("jobs.search_result_heading.keyword_location_html", jobs_count: @readable_count, location: @location, keyword: @keyword, count: @total_count, radius: @radius, units: units)
-    elsif @keyword.present?
-      t("jobs.search_result_heading.keyword_html", jobs_count: @readable_count, keyword: @keyword, count: @total_count)
-    elsif @polygon_boundaries.present?
-      t("jobs.search_result_heading.location_polygon_html", jobs_count: @readable_count, location: @location, count: @total_count, radius: @radius, units: units)
-    elsif @location.present?
-      t("jobs.search_result_heading.location_html", jobs_count: @readable_count, location: @location, count: @total_count, radius: @radius, units: units)
-    else
-      t("jobs.search_result_heading.without_search_html", jobs_count: @readable_count, count: @total_count)
+      return t("jobs.search_result_heading.landing_page_html", jobs_count: @readable_count, landing_page: job_role(@landing_page), count: @total_count)
     end
+
+    if @keyword.blank? && @location.blank?
+      return t("jobs.search_result_heading.without_search_html", jobs_count: @readable_count, count: @total_count)
+    end
+
+    [count_phrase, keyword_phrase, radius_phrase, location_phrase].compact.join(" ")
   end
 
   private
+
+  def count_phrase
+    t("jobs.search_result_heading.count_html", jobs_count: @readable_count, count: @total_count)
+  end
+
+  def keyword_phrase
+    if @keyword.present?
+      t("jobs.search_result_heading.keyword_html", keyword: @keyword, count: @total_count)
+    else
+      t("jobs.search_result_heading.no_keyword")
+    end
+  end
+
+  def location_phrase
+    return unless @location.present?
+
+    t("jobs.search_result_heading.location_html", location: @location)
+  end
+
+  def radius_phrase
+    return unless @location.present?
+
+    # A radius of 0 is only possible for polygon searches.
+    t("jobs.search_result_heading.radius_html", count: @radius, units: units)
+  end
 
   def units
     t("jobs.search_result_heading.unit_of_length").pluralize(@radius.to_i)
