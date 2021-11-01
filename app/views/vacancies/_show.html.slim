@@ -1,4 +1,6 @@
-- content_for :page_title_prefix, "#{@vacancy.job_title} - #{@vacancy.parent_organisation.name}"
+- content_for :og_title, vacancy_listing_page_title_prefix(@vacancy)
+
+- content_for :page_title_prefix, vacancy_listing_page_title_prefix(@vacancy)
 
 - content_for :page_description, t(".page_description", job_title: @vacancy.job_title,
                                                         organisation: @vacancy.parent_organisation.name,

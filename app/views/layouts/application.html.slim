@@ -5,7 +5,7 @@ html.govuk-template.app-html-class lang="en"
     = render partial: "shared/open_graph"
     = render partial: "shared/meta"
     meta charset="utf-8"
-    title #{content_for :page_title_prefix} — #{t("app.title")}
+    title #{content_for :page_title_prefix} - #{t("app.title")}
     meta content="width=device-width, initial-scale=1" name="viewport"
     meta content="blue" name="theme-color"
     link href=asset_pack_path("media/images/favicon.ico") rel="shortcut icon" type="image/x-icon"
@@ -18,6 +18,8 @@ html.govuk-template.app-html-class lang="en"
       = yield(:head_links)
     = stylesheet_pack_tag "application", media: "all"
     meta content=asset_pack_path("media/images/govuk-opengraph-image.png") property="og:image"
+    - if content_for? :og_title
+      = yield(:og_title)
     = csrf_meta_tags
 
   body class=body_class
