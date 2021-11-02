@@ -6,4 +6,11 @@
     margin-bottom: govuk-spacing(2);
     margin-top: govuk-spacing(3);
   }
+
+  &--publisher {
+    p,
+    form {
+      display: inline;
+    }
+  }
 }
