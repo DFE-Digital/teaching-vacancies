@@ -11,12 +11,17 @@
               = render "signed_in_jobseeker"
           - else
               = render "signed_out_jobseeker"
-        - unless signed_in?
-          .signin
-            h2.govuk-heading-m = t(".publisher_signin.title")
-            p.govuk-body = t(".publisher_signin.description_html",
-              signin_link: govuk_link_to(t(".publisher_signin.link_text.sign_in"), publishers_sign_in_path, class: "govuk-link--no-visited-state"),
-              signup_link: govuk_link_to(t(".publisher_signin.link_text.sign_up"), page_path("dsi-account-request"), class: "govuk-link--no-visited-state"))
+        - unless jobseeker_signed_in?
+          .signin.signin--publisher
+            h2.govuk-heading-m = t(".publisher_section.title")
+            - if publisher_signed_in?
+              = button_to(t("buttons.create_job"), organisation_jobs_path, class: "govuk-body govuk-link button-as-link")
+              p.govuk-body = t(".publisher_section.signed_in.description_html",
+                manage_jobs_link: govuk_link_to(t(".publisher_section.signed_in.link_text.manage_jobs"), organisation_path, class: "govuk-link--no-visited-state"))
+            - else
+              p.govuk-body = t(".publisher_section.signed_out.description_html",
+                signin_link: govuk_link_to(t(".publisher_section.signed_out.link_text.sign_in"), publishers_sign_in_path, class: "govuk-link--no-visited-state"),
+                signup_link: govuk_link_to(t(".publisher_section.signed_out.link_text.sign_up"), page_path("dsi-account-request"), class: "govuk-link--no-visited-state"))
 
 .govuk-main-wrapper class="govuk-!-padding-top-0"
   .govuk-grid-row
