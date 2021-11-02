@@ -6,17 +6,6 @@ RSpec.shared_examples "a successful sign in" do
     visit root_path
   end
 
-  scenario "it displays the Hiring staff sign-in section" do
-    within ".search-panel-banner .govuk-grid-column-one-third" do
-      expect(page).to have_content(I18n.t("home.index.publisher_signin.title"))
-      expect(page).to have_content(I18n.t("home.index.publisher_signin.description_html",
-                                          signin_link: I18n.t("home.index.publisher_signin.link_text.sign_in"),
-                                          signup_link: I18n.t("home.index.publisher_signin.link_text.sign_up")))
-      expect(page).to have_link(I18n.t("home.index.publisher_signin.link_text.sign_in"), href: publishers_sign_in_path)
-      expect(page).to have_link(I18n.t("home.index.publisher_signin.link_text.sign_up"), href: page_path("dsi-account-request"))
-    end
-  end
-
   scenario "it signs in the user successfully" do
     expect { sign_in_publisher }
       .to have_triggered_event(:publisher_sign_in_attempt)
@@ -25,20 +14,6 @@ RSpec.shared_examples "a successful sign in" do
 
     within("nav") { expect(page).to have_selector(:link_or_button, I18n.t("nav.sign_out")) }
     within("nav") { expect(page).to have_selector(:link_or_button, I18n.t("nav.school_page_link")) }
-  end
-
-  scenario "it does not display the Hiring staff sign-in section" do
-    sign_in_publisher
-    visit root_path
-
-    within ".search-panel-banner .govuk-grid-column-one-third" do
-      expect(page).not_to have_content(I18n.t("home.index.publisher_signin.title"))
-      expect(page).not_to have_content(I18n.t("home.index.publisher_signin.description_html",
-                                              signin_link: I18n.t("home.index.publisher_signin.link_text.sign_in"),
-                                              signup_link: I18n.t("home.index.publisher_signin.link_text.sign_up")))
-      expect(page).not_to have_link(I18n.t("home.index.publisher_signin.link_text.sign_in"), href: publishers_sign_in_path)
-      expect(page).not_to have_link(I18n.t("home.index.publisher_signin.link_text.sign_up"), href: page_path("dsi-account-request"))
-    end
   end
 end
 
@@ -72,6 +47,21 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
     OmniAuth.config.test_mode = false
   end
 
+  context "when the hiring staff is not signed in" do
+    scenario "it displays the hiring staff CTA section with the text for when they are signed out" do
+      visit root_path
+
+      within ".search-panel-banner .govuk-grid-column-one-third" do
+        expect(page).to have_content(I18n.t("home.index.publisher_section.title"))
+        expect(page).to have_content(I18n.t("home.index.publisher_section.signed_out.description_html",
+                                            signin_link: I18n.t("home.index.publisher_section.signed_out.link_text.sign_in"),
+                                            signup_link: I18n.t("home.index.publisher_section.signed_out.link_text.sign_up")))
+        expect(page).to have_link(I18n.t("home.index.publisher_section.signed_out.link_text.sign_in"), href: publishers_sign_in_path)
+        expect(page).to have_link(I18n.t("home.index.publisher_section.signed_out.link_text.sign_up"), href: page_path("dsi-account-request"))
+      end
+    end
+  end
+
   context "with valid credentials that match a school" do
     let!(:organisation) { create(:school, urn: "110627") }
 
@@ -84,13 +74,23 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
     it_behaves_like "a successful sign in"
 
     scenario "it redirects the sign in page to the school page" do
-      visit root_path
       sign_in_publisher
       visit new_publisher_session_path
 
       expect(page).to have_content(organisation.name)
       expect(page).to have_content(dsi_email_address)
       expect(current_path).to eq(organisation_path)
+    end
+
+    scenario "it displays the hiring staff CTA section with the text for when they are signed in" do
+      sign_in_publisher
+      visit root_path
+
+      within ".search-panel-banner .govuk-grid-column-one-third" do
+        expect(page).to have_content(I18n.t("home.index.publisher_section.title"))
+        expect(page).to have_link(I18n.t("home.index.publisher_section.signed_in.link_text.manage_jobs"), href: organisation_path)
+        expect { click_on I18n.t("buttons.create_job") }.to change { Vacancy.count }.by(1)
+      end
     end
   end
 
