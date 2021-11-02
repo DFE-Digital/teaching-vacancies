@@ -28,7 +28,7 @@ class Search::Strategies::PgSearch
     scope = scope.search_by_location(location, radius) if location
     scope = scope.search_by_filter(filters) if filters.any?
     scope = scope.search_by_full_text(keyword) if keyword.present?
-    scope = scope.order(sort_by.column => sort_by.order) if sort_by&.column
+    scope = scope.reorder(sort_by.column => sort_by.order) if sort_by&.column
 
     # Adds an additional order by updated at for searches so a non-deterministic order column
     # (e.g. date instead of datetime) will still result in the same order as Algolia for
