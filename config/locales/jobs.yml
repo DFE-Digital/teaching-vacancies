@@ -59,6 +59,7 @@ en:
       location: Location
       location_hint: For example, city, county or postcode
       number_of_miles:
+        zero: This area only
         one: '%{count} mile'
         other: '%{count} miles'
       title: Search job listings
@@ -66,16 +67,9 @@ en:
       within_radius: Search radius
 
     search_result_heading:
-      without_search_html:
-        one: There is <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> job listed
-        other: There are <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> jobs listed
-      keyword_html:
-        one: >-
-          <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> job matches
-          <span class='govuk-!-font-weight-bold'>&lsquo;%{keyword}&rsquo;</span>
-        other: >-
-          <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> jobs match
-          <span class='govuk-!-font-weight-bold'>&lsquo;%{keyword}&rsquo;</span>
+      count_html:
+        one: <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> job
+        other: <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> jobs
       landing_page_html:
         one: >-
           <span class='govuk-!-font-weight-bold'>%{jobs_count}</span>
@@ -83,47 +77,22 @@ en:
         other: >-
           <span class='govuk-!-font-weight-bold'>%{jobs_count}</span>
           <span class='govuk-!-font-weight-bold'>%{landing_page} jobs</span>
-      location_html:
+      keyword_html:
+        one: matches <span class='govuk-!-font-weight-bold'>&lsquo;%{keyword}&rsquo;</span>
+        other: match <span class='govuk-!-font-weight-bold'>&lsquo;%{keyword}&rsquo;</span>
+      no_keyword: found
+      radius_html:
+        zero: in
         one: >-
-          <span class="govuk-!-font-weight-bold">%{jobs_count}</span> job found within
-          <span class='govuk-!-font-weight-bold'>%{radius} %{units}</span> of
-          <span class='govuk-!-font-weight-bold text-capitalize'>&lsquo;%{location}&rsquo;</span>
+          within <span class='govuk-!-font-weight-bold'>%{count} %{units}</span> of
         other: >-
-          <span class="govuk-!-font-weight-bold">%{jobs_count}</span> jobs found within
-          <span class='govuk-!-font-weight-bold'>%{radius} %{units}</span> of
-          <span class="govuk-!-font-weight-bold text-capitalize">&lsquo;%{location}&rsquo;</span>
-      location_polygon_html:
-        one: >-
-          <span class="govuk-!-font-weight-bold">%{jobs_count}</span> job found within
-          <span class='govuk-!-font-weight-bold'>%{radius} %{units}</span> of
-          <span class='govuk-!-font-weight-bold text-capitalize'>&lsquo;%{location}&rsquo;</span>
-        other: >-
-          <span class="govuk-!-font-weight-bold">%{jobs_count}</span> jobs found within
-          <span class='govuk-!-font-weight-bold'>%{radius} %{units}</span> of
-          <span class="govuk-!-font-weight-bold text-capitalize">&lsquo;%{location}&rsquo;</span>
-      keyword_location_html:
-        one: >-
-          <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> job matches
-          <span class='govuk-!-font-weight-bold'>&lsquo;%{keyword}&rsquo;</span> within
-          <span class='govuk-!-font-weight-bold'>%{radius} %{units}</span> of
-          <span class='govuk-!-font-weight-bold text-capitalize'>&lsquo;%{location}&rsquo;</span>
-        other: >-
-          <span class="govuk-!-font-weight-bold">%{jobs_count}</span> jobs match
-          <span class='govuk-!-font-weight-bold'>&lsquo;%{keyword}&rsquo;</span> within
-          <span class='govuk-!-font-weight-bold'>%{radius} %{units}</span> of
-          <span class="govuk-!-font-weight-bold text-capitalize">&lsquo;%{location}&rsquo;</span>
-      keyword_location_polygon_html:
-        one: >-
-          <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> job matches
-          <span class='govuk-!-font-weight-bold'>&lsquo;%{keyword}&rsquo;</span> within
-          <span class='govuk-!-font-weight-bold'>%{radius} %{units}</span> of
-          <span class='govuk-!-font-weight-bold text-capitalize'>&lsquo;%{location}&rsquo;</span>
-        other: >-
-          <span class="govuk-!-font-weight-bold">%{jobs_count}</span> jobs match
-          <span class='govuk-!-font-weight-bold'>&lsquo;%{keyword}&rsquo;</span> within
-          <span class='govuk-!-font-weight-bold'>%{radius} %{units}</span> of
-          <span class="govuk-!-font-weight-bold text-capitalize">&lsquo;%{location}&rsquo;</span>
+          within <span class='govuk-!-font-weight-bold'>%{count} %{units}</span> of
+      location_html: <span class='govuk-!-font-weight-bold text-capitalize'>&lsquo;%{location}&rsquo;</span>
       unit_of_length: mile
+      without_search_html:
+        one: There is <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> job listed
+        other: There are <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> jobs listed
+
 
     legacy_job_alert:
       link: Receive a job alert
