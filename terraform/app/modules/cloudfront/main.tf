@@ -51,18 +51,27 @@ resource "aws_cloudfront_distribution" "default" {
     viewer_protocol_policy = "redirect-to-https"
   }
 
-  dynamic "ordered_cache_behavior" {
-    for_each = local.cloudfront_cached_paths
+  ordered_cache_behavior {
 
-    content {
-      allowed_methods        = ["GET", "HEAD"]
-      cached_methods         = ["GET", "HEAD"]
-      path_pattern           = ordered_cache_behavior.value
-      target_origin_id       = "${var.service_name}-${var.environment}-default-origin"
-      viewer_protocol_policy = "redirect-to-https"
-      cache_policy_id        = data.aws_cloudfront_cache_policy.managed-caching-optimized.id
-    }
+    allowed_methods        = ["GET", "HEAD"]
+    cached_methods         = ["GET", "HEAD"]
+    path_pattern           = "/packs/*"
+    target_origin_id       = "${var.service_name}-${var.environment}-default-origin"
+    viewer_protocol_policy = "redirect-to-https"
+    cache_policy_id        = data.aws_cloudfront_cache_policy.managed-caching-optimized.id
+    compress               = var.enable_cloudfront_compress
   }
+
+  ordered_cache_behavior {
+
+    allowed_methods        = ["GET", "HEAD"]
+    cached_methods         = ["GET", "HEAD"]
+    path_pattern           = "/attachments/*"
+    target_origin_id       = "${var.service_name}-${var.environment}-default-origin"
+    viewer_protocol_policy = "redirect-to-https"
+    cache_policy_id        = data.aws_cloudfront_cache_policy.managed-caching-optimized.id
+  }
+
 
   default_cache_behavior {
     allowed_methods          = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
