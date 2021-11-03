@@ -5,11 +5,13 @@
 # context of a user request. This event can only meaningfully be triggered in controllers.
 class RequestEvent < Event
   def initialize(request, response, session, current_jobseeker, current_publisher)
+    Rollbar.debug("8 in RequestEvent") unless request.query_string == "keyword=Maths&location=&radius=0"
     @request = request
     @response = response
     @session = session
     @current_jobseeker = current_jobseeker
     @current_publisher = current_publisher
+    Rollbar.debug("14 in RequestEvent") unless request.query_string == "keyword=Maths&location=&radius=0"
   end
 
   private
@@ -17,6 +19,7 @@ class RequestEvent < Event
   attr_reader :request, :response, :session, :current_jobseeker, :current_publisher
 
   def base_data
+    Rollbar.debug("22 in RequestEvent") unless request.query_string == "keyword=Maths&location=&radius=0"
     @base_data ||= super.merge(
       request_uuid: request.uuid,
       request_user_agent: user_agent,
@@ -32,6 +35,8 @@ class RequestEvent < Event
       user_anonymised_jobseeker_id: anonymised_jobseeker_id,
       user_anonymised_publisher_id: anonymised_publisher_id,
     )
+    Rollbar.debug("38 in RequestEvent") unless request.query_string == "keyword=Maths&location=&radius=0"
+    @base_data
   end
 
   def request_identifier
