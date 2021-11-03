@@ -1,6 +1,7 @@
 class Api::LocationSuggestionController < Api::ApplicationController
   before_action :verify_json_request, only: %i[show]
   before_action :check_valid_params, only: %i[show]
+  skip_after_action :trigger_page_visited_event
 
   def show
     begin
