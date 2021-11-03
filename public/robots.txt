@@ -6,3 +6,4 @@ Disallow: /subscriptions/
 Disallow: /documents/
 Disallow: /attachments/
 Disallow: /teaching-jobs-in-*?location=*
+Disallow: /teaching-jobs-for-*?job_roles[]=*
