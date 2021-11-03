@@ -434,7 +434,7 @@ en:
       filters: Add more filters
       title: Manage your job alert
     errors:
-      duplicate_alert: A job alert matching these criteria already exists
+      duplicate_alert: You must change the search criteria in order to update your job alert
       no_location_and_other_criterion_selected: Enter a location and one or more other filters, for example a keyword or job role.
     info: You can unsubscribe at any time by following the simple instructions at the bottom of the alert.
     intro: 'We’ll email you details of any new jobs that match the following criteria:'
