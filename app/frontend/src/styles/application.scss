@@ -214,7 +214,14 @@ dd {
   }
 }
 
-// Per https://gov.uk footer
 .govuk-footer__list {
   padding-bottom: 40px;
+}
+
+@media print {
+  .govuk-header,
+  .govuk-breadcrumbs,
+  .govuk-footer {
+    display: none;
+  }
 }
