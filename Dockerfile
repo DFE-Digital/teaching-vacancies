@@ -18,6 +18,7 @@ RUN bundle install --no-binstubs --retry=5 --jobs=4 --no-cache
 
 COPY package.json yarn.lock ./
 RUN yarn install --check-files
+RUN node -v
 
 COPY . .
 
