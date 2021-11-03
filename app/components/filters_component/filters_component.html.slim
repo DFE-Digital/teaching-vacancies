@@ -1,21 +1,12 @@
-.filters-component__open
-  button.govuk-button.govuk-button--secondary type="button" id="filters-component-show-mobile" class="govuk-!-margin-bottom-0" aria-controls="filters-component"
-    = "Open filters"
-    span.govuk-body.filters-component__heading-applied = applied_text
-
 = tag.div(class: classes, **html_attributes) do
 
-  .filters-component__heading
-    .filters-component__heading-container
-      h2.govuk-heading-m = filters[:title]
-      - if options[:publisher_preference]
+  - if options[:publisher_preference]
+    .filters-component__heading
+      .filters-component__heading-container
         = govuk_link_to t(".add_or_remove_schools"), edit_publisher_preference_path(options[:publisher_preference]), class: "filters-component__link-button add-remove-schools govuk-link--no-visited-state"
 
-      button.filters-component__link-button.icon--close.filters-component--show-mobile-open id="filters-component-close-panel" type="button"
-        span.govuk-body-s = "Close"
-
-  .filters-component__remove
-    - if display_remove_buttons
+  - if display_remove_buttons
+    .filters-component__remove
       .filters-component-filter__selected
         .filters-component__section-heading class="govuk-!-margin-bottom-2"
           .govuk-body class="govuk-!-margin-bottom-0"

@@ -18,10 +18,6 @@ class FiltersComponent < GovukComponent::Base
     filters.present?
   end
 
-  def applied_text
-    filters[:total_count].positive? ? "(#{filters[:total_count]} applied)" : ""
-  end
-
   def display_remove_buttons
     filters[:total_count].positive? && options[:remove_buttons]
   end
