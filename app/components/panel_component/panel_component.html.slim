@@ -1,6 +1,8 @@
+button.panel-component__toggle.govuk-button.govuk-button--secondary type="button" data-panel-id=panel_id
+  = button_text
 = tag.div(class: classes, **html_attributes) do
   .panel-component__heading
-    h2.govuk-heading-m = @heading_text
+    h2.govuk-heading-m = heading_text
     button.panel-component__close-button.icon--close type="button"
       span.govuk-body-s = "Close"
   .panel-component__body
