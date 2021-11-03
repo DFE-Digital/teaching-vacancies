@@ -65,6 +65,10 @@ en:
     send_message: Send message
     set_preferences: Set your preferences
     shortlist: Shortlist
+    filters_toggle_text:
+      zero: Open filters
+      one: Open filters (%{count} applied)
+      other: Open filters (%{count} applied)
     sign_in: Sign in
     sign_in_jobseeker: Sign in as a jobseeker
     sign_in_publisher: Sign in as hiring staff

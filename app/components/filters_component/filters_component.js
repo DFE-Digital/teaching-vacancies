@@ -12,39 +12,16 @@ window.addEventListener(
   () => init(
     REMOVE_FILTER_CLASS_SELECTOR,
     'filters-component-clear-all',
-    'filters-component-close-panel',
-    'filters-component-show-mobile',
   ),
 );
 
-export const init = (removeButtonSelector, clearButtonId, closeButtonId, showFilterPanelId) => {
+export const init = (removeButtonSelector, clearButtonId) => {
   const clearFiltersEl = document.getElementById(clearButtonId);
-  const closeFilterPanelEl = document.getElementById(closeButtonId);
-  const showFilterPanelEl = document.getElementById(showFilterPanelId);
 
   Array.from(document.getElementsByClassName(removeButtonSelector)).forEach((removeButton) => filterGroup.addRemoveFilterEvent(removeButton));
 
   if (clearFiltersEl) {
     filterGroup.addRemoveAllFiltersEvent(clearFiltersEl);
-  }
-
-  if (showFilterPanelEl) {
-    showFilterPanelEl.addEventListener('click', (e) => {
-      togglePanel(e.target);
-    });
-  }
-
-  if (closeFilterPanelEl) {
-    closeFilterPanelEl.addEventListener('click', () => {
-      togglePanel(showFilterPanelEl);
-    });
-
-    document.getElementsByClassName('filters-component')[0].addEventListener('keydown', (e) => {
-      if (['Esc', 'Escape'].includes(e.key)) {
-        document.getElementsByClassName('filters-component')[0].classList.remove('filters-component--show-mobile');
-        setFiltersHiddenState(showFilterPanelEl, document.getElementsByClassName('filters-component')[0], true);
-      }
-    });
   }
 
   Array.from(document.getElementsByClassName('filters-component')).forEach((filtersEl) => {
@@ -62,13 +39,8 @@ export const init = (removeButtonSelector, clearButtonId, closeButtonId, showFil
         mediaQueryList.addEventListener('change', (e) => {
           if (e.matches) {
             mobileFiltersBehaviour(filtersEl);
-
-            if (filtersEl.classList.contains('filters-component--show-mobile')) {
-              setFiltersVisibleState(showFilterPanelEl, filtersEl);
-            }
           } else {
             desktopFiltersBehaviour(filtersEl);
-            setFiltersHiddenState(filtersEl, showFilterPanelEl);
           }
         });
       }
@@ -84,25 +56,6 @@ const mobileFiltersBehaviour = (filtersEl) => {
 const desktopFiltersBehaviour = (filtersEl) => {
   filtersEl.closest('form').setAttribute('data-auto-submit', 'true');
   filtersEl.removeAttribute('tabindex');
-};
-
-export const togglePanel = (actionEl) => Array.from(document.getElementsByClassName('filters-component')).forEach((element) => {
-  element.classList.toggle('filters-component--show-mobile') ? setFiltersVisibleState(actionEl, element) : setFiltersHiddenState(actionEl, element, true);
-});
-
-export const setFiltersVisibleState = (actionEl, filtersEl) => {
-  filtersEl.focus();
-  filtersEl.setAttribute('aria-hidden', 'false');
-  actionEl.setAttribute('aria-expanded', 'true');
-};
-
-export const setFiltersHiddenState = (actionEl, filtersEl, shouldFocus) => {
-  if (shouldFocus) {
-    actionEl.focus();
-  }
-
-  filtersEl.setAttribute('aria-hidden', 'true');
-  actionEl.setAttribute('aria-expanded', 'false');
 };
 
 export const addRemoveFilterEvent = (el, onClear) => {
