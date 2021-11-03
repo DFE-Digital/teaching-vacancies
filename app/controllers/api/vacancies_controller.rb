@@ -25,6 +25,7 @@ class Api::VacanciesController < Api::ApplicationController
   private
 
   def trigger_api_queried_event
+    Rollbar.debug("28 in controller")
     request_event.trigger(:api_queried)
   end
 
