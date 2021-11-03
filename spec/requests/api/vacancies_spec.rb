@@ -39,7 +39,7 @@ RSpec.describe "Api::Vacancies" do
       expect(info_object[:title]).to eq("GOV UK - #{I18n.t('app.title')}")
       expect(info_object[:description]).to eq(I18n.t("app.description"))
       expect(info_object[:termsOfService])
-        .to eq(terms_and_conditions_url(anchor: "api"))
+        .to eq(page_url("terms-and-conditions", anchor: "terms-and-conditions-for-api-users"))
       expect(info_object[:contact][:email]).to eq(I18n.t("help.email"))
     end
 
