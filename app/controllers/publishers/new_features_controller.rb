@@ -4,6 +4,7 @@ class Publishers::NewFeaturesController < Publishers::BaseController
   def show
     @new_features_form = Publishers::NewFeaturesForm.new
     current_publisher.update(viewed_new_features_page_at: Time.current)
+    session[:visited_new_features_page] = true
   end
 
   def update
