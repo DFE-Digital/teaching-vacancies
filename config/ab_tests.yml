@@ -33,7 +33,7 @@ shared:
   2021_07_contents_tabs_on_job_listing_test:
     present: 1
     absent: 1
-  2021_10_mobile_search_filters_test:
+  2021_10_mobile_search_panel_test:
     present: 1
     overlay: 1
 test:
@@ -47,6 +47,6 @@ test:
   2021_07_contents_tabs_on_job_listing_test:
     present: 1
     absent: 0
-  2021_10_mobile_search_filters_test:
+  2021_10_mobile_search_panel_test:
     present: 1
     overlay: 0
