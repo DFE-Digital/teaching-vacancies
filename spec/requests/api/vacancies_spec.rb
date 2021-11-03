@@ -127,8 +127,12 @@ RSpec.describe "Api::Vacancies" do
       expect(response.status).to eq(Rack::Utils.status_code(:ok))
     end
 
-    it "triggers a page_visited event" do
-      expect { get api_job_path(vacancy.slug, api_version: 1), params: { format: :json } }.to have_triggered_event(:page_visited)
+    it "does not trigger a page_visited event" do
+      expect { subject }.not_to have_triggered_event(:page_visited)
+    end
+
+    it "triggers an api_queried event" do
+      expect { subject }.to have_triggered_event(:api_queried)
     end
 
     it "never redirects to latest url" do
