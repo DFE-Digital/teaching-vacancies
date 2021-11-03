@@ -1,71 +1,15 @@
 @import 'base_component';
 
-.js-enabled {
-  .filters-component__open {
-    display: block;
-
-    @include govuk-media-query($until: desktop) {
-      margin-bottom: govuk-spacing(6);
-
-      .govuk-button {
-        display: block;
-        width: 100%;
-      }
-    }
-
-    @include govuk-media-query($from: desktop) {
-      .govuk-button {
-        display: none;
-      }
-    }
-  }
-
+.panel-component--visible {
   .filters-component {
-    &.filters-component--mobile {
-      .filters-component__groups {
-        @include govuk-media-query($until: desktop) {
-          display: none;
-        }
-      }
+    @include govuk-media-query($until: desktop) {
+      .filters-component__submit {
+        bottom: 0;
+        display: flex;
+        position: sticky;
 
-      &.filters-component--show-mobile {
-        @include govuk-media-query($until: desktop) {
-          border: 1px solid govuk-colour('mid-grey');
-          bottom: 5px;
-          max-width: 320px;
-          overflow-y: scroll;
-          position: fixed;
-          right: 5px;
-          top: 5px;
-          z-index: 100;
-
-          .filters-component--show-mobile-open {
-            display: block;
-          }
-
-          .filters-component__groups {
-            display: block;
-          }
-
-          .filters-component__submit {
-            bottom: 0;
-            display: flex;
-            padding: 0 govuk-spacing(3);
-            position: sticky;
-
-            .govuk-button {
-              width: 100%;
-            }
-          }
-
-          .filters-component__heading {
-            display: block;
-            padding: govuk-spacing(3) govuk-spacing(3) 0 govuk-spacing(3);
-
-            .govuk-heading-m {
-              display: block;
-            }
-          }
+        .govuk-button {
+          width: 100%;
         }
       }
     }
@@ -74,14 +18,9 @@
 
 .filters-component {
   background-color: govuk-colour('light-grey');
-  overflow: hidden;
 
   &:focus {
     outline: $govuk-focus-width solid $govuk-focus-colour;
-  }
-
-  &--show-mobile-open {
-    display: none;
   }
 
   &__link-button {
@@ -188,7 +127,7 @@
 
   &__remove {
     box-shadow: none;
-    padding: govuk-spacing(1) govuk-spacing(3);
+    padding: govuk-spacing(1) 0;
 
     @include govuk-media-query($until: desktop) {
       display: none;
@@ -255,7 +194,7 @@
   }
 
   &__groups {
-    padding: govuk-spacing(1) govuk-spacing(3) govuk-spacing(1);
+    padding: govuk-spacing(1) 0;
 
     .govuk-accordion__section-button {
       font-size: 1.2rem;
