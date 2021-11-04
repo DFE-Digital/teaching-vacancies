@@ -73,7 +73,7 @@ Vacancy.reindex!
 
 # Jobseekers
 Jobseeker.create(email: "jobseeker@example.com", password: "password", confirmed_at: Time.zone.now)
-6.times { |i| Jobseeker.create(email: "jobseeker#{i}@example.com", password: "password", confirmed_at: Time.zone.now) }
+JobApplication.statuses.count.times { |i| Jobseeker.create(email: "jobseeker#{i}@example.com", password: "password", confirmed_at: Time.zone.now) }
 
 # Job Applications
 Vacancy.listed.each do |vacancy|
