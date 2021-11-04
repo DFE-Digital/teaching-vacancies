@@ -138,7 +138,7 @@ en:
         terse: Get a job alert for similar jobs
         verbose:
           link_text: Get a job alert
-          reminder: for when similar jobs are listed
+          reminder: when similar jobs are listed
 
     contents: Contents
     similar_jobs: Similar jobs nearby
