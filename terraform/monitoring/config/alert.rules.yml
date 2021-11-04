@@ -33,7 +33,7 @@ groups:
 
   - alert: ProdSlowRequests
   # Condition for alerting
-    expr: histogram_quantile(0.9, sum(rate(response_time_bucket{app="teaching-vacancies-production", status_range="2xx"}[5m])) by (le)) > 2
+    expr: histogram_quantile(0.9, sum(rate(response_time_bucket{app="teaching-vacancies-production", status_range="2xx"}[5m])) by (le)) > 3
     # Annotation - additional informational labels to store more information
     annotations:
       summary: Identify slow running request above 95 percentile
