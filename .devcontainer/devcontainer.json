@@ -1,0 +1,61 @@
+{
+  "name": "DfE Teaching Vacancies",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/app",
+  "forwardPorts": [
+    3000,
+    3035,
+    5432,
+    6379
+  ],
+  "postCreateCommand": "/bin/bash /app/.devcontainer/post_create.sh",
+  "remoteUser": "teaching-vacancies",
+  "extensions": [
+    "aki77.rails-db-schema",
+    "aki77.rails-i18n",
+    "aki77.rails-routes",
+    "mtxr.sqltools",
+    "mtxr.sqltools-driver-pg",
+    "rebornix.Ruby",
+    "redhat.vscode-yaml",
+    "sianglim.slim"
+  ],
+  "settings": {
+    // Get highlighting for local env files
+    "files.associations": {
+      ".env.local": "env",
+      ".env.test.local": "env"
+    },
+    // Set up Ruby extension
+    "ruby.format": "rubocop",
+    "ruby.lint": {
+      "rubocop": {
+        "useBundler": true
+      }
+    },
+    "ruby.useLanguageServer": true,
+    "sqltools.connections": [
+      {
+        "name": "Rails Development Database",
+        "driver": "PostgreSQL",
+        "previewLimit": 50,
+        "server": "db",
+        "port": 5432,
+        "database": "tvs_development",
+        "username": "postgres",
+        "password": "postgres"
+      },
+      {
+        "name": "Rails Test Database",
+        "driver": "PostgreSQL",
+        "previewLimit": 50,
+        "server": "db",
+        "port": 5432,
+        "database": "tvs_test",
+        "username": "postgres",
+        "password": "postgres"
+      }
+    ]
+  }
+}

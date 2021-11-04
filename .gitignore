@@ -88,8 +88,5 @@ dump.rdb
 !.github/workflows/backup_production_db.yml
 *dump*
 
-# VSCode
-.vscode
-
 # Scripts and content from a shared source. Ensures we always download the latest from source
 /bin/fetch_config.rb

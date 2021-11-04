@@ -1,0 +1,72 @@
+version: "3.8"
+
+services:
+  app:
+    hostname: devcontainer
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/app:cached
+      - bundle:/usr/local/bundle
+      - node_modules:/app/node_modules
+      - packs:/app/public/packs
+      - tmp:/app/tmp
+    working_dir: /app
+    command: sleep infinity
+    user: teaching-vacancies
+    ports:
+      - "3000:3000"
+      - "3035:3035"
+    tmpfs:
+      - /tmp # Required for ActiveStorage, see https://github.com/docker/for-mac/issues/5570
+    environment:
+      # Rails
+      DATABASE_URL: postgis://postgres:postgres@db
+      REDIS_URL: redis://redis:6379
+      # Painless `psql` connection
+      PGHOST: db
+      PGUSER: postgres
+      # Set up Selenium to use remote Chrome
+      SELENIUM_HUB_URL: http://selenium-chrome:4444/wd/hub
+    depends_on:
+      - db
+      - redis
+      - selenium-chrome
+
+  db:
+    image: postgis/postgis:12-3.1-alpine
+    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:5-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  selenium-chrome:
+    image: selenium/standalone-chrome:95.0
+    shm_size: 2G
+    ports:
+      - "7900:7900"
+    tmpfs:
+      - /tmp
+
+volumes:
+  # Postgres data directory
+  postgres_data:
+  # Caches for Bundler/NPM/Yarn-installed dependencies to persist across rebuilds and install faster
+  bundle:
+  node_modules:
+  # Tempfile and packs directories are IO-heavy and we don't need to have their contents
+  # replicated on host
+  tmp:
+  packs:
