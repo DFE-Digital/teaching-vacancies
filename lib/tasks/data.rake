@@ -41,6 +41,13 @@ namespace :gias do
   end
 end
 
+namespace :google do
+  desc "Remove expired vacancies from the Google index"
+  task remove_expired_vacancies_google_index: :environment do
+    RemoveExpiredJobUrlsFromGoogleIndexJob.perform_later
+  end
+end
+
 namespace :ons do
   desc "Import all ONS areas"
   task import_all: %i[import_counties import_cities import_regions create_composites]

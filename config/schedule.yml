@@ -60,7 +60,12 @@ remove_stale_vacancies:
 
 remove_vacancies_that_expired_yesterday:
   cron: '0 03 * * *'
-  class: 'RemoveVacanciesThatExpiredYesterday'
+  class: 'RemoveVacanciesThatExpiredYesterdayFromAlgolia'
+  queue: low
+
+remove_vacancies_that_expired_yesterday_from_google_index:
+  crom: '* 04 * * *'
+  class: 'RemoveJobsThatExpiredYesterdayFromGoogleIndexJob'
   queue: low
 
 reset_sessions:
