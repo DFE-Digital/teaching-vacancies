@@ -61,7 +61,7 @@ There are two timed jobs that run in sidekiq cron:
 
 This runs every five minutes and add vacancies with matured `publish_on` times to the index.
 
-### `RemoveVacanciesThatExpiredYesterday`
+### `RemoveVacanciesThatExpiredYesterdayFromAlgolia`
 
 This runs at 03:00 every day and does exactly what the name says it does. Daily removal is not a problem because expired vacancies that have not yet been removed will be filtered out by the search client and do not show to jobseekers.
 
