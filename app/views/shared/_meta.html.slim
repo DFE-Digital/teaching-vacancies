@@ -1,1 +1,3 @@
 meta name="description" content=meta_description
+- if content_for?(:no_index)
+  = yield(:no_index)
