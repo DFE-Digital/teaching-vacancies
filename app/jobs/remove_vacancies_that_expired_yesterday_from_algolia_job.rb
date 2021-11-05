@@ -1,4 +1,4 @@
-class RemoveVacanciesThatExpiredYesterday < ApplicationJob
+class RemoveVacanciesThatExpiredYesterdayFromAlgoliaJob < ApplicationJob
   queue_as :low
 
   def perform
