@@ -1,7 +1,7 @@
 json.info do
   json.title "GOV UK - #{t('app.title')}"
   json.description t("app.description")
-  json.termsOfService terms_and_conditions_url(anchor: "api")
+  json.termsOfService page_url("terms-and-conditions", anchor: "terms-and-conditions-for-api-users")
   json.contact do
     json.name "#{t('app.title')} API Support"
     json.email t("help.email")

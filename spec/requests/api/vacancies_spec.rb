@@ -39,7 +39,7 @@ RSpec.describe "Api::Vacancies" do
       expect(info_object[:title]).to eq("GOV UK - #{I18n.t('app.title')}")
       expect(info_object[:description]).to eq(I18n.t("app.description"))
       expect(info_object[:termsOfService])
-        .to eq(terms_and_conditions_url(anchor: "api"))
+        .to eq(page_url("terms-and-conditions", anchor: "terms-and-conditions-for-api-users"))
       expect(info_object[:contact][:email]).to eq(I18n.t("help.email"))
     end
 
@@ -105,23 +105,40 @@ RSpec.describe "Api::Vacancies" do
   describe "GET /api/v1/jobs/:id.json", json: true do
     let(:vacancy) { create(:vacancy, organisations: [school]) }
 
+    subject do
+      get api_job_path(vacancy.slug, api_version: 1), params: { format: :json }
+    end
+
     it "returns status :not_found if the request format is not JSON" do
       get api_job_path(vacancy.slug, api_version: 1), params: { format: :html }
 
       expect(response.status).to eq(Rack::Utils.status_code(:not_found))
     end
 
+    it "still monitors API usage if the request is for an entity that is not found" do
+      expect {
+        get api_job_path("slug-that-does-not-exist", api_version: 1), params: { format: :json }
+      }.to have_triggered_event(:api_queried).with_data({ not_found: "true" })
+    end
+
     context "sets headers" do
-      before(:each) { get api_job_path(vacancy.slug, api_version: 1), params: { format: :json } }
+      before { subject }
 
       it_behaves_like "X-Robots-Tag"
       it_behaves_like "Content-Type JSON"
     end
 
     it "returns status code :ok" do
-      get api_job_path(vacancy.slug, api_version: 1), params: { format: :json }
-
+      subject
       expect(response.status).to eq(Rack::Utils.status_code(:ok))
+    end
+
+    it "does not trigger a page_visited event" do
+      expect { subject }.not_to have_triggered_event(:page_visited)
+    end
+
+    it "triggers an api_queried event" do
+      expect { subject }.to have_triggered_event(:api_queried)
     end
 
     it "never redirects to latest url" do
@@ -130,55 +147,31 @@ RSpec.describe "Api::Vacancies" do
       vacancy.refresh_slug
       vacancy.save
 
-      get api_job_path(vacancy.slug, api_version: 1), params: { format: :json }
+      subject
       expect(response.status).to eq(Rack::Utils.status_code(:ok))
     end
 
     context "format" do
-      it "maps vacancy to the JobPosting schema" do
-        get api_job_path(vacancy.slug, api_version: 1), params: { format: :json }
+      before { subject }
 
+      it "maps vacancy to the JobPosting schema" do
         expect(json.to_h).to eq(vacancy_json_ld(VacancyPresenter.new(vacancy)))
       end
 
       describe "#employment_type" do
-        it "maps full_time working pattern to FULL_TIME" do
-          vacancy = create(:vacancy, working_patterns: %w[full_time])
+        let(:vacancy) { create(:vacancy, working_patterns: working_patterns) }
 
-          get api_job_path(vacancy.slug, api_version: 1), params: { format: :json }
+        context "with single working patterns" do
+          let(:working_patterns) { %w[full_time] }
 
-          expect(json.to_h).to include(employmentType: "FULL_TIME")
-        end
-
-        it "maps part_time working pattern to PART_TIME" do
-          vacancy = create(:vacancy, working_patterns: %w[part_time])
-
-          get api_job_path(vacancy.slug, api_version: 1), params: { format: :json }
-
-          expect(json.to_h).to include(employmentType: "PART_TIME")
-        end
-
-        it "maps job_share working pattern to JOB_SHARE" do
-          vacancy = create(:vacancy, working_patterns: %w[job_share])
-
-          get api_job_path(vacancy.slug, api_version: 1), params: { format: :json }
-
-          expect(json.to_h).to include(employmentType: "JOB_SHARE")
-        end
-
-        it "maps multiple values to an array" do
-          vacancy = create(:vacancy, working_patterns: %w[part_time job_share])
-
-          get api_job_path(vacancy.slug, api_version: 1), params: { format: :json }
-
-          expect(json.to_h).to include(employmentType: "PART_TIME, JOB_SHARE")
+          it "maps full_time working pattern to FULL_TIME" do
+            expect(json.to_h).to include(employmentType: "FULL_TIME")
+          end
         end
       end
 
       describe "#hiringOrganization" do
         it "sets the school's details" do
-          get api_job_path(vacancy.slug, api_version: 1), params: { format: :json }
-
           hiring_organization = {
             hiringOrganization: {
               "@type": "Organization",

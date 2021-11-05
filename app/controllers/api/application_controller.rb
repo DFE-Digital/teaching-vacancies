@@ -1,6 +1,8 @@
 class Api::ApplicationController < ApplicationController
   skip_after_action :trigger_page_visited_event
 
+  private
+
   def set_headers
     response.set_header("X-Robots-Tag", "noarchive")
     response.charset = "utf-8"

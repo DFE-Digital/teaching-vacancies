@@ -28,7 +28,10 @@ class ApplicationController < ActionController::Base
   def not_found
     respond_to do |format|
       format.html { render "errors/not_found", status: :not_found }
-      format.json { render json: { error: "Resource not found" }, status: :not_found }
+      format.json do
+        trigger_api_queried_event(not_found: true) if controller_path == "api/vacancies"
+        render json: { error: "Resource not found" }, status: :not_found
+      end
       format.all { render status: :not_found, body: nil }
     end
   end
