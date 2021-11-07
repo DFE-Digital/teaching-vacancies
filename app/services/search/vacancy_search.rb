@@ -67,7 +67,7 @@ class Search::VacancySearch
                              Search::Strategies::PgSearch.new(
                                keyword,
                                filters: search_criteria,
-                               location: location_search.location_filter[:location],
+                               location: search_criteria[:location],
                                radius: location_search.radius,
                                page: page,
                                per_page: per_page,
