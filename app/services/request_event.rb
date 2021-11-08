@@ -29,12 +29,9 @@ class RequestEvent < Event
       response_status: response.status,
       user_anonymised_request_identifier: anonymise(request_identifier),
       user_anonymised_session_id: anonymise(session.id),
-      user_anonymised_jobseeker_id: anonymised_jobseeker_id,
-      user_anonymised_publisher_id: anonymised_publisher_id,
-    ).reject do |k, v|
-      # BigQuery throws an error if we pass a nil value for this field since it expects key-value pairs.
-      k == :request_ab_tests && v.blank?
-    end
+      user_anonymised_jobseeker_id: anonymise(current_jobseeker&.id),
+      user_anonymised_publisher_id: anonymise(current_publisher&.oid),
+    )
   end
 
   def request_identifier
@@ -46,24 +43,6 @@ class RequestEvent < Event
   end
 
   def ab_tests
-    return if api_request?
-
     AbTests.new(session).current_variants.map { |test, variant| { test: test, variant: variant } }
-  end
-
-  def anonymised_jobseeker_id
-    return if api_request?
-
-    anonymise(current_jobseeker&.id)
-  end
-
-  def anonymised_publisher_id
-    return if api_request?
-
-    anonymise(current_publisher&.oid)
-  end
-
-  def api_request?
-    request.path.include?("/api/")
   end
 end
