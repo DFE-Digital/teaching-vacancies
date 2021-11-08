@@ -6,6 +6,10 @@ RSpec.describe "Errors" do
       get not_found_path
       expect(response).to have_http_status(:not_found)
     end
+
+    it "does not trigger an api_queried event" do
+      expect { get not_found_path }.not_to have_triggered_event(:api_queried)
+    end
   end
 
   describe "GET #unprocessable_entity" do

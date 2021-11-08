@@ -43,13 +43,24 @@ RSpec.describe "Api::LocationSuggestion" do
       let(:suggestions) { ["first playful place, UK", "second place, UK"] }
       let(:matched_terms) { [%w[playful place], %w[place]] }
 
+      subject do
+        get api_location_suggestion_path(api_version: 1), params: { format: :json, location: location }
+      end
+
       before do
         allow(location_suggestion).to receive(:suggest_locations).and_return([suggestions, matched_terms])
       end
 
-      it "returns status :ok" do
-        get api_location_suggestion_path(api_version: 1), params: { format: :json, location: location }
+      it "does not trigger a page_visited event" do
+        expect { subject }.not_to have_triggered_event(:page_visited)
+      end
 
+      it "does not trigger an api_queried event" do
+        expect { subject }.not_to have_triggered_event(:api_queried)
+      end
+
+      it "returns status :ok" do
+        subject
         expect(response).to have_http_status(:ok)
         expect(json[:query]).to eq(location)
         expect(json[:suggestions]).to eq(suggestions)
