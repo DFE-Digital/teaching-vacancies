@@ -4,5 +4,9 @@
                                                         organisation: @vacancy.parent_organisation.name,
                                                         deadline: format_date(@vacancy.expires_at, :date_only_shorthand))
 
+- if @vacancy.expired?
+  - content_for :no_index do
+    meta name="robots" content="noindex"
+
 .vacancy
   = render "/shared/vacancy/jobseeker_view"
