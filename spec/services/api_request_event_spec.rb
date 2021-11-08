@@ -1,8 +1,8 @@
 require "rails_helper"
 
-RSpec.describe RequestEvent do
+RSpec.describe ApiRequestEvent do
   subject do
-    described_class.new(request, response, session, jobseeker, publisher)
+    described_class.new(request, response, session)
   end
 
   let(:request) do
@@ -13,7 +13,7 @@ RSpec.describe RequestEvent do
       remote_ip: "255.255.255.255",
       referer: "ukonline.gov.uk",
       method: "DELETE",
-      path: "/foo/bar",
+      path: "/api/v1/give_me_all_your_data.json",
       query_string: "foo=bar&baz=bat",
     )
   end
@@ -25,9 +25,6 @@ RSpec.describe RequestEvent do
   let(:session) do
     instance_double(ActionDispatch::Request::Session, id: "1337")
   end
-
-  let(:publisher) { instance_double(Publisher, oid: 1234) }
-  let(:jobseeker) { instance_double(Jobseeker, id: 4321) }
 
   let(:ab_tests) { double(AbTests, current_variants: { foo: :bar }) }
 
@@ -44,15 +41,12 @@ RSpec.describe RequestEvent do
         request_user_agent: "Mozilla/4.0 (compatible; MSIE 5.5; Windows 95)",
         request_referer: "ukonline.gov.uk",
         request_method: "DELETE",
-        request_path: "/foo/bar",
+        request_path: "/api/v1/give_me_all_your_data.json",
         request_query: "foo=bar&baz=bat",
-        request_ab_tests: [{ test: :foo, variant: :bar }],
         response_content_type: "image/gif",
         response_status: 418,
         user_anonymised_request_identifier: anonymised_form_of("Mozilla/4.0 (compatible; MSIE 5.5; Windows 95)255.255.255.255"),
         user_anonymised_session_id: anonymised_form_of("1337"),
-        user_anonymised_jobseeker_id: anonymised_form_of("4321"),
-        user_anonymised_publisher_id: anonymised_form_of("1234"),
         data: [{ key: "foo", value: "Bar" }],
       }
     end
