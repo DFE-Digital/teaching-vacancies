@@ -7,11 +7,6 @@
     = review_section_tag(vacancy, %i[job_summary], [Publishers::JobListing::JobSummaryForm])
 
   - review.body do
-    = govuk_summary_list do |summary_list|
-      - summary_list.row do |row|
-        - row.key text: t("jobs.job_advert")
-        - row.value text: vacancy.job_advert
-
-      - summary_list.row do |row|
-        - row.key text: t("jobs.about_school", school: vacancy_about_school_label_organisation(vacancy))
-        - row.value text: vacancy.about_school
+    = validatable_summary_list(vacancy, show_errors: local_assigns[:show_errors], error_path: organisation_job_build_path(vacancy.id, :job_summary)) do |list|
+      - list.row :job_advert
+      - list.row :about_school, label: t("jobs.about_school", school: vacancy_about_school_label_organisation(vacancy))

@@ -7,11 +7,6 @@
     = review_section_tag(vacancy, %i[working_patterns], [Publishers::JobListing::WorkingPatternsForm])
 
   - review.body do
-    = govuk_summary_list do |summary_list|
-      - summary_list.row do |row|
-        - row.key text: t("jobs.working_patterns")
-        - row.value text: vacancy.working_patterns
-
-      - summary_list.row do |row|
-        - row.key text: t("jobs.working_patterns_details")
-        - row.value text: vacancy.working_patterns_details
+    = validatable_summary_list(vacancy, show_errors: local_assigns[:show_errors], error_path: organisation_job_build_path(vacancy.id, :working_patterns)) do |list|
+      - list.row :working_patterns
+      - list.row :working_patterns_details
