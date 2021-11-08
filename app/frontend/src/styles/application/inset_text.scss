@@ -2,8 +2,8 @@
 .govuk-inset-text {
   .govuk-summary-list__value & {
     margin-top: 0;
-    padding-top: 0;
     padding-bottom: 0;
+    padding-top: 0;
   }
 }
 
@@ -13,10 +13,10 @@
 
 
 .app-inset-text--important {
-  border-color: govuk-colour("blue");
+  border-color: govuk-colour('blue');
 
   .app-inset-text__title {
-    color: govuk-colour("blue");
+    color: govuk-colour('blue');
   }
 }
 
