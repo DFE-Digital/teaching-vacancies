@@ -701,6 +701,9 @@ en:
         expiry_time: Time application is due
         publish_on: What date will the job be listed?
         publish_on_day: Date job will be listed
+        start_asap: As soon as possible
+        start_date_specific: On a specific day
+        starts_on: Date job starts (optional)
         starts_on_html: Date job starts (optional<span class='govuk-visually-hidden'> field</span>)</span>
       publishers_job_listing_job_details_form:
         contract_type: Contract type
