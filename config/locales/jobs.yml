@@ -151,7 +151,7 @@ en:
     create_a_job_title: Create a job listing for %{organisation}
     create_a_job_title_no_org: Create a job listing
     copy_job_title: Copy %{job_title}
-    manage_listing: Manage job listing
+    manage_listing: Manage %{state} listing
     new_job_listing_details: New job listing details
     reminder_body: You can now receive and manage job applications on Teaching Vacancies. You can do this for all jobs except education support roles.
     reminder_continue_button: Continue to create a job
@@ -277,8 +277,9 @@ en:
         You will have access to candidates' applications for this job for one year after the closing date of the
         listing.
       heading:
-        zero: Submit this job listing for publication now (%{date})
-        one: Submit this listing for publication on %{date}
+        today: Submit this listing for publication now (%{date})
+        later: Submit this listing for publication on %{date}
+        other: Submit this listing for publication
       message_html: >-
         By publishing this job you agree to our <a href='/pages/terms-and-conditions'
         class='govuk-link' target='blank'>terms and conditions</a> for schools and confirm that the details you have
