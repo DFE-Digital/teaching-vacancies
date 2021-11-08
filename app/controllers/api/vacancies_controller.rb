@@ -1,5 +1,6 @@
 class Api::VacanciesController < Api::ApplicationController
   before_action :verify_json_request, only: %i[show index]
+  after_action :trigger_api_queried_event
 
   MAX_API_RESULTS_PER_PAGE = 100
 
@@ -22,6 +23,10 @@ class Api::VacanciesController < Api::ApplicationController
   end
 
   private
+
+  def trigger_api_queried_event(event_data = {})
+    request_event.trigger(:api_queried, event_data)
+  end
 
   def id
     params[:id]
