@@ -21,8 +21,12 @@ class VacancyFilterQuery < ApplicationQuery
     built_scope = built_scope.where("subjects && ARRAY[?]::varchar[]", filters[:subjects]) if filters[:subjects].present?
 
     # General filters
-    built_scope = built_scope.with_any_of_job_roles(fix_legacy_filters(filters[:job_roles])) if filters[:job_roles].present?
-    built_scope = built_scope.with_any_of_working_patterns(filters[:working_patterns]) if filters[:working_patterns].present?
+    job_roles = fix_legacy_job_roles(filters[:job_roles])
+    built_scope = built_scope.with_any_of_job_roles(job_roles) if job_roles.present?
+
+    working_patterns = fix_legacy_working_patterns(filters[:working_patterns])
+    built_scope = built_scope.with_any_of_working_patterns(working_patterns) if working_patterns.present?
+
     built_scope = built_scope.where("readable_phases && ARRAY[?]::varchar[]", filters[:phases]) if filters[:phases].present?
 
     built_scope
@@ -30,11 +34,19 @@ class VacancyFilterQuery < ApplicationQuery
 
   private
 
-  # Fixes legacy filter names coming through that have moved to a new name
-  def fix_legacy_filters(job_roles)
+  def fix_legacy_job_roles(job_roles)
+    return nil unless job_roles
+
     job_roles.dup.tap do |roles|
       roles.push("ect_suitable") if roles.delete("nqt_suitable")
       roles.push("send_responsible") if roles.delete("sen_specialist")
     end
+  end
+
+  def fix_legacy_working_patterns(working_patterns)
+    return nil unless working_patterns
+
+    # These are no longer relevant and have no current equivalent
+    working_patterns - %w[compressed_hours staggered_hours]
   end
 end
