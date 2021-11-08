@@ -57,7 +57,7 @@ module Indexable
           local_authorities_within: organisations.map(&:local_authority_within).reject(&:blank?).uniq,
           religious_characters: organisations.schools.map(&:religious_character).reject(&:blank?).uniq,
           regions: organisations.schools.map(&:region).uniq,
-          school_types: organisations.schools.map { |org| org.school_type&.singularize }.uniq,
+          school_types: organisations.schools.map(&:school_type).uniq,
           towns: organisations.map(&:town).reject(&:blank?).uniq }
       end
 

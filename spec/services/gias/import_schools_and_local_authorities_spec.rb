@@ -57,7 +57,7 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
       expect(example_school.name).to eq("Sir John Cass's Foundation Primary School")
       expect(example_school.phase).to eq("primary")
       expect(example_school.region).to eq("London")
-      expect(example_school.school_type).to eq("LA maintained schools")
+      expect(example_school.school_type).to eq("LA maintained school")
       expect(example_school.url).to eq("http://www.sirjohncassprimary.org")
     end
 

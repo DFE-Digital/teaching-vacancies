@@ -10,6 +10,14 @@ RSpec.describe School do
     end
   end
 
+  describe "#school_type" do
+    subject { build(:school, school_type: "Academies") }
+
+    it "singularizes any plural school type" do
+      expect(subject.school_type).to eq("Academy")
+    end
+  end
+
   describe "#religious_character" do
     let(:religious_character) { "Roman Catholic" }
     let(:gias_data) { { "ReligiousCharacter (name)" => religious_character } }
