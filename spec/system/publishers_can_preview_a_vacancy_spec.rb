@@ -18,7 +18,7 @@ RSpec.describe "Publishers can preview a vacancy" do
 
     scenario "users can preview the listing" do
       click_on I18n.t("buttons.preview_job_listing")
-      expect(page).to have_current_path(organisation_job_preview_path(vacancy.id))
+      expect(page).to have_current_path(organisation_job_preview_path(vacancy.id, back_to: "review"))
       within(".govuk-info-summary__title") do
         expect(page).to have_content(vacancy.job_title)
       end
