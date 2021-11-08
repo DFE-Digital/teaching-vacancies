@@ -237,6 +237,9 @@ en:
         subjects: What subjects will the teacher focus on?
         subjects_placeholder: Search
       publishers_job_listing_job_role_form:
+        main_job_role:  >-
+          You can list all the roles below on Teaching Vacancies. You cannot list other roles such as
+          finance manager, administrative assistant, cleaner or chef.
         main_job_role_options:
           leadership: Includes Deputy/Assistant Head, Headteacher, and trust-level roles
           education_support: Includes learning support and tutors
