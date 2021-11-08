@@ -11,7 +11,7 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Vacan
   validates :expires_at, date: { on_or_after: :now, on_or_before: :far_future, after: :publish_on }
   validates :expiry_time, inclusion: { in: Vacancy::EXPIRY_TIME_OPTIONS }
   validates :starts_on, date: { on_or_after: :today, on_or_before: :far_future, after: :expires_at }, allow_blank: true,
-                        if: proc { starts_asap == "0" }
+                        if: proc { ["true", "1"].include?(starts_asap) }
   validate :starts_on_and_starts_asap_not_present
 
   def self.fields
@@ -66,6 +66,6 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Vacan
   private
 
   def starts_on_and_starts_asap_not_present
-    errors.add(:starts_on, :date_and_asap) if starts_on.present? && starts_asap == "true"
+    errors.add(:starts_on, :date_and_asap) if starts_on.present? && ["true", "1"].include?(starts_asap)
   end
 end
