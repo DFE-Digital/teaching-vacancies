@@ -2,41 +2,39 @@ import { Controller } from '@hotwired/stimulus';
 import './panel.scss';
 
 export const COMPONENT_CLASS = 'panel-component';
-export const ACTION_ELEMENT_CLASS = `${COMPONENT_CLASS}__toggle`;
-export const CLOSE_ELEMENT_CLASS = `${COMPONENT_CLASS}__close-button`;
-export const PANEL_VISIBLE_CLASS = `${COMPONENT_CLASS}--visible`;
+export const TOGGLE_ELEMENT_CLASS = `${COMPONENT_CLASS}__toggle`;
+export const CONTENT_ELEMENT_CLASS = `${COMPONENT_CLASS}__content`;
+export const CLOSE_ELEMENT_CLASS = `${COMPONENT_CLASS}__content__close-button`;
+export const PANEL_VISIBLE_CLASS = `${CONTENT_ELEMENT_CLASS}--visible`;
 
 export default class extends Controller {
-  connect() {
-    Array.from(this.element.getElementsByClassName(ACTION_ELEMENT_CLASS)).forEach((actionEl) => {
-      this.actionEl = actionEl;
-      this.panelEl = document.getElementById(actionEl.dataset.panelId);
+  static targets = ['toggle', 'content'];
 
-      this.panelEl.addEventListener('keydown', (e) => {
-        if (['Esc', 'Escape'].includes(e.key)) {
-          this.panelEl.classList.remove(PANEL_VISIBLE_CLASS);
-          this.setHiddenState(true);
-        }
-      });
+  connect() {
+    this.contentTarget.addEventListener('keydown', (e) => {
+      if (['Esc', 'Escape'].includes(e.key)) {
+        this.contentTarget.classList.remove(PANEL_VISIBLE_CLASS);
+        this.setHiddenState(true);
+      }
     });
   }
 
-  toggle() {
-    this.panelEl.classList.toggle(PANEL_VISIBLE_CLASS) ? this.setVisibleState() : this.setHiddenState(true);
+  toggleVisibility() {
+    this.contentTarget.classList.toggle(PANEL_VISIBLE_CLASS) ? this.setVisibleState() : this.setHiddenState(true);
   }
 
   setVisibleState() {
-    this.panelEl.focus();
-    this.panelEl.setAttribute('aria-hidden', 'false');
-    this.actionEl.setAttribute('aria-expanded', 'true');
+    this.contentTarget.focus();
+    this.contentTarget.setAttribute('aria-hidden', 'false');
+    this.toggleTarget.setAttribute('aria-expanded', 'true');
   }
 
   setHiddenState(shouldFocus) {
     if (shouldFocus) {
-      this.actionEl.focus();
+      this.toggleTarget.focus();
     }
 
-    this.panelEl.setAttribute('aria-hidden', 'true');
-    this.actionEl.setAttribute('aria-expanded', 'false');
+    this.contentTarget.setAttribute('aria-hidden', 'true');
+    this.toggleTarget.setAttribute('aria-expanded', 'false');
   }
 }

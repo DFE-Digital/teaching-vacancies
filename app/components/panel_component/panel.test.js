@@ -5,9 +5,10 @@
 import { Application } from '@hotwired/stimulus';
 import PanelController, {
   COMPONENT_CLASS,
-  ACTION_ELEMENT_CLASS,
-  PANEL_VISIBLE_CLASS,
+  TOGGLE_ELEMENT_CLASS,
+  CONTENT_ELEMENT_CLASS,
   CLOSE_ELEMENT_CLASS,
+  PANEL_VISIBLE_CLASS,
 } from './panel';
 
 const application = Application.start();
@@ -15,10 +16,12 @@ const application = Application.start();
 application.register('panel', PanelController);
 
 describe('panel', () => {
-  document.body.innerHTML = `<div data-controller="panel">
-  <button data-action="click->panel#toggle" class="${ACTION_ELEMENT_CLASS}" data-panel-id="test-panel">panel toggle</button>
-  <div class="${COMPONENT_CLASS}" tabindex="-1" id="test-panel">
-    <button class="${CLOSE_ELEMENT_CLASS}" data-action="click->panel#toggle">close</button>
+  document.body.innerHTML = `<div class="${COMPONENT_CLASS}">
+  <div data-controller="panel">
+  <button data-action="panel#toggleVisibility" class="${TOGGLE_ELEMENT_CLASS}" data-panel-target="toggle">panel toggle</button>
+  <div class="${CONTENT_ELEMENT_CLASS}" tabindex="-1" data-panel-target="content">
+    <button class="${CLOSE_ELEMENT_CLASS}" data-action="panel#toggleVisibility">close</button>
+  </div>
   </div>
   </div>`;
 
@@ -27,8 +30,8 @@ describe('panel', () => {
   let closeButton;
 
   beforeAll(() => {
-    [container] = document.getElementsByClassName(COMPONENT_CLASS);
-    [openButton] = document.getElementsByClassName(ACTION_ELEMENT_CLASS);
+    [container] = document.getElementsByClassName(CONTENT_ELEMENT_CLASS);
+    [openButton] = document.getElementsByClassName(TOGGLE_ELEMENT_CLASS);
     [closeButton] = document.getElementsByClassName(CLOSE_ELEMENT_CLASS);
   });
 

@@ -56,7 +56,7 @@ ruby:
   .search-controls
     .search-controls__panel
       - if current_variant?(:"2021_10_mobile_search_panel_test", :overlay)
-        = render(PanelComponent.new(panel_id: "search-panel", button_text: "Edit search", heading_text: t("jobs.search.title"), html_attributes: { id: "search-panel", tabindex: "-1" })) do |panel|
+        = render(PanelComponent.new(button_text: t("buttons.search_toggle_panel"), heading_text: t("jobs.search.title"))) do |panel|
           - panel.body do
             = render "shared/search/keyword", f: f
             = render "shared/search/location", f: f
@@ -78,7 +78,7 @@ ruby:
           = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"
 
     .search-controls__panel
-      = render(PanelComponent.new(panel_id: "filters-panel", button_text: t("buttons.filters_toggle_text", count: @form.total_filters), heading_text: "Filter results", html_attributes: { id: "filters-panel", tabindex: "-1" })) do |panel|
+      = render(PanelComponent.new(button_text: t("buttons.filters_toggle_panel", count: @form.total_filters), heading_text: "Filter results")) do |panel|
         - panel.body do
           = render(FiltersComponent.new(form: f,
             filters: { total_count: @form.total_filters },
