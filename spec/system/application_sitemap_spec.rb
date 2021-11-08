@@ -3,7 +3,7 @@ RSpec.describe "Application sitemap" do
   context "sitemap.xml" do
     scenario "generates a sitemap of the application" do
       published_jobs = (1..4).map { |i| create(:vacancy, :published, job_title: "Title#{i}") }
-      build_list(:vacancy, 2, :expired).each { |j| j.save(validate: false) }
+      expired_jobs = create_list(:vacancy, 2, :expired).each { |j| j.save(validate: false) }
 
       visit sitemap_path(format: :xml)
       document = Nokogiri::XML::Document.parse(body)
@@ -13,9 +13,13 @@ RSpec.describe "Application sitemap" do
       expect(nodes.search("loc[text()='#{root_url(protocol: 'https')}']").text)
         .to eq(root_url(protocol: "https"))
 
-      published_jobs.each do |job|
-        expect(nodes.search("loc:contains('#{job_path(job, protocol: 'https')}')").text)
-          .to eq(job_url(job, protocol: "https"))
+      published_jobs.each do |published_job|
+        expect(nodes.search("loc:contains('#{job_path(published_job, protocol: 'https')}')").text)
+          .to eq(job_url(published_job, protocol: "https"))
+      end
+
+      expired_jobs.each do |expired_job|
+        expect(nodes.search("loc:contains('#{job_path(expired_job, protocol: 'https')}')").text).to be_blank
       end
 
       ALL_IMPORTED_LOCATIONS.each do |location|
