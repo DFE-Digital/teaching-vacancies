@@ -1,11 +1,12 @@
-div data-controller="panel"
-  button.panel-component__toggle.govuk-button.govuk-button--secondary type="button" data-panel-id=panel_id data-action="click->panel#toggle"
-    = button_text
+= tag.div(class: classes, **html_attributes) do
+  div data-controller="panel"
+    button.panel-component__toggle.govuk-button.govuk-button--secondary type="button" data-panel-target="toggle" data-action="panel#toggleVisibility"
+      = button_text
 
-  = tag.div(class: classes, **html_attributes) do
-    .panel-component__heading
-      h2.govuk-heading-m = heading_text
-      button.panel-component__close-button.icon--close type="button" data-action="click->panel#toggle"
-        span.govuk-body-s = "Close"
-    .panel-component__body
-      = body
+    .panel-component__content data-panel-target="content" tabindex="-1"
+      .panel-component__content__heading
+        h2.govuk-heading-m = heading_text
+        button.panel-component__content__close-button.icon--close type="button" data-action="panel#toggleVisibility"
+          span.govuk-body-s = "Close"
+      .panel-component__content__body
+        = body
