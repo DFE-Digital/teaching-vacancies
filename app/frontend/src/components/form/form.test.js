@@ -57,10 +57,6 @@ describe('form', () => {
       test('removes the value from the input element', () => {
         expect(textField.value).toBe('');
       });
-
-      test('disables the input element', () => {
-        expect(textField.disabled).toBe(true);
-      });
     });
 
     describe('enableInputs', () => {
