@@ -51,7 +51,7 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
   scope :applicable, (-> { where("expires_at >= ?", Time.current) })
   scope :awaiting_feedback, (-> { expired.where(listed_elsewhere: nil, hired_status: nil) })
   scope :expired, (-> { published.where("expires_at < ?", Time.current) })
-  scope :expired_yesterday, (-> { where("expires_at BETWEEN ? AND ?", Time.zone.yesterday.midnight, Date.current.midnight) })
+  scope :expired_yesterday, (-> { where("DATE(expires_at) = ?", 1.day.ago.to_date) })
   scope :expires_within_data_access_period, (-> { where("expires_at >= ?", Time.current - DATA_ACCESS_PERIOD_FOR_PUBLISHERS) })
   scope :in_organisation_ids, (->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { organisation_id: ids }).distinct })
   scope :listed, (-> { published.where("publish_on <= ?", Date.current) })
