@@ -7,15 +7,9 @@
     = review_section_tag(vacancy, %i[important_dates], [Publishers::JobListing::ImportantDatesForm])
 
   - review.body do
-    = govuk_summary_list do |summary_list|
-      - summary_list.row do |row|
-        - row.key text: t("jobs.publication_date")
-        - row.value text: format_date(vacancy.publish_on)
-
-      - summary_list.row do |row|
-        - row.key text: t("jobs.application_deadline")
-        - row.value text: format_time_to_datetime_at(vacancy.expires_at)
-
-      - summary_list.row do |row|
-        - row.key text: t("jobs.starts_on")
-        - row.value text: vacancy.starts_asap? ? t("jobs.starts_asap") : format_date(vacancy.starts_on)
+    = validatable_summary_list(vacancy, show_errors: local_assigns[:show_errors], error_path: organisation_job_build_path(vacancy.id, :important_dates)) do |list|
+      - list.row :publication_date, text: format_date(vacancy.publish_on)
+      - list.row :expires_at,
+        text: format_time_to_datetime_at(vacancy.expires_at),
+        label: t("jobs.application_deadline")
+      - list.row :starts_on, text: vacancy.starts_asap? ? t("jobs.starts_asap") : format_date(vacancy.starts_on)

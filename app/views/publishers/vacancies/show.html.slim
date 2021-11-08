@@ -4,12 +4,15 @@
 
 .govuk-grid-row.vacancy class="govuk-!-margin-top-7"
   .govuk-grid-column-two-thirds
-    h2.govuk-heading-l = t("jobs.manage_listing")
+    h2.govuk-heading-l = t("jobs.manage_listing", state: (vacancy.draft? ? "draft" : "job"))
     = render "actions"
-    - unless vacancy.draft? || vacancy.expired?
-      = render "shared/error_messages", errors: vacancy.errors
-    = render "edit_sections"
-    = render "publish_buttons"
+
+    - if params[:show_errors]
+      = render "shared/error_messages", errors: vacancy.errors do |error|
+        = govuk_link_to error.message, organisation_job_build_path(job_id: vacancy.id, id: error.options[:step]), class: "govuk-link--no-visited-state"
+
+    = render "edit_sections", show_errors: params[:show_errors] == "true"
+    = render "publish_buttons", back_to: "manage_draft"
 
     = govuk_link_to(t("buttons.back_to_manage_jobs"), back_to_manage_jobs_link(vacancy), class: "govuk-link--no-visited-state")
 

@@ -7,12 +7,8 @@
     = review_section_tag(vacancy, %i[job_role], [Publishers::JobListing::JobRoleForm])
 
   - review.body do
-    = govuk_summary_list do |summary_list|
-      - summary_list.row do |row|
-        - row.key text: t("jobs.main_job_role")
-        - row.value text: vacancy.show_main_job_role || t("jobs.not_defined")
+    = validatable_summary_list(vacancy, show_errors: local_assigns[:show_errors], error_path: organisation_job_build_path(vacancy.id, :job_role)) do |list|
+      - list.row :show_main_job_role, label: t("jobs.main_job_role"), optional: true
 
       - unless vacancy.main_job_role == "sendco"
-        - summary_list.row do |row|
-          - row.key text: t("jobs.additional_job_roles")
-          - row.value text: vacancy.show_additional_job_roles.presence || t("jobs.not_defined")
+        - list.row :show_additional_job_roles, label: t("jobs.additional_job_roles"), optional: true
