@@ -8,7 +8,7 @@ RSpec.describe "Sidekiq configuration" do
     ApplicationJob.descendants.map(&:name)
   end
 
-  let(:scheduled_jobs) { YAML.load_file("./config/schedule.yml").map { |_, v| v["class"] } }
+  let(:scheduled_jobs) { YAML.load_file("./config/schedule.yml").select { |_, v| v["cron"].present? }.map { |_, v| v["class"] } }
   let(:unscheduled_jobs) do
     %w[
       AlertEmail::Base
