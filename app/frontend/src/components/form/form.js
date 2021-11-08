@@ -1,4 +1,5 @@
 export const CHECKBOX_CLASS = 'govuk-checkboxes__input';
+export const RADIO_CLASS = 'govuk-radios__input';
 export const SELECT_CLASS = 'govuk-select';
 export const CLEARFORM_CLASS = 'clear-form';
 export const AUTOSUBMIT_ATTR_KEY = 'auto-submit';
@@ -9,9 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 export const initClearForm = () => {
-  Array.from(document.getElementsByClassName(CLEARFORM_CLASS)).forEach((el) => {
-    el.querySelector(`.${CHECKBOX_CLASS}`).addEventListener('click', (event) => {
-      form.checkboxClickHandler(el, event.target.checked);
+  Array.from(document.getElementsByClassName(CLEARFORM_CLASS)).forEach((clearFormEl) => {
+    Array.from(clearFormEl.querySelectorAll(`.${RADIO_CLASS}, .${CHECKBOX_CLASS}`)).forEach((controlEl) => {
+      controlEl.addEventListener('click', (event) => {
+        form.checkboxClickHandler(clearFormEl, event.target.checked);
+      });
     });
   });
 };
@@ -36,7 +39,6 @@ export const formSubmit = (formEl) => {
 
 export const disableInputs = (inputs) => {
   inputs.forEach((input) => {
-    input.disabled = true;
     input.value = '';
   });
 };
