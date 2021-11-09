@@ -141,12 +141,14 @@ en:
           reminder: when similar jobs are listed
 
     contents: Contents
-    similar_jobs: Similar jobs nearby
+    similar_jobs:
+      anchor_link_text: see similar jobs
+      heading: Similar jobs nearby
     school_type: School type
     trust_type: Trust type
     expired_tag: expired
     listing_expired: This job post has expired.
-    listing_expired_on_html: "This job expired on <span class='govuk-!-font-weight-regular'>%{date}</span>"
+    listing_expired_on_html: This job expired on <span class='govuk-!-font-weight-regular'>%{date} – %{similar_jobs_link}</span>
 
     create_a_job_title: Create a job listing for %{organisation}
     create_a_job_title_no_org: Create a job listing
