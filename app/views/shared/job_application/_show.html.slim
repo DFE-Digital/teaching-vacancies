@@ -142,7 +142,7 @@
   - review.heading title: t(".personal_statement.heading")
 
   - review.body do
-    p.govuk-body.review-component__body--border class="govuk-!-padding-bottom-3" = job_application.personal_statement
+    .govuk-body.review-component__body--border class="govuk-!-padding-bottom-3" = simple_format(job_application.personal_statement)
 
 = render ReviewComponent.new id: "references_summary" do |review|
   - review.heading title: t(".references.heading")
