@@ -52,8 +52,6 @@ bar. This will start:
   > using the container definitions as a guide to setting the app up locally without any Docker
   > involvement at all.
 </details>
-WIP database disaster
-
 
 * [API Documentation](https://docs.teaching-vacancies.service.gov.uk)
 * [API Keys](/documentation/api-keys.md)

@@ -114,6 +114,14 @@ variable "paas_worker_app_memory" {
   default = 512
 }
 
+variable "paas_restore_from_db_guid" {
+  default = ""
+}
+
+variable "paas_db_backup_before_point_in_time" {
+  default = ""
+}
+
 # Statuscake
 variable "statuscake_alerts" {
   description = "Define Statuscake alerts with the attributes below"
