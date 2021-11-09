@@ -61,11 +61,12 @@ en:
       other: Save qualifications
     save_reference: Save referee
     search: Search
+    search_toggle_panel: Edit search
     select_file: Select a file
     send_message: Send message
     set_preferences: Set your preferences
     shortlist: Shortlist
-    filters_toggle_text:
+    filters_toggle_panel:
       zero: Open filters
       one: Open filters (%{count} applied)
       other: Open filters (%{count} applied)

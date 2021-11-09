@@ -9,6 +9,7 @@ import 'src/components';
 
 import 'src/styles/application.scss';
 
+import 'src/application';
 import 'src/application/init';
 
 Rails.start();

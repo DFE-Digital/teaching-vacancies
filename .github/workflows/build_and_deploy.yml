@@ -4,7 +4,7 @@ on:
   push:
     branches:
     - master
-    - dev     # Push to branch other than master deploys directly to environment with the same name. ie 'dev' branch deploys to 'dev' environment
+    - dev    # Push to branch other than master deploys directly to environment with the same name. ie 'dev' branch deploys to 'dev' environment
     paths-ignore:
     - 'bigquery/**'
     - 'documentation/**'
