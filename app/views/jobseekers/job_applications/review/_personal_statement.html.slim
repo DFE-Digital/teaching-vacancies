@@ -9,6 +9,6 @@
 
   - review.body do
     - if job_application.personal_statement.present?
-      p.govuk-body.review-component__body--border class="govuk-!-padding-bottom-3" = job_application.personal_statement
+      .govuk-body.review-component__body--border class="govuk-!-padding-bottom-3" = simple_format(job_application.personal_statement)
     - else
       p.govuk-body = t(".blank")
