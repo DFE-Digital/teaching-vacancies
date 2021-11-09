@@ -87,6 +87,14 @@ variable "hostname_domain_map" {
   type = map(any)
 }
 
+variable "restore_from_db_guid" {
+
+}
+
+variable "db_backup_before_point_in_time" {
+
+}
+
 locals {
   app_env_api_keys = merge(
     yamldecode(data.aws_ssm_parameter.app_env_api_key_big_query.value),
@@ -122,4 +130,11 @@ locals {
   web_app_name             = "${var.service_name}-${var.environment}"
   worker_app_start_command = "bundle exec sidekiq -C config/sidekiq.yml"
   worker_app_name          = "${var.service_name}-worker-${var.environment}"
+  postgres_backup_restore_params = var.restore_from_db_guid != "" ? {
+    restore_from_point_in_time_of     = var.restore_from_db_guid
+    restore_from_point_in_time_before = var.db_backup_before_point_in_time
+  } : {}
+  postgres_extensions  = { enable_extensions=["pgcrypto", "fuzzystrmatch", "plpgsql", "pg_trgm", "postgis"] }
+  postgres_json_params = merge(local.postgres_backup_restore_params, local.postgres_extensions)
+
 }
