@@ -105,7 +105,7 @@ module OrganisationsHelper
   end
 
   def application_pack_asset_size
-    (File.size("public/#{APPLICATION_PACK_FILENAME}") / 1.0.megabyte).round(2)
+    (File.size("public/#{APPLICATION_PACK_FILENAME}") / 1.0.megabyte).round(1)
   end
 
   def application_pack_asset_path
