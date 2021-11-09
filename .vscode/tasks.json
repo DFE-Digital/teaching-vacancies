@@ -1,0 +1,46 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "TV: Rails server",
+      "type": "shell",
+      "command": "./bin/rails server -b 0.0.0.0",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "TV: Webpack dev server",
+      "type": "shell",
+      "command": "./bin/webpack-dev-server",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "TV: Sidekiq",
+      "type": "shell",
+      "command": "bundle exec sidekiq",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "TV: ⏩ All services",
+      "dependsOn": [
+        "TV: Rails server",
+        "TV: Webpack dev server",
+        "TV: Sidekiq"
+      ],
+      "problemMatcher": []
+    },
+  ]
+}

@@ -21,6 +21,23 @@ Sidekiq::Testing.fake!
 Geocoder::DEFAULT_STUB_COORDINATES = [51.67014192630465, -1.2809649516211556].freeze
 Geocoder::DEFAULT_LOCATION = "TE5 T1NG".freeze
 
+Capybara.register_driver :chrome_headless do |app|
+  capabilities = ::Selenium::WebDriver::Remote::Capabilities.chrome(
+    "goog:chromeOptions" => { args: %w[no-sandbox headless disable-gpu window-size=1400,1400] },
+  )
+
+  if ENV["SELENIUM_HUB_URL"]
+    Capybara::Selenium::Driver.new(
+      app,
+      browser: :remote,
+      url: ENV["SELENIUM_HUB_URL"],
+      capabilities: capabilities,
+    )
+  else
+    Capybara::Selenium::Driver.new(app, browser: :chrome, capabilities: capabilities)
+  end
+end
+Capybara.javascript_driver = :chrome_headless
 Capybara.server = :puma, { Silent: true, Threads: "0:1" }
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
@@ -47,6 +64,12 @@ RSpec.configure do |config|
   config.before(:each, type: :system) do
     driven_by :rack_test
     Capybara.default_host = "http://#{ENV.fetch('DOMAIN', 'localhost:3000')}"
+
+    if ENV["SELENIUM_HUB_URL"]
+      Capybara.app_host = "http://#{IPSocket.getaddress(Socket.gethostname)}:3000"
+      Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
+      Capybara.server_port = 3000
+    end
   end
 
   config.before(:each, recaptcha: true) do
@@ -58,11 +81,11 @@ RSpec.configure do |config|
   end
 
   config.before(:each, type: :system, js: true) do
-    driven_by :selenium, using: :headless_chrome
+    driven_by :chrome_headless
   end
 
   config.before(:each, type: :system, accessibility: true) do
-    driven_by :selenium, using: :headless_chrome
+    driven_by :chrome_headless
   end
 
   config.before(:each, geocode: true) do
@@ -105,7 +128,7 @@ VCR.configure do |config|
   config.hook_into :webmock
   config.configure_rspec_metadata!
   config.ignore_localhost = true
-  config.ignore_hosts "ea-edubase-api-prod.azurewebsites.net"
+  config.ignore_hosts "ea-edubase-api-prod.azurewebsites.net", "selenium-chrome", IPSocket.getaddress(Socket.gethostname)
 end
 
 Shoulda::Matchers.configure do |config|

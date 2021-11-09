@@ -72,6 +72,7 @@ group :development do
   gem "aws-sdk-ssm"
   gem "launchy"
   gem "listen"
+  gem "solargraph", require: false
   gem "spring"
   gem "spring-watcher-listen"
   gem "web-console"
@@ -84,6 +85,7 @@ group :development, :test do
   gem "brakeman"
   gem "bullet"
   gem "byebug", platforms: %i[mri mingw x64_mingw]
+  gem "debase", ">= 0.2.5beta", require: false
   gem "dotenv-rails"
   gem "pry"
   gem "pry-byebug"
@@ -95,6 +97,7 @@ group :development, :test do
   gem "rubocop-performance"
   gem "rubocop-rails"
   gem "rubocop-rspec"
+  gem "ruby-debug-ide", require: false
   gem "slim_lint", require: false
 end
 
