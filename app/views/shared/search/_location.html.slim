@@ -1,6 +1,6 @@
 = f.govuk_text_field :location,
   label: { text: t("jobs.search.location"), size: "s" },
-  hint: { text: t("jobs.search.location_hint"), size: "s" },
+  hint: { text:  hint ? t("jobs.search.location_hint") : nil , size: "s" },
   class: %w[js-location-finder__input],
   form_group: { classes: "js-location-finder location-text govuk-!-margin-bottom-0" },
   "data-coordinates": @vacancies_search&.point_coordinates || @point_coordinates
