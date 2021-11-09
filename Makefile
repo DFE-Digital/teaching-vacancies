@@ -178,6 +178,36 @@ console: ## make qa console
 	cf target -s ${space}
 	cf ssh teaching-vacancies-${env} -t -c "cd /app && /usr/local/bin/bundle exec rails c"
 
+
+.PHONY: get-postgres-instance-guid
+get-postgres-instance-guid: ## Gets the postgres service instance's guid
+	cf target -s ${space} 1> /dev/null
+	$(eval export DB_INSTANCE_GUID=$(shell cf service teaching-vacancies-postgres-${env} --guid))
+	echo ${DB_INSTANCE_GUID}
+
+.PHONY: rename-postgres-service
+rename-postgres-service: ## make qa rename-postgres-service CONFIRM_RENAME
+	$(if $(CONFIRM_RENAME), , $(error can only run with CONFIRM_RENAME))
+	cf target -s ${space} 1> /dev/null
+	cf rename-service teaching-vacancies-postgres-${env} teaching-vacancies-postgres-${env}-old
+
+.PHONY: remove-postgres-tf-state
+remove-postgres-tf-state: terraform-app-init ## make qa remove-postgres-tf-state PASSCODE=
+#cd terraform && terraform state rm module.paas.cloudfoundry_service_instance.postgres_instance
+
+.PHONY: restore-postgres
+restore-postgres: terraform-app-init get-postgres-instance-guid ## make qa restore-postgres DB_INSTANCE_GUID="<cf service db-name --guid>" BEFORE_TIME="" IMAGE_TAG=<COMMIT_SHA> PASSCODE=<auth code from https://login.london.cloud.service.gov.uk/passcode>
+	cf target -s ${space} > /dev/null
+	$(if $(DB_INSTANCE_GUID), , $(error can only run with DB_INSTANCE_GUID, get it by running `make ${space} get-postgres-instance-guid`))
+	$(if $(SNAPSHOT_TIME), , $(error can only run with BEFORE_TIME, eg SNAPSHOT_TIME="2021-09-14 16:00:00"))
+	$(if $(target_env), , $(error please set the environment to targer - review, qa, production, staging, dev or research))
+	$(eval export TF_VAR_paas_restore_from_db_guid=$(DB_INSTANCE_GUID))
+	$(eval export TF_VAR_paas_db_backup_before_point_in_time=$(SNAPSHOT_TIME))
+	echo "Restoring teaching-vacancies from $(TF_VAR_paas_restore_from_db_guid) before $(TF_VAR_paas_db_backup_before_point_in_time)"
+	make ${target_env} terraform-app-plan
+
+
+
 ##@ Help
 
 .PHONY: help
