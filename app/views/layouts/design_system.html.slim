@@ -19,7 +19,8 @@ html.govuk-template.app-html-class lang="en"
     .govuk-width-container
       .govuk-phase-banner role='contentinfo'
         p.govuk-phase-banner__content
-          strong.govuk-tag.govuk-phase-banner__content__tag = "beta"
+          .govuk-tag.govuk-phase-banner__content__tag class="govuk-!-font-weight-bold"
+            = "beta"
           span.govuk-phase-banner__text == "This is a new service - #{link_to 'your feedback', new_feedback_path, class: 'govuk-link'} will help us to improve it."
 
     .top-nav
