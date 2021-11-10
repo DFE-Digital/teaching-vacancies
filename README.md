@@ -1,106 +1,68 @@
 # Teaching Vacancies
 
-* [API Documentation](https://docs.teaching-vacancies.service.gov.uk)
-* [API Keys](/documentation/api-keys.md)
-* [Continuous delivery](/documentation/continuous-delivery.md)
-* [Deployments](/documentation/deployments.md)
-* [Docker](/documentation/docker.md)
-* [DSI Integration](/documentation/dsi-integration.md)
-* [Hosting](/documentation/hosting.md)
-* [Logging](/documentation/logging.md)
-* [Onboarding](/documentation/onboarding.md)
-* [Misc](#misc)
-* [Search](/documentation/search.md)
-* [Troubleshooting](#troubleshooting)
+> Teaching Vacancies is a free job-listing service from the Department for Education. Teachers can
+> search and apply for jobs at schools or trusts in England, save jobs and set up job alerts.
 
-## Setup
+This repository contains the source code and infrastructure definitions for the main Teaching
+Vacancies service, a Ruby on Rails application with PostgreSQL and Redis backing services.
 
-Welcome! :tada: :fireworks: :tiger:
+## Onboarding
 
-By now you should be [onboarded](/documentation/onboarding.md).
+Welcome to the team! 🐯
 
-The first thing to do is to install the required development tools. If you are on a Mac, this [script](https://github.com/thoughtbot/laptop) will install Homebrew, Git, asdf-vm, Ruby, Bundler, Node.js, npm, Yarn, Postgres, Redis and other useful utilities.
+You should have been added to our Github team ahead of time, if not, remind your delivery manager or
+tech lead to do that and also [complete the other onboarding steps](documentation/onboarding.md)!
 
-Then, clone the project with SSH:
+## Quick start
 
-```bash
-git clone git@github.com:DFE-Digital/teaching-vacancies.git
-```
+This project uses [devcontainers](https://code.visualstudio.com/docs/remote/create-dev-container)
+to provide a seamless onboarding experience for developers and other team members.
 
-If you are on a new device, remember to [generate a new SSH key](https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
+You will need the following software installed on your system:
+- [Git](https://github.com/git-guides/install-git)
+- [Docker Desktop](https://www.docker.com/get-started)
+- [Visual Studio Code](https://code.visualstudio.com)
 
-### Dependencies
+To get the application running:
+- Clone the repository to a folder of your choice
+- Ask another developer for a `.env` file, and place it in the root of the application folder
+  (you can set up your AWS access to be able to do this yourself later)
+- Open the folder in VS Code, and when prompted, choose "Reopen in container"
+- The container will now build and execute first run tasks - this will take between 5 and 10 minutes
+  depending on the performance of your computer. Wait for the terminal showing build tasks to
+  display "`Done. Press any key to close the terminal.`"
 
-* [Ruby](https://www.ruby-lang.org)
-* [NodeJS](https://nodejs.org)
-* shared-mime-info (installed using Homebrew or other package manager of your choice, the
-  `mimemagic` gem depends on this)
+When the build has finished, you can run the application by clicking on "▶️ Start app" in the status
+bar. This will start:
+- The Rails application running on http://localhost:3000
+- Webpack Dev Server for fast reloading of frontend asset changes
+- Sidekiq for processing background jobs
 
-A tool like [asdf-vm](https://asdf-vm.com) can help you install the required versions of Ruby and Node.js.
-Current versions that match production ones are specified in [.tool-versions](/.tool-versions).
+<details>
+  <summary>Optional: Advanced custom setup (for developers)</summary>
 
-If asdf-vm is installed correctly, from the project repository you can just execute:
+  > The Docker-based devcontainer setup (see [configuration](.devcontainer)) is our "gold standard"
+  > reference implementation of a local development environment. We highly recommend you use it, but
+  > you're of course free to work in whatever way makes you the most happy and productive.
+  >
+  > This might involve running a container-based workflow using vanilla `docker-compose` (working
+  > inside the container using a command-line text editor, or outside the container in a GUI editor
+  > or IDE), running a Linux VM with a container engine for that extra bit of performance, or just
+  > using the container definitions as a guide to setting the app up locally without any Docker
+  > involvement at all.
+</details>
 
-```bash
-asdf install
-```
+---
 
-If `asdf install` fails with the below message, and you are on a Mac, install [GPG Suite](https://gpgtools.org/).
+## Additional setup
 
-```
-You must install GnuPG to verify the authenticity of the downloaded archives before continuing with the install: https://www.gnupg.org/
-```
-
-### Services
-
-Make sure you have the following services configured and running on your development background:
-
-* [PostgreSQL](https://www.postgresql.org)
-* [Postgis](https://postgis.net/install/)
-* [Redis](https://redis.io)
-
-If using Homebrew to install PostgreSQL, run `brew services start postgresql` in order to have `launchd` start PostgreSQL and restart whenever you log in.
-
-### ChromeDriver
-
-To install
-```bash
-brew install --cask chromedriver
-```
-
-To update
-```bash
-brew upgrade --cask chromedriver
-```
-
-On macOS you might need to "un-quarantine" chromedriver too
-```bash
-which chromedriver
-xattr -d com.apple.quarantine /path/to/chromedriver
-```
-
-### Install dependencies
-
-#### Install Ruby dependency libraries
-
-```bash
-bundle
-```
-
-Install the version of Bundler that created the lockfile if prompted to do so.
-
-#### Install Javascript dependency libraries
-
-```bash
-yarn
-```
+This section describes optional additional setup tasks once you have the application up and running.
+It is mainly relevant for developers and not strictly necessary to run the application.
 
 ### AWS credentials, MFA, and role profiles
 
-When onboarded, you will be provided with an AWS user. You can use it to access the AWS console at:
-[https://teaching-vacancies.signin.aws.amazon.com/console](https://teaching-vacancies.signin.aws.amazon.com/console).
-
-[Set up MFA and install command-line tools](/documentation/aws-roles-and-cli-tools.md)
+Once onboarded to AWS, you should finish setting up your account by following the steps described in
+the [AWS roles and CLI tools documentation](/documentation/aws-roles-and-cli-tools.md).
 
 ### Environment Variables
 
@@ -116,163 +78,69 @@ Run the following command to fetch all the required environment variables for de
 aws-vault exec ReadOnly -- make -s local print-env > .env
 ```
 
-To run the command above you need [AWS credentials](#aws-credentials-mfa-and-role-profiles).
-
 [Git secrets](/documentation/secrets-detection.md) offers an easy way to defend against accidentally publishing these secrets.
 
-#### Override variables for local development
+## Data
 
-For local development, you can use a [dotenv-rails environment override](https://github.com/bkeepers/dotenv#frequently-answered-questions):
-- create the file `.env.local`, with contents
-```
-DFE_SIGN_IN_REDIRECT_URL=http://localhost:3000/publishers/auth/dfe/callback
-DOMAIN=localhost:3000
-LOCKBOX_MASTER_KEY=0000000000000000000000000000000000000000000000000000000000000000
-```
+If you use the devcontainer, the database will be created and seeded on first run using standard
+`rails db:prepare`. The seeds generate a number of fake vacancies, job applications, and users,
+as well as importing required data from a number of external services.
 
-### Set up the database
+You shouldn't have to refresh the external data, but if you do need to, you can with the following
+tasks:
 
 ```bash
-bundle exec rails db:create db:schema:load
+# Import all schools, trusts, and local authorities from DfE's Get Information About Schools
+bundle exec rails gias:import_schools
+
+# Import location polygon data from the Office for National Statistics
+bundle exec rails ons:import_all
 ```
 
-[/config/database.yml](./config/database.yml) sets the default for `DATABASE_URL` to `postgis://postgres@localhost:5432`, which should work without any additional configuration on a Mac.
-
-If you set up your local Postgres with a custom user and password, such as in Ubuntu 20.04, set this in `.env.local`:
-```
-DATABASE_URL=postgis://mylocaluser:mylocalpassword@localhost:5432
-```
-
-⚠ Note that the database URL has `postgis` as its adapter, not `postgres`!
-
-
-### Seed the database
-
-Populate your environment with:
-
-* real school data, taken from [GIAS](https://get-information-schools.service.gov.uk/)
-* real location polygon data from the ONS
-* fake publishers, vacancies, jobseekers and job applications
+If ever you want to start over, you can delete and re-seed using:
 
 ```bash
-bundle exec rails db:seed
+bundle exec rails db:drop db:prepare
 ```
 
-### Run the server
+The _SQLTools_ VS Code extension is installed and configured in the devcontainer by default and can
+be used to browse the database and run SQL queries. The `psql` tool is also installed, so you can
+use `rails dbconsole` or even just `psql tvs_development`.
+
+## Tests and linting
+
+The Rails application uses [RSpec](https://rspec.info) and [RuboCop](https://rubocop.org) for
+testing and linting, as well as [Brakeman](https://brakemanscanner.org) for security scanning and
+[Slim-Lint](https://github.com/sds/slim-lint) to lint Slim templates.
 
 ```bash
-bundle exec rails server
-```
-
-Look at that, you’re up and running! Visit [http://localhost:3000](http://localhost:3000) and you’re ready to go.
-
-#### Use live reloading
-
-Optionally, use live reloading with [bin/webpack-dev-server](https://github.com/DFE-Digital/teaching-vacancies/blob/master/bin/webpack-dev-server) to save time when developing front-end assets:
-
-```
-yarn run dev
-```
-
-### Run the worker
-
-```bash
-bundle exec sidekiq -C config/sidekiq.yml
-```
-
-### Run the tests
-
-#### Ruby
-
-This uses a standard `RSpec` and `RuboCop` stack. To run these together:
-
-```bash
+# Run tests and linting
 bundle exec rake
-```
 
-To run only RSpec:
-
-```bash
+# Run tests only
 bundle exec rspec
+
+# Run linters only
+bundle exec rails lint
 ```
 
-To run only RuboCop:
+The frontend Javascript code uses [Jest](https://jestjs.io) and [ESLint](https://eslint.org/) for
+testing and linting (using [Airbnb rules](https://www.npmjs.com/package/eslint-config-airbnb)), as
+well as [Stylelint](https://stylelint.io/) for SASS linting (with the default ruleset):
 
 ```bash
-bundle exec rubocop
-```
-
-#### JavaScript
-
-```bash
-npm test
-```
-
-The full test suite including linting can be run as parallel tasks using the command:
-
-```bash
+# Run tests and linting
 yarn test
-```
 
-To run unit tests written using [Jest](https://jestjs.io/):
-
-```bash
+# Run tests only
 yarn run js:test
-```
 
-To generate a coverage report of unit tests you can run:
-
-```bash
+# Generate a coverage report
 yarn run js:test:coverage
-```
 
-Linting of Javascript files uses [ESLint](https://eslint.org/) and the ruleset is extended using [Airbnb rules](https://www.npmjs.com/package/eslint-config-airbnb) which are widely acknowledged as a comprehensive ruleset for modern Javascript. To run Javascript linting:
-
-```bash
+# Run JS linter only
 yarn run js:lint
-```
 
-#### SASS
-
-Linting of SASS files uses [Stylelint](https://stylelint.io/) default ruleset and can be run using:
-
-```bash
+# Run SASS linter only
 yarn run sass:lint
 ```
-
----
-
-## Troubleshooting
-
-* I see Page Not Found when I log in and try to create a job listing.
-
-Try [seeding the database](https://github.com/DFE-Digital/teaching-vacancies#seed-the-database) (quick) or [importing the school data](#gias-data-schools-trusts-and-local-authorities) (slow) if you have not already. When your sign in account was created, it was assigned to a school via a URN, and you may not have a school in your database with the same URN.
-
----
-
-## Misc
-
-### Getting production-like data for local development
-
-To get sanitised production-like data for local development, first log in to AWS with the ReadOnly role. To do so, follow the instructions here: [AWS Login](/documentation/aws-roles-and-cli-tools.md#log-in-to-the-aws-console-with-aws-vault).
-
-Once logged in, go to S3 >  530003481352-tv-db-backups > sanitised. Then click the checkbox next to the backup you want (the names of the backups will include dates) and click "Download".
-
-Then, unzip the file and load it into your local database like so:
-
-```bash
-  psql tvs_development < <path to unzipped .sql backup file>
-```
-
-### Integration between Jira and Github
-
-The integration allows to see the status of development from within the jira issue. You can see the
-status of branches, commits and pull requests as well as navigate to them to show the detail in Github.
-
-To enable this, the following formatting must be used:
-- Branch: Prefix with the issue id. Ex: `TEVA-1155-test-jira-github-integration`
-- Commit: Prefix with the issue id between square bracket. Ex: `[TEVA-1155] Update Readme`
-- Pull request: Prefix with the issue id between square bracket. If the branch was prefixed correctly,
-this should be automatically added for you. Ex: `[TEVA-1155] Document Jira-Github integration`
-
-The branch, commit or pull request will then appear in the `Development` side panel within the issue.

@@ -12,6 +12,7 @@
   "postCreateCommand": "/bin/bash /app/.devcontainer/post_create.sh",
   "remoteUser": "teaching-vacancies",
   "extensions": [
+    "actboy168.tasks",
     "aki77.rails-db-schema",
     "aki77.rails-i18n",
     "aki77.rails-routes",
@@ -24,7 +25,9 @@
   "settings": {
     // Get highlighting for local env files
     "files.associations": {
+      ".env.development": "env",
       ".env.local": "env",
+      ".env.test": "env",
       ".env.test.local": "env"
     },
     // Set up Ruby extension
