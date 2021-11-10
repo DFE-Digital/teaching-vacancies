@@ -255,7 +255,7 @@ en:
       summary:
         date_expires: >-
           The job listing will appear on the service until %{application_deadline}, after which it will no longer be
-          visible to jobseekers
+          visible to jobseekers.
         date_posted: Your job listing will be posted on %{date}.
         date_posted_now: Your job listing has been posted.
         feedback:
