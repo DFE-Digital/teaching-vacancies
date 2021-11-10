@@ -4,43 +4,65 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "TV: Rails server",
+      "label": "Rails",
       "type": "shell",
       "command": "./bin/rails server -b 0.0.0.0",
       "presentation": {
         "reveal": "always",
         "panel": "shared"
       },
-      "problemMatcher": []
+      "problemMatcher": [],
+      "options": {
+        "statusbar": {
+          "hide" : true
+        }
+      }
     },
     {
-      "label": "TV: Webpack dev server",
+      "label": "Webpack dev server",
       "type": "shell",
       "command": "./bin/webpack-dev-server",
       "presentation": {
         "reveal": "always",
         "panel": "shared"
       },
-      "problemMatcher": []
+      "problemMatcher": [],
+      "options": {
+        "statusbar": {
+          "hide" : true
+        }
+      }
     },
     {
-      "label": "TV: Sidekiq",
+      "label": "Sidekiq",
       "type": "shell",
       "command": "bundle exec sidekiq",
       "presentation": {
         "reveal": "always",
         "panel": "shared"
       },
-      "problemMatcher": []
+      "problemMatcher": [],
+      "options": {
+        "statusbar": {
+          "hide" : true
+        }
+      }
     },
     {
-      "label": "TV: ⏩ All services",
+      "label": "TV: Run all services",
       "dependsOn": [
-        "TV: Rails server",
-        "TV: Webpack dev server",
-        "TV: Sidekiq"
+        "Rails",
+        "Webpack dev server",
+        "Sidekiq"
       ],
-      "problemMatcher": []
+      "problemMatcher": [],
+      "options": {
+        "statusbar": {
+          "label" : "$(run-all) Start app",
+          "color": "#f47738",
+          "tooltip": "Run the application and all background tasks"
+        }
+      }
     },
   ]
 }
