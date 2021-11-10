@@ -1,3 +1,5 @@
+#WIP database disaster
+
 variable "region" {
   default = "eu-west-2"
 }
@@ -106,6 +108,14 @@ variable "paas_worker_app_instances" {
 
 variable "paas_worker_app_memory" {
   default = 512
+}
+
+variable "paas_restore_from_db_guid" {
+  default = ""
+}
+
+variable "paas_db_backup_before_point_in_time" {
+  default = ""
 }
 
 # Statuscake

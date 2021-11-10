@@ -90,6 +90,8 @@ module "paas" {
   route53_zones                  = var.route53_zones
   route53_a_records              = local.route53_a_records
   hostname_domain_map            = local.hostname_domain_map
+  restore_from_db_guid           = var.paas_restore_from_db_guid
+  db_backup_before_point_in_time = var.paas_db_backup_before_point_in_time
 }
 
 module "statuscake" {
