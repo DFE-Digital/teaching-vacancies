@@ -1,0 +1,96 @@
+# Sets of phrases that are considered equivalent as a YAML array of arrays, i.e. when searching
+# for any phrase that's contained in this set, also search for the other phrases in the same set
+-
+  - headteacher
+  - principal
+  - head teacher
+-
+  - slt
+  - senior
+  - leader
+  - senior leader
+  - lead practitioner
+  - head of
+  - director of
+-
+  - primary teacher
+  - primary practitioner
+  - primary school teacher
+  - class teacher
+-
+  - mfl
+  - modern foreign languages
+  - languages
+  - modern languages
+-
+  - computing
+  - it
+  - ict
+  - information technology
+  - information communications technology
+  - computer science
+-
+  - physical education
+  - sport
+  - pe
+-
+  - religion
+  - religious studies
+  - religious education
+  - re
+  - r.e
+  - rs
+  - r.s
+-
+  - gcse
+  - g.c.s.e
+  - key stage 4
+  - ks4
+-
+  - ks2
+  - keystage 2
+  - key stage 2
+  - ks 2
+-
+  - 16+
+  - fe
+  - further education
+-
+  - early years
+  - childcare
+  - eyfs
+  - early years teacher
+  - early years foundation stage
+  - nursery
+-
+  - ta
+  - teaching assistant
+  - classroom assistant
+-
+  - nqt
+  - newly qualified teacher
+  - trainee
+  - newly qualified
+  - newly-qualified
+  - suitable for nqts
+  - ect
+  - early career teacher
+-
+  - sen
+  - send
+  - senco
+  - sendco
+  - special educational needs
+  - special needs
+  - inclusion
+-
+  - deputy head
+  - deputy headteacher
+  - assistant head
+  - assistant headteacher
+-
+  - alevel
+  - a-level
+  - ks5
+  - key stage 5
+  - ks 5
