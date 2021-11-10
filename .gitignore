@@ -63,6 +63,8 @@ tokens
 
 # ENV files
 .env*
+!.env.development
+!.env.test
 dotenv*
 !dotenv*.gpg
 **/**/cf-vars*.yml
