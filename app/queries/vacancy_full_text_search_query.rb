@@ -6,26 +6,18 @@ class VacancyFullTextSearchQuery < ApplicationQuery
   end
 
   def call(query)
-    # Convert user input into a search query of Postgres type `tsquery`
-    # TODO: `websearch_to_tsquery` used to get this up and running quickly, to be replaced soon
-    #       with custom query logic taking synonyms etc into account.
-    tsquery = Arel::Nodes::NamedFunction.new(
-      "websearch_to_tsquery",
-      [
-        Arel::Nodes::Quoted.new("simple"),
-        Arel::Nodes::Quoted.new(query),
-      ],
-    )
+    parsed_query_tree = Search::Postgres::QueryParser.new.parse(query)
+    tsquery_arel = Search::Postgres::QueryTransformer.new.apply(parsed_query_tree)
 
     full_text_query = Arel::Nodes::InfixOperation.new(
       "@@",
       scope.arel_table[:searchable_content],
-      tsquery,
+      tsquery_arel,
     )
 
     rank_order = Arel::Nodes::NamedFunction.new(
       "ts_rank",
-      [scope.arel_table[:searchable_content], tsquery],
+      [scope.arel_table[:searchable_content], tsquery_arel],
     )
 
     # Order based on "relevance" (`ts_rank`) here because we don't have access to the `tsquery`

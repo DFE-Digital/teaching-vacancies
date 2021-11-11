@@ -389,6 +389,7 @@ GEM
     parallel (1.21.0)
     parser (3.0.2.0)
       ast (~> 2.4.1)
+    parslet (2.0.0)
     pg (1.2.3)
     pry (0.13.1)
       coderay (~> 1.1)
@@ -726,6 +727,7 @@ DEPENDENCIES
   noticed
   omniauth
   omniauth_openid_connect
+  parslet
   pg
   pry
   pry-byebug

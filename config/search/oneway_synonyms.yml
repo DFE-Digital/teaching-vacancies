@@ -1,0 +1,55 @@
+# Sets of alternative phrases for a given phrase
+# Only considered in one direction (i.e. when searching for <key>, also search for <values>)
+primary:
+  - ks1
+  - ks2
+mfl:
+  - french
+  - german
+  - spanish
+  - mandarin
+  - arabic
+  - eal
+  - english as an additional language
+flexible:
+  - contract
+  - temporary
+  - supply
+sats:
+  - ks2
+  - key stage 2
+  - keystage 2
+music:
+  - performing arts
+design and tech:
+  - food technology
+  - food
+  - product design
+  - textiles
+  - systems and control
+humanities:
+  - ancient and modern languages
+  - literature
+  - philosophy
+  - history
+  - geography
+  - law
+  - politics
+  - religion
+  - psychology
+  - sociology
+performing arts:
+  - music
+  - drama
+  - performance
+  - dance
+  - culture
+  - art
+  - theatre
+science:
+  - chemistry
+  - biology
+  - physics
+all through:
+  - primary
+  - secondary
