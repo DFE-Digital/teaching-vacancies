@@ -20,7 +20,8 @@
             /= render "shared/search/current_location", loaderElement: "location-field"
             = render "shared/search/radius", f: f, wide: true
             = f.hidden_field :jobs_sort, value: @form.jobs_sort
-            = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"
+            .search-results__header__submit
+              = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-6 govuk-!-width-full"
           = render(Jobseekers::SearchResults::SearchVisualizerComponent.new(vacancies_search: @vacancies_search, render: @display_map))
           .search-results__header
             - unless @vacancies_search.out_of_bounds?
