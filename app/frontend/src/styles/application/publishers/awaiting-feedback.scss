@@ -7,6 +7,13 @@
       margin-bottom: govuk-spacing(2);
     }
 
+    dt {
+      &::after {
+        content: ':';
+        margin-right: govuk-spacing(1);
+      }
+    }
+
     &__options {
       @media (min-width: 1000px) {
         display: flex;
