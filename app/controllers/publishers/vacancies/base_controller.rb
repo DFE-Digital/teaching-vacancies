@@ -3,13 +3,11 @@ require "indexing"
 class Publishers::Vacancies::BaseController < Publishers::BaseController
   include Publishers::Wizardable
 
-  helper_method :step_process, :vacancy
+  private
+
+  helper_method :current_step, :step_process, :vacancy
 
   def step_process
-    # TODO: We currently have to do this kinda thing in a lot of places thanks to `wicked`
-    #       Find a better way!
-    current_step = defined?(step) ? step : :review
-
     ::Publishers::Vacancies::VacancyStepProcess.new(
       current_step || :review,
       vacancy: vacancy,
@@ -23,17 +21,23 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
   end
 
   def all_steps_valid?
-    step_process.validatable_steps.all? { |step| step_valid?(step) }
+    step_process.all_steps_valid?
   end
 
-  def step_valid?(step)
-    step_form = "publishers/job_listing/#{step}_form".camelize.constantize
-
-    # We need to merge in the current organisation otherwise the form will always be invalid for local authority users
-    form = step_form.new(vacancy.slice(*step_form.fields).merge(current_organisation: current_organisation), vacancy)
-
-    form.valid?.tap do
-      vacancy.errors.merge!(form.errors)
+  def back_to(**extras)
+    case params[:back_to]
+    when "review"
+      organisation_job_review_path(
+        job_id: vacancy.id,
+        anchor: "errors",
+        **extras,
+      )
+    else
+      organisation_job_path(
+        id: vacancy.id,
+        anchor: "errors",
+        **extras,
+      )
     end
   end
 
@@ -49,7 +53,11 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
   end
 
   def redirect_updated_job_with_message
-    updated_job_path = vacancy.published? ? organisation_job_path(vacancy.id) : organisation_job_review_path(vacancy.id)
+    updated_job_path = if vacancy.published? || params[:back_to] == "manage_draft"
+                         organisation_job_path(vacancy.id)
+                       else
+                         organisation_job_review_path(vacancy.id)
+                       end
 
     redirect_to updated_job_path,
                 success: t("messages.jobs.listing_updated_html",

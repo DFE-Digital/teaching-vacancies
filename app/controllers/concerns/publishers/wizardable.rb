@@ -6,6 +6,8 @@ module Publishers::Wizardable
     working_patterns: %i[working_patterns],
   }.freeze
 
+  private
+
   def job_role_params(params)
     params.require(:publishers_job_listing_job_role_form).permit(:main_job_role).merge(completed_steps: completed_steps)
   end
@@ -105,10 +107,11 @@ module Publishers::Wizardable
           .merge(completed_steps: completed_steps)
   end
 
-  private
-
   def completed_steps
-    current_step = defined?(step) ? step.to_s : "review"
-    (vacancy.completed_steps | [current_step]).compact
+    (vacancy.completed_steps | [(current_step || "review").to_s]).compact
+  end
+
+  def current_step
+    step if defined?(step)
   end
 end
