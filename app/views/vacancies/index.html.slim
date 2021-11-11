@@ -15,17 +15,12 @@
           = render "search", f: f
         .grid-column-right
           .search-results__header
-            .search-controls__alternative
-              .govuk-grid-column-one-quarter
-                = render "shared/search/keyword", f: f
-              .govuk-grid-column-one-quarter
-                = render "shared/search/location", hint: false, f: f
-                /= render "shared/search/current_location", loaderElement: "location-field"
-              .govuk-grid-column-one-quarter
-                = render "shared/search/radius", f: f, wide: true
-              .govuk-grid-column-one-quarter
-                = f.hidden_field :jobs_sort, value: @form.jobs_sort
-                = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"
+            = render "shared/search/keyword", f: f
+            = render "shared/search/location", hint: false, f: f
+            /= render "shared/search/current_location", loaderElement: "location-field"
+            = render "shared/search/radius", f: f, wide: true
+            = f.hidden_field :jobs_sort, value: @form.jobs_sort
+            = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"
           = render(Jobseekers::SearchResults::SearchVisualizerComponent.new(vacancies_search: @vacancies_search, render: @display_map))
           .search-results__header
             - unless @vacancies_search.out_of_bounds?

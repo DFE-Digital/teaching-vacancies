@@ -2,6 +2,10 @@
   display: flex;
   flex-direction: column;
 
+  > div, button {
+    flex-basis: 25%;
+  }
+
   @include govuk-media-query($from: tablet) {
     flex-direction: row;
   }
