@@ -1,6 +1,6 @@
 @import 'base_component';
 
-.panel-component--visible {
+.panel-component__content--visible {
   .filters-component {
     @include govuk-media-query($until: desktop) {
       .filters-component__submit {
