@@ -85,14 +85,15 @@ ruby:
               items: items,
               options: { remove_buttons: true, mobile_variant: true, close_all: true },
               html_attributes: { tabindex: "-1", id: "filters-component" }))
-              
 - else
   .search-controls
     .search-controls__panel
-    = render(PanelComponent.new(button_text: t("buttons.filters_toggle_panel", count: @form.total_filters), heading_text: "Filter results")) do |panel|
-      - panel.body do
-        = render(FiltersComponent.new(form: f,
-          filters: { total_count: @form.total_filters },
-          items: items,
-          options: { remove_buttons: true, mobile_variant: true, close_all: true },
-          html_attributes: { tabindex: "-1", id: "filters-component" }))
+      = render(PanelComponent.new(button_text: t("buttons.filters_toggle_panel", count: @form.total_filters), heading_text: "Filter results")) do |panel|
+        - panel.body do
+          noscript
+            = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-5"
+          = render(FiltersComponent.new(form: f,
+            filters: { total_count: @form.total_filters },
+            items: items,
+            options: { remove_buttons: true, mobile_variant: true, close_all: true },
+            html_attributes: { tabindex: "-1", id: "filters-component" }))

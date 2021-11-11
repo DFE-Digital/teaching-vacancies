@@ -7,133 +7,83 @@
   = govuk_breadcrumbs breadcrumbs: { "#{t("breadcrumbs.home")}": root_path, "#{t("breadcrumbs.jobs")}": "" }
 
   = render(Jobseekers::SearchResults::HeadingComponent.new(vacancies_search: @vacancies_search, landing_page: @landing_page))
-  
-  - if current_variant?(:"2021_11_desktop_search_results_page_test", :alternative)
-    = form_for @form, as: "", url: jobs_path, method: :get, html: { id: "filter-form", data: { "auto-submit": true }, class: "filters-form", role: "search", aria: { label: "Search criteria" } } do |f|
-      .grid-row
-        .grid-column-left class="govuk-!-margin-bottom-3"
+
+  .grid-row
+    .grid-column-left class="govuk-!-margin-bottom-3"
+      - if current_variant?(:"2021_11_desktop_search_results_page_test", :alternative)
+        = form_for @form, as: "", url: jobs_path, method: :get, html: { id: "filter-form", data: { "auto-submit": true }, class: "filters-form", role: "search", aria: { label: "Filter criteria" } } do |f|
           = render "search", f: f
-        .grid-column-right
-          .search-results__header
+          = f.hidden_field :keyword, value: @form.keyword
+          = f.hidden_field :location, value: @form.location
+          = f.hidden_field :radius, value: @form.radius
+      - else
+        = render "search"
+    .grid-column-right
+      - if current_variant?(:"2021_11_desktop_search_results_page_test", :alternative)
+        = form_for @form, as: "", url: jobs_path, method: :get, html: { id: "search-form", data: { "auto-submit": true }, class: "filters-form", role: "search", aria: { label: "Search criteria" } } do |f|
+          .search-results__header.search-results__header-border
+            h2.govuk-heading-m = t("jobs.search.title")
             = render "shared/search/keyword", f: f
             = render "shared/search/location", hint: false, f: f
-            /= render "shared/search/current_location", loaderElement: "location-field"
             = render "shared/search/radius", f: f, wide: true
             = f.hidden_field :jobs_sort, value: @form.jobs_sort
+            = f.hidden_field :job_roles, value: @form.job_roles
+            = f.hidden_field :phases, value: @form.phases
+            = f.hidden_field :working_patterns, value: @form.working_patterns
             .search-results__header__submit
               = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-6 govuk-!-width-full"
-          = render(Jobseekers::SearchResults::SearchVisualizerComponent.new(vacancies_search: @vacancies_search, render: @display_map))
-          .search-results__header
-            - unless @vacancies_search.out_of_bounds?
-              .govuk-body.search-results__header-stats
-                p.govuk-body
-                  - if @vacancies_search.total_count <= @vacancies_search.per_page
-                    = t("jobs.number_of_results_one_page_html", count: @vacancies_search.total_count)
-                  - else
-                    = t("jobs.number_of_results_html", first: @vacancies_search.page_from, last: @vacancies_search.page_to, count: @vacancies_search.total_count)
-            .search-results__header-sorting
-              = render partial: "sorting_options", locals: { search_criteria: @vacancies_search.active_criteria, sort: @vacancies_search.sort_by }
-          #search-results
-            - if @vacancies.any?
-              ul.vacancies role="list"
-                - @vacancies.each do |vacancy|
-                  = render(Jobseekers::VacancySummaryComponent.new(vacancy: vacancy))
-
-            - elsif @vacancies_search.active_criteria?
-              .divider-bottom
-                .govuk-heading-m = t("jobs.no_jobs.heading")
-                p.govuk-body
-                  = t("jobs.no_jobs.intro")
-                  ul.govuk-list.govuk-list--bullet
-                    - t("jobs.no_jobs.suggestions").each do |list_item|
-                      li = list_item
-              - if @vacancies_search.wider_search_suggestions.present?
-                .divider-bottom
-                  - if @vacancies_search.keyword.present?
-                    .govuk-heading-m = t(".wider_search_suggestions.heading.keyword_html", keyword: @vacancies_search.keyword)
-                  - else
-                    .govuk-heading-m = t(".wider_search_suggestions.heading.no_keyword")
-                  ul.govuk-list.govuk-list--bullet
-                    - @vacancies_search.wider_search_suggestions.each do |wider_radius|
-                      li = t(".wider_search_suggestions.suggestion_html",
-                                                            search_link: govuk_link_to(t(".wider_search_suggestions.radius_distance", radius: wider_radius.first), jobs_path(@vacancies_search.search_criteria.merge(radius: wider_radius.first)), class: "wider-radius-gtm"),
-                                                            count: t(".wider_search_suggestions.results", count: wider_radius.last))
-                span.govuk-heading-m
-                  = t("subscriptions.link.no_search_results.text_html", link_to: govuk_link_to(t("subscriptions.link.no_search_results.link"), new_subscription_path(search_criteria: @vacancies_search.active_criteria, origin: request.original_fullpath), id: "job-alert-link-no-search-results-gtm"))
-                p class="govuk-!-margin-1"
-                  = t("subscriptions.benefits.title")
-                  ul.govuk-list.govuk-list--bullet
-                    - t("subscriptions.benefits.list").each do |list_item|
-                      li = list_item
-
+      = render(Jobseekers::SearchResults::SearchVisualizerComponent.new(vacancies_search: @vacancies_search, render: @display_map))
+      .search-results__header
+        - unless @vacancies_search.out_of_bounds?
+          .govuk-body.search-results__header-stats
+            p.govuk-body
+              - if @vacancies_search.total_count <= @vacancies_search.per_page
+                = t("jobs.number_of_results_one_page_html", count: @vacancies_search.total_count)
               - else
-                .empty
-                  - t("jobs.none_listed", count: Vacancy.listed.count).each do |sentence|
-                    p = sentence
+                = t("jobs.number_of_results_html", first: @vacancies_search.page_from, last: @vacancies_search.page_to, count: @vacancies_search.total_count)
+        .search-results__header-sorting
+          = render partial: "sorting_options", locals: { search_criteria: @vacancies_search.active_criteria, sort: @vacancies_search.sort_by }
+      #search-results
+        - if @vacancies.any?
+          ul.vacancies role="list"
+            - @vacancies.each do |vacancy|
+              = render(Jobseekers::VacancySummaryComponent.new(vacancy: vacancy))
 
-          .pagination-and-stats
-            .pagination-results
-              = paginate @vacancies_search.vacancies
-            span.govuk-body#vacancies-stats-bottom
-
-          = render(Jobseekers::SearchResults::JobAlertsLinkComponent.new(vacancies_search: @vacancies_search, count: @vacancies.count, origin: request.original_fullpath))         
-  - else
-    .grid-row
-      .grid-column-left class="govuk-!-margin-bottom-3"
-        = render "search"
-      .grid-column-right
-        = render(Jobseekers::SearchResults::SearchVisualizerComponent.new(vacancies_search: @vacancies_search, render: @display_map))
-        .search-results__header
-          - unless @vacancies_search.out_of_bounds?
-            .govuk-body.search-results__header-stats
-              p.govuk-body
-                - if @vacancies_search.total_count <= @vacancies_search.per_page
-                  = t("jobs.number_of_results_one_page_html", count: @vacancies_search.total_count)
-                - else
-                  = t("jobs.number_of_results_html", first: @vacancies_search.page_from, last: @vacancies_search.page_to, count: @vacancies_search.total_count)
-          .search-results__header-sorting
-            = render partial: "sorting_options", locals: { search_criteria: @vacancies_search.active_criteria, sort: @vacancies_search.sort_by }
-        #search-results
-          - if @vacancies.any?
-            ul.vacancies role="list"
-              - @vacancies.each do |vacancy|
-                = render(Jobseekers::VacancySummaryComponent.new(vacancy: vacancy))
-
-          - elsif @vacancies_search.active_criteria?
+        - elsif @vacancies_search.active_criteria?
+          .divider-bottom
+            .govuk-heading-m = t("jobs.no_jobs.heading")
+            p.govuk-body
+              = t("jobs.no_jobs.intro")
+              ul.govuk-list.govuk-list--bullet
+                - t("jobs.no_jobs.suggestions").each do |list_item|
+                  li = list_item
+          - if @vacancies_search.wider_search_suggestions.present?
             .divider-bottom
-              .govuk-heading-m = t("jobs.no_jobs.heading")
-              p.govuk-body
-                = t("jobs.no_jobs.intro")
-                ul.govuk-list.govuk-list--bullet
-                  - t("jobs.no_jobs.suggestions").each do |list_item|
-                    li = list_item
-            - if @vacancies_search.wider_search_suggestions.present?
-              .divider-bottom
-                - if @vacancies_search.keyword.present?
-                  .govuk-heading-m = t(".wider_search_suggestions.heading.keyword_html", keyword: @vacancies_search.keyword)
-                - else
-                  .govuk-heading-m = t(".wider_search_suggestions.heading.no_keyword")
-                ul.govuk-list.govuk-list--bullet
-                  - @vacancies_search.wider_search_suggestions.each do |wider_radius|
-                    li = t(".wider_search_suggestions.suggestion_html",
-                                                          search_link: govuk_link_to(t(".wider_search_suggestions.radius_distance", radius: wider_radius.first), jobs_path(@vacancies_search.search_criteria.merge(radius: wider_radius.first)), class: "wider-radius-gtm"),
-                                                          count: t(".wider_search_suggestions.results", count: wider_radius.last))
-              span.govuk-heading-m
-                = t("subscriptions.link.no_search_results.text_html", link_to: govuk_link_to(t("subscriptions.link.no_search_results.link"), new_subscription_path(search_criteria: @vacancies_search.active_criteria, origin: request.original_fullpath), id: "job-alert-link-no-search-results-gtm"))
-              p class="govuk-!-margin-1"
-                = t("subscriptions.benefits.title")
-                ul.govuk-list.govuk-list--bullet
-                  - t("subscriptions.benefits.list").each do |list_item|
-                    li = list_item
+              - if @vacancies_search.keyword.present?
+                .govuk-heading-m = t(".wider_search_suggestions.heading.keyword_html", keyword: @vacancies_search.keyword)
+              - else
+                .govuk-heading-m = t(".wider_search_suggestions.heading.no_keyword")
+              ul.govuk-list.govuk-list--bullet
+                - @vacancies_search.wider_search_suggestions.each do |wider_radius|
+                  li = t(".wider_search_suggestions.suggestion_html",
+                                                        search_link: govuk_link_to(t(".wider_search_suggestions.radius_distance", radius: wider_radius.first), jobs_path(@vacancies_search.search_criteria.merge(radius: wider_radius.first)), class: "wider-radius-gtm"),
+                                                        count: t(".wider_search_suggestions.results", count: wider_radius.last))
+            span.govuk-heading-m
+              = t("subscriptions.link.no_search_results.text_html", link_to: govuk_link_to(t("subscriptions.link.no_search_results.link"), new_subscription_path(search_criteria: @vacancies_search.active_criteria, origin: request.original_fullpath), id: "job-alert-link-no-search-results-gtm"))
+            p class="govuk-!-margin-1"
+              = t("subscriptions.benefits.title")
+              ul.govuk-list.govuk-list--bullet
+                - t("subscriptions.benefits.list").each do |list_item|
+                  li = list_item
 
-            - else
-              .empty
-                - t("jobs.none_listed", count: Vacancy.listed.count).each do |sentence|
-                  p = sentence
+          - else
+            .empty
+              - t("jobs.none_listed", count: Vacancy.listed.count).each do |sentence|
+                p = sentence
 
-        .pagination-and-stats
-          .pagination-results
-            = paginate @vacancies_search.vacancies
-          span.govuk-body#vacancies-stats-bottom
+      .pagination-and-stats
+        .pagination-results
+          = paginate @vacancies_search.vacancies
+        span.govuk-body#vacancies-stats-bottom
 
-        = render(Jobseekers::SearchResults::JobAlertsLinkComponent.new(vacancies_search: @vacancies_search, count: @vacancies.count, origin: request.original_fullpath))
+      = render(Jobseekers::SearchResults::JobAlertsLinkComponent.new(vacancies_search: @vacancies_search, count: @vacancies.count, origin: request.original_fullpath))
