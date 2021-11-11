@@ -118,14 +118,7 @@ dt {
 }
 
 dd {
-  color: $govuk-secondary-text-colour;
-}
-
-dt {
-  &::after {
-    content: ':';
-    margin-right: govuk-spacing(1);
-  }
+  color: $govuk-text-colour;
 }
 
 dl,
