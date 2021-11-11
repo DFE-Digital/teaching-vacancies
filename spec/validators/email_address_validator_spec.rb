@@ -13,6 +13,12 @@ RSpec.describe EmailAddressValidator do
     expect(Jobseekers::SignInForm.new(email: "test@example", password: "password")).not_to be_valid
   end
 
+  it "can supply an error message translation to a form" do
+    form = Jobseekers::SubscriptionForm.new(email: "test")
+    form.valid?
+    expect(form.errors.messages[:email].first).to eq("Enter an email address in the correct format, like name@example.com")
+  end
+
   context "with a valid email address" do
     let(:email_address) { "test@example.com" }
 

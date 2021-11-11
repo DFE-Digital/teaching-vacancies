@@ -24,13 +24,11 @@ en:
   subscription_errors: &subscription_errors
     email:
       blank: Enter your email address
-      invalid: Enter an email address in the correct format, like name@example.com
     frequency:
       blank: Select when you want to receive job alert emails
   unsubscribe_feedback_errors: &unsubscribe_feedback_errors
     email:
       blank: Enter your email address
-      invalid: Enter an email address in the correct format, like name@example.com
     other_unsubscribe_reason_comment:
       blank: Tell us why you want to unsubscribe
     unsubscribe_reason:
@@ -44,7 +42,6 @@ en:
       too_long: Feedback must not be more than 1,200 characters
     email:
       blank: Enter your email address
-      invalid: Enter an email address in the correct format, like name@example.com
     rating:
       inclusion: Select how satisfied or dissatisfied you are
     report_a_problem:
@@ -56,7 +53,6 @@ en:
       inclusion: Please indicate if you'd like to participate in user research
     email:
       blank: Enter your email address
-      invalid: Enter an email address in the correct format, like name@example.com
     comment:
       blank: Enter your feedback
       too_long: Feedback must not be more than 1,200 characters
@@ -75,7 +71,6 @@ en:
   jobseekers_job_application_feedback_form: &jobseekers_job_application_feedback_form_errors
     email:
       blank: Enter your email address
-      invalid: Enter an email address in the correct format, like name@example.com
     rating:
       inclusion: Choose how satisfied you are with the application process
     comment:
@@ -85,7 +80,6 @@ en:
   publisher_job_listing_feedback_form: &publisher_job_listing_feedback_form_errors
     email:
       blank: Enter your email address
-      invalid: Enter an email address in the correct format, like name@example.com
     rating:
       inclusion: Choose how satisfied you are with the job listing process
     report_a_problem:
@@ -163,7 +157,6 @@ en:
       inclusion: Select how you would like candidates to apply
     contact_email:
       blank: Enter a contact email
-      invalid: Enter an email address in the correct format, like name@example.com
     contact_number:
       invalid: Contact number must be a valid phone number
     how_to_apply:
@@ -318,7 +311,6 @@ en:
               blank: Enter your country
             email_address:
               blank: Enter your email address
-              invalid: Enter an email address in the correct format, like name@example.com
             first_name:
               blank: Enter your first name
             last_name:
@@ -441,7 +433,6 @@ en:
           attributes:
             email:
               blank: Enter your referee's email address
-              invalid: Enter an email address in the correct format, like name@example.com
             job_title:
               blank: Enter your referee's job title
             name:
@@ -458,7 +449,6 @@ en:
           attributes:
             email_address:
               blank: Enter your email address
-              invalid: Enter an email address in the correct format, like name@example.com
             is_for_whole_site:
               inclusion: Choose whether this issue is for the whole site or a specific page
             issue:
