@@ -13,6 +13,7 @@ li.vacancy role="listitem" tab-index="0"
       - if @vacancy.actual_salary?
         span.govuk-hint class="govuk-!-margin-bottom-0 govuk-!-margin-top-1 govuk-!-font-size-16" = t("jobs.actual_salary")
         = @vacancy.actual_salary
+  dl
     dt = @vacancy.central_office? ? t("jobs.trust_type") : t("jobs.school_type")
     dd.double
       - if @vacancy.at_multiple_schools?
@@ -20,10 +21,12 @@ li.vacancy role="listitem" tab-index="0"
           .govuk-body-s class="govuk-!-margin-bottom-0" = organisation_type
       - else
         = organisation_type(@vacancy.parent_organisation)
-    - if @vacancy.working_patterns?
+  - if @vacancy.working_patterns?
+    dl
       dt = t("jobs.working_patterns")
       dd.double
         = @vacancy.working_patterns
+  dl
     dt = t("jobs.expires_at")
     dd.double
       = format_time_to_datetime_at(@vacancy.expires_at)
