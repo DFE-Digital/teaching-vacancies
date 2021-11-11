@@ -52,10 +52,10 @@ class EmailAddressValidator < ActiveModel::EachValidator
   private
 
   def blank_email_message
-    I18n.t("activerecord.errors.models.general_feedback.attributes.email.blank")
+    I18n.t("activerecord.errors.models.jobseeker.attributes.email.blank")
   end
 
   def invalid_error_message
-    I18n.t("activerecord.errors.models.general_feedback.attributes.email.invalid")
+    I18n.t("activerecord.errors.models.jobseeker.attributes.email.invalid")
   end
 end
