@@ -5,7 +5,7 @@ p.govuk-body = t("jobs.preview_listing.message")
 h3.govuk-heading-m
   - if vacancy.publish_on.present?
     - if vacancy.publish_on.today?
-      = t("jobs.submit_listing.heading.today")
+      = t("jobs.submit_listing.heading.today", date: Date.today.to_s.strip)
     - else
       = t("jobs.submit_listing.heading.later", date: vacancy.publish_on.to_s.strip)
   - else
