@@ -2,14 +2,6 @@ en:
   cookies_preferences_errors: &cookies_preferences_errors
     cookies_consent:
       inclusion: Please select an option
-  ect_job_alert_errors: &ect_job_alert_errors
-    keywords:
-      blank: Enter keyword(s)
-    location:
-      blank: Enter a location
-    email:
-      blank: Enter your email address
-      invalid: Enter an email address in the correct format, like name@example.com
   qualification_errors: &qualification_errors
     qualification_results_attributes_0_subject:
       at_least_one_result_required: Enter at least one subject and grade for this qualification
@@ -75,15 +67,6 @@ en:
     visit_purpose_comment:
       blank: Enter the reason for your visit
       too_long: Purpose of visit must not be more than 1,200 characters
-  job_alert_feedback_errors: &job_alert_feedback_errors
-    comment:
-      blank: You have not submitted any further feedback
-      too_long: Feedback must not be more than 1,200 characters
-    email:
-      blank: Enter your email address
-      invalid: Enter an email address in the correct format, like name@example.com
-    user_participation_response:
-      inclusion: Please indicate if you'd like to participate in user research
   jobseekers_job_alert_further_feedback_form: &job_alert_further_feedback_form_errors
     comment:
       blank: Tell us about the relevancy of your job alerts
@@ -211,18 +194,12 @@ en:
         jobseekers/account_feedback_form:
           attributes:
             <<: *account_feedback_errors
-        jobseekers/job_alert_feedback_form:
-          attributes:
-            <<: *job_alert_feedback_errors
         jobseekers/job_alert_further_feedback_form:
           attributes:
             <<: *job_alert_further_feedback_form_errors
         jobseekers/job_application/feedback_form:
           attributes:
             <<: *jobseekers_job_application_feedback_form_errors
-        jobseekers/ect_job_alerts_form:
-          attributes:
-            <<: *ect_job_alert_errors
         jobseekers/subscription_form:
           attributes:
             <<: *subscription_errors
