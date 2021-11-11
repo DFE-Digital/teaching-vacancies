@@ -13,39 +13,35 @@
   }
 
   > li {
-    border-bottom: 1px solid govuk-colour('light-grey');
+    border-bottom: 1px solid $govuk-border-colour;
     margin-bottom: $govuk-gutter-half;
     padding-bottom: $govuk-gutter-half;
 
+    &:first-child {
+      border-top: 1px solid $govuk-border-colour;
+      padding-top: $govuk-gutter-half;
+    }
+
     dl {
+      display: flex;
+      width: 100%;
       @include govuk-font(16);
     }
 
     dt,
     dd {
-      display: inline-block;
-      padding-bottom: 5px;
+      padding-bottom: govuk-spacing(1);
       vertical-align: top;
     }
 
     dt {
-      color: $govuk-secondary-text-colour;
-      width: 25%;
-      @include govuk-media-query($from: desktop) {
-        width: 24%;
-      }
+      flex-basis: 30%;
+      font-weight: $bold-font-weight;
     }
 
     dd {
-      margin-left: 0;
-      width: 50%;
-      @include govuk-media-query($from: desktop) {
-        width: 24%;
-      }
-
-      &.double {
-        width: 60%;
-      }
+      flex-basis: 70%;
+      margin-left: govuk-spacing(1);
     }
   }
 }

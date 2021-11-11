@@ -7,6 +7,13 @@
   display: flex;
   padding: govuk-spacing(4) 0;
 
+  dt {
+    &::after {
+      content: ':';
+      margin-right: govuk-spacing(1);
+    }
+  }
+
   &__content {
     display: flex;
     flex-basis: 75%;
