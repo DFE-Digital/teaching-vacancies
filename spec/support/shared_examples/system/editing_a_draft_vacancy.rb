@@ -39,6 +39,17 @@ RSpec.shared_examples "provides an overview of the draft vacancy form" do
     expect(page).to have_step_status(:working_patterns, status: "action required")
   end
 
+  it "shows the overview without errors when updating a section" do
+    within "#job_details" do
+      click_on "Change"
+    end
+
+    click_on "Update listing"
+
+    expect(page).to have_css("h2", text: "Manage draft listing")
+    expect(page).not_to have_link("Enter a salary")
+  end
+
   context "when incomplete and submitted for publication" do
     before do
       expect(page).not_to have_css(".govuk-notification-banner--warning")
@@ -47,13 +58,13 @@ RSpec.shared_examples "provides an overview of the draft vacancy form" do
 
     it "provides top-of-page validation errors which link to the relevant form parts" do
       within ".govuk-notification-banner--warning" do
-        expect(page).to have_link("Enter a salary", href: organisation_job_build_path(job_id: vacancy.id, id: "pay_package"))
+        expect(page).to have_link("Enter a salary", href: organisation_job_build_path(job_id: vacancy.id, id: "pay_package", back_to: "manage_draft"))
       end
     end
 
     it "provides inline validation errors which link to the relevant form parts" do
       within "#pay_package .app-inset-text--error" do
-        expect(page).to have_link("Enter a salary", href: organisation_job_build_path(job_id: vacancy.id, id: "pay_package"))
+        expect(page).to have_link("Enter a salary", href: organisation_job_build_path(job_id: vacancy.id, id: "pay_package", back_to: "manage_draft"))
       end
     end
   end
@@ -66,13 +77,13 @@ RSpec.shared_examples "provides an overview of the draft vacancy form" do
 
     it "provides top-of-page validation errors which link to the relevant form parts" do
       within ".govuk-notification-banner--warning" do
-        expect(page).to have_link("Enter a salary", href: organisation_job_build_path(job_id: vacancy.id, id: "pay_package"))
+        expect(page).to have_link("Enter a salary", href: organisation_job_build_path(job_id: vacancy.id, id: "pay_package", back_to: "manage_draft"))
       end
     end
 
     it "provides inline validation errors which link to the relevant form parts" do
       within "#pay_package .app-inset-text--error" do
-        expect(page).to have_link("Enter a salary", href: organisation_job_build_path(job_id: vacancy.id, id: "pay_package"))
+        expect(page).to have_link("Enter a salary", href: organisation_job_build_path(job_id: vacancy.id, id: "pay_package", back_to: "manage_draft"))
       end
     end
   end
@@ -88,6 +99,8 @@ RSpec.shared_examples "provides an overview of the draft vacancy form" do
 
       fill_in "Annual or full time equivalent (FTE) salary", with: "£60,000"
       click_on "Update listing"
+
+      click_on "Confirm and submit job"
 
       within ".review-component#working_patterns" do
         click_on "Select a working pattern"
@@ -115,6 +128,8 @@ RSpec.shared_examples "provides an overview of the draft vacancy form" do
 
       fill_in "Annual or full time equivalent (FTE) salary", with: "£60,000"
       click_on "Update listing"
+
+      click_on "Preview job listing"
 
       within ".review-component#working_patterns" do
         click_on "Select a working pattern"

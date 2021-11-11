@@ -5,7 +5,7 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
 
   private
 
-  helper_method :step_process, :vacancy
+  helper_method :current_step, :step_process, :vacancy
 
   def step_process
     ::Publishers::Vacancies::VacancyStepProcess.new(
@@ -53,7 +53,11 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
   end
 
   def redirect_updated_job_with_message
-    updated_job_path = vacancy.published? ? organisation_job_path(vacancy.id) : organisation_job_review_path(vacancy.id)
+    updated_job_path = if vacancy.published? || params[:back_to] == "manage_draft"
+                         organisation_job_path(vacancy.id)
+                       else
+                         organisation_job_review_path(vacancy.id)
+                       end
 
     redirect_to updated_job_path,
                 success: t("messages.jobs.listing_updated_html",

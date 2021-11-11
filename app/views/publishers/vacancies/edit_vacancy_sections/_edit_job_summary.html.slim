@@ -3,10 +3,10 @@
 = render ReviewComponent.new id: "job_summary" do |review|
   - review.heading title: t("publishers.vacancies.steps.job_summary"),
                    text: t("buttons.change"),
-                   href: organisation_job_build_path(vacancy.id, :job_summary)
+                   href: organisation_job_build_path(vacancy.id, :job_summary, back_to: local_assigns[:back_to])
     = review_section_tag(vacancy, %i[job_summary], [Publishers::JobListing::JobSummaryForm])
 
   - review.body do
-    = validatable_summary_list(vacancy, show_errors: local_assigns[:show_errors], error_path: organisation_job_build_path(vacancy.id, :job_summary)) do |list|
+    = validatable_summary_list(vacancy, show_errors: local_assigns[:show_errors], error_path: organisation_job_build_path(vacancy.id, :job_summary, back_to: local_assigns[:back_to])) do |list|
       - list.row :job_advert
       - list.row :about_school, label: t("jobs.about_school", school: vacancy_about_school_label_organisation(vacancy))

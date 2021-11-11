@@ -5,7 +5,7 @@
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      = form_for form, url: wizard_path, method: :patch do |f|
+      = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
         = f.govuk_error_summary
 
         h2.govuk-heading-l = t("publishers.vacancies.steps.important_dates")

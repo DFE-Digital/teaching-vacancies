@@ -7,7 +7,7 @@
     .govuk-grid-column-two-thirds
       h2.govuk-heading-l = t("publishers.vacancies.steps.review_heading")
       = render "shared/error_messages", errors: vacancy.errors do |error|
-        = govuk_link_to error.message, organisation_job_build_path(job_id: vacancy.id, id: error.options[:step]), class: "govuk-link--no-visited-state"
+        = govuk_link_to error.message, organisation_job_build_path(job_id: vacancy.id, id: error.options[:step], back_to: "review"), class: "govuk-link--no-visited-state"
 
       p.govuk-body-l
         - if vacancy.publish_on&.today?
@@ -15,7 +15,7 @@
         - else
           = t("jobs.review_future")
 
-      = render "edit_sections", show_errors: true
+      = render "edit_sections", back_to: "review", show_errors: true
       = render "publish_buttons", back_to: "review"
 
       = govuk_link_to t("buttons.back_to_manage_jobs"), jobs_with_type_organisation_path("draft", from_review: vacancy.id), class: "govuk-link--no-visited-state"
