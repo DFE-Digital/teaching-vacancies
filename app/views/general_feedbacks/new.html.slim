@@ -24,7 +24,16 @@
             - else
               = f.govuk_radio_button :visit_purpose, visit_purpose, link_errors: idx.zero?
 
-        = render "/feedback/form", f: f
+        = f.govuk_text_area :comment,
+          label: { size: "m" },
+          rows: 5,
+          max_chars: 1200,
+          required: true
+
+        = f.govuk_radio_buttons_fieldset(:user_participation_response, legend: { size: "m" }) do
+          = f.govuk_radio_button :user_participation_response, :interested, link_errors: true do
+            = f.govuk_email_field :email, value: (@general_feedback_form.email.presence || current_user_email(current_jobseeker, current_publisher)), required: true
+          = f.govuk_radio_button :user_participation_response, :uninterested
 
         = recaptcha
 
