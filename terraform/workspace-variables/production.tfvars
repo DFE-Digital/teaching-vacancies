@@ -12,7 +12,7 @@ distribution_list = {
     cloudfront_origin_domain_name = "teaching-vacancies-production.london.cloudapps.digital"
   }
 }
-
+enable_cloudfront_compress = false
 # Monitoring
 channel_list = {
   "tvsprod" = {

@@ -16,6 +16,10 @@ variable "distribution_list" {
   default = {}
 }
 
+variable "enable_cloudfront_compress" {
+  default = true
+}
+
 variable "route53_zones" {
   type    = list(any)
   default = ["teaching-jobs.service.gov.uk", "teaching-vacancies.service.gov.uk"]

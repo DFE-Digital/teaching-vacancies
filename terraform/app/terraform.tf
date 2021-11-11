@@ -38,6 +38,7 @@ module "cloudfront" {
   source                        = "./modules/cloudfront"
   for_each                      = var.distribution_list
   environment                   = var.environment
+  enable_cloudfront_compress    = var.enable_cloudfront_compress
   service_name                  = local.service_name
   cloudfront_origin_domain_name = each.value.cloudfront_origin_domain_name
   offline_bucket_domain_name    = each.value.offline_bucket_domain_name
