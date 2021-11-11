@@ -12,7 +12,7 @@
         = govuk_link_to error.message, organisation_job_build_path(job_id: vacancy.id, id: error.options[:step], back_to: "manage_draft"), class: "govuk-link--no-visited-state"
 
     = render "edit_sections", back_to: "manage_draft", show_errors: params[:show_errors] == "true"
-    = render "publish_buttons", back_to: "manage_draft"
+    = render "publish_buttons", back_to: "manage_draft" if vacancy.draft?
 
     = govuk_link_to(t("buttons.back_to_manage_jobs"), back_to_manage_jobs_link(vacancy), class: "govuk-link--no-visited-state")
 
