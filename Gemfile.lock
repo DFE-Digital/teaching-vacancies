@@ -588,6 +588,8 @@ GEM
       tilt (~> 2.0)
       yard (~> 0.9, >= 0.9.24)
     spring (2.1.1)
+    spring-commands-rspec (1.0.4)
+      spring (>= 0.9.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
       spring (>= 1.2, < 3.0)
@@ -759,6 +761,7 @@ DEPENDENCIES
   slim_lint
   solargraph
   spring
+  spring-commands-rspec
   spring-watcher-listen
   tzinfo-data
   validate_url

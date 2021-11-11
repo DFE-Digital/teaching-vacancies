@@ -74,6 +74,7 @@ group :development do
   gem "listen"
   gem "solargraph", require: false
   gem "spring"
+  gem "spring-commands-rspec"
   gem "spring-watcher-listen"
   gem "web-console"
 end
