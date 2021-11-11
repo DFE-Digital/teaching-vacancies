@@ -19,7 +19,7 @@ Rails.application.configure do
     .reverse
 
   config.x.search.synonyms = synonyms
-  config.x.search.terms_with_synonyms = terms_with_synonyms
+  config.x.search.terms_with_synonyms = terms_with_synonyms # TODO: Find a better name
 
   config.x.search.oneway_synonyms = oneway_synonyms
   config.x.search.terms_with_oneway_synonyms = terms_with_oneway_synonyms

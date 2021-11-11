@@ -17,14 +17,14 @@ class Search::Postgres::QueryTransformer < Parslet::Transform
 
   rule(query: sequence(:terms)) do |captures|
     captures[:terms]
-      .reduce { |acc, term| infix("&&", acc, term) }
+      .reduce { |acc, term| Arel::Nodes::InfixOperation.new("&&", acc, term) }
       .then { |query| Arel::Nodes::Grouping.new(query) }
   end
 
   def self.any_phrase_query(phrases)
     phrases
       .map { |syn| to_tsquery(:phrase, syn) }
-      .reduce { |acc, term| infix("||", acc, term) }
+      .reduce { |acc, term| Arel::Nodes::InfixOperation.new("||", acc, term) }
       .then { |query| Arel::Nodes::Grouping.new(query) }
   end
 
@@ -33,9 +33,5 @@ class Search::Postgres::QueryTransformer < Parslet::Transform
       "#{type}to_tsquery",
       [Arel::Nodes::Quoted.new("simple"), Arel::Nodes::Quoted.new(word.to_s)],
     )
-  end
-
-  def self.infix(operator, left, right)
-    Arel::Nodes::InfixOperation.new(operator, left, right)
   end
 end

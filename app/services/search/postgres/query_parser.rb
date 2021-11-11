@@ -10,24 +10,39 @@
 # syntax in the future.
 
 class Search::Postgres::QueryParser < Parslet::Parser
-  rule(:space) { match('\s').repeat(1) }
-  rule(:term_terminator) { match("$") | space }
-
-  rule(:synonym_term) { synonym_atoms.reduce(:|).as(:synonym_term) >> term_terminator }
-  rule(:oneway_synonym_term) { oneway_synonym_atoms.reduce(:|).as(:oneway_synonym_term) >> term_terminator }
-  rule(:plain_term) { match('\S').repeat(1).as(:plain_term) >> term_terminator }
-
-  rule(:term) { synonym_term | oneway_synonym_term | plain_term }
+  root(:query)
 
   rule(:query) { (space | term).repeat(0).as(:query) }
 
-  root(:query)
+  rule(:space) { match('\s').repeat(1) }
 
-  def synonym_atoms
-    Rails.application.config.x.search.terms_with_synonyms.map { |s| str(s) }
+  rule(:term) { synonym_term | oneway_synonym_term | plain_term }
+  rule(:term_terminator) { match("$") | space } # Ensures that
+
+  rule(:synonym_term) do
+    synonym_token.as(:synonym_term) >> term_terminator
+  end
+  rule(:oneway_synonym_term) do
+    oneway_synonym_token.as(:oneway_synonym_term) >> term_terminator
+  end
+  rule(:plain_term) do
+    match('\S').repeat(1).as(:plain_term) >> term_terminator
   end
 
-  def oneway_synonym_atoms
-    Rails.application.config.x.search.terms_with_oneway_synonyms.map { |s| str(s) }
+  # Represents any phrase that occurs in the synonym dictionary as a static string token
+  def synonym_token
+    Rails.application.config.x.search.terms_with_synonyms
+      .map { |s| str(s) }.reduce(:|)
+  end
+
+  # Represents any phrase that occurs in the oneway synonym dictionary as a static string token
+  def oneway_synonym_token
+    Rails.application.config.x.search.terms_with_oneway_synonyms
+      .map { |s| str(s) }.reduce(:|)
+  end
+
+  # Normalise query before parsing
+  def parse(query)
+    super(query.downcase)
   end
 end
