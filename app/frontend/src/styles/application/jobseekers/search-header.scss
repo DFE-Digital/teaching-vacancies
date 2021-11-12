@@ -49,3 +49,9 @@
     }
   }
 }
+
+div.grid-column-right .search-results__header {
+  @include govuk-media-query($until: desktop) {
+    display: none;
+  }
+}

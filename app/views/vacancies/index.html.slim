@@ -10,14 +10,8 @@
 
   .grid-row
     .grid-column-left class="govuk-!-margin-bottom-3"
-      - if current_variant?(:"2021_11_desktop_search_results_page_test", :alternative)
-        = form_for @form, as: "", url: jobs_path, method: :get, html: { id: "filter-form", data: { "auto-submit": true }, class: "filters-form", role: "search", aria: { label: "Filter criteria" } } do |f|
-          = render "search", f: f
-          = f.hidden_field :keyword, value: @form.keyword
-          = f.hidden_field :location, value: @form.location
-          = f.hidden_field :radius, value: @form.radius
-      - else
-        = render "search"
+      = form_for @form, as: "", url: jobs_path, method: :get, html: { id: "filter-form", data: { "auto-submit": true }, class: "filters-form", role: "search", aria: { label: "Filter criteria" } } do |f|
+        = render "search", f: f
     .grid-column-right
       - if current_variant?(:"2021_11_desktop_search_results_page_test", :alternative)
         = form_for @form, as: "", url: jobs_path, method: :get, html: { id: "search-form", data: { "auto-submit": true }, class: "filters-form", role: "search", aria: { label: "Search criteria" } } do |f|
