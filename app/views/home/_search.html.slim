@@ -4,7 +4,7 @@ p.govuk-caption-m = t("jobs.intro")
 = form_for @form, as: "", url: jobs_path, html: { method: "get", class: "govuk-!-width-two-thirds" } do |f|
 
   = render "shared/search/keyword", f: f
-  = render "shared/search/location", f: f
+  = render "shared/search/location", hint: true, f: f
   = render "shared/search/current_location", loaderElement: "location-field"
   = render "shared/search/radius", f: f, wide: false
 
