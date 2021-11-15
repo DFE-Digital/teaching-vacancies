@@ -76,7 +76,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
 
     schools = current_organisation.local_authority? ? current_publisher_preference.schools : current_organisation.schools
     @school_options = schools.not_closed.order(:name).map do |school|
-      OpenStruct.new({ id: school.id, name: school.name, address: full_address(school) })
+      Option.new(id: school.id, name: school.name, address: full_address(school))
     end
   end
 
