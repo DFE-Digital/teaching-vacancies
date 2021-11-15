@@ -20,6 +20,22 @@ RSpec.describe "Subscriptions" do
       end
     end
 
+    context "with search criteria pre-populated" do
+      it "sets subscription_autopopulated in the session so we can track it with subscription events" do
+        get new_subscription_path(origin: "/", search_criteria: { key: "value" })
+
+        expect(session[:subscription_autopopulated]).to eq(true)
+      end
+    end
+
+    context "with search criteria not pre-populated" do
+      it "sets subscription_autopopulated in the session so we can track it with subscription events" do
+        get new_subscription_path(origin: "/")
+
+        expect(session[:subscription_autopopulated]).to eq(false)
+      end
+    end
+
     context "when hit via the nqt job alerts url" do
       before { get "/sign-up-for-NQT-job-alerts" }
 
@@ -87,6 +103,7 @@ RSpec.describe "Subscriptions" do
 
     it "triggers a `job_alert_subscription_created` event" do
       expect { subject }.to have_triggered_event(:job_alert_subscription_created).and_data(
+        autopopulated: "false",
         email_identifier: anonymised_form_of("foo@example.net"),
         frequency: "daily",
         subscription_identifier: anything,
@@ -136,6 +153,7 @@ RSpec.describe "Subscriptions" do
 
     it "triggers a `job_alert_subscription_updated` event" do
       expect { subject }.to have_triggered_event(:job_alert_subscription_updated).and_data(
+        autopopulated: nil,
         email_identifier: anonymised_form_of("jimi@hendrix.com"),
         frequency: "weekly",
         subscription_identifier: anonymised_form_of(subscription.id),
@@ -165,6 +183,7 @@ RSpec.describe "Subscriptions" do
 
     it "triggers a `job_alert_subscription_unsubscribed` event" do
       expect { subject }.to have_triggered_event(:job_alert_subscription_unsubscribed).and_data(
+        autopopulated: nil,
         email_identifier: anonymised_form_of("bob@dylan.com"),
         frequency: "daily",
         subscription_identifier: anonymised_form_of(subscription.id),
