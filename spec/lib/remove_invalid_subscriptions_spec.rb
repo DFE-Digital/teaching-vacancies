@@ -5,9 +5,9 @@ RSpec.describe RemoveInvalidSubscriptions do
 
   describe "#run!" do
     let(:notify_api_response) do
-      [OpenStruct.new({ status: "permanent-failure", email_address: "first@failed.com" }),
-       OpenStruct.new({ status: "permanent-failure", email_address: "second@failed.com" }),
-       OpenStruct.new({ status: "not-permanent-failure", email_address: "test@tempfailed.com" })]
+      [double("response", status: "permanent-failure", email_address: "first@failed.com"),
+       double("response", status: "permanent-failure", email_address: "second@failed.com"),
+       double("response", status: "not-permanent-failure", email_address: "test@tempfailed.com")]
     end
 
     let!(:failed_subscription1) { create(:subscription, email: "first@failed.com") }

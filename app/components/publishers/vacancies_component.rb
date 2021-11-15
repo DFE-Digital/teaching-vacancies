@@ -93,14 +93,14 @@ class Publishers::VacanciesComponent < ViewComponent::Base
     schools = organisation.local_authority? ? publisher_preference.schools : organisation.schools
     @organisation_options = schools.not_closed.order(:name).map do |school|
       count = school.vacancies.send(selected_scope).count
-      OpenStruct.new({ id: school.id, name: school.name, label: "#{school.name} (#{count})" })
+      Option.new(id: school.id, name: school.name, label: "#{school.name} (#{count})")
     end
 
     return if organisation.local_authority?
 
     count = organisation.vacancies.send(selected_scope).count
     @organisation_options.unshift(
-      OpenStruct.new({ id: organisation.id, name: "Trust head office", label: "Trust head office (#{count})" }),
+      Option.new(id: organisation.id, name: "Trust head office", label: "Trust head office (#{count})"),
     )
   end
 end
