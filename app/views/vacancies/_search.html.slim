@@ -91,17 +91,17 @@ ruby:
 
             = f.hidden_field :jobs_sort, value: @form.jobs_sort
             = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"
-      / - else
-      /   .search-controls__panel__filters
-      /     h2.govuk-heading-m = t("jobs.search.title")
+      - else
+        .search-controls__panel__filters
+          h2.govuk-heading-m = t("jobs.search.title")
 
-      /     = render "shared/search/keyword", f: f
-      /     = render "shared/search/location", hint: true, f: f
-      /     = render "shared/search/current_location", loaderElement: "location-field"
-      /     = render "shared/search/radius", f: f, wide: true
+          = render "shared/search/keyword", f: f
+          = render "shared/search/location", hint: true, f: f
+          = render "shared/search/current_location", loaderElement: "location-field"
+          = render "shared/search/radius", f: f, wide: true
 
-      /     = f.hidden_field :jobs_sort, value: @form.jobs_sort
-      /     = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"
+          = f.hidden_field :jobs_sort, value: @form.jobs_sort
+          = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"
 
   .search-controls__panel
     = render(PanelComponent.new(button_text: t("buttons.filters_toggle_panel", count: @form.total_filters), heading_text: "Filter results")) do |panel|
