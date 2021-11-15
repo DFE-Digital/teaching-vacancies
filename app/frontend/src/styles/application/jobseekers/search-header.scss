@@ -11,13 +11,14 @@
     flex-basis: 25%;
   }
 
+  .autocomplete,
   .govuk-form-group {
-    margin-right: govuk-spacing(1);
+    margin-right: govuk-spacing(2);
   }
 
   &-border {
     border-bottom: 1px solid $govuk-border-colour;
-    margin-bottom: 30px;
+    margin-bottom: govuk-spacing(6);
 
     .govuk-heading-m {
       display: none;
