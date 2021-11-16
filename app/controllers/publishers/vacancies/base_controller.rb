@@ -8,7 +8,7 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
   helper_method :current_step, :step_process, :vacancy
 
   def step_process
-    ::Publishers::Vacancies::VacancyStepProcess.new(
+    Publishers::Vacancies::VacancyStepProcess.new(
       current_step || :review,
       vacancy: vacancy,
       organisation: current_organisation,
