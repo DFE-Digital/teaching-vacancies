@@ -43,7 +43,7 @@
         = render BannerButtonComponent.new text: t("jobs.alert.similar.terse"),
           href: new_subscription_path,
           icon: "alert-blue",
-          params: { search_criteria: @invented_job_alert_search_criteria }
+          params: { search_criteria: @invented_job_alert_search_criteria, vacancy_id: @vacancy.id }
 
       - unless defined?(job_application) && job_application.present?
         .govuk-grid-column-one-third
@@ -93,7 +93,7 @@
 
     section
       p.icon.icon--left.icon--alert-blue
-        = govuk_link_to(t("jobs.alert.similar.verbose.link_text"), new_subscription_path(search_criteria: @invented_job_alert_search_criteria), id: "job-alert-link-from-bottom-of-job-listing-gtm")
+        = govuk_link_to(t("jobs.alert.similar.verbose.link_text"), new_subscription_path(search_criteria: @invented_job_alert_search_criteria, vacancy_id: @vacancy.id), id: "job-alert-link-from-bottom-of-job-listing-gtm")
         =< t("jobs.alert.similar.verbose.reminder")
 
     = render "shared/vacancy/copy_vacancy_link"

@@ -1,4 +1,6 @@
 class SubscriptionsController < ApplicationController
+  before_action :trigger_create_job_alert_clicked_event, only: :new, if: -> { vacancy_id.present? }
+
   def new
     @point_coordinates = params[:coordinates_present] == "true"
     @ect_job_alert = params[:ect_job_alert]
@@ -74,6 +76,10 @@ class SubscriptionsController < ApplicationController
 
   private
 
+  def trigger_create_job_alert_clicked_event
+    request_event.trigger(:vacancy_create_job_alert_clicked, vacancy_id: StringAnonymiser.new(vacancy_id))
+  end
+
   def trigger_subscription_event(type, subscription)
     request_event.trigger(
       type,
@@ -102,5 +108,9 @@ class SubscriptionsController < ApplicationController
 
   def token
     params.require(:id)
+  end
+
+  def vacancy_id
+    params.permit(:vacancy_id)[:vacancy_id]
   end
 end
