@@ -18,7 +18,7 @@
           .search-results__header.search-results__header-border
             h2.govuk-heading-m = t("jobs.search.title")
             = render "shared/search/keyword", f: f
-            = render "shared/search/location", hint: false, f: f
+            = render "shared/search/location", hint: false, desktop: true, f: f
             = render "shared/search/radius", f: f, wide: true
             = f.hidden_field :jobs_sort, value: @form.jobs_sort
             = f.hidden_field :job_roles, value: @form.job_roles
@@ -62,13 +62,13 @@
                   li = t(".wider_search_suggestions.suggestion_html",
                                                         search_link: govuk_link_to(t(".wider_search_suggestions.radius_distance", radius: wider_radius.first), jobs_path(@vacancies_search.search_criteria.merge(radius: wider_radius.first)), class: "wider-radius-gtm"),
                                                         count: t(".wider_search_suggestions.results", count: wider_radius.last))
-            span.govuk-heading-m
-              = t("subscriptions.link.no_search_results.text_html", link_to: govuk_link_to(t("subscriptions.link.no_search_results.link"), new_subscription_path(search_criteria: @vacancies_search.active_criteria, origin: request.original_fullpath), id: "job-alert-link-no-search-results-gtm"))
-            p class="govuk-!-margin-1"
-              = t("subscriptions.benefits.title")
-              ul.govuk-list.govuk-list--bullet
-                - t("subscriptions.benefits.list").each do |list_item|
-                  li = list_item
+          span.govuk-heading-m
+            = t("subscriptions.link.no_search_results.text_html", link_to: govuk_link_to(t("subscriptions.link.no_search_results.link"), new_subscription_path(search_criteria: @vacancies_search.active_criteria, origin: request.original_fullpath), id: "job-alert-link-no-search-results-gtm"))
+          p class="govuk-!-margin-1"
+            = t("subscriptions.benefits.title")
+            ul.govuk-list.govuk-list--bullet
+              - t("subscriptions.benefits.list").each do |list_item|
+                li = list_item
 
           - else
             .empty
