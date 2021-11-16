@@ -1,9 +1,13 @@
-= f.govuk_text_field :location,
-  label: { text: t("jobs.search.location"), size: "s" },
-  hint: { text: t("jobs.search.location_hint"), size: "s" },
-  class: %w[js-location-finder__input],
-  form_group: { classes: "js-location-finder location-text govuk-!-margin-bottom-0" },
-  "data-coordinates": @vacancies_search&.point_coordinates || @point_coordinates
+- desktop = false if local_assigns[:desktop].nil?
+- show_hint = true if local_assigns[:show_hint].nil?
 
-.accessible-autocomplete__container
-  #accessible-autocomplete.govuk-body class="govuk-!-margin-bottom-1"
+.autocomplete data-source="getLocationSuggestions"
+  = f.govuk_text_field :location,
+    label: { text: t("jobs.search.location"), size: "s" },
+    hint: { text: show_hint ? t("jobs.search.location_hint") : nil, size: "s" },
+    class: %w[js-location-finder__input],
+    form_group: { classes: "js-location-finder location-text govuk-!-margin-bottom-0" },
+    "data-coordinates": @vacancies_search&.point_coordinates || @point_coordinates
+
+  .accessible-autocomplete__container class="#{desktop ? "accessible-autocomplete__container--desktop" : ""}"
+    .accessible-autocomplete.govuk-body class="govuk-!-margin-bottom-1"
