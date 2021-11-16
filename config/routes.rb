@@ -134,7 +134,7 @@ Rails.application.routes.draw do
 
   get "sign-up-for-NQT-job-alerts", to: redirect("/sign-up-for-ECT-job-alerts")
 
-  get "sign-up-for-ECT-job-alerts", to: "subscriptions#new", as: "ect_job_alerts", defaults: { ect_job_alert: true, origin: "/sign-up-for-ECT-job-alerts", search_criteria: { job_roles: ["ect_suitable"] } }
+  get "sign-up-for-ECT-job-alerts", to: "subscriptions#new", as: "ect_job_alerts", defaults: { ect_job_alert: true, search_criteria: { job_roles: ["ect_suitable"] } }
 
   namespace :api do
     scope "v:api_version", api_version: /1/ do

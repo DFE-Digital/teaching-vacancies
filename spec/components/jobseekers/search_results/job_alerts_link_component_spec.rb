@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Jobseekers::SearchResults::JobAlertsLinkComponent, type: :component do
-  subject { described_class.new(vacancies_search: vacancies_search, count: 1, origin: "/foo/bar") }
+  subject { described_class.new(vacancies_search: vacancies_search, count: 1) }
 
   let(:vacancies_search) { instance_double(Search::VacancySearch) }
   let(:active_hash) { { keyword: "maths" } }
@@ -20,7 +20,7 @@ RSpec.describe Jobseekers::SearchResults::JobAlertsLinkComponent, type: :compone
     it "renders the job alerts link" do
       expect(inline_component.css(
         "a#job-alert-link-sticky-gtm[href="\
-        "'#{Rails.application.routes.url_helpers.new_subscription_path(search_criteria: active_hash, origin: '/foo/bar', coordinates_present: true)}']",
+        "'#{Rails.application.routes.url_helpers.new_subscription_path(search_criteria: active_hash, coordinates_present: true)}']",
       ).to_html).to include(I18n.t("subscriptions.link.text"))
     end
   end
