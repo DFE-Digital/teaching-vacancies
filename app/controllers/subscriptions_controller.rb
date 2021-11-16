@@ -4,6 +4,7 @@ class SubscriptionsController < ApplicationController
   def new
     @point_coordinates = params[:coordinates_present] == "true"
     @ect_job_alert = params[:ect_job_alert]
+    session[:subscription_autopopulated] = params[:search_criteria].present?
     @form = Jobseekers::SubscriptionForm.new(params[:search_criteria].present? ? search_criteria_params : email)
   end
 
@@ -89,12 +90,13 @@ class SubscriptionsController < ApplicationController
   def trigger_subscription_event(type, subscription)
     request_event.trigger(
       type,
-      subscription_identifier: StringAnonymiser.new(subscription.id),
+      autopopulated: session.delete(:subscription_autopopulated),
       email_identifier: StringAnonymiser.new(subscription.email),
-      recaptcha_score: subscription.recaptcha_score,
       frequency: subscription.frequency,
-      search_criteria: subscription.search_criteria,
       origin: session.delete(:subscription_origin),
+      recaptcha_score: subscription.recaptcha_score,
+      search_criteria: subscription.search_criteria,
+      subscription_identifier: StringAnonymiser.new(subscription.id),
     )
   end
 
