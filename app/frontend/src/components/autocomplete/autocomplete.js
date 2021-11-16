@@ -2,6 +2,8 @@ import accessibleAutocomplete from 'accessible-autocomplete';
 import 'accessible-autocomplete/dist/accessible-autocomplete.min.css';
 import './autocomplete.scss';
 
+import api from '../../lib/api';
+
 const SHOW_SUGGESTIONS_THRESHOLD = 3;
 
 const highlightRefinement = (text, refinement) => {
@@ -12,22 +14,23 @@ const highlightRefinement = (text, refinement) => {
   /* eslint-enable */
 };
 
-const autocomplete = (fieldIds, source) => {
-  fieldIds.forEach((elementId) => {
-    const formInput = document.getElementById(elementId);
+const autocomplete = () => {
+  Array.from(document.querySelectorAll('.autocomplete')).forEach((el) => {
+    const formInput = el.querySelector('input');
+    const dataSource = api[el.dataset.source];
 
-    if (formInput) {
+    if (formInput && dataSource) {
       let currentInputValue = formInput.value;
       formInput.parentNode.removeChild(formInput);
 
       accessibleAutocomplete({
-        element: document.querySelector('#accessible-autocomplete'),
-        id: elementId,
+        element: el.querySelector('.accessible-autocomplete'),
+        id: formInput.id,
         name: formInput.name,
         defaultValue: currentInputValue,
         source: (query, populateResults) => {
           currentInputValue = query;
-          return source({ query, populateResults });
+          return dataSource({ query, populateResults });
         },
         minLength: SHOW_SUGGESTIONS_THRESHOLD,
         templates: {

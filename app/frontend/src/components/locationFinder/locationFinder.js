@@ -19,21 +19,21 @@ export const LOADING_PLACEHOLDER = 'Finding Location...';
 export const startLoading = (container, input) => {
   input.disabled = true;
   container.classList.add('js-location-finder--loading');
-  loader.add(document.getElementById(getTargetElementId()), LOADING_PLACEHOLDER);
+  loader.add(document.querySelector(getTargetSelector()), LOADING_PLACEHOLDER);
 };
 
 export const stopLoading = (container, input) => {
-  loader.remove(document.getElementById(getTargetElementId()), DEFAULT_PLACEHOLDER);
+  loader.remove(document.querySelector(getTargetSelector()), DEFAULT_PLACEHOLDER);
   container.classList.remove('js-location-finder--loading');
   input.removeAttribute('disabled');
 };
 
-const getTargetElementId = () => {
+const getTargetSelector = () => {
   if (document.getElementById('current-location')) {
     return document.getElementById('current-location').getAttribute('data-loader');
   }
 
-  return 'location-field';
+  return '#location-field';
 };
 
 export const showLocationLink = (container) => {
