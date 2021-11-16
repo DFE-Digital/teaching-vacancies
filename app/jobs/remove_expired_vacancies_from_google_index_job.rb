@@ -3,8 +3,9 @@ class RemoveExpiredVacanciesFromGoogleIndexJob < ApplicationJob
 
   def perform
     Rails.logger.info("Removing expired jobs from Google index")
-    Vacancy.expired.find_each do |vacancy|
-      RemoveGoogleIndexQueueJob.perform_later(Rails.application.routes.url_helpers.job_url(vacancy))
+    Vacancy.expired.where(google_index_removed: false).limit(500).each do |vacancy|
+      RemoveGoogleIndexQueueJob.perform_now(Rails.application.routes.url_helpers.job_url(vacancy))
+      vacancy.update_column(:google_index_removed, true)
     end
     Rails.logger.info("Finished removing expired jobs from Google index")
   end
