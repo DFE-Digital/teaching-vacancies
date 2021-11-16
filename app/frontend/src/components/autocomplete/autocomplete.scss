@@ -10,6 +10,10 @@
   }
 }
 
+.accessible-autocomplete__container--desktop .autocomplete__menu {
+  position: absolute;
+}
+
 .autocomplete__wrapper {
   .autocomplete__input {
     background-color: govuk-colour('white');
