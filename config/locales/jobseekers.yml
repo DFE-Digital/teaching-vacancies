@@ -384,9 +384,16 @@ en:
         title: Reset your password
     registrations:
       check_your_email:
-        description: We have sent you an email with simple instructions on how to verify your email address.
+        additional_instructions: >-
+          To finish setting up your Teaching Vacancies account you must click the link in the email.
+          If you have not received the email after a few minutes, please check your spam folder.
+        description: "We have sent you an email with instructions on how to verify your email address. We sent the email to:"
         having_trouble_html: Still having trouble? %{mail_to} to our support team.
         report_it: Report it
+        resend_summary: Need us to resend the email?
+        resend_text_html: If you did not receive the email, you can %{resend_link} or %{restart_link}.<br><br>Need help? Email us at %{mail_to}
+        resend_link: request a new one
+        restart_link: provide another email address
         title: Check your email
       confirm_destroy:
         feedback_title: Tell us why you are closing your account
