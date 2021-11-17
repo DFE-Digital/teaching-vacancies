@@ -10,10 +10,8 @@ module StatusTagHelper
   private
 
   def step_forms_contain_errors?(resource, form_classes)
-    form_classes.each do |form_class|
-      return true if form_class.fields.any? { |field| field.in?(resource.errors.messages.keys) }
+    form_classes.any? do |form_class|
+      form_class.fields.any? { |field| resource.errors.include?(field) }
     end
-
-    false
   end
 end
