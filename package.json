@@ -24,7 +24,7 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.3",
     "backstopjs": "^5.4.4",
-    "concurrently": "^6.3.0",
+    "concurrently": "^6.4.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.2",
