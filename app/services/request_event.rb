@@ -17,6 +17,7 @@ class RequestEvent < Event
   attr_reader :request, :response, :session, :current_jobseeker, :current_publisher
 
   def base_data
+    Rollbar.log(:info, "Request referrer: #{request.referer}")
     @base_data ||= super.merge(
       request_uuid: request.uuid,
       request_user_agent: user_agent,
