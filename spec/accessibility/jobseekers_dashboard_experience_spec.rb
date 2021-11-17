@@ -31,7 +31,7 @@ RSpec.describe "Jobseeker dashboardexperience", type: :system, accessibility: tr
     before do
       visit job_path(vacancy)
       click_on I18n.t("jobseekers.saved_jobs.save")
-      visit jobseeker_root_path
+      visit jobseekers_saved_jobs_path
     end
 
     it "it meets accessibility standards" do

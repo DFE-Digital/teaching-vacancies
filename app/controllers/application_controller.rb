@@ -12,10 +12,11 @@ class ApplicationController < ActionController::Base
   before_action :store_jobseeker_redirect_to!, if: -> { redirect_to_param.present? }
   before_action :trigger_click_event, if: -> { click_event_param.present? }
   before_action { EventContext.request_event = request_event }
+  before_action :destroy_jobseeker_return_to!
 
   after_action :trigger_page_visited_event, unless: :request_is_healthcheck?
 
-  helper_method :cookies_preference_set?, :referred_from_jobs_path?, :user_type, :utm_parameters, :current_variant?
+  helper_method :cookies_preference_set?, :current_variant?, :jobseeker_root_path, :referred_from_jobs_path?, :user_type, :utm_parameters
   helper GOVUKDesignSystemFormBuilder::BuilderHelper
 
   include Publishers::AuthenticationConcerns
@@ -44,6 +45,22 @@ class ApplicationController < ActionController::Base
       :jobseeker
     elsif publisher_signed_in?
       :publisher
+    end
+  end
+
+  def jobseeker_root_path(*args)
+    if current_jobseeker.job_applications.any?
+      jobseekers_job_applications_path(*args)
+    else
+      super(*args)
+    end
+  end
+
+  def jobseeker_root_url(*args)
+    if current_jobseeker.job_applications.any?
+      jobseekers_job_applications_url(*args)
+    else
+      super(*args)
     end
   end
 
@@ -106,6 +123,10 @@ class ApplicationController < ActionController::Base
 
   def store_jobseeker_redirect_to!
     store_location_for(:jobseeker, redirect_to_param)
+  end
+
+  def destroy_jobseeker_return_to!
+    session.delete(:jobseeker_return_to) unless devise_controller?
   end
 
   def redirect_to_param
