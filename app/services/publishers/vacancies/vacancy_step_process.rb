@@ -20,20 +20,6 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
     })
   end
 
-  def validatable_steps(top_level: false)
-    initial_set = (top_level ? step_groups.keys : steps)
-
-    initial_set - %i[documents review]
-  end
-
-  def validate_all_steps
-    validatable_steps.each.with_object({}) { |s, h| h[s] = validate_step(s) }
-  end
-
-  def all_steps_valid?
-    validate_all_steps.values.all?(&:valid?)
-  end
-
   def previous_step_or_review
     return steps.last if session[:current_step] == :review && first_of_group?
 
@@ -41,24 +27,6 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
   end
 
   private
-
-  def validate_step(step_name)
-    step_form = "publishers/job_listing/#{step_name}_form".camelize.constantize
-
-    # We need to merge in the current organisation otherwise the form will always be invalid for local authority users
-    vacancy_params = vacancy
-      .slice(*step_form.fields)
-      .merge(current_organisation: organisation)
-
-    step_form.new(vacancy_params, vacancy).tap do |form|
-      form.valid?
-      vacancy.errors.merge!(
-        form.errors.tap do |errors|
-          errors.each { |e| e.options[:step] = step_name }
-        end,
-      )
-    end
-  end
 
   def job_role_steps
     if vacancy.main_job_role == "sendco"

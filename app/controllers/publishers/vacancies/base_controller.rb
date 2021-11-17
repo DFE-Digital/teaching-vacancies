@@ -20,8 +20,15 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
     @vacancy ||= current_organisation.all_vacancies.find(params[:job_id].presence || params[:id])
   end
 
+  def form_sequence
+    @form_sequence ||= Publishers::VacancyFormSequence.new(
+      vacancy: vacancy,
+      organisation: current_organisation,
+    )
+  end
+
   def all_steps_valid?
-    step_process.all_steps_valid?
+    form_sequence.all_steps_valid?
   end
 
   def back_to(**extras)

@@ -1,6 +1,6 @@
 RSpec.shared_examples "provides an overview of the draft vacancy form" do
   let(:step_process) do
-    ::Publishers::Vacancies::VacancyStepProcess.new(
+    Publishers::Vacancies::VacancyStepProcess.new(
       :review,
       vacancy: vacancy,
       organisation: organisation,
@@ -28,7 +28,7 @@ RSpec.shared_examples "provides an overview of the draft vacancy form" do
   end
 
   it "shows the status of each stage" do
-    top_level_steps = step_process.validatable_steps(top_level: true)
+    top_level_steps = step_process.step_groups.keys - Publishers::VacancyFormSequence::NOT_VALIDATABLE
     completed_steps = top_level_steps - %i[pay_package working_patterns]
 
     completed_steps.each do |step_name|

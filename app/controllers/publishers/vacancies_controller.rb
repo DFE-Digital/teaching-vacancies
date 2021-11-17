@@ -4,7 +4,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   before_action :redirect_to_new_features_reminder, only: %i[create]
 
   def show
-    step_process.validate_all_steps
+    form_sequence.validate_all_steps
     session[:current_step] = :review
     @vacancy = VacancyPresenter.new(vacancy)
   end
