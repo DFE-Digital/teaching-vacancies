@@ -32,20 +32,11 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
   end
 
   def back_to(**extras)
-    case params[:back_to]
-    when "review"
-      organisation_job_review_path(
-        job_id: vacancy.id,
-        anchor: "errors",
-        **extras,
-      )
-    else
-      organisation_job_path(
-        id: vacancy.id,
-        anchor: "errors",
-        **extras,
-      )
-    end
+    organisation_job_path(
+      id: vacancy.id,
+      anchor: "errors",
+      **extras,
+    )
   end
 
   def readable_job_location(job_location, school_name: nil, schools_count: nil)
