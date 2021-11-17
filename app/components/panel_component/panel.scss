@@ -11,6 +11,12 @@
         border-bottom: 0;
       }
 
+      &--mobile {
+        @include govuk-media-query($from: desktop) {
+          display: none;
+        }
+      }
+
       &:last-of-type {
         border-bottom: 0;
       }
