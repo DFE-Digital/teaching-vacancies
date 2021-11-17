@@ -14,11 +14,11 @@
       - if vacancy.enable_job_applications?
         - list.row :personal_statement_guidance, optional: true
       - else
-        - list.row :application_link, if_present: open_in_new_tab_link_to(vacancy.application_link, vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link"))
+        - list.row :application_link, value_if_attribute_present: open_in_new_tab_link_to(vacancy.application_link, vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link"))
 
       - if vacancy.how_to_apply.present?
         - list.row :how_to_apply
 
       - list.row :contact_email, text: govuk_mail_to(vacancy.contact_email, nil, "aria-label": t("jobs.aria_labels.contact_email_link", email: vacancy.contact_email))
-      - list.row :contact_number, if_present: govuk_link_to(vacancy.contact_number, "tel:#{vacancy.contact_number}"), optional: true
+      - list.row :contact_number, value_if_attribute_present: govuk_link_to(vacancy.contact_number, "tel:#{vacancy.contact_number}"), optional: true
       - list.row :school_visits, label: t("jobs.#{school_or_trust_visits(vacancy.parent_organisation)}"), optional: true

@@ -27,7 +27,7 @@ class ValidatableSummaryListComponent::RowComponent < GovukComponent::SummaryLis
     return @options[:text] if @options[:text]
 
     val = @record.public_send(@attribute)
-    val = @options[:if_present] if val.present? && @options[:if_present].present?
+    val = @options[:value_if_attribute_present] if val.present? && @options[:value_if_attribute_present].present?
 
     if @options[:optional]
       val.presence || t("jobs.not_defined")
