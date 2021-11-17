@@ -27,10 +27,10 @@ Publisher.create(email: "ife.akinbolaji@digital.education.gov.uk", family_name: 
 Publisher.create(email: "jesse.yuen@digital.education.gov.uk", family_name: "Yuen", given_name: "Jesse", **attrs)
 Publisher.create(email: "joseph.hull@digital.education.gov.uk", family_name: "Hull", given_name: "Joseph", **attrs)
 Publisher.create(email: "leonie.shanks@digital.education.gov.uk", family_name: "Shanks", given_name: "Leonie", **attrs)
-Publisher.create(email: "mili.malde@digital.education.gov.uk", family_name: "Malde", given_name: "Mili", **attrs)
 Publisher.create(email: "molly.capstick@digital.education.gov.uk", family_name: "Capstick", given_name: "Molly", **attrs)
 Publisher.create(email: "rishil.patel@digital.education.gov.uk", family_name: "Patel", given_name: "Rishil", **attrs)
 Publisher.create(email: "rose.mackworth-young@digital.education.gov.uk", family_name: "Mackworth-Young", given_name: "Rose", **attrs)
+Publisher.create(email: "sabrina.altieri@education.gov.uk", family_name: "Altieri", given_name: "Sabrina", **attrs)
 
 # Vacancies at Bexleyheath school
 attrs = { organisations: [bexleyheath_school], publisher_organisation: bexleyheath_school, publisher: Publisher.all.sample }
