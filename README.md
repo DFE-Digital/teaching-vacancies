@@ -21,6 +21,7 @@ to provide a seamless onboarding experience for developers and other team member
 You will need the following software installed on your system:
 - [Git](https://github.com/git-guides/install-git)
 - [Docker Desktop](https://www.docker.com/get-started)
+  - You will need to start Docker before the process will work.
 - [Visual Studio Code](https://code.visualstudio.com)
 
 To get the application running:
