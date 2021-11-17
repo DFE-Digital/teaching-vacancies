@@ -4,4 +4,4 @@
     div class="govuk-!-margin-top-3"
       - errors.each do |error|
         div class="govuk-!-margin-bottom-1"
-          = govuk_link_to error.message, "##{error.attribute}", class: "govuk-link--no-visited-state"
+          = (yield error).presence || govuk_link_to(error.message, "##{error.attribute}", class: "govuk-link--no-visited-state")
