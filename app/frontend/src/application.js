@@ -2,6 +2,7 @@ import { Application } from '@hotwired/stimulus';
 
 import PanelController from '../../components/panel_component/panel';
 import UtilsController from './components/utils';
+import AutoCompleteController from './components/autocomplete/autocomplete';
 
 const application = Application.start();
 
@@ -11,3 +12,4 @@ window.Stimulus = application;
 
 application.register('panel', PanelController);
 application.register('utils', UtilsController);
+application.register('autocomplete', AutoCompleteController);
