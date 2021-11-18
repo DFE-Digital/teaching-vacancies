@@ -4,6 +4,7 @@ en:
     sign_in: Sign in
 
   app:
+    back_to_homepage: Return to homepage
     description: >-
       On Teaching Vacancies, early career teachers, experienced teachers and leaders can search for a job at a school or Trust in England and set up job alerts.
     govuk: GOV.UK
