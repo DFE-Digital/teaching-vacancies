@@ -52,12 +52,12 @@ RSpec.shared_examples "provides an overview of the draft vacancy form" do
 
   context "when incomplete and submitted for publication" do
     before do
-      expect(page).not_to have_css(".govuk-notification-banner--warning")
+      expect(page).not_to have_css(".govuk-error-summary")
       click_on "Confirm and submit job"
     end
 
     it "provides top-of-page validation errors which link to the relevant form parts" do
-      within ".govuk-notification-banner--warning" do
+      within ".govuk-error-summary" do
         expect(page).to have_link("Enter a salary", href: organisation_job_build_path(job_id: vacancy.id, id: "pay_package", back_to: "manage_draft"))
       end
     end
@@ -71,12 +71,12 @@ RSpec.shared_examples "provides an overview of the draft vacancy form" do
 
   context "when incomplete and previewed" do
     before do
-      expect(page).not_to have_css(".govuk-notification-banner--warning")
+      expect(page).not_to have_css(".govuk-error-summary")
       click_on "Preview job listing"
     end
 
     it "provides top-of-page validation errors which link to the relevant form parts" do
-      within ".govuk-notification-banner--warning" do
+      within ".govuk-error-summary" do
         expect(page).to have_link("Enter a salary", href: organisation_job_build_path(job_id: vacancy.id, id: "pay_package", back_to: "manage_draft"))
       end
     end
