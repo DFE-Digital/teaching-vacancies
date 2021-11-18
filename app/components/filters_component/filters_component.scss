@@ -17,8 +17,6 @@
 }
 
 .filters-component {
-  background-color: govuk-colour('light-grey');
-
   &:focus {
     outline: $govuk-focus-width solid $govuk-focus-colour;
   }
