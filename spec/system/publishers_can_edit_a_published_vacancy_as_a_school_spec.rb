@@ -15,23 +15,6 @@ RSpec.describe "Publishers can edit a vacancy" do
       )
     end
 
-    context "when the vacancy is now invalid" do
-      before do
-        vacancy.about_school = nil
-        vacancy.contract_type = nil
-        vacancy.save(validate: false)
-      end
-
-      scenario "shows action required error message" do
-        visit organisation_job_path(vacancy.id)
-
-        expect(page).to have_content(I18n.t("banners.action_required"))
-        expect(page).to have_content(I18n.t("messages.jobs.action_required.message.publisher"))
-        expect(page).to have_content(I18n.t("job_summary_errors.about_school.blank", organisation: "school"))
-        expect(page).to have_content(I18n.t("job_details_errors.contract_type.inclusion"))
-      end
-    end
-
     scenario "shows all vacancy information" do
       visit organisation_job_path(vacancy.id)
 
@@ -42,7 +25,7 @@ RSpec.describe "Publishers can edit a vacancy" do
       visit organisation_job_path(vacancy.id)
 
       within("h2.govuk-heading-l") do
-        expect(page).to have_content(I18n.t("jobs.manage_listing", job_title: vacancy.job_title))
+        expect(page).to have_content("Manage job listing")
       end
     end
 
@@ -50,6 +33,12 @@ RSpec.describe "Publishers can edit a vacancy" do
       visit organisation_job_path(vacancy.id)
 
       expect(page).to_not have_content("Creating a job listing steps")
+    end
+
+    scenario "publish buttons are not present" do
+      visit organisation_job_path(vacancy.id)
+
+      expect(page).to_not have_content("Confirm and submit job")
     end
 
     describe "#cancel_and_return_later" do
@@ -69,7 +58,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         visit organisation_job_path(vacancy.id)
 
         within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.manage_listing", job_title: vacancy.job_title))
+          expect(page).to have_content("Manage job listing")
         end
         click_header_link(I18n.t("publishers.vacancies.steps.job_details"))
 
@@ -122,7 +111,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         visit organisation_job_path(vacancy.id)
 
         within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.manage_listing", job_title: vacancy.job_title))
+          expect(page).to have_content("Manage job listing")
         end
 
         click_header_link(I18n.t("publishers.vacancies.steps.pay_package"))
@@ -170,7 +159,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         visit organisation_job_path(vacancy.id)
 
         within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.manage_listing", job_title: vacancy.job_title))
+          expect(page).to have_content("Manage job listing")
         end
         click_header_link(I18n.t("publishers.vacancies.steps.important_dates"))
 
@@ -274,7 +263,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         visit organisation_job_path(vacancy.id)
 
         within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.manage_listing", job_title: vacancy.job_title))
+          expect(page).to have_content("Manage job listing")
         end
         click_header_link(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
 
@@ -316,7 +305,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         visit organisation_job_path(vacancy.id)
 
         within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.manage_listing", job_title: vacancy.job_title))
+          expect(page).to have_content("Manage job listing")
         end
         click_header_link(I18n.t("publishers.vacancies.steps.job_summary"))
 

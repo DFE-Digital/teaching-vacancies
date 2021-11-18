@@ -4,7 +4,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   before_action :redirect_to_new_features_reminder, only: %i[create]
 
   def show
-    validate_all_steps
+    form_sequence.validate_all_steps
     session[:current_step] = :review
     @vacancy = VacancyPresenter.new(vacancy)
   end
@@ -30,6 +30,8 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   end
 
   def preview
+    redirect_to back_to(show_errors: true) unless all_steps_valid?
+
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
@@ -61,11 +63,5 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     return false if (viewed_at = current_publisher.viewed_new_features_page_at).blank?
 
     Vacancy.published.where(publisher_id: current_publisher.id, enable_job_applications: false, created_at: viewed_at..).any?
-  end
-
-  def validate_all_steps
-    step_process.validatable_steps.each do |step|
-      step_valid?(step)
-    end
   end
 end
