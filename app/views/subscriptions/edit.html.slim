@@ -1,20 +1,2 @@
-- content_for :page_title_prefix, t(".title")
-
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = form_for @form, url: subscription_path(@subscription.token), method: :patch do |f|
-        = f.govuk_error_summary
-
-        h1.govuk-heading-xl class="govuk-!-margin-bottom-4" = t(".title")
-
-        p.govuk-body-m class="govuk-!-margin-bottom-4" = t(".description")
-
-        .location-search = render "fields", f: f
-
-        = govuk_notification_banner title_text: t("banners.important") do
-          = t("subscriptions.info")
-
-        = f.hidden_field :token, value: @subscription.token
-
-        = f.govuk_submit t("buttons.update_alert"), classes: "govuk-!-padding-left-8 govuk-!-padding-right-8"
+= render "form", form_options: { url: subscription_path(@subscription.token), method: :patch }, i18n_prefix: "subscriptions.edit" do
+  = f.hidden_field :token, value: @subscription.token
