@@ -1,6 +1,8 @@
 - content_for :page_title_prefix, t("#{i18n_prefix}.title")
 
 .govuk-main-wrapper
+  p = govuk_link_to t("app.back_to_homepage"), root_path
+
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = form_for @form, **local_assigns.fetch(:form_options, {}) do |f|
