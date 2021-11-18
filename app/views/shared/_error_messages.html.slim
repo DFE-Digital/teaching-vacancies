@@ -1,7 +1,2 @@
-- if errors.any?
-  = govuk_notification_banner title_text: t("banners.action_required"), classes: "govuk-notification-banner--warning" do
-    span class="govuk-!-margin-top-3" = t("messages.jobs.action_required.message")[user_type]
-    div class="govuk-!-margin-top-3"
-      - errors.each do |error|
-        div class="govuk-!-margin-bottom-1"
-          = (yield error).presence || govuk_link_to(error.message, "##{error.attribute}", class: "govuk-link--no-visited-state")
+- if model.errors.any?
+  = govuk_error_summary(model, presenter: local_assigns[:presenter].presence || GOVUKDesignSystemFormBuilder.config.default_error_summary_presenter)

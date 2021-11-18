@@ -6,8 +6,7 @@
   .vacancy.govuk-grid-row
     .govuk-grid-column-two-thirds
       h2.govuk-heading-l = t("publishers.vacancies.steps.review_heading")
-      = render "shared/error_messages", errors: vacancy.errors do |error|
-        = govuk_link_to error.message, organisation_job_build_path(job_id: vacancy.id, id: error.options[:step], back_to: "review"), class: "govuk-link--no-visited-state"
+      = render "shared/error_messages", model: vacancy, presenter: ErrorSummaryPresenter.new(vacancy.errors, ->(e) { organisation_job_build_path(job_id: vacancy.id, id: e.options[:step], back_to: "review") })
 
       p.govuk-body-l
         - if vacancy.publish_on&.today?

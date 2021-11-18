@@ -8,8 +8,7 @@
     = render "actions"
 
     - if params[:show_errors]
-      = render "shared/error_messages", errors: vacancy.errors do |error|
-        = govuk_link_to error.message, organisation_job_build_path(job_id: vacancy.id, id: error.options[:step], back_to: "manage_draft"), class: "govuk-link--no-visited-state"
+      = render "shared/error_messages", model: vacancy, presenter: ErrorSummaryPresenter.new(vacancy.errors, ->(e) { organisation_job_build_path(job_id: vacancy.id, id: e.options[:step], back_to: "manage_draft") })
 
     = render "edit_sections", back_to: "manage_draft", show_errors: params[:show_errors] == "true"
     = render "publish_buttons", back_to: "manage_draft" if vacancy.draft?
