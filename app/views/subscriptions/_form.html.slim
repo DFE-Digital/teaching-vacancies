@@ -16,6 +16,6 @@
 
         = govuk_details summary_text: t("subscriptions.unsubscribe.guidance.heading"), text: t("subscriptions.unsubscribe.guidance.body")
 
-        = yield
+        = yield f
 
-        = f.govuk_submit t("buttons.subscribe"), classes: "govuk-!-padding-left-8 govuk-!-padding-right-8"
+        = f.govuk_submit button_text, classes: "govuk-!-padding-left-8 govuk-!-padding-right-8"
