@@ -12,8 +12,7 @@
 
         .location-search = render "fields", f: f
 
-        = govuk_notification_banner title_text: t("banners.important") do
-          = t("subscriptions.info")
+        = govuk_details summary_text: t("subscriptions.unsubscribe.guidance.heading"), text: t("subscriptions.unsubscribe.guidance.body")
 
         = yield
 
