@@ -227,3 +227,11 @@
 .js-enabled .filters-component__submit {
   display: none;
 }
+
+.plain-styling .filters-component {
+  background: none;
+
+  &__groups__group {
+    border-bottom: 0;
+  }
+}
