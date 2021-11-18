@@ -42,7 +42,7 @@
                 = tag.div(card.labelled_item(t(".closing_date"), OrganisationVacancyPresenter.new(submitted_application.vacancy).application_deadline))
 
               - card.action_item link: govuk_link_to(safe_join([t(".view_application"), tag.span(" for #{submitted_application.vacancy.job_title}", class: "govuk-visually-hidden")]), jobseekers_job_application_path(submitted_application))
-              - if submitted_application.status.in?(%w[shortlisted submitted])
+              - if submitted_application.status.in?(%w[reviewed shortlisted submitted])
                 - card.action_item link: govuk_link_to(safe_join([t(".withdraw"), tag.span(" application for #{submitted_application.vacancy.job_title}", class: "govuk-visually-hidden")]), jobseekers_job_application_confirm_withdraw_path(submitted_application))
 
       - else
