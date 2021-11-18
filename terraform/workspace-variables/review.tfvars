@@ -25,7 +25,7 @@ documents_s3_bucket_force_destroy = true
 
 # Gov.UK PaaS
 paas_space_name                     = "teaching-vacancies-review"
-paas_postgres_service_plan          = "tiny-unencrypted-11"
+paas_postgres_service_plan          = "small-11"
 paas_redis_cache_service_plan       = "micro-5_x"
 paas_redis_queue_service_plan       = "micro-5_x"
 paas_logging_service_binding_enable = false
