@@ -1,5 +1,5 @@
 class ErrorSummaryPresenter
-  def initialize(errors, link_generator)
+  def initialize(errors, link_generator = ->(_) {})
     @errors = errors
     @link_generator = link_generator
   end

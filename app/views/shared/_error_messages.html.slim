@@ -1,2 +1,2 @@
 - if model.errors.any?
-  = govuk_error_summary(model, presenter: local_assigns[:presenter].presence || GOVUKDesignSystemFormBuilder.config.default_error_summary_presenter)
+  = govuk_error_summary(model, nil, t("messages.jobs.action_required.message")[user_type], presenter: local_assigns[:presenter].presence || GOVUKDesignSystemFormBuilder.config.default_error_summary_presenter)
