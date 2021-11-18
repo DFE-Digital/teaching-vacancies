@@ -35,10 +35,6 @@ class Publishers::SessionsController < Devise::SessionsController
     url.to_s
   end
 
-  def after_sign_in_path_for(_resource)
-    organisation_path
-  end
-
   def redirect_to_authentication_fallback
     return unless AuthenticationFallback.enabled?
 
