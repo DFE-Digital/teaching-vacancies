@@ -1,15 +1,15 @@
-= f.govuk_fieldset legend: { text: t("helpers.legend.jobseekers_job_application_details_qualifications_shared_legends.subjects") }, class: "subjects-and-grades" do
+= f.govuk_fieldset legend: { text: t("helpers.legend.jobseekers_job_application_details_qualifications_shared_legends.subjects") }, class: "subjects-and-grades", data: { controller: "manage-qualifications" } do
   - form.qualification_results.each_with_index do |result, idx|
     = f.fields_for :qualification_results, result do |result_form|
-      .inline-fields-container.subject-row class="#{idx > form.highest_present_result_index ? "js-hidden" : ""}"
+      .inline-fields-container.subject-row class="#{idx > form.highest_present_result_index ? "js-hidden" : ""}" data-manage-qualifications-target="row"
         = result_form.govuk_text_field :subject, label: { text: "Subject #{idx + 1}" }, aria: { required: idx.zero? }, form_group: { classes: "govuk-!-width-two-thirds" }
         = result_form.govuk_text_field :grade, aria: { required: idx.zero? }, form_group: { classes: "govuk-!-width-one-third" }
         .govuk-form-group.button_to
-          button.js-action.delete-button.govuk-delete-link class="govuk-!-margin-bottom-2"
+          button.js-action.delete-button.govuk-delete-link class="govuk-!-margin-bottom-2" data-action="manage-qualifications#deleteRow"
             = t("buttons.delete_subject")
 
   span class="govuk-!-margin-bottom-6 govuk-!-margin-top-0 js-action button_to"
-    button.govuk-delete-link id="add_subject"
+    button.govuk-delete-link id="add_subject" data-action="manage-qualifications#addRow"
       = t("buttons.add_another_subject")
 
 = f.govuk_text_field :institution, label: { size: "s" }, aria: { required: true }, width: "three-quarters"
