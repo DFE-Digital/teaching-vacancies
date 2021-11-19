@@ -30,7 +30,7 @@ html.govuk-template.app-html-class lang="en"
 
     = render "layouts/header"
 
-    .govuk-width-container.phase-banner
+    .govuk-width-container.phase-banner class="govuk-!-display-none-print"
       = govuk_phase_banner(tag: { text: "beta" }) do
         span.govuk-phase-banner__text
           | This is a new service - #{govuk_link_to "your feedback", new_feedback_path} will help us to improve it.
