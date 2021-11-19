@@ -55,7 +55,7 @@ staging: ## staging
 		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
 
 .PHONY: production
-production: ## production # Requires `CONFIRM_PRODUCTION=true`
+production: ## production # Requires `CONFIRM_PRODUCTION` to be present (any value)
 		$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
 		$(eval env=production)
 		$(eval space=teaching-vacancies-production)
