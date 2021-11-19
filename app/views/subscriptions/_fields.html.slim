@@ -3,6 +3,8 @@
 = render "shared/search/current_location", loaderElement: "jobseekers-subscription-form-location-field"
 = render "shared/search/radius", f: f, wide: false
 
+div class="divider-bottom govuk-!-margin-top-6 govuk-!-margin-bottom-4"
+
 ruby:
   items = [
     {
@@ -57,11 +59,13 @@ ruby:
     },
   ]
 
-div class="govuk-!-margin-bottom-7 plain-styling"
+div class="govuk-!-margin-bottom-1 plain-styling"
   = render(FiltersComponent.new(form: f,
     filters: { total_count: 0, title: t("subscriptions.edit.filters") },
     items: items,
     options: { remove_buttons: false, mobile_variant: false, close_all: false }))
+
+.divider-bottom
 
 - if jobseeker_signed_in?
   = f.hidden_field :email, value: current_jobseeker.email
