@@ -106,10 +106,12 @@ deploy-local-image: push-local-image terraform-app-plan## make passcode=MyPassco
 
 ##@ Plan or apply changes to dev, review, staging, or production. Requires Terraform CLI
 
-.PHONY: check-docker-tag
-check-docker-tag:
-		$(if $(tag), , $(error Missing environment variable "tag"))
+.PHONY: check-terraform-variables
+check-terraform-variables:
+		$(if $(tag), , $(eval export tag=master))
 		$(eval export TF_VAR_paas_app_docker_image=$(DOCKER_REPOSITORY):$(tag))
+		$(if $(or $(disable_passcode),$(passcode)), , $(error Missing environment variable "passcode", retrieve from https://login.london.cloud.service.gov.uk/passcode))
+		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
 
 ci:	## Run in automation environment
 	$(eval export disable_passcode=true)
@@ -117,24 +119,21 @@ ci:	## Run in automation environment
 
 .PHONY: terraform-app-init
 terraform-app-init:
-		$(if $(tag), , $(eval export tag=master))
-		$(if $(or $(disable_passcode),$(passcode)), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
-		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
 		cd terraform/app && rm -f .terraform.lock.hcl && terraform init -reconfigure -input=false $(backend_config)
 
 .PHONY: terraform-app-plan
-terraform-app-plan: terraform-app-init check-docker-tag ## make passcode=MyPasscode tag=dev-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714 <env> terraform-app-plan
+terraform-app-plan: terraform-app-init check-terraform-variables ## make passcode=MyPasscode tag=dev-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714 <env> terraform-app-plan
 		cd terraform/app && terraform plan -var-file ../workspace-variables/$(var_file).tfvars
 
 .PHONY: terraform-app-apply
-terraform-app-apply: terraform-app-init check-docker-tag ## make passcode=MyPasscode tag=47fd1475376bbfa16a773693133569b794408995 <env> terraform-app-apply
+terraform-app-apply: terraform-app-init check-terraform-variables ## make passcode=MyPasscode tag=47fd1475376bbfa16a773693133569b794408995 <env> terraform-app-apply
 		cd terraform/app && terraform apply -input=false -var-file ../workspace-variables/$(var_file).tfvars -auto-approve
 
 terraform-app-destroy: terraform-app-init ## make qa destroy passcode=MyPasscode
 	$(if $(CONFIRM_DESTROY), , $(error Can only run with CONFIRM_DESTROY))
 	cd terraform/app && terraform destroy -var-file ../workspace-variables/${var_file}.tfvars
 
-terraform-app-database-replace: terraform-app-init check-docker-tag
+terraform-app-database-replace: terraform-app-init check-terraform-variables
 	$(if $(CONFIRM_REPLACE), , $(error Can only run with CONFIRM_REPLACE)) \
 	cd terraform/app && terraform apply \
 		-replace="module.paas.cloudfoundry_service_instance.postgres_instance" \
@@ -177,6 +176,28 @@ terraform-monitoring-apply: terraform-monitoring-init ## make passcode=MyPasscod
 console: ## make qa console
 	cf target -s ${space}
 	cf ssh teaching-vacancies-${env} -t -c "cd /app && /usr/local/bin/bundle exec rails c"
+
+get-postgres-instance-guid: ## Gets the postgres service instance's guid make dev passcode=xxxxx get-postgres-instance-guid
+	cf target -s ${space} 1> /dev/null
+	$(eval export DB_INSTANCE_GUID=$(shell cf service teaching-vacancies-postgres-${env} --guid))
+	@echo The guid for the database is: ${DB_INSTANCE_GUID}
+
+rename-postgres-service: ## make dev rename-postgres-service
+	cf target -s ${space} 1> /dev/null
+	cf rename-service teaching-vacancies-postgres-${env} teaching-vacancies-postgres-${env}-old
+
+remove-postgres-tf-state: terraform-app-init ## make dev remove-postgres-tf-state
+	cd terraform/app && terraform state rm module.paas.cloudfoundry_service_instance.postgres_instance
+
+restore-postgres: set-restore-variables terraform-app-apply ##  make dev DB_INSTANCE_GUID=abcdb262-79d1-xx1x-b1dc-0534fb9b4 SNAPSHOT_TIME="2021-11-16 15:20:00" passcode=xxxxx restore-postgres
+
+set-restore-variables:
+	$(if $(DB_INSTANCE_GUID), , $(error can only run with DB_INSTANCE_GUID, get it by running `make ${space} get-postgres-instance-guid`))
+	$(if $(SNAPSHOT_TIME), , $(error can only run with BEFORE_TIME, eg SNAPSHOT_TIME="2021-09-14 16:00:00"))
+	$(eval export TF_VAR_paas_restore_from_db_guid=$(DB_INSTANCE_GUID))
+	$(eval export TF_VAR_paas_db_backup_before_point_in_time=$(SNAPSHOT_TIME))
+	echo "Restoring teaching-vacancies from $(TF_VAR_paas_restore_from_db_guid) before $(TF_VAR_paas_db_backup_before_point_in_time)"
+
 
 ##@ Help
 
