@@ -9,6 +9,9 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
+    - if job_application.draft?
+      = govuk_button_link_to t("buttons.delete_application"), jobseekers_job_application_confirm_destroy_path(job_application), class: "govuk-button--warning"
+
     / TODO: Confirm content
     - unless vacancy.listed?
       = govuk_notification_banner title_text: t("banners.important") do

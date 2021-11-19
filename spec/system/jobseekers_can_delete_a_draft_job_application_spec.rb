@@ -11,7 +11,8 @@ RSpec.describe "Jobseekers can delete a draft job application" do
   it "allows deleting the draft permanently" do
     visit jobseekers_job_applications_path
 
-    click_on I18n.t("buttons.delete")
+    click_on job_application.vacancy.job_title
+    click_on I18n.t("buttons.delete_application")
     click_on I18n.t("jobseekers.job_applications.confirm_destroy.confirm")
 
     expect(page).to have_content(I18n.t("messages.jobseekers.job_applications.draft_deleted", job_title: vacancy.job_title))

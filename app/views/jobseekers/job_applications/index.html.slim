@@ -9,41 +9,32 @@
 .govuk-main-wrapper class="govuk-!-padding-bottom-0"
   .govuk-grid-row
     .govuk-grid-column-full
-      h1.govuk-heading-l = t(".page_title")
+      h1.govuk-heading-l = t(".page_title_with_count", count: current_jobseeker.job_applications.count)
 
   .govuk-grid-row class="govuk-!-margin-top-0"
     .govuk-grid-column-full
       - if current_jobseeker.job_applications.any?
         #applications-results
-          - current_jobseeker.job_applications.includes(:vacancy).order(updated_at: :desc).draft.each do |draft_application|
-            = render CardComponent.new do |card|
-              - card.header do
-                = tag.div(govuk_link_to(draft_application.vacancy.job_title, job_path(draft_application.vacancy), class: "govuk-link--no-visited-state"))
-                = tag.div(vacancy_job_location(draft_application.vacancy))
+          - current_jobseeker.job_applications.includes(:vacancy).order(updated_at: :desc).draft.each do |job_application|
+            = render "job_application", job_application: job_application if job_application.vacancy.expires_at.future?
 
-              - card.body do
-                = draft_application.vacancy.expires_at.future? ? job_application_status_tag(draft_application.status) : govuk_tag(text: "deadline passed", colour: "grey", classes: "govuk-!-margin-bottom-2")
-                = tag.div(card.labelled_item(t(".last_edited"), format_time_to_datetime_at(draft_application.updated_at)))
-                = tag.div(card.labelled_item(t(".closing_date"), OrganisationVacancyPresenter.new(draft_application.vacancy).application_deadline))
+          - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).submitted.each do |job_application|
+            = render "job_application", job_application: job_application
 
-              - if draft_application.vacancy.expires_at.future?
-                - card.action_item link: govuk_link_to(safe_join([t(".continue_application"), tag.span(" for #{draft_application.vacancy.job_title}", class: "govuk-visually-hidden")]), jobseekers_job_application_review_path(draft_application))
-              - card.action_item link: govuk_link_to(safe_join([t("buttons.delete"), tag.span(" application for #{draft_application.vacancy.job_title}", class: "govuk-visually-hidden")]), jobseekers_job_application_confirm_destroy_path(draft_application))
+          - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).reviewed.each do |job_application|
+            = render "job_application", job_application: job_application
 
-          - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).not_draft.each do |submitted_application|
-            = render CardComponent.new do |card|
-              - card.header do
-                = tag.div(govuk_link_to(submitted_application.vacancy.job_title, job_path(submitted_application.vacancy), class: "govuk-link--no-visited-state"))
-                = tag.div(vacancy_job_location(submitted_application.vacancy))
+          - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).shortlisted.each do |job_application|
+            = render "job_application", job_application: job_application
 
-              - card.body do
-                = job_application_status_tag(submitted_application.status)
-                = tag.div(card.labelled_item(t(".submitted"), format_time_to_datetime_at(submitted_application.submitted_at)))
-                = tag.div(card.labelled_item(t(".closing_date"), OrganisationVacancyPresenter.new(submitted_application.vacancy).application_deadline))
+          - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).unsuccessful.each do |job_application|
+            = render "job_application", job_application: job_application
 
-              - card.action_item link: govuk_link_to(safe_join([t(".view_application"), tag.span(" for #{submitted_application.vacancy.job_title}", class: "govuk-visually-hidden")]), jobseekers_job_application_path(submitted_application))
-              - if submitted_application.status.in?(%w[reviewed shortlisted submitted])
-                - card.action_item link: govuk_link_to(safe_join([t(".withdraw"), tag.span(" application for #{submitted_application.vacancy.job_title}", class: "govuk-visually-hidden")]), jobseekers_job_application_confirm_withdraw_path(submitted_application))
+          - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).withdrawn.each do |job_application|
+            = render "job_application", job_application: job_application
+
+          - current_jobseeker.job_applications.includes(:vacancy).order(updated_at: :desc).draft.each do |job_application|
+            = render "job_application", job_application: job_application unless job_application.vacancy.expires_at.future?
 
       - else
         = render EmptySectionComponent.new title: t(".no_job_applications") do
