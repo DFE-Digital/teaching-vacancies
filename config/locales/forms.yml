@@ -34,6 +34,7 @@ en:
     create_account: Create an account
     create_job: Create a job listing
     delete: Delete
+    delete_application: Delete application
     delete_draft: Delete draft
     delete_subject: Delete subject
     dismiss: Dismiss
