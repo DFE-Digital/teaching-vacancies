@@ -1,29 +1,5 @@
-@import '~govuk-frontend/govuk/base';
-
-.accessible-autocomplete {
-  &__container {
-    position: relative;
-  }
-
-  &__suggestion-highlight {
+.autocomplete {
+  &__suggestions--highlight {
     font-weight: bold;
-  }
-}
-
-.autocomplete__wrapper {
-  .autocomplete__input {
-    background-color: govuk-colour('white');
-    font-family: 'GDS Transport', arial, sans-serif;
-    height: 2.5rem;
-  }
-
-  .autocomplete__option--focused,
-  .autocomplete__option:hover {
-    background-color: #c2dff4;
-    border-color: $govuk-border-colour;
-  }
-
-  .autocomplete__option {
-    color: $govuk-text-colour;
   }
 }

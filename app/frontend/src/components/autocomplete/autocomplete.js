@@ -6,12 +6,14 @@ import './autocomplete.scss';
 import api from '../../lib/api';
 
 const SHOW_SUGGESTIONS_THRESHOLD = 3;
+const SUGGESTIONS_CLASSNAME = 'autocomplete__suggestions';
+const suggestionsContainerHTML = `<div class="${SUGGESTIONS_CLASSNAME} govuk-body"></div>`;
 
 const suggestionHTML = (text, inputValue) => {
   const index = text.toLowerCase().indexOf(inputValue.toLowerCase());
 
   /* eslint-disable max-len */
-  return `${text.substring(0, index)}<span class='accessible-autocomplete__suggestion-highlight'>${text.substring(index, index + inputValue.length)}</span>${text.substring(index + inputValue.length, text.length)}`;
+  return `${text.substring(0, index)}<span class='${SUGGESTIONS_CLASSNAME}--highlight'>${text.substring(index, index + inputValue.length)}</span>${text.substring(index + inputValue.length, text.length)}`;
   /* eslint-enable */
 };
 
@@ -21,14 +23,14 @@ export default class extends Controller {
     const dataSource = api[this.element.dataset.source];
     const position = this.element.dataset.autocompletePosition;
 
-    this.addContainers();
+    this.element.insertAdjacentHTML('beforeend', suggestionsContainerHTML);
 
     if (formInput && dataSource) {
       let currentInputValue = formInput.value;
       formInput.parentNode.removeChild(formInput);
 
       accessibleAutocomplete({
-        element: this.element.querySelector('.accessible-autocomplete'),
+        element: this.element.getElementsByClassName(SUGGESTIONS_CLASSNAME).item(0),
         id: formInput.id,
         name: formInput.name,
         defaultValue: currentInputValue,
@@ -44,10 +46,5 @@ export default class extends Controller {
         tNoResults: () => 'Loading...',
       });
     }
-  }
-
-  addContainers() {
-    const html = '<div class="accessible-autocomplete__container"><div class="accessible-autocomplete govuk-body"></div></div>';
-    this.element.insertAdjacentHTML('beforeend', html);
   }
 }
