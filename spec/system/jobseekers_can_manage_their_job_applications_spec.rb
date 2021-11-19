@@ -37,7 +37,7 @@ RSpec.describe "Jobseekers can manage their job applications" do
 
         it "can continue a draft application" do
           within ".card-component", text: draft_job_application.vacancy.job_title do
-            click_on I18n.t("jobseekers.job_applications.index.continue_application")
+            click_on draft_job_application.vacancy.job_title
           end
 
           expect(current_path).to eq(jobseekers_job_application_review_path(draft_job_application))
@@ -53,7 +53,7 @@ RSpec.describe "Jobseekers can manage their job applications" do
 
         it "can view a submitted application" do
           within ".card-component", text: submitted_job_application.vacancy.job_title do
-            click_on I18n.t("jobseekers.job_applications.index.view_application")
+            click_on submitted_job_application.vacancy.job_title
           end
 
           expect(current_path).to eq(jobseekers_job_application_path(submitted_job_application))
@@ -61,16 +61,18 @@ RSpec.describe "Jobseekers can manage their job applications" do
 
         it "can delete a draft application" do
           within ".card-component", text: draft_job_application.vacancy.job_title do
-            click_on I18n.t("buttons.delete")
+            click_on draft_job_application.vacancy.job_title
           end
+          click_on I18n.t("buttons.delete_application")
 
           expect(current_path).to eq(jobseekers_job_application_confirm_destroy_path(draft_job_application))
         end
 
         it "can withdraw a submitted application" do
           within ".card-component", text: submitted_job_application.vacancy.job_title do
-            click_on I18n.t("jobseekers.job_applications.index.withdraw")
+            click_on submitted_job_application.vacancy.job_title
           end
+          click_on I18n.t("buttons.withdraw_application")
 
           expect(current_path).to eq(jobseekers_job_application_confirm_withdraw_path(submitted_job_application))
         end

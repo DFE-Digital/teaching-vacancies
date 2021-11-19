@@ -198,18 +198,21 @@ en:
         create:
           success: Thank you for your feedback
       heading: Application
+      job_application:
+        closing_date: Closing date
+        last_edited: Last edited
+        shortlisted: Shortlisted
+        submitted: Submitted
+        withdrawn: Withdrawn
       index:
         continue_application: Continue application
-        closing_date: Closing date
         find_and_apply: Find and apply
-        last_edited: Last edited
         no_job_applications: You have not applied for any teaching jobs
         no_job_applications_body_html: "%{link_to} for a teaching job"
         page_title: My applications
+        page_title_with_count: My applications (%{count})
         skip_link: Skip to my job applications
-        submitted: Submitted
         view_application: View application
-        withdraw: Withdraw
       new:
         assistance:
           content_html: You can find out more about our %{privacy_html} and our %{terms_html}.
