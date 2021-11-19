@@ -1,0 +1,24 @@
+- job_application_link = job_application.draft? ? jobseekers_job_application_review_path(job_application) : jobseekers_job_application_path(job_application)
+
+= render CardComponent.new do |card|
+  - card.header do
+    = tag.div(govuk_link_to(job_application.vacancy.job_title, job_application_link, class: "govuk-link--no-visited-state"))
+    = tag.div(vacancy_job_location(job_application.vacancy))
+
+  - card.body do
+    - case job_application.status
+    - when "draft"
+      = tag.div(card.labelled_item(t(".last_edited"), format_time_to_datetime_at(job_application.updated_at)))
+    - when "submitted", "reviewed", "unsuccessful"
+      = tag.div(card.labelled_item(t(".submitted"), format_time_to_datetime_at(job_application.updated_at)))
+    - when "shortlisted"
+      = tag.div(card.labelled_item(t(".shortlisted"), format_time_to_datetime_at(job_application.shortlisted_at)))
+    - when "withdrawn"
+      = tag.div(card.labelled_item(t(".withdrawn"), format_time_to_datetime_at(job_application.updated_at)))
+
+    = tag.div(card.labelled_item(t(".closing_date"), OrganisationVacancyPresenter.new(job_application.vacancy).application_deadline))
+
+  - if job_application.draft? && job_application.vacancy.expires_at.past?
+    - card.action_item link: govuk_tag(text: "deadline passed", colour: "grey", classes: "govuk-!-margin-bottom-2")
+  - else
+    - card.action_item link: job_application_status_tag(job_application.status)
