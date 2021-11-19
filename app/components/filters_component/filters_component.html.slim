@@ -30,13 +30,13 @@
 
   .filters-component__groups
     - items.each do |group|
-      .filters-component__groups__group data-group=group[:key]
+      .filters-component__groups__group class="#{'small' if group[:small]}" data-group=group[:key]
         = form.govuk_collection_check_boxes group[:attribute],
           group[:options],
           group[:value_method],
           group[:text_method],
-          small: true,
-          legend: { text: group[:legend] },
+          small: group[:small],
+          legend: { text: group[:legend], size: (group[:small] ? "s" : "m") },
           hint: nil
 
   .filters-component__submit

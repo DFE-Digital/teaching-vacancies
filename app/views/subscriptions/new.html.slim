@@ -1,20 +1,2 @@
-- content_for :page_title_prefix, t(".title")
-
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = form_for @form, url: subscriptions_path do |f|
-        = f.govuk_error_summary
-
-        h1.govuk-heading-xl class="govuk-!-margin-bottom-4" = t(".title")
-
-        p.govuk-body-m class="govuk-!-margin-bottom-4" = t(".description")
-
-        .location-search = render "fields", f: f
-
-        = govuk_notification_banner title_text: t("banners.important") do
-          = t("subscriptions.info")
-
-        = recaptcha
-
-        = f.govuk_submit t("buttons.subscribe"), classes: "govuk-!-padding-left-8 govuk-!-padding-right-8"
+= render "form", form_options: { url: subscriptions_path }, i18n_prefix: "subscriptions.new", button_text: t("buttons.subscribe") do
+  = recaptcha
