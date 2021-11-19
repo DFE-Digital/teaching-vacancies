@@ -53,6 +53,19 @@ bar. This will start:
   > involvement at all.
 </details>
 
+* [API Documentation](https://docs.teaching-vacancies.service.gov.uk)
+* [API Keys](/documentation/api-keys.md)
+* [Continuous delivery](/documentation/continuous-delivery.md)
+* [Deployments](/documentation/deployments.md)
+* [Docker](/documentation/docker.md)
+* [DSI Integration](/documentation/dsi-integration.md)
+* [Hosting](/documentation/hosting.md)
+* [Logging](/documentation/logging.md)
+* [Onboarding](/documentation/onboarding.md)
+* [Misc](#misc)
+* [Search](/documentation/search.md)
+* [Troubleshooting](#troubleshooting)
+
 ---
 
 ## Additional setup
