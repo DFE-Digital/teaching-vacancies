@@ -1,3 +1,2 @@
-.js-location-finder__link.govuk-body-s.js-action
-  | or
-  =< govuk_link_to(t("jobs.search.use_current_location_html"), "#", id: "current-location", class: "govuk-link--no-visited-state", data: { loader: ".accessible-autocomplete" })
+.location-finder.govuk-body-s.js-action class="govuk-!-margin-top-1"
+  =< govuk_link_to(t("jobs.search.use_current_location_html"), "#", class: "govuk-link--no-visited-state location-finder--hidden", data: { target: "location-field", controller: "locationFinder", source: "getPostcodeFromCoordinates", action: "click->locationFinder#findLocation" })
