@@ -7,3 +7,27 @@
 .employment-history-gap {
   border-left: 10px solid govuk-colour('light-blue');
 }
+
+
+.job-application-review-banner {
+  background-color: govuk-colour('white');
+
+  .application-status {
+    align-items: end;
+    display: flex;
+    flex-direction: row;
+
+    .status-tag {
+      margin-left: auto;
+    }
+  }
+
+  .govuk-button-group {
+    border-bottom: 1px solid $govuk-border-colour;
+    padding-bottom: govuk-spacing(3);
+
+    .view-listing-link {
+      margin-left: auto;
+    }
+  }
+}
