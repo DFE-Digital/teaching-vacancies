@@ -22,3 +22,5 @@ RUN ln -s /usr/bin/yarnpkg /usr/local/bin/yarn
 
 # Set unprivileged user as default user
 USER $USERNAME
+
+ENV DEVCONTAINER=true
