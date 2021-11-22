@@ -4,25 +4,9 @@ RSpec.describe "Subscriptions" do
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
 
   describe "GET #new" do
-    context "with valid origin" do
-      let(:origin) { "/jobs/#{vacancy.id}/#{vacancy.slug}" }
-
-      it "sets the origin in the session so we can track it with subscription events" do
-        get new_subscription_path(origin: origin)
-
-        expect(session[:subscription_origin]).to eq(origin)
-      end
-
-      it "triggers a `vacancy_create_job_alert_clicked` event" do
-        expect { get new_subscription_path(origin: origin) }
-          .to have_triggered_event(:vacancy_create_job_alert_clicked)
-          .and_data(vacancy_id: anonymised_form_of(vacancy.id))
-      end
-    end
-
     context "with search criteria pre-populated" do
       it "sets subscription_autopopulated in the session so we can track it with subscription events" do
-        get new_subscription_path(origin: "/", search_criteria: { key: "value" })
+        get new_subscription_path(search_criteria: { key: "value" })
 
         expect(session[:subscription_autopopulated]).to eq(true)
       end
@@ -30,7 +14,7 @@ RSpec.describe "Subscriptions" do
 
     context "with search criteria not pre-populated" do
       it "sets subscription_autopopulated in the session so we can track it with subscription events" do
-        get new_subscription_path(origin: "/")
+        get new_subscription_path
 
         expect(session[:subscription_autopopulated]).to eq(false)
       end
@@ -45,27 +29,12 @@ RSpec.describe "Subscriptions" do
     end
 
     context "when hit via the ECT job alerts url" do
-      let(:origin) { "/sign-up-for-ECT-job-alerts" }
-      let(:params) { { "ect_job_alert" => true, "origin" => "/sign-up-for-ECT-job-alerts", "search_criteria" => { "job_roles" => ["ect_suitable"] } } }
+      let(:params) { { "ect_job_alert" => true, "search_criteria" => { "job_roles" => ["ect_suitable"] } } }
 
       before { get ect_job_alerts_path }
 
       it "includes the correct parameters" do
         expect(request.parameters).to include(params)
-      end
-
-      it "sets subscription_origin in the session as the ECT job alerts url" do
-        expect(session[:subscription_origin]).to eq(origin)
-      end
-    end
-
-    context "with invalid origin" do
-      let(:origin) { "https://www.evil.com" }
-
-      it "ignores origin param unless it's a path on our app" do
-        get new_subscription_path(origin: origin)
-
-        expect(session[:subscription_origin]).not_to be_present
       end
     end
   end
@@ -87,7 +56,7 @@ RSpec.describe "Subscriptions" do
 
     before do
       # Required to set the session
-      get new_subscription_path(origin: "/some/where")
+      get new_subscription_path
     end
 
     it "calls Jobseekers::SubscriptionMailer" do
@@ -109,7 +78,6 @@ RSpec.describe "Subscriptions" do
         subscription_identifier: anything,
         recaptcha_score: 0.9,
         search_criteria: /^{.*}$/,
-        origin: "/some/where",
       )
     end
 

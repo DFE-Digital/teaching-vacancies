@@ -9,11 +9,11 @@
 
   - if jobseeker_signed_in?
     = header.navigation_item text: t("nav.find_job"), href: root_path, active: find_jobs_active?
-    = header.navigation_item text: t("nav.create_a_job_alert"), href: new_subscription_path(origin: request.original_fullpath)
+    = header.navigation_item text: t("nav.create_a_job_alert"), href: new_subscription_path
     = header.navigation_item text: t("footer.your_account"), href: jobseeker_root_path, active: your_account_active?
     = header.navigation_item text: t("nav.sign_out"), href: destroy_jobseeker_session_path, options: { method: :delete }, classes: "navigation-item--right"
 
   - if !jobseeker_signed_in? && !publisher_signed_in?
     = header.navigation_item text: t("nav.find_job"), href: root_path, active: find_jobs_active?
-    = header.navigation_item text: t("nav.create_a_job_alert"), href: new_subscription_path(origin: request.original_fullpath)
+    = header.navigation_item text: t("nav.create_a_job_alert"), href: new_subscription_path
     = header.navigation_item text: t("buttons.sign_in"), href: page_path("sign-in"), classes: "navigation-item--right"
