@@ -1,6 +1,8 @@
 @import '~govuk-frontend/govuk/base';
 
 .autocomplete {
+  position: relative;
+
   &__suggestions {
     margin-bottom: 0;
   }

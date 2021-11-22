@@ -1,8 +1,8 @@
 .govuk-c-loader__spinner {
   animation: spin 1.5s infinite linear;
+  bottom: 4px;
   left: 4px;
   position: absolute;
-  top: 4px;
   transform: translateZ(0);
 }
 
