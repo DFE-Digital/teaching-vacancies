@@ -1,65 +1,23 @@
 - content_for :page_title_prefix, t(".page_title")
 
-= render BannerComponent.new do
-  = govuk_breadcrumbs breadcrumbs: { "#{t("breadcrumbs.job_applications")}": jobseekers_job_applications_path,
-                                      "#{vacancy.job_title}": "" }
-
-  .govuk-caption-l class="govuk-!-margin-top-5" = t("jobseekers.job_applications.heading")
-
-  h1.govuk-heading-xl class="govuk-!-margin-bottom-5 govuk-!-margin-top-0" = vacancy.job_title
-
-  div
-    span.govuk-body class="govuk-!-margin-right-5" = t(".status_heading")
-    = job_application_status_tag(job_application.status)
+= render "banner"
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    - if job_application.status.in?(%w[shortlisted submitted reviewed])
-      = govuk_button_link_to t("buttons.withdraw_application"), jobseekers_job_application_confirm_withdraw_path(job_application), class: "govuk-button--warning"
-
     - if job_application.shortlisted?
       = govuk_notification_banner title_text: t("banners.important"), classes: "govuk-!-margin-bottom-5" do |banner|
         - banner.heading text: t(".shortlist_alert.title")
         span class="govuk-!-margin-top-3" = t(".shortlist_alert.body", organisation: vacancy.parent_organisation_name)
 
-    .grey-border-box
-      h3.govuk-heading-m = t(".school_details.heading")
-      = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
-        - summary_list.row do |row|
-          - row.key text: t(".school_details.name")
-          - row.value text: vacancy.parent_organisation_name
-
-        - summary_list.row do |row|
-          - row.key text: t(".school_details.type")
-          - row.value text: vacancy.parent_organisation.school_type
-
-        - summary_list.row do |row|
-          - row.key text: t(".school_details.number")
-          - row.value text: vacancy.contact_number
-
-        - summary_list.row do |row|
-          - row.key text: t(".school_details.email")
-          - row.value text: govuk_mail_to(vacancy.contact_email, vacancy.contact_email)
-
-        - if vacancy.parent_organisation.website.present? || vacancy.parent_organisation.url.present?
-          - summary_list.row do |row|
-            - row.key text: t(".school_details.website")
-            - row.value text: govuk_link_to(vacancy.parent_organisation.website.presence || vacancy.parent_organisation.url, vacancy.parent_organisation.website.presence || vacancy.parent_organisation.url)
-
-        - summary_list.row do |row|
-          - row.key text: t(".school_details.address")
-          - row.value text: full_address(vacancy.parent_organisation)
-
     - if job_application.unsuccessful? && job_application.rejection_reasons.present?
-      .grey-border-box
+      .grey-border-box class="govuk-!-display-none-print"
         h3.govuk-heading-m = t(".feedback")
         p.govuk-body class="govuk-!-margin-bottom-0" = job_application.rejection_reasons
 
     = render "shared/job_application/show"
 
-  .govuk-grid-column-one-third
-    .account-sidebar
-      h2.account-sidebar__heading = t(".timeline")
+  .govuk-grid-column-one-third class="govuk-!-display-none-print"
+    h2.govuk-heading-m = t(".timeline")
 
     = render TimelineComponent.new do |timeline|
       - if job_application.withdrawn_at?

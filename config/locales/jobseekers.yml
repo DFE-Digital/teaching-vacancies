@@ -139,6 +139,7 @@ en:
           step_title: References
           title: References — Application
       caption: "%{job_title} at %{organisation}"
+      closing_date: Closing date
       confirm_destroy:
         title: Delete draft
         heading: Delete draft
@@ -333,14 +334,6 @@ en:
       show:
         feedback: Feedback on your application
         page_title: View application
-        school_details:
-          address: School address
-          email: Contact email
-          heading: School details
-          name: School name
-          number: Telephone number
-          type: School type
-          website: School website
         shortlist_alert:
           title: What happens next with shortlisting?
           body: "%{organisation} will be in touch soon with more information about next steps."
