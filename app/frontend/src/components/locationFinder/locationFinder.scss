@@ -1,11 +1,15 @@
 @import '~govuk-frontend/govuk/base';
 
-.js-location-finder {
-
+.location-finder {
+  @include govuk-font(16);
   position: relative;
 
+  &__link-prefix {
+    color: inherit;
+  }
+
   .govuk-c-loader {
-    background: #fff;
+    background: govuk-colour('white');
     left: 0;
     position: absolute;
     top: govuk-spacing(6);
@@ -14,17 +18,12 @@
   }
 
   .govuk-c-loader__label {
-    line-height: 26px;
+    line-height: govuk-spacing(5);
     vertical-align: top;
   }
 
   &__error {
+    color: inherit;
     margin-top: govuk-spacing(2);
-  }
-}
-
-form .govuk-form-group.js-geolocation-supported {
-  .js-location-finder__link {
-    display: block;
   }
 }
