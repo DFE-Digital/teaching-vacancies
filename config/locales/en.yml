@@ -4,6 +4,7 @@ en:
     sign_in: Sign in
 
   app:
+    back_to_homepage: Return to homepage
     description: >-
       On Teaching Vacancies, early career teachers, experienced teachers and leaders can search for a job at a school or Trust in England and set up job alerts.
     govuk: GOV.UK
@@ -436,7 +437,6 @@ en:
     errors:
       duplicate_alert: You must change the search criteria in order to update your job alert
       no_location_and_other_criterion_selected: Enter a location and one or more other filters, for example a keyword or job role.
-    info: You can unsubscribe at any time by following the simple instructions at the bottom of the alert.
     intro: 'We’ll email you details of any new jobs that match the following criteria:'
     jobseeker_account_prompt:
       body:
@@ -474,6 +474,9 @@ en:
           <li>your alert criteria, for example keywords or location</li>
         </ul>
       heading: Unsubscribe from this job alert
+      guidance:
+        heading: Want to unsubscribe?
+        body: You can unsubscribe at any time by following the simple instructions at the bottom of the alert.
       title: Unsubscribe from this job alert
     update:
       success: Your job alert has been updated

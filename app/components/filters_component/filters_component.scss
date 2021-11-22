@@ -206,8 +206,6 @@
     }
 
     .govuk-checkboxes__label {
-      font-size: 1rem;
-
       &::before {
         background-color: govuk-colour('white');
       }
@@ -215,10 +213,18 @@
 
     &__group {
       border-bottom: 1px solid govuk-colour('mid-grey');
-      margin-bottom: govuk-spacing(3);
+      margin-bottom: govuk-spacing(7);
 
       &:last-of-type {
         border-bottom: 0;
+      }
+
+      &.small {
+        margin-bottom: govuk-spacing(3);
+
+        .govuk-checkboxes__label {
+          font-size: 1rem;
+        }
       }
     }
   }
@@ -226,4 +232,12 @@
 
 .js-enabled .filters-component__submit {
   display: none;
+}
+
+.plain-styling .filters-component {
+  background: none;
+
+  &__groups__group {
+    border-bottom: 0;
+  }
 }
