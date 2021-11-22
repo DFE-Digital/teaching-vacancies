@@ -5,7 +5,7 @@ p.govuk-caption-m = t("jobs.intro")
 
   = render "shared/search/keyword", f: f
   = render "shared/search/location", f: f
-  = render "shared/search/current_location", loaderElement: "location-field"
+  = render "shared/search/current_location", target: "location-field"
   = render "shared/search/radius", f: f, wide: false
 
   = f.govuk_submit t("buttons.search"), classes: "govuk-button--start icon icon--start icon--right govuk-!-margin-0"
