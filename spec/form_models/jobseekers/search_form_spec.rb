@@ -1,13 +1,5 @@
 require "rails_helper"
 
-RSpec.shared_examples "a form that correctly calls Search::RadiusBuilder" do
-  it "sets the radius and location attributes" do
-    expect(Search::RadiusBuilder).to receive(:new).with(location, radius).and_return(radius_builder)
-    expect(subject.radius).to eq(expected_radius)
-    expect(subject.location).to eq(location)
-  end
-end
-
 RSpec.describe Jobseekers::SearchForm, type: :model do
   subject { described_class.new(params) }
 
@@ -24,13 +16,13 @@ RSpec.describe Jobseekers::SearchForm, type: :model do
       context "when radius param is provided" do
         let(:radius) { "1" }
 
-        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
+        it_behaves_like "a correct call of Search::RadiusBuilder"
       end
 
       context "when radius param is not provided" do
         let(:radius) { nil }
 
-        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
+        it_behaves_like "a correct call of Search::RadiusBuilder"
       end
     end
 
@@ -40,13 +32,13 @@ RSpec.describe Jobseekers::SearchForm, type: :model do
       context "when radius param is provided" do
         let(:radius) { "1" }
 
-        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
+        it_behaves_like "a correct call of Search::RadiusBuilder"
       end
 
       context "when radius param is not provided" do
         let(:radius) { nil }
 
-        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
+        it_behaves_like "a correct call of Search::RadiusBuilder"
       end
     end
   end
