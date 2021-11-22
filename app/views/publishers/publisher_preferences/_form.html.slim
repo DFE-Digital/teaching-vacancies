@@ -8,7 +8,7 @@
       label_text: "search organisation schools",
       threshold: 10,
       attribute_name: :school_ids,
-      collection: current_organisation.schools.not_closed.order(:name),
+      collection: current_organisation.schools.not_universities.not_closed.order(:name),
       value_method: :id,
       text_method: :name,
       hint_method: :address

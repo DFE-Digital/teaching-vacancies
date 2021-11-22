@@ -4,6 +4,8 @@ class School < Organisation
   has_many :school_group_memberships
   has_many :school_groups, through: :school_group_memberships
 
+  scope :not_universities, (-> { where("gias_data->>'TypeOfEstablishment (code)' != ?", "29") })
+
   validates :urn, uniqueness: true
 
   enum phase: {
