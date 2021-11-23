@@ -31,5 +31,9 @@
   .govuk-link {
     @include govuk-typography-weight-bold($important: true);
     color: $govuk-error-colour;
+
+    &:focus {
+      color: $govuk-focus-text-colour;
+    }
   }
 }
