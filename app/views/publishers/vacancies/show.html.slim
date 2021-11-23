@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, review_page_title_prefix(vacancy)
+- content_for :page_title_prefix, review_page_title_prefix(vacancy, show_errors: params[:show_errors])
 
 = render "publishers/vacancies/job_applications/banner", vacancy: vacancy, job_applications: vacancy.job_applications
 

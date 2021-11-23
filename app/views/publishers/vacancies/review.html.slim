@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, review_page_title_prefix(vacancy)
+- content_for :page_title_prefix, review_page_title_prefix(vacancy, show_errors: true)
 
 .govuk-main-wrapper
   = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)

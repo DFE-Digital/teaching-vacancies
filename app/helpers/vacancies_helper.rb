@@ -22,9 +22,9 @@ module VacanciesHelper
     end
   end
 
-  def review_page_title_prefix(vacancy, organisation = current_organisation)
+  def review_page_title_prefix(vacancy, organisation: current_organisation, show_errors: true)
     page_title = t("jobs.review_page_title", organisation: organisation.name)
-    "#{vacancy.errors.present? ? 'Error: ' : ''}#{page_title}"
+    "#{'Error: ' if vacancy.errors.present? && show_errors}#{page_title}"
   end
 
   def back_to_manage_jobs_link(vacancy)
