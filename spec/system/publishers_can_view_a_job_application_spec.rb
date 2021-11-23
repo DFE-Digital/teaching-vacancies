@@ -45,7 +45,7 @@ RSpec.describe "Publishers can view a job application" do
       expect(page).to have_css(".job-application-actions") do |actions|
         expect(actions).not_to have_css("a", class: "govuk-button", text: I18n.t("buttons.shortlist"))
         expect(actions).not_to have_css("a", class: "govuk-button--warning", text: I18n.t("buttons.reject"))
-        expect(actions).to have_css("a", class: "govuk-button--secondary", text: I18n.t("buttons.print_download_application"))
+        expect(actions).to have_css("a", class: "govuk-button--secondary", text: I18n.t("buttons.download_application"))
       end
     end
   end
@@ -59,7 +59,7 @@ RSpec.describe "Publishers can view a job application" do
       expect(page).to have_css(".job-application-actions") do |actions|
         expect(actions).not_to have_css("a", class: "govuk-button", text: I18n.t("buttons.shortlist"))
         expect(actions).to have_css("a", class: "govuk-button--warning", text: I18n.t("buttons.reject"))
-        expect(actions).to have_css("a", class: "govuk-button--secondary", text: I18n.t("buttons.print_download_application"))
+        expect(actions).to have_css("a", class: "govuk-button--secondary", text: I18n.t("buttons.download_application"))
       end
     end
   end
@@ -73,7 +73,7 @@ RSpec.describe "Publishers can view a job application" do
       expect(page).to have_css(".job-application-actions") do |actions|
         expect(actions).to have_css("a", class: "govuk-button", text: I18n.t("buttons.shortlist"))
         expect(actions).to have_css("a", class: "govuk-button--warning", text: I18n.t("buttons.reject"))
-        expect(actions).to have_css("a", class: "govuk-button--secondary", text: I18n.t("buttons.print_download_application"))
+        expect(actions).to have_css("a", class: "govuk-button--secondary", text: I18n.t("buttons.download_application"))
       end
     end
   end
