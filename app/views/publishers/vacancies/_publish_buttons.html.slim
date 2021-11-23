@@ -1,10 +1,17 @@
-- if vacancy.draft? && vacancy.errors.none?
-  h3.govuk-heading-m = t("jobs.preview_listing.heading")
-  p.govuk-body = t("jobs.preview_listing.message")
-  = govuk_button_link_to t("buttons.preview_job_listing"), organisation_job_preview_path(vacancy.id), class: "govuk-button--secondary preview-listing-gtm", id: "vacancy-review-preview"
+h3.govuk-heading-m = t("jobs.preview_listing.heading")
+p.govuk-body = t("jobs.preview_listing.message")
+= govuk_button_link_to t("buttons.preview_job_listing"), organisation_job_preview_path(vacancy.id, back_to: local_assigns[:back_to]), class: "govuk-button--secondary preview-listing-gtm", id: "vacancy-review-preview"
 
-  h3.govuk-heading-m = t("jobs.submit_listing.heading", count: vacancy.publish_on.today? ? 0 : 1, date: vacancy.publish_on.to_s.strip)
-  p.govuk-body = t("jobs.submit_listing.message_html")
-  - if vacancy.enable_job_applications?
-    p.govuk-body = t("jobs.submit_listing.data_retention")
-  = govuk_button_to t("buttons.submit_job_listing"), organisation_job_publish_path(vacancy.id), class: "submit-listing-without-preview-gtm", id: "vacancy-review-submit"
+h3.govuk-heading-m
+  - if vacancy.publish_on.present?
+    - if vacancy.publish_on.today?
+      = t("jobs.submit_listing.heading.today", date: Date.today.to_s.strip)
+    - else
+      = t("jobs.submit_listing.heading.later", date: vacancy.publish_on.to_s.strip)
+  - else
+    = t("jobs.submit_listing.heading.other")
+
+p.govuk-body = t("jobs.submit_listing.message_html")
+- if vacancy.enable_job_applications?
+  p.govuk-body = t("jobs.submit_listing.data_retention")
+= govuk_button_to t("buttons.submit_job_listing"), organisation_job_publish_path(vacancy.id, back_to: local_assigns[:back_to]), class: "submit-listing-without-preview-gtm", id: "vacancy-review-submit"

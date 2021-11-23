@@ -1,20 +1,36 @@
 require "rails_helper"
 
-RSpec.describe "Editing a draft vacancy" do
+RSpec.describe "Publishers can edit a draft vacancy" do
   let(:publisher) { create(:publisher) }
-  let(:school_group) { create(:trust, schools: [school1, school2]) }
-  let(:school1) { create(:school, name: "First school") }
-  let(:school2) { create(:school, name: "Second school") }
-  let(:vacancy) { create(:vacancy, :central_office, :draft, organisations: [school_group], job_roles: %w[teacher]) }
 
-  before { login_publisher(publisher: publisher, organisation: school_group) }
+  let!(:vacancy) do
+    create(
+      :vacancy, :central_office, :draft,
+      organisations: [organisation],
+      job_roles: %w[teacher]
+    )
+  end
 
-  describe "#job_location" do
+  before { login_publisher(publisher: publisher, organisation: organisation) }
+
+  context "when a single school" do
+    let(:organisation) { create(:school) }
+
+    include_examples "provides an overview of the draft vacancy form"
+  end
+
+  context "when a school group" do
+    let(:organisation) { create(:trust, schools: [school1, school2]) }
+    let(:school1) { create(:school, name: "First school") }
+    let(:school2) { create(:school, name: "Second school") }
+
+    include_examples "provides an overview of the draft vacancy form"
+
     scenario "can edit job location" do
       visit organisation_job_review_path(vacancy.id)
 
       expect(page).to have_content(I18n.t("school_groups.job_location_heading.central_office"))
-      expect(page).to have_content(full_address(school_group))
+      expect(page).to have_content(full_address(organisation))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eq(
         I18n.t("publishers.organisations.readable_job_location.central_office"),
       )
@@ -57,7 +73,7 @@ RSpec.describe "Editing a draft vacancy" do
 
       expect(page.current_path).to eq(organisation_job_review_path(vacancy.id))
       expect(page).to have_content(I18n.t("school_groups.job_location_heading.central_office"))
-      expect(page).to have_content(full_address(school_group))
+      expect(page).to have_content(full_address(organisation))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eq(
         I18n.t("publishers.organisations.readable_job_location.central_office"),
       )
