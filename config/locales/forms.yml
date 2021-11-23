@@ -49,7 +49,7 @@ en:
     make_changes: Make changes
     manage_listing: Manage job listing
     preview_job_listing: Preview job listing
-    print_download_application: Print or download
+    download_application: Download application
     reject: Reject
     request_dsi_account: Request a DfE Sign-in account
     resend_email: Resend request
