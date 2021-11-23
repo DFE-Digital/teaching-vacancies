@@ -22,6 +22,7 @@ FactoryBot.define do
         SchoolCapacity: Faker::Number.number(digits: 4),
         TelephoneNum: Faker::Number.number(digits: 11).to_s,
         "Trusts (name)": "#{Faker::Company.name.delete("'")} Trust",
+        "TypeOfEstablishment (code)": "02",
       }
     end
     minimum_age { 11 }
