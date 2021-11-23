@@ -1,6 +1,12 @@
 class Jobseekers::ConfirmationsController < Devise::ConfirmationsController
   after_action :remove_devise_flash!, only: %i[create]
 
+  def show
+    super do |jobseeker|
+      jobseeker.errors.delete(:email, :already_confirmed) if jobseeker.errors.added?(:email, :already_confirmed)
+    end
+  end
+
   protected
 
   def after_confirmation_path_for(resource_name, resource)

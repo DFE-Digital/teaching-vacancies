@@ -51,5 +51,15 @@ RSpec.describe "Jobseekers can sign up to an account" do
         end
       end
     end
+
+    context "when the confirmation link is followed after the account has already been confirmed" do
+      before { jobseeker.confirm }
+
+      it "still signs them in" do
+        visit first_link_from_last_mail
+        expect(current_path).to eq(jobseekers_saved_jobs_path)
+        expect(page).to have_content(I18n.t("devise.confirmations.confirmed"))
+      end
+    end
   end
 end
