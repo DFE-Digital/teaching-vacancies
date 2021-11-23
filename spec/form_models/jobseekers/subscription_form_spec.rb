@@ -1,13 +1,5 @@
 require "rails_helper"
 
-RSpec.shared_examples "a form that correctly calls Search::RadiusBuilder" do
-  it "sets the radius and location attributes" do
-    expect(Search::RadiusBuilder).to receive(:new).with(location, radius).and_return(radius_builder)
-    expect(subject.radius).to eq(expected_radius)
-    expect(subject.location).to eq(location)
-  end
-end
-
 RSpec.shared_examples "a form with the correct attributes" do
   it "sets the keyword, job_roles, phases, and working_patterns attributes" do
     expect(subject.keyword).to eq(keyword)
@@ -49,21 +41,21 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
         let(:location) { "North Nowhere" }
         let(:params) { { radius: radius, location: location } }
 
-        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
+        it_behaves_like "a correct call of Search::RadiusBuilder"
       end
 
       context "when a location is provided in the search_criteria param" do
         let(:location) { "North Nowhere" }
         let(:params) { { radius: radius, search_criteria: { location: location } } }
 
-        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
+        it_behaves_like "a correct call of Search::RadiusBuilder"
       end
 
       context "when a location is not provided" do
         let(:location) { nil }
         let(:params) { { radius: radius } }
 
-        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
+        it_behaves_like "a correct call of Search::RadiusBuilder"
       end
     end
 
@@ -74,21 +66,21 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
         let(:location) { "North Nowhere" }
         let(:params) { { search_criteria: { radius: radius }, location: location } }
 
-        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
+        it_behaves_like "a correct call of Search::RadiusBuilder"
       end
 
       context "when a location is provided in the search_criteria param" do
         let(:location) { "North Nowhere" }
         let(:params) { { search_criteria: { radius: radius, location: location } } }
 
-        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
+        it_behaves_like "a correct call of Search::RadiusBuilder"
       end
 
       context "when a location is not provided" do
         let(:location) { nil }
         let(:params) { { search_criteria: { radius: radius } } }
 
-        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
+        it_behaves_like "a correct call of Search::RadiusBuilder"
       end
     end
 
@@ -99,21 +91,21 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
         let(:location) { "North Nowhere" }
         let(:params) { { location: location } }
 
-        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
+        it_behaves_like "a correct call of Search::RadiusBuilder"
       end
 
       context "when a location is provided in the search_criteria param" do
         let(:location) { "North Nowhere" }
         let(:params) { { search_criteria: { location: location } } }
 
-        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
+        it_behaves_like "a correct call of Search::RadiusBuilder"
       end
 
       context "when a location is not provided" do
         let(:location) { nil }
         let(:params) { {} }
 
-        it_behaves_like "a form that correctly calls Search::RadiusBuilder"
+        it_behaves_like "a correct call of Search::RadiusBuilder"
       end
     end
   end
