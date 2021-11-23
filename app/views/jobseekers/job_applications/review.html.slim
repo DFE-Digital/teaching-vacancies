@@ -1,17 +1,9 @@
 - content_for :page_title_prefix, job_application_page_title_prefix(review_form, t(".title"))
 
-= render BannerComponent.new do
-  - if current_jobseeker.job_applications.not_draft.none?
-    = govuk_back_link text: t("buttons.back"), href: request.referrer, classes: "govuk-!-margin-top-3"
-
-  .govuk-caption-l class="govuk-!-margin-top-5" = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
-  h1.govuk-heading-xl class="govuk-!-margin-bottom-5" = t("jobseekers.job_applications.heading")
+= render "banner"
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    - if job_application.draft?
-      = govuk_button_link_to t("buttons.delete_application"), jobseekers_job_application_confirm_destroy_path(job_application), class: "govuk-button--warning"
-
     / TODO: Confirm content
     - unless vacancy.listed?
       = govuk_notification_banner title_text: t("banners.important") do
