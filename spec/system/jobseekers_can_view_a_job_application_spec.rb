@@ -16,15 +16,6 @@ RSpec.describe "Jobseekers can view a job application" do
       expect(page).to have_content(job_application.status)
     end
 
-    within ".grey-border-box", text: I18n.t("jobseekers.job_applications.show.school_details.heading") do
-      expect(page).to have_content(vacancy.parent_organisation_name)
-      expect(page).to have_content(vacancy.parent_organisation.school_type)
-      expect(page).to have_content(vacancy.contact_number)
-      expect(page).to have_content(vacancy.contact_email)
-      expect(page).to have_content(vacancy.parent_organisation.url)
-      expect(page).to have_content(full_address(vacancy.parent_organisation))
-    end
-
     within ".navigation-list-component", text: I18n.t("shared.job_application.show.application_sections") do
       expect(page).to have_link(I18n.t("shared.job_application.show.personal_details.heading"), href: "#personal_details_summary")
       expect(page).to have_link(I18n.t("shared.job_application.show.professional_status.heading"), href: "#professional_status_summary")

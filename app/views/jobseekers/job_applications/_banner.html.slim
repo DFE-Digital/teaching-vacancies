@@ -1,0 +1,22 @@
+= render BannerComponent.new(classes: ["job-application-review-banner"]) do
+
+  div class="govuk-!-display-none-print"
+    = govuk_breadcrumbs breadcrumbs: { "#{t("breadcrumbs.job_applications")}": jobseekers_job_applications_path, "#{vacancy.job_title}": "" }
+
+  h1.govuk-heading-xl class="govuk-!-margin-top-5 govuk-!-margin-bottom-4" = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
+
+  .govuk-body class="govuk-!-margin-bottom-0 govuk-!-font-weight-bold govuk-!-display-none-print"
+    = t("jobseekers.job_applications.closing_date")
+  .govuk-body class="govuk-!-margin-bottom-5 govuk-!-display-none-print" = format_time_to_datetime_at(job_application.vacancy.expires_at)
+
+  .status-tag
+    = job_application_status_tag(job_application.vacancy.expires_at.past? && job_application.draft? ? :deadline_passed : job_application.status)
+
+  .govuk-button-group class="govuk-!-margin-bottom-0 govuk-!-margin-top-3 govuk-!-display-none-print"
+    - if job_application.draft?
+      = govuk_button_link_to t("buttons.delete_application"), jobseekers_job_application_confirm_destroy_path(job_application), class: "govuk-button--warning govuk-!-margin-bottom-4"
+    - if job_application.status.in?(%w[reviewed shortlisted submitted])
+      = govuk_button_link_to t("buttons.withdraw_application"), jobseekers_job_application_confirm_withdraw_path(job_application), class: "govuk-button--warning govuk-!-margin-bottom-4"
+    - unless job_application.draft?
+      = govuk_button_link_to t("buttons.download_application"), "#", class: "govuk-button--secondary js-action print-application", "data-controller": "utils", "data-action": "click->utils#print"
+    = open_in_new_tab_link_to "View this listing", job_path(job_application.vacancy), class: "govuk-!-margin-bottom-0 view-listing-link"
