@@ -1,7 +1,7 @@
 class Publishers::Vacancies::VacancyStepProcess < StepProcess
   attr_reader :vacancy, :organisation, :session
 
-  def initialize(current_step, vacancy:, organisation:, session:)
+  def initialize(current_step, vacancy:, organisation:, session: {})
     @vacancy = vacancy
     @organisation = organisation
     @session = session
@@ -18,10 +18,6 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
       job_summary: %i[job_summary],
       review: %i[review],
     })
-  end
-
-  def validatable_steps
-    steps - %i[documents review]
   end
 
   def previous_step_or_review

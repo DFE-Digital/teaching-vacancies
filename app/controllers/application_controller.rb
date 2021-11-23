@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
   after_action :trigger_page_visited_event, unless: :request_is_healthcheck?
 
   helper_method :cookies_preference_set?, :referred_from_jobs_path?, :user_type, :utm_parameters, :current_variant?
+  helper GOVUKDesignSystemFormBuilder::BuilderHelper
 
   include Publishers::AuthenticationConcerns
   include DeviseFlashConcerns
