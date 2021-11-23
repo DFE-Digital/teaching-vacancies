@@ -7,7 +7,7 @@ class Publishers::Vacancies::PublishController < Publishers::Vacancies::BaseCont
       reset_session_vacancy!
       redirect_to organisation_job_summary_path(vacancy.id)
     else
-      redirect_to back_to(show_errors: true, source: "publish"), warning: t("errors.jobs.unable_to_publish")
+      redirect_to back_to(show_errors: true, source: "publish")
     end
   end
 end
