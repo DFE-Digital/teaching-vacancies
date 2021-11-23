@@ -8,6 +8,7 @@ module JobApplicationsHelper
   }.freeze
 
   JOBSEEKER_STATUS_MAPPINGS = {
+    deadline_passed: "deadline passed",
     draft: "draft",
     submitted: "submitted",
     reviewed: "submitted",
@@ -17,6 +18,7 @@ module JobApplicationsHelper
   }.freeze
 
   JOB_APPLICATION_STATUS_TAG_COLOURS = {
+    deadline_passed: "grey",
     draft: "pink",
     submitted: "blue",
     reviewed: "purple",
@@ -60,7 +62,7 @@ module JobApplicationsHelper
 
   def job_application_status_tag(status)
     govuk_tag text: JOBSEEKER_STATUS_MAPPINGS[status.to_sym],
-              colour: JOB_APPLICATION_STATUS_TAG_COLOURS[JOBSEEKER_STATUS_MAPPINGS[status.to_sym].to_sym],
+              colour: JOB_APPLICATION_STATUS_TAG_COLOURS[JOBSEEKER_STATUS_MAPPINGS[status.to_sym].parameterize.underscore.to_sym],
               classes: "govuk-!-margin-bottom-2"
   end
 
