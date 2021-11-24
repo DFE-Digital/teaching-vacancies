@@ -31,9 +31,11 @@ en:
     continue_to_account: Continue to my account
     continue_to_dsi: Continue to DfE Sign-in
     copy_listing: Copy job listing
+    copy_url: Copy URL
     create_account: Create an account
     create_job: Create a job listing
     delete: Delete
+    delete_application: Delete application
     delete_draft: Delete draft
     delete_subject: Delete subject
     dismiss: Dismiss
@@ -48,7 +50,7 @@ en:
     make_changes: Make changes
     manage_listing: Manage job listing
     preview_job_listing: Preview job listing
-    print_download_application: Print or download
+    download_application: Download application
     reject: Reject
     request_dsi_account: Request a DfE Sign-in account
     resend_email: Resend request

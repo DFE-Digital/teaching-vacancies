@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Publishers can filter vacancies in their dashboard" do
   let(:publisher) { create(:publisher) }
   let(:trust) { create(:trust, schools: [school1, school2]) }
-  let(:local_authority1) { create(:local_authority, schools: [school1, school2]) }
+  let(:local_authority1) { create(:local_authority, schools: [school1, school2, school4, school5]) }
   let(:local_authority2) { create(:local_authority) }
   let(:school1) { create(:school, name: "Happy Rainbows School") }
   let(:school2) { create(:school, name: "Dreary Grey School") }
@@ -76,6 +76,8 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
   context "when organisations is a local authority" do
     let(:local_authorities_extra_schools) { { local_authority1.local_authority_code.to_i => [school3.urn] } }
     let!(:school3) { create(:school) }
+    let(:school4) { create(:school, name: "Closed school", establishment_status: "Closed") }
+    let(:school5) { create(:school, name: "University", gias_data: { "TypeOfEstablishment (code)" => "29" }) }
 
     before do
       login_publisher(publisher: publisher, organisation: local_authority1)
@@ -88,6 +90,8 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
       click_on I18n.t("buttons.save_and_continue")
 
       expect(page).to have_content(I18n.t("publishers.publisher_preferences.form.missing_schools_error"))
+      expect(page).to_not have_content(school4.name)
+      expect(page).to_not have_content(school5.name)
 
       check school1.name
       click_on I18n.t("buttons.save_and_continue")

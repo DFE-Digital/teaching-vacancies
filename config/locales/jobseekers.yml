@@ -139,6 +139,7 @@ en:
           step_title: References
           title: References — Application
       caption: "%{job_title} at %{organisation}"
+      closing_date: Closing date
       confirm_destroy:
         title: Delete draft
         heading: Delete draft
@@ -198,18 +199,21 @@ en:
         create:
           success: Thank you for your feedback
       heading: Application
+      job_application:
+        closing_date: Closing date
+        last_edited: Last edited
+        shortlisted: Shortlisted
+        submitted: Submitted
+        withdrawn: Withdrawn
       index:
         continue_application: Continue application
-        closing_date: Closing date
         find_and_apply: Find and apply
-        last_edited: Last edited
         no_job_applications: You have not applied for any teaching jobs
         no_job_applications_body_html: "%{link_to} for a teaching job"
         page_title: My applications
+        page_title_with_count: My applications (%{count})
         skip_link: Skip to my job applications
-        submitted: Submitted
         view_application: View application
-        withdraw: Withdraw
       new:
         assistance:
           content_html: You can find out more about our %{privacy_html} and our %{terms_html}.
@@ -330,14 +334,6 @@ en:
       show:
         feedback: Feedback on your application
         page_title: View application
-        school_details:
-          address: School address
-          email: Contact email
-          heading: School details
-          name: School name
-          number: Telephone number
-          type: School type
-          website: School website
         shortlist_alert:
           title: What happens next with shortlisting?
           body: "%{organisation} will be in touch soon with more information about next steps."

@@ -128,7 +128,8 @@ VCR.configure do |config|
   config.hook_into :webmock
   config.configure_rspec_metadata!
   config.ignore_localhost = true
-  config.ignore_hosts "ea-edubase-api-prod.azurewebsites.net", "selenium-chrome", IPSocket.getaddress(Socket.gethostname)
+  config.ignore_hosts "ea-edubase-api-prod.azurewebsites.net", "selenium-chrome"
+  config.ignore_hosts IPSocket.getaddress(Socket.gethostname) if ENV["DEVCONTAINER"] == "true"
 end
 
 Shoulda::Matchers.configure do |config|

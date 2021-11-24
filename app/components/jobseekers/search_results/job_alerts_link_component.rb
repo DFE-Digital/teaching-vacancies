@@ -1,8 +1,7 @@
 class Jobseekers::SearchResults::JobAlertsLinkComponent < ViewComponent::Base
-  def initialize(vacancies_search:, count:, origin:)
+  def initialize(vacancies_search:, count:)
     @vacancies_search = vacancies_search
     @count = count
-    @origin = origin
   end
 
   def render?
