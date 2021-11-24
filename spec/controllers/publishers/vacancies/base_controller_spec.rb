@@ -9,7 +9,7 @@ RSpec.describe Publishers::Vacancies::BaseController do
 
       it "does perform the task" do
         expect(UpdateGoogleIndexQueueJob).to receive(:perform_later)
-        controller.update_google_index(vacancy)
+        controller.send(:update_google_index, vacancy)
       end
     end
 
@@ -18,7 +18,7 @@ RSpec.describe Publishers::Vacancies::BaseController do
 
       it "does NOT perform the task" do
         expect(UpdateGoogleIndexQueueJob).not_to receive(:perform_later)
-        controller.update_google_index(vacancy)
+        controller.send(:update_google_index, vacancy)
       end
     end
   end
@@ -31,7 +31,7 @@ RSpec.describe Publishers::Vacancies::BaseController do
 
       it "does perform the task" do
         expect(RemoveGoogleIndexQueueJob).to receive(:perform_later)
-        controller.remove_google_index(vacancy)
+        controller.send(:remove_google_index, vacancy)
       end
     end
 
@@ -40,7 +40,7 @@ RSpec.describe Publishers::Vacancies::BaseController do
 
       it "does NOT perform the task" do
         expect(RemoveGoogleIndexQueueJob).not_to receive(:perform_later)
-        controller.remove_google_index(vacancy)
+        controller.send(:remove_google_index, vacancy)
       end
     end
   end

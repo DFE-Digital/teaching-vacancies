@@ -3,6 +3,8 @@ require "rails_helper"
 RSpec.describe VacancyPresenter do
   subject { described_class.new(vacancy) }
 
+  let(:vacancy) { build(:vacancy) }
+
   describe "#expired?" do
     context "when the vacancy has expired by now" do
       let(:vacancy) { build_stubbed(:vacancy, expires_at: 1.hour.ago) }
@@ -287,6 +289,12 @@ RSpec.describe VacancyPresenter do
       it "returns empty string" do
         expect(subject.show_key_stages).to be_blank
       end
+    end
+  end
+
+  describe "#columns" do
+    it "delegates to the record's columns" do
+      expect(subject.columns).to eq(vacancy.class.columns)
     end
   end
 end
