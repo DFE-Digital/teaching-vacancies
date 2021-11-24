@@ -44,6 +44,7 @@ FactoryBot.define do
     job_title { JOB_TITLES.sample }
     listed_elsewhere { nil }
     personal_statement_guidance { Faker::Lorem.paragraph(sentence_count: rand(5..10)) }
+    phase { :secondary }
     publish_on { Date.current }
     salary { SALARIES.sample }
     school_visits { Faker::Lorem.paragraph(sentence_count: rand(5..10)) }

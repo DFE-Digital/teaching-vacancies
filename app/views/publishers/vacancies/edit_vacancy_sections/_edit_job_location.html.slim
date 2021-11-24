@@ -4,7 +4,7 @@
 = render ReviewComponent.new id: "job_location" do |review|
   - review.heading title: t("publishers.vacancies.steps.job_location"),
                    text: t("buttons.change"),
-                   href: organisation_job_build_path(vacancy.id, :job_location)
+                   href: organisation_job_build_path(vacancy.id, :job_location, back_to: local_assigns[:back_to])
     = review_section_tag(vacancy,
                         %i[job_location schools],
                         [Publishers::JobListing::JobLocationForm, Publishers::JobListing::SchoolsForm])
