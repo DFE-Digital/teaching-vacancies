@@ -13,4 +13,10 @@ class Publishers::VacancyFormSequence < FormSequence
       form_prefix: "publishers/job_listing",
     )
   end
+
+  private
+
+  def not_validatable_steps
+    %i[documents review].freeze
+  end
 end

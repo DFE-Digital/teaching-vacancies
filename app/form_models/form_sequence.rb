@@ -1,6 +1,4 @@
 class FormSequence
-  NOT_VALIDATABLE = %i[documents review].freeze
-
   def initialize(model:, organisation:, step_names:, form_prefix:)
     @model = model
     @organisation = organisation
@@ -16,11 +14,15 @@ class FormSequence
     validate_all_steps.values.all?(&:valid?)
   end
 
+  private
+
   def validatable_steps
-    @step_names - NOT_VALIDATABLE
+    @step_names - not_validatable_steps
   end
 
-  private
+  def not_validatable_steps
+    []
+  end
 
   def validate_step(step_name)
     step_form = File.join(@form_prefix, "#{step_name}_form").camelize.constantize

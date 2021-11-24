@@ -7,7 +7,7 @@ class ValidatableSummaryListComponent::RowComponent < GovukComponent::SummaryLis
     @error_path = error_path
     @options = options
 
-    @errors = @record.errors.group_by_attribute[@attribute] if show_errors
+    @errors = @record.errors.where(@attribute) if show_errors
   end
 
   attr_reader :attribute
@@ -46,6 +46,6 @@ class ValidatableSummaryListComponent::RowComponent < GovukComponent::SummaryLis
                 @record.class.columns
               end
 
-    columns.find { |c| c.name == @attribute }&.type == :boolean
+    columns.find { |c| c.name == @attribute.to_s }&.type == :boolean
   end
 end
