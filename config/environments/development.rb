@@ -16,8 +16,8 @@ Rails.application.configure do
   # Show full error reports.
   config.consider_all_requests_local = true
 
-  # Allow
-  config.web_console.permissions = "172.18.0.0/16"
+  # Allow Web Console from outside devcontainer
+  config.web_console.permissions = "172.0.0.0/8" if ENV["DEVCONTAINER"].present?
 
   # Enable/disable caching. By default caching is disabled.
   if Rails.root.join("tmp/caching-dev.txt").exist?
