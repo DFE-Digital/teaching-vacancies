@@ -1,6 +1,6 @@
 .govuk-button-group
   - if vacancy.published? || session[:current_step] == :review
-    = f.govuk_submit t("buttons.update_job"), classes: "update-listing-gtm"
+    = f.govuk_submit t("buttons.update_job"), classes: "update-listing-gtm", "data-upload-documents-target": "saveListingButton"
   - else
-    = f.govuk_submit t("buttons.continue"), classes: "govuk-!-margin-bottom-5 save-listing-gtm"
+    = f.govuk_submit t("buttons.continue"), classes: "govuk-!-margin-bottom-5 save-listing-gtm", "data-upload-documents-target": "saveListingButton"
     = govuk_link_to t("buttons.cancel_and_return_to_jobs"), jobs_with_type_organisation_path(:draft), class: "govuk-link--no-visited-state"
