@@ -4,7 +4,7 @@
   = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
 
   .govuk-grid-row
-    .govuk-grid-column-two-thirds
+    .govuk-grid-column-two-thirds data-controller="upload-documents"
       = form_for form, url: organisation_job_documents_path(vacancy.id, back_to: params[:back_to]) do |f|
         = f.govuk_error_summary
 
@@ -17,12 +17,13 @@
           label: { size: "s" },
           accept: ".doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, image/jpeg, image/png, video/mp4",
           multiple: true,
-          enctype: "multipart/form-data"
+          enctype: "multipart/form-data",
+          "data-upload-documents-target": "inputFileUpload"
 
-        button.govuk-button.govuk-button--secondary.display-none#select-files-button class="govuk-!-margin-bottom-3"
+        button.govuk-button.govuk-button--secondary.display-none#select-files-button class="govuk-!-margin-bottom-3" data-upload-documents-target="selectFileButton"
           = t("buttons.select_file")
 
-        = f.govuk_submit t("buttons.upload_files"), secondary: true, classes: "upload-files-button"
+        = f.govuk_submit t("buttons.upload_files"), secondary: true, "data-upload-documents-target": "uploadFilesButton"
 
         .js-documents class=("js-documents--empty" if vacancy.supporting_documents.none?)
           = render "publishers/vacancies/documents/documents"

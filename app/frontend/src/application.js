@@ -5,6 +5,7 @@ import ManageQualificationsController from './components/manageQualifications/ma
 import PanelController from '../../components/panel_component/panel';
 import UtilsController from './components/utils';
 import AutocompleteController from './components/autocomplete/autocomplete';
+import UploadDocumentsController from './components/uploadDocuments/uploadDocuments';
 
 const application = Application.start();
 
@@ -17,3 +18,4 @@ application.register('manage-qualifications', ManageQualificationsController);
 application.register('panel', PanelController);
 application.register('utils', UtilsController);
 application.register('autocomplete', AutocompleteController);
+application.register('upload-documents', UploadDocumentsController);
