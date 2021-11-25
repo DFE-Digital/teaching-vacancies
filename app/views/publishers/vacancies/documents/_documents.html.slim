@@ -1,17 +1,15 @@
-table.govuk-table.js-documents__table
-  thead.govuk-table__head
-    tr.govuk-table__row
-      th.govuk-table__header = t("jobs.upload_documents_table.headers.file_name")
-      th.govuk-table__header = t("jobs.upload_documents_table.headers.status")
-      th.govuk-table__header = t("jobs.upload_documents_table.headers.file_size")
-      th.govuk-table__header = t("jobs.upload_documents_table.headers.action")
-  tbody#js-documents__table-body.govuk-table__body
+= govuk_table classes: "js-documents__table" do |table|
+  - table.head do |head|
+    - head.row do |row|
+      - row.cell header: true, text: t("jobs.upload_documents_table.headers.file_name")
+      - row.cell header: true, text: t("jobs.upload_documents_table.headers.status")
+      - row.cell header: true, text: t("jobs.upload_documents_table.headers.file_size")
+      - row.cell header: true, text: t("jobs.upload_documents_table.headers.action")
+
+  - table.body classes: "js-documents__table-body" do |body|
     - vacancy.supporting_documents.each do |document|
-      tr.govuk-table__row.js-document-row data-document-id=document.id
-        td.govuk-table__cell = open_in_new_tab_link_to(document.filename, document)
-        td.govuk-table__cell = t("jobs.upload_documents_table.upload_status.uploaded")
-        td.govuk-table__cell = number_to_human_size(document.byte_size)
-        td.govuk-table__cell
-          = govuk_link_to organisation_job_documents_path(id: document.id, job_id: vacancy.id), method: :delete do
-           = t("jobs.upload_documents_table.actions.remove")
-           span.govuk-visually-hidden = " #{document.filename} supporting document"
+      - body.row do |row|
+        - row.cell text: open_in_new_tab_link_to(document.filename, document)
+        - row.cell text: t("jobs.upload_documents_table.upload_status.uploaded")
+        - row.cell text: number_to_human_size(document.byte_size)
+        - row.cell text: remove_document_link(document, vacancy)
