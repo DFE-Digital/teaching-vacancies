@@ -2,144 +2,131 @@
  * @jest-environment jsdom
  */
 
-import manageQualifications, {
-  addAddSubjectEventListener,
-  addSubjectHandler,
-  deleteRowHandler,
-  renumberCell,
-  renumberRow,
-  renumberRows,
-  DELETE_BUTTON_CLASSNAME,
-  FIELDSET_CLASSNAME,
-  GOVUK_INPUT_CLASSNAME,
-  ROW_CLASS,
-  SUBJECT_LINK_ID,
-} from './manageQualifications';
+import { Application } from '@hotwired/stimulus';
+import ManageQualificationsController from './manageQualifications';
+
+Application.start().register('manage-qualifications', ManageQualificationsController);
 
 describe('manageQualifications', () => {
-  const originalMarkup = `<div class="${FIELDSET_CLASSNAME}">
-      <div class="${ROW_CLASS}">
-        <label for="subject1">Subject 1</label>
-        <input class="${GOVUK_INPUT_CLASSNAME}" id="s1" value="Maths" />
-        <a class="${DELETE_BUTTON_CLASSNAME}" href="#">delete subject</a>
+  const originalMarkup = `<fieldset data-controller="manage-qualifications">
+      <div class="row" data-manage-qualifications-target="row">
+        <div class="govuk-form-group">
+          <label for="subject1">Subject 1</label>
+          <input class="govuk-input" value="Maths" />
+        </div>
+        <div class="govuk-form-group">
+          <a class="delete-row" href="#" data-action="manage-qualifications#deleteRow">delete subject</a>
+        </div>
       </div>
-      <div class="${ROW_CLASS}">
-        <label for="subject2">Subject 2</label>
-        <input class="${GOVUK_INPUT_CLASSNAME}" id="s2" value="Music" />
-        <a class="${DELETE_BUTTON_CLASSNAME}" href="#">delete subject</a>
+      <div class="row" data-manage-qualifications-target="row">
+        <div class="govuk-form-group">
+          <label for="subject2">Subject 2</label>
+          <input class="govuk-input govuk-input--error" value="Music" />
+        </div>
+        <div class="govuk-form-group">
+          <a class="delete-row" href="#" data-action="manage-qualifications#deleteRow">delete subject</a>
+        </div>
       </div>
-      <div class="${ROW_CLASS} js-hidden">
-        <label for="subject3">Subject 3</label>
-        <input class="${GOVUK_INPUT_CLASSNAME}" class="govuk-input--error" id="s3" value="Geography" />
-        <a class="${DELETE_BUTTON_CLASSNAME}" href="#">delete subject</a>
+      <div class="row js-hidden" data-manage-qualifications-target="row">
+        <div class="govuk-form-group">
+          <label for="subject3">Subject 3</label>
+          <input class="govuk-input" />
+        </div>
+        <div class="govuk-form-group">
+          <a class="delete-row" href="#" data-action="manage-qualifications#deleteRow">delete subject</a>
+        </div>
       </div>
-      <div class="${ROW_CLASS} js-hidden">
-        <label for="subject4">Subject 4</label>
-        <input class="${GOVUK_INPUT_CLASSNAME}" id="s4" value="Economics 101" />
-        <a class="${DELETE_BUTTON_CLASSNAME}" href="#">delete subject</a>
+      <div class="row js-hidden" data-manage-qualifications-target="row">
+        <div class="govuk-form-group">
+          <label for="subject4">Subject 4</label>
+          <input class="govuk-input" />
+        </div>
+        <div class="govuk-form-group">
+          <a class="delete-row" href="#" data-action="manage-qualifications#deleteRow">delete subject</a>
+        </div>
       </div>
-    </div>
-    <a id="${SUBJECT_LINK_ID}" href="#">Add subject</a>`;
+      <a id="add-row" href="#" data-action="manage-qualifications#addRow">Add subject</a>
+    </fieldset>`;
 
   beforeEach(() => {
     document.body.innerHTML = originalMarkup;
   });
 
-  describe('Add subject event listener', () => {
-    document.body.innerHTML = originalMarkup;
-    const button = document.getElementById(SUBJECT_LINK_ID);
-    test('when the link is clicked, it adds a subject', () => {
-      manageQualifications.addSubjectHandler = jest.fn();
-      const addSubjectSpy = jest.spyOn(manageQualifications, 'addSubjectHandler');
-      addAddSubjectEventListener(button);
-      button.dispatchEvent(new Event('click'));
-      expect(addSubjectSpy).toHaveBeenCalled();
-    });
-  });
-
-  describe('add subject event handler', () => {
-    manageQualifications.renumberRow = jest.fn();
-
-    const initialNumberOfRows = document.getElementsByClassName(ROW_CLASS).length;
+  describe('Adding a row', () => {
+    let addButton;
 
     beforeEach(() => {
-      addSubjectHandler();
+      addButton = document.getElementById('add-row');
     });
 
-    test('adds a row', () => {
-      expect(document.getElementsByClassName(ROW_CLASS).length).toBe(initialNumberOfRows + 1);
+    test('it adds a row', () => {
+      expect(document.getElementsByClassName('row').length).toBe(4);
+
+      addButton.click();
+
+      expect(document.getElementsByClassName('row').length).toBe(5);
     });
 
-    test('renumbers row, discarding values and errors', () => {
-      const renumberRowsSpy = jest.spyOn(manageQualifications, 'renumberRows');
-      expect(renumberRowsSpy).toHaveBeenCalled();
+    test('it renumbers the rows', () => {
+      addButton.click();
+
+      const rows = Array.from(document.getElementsByClassName('row'));
+      rows.forEach((row, index) => expect(row.children[0].children[0].innerHTML).toBe(`Subject ${index + 1}`));
     });
 
-    test('puts the new subject input in focus', () => {
-      expect(document.getElementsByClassName(ROW_CLASS)[2].querySelector('input') === document.activeElement).toBe(true);
+    test('it keeps values', () => {
+      const rows = Array.from(document.getElementsByClassName('row'));
+      const valueRow = rows[0];
+      expect(valueRow.children[0].children[1].value).toBe('Maths');
+
+      addButton.click();
+      expect(valueRow.children[0].children[1].value).toBe('Maths');
+    });
+
+    test('it puts the new subject input in focus', () => {
+      addButton.click();
+
+      const rows = Array.from(document.getElementsByClassName('row'));
+      const visibleRows = rows.filter((row) => !row.classList.contains('js-hidden'));
+      const newRow = visibleRows[visibleRows.length - 1];
+
+      expect(newRow.getElementsByClassName('govuk-input')[0] === document.activeElement).toBe(true);
     });
   });
 
-  describe('delete row event handler', () => {
-    manageQualifications.renumberRows = jest.fn();
-    const renumberRowsSpy = jest.spyOn(manageQualifications, 'renumberRows');
-    const rowNumberToDelete = '2';
+  describe('Deleting a row', () => {
+    let deletedRow;
+    let deleteButton;
 
     beforeEach(() => {
-      deleteRowHandler(document.getElementsByClassName(ROW_CLASS)[rowNumberToDelete].children[2]);
+      const rows = Array.from(document.getElementsByClassName('row'));
+
+      [, deletedRow] = rows;
+      deleteButton = deletedRow.querySelector('.delete-row');
     });
 
-    test('renumbers the rows', () => {
-      expect(renumberRowsSpy).toHaveBeenCalledTimes(4);
-    });
-  });
+    test('it deletes the row', () => {
+      expect(document.getElementsByClassName('row').length).toBe(4);
 
-  describe('renumber rows', () => {
-    manageQualifications.renumberRow = jest.fn();
-    const renumberRowSpy = jest.spyOn(manageQualifications, 'renumberRow');
+      deleteButton.click();
 
-    beforeEach(() => {
-      renumberRows();
+      expect(document.getElementsByClassName('row').length).toBe(3);
     });
 
-    test('renumbers 4 subject rows', () => {
-      expect(renumberRowSpy).toHaveBeenCalledTimes(4);
-    });
-  });
+    test('it renumbers the rows', () => {
+      deleteButton.click();
 
-  describe('renumber row', () => {
-    manageQualifications.renumberCell = jest.fn();
-    const renumberCellSpy = jest.spyOn(manageQualifications, 'renumberCell');
-
-    const row = document.getElementsByClassName(FIELDSET_CLASSNAME)[0];
-
-    beforeEach(() => {
-      renumberRow(row, 3, false);
+      const rows = Array.from(document.getElementsByClassName('row'));
+      rows.forEach((row, index) => expect(row.children[0].children[0].innerHTML).toBe(`Subject ${index + 1}`));
     });
 
-    test('renumbers all cells', () => {
-      expect(renumberCellSpy).toHaveBeenCalledTimes(12);
-    });
-  });
+    test('it keeps values', () => {
+      const rows = Array.from(document.getElementsByClassName('row'));
+      const valueRow = rows[0];
+      expect(valueRow.children[0].children[1].value).toBe('Maths');
 
-  describe('renumber cells', () => {
-    const row = document.getElementsByClassName(ROW_CLASS)[3];
-    const label = row.children[0];
-    const input = row.children[1];
-    test('renumbers cell attributes with position index', () => {
-      renumberCell(label, 5);
-      expect(label.getAttribute('for')).toBe('subject5');
-    });
-
-    test('renumbers cell display text with human readable index', () => {
-      renumberCell(label, 5);
-      expect(label.innerHTML).toBe('Subject 6');
-    });
-
-    test('renumbers input attributes except for values', () => {
-      renumberCell(input, 5);
-      expect(input.getAttribute('id')).toBe('s5');
-      expect(input.value).toBe('Economics 101');
+      document.getElementById('add-row').click();
+      expect(valueRow.children[0].children[1].value).toBe('Maths');
     });
   });
 });
