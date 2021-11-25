@@ -51,6 +51,13 @@ The stack is comprised of 4 apps in the Gov.UK `teaching-vacancies-monitoring` s
 
 - [Check the Gov.UK PaaS `teaching-vacancies-production` space](https://admin.london.cloud.service.gov.uk/organisations/386a9502-d9b6-4aba-b3c3-ebe4fa3f963e/spaces/ebce88e9-8d3e-424b-8da3-c8dc0072b900/applications)
 
+### Logit
+
+PaaS logs are drained to logit. There are customised alerts on Logit, which monitors and alerts on various events.
+
+`alert_on_no_logs_from_paas.yaml`: This monitors and alerts if no logs are being sent from PaaS to Teaching-Vacanices' Logit stack.
+`Throttled.yml`: This monitors and alerts if we have unusual amount of requests, which have been throttled.
+
 ### Billing
 
 - [Billing & Cost Management Dashboard](https://console.aws.amazon.com/billing/home#/) for which you'll need to first assume the AWS role [Billing Manager](https://console.aws.amazon.com/iam/home?region=eu-west-2#/roles/BillingManager)
