@@ -5,7 +5,7 @@
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      = form_for form, url: organisation_job_documents_path(vacancy.id) do |f|
+      = form_for form, url: organisation_job_documents_path(vacancy.id, back_to: params[:back_to]) do |f|
         = f.govuk_error_summary
 
         h2.govuk-heading-l

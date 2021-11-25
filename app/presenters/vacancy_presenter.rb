@@ -8,6 +8,10 @@ class VacancyPresenter < BasePresenter
 
   HTML_STRIP_REGEX = %r{(&nbsp;|<div>|</div>|<!--block-->)+}
 
+  def columns
+    model.class.columns
+  end
+
   def share_url(utm_source: nil, utm_medium: nil, utm_campaign: nil, utm_content: nil)
     params = {}
     if utm_source.present?

@@ -11,7 +11,7 @@ RSpec.describe StatusTagHelper do
       context "when there is an error on the step's form object" do
         let(:steps) { [:personal_details] }
 
-        before { allow(job_application).to receive_message_chain(:errors, :messages).and_return({ city: "Invalid city" }) }
+        before { job_application.errors.add(:city) }
 
         it "returns 'action required' tag" do
           expect(subject).to eq(helper.govuk_tag(text: I18n.t("shared.status_tags.action_required"), colour: "red"))
@@ -44,7 +44,7 @@ RSpec.describe StatusTagHelper do
       context "when there is an error on the step's form object" do
         let(:steps) { %i[job_details] }
 
-        before { allow(vacancy).to receive_message_chain(:errors, :messages).and_return({ job_title: "Enter a job title" }) }
+        before { vacancy.errors.add(:job_title) }
 
         it "returns 'action required' tag" do
           expect(subject).to eq(helper.govuk_tag(text: I18n.t("shared.status_tags.action_required"), colour: "red"))
