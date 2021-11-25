@@ -1,51 +1,38 @@
 import 'classlist-polyfill';
 import './uploadDocuments.scss';
+import { Controller } from '@hotwired/stimulus';
 
-document.addEventListener('DOMContentLoaded', () => {
-  const inputFileUpload = document.getElementById('publishers-job-listing-documents-form-documents-field');
-  const selectFileButton = document.getElementById('select-files-button');
-  const uploadFileButton = document.getElementsByClassName('upload-files-button')[0];
-  const continueButton = document.getElementsByClassName('save-listing-gtm')[0];
-  const updateButton = document.getElementsByClassName('save-listing-gtm')[0];
-  const saveButton = document.getElementsByClassName('save-and-return-listing-gtm')[0];
+export default class extends Controller {
+  static targets = ['inputFileUpload', 'uploadFilesButton', 'selectFileButton', 'saveListingButton'];
 
-  if (inputFileUpload && selectFileButton && uploadFileButton) {
-    selectFileButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      inputFileUpload.click();
-    });
-
-    inputFileUpload.addEventListener('change', () => {
-      if (continueButton) {
-        continueButton.disabled = true;
-      }
-      if (updateButton) {
-        updateButton.disabled = true;
-      }
-      if (saveButton) {
-        saveButton.disabled = true;
-      }
-      injectDocumentsTable(inputFileUpload);
-      inputFileUpload.form.submit();
-    });
-
-    inputFileUpload.classList.add('display-none');
-    uploadFileButton.classList.add('display-none');
-    selectFileButton.classList.remove('display-none');
+  connect() {
+    this.inputFileUploadTarget.classList.add('display-none');
+    this.uploadFilesButtonTarget.classList.add('display-none');
+    this.selectFileButtonTarget.classList.remove('display-none');
   }
-});
 
-const injectDocumentsTable = (documentsInput) => {
-  const filesList = documentsInput.files;
+  trigger_upload(event) {
+    event.preventDefault();
+    this.inputFileUploadTarget.click();
+  }
 
-  if (filesList && filesList.length) {
-    const documentsContainerElement = document.querySelector('.js-documents');
-    const tableBodyElement = documentsContainerElement.querySelector('#js-documents__table-body');
+  uploadFiles() {
+    this.saveListingButtonTarget.disabled = true;
+    this.injectDocumentsTable();
+    this.inputFileUploadTarget.form.submit();
+  }
 
-    documentsContainerElement.classList.remove('js-documents--empty');
+  injectDocumentsTable() {
+    const filesList = this.inputFileUploadTarget.files;
 
-    Array.from(filesList).forEach((file) => {
-      const rowHTML = `
+    if (filesList && filesList.length) {
+      const documentsContainerElement = document.querySelector('.js-documents');
+      const tableBodyElement = documentsContainerElement.querySelector('#js-documents__table-body');
+
+      documentsContainerElement.classList.remove('js-documents--empty');
+
+      Array.from(filesList).forEach((file) => {
+        const rowHTML = `
 <tr class='govuk-table__row'>
 <td class='govuk-table__cell' scope='row'>${file.name}</td>
 <td class='govuk-table__cell'>
@@ -54,7 +41,8 @@ Uploading<span class='upload-progress'><div class='upload-progress-spinner'></di
 <td class='govuk-table__cell' scope='row'></td>
 <td class='govuk-table__cell' scope='row'></td>
 </tr> `;
-      tableBodyElement.insertAdjacentHTML('beforeend', rowHTML);
-    });
+        tableBodyElement.insertAdjacentHTML('beforeend', rowHTML);
+      });
+    }
   }
-};
+}
