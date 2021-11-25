@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus';
 
 import 'es6-promise/auto';
 
-import loader from '../loader/loader';
+import loader from '../loadingIndicator/loadingIndicator';
 import api from '../../lib/api';
 import logger from '../../lib/logging';
 import './locationFinder.scss';

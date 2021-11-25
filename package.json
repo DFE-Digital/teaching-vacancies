@@ -37,6 +37,7 @@
     "webpack-dev-server": "^3.11.2"
   },
   "scripts": {
+    "joetest": "jest app/frontend/src/components/loader/loader.test.js",
     "server": "rails s",
     "dev": "./bin/webpack-dev-server",
     "test": "concurrently \"yarn run js:test\" \"yarn run js:lint\" \"yarn run sass:lint\"",
