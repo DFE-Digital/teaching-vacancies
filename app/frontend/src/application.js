@@ -1,6 +1,5 @@
+import '@stimulus/polyfills';
 import { Application } from '@hotwired/stimulus';
-
-import './lib/polyfill/promise.polyfill';
 
 import ClipboardController from './components/clipboard/clipboard';
 import ManageQualificationsController from './components/manageQualifications/manageQualifications';
