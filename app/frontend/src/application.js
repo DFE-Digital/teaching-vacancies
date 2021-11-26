@@ -1,3 +1,4 @@
+import '@stimulus/polyfills';
 import { Application } from '@hotwired/stimulus';
 
 import ClipboardController from './components/clipboard/clipboard';
