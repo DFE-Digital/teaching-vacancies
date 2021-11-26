@@ -9,7 +9,7 @@ groups:
     annotations:
       summary: High rate of failing requests
       description: "The proportion of failed 4xx HTTP requests in the past 5 min is above 40% (current value: {{ humanizePercentage $value }})"
-      runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/master/documentation/alert-runbook.md#ProdRequestsFailuresElevated
+      runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/main/documentation/alert-runbook.md#ProdRequestsFailuresElevated
       dashboard: https://grafana-teaching-vacancies.london.cloudapps.digital/d/6Ac4lUWGk/teaching-vacancies-production?orgId=1&refresh=5s
     # Labels - additional labels to be attached to the alert
     labels:
@@ -24,7 +24,7 @@ groups:
     annotations:
       summary: High rate of failing requests
       description: "The proportion of failed 5xx HTTP requests in the past 5 min is above 10% (current value: {{ humanizePercentage $value }})"
-      runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/master/documentation/alert-runbook.md#ProdRequestsFailuresElevated
+      runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/main/documentation/alert-runbook.md#ProdRequestsFailuresElevated
       dashboard: https://grafana-teaching-vacancies.london.cloudapps.digital/d/6Ac4lUWGk/teaching-vacancies-production?orgId=1&refresh=5s
     # Labels - additional labels to be attached to the alert
     labels:
@@ -38,7 +38,7 @@ groups:
     annotations:
       summary: Identify slow running request above 95 percentile
       description: "Identify slow running http request above 95 percentile above 3sec (current value: {{ humanize $value}}s )"
-      runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/master/documentation/alert-runbook.md#ProdSlowRequests
+      runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/main/documentation/alert-runbook.md#ProdSlowRequests
       dashboard: https://grafana-teaching-vacancies.london.cloudapps.digital/d/6Ac4lUWGk/teaching-vacancies-production?orgId=1&refresh=5s
   # Labels - additional labels to be attached to the alert
     labels:
@@ -51,7 +51,7 @@ groups:
     annotations:
       summary: App CPU usage high
       description: "App CPU usage at least 60% for more than 5 minutes (current value: {{ $value }})"
-      runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/master/documentation/alert-runbook.md#ProdAppCPUHigh
+      runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/main/documentation/alert-runbook.md#ProdAppCPUHigh
       dashboard: https://grafana-teaching-vacancies.london.cloudapps.digital/d/6Ac4lUWGk/teaching-vacancies-production?orgId=1&refresh=5s
     labels:
       environment: production
@@ -63,7 +63,7 @@ groups:
     annotations:
       summary: Worker CPU usage high
       description: "Worker CPU usage at least 75% for more than 10 minutes (current value: {{ $value }})"
-      runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/master/documentation/alert-runbook.md#ProdWorkerCPUHigh
+      runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/main/documentation/alert-runbook.md#ProdWorkerCPUHigh
       dashboard: https://grafana-teaching-vacancies.london.cloudapps.digital/d/6Ac4lUWGk/teaching-vacancies-production?orgId=1&refresh=5s
     labels:
       environment: production
@@ -75,7 +75,7 @@ groups:
     annotations:
       summary: Disk Utilization High
       description: "Disk utilization at least 60% for more than 5 minutes (current value: {{ $value }})"
-      runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/master/documentation/alert-runbook.md#ProdDiskUtilisationHigh
+      runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/main/documentation/alert-runbook.md#ProdDiskUtilisationHigh
       dashboard: https://grafana-teaching-vacancies.london.cloudapps.digital/d/6Ac4lUWGk/teaching-vacancies-production?orgId=1&refresh=5s
     labels:
       environment: production
@@ -88,7 +88,7 @@ groups:
     annotations:
       summary: Memory Utilization High
       description: "Memory utilization at least 60% for more than 5 minutes (current value: {{ $value }})"
-      runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/master/documentation/alert-runbook.md#ProdMemoryUtilizationHigh
+      runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/main/documentation/alert-runbook.md#ProdMemoryUtilizationHigh
       dashboard: https://grafana-teaching-vacancies.london.cloudapps.digital/d/6Ac4lUWGk/teaching-vacancies-production?orgId=1&refresh=5s
     labels:
       environment: production
@@ -100,7 +100,7 @@ groups:
     annotations:
       summary: Crashed Production Apps non-zero
       description: "At least 1 crashed production app (current value: {{ $value }})"
-      runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/master/documentation/alert-runbook.md#ProdAppsCrashed
+      runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/main/documentation/alert-runbook.md#ProdAppsCrashed
       dashboard: https://grafana-teaching-vacancies.london.cloudapps.digital/d/6Ac4lUWGk/teaching-vacancies-production?orgId=1&refresh=5s
     labels:
       environment: production

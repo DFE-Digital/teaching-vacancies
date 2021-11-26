@@ -41,7 +41,7 @@ tests:
             - exp_annotations:
                 summary: High rate of failing requests
                 description: "The proportion of failed 4xx HTTP requests in the past 5 min is above 40% (current value: 66.67%)"
-                runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/master/documentation/alert-runbook.md#ProdRequestsFailuresElevated
+                runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/main/documentation/alert-runbook.md#ProdRequestsFailuresElevated
                 dashboard: https://grafana-teaching-vacancies.london.cloudapps.digital/d/6Ac4lUWGk/teaching-vacancies-production?orgId=1&refresh=5s
               exp_labels:
                 environment: production
@@ -56,7 +56,7 @@ tests:
             - exp_annotations:
                 summary: High rate of failing requests
                 description: "The proportion of failed 5xx HTTP requests in the past 5 min is above 10% (current value: 16.67%)"
-                runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/master/documentation/alert-runbook.md#ProdRequestsFailuresElevated
+                runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/main/documentation/alert-runbook.md#ProdRequestsFailuresElevated
                 dashboard: https://grafana-teaching-vacancies.london.cloudapps.digital/d/6Ac4lUWGk/teaching-vacancies-production?orgId=1&refresh=5s
               exp_labels:
                 environment: production
@@ -91,7 +91,7 @@ tests:
             - exp_annotations:
                 summary: Identify slow running request above 95 percentile
                 description: "Identify slow running http request above 95 percentile above 3sec (current value: 4.6s )"
-                runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/master/documentation/alert-runbook.md#ProdSlowRequests
+                runbook: https://github.com/DFE-Digital/teaching-vacancies/tree/main/documentation/alert-runbook.md#ProdSlowRequests
                 dashboard: https://grafana-teaching-vacancies.london.cloudapps.digital/d/6Ac4lUWGk/teaching-vacancies-production?orgId=1&refresh=5s
                 # Labels - additional labels to be attached to the alert
               exp_labels:
