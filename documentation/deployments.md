@@ -6,17 +6,17 @@
 
 The deployments to all environments share the same and simplified workflow. The deployment to review app (via Pull Request), staging, production, qa and research go through the CI/CD pipeline. To deploy to `Dev` environment, a `git push local_branch_name:dev -f` is required to commence deployment. This will trigger the same workflows as used in deploying to other environment.
 
-Once the PR has been merged to master or a `deploy`tag applied to Review app or `git push` to dev branch:-
+Once the PR has been merged to main or a `deploy`tag applied to Review app or `git push` to dev branch:-
 
 The GitHub actions workflow [build_and_deploy.yml](../.github/workflows/build_and_deploy.yml) performs these steps:
 
-- Builds and tags a Docker image from code in the `master` (staging, prod, qa and research environments), `Dev` or `review app` branch
+- Builds and tags a Docker image from code in the `main` (staging, prod, qa and research environments), `Dev` or `review app` branch
 - Tags the Docker image with the commit SHA as the tag
 - Logs in to Github's container registry as the service account `twd-tv-ci`
 - Pushes the image to GitHub packages, after it has been scanned by `Snyk` for vulnerabilities
 - Calls the [deploy_app.yml](../.github/workflows/deploy_app.yml) workflow to use Terraform to update the `web` and `worker` apps to use the new Docker image, and apply any changes to the appropriate environment.
 - Runs a smoke test against the deployed environment
-- If deployment (push) is to the master branch, performs `Post Deployment` step e.g. deploy terraform/monitoring module, which is responsible for deploying Prometheus, influxDB and Grafana.
+- If deployment (push) is to the main branch, performs `Post Deployment` step e.g. deploy terraform/monitoring module, which is responsible for deploying Prometheus, influxDB and Grafana.
 - Sends a Slack notification to the `#twd_tv_dev` channel - success or failure.
 
 ### Build and deploy to review - GitHub Actions
@@ -63,7 +63,7 @@ Requirements:
 
 ### Default tag
 
-If no docker image tag is specified, the makefile defaults to using the `master` tag - as specified in the makfile's `terraform-app-init:` target
+If no docker image tag is specified, the makefile defaults to using the `main` tag - as specified in the makfile's `terraform-app-init:` target
 
 ### Refresh an environment with updated Parameter Store secrets
 
@@ -76,7 +76,7 @@ The [refresh.yml](../.github/workflows/refresh.yml) workflow:
 Go to the [Refresh environment](https://github.com/DFE-Digital/teaching-vacancies/actions?query=workflow%3A%22Refresh+environment%22) workflow:
 Click "Run workflow", and choose:
 
-- Use workflow from `Branch: master`
+- Use workflow from `Branch: main`
 - Environment: e.g. `production` (or `staging`, `qa`, or `dev`)
 
 ### Deploy a specific tag to an environment - GitHub Actions
@@ -90,7 +90,7 @@ is built from [commit 2641bebaf22ad96be543789693e015922e4514c4](https://github.c
 
 Go to the [Deploy App to Environment](https://github.com/DFE-Digital/teaching-vacancies/actions?query=workflow%3A%22Deploy+App+to+Environment%22) workflow.
 Click "Run workflow", and choose:
-- Use workflow from `Branch: master`
+- Use workflow from `Branch: main`
 - Environment: e.g. `production` (or `staging`, `qa`, or `dev`)
 - Docker tag: e.g. `2641bebaf22ad96be543789693e015922e4514c41`
 
@@ -118,7 +118,7 @@ Requirements:
 - Occasionally, we need to destroy and replace the postgres database. For instance, the database in `qa` is corrupt or not functioning as designed, we could use the makefile target - `terraform-app-database-replace` , which allows the database in a particular environment to destroyed and recreated.
 ```bash
 `cf login --sso` - target appropriate space i.e. `review`
-make review ci terraform-app-database-replace pr_id=3982 tag=master CONFIRM_REPLACE=yes
+make review ci terraform-app-database-replace pr_id=3982 tag=main CONFIRM_REPLACE=yes
 ```
 There is also a corresponding GitHub Action workflow - .github/workflows/recreate-qa-database.yml. Once the database has created, data would need to be seeded separately.
 
