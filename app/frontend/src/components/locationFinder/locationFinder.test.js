@@ -2,120 +2,110 @@
  * @jest-environment jsdom
  */
 
-import locationFinder, {
-  startLoading, stopLoading, onSuccess, onFailure, showErrorMessage, ERROR_MESSAGE, DEFAULT_PLACEHOLDER, LOADING_PLACEHOLDER, postcodeFromPosition,
+import { Application } from '@hotwired/stimulus';
+
+import LocationFinderController, {
+  ERROR_MESSAGE, DEFAULT_PLACEHOLDER, LOADING_PLACEHOLDER,
 } from './locationFinder';
-import loader from '../loader/loader';
 
-describe('current location', () => {
-  let showErrorMessageMock = null; let stopLoadingMock = null; let onSuccessMock = null; let
-    onFailureMock = null; let addLoaderMock = null; let removeLoaderMock = null; let input = null; let container = null;
+const initialiseStimulus = () => {
+  const application = Application.start();
+  application.register('locationFinder', LocationFinderController);
+};
 
+jest.mock('../../lib/api');
+
+export const currentPosition = (coords) => ({
+  getCurrentPosition: jest.fn().mockImplementationOnce((success) => Promise.resolve(success(coords))),
+});
+
+let actionEl;
+let inputEl;
+let addLoaderMock;
+let removeLoaderMock;
+let inputContainerEl;
+
+describe('location finder', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    initialiseStimulus();
 
-    locationFinder.showErrorMessage = jest.fn();
-    showErrorMessageMock = jest.spyOn(locationFinder, 'showErrorMessage');
+    document.body.innerHTML = `<div class="autocomplete">
+    <input type="text" id="location-input" />
+    </div>
+    <a
+    data-target="location-input"
+    data-controller="locationFinder"
+    data-source="getPostcodeFromCoordinates"
+    data-action="click->locationFinder#findLocation"
+    class="find-location-button">
+    find location
+    </a>`;
 
-    locationFinder.stopLoading = jest.fn();
-    stopLoadingMock = jest.spyOn(locationFinder, 'stopLoading');
+    LocationFinderController.loader.add = jest.fn();
+    addLoaderMock = jest.spyOn(LocationFinderController.loader, 'add');
 
-    loader.add = jest.fn();
-    addLoaderMock = jest.spyOn(loader, 'add');
+    LocationFinderController.loader.remove = jest.fn();
+    removeLoaderMock = jest.spyOn(LocationFinderController.loader, 'remove');
 
-    loader.remove = jest.fn();
-    removeLoaderMock = jest.spyOn(loader, 'remove');
-
-    document.body.innerHTML = `<div class="js-location-finder" id="test-container">
-<input type="text" id="location-field" class="autocomplete__input" />
-</div>`;
-
-    input = document.getElementById('location-field');
-    container = document.getElementById('test-container');
+    [actionEl] = document.getElementsByClassName('find-location-button');
+    [inputContainerEl] = document.getElementsByClassName('autocomplete');
+    inputEl = document.getElementById('location-input');
   });
 
-  describe('startLoading', () => {
-    test('adds loader to UI', () => {
-      startLoading(container, input);
-      expect(addLoaderMock).toHaveBeenCalledWith(input, LOADING_PLACEHOLDER);
-      expect(removeLoaderMock).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('stopLoading', () => {
-    test('removes loader from UI', () => {
-      stopLoading(container, input);
-      expect(addLoaderMock).not.toHaveBeenCalled();
-      expect(removeLoaderMock).toHaveBeenCalledWith(input, DEFAULT_PLACEHOLDER);
-    });
-  });
-
-  describe('onFaliure', () => {
-    test('updates the UI correctly and adds error message', () => {
-      onFailure();
-      expect(input.value).toBe('');
-      expect(stopLoadingMock).toHaveBeenCalled();
-      expect(showErrorMessageMock).toHaveBeenCalled();
-    });
-  });
-
-  describe('onSuccess', () => {
-    test('updates the UI correctly', () => {
-      onSuccess('W12 8QT', input);
-      expect(input.value).toBe('W12 8QT');
-      expect(stopLoadingMock).toHaveBeenCalled();
-      expect(showErrorMessageMock).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('showErrorMessage', () => {
-    beforeEach(() => {
-      jest.resetAllMocks();
-      document.body.innerHTML = '<div class="js-location-finder"><a href="/" id="current-location" data-loader="form-location-field">link</a></div>';
-    });
-
-    test('displays correct message in error displayed', () => {
-      showErrorMessage(document.getElementById('current-location'));
-      expect(document.getElementById('js-location-finder__error').innerHTML).toBe(ERROR_MESSAGE);
-    });
-  });
-
-  describe('postcodeFromPosition', () => {
-    beforeEach(() => {
-      jest.resetAllMocks();
-      locationFinder.onSuccess = jest.fn();
-      onSuccessMock = jest.spyOn(locationFinder, 'onSuccess');
-
-      locationFinder.onFailure = jest.fn();
-      onFailureMock = jest.spyOn(locationFinder, 'onFailure');
-    });
-
-    test('calls onSuccess handler when API returns postcode', () => {
-      postcodeFromPosition({
+  describe('when coordinates are available from browser geolocation api', () => {
+    beforeAll(() => {
+      global.navigator.geolocation = currentPosition({
         coords: {
-          latitude: 10,
-          longitude: 10,
+          latitude: 51.1,
+          longitude: 45.3,
         },
-      }, () => Promise.resolve({ status: 200, result: [{ postcode: 'E2 0BT' }] }))
-        .then(() => {
-          expect(onSuccessMock).toHaveBeenCalled();
-          expect(onFailureMock).not.toHaveBeenCalled();
-        })
-        .catch(() => true);
+      });
     });
 
-    test('calls onFailure handler when API returns falsy value', () => {
-      postcodeFromPosition({
-        coords: {
-          latitude: 10,
-          longitude: 10,
-        },
-      }, () => Promise.resolve({ status: 200, result: null }))
-        .then(() => {
-          expect(onFailureMock).toHaveBeenCalled();
-          expect(onSuccessMock).not.toHaveBeenCalled();
-        })
-        .catch(() => true);
+    test('postcode is added to input box', (done) => {
+      actionEl.click();
+
+      setTimeout(() => {
+        try {
+          expect(addLoaderMock).toHaveBeenCalledWith(inputContainerEl, LOADING_PLACEHOLDER);
+          expect(inputEl.value).toEqual('E2 0BT');
+          expect(removeLoaderMock).toHaveBeenCalledWith(inputContainerEl, DEFAULT_PLACEHOLDER);
+          done();
+        } catch (error) {
+          done(error);
+        }
+      });
+    });
+  });
+
+  describe('when coordinates are not available from browser geolocation api', () => {
+    beforeAll(() => {
+      global.navigator.geolocation = currentPosition({
+        coords: {},
+      });
+    });
+
+    test('error message is displayed to user', (done) => {
+      actionEl.click();
+
+      setTimeout(() => {
+        try {
+          expect(addLoaderMock).toHaveBeenCalledWith(inputContainerEl, LOADING_PLACEHOLDER);
+          expect(inputEl.value).toEqual('');
+          expect(removeLoaderMock).toHaveBeenCalledWith(inputContainerEl, DEFAULT_PLACEHOLDER);
+
+          expect(document.getElementById('location-finder__error').innerHTML).toEqual(ERROR_MESSAGE);
+
+          done();
+        } catch (error) {
+          done(error);
+        }
+      });
+    });
+
+    test('when input is focused error message is removed', () => {
+      inputEl.focus();
+      expect(document.getElementById('location-finder__error')).toBe(null);
     });
   });
 });
