@@ -7,12 +7,12 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - ..:/app:cached
+      - ..:/workspace:cached
       - bundle:/usr/local/bundle
-      - node_modules:/app/node_modules
-      - packs:/app/public/packs
-      - tmp:/app/tmp
-    working_dir: /app
+      - node_modules:/workspace/node_modules
+      - packs:/workspace/public/packs
+      - tmp:/workspace/tmp
+    working_dir: /workspace
     command: sleep infinity
     user: teaching-vacancies
     ports:
