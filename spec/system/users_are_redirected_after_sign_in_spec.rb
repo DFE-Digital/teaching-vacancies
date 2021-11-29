@@ -4,20 +4,54 @@ RSpec.describe "Users are redirected after sign in" do
   context "when the user is a jobseeker" do
     let(:jobseeker) { create(:jobseeker) }
 
-    scenario "when the jobseeker was redirected to the sign in page" do
-      visit jobseekers_job_applications_path
+    context "when a jobseeker is redirected to the sign in page" do
+      let(:school) { create(:school) }
+      let(:job) { create(:vacancy, organisations: [school]) }
 
-      expect(page).to have_text(I18n.t("jobseekers.sessions.new.title"))
-      sign_in_jobseeker
+      scenario "then the user is redirected back to the original page" do
+        visit jobseekers_job_applications_path
 
-      expect(current_path).to eq(jobseekers_job_applications_path)
+        expect(page).to have_text(I18n.t("jobseekers.sessions.new.title"))
+        sign_in_jobseeker
+
+        expect(current_path).to eq(jobseekers_job_applications_path)
+      end
+
+      scenario "then goes to a different page and signs in" do
+        visit job_path(job)
+        click_link I18n.t("jobseekers.job_applications.apply")
+
+        expect(page).to have_text(I18n.t("jobseekers.sessions.new.title"))
+        visit root_path
+
+        visit new_jobseeker_session_path
+        sign_in_jobseeker
+
+        expect(current_path).to eq(jobseekers_saved_jobs_path)
+      end
     end
 
-    scenario "when the jobseeker goes to the sign in page" do
-      visit jobseekers_sign_in_path
-      sign_in_jobseeker
+    context "when the user has one job application" do
+      let(:school) { create(:school) }
+      let(:job) { create(:vacancy, organisations: [school]) }
 
-      expect(current_path).to eq(jobseeker_root_path)
+      before do
+        create(:job_application, jobseeker: jobseeker, vacancy: job)
+      end
+
+      scenario "directs the user to 'My Applications'" do
+        visit jobseekers_sign_in_path
+        sign_in_jobseeker
+        expect(current_path).to eq(jobseekers_job_applications_path)
+      end
+    end
+
+    context "when the user has no job applications" do
+      scenario "directs the user to 'My saved jobs'" do
+        visit jobseekers_sign_in_path
+        sign_in_jobseeker
+        expect(current_path).to eq(jobseekers_saved_jobs_path)
+      end
     end
   end
 

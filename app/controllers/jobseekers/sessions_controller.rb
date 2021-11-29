@@ -11,6 +11,11 @@ class Jobseekers::SessionsController < Devise::SessionsController
     invalid not_found_in_database last_attempt
   ].map { |error| I18n.t("devise.failure.#{error}") }.freeze
 
+  def destroy
+    session.delete(:jobseeker_return_to)
+    super
+  end
+
   private
 
   def render_resource_with_errors
