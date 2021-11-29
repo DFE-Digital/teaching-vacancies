@@ -76,7 +76,7 @@
 }
 
 .js-enabled {
-  form[data-auto-submit='true'][data-hide-submit='true'] {
+  form[data-controller='form'][data-hide-submit='true'] {
     .govuk-button {
       display: none;
     }
