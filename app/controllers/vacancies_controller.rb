@@ -8,7 +8,7 @@ class VacanciesController < ApplicationController
       search_form.to_hash,
       sort_by: search_form.jobs_sort,
       page: params[:page],
-      pg_search: ActiveModel::Type::Boolean.new.cast(params[:pg_search]),
+      pg_search: current_variant?(:"2021_12_new_search", :postgres),
     )
     @vacancies = VacanciesPresenter.new(@vacancies_search.vacancies)
   end
