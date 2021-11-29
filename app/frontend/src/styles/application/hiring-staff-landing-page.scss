@@ -1,0 +1,61 @@
+.hiring-staff-landing-page {
+  .account-actions {
+    align-items: baseline;
+    display: flex;
+
+    .request-account-link {
+      .govuk-body-m {
+        color: govuk-colour('white');
+        display: inline;
+      }
+    }
+  }
+
+  .header {
+    background-color: $govuk-brand-colour;
+
+    .govuk-body-l {
+      color: govuk-colour('white');
+    }
+
+    .govuk-heading-l {
+      color: govuk-colour('white');
+    }
+
+    .govuk-link {
+      color: govuk-colour('white');
+    }
+
+    .sign-in-button {
+      color: $govuk-brand-colour;
+    }
+  }
+
+  .govuk-button--start {
+    background-color: govuk-colour('white');
+    color: $govuk-brand-colour;
+  }
+
+  .govuk-phase-banner {
+    border-top: 0;
+
+    &__content__tag {
+      background-color: govuk-colour('white');
+      color: $govuk-brand-colour;
+    }
+
+    &__text {
+      color: govuk-colour('white');
+    }
+  }
+
+  .section {
+    .govuk-link {
+      display: block;
+    }
+  }
+
+  .spacer {
+    margin-bottom: 150px;
+  }
+}
