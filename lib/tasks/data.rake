@@ -24,6 +24,14 @@ namespace :db do
   task async_seed: :environment do
     SeedDatabaseJob.perform_later
   end
+
+  desc "Generates 1000 random vacancies for testing purposes"
+  task create_random_vacancies: :environment do
+    1000.times do
+      school = School.order(Arel.sql("RANDOM()")).first
+      FactoryBot.create(:vacancy, organisations: [school])
+    end
+  end
 end
 
 namespace :dsi do
