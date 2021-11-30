@@ -2,7 +2,9 @@
 
 ## Data loss
 
-In the case of a data loss, we need to recover the data as soon as possible in order to resume normal service.
+In the case of a data loss, we need to recover the data as soon as possible in order to resume normal service. Declare a major incident
+and document the incident timelines as you go along.
+
 The application's database is a postgres instance, which resides on PaaS. This provides a point-in-time backup with
 the resolution of 1 second, available between 5min and 7days ago - this is not applicable to postgres `tiny` plans. We can use
 terraform to create a new database using a point-in-time backup of the affacted database instance.
@@ -22,6 +24,11 @@ Alert all developers that, no one should merge to master branch.
 
 In the instance of data loss, if the application is unavailable, the CDN may be forwarding requests to the [offline site](offline-site.md).
 If the application is still available and there is a risk of users adding data, enable [Maintenance mode](maintenance-mode.md).
+
+### setup virtual meeting
+
+Set up virtual meeting via Zoom, Slack, Teams or Google Hangout, inviting all the relevant technical stakeholders. Regularly provide updates on
+the #tv_product Slack channel; to keep product owners abreast of developments.
 
 ### Get affected postgres database ID
 
@@ -48,7 +55,8 @@ this renames the database by appending "-old" to the database name, `env` is the
 In order for terraform to be able to create a new database instance, the existing database reference needs to be removed from the state file. This is to ensure it is no longer managed by terraform, otherwise, terraform would revert our changes. To achieve this, use the makefile target -
 
 ```
-make <env> remove-postgres-tf-state [CONFIRM_PRODUCTION=true]
+aws-vault login # authenticate to AWS because statefile is on S3
+aws-vault exec Deployments --  make <env> remove-postgres-tf-state [CONFIRM_PRODUCTION=true]
 ```
 
 `env` is the target environment e.g. `production`
@@ -59,7 +67,9 @@ The following variables need to be set: `DB_INSTANCE_GUID` (the output of [the '
 
  Use the following makefile command to initiate the restore process by using the approriate variable values:
  ```
- make <env> restore-postgres DB_INSTANCE_GUID=abcdb262-79d1-xx1x-b1dc-0534fb9b4 SNAPSHOT_TIME="2021-11-16 15:20:00" passcode=xxxxx tag=xxxx [CONFIRM_PRODUCTION=true]
+ aws-vault login # authenticate to AWS because statefile is on S3
+ aws-vault exec Deployments -- make <env> restore-postgres DB_INSTANCE_GUID=abcdb262-79d1-xx1x-b1dc-0534fb9b4 SNAPSHOT_TIME="2021-11-16 15:20:00" \
+ passcode=xxxxx tag=xxxx [CONFIRM_PRODUCTION=true]
  ```
  `env` is the target environment e.g. `production`. This will create a new database instance but with a point-in-time database backup of affected database. The restore process could take between 30min - 1hr, use the following to command to get progress:
 
@@ -74,3 +84,5 @@ cf service teaching-vacancies-postgres-production
  ### Tidy up
 
  Once the database has been successfully restored, the corrupted database instance should be deleted.
+
+ `cf delete-service teaching-vacancies-<env>-old -f`
