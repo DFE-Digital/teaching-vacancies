@@ -1,0 +1,228 @@
+- content_for :page_title_prefix, "List a school job"
+
+.publisher-landing-page
+  .govuk-width-container
+    .govuk-grid-row.publisher-landing-page__header class=" govuk-!-margin-bottom-2"
+        = govuk_phase_banner(classes: "govuk-!-margin-bottom-6", tag: { text: "beta" }) do
+          | This is a new service - #{govuk_link_to "your feedback", new_feedback_path} will help us to improve it.
+
+        .govuk-grid-column-two-thirds
+          h1.govuk-heading-l = "Save time and money on recruitment"
+
+          p.govuk-body-l
+            | Teaching Vacancies is completely free. Save money on recruitment
+            |   advertising and spend it where it counts most – in the classroom.
+
+          p.govuk-body-l
+            | Teaching Vacancies puts you in control of your own recruitment. Post as
+            |   many vacancies as you want and directly publish and edit them for free.
+
+          .publisher-landing-page__account-actions
+            = govuk_start_button(text: "Sign in", href: page_path("sign-in"))
+
+            .publisher-landing-page__account-actions__request-account-link
+              span.govuk-body-m class="govuk-!-margin-left-5"
+                = "or"
+              = govuk_link_to("request a Teaching Vacancies account", page_path("dsi-account-request"), class: "govuk-body-m govuk-!-margin-left-1")
+
+        .govuk-grid-column-one-third class="govuk-!-padding-left-0"
+          img class="publisher-landing-page__image govuk-!-margin-top-2" src=asset_pack_path("media/images/publishers/landing_page/header_icons.png")
+
+    .govuk-grid-row.publisher-landing-page__section class="govuk-!-padding-left-3"
+      .govuk-grid-column-one-half class="govuk-!-padding-left-0"
+        h2.govuk-heading-m class="govuk-!-margin-top-4"
+          | What is Teaching Vacancies?
+
+        p.govuk-body
+          | Teaching Vacancies is the government's free, national job listing service for the teaching profession.
+
+        p.govuk-body
+          | Our aim is to save schools money and time when recruiting teachers, instead of relying on paid-for job boards.
+
+        p.govuk-body
+          | All state funded schools, trusts and local authorities in England can use Teaching Vacancies to advertise teaching,
+          |   leadership and education support roles for free.
+
+        = govuk_link_to("Visit Teaching Vacancies", root_path, class: "govuk-body-m govuk-!-margin-bottom-4")
+
+      .govuk-grid-column-one-half class="govuk-!-padding-left-0"
+        img class="publisher-landing-page__image govuk-!-margin-top-4" src=asset_pack_path("media/images/publishers/landing_page/what_is_teaching_vacancies.png") width="571" height="299"
+
+    hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible class="govuk-!-margin-top-2 govuk-!-margin-bottom-2"
+
+    .govuk-grid-row.publisher-landing-page__section class="govuk-!-padding-left-3"
+      .govuk-grid-column-two-thirds class="govuk-!-padding-left-0"
+        h2.govuk-heading-m class="govuk-!-margin-top-4"
+          | Why should I use Teaching Vacancies?
+
+        p.govuk-body
+          | Teaching Vacancies is now the largest source of primary teaching jobs listed directly by schools in England and the second
+          |   largest for secondary teaching jobs.
+
+        p.govuk-body
+          | Last year we received over 2.5 million views of job vacancies from potential jobseekers.
+
+    .govuk-grid-row.publisher-landing-page__section class="govuk-!-padding-left-3"
+      .govuk-grid-column-one-third class="govuk-!-padding-left-0"
+        h3.govuk-heading-m class="govuk-!-margin-top-4"
+          | Save money
+
+        p.govuk-body
+          | Teaching Vacancies is completely free. Save money on recruitment advertising and spend it where it counts most - in the classroom.
+
+      .govuk-grid-column-one-third class="govuk-!-padding-left-0"
+        h3.govuk-heading-m class="govuk-!-margin-top-4"
+          | Save time
+
+        p.govuk-body
+          | We have worked with hundreds of schools across England to make recruitment quick and easy for you. Simplify your search for new
+          |   staff by listing jobs, receiving applications and managing candidates all in one place.
+
+      .govuk-grid-column-one-third class="govuk-!-padding-left-0"
+        h3.govuk-heading-m class="govuk-!-margin-top-4"
+          | Be in control
+
+        p.govuk-body
+          | Teaching Vacancies puts you in control of your own recruitment. Post as many vacancies as you want and directly publish and edit them
+          |   for free. You won’t get any sales calls or invoices, and there are no contracts to negotiate.
+
+    hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible class="govuk-!-margin-top-2 govuk-!-margin-bottom-2"
+
+    .govuk-grid-row.publisher-landing-page__section class="govuk-!-padding-left-3"
+      .govuk-grid-column-one-half class="govuk-!-padding-left-0"
+        h2.govuk-heading-l class="govuk-!-margin-top-4"
+            | How does Teaching Vacancies work?
+
+    .govuk-grid-row.publisher-landing-page__section class="govuk-!-padding-left-3"
+      .govuk-grid-column-one-half class="govuk-!-padding-left-0"
+        h3.govuk-heading-m class="govuk-!-margin-top-4"
+          | Create a job listing
+
+        p.govuk-body
+          | List teaching, leadership or education support roles.
+
+        p.govuk-body
+          | List a job at a single school, multiple schools or the trust head office.
+
+        p.govuk-body
+          | You can specify working pattern, contract type and pay package.
+
+        p.govuk-body
+          | You can also upload supporting documents, for example a job description, and include information about the school or trust.
+
+        = govuk_link_to("Sign in and list your jobs for free", publishers_sign_in_path, class: "govuk-body-m govuk-!-margin-bottom-4")
+
+        = govuk_link_to("Request a Teaching Vacancies account", page_path("dsi-account-request"), class: "govuk-body-m govuk-!-margin-bottom-4")
+
+      .govuk-grid-column-one-half class="govuk-!-padding-left-0"
+        img class="publisher-landing-page__image govuk-!-margin-top-4" src=asset_pack_path("media/images/publishers/landing_page/create_a_job_listing.png")
+
+    .govuk-grid-row.publisher-landing-page__section class="govuk-!-padding-left-3"
+      .govuk-grid-column-one-half class="govuk-!-padding-left-0"
+        h3.govuk-heading-m class="govuk-!-margin-top-4"
+            | Receive applications through Teaching Vacancies
+
+        p.govuk-body
+          | You can choose to use the Teaching Vacancies application form for all jobs except education support roles.
+
+        p.govuk-body
+          | Our application form will help you to:
+
+        ul.govuk-list.govuk-list--bullet.govuk-list--spaced class="govuk-!-margin-left-2"
+          li easily identify high quality candidates
+          li get explanations for gaps in work history
+          li ensure your recruitment processes always follow the latest safeguarding requirements
+
+        = govuk_link_to("Find out more about the Teaching Vacancies application form", page_path("job-application-preview"), class: "govuk-body-m govuk-!-margin-bottom-4")
+
+      .govuk-grid-column-one-half class="govuk-!-padding-left-0"
+        img class="publisher-landing-page__image govuk-!-margin-top-4" src=asset_pack_path("media/images/publishers/landing_page/receive_applications.png")
+
+    .govuk-grid-row.publisher-landing-page__section class="govuk-!-padding-left-3"
+      .govuk-grid-column-one-half class="govuk-!-padding-left-0"
+        h3.govuk-heading-m class="govuk-!-margin-top-4"
+          | Manage your jobs
+
+        p.govuk-body
+          | View and manage all your job listings on one simple dashboard.
+
+        p.govuk-body
+          | Staff at multi-academy trusts can manage jobs across all their schools on one dashboard.
+
+      .govuk-grid-column-one-half class="govuk-!-padding-left-0"
+        img class="publisher-landing-page__image govuk-!-margin-top-4" src=asset_pack_path("media/images/publishers/landing_page/manage_your_jobs.png")
+
+    .govuk-grid-row.publisher-landing-page__section class="govuk-!-padding-left-3"
+      .govuk-grid-column-one-half class="govuk-!-padding-left-0"
+        h3.govuk-heading-m class="govuk-!-margin-top-4"
+          | Manage applicants on a personalised dashboard
+
+        p.govuk-body
+          | We will notify you by email when you get a new application. You can then review the application on your Teaching
+          |   Vacancies dashboard.
+
+        p.govuk-body
+          | You can shortlist or reject applications quickly and easily, and can print or download the applications.
+
+      .govuk-grid-column-one-half class="govuk-!-padding-left-0"
+        img class="publisher-landing-page__image govuk-!-margin-top-4" src=asset_pack_path("media/images/publishers/landing_page/manage_applicants.png")
+
+    hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible class="govuk-!-margin-top-2 govuk-!-margin-bottom-2"
+
+    .govuk-grid-row.publisher-landing-page__section class="govuk-!-padding-left-3"
+      h3.govuk-heading-m class="govuk-!-margin-top-4"
+        | Who's using Teaching Vacancies?
+
+      .govuk-grid-column-one-third class="govuk-!-padding-left-0"
+        h4.govuk-heading-l class="govuk-!-font-size-80 govuk-!-margin-top-4"
+          | 81%
+        p.govuk-body
+          | of schools in England
+
+      .govuk-grid-column-one-third class="govuk-!-padding-left-0"
+        h4.govuk-heading-l class="govuk-!-font-size-80 govuk-!-margin-top-4"
+          | 2.2
+        strong.govuk-body class="govuk-!-font-weight-bold"
+          | million
+        span.govuk-body
+          |  vacancy views in 2021
+
+      .govuk-grid-column-one-third class="govuk-!-padding-left-0"
+        h4.govuk-heading-l class="govuk-!-font-size-80 govuk-!-margin-top-4"
+          | 1.5
+        strong.govuk-body class="govuk-!-font-weight-bold"
+          | million
+        span.govuk-body
+          |  job alert emails sent in 2021
+
+    hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible class="govuk-!-margin-top-2 govuk-!-margin-bottom-2"
+
+    .govuk-grid-row.publisher-landing-page__section class="govuk-!-padding-left-3"
+      h3.govuk-heading-m class="govuk-!-margin-top-4 govuk-!-margin-bottom-6"
+        | What schools say about Teaching Vacancies
+
+      .govuk-grid-column-one-third class="govuk-!-padding-left-0"
+        p.govuk-body
+          | “Using Teaching Vacancies was free and simple to set up… and reached a wider group of applicants than our
+          |   usual advertising.”
+
+      .govuk-grid-column-one-third class="govuk-!-padding-left-0"
+        p.govuk-body
+          | “What we have saved is enough to recruit another teacher!”
+
+      .govuk-grid-column-one-third class="govuk-!-padding-left-0"
+        p.govuk-body
+          | “We like that we are totally in control and can post directly.”
+
+    hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible class="govuk-!-margin-top-2 govuk-!-margin-bottom-2"
+
+    .govuk-grid-row.publisher-landing-page__section class="govuk-!-padding-left-3"
+      .govuk-grid-column-one-third class="govuk-!-padding-left-0"
+        h3.govuk-heading-m class="govuk-!-margin-top-4"
+          | Sign in
+
+        = govuk_link_to("Sign in and list your jobs for free", publishers_sign_in_path, class: "govuk-body-m govuk-!-margin-bottom-4")
+
+        = govuk_link_to("Request a Teaching Vacancies account", publishers_account_requests_new_path, class: "govuk-body-m govuk-!-margin-bottom-4")
+
+    .publisher-landing-page__spacer
