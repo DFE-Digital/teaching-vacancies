@@ -68,7 +68,7 @@ ruby:
           - panel.body do
             = render "shared/search/keyword", f: f
             = render "shared/search/location", f: f
-            = render "shared/search/current_location", loaderElement: "location-field"
+            = render "shared/search/current_location", target: "location-field"
             = render "shared/search/radius", f: f, wide: true
 
             = f.hidden_field :jobs_sort, value: @form.jobs_sort
@@ -79,7 +79,7 @@ ruby:
 
           = render "shared/search/keyword", f: f
           = render "shared/search/location", f: f
-          = render "shared/search/current_location", loaderElement: "location-field"
+          = render "shared/search/current_location", target: "location-field"
           = render "shared/search/radius", f: f, wide: true
 
           = f.hidden_field :jobs_sort, value: @form.jobs_sort
@@ -91,7 +91,7 @@ ruby:
           - panel.body do
             = render "shared/search/keyword", f: f
             = render "shared/search/location", f: f
-            = render "shared/search/current_location", loaderElement: "location-field"
+            = render "shared/search/current_location", target: "location-field"
             = render "shared/search/radius", f: f, wide: true
 
             = f.hidden_field :jobs_sort, value: @form.jobs_sort
@@ -102,7 +102,7 @@ ruby:
 
           = render "shared/search/keyword", f: f
           = render "shared/search/location", f: f
-          = render "shared/search/current_location", loaderElement: "location-field"
+          = render "shared/search/current_location", target: "location-field"
           = render "shared/search/radius", f: f, wide: true
 
           = f.hidden_field :jobs_sort, value: @form.jobs_sort

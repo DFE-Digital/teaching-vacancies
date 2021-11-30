@@ -3,7 +3,7 @@ import logger from './logging';
 
 export const getPostcodeFromCoordinates = (latitude, longitude) => axios.get('https://api.postcodes.io/postcodes', {
   params: { latitude, longitude },
-}).then((response) => response.data)
+}).then((response) => response.data.result[0].postcode)
   .catch((error) => {
     logger.log(`${error} Postcodes API`);
   });

@@ -1,14 +1,13 @@
-import '../../lib/polyfill/remove.polyfill';
 import './loader.scss';
 
 export const add = (targetEl, placeholder) => {
-  targetEl.insertAdjacentHTML('afterend', loaderSvg);
+  targetEl.insertAdjacentHTML('beforeend', loaderSvg);
   targetEl.placeholder = placeholder;
 };
 
 export const remove = (targetEl, placeholder) => {
   const loaderEl = document.getElementById('loader');
-  loaderEl.remove();
+  loaderEl.parentNode.removeChild(loaderEl);
   targetEl.setAttribute('placeholder', placeholder);
 };
 
