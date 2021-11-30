@@ -17,7 +17,7 @@ module DatabaseIndexable
     self.searchable_content = generate_searchable_content
   end
 
-  def generate_searchable_content # rubocop:disable Metrics/AbcSize
+  def generate_searchable_content # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     # For now, this configuration mirrors the current Algolia ranking as closely as possible
     # `job_title` and `subject` are used for ranking (and weighted with 'A' here, the other
     # searchable fields get the lowest possible 'D' weight)
@@ -26,6 +26,7 @@ module DatabaseIndexable
       d: [
         readable_phases,
         VacancyPresenter.new(self).show_job_roles,
+        VacancyPresenter.new(self).show_key_stages,
         parent_organisation_name,
         VacancyPresenter.new(self).working_patterns,
         organisations.map(&:name),
