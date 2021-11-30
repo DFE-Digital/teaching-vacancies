@@ -37,6 +37,7 @@ jobs:
 
       - name: Setup sonarqube
         uses: warchant/setup-sonar-scanner@v3
+        if: ${{ github.actor != 'dependabot[bot]' }}
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -88,6 +89,7 @@ jobs:
            -Dsonar.projectKey=DFE-Digital_teaching-vacancies
            -Dsonar.testExecutionReportPaths=${{ github.workspace }}/out/test-report.xml
            -Dsonar.ruby.coverage.reportPaths=${{ github.workspace }}/coverage/.resultset.json
+        if: ${{ github.actor != 'dependabot[bot]' }}
 
   frontend-tests:
     name: Run frontend JS unit tests
