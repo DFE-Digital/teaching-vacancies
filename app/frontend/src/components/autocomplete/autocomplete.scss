@@ -3,6 +3,10 @@
 .autocomplete {
   position: relative;
 
+  .govuk-body {
+    margin-bottom: 0;
+  }
+
   &__suggestions {
     margin-bottom: 0;
   }
