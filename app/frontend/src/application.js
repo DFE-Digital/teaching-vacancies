@@ -1,6 +1,9 @@
 import '@stimulus/polyfills';
 import { Application } from '@hotwired/stimulus';
 
+import 'src/components';
+import 'src/styles/application.scss';
+
 // view components
 import PanelController from '../../components/panel_component/panel';
 
