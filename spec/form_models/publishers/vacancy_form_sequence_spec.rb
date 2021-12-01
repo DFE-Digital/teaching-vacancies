@@ -37,6 +37,8 @@ RSpec.describe Publishers::VacancyFormSequence do
 
       valid_steps.each do |step|
         form = validated_forms[step]
+        next unless form
+
         expect(form.errors).to be_none
         expect(form).to be_valid
       end
