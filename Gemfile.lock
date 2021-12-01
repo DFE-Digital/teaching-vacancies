@@ -270,7 +270,6 @@ GEM
     hashdiff (1.0.1)
     hashie (4.1.0)
     high_voltage (3.1.2)
-    htmlentities (4.3.4)
     http (5.0.4)
       addressable (~> 2.8)
       http-cookie (~> 1.0)
@@ -480,10 +479,6 @@ GEM
       activerecord (>= 5.0)
       rgeo (>= 1.0.0)
     rollbar (3.3.0)
-    rspec (3.10.0)
-      rspec-core (~> 3.10.0)
-      rspec-expectations (~> 3.10.0)
-      rspec-mocks (~> 3.10.0)
     rspec-core (3.10.1)
       rspec-support (~> 3.10.0)
     rspec-expectations (3.10.1)
@@ -500,9 +495,6 @@ GEM
       rspec-expectations (~> 3.10)
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
-    rspec-sonarqube-formatter (1.5.0)
-      htmlentities (~> 4.3.3)
-      rspec (~> 3.0)
     rspec-support (3.10.3)
     rubocop (1.23.0)
       parallel (~> 1.10)
@@ -741,7 +733,6 @@ DEPENDENCIES
   redis
   rollbar
   rspec-rails
-  rspec-sonarqube-formatter
   rubocop-performance
   rubocop-rails
   rubocop-rspec
@@ -750,7 +741,7 @@ DEPENDENCIES
   shoulda-matchers
   sidekiq
   sidekiq-cron
-  simplecov (<= 0.17.1)
+  simplecov
   skylight
   slim-rails
   slim_lint

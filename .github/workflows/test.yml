@@ -13,9 +13,26 @@ on:
 
 jobs:
   backend-tests:
-    name: Run rspec
+    name: Run RSpec (${{ matrix.test_params.name }})
 
     runs-on: ubuntu-20.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        test_params:
+          -
+            name: system - jobseekers
+            params: 'spec/system/jobseekers_*_spec.rb'
+          -
+            name: system - publishers
+            params: 'spec/system/publishers_*_spec.rb'
+          -
+            name: system - other & a11y
+            params: '--exclude-pattern "spec/system/{jobseekers,publishers}_*_spec.rb" spec/system spec/accessibility'
+          -
+            name: unit
+            params: '--exclude-pattern "spec/{accessibility,system}/*_spec.rb"'
 
     env:
       RAILS_ENV: test
@@ -34,10 +51,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Setup sonarqube
-        uses: warchant/setup-sonar-scanner@v3
-        if: ${{ github.actor != 'dependabot[bot]' }}
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -71,25 +84,7 @@ jobs:
         run: bin/rails db:create db:schema:load
 
       - name: Run tests
-        run: bundle exec rspec --format RspecSonarqubeFormatter --out ${{ github.workspace }}/out/test-report.xml --format documentation
-
-      - name: Keep Code Coverage Report
-        uses: actions/upload-artifact@v2
-        with:
-          name: Code_Coverage
-          path: ${{ github.workspace }}/coverage/*
-
-      - name: Run sonarqube
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: sonar-scanner
-           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-           -Dsonar.organization=dfe-digital
-           -Dsonar.host.url=https://sonarcloud.io/
-           -Dsonar.projectKey=DFE-Digital_teaching-vacancies
-           -Dsonar.testExecutionReportPaths=${{ github.workspace }}/out/test-report.xml
-           -Dsonar.ruby.coverage.reportPaths=${{ github.workspace }}/coverage/.resultset.json
-        if: ${{ github.actor != 'dependabot[bot]' }}
+        run: bundle exec rspec --format documentation ${{ matrix.test_params.params }}
 
   frontend-tests:
     name: Run frontend JS unit tests
