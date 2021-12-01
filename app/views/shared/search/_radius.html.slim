@@ -3,7 +3,6 @@
   :last,
   :first,
   label: { text: t("jobs.search.within_radius"), size: "s" },
-  class: "govuk-!-width-#{wide ? 'full' : 'one-third'}",
   data: { "change-submit": "false" },
-  form_group: { classes: "location-radius-select" },
+  form_group: { classes: "location-search__radius" },
   options: { selected: @form.radius || Search::LocationBuilder::DEFAULT_BUFFER_FOR_POLYGON_SEARCHES }
