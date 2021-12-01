@@ -20,7 +20,7 @@ window.Stimulus = application;
 
 application.register('autocomplete', AutocompleteController);
 application.register('clipboard', ClipboardController);
-application.register('locationFinder', LocationFinderController);
+application.register('location-finder', LocationFinderController);
 application.register('manage-qualifications', ManageQualificationsController);
 application.register('panel', PanelController);
 application.register('upload-documents', UploadDocumentsController);

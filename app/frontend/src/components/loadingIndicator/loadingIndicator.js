@@ -22,7 +22,7 @@ const loadingIndicator = class {
 
   static add(targetEl) {
     targetEl.insertAdjacentHTML('beforeend', loadingIndicator.svg);
-    [loadingIndicator.element] = targetEl.getElementsByClassName(CLASS_NAME);
+    [loadingIndicator.element] = Array.from(targetEl.getElementsByClassName(CLASS_NAME));
   }
 
   static remove() {
