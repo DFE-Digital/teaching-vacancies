@@ -116,7 +116,7 @@ en:
       jobseekers_job_application_declarations_form:
         right_to_work_in_uk_html: >-
           You can find out whether you have the right to work in the UK on the
-          <a href="https://www.gov.uk/" target="_blank">GOV.UK website (opens in new tab)</a>. You can apply for this role even if you do not have the
+          <a href="https://www.gov.uk/" target="_blank" class="govuk-link">GOV.UK website (opens in new tab)</a>. You can apply for this role even if you do not have the
           right to work in the UK.
       jobseekers_job_application_details_break_form:
         ended_on: For example, 01 2020
