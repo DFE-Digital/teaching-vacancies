@@ -94,7 +94,6 @@ group :development, :test do
   gem "rack-mini-profiler"
   gem "rails-controller-testing"
   gem "rspec-rails"
-  gem "rspec-sonarqube-formatter", require: false
   gem "rubocop-performance"
   gem "rubocop-rails"
   gem "rubocop-rspec"
@@ -107,7 +106,7 @@ group :test do
   gem "rack_session_access"
   gem "selenium-webdriver"
   gem "shoulda-matchers"
-  gem "simplecov", "<= 0.17.1", require: false # Newer versions of simplecov are not compatible with Sonarqube
+  gem "simplecov"
   gem "vcr"
   gem "webmock"
 end

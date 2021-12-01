@@ -54,9 +54,6 @@ config/localhost/https/*.crt
 .stylelintrc.json
 .tool-versions
 
-# Ignore Sonar
-sonar-project.properties
-
 # Ignore BigQuery
 bigquery/*
 
