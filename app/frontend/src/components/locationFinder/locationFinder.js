@@ -17,13 +17,13 @@ const LocationFinder = class extends Controller {
   static loader = loader;
 
   connect() {
-    console.log('connect')
+    // console.log('connect')
     [this.inputContainer] = Array.from(document.getElementsByClassName('location-field__container'));
     // this.inputContainer = containerEl;
-    console.log('container', this.inputContainer);
+    // console.log('container', this.inputContainer);
     this.input = document.getElementById(this.element.dataset.target);
-    console.log('input', this.input);
-    console.log('loader', LocationFinder.loader)
+    // console.log('input', this.input);
+    // console.log('loader', LocationFinder.loader)
     this.input.addEventListener('focus', () => {
       this.removeErrorMessage();
     });
