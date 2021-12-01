@@ -5,7 +5,12 @@
   border-bottom: 1px solid $govuk-border-colour;
   color: $govuk-secondary-text-colour;
   display: flex;
-  padding: govuk-spacing(4) 0;
+  padding: govuk-spacing(4) 0 0;
+
+  dt,
+  dd {
+    display: inline-block;
+  }
 
   dt {
     &::after {
