@@ -14,11 +14,10 @@
 
         .govuk-character-count data-module="govuk-character-count" data-maxlength=100
           = f.govuk_text_field :job_title,
-            id: "publishers_job_listing_copy_form_job_title",
             label: { size: "s" },
             class: "govuk-input string required govuk-js-character-count",
             required: true
-          span#publishers_job_listing_copy_form_job_title-info.govuk-hint.govuk-character-count__message aria-live="polite"
+          span#publishers-job-listing-copy-vacancy-form-job-title-field-info.govuk-hint.govuk-character-count__message aria-live="polite"
             | You can enter up to 100 characters
 
         = f.govuk_radio_buttons_fieldset :publish_on_day do
