@@ -1,7 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
 
-import 'es6-promise/auto';
-
 import loader from '../loadingIndicator/loadingIndicator';
 import api from '../../lib/api';
 import logger from '../../lib/logging';
@@ -17,7 +15,7 @@ const LocationFinder = class extends Controller {
   static loader = loader;
 
   connect() {
-    [this.inputContainer] = document.getElementsByClassName('location-field__container');
+    [this.inputContainer] = Array.from(document.getElementsByClassName('location-field__container'));
     this.input = document.getElementById(this.element.dataset.target);
 
     this.input.addEventListener('focus', () => {
