@@ -17,7 +17,8 @@ const LocationFinder = class extends Controller {
   static loader = loader;
 
   connect() {
-    [this.inputContainer] = document.getElementsByClassName('location-field__container');
+    const [containerEl] = document.getElementsByClassName('location-field__container');
+    this.inputContainer = containerEl;
     this.input = document.getElementById(this.element.dataset.target);
 
     this.input.addEventListener('focus', () => {
