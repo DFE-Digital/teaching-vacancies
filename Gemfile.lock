@@ -156,9 +156,6 @@ GEM
     crack (0.4.5)
       rexml
     crass (1.0.6)
-    debase (0.2.5.beta2)
-      debase-ruby_core_source (>= 0.10.12)
-    debase-ruby_core_source (0.10.13)
     declarative (0.0.20)
     deep_merge (1.2.1)
     descendants_tracker (0.0.4)
@@ -527,8 +524,6 @@ GEM
       rubocop (>= 1.7.0, < 2.0)
     rubocop-rspec (2.6.0)
       rubocop (~> 1.19)
-    ruby-debug-ide (0.7.3)
-      rake (>= 0.8.1)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
@@ -701,7 +696,6 @@ DEPENDENCIES
   capybara
   climate_control
   colorize
-  debase (>= 0.2.5beta)
   devise
   dotenv-rails
   factory_bot_rails
@@ -751,7 +745,6 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
-  ruby-debug-ide
   sanitize
   selenium-webdriver
   shoulda-matchers
