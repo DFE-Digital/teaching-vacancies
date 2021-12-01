@@ -9,8 +9,8 @@ import AutocompleteController from './components/autocomplete/autocomplete';
 import ClipboardController from './components/clipboard/clipboard';
 import LocationFinderController from './components/locationFinder/locationFinder';
 import ManageQualificationsController from './components/manageQualifications/manageQualifications';
-import UtilsController from './components/utils';
 import UploadDocumentsController from './components/uploadDocuments/uploadDocuments';
+import UtilsController from './components/utils';
 
 const application = Application.start();
 
@@ -18,10 +18,10 @@ application.warnings = false;
 application.debug = false;
 window.Stimulus = application;
 
+application.register('autocomplete', AutocompleteController);
 application.register('clipboard', ClipboardController);
+application.register('locationFinder', LocationFinderController);
 application.register('manage-qualifications', ManageQualificationsController);
 application.register('panel', PanelController);
-application.register('utils', UtilsController);
-application.register('autocomplete', AutocompleteController);
 application.register('upload-documents', UploadDocumentsController);
-application.register('locationFinder', LocationFinderController);
+application.register('utils', UtilsController);

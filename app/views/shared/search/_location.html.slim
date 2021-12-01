@@ -1,7 +1,7 @@
 - desktop = false if local_assigns[:desktop].nil?
 - show_hint = true if local_assigns[:show_hint].nil?
 
-.autocomplete.location-field__container data-source="getLocationSuggestions" data-controller="autocomplete" data-autocomplete-position="#{desktop ? "overlay" : "inline"}"
+.autocomplete.location-field__container data-source="getLocationSuggestions" data-controller="autocomplete loader" data-autocomplete-position="#{desktop ? "overlay" : "inline"}"
   = f.govuk_text_field :location,
     label: { text: t("jobs.search.location"), size: "s" },
     hint: { text: show_hint ? t("jobs.search.location_hint") : nil, size: "s" },
