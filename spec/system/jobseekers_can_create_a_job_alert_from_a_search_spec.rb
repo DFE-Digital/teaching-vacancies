@@ -176,7 +176,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
   def and_the_search_criteria_are_populated
     expect(page.find_field("jobseekers-subscription-form-keyword-field").value).to eq("english")
     expect(page.find_field("jobseekers-subscription-form-location-field").value).to eq(location)
-    expect(page).to have_css(".js-location-finder__input")
+    expect(page).to have_css(".location-finder__input")
     if search_with_polygons?
       expect(page.find_field("jobseekers-subscription-form-radius-field").value).to eq("25")
     end
