@@ -18,7 +18,7 @@ const LocationFinder = class extends Controller {
 
   connect() {
     console.log('connect')
-    const containerEl = Array.from(document.getElementsByClassName('location-field__container'))[0];
+    const [containerEl] = document.getElementsByClassName('location-field__container');
     this.inputContainer = containerEl;
     console.log('container', this.inputContainer);
     this.input = document.getElementById(this.element.dataset.target);
