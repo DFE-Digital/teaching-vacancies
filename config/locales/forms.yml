@@ -201,12 +201,13 @@ en:
         starts_on: For example, 01 09 2021
       publishers_job_listing_documents_form:
         documents_html: >-
-          <p>You can upload pdf, jpeg, png, mp4, word, powerpoint and excel files. You can upload as many files as you
-          like, and each file must be smaller than 10 MB.</p><p>The documents you upload should be accessible for users
-          with disabilities or impairments. You should keep the language simple and structure your documents to make
-          them easier to read. Learn more about <a class="govuk-link"
-          href="https://www.gov.uk/guidance/publishing-accessible-documents#writing-accessible-documents" target="_blank">
-          how to make documents accessible (opens in new tab)</a>.</p>
+          <p class="govuk-body">You can upload files such as a job description or person specification.</p>
+          <p class="govuk-body">You can upload as many files as you like. Each file must be:</p>
+          <ul class="govuk-list govuk-list--bullet">
+          <li>in pdf, jpeg, png, mp4, doc, ppt or xls format</li>
+          <li>smaller than 10 MB</li>
+          <li>accessible for users with disabilities or impairments - <a class="govuk-link" target="_blank" href="https://www.gov.uk/guidance/publishing-accessible-documents#writing-accessible-documents">how to make documents accessible (opens in new tab)</a>.</li>
+          </ul>
       publishers_job_listing_extend_deadline_form:
         expires_at: For example, 01 05 2021
         starts_on: For example, 01 09 2021
