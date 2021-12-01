@@ -24,4 +24,4 @@ application.register('panel', PanelController);
 application.register('utils', UtilsController);
 application.register('autocomplete', AutocompleteController);
 application.register('upload-documents', UploadDocumentsController);
-application.register('locationFinder', LocationFinderController);
+application.register('location-finder', LocationFinderController);
