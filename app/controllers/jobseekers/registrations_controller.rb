@@ -17,6 +17,16 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
     redirect_to root_path, success: t(".success")
   end
 
+  def check_your_email
+    @resource = Jobseeker.find(session[:jobseeker_id])
+  end
+
+  def resend_instructions
+    @resource = Jobseeker.find(session[:jobseeker_id])
+    @resource.send_confirmation_instructions
+    render :check_your_email
+  end
+
   protected
 
   def check_password_difference
@@ -63,6 +73,7 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
       user_anonymised_jobseeker_id: StringAnonymiser.new(resource.id),
       email_identifier: StringAnonymiser.new(resource.email),
     )
+    session[:jobseeker_id] = resource.id
     jobseekers_check_your_email_path
   end
 
