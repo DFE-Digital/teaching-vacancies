@@ -13,7 +13,8 @@
       = form_for form, url: organisation_job_extend_deadline_path(vacancy.id), method: :patch do |f|
         = f.govuk_error_summary
 
-        = f.govuk_date_field :expires_at
+        = f.govuk_date_field :expires_at,
+          hint: -> { t("helpers.hint.publishers_job_listing_extend_deadline_form.expires_at", date: 1.month.from_now.strftime("%d %m %Y")) }
 
         = f.govuk_collection_radio_buttons :expiry_time,
           Vacancy::EXPIRY_TIME_OPTIONS,
@@ -21,7 +22,8 @@
           ->(option) { t("helpers.options.publishers_job_listing_extend_deadline_form.expiry_time.#{option}") }
 
         .clear-form
-          = f.govuk_date_field :starts_on
+          = f.govuk_date_field :starts_on,
+            hint: -> { t("helpers.hint.publishers_job_listing_extend_deadline_form.starts_on", date: 2.months.from_now.strftime("%d %m %Y")) }
 
           .clear-form__checkbox
             = f.govuk_check_box :starts_asap, "true", 0, multiple: false, link_errors: false

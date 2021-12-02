@@ -193,12 +193,12 @@ en:
         school_visits: Explain how a candidate can arrange a visit to the school (give a phone number if possible)
         trust_visits: Explain how a candidate can arrange a visit to the trust (give a phone number if possible)
       publishers_job_listing_copy_vacancy_form:
-        expires_at: For example, 01 05 2021
+        expires_at: For example, %{date}
         job_title: >-
           For secondary school roles include subject and, if relevant,
           level of seniority (‘Subject leader for science’, for example).
-        publish_on: For example, 01 01 2021
-        starts_on: For example, 01 09 2021
+        publish_on: For example, %{date}
+        starts_on: For example, %{date}
       publishers_job_listing_documents_form:
         documents_html: >-
           <p class="govuk-body">You can upload files such as a job description or person specification.</p>
@@ -209,16 +209,16 @@ en:
           <li>accessible for users with disabilities or impairments - <a class="govuk-link" target="_blank" href="https://www.gov.uk/guidance/publishing-accessible-documents#writing-accessible-documents">how to make documents accessible (opens in new tab)</a>.</li>
           </ul>
       publishers_job_listing_extend_deadline_form:
-        expires_at: For example, 01 05 2021
-        starts_on: For example, 01 09 2021
+        expires_at: For example, %{date}
+        starts_on: For example, %{date}
       publishers_job_listing_feedback_form:
         email: >-
           We'll only use this to tell you about opportunities to take part in user research that helps us improve
           Department for Education services.
       publishers_job_listing_important_dates_form:
-        expires_at: For example, 01 05 2021
-        publish_on: For example, 01 01 2021
-        starts_on: For example, 01 09 2021
+        expires_at: For example, %{date}
+        publish_on: For example, %{date}
+        starts_on: For example, %{date}
       publishers_job_listing_job_details_form:
         contract_type_duration: >-
           Contract length should be more than 12 weeks. Short term cover should not be advertised on Teaching Vacancies
