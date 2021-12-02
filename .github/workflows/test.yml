@@ -23,15 +23,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node
+      - name: Set up Node.js
         uses: actions/setup-node@v2.5.0
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Install yarn
+      - name: Install Yarn
         run: npm install yarn -g
 
-      - name: Yarn cache
+      - name: Prepare Yarn cache
         id: yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
@@ -49,13 +49,14 @@ jobs:
       - name: Archive Node.js dependencies
         run: tar --use-compress-program zstd -cf node_modules.tar.zst node_modules
 
-      - uses: actions/upload-artifact@master
+      - name: Upload Node.js dependencies to artifact cache
+        uses: actions/upload-artifact@master
         with:
           name: node-modules
           path: node_modules.tar.zst
 
   backend-tests:
-    name: Run RSpec (${{ matrix.test_params.name }})
+    name: RSpec ${{ matrix.test_params.name }}
     needs: prepare
     runs-on: ubuntu-20.04
 
@@ -63,13 +64,13 @@ jobs:
       fail-fast: false
       matrix:
         test_params:
-          - name: system - jobseekers
+          - name: system specs - jobseekers
             params: "spec/system/jobseekers_*_spec.rb"
-          - name: system - publishers
+          - name: system specs - publishers
             params: "spec/system/publishers_*_spec.rb"
-          - name: system - other & a11y
+          - name: system specs - other & a11y
             params: '--exclude-pattern "spec/system/{jobseekers,publishers}_*_spec.rb" spec/system spec/accessibility'
-          - name: unit
+          - name: unit specs
             params: '--exclude-pattern "spec/{accessibility,system}/*_spec.rb"'
 
     env:
@@ -118,7 +119,7 @@ jobs:
         run: bundle exec rspec --format documentation ${{ matrix.test_params.params }}
 
   frontend-tests:
-    name: Run frontend JS unit tests
+    name: JavaScript unit tests
     needs: prepare
     runs-on: ubuntu-20.04
 
@@ -142,5 +143,5 @@ jobs:
       - name: Extract Node.js dependencies
         run: tar --use-compress-program zstd -xf tmp/node_modules.tar.zst
 
-      - name: run frontend tests and linting
+      - name: Run tests
         run: yarn run js:test
