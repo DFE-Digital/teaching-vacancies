@@ -16,10 +16,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+      - name: Prepare application environment
+        uses: ./.github/actions/prepare-app-env
         with:
-          bundler-cache: true
+          skip-node: true
 
       - name: Run Rubocop
         run: bundle exec rubocop
@@ -39,28 +39,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node
-        uses: actions/setup-node@v2.5.0
+      - name: Prepare application environment
+        uses: ./.github/actions/prepare-app-env
         with:
-          node-version: '12.x'
-
-      - name: Install yarn
-        run: npm install yarn -g
-
-      - name: Yarn cache
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: Set up yarn cache
-        uses: actions/cache@v2.1.7
-        with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Install node.js dependencies
-        run: yarn install
+          skip-ruby: true
 
       - name: Run SASS lint
         run: yarn run sass:lint && yarn run js:lint
