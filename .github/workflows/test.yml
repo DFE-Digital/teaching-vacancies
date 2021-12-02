@@ -47,12 +47,12 @@ jobs:
         run: yarn install
 
       - name: Archive Node.js dependencies
-        run: tar czf node_modules.tar.gz node_modules
+        run: tar --use-compress-program zstd -cf node_modules.tar.zst node_modules
 
       - uses: actions/upload-artifact@master
         with:
           name: node-modules
-          path: node_modules.tar.gz
+          path: node_modules.tar.zst
 
   backend-tests:
     name: Run RSpec (${{ matrix.test_params.name }})
@@ -106,10 +106,10 @@ jobs:
       - uses: actions/download-artifact@master
         with:
           name: node-modules
-          path: node_modules.tar.gz
+          path: node_modules.tar.zst
 
       - name: Extract Node.js dependencies
-        run: tar xzf node_modules.tar.gz
+        run: tar --use-compress-program zstd -xf node_modules.tar.zst
 
       - name: Set up test database
         run: bin/rails db:create db:schema:load
@@ -137,10 +137,13 @@ jobs:
       - uses: actions/download-artifact@master
         with:
           name: node-modules
-          path: node_modules.tar.gz
+          path: nodemod/
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: nodemod/
 
       - name: Extract Node.js dependencies
-        run: tar xzf node_modules.tar.gz
+        run: tar --use-compress-program zstd -xf tmp/node_modules.tar.zst
 
       - name: run frontend tests and linting
         run: yarn run js:test
