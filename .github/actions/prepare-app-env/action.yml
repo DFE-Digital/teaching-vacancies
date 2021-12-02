@@ -1,0 +1,55 @@
+name: Prepare application environment
+description: Performs setup steps common to jobs that need to run the application
+inputs:
+  skip-ruby:
+    description: Allows skipping Ruby setup for jobs where it isn't required
+    required: false
+    default: "false"
+  skip-node:
+    description: Allows skipping Node.js setup for jobs where it isn't required
+    required: false
+    default: "false"
+  node-version:
+    description: The version of Node.js to install
+    required: false
+    default: "12.x"
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Ruby
+      if: ${{ inputs.skip-ruby == 'false' }}
+      uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+
+    - name: Set up Node
+      if: ${{ inputs.skip-node == 'false' }}
+      uses: actions/setup-node@v2.5.0
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Install yarn
+      if: ${{ inputs.skip-node == 'false' }}
+      run: npm install yarn -g
+      shell: bash
+
+    - name: Yarn cache
+      if: ${{ inputs.skip-node == 'false' }}
+      id: yarn-cache
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+      shell: bash
+
+    - name: Set up yarn cache
+      if: ${{ inputs.skip-node == 'false' }}
+      uses: actions/cache@v2.1.7
+      with:
+        path: ${{ steps.yarn-cache.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+
+    - name: Install node.js dependencies
+      if: ${{ inputs.skip-node == 'false' }}
+      run: yarn install
+      shell: bash
