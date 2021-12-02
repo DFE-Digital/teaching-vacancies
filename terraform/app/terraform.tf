@@ -65,34 +65,35 @@ module "cloudwatch" {
 module "paas" {
   source = "./modules/paas"
 
-  environment                    = var.environment
-  app_docker_image               = var.paas_app_docker_image
-  app_env_values                 = local.paas_app_env_values
-  app_start_timeout              = var.paas_app_start_timeout
-  app_stopped                    = var.paas_app_stopped
-  docker_username                = local.infra_secrets.github_packages_username
-  docker_password                = local.infra_secrets.github_packages_token
-  logging_url                    = local.infra_secrets.logging_url
-  logging_service_binding_enable = var.paas_logging_service_binding_enable
-  parameter_store_environment    = var.parameter_store_environment
-  service_name                   = local.service_name
-  service_abbreviation           = local.service_abbreviation
-  postgres_service_plan          = var.paas_postgres_service_plan
-  redis_cache_service_plan       = var.paas_redis_cache_service_plan
-  redis_queue_service_plan       = var.paas_redis_queue_service_plan
-  space_name                     = var.paas_space_name
-  web_app_deployment_strategy    = var.paas_web_app_deployment_strategy
-  web_app_instances              = var.paas_web_app_instances
-  web_app_memory                 = var.paas_web_app_memory
-  web_app_start_command          = var.paas_web_app_start_command
-  worker_app_deployment_strategy = var.paas_worker_app_deployment_strategy
-  worker_app_instances           = var.paas_worker_app_instances
-  worker_app_memory              = var.paas_worker_app_memory
-  route53_zones                  = var.route53_zones
-  route53_a_records              = local.route53_a_records
-  hostname_domain_map            = local.hostname_domain_map
-  restore_from_db_guid           = var.paas_restore_from_db_guid
-  db_backup_before_point_in_time = var.paas_db_backup_before_point_in_time
+  environment                       = var.environment
+  app_docker_image                  = var.paas_app_docker_image
+  app_env_values                    = local.paas_app_env_values
+  app_start_timeout                 = var.paas_app_start_timeout
+  app_stopped                       = var.paas_app_stopped
+  docker_username                   = local.infra_secrets.github_packages_username
+  docker_password                   = local.infra_secrets.github_packages_token
+  logging_url                       = local.infra_secrets.logging_url
+  logging_service_binding_enable    = var.paas_logging_service_binding_enable
+  parameter_store_environment       = var.parameter_store_environment
+  service_name                      = local.service_name
+  service_abbreviation              = local.service_abbreviation
+  postgres_service_plan             = var.paas_postgres_service_plan
+  redis_cache_service_plan          = var.paas_redis_cache_service_plan
+  redis_queue_service_plan          = var.paas_redis_queue_service_plan
+  space_name                        = var.paas_space_name
+  web_app_deployment_strategy       = var.paas_web_app_deployment_strategy
+  web_app_instances                 = var.paas_web_app_instances
+  web_app_memory                    = var.paas_web_app_memory
+  web_app_start_command             = var.paas_web_app_start_command
+  worker_app_deployment_strategy    = var.paas_worker_app_deployment_strategy
+  worker_app_instances              = var.paas_worker_app_instances
+  worker_app_memory                 = var.paas_worker_app_memory
+  route53_zones                     = var.route53_zones
+  route53_a_records                 = local.route53_a_records
+  hostname_domain_map               = local.hostname_domain_map
+  restore_from_db_guid              = var.paas_restore_from_db_guid
+  db_backup_before_point_in_time    = var.paas_db_backup_before_point_in_time
+  documents_s3_bucket_force_destroy = var.documents_s3_bucket_force_destroy
 }
 
 module "statuscake" {
