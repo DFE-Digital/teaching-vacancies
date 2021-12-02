@@ -106,10 +106,10 @@ jobs:
       - uses: actions/download-artifact@master
         with:
           name: node-modules
-          path: node_modules.tar.zst
+          path: tmp/
 
       - name: Extract Node.js dependencies
-        run: tar --use-compress-program zstd -xf node_modules.tar.zst
+        run: tar --use-compress-program zstd -xf tmp/node_modules.tar.zst
 
       - name: Set up test database
         run: bin/rails db:create db:schema:load
@@ -141,10 +141,6 @@ jobs:
 
       - name: Extract Node.js dependencies
         run: tar --use-compress-program zstd -xf tmp/node_modules.tar.zst
-
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: .
 
       - name: run frontend tests and linting
         run: yarn run js:test
