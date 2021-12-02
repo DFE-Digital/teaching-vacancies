@@ -1,3 +1,7 @@
-= f.govuk_date_field :started_on, omit_day: true
-= f.govuk_date_field :ended_on, omit_day: true
+= f.govuk_date_field :started_on,
+  omit_day: true,
+  hint: -> { t("helpers.hint.jobseekers_job_application_details_break_form.started_on", date: 15.months.ago.strftime("%m %Y")) }
+= f.govuk_date_field :ended_on,
+  omit_day: true,
+  hint: -> { t("helpers.hint.jobseekers_job_application_details_break_form.ended_on", date: 3.months.ago.strftime("%m %Y")) }
 = f.govuk_text_area :reason_for_break, label: { size: "s" }, required: true

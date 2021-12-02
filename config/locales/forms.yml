@@ -119,14 +119,14 @@ en:
           <a href="https://www.gov.uk/" target="_blank" class="govuk-link">GOV.UK website (opens in new tab)</a>. You can apply for this role even if you do not have the
           right to work in the UK.
       jobseekers_job_application_details_break_form:
-        ended_on: For example, 01 2020
+        ended_on: For example, %{date}
         reason_for_break: "For example, 'I was unemployed', 'I had health issues' or 'I was caring for a child'"
-        started_on: For example, 01 2020
+        started_on: For example, %{date}
       jobseekers_job_application_details_employment_form:
-        ended_on: For example, 01 2020
+        ended_on: For example, %{date}
         main_duties: A very brief summary
         organisation: For a non-teaching job, tell us the name of the organisation you worked at
-        started_on: For example, 01 2020
+        started_on: For example, %{date}
       jobseekers_job_application_details_qualifications_degree_form:
         institution: For example, a university or college
       jobseekers_job_application_details_reference_form:
