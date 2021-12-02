@@ -11,6 +11,10 @@
       .govuk-body-m {
         color: govuk-colour('white');
         display: inline;
+
+        &:focus {
+          color: $govuk-focus-text-colour;
+        }
       }
     }
   }
@@ -18,12 +22,18 @@
   .govuk-button--start {
     background-color: govuk-colour('white');
     color: $govuk-brand-colour;
+
+    &:hover {
+      background-color: #d5e8f3;
+    }
   }
 
   .govuk-header__content {
-    .govuk-header__navigation {
-      display: inline-block;
-      width: 100%;
+    @include govuk-media-query($from: desktop) {
+      .govuk-header__navigation {
+        display: inline-block;
+        width: 100%;
+      }
     }
   }
 
