@@ -47,7 +47,7 @@ jobs:
         run: yarn install
 
       - name: Archive Node.js dependencies
-        run: tar cf node_modules
+        run: tar cf node_modules.tar node_modules
 
       - uses: actions/upload-artifact@master
         with:
