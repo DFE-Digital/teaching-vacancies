@@ -43,13 +43,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: Install node.js dependencies
+      - name: Install Node.js dependencies
         run: yarn install
+
+      - name: Archive Node.js dependencies
+        run: tar cf node_modules
 
       - uses: actions/upload-artifact@master
         with:
           name: yarn-cache
-          path: node_modules
+          path: node_modules.tar
 
   backend-tests:
     name: Run RSpec (${{ matrix.test_params.name }})
@@ -103,7 +106,10 @@ jobs:
       - uses: actions/download-artifact@master
         with:
           name: yarn-cache
-          path: node_modules
+          path: node_modules.tar
+
+      - name: Extract Node.js dependencies
+        run: tar xf node_modules.tar
 
       - name: Set up test database
         run: bin/rails db:create db:schema:load
