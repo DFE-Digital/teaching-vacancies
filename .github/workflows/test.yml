@@ -3,35 +3,70 @@ name: Test
 on:
   push:
     branches:
-      - '**'
+      - "**"
     paths-ignore:
-    - 'bigquery/**'
-    - 'documentation/**'
-    - 'terraform/common/**'
-    - 'terraform/monitoring/**'
-    - '**.md'
+      - "bigquery/**"
+      - "documentation/**"
+      - "terraform/common/**"
+      - "terraform/monitoring/**"
+      - "**.md"
+
+env:
+  NODE_VERSION: "12.x"
 
 jobs:
+  prepare:
+    name: Prepare Node.js dependencies
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node
+        uses: actions/setup-node@v2.5.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install yarn
+        run: npm install yarn -g
+
+      - name: Yarn cache
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Set up yarn cache
+        uses: actions/cache@v2.1.7
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install node.js dependencies
+        run: yarn install
+
+      - uses: actions/upload-artifact@master
+        with:
+          name: yarn-cache
+          path: node_modules
+
   backend-tests:
     name: Run RSpec (${{ matrix.test_params.name }})
-
+    needs: prepare
     runs-on: ubuntu-20.04
 
     strategy:
       fail-fast: false
       matrix:
         test_params:
-          -
-            name: system - jobseekers
-            params: 'spec/system/jobseekers_*_spec.rb'
-          -
-            name: system - publishers
-            params: 'spec/system/publishers_*_spec.rb'
-          -
-            name: system - other & a11y
+          - name: system - jobseekers
+            params: "spec/system/jobseekers_*_spec.rb"
+          - name: system - publishers
+            params: "spec/system/publishers_*_spec.rb"
+          - name: system - other & a11y
             params: '--exclude-pattern "spec/system/{jobseekers,publishers}_*_spec.rb" spec/system spec/accessibility'
-          -
-            name: unit
+          - name: unit
             params: '--exclude-pattern "spec/{accessibility,system}/*_spec.rb"'
 
     env:
@@ -60,25 +95,15 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v2.5.0
         with:
-          node-version: '12.x'
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Install yarn
         run: npm install yarn -g
 
-      - name: Yarn cache
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: Set up yarn cache
-        uses: actions/cache@v2.1.7
+      - uses: actions/download-artifact@master
         with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Install node.js dependencies
-        run: yarn install
+          name: yarn-cache
+          path: node_modules
 
       - name: Set up test database
         run: bin/rails db:create db:schema:load
@@ -88,7 +113,7 @@ jobs:
 
   frontend-tests:
     name: Run frontend JS unit tests
-
+    needs: prepare
     runs-on: ubuntu-20.04
 
     steps:
@@ -98,25 +123,15 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v2.5.0
         with:
-          node-version: '12.x'
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Install yarn
         run: npm install yarn -g
 
-      - name: Yarn cache
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: Set up yarn cache
-        uses: actions/cache@v2.1.7
+      - uses: actions/download-artifact@master
         with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Install node.js dependencies
-        run: yarn install
+          name: yarn-cache
+          path: node_modules
 
       - name: run frontend tests and linting
         run: yarn run js:test
