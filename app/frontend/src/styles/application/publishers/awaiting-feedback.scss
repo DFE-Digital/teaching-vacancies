@@ -8,6 +8,8 @@
     }
 
     dt {
+      display: inline-block;
+
       &::after {
         content: ':';
         margin-right: govuk-spacing(1);

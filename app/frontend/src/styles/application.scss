@@ -128,11 +128,6 @@ dd {
   margin: 0;
 }
 
-dt,
-dd {
-  display: inline-block;
-}
-
 .govuk-section-break {
   &--thick {
     border-bottom: 5px solid #b1b4b6;
@@ -144,7 +139,6 @@ dd {
 
   .govuk-summary-list__row {
     border-bottom: 1px solid $govuk-border-colour;
-    padding: govuk-spacing(4) 0;
   }
 }
 
