@@ -1,0 +1,15 @@
+@import 'base_component';
+
+.map-component {
+  margin-bottom: govuk-spacing(4);
+
+  &__map {
+    height: 400px;
+    width: 100%;
+
+    &__icon {
+      background-color: $govuk-brand-colour;
+      border-radius: 10px;
+    }
+  }
+}
