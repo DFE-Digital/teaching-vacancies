@@ -9,7 +9,17 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
+  def create_or_copy; end
+
+  def select_a_job_for_copying; end
+
+  def redirect_to_copy_job
+    redirect_to new_organisation_job_copy_path(job_id: params[:job_id])
+  end
+
   def create
+    redirect_to select_a_job_for_copying_organisation_jobs_path and return if params[:create_or_copy] == "copy-existing"
+
     reset_session_vacancy!
     vacancy = Vacancy.create(organisations: [current_organisation])
     redirect_to organisation_job_build_path(vacancy.id, :job_role)

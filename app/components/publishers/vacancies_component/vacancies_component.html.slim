@@ -1,4 +1,4 @@
-= dashboard(background: true, heading: t("jobs.manage.heading_html", organisation: @organisation.name, email: @email), link: { url: organisation_jobs_path, text: t("buttons.create_job") }) do |d|
+= dashboard(background: true, heading: t("jobs.manage.heading_html", organisation: @organisation.name, email: @email), link: { url: create_or_copy_organisation_jobs_path, text: t("buttons.create_job") }) do |d|
   - vacancy_links.each do |item|
     - d.navigation_item item: item
 

@@ -16,6 +16,7 @@
         = t(".date_expires", application_deadline: OrganisationVacancyPresenter.new(@vacancy).application_deadline)
 
       = govuk_button_link_to t(".view_jobs"), jobs_with_type_organisation_path(:published), class: "govuk-button--secondary"
+      = govuk_button_link_to t(".create_another_job_listing"), create_or_copy_organisation_jobs_path, class: "govuk-button--secondary govuk-!-margin-left-3"
 
       .divider-bottom
 
