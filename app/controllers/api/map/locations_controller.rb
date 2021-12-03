@@ -12,11 +12,9 @@ class Api::Map::LocationsController < Api::ApplicationController
   end
 
   def polygon
-    points = []
-    location_search.polygon_boundaries.each do |boundary|
+    location_search.polygon_boundaries.each_with_object([]) do |boundary, points|
       boundary.each_slice(2).map { |element| points.push({ lat: element.first, lng: element.second }) }
     end
-    points
   end
 
   def location
