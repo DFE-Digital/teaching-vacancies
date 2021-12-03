@@ -93,6 +93,7 @@ en:
   helpers:
     optional_field_html: "%{label} (optional<span class='govuk-visually-hidden'> field</span>)"
     hint:
+      date: For example, %{date}
       general_feedback_form:
         comment_html: >-
           <p>Please do not include any information that could identify you personally
@@ -119,14 +120,10 @@ en:
           <a href="https://www.gov.uk/" target="_blank" class="govuk-link">GOV.UK website (opens in new tab)</a>. You can apply for this role even if you do not have the
           right to work in the UK.
       jobseekers_job_application_details_break_form:
-        ended_on: For example, %{date}
         reason_for_break: "For example, 'I was unemployed', 'I had health issues' or 'I was caring for a child'"
-        started_on: For example, %{date}
       jobseekers_job_application_details_employment_form:
-        ended_on: For example, %{date}
         main_duties: A very brief summary
         organisation: For a non-teaching job, tell us the name of the organisation you worked at
-        started_on: For example, %{date}
       jobseekers_job_application_details_qualifications_degree_form:
         institution: For example, a university or college
       jobseekers_job_application_details_reference_form:
@@ -193,12 +190,9 @@ en:
         school_visits: Explain how a candidate can arrange a visit to the school (give a phone number if possible)
         trust_visits: Explain how a candidate can arrange a visit to the trust (give a phone number if possible)
       publishers_job_listing_copy_vacancy_form:
-        expires_at: For example, %{date}
         job_title: >-
           For secondary school roles include subject and, if relevant,
           level of seniority (‘Subject leader for science’, for example).
-        publish_on: For example, %{date}
-        starts_on: For example, %{date}
       publishers_job_listing_documents_form:
         documents_html: >-
           <p class="govuk-body">You can upload files such as a job description or person specification.</p>
@@ -208,17 +202,10 @@ en:
           <li>smaller than 10 MB</li>
           <li>accessible for users with disabilities or impairments - <a class="govuk-link" target="_blank" href="https://www.gov.uk/guidance/publishing-accessible-documents#writing-accessible-documents">how to make documents accessible (opens in new tab)</a>.</li>
           </ul>
-      publishers_job_listing_extend_deadline_form:
-        expires_at: For example, %{date}
-        starts_on: For example, %{date}
       publishers_job_listing_feedback_form:
         email: >-
           We'll only use this to tell you about opportunities to take part in user research that helps us improve
           Department for Education services.
-      publishers_job_listing_important_dates_form:
-        expires_at: For example, %{date}
-        publish_on: For example, %{date}
-        starts_on: For example, %{date}
       publishers_job_listing_job_details_form:
         contract_type_duration: >-
           Contract length should be more than 12 weeks. Short term cover should not be advertised on Teaching Vacancies

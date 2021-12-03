@@ -25,10 +25,10 @@
           = f.govuk_radio_button :publish_on_day, :tomorrow
           = f.govuk_radio_button :publish_on_day, :another_day do
             = f.govuk_date_field :publish_on,
-              hint: -> { t("helpers.hint.publishers_job_listing_copy_vacancy_form.publish_on", date: 1.week.from_now.strftime("%d %m %Y")) }
+              hint: -> { t("helpers.hint.date", date: 1.week.from_now.strftime("%d %m %Y")) }
 
         = f.govuk_date_field :expires_at,
-          hint: -> { t("helpers.hint.publishers_job_listing_copy_vacancy_form.expires_at", date: 1.month.from_now.strftime("%d %m %Y")) }
+          hint: -> { t("helpers.hint.date", date: 1.month.from_now.strftime("%d %m %Y")) }
 
         = f.govuk_collection_radio_buttons :expiry_time,
           Vacancy::EXPIRY_TIME_OPTIONS,
@@ -37,7 +37,7 @@
 
         .clear-form
           = f.govuk_date_field :starts_on,
-            hint: -> { t("helpers.hint.publishers_job_listing_copy_vacancy_form.starts_on", date: 2.months.from_now.strftime("%d %m %Y")) }
+            hint: -> { t("helpers.hint.date", date: 2.months.from_now.strftime("%d %m %Y")) }
 
           .clear-form__checkbox
             = f.govuk_check_box :starts_asap, "true", 0, multiple: false, link_errors: false

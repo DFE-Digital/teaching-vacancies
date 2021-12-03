@@ -24,10 +24,10 @@
             = f.govuk_radio_button :publish_on_day, :tomorrow
             = f.govuk_radio_button :publish_on_day, :another_day do
               = f.govuk_date_field :publish_on,
-                hint: -> { t("helpers.hint.publishers_job_listing_important_dates_form.publish_on", date: 1.week.from_now.strftime("%d %m %Y")) }
+                hint: -> { t("helpers.hint.date", date: 1.week.from_now.strftime("%d %m %Y")) }
 
         = f.govuk_date_field :expires_at,
-          hint: -> { t("helpers.hint.publishers_job_listing_important_dates_form.expires_at", date: 1.month.from_now.strftime("%d %m %Y")) }
+          hint: -> { t("helpers.hint.date", date: 1.month.from_now.strftime("%d %m %Y")) }
 
         = f.govuk_collection_radio_buttons :expiry_time,
           Vacancy::EXPIRY_TIME_OPTIONS,
@@ -38,7 +38,7 @@
           = f.govuk_radio_button :starts_asap, "false", link_errors: true, label: { text: t("helpers.legend.publishers_job_listing_important_dates_form.start_date_specific") } do
             = f.govuk_date_field :starts_on,
               legend: { text: "Enter date" },
-              hint: -> { t("helpers.hint.publishers_job_listing_important_dates_form.starts_on", date: 2.months.from_now.strftime("%d %m %Y")) }
+              hint: -> { t("helpers.hint.date", date: 2.months.from_now.strftime("%d %m %Y")) }
           = f.govuk_radio_button :starts_asap, "true", class: "clear-form__checkbox", label: { text: t("helpers.legend.publishers_job_listing_important_dates_form.start_asap") }
 
         = render "publishers/vacancies/vacancy_form_partials/submit", f: f
