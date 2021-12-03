@@ -56,4 +56,14 @@ RSpec.describe "Copy-or-new vacancy flow" do
     click_on "Confirm and submit job"
     expect(page).to have_link("Create another job listing", href: create_or_copy_organisation_jobs_path)
   end
+
+  context "if there are no published vacancies" do
+    let(:vacancy_count) { 0 }
+
+    scenario "publishers are sent straight to the 'create new' path" do
+      visit organisation_path
+      click_on "Create a job listing"
+      expect(page).to have_content("Step 1 of 9")
+    end
+  end
 end
