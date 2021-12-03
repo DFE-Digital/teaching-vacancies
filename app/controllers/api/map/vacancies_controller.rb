@@ -27,8 +27,8 @@ class Api::Map::VacanciesController < Api::ApplicationController
           name_link: organisation.website || organisation.url,
           address: full_address(organisation),
           school_type: organisation_type(organisation),
-        }
-      }
+        },
+      },
     }
   end
 end

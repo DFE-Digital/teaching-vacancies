@@ -24,7 +24,7 @@ class Api::Map::LocationsController < Api::ApplicationController
         point: location_search.point_coordinates,
         meta: {},
         coordinates: polygon,
-      }
+      },
     }
   end
 end
