@@ -26,16 +26,10 @@
   }
 
   &-stats {
+    padding-top: 0.3em;
+
     @include govuk-media-query($from: tablet) {
       order: 2;
-
-      .govuk-body {
-        line-height: 2.6rem;
-      }
-    }
-
-    .govuk-body {
-      margin-bottom: 0;
     }
   }
 
@@ -45,8 +39,26 @@
       order: 1;
     }
 
-    .govuk-label {
-      display: inline;
+    &__list {
+      display: inline-block;
+      list-style: none;
+      margin: 0 0 0 0.3125em;
+      padding-left: govuk-spacing(0);
+    }
+
+    &__list-item {
+      display: inline-block;
+
+      &:first-child::after {
+        border-right: 1px solid $govuk-border-colour;
+        content: '';
+        display: inline-block;
+        height: 1.2em;
+        margin-left: 0.5em;
+        margin-right: 0.5em;
+        position: relative;
+        top: 0.2em;
+      }
     }
   }
 }

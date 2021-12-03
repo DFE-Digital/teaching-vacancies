@@ -17,21 +17,31 @@ RSpec.describe Search::VacancySearchSort do
     end
   end
 
+  context "when the sort option 'relevance' is selected and there is no keyword" do
+    let(:key) { "relevance" }
+
+    it { is_expected.to eq(Search::VacancySearchSort::PUBLISH_ON_DESC) }
+
+    it "does not include 'relevance' in the sorting options" do
+      expect(Search::VacancySearchSort.sorting_options(keyword: keyword)).not_to include(Search::VacancySearchSort::RELEVANCE)
+    end
+  end
+
   context "when an invalid sort strategy is specified" do
     let(:key) { "worst_listing" }
 
     it { is_expected.to eq(Search::VacancySearchSort::PUBLISH_ON_DESC) }
   end
 
-  context "when a valid non-default sort strategy is specified" do
-    let(:key) { "expires_at_desc" }
+  context "when a valid sort strategy is specified" do
+    let(:key) { "publish_on_desc" }
 
-    it { is_expected.to eq(Search::VacancySearchSort::EXPIRES_AT_DESC) }
+    it { is_expected.to eq(Search::VacancySearchSort::PUBLISH_ON_DESC) }
 
     context "and a keyword is specified" do
       let(:keyword) { "maths teacher" }
 
-      it { is_expected.to eq(Search::VacancySearchSort::EXPIRES_AT_DESC) }
+      it { is_expected.to eq(Search::VacancySearchSort::PUBLISH_ON_DESC) }
     end
   end
 end
