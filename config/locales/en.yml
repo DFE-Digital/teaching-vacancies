@@ -130,8 +130,8 @@ en:
 
   error_pages:
     invalid_recaptcha:
-      email_subject: Invalid recaptcha - %{form}
-      title: Sorry, there has been a problem
+      email_subject: ReCAPTCHA issue - %{form}
+      title: Sorry, we cannot process your request
     not_found: Page not found.
     server_error: Sorry, there’s a technical issue at our end
     unauthorised:
