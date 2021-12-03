@@ -16,7 +16,7 @@ class Search::LocationBuilder
       @location = nil
     elsif search_with_polygons?
       initialize_polygon_boundaries
-    elsif @location.present?
+    # elsif @location.present?
       @location_filter = build_location_filter
     end
   end
