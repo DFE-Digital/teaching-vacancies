@@ -1,9 +1,13 @@
 = f.govuk_text_field :organisation, label: { size: "s" }, required: true
 = f.govuk_text_field :job_title, label: { size: "s" }, required: true
 = f.govuk_text_field :subjects, label: { size: "s" }
-= f.govuk_date_field :started_on, omit_day: true
+= f.govuk_date_field :started_on,
+  omit_day: true,
+  hint: -> { t("helpers.hint.date", date: 15.months.ago.strftime("%m %Y")) }
 = f.govuk_radio_buttons_fieldset :current_role do
   = f.govuk_radio_button :current_role, :yes, link_errors: true
   = f.govuk_radio_button :current_role, :no do
-    = f.govuk_date_field :ended_on, omit_day: true
+    = f.govuk_date_field :ended_on,
+      omit_day: true,
+      hint: -> { t("helpers.hint.date", date: 3.months.ago.strftime("%m %Y")) }
 = f.govuk_text_area :main_duties, label: { size: "s" }, required: true
