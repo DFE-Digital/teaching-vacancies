@@ -1,9 +1,26 @@
 .location-search {
-  .location-radius-select {
+  &__radius {
     @include govuk-responsive-margin(4, 'bottom');
-  }
 
-  .location-text {
-    @include govuk-responsive-margin(1, 'bottom');
+    .govuk-select {
+      width: 100%;
+      @include govuk-media-query ($from: desktop) {
+        width: 50%;
+      }
+    }
+  }
+}
+
+.search-controls__panel {
+  .govuk-select {
+    width: 100%;
+  }
+}
+
+.grid-column-right {
+  .search-results__header {
+    .govuk-select[name='radius'] {
+      width: 100%;
+    }
   }
 }
