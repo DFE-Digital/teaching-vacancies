@@ -14,7 +14,7 @@ distribution_list = {
 }
 
 # Documents S3 bucket
-documents_s3_bucket_force_destroy = true
+documents_s3_bucket_force_destroy = false
 
 # Gov.UK PaaS
 paas_space_name                     = "teaching-vacancies-dev"
