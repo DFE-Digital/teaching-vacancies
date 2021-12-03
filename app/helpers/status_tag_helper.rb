@@ -1,5 +1,7 @@
 module StatusTagHelper
   def review_section_tag(resource, steps, form_classes)
+    return if (resource.is_a?(Vacancy) || resource.is_a?(VacancyPresenter)) && resource.published?
+
     return govuk_tag(text: t("shared.status_tags.not_started"), colour: "grey") if steps.none? { |step| vacancy_step_completed?(resource, step) }
 
     return govuk_tag(text: t("shared.status_tags.action_required"), colour: "red") if step_forms_contain_errors?(resource, form_classes)
