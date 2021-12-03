@@ -1,0 +1,24 @@
+- content_for :page_title_prefix, t(".page_title")
+
+.govuk-main-wrapper class="govuk-!-padding-bottom-0"
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form_tag redirect_to_copy_job_organisation_jobs_path do
+        .govuk-form-group
+          fieldset.govuk-fieldset
+            legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+              h1.govuk-fieldset__heading = t(".heading")
+
+            .govuk-radios
+              - vacancies.published.order(:job_title).each do |vacancy|
+                .govuk-radios__item
+                  input.govuk-radios__input type="radio" name="job_id" value=vacancy.id id="job_#{vacancy.id}"
+                  label.govuk-label.govuk-radios__label for="job_#{vacancy.id}"
+                    span class="govuk-!-font-weight-bold" = vacancy.job_title
+                    span class="govuk-hint govuk-!-margin-bottom-0" = t(".job.ends_on", date: vacancy.ends_on || t(".job.not_set"))
+                    - if current_organisation.trust_or_la?
+                      span class="govuk-hint govuk-!-margin-bottom-0" = vacancy.organisation.name
+
+        button.govuk-button = t(".form.submit")
+        p class="govuk-!-margin-top-0"
+          = govuk_link_to t(".cancel"), create_or_copy_organisation_jobs_path
