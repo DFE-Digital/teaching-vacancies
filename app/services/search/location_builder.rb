@@ -16,7 +16,7 @@ class Search::LocationBuilder
       @location = nil
     elsif search_with_polygons?
       initialize_polygon_boundaries
-    # elsif @location.present?
+    elsif @location.present?
       @location_filter = build_location_filter
     end
   end
@@ -26,7 +26,7 @@ class Search::LocationBuilder
   end
 
   def point_coordinates
-    location_filter[:point_coordinates]
+    @point_coordinates ||= Geocoding.new(location).coordinates
   end
 
   private
@@ -37,7 +37,7 @@ class Search::LocationBuilder
 
   def build_location_filter
     {
-      point_coordinates: Geocoding.new(location).coordinates,
+      point_coordinates: point_coordinates,
       radius: convert_miles_to_metres(radius),
     }
   end

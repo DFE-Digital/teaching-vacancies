@@ -1,32 +1,9 @@
-class Api::MapController < Api::ApplicationController
-  # before_action :verify_json_request, only: %i[show]
+class Api::Map::VacanciesController < Api::ApplicationController
   include OrganisationsHelper
 
-  def location
-    map_items = []
-    polygon = []
+  before_action :verify_json_request, only: %i[show]
 
-    map_object = {
-      type: "polygon",
-      data: {
-        point: location_search.point_coordinates,
-        meta: {},
-        coordinates: [],
-      }
-    }
-
-    location_search.polygon_boundaries.each { |boundary|
-      boundary.each_slice(2).map { |element| polygon.push({ lat: element.first, lng: element.second }) }
-    }
-
-    map_object[:data][:coordinates] = polygon
-
-    map_items.push(map_object)
-
-    render json: map_items
-  end
-
-  def vacancy
+  def show
     map_items = []
     vacancy = Vacancy.find(params[:id])
 
@@ -64,9 +41,5 @@ class Api::MapController < Api::ApplicationController
     end
 
     render json: map_items
-  end
-
-  def location_search
-    Search::LocationBuilder.new(params[:location], params[:radius])
   end
 end
