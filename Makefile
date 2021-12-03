@@ -55,8 +55,9 @@ staging: ## staging
 		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
 
 .PHONY: production
-production: ## production # Requires `CONFIRM_PRODUCTION` to be present (any value)
+production: ## production # Requires `CONFIRM_PRODUCTION` to be present
 		$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
+		$(shell if ! [[ $(CONFIRM_PRODUCTION) = "YES" ]]; then echo "Please enter "CONFIRM_PRODUCTION=YES" to run workflow"; fi)
 		$(eval env=production)
 		$(eval space=teaching-vacancies-production)
 		$(eval var_file=$(env))
@@ -119,23 +120,25 @@ ci:	## Run in automation environment
 
 .PHONY: terraform-app-init
 terraform-app-init:
-		cd terraform/app && rm -f .terraform.lock.hcl && terraform init -reconfigure -input=false $(backend_config)
+		terraform -chdir=terraform/app init -reconfigure -input=false $(backend_config)
 
 .PHONY: terraform-app-plan
 terraform-app-plan: terraform-app-init check-terraform-variables ## make passcode=MyPasscode tag=dev-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714 <env> terraform-app-plan
-		cd terraform/app && terraform plan -var-file ../workspace-variables/$(var_file).tfvars
+		terraform -chdir=terraform/app plan -var-file ../workspace-variables/$(var_file).tfvars
 
 .PHONY: terraform-app-apply
 terraform-app-apply: terraform-app-init check-terraform-variables ## make passcode=MyPasscode tag=47fd1475376bbfa16a773693133569b794408995 <env> terraform-app-apply
-		cd terraform/app && terraform apply -input=false -var-file ../workspace-variables/$(var_file).tfvars -auto-approve
+		terraform -chdir=terraform/app apply -input=false -var-file ../workspace-variables/$(var_file).tfvars -auto-approve
 
 terraform-app-destroy: terraform-app-init ## make qa destroy passcode=MyPasscode
 	$(if $(CONFIRM_DESTROY), , $(error Can only run with CONFIRM_DESTROY))
-	cd terraform/app && terraform destroy -var-file ../workspace-variables/${var_file}.tfvars
+	$(shell if ! [[ $(CONFIRM_DESTROY) = "YES" ]]; then echo "Please enter "CONFIRM_DESTROY=YES" to run workflow"; fi)
+	terraform -chdir=terraform/app destroy -var-file ../workspace-variables/${var_file}.tfvars
 
 terraform-app-database-replace: terraform-app-init check-terraform-variables
 	$(if $(CONFIRM_REPLACE), , $(error Can only run with CONFIRM_REPLACE)) \
-	cd terraform/app && terraform apply \
+	$(shell if ! [[ $(CONFIRM_REPLACE) = "YES" ]]; then echo "Please enter "CONFIRM_REPLACE=YES" to run workflow"; fi) \
+	terraform -chdir=terraform/app apply \
 		-replace="module.paas.cloudfoundry_service_instance.postgres_instance" \
 		-replace="module.paas.cloudfoundry_app.web_app" \
 		-replace="module.paas.cloudfoundry_app.worker_app" \
@@ -145,15 +148,15 @@ terraform-app-database-replace: terraform-app-init check-terraform-variables
 
 .PHONY: terraform-common-init
 terraform-common-init:
-		cd terraform/common && rm -f .terraform.lock.hcl && terraform init -reconfigure -input=false
+		terraform -chdir=terraform/common init -reconfigure -input=false
 
 .PHONY: terraform-common-plan
 terraform-common-plan: terraform-common-init ## make terraform-common-plan
-		cd terraform/common && terraform plan
+		terraform -chdir=terraform/common plan
 
 .PHONY: terraform-common-apply
 terraform-common-apply: terraform-common-init ## make terraform-common-apply
-		cd terraform/common && terraform apply
+		terraform -chdir=terraform/common apply
 
 ##@ terraform/monitoring. Deploys grafana, prometheus monitoring on Gov.UK PaaS
 
@@ -161,15 +164,15 @@ terraform-common-apply: terraform-common-init ## make terraform-common-apply
 terraform-monitoring-init:
 		$(if $(passcode), , $(error Missing environment variable "passcode"))
 		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
-		cd terraform/monitoring && rm -f .terraform.lock.hcl && terraform init -upgrade=true -reconfigure -input=false
+		terraform -chdir=terraform/monitoring init -upgrade=true -reconfigure -input=false
 
 .PHONY: terraform-monitoring-plan
 terraform-monitoring-plan: terraform-monitoring-init ## make passcode=MyPasscode terraform-monitoring-plan
-		cd terraform/monitoring && terraform plan -input=false
+		terraform -chdir=terraform/monitoring plan -input=false
 
 .PHONY: terraform-monitoring-apply
 terraform-monitoring-apply: terraform-monitoring-init ## make passcode=MyPasscode terraform-monitoring-apply
-		cd terraform/monitoring && terraform apply -input=false -auto-approve
+		terraform -chdir=terraform/monitoring apply -input=false -auto-approve
 
 ##@ rails console. Ability to rail console to apps on PaaS
 
@@ -187,7 +190,7 @@ rename-postgres-service: ## make dev rename-postgres-service
 	cf rename-service teaching-vacancies-postgres-${env} teaching-vacancies-postgres-${env}-old
 
 remove-postgres-tf-state: terraform-app-init ## make dev remove-postgres-tf-state
-	cd terraform/app && terraform state rm module.paas.cloudfoundry_service_instance.postgres_instance
+	terraform -chdir=terraform/app state rm module.paas.cloudfoundry_service_instance.postgres_instance
 
 restore-postgres: set-restore-variables terraform-app-apply ##  make dev DB_INSTANCE_GUID=abcdb262-79d1-xx1x-b1dc-0534fb9b4 SNAPSHOT_TIME="2021-11-16 15:20:00" passcode=xxxxx restore-postgres
 
