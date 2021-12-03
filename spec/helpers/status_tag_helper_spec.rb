@@ -36,10 +36,19 @@ RSpec.describe StatusTagHelper do
     end
 
     context "when it is passed a vacancy" do
-      let(:vacancy) { build_stubbed(:vacancy, completed_steps: %w[job_role job_details]) }
+      let(:vacancy) { build_stubbed(:vacancy, :draft, completed_steps: %w[job_role job_details]) }
       let(:form_classes) { [Publishers::JobListing::JobDetailsForm] }
 
       subject { helper.review_section_tag(vacancy, steps, form_classes) }
+
+      context "when is published" do
+        let(:vacancy) { build_stubbed(:vacancy) }
+        let(:steps) { %i[job_details] }
+
+        it "returns nil" do
+          expect(subject).to be_nil
+        end
+      end
 
       context "when there is an error on the step's form object" do
         let(:steps) { %i[job_details] }
