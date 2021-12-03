@@ -92,7 +92,8 @@ RSpec.describe "Jobseekers can view all the jobs" do
       end
 
       it "jobseekers can view jobs and sort jobs", js: true do
-        expect(page.find("#jobs-sort-field").value).to eq("publish_on_desc")
+        expect(page).to have_content(I18n.t("jobs.sort_by.publish_on.descending").humanize)
+        expect(page).not_to have_link(I18n.t("jobs.sort_by.publish_on.descending").humanize)
 
         expect(page).to have_css("li.vacancy", count: 7) do |jobs|
           expect(jobs[0]).to have_content(newest_job.job_title)

@@ -1,12 +1,17 @@
 class Search::VacancySearchSort
   attr_reader :key, :display_name, :column, :order
 
-  def self.options
-    OPTIONS
+  def self.sorting_options(keyword:)
+    # Do not allow relevance sort order when no keywords are given as it makes no sense
+    if keyword.blank?
+      OPTIONS - [RELEVANCE]
+    else
+      OPTIONS
+    end
   end
 
   def self.for(key, keyword:)
-    option = options.find { |o| o.key.to_s == key.to_s } || RELEVANCE
+    option = sorting_options(keyword: keyword).find { |o| o.key.to_s == key.to_s } || RELEVANCE
 
     # Do not allow relevance sort order when no keywords are given as it makes no sense
     return PUBLISH_ON_DESC if option == RELEVANCE && keyword.blank?
@@ -30,18 +35,6 @@ class Search::VacancySearchSort
       I18n.t("jobs.sort_by.publish_on.descending"),
       column: :publish_on,
       order: :desc,
-    ),
-    EXPIRES_AT_DESC = new(
-      :expires_at_desc,
-      I18n.t("jobs.sort_by.expires_at.descending.vacancy.jobseeker"),
-      column: :expires_at,
-      order: :desc,
-    ),
-    EXPIRES_AT_ASC = new(
-      :expires_at_asc,
-      I18n.t("jobs.sort_by.expires_at.ascending.vacancy.jobseeker"),
-      column: :expires_at,
-      order: :asc,
     ),
   ].freeze
 

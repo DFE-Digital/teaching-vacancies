@@ -9,6 +9,7 @@ class VacanciesController < ApplicationController
       sort_by: search_form.jobs_sort,
       page: params[:page],
     )
+    @sorting_options = search_form.sorting_options
     @vacancies = VacanciesPresenter.new(@vacancies_search.vacancies)
   end
 
