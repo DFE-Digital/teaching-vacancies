@@ -38,4 +38,4 @@ section#school-overview class="govuk-!-margin-bottom-5"
     p = full_address(organisation)
 
     - if organisation.geopoint
-      = render(MapComponent.new(items: [{type: 'VACANCY', params: { type: 'school', id: vacancy.id }}].to_json))
+      = render(MapComponent.new(items: [{ type: "VACANCY", params: { type: "school", id: vacancy.id } }].to_json))

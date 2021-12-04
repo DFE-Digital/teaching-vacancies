@@ -73,4 +73,4 @@ section#school-overview class="govuk-!-margin-bottom-5"
   - if vacancy.organisations.any?(&:geopoint)
     section#school-location
       h3.govuk-heading-l.section-heading = t("schools.school_location.other")
-      = render(MapComponent.new(items: [{type: 'vacancy', params: { type: 'organisation', id: vacancy.id }}].to_json, zoom: 11))
+      = render(MapComponent.new(items: [{ type: "vacancy", params: { type: "organisation", id: vacancy.id } }].to_json, zoom: 11))

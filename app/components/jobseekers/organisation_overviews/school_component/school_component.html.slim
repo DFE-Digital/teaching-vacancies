@@ -53,4 +53,4 @@ section#school-overview
     = govuk_link_to full_address(organisation), "https://www.google.com/maps/search/#{full_address(organisation)}+UK", "aria-label": t("schools.map_link_aria_label")
 
     - if organisation.geopoint
-      = render(MapComponent.new(items: [{type: 'VACANCY', params: { type: 'school', id: vacancy.id }}].to_json))
+      = render(MapComponent.new(items: [{ type: "VACANCY", params: { type: "school", id: vacancy.id } }].to_json))
