@@ -27,7 +27,7 @@
             .search-results__header__submit
               = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-6 govuk-!-width-full"
 
-      = render(MapComponent.new(items: [{type: 'LOCATION', params: { location: params[:location], radius: params[:radius] }}].to_json, render: @display_map, zoom: 8))
+      = render(MapComponent.new(items: [{ type: "LOCATION", params: { location: params[:location], radius: params[:radius] } }].to_json, render: @display_map, zoom: 8))
 
       .search-results__header
         - unless @vacancies_search.out_of_bounds?
