@@ -7,24 +7,38 @@ class Api::Map::LocationsController < Api::ApplicationController
 
   private
 
+  def location
+    return polygon if location_search.search_with_polygons?
+    marker
+  end
+
   def location_search
-    Search::LocationBuilder.new(params[:id], params[:radius])
+    @location_search ||= Search::LocationBuilder.new(params[:id], params[:radius])
   end
 
   def polygon
-    location_search.polygon_boundaries.each_with_object([]) do |boundary, points|
-      boundary.each_slice(2).map { |element| points.push({ lat: element.first, lng: element.second }) }
-    end
-  end
-
-  def location
     {
       type: "polygon",
       data: {
-        point: location_search.point_coordinates,
+        point: Geocoding.new(params[:id]).coordinates,
         meta: {},
-        coordinates: polygon,
+        coordinates: coordinates,
       },
     }
+  end
+
+  def marker
+    {
+      type: "marker",
+      data: {
+        point: location_search.point_coordinates,
+      },
+    }
+  end
+
+  def coordinates
+    location_search.polygon_boundaries.each_with_object([]) do |boundary, points|
+      boundary.each_slice(2).map { |element| points << { lat: element.first, lng: element.second } }
+    end
   end
 end
