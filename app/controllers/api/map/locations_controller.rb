@@ -9,6 +9,7 @@ class Api::Map::LocationsController < Api::ApplicationController
 
   def location
     return polygon if location_search.search_with_polygons?
+
     marker
   end
 
