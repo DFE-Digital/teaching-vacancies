@@ -7,9 +7,10 @@
     height: 400px;
     width: 100%;
 
-    &__icon {
+    &__marker--default {
       background-color: $govuk-brand-colour;
-      border-radius: 10px;
+      border: 2px solid $govuk-input-border-colour;
+      border-radius: 12px;
     }
   }
 }
