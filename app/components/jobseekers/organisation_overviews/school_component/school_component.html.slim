@@ -1,4 +1,4 @@
-section#school-overview class="govuk-!-margin-bottom-5"
+section#school-overview
   h3.govuk-heading-l.section-heading
     = t("schools.school_overview")
 
@@ -53,5 +53,4 @@ section#school-overview class="govuk-!-margin-bottom-5"
     = govuk_link_to full_address(organisation), "https://www.google.com/maps/search/#{full_address(organisation)}+UK", "aria-label": t("schools.map_link_aria_label")
 
     - if organisation.geopoint
-      div id="map" aria-label=t("schools.map_aria_label") data-school=organisation_map_data
-      script defer=true title=t("schools.map_aria_label") src="https://maps.googleapis.com/maps/api/js?key=#{GOOGLE_MAPS_API_KEY}&callback=initMap"
+      = render(MapComponent.new(items: [{ type: "VACANCY", params: { type: "school", id: vacancy.id } }].to_json))
