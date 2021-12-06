@@ -49,12 +49,12 @@ export const init = (removeButtonSelector, clearButtonId) => {
 };
 
 const mobileFiltersBehaviour = (filtersEl) => {
-  filtersEl.closest('form').removeAttribute('data-auto-submit');
+  filtersEl.closest('form').removeAttribute('data-controller');
   filtersEl.setAttribute('tabindex', '-1');
 };
 
 const desktopFiltersBehaviour = (filtersEl) => {
-  filtersEl.closest('form').setAttribute('data-auto-submit', 'true');
+  filtersEl.closest('form').setAttribute('data-controller', 'form');
   filtersEl.removeAttribute('tabindex');
 };
 
