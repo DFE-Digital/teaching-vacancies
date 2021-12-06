@@ -10,8 +10,4 @@ class Jobseekers::OrganisationOverviews::BaseComponent < ViewComponent::Base
     @vacancy = vacancy
     @organisation = vacancy.parent_organisation
   end
-
-  def organisation_map_data
-    { name: organisation&.name, lat: organisation.geopoint&.lat, lng: organisation.geopoint&.lon }.to_json
-  end
 end

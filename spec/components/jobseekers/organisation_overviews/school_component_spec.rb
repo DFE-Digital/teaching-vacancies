@@ -118,22 +118,4 @@ RSpec.describe Jobseekers::OrganisationOverviews::SchoolComponent, type: :compon
       expect(inline_component.css("#map").count).to eq(0)
     end
   end
-
-  describe "#organisation_map_data" do
-    let(:data) do
-      JSON.parse(described_class.new(vacancy: vacancy_presenter).organisation_map_data)
-    end
-
-    it "contains the school name" do
-      expect(data["name"]).to eq organisation.name
-    end
-
-    it "contains the school latitude" do
-      expect(data["lat"].round(13)).to eq organisation.geopoint.lat.round(13)
-    end
-
-    it "contains the school longitude" do
-      expect(data["lng"].round(13)).to eq organisation.geopoint.lon.round(13)
-    end
-  end
 end
