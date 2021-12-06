@@ -15,7 +15,8 @@
         "expect": "readonly",
         "history": true,
         "GOVUK": "readonly",
-        "dataLayer": "readonly"
+        "dataLayer": "readonly",
+        "L": "readonly"
     },
     "parser": "@babel/eslint-parser",
     "parserOptions": {
