@@ -44,8 +44,8 @@ RSpec.describe "Jobseekers can search for jobs" do
 
     it "displays the Maths jobs" do
       expect(page).to have_css("li.vacancy", count: 2) do |jobs|
-        expect(jobs[0]).to have_content("Maths Teacher")
-        expect(jobs[1]).to have_content("Maths Teacher 2")
+        expect(jobs[0]).to have_content("Arbitrary random text q123oi4umyxdsgxjh")
+        expect(jobs[1]).to have_content("Arbitrary random text q123oi4umyxdsgxjh")
       end
 
       expect(page).to have_css(".search-results__header-stats", text: strip_tags(I18n.t("jobs.number_of_results_one_page_html", count: 2)))
@@ -56,8 +56,8 @@ RSpec.describe "Jobseekers can search for jobs" do
 
       it "displays the Maths jobs that expires soonest first" do
         expect(page).to have_css("li.vacancy", count: 2) do |jobs|
-          expect(jobs[0]).to have_content("Maths Teacher 2")
-          expect(jobs[1]).to have_content("Maths Teacher")
+          expect(jobs[0]).to have_content("Arbitrary random text q123oi4umyxdsgxjh")
+          expect(jobs[1]).to have_content("Arbitrary random text q123oi4umyxdsgxjh")
         end
 
         expect(page).to have_css(".search-results__header-stats", text: strip_tags(I18n.t("jobs.number_of_results_one_page_html", count: 2)))
