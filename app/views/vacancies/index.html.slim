@@ -26,7 +26,9 @@
             = f.hidden_field :working_patterns, value: @form.working_patterns
             .search-results__header__submit
               = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-6 govuk-!-width-full"
-      = render(Jobseekers::SearchResults::SearchVisualizerComponent.new(vacancies_search: @vacancies_search, render: @display_map))
+
+      = render(MapComponent.new(items: [{ type: "location", params: { location: params[:location], radius: params[:radius] } }].to_json, render: @display_map, zoom: 8))
+
       .search-results__header
         - unless @vacancies_search.out_of_bounds?
           .govuk-body.search-results__header-stats
