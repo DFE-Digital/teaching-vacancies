@@ -11,6 +11,7 @@ import LocationFinderController from './components/locationFinder/locationFinder
 import ManageQualificationsController from './components/manageQualifications/manageQualifications';
 import UploadDocumentsController from './components/uploadDocuments/uploadDocuments';
 import UtilsController from './components/utils';
+import FormController from './components/form/form';
 
 const application = Application.start();
 
@@ -25,3 +26,4 @@ application.register('manage-qualifications', ManageQualificationsController);
 application.register('panel', PanelController);
 application.register('upload-documents', UploadDocumentsController);
 application.register('utils', UtilsController);
+application.register('form', FormController);

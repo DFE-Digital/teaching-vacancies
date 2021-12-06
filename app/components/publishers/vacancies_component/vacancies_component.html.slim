@@ -11,7 +11,7 @@
     .govuk-grid-row
       - if @organisation.school_group?
         .govuk-grid-column-one-third class="govuk-!-margin-bottom-5"
-          = form_for @publisher_preference, html: { data: { "auto-submit": true, "hide-submit": true } } do |f|
+          = form_for @publisher_preference, html: { data: { controller: "form", "hide-submit": true } } do |f|
             = render(FiltersComponent.new(filters: { total_count: @publisher_preference.organisations.count,
                                                               title: t("jobs.filters.job_filters") },
                                                               form: f,
@@ -35,12 +35,13 @@
 
       .vacancies-component__content class=grid_column_class
         - if @vacancies.any?
-          = form_for @sort_form, as: "", url: jobs_with_type_organisation_path(@selected_type), method: :get, data: { "auto-submit": true, "hide-submit": true } do |f|
+          = form_for @sort_form, as: "", url: jobs_with_type_organisation_path(@selected_type), method: :get, data: { controller: "form", "hide-submit": true } do |f|
             = f.govuk_collection_select :sort_column,
               vacancy_sort_options,
               :column,
               :display_name,
-              label: { text: t("jobs.sort_by.label"), size: "s", class: "govuk-label inline govuk-!-margin-right-2" }
+              label: { text: t("jobs.sort_by.label"), size: "s", class: "govuk-label inline govuk-!-margin-right-2" },
+              data: { action: "change->form#submitListener" }
 
             = f.govuk_submit t("jobs.sort_by.submit")
         section#vacancy-results

@@ -14,13 +14,14 @@
   - if subscriptions.any?
     .govuk-grid-row class="govuk-!-margin-top-0"
       .govuk-grid-column-two-thirds
-        = form_for sort_form, as: "", url: jobseekers_subscriptions_path, method: :get, data: { "auto-submit": true, "hide-submit": true } do |f|
+        = form_for sort_form, as: "", url: jobseekers_subscriptions_path, method: :get, data: { controller: "form", "hide-submit": true } do |f|
           = f.govuk_collection_select :sort_column,
             sort,
             :column,
             :display_name,
             label: { text: t("jobs.sort_by.label"), size: "s", class: "govuk-label inline govuk-!-margin-right-2" },
-            form_group: { classes: "govuk-!-margin-bottom-2" }
+            form_group: { classes: "govuk-!-margin-bottom-2" },
+            data: { action: "change->form#submitListener" }
 
           = f.govuk_submit t("jobs.sort_by.submit")
 
