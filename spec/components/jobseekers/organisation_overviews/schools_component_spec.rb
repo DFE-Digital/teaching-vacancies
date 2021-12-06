@@ -120,30 +120,4 @@ RSpec.describe Jobseekers::OrganisationOverviews::SchoolsComponent, type: :compo
       expect(inline_component.css("#map").count).to eq(0)
     end
   end
-
-  describe "#organisation_map_data" do
-    let(:organisation_map_data) do
-      JSON.parse(described_class.new(vacancy: vacancy_presenter).organisation_map_data)
-    end
-
-    let(:school_1_data) do
-      organisation_map_data.find { |s| s["name"] == school1.name }
-    end
-
-    let(:school_2_data) do
-      organisation_map_data.find { |s| s["name"] == school2.name }
-    end
-
-    context "when the user has provided a website" do
-      it "links to the user-provided website" do
-        expect(school_1_data["name_link"]).to eq "<a href=\"#{school1.website}\">#{school1.name}</a>"
-      end
-    end
-
-    context "when the user has NOT provided a website" do
-      it "links to the GIAS-provided url" do
-        expect(school_2_data["name_link"]).to eq "<a href=\"#{school2.url}\">#{school2.name}</a>"
-      end
-    end
-  end
 end
