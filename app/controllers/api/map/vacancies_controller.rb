@@ -10,9 +10,10 @@ class Api::Map::VacanciesController < Api::ApplicationController
   private
 
   def markers
-    vacancy = Vacancy.find(params[:id])
-    vacancy.organisations.select(&:geopoint)
-                         .map { |organisation| marker(organisation) }
+    Vacancy.find(params[:id])
+           .organisations
+           .select(&:geopoint)
+           .map { |organisation| marker(organisation) }
   end
 
   def marker(organisation)

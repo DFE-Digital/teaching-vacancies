@@ -77,4 +77,4 @@ section#school-overview class="govuk-!-margin-bottom-5"
         = govuk_link_to full_address(organisation), "https://www.google.com/maps/search/#{full_address(organisation)}+UK", "aria-label": t("schools.map_link_aria_label")
         br
 
-      = render(MapComponent.new(items: [{ type: "vacancy", params: { type: "organisation", id: vacancy.id } }].to_json, zoom: 11))
+      = render(MapComponent.new(items: [{ type: "vacancy", params: { type: "organisation", id: vacancy.id } }].to_json, zoom: 10))
