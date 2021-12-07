@@ -1,3 +1,9 @@
+.desktop-only {
+  @include govuk-media-query($until: desktop) {
+    display: none !important;
+  }
+}
+
 input.button-as-link {
   background: none;
   border: 0;
