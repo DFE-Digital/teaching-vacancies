@@ -24,7 +24,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
     end
 
     context "when the confirmation token is valid" do
-      it "confirms email, triggers email confirmed event and redirects to jobseeker saved jobs page" do
+      it "confirms email, triggers email confirmed event, signs in the user, and redirects to jobseeker root page" do
         expect { visit first_link_from_last_mail }.to have_triggered_event(:jobseeker_email_confirmed).with_base_data(
           user_anonymised_jobseeker_id: StringAnonymiser.new(created_jobseeker.id).to_s,
         )
@@ -48,6 +48,19 @@ RSpec.describe "Jobseekers can sign up to an account" do
         it "resends confirmation email and redirects to check your email page" do
           expect { resend_confirmation_email }.to change { delivered_emails.count }.by(1)
           expect(current_path).to eq(jobseekers_check_your_email_path)
+        end
+      end
+    end
+
+    context "when the confirmation link is followed after the account has already been confirmed" do
+      before { jobseeker.confirm }
+
+      it "redirects the user to authenticate" do
+        visit first_link_from_last_mail
+        expect(current_path).to eq(new_jobseeker_session_path)
+        expect(page).to have_content(I18n.t("devise.confirmations.confirmed"))
+        within("#navigation") do
+          expect(page).to have_content(I18n.t("buttons.sign_in"))
         end
       end
     end
