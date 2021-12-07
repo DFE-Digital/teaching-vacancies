@@ -56,7 +56,7 @@ staging: ## staging
 
 .PHONY: production
 production: ## production # Requires `CONFIRM_PRODUCTION=YES` to be present
-		@if [[ "$(CONFIRM_PRODUCTION)" != "YES" ]]; then echo "Please enter "CONFIRM_PRODUCTION=YES" to run workflow"; exit 1; fi
+		@if [[ "$(CONFIRM_PRODUCTION)" != YES ]]; then echo "Please enter "CONFIRM_PRODUCTION=YES" to run workflow"; exit 1; fi
 		$(eval env=production)
 		$(eval space=teaching-vacancies-production)
 		$(eval var_file=$(env))
