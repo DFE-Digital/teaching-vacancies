@@ -112,6 +112,7 @@ RSpec.describe "Creating a vacancy" do
     scenario "redirects to the vacancy review page when submitted successfully" do
       visit organisation_path
       click_on I18n.t("buttons.create_job")
+      click_on "Continue"
 
       fill_in_job_role_form_fields(vacancy)
       click_on I18n.t("buttons.continue")

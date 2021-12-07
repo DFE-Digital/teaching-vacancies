@@ -1,5 +1,9 @@
-RSpec.shared_examples "a component that accepts custom classes" do
-  subject! { render_inline(described_class.send(:new, **kwargs.merge(classes: custom_classes))) }
+RSpec.shared_examples "a component that accepts custom classes" do |uses_positional_args: false|
+  if uses_positional_args
+    subject! { render_inline(described_class.send(:new, *args, **kwargs.merge(classes: custom_classes))) }
+  else
+    subject! { render_inline(described_class.send(:new, **kwargs.merge(classes: custom_classes))) }
+  end
 
   context "when classes are supplied as a string" do
     let(:custom_classes) { "purple-stripes" }
