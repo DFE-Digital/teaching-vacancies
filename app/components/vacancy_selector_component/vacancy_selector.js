@@ -8,7 +8,7 @@ export default class extends Controller {
     'fieldset',
     'legend',
     'radioBlock',
-    'radioItem'
+    'radioItem',
   ];
 
   static selectorID = 'vacancy-selector';
@@ -59,14 +59,12 @@ export default class extends Controller {
 
   #buildChoiceData() {
     if (!this.#choiceData) {
-      this.#choiceData = this.radioItemTargets.map((radio) => {
-        return {
-          'id': radio.getElementsByTagName('input').item(0).value,
-          'job-title': radio.getElementsByClassName('job-title').item(0),
-          'job-ends-on': radio.getElementsByClassName('job-ends-on').item(0),
-          'job-organisation-name': radio.getElementsByClassName('job-organisation-name').item(0)
-        };
-      });
+      this.#choiceData = this.radioItemTargets.map((radio) => ({
+        id: radio.getElementsByTagName('input').item(0).value,
+        'job-title': radio.getElementsByClassName('job-title').item(0),
+        'job-ends-on': radio.getElementsByClassName('job-ends-on').item(0),
+        'job-organisation-name': radio.getElementsByClassName('job-organisation-name').item(0),
+      }));
     }
 
     return this.#choiceData;
@@ -76,38 +74,38 @@ export default class extends Controller {
     accessibleAutocomplete({
       element: autocompleteSuggestions,
       id: this.constructor.selectorID,
-      source: this.#onSearch(this.#buildChoiceData(), hiddenField),
+      source: this.constructor.onSearch(this.#buildChoiceData(), hiddenField),
       templates: {
-        inputValue: this.#inputValueTemplate,
-        suggestion: this.#suggestionTemplate,
+        inputValue: this.constructor.inputValueTemplate,
+        suggestion: this.constructor.suggestionTemplate,
       },
       onConfirm: (choice) => {
         if (choice) {
           hiddenField.value = choice.id;
         }
-      }
+      },
     });
   }
 
-  #inputValueTemplate(choice) {
+  static inputValueTemplate(choice) {
     if (choice) {
       return choice['job-title'].innerText;
     }
+
+    return undefined;
   }
 
-  #onSearch(choiceData, hiddenField) {
+  static onSearch(choiceData, hiddenField) {
     return (query, callback) => {
-      const results = choiceData.filter((c) =>
-        -1 !== c['job-title'].innerText
-          .toLowerCase()
-          .indexOf(query.toLowerCase())
-      );
+      const results = choiceData.filter((c) => c['job-title'].innerText
+        .toLowerCase()
+        .indexOf(query.toLowerCase()) !== -1);
       callback(results);
       hiddenField.value = null;
     };
   }
 
-  #suggestionTemplate(choice) {
+  static suggestionTemplate(choice) {
     if (choice) {
       const label = document.createElement('label');
       label.className = 'govuk-label';

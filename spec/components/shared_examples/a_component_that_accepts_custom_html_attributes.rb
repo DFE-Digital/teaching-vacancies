@@ -1,4 +1,4 @@
-RSpec.shared_examples "a component that accepts custom HTML attributes" do |uses_positional_args:|
+RSpec.shared_examples "a component that accepts custom HTML attributes" do |uses_positional_args: false|
   if uses_positional_args
     subject! { render_inline(described_class.send(:new, *args, html_attributes: custom_attributes, **kwargs)) }
   else

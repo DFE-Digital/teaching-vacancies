@@ -57,7 +57,7 @@ RSpec.describe "Copy-or-new vacancy flow" do
     expect(page).to have_link("Create another job listing", href: create_or_copy_organisation_jobs_path)
   end
 
-  context "if there's more than 20 published vacancies" do
+  context "if there's more than 20 published vacancies", js: true do
     let(:vacancy_count) { 21 }
 
     scenario "an autocomplete box is used to find the vacancy for copying" do
@@ -70,7 +70,7 @@ RSpec.describe "Copy-or-new vacancy flow" do
 
       fill_in "Select a job to copy", with: original_vacancy.job_title[0..5]
 
-      page.find(".job-title", text: original_vacancy.job_title).ancestor("li").click
+      page.first(".job-title", text: original_vacancy.job_title).ancestor("li").click
       click_on "Continue"
 
       expect(page).to have_text("Copy #{original_vacancy.job_title}")
