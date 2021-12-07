@@ -1,101 +1,54 @@
 /**
  * @jest-environment jsdom
  */
-import form, {
-  initAutoSubmit,
-  initClearForm,
-  CHECKBOX_CLASS,
-  CLEARFORM_CLASS,
-  AUTOSUBMIT_ATTR_KEY,
-} from './form';
+import { Application } from '@hotwired/stimulus';
 
-describe('form', () => {
-  describe('form auto submit behaviour', () => {
-    beforeEach(() => {
-      document.body.innerHTML = `<form data-${AUTOSUBMIT_ATTR_KEY}="true">
-      <input type="checkbox" class="${CHECKBOX_CLASS}" data-change-submit="false" id="no-submit" />
-      <input type="checkbox" class="${CHECKBOX_CLASS}" id="should-submit" />
-      </form>`;
-    });
+import FormController from './form';
 
-    describe('form has auto submit data attribute', () => {
-      let formSubmitMock = null;
+const initialiseStimulus = () => {
+  const application = Application.start();
+  application.register('form', FormController);
+};
 
-      beforeEach(() => {
-        form.formSubmit = jest.fn();
-        formSubmitMock = jest.spyOn(form, 'formSubmit');
-        initAutoSubmit();
-      });
+let inputEl;
+let submitHandlerMock;
+let clearHandlerMock;
 
-      test('changing state of an input with data-change-submit="false" attribute does not submit form', () => {
-        const event = new Event('change');
-        document.getElementById('no-submit').dispatchEvent(event);
-        expect(formSubmitMock).not.toHaveBeenCalled();
-      });
+describe('form auto submit', () => {
+  beforeEach(() => {
+    initialiseStimulus();
+    document.body.innerHTML = '<form data-controller=\'form\'><input type=\'checkbox\' data-action=\'change->form#submitListener\' /></form>';
 
-      test('changing state of an input without data-change-submit="false" attribute does submit form', () => {
-        const event = new Event('change');
-        document.getElementById('should-submit').dispatchEvent(event);
-        expect(formSubmitMock).toHaveBeenCalled();
-      });
-    });
+    [inputEl] = document.getElementsByTagName('input');
+
+    FormController.prototype.submitHandler = jest.fn();
+    submitHandlerMock = jest.spyOn(FormController.prototype, 'submitHandler');
   });
 
-  describe('toggling inputs', () => {
-    let textField;
-
-    beforeEach(() => {
-      document.body.innerHTML = `<div class="${CLEARFORM_CLASS}"> <input id="test-text-input" type="text" value="10" /> </div>`;
-      textField = document.getElementById('test-text-input');
-    });
-
-    describe('disableInputs', () => {
-      beforeEach(() => {
-        form.disableInputs(Array.from(document.querySelectorAll('input[type="text"]')));
-      });
-
-      test('removes the value from the input element', () => {
-        expect(textField.value).toBe('');
-      });
-    });
-
-    describe('enableInputs', () => {
-      beforeEach(() => {
-        form.enableInputs(Array.from(document.querySelectorAll('input[type="text"]')));
-      });
-
-      test('restores the original value of the input element', () => {
-        expect(textField.value).toBe('10');
-      });
-
-      test('enables the input element', () => {
-        expect(textField.disabled).toBe(false);
-      });
+  describe('when input element changes', () => {
+    test('submitHandler should be called', () => {
+      inputEl.click();
+      expect(submitHandlerMock).toHaveBeenCalled();
     });
   });
+});
 
-  describe('clear form', () => {
-    beforeEach(() => {
-      document.body.innerHTML = `<div class="${CLEARFORM_CLASS}"> <input id="test-text-input" type="text" /> <input id="test-checkbox" type="checkbox" class="${CHECKBOX_CLASS}" /> </div>`;
-      initClearForm();
-    });
+describe('form clear', () => {
+  beforeEach(() => {
+    initialiseStimulus();
+    document.body.innerHTML = '<form data-controller=\'form\'><input type=\'text\' data-form-target=\'inputText\' />'
+    + '<input type=\'radio\' data-action=\'click->form#clearListener\' id=\'test-radio-button\' /></form>';
 
-    describe('when checkbox is checked', () => {
-      test('calls disableInputs', () => {
-        form.disableInputs = jest.fn();
-        const disableInputsMock = jest.spyOn(form, 'disableInputs');
-        form.checkboxClickHandler(document.querySelector(`.${CLEARFORM_CLASS}`), true);
-        expect(disableInputsMock).toHaveBeenCalledWith(Array.from(document.querySelectorAll('input[type="text"]')));
-      });
-    });
+    [inputEl] = [document.getElementById('test-radio-button')];
 
-    describe('when checkbox is not checked', () => {
-      test('calls enablesInputs', () => {
-        form.enableInputs = jest.fn();
-        const enableInputsMock = jest.spyOn(form, 'enableInputs');
-        form.checkboxClickHandler(document.querySelector(`.${CLEARFORM_CLASS}`), false);
-        expect(enableInputsMock).toHaveBeenCalledWith(Array.from(document.querySelectorAll('input[type="text"]')));
-      });
+    FormController.prototype.clearHandler = jest.fn();
+    clearHandlerMock = jest.spyOn(FormController.prototype, 'clearHandler');
+  });
+
+  describe('when radio button clicked', () => {
+    test('clearHandler should be called', () => {
+      inputEl.click();
+      expect(clearHandlerMock).toHaveBeenCalled();
     });
   });
 });
