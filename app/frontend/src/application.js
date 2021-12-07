@@ -8,6 +8,7 @@ import VacancySelectorController from '../../components/vacancy_selector_compone
 // js components
 import AutocompleteController from './components/autocomplete/autocomplete';
 import ClipboardController from './components/clipboard/clipboard';
+import FormController from './components/form/form';
 import LocationFinderController from './components/locationFinder/locationFinder';
 import ManageQualificationsController from './components/manageQualifications/manageQualifications';
 import UploadDocumentsController from './components/uploadDocuments/uploadDocuments';
@@ -21,6 +22,7 @@ window.Stimulus = application;
 
 application.register('autocomplete', AutocompleteController);
 application.register('clipboard', ClipboardController);
+application.register('form', FormController);
 application.register('location-finder', LocationFinderController);
 application.register('manage-qualifications', ManageQualificationsController);
 application.register('panel', PanelController);

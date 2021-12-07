@@ -21,12 +21,14 @@
           ->(option) { option },
           ->(option) { t("helpers.options.publishers_job_listing_extend_deadline_form.expiry_time.#{option}") }
 
-        .clear-form
+        .clear-form data-controller="form"
           = f.govuk_date_field :starts_on,
-            hint: -> { t("helpers.hint.date", date: 2.months.from_now.strftime("%d %m %Y")) }
+            hint: -> { t("helpers.hint.date", date: 2.months.from_now.strftime("%d %m %Y")) },
+            data: { "form-target": "inputText" }
 
           .clear-form__checkbox
-            = f.govuk_check_box :starts_asap, "true", 0, multiple: false, link_errors: false
+            = f.govuk_check_box :starts_asap, "true", 0, multiple: false, link_errors: false,
+            data: { action: "click->form#clearListener" }
 
         = f.govuk_submit t("buttons.extend_deadline"), classes: "govuk-!-margin-bottom-5"
 

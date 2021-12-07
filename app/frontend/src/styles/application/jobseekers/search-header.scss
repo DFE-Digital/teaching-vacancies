@@ -24,7 +24,7 @@
       display: none;
     }
   }
-  
+
   &-stats {
     @include govuk-media-query($from: tablet) {
       order: 2;
@@ -48,11 +48,5 @@
     .govuk-label {
       display: inline;
     }
-  }
-}
-
-.grid-column-right .search-results__header {
-  @include govuk-media-query($until: desktop) {
-    display: none;
   }
 }

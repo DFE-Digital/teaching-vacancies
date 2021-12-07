@@ -28,15 +28,15 @@ html.govuk-template.app-html-class lang="en"
 
     = render EnvironmentBannerComponent.new
 
-    = govuk_header(container_classes: "publisher-landing-page", service_name: t("app.title")) do |header|
+    = govuk_header(container_classes: "landing-page__header", navigation_classes: ["govuk-header__content__nav"], service_name: t("app.title")) do |header|
       - if publisher_signed_in?
-        = header.navigation_item text: t("nav.sign_out"), href: destroy_publisher_session_path, options: { method: :delete }, classes: "navigation-item--right"
+        = header.navigation_item text: t("nav.sign_out"), href: destroy_publisher_session_path, options: { method: :delete }
 
       - if jobseeker_signed_in?
-        = header.navigation_item text: t("nav.sign_out"), href: destroy_jobseeker_session_path, options: { method: :delete }, classes: "navigation-item--right"
+        = header.navigation_item text: t("nav.sign_out"), href: destroy_jobseeker_session_path, options: { method: :delete }
 
       - if !jobseeker_signed_in? && !publisher_signed_in?
-        = header.navigation_item text: t("buttons.sign_in"), href: page_path("sign-in"), classes: "navigation-item--right"
+        = header.navigation_item text: t("buttons.sign_in"), href: page_path("sign-in")
 
     = yield
 
