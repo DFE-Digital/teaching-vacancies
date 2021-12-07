@@ -37,7 +37,8 @@
           group[:text_method],
           small: group[:small],
           legend: { text: group[:legend], size: (group[:small] ? "s" : "m") },
-          hint: nil
+          hint: nil,
+          form_group: { data: { action: "change->form#submitListener" } }
 
   .filters-component__submit
     = form.govuk_submit t("buttons.apply_filters"), classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2 filters-component__submit-button"
