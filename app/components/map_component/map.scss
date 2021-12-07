@@ -1,0 +1,16 @@
+@import 'base_component';
+
+.map-component {
+  margin-bottom: govuk-spacing(4);
+
+  &__map {
+    height: 400px;
+    width: 100%;
+
+    &__marker--default {
+      background-color: $govuk-brand-colour;
+      border: 2px solid $govuk-input-border-colour;
+      border-radius: 12px;
+    }
+  }
+}
