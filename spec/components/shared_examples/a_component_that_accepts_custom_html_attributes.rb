@@ -1,5 +1,9 @@
-RSpec.shared_examples "a component that accepts custom HTML attributes" do
-  subject! { render_inline(described_class.send(:new, html_attributes: custom_attributes, **kwargs)) }
+RSpec.shared_examples "a component that accepts custom HTML attributes" do |uses_positional_args:|
+  if uses_positional_args
+    subject! { render_inline(described_class.send(:new, *args, html_attributes: custom_attributes, **kwargs)) }
+  else
+    subject! { render_inline(described_class.send(:new, html_attributes: custom_attributes, **kwargs)) }
+  end
 
   let(:custom_attributes) { { lang: "en-GB", style: "background-color: blue;" } }
 

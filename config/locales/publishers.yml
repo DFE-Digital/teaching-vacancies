@@ -250,9 +250,6 @@ en:
         form:
           submit: Continue
         heading: Select a job to copy
-        job:
-          ends_on: "Closing date: %{date}"
-          not_set: not set
         page_title: Select a job to copy
       show:
         view_live_listing_link: View this listing

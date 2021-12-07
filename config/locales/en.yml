@@ -540,3 +540,8 @@ en:
         zero: Find a job in teaching - Search results
         one: Find a job in teaching - Search results
         other: Find a job in teaching - Search results page %{count}
+
+  vacancy_selector_component:
+    job:
+      ends_on: "Closing date: %{date}"
+      not_set: not set
