@@ -1,4 +1,4 @@
-RSpec.shared_examples "a component that accepts custom classes" do |uses_positional_args:|
+RSpec.shared_examples "a component that accepts custom classes" do |uses_positional_args: false|
   if uses_positional_args
     subject! { render_inline(described_class.send(:new, *args, **kwargs.merge(classes: custom_classes))) }
   else
