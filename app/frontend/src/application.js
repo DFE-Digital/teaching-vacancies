@@ -3,6 +3,7 @@ import { Application } from '@hotwired/stimulus';
 
 // view components
 import PanelController from '../../components/panel_component/panel';
+import VacancySelectorController from '../../components/vacancy_selector_component/vacancy_selector';
 
 // js components
 import AutocompleteController from './components/autocomplete/autocomplete';
@@ -25,3 +26,4 @@ application.register('manage-qualifications', ManageQualificationsController);
 application.register('panel', PanelController);
 application.register('upload-documents', UploadDocumentsController);
 application.register('utils', UtilsController);
+application.register('vacancy-selector', VacancySelectorController);

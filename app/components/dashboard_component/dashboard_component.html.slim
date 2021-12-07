@@ -6,7 +6,7 @@
           = heading
 
         - if link.present?
-          = govuk_button_to link[:text], link[:url], class: "govuk-!-margin-bottom-0", form_class: "dashboard-component__button"
+          .dashboard-component__button = govuk_button_link_to link[:text], link[:url], class: "govuk-!-margin-bottom-0"
 
     .dashboard-component-navigation
       .dashboard-component-navigation__container
