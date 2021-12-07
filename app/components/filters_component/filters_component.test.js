@@ -34,7 +34,7 @@ describe('filterGroup', () => {
       filterGroup.addRemoveAllFiltersEvent = jest.fn();
       const addRemoveAllFiltersEventMock = jest.spyOn(filterGroup, 'addRemoveAllFiltersEvent');
 
-      document.body.innerHTML = `<form data-auto-submit="true"><div class='filters-component'>
+      document.body.innerHTML = `<form data-controller="form"><div class='filters-component'>
 <h2 id="filters-component-show-mobile"></h2>
 <button class="${REMOVE_FILTER_CLASS_SELECTOR}">remove</button>
 <button class="${REMOVE_FILTER_CLASS_SELECTOR}">remove</button>
