@@ -1,5 +1,4 @@
 import 'leaflet';
-import 'leaflet/dist/leaflet.css';
 
 import { Controller } from '@hotwired/stimulus';
 
@@ -13,14 +12,12 @@ const MapController = class extends Controller {
 
     api.getMapData(config).then((items) => {
       if (!this.map) {
-        const [[mapCenter]] = items.filter((mapItem) => mapItem[0].data.point);
+        const [mapCenter] = items.filter((mapItem) => mapItem.data.point);
         this.create(mapCenter.data.point, this.element.dataset.zoom);
       }
 
-      items.forEach((mapItem) => {
-        mapItem.forEach((item) => {
-          this[item.type](item.data);
-        });
+      items.forEach((item) => {
+        this[item.type](item.data);
       });
     });
   }
@@ -44,12 +41,21 @@ const MapController = class extends Controller {
     if (!meta) {
       L.marker(point, { icon }).addTo(this.map);
     } else {
-      L.marker(point, { icon }).addTo(this.map).bindPopup(MapController.popupHTML(meta)).openPopup();
+      L.marker(point, { icon }).addTo(this.map).bindPopup(
+        MapController.popupHTML(meta),
+        { className: 'map-component__map__popup' },
+      ).openPopup();
     }
   }
 
   static popupHTML(data) {
-    return `<h4 class="govuk-body-m"><a href="${data.name_link}">${data.name}</a></h4><p>${data.organisation_type}</p><p>${data.address}</p>`;
+    return `<h4 class="govuk-body-m govuk-!-margin-bottom-2">
+    <a class="govuk-link" href="${data.name_link}">${data.name}</a>
+    </h4>
+    <ul class="govuk-list govuk-body-s">
+    <li>${data.organisation_type}</li>
+    <li>${data.address}</li>
+    </ul>`;
   }
 };
 

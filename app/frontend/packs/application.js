@@ -5,6 +5,8 @@ import Rails from 'rails-ujs';
 
 import { initAll } from 'govuk-frontend';
 
+import 'leaflet/dist/leaflet.css';
+
 import 'src/application';
 import 'src/components';
 

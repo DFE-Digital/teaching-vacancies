@@ -8,9 +8,14 @@
     width: 100%;
 
     &__marker--default {
-      background-color: $govuk-brand-colour;
-      border: 2px solid $govuk-input-border-colour;
+      background-color: govuk-colour('red');
+      border: 1px solid $govuk-input-border-colour;
       border-radius: 12px;
+    }
+
+    &__popup {
+      margin-bottom: 32px;
+      margin-left: 2px;
     }
   }
 }
