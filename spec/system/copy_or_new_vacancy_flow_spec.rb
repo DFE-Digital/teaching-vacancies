@@ -57,6 +57,38 @@ RSpec.describe "Copy-or-new vacancy flow" do
     expect(page).to have_link("Create another job listing", href: create_or_copy_organisation_jobs_path)
   end
 
+  context "if there's more than 20 published vacancies" do
+    let(:vacancy_count) { 21 }
+
+    scenario "an autocomplete box is used to find the vacancy for copying" do
+      visit organisation_path
+      click_on "Create a job listing"
+      expect(page).to have_content("What do you want to do?")
+
+      page.find("label", text: "Copy an existing job listing").click
+      click_on "Continue"
+
+      fill_in "Select a job to copy", with: original_vacancy.job_title[0..5]
+
+      page.find(".job-title", text: original_vacancy.job_title).ancestor("li").click
+      click_on "Continue"
+
+      expect(page).to have_text("Copy #{original_vacancy.job_title}")
+    end
+
+    context "but javascript is disabled", js: false do
+      scenario "it shows the list of radio buttons" do
+        visit organisation_path
+        click_on "Create a job listing"
+        choose "Copy an existing job listing"
+        click_on "Continue"
+
+        expect(page).to have_content("Select a job to copy")
+        expect(page).to have_css(".govuk-radios__input", count: vacancy_count)
+      end
+    end
+  end
+
   context "if there are no published vacancies" do
     let(:vacancy_count) { 0 }
 
