@@ -191,7 +191,6 @@ en:
       new:
         page_description: Sign in to Teaching Vacancies
 
-
   organisation:
     location_link_text:
       at_multiple_schools: School locations
@@ -265,7 +264,6 @@ en:
       You can now receive and manage job applications on Teaching Vacancies. You can
       do this for all jobs except education support roles.
     page_title: New features for hiring staff
-
 
   pages:
     accessibility:
@@ -497,7 +495,6 @@ en:
     create:
       success: Your request for help has been sent
 
-
   terms_and_conditions:
     intro_html: >-
       Before listing any role at your school on Teaching Vacancies you must first read our %{link} and
@@ -543,3 +540,8 @@ en:
         zero: Find a job in teaching - Search results
         one: Find a job in teaching - Search results
         other: Find a job in teaching - Search results page %{count}
+
+  vacancy_selector_component:
+    job:
+      ends_on: "Closing date: %{date}"
+      not_set: not set

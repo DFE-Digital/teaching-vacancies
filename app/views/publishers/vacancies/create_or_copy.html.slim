@@ -1,0 +1,21 @@
+- content_for :page_title_prefix, t(".page_title")
+
+.govuk-main-wrapper class="govuk-!-padding-bottom-0"
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form_tag organisation_jobs_path do
+        .govuk-form-group
+          fieldset.govuk-fieldset
+            legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+              h1.govuk-fieldset__heading = t(".heading")
+
+            .govuk-radios
+              - %w[create-new copy-existing].each do |value|
+                .govuk-radios__item
+                  input.govuk-radios__input type="radio" name="create_or_copy" value=value id=value checked=(value == "create-new")
+                  label.govuk-label.govuk-radios__label for=value
+                    = t(".form.options.#{value.underscore}")
+
+        button.govuk-button = t(".form.submit")
+        p class="govuk-!-margin-top-0"
+          = govuk_link_to t(".cancel"), organisation_jobs_path
