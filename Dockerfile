@@ -1,11 +1,11 @@
-ARG PROD_PACKAGES="libxml2=2.9.12-r1 libxslt=1.1.34-r1 libpq=13.5-r0 tzdata=2021e-r0 shared-mime-info=2.1-r0 util-linux=2.37.2-r0 busybox=1.33.1-r6"
+ARG PROD_PACKAGES="libxml2=2.9.12-r2 libxslt=1.1.34-r1 libpq=14.1-r4 tzdata=2021e-r0 shared-mime-info=2.1-r0 util-linux=2.37.2-r1 busybox=1.34.1-r3"
 
-FROM ruby:3.0.3-alpine3.14 AS builder
+FROM ruby:3.0.3-alpine3.15 AS builder
 
 WORKDIR /app
 
 ARG PROD_PACKAGES
-ENV DEV_PACKAGES="gcc=10.3.1_git20210424-r2 libc-dev=0.7.2-r3 make=4.3-r0 yarn=1.22.10-r0 postgresql-dev=13.5-r0 build-base=0.5-r2 libxml2-dev=2.9.12-r1 libxslt-dev=1.1.34-r1 git"
+ENV DEV_PACKAGES="gcc=10.3.1_git20211027-r0 libc-dev=0.7.2-r3 make=4.3-r0 yarn=1.22.17-r0 postgresql14-dev=14.1-r4 build-base=0.5-r2  git"
 RUN apk add --no-cache $PROD_PACKAGES $DEV_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
@@ -33,7 +33,7 @@ RUN rm -rf node_modules log tmp yarn.lock && \
 
 
 # this stage reduces the image size.
-FROM ruby:3.0.3-alpine3.14 AS production
+FROM ruby:3.0.3-alpine3.15 AS production
 
 WORKDIR /app
 
