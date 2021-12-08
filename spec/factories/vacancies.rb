@@ -41,7 +41,7 @@ FactoryBot.define do
       end
     end
 
-    job_title { JOB_TITLES.sample }
+    sequence(:job_title) { |n| "#{JOB_TITLES.sample} #{n}" }
     listed_elsewhere { nil }
     personal_statement_guidance { Faker::Lorem.paragraph(sentence_count: rand(5..10)) }
     publish_on { Date.current }

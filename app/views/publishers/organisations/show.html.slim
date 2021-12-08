@@ -3,13 +3,13 @@
 - content_for :skip_links do
   a.govuk-skip-link href="#vacancy-results" Skip to #{t("publishers.vacancies_component.#{@selected_type}.tab_heading")}
 
-= render(Publishers::VacanciesComponent.new(organisation: current_organisation,
-                                            sort: @sort,
-                                            selected_type: @selected_type,
-                                            publisher_preference: @publisher_preference,
-                                            sort_form: @sort_form,
-                                            email: current_publisher.email))
+= publishers_vacancies(organisation: current_organisation,
+    sort: @sort,
+    selected_type: @selected_type,
+    publisher_preference: @publisher_preference,
+    sort_form: @sort_form,
+    email: current_publisher.email)
 
-= render(Publishers::NoVacanciesComponent.new(organisation: current_organisation, email: current_publisher.email))
+= publishers_no_vacancies(organisation: current_organisation, email: current_publisher.email)
 
-= render(Publishers::SchoolOverviewComponent.new(organisation: current_organisation))
+= publishers_school_overview(organisation: current_organisation)

@@ -46,6 +46,10 @@ class Organisation < ApplicationRecord
     local_authority_code.present?
   end
 
+  def trust_or_la?
+    trust? || local_authority?
+  end
+
   # We bulk import organisations from GIAS, so cannot use ActiveRecord callbacks or rely on
   # the `updated_at` field to trigger "entity updated" events for our data warehouse.
   # Instead, we use a job to iterate over all organisations and call this method to recompute
