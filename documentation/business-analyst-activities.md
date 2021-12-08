@@ -29,7 +29,7 @@ You'll get instant feedback - either `Valid YAML!` or a useful error
 
 Read [this Atlassian tutorial](https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow) for details on using feature branches, and working with Pull Requests:
 
-> The core idea behind the Feature Branch Workflow is that all feature development should take place in a dedicated branch instead of the master branch. This encapsulation makes it easy for multiple developers to work on a particular feature without disturbing the main codebase. It also means the master branch will never contain broken code, which is a huge advantage for continuous integration environments.
+> The core idea behind the Feature Branch Workflow is that all feature development should take place in a dedicated branch instead of the main branch. This encapsulation makes it easy for multiple developers to work on a particular feature without disturbing the main codebase. It also means the main branch will never contain broken code, which is a huge advantage for continuous integration environments.
 
 ## Updating Polygon Mappings in the `mapped_locations.yml` file
 
@@ -50,8 +50,8 @@ Before making a change, you can check how a search currently works by using the 
 3. Once all desired mappings have been added, scroll to the bottom of the page and update the fields in the "Commit changes" box. This should include a concise title for the change, and further details of what you have done in the extended description field.
   * Once you have added this information ensure that the "Create a new branch for this commit and start a pull request." radio button is selected and press "Commit changes".
 4. Automated tests will run on your new branch to confirm that all rows have been entered correctly. If one of these tests fails check that all `"` and `:` have been entered correctly. On the PR, in the merging section at the bottom of the page there is a section dedicated to automated checks. This will show any checks that may have failed as part of the changes. ![Automated tests screenshot](https://user-images.githubusercontent.com/72141/103927287-0d570500-5112-11eb-902d-5d36a1c7e10a.png)
-5. Before the change can be committed to the `master` branch it must be approved by another member of the team and pass a set of automated tests. Once these steps have been completed press "Merge pull request" and your change will be:
-  * merged to the `master` branch
+5. Before the change can be committed to the `main` branch it must be approved by another member of the team and pass a set of automated tests. Once these steps have been completed press "Merge pull request" and your change will be:
+  * merged to the `main` branch
   * deployed to the `staging` environment
   * smoke-tested on the `staging` environment
   * deployed to the `production` environment
