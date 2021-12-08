@@ -6,9 +6,9 @@ class Search::VacancySearch
   def_delegators :search_strategy, :vacancies, :total_count
   def_delegators :location_search, :point_coordinates
 
-  attr_reader :search_criteria, :keyword, :sort_by, :page, :per_page, :fuzzy, :pg_search
+  attr_reader :search_criteria, :keyword, :sort_by, :page, :per_page, :fuzzy
 
-  def initialize(search_criteria, sort_by: nil, page: nil, per_page: nil, fuzzy: true, pg_search: false)
+  def initialize(search_criteria, sort_by: nil, page: nil, per_page: nil, fuzzy: true)
     @search_criteria = search_criteria
     @keyword = search_criteria[:keyword]
 
@@ -16,7 +16,6 @@ class Search::VacancySearch
     @per_page = (per_page || DEFAULT_HITS_PER_PAGE).to_i
     @page = (page || DEFAULT_PAGE).to_i
     @fuzzy = fuzzy
-    @pg_search = pg_search
   end
 
   def active_criteria
@@ -61,24 +60,15 @@ class Search::VacancySearch
   private
 
   def search_strategy
-    @search_strategy ||= if active_criteria?
-                           Search::Strategies::Experiment.new(
-                             Search::Strategies::Algolia.new(algolia_params),
-                             Search::Strategies::PgSearch.new(
-                               keyword,
-                               filters: search_criteria,
-                               location: search_criteria[:location],
-                               radius: location_search.radius,
-                               page: page,
-                               per_page: per_page,
-                               sort_by: sort_by,
-                             ),
-                             search_criteria: search_criteria,
-                             use_experiment: pg_search,
-                           )
-                         else
-                           Search::Strategies::Database.new(page, per_page, sort_by)
-                         end
+    @search_strategy ||= Search::Strategies::PgSearch.new(
+      keyword,
+      filters: search_criteria,
+      location: search_criteria[:location],
+      radius: location_search.radius,
+      page: page,
+      per_page: per_page,
+      sort_by: sort_by,
+    )
   end
 
   def algolia_params
