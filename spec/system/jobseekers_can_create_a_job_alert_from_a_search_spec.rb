@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: true, vcr: { cassette_name: "algoliasearch" } do
+RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: true do
   let(:location) { "London" }
   let!(:location_polygon) { create(:location_polygon, name: "london") }
 
