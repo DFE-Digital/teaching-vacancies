@@ -24,7 +24,8 @@ FactoryBot.define do
     contact_email { Faker::Internet.email(domain: "example.com") }
     contact_number { "01234 123456" }
     contract_type { factory_sample(Vacancy.contract_types.keys) }
-    contract_type_duration { "6 months" }
+    fixed_term_contract_duration { "6 months" }
+    parental_leave_cover_contract_duration { "6 months" }
     expires_at { 6.months.from_now.change(hour: 9, minute: 0, second: 0) }
     hired_status { nil }
     job_advert { Faker::Lorem.paragraph(sentence_count: factory_rand(50..300)) }
