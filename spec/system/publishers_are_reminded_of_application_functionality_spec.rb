@@ -26,7 +26,7 @@ RSpec.describe "Application feature reminder" do
       it "does not show reminder page when creating a job" do
         visit organisation_path
         click_on I18n.t("buttons.create_job")
-        expect(current_path).to eq(organisation_job_build_path(last_vacancy.id, :job_role))
+        expect(current_path).to eq(create_or_copy_organisation_jobs_path)
       end
     end
 
@@ -36,6 +36,7 @@ RSpec.describe "Application feature reminder" do
       it "shows reminder page before first step of create job" do
         visit organisation_path
         click_on I18n.t("buttons.create_job")
+        click_on "Continue"
 
         expect(page).to have_content(I18n.t("jobs.reminder_title"))
         expect(page).to have_link(I18n.t("application_pack.link_text", size: application_pack_asset_size), href: application_pack_asset_path)
