@@ -1,0 +1,50 @@
+<div class="dashboard-component dashboard-component--background">
+  <div class="govuk-width-container">
+    <div class="dashboard-component__header">
+      <h2 class="govuk-heading-m govuk-!-margin-bottom-2">publisher@example.net <span class="govuk-!-font-weight-regular">- A school with jobs</span></h2>
+      <form class="dashboard-component__button" method="post" action="/organisation/jobs">
+        <input class="govuk-button govuk-!-margin-bottom-0" type="submit" value="Create a job listing" />
+      </form>
+    </div>
+    <div class="dashboard-component-navigation">
+      <div class="dashboard-component-navigation__container">
+        <div aria-label="Dashboard navigation" class="dashboard-component-navigation__nav">
+          <ul class="dashboard-component-navigation__list">
+            <li class="dashboard-component-navigation__item">
+              <a class="govuk-link dashboard-component-navigation__link" href="/organisation/jobs">Active jobs</a>
+            </li>
+            <li class="dashboard-component-navigation__item">
+              <a class="govuk-link dashboard-component-navigation__link" href="/organisation/jobs/expired">Passed deadline</a>
+            </li>
+            <li class="dashboard-component-navigation__item">
+              <a class="govuk-link dashboard-component-navigation__link" href="/organisation/jobs/pending">Scheduled jobs</a>
+            </li>
+            <li class="dashboard-component-navigation__item">
+              <a class="govuk-link dashboard-component-navigation__link" aria-current="page" href="/organisation/jobs/draft">Draft jobs</a>
+            </li>
+            <li class="dashboard-component-navigation__item">
+              <a class="govuk-link dashboard-component-navigation__link" href="/organisation/jobs/awaiting_feedback">Jobs awaiting feedback</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><div class="govuk-main-wrapper">
+  <div class="vacancies-component">
+    <div class="govuk-grid-row vacancies-component__header govuk-!-margin-top-7">
+      <div class="govuk-grid-column-full">
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-4">Draft jobs <span class="govuk-body-l govuk-!-font-size-36">(0)</span></h1>
+      </div>
+    </div>
+    <div class="govuk-grid-row">
+      <div class="vacancies-component__content govuk-grid-column-full">
+        <section id="vacancy-results">
+          <div class="empty-section-component">
+            <p class="govuk-body govuk-!-margin-bottom-0">You currently have no draft jobs.</p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+<div class="dashboard-component dashboard-component--background">
+  <div class="govuk-width-container">
+    <div class="dashboard-component__header">
+      <h2 class="govuk-heading-m govuk-!-margin-bottom-2">publisher@example.net <span class="govuk-!-font-weight-regular">- AR LA local authority</span></h2>
+      <form class="dashboard-component__button" method="post" action="/organisation/jobs">
+        <input class="govuk-button govuk-!-margin-bottom-0" type="submit" value="Create a job listing" />
+      </form>
+    </div>
+    <div class="dashboard-component-navigation">
+      <div class="dashboard-component-navigation__container">
+        <div aria-label="Dashboard navigation" class="dashboard-component-navigation__nav">
+          <ul class="dashboard-component-navigation__list">
+            <li class="dashboard-component-navigation__item">
+              <a class="govuk-link dashboard-component-navigation__link" href="/organisation/jobs">Active jobs</a>
+            </li>
+            <li class="dashboard-component-navigation__item">
+              <a class="govuk-link dashboard-component-navigation__link" href="/organisation/jobs/expired">Passed deadline</a>
+            </li>
+            <li class="dashboard-component-navigation__item">
+              <a class="govuk-link dashboard-component-navigation__link" href="/organisation/jobs/pending">Scheduled jobs</a>
+            </li>
+            <li class="dashboard-component-navigation__item">
+              <a class="govuk-link dashboard-component-navigation__link" aria-current="page" href="/organisation/jobs/draft">Draft jobs</a>
+            </li>
+            <li class="dashboard-component-navigation__item">
+              <a class="govuk-link dashboard-component-navigation__link" href="/organisation/jobs/awaiting_feedback">Jobs awaiting feedback</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><div class="govuk-main-wrapper">
+  <div class="vacancies-component">
+    <div class="govuk-grid-row vacancies-component__header govuk-!-margin-top-7">
+      <div class="govuk-grid-column-full">
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-4">Draft jobs <span class="govuk-body-l govuk-!-font-size-36">(0)</span></h1>
+      </div>
+    </div>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-third govuk-!-margin-bottom-5">
+        <form class="edit_publisher_preference" id="edit_publisher_preference_04be5c96-b7ee-4b15-af4d-9bffcc973622" data-controller="form" data-hide-submit="true" action="/publishers/publisher_preferences/04be5c96-b7ee-4b15-af4d-9bffcc973622" accept-charset="UTF-8" method="post">
+          <input type="hidden" name="_method" value="patch" />
+          <div class="filters-component filters-component--mobile govuk-!-padding-left-3 govuk-!-padding-right-3 govuk-!-padding-top-1">
+            <div class="filters-component__heading">
+              <div class="filters-component__heading-container">
+                <a class="govuk-link filters-component__link-button add-remove-schools govuk-link--no-visited-state" href="/publishers/publisher_preferences/04be5c96-b7ee-4b15-af4d-9bffcc973622/edit">Add or remove schools</a>
+              </div>
+            </div>
+            <div class="filters-component__groups">
+              <div class="filters-component__groups__group small" data-group="locations">
+                <div class="govuk-form-group" data-action="change-&gt;form#submitListener">
+                  <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                      <h3 class="govuk-fieldset__heading">Locations</h3>
+                    </legend>
+                    <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                      <input type="hidden" name="publisher_preference[organisation_ids][]" value="" />
+                      <div class="govuk-checkboxes__item">
+                        <input id="publisher-preference-organisation-ids-2d09417e-9358-4039-a6cb-b006908654f0-field" class="govuk-checkboxes__input" type="checkbox" value="2d09417e-9358-4039-a6cb-b006908654f0" name="publisher_preference[organisation_ids][]" />
+                        <label for="publisher-preference-organisation-ids-2d09417e-9358-4039-a6cb-b006908654f0-field" class="govuk-label govuk-checkboxes__label">Open school (0)</label>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+            <div class="filters-component__submit">
+              <button type="submit" formnovalidate="formnovalidate" class="govuk-button govuk-!-margin-top-4 govuk-!-margin-bottom-2 filters-component__submit-button" data-module="govuk-button" data-prevent-double-click="true">Apply filters</button>
+            </div>
+          </div>
+          <input value="draft" type="hidden" name="publisher_preference[jobs_type]" id="publisher_preference_jobs_type" />
+        </form>
+      </div>
+      <div class="vacancies-component__content govuk-grid-column-two-thirds">
+        <section id="vacancy-results">
+          <div class="empty-section-component">
+            <p class="govuk-body govuk-!-margin-bottom-0">You currently have no draft jobs.</p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
