@@ -1,5 +1,6 @@
 module ComponentsHelper
   {
+    map: "MapComponent",
     validatable_summary_list: "ValidatableSummaryListComponent",
   }.each do |name, klass|
     define_method(name) do |*args, **kwargs, &block|
