@@ -9,7 +9,7 @@ module RandomHelpers
 
   def factory_sample(things, num = 1)
     if Rails.env.test?
-      num == 1 ? things.first : things[0...num]
+      num == 1 ? things.first : things.take(num)
     else
       things.sample(num)
     end
