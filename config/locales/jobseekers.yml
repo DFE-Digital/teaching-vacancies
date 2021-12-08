@@ -138,6 +138,8 @@ en:
           no_references: No referees specified
           step_title: References
           title: References — Application
+        review:
+          step_title: Review your application
       caption: "%{job_title} at %{organisation}"
       closing_date: Closing date
       confirm_destroy:
