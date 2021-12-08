@@ -12,14 +12,14 @@ FactoryBot.define do
       results_count { 5 }
     end
 
-    category { Qualification.categories.keys.sample }
+    category { factory_sample(Qualification.categories.keys) }
     finished_studying { undergraduate? || postgraduate? ? Faker::Boolean.boolean : nil }
     finished_studying_details { finished_studying == false ? "Stopped due to illness" : "" }
-    grade { finished_studying? ? ["2.1", "Flying Colours", "Honours"].sample : "" }
+    grade { finished_studying? ? factory_sample(["2.1", "Flying Colours", "Honours"]) : "" }
     institution { secondary? ? Faker::Educator.secondary_school : Faker::Educator.university }
     name { other_secondary? || other? ? Faker::Educator.degree : "" }
     subject { undergraduate? || postgraduate? ? Faker::Educator.subject : "" }
-    year { finished_studying == false ? nil : rand(1970..2020) }
+    year { finished_studying == false ? nil : factory_rand(1970..2020) }
 
     job_application
   end
