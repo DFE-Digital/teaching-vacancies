@@ -121,8 +121,9 @@ en:
         qualifications:
           description: >-
             Enter your qualifications as completely as you can, including all GCSEs, A levels (or equivalents),
-            undergraduate and postgraduate degrees. Please also specify any other qualifications where you showed skills
-            that might help you in this role.
+            undergraduate and postgraduate degrees.
+          description_extra: >-
+            Please also specify any other qualifications where you showed skills that might help you in this role.
           heading: Education and qualifications
           no_qualifications: No qualifications specified
           step_title: Education and qualifications
@@ -138,6 +139,8 @@ en:
           no_references: No referees specified
           step_title: References
           title: References — Application
+        review:
+          step_title: Review your application
       caption: "%{job_title} at %{organisation}"
       closing_date: Closing date
       confirm_destroy:
@@ -444,7 +447,7 @@ en:
         You have saved this job. <a href="%{link}" class="govuk-link">View all your saved jobs</a> on your account.
     sessions:
       new:
-        description: If you are a teacher or aspiring teacher you can sign in here to save and apply for jobs.
+        description: Sign in here if you are a teacher, aspiring teacher or work in education support. Once signed in you'll be able to save and apply for jobs.
         forgotten: Forgotten your password?
         no_account:
           content_html: "%{link_to} to save and apply for jobs you are interested in."
