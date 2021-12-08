@@ -60,5 +60,5 @@ test:
     present: 1
     right_column: 0
   2021_12_new_search:
-    algolia: 1
-    postgres: 0
+    algolia: 0
+    postgres: 1

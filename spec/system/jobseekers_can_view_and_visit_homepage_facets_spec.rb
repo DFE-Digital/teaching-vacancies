@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Jobseekers can view and visit homepage facets", vcr: { cassette_name: "algoliasearch" } do
+RSpec.describe "Jobseekers can view and visit homepage facets" do
   # TODO: Instead of stubbing implementation details, we should move towards e.g. VCR in the future
   let(:vacancy_facets) do
     instance_double(
