@@ -2,6 +2,7 @@ import '@stimulus/polyfills';
 import { Application } from '@hotwired/stimulus';
 
 // view components
+import MapController from '../../components/map_component/map';
 import PanelController from '../../components/panel_component/panel';
 import VacancySelectorController from '../../components/vacancy_selector_component/vacancy_selector';
 
@@ -25,6 +26,7 @@ application.register('clipboard', ClipboardController);
 application.register('form', FormController);
 application.register('location-finder', LocationFinderController);
 application.register('manage-qualifications', ManageQualificationsController);
+application.register('map', MapController);
 application.register('panel', PanelController);
 application.register('upload-documents', UploadDocumentsController);
 application.register('utils', UtilsController);

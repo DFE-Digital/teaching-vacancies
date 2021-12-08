@@ -4,6 +4,7 @@ module ComponentsHelper
     dashboard: "DashboardComponent",
     empty_section: "EmptySectionComponent",
     filters: "FiltersComponent",
+    map: "MapComponent",
     publishers_no_vacancies: "Publishers::NoVacanciesComponent",
     publishers_school_overview: "Publishers::SchoolOverviewComponent",
     publishers_vacancies: "Publishers::VacanciesComponent",
