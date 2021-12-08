@@ -1,4 +1,4 @@
-class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
+class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications::BaseController
   include Wicked::Wizard
   include QualificationFormConcerns
 
@@ -8,6 +8,8 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
   helper_method :back_path, :employments, :form, :job_application, :qualification_form_param_key, :redirect_to_review?, :vacancy
 
   def show
+    skip_step_if_missing
+
     render_wizard
   end
 
@@ -31,7 +33,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
                    elsif step == :personal_details
                      new_jobseekers_job_job_application_path(vacancy.id)
                    else
-                     previous_wizard_path
+                     jobseekers_job_application_build_path(job_application.id, step_process.previous_step)
                    end
   end
 
@@ -80,5 +82,12 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::BaseController
 
   def vacancy
     @vacancy ||= job_application.vacancy
+  end
+
+  def skip_step_if_missing
+    # Calling step_process will initialize a StepProcess, which will raise if the current step is missing.
+    step_process
+  rescue StepProcess::MissingStepError
+    skip_step unless step == "wicked_finish"
   end
 end
