@@ -454,7 +454,7 @@ ActiveRecord::Schema.define(version: 2021_12_09_154121) do
     t.uuid "publisher_organisation_id"
     t.boolean "starts_asap", default: false
     t.integer "contract_type"
-    t.string "contract_type_duration"
+    t.string "fixed_term_contract_duration"
     t.text "personal_statement_guidance"
     t.integer "end_listing_reason"
     t.integer "candidate_hired_from"
@@ -469,6 +469,7 @@ ActiveRecord::Schema.define(version: 2021_12_09_154121) do
     t.string "readable_phases", default: [], array: true
     t.tsvector "searchable_content"
     t.boolean "google_index_removed", default: false
+    t.string "parental_leave_cover_contract_duration"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["geolocation"], name: "index_vacancies_on_geolocation", using: :gist
     t.index ["initially_indexed"], name: "index_vacancies_on_initially_indexed"
