@@ -17,15 +17,14 @@
 
       - if current_jobseeker.job_applications.not_draft.none?
         .govuk-caption-m
-          = t("jobseekers.job_applications.current_step",
-              current: JobApplication.completed_steps.values.last + 2,
-              total: JobApplication.completed_steps.values.last + 2)
+          = t("jobseekers.job_applications.current_step", current: step_process.current_step_group_number, total: step_process.total_step_groups)
 
       h2.govuk-heading-l = t(".heading")
 
       ol.app-task-list
         li = render "jobseekers/job_applications/review/personal_details"
-        li = render "jobseekers/job_applications/review/professional_status"
+        - unless job_application.vacancy.main_job_role == "education_support"
+          li = render "jobseekers/job_applications/review/professional_status"
         li = render "jobseekers/job_applications/review/qualifications"
         li = render "jobseekers/job_applications/review/employment_history"
         li = render "jobseekers/job_applications/review/personal_statement"
@@ -61,8 +60,4 @@
 
   - if current_jobseeker.job_applications.not_draft.none?
     .govuk-grid-column-one-third
-      = render StepsComponent.new title: t(".steps"), classes: "govuk-!-margin-top-6" do |component|
-        - steps = %w[personal_details professional_status qualifications employment_history personal_statement references equal_opportunities ask_for_support declarations]
-        - steps.each do |step|
-          - component.step(label: t("jobseekers.job_applications.build.#{step}.step_title"), current: false, completed: step.in?(job_application.completed_steps))
-        - component.step(label: t(".heading"), current: action_name == "review", completed: false)
+      = render "jobseekers/job_applications/build/steps"
