@@ -16,9 +16,9 @@ FactoryBot.define do
         HeadPreferredJobTitle: Faker::Name.prefix.delete("."),
         DateOfLastInspectionVisit: Faker::Date.between(from: 999.days.ago, to: 5.days.ago),
         NumberOfPupils: Faker::Number.number(digits: 3),
-        "OfstedRating (name)": ofsted_ratings.sample,
+        "OfstedRating (name)": factory_sample(ofsted_ratings),
         OpenDate: Faker::Date.between(from: 10_000.days.ago, to: 1000.days.ago),
-        "ReligiousCharacter (name)": religious_characters.sample,
+        "ReligiousCharacter (name)": factory_sample(religious_characters),
         SchoolCapacity: Faker::Number.number(digits: 4),
         TelephoneNum: Faker::Number.number(digits: 11).to_s,
         "Trusts (name)": "#{Faker::Company.name.delete("'")} Trust",
@@ -47,7 +47,7 @@ FactoryBot.define do
     end
 
     trait :middle do
-      phase { %i[middle_deemed_primary middle_deemed_secondary].sample }
+      phase { factory_sample(%i[middle_deemed_primary middle_deemed_secondary]) }
       readable_phases { %w[middle] }
     end
 
@@ -78,7 +78,7 @@ FactoryBot.define do
           HeadPreferredJobTitle: Faker::Name.prefix.delete("."),
           DateOfLastInspectionVisit: Faker::Date.between(from: 999.days.ago, to: 5.days.ago),
           NumberOfPupils: Faker::Number.number(digits: 3),
-          "OfstedRating (name)": ofsted_ratings.sample,
+          "OfstedRating (name)": factory_sample(ofsted_ratings),
           OpenDate: Faker::Date.between(from: 10_000.days.ago, to: 1000.days.ago),
           "ReligiousCharacter (name)": "Roman Catholic",
           SchoolCapacity: Faker::Number.number(digits: 4),
