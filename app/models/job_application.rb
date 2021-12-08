@@ -57,6 +57,10 @@ class JobApplication < ApplicationRecord
     Jobseekers::JobApplicationMailer.application_submitted(self).deliver_later
   end
 
+  def ask_professional_status?
+    vacancy.main_job_role.in? %w[teacher leadership]
+  end
+
   private
 
   def update_status_timestamp
