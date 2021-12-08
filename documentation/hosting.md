@@ -6,8 +6,8 @@ Teaching Vacancies is hosted on [GOV.UK PaaS](https://docs.cloud.service.gov.uk/
 
 | Environment | URL                                                                                                    | Code branch | CI/CD workflow      | Gov.UK PaaS space             |
 | ----------- | ------------------------------------------------------------------------------------------------------ | ----------- | ------------------- | ----------------------------- |
-| Production  | [https://teaching-vacancies.service.gov.uk](https://teaching-vacancies.service.gov.uk)                 | `master`    | [deploy.yml](../.github/workflows/deploy.yml)        | teaching-vacancies-production |
-| Staging     | [https://staging.teaching-vacancies.service.gov.uk](https://staging.teaching-vacancies.service.gov.uk) | `master`    | [deploy.yml](../.github/workflows/deploy.yml)        | teaching-vacancies-staging    |
+| Production  | [https://teaching-vacancies.service.gov.uk](https://teaching-vacancies.service.gov.uk)                 | `main`    | [deploy.yml](../.github/workflows/deploy.yml)        | teaching-vacancies-production |
+| Staging     | [https://staging.teaching-vacancies.service.gov.uk](https://staging.teaching-vacancies.service.gov.uk) | `main`    | [deploy.yml](../.github/workflows/deploy.yml)        | teaching-vacancies-staging    |
 | Dev         | [https://dev.teaching-vacancies.service.gov.uk](https://dev.teaching-vacancies.service.gov.uk)         | `dev`       | [deploy_branch.yml](../.github/workflows/deploy_branch.yml) | teaching-vacancies-dev        |
 | QA          | [https://qa.teaching-vacancies.service.gov.uk](https://qa.teaching-vacancies.service.gov.uk)           | `qa`        | [deploy_branch.yml](../.github/workflows/deploy_branch.yml) | teaching-vacancies-dev        |
 | Prototype   | [https://teaching-vacancies-prototype.london.cloudapps.digital](https://teaching-vacancies-prototype.london.cloudapps.digital/) |   |    | teaching-vacancies-prototype |

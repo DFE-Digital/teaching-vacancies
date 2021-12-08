@@ -3,8 +3,8 @@ name: Build and deploy
 on:
   push:
     branches:
-    - master
-    - dev     # Push to branch other than master deploys directly to environment with the same name. ie 'dev' branch deploys to 'dev' environment
+    - main
+    - dev     # Push to branch other than main deploys directly to environment with the same name. ie 'dev' branch deploys to 'dev' environment
     paths-ignore:
     - 'bigquery/**'
     - 'documentation/**'
@@ -13,7 +13,7 @@ on:
 
   pull_request:
     branches:
-    - master
+    - main
     types:
       - labeled
       - opened
@@ -88,10 +88,10 @@ jobs:
           build-args: |
             BUILDKIT_INLINE_CACHE=1
           # Cache from builder target tagged with branch name, may be empty first time branch is pushed
-          # Cache from builder target tagged with master branch name, always present, maybe less recent
+          # Cache from builder target tagged with main branch name, always present, maybe less recent
           cache-from: |
             ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
-            ${{ env.DOCKER_REPOSITORY }}:builder-master
+            ${{ env.DOCKER_REPOSITORY }}:builder-main
           push: true
           # Tag with branch name for reuse
           tags: ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
@@ -105,11 +105,11 @@ jobs:
             COMMIT_SHA=${{ env.COMMIT_SHA }}
           # Cache from builder target built above, always present
           # Cache from production target tagged with branch name, may be empty first time branch is pushed
-          # Cache from production target tagged with master branch name, always present, maybe less recent
+          # Cache from production target tagged with main branch name, always present, maybe less recent
           cache-from: |
             ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
             ${{ env.DOCKER_REPOSITORY }}:${{ env.GIT_BRANCH }}
-            ${{ env.DOCKER_REPOSITORY }}:master
+            ${{ env.DOCKER_REPOSITORY }}:main
           push: false
           load: true
           # Tag with branch name for reuse
@@ -126,12 +126,12 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set matrix environments (Push to master)
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      - name: Set matrix environments (Push to main)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: echo "MATRIX_ENVIRONMENTS={\"environment\":[\"staging\",\"production\",\"qa\", \"research\"]}" >> $GITHUB_ENV
 
-      - name: Set matrix environments (Push to non master branch)
-        if: github.event_name == 'push' && github.ref != 'refs/heads/master'
+      - name: Set matrix environments (Push to non main branch)
+        if: github.event_name == 'push' && github.ref != 'refs/heads/main'
         run: echo "MATRIX_ENVIRONMENTS={\"environment\":[\"${GIT_BRANCH}\"]}" >> $GITHUB_ENV
 
       - name: Set matrix environments (Pull request)
@@ -140,7 +140,7 @@ jobs:
 
       - name: Scan ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }} image
         id: scan_docker_image
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           docker run -t -e "SNYK_TOKEN=${{ secrets.SNYK_TOKEN }}" \
             -v "/var/run/docker.sock:/var/run/docker.sock" \
@@ -272,7 +272,7 @@ jobs:
         SLACK_COLOR: failure
 
   post_deployment:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     name: Post deployment steps
     needs: [build, deploy]
     runs-on: ubuntu-20.04

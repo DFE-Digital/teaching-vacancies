@@ -20,8 +20,8 @@ The current setup is this:
 
 * **testing** - user researchers to conduct usability testing sessions
 * **edge** - devs to test or debug features, code and integrations in isolation
-* **staging** - final quality assurance step and demos	
-* **production** - the live service	
+* **staging** - final quality assurance step and demos
+* **production** - the live service
 
 
 ## Decision
@@ -29,7 +29,7 @@ The current setup is this:
 We will reduce the number of environment to:
 
 * **staging** - used for User Acceptance testing, quality assurance testing and demos
-* **production** - the live service, runs the latest version of the master branch
+* **production** - the live service, runs the latest version of the main branch
 
 Developers will use local environments to test or debug features, code and integrations.
 The same applies to user researchers when conducting usability testing sessions.

@@ -18,7 +18,7 @@ ___Important___: You should convert the time to UTC before actually using it. Wh
 
 ### Freeze pipeline
 
-Alert all developers that, no one should merge to master branch.
+Alert all developers that, no one should merge to main branch.
 
 ### Maintenance mode
 
@@ -63,7 +63,7 @@ aws-vault exec Deployments --  make <env> remove-postgres-tf-state [CONFIRM_PROD
 
 ### Restore postgres database instance
 
-The following variables need to be set: `DB_INSTANCE_GUID` (the output of [the 'Get affected postgres instance guid' step](#get-affected-postgres-database-id), `SNAPSHOT_TIME` ("2021-09-14 16:00:00" IMPORTANT - this is UTC time!), `passcode` (a [GOV.UK PaaS one-time passcode](https://login.london.cloud.service.gov.uk/passcode)), `CONFIRM_PRODUCTION` (true) and `tag` (cf app teaching-vacancies-qa | grep "docker image" the tag is after the : i.e ghcr.io/dfe-digital/teaching-vacancies:master-7b736906654cbd42145420ad40fcbc6ec257bd1c)
+The following variables need to be set: `DB_INSTANCE_GUID` (the output of [the 'Get affected postgres instance guid' step](#get-affected-postgres-database-id), `SNAPSHOT_TIME` ("2021-09-14 16:00:00" IMPORTANT - this is UTC time!), `passcode` (a [GOV.UK PaaS one-time passcode](https://login.london.cloud.service.gov.uk/passcode)), `CONFIRM_PRODUCTION` (true) and `tag` (cf app teaching-vacancies-qa | grep "docker image" the tag is after the : i.e ghcr.io/dfe-digital/teaching-vacancies:main-7b736906654cbd42145420ad40fcbc6ec257bd1c)
 
  Use the following makefile command to initiate the restore process by using the approriate variable values:
  ```

@@ -80,14 +80,14 @@ Although it's possible to build a Docker image by typing `docker` commands into 
 - `docker/login-action@v1`
     - Log in to Docker Hub with username/password stored in GitHub Secrets
 - `docker/build-push-action@v2`
-    - Pull the image tagged `builder-master`
+    - Pull the image tagged `builder-main`
     - Check if there's an image tagged `builder-BRANCHNAME`
     - Use the build argument `BUILDKIT_INLINE_CACHE=1` to include cache metadata
     - Build an image from Docker target `builder` defined in the Dockerfile
     - Tag it with `builder-BRANCHNAME`
     - Push the image to the Docker Hub repository
 - `docker/build-push-action@v2`
-    - Use the image tagged `builder-master` (already cached locally in the step above)
+    - Use the image tagged `builder-main` (already cached locally in the step above)
     - Use the image tagged `builder-BRANCHNAME` (already created locally in the step above)
     - Check if there's an image tagged `BRANCHNAME`
     - Use the build argument `BUILDKIT_INLINE_CACHE=1` to include cache metadata
@@ -110,9 +110,9 @@ build-local-image:
 		$(eval tag=dev-$(shell git rev-parse HEAD)-$(shell date '+%Y%m%d%H%M%S'))
 		docker build \
 			--build-arg BUILDKIT_INLINE_CACHE=1 \
-			--cache-from $(repository):builder-master \
+			--cache-from $(repository):builder-main \
 			--cache-from $(repository):builder-$(branch) \
-			--cache-from $(repository):master \
+			--cache-from $(repository):main \
 			--cache-from $(repository):$(branch) \
 			--cache-from $(repository):$(tag) \
 			--tag $(repository):$(branch) \
@@ -125,11 +125,11 @@ build-local-image:
 ```
 
 - Enable BuildKit by setting an environment variable
-- Use `git` to determine the branch name (`dev`, `staging`, `master`, or a feature branch)
+- Use `git` to determine the branch name (`dev`, `staging`, `main`, or a feature branch)
 - Create a unique tag comprised of the branch name plus a timestamp
-- Use the image tagged `builder-master` (already cached locally in the step above)
+- Use the image tagged `builder-main` (already cached locally in the step above)
 - Use the image tagged `builder-BRANCHNAME` (already created locally in the step above)
-- Use the image tagged `master`
+- Use the image tagged `main`
 - Use the image tagged `BRANCHNAME` (potentially cached locally from a previous run)
 - Use the build argument `BUILDKIT_INLINE_CACHE=1` to include cache metadata
 - Build an image from Docker target `production` defined in the Dockerfile
@@ -195,7 +195,7 @@ At this point you'll be in the `/app` directory
 
 - `builder-dev`
 - `builder-staging`
-- `builder-master`
+- `builder-main`
 
 And for feature branches, these may undergo several pushes to the branch, so it's worth storing the builder image, to speed up subsequent builds, e.g.
 
@@ -205,7 +205,7 @@ And for feature branches, these may undergo several pushes to the branch, so it'
 
 - `dev`
 - `staging`
-- `master`
+- `main`
 
 And for feature branches:
 
@@ -217,7 +217,7 @@ Do NOT use these tags to generate containers - instead, choose a unique tag list
 
 ### `Production` stage image unique tags
 
-For images built off the `master` branch, we use the [SHA of the GitHub commit](https://docs.github.com/en/free-pro-team@latest/actions/reference/context-and-expression-syntax-for-github-actions), e.g.
+For images built off the `main` branch, we use the [SHA of the GitHub commit](https://docs.github.com/en/free-pro-team@latest/actions/reference/context-and-expression-syntax-for-github-actions), e.g.
 
 [Docker image tagged `a18165a5a6d8ae5b753ac7c3cac65f0cbc34dd18`](https://hub.docker.com/layers/dfedigital/teaching-vacancies/a18165a5a6d8ae5b753ac7c3cac65f0cbc34dd18/images/sha256-7ae9ec3802192d41dc9846db734303efecc372d90d11317864f2cc0478908bf5?context=explore) comes from [GitHub commit `a18165a5a6d8ae5b753ac7c3cac65f0cbc34dd18`](https://github.com/DFE-Digital/teaching-vacancies/commit/a18165a5a6d8ae5b753ac7c3cac65f0cbc34dd18)
 

@@ -43,7 +43,7 @@ jobs:
         BACKUP_TYPE: full
 
     - name: Send job status message to twd_tv_dev channel
-      if: always() && github.ref == 'refs/heads/master'
+      if: always() && github.ref == 'refs/heads/main'
       uses: rtCamp/action-slack-notify@v2.2.0
       env:
         SLACK_CHANNEL: twd_tv_dev
