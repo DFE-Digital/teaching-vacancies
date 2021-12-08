@@ -72,7 +72,7 @@ module Publishers::Wizardable
       status: vacancy.status.blank? ? "draft" : nil,
     }
     params.require(:publishers_job_listing_job_details_form)
-          .permit(:job_title, :contract_type, :contract_type_duration, key_stages: [], subjects: [])
+          .permit(:job_title, :contract_type, :fixed_term_contract_duration, :maternity_cover_contract_duration, key_stages: [], subjects: [])
           .merge(attributes_to_merge.compact)
           .merge(key_stages: params[:publishers_job_listing_job_details_form][:key_stages]&.reject(&:blank?))
   end

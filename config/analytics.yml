@@ -302,7 +302,8 @@ shared:
     - publisher_organisation_id
     - starts_asap
     - contract_type
-    - contract_type_duration
+    - fixed_term_contract_duration
+    - maternity_cover_contract_duration
     - enable_job_applications
     - personal_statement_guidance
     - end_listing_reason

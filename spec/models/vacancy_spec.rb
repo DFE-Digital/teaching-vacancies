@@ -421,12 +421,36 @@ RSpec.describe Vacancy do
     end
 
     context "when changing contract type to permanent" do
-      subject { create(:vacancy, contract_type: "fixed_term", contract_type_duration: "8 months") }
+      subject { create(:vacancy, contract_type: "fixed_term", fixed_term_contract_duration: "8 months", maternity_cover_contract_duration: "8 months") }
 
       before { subject.update contract_type: "permanent" }
 
-      it "resets contract_type_duration field" do
-        expect(subject.contract_type_duration).to be_blank
+      it "resets fixed_term_contract_duration field" do
+        expect(subject.fixed_term_contract_duration).to be_blank
+      end
+
+      it "resets maternity_cover_contract_duration field" do
+        expect(subject.maternity_cover_contract_duration).to be_blank
+      end
+    end
+
+    context "when changing contract type from fixed_term to maternity_cover" do
+      subject { create(:vacancy, contract_type: "fixed_term", fixed_term_contract_duration: "8 months") }
+
+      before { subject.update contract_type: "maternity_cover" }
+
+      it "resets fixed_term_contract_duration field" do
+        expect(subject.fixed_term_contract_duration).to be_blank
+      end
+    end
+
+    context "when changing contract type from maternity_cover to fixed_term" do
+      subject { create(:vacancy, contract_type: "maternity_cover", maternity_cover_contract_duration: "8 months") }
+
+      before { subject.update contract_type: "fixed_term" }
+
+      it "resets maternity_cover_contract_duration field" do
+        expect(subject.maternity_cover_contract_duration).to be_blank
       end
     end
 

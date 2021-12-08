@@ -30,7 +30,10 @@
           = f.govuk_radio_button :contract_type, :permanent, link_errors: true
 
           = f.govuk_radio_button :contract_type, :fixed_term do
-            = f.govuk_text_field :contract_type_duration, label: { size: "s" }
+            = f.govuk_text_field :fixed_term_contract_duration, label: { size: "s" }
+
+          = f.govuk_radio_button :contract_type, :maternity_cover do
+            = f.govuk_text_field :maternity_cover_contract_duration, label: { size: "s" }
 
         - if vacancy.allow_key_stages?
           = f.govuk_collection_check_boxes :key_stages, Vacancy.key_stages.keys, :to_s, :to_s,
