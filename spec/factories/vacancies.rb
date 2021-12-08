@@ -14,43 +14,42 @@ FactoryBot.define do
   factory :vacancy do
     publisher
 
-    job_location { "at_one_school" }
-    about_school { Faker::Lorem.paragraph(sentence_count: rand(5..10)) }
-    actual_salary { rand(20_000..100_000) }
+    about_school { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
+    actual_salary { factory_rand(20_000..100_000) }
     enable_job_applications { true }
-    benefits { Faker::Lorem.paragraph(sentence_count: rand(1..3)) }
+    benefits { Faker::Lorem.paragraph(sentence_count: factory_rand(1..3)) }
     completed_steps do
       %w[job_role job_role_details job_location schools job_details working_patterns pay_package important_dates documents applying_for_the_job job_summary]
     end
     contact_email { Faker::Internet.email(domain: "example.com") }
     contact_number { "01234 123456" }
-    contract_type { Vacancy.contract_types.keys.sample }
+    contract_type { factory_sample(Vacancy.contract_types.keys) }
     contract_type_duration { "6 months" }
     expires_at { 6.months.from_now.change(hour: 9, minute: 0, second: 0) }
     hired_status { nil }
-    job_advert { Faker::Lorem.paragraph(sentence_count: rand(50..300)) }
-    main_job_role { Vacancy.main_job_role_options.sample }
+    job_advert { Faker::Lorem.paragraph(sentence_count: factory_rand(50..300)) }
+    job_location { "at_one_school" }
+    job_title { factory_sample(JOB_TITLES) }
+    listed_elsewhere { nil }
+    main_job_role { factory_sample(Vacancy.main_job_role_options) }
     additional_job_roles do
       case main_job_role
       when "teacher"
-        Vacancy.additional_job_role_options.sample(rand(0..2))
+        factory_rand_sample(Vacancy.additional_job_role_options, 0..2)
       when "sendco"
         []
       else
-        ["send_responsible"].sample(rand(0..1))
+        factory_rand_sample(["send_responsible"], 0..1)
       end
     end
-
-    job_title { JOB_TITLES.sample }
-    listed_elsewhere { nil }
-    personal_statement_guidance { Faker::Lorem.paragraph(sentence_count: rand(5..10)) }
+    personal_statement_guidance { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
     publish_on { Date.current }
-    salary { SALARIES.sample }
-    school_visits { Faker::Lorem.paragraph(sentence_count: rand(5..10)) }
+    salary { factory_sample(SALARIES) }
+    school_visits { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
     starts_on { 1.year.from_now.to_date }
     status { :published }
-    subjects { SUBJECT_OPTIONS.sample(2).map(&:first).sort! }
-    working_patterns { Vacancy.working_patterns.keys.sample(rand(1..3)) }
+    subjects { factory_sample(SUBJECT_OPTIONS, 2).map(&:first).sort! }
+    working_patterns { factory_rand_sample(Vacancy.working_patterns.keys, 1..3) }
     working_patterns_details { Faker::Lorem.paragraph(sentence_count: 1) }
 
     trait :no_tv_applications do
