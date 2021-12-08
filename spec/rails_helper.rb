@@ -120,6 +120,7 @@ RSpec.configure do |config|
   config.include VacanciesHelper
   config.include VacancyHelpers
   config.include ViewComponent::TestHelpers, type: :component
+  config.include ComponentHelpers, type: :component # Has to come after ViewComponent::TestHelpers
   config.include WithEnv
 end
 
