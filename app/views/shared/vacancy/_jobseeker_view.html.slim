@@ -64,21 +64,6 @@
       = govuk_notification_banner title_text: t("banners.important"), classes: "govuk-!-margin-bottom-5" do
         = t("messages.jobs.multi_school_job_notification_html", organisation_type: organisation_type_basic(@vacancy.parent_organisation))
 
-    - if current_variant?(:"2021_07_contents_tabs_on_job_listing_test", :present)
-      .content-pills class="govuk-!-margin-bottom-6"
-        h3.govuk-heading-s class="govuk-!-margin-bottom-3" = t("jobs.contents")
-        .govuk-grid-row
-          / Up to four half columns in one row so that they automatically wrap depending on how many are present
-          .govuk-grid-column-one-half
-            = render PillLinkComponent.new text: "Job details", href: "#job-details"
-          - if @vacancy.supporting_documents.any?
-            .govuk-grid-column-one-half
-              = render PillLinkComponent.new text: "Supporting documents", href: "#supporting-documents"
-          .govuk-grid-column-one-half
-            = render PillLinkComponent.new text: t("organisation.overview_link_text.#{@vacancy.job_location}"), href: "#school-overview"
-          .govuk-grid-column-one-half
-            = render PillLinkComponent.new text: t("organisation.location_link_text.#{@vacancy.job_location}"), href: "#school-location"
-
     = render(Jobseekers::VacancyDetailsComponent.new(vacancy: @vacancy))
     = render(Jobseekers::OrganisationOverviews::SchoolGroupComponent.new(vacancy: @vacancy))
     = render(Jobseekers::OrganisationOverviews::SchoolComponent.new(vacancy: @vacancy))
