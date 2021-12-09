@@ -3,6 +3,7 @@ FactoryBot.define do
   religious_characters = ["Church of England", "Roman Catholic", "None", "Does not apply"].freeze
 
   factory :school do
+    Faker::Config.random = Random.new(123)
     address { Faker::Address.street_name.delete("'") }
     county { Faker::Address.state_abbr }
     description { Faker::Lorem.paragraph(sentence_count: 1) }
