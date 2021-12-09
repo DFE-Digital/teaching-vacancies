@@ -107,13 +107,13 @@ FactoryBot.define do
 
     trait :published_slugged do
       status { :published }
-      sequence(:slug) { |n| "slug-#{n}" }
+      deterministic_sequence(:slug) { |n| "slug-#{n}" }
     end
 
     trait :expired do
       to_create { |instance| instance.save(validate: false) }
       status { :published }
-      sequence(:slug) { |n| "slug-#{n}" }
+      deterministic_sequence(:slug) { |n| "slug-#{n}" }
       publish_on { Date.current - 1.month }
       expires_at { 2.weeks.ago.change(hour: 9, minute: 0) }
     end
@@ -139,7 +139,7 @@ FactoryBot.define do
 
     trait :past_publish do
       status { :published }
-      sequence(:slug) { |n| "slug-#{n}" }
+      deterministic_sequence(:slug) { |n| "slug-#{n}" }
       publish_on { Date.current - 1.day }
       expires_at { 2.months.from_now.change(hour: 9, minute: 0) }
       starts_on { Date.current + 3.months }
@@ -147,7 +147,7 @@ FactoryBot.define do
 
     trait :without_working_patterns do
       to_create { |instance| instance.save(validate: false) }
-      sequence(:slug) { |n| "slug-#{n}" }
+      deterministic_sequence(:slug) { |n| "slug-#{n}" }
       working_patterns { nil }
     end
 

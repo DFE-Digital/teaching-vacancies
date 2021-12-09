@@ -2,6 +2,7 @@ raise "Aborting seeds - running in production with existing vacancies" if Rails.
 
 require "faker"
 require "factory_bot_rails"
+require_relative "../spec/factories/support/random_helpers"
 
 Gias::ImportSchoolsAndLocalAuthorities.new.call
 Gias::ImportTrusts.new.call
