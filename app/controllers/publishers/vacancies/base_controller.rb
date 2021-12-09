@@ -5,7 +5,7 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
 
   private
 
-  helper_method :current_step, :step_process, :vacancy
+  helper_method :current_step, :step_process, :vacancy, :vacancies
 
   def step_process
     Publishers::Vacancies::VacancyStepProcess.new(
@@ -16,8 +16,12 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
     )
   end
 
+  def vacancies
+    @vacancies ||= current_organisation.all_vacancies
+  end
+
   def vacancy
-    @vacancy ||= current_organisation.all_vacancies.find(params[:job_id].presence || params[:id])
+    @vacancy ||= vacancies.find(params[:job_id].presence || params[:id])
   end
 
   def form_sequence

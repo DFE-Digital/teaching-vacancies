@@ -56,10 +56,7 @@ RSpec.describe DashboardComponent, type: :component do
     let(:link) { { text: "link text", url: "http://something" } }
 
     it "renders the link with name and url" do
-      expect(page).to have_css("form", class: "dashboard-component__button") do |form|
-        expect(form["action"]).to eq(link[:url])
-        expect(form.find(".govuk-button")["value"]).to eq(link[:text])
-      end
+      expect(page).to have_link(link[:text], href: link[:url])
     end
   end
 end
