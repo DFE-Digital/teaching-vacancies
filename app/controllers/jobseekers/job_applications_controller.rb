@@ -1,4 +1,4 @@
-class Jobseekers::JobApplicationsController < Jobseekers::BaseController
+class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseController
   include QualificationFormConcerns
 
   before_action :raise_unless_vacancy_enable_job_applications,

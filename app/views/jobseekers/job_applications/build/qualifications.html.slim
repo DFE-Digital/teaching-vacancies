@@ -11,7 +11,9 @@
       = render "caption"
     h2.govuk-heading-l = t(".heading")
 
-    p.govuk-body = t(".description")
+    p.govuk-body
+      = t(".description")
+      =< t(".description_extra") if %w[teacher leadership].include?(vacancy.main_job_role)
 
     - if job_application.qualifications.any?
       - job_application.qualifications.each do |qualification|
