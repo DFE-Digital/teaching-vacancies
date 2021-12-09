@@ -37,7 +37,7 @@ class Subscription < ApplicationRecord
 
   def vacancies_for_range(date_from, date_to)
     criteria = search_criteria.symbolize_keys.merge(from_date: date_from, to_date: date_to)
-    Search::VacancySearch.new(criteria, per_page: MAXIMUM_RESULTS_PER_RUN, fuzzy: false).vacancies
+    Search::VacancySearch.new(criteria, per_page: MAXIMUM_RESULTS_PER_RUN).vacancies
   end
 
   def alert_run_today
