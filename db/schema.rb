@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_15_110318) do
+ActiveRecord::Schema.define(version: 2021_12_09_154121) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -429,7 +429,6 @@ ActiveRecord::Schema.define(version: 2021_11_15_110318) do
     t.text "job_advert"
     t.text "benefits"
     t.date "starts_on"
-    t.date "ends_on"
     t.string "contact_email"
     t.integer "status"
     t.date "publish_on"

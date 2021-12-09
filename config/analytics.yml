@@ -275,7 +275,6 @@ shared:
     - job_advert
     - benefits
     - starts_on
-    - ends_on
     - contact_email
     - status
     - publish_on
