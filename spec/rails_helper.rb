@@ -17,6 +17,9 @@ require "webmock/rspec"
 
 Sidekiq::Testing.fake!
 
+# https://github.com/faker-ruby/faker#deterministic-random
+Faker::Config.random = Random.new(123)
+
 # Stub Geocoder HTTP requests in specs
 Geocoder::DEFAULT_STUB_COORDINATES = [51.67014192630465, -1.2809649516211556].freeze
 Geocoder::DEFAULT_LOCATION = "TE5 T1NG".freeze
