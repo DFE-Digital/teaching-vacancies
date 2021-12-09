@@ -39,9 +39,6 @@ shared:
   2021_11_desktop_search_results_page_test:
     present: 1
     right_column: 1
-  2021_12_new_search:
-    algolia: 1
-    postgres: 1
 test:
   2021_04_cookie_consent_test:
     none: 0
@@ -59,6 +56,3 @@ test:
   2021_11_desktop_search_results_page_test:
     present: 1
     right_column: 0
-  2021_12_new_search:
-    algolia: 0
-    postgres: 1

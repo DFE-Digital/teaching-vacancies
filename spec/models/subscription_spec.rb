@@ -98,33 +98,21 @@ RSpec.describe Subscription do
     let(:date_today) { Date.current.to_time }
     let(:subscription) { create(:subscription, frequency: :daily, search_criteria: { keyword: "english" }) }
     let(:vacancies) { double("vacancies") }
-    let(:search_filter) do
-      "(publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > "\
-      "#{expired_now.to_time.to_i}) AND (publication_date_timestamp >= #{date_yesterday.to_i}"\
-      " AND publication_date_timestamp <= #{date_today.to_i})"
-    end
-
-    let(:algolia_search_query) { "english" }
-    let(:algolia_search_args) do
-      {
-        filters: search_filter,
-        hitsPerPage: Subscription::MAXIMUM_RESULTS_PER_RUN,
-        page: 1,
-        typoTolerance: false,
-      }
-    end
-
-    before do
-      travel_to expired_now
-      allow_any_instance_of(Search::FiltersBuilder).to receive(:expired_now_filter).and_return(expired_now.to_time.to_i)
-      allow(vacancies).to receive(:count).and_return(10)
-      mock_algolia_search(vacancies, 10, algolia_search_query, algolia_search_args)
-    end
-
-    after { travel_back }
+    let(:vacancy_search) { double(vacancies: vacancies) }
 
     it "calls out to algolia search" do
-      expect(subscription.vacancies_for_range(date_yesterday, date_today)).to eq(vacancies)
+      expect(Search::VacancySearch).to receive(:new).with(
+        {
+          keyword: "english",
+          from_date: date_yesterday,
+          to_date: date_today,
+        },
+        { per_page: 500 },
+      ).and_return(vacancy_search)
+
+      travel_to(expired_now) do
+        expect(subscription.vacancies_for_range(date_yesterday, date_today)).to eq(vacancies)
+      end
     end
   end
 
