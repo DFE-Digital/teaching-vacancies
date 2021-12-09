@@ -1,1 +1,1 @@
-.govuk-caption-m = t("jobseekers.job_applications.current_step", current: JobApplication.completed_steps[step] + 1, total: JobApplication.completed_steps.values.last + 2)
+.govuk-caption-m = t("jobseekers.job_applications.current_step", current: step_process.current_step_group_number, total: step_process.total_step_groups)
