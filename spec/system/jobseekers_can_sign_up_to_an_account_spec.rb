@@ -34,20 +34,42 @@ RSpec.describe "Jobseekers can sign up to an account" do
     end
 
     context "when the confirmation token is invalid" do
-      before do
-        travel_to 3.hours.from_now
+      context "when the confirmation period has expired" do
+        before { travel_to 3.hours.from_now }
+
+        it "does not confirm email and redirects to resend confirmation page" do
+          expect { visit first_link_from_last_mail }.to have_triggered_event(:invalid_confirmation_attempt).with_data(
+            errors: ["confirmation_period_expired"].to_s,
+            resource_identifier: StringAnonymiser.new(created_jobseeker.id).to_s,
+            email_identifier: StringAnonymiser.new(created_jobseeker.email).to_s,
+          )
+          expect(current_path).to eq(jobseeker_confirmation_path)
+          expect(page).to have_content(I18n.t("jobseekers.confirmations.new.title"))
+        end
+
+        context "when the confirmation email is resent" do
+          it "resends confirmation email and redirects to check your email page" do
+            expect { resend_confirmation_email }.to change { delivered_emails.count }.by(1)
+            expect(current_path).to eq(jobseekers_check_your_email_path)
+          end
+        end
       end
 
-      it "does not confirm email and redirects to resend confirmation page" do
-        visit first_link_from_last_mail
-        expect(current_path).to eq(jobseeker_confirmation_path)
-        expect(page).to have_content(I18n.t("jobseekers.confirmations.new.title"))
+      context "when the confirmation link is followed after the account has already been confirmed" do
+        before { created_jobseeker.confirm }
+
+        it "tracks the error as a request event" do
+          expect { visit first_link_from_last_mail }.to have_triggered_event(:invalid_confirmation_attempt)
+            .with_data(errors: ["already_confirmed"].to_s,
+                       resource_identifier: StringAnonymiser.new(created_jobseeker.id).to_s,
+                       email_identifier: StringAnonymiser.new(created_jobseeker.email).to_s)
+        end
       end
 
-      context "when the confirmation email is resent" do
-        it "resends confirmation email and redirects to check your email page" do
-          expect { resend_confirmation_email }.to change { delivered_emails.count }.by(1)
-          expect(current_path).to eq(jobseekers_check_your_email_path)
+      context "when the confirmation link uses a non-existent token" do
+        it "tracks the error as a request event" do
+          expect { visit jobseeker_confirmation_url(confirmation_token: "wrong") }.to have_triggered_event(:invalid_confirmation_attempt)
+            .with_data(errors: ["invalid"].to_s)
         end
       end
     end
