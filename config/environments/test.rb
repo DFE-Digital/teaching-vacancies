@@ -49,9 +49,6 @@ Rails.application.configure do
 
   config.middleware.use RackSessionAccess::Middleware
 
-  # Algolia index prefix must be nil in order for VCR system specs to run
-  config.algolia_index_prefix = nil
-
   config.big_query_dataset = "test_dataset"
 
   # Use test geocoder lookup, unless otherwise specified

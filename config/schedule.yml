@@ -63,11 +63,6 @@ remove_expired_vacancies_from_google_index:
   class: 'RemoveExpiredVacanciesFromGoogleIndexJob'
   queue: low
 
-remove_vacancies_that_expired_yesterday_from_algolia:
-  cron: '0 03 * * *'
-  class: 'RemoveVacanciesThatExpiredYesterdayFromAlgoliaJob'
-  queue: low
-
 remove_vacancies_that_expired_yesterday_from_google_index:
   cron: '0 04 * * *'
   class: 'RemoveVacanciesThatExpiredYesterdayFromGoogleIndexJob'
@@ -96,11 +91,6 @@ send_job_application_data_expiry_notification:
 stream_equal_opportunities_report_publication_job:
   cron: '30 01 * * *'
   class: 'StreamEqualOpportunitiesReportPublicationJob'
-  queue: low
-
-update_algolia_index:
-  cron: '*/5 * * * *'
-  class: 'UpdateAlgoliaIndex'
   queue: low
 
 update_dsi_users_in_db:

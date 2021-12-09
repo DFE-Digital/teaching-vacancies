@@ -63,53 +63,6 @@ RSpec.describe Vacancy do
     end
   end
 
-  context "indexing for legacy Algolia search" do
-    describe "#update_index!" do
-      it { is_expected.to have_db_column(:initially_indexed) }
-      it { is_expected.to have_db_index(:initially_indexed) }
-
-      it "indexes `live` records where `initially_indexed == false`" do
-        allow(described_class).to receive_message_chain(:unindexed, :update_all).with({ initially_indexed: true })
-        expect(described_class).to receive_message_chain(:unindexed, :algolia_reindex!)
-        described_class.update_index!
-      end
-
-      it "flags indexed records as `initially_indexed = true`" do
-        allow(described_class).to receive_message_chain(:unindexed, :algolia_reindex!)
-        expect(described_class).to receive_message_chain(:unindexed, :update_all).with({ initially_indexed: true })
-        described_class.update_index!
-      end
-    end
-
-    describe "#reindex!" do
-      it "is overridden so that it only indexes vacancies scoped as `live`" do
-        expect(described_class).to receive_message_chain(:live, :includes, :algolia_reindex!)
-        described_class.reindex!
-      end
-    end
-
-    describe "#reindex" do
-      it "is overridden so that it only indexes vacancies scoped as `live`" do
-        expect(described_class).to receive_message_chain(:live, :includes, :algolia_reindex)
-        described_class.reindex
-      end
-    end
-
-    describe "#remove_vacancies_that_expired_yesterday!" do
-      it "selects all records that expired yesterday" do
-        expect(described_class).to receive(:expired_yesterday)
-        described_class.remove_vacancies_that_expired_yesterday!
-      end
-
-      it "calls .index.delete_objects on the expired records" do
-        vacancy = double(Vacancy, id: "ABC123")
-        allow(described_class).to receive(:expired_yesterday).and_return([vacancy])
-        expect(described_class).to receive_message_chain(:index, :delete_objects).with(%w[ABC123])
-        described_class.remove_vacancies_that_expired_yesterday!
-      end
-    end
-  end
-
   describe "indexing for search" do
     subject { build(:vacancy) }
 
