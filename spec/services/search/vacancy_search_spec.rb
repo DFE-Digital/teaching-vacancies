@@ -109,8 +109,6 @@ RSpec.describe Search::VacancySearch do
           }
         end
 
-        before { allow(Search::BufferSuggestionsBuilder).to receive_message_chain(:new, :buffer_suggestions) }
-
         it "calls algolia search with the correct parameters" do
           expect(Search::Strategies::Algolia).to receive(:new).with(search_params).and_call_original
           subject.vacancies
@@ -131,8 +129,6 @@ RSpec.describe Search::VacancySearch do
             typo_tolerance: true,
           }
         end
-
-        before { allow(Search::RadiusSuggestionsBuilder).to receive_message_chain(:new, :radius_suggestions) }
 
         it "calls algolia search with the correct parameters" do
           expect(Search::Strategies::Algolia).to receive(:new).with(search_params).and_call_original
@@ -175,8 +171,8 @@ RSpec.describe Search::VacancySearch do
           freeze_time
         end
 
-        it "does not call the buffer suggestions builder" do
-          expect(Search::BufferSuggestionsBuilder).not_to receive(:new)
+        it "does not call the wider suggestions builder" do
+          expect(Search::WiderSuggestionsBuilder).not_to receive(:new)
           subject.wider_search_suggestions
         end
       end
@@ -195,8 +191,8 @@ RSpec.describe Search::VacancySearch do
 
         before { freeze_time }
 
-        it "calls the buffer suggestions builder" do
-          expect(Search::BufferSuggestionsBuilder).to receive(:new).with(location_polygon.name, search_params).and_call_original
+        it "calls the wider suggestions builder" do
+          expect(Search::WiderSuggestionsBuilder).to receive(:new).and_call_original
           subject.wider_search_suggestions
         end
       end
@@ -236,15 +232,15 @@ RSpec.describe Search::VacancySearch do
           mock_algolia_search(vacancies, 1, keyword, arguments_to_algolia)
         end
 
-        it "does not call the radius suggestions builder" do
-          expect(Search::RadiusSuggestionsBuilder).not_to receive(:new)
+        it "does not call the wider suggestions builder" do
+          expect(Search::WiderSuggestionsBuilder).not_to receive(:new)
           subject.wider_search_suggestions
         end
       end
 
       context "when vacancies is empty" do
-        it "calls the radius suggestions builder" do
-          expect(Search::RadiusSuggestionsBuilder).to receive(:new).with(radius, search_params).and_call_original
+        it "calls the wider suggestions builder" do
+          expect(Search::WiderSuggestionsBuilder).to receive(:new).and_call_original
           subject.wider_search_suggestions
         end
       end
