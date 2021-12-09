@@ -543,5 +543,5 @@ en:
 
   vacancy_selector_component:
     job:
-      ends_on: "Closing date: %{date}"
+      expires_on: "Closing date: %{date}"
       not_set: not set
