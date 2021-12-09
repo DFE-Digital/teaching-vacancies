@@ -1,6 +1,6 @@
 require "geocoding"
 
-class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
+class Vacancy < ApplicationRecord
   extend FriendlyId
   extend ArrayEnum
 
@@ -107,10 +107,6 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def can_receive_job_applications?
     enable_job_applications? && published? && !pending?
-  end
-
-  def allow_enabling_job_applications?
-    %w[teacher leadership sendco].include?(main_job_role)
   end
 
   def allow_key_stages?
