@@ -1,7 +1,7 @@
 class Search::Strategies::PgSearch
   attr_reader :keyword, :location, :radius, :filters, :page, :per_page, :sort_by
 
-  def initialize(keyword, location:, radius:, filters:, page:, per_page:, sort_by:)
+  def initialize(keyword:, location:, radius:, filters:, page:, per_page:, sort_by:)
     @keyword = keyword
 
     @location = location

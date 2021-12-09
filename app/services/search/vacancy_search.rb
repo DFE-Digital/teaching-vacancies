@@ -37,13 +37,9 @@ class Search::VacancySearch
   end
 
   def wider_search_suggestions
-    return unless vacancies.empty? && active_criteria?
+    return unless vacancies.empty? && search_criteria[:location].present?
 
-    @wider_search_suggestions ||= if point_coordinates.present?
-                                    Search::RadiusSuggestionsBuilder.new(search_criteria[:radius], algolia_params).radius_suggestions
-                                  elsif location_search.polygon_boundaries.present?
-                                    Search::BufferSuggestionsBuilder.new(search_criteria[:location], algolia_params).buffer_suggestions
-                                  end
+    Search::WiderSuggestionsBuilder.new(search_params).suggestions
   end
 
   def out_of_bounds?
@@ -64,21 +60,25 @@ class Search::VacancySearch
     @search_strategy ||= if active_criteria?
                            Search::Strategies::Experiment.new(
                              Search::Strategies::Algolia.new(algolia_params),
-                             Search::Strategies::PgSearch.new(
-                               keyword,
-                               filters: search_criteria,
-                               location: search_criteria[:location],
-                               radius: location_search.radius,
-                               page: page,
-                               per_page: per_page,
-                               sort_by: sort_by,
-                             ),
+                             Search::Strategies::PgSearch.new(**search_params),
                              search_criteria: search_criteria,
                              use_experiment: pg_search,
                            )
                          else
                            Search::Strategies::Database.new(page, per_page, sort_by)
                          end
+  end
+
+  def search_params
+    {
+      keyword: keyword,
+      filters: search_criteria,
+      location: search_criteria[:location],
+      radius: location_search.radius,
+      page: page,
+      per_page: per_page,
+      sort_by: sort_by,
+    }
   end
 
   def algolia_params
