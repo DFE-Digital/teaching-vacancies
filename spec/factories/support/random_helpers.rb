@@ -4,10 +4,10 @@ module RandomHelpers
       return sequence(*args, &block) unless Rails.env.test?
 
       sequence(*args) do |n|
-        prev_random = Faker::Config.random
-        Faker::Config.random = Random.new(n)
+        # prev_random = Faker::Config.random
+        # Faker::Config.random = Random.new(n)
         block.yield n
-        Faker::Config.random = prev_random
+        # Faker::Config.random = prev_random
       end
     end
   end
