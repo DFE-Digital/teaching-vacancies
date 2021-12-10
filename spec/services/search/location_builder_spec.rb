@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.shared_examples "a search using polygons" do
   it "sets the correct attributes" do
     buffered_polygon = LocationPolygon.buffered(expected_radius).find_by(name: location_polygon.name)
-    expect(subject.polygon).to eq(buffered_polygon)
+    expect(subject.polygon.area).to eq(buffered_polygon.area)
     expect(subject.location_filter).to eq({})
     expect(subject.radius).to eq(expected_radius)
   end
@@ -16,11 +16,10 @@ RSpec.describe Search::LocationBuilder do
   let(:radius) { 10 }
   let(:expected_radius) { 1000 }
   let!(:location_polygon) { create(:location_polygon, name: "london") }
-  let(:radius_builder) { instance_double(Search::RadiusBuilder) }
+  let(:radius_builder) { instance_double(Search::RadiusBuilder, radius: 1000) }
 
   before do
-    allow(Search::RadiusBuilder).to receive(:new).and_return(radius_builder)
-    allow(radius_builder).to receive(:radius).and_return(1000)
+    allow(Search::RadiusBuilder).to receive(:new).with(location, radius).and_return(radius_builder)
   end
 
   describe "#initialize" do

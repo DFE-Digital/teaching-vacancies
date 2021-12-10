@@ -15,7 +15,7 @@ class Search::LocationBuilder
     if NATIONWIDE_LOCATIONS.include?(@location&.downcase)
       @location = nil
     elsif search_with_polygons?
-      @polygon = LocationPolygon.buffered(radius).with_name(location)
+      @polygon = LocationPolygon.buffered(@radius).with_name(location)
     elsif @location.present?
       @location_filter = build_location_filter
     end
