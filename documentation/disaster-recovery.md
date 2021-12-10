@@ -1,5 +1,28 @@
 # Disaster recovery
 
+
+This documentation covers two disaster scenario
+
+- [Data loss](#data-loss)
+- [Loss of database instance](#loss-of-database-instance)
+
+In case of any above database disaster, please do the following:
+
+### Freeze pipeline
+
+Alert all developers that, no one should merge to main branch.
+
+### Maintenance mode
+
+In the instance of data loss, if the application is unavailable, the CDN may be forwarding requests to the [offline site](offline-site.md).
+If the application is still available and there is a risk of users adding data, enable [Maintenance mode](maintenance-mode.md).
+
+### setup virtual meeting
+
+Set up virtual meeting via Zoom, Slack, Teams or Google Hangout, inviting all the relevant technical stakeholders. Regularly provide updates on
+the #tv_product Slack channel; to keep product owners abreast of developments.
+
+
 ## Data loss
 
 In the case of a data loss, we need to recover the data as soon as possible in order to resume normal service. Declare a major incident
@@ -15,20 +38,6 @@ Make note of the time the database failure occurred, and then use this to calcul
 if data loss or corruption happened at 1200hrs, use this to work out what snapshot time is best for the product (consult with the PM if you are unsure what would be best from the product perspective). This would determine the value of `SNAPSHOT_TIME` env.
 
 ___Important___: You should convert the time to UTC before actually using it. When you record the time, note what timezone you are using. Especially during BST (British Summer Time).
-
-### Freeze pipeline
-
-Alert all developers that, no one should merge to main branch.
-
-### Maintenance mode
-
-In the instance of data loss, if the application is unavailable, the CDN may be forwarding requests to the [offline site](offline-site.md).
-If the application is still available and there is a risk of users adding data, enable [Maintenance mode](maintenance-mode.md).
-
-### setup virtual meeting
-
-Set up virtual meeting via Zoom, Slack, Teams or Google Hangout, inviting all the relevant technical stakeholders. Regularly provide updates on
-the #tv_product Slack channel; to keep product owners abreast of developments.
 
 ### Get affected postgres database ID
 
@@ -86,3 +95,29 @@ cf service teaching-vacancies-postgres-production
  Once the database has been successfully restored, the corrupted database instance should be deleted.
 
  `cf delete-service teaching-vacancies-<env>-old -f`
+
+## Loss of database instance
+
+In case the database instance is lost, the objectives are:
+
+- Recreate the lost postgress database instance
+- Restore data from daily backup
+
+### Recreate the lost postgress database instance
+
+In order to recreate the lost postgress database instance, use the following make command:
+
+```
+aws-vault exec Deployments -- make <env> passcode=pgxxwxx recreate-lost-postgres-instance-tf-apply \ tag=TEVA-3572-disaster-recovery-lost-db-instance-0a926db3114f90237b1878931fd034355423d3f9
+```
+This will create a new postgres database instance as described in the terraform configuration file and also redeploys
+the web and worker apps.
+
+### Restore Data From Daily Backup
+
+Once the lost database instance has been recreated, the last daily backup will need to be restored. To achieve this,
+run the `Restore sanitised backup to non-prod environment` workflow dispath.
+
+This takes three variables, namely, `environment`, `backup_filename` and `CF_DR_MODE`. The `environment` inputbox takes
+the affected environment as an argument, e.g. Production. The `backup_filename` inputbox takes `true` as argument; and `CF_DR_MODE` inputbox takes `true` as
+an argument. If the `CF_DR_MODE` inputbox's value is set to false (default value), this will not successfully run against production.
