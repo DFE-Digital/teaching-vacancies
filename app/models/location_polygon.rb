@@ -6,7 +6,7 @@ class LocationPolygon < ApplicationRecord
   #
   # TODO: This is a "clever" temporary solution to allow us to generate expanded polygons
   #       to send to Algolia, and should be removed once we search through ActiveRecord.
-  scope :buffered, ->(radius_in_miles) { select("*, ST_Buffer(area, #{convert_miles_to_metres(radius_in_miles)}) AS area") }
+  scope :buffered, ->(radius_in_miles) { select("*, ST_Buffer(area, #{convert_miles_to_metres(radius_in_miles || 0)}) AS area") }
 
   def self.with_name(location)
     find_by(name: mapped_name(location))
