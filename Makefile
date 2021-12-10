@@ -189,6 +189,10 @@ remove-postgres-tf-state: terraform-app-init ## make dev remove-postgres-tf-stat
 
 restore-postgres: set-restore-variables terraform-app-apply ##  make dev DB_INSTANCE_GUID=abcdb262-79d1-xx1x-b1dc-0534fb9b4 SNAPSHOT_TIME="2021-11-16 15:20:00" passcode=xxxxx restore-postgres
 
+
+recreate-lost-postgres-instance: terraform-app-init # make review recreate-lost-postgres-instance pr_id=xxxx passcode=xxxx
+	terraform -chdir=terraform/app plan -target=module.paas.cloudfoundry_service_instance.postgres_instance
+
 set-restore-variables:
 	$(if $(DB_INSTANCE_GUID), , $(error can only run with DB_INSTANCE_GUID, get it by running `make ${space} get-postgres-instance-guid`))
 	$(if $(SNAPSHOT_TIME), , $(error can only run with BEFORE_TIME, eg SNAPSHOT_TIME="2021-09-14 16:00:00"))
