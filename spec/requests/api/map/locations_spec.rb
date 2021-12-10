@@ -6,9 +6,10 @@ RSpec.describe "Api::Map::Locations" do
   let(:point) { [1.0, 2.0] }
   let(:search_with_polygons) { true }
   let(:json) { JSON.parse(response.body, symbolize_names: true) }
+  let(:polygon) { double(area: double(coordinates: [[[2.0, 1.0]], [[3.0, 2.0]], [[4.0, 3.0]]])) }
   let(:location_builder_double) do
     instance_double Search::LocationBuilder, search_with_polygons?: search_with_polygons,
-                                             polygon_boundaries: [[1.0, 2.0], [2.0, 3.0], [3.0, 4.0]],
+                                             polygon: polygon,
                                              point_coordinates: point
   end
 

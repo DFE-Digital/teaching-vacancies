@@ -19,10 +19,4 @@ class LocationPolygon < ApplicationRecord
   def self.mapped_name(location)
     (MAPPED_LOCATIONS[location&.downcase].presence || location)&.downcase
   end
-
-  # Returns the coordinates of this location (multi)polygon in the format expected by Algolia
-  def to_algolia_polygons
-    # Reversing original coordinates as PostGIS uses lon,lat whereas Algolia uses lat,lon
-    area.coordinates.map { |polygon| polygon.flatten.reverse }
-  end
 end

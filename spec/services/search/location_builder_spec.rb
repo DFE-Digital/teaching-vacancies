@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.shared_examples "a search using polygons" do
   it "sets the correct attributes" do
     buffered_polygon = LocationPolygon.buffered(expected_radius).find_by(name: location_polygon.name)
-    expect(subject.polygon_boundaries).to eq(buffered_polygon.to_algolia_polygons)
+    expect(subject.polygon).to eq(buffered_polygon)
     expect(subject.location_filter).to eq({})
     expect(subject.radius).to eq(expected_radius)
   end
@@ -45,7 +45,7 @@ RSpec.describe Search::LocationBuilder do
       let(:location) { point_location }
 
       it "sets radius attribute, and location filter around the location" do
-        expect(subject.polygon_boundaries).to be_nil
+        expect(subject.polygon).to be_nil
         expect(subject.location_filter).to eq({
           point_coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
           radius: radius_in_metres,
@@ -59,7 +59,7 @@ RSpec.describe Search::LocationBuilder do
 
       it "does not set location filters" do
         expect(subject.location).to be nil
-        expect(subject.polygon_boundaries).to be nil
+        expect(subject.polygon).to be nil
         expect(subject.location_filter).to eq({})
       end
     end
