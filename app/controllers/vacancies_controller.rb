@@ -38,7 +38,7 @@ class VacanciesController < ApplicationController
     params[:subject]&.titleize
   end
 
-  def algolia_search_params
+  def search_params
     strip_empty_checkboxes(%i[job_roles phases working_patterns])
     %w[job_role job_roles phases working_patterns].each do |facet|
       params[facet] = params[facet].split if params[facet].is_a?(String)
@@ -48,7 +48,7 @@ class VacanciesController < ApplicationController
   end
 
   def search_form
-    @form = Jobseekers::SearchForm.new(algolia_search_params)
+    @form = Jobseekers::SearchForm.new(search_params)
   end
 
   def job_application
