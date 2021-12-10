@@ -1,8 +1,8 @@
 .search-results__header {
-  display: flex;
-  flex-direction: column;
+  position: relative;
 
   @include govuk-media-query($from: tablet) {
+    display: flex;
     flex-direction: row;
   }
 
@@ -28,22 +28,26 @@
   &-stats {
     padding-top: 0.3em;
 
-    @include govuk-media-query($from: tablet) {
-      order: 2;
+    @include govuk-media-query($until: tablet) {
+      position: absolute;
+      right: 0;
+      top: 0;
     }
   }
 
   &-sorting {
     @include govuk-media-query($from: tablet) {
       flex-grow: 1;
-      order: 1;
     }
 
     &__list {
-      display: inline-block;
       list-style: none;
       margin: 0 0 0 0.3125em;
       padding-left: govuk-spacing(0);
+
+      @include govuk-media-query($from: tablet) {
+        display: inline-block;
+      }
     }
 
     &__list-item {

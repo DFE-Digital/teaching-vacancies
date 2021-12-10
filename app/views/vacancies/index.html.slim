@@ -30,6 +30,9 @@
       = map(items: [{ type: "location", params: { location: params[:location], radius: params[:radius] } }].to_json, render: @display_map, zoom: 8)
 
       .search-results__header class="govuk-!-margin-bottom-3"
+        .search-results__header-sorting
+          - if @sorting_options.many? && @vacancies.many?
+            = render partial: "sorting_options", locals: { sort: @vacancies_search.sort_by }
         - unless @vacancies_search.out_of_bounds?
           .search-results__header-stats
             p.govuk-body
@@ -37,10 +40,6 @@
                 = t("jobs.number_of_results_one_page_html", count: @vacancies_search.total_count)
               - else
                 = t("jobs.number_of_results_html", first: @vacancies_search.page_from, last: @vacancies_search.page_to, count: @vacancies_search.total_count)
-        .search-results__header-sorting
-
-          - if @sorting_options.many? && @vacancies.many?
-            = render partial: "sorting_options", locals: { sort: @vacancies_search.sort_by }
       #search-results
         - if @vacancies.any?
           ul.vacancies role="list"
