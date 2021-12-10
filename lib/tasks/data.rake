@@ -1,24 +1,3 @@
-namespace :algolia do
-  desc "Load an index with live records for the first time"
-  task reindex: :environment do
-    Vacancy.reindex!
-  end
-
-  desc "Remove Algolia primary index and replicas"
-  task remove_indices: :environment do
-    replicas = Vacancy.index.get_settings["replicas"]
-    Vacancy.index.set_settings({ replicas: [] })
-    Algolia.client.delete_index(Indexable::INDEX_NAME)
-    sleep(5) # Needed otherwise replicas are still bound to the primary
-    replicas.each { |replica| Algolia.client.delete_index(replica) }
-  end
-
-  desc "Update a live index with newly published records using minimal operations"
-  task update_index: :environment do
-    Vacancy.update_index!
-  end
-end
-
 namespace :db do
   desc "Asynchronously import organisations from GIAS and seed the database"
   task async_seed: :environment do

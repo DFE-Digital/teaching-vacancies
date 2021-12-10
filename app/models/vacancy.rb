@@ -5,7 +5,6 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
   extend ArrayEnum
 
   include DatabaseIndexable
-  include Indexable
   include Resettable
   include Phaseable
 

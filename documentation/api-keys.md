@@ -1,16 +1,5 @@
 ## API Keys
 
-### ALGOLIA_WRITE_API_KEY
-This key is used to index vacancies in Algolia.
-In order to manage API keys:
-1. Log in to Algolia using teachingjobs@digital.education.gov.uk
-1. Go to the API Keys tab on the sidebar
-1. Filter by API Key
-1. Create new API key
-1. Update ALGOLIA_WRITE_API_KEY in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/secrets` files
-1. Rolling restart the application
-1. Delete the old API key
-
 ### cloudwatch_slack_hook_url
 Terraform variable containing encrypted URL to the Slack webhook. cloudwatch_ops_genie_api_key is not actually used but is commonly set to the same value as cloudwatch_slack_hook_url.
 They need to be in an encrypted and base64 encoded format. There currently isn't a way to do this with Terraform, so to work around this:

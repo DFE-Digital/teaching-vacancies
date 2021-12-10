@@ -38,11 +38,6 @@ Rollbar.configure do |config|
   # You can also specify a callable, which will be called with the exception instance.
   # config.exception_level_filters.merge!('MyCriticalException' => lambda { |e| 'critical' })
 
-  # TODO: We get a lot of these in non-production environments, causing us to exceed our Rollbar
-  # event quota. Until we find the root cause, do not report these errors if we're not in
-  # production.
-  config.exception_level_filters["Algolia::AlgoliaProtocolError"] = "ignore" unless ENV["ROLLBAR_ENV"] == "production"
-
   # Enable asynchronous reporting (uses girl_friday or Threading if girl_friday
   # is not installed)
   # config.use_async = true

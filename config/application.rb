@@ -96,8 +96,6 @@ module TeacherVacancyService
 
     config.enforce_local_authority_allowlist = ActiveModel::Type::Boolean.new.cast(ENV["ENFORCE_LOCAL_AUTHORITY_ALLOWLIST"])
 
-    config.algolia_index_prefix = ENV.fetch("ALGOLIA_INDEX_PREFIX", nil)
-
     config.geocoder_lookup = :default
 
     config.maintenance_mode = ActiveModel::Type::Boolean.new.cast(ENV["MAINTENANCE_MODE"])
