@@ -44,26 +44,26 @@ class VacancyFacets
   end
 
   def city_facet
-    CITIES.each_with_object({}) { |city, facets| facets[city] = algolia_facet_count(location: city) }
+    CITIES.each_with_object({}) { |city, facets| facets[city] = facet_counts(location: city) }
   end
 
   def county_facet
-    COUNTIES.each_with_object({}) { |county, facets| facets[county] = algolia_facet_count(location: county) }
+    COUNTIES.each_with_object({}) { |county, facets| facets[county] = facet_counts(location: county) }
   end
 
   def education_phase_facet
-    School.available_readable_phases.each_with_object({}) { |phase, facets| facets[phase] = algolia_facet_count(phases: [phase]) }
+    School.available_readable_phases.each_with_object({}) { |phase, facets| facets[phase] = facet_counts(phases: [phase]) }
   end
 
   def job_role_facet
-    Vacancy.job_roles.keys.each_with_object({}) { |job_role, facets| facets[job_role] = algolia_facet_count(job_roles: [job_role]) }
+    Vacancy.job_roles.keys.each_with_object({}) { |job_role, facets| facets[job_role] = facet_counts(job_roles: [job_role]) }
   end
 
   def subject_facet
-    SUBJECT_OPTIONS.each_with_object({}) { |subject, facets| facets[subject.first] = algolia_facet_count(keyword: subject.first) }
+    SUBJECT_OPTIONS.each_with_object({}) { |subject, facets| facets[subject.first] = facet_counts(keyword: subject.first) }
   end
 
-  def algolia_facet_count(query)
+  def facet_counts(query)
     # Disable this very expensive operation unless caching is enabled (e.g. in dev, system tests)
     return 0 unless Rails.application.config.action_controller.perform_caching
 

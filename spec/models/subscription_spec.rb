@@ -100,7 +100,7 @@ RSpec.describe Subscription do
     let(:vacancies) { double("vacancies") }
     let(:vacancy_search) { double(vacancies: vacancies) }
 
-    it "calls out to algolia search" do
+    it "searches with an appropriate date range" do
       expect(Search::VacancySearch).to receive(:new).with(
         {
           keyword: "english",
