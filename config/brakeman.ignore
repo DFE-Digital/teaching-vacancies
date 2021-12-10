@@ -55,22 +55,22 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "8e2c1f91d02bb1633f5456dc0983e24f4972cf73213afa01b9e7bcdf7b1c3fcc",
+      "fingerprint": "bdb6e5e218cff279e924b58b25fb8cbadd3161da685319b6725256b791286670",
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/location_polygon.rb",
       "line": 9,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "select(\"*, ST_Buffer(area, #{convert_miles_to_metres(radius_in_miles)}) AS area\")",
+      "code": "select(\"*, ST_Buffer(area, #{convert_miles_to_metres((radius_in_miles or 0))}) AS area\")",
       "render_path": null,
       "location": {
         "type": "method",
         "class": "LocationPolygon",
         "method": "buffered"
       },
-      "user_input": "convert_miles_to_metres(radius_in_miles)",
+      "user_input": "convert_miles_to_metres((radius_in_miles or 0))",
       "confidence": "Medium",
-      "note": "Helper forces conversion to integer, temporary method that will be removed so"
+      "note": "Does not receive any user input"
     },
     {
       "warning_type": "SQL Injection",
@@ -93,6 +93,6 @@
       "note": "User input is coerced to integer"
     }
   ],
-  "updated": "2021-10-22 13:54:05 +0100",
-  "brakeman_version": "5.1.1"
+  "updated": "2021-12-10 15:26:05 +0000",
+  "brakeman_version": "5.1.2"
 }
