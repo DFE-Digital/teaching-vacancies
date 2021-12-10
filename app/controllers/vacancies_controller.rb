@@ -2,6 +2,7 @@ class VacanciesController < ApplicationController
   helper_method :job_application
 
   before_action :set_landing_page_description, :set_map_display, :set_params_from_pretty_landing_page_params, only: %i[index]
+  after_action :trigger_search_performed_event, only: %i[index]
 
   def index
     @vacancies_search = Search::VacancySearch.new(
@@ -82,5 +83,19 @@ class VacanciesController < ApplicationController
     @display_map = params[:location]&.include?("+map")
 
     params[:location]&.gsub!("+map", "")
+  end
+
+  def trigger_search_performed_event
+    fail_safe do
+      request_event.trigger(
+        :search_performed,
+        search_criteria: search_form.to_hash,
+        sort_by: search_form.jobs_sort,
+        page: params[:page] || 1,
+        total_count: @vacancies_search.total_count,
+        vacancies_on_page: @vacancies_search.vacancies.map(&:id),
+        location_polygon_used: @vacancies_search.location_search.polygon&.id,
+      )
+    end
   end
 end
