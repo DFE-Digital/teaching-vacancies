@@ -22,11 +22,11 @@ RSpec.describe Search::WiderSuggestionsBuilder do
       let(:radius) { 6 }
 
       it "provides radius suggestions beyond the current radius" do
-        expect(Search::Strategies::PgSearch).to receive(:new).with(hash_including(radius: 10)).and_return(pg_search)
-        expect(Search::Strategies::PgSearch).to receive(:new).with(hash_including(radius: 25)).and_return(pg_search)
-        expect(Search::Strategies::PgSearch).to receive(:new).with(hash_including(radius: 50)).and_return(pg_search)
-        expect(Search::Strategies::PgSearch).to receive(:new).with(hash_including(radius: 100)).and_return(pg_search)
-        expect(Search::Strategies::PgSearch).to receive(:new).with(hash_including(radius: 200)).and_return(pg_search)
+        expect(Search::VacancySearch).to receive(:new).with(hash_including(radius: 10)).and_return(pg_search)
+        expect(Search::VacancySearch).to receive(:new).with(hash_including(radius: 25)).and_return(pg_search)
+        expect(Search::VacancySearch).to receive(:new).with(hash_including(radius: 50)).and_return(pg_search)
+        expect(Search::VacancySearch).to receive(:new).with(hash_including(radius: 100)).and_return(pg_search)
+        expect(Search::VacancySearch).to receive(:new).with(hash_including(radius: 200)).and_return(pg_search)
 
         allow(pg_search).to receive(:total_count).and_return(0, 0, 2, 4, 80)
 
