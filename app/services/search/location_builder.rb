@@ -5,7 +5,7 @@ class Search::LocationBuilder
 
   include DistanceHelper
 
-  attr_reader :location, :location_filter, :polygon_boundaries, :radius
+  attr_reader :location, :location_filter, :polygon, :radius
 
   def initialize(location, radius)
     @location = location
@@ -15,7 +15,7 @@ class Search::LocationBuilder
     if NATIONWIDE_LOCATIONS.include?(@location&.downcase)
       @location = nil
     elsif search_with_polygons?
-      initialize_polygon_boundaries
+      @polygon = LocationPolygon.buffered(radius).with_name(location)
     elsif @location.present?
       @location_filter = build_location_filter
     end
@@ -30,10 +30,6 @@ class Search::LocationBuilder
   end
 
   private
-
-  def initialize_polygon_boundaries
-    @polygon_boundaries = LocationPolygon.buffered(radius).with_name(location).to_algolia_polygons
-  end
 
   def build_location_filter
     {

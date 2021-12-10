@@ -18,7 +18,7 @@ class Api::Map::LocationsController < Api::ApplicationController
   end
 
   def polygons
-    location_search.polygon_boundaries.map { |boundary| polygon(boundary) }
+    location_search.polygon.area.coordinates.map { |boundary| polygon(boundary) }
   end
 
   def polygon(boundary)
@@ -41,6 +41,6 @@ class Api::Map::LocationsController < Api::ApplicationController
   end
 
   def coordinates(boundary)
-    boundary.each_slice(2).map { |lat, lng| { lat: lat, lng: lng } }
+    boundary.map { |lng, lat| { lat: lat, lng: lng } }
   end
 end
