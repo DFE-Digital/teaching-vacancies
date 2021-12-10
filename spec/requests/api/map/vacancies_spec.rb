@@ -26,14 +26,14 @@ RSpec.describe "Api::Map::Vacancies" do
 
     it "returns status code :ok" do
       subject
-      expect(response.status).to eq(Rack::Utils.status_code(:ok))
+      expect(response).to be_ok
     end
 
     context "when vacancy is at one school" do
       before { subject }
 
       it "returns markers of the organisations" do
-        check_marker(json.first, organisation)
+        expect(json).to include(expected_marker(organisation))
       end
     end
 
@@ -46,19 +46,27 @@ RSpec.describe "Api::Map::Vacancies" do
       before { subject }
 
       it "returns markers of the organisations" do
-        check_marker(json.first, organisation)
-        check_marker(json.second, organisation_two)
-        check_marker(json.third, organisation_three)
+        expect(json).to include(
+          expected_marker(organisation),
+          expected_marker(organisation_two),
+          expected_marker(organisation_three),
+        )
       end
     end
   end
 end
 
-def check_marker(marker, organisation)
-  expect(marker).to include(type: "marker")
-  expect(marker[:data][:point]).to eq [organisation.geopoint.lat, organisation.geopoint.lon]
-  expect(marker[:data][:meta][:name]).to eq organisation.name
-  expect(marker[:data][:meta][:name_link]).to eq organisation.url
-  expect(marker[:data][:meta][:address]).to eq full_address(organisation)
-  expect(marker[:data][:meta][:organisation_type]).to eq organisation_type(organisation)
+def expected_marker(organisation)
+  {
+    type: "marker",
+    data: {
+      point: [organisation.geopoint.lat, organisation.geopoint.lon],
+      meta: {
+        name: organisation.name,
+        name_link: organisation.url,
+        address: full_address(organisation),
+        organisation_type: organisation_type(organisation),
+      },
+    },
+  }
 end
