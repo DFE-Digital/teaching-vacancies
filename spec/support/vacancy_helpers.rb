@@ -92,7 +92,7 @@ module VacancyHelpers
   end
 
   def fill_in_applying_for_the_job_form_fields(vacancy, local_authority_vacancy: false)
-    if !local_authority_vacancy && vacancy.enable_job_applications? && vacancy.allow_enabling_job_applications?
+    if !local_authority_vacancy && vacancy.enable_job_applications?
       choose strip_tags(I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.enable_job_applications_options.true"))
       fill_in "publishers_job_listing_applying_for_the_job_form[personal_statement_guidance]", with: vacancy.personal_statement_guidance
     else
