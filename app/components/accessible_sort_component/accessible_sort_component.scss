@@ -1,0 +1,32 @@
+@import 'base_component';
+
+.accessible-sorting-component {
+  &__list {
+    list-style: none;
+    margin: 0 0 0 0.3125em;
+    padding-left: govuk-spacing(0);
+
+    @include govuk-media-query($from: tablet) {
+      display: inline-block;
+    }
+  }
+
+  &__list-item {
+    display: inline-block;
+
+    &:first-child::after {
+      border-right: 1px solid $govuk-border-colour;
+      content: '';
+      display: inline-block;
+      height: 1.2em;
+      margin-left: 0.5em;
+      margin-right: 0.5em;
+      position: relative;
+      top: 0.2em;
+    }
+
+    .govuk-link:visited {
+      color: $govuk-link-colour;
+    }
+  }
+}
