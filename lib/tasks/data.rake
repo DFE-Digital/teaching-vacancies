@@ -59,3 +59,10 @@ namespace :ons do
     OnsDataImport::CreateComposites.new.call
   end
 end
+
+namespace :publishers do
+  desc "Reset 'New features' attributes so all publishers are shown 'New features' page"
+  task reset_new_features_attributes: :environment do
+    Publisher.update_all(dismissed_new_features_page_at: nil, viewed_new_features_page_at: nil)
+  end
+end

@@ -5,15 +5,15 @@ class Search::VacancySearch
   extend Forwardable
   def_delegators :location_search, :point_coordinates
 
-  attr_reader :search_criteria, :keyword, :location, :radius, :sort_by, :page, :per_page
+  attr_reader :search_criteria, :keyword, :location, :radius, :sort, :page, :per_page
 
-  def initialize(search_criteria, sort_by: nil, page: nil, per_page: nil)
+  def initialize(search_criteria, sort: nil, page: nil, per_page: nil)
     @search_criteria = search_criteria
     @keyword = search_criteria[:keyword]
     @location = search_criteria[:location]
     @radius = search_criteria[:radius]
 
-    @sort_by = sort_by || Search::VacancySearchSort::RELEVANCE
+    @sort = sort || Search::VacancySort.new(keyword: keyword)
     @per_page = (per_page || DEFAULT_HITS_PER_PAGE).to_i
     @page = (page || DEFAULT_PAGE).to_i
   end
@@ -68,11 +68,7 @@ class Search::VacancySearch
     scope = scope.search_by_location(location, radius) if location
     scope = scope.search_by_filter(search_criteria) if search_criteria.any?
     scope = scope.search_by_full_text(keyword) if keyword.present?
-    scope = scope.reorder(sort_by.column => sort_by.order) if sort_by&.column
-
-    # Adds an additional order by updated at for searches so a non-deterministic order column
-    # (e.g. date instead of datetime) will still result in the same order as Algolia for
-    # comparison. Can probably be removed post-migration.
-    scope.order(updated_at: :desc)
+    scope = scope.reorder(sort.by => sort.order) if sort&.by_db_column?
+    scope
   end
 end

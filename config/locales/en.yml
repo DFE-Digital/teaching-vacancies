@@ -259,10 +259,9 @@ en:
       subjects: Current jobs by subject
 
   new_features:
-    applications: Applications
+    applications_for_education_support: Applications for Education support roles
     content: >-
-      You can now receive and manage job applications on Teaching Vacancies. You can
-      do this for all jobs except education support roles.
+      You can now receive and manage applications for education support roles on Teaching Vacancies.
     page_title: New features for hiring staff
 
   pages:
