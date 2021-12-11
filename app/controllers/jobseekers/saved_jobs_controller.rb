@@ -1,5 +1,5 @@
 class Jobseekers::SavedJobsController < Jobseekers::BaseController
-  helper_method :saved_jobs, :sort, :sort_form
+  helper_method :saved_jobs, :sort
 
   # This action is not 'create' because we need to redirect here when an unauthenticated jobseeker attempts to save a job
   def new
@@ -23,7 +23,7 @@ class Jobseekers::SavedJobsController < Jobseekers::BaseController
   end
 
   def saved_jobs
-    @saved_jobs ||= current_jobseeker.saved_jobs.includes(:vacancy).order("#{sort.column} #{sort.order}")
+    @saved_jobs ||= current_jobseeker.saved_jobs.includes(:vacancy).order("#{sort.by} #{sort.order}")
   end
 
   def saved_job_params
@@ -31,11 +31,7 @@ class Jobseekers::SavedJobsController < Jobseekers::BaseController
   end
 
   def sort
-    @sort ||= Jobseekers::SavedJobSort.new.update(column: params[:sort_column])
-  end
-
-  def sort_form
-    @sort_form ||= SortForm.new(@sort.column)
+    @sort ||= Jobseekers::SavedJobSort.new.update(sort_by: params[:sort_by])
   end
 
   def vacancy

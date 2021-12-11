@@ -11,19 +11,10 @@
     .govuk-grid-column-full
       h1.govuk-heading-l = t(".page_title")
 
-  - if saved_jobs.any?
+  - if saved_jobs.many?
     .govuk-grid-row class="govuk-!-margin-top-0"
       .govuk-grid-column-full
-        = form_for sort_form, as: "", url: jobseekers_saved_jobs_path, method: :get, data: { controller: "form", "hide-submit": true } do |f|
-          = f.govuk_collection_select :sort_column,
-            sort,
-            :column,
-            :display_name,
-            label: { text: t("jobs.sort_by.label"), size: "s", class: "govuk-label inline govuk-!-margin-right-2" },
-            form_group: { classes: "govuk-!-margin-bottom-2" },
-            data: { action: "change->form#submitListener" }
-
-          = f.govuk_submit t("jobs.sort_by.submit")
+        = render SortComponent.new path: method(:jobseekers_saved_jobs_path), sort: sort
 
   .govuk-grid-row
     .govuk-grid-column-full
