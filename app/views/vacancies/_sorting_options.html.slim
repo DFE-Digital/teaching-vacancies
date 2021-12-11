@@ -1,9 +1,0 @@
-nav.govuk-body
-  span class="govuk-!-font-weight-bold" Sort by:
-  ul.search-results__header-sorting__list
-    - @sorting_options.each do |option|
-      li.search-results__header-sorting__list-item
-        - if option.key == sort.key
-          span = option.display_name.humanize
-        - else
-          = govuk_link_to(option.display_name.humanize, jobs_path(@form.to_hash.merge(jobs_sort: option.key)))
