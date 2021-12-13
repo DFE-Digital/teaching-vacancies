@@ -1,0 +1,32 @@
+- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.applying_for_the_job"))
+
+.govuk-main-wrapper class="govuk-!-padding-top-0"
+  = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
+
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
+        = f.govuk_error_summary
+
+        h2.govuk-heading-l = t("publishers.vacancies.steps.applying_for_the_job")
+
+        - if vacancy.enable_job_applications?
+          = f.govuk_text_area :personal_statement_guidance, label: { size: "s" }
+        - else
+          = f.govuk_text_area :how_to_apply, label: { size: "s" }, rows: 10
+          = f.govuk_url_field :application_link, label: { size: "s" }
+
+        = f.govuk_email_field :contact_email, label: { size: "s" }, required: true, width: "two-thirds"
+
+        = f.govuk_phone_field :contact_number, label: { size: "s" }, width: "one-third"
+
+        = f.govuk_text_area :school_visits,
+          label: { id: "school-visits-label", text: t("helpers.label.publishers_job_listing_applying_for_the_job_details_form.#{school_or_trust_visits(vacancy.parent_organisation)}"), size: "s" },
+          hint: { text: vacancy_school_visits_hint(vacancy) },
+          rows: 10
+
+        = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+
+    - unless vacancy.published?
+      .govuk-grid-column-one-third
+        = render "steps"

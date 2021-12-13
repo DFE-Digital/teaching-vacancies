@@ -9,6 +9,7 @@
         = f.govuk_error_summary
 
         h2.govuk-heading-l = t("publishers.vacancies.steps.applying_for_the_job")
+        p.govuk-body = t(".enable_job_applications_html", link: govuk_link_to(t("application_pack.link_text", size: application_pack_asset_size), application_pack_asset_path, target: "_blank", class: "govuk-body", download: t("application_pack.link_download_attr")))
 
         - if vacancy.listed? || current_organisation.local_authority?
           = f.hidden_field :enable_job_applications
@@ -18,22 +19,9 @@
             = f.govuk_text_area :how_to_apply, label: { size: "s" }, rows: 10, required: true
             = f.govuk_url_field :application_link, label: { size: "s" }
         - else
-          = f.govuk_radio_buttons_fieldset :enable_job_applications,
-            hint: { text: t("helpers.hint.publishers_job_listing_applying_for_the_job_form.enable_job_applications_html", link: govuk_link_to(t("application_pack.link_text", size: application_pack_asset_size), application_pack_asset_path, target: "_blank", class: "govuk-body", download: t("application_pack.link_download_attr"))) } do
-            = f.govuk_radio_button :enable_job_applications, true, link_errors: true do
-              = f.govuk_text_area :personal_statement_guidance, label: { size: "s" }
-            = f.govuk_radio_button :enable_job_applications, "false" do
-              = f.govuk_text_area :how_to_apply, label: { size: "s" }, rows: 10
-              = f.govuk_url_field :application_link, label: { size: "s" }
-
-        = f.govuk_email_field :contact_email, label: { size: "s" }, required: true, width: "two-thirds"
-
-        = f.govuk_phone_field :contact_number, label: { size: "s" }, width: "one-third"
-
-        = f.govuk_text_area :school_visits,
-          label: { id: "school-visits-label", text: t("helpers.label.publishers_job_listing_applying_for_the_job_form.#{school_or_trust_visits(vacancy.parent_organisation)}"), size: "s" },
-          hint: { text: vacancy_school_visits_hint(vacancy) },
-          rows: 10
+          = f.govuk_radio_buttons_fieldset :enable_job_applications do
+            = f.govuk_radio_button :enable_job_applications, true, link_errors: true
+            = f.govuk_radio_button :enable_job_applications, "false"
 
         = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
