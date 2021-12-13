@@ -56,6 +56,10 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
   end
 
   def applying_for_the_job_steps
-    %i[applying_for_the_job applying_for_the_job_details]
+    if vacancy.published?
+      %i[applying_for_the_job_details]
+    else
+      %i[applying_for_the_job applying_for_the_job_details]
+    end
   end
 end
