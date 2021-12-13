@@ -11,7 +11,7 @@ module RandomHelpers
     if Rails.env.test?
       num == 1 ? things.first : things.take(num)
     else
-      things.sample(num)
+      num == 1 ? things.sample : things.sample(num)
     end
   end
 
