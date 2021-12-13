@@ -70,9 +70,6 @@ attrs = { organisations: weydon_trust.schools, publisher_organisation: weydon_tr
 attrs = { organisations: southampton_la.schools.first(5), publisher_organisation: southampton_la, publisher: Publisher.all.sample }
 3.times { FactoryBot.create(:vacancy, :published, :at_multiple_schools, **attrs) }
 
-Vacancy.index.clear_index
-Vacancy.reindex!
-
 # Jobseekers
 Jobseeker.create(email: "jobseeker@example.com", password: "password", confirmed_at: Time.zone.now)
 JobApplication.statuses.count.times { |i| Jobseeker.create(email: "jobseeker#{i}@example.com", password: "password", confirmed_at: Time.zone.now) }
