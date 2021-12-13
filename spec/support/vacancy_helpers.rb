@@ -95,10 +95,6 @@ module VacancyHelpers
     if !local_authority_vacancy && vacancy.enable_job_applications?
       choose strip_tags(I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.enable_job_applications_options.true"))
     end
-
-    fill_in "publishers_job_listing_applying_for_the_job_form[contact_email]", with: vacancy.contact_email
-    fill_in "publishers_job_listing_applying_for_the_job_form[contact_number]", with: vacancy.contact_number
-    fill_in "publishers_job_listing_applying_for_the_job_form[school_visits]", with: vacancy.school_visits
   end
 
   def fill_in_applying_for_the_job_details_form_fields(vacancy, local_authority_vacancy: false)

@@ -13,11 +13,6 @@
 
         - if vacancy.listed? || current_organisation.local_authority?
           = f.hidden_field :enable_job_applications
-          - if vacancy.enable_job_applications?
-            = f.govuk_text_area :personal_statement_guidance, label: { size: "s" }
-          - else
-            = f.govuk_text_area :how_to_apply, label: { size: "s" }, rows: 10, required: true
-            = f.govuk_url_field :application_link, label: { size: "s" }
         - else
           = f.govuk_radio_buttons_fieldset :enable_job_applications do
             = f.govuk_radio_button :enable_job_applications, true, link_errors: true
