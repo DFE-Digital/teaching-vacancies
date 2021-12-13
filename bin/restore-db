@@ -6,7 +6,7 @@ if [[ -z "${CF_DESTINATION_ENVIRONMENT}" ]]; then
   echo "CF_DESTINATION_ENVIRONMENT environment variable not set"
   exit 1
 fi
-if [[ "${CF_DESTINATION_ENVIRONMENT}" = "production" ]] ; then
+if [[ "${CF_DESTINATION_ENVIRONMENT}" = "production" ]]  && "${CF_DR}" != "true"; then
   echo "CF_DESTINATION_ENVIRONMENT should not equal production"
   exit 1
 fi
