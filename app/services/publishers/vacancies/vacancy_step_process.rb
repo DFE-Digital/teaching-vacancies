@@ -56,7 +56,7 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
   end
 
   def applying_for_the_job_steps
-    if vacancy.published?
+    if vacancy.published? || organisation.local_authority?
       %i[applying_for_the_job_details]
     else
       %i[applying_for_the_job applying_for_the_job_details]

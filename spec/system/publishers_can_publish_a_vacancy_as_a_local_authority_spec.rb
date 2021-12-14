@@ -184,14 +184,6 @@ RSpec.describe "Creating a vacancy" do
     expect(current_path).to eq(organisation_job_documents_path(created_vacancy.id))
 
     click_on I18n.t("buttons.continue")
-    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
-
-    click_on I18n.t("buttons.continue")
-    expect(page).to have_content("There is a problem")
-    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
-
-    fill_in_applying_for_the_job_form_fields(vacancy, local_authority_vacancy: true)
-    click_on I18n.t("buttons.continue")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job_details))
 
     click_on I18n.t("buttons.continue")
