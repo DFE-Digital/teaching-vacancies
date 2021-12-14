@@ -132,7 +132,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
       let(:organisation) { build_stubbed(:local_authority) }
 
       it "returns the expected steps" do
-        expect(subject.steps).to eq(all_possible_steps)
+        expect(subject.steps).to eq(all_possible_steps.excluding(:applying_for_the_job))
       end
 
       context "when the vacancy is at multiple schools" do
@@ -162,6 +162,14 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
             end
           end
         end
+      end
+    end
+
+    context "when vacancy is published" do
+      let(:vacancy) { build_stubbed(:vacancy, :published, job_roles: %w[teacher]) }
+
+      it "returns the expected steps" do
+        expect(subject.steps).to eq(all_possible_steps - %i[job_location schools applying_for_the_job])
       end
     end
   end
