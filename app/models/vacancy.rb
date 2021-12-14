@@ -161,7 +161,7 @@ class Vacancy < ApplicationRecord
   end
 
   def additional_job_roles=(roles)
-    self.job_roles = [main_job_role] + roles
+    self.job_roles = [main_job_role, roles].flatten
   end
 
   def publish_equal_opportunities_report?
