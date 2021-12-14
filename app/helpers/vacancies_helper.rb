@@ -86,7 +86,7 @@ module VacanciesHelper
 
   def vacancy_school_visits_hint(vacancy)
     organisation = organisation_type_basic(vacancy.parent_organisation).tr(" ", "_")
-    t("helpers.hint.publishers_job_listing_applying_for_the_job_form.#{organisation}_visits")
+    t("helpers.hint.publishers_job_listing_applying_for_the_job_details_form.#{organisation}_visits")
   end
 
   def vacancy_step_completed?(vacancy, step)

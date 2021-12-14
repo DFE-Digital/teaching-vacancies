@@ -149,12 +149,13 @@ en:
       on_or_after: The date the job starts must be in the future
       on_or_before: The date the job starts must be less than two years in the future
   applying_for_the_job_errors: &applying_for_the_job_errors
-    application_link:
-      url: Enter a link in the correct format, like www.school.ac.uk
     enable_job_applications:
       cannot_be_changed_once_listed: >-
         You cannot change how you would like candidates to apply now that your listing is published
       inclusion: Select how you would like candidates to apply
+  applying_for_the_job_details_errors: &applying_for_the_job_details_errors
+    application_link:
+      url: Enter a link in the correct format, like www.school.ac.uk
     contact_email:
       blank: Enter a contact email
     contact_number:
@@ -231,6 +232,9 @@ en:
         publishers/job_listing/applying_for_the_job_form:
           attributes:
             <<: *applying_for_the_job_errors
+        publishers/job_listing/applying_for_the_job_details_form:
+          attributes:
+            <<: *applying_for_the_job_details_errors
         publishers/job_listing/job_summary_form:
           attributes:
             <<: *job_summary_errors

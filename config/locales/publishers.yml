@@ -130,6 +130,10 @@ en:
               content_with_link_html: You can choose for candidates to apply for the job through Teaching Vacancies. %{link}
               content_with_no_link: You can choose for candidates to apply for the job through Teaching Vacancies.
               link: Preview the application form
+          enable_job_applications_html: >-
+            Candidates can apply using the Teaching Vacancies application form,
+            or you can direct them to another service, like the local authority or a school's website.
+            %{link}
           step_title: Applying for the job
         documents:
           step_title: Supporting documents
