@@ -56,6 +56,7 @@ staging: ## staging
 .PHONY: production
 production: ## production # Requires `CONFIRM_PRODUCTION=YES` to be present
 		@if [[ "$(CONFIRM_PRODUCTION)" != YES ]]; then echo "Please enter "CONFIRM_PRODUCTION=YES" to run workflow"; exit 1; fi
+		$(eval export CF_DR_MODE=false)
 		$(eval env=production)
 		$(eval space=teaching-vacancies-production)
 		$(eval var_file=$(env))
@@ -188,6 +189,16 @@ remove-postgres-tf-state: terraform-app-init ## make dev remove-postgres-tf-stat
 	terraform -chdir=terraform/app state rm module.paas.cloudfoundry_service_instance.postgres_instance
 
 restore-postgres: set-restore-variables terraform-app-apply ##  make dev DB_INSTANCE_GUID=abcdb262-79d1-xx1x-b1dc-0534fb9b4 SNAPSHOT_TIME="2021-11-16 15:20:00" passcode=xxxxx restore-postgres
+
+
+recreate-lost-postgres-instance-tf-plan: #terraform-app-plan # make review recreate-lost-postgres-instance pr_id=xxxx passcode=xxxx tag=xxx
+	$(eval export CF_DESTINATION_ENVIRONMENT=${env})
+	$(eval export CF_SPACE_NAME=teaching-vacancies-${CF_DESTINATION_ENVIRONMENT})
+	$(eval export BACKUP_TYPE=full)
+	$(eval export BACKUP_FILENAME=$(shell date +%F))
+	bin/download-db-backup
+	bin/restore-db
+
 
 set-restore-variables:
 	$(if $(DB_INSTANCE_GUID), , $(error can only run with DB_INSTANCE_GUID, get it by running `make ${space} get-postgres-instance-guid`))
