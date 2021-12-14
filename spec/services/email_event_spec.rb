@@ -1,13 +1,14 @@
 require "rails_helper"
 
 RSpec.describe EmailEvent do
-  subject { described_class.new(notify_template, email, uid, jobseeker: jobseeker, publisher: publisher) }
+  subject { described_class.new(notify_template, email, uid, jobseeker: jobseeker, publisher: publisher, ab_tests: ab_tests) }
 
   let(:notify_template) { "test_template" }
   let(:email) { "test@example.net" }
   let(:jobseeker) { instance_double(Jobseeker, id: 1234, email: "test@example.net") }
   let(:publisher) { instance_double(Publisher, oid: 4321) }
   let(:uid) { SecureRandom.uuid }
+  let(:ab_tests) { { example_AB_test: "present" } }
 
   describe "#trigger" do
     let(:expected_data) do
@@ -22,6 +23,7 @@ RSpec.describe EmailEvent do
           { key: "user_anonymised_publisher_id", value: anonymised_form_of("4321") },
           { key: "foozy", value: "barzy" },
         ],
+        request_ab_tests: [{ test: :example_AB_test, variant: "present" }],
       }
     end
 
