@@ -34,11 +34,6 @@ RSpec.describe FailSafe, type: :component do
       expect { try_render }.not_to raise_error
     end
 
-    it "notifies Rollbar of errors raised during rendering" do
-      expect(Rollbar).to receive(:error).with(an_instance_of(RuntimeError))
-      try_render
-    end
-
     it "renders nothing" do
       expect(try_render.to_html).to be_blank
     end
