@@ -2,15 +2,21 @@ class Search::WiderSuggestionsBuilder
   include DistanceHelper
   include VacanciesOptionsHelper
 
-  attr_reader :search_params
+  attr_reader :search_criteria
 
-  def initialize(search_params)
-    @search_params = search_params
+  def initialize(search_criteria)
+    @search_criteria = search_criteria
+  end
+
+  def initial_radius
+    return Integer(search_criteria[:radius]) if search_criteria[:radius]
+
+    0
   end
 
   def suggestions
     RADIUS_OPTIONS
-      .select { |r| r > search_params[:radius] }
+      .select { |r| r > initial_radius }
       .map { |radius| [radius.to_s, wider_results(radius)] }
       .uniq(&:second)
       .reject { |options| options.second.zero? }
@@ -19,6 +25,6 @@ class Search::WiderSuggestionsBuilder
   private
 
   def wider_results(radius)
-    Search::Strategies::PgSearch.new(**search_params.merge(radius: radius)).total_count
+    Search::VacancySearch.new(search_criteria.merge(radius: radius)).total_count
   end
 end

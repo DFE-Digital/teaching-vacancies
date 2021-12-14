@@ -15,18 +15,25 @@ RSpec.describe Search::VacancySearch do
   let(:location) { "Louth" }
   let(:radius) { 10 }
   let(:jobs_sort) { Search::VacancySearchSort::RELEVANCE }
-  let(:per_page) { nil }
+  let(:per_page) { 20 }
   let(:page) { 1 }
 
+  let(:scope) { double("scope", total_count: 870) }
+
   before do
-    allow(Search::Strategies::PgSearch).to receive(:new).and_return(pg_search)
+    allow(Vacancy).to receive(:live).and_return(scope)
+    allow(scope).to receive(:search_by_location).with("Louth", 10).and_return(scope)
+    allow(scope).to receive(:search_by_filter).and_return(scope)
+    allow(scope).to receive(:search_by_full_text).with("maths teacher").and_return(scope)
+    allow(scope).to receive(:order).with(updated_at: :desc).and_return(scope)
+
+    allow(scope).to receive(:page).with(page).and_return(scope)
+    allow(scope).to receive(:per).with(per_page).and_return(scope)
   end
 
   describe "pagination helpers" do
-    let(:per_page) { 20 }
+    let(:scope) { double("scope", total_count: 50) }
     let(:page) { 3 }
-
-    let(:pg_search) { double(total_count: 50) }
 
     it "returns the expected bounds" do
       expect(subject).not_to be_out_of_bounds
@@ -36,7 +43,7 @@ RSpec.describe Search::VacancySearch do
     end
 
     context "when out of bounds" do
-      let(:pg_search) { double(total_count: 20) }
+      let(:scope) { double("scope", total_count: 20) }
 
       it "returns the expected bounds" do
         expect(subject).to be_out_of_bounds
@@ -48,30 +55,15 @@ RSpec.describe Search::VacancySearch do
   end
 
   describe "performing search" do
-    let(:vacancies) { [build_stubbed(:vacancy)] * 3 }
-    let(:pg_search) { double(vacancies: vacancies, total_count: 3) }
-
-    before do
-      expect(Search::Strategies::PgSearch).to receive(:new).with(
-        keyword: "maths teacher",
-        location: "Louth",
-        radius: 10,
-        filters: hash_including(keyword: "maths teacher"),
-        page: 1,
-        per_page: 20,
-        sort_by: Search::VacancySearchSort::RELEVANCE,
-      ).and_return(pg_search)
-    end
-
-    it "uses the PgSearch strategy" do
-      expect(subject.vacancies).to eq(vacancies)
-      expect(subject.total_count).to eq(3)
+    it "searches for vacancies" do
+      expect(subject.vacancies).to eq(scope)
+      expect(subject.total_count).to eq(870)
     end
   end
 
   describe "wider suggestions" do
     context "when results are returned" do
-      let(:pg_search) { double(vacancies: [double("vacancy")], total_count: 1) }
+      let(:scope) { double("scope", empty?: false) }
 
       it "does not offer suggestions" do
         expect(subject.wider_search_suggestions).to be_nil
@@ -79,7 +71,7 @@ RSpec.describe Search::VacancySearch do
     end
 
     context "when no results are returned" do
-      let(:pg_search) { double(vacancies: [], total_count: 0) }
+      let(:scope) { double("scope", empty?: true) }
       let(:suggestions_builder) { double(suggestions: [1, 2, 3]) }
 
       before do

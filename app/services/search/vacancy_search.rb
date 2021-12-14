@@ -3,14 +3,15 @@ class Search::VacancySearch
   DEFAULT_PAGE = 1
 
   extend Forwardable
-  def_delegators :search_strategy, :vacancies, :total_count
   def_delegators :location_search, :point_coordinates
 
-  attr_reader :search_criteria, :keyword, :sort_by, :page, :per_page
+  attr_reader :search_criteria, :keyword, :location, :radius, :sort_by, :page, :per_page
 
   def initialize(search_criteria, sort_by: nil, page: nil, per_page: nil)
     @search_criteria = search_criteria
     @keyword = search_criteria[:keyword]
+    @location = search_criteria[:location]
+    @radius = search_criteria[:radius]
 
     @sort_by = sort_by || Search::VacancySearchSort::RELEVANCE
     @per_page = (per_page || DEFAULT_HITS_PER_PAGE).to_i
@@ -37,7 +38,7 @@ class Search::VacancySearch
   def wider_search_suggestions
     return unless vacancies.empty? && search_criteria[:location].present?
 
-    Search::WiderSuggestionsBuilder.new(search_params).suggestions
+    Search::WiderSuggestionsBuilder.new(search_criteria).suggestions
   end
 
   def out_of_bounds?
@@ -52,21 +53,26 @@ class Search::VacancySearch
     [(page * per_page), total_count].min
   end
 
-  private
-
-  def search_strategy
-    @search_strategy ||= Search::Strategies::PgSearch.new(**search_params)
+  def vacancies
+    @vacancies ||= scope.page(page).per(per_page)
   end
 
-  def search_params
-    {
-      keyword: keyword,
-      filters: search_criteria,
-      location: search_criteria[:location],
-      radius: location_search.radius,
-      page: page,
-      per_page: per_page,
-      sort_by: sort_by,
-    }
+  def total_count
+    vacancies.total_count
+  end
+
+  private
+
+  def scope
+    scope = Vacancy.live
+    scope = scope.search_by_location(location, radius) if location
+    scope = scope.search_by_filter(search_criteria) if search_criteria.any?
+    scope = scope.search_by_full_text(keyword) if keyword.present?
+    scope = scope.reorder(sort_by.column => sort_by.order) if sort_by&.column
+
+    # Adds an additional order by updated at for searches so a non-deterministic order column
+    # (e.g. date instead of datetime) will still result in the same order as Algolia for
+    # comparison. Can probably be removed post-migration.
+    scope.order(updated_at: :desc)
   end
 end
