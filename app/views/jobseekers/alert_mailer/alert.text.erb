@@ -1,6 +1,19 @@
 # <%= t(".summary.#{subscription.frequency}", count: @vacancies.count) %>
 
 ---
+# <%= t(".title") %>
+<%= t("subscriptions.intro") %>
+
+<%- subscription.filtered_search_criteria.each_pair do |filter, value| %>
+  <%= "- #{filter.humanize}: #{value}" %>
+<% end %>
+
+<%= t(".alert_frequency", frequency: subscription.frequency) %>
+
+# <%= t(".alert_relevance") %>
+<%= t(".edit_alert", edit_link_text: edit_subscription_link(subscription))%>
+
+---
 
 <%- @vacancies.each do |vacancy| %>
   <%= show_link(vacancy) %>
@@ -13,19 +26,7 @@
   <%= t(".closing_date", closing_date: format_time_to_datetime_at(vacancy.expires_at)) %>
 
   ---
-
 <% end %>
-
-# <%= t(".title") %>
-<%= t("subscriptions.intro") %>
-
-<%- subscription.filtered_search_criteria.each_pair do |filter, value| %>
-  <%= "- #{filter.humanize}: #{value}" %>
-<% end %>
-
-<%= [t(".alert_frequency", frequency: subscription.frequency), t(".edit_alert", edit_link: edit_subscription_link(subscription))].join(" ") %>
-
----
 
 # <%= t(".feedback.heading") %>
 

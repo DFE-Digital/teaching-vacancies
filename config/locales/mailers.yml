@@ -63,9 +63,10 @@ en:
       alert:
         alert_frequency: >-
           You have set to receive this job alert %{frequency} when any jobs matching your criteria are listed.
+        alert_relevance: Get more relevant job alerts
         closing_date: "Closing date: %{closing_date}"
-        edit_alert: You can %{edit_link} here.
-        edit_link_text: manage your alert
+        edit_alert: "%{edit_link_text} to get job alerts that are more relevant to you. You can filter by keyword, location, job role, education phase or working pattern."
+        edit_link_text: Change your alert criteria
         feedback:
           heading: Are these job listings relevant to your search?
           irrelevant_link_text: No, they are not relevant
