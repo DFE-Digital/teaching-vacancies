@@ -5,7 +5,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
 
   let(:current_step) { :job_details }
 
-  let(:vacancy) { build_stubbed(:vacancy, job_roles: %w[teacher]) }
+  let(:vacancy) { build_stubbed(:vacancy, :draft, job_roles: %w[teacher]) }
   let(:organisation) { build_stubbed(:school) }
   let(:session) { {} }
 
@@ -46,7 +46,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
     let(:all_possible_steps) do
       %i[
         job_role job_role_details job_location schools education_phases job_details working_patterns
-        pay_package important_dates documents applying_for_the_job job_summary review
+        pay_package important_dates documents applying_for_the_job applying_for_the_job_details job_summary review
       ]
     end
 
@@ -62,6 +62,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
       let(:organisation) { create(:school) }
       let(:vacancy) do
         create(:vacancy,
+               :draft,
                job_roles: %w[teacher],
                organisations: [organisation])
       end
@@ -78,6 +79,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
         let(:school) { create(:school) }
         let(:vacancy) do
           create(:vacancy,
+                 :draft,
                  job_roles: %w[teacher],
                  organisations: [school])
         end
@@ -117,7 +119,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
       end
 
       context "when the job location has changed to central_office in the session" do
-        let(:vacancy) { build_stubbed(:vacancy, job_roles: %w[teacher], job_location: "at_multiple_schools") }
+        let(:vacancy) { build_stubbed(:vacancy, :draft, job_roles: %w[teacher], job_location: "at_multiple_schools") }
         let(:session) { { job_location: "central_office" } }
 
         it "skips the `schools` step" do

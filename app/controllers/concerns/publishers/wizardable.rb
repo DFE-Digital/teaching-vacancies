@@ -96,8 +96,16 @@ module Publishers::Wizardable
   end
 
   def applying_for_the_job_params(params)
-    params.require(:publishers_job_listing_applying_for_the_job_form)
-          .permit(:application_link, :enable_job_applications, :contact_email, :contact_number, :personal_statement_guidance, :school_visits, :how_to_apply)
+    if params[:publishers_job_listing_applying_for_the_job_form]
+      params.require(:publishers_job_listing_applying_for_the_job_form).permit(:enable_job_applications)
+    else
+      {}
+    end.merge(completed_steps: completed_steps, current_organisation: current_organisation)
+  end
+
+  def applying_for_the_job_details_params(params)
+    params.require(:publishers_job_listing_applying_for_the_job_details_form)
+          .permit(:application_link, :contact_email, :contact_number, :personal_statement_guidance, :school_visits, :how_to_apply)
           .merge(completed_steps: completed_steps, current_organisation: current_organisation)
   end
 
