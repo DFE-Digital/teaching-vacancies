@@ -1,5 +1,3 @@
-require "breasal"
-
 class School < Organisation
   has_many :school_group_memberships
   has_many :school_groups, through: :school_group_memberships
