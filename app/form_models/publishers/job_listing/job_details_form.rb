@@ -1,7 +1,7 @@
 class Publishers::JobListing::JobDetailsForm < Publishers::JobListing::VacancyForm
   include ActionView::Helpers::SanitizeHelper
 
-  attr_accessor :job_title, :contract_type, :contract_type_duration, :key_stages, :subjects, :job_location, :readable_job_location, :status
+  attr_accessor :job_title, :contract_type, :fixed_term_contract_duration, :parental_leave_cover_contract_duration, :key_stages, :subjects, :job_location, :readable_job_location, :status
 
   validates :job_title, presence: true
   validates :job_title, length: { minimum: 4, maximum: 100 }, if: -> { job_title.present? }
@@ -10,10 +10,11 @@ class Publishers::JobListing::JobDetailsForm < Publishers::JobListing::VacancyFo
   validates :key_stages, inclusion: { in: Vacancy.key_stages.keys }, if: -> { key_stages.present? }
 
   validates :contract_type, inclusion: { in: Vacancy.contract_types.keys }
-  validates :contract_type_duration, presence: true, if: -> { contract_type == "fixed_term" }
+  validates :fixed_term_contract_duration, presence: true, if: -> { contract_type == "fixed_term" }
+  validates :parental_leave_cover_contract_duration, presence: true, if: -> { contract_type == "parental_leave_cover" }
 
   def self.fields
-    %i[job_title contract_type contract_type_duration key_stages subjects]
+    %i[job_title contract_type fixed_term_contract_duration parental_leave_cover_contract_duration key_stages subjects]
   end
 
   def job_title_has_no_tags?
