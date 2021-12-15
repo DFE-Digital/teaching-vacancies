@@ -24,7 +24,7 @@ class Vacancy < ApplicationRecord
   # Legacy vacancies can have these working_pattern options too: { compressed_hours: 102, staggered_hours: 103 }
 
   enum candidate_hired_from: { teaching_vacancies: 0, other_free: 1, other_paid: 2, unknown: 3 }
-  enum contract_type: { permanent: 0, fixed_term: 1 }
+  enum contract_type: { permanent: 0, fixed_term: 1, maternity_cover: 2 }
   enum end_listing_reason: { suitable_candidate_found: 0, end_early: 1 }
   enum hired_status: { hired_tvs: 0, hired_other_free: 1, hired_paid: 2, hired_no_listing: 3, not_filled_ongoing: 4, not_filled_not_looking: 5, hired_dont_know: 6 }
   enum job_location: { at_one_school: 0, at_multiple_schools: 1, central_office: 2 }

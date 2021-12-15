@@ -48,7 +48,8 @@ module VacancyHelpers
         check I18n.t("helpers.label.publishers_job_listing_job_role_details_form.additional_job_roles_options.#{key_stage}")
       end
     end
-    fill_in "publishers_job_listing_job_details_form[contract_type_duration]", with: vacancy.contract_type_duration
+    fill_in "publishers_job_listing_job_details_form[fixed_term_contract_duration]", with: vacancy.fixed_term_contract_duration
+    fill_in "publishers_job_listing_job_details_form[maternity_cover_contract_duration]", with: vacancy.maternity_cover_contract_duration
   end
 
   def fill_in_working_patterns_form_fields(vacancy)

@@ -7,7 +7,8 @@ module Resettable
 
   def reset_dependent_fields
     reset_actual_salary
-    reset_contract_type_duration
+    reset_fixed_term_contract_duration
+    reset_maternity_cover_contract_duration
     # Key stages and subjects are dependent on phase, so reset phase first
     reset_phase
     reset_key_stages
@@ -20,10 +21,16 @@ module Resettable
     self.actual_salary = ""
   end
 
-  def reset_contract_type_duration
-    return unless contract_type_changed? && contract_type == "permanent"
+  def reset_fixed_term_contract_duration
+    return unless contract_type_changed? && contract_type != "fixed_term"
 
-    self.contract_type_duration = ""
+    self.fixed_term_contract_duration = ""
+  end
+
+  def reset_maternity_cover_contract_duration
+    return unless contract_type_changed? && contract_type != "maternity_cover"
+
+    self.maternity_cover_contract_duration = ""
   end
 
   def reset_phase
