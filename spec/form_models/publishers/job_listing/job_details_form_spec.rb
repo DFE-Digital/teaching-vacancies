@@ -12,7 +12,13 @@ RSpec.describe Publishers::JobListing::JobDetailsForm, type: :model do
   context "when contract_type is fixed_term" do
     before { allow(subject).to receive(:contract_type).and_return("fixed_term") }
 
-    it { is_expected.to validate_presence_of(:contract_type_duration) }
+    it { is_expected.to validate_presence_of(:fixed_term_contract_duration) }
+  end
+
+  context "when contract_type is parental_leave_cover" do
+    before { allow(subject).to receive(:contract_type).and_return("parental_leave_cover") }
+
+    it { is_expected.to validate_presence_of(:parental_leave_cover_contract_duration) }
   end
 
   context "when key stages is not present" do
