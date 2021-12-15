@@ -32,11 +32,7 @@ class JobApplication < ApplicationRecord
   has_many :employments, dependent: :destroy
   has_many :references, dependent: :destroy
 
-  # TODO: This is equivalent to the behaviour of the noticed` gem's `has_noticed_notification`
-  #       method. However, the gem does not support the PostGIS adapter so until that is fixed
-  #       we need to do this manually.
-  #       c.f. https://github.com/excid3/noticed/pull/150
-  before_destroy { Notification.where("params @> ?", Noticed::Coder.dump(job_application: self).to_json).destroy_all }
+  has_noticed_notifications
 
   scope :submitted_yesterday, -> { submitted.where("DATE(submitted_at) = ?", Date.yesterday) }
   scope :after_submission, -> { where(status: %w[submitted reviewed shortlisted unsuccessful withdrawn]) }
