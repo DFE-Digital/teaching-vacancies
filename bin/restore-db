@@ -6,28 +6,35 @@ if [[ -z "${CF_DESTINATION_ENVIRONMENT}" ]]; then
   echo "CF_DESTINATION_ENVIRONMENT environment variable not set"
   exit 1
 fi
-if [[ "${CF_DESTINATION_ENVIRONMENT}" = "production" ]] ; then
-  echo "CF_DESTINATION_ENVIRONMENT should not equal production"
+
+if [[ "${CF_DESTINATION_ENVIRONMENT}" = "production"  && "${BACKUP_RESTORE}" != "true" ]]  ; then
+  echo "CF_DESTINATION_ENVIRONMENT should not equal production unless in BACKUP_RESTORE env is true"
   exit 1
 fi
+
 if [[ -z "${CF_SPACE_NAME}" ]]; then
   echo "CF_SPACE_NAME environment variable not set"
   exit 1
 fi
+
 if [[ -z "${BACKUP_TYPE}" ]]; then
   echo "BACKUP_TYPE environment variable not set"
   exit 1
 else
   FILENAME="${BACKUP_TYPE}.sql"
 fi
+
 if [[ ! -f "${FILENAME}" ]]; then
   echo "${FILENAME} does not exist."
   exit 1
 else
   CONDUIT_APP_NAME="${CF_SPACE_NAME}-conduit-${CF_DESTINATION_ENVIRONMENT}"
 
+  echo executing cf target -o "${CF_ORG_NAME}" -s "${CF_SPACE_NAME}"
   cf target -o "${CF_ORG_NAME}" -s "${CF_SPACE_NAME}"
-  cf conduit "${CF_SERVICE_NAME}-postgres-${CF_DESTINATION_ENVIRONMENT}" --app-name "${CONDUIT_APP_NAME}" -- psql < "${FILENAME}"
+
+  echo executing cf conduit "${CF_SERVICE_NAME}-postgres-${CF_DESTINATION_ENVIRONMENT}" -- psql < "${FILENAME}"
+  cf conduit "${CF_SERVICE_NAME}-postgres-${CF_DESTINATION_ENVIRONMENT}" -- psql < "${FILENAME}"
   # The conduit app may have to be deleted explicitly
   cf delete -f "${CONDUIT_APP_NAME}" || true
 fi
