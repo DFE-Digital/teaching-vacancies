@@ -21,6 +21,7 @@ require "view_component/compile_cache"
 Bundler.require(*Rails.groups)
 
 # These are needed in configuration before autoloading kicks in
+require_relative "../lib/fail_safe"
 require_relative "../lib/modules/aws_ip_ranges"
 require_relative "../lib/vcap_services"
 
