@@ -1,4 +1,6 @@
 module RandomHelpers
+  module_function
+
   def factory_rand(range)
     if Rails.env.test?
       range.min
@@ -7,11 +9,11 @@ module RandomHelpers
     end
   end
 
-  def factory_sample(things, num = 1)
+  def factory_sample(things, num = nil)
     if Rails.env.test?
-      num == 1 ? things.first : things.take(num)
+      (num || 1) == 1 ? things.first : things.take(num)
     else
-      num == 1 ? things.sample : things.sample(num)
+      num.nil? ? things.sample : things.sample(num)
     end
   end
 
