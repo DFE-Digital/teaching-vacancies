@@ -1,4 +1,5 @@
 require "rails_helper"
+require "flag"
 
 RSpec.describe Flag do
   context "when the flag is a feature flag" do

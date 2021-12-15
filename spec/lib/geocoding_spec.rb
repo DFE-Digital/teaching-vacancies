@@ -1,4 +1,5 @@
 require "rails_helper"
+require "geocoding"
 
 RSpec.describe Geocoding, geocode: true do
   subject { described_class.new(location) }

@@ -1,4 +1,5 @@
 require "rails_helper"
+require "modules/aws_ip_ranges"
 
 RSpec.describe AWSIpRanges do
   describe ".cloudfront_ips" do

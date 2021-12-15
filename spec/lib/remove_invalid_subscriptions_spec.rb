@@ -1,4 +1,5 @@
 require "rails_helper"
+require "remove_invalid_subscriptions"
 
 RSpec.describe RemoveInvalidSubscriptions do
   subject { described_class.new }
