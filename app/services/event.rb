@@ -14,14 +14,14 @@ class Event
   # @param [Symbol, String] event_type The type of event (e.g. `:page_visited`) to trigger
   # @param [Hash{Symbol => Object}] event_data An optional hash of data to include with the event
   def trigger(event_type, event_data = {})
-    event_data = base_data.merge(
-      type: event_type,
-      occurred_at: occurred_at(event_data),
-      data: data.push(*event_data.map { |key, value| { key: key.to_s, value: formatted_value(value) } }),
-    )
-    SendEventToDataWarehouseJob.perform_later(TABLE_NAME, event_data)
-  rescue StandardError => e
-    Rollbar.error(e)
+    fail_safe do
+      event_data = base_data.merge(
+        type: event_type,
+        occurred_at: occurred_at(event_data),
+        data: data.push(*event_data.map { |key, value| { key: key.to_s, value: formatted_value(value) } }),
+      )
+      SendEventToDataWarehouseJob.perform_later(TABLE_NAME, event_data)
+    end
   end
 
   private

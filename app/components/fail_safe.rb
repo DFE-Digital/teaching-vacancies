@@ -3,11 +3,8 @@
 # even if the non-critical component raised an error, rather than serving a 500 page.
 module FailSafe
   def render_in(...)
-    super
-  rescue StandardError => e
-    raise e unless Rails.env.production?
-
-    Rollbar.error(e)
-    nil
+    fail_safe do
+      super
+    end
   end
 end

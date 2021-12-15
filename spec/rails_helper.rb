@@ -59,6 +59,10 @@ RSpec.configure do |config|
 
   config.before do
     ActiveJob::Base.queue_adapter = :test
+
+    allow(Google::Cloud::Bigquery).to receive(:new).and_return(
+      double("BigQuery", dataset: double("BigQuery dataset", table: double.as_null_object)),
+    )
   end
 
   config.before(:each, type: :system) do
