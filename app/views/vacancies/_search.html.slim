@@ -71,7 +71,7 @@ ruby:
             = render "shared/search/current_location", target: "location-field"
             = render "shared/search/radius", f: f, wide: true
 
-            = f.hidden_field :jobs_sort, value: @form.jobs_sort
+            = f.hidden_field :sort_by, value: @form.sort.by
             = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"
       - else
         .search-controls__panel__filters
@@ -82,7 +82,7 @@ ruby:
           = render "shared/search/current_location", target: "location-field"
           = render "shared/search/radius", f: f, wide: true
 
-          = f.hidden_field :jobs_sort, value: @form.jobs_sort
+          = f.hidden_field :sort_by, value: @form.sort.by
           = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"
   - else
     .search-controls__panel.search-controls__panel--mobile
@@ -94,7 +94,7 @@ ruby:
             = render "shared/search/current_location", target: "location-field"
             = render "shared/search/radius", f: f, wide: true
 
-            = f.hidden_field :jobs_sort, value: @form.jobs_sort
+            = f.hidden_field :sort_by, value: @form.sort.by
             = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"
       - else
         .search-controls__panel__filters
@@ -105,7 +105,7 @@ ruby:
           = render "shared/search/current_location", target: "location-field"
           = render "shared/search/radius", f: f, wide: true
 
-          = f.hidden_field :jobs_sort, value: @form.jobs_sort
+          = f.hidden_field :sort_by, value: @form.sort.by
           = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"
 
   .search-controls__panel

@@ -34,16 +34,8 @@
             = f.hidden_field :jobs_type, value: @selected_type
 
       .vacancies-component__content class=grid_column_class
-        - if @vacancies.any?
-          = form_for @sort_form, as: "", url: jobs_with_type_organisation_path(@selected_type), method: :get, data: { controller: "form", "hide-submit": true } do |f|
-            = f.govuk_collection_select :sort_column,
-              vacancy_sort_options,
-              :column,
-              :display_name,
-              label: { text: t("jobs.sort_by.label"), size: "s", class: "govuk-label inline govuk-!-margin-right-2" },
-              data: { action: "change->form#submitListener" }
-
-            = f.govuk_submit t("jobs.sort_by.submit")
+        - if @vacancies.many?
+          = render AccessibleSortComponent.new sort: @sort, url_params: { type: @selected_type }, path: method(:jobs_with_type_organisation_path)
         section#vacancy-results
           - if vacancies.none?
             = empty_section do
