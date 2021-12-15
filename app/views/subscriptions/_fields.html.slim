@@ -63,7 +63,7 @@ ruby:
   = render(FiltersComponent.new(form: f,
     filters: { total_count: 0, title: t("subscriptions.edit.filters") },
     items: items,
-    options: { remove_buttons: false, mobile_variant: false, close_all: false }))
+    options: { remove_buttons: false, mobile_variant: false, close_all: false, autosubmit_form: false }))
 
 .divider-bottom
 
