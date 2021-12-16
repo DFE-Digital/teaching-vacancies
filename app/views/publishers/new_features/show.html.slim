@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, t("new_features.page_title")
+- content_for :page_title_prefix, t(".page_title")
 
 .govuk-main-wrapper
   .govuk-grid-row
@@ -6,11 +6,11 @@
       = form_for @new_features_form, url: new_features_path, method: :patch do |f|
         = f.govuk_error_summary
 
-        h1.govuk-heading-l = t("new_features.page_title")
+        h1.govuk-heading-l = t(".page_title")
 
-        h2.govuk-heading-m = t("new_features.applications")
+        h2.govuk-heading-m = t(".heading")
 
-        p.govuk-body = t("new_features.content")
+        p.govuk-body = t(".content")
 
         = govuk_link_to t("application_pack.link_text", size: application_pack_asset_size), application_pack_asset_path, target: "_blank", class: "govuk-body", download: t("application_pack.link_download_attr")
 
