@@ -20,7 +20,7 @@ RSpec.describe EventContext do
     end
 
     context "when entity is not included in analytics.yml" do
-      let(:event_data) { { "table_name" => "location_polygons", name: "London" } }
+      let(:event_data) { { "table_name" => "i_am_not_included", foo: "Bar" } }
 
       it "does not invoke trigger method on event" do
         expect(event_double).not_to receive(:trigger).with(event_type, event_data)
