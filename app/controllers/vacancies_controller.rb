@@ -1,12 +1,12 @@
 class VacanciesController < ApplicationController
-  helper_method :job_application
+  helper_method :allow_sorting?, :job_application
 
   before_action :set_landing_page_description, :set_map_display, :set_params_from_pretty_landing_page_params, only: %i[index]
 
   def index
     @vacancies_search = Search::VacancySearch.new(
       search_form.to_hash,
-      sort_by: search_form.jobs_sort,
+      sort: search_form.sort,
       page: params[:page],
     )
     @vacancies = VacanciesPresenter.new(@vacancies_search.vacancies)
@@ -43,7 +43,7 @@ class VacanciesController < ApplicationController
     %w[job_role job_roles phases working_patterns].each do |facet|
       params[facet] = params[facet].split if params[facet].is_a?(String)
     end
-    params.permit(:keyword, :location, :radius, :subject, :jobs_sort,
+    params.permit(:keyword, :location, :radius, :subject, :sort_by,
                   job_role: [], job_roles: [], phases: [], working_patterns: [])
   end
 
@@ -65,6 +65,10 @@ class VacanciesController < ApplicationController
 
   def id
     params[:id]
+  end
+
+  def allow_sorting?
+    @vacancies_search.sort.many? && @vacancies.many?
   end
 
   def set_headers
