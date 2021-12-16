@@ -1,4 +1,4 @@
-class Publishers::JobListing::ApplyingForTheJobDetailsForm < Publishers::JobListing::VacancyForm
+class Publishers::JobListing::ApplyingForTheJobDetailsForm < Publishers::JobListing::UploadBaseForm
   validates :how_to_apply, presence: true, unless: proc { vacancy.enable_job_applications.in?(["true", true]) }
   validates :application_link, url: true, if: proc { application_link.present? }
   validate :application_link_valid_uri, if: proc { application_link.present? }
@@ -14,12 +14,23 @@ class Publishers::JobListing::ApplyingForTheJobDetailsForm < Publishers::JobList
       personal_statement_guidance school_visits how_to_apply
     ]
   end
-  attr_accessor(*fields)
+  attr_accessor(:application_form, *fields)
+
+  def valid_application_form
+    @valid_application_form ||= application_form if application_form &&
+                                                    valid_file_size?(application_form) &&
+                                                    valid_file_type?(application_form) &&
+                                                    virus_free?(application_form)
+  end
 
   def application_link=(link)
     @application_link = Addressable::URI.heuristic_parse(link).to_s
   rescue Addressable::URI::InvalidURIError
     @application_link = link
+  end
+
+  def file_upload_field_name
+    :application_form
   end
 
   private
