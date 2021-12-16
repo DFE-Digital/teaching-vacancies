@@ -109,9 +109,11 @@ en:
       inclusion: Select an education phase
   job_details_errors: &job_details_errors
     contract_type:
-      inclusion: Select if the contract type is permanent or fixed term
-    contract_type_duration:
-      blank: Enter a description of the fixed term contract
+      inclusion: Select if the contract type is permanent, fixed term or parental leave cover
+    fixed_term_contract_duration:
+      blank: Enter the duration of the fixed term contract
+    parental_leave_cover_contract_duration:
+      blank: Enter the duration of the maternity or parental leave cover contract
     job_title:
       blank: Enter a job title
       too_short: Job title must be at least %{count} characters

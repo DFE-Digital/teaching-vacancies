@@ -203,7 +203,9 @@ en:
           We'll only use this to tell you about opportunities to take part in user research that helps us improve
           Department for Education services.
       publishers_job_listing_job_details_form:
-        contract_type_duration: >-
+        fixed_term_contract_duration: >-
+          Contract length should be more than 12 weeks. Short term cover should not be advertised on Teaching Vacancies
+        parental_leave_cover_contract_duration: >-
           Contract length should be more than 12 weeks. Short term cover should not be advertised on Teaching Vacancies
         job_title:
           middle: >-
@@ -543,9 +545,11 @@ en:
         starts_asap_options:
           "true": As soon as possible
       publishers_job_listing_job_details_form:
-        contract_type_duration: Duration of fixed term contract
+        fixed_term_contract_duration: Duration of contract
+        parental_leave_cover_contract_duration: Duration of contract
         contract_type_options:
           fixed_term: Fixed term
+          parental_leave_cover: Maternity or parental leave cover
           permanent: Permanent
         job_title: Job title
         # TODO: These job_roles_options are no longer on this form, but are used throughout the
