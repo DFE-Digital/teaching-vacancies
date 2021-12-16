@@ -267,7 +267,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         end
         click_header_link(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
 
-        fill_in "publishers_job_listing_applying_for_the_job_form[contact_email]", with: "some email"
+        fill_in "publishers_job_listing_applying_for_the_job_details_form[contact_email]", with: "some email"
         click_on I18n.t("buttons.update_job")
 
         expect(page).to have_content("There is a problem")
@@ -279,7 +279,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         click_header_link(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
         vacancy.contact_email = "new-test@example.net"
 
-        fill_in "publishers_job_listing_applying_for_the_job_form[contact_email]", with: vacancy.contact_email
+        fill_in "publishers_job_listing_applying_for_the_job_details_form[contact_email]", with: vacancy.contact_email
         click_on I18n.t("buttons.update_job")
 
         expect(current_path).to eq(organisation_job_path(vacancy.id))
@@ -295,7 +295,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         click_header_link(I18n.t("publishers.vacancies.steps.applying_for_the_job"))
         vacancy.contact_email = "new-test@example.net"
 
-        fill_in "publishers_job_listing_applying_for_the_job_form[contact_email]", with: vacancy.contact_email
+        fill_in "publishers_job_listing_applying_for_the_job_details_form[contact_email]", with: vacancy.contact_email
         click_on I18n.t("buttons.update_job")
       end
     end
