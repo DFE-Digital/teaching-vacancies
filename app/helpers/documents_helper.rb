@@ -5,4 +5,11 @@ module DocumentsHelper
                  tag.span(" #{document.filename} supporting document", class: "govuk-visually-hidden")]
     end
   end
+
+  def remove_application_form_link(application_form, vacancy)
+    govuk_link_to organisation_job_application_forms_path(id: application_form.id, job_id: vacancy.id), method: :delete do
+      safe_join [t("jobs.upload_documents_table.actions.remove"),
+                 tag.span(" #{application_form.filename} supporting document", class: "govuk-visually-hidden")]
+    end
+  end
 end
