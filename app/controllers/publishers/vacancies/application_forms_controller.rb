@@ -16,7 +16,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
       content_type: document.content_type,
     )
 
-    render :show
+    render "publishers/vacancies/build/applying_for_the_job_details"
   end
 
   def destroy

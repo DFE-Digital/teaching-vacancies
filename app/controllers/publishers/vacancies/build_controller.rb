@@ -18,8 +18,6 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
 
     return redirect_to(organisation_job_documents_path(vacancy.id, back_to: params[:back_to])) if step == :documents
 
-    return redirect_to(organisation_job_application_forms_path(vacancy.id, back_to: params[:back_to])) if step == :applying_for_the_job_details
-
     render_wizard
   end
 
