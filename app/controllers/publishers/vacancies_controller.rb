@@ -66,13 +66,15 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   end
 
   def redirect_to_new_features_reminder
-    redirect_to reminder_new_features_path if show_application_reminder_page?
+    redirect_to reminder_new_features_path if show_feature_reminder_page?
   end
 
-  def show_application_reminder_page?
-    return false if session[:viewed_new_features_reminder_at].present?
-    return false if (viewed_at = current_publisher.viewed_new_features_page_at).blank?
+  def show_feature_reminder_page?
+    return false if session[:visited_application_feature_reminder_page] || session[:visited_new_features_page]
 
-    Vacancy.published.where(publisher_id: current_publisher.id, enable_job_applications: false, created_at: viewed_at..).any?
+    Vacancy.published.where(
+      publisher_id: current_publisher.id,
+      enable_job_applications: false,
+      created_at: Publishers::NewFeaturesController::NEW_FEATURES_PAGE_UPDATED_AT..).any?
   end
 end
