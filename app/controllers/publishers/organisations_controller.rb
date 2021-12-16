@@ -7,8 +7,7 @@ class Publishers::OrganisationsController < Publishers::BaseController
   def show
     @selected_type = params[:type] || :published
     @publisher_preference = PublisherPreference.find_or_create_by(publisher: current_publisher, organisation: current_organisation)
-    @sort = Publishers::VacancySort.new(current_organisation, @selected_type).update(column: params[:sort_column])
-    @sort_form = SortForm.new(@sort.column)
+    @sort = Publishers::VacancySort.new(current_organisation, @selected_type).update(sort_by: params[:sort_by])
     session[:viewed_new_features_reminder_at] = nil
     render_draft_saved_message if params[:from_review]
   end
