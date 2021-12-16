@@ -6,6 +6,5 @@ FactoryBot.define do
     family_name { Faker::Name.last_name.delete("'") }
     given_name { Faker::Name.first_name }
     oid { Faker::Crypto.md5 }
-    viewed_new_features_page_at { 2.days.ago }
   end
 end
