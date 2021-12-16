@@ -67,9 +67,8 @@ class Vacancy < ApplicationRecord
   validates :slug, presence: true
   validate :enable_job_applications_cannot_be_changed_once_listed
 
-  # TODO: This is equivalent to the behaviour of the noticed` gem's `has_noticed_notification` method. However, the gem
-  #       does not support the PostGIS adapter so until that is fixed we need to do this manually. c.f. https://github.com/excid3/noticed/pull/150
-  before_destroy { Notification.where("params @> ?", Noticed::Coder.dump(vacancy: self).to_json).destroy_all }
+  has_noticed_notifications
+
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
   before_save :refresh_geolocation, if: -> { job_location_changed? }
 
