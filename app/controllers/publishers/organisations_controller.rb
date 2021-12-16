@@ -8,7 +8,6 @@ class Publishers::OrganisationsController < Publishers::BaseController
     @selected_type = params[:type] || :published
     @publisher_preference = PublisherPreference.find_or_create_by(publisher: current_publisher, organisation: current_organisation)
     @sort = Publishers::VacancySort.new(current_organisation, @selected_type).update(sort_by: params[:sort_by])
-    session[:viewed_new_features_reminder_at] = nil
     render_draft_saved_message if params[:from_review]
   end
 
@@ -42,9 +41,15 @@ class Publishers::OrganisationsController < Publishers::BaseController
   def show_new_features_page?
     return false if current_organisation.local_authority?
 
-    return false if current_publisher.vacancies.any?(&:enable_job_applications?)
+    return false if publisher_has_used_feature?
 
     current_publisher.dismissed_new_features_page_at.blank?
+  end
+
+  def publisher_has_used_feature?
+    current_publisher.vacancies.where(enable_job_applications: true).any? do |vacancy|
+      vacancy.main_job_role == "education_support"
+    end
   end
 
   def statistics_params
