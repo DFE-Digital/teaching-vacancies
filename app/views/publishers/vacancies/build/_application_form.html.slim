@@ -1,0 +1,15 @@
+= govuk_table classes: "js-documents__table" do |table|
+  - table.head do |head|
+    - head.row do |row|
+      - row.cell header: true, text: t("jobs.upload_documents_table.headers.file_name")
+      - row.cell header: true, text: t("jobs.upload_documents_table.headers.status")
+      - row.cell header: true, text: t("jobs.upload_documents_table.headers.file_size")
+      - row.cell header: true, text: t("jobs.upload_documents_table.headers.action")
+
+  - table.body classes: "js-documents__table-body" do |body|
+    - if vacancy.application_form.present?
+      - body.row do |row|
+        - row.cell text: open_in_new_tab_link_to(vacancy.application_form.filename, vacancy.application_form)
+        - row.cell text: t("jobs.upload_documents_table.upload_status.uploaded")
+        - row.cell text: number_to_human_size(vacancy.application_form.byte_size)
+        - row.cell text: remove_application_form_link(vacancy.application_form, vacancy)
