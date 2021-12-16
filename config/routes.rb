@@ -164,6 +164,7 @@ Rails.application.routes.draw do
     resources :jobs, only: %i[create destroy delete show], controller: "publishers/vacancies" do
       resources :build, only: %i[show update], controller: "publishers/vacancies/build"
       resource :documents, only: %i[create destroy show], controller: "publishers/vacancies/documents"
+      resource :application_forms, only: %i[create destroy show], controller: "publishers/vacancies/application_forms"
 
       collection do
         get :create_or_copy, to: "publishers/vacancies#create_or_copy", path: "create-or-copy"

@@ -11,8 +11,6 @@
         h2.govuk-heading-l
           = t("publishers.vacancies.steps.documents")
 
-        #js-xhr-flashes
-
         = f.govuk_file_field :documents,
           label: { size: "s" },
           accept: ".doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, image/jpeg, image/png, video/mp4",
