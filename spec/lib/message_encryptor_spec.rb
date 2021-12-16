@@ -1,6 +1,7 @@
 require "rails_helper"
+require "message_encryptor"
 
-RSpec.describe "MessageEnryptor" do
+RSpec.describe MessageEncryptor do
   describe "it can #encrypt and #decrypt data" do
     it "an array" do
       data = %w[an array of data]

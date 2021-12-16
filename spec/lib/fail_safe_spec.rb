@@ -1,4 +1,5 @@
 require "rails_helper"
+require "fail_safe"
 
 RSpec.describe Kernel do
   context "when the block raises an error" do

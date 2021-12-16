@@ -1,4 +1,5 @@
 require "rails_helper"
+require "vcap_services"
 
 RSpec.describe VcapServices do
   subject { described_class.new(env_var) }

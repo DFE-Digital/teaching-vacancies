@@ -1,4 +1,5 @@
 require "rails_helper"
+require "export_dsi_users_to_big_query"
 
 RSpec.describe ExportDsiUsersToBigQuery do
   before do
