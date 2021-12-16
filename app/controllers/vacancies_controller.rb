@@ -94,7 +94,7 @@ class VacanciesController < ApplicationController
       request_event.trigger(
         :search_performed,
         search_criteria: search_form.to_hash,
-        sort_by: search_form.jobs_sort,
+        sort_by: search_form.sort.by,
         page: params[:page] || 1,
         total_count: @vacancies_search.total_count,
         vacancies_on_page: @vacancies_search.vacancies.map(&:id),
