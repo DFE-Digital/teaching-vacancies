@@ -1,11 +1,10 @@
 class Publishers::VacanciesComponent < ViewComponent::Base
   include DatesHelper
 
-  def initialize(organisation:, sort:, selected_type:, publisher_preference:, sort_form:, email:)
+  def initialize(organisation:, sort:, selected_type:, publisher_preference:, email:)
     @organisation = organisation
     @sort = sort
     @publisher_preference = publisher_preference
-    @sort_form = sort_form
     @email = email
     @vacancy_types = %w[published expired pending draft awaiting_feedback]
     @selected_type = @vacancy_types.include?(selected_type) ? selected_type : "published"
@@ -20,10 +19,6 @@ class Publishers::VacanciesComponent < ViewComponent::Base
 
   def selected?(vacancy_type)
     selected_type == vacancy_type
-  end
-
-  def vacancy_sort_options
-    Publishers::VacancySort.new(organisation, selected_type)
   end
 
   def vacancy_links
@@ -76,7 +71,7 @@ class Publishers::VacanciesComponent < ViewComponent::Base
 
     @vacancies = @vacancies.includes(:job_applications) if include_job_applications?
     @vacancies = @vacancies.send(selected_scope)
-                           .order(sort.column => sort.order)
+                           .order(sort.by => sort.order)
                            .reject { |vacancy| vacancy.job_title.blank? }
                            .map { |v| OrganisationVacancyPresenter.new(v) }
   end
