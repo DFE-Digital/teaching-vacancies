@@ -2,7 +2,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   include QualificationFormConcerns
   include DatesHelper
 
-  helper_method :employments, :form, :job_application, :job_applications, :qualification_form_param_key, :sort, :sorted_job_applications, :vacancy
+  helper_method :employments, :form, :job_application, :job_applications, :qualification_form_param_key, :sort, :sort_form, :vacancy
 
   def reject
     raise ActionController::RoutingError, "Cannot reject a draft or withdrawn application" if
@@ -34,17 +34,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   private
 
   def job_applications
-    @job_applications ||= vacancy.job_applications.not_draft
-  end
-
-  def sorted_job_applications
-    sort.by_db_column? ? job_applications.order(sort.by => sort.order) : job_applications_sorted_by_virtual_attribute
-  end
-
-  def job_applications_sorted_by_virtual_attribute
-    # When we 'order' by a virtual attribute we have to do the sorting after all scopes.
-    # last_name is a virtual attribute as it is an encrypted column.
-    job_applications.sort_by(&sort.by.to_sym)
+    @job_applications ||= vacancy.job_applications.not_draft.order(sort.column => sort.order)
   end
 
   def form
@@ -70,7 +60,11 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def sort
-    @sort ||= Publishers::JobApplicationSort.new.update(sort_by: params[:sort_by])
+    @sort ||= Publishers::JobApplicationSort.new.update(column: params[:sort_column])
+  end
+
+  def sort_form
+    @sort_form ||= SortForm.new(sort.column)
   end
 
   def vacancy

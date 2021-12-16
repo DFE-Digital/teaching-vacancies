@@ -2,14 +2,15 @@ require "rails_helper"
 
 RSpec.describe Publishers::VacanciesComponent, type: :component do
   let(:publisher) { create(:publisher) }
-  let(:sort) { Publishers::VacancySort.new(organisation, selected_type).update(sort_by: "job_title") }
+  let(:sort) { Publishers::VacancySort.new(organisation, selected_type).update(column: "job_title") }
   let(:selected_type) { "published" }
   let(:publisher_preference) { create(:publisher_preference, publisher: publisher, organisation: organisation) }
+  let(:sort_form) { SortForm.new(sort.column) }
   let(:email) { "publisher@example.net" }
 
   subject do
     described_class.new(
-      organisation: organisation, sort: sort, selected_type: selected_type, publisher_preference: publisher_preference, email: email,
+      organisation: organisation, sort: sort, selected_type: selected_type, publisher_preference: publisher_preference, sort_form: sort_form, email: email,
     )
   end
 

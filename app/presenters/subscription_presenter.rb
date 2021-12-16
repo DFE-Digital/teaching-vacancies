@@ -32,22 +32,16 @@ class SubscriptionPresenter < BasePresenter
   end
 
   def search_criteria_field(field, value)
-    case field
-    when "radius", "sort_by"
-      nil
-    when "location"
-      render_location_filter(value, search_criteria["radius"])
-    when "job_roles"
-      render_job_roles_filter(value)
-    when "working_patterns"
-      render_working_patterns_filter(value)
-    when "phases"
-      render_phases_filter(value)
-    when "newly_qualified_teacher"
-      render_ect_filter(value)
-    else
-      { "#{field}": value }
-    end
+    return if field.eql?("radius")
+    return if field.eql?("jobs_sort")
+
+    return render_location_filter(value, search_criteria["radius"]) if field.eql?("location")
+    return render_job_roles_filter(value) if field.eql?("job_roles")
+    return render_working_patterns_filter(value) if field.eql?("working_patterns")
+    return render_phases_filter(value) if field.eql?("phases")
+    return render_ect_filter(value) if field.eql?("newly_qualified_teacher")
+
+    { "#{field}": value }
   end
 
   def render_location_filter(location, radius)

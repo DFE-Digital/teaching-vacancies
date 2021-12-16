@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Search::VacancySearch do
-  subject { described_class.new(form_hash, sort: sort, page: page, per_page: per_page) }
+  subject { described_class.new(form_hash, sort_by: jobs_sort, page: page, per_page: per_page) }
 
   let(:form_hash) do
     {
@@ -14,7 +14,7 @@ RSpec.describe Search::VacancySearch do
   let(:keyword) { "maths teacher" }
   let(:location) { "Louth" }
   let(:radius) { 10 }
-  let(:sort) { Search::VacancySort.new(keyword: keyword) }
+  let(:jobs_sort) { Search::VacancySearchSort::RELEVANCE }
   let(:per_page) { 20 }
   let(:page) { 1 }
 
@@ -25,6 +25,7 @@ RSpec.describe Search::VacancySearch do
     allow(scope).to receive(:search_by_location).with("Louth", 10).and_return(scope)
     allow(scope).to receive(:search_by_filter).and_return(scope)
     allow(scope).to receive(:search_by_full_text).with("maths teacher").and_return(scope)
+    allow(scope).to receive(:order).with(updated_at: :desc).and_return(scope)
 
     allow(scope).to receive(:page).with(page).and_return(scope)
     allow(scope).to receive(:per).with(per_page).and_return(scope)

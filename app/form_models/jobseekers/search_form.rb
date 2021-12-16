@@ -6,7 +6,7 @@ class Jobseekers::SearchForm
               :job_roles, :phases, :working_patterns,
               :job_role_options, :ect_suitable_options, :send_responsible_options,
               :phase_options, :working_pattern_options,
-              :total_filters, :sort
+              :total_filters, :jobs_sort
 
   def initialize(params = {})
     strip_trailing_whitespaces_from_params(params)
@@ -15,7 +15,7 @@ class Jobseekers::SearchForm
     @job_roles = params[:job_roles] || params[:job_role] || []
     @phases = params[:phases]
     @working_patterns = params[:working_patterns]
-    @sort = Search::VacancySort.new(keyword: keyword).update(sort_by: params[:sort_by])
+    @jobs_sort = Search::VacancySearchSort.for(params[:jobs_sort], keyword: keyword)
 
     set_radius(params[:radius])
     set_facet_options

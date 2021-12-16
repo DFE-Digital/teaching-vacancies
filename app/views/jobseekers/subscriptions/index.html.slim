@@ -14,9 +14,16 @@
   - if subscriptions.any?
     .govuk-grid-row class="govuk-!-margin-top-0"
       .govuk-grid-column-two-thirds
-        - if subscriptions.many?
-          = render SortComponent.new path: method(:jobseekers_subscriptions_path), sort: sort
-        p.empty
+        = form_for sort_form, as: "", url: jobseekers_subscriptions_path, method: :get, data: { controller: "form", "hide-submit": true } do |f|
+          = f.govuk_collection_select :sort_column,
+            sort,
+            :column,
+            :display_name,
+            label: { text: t("jobs.sort_by.label"), size: "s", class: "govuk-label inline govuk-!-margin-right-2" },
+            form_group: { classes: "govuk-!-margin-bottom-2" },
+            data: { action: "change->form#submitListener" }
+
+          = f.govuk_submit t("jobs.sort_by.submit")
 
       .govuk-grid-column-one-third.create-alert__button
         = govuk_button_link_to t(".button_create"), new_subscription_path

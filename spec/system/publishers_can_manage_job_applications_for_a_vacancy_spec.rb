@@ -12,10 +12,10 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
   context "when a vacancy has expired and it has applications" do
     let(:vacancy_trait) { :expired }
 
-    let!(:job_application_submitted) { create(:job_application, :status_submitted, vacancy: vacancy, last_name: "Alpha") }
-    let!(:job_application_reviewed) { create(:job_application, :status_reviewed, vacancy: vacancy, last_name: "Charlie") }
-    let!(:job_application_shortlisted) { create(:job_application, :status_shortlisted, vacancy: vacancy, last_name: "Beta") }
-    let!(:job_application_unsuccessful) { create(:job_application, :status_unsuccessful, vacancy: vacancy, last_name: "Delta") }
+    let!(:job_application_submitted) { create(:job_application, :status_submitted, vacancy: vacancy) }
+    let!(:job_application_reviewed) { create(:job_application, :status_reviewed, vacancy: vacancy) }
+    let!(:job_application_shortlisted) { create(:job_application, :status_shortlisted, vacancy: vacancy) }
+    let!(:job_application_unsuccessful) { create(:job_application, :status_unsuccessful, vacancy: vacancy) }
     let!(:job_application_draft) { create(:job_application, :status_draft, vacancy: vacancy) }
 
     before { visit organisation_job_job_applications_path(vacancy.id) }
@@ -57,18 +57,6 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
       it "shows a card for each application that has been submitted and no draft applications" do
         expect(page).to have_css(".card-component", count: 4)
-      end
-
-      context "when sorting the job applications by a virtual attribute" do
-        before do
-          click_on I18n.t("publishers.vacancies.job_applications.index.sort_by.applicant_last_name").humanize
-        end
-
-        it "sorts the job applications" do
-          expect("Alpha").to appear_before("Beta")
-          expect("Beta").to appear_before("Charlie")
-          expect("Charlie").to appear_before("Delta")
-        end
       end
     end
 

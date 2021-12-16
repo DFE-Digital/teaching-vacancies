@@ -1,0 +1,22 @@
+= form_for @form, as: "", url: jobs_path, method: :get, html: { id: "sorting-options-form", data: { controller: "form", "hide-submit": true } } do |f|
+  = f.hidden_field :keyword, value: @form.keyword
+  = f.hidden_field :location, value: @form.location
+  = f.hidden_field :radius, value: @form.radius
+  = f.hidden_field :job_roles, value: @form.job_roles
+  = f.hidden_field :phases, value: @form.phases
+  = f.hidden_field :working_patterns, value: @form.working_patterns
+
+  .govuk-form-group
+    = f.govuk_collection_select :jobs_sort,
+      Search::VacancySearchSort.options,
+      :key,
+      :display_name,
+      label: { text: t("jobs.sort_by.label"), size: "s", class: "govuk-label govuk-!-margin-right-2", id: "jobs_sort_label" },
+      form_group: { classes: "govuk-!-margin-bottom-0" },
+      class: %w[govuk-input--width-10],
+      disabled: @vacancies.none?,
+      data: { action: "change->form#submitListener" }
+
+    = f.govuk_submit t("jobs.sort_by.submit"),
+      classes: "govuk-button govuk-!-margin-0 govuk-input--width-5",
+      disabled: @vacancies.none?
