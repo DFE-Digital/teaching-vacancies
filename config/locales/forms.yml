@@ -209,16 +209,7 @@ en:
       publishers_job_listing_job_details_form:
         contract_type_duration: >-
           Contract length should be more than 12 weeks. Short term cover should not be advertised on Teaching Vacancies
-        job_title:
-          middle: >-
-            Include subject and level of seniority, if relevant. For example, ‘Subject leader for science’. You should
-            also include the key stage, if relevant.
-          multiple_phases: >-
-            Include subject and level of seniority, if relevant. For example, ‘Subject leader for science’. You should
-            also include the key stage, if relevant.
-          primary: Include key stage, if relevant.
-          secondary: Include subject and level of seniority, if relevant. For example, ‘Subject leader for science’.
-          16-19: Include subject and level of seniority, if relevant. For example, ‘Subject leader for science’.
+        job_title: Jobseekers respond better to short, simple job titles. You should include seniority level, subject or key stage, if relevant. Avoid start date, salary and responsibilities which will be covered in the job description.
         key_stages:
           middle: Only complete this field if it’s relevant to the role.
           multiple_phases: What key stages will the role focus on?
@@ -244,8 +235,9 @@ en:
           Give a brief summary of the schools where the jobseeker would be teaching and any relevant information about
           the %{organisation_type}
         job_advert: >-
-          Give a brief summary of the job that jobseekers can quickly scan.
-          This will be the first thing they see on the listing or in search engine results
+          Get jobseekers interested in the role by providing a brief summary of around 400 words.
+          You should cover what the role is and who you're looking to recruit.
+          The first 20 to 40 words will be shown in search results, so make them stand out.
       publishers_job_listing_pay_package_form:
         actual_salary: For part time or term time roles this is what the candidate will actually be paid
         benefits: >-
