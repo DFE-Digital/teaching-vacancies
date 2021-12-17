@@ -1,29 +1,23 @@
-= render ReviewComponent.new id: "jobseekers-job-application-review-form-qualifications-field-error" do |review|
-  - review.heading title: t("jobseekers.job_applications.build.qualifications.heading"),
-                    text: job_application_review_edit_section_text(job_application, :qualifications),
-                    href: jobseekers_job_application_build_path(job_application, :qualifications) do
-      = review_section_tag(job_application, [:qualifications], [Jobseekers::JobApplication::QualificationsForm])
+- r.section :qualifications
+  - if job_application.qualifications.none?
+    p.govuk-body = t(".qualifications.none")
+  - else
+    = govuk_accordion do |accordion|
+      - job_application.qualifications.each do |qualification|
+        - accordion.section heading_text: qualification.name do
+          = govuk_summary_list do |summary_list|
+            - if qualification.secondary?
+              - summary_list.row do |row|
+                - row.key text: t(".qualifications.subjects_and_grades")
+                - row.value text: safe_join(qualification.qualification_results.map { |result| tag.div("#{result.subject} - #{result.grade}") })
 
-  - review.body do
-    - if job_application.qualifications.none?
-      p.govuk-body = t(".none")
-    - else
-      = govuk_accordion do |accordion|
-        - job_application.qualifications.each do |qualification|
-          - accordion.section heading_text: qualification.name do
-            = govuk_summary_list do |summary_list|
-              - if qualification.secondary?
+            - qualification.display_attributes.each do |attribute|
+              - if qualification[attribute].present?
                 - summary_list.row do |row|
-                  - row.key text: t(".subjects_and_grades")
-                  - row.value text: safe_join(qualification.qualification_results.map { |result| tag.div("#{result.subject} - #{result.grade}") })
+                  - row.key text: t("helpers.label.#{qualification_form_param_key(qualification.category)}.#{attribute}")
+                  - row.value text: qualification[attribute]
 
-              - qualification.display_attributes.each do |attribute|
-                - if qualification[attribute].present?
-                  - summary_list.row do |row|
-                    - row.key text: t("helpers.label.#{qualification_form_param_key(qualification.category)}.#{attribute}")
-                    - row.value text: qualification[attribute]
-
-              - unless qualification.finished_studying.nil?
-                - summary_list.row do |row|
-                  - row.key text: t("helpers.legend.#{qualification_form_param_key(qualification.category)}.finished_studying")
-                  - row.value text: safe_join([tag.div(t("helpers.label.jobseekers_job_application_details_qualifications_shared_labels.finished_studying_options.#{qualification.finished_studying}")), tag.div(qualification.finished_studying_details.presence)])
+            - unless qualification.finished_studying.nil?
+              - summary_list.row do |row|
+                - row.key text: t("helpers.legend.#{qualification_form_param_key(qualification.category)}.finished_studying")
+                - row.value text: safe_join([tag.div(t("helpers.label.jobseekers_job_application_details_qualifications_shared_labels.finished_studying_options.#{qualification.finished_studying}")), tag.div(qualification.finished_studying_details.presence)])

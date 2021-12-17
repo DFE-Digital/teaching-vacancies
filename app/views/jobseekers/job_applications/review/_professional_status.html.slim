@@ -1,17 +1,8 @@
-= render_divs_for_fields(Jobseekers::JobApplication::ProfessionalStatusForm)
+- r.section :professional_status do |s|
+  - s.row do |row|
+    - row.key text: t("helpers.legend.jobseekers_job_application_professional_status_form.qualified_teacher_status")
+    - row.value text: job_application_qualified_teacher_status_info(job_application)
 
-= render ReviewComponent.new id: "jobseekers-job-application-review-form-professional-status-field-error" do |review|
-  - review.heading title: t("jobseekers.job_applications.build.professional_status.heading"),
-                    text: job_application_review_edit_section_text(job_application, :professional_status),
-                    href: jobseekers_job_application_build_path(job_application, :professional_status) do
-      = review_section_tag(job_application, [:professional_status], [Jobseekers::JobApplication::ProfessionalStatusForm])
-
-  - review.body do
-    = govuk_summary_list do |summary_list|
-      - summary_list.row do |row|
-        - row.key text: t("helpers.legend.jobseekers_job_application_professional_status_form.qualified_teacher_status")
-        - row.value text: job_application_qualified_teacher_status_info(job_application)
-
-      - summary_list.row do |row|
-        - row.key text: t("helpers.legend.jobseekers_job_application_professional_status_form.statutory_induction_complete")
-        - row.value text: job_application.statutory_induction_complete.humanize
+  - s.row do |row|
+    - row.key text: t("helpers.legend.jobseekers_job_application_professional_status_form.statutory_induction_complete")
+    - row.value text: job_application.statutory_induction_complete.humanize

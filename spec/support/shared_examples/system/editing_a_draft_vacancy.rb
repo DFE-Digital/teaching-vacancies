@@ -102,7 +102,7 @@ RSpec.shared_examples "provides an overview of the draft vacancy form" do
 
       click_on "Confirm and submit job"
 
-      within ".review-component#working_patterns" do
+      within ".review-component__section#working_patterns" do
         click_on "Select a working pattern"
       end
 
@@ -131,7 +131,7 @@ RSpec.shared_examples "provides an overview of the draft vacancy form" do
 
       click_on "Preview job listing"
 
-      within ".review-component#working_patterns" do
+      within ".review-component__section#working_patterns" do
         click_on "Select a working pattern"
       end
 
@@ -148,7 +148,7 @@ RSpec.shared_examples "provides an overview of the draft vacancy form" do
 
   def have_step_status(step, status:)
     have_css(
-      "##{step} .review-component__heading__status",
+      "##{step} .review-component__section__heading__status",
       text: status,
     )
   end

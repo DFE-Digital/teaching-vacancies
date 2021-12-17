@@ -1,5 +1,17 @@
-= tag.div(class: classes, **html_attributes) do
-  = heading
-  - if body
-    .review-component__body
-      = body
+= tag.div(class: classes, **html_attributes)
+  = header
+
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = above
+
+      - if sections.any?
+        ol.app-task-list
+          - sections.each do |section|
+            = section
+
+      = below
+
+    - if show_tracks?
+      .govuk-grid-column-one-third
+        = render "#{namespace}/build/steps", track_assigns

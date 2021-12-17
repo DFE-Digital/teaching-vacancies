@@ -1,6 +1,6 @@
 @media print {
   .publishers_vacancies_job_applications_show {
-    .review-component__body {
+    .review-component__section__body {
       margin-bottom: govuk-spacing(4);
 
       .govuk-summary-list__row > * {
@@ -12,11 +12,11 @@
       }
     }
 
-    .review-component__heading {
+    .review-component__section__heading {
       margin-bottom: 0;
     }
 
-    .review-component {
+    .review-component__section {
       border-bottom: 1px solid $govuk-border-colour;
       margin-bottom: govuk-spacing(4);
     }
@@ -24,7 +24,7 @@
     .govuk-accordion__section-header,
     .govuk-accordion__section,
     .govuk-summary-list__actions,
-    .review-component__body--border {
+    .review-component__section__body--border {
       border: 0 !important;
     }
 
@@ -32,7 +32,7 @@
       margin-bottom: 0 !important;
     }
 
-    .review-component__heading__title {
+    .review-component__section__heading__title {
       flex-basis: 75%;
     }
 

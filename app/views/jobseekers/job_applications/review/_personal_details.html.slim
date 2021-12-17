@@ -1,41 +1,32 @@
-= render_divs_for_fields(Jobseekers::JobApplication::PersonalDetailsForm)
+- r.section :personal_details do |s|
+  - s.row do |row|
+    - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.first_name")
+    - row.value text: job_application.first_name
 
-= render ReviewComponent.new id: "jobseekers-job-application-review-form-personal-details-field-error" do |review|
-  - review.heading title: t("jobseekers.job_applications.build.personal_details.heading"),
-                    text: job_application_review_edit_section_text(job_application, :personal_details),
-                    href: jobseekers_job_application_build_path(job_application, :personal_details) do
-      = review_section_tag(job_application, [:personal_details], [Jobseekers::JobApplication::PersonalDetailsForm])
+  - s.row do |row|
+    - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.last_name")
+    - row.value text: job_application.last_name
 
-  - review.body do
-    = govuk_summary_list do |summary_list|
-      - summary_list.row do |row|
-        - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.first_name")
-        - row.value text: job_application.first_name
+  - s.row do |row|
+    - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.previous_names_html")
+    - row.value text: job_application.previous_names.presence || t("jobseekers.job_applications.not_defined")
 
-      - summary_list.row do |row|
-        - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.last_name")
-        - row.value text: job_application.last_name
+  - s.row do |row|
+    - row.key text: t("helpers.legend.jobseekers_job_application_personal_details_form.your_address")
+    - row.value text: safe_join([tag.div(job_application.street_address, class: "govuk-body"), tag.div(job_application.city, class: "govuk-body"), tag.div(job_application.postcode, class: "govuk-body"), tag.div(job_application.country, class: "govuk-body")])
 
-      - summary_list.row do |row|
-        - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.previous_names_html")
-        - row.value text: job_application.previous_names.presence || t("jobseekers.job_applications.not_defined")
+  - s.row do |row|
+    - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.phone_number")
+    - row.value text: job_application.phone_number
 
-      - summary_list.row do |row|
-        - row.key text: t("helpers.legend.jobseekers_job_application_personal_details_form.your_address")
-        - row.value text: safe_join([tag.div(job_application.street_address, class: "govuk-body"), tag.div(job_application.city, class: "govuk-body"), tag.div(job_application.postcode, class: "govuk-body"), tag.div(job_application.country, class: "govuk-body")])
+  - s.row do |row|
+    - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.email_address")
+    - row.value text: job_application.email
 
-      - summary_list.row do |row|
-        - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.phone_number")
-        - row.value text: job_application.phone_number
+  - s.row do |row|
+    - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number_html")
+    - row.value text: job_application.teacher_reference_number.presence || t("jobseekers.job_applications.not_defined")
 
-      - summary_list.row do |row|
-        - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.email_address")
-        - row.value text: job_application.email
-
-      - summary_list.row do |row|
-        - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number_html")
-        - row.value text: job_application.teacher_reference_number.presence || t("jobseekers.job_applications.not_defined")
-
-      - summary_list.row do |row|
-        - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.national_insurance_number_html")
-        - row.value text: job_application.national_insurance_number.presence || t("jobseekers.job_applications.not_defined")
+  - s.row do |row|
+    - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.national_insurance_number_html")
+    - row.value text: job_application.national_insurance_number.presence || t("jobseekers.job_applications.not_defined")
