@@ -15,6 +15,8 @@
         - list.row :personal_statement_guidance, optional: true
       - else
         - list.row :application_link, value_if_attribute_present: open_in_new_tab_link_to(vacancy.application_link, vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link"))
+        - if vacancy.application_form.present?
+          - list.row :application_form, text: vacancy.application_form.filename
 
       - if vacancy.how_to_apply.present?
         - list.row :how_to_apply
