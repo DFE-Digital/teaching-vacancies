@@ -39,6 +39,8 @@ en:
     delete_draft: Delete draft
     delete_subject: Delete subject
     dismiss: Dismiss
+    download_application: Download application
+    download_application_form: Download an application form - %{size}
     download_stats: Download statistics (csv, 0.2KB)
     edit: Edit
     end_listing: End job listing
@@ -50,7 +52,6 @@ en:
     make_changes: Make changes
     manage_listing: Manage job listing
     preview_job_listing: Preview job listing
-    download_application: Download application
     reject: Reject
     request_dsi_account: Request a DfE Sign-in account
     resend_email: Resend request
@@ -177,6 +178,13 @@ en:
         enable_job_applications_options:
           "true": Receive and manage applications through Teaching Vacancies
       publishers_job_listing_applying_for_the_job_details_form:
+        application_form_html: >-
+          <p class="govuk-body">The file must be:</p>
+          <ul class="govuk-list govuk-list--bullet">
+          <li>in pdf or doc format</li>
+          <li>smaller than 10 MB</li>
+          <li>accessible for users with disabilities or impairments - <a class="govuk-link" target="_blank" href="https://www.gov.uk/guidance/publishing-accessible-documents#writing-accessible-documents">how to make documents accessible (opens in new tab)</a>.</li>
+          </ul>
         application_link: Direct candidates to apply on your school or council website. Leave this blank if you will be uploading an application form attachment.
         contact_email: Tell candidates where they can send documents or ask questions (this will be shown publicly)
         contact_number: Allow candidates to contact you about the role (this will be shown publicly)
@@ -482,6 +490,7 @@ en:
           "false": Use another application process
           "true": Use the Teaching Vacancies application form
       publishers_job_listing_applying_for_the_job_details_form:
+        application_form: Upload an application form (optional)
         application_link_html: Link to online application (optional<span class='govuk-visually-hidden'> field</span>)</span>
         contact_email: Contact email
         contact_number_html: Contact phone number (optional<span class='govuk-visually-hidden'> field</span>)</span>
