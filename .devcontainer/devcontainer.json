@@ -20,6 +20,8 @@
     "aki77.rails-i18n",
     "aki77.rails-routes",
     "castwide.solargraph",
+    "davidpallinder.rails-test-runner",
+    "jemmyw.rails-fast-nav",
     "kaiwood.endwise",
     "mtxr.sqltools",
     "mtxr.sqltools-driver-pg",
@@ -35,11 +37,14 @@
       ".env.test": "env",
       ".env.test.local": "env"
     },
+    "rails.viewFileExtension": "html.slim",
+    "railsRoutes.railsCommand": "bin/rails",
+    "railsTestRunner.rspecCommand": "bin/rspec",
     // Set up Ruby extension
     "ruby.format": "rubocop",
     "ruby.lint": {
       "rubocop": {
-        "useBundler": true
+        "useBundler": false
       }
     },
     "ruby.useLanguageServer": true,
