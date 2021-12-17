@@ -2,24 +2,31 @@
 set -eu
 CF_ORG_NAME='dfe'
 CF_SERVICE_NAME='teaching-vacancies'
+
 if [[ -z "${CF_DESTINATION_ENVIRONMENT}" ]]; then
   echo "CF_DESTINATION_ENVIRONMENT environment variable not set"
   exit 1
 fi
-if [[ "${CF_DESTINATION_ENVIRONMENT}" = "production" ]] ; then
-  echo "CF_DESTINATION_ENVIRONMENT should not equal production"
+
+# Setting ${CONFIRM_RESTORE} to x, if not set
+# https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_02
+if [[ "${CF_DESTINATION_ENVIRONMENT}" = "production" && "${CONFIRM_RESTORE:-x}" != "YES" ]]  ; then
+  echo "CF_DESTINATION_ENVIRONMENT should not equal production unless \"CONFIRM_RESTORE=YES\" "
   exit 1
 fi
+
 if [[ -z "${CF_SPACE_NAME}" ]]; then
   echo "CF_SPACE_NAME environment variable not set"
   exit 1
 fi
+
 if [[ -z "${BACKUP_TYPE}" ]]; then
   echo "BACKUP_TYPE environment variable not set"
   exit 1
 else
   FILENAME="${BACKUP_TYPE}.sql"
 fi
+
 if [[ ! -f "${FILENAME}" ]]; then
   echo "${FILENAME} does not exist."
   exit 1
