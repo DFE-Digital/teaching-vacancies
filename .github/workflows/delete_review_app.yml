@@ -91,6 +91,9 @@ jobs:
         terraform destroy -var-file ../workspace-variables/review.tfvars -auto-approve
       working-directory: terraform/app
 
+    - name: Delete Terraform Statefile
+      run: ./bin/delete-state-file ${{ github.event.number }}
+
     - name: Post sticky pull request comment
       uses: marocchino/sticky-pull-request-comment@v2
       with:
