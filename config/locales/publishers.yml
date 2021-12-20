@@ -1,5 +1,15 @@
 en:
   publishers:
+    new_features:
+      show:
+        heading: Applications for education support roles
+        content: >-
+          You can now receive and manage applications for education support roles on Teaching Vacancies.
+        page_title: New features for hiring staff
+      reminder:
+        content: You can now receive and manage job applications for all roles on Teaching Vacancies, including education support roles.
+        page_title: A reminder about applications
+
     notifications:
       index:
         heading: Notifications
@@ -9,26 +19,11 @@ en:
           zero: No unread notifications
           one: 1 unread notification
           other: "%{count} unread notifications"
+    no_vacancies_component:
+      heading: You have no job listings to manage
     omniauth_callbacks:
       failure:
         message: Your session has expired so you have been logged out. Please sign in again to your account below.
-    sessions:
-      create:
-        not_authorised: You are not authorised to log in
-      new:
-        no_account:
-          account_request_html: If you don't yet have access to Teaching Vacancies you can %{link}
-          account_request_link_text: request an account
-          content_html: If you have a DfE Sign-in account but can't access Teaching Vacancies, %{link} and select 'Request access to a service'
-          heading: Don't have an account yet?
-          login_link_text: log in
-        page_description: If you already have a Teaching Vacancies account you can sign in to the service here.
-        sign_in:
-          description: Use DfE Sign-in to access your Teaching Vacancies account.
-          description_fallback: Enter your email below and we will send you a link that will take you straight into your account.
-          title: Hiring staff sign in
-    no_vacancies_component:
-      heading: You have no job listings to manage
     organisations:
       aria_change_description: '%{organisation_type} description'
       aria_change_website: '%{organisation_type} website'
@@ -75,6 +70,21 @@ en:
         description_2: >-
           Once you have selected a school, you will be able to post and edit jobs listings for that school.
         page_title: Add or remove schools from your account
+    sessions:
+      create:
+        not_authorised: You are not authorised to log in
+      new:
+        no_account:
+          account_request_html: If you don't yet have access to Teaching Vacancies you can %{link}
+          account_request_link_text: request an account
+          content_html: If you have a DfE Sign-in account but can't access Teaching Vacancies, %{link} and select 'Request access to a service'
+          heading: Don't have an account yet?
+          login_link_text: log in
+        page_description: If you already have a Teaching Vacancies account you can sign in to the service here.
+        sign_in:
+          description: Use DfE Sign-in to access your Teaching Vacancies account.
+          description_fallback: Enter your email below and we will send you a link that will take you straight into your account.
+          title: Hiring staff sign in
     temp_login:
       check_your_email:
         check_spam_html: >-
