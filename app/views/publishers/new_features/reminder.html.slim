@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, t("jobs.reminder_title")
+- content_for :page_title_prefix, t(".page_title")
 
 .govuk-main-wrapper
   .govuk-grid-row
@@ -6,8 +6,8 @@
       h1.govuk-heading-m
         = t("jobs.create_a_job_title", organisation: current_organisation.name)
       h2.govuk-heading-l class="govuk-!-margin-top-7"
-        = t("jobs.reminder_title")
+        = t(".page_title")
       p.govuk-body
-        = t("jobs.reminder_body")
+        = t(".content")
       = govuk_link_to t("application_pack.link_text", size: application_pack_asset_size), application_pack_asset_path, target: "_blank", class: "govuk-body", download: t("application_pack.link_download_attr")
-      = govuk_button_to t("jobs.reminder_continue_button"), organisation_jobs_path, class: "govuk-!-margin-top-8"
+      = govuk_button_to t("buttons.reminder_continue"), organisation_jobs_path, class: "govuk-!-margin-top-8"
