@@ -229,7 +229,7 @@ en:
       publisher_section:
         title: Advertise a school job
         signed_in:
-          description_html: " or %{manage_jobs_link}."
+          description_html: "%{create_job_link} or %{manage_jobs_link}."
           link_text:
             manage_jobs: manage your jobs
         signed_out:
