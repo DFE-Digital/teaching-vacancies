@@ -29,9 +29,16 @@ data "aws_iam_policy_document" "deployments_role_policy" {
   }
   statement {
     sid     = "DeleteTerraformState"
-    actions = ["s3:DeleteObject"]
+    actions = ["s3:DeleteObject", "s3:DeleteObjectVersion"]
     resources = [
       "arn:aws:s3:::${data.aws_s3_bucket.terraform_state.bucket}/review/*"
+    ]
+  }
+  statement {
+    sid     = "ListTerraformStateVersions"
+    actions = ["s3:ListBucketVersions"]
+    resources = [
+      "arn:aws:s3:::${data.aws_s3_bucket.terraform_state.bucket}"
     ]
   }
   statement {
