@@ -141,6 +141,7 @@ en:
           title: References — Application
         review:
           step_title: Review your application
+      cancel_caption: If you click cancel you will lose any unsaved information from this step. Completed details from previous steps will be saved in your draft applications.
       caption: "%{job_title} at %{organisation}"
       closing_date: Closing date
       confirm_destroy:
