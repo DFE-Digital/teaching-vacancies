@@ -4,7 +4,7 @@
 .govuk-grid-row
   .govuk-grid-column-full
     h1.govuk-heading-m
-      = heading
       - unless vacancy.published?
         span.govuk-caption-m
           = t("jobs.current_step", step: step_process.current_step_group_number, total: step_process.total_step_groups)
+      = heading
