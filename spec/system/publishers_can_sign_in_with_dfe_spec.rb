@@ -89,7 +89,8 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       within ".search-panel-banner .govuk-grid-column-one-third" do
         expect(page).to have_content(I18n.t("home.index.publisher_section.title"))
         expect(page).to have_link(I18n.t("home.index.publisher_section.signed_in.link_text.manage_jobs"), href: organisation_path)
-        expect { click_on I18n.t("buttons.create_job") }.to change { Vacancy.count }.by(1)
+        click_on I18n.t("buttons.create_job")
+        expect(current_path).to eq(create_or_copy_organisation_jobs_path)
       end
     end
   end
