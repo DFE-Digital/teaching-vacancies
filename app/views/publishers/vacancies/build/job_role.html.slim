@@ -16,6 +16,8 @@
           = f.govuk_submit t("buttons.continue")
           - unless vacancy.published?
             = govuk_link_to t("buttons.cancel_and_return_to_jobs"), jobs_with_type_organisation_path(:draft), class: "govuk-link--no-visited-state"
+            span.govuk-caption-m
+              = t("publishers.vacancies.create_or_copy.cancel_caption")
 
     - unless vacancy.published?
       .govuk-grid-column-one-third

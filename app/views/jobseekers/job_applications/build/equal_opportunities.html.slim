@@ -76,6 +76,8 @@
 
       = f.govuk_submit job_application_build_submit_button_text do
         = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
+        span.govuk-caption-m
+          = t("jobseekers.job_applications.cancel_caption")
 
   - if current_jobseeker.job_applications.not_draft.none?
     .govuk-grid-column-one-third

@@ -162,6 +162,7 @@ en:
         page_title: Delete draft listing
       create_or_copy:
         cancel: Cancel and return to manage jobs
+        cancel_caption: If you click cancel you will lose any unsaved information from this step. Completed details from previous steps will be saved in your draft jobs.
         form:
           options:
             copy_existing: Copy an existing job listing
