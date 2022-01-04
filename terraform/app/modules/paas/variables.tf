@@ -112,7 +112,7 @@ locals {
     local.app_env_secrets,
     local.app_env_documents_bucket_credentials,
     local.app_env_domain,
-    var.app_env_values #Because of merge order, if present, the value of DOMAIN in .tfvars will overwrite app_env_domain
+    var.app_env_values #Because of merge order, if present, the value of DOMAIN in .tfvars.json will overwrite app_env_domain
   )
   app_cloudfoundry_service_instances = [
     cloudfoundry_service_instance.postgres_instance.id,

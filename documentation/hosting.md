@@ -231,7 +231,7 @@ cf conduit $CF_POSTGRES_SERVICE_TARGET -- psql < backup.sql
 ```
 
 ## Set up a new environment
-- Create file `terraform/workspace-variables/<env>.tfvars`
+- Create file `terraform/workspace-variables/<env>.tfvars.json`
 - Create file `terraform/workspace-variables/<env>_app_env.yml`
 - Create SSM parameters of type `SecureString`:
   - `/teaching-vacancies/<env>/app/BIG_QUERY_API_JSON_KEY`
