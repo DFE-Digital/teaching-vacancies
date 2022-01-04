@@ -32,7 +32,7 @@ jobs:
     - name: Set PaaS space name
       shell: bash
       run: |
-        PAAS_SPACE_NAME=$(grep paas_space_name terraform/workspace-variables/${{ github.event.inputs.environment }}.tfvars | awk -F'= ' '{print $2}' | cut -d '"' -f 2)
+        PAAS_SPACE_NAME=$(jq -r .paas_space_name terraform/workspace-variables/${{ github.event.inputs.environment }}.tfvars.json)
         echo "PAAS_SPACE_NAME=${PAAS_SPACE_NAME}" >> $GITHUB_ENV
 
     - name: Setup cf cli

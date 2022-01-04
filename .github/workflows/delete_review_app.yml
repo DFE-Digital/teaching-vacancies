@@ -88,7 +88,7 @@ jobs:
       run: |
         export TF_VAR_environment=${{env.ENVIRONMENT}}
         terraform init -reconfigure -input=false -backend-config="key=review/review-pr-${{ github.event.number }}.tfstate"
-        terraform destroy -var-file ../workspace-variables/review.tfvars -auto-approve
+        terraform destroy -var-file ../workspace-variables/review.tfvars.json -auto-approve
       working-directory: terraform/app
 
     - name: Delete Terraform Statefile

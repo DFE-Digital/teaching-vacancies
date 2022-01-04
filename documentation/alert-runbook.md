@@ -55,7 +55,7 @@ cf logs teaching-vacancies-production
 
 ### Terraform
 
-Most PaaS settings are in [production.tfvars](../terraform/workspace-variables/production.tfvars)
+Most PaaS settings are in [production.tfvars.json](../terraform/workspace-variables/production.tfvars.json)
 
 ```
 paas_postgres_service_plan             = "medium-ha-11"
