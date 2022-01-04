@@ -167,5 +167,14 @@ FactoryBot.define do
         ]
       end
     end
+
+    trait :with_application_form do
+      application_form do
+        Rack::Test::UploadedFile.new(
+          Rails.root.join("spec", "fixtures", "files", "blank_job_spec.pdf"),
+          "application/pdf",
+        )
+      end
+    end
   end
 end
