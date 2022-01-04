@@ -57,7 +57,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
       if session[:current_step] == :review
         redirect_updated_job_with_message
       else
-        redirect_to organisation_job_build_path(vacancy.id, :job_summary)
+        redirect_to organisation_job_build_path(vacancy.id, :documents)
       end
     else
       render "publishers/vacancies/build/applying_for_the_job_details"

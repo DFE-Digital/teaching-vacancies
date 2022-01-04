@@ -12,8 +12,8 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
   describe "#step_groups" do
     let(:all_possible_step_groups) do
       %i[
-        job_role job_location job_details working_patterns pay_package important_dates documents
-        applying_for_the_job job_summary review
+        job_role job_location job_details working_patterns pay_package important_dates
+        applying_for_the_job documents job_summary review
       ]
     end
 
@@ -46,7 +46,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
     let(:all_possible_steps) do
       %i[
         job_role job_role_details job_location schools education_phases job_details working_patterns
-        pay_package important_dates documents applying_for_the_job applying_for_the_job_details job_summary review
+        pay_package important_dates applying_for_the_job applying_for_the_job_details documents job_summary review
       ]
     end
 
