@@ -122,14 +122,14 @@ terraform-app-init:
 
 .PHONY: terraform-app-plan
 terraform-app-plan: terraform-app-init check-terraform-variables ## make passcode=MyPasscode tag=dev-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714 <env> terraform-app-plan
-		terraform -chdir=terraform/app plan -var-file ../workspace-variables/$(var_file).tfvars
+		terraform -chdir=terraform/app plan -var-file ../workspace-variables/$(var_file).tfvars.json
 
 .PHONY: terraform-app-apply
 terraform-app-apply: terraform-app-init check-terraform-variables ## make passcode=MyPasscode tag=47fd1475376bbfa16a773693133569b794408995 <env> terraform-app-apply
-		terraform -chdir=terraform/app apply -input=false -var-file ../workspace-variables/$(var_file).tfvars -auto-approve
+		terraform -chdir=terraform/app apply -input=false -var-file ../workspace-variables/$(var_file).tfvars.json -auto-approve
 
 terraform-app-destroy: terraform-app-init ## make qa destroy passcode=MyPasscode
-	terraform -chdir=terraform/app destroy -var-file ../workspace-variables/${var_file}.tfvars
+	terraform -chdir=terraform/app destroy -var-file ../workspace-variables/${var_file}.tfvars.json
 
 terraform-app-database-replace: terraform-app-init check-terraform-variables
 	@if [[ "$(CONFIRM_REPLACE)" != "YES" ]]; then echo "Please enter "CONFIRM_REPLACE=YES" to run workflow"; exit 1; fi
@@ -137,7 +137,7 @@ terraform-app-database-replace: terraform-app-init check-terraform-variables
 		-replace="module.paas.cloudfoundry_service_instance.postgres_instance" \
 		-replace="module.paas.cloudfoundry_app.web_app" \
 		-replace="module.paas.cloudfoundry_app.worker_app" \
-		-var-file ../workspace-variables/${var_file}.tfvars -auto-approve
+		-var-file ../workspace-variables/${var_file}.tfvars.json -auto-approve
 
 ##@ terraform/common code. Requires privileged IAM account to run
 
