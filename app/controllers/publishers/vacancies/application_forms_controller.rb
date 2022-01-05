@@ -25,6 +25,10 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
 
   private
 
+  def current_step
+    :applying_for_the_job_details
+  end
+
   def form
     @form ||= Publishers::JobListing::ApplyingForTheJobDetailsForm.new(applying_for_the_job_details_form_params, vacancy)
   end
