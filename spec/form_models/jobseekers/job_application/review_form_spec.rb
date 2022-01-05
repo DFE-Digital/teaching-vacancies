@@ -2,9 +2,10 @@ require "rails_helper"
 
 RSpec.describe Jobseekers::JobApplication::ReviewForm, type: :model do
   let(:completed_steps) { [] }
+  let(:all_steps) { %w[personal_details professional_status employment_history] }
 
   subject do
-    described_class.new({ confirm_data_accurate: "1", confirm_data_usage: "1", completed_steps: completed_steps })
+    described_class.new({ confirm_data_accurate: "1", confirm_data_usage: "1", completed_steps: completed_steps, all_steps: all_steps })
   end
 
   it { is_expected.to validate_acceptance_of(:confirm_data_accurate) }
@@ -19,8 +20,8 @@ RSpec.describe Jobseekers::JobApplication::ReviewForm, type: :model do
   end
 
   context "when there are incomplete steps" do
-    let(:completed_steps) { %w[personal_details professional_status employment_history references ask_for_support] }
-    let(:incomplete_steps) { %i[personal_statement equal_opportunities declarations] }
+    let(:completed_steps) { %w[personal_details professional_status] }
+    let(:incomplete_steps) { %i[employment_history] }
 
     it "is invalid" do
       expect(subject).not_to be_valid

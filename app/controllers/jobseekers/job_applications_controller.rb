@@ -153,7 +153,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def review_form_params
     params.require(:jobseekers_job_application_review_form).permit(:confirm_data_accurate, :confirm_data_usage)
-          .merge(completed_steps: job_application.completed_steps)
+          .merge(completed_steps: job_application.completed_steps, all_steps: step_process.steps.excluding(:review).map(&:to_s))
   end
 
   def withdraw_form_params

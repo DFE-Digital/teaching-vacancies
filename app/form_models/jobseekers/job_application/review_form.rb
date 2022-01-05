@@ -1,7 +1,7 @@
 class Jobseekers::JobApplication::ReviewForm
   include ActiveModel::Model
 
-  attr_accessor :confirm_data_accurate, :confirm_data_usage, :completed_steps
+  attr_accessor :confirm_data_accurate, :confirm_data_usage, :completed_steps, :all_steps
 
   validates_acceptance_of :confirm_data_accurate, :confirm_data_usage,
                           acceptance: true,
@@ -9,7 +9,7 @@ class Jobseekers::JobApplication::ReviewForm
   validate :all_steps_completed?
 
   def all_steps_completed?
-    JobApplication.completed_steps.each_key do |step|
+    all_steps.each do |step|
       next if step.in?(completed_steps)
 
       errors.add(
