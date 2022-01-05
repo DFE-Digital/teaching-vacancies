@@ -1,5 +1,17 @@
 en:
   publishers:
+    accounts:
+      confirm_unsubscribe:
+        confirmation_button: Unsubscribe
+        notification_banner:
+          body_html: Are you sure you want to unsubscribe from <span class="govuk-!-font-weight-bold">Give Feedback</span> email
+          heading: Unsubscribe from this email
+        title: Unsubscribe
+      unsubscribe:
+        panel:
+          body: You will no longer receive feedback requests for your listing
+          heading: You have now unsubcribed
+        title: You are now unsubscribed
     notifications:
       index:
         heading: Notifications
@@ -188,6 +200,30 @@ en:
           title: Extend deadline - %{job_title}
         update:
           success: "The deadline for %{job_title} has been extended"
+      expired_feedbacks:
+        new:
+          description: >-
+            Please tell us whether you filled this job through Teaching Vacancies, and if you listed it elsewhere.
+            Your feedback will help us improve the service.
+          expired_vacancy_feedback_link_text: Provide feedback to other expired listings
+          heading: Give job feedback
+          provided:
+            description: >-
+              We will use your feedback to improve Teaching Vacancies. With your help we can make it the resource
+              schools prefer to use when looking for teachers, leading to even bigger savings on recruitment costs.
+            heading: Feedback for this job listing has already been provided
+            subheading: What happens next?
+          title: Give feedback
+        submitted:
+          description: >-
+            We will use your feedback to improve Teaching Vacancies. With your help we can make it the resource schools
+            prefer to use when looking for teachers, leading to even bigger savings on recruitment costs.
+          expired_vacancy_feedback_link_text: Provide feedback to other expired listings
+          heading: What happens next?
+          panel:
+            heading: Feedback submitted
+            body: Thank you
+          title: Feedback submitted
       job_applications:
         banner:
           applications:
