@@ -16,7 +16,7 @@ gem "activerecord-import"
 gem "activerecord-postgis-adapter"
 gem "activerecord-session_store"
 gem "addressable"
-gem "array_enum", github: "DFE-Digital/array_enum"
+gem "array_enum"
 gem "aws-sdk-s3", require: false
 gem "breasal"
 gem "browser"
