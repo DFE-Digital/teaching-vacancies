@@ -15,8 +15,8 @@
           .signin.signin--publisher
             h2.govuk-heading-m = t(".publisher_section.title")
             - if publisher_signed_in?
-              = button_to(t("buttons.create_job"), organisation_jobs_path, class: "govuk-body govuk-link button-as-link")
               p.govuk-body = t(".publisher_section.signed_in.description_html",
+                create_job_link: govuk_link_to(t("buttons.create_job"), create_or_copy_organisation_jobs_path, class: "govuk-link--no-visited-state"),
                 manage_jobs_link: govuk_link_to(t(".publisher_section.signed_in.link_text.manage_jobs"), organisation_path, class: "govuk-link--no-visited-state"))
             - else
               p.govuk-body = t(".publisher_section.signed_out.description_html",
