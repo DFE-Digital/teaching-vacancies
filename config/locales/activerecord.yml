@@ -86,6 +86,11 @@ en:
       inclusion: Select yes if you want to report a problem or request support
     user_participation_response:
       inclusion: Please indicate if you'd like to participate in user research
+  publisher_job_listing_expired_feedback_form: &publisher_job_listing_expired_feedback_form_errors
+    hired_status:
+      inclusion: Please make sure you have submitted an answer for both questions
+    listed_elsewhere:
+      inclusion: Please make sure you have submitted an answer for both questions
 
   # Publishers journey
   job_role_errors: &job_role_errors
@@ -247,6 +252,9 @@ en:
         publishers/job_listing/feedback_form:
           attributes:
             <<: *publisher_job_listing_feedback_form_errors
+        publishers/job_listing/expired_feedback_form:
+          attributes:
+            <<: *publisher_job_listing_expired_feedback_form_errors
         publishers/job_listing/end_listing_form:
           attributes:
             end_listing_reason:
