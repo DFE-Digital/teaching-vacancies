@@ -91,6 +91,10 @@ Rails.application.routes.draw do
 
   namespace :publishers do
     resources :notifications, only: %i[index]
+    resource :account do
+      get "confirm-unsubscribe", to: "accounts#confirm_unsubscribe"
+      patch "unsubscribe", to: "accounts#unsubscribe"
+    end
   end
 
   scope :publishers do
@@ -181,6 +185,9 @@ Rails.application.routes.draw do
       get :review
       get :summary
       resource :feedback, only: %i[create], controller: "publishers/vacancies/feedbacks"
+      resource :expired_feedback, only: %i[new create], controller: "publishers/vacancies/expired_feedbacks", path: "expired-feedback" do
+        get :submitted
+      end
       resource :statistics, only: %i[show update], controller: "publishers/vacancies/statistics"
       resource :copy, only: %i[new create], controller: "publishers/vacancies/copy"
       resource :end_listing, only: %i[show update], controller: "publishers/vacancies/end_listing"
