@@ -48,7 +48,7 @@ The equivalent of the Makefile `dev terraform-app-plan` is:
 cd terraform/app
 rm -f .terraform.lock.hcl
 terraform init -reconfigure -backend-config="key=dev/app.tfstate"
-terraform plan -var="paas_sso_passcode=MyPasscode" -var="paas_app_docker_image=dfedigital/teaching-vacancies:dev-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714" -var-file ../workspace-variables/dev.tfvars
+terraform plan -var="paas_sso_passcode=MyPasscode" -var="paas_app_docker_image=dfedigital/teaching-vacancies:dev-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714" -var-file ../workspace-variables/dev.tfvars.json
 ```
 
 ## Planning out to a file, and using `terraform show`
@@ -70,7 +70,7 @@ How do we get visibility of what the `(sensitive value)` change will be?
 In the `terraform/app` directory:
 
 ```
-terraform plan -var="paas_sso_passcode=MyPasscode" -var="paas_app_docker_image=dfedigital/teaching-vacancies:dev-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714" -var-file ../workspace-variables/dev.tfvars -out dev.plan
+terraform plan -var="paas_sso_passcode=MyPasscode" -var="paas_app_docker_image=dfedigital/teaching-vacancies:dev-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714" -var-file ../workspace-variables/dev.tfvars.json -out dev.plan
 ```
 Then we can use `terraform show` to render as JSON
 ```
