@@ -1,0 +1,10 @@
+- content_for :page_title_prefix, t(".title")
+
+= govuk_notification_banner title_text: t("banners.important"), classes: "govuk-!-margin-top-2" do |banner|
+  - banner.heading(text: t(".notification_banner.heading"))
+
+  p.govuk-body
+    = t(".notification_banner.body_html")
+
+= form_for @publisher, url: unsubscribe_publishers_account_path(publisher_id: @publisher.signed_id), method: :patch do |f|
+  = f.govuk_submit t("buttons.confirm_unsubscribe"), warning: true

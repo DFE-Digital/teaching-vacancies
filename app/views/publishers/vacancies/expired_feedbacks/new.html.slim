@@ -1,0 +1,45 @@
+- content_for :page_title_prefix, t(".title")
+
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-full
+      span.govuk-caption-l class="govuk-!-margin-bottom-1"
+        = @vacancy.job_title
+
+      h1.govuk-heading-xl class="govuk-!-margin-bottom-5"
+          = @vacancy.hired_status.nil? ? t(".heading") : t(".provided.heading")
+
+      .govuk-grid-column-two-thirds class="govuk-!-padding-left-0"
+        - if @vacancy.hired_status.nil?
+          p.govuk-body = t(".description")
+
+          = form_for @feedback_form, url: organisation_job_expired_feedback_path(@vacancy.signed_id) do |f|
+            = f.govuk_error_summary
+
+            = f.govuk_radio_buttons_fieldset(:hired_status, legend: { size: "m" }) do
+              = f.govuk_radio_button :hired_status, :hired_tvs
+              = f.govuk_radio_button :hired_status, :hired_other_free
+              = f.govuk_radio_button :hired_status, :hired_paid
+              = f.govuk_radio_button :hired_status, :hired_no_listing
+              = f.govuk_radio_button :hired_status, :not_filled_ongoing
+              = f.govuk_radio_button :hired_status, :not_filled_not_looking
+              = f.govuk_radio_divider
+              = f.govuk_radio_button :hired_status, :hired_dont_know
+
+            = f.govuk_radio_buttons_fieldset(:listed_elsewhere, legend: { size: "m" }) do
+              = f.govuk_radio_button :listed_elsewhere, :listed_paid
+              = f.govuk_radio_button :listed_elsewhere, :listed_free
+              = f.govuk_radio_button :listed_elsewhere, :listed_mix
+              = f.govuk_radio_button :listed_elsewhere, :not_listed
+              = f.govuk_radio_divider
+              = f.govuk_radio_button :listed_elsewhere, :listed_dont_know
+
+            = f.govuk_submit t("buttons.submit_feedback")
+
+        - else
+          h2.govuk-heading-m class="govuk-!-margin-top-5"
+            = t(".provided.subheading")
+
+          p.govuk-body = t(".provided.description")
+
+          = govuk_link_to(t(".expired_vacancy_feedback_link_text"), jobs_with_type_organisation_path(:awaiting_feedback), class: "govuk-body-m")
