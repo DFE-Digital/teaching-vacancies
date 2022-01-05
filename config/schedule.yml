@@ -10,7 +10,7 @@ destroy_inactive_accounts:
 
 email_feedback_prompt:
   cron: '0 09 * * *'
-  class: 'SendExpiredVacancyFeedbackEmailJob'
+  class: 'SendExpiredVacancyFeedbackPromptJob'
   queue: low
 
 export_users:
