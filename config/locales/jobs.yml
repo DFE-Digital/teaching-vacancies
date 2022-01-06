@@ -155,9 +155,6 @@ en:
     copy_job_title: Copy %{job_title}
     manage_listing: Manage %{state} listing
     new_job_listing_details: New job listing details
-    reminder_body: You can now receive and manage job applications on Teaching Vacancies. You can do this for all jobs except education support roles.
-    reminder_continue_button: Continue to create a job
-    reminder_title: A reminder about applications
     review_page_title: Review the job listing — Create a job listing for %{organisation}
     edit_job_title: Edit %{job_title}
     current_step: Step %{step} of %{total}
