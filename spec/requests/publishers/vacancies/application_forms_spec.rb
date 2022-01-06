@@ -90,7 +90,7 @@ RSpec.describe "Documents" do
       end
 
       it "redirects to next step" do
-        expect(response).to redirect_to(organisation_job_build_path(vacancy.id, :job_summary))
+        expect(response).to redirect_to(organisation_job_build_path(vacancy.id, :documents))
       end
     end
   end

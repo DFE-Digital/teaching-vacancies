@@ -209,9 +209,6 @@ RSpec.describe "Creating a vacancy" do
 
     fill_in_important_dates_fields(vacancy)
     click_on I18n.t("buttons.continue")
-    expect(current_path).to eq(organisation_job_documents_path(created_vacancy.id))
-
-    click_on I18n.t("buttons.continue")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
 
     click_on I18n.t("buttons.continue")
@@ -227,6 +224,9 @@ RSpec.describe "Creating a vacancy" do
     expect(current_path).to eq(organisation_job_application_forms_path(created_vacancy.id))
 
     fill_in_applying_for_the_job_details_form_fields(vacancy, local_authority_vacancy: false)
+    click_on I18n.t("buttons.continue")
+    expect(current_path).to eq(organisation_job_documents_path(created_vacancy.id))
+
     click_on I18n.t("buttons.continue")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_summary))
 
