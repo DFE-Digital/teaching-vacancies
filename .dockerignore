@@ -18,7 +18,7 @@ package-lock.json
 # Ignore terraform files
 terraform/*
 *.tf
-*.tfvars
+*.tfvar*
 
 # Ignore Makefile
 Makefile
