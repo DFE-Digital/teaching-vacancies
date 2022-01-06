@@ -17,24 +17,24 @@ RSpec.describe "Jobseekers can view a job application" do
     end
 
     within ".navigation-list-component", text: I18n.t("shared.job_application.show.application_sections") do
-      expect(page).to have_link(I18n.t("shared.job_application.show.personal_details.heading"), href: "#personal_details_summary")
-      expect(page).to have_link(I18n.t("shared.job_application.show.professional_status.heading"), href: "#professional_status_summary")
-      expect(page).to have_link(I18n.t("shared.job_application.show.qualifications.heading"), href: "#qualifications_summary")
-      expect(page).to have_link(I18n.t("shared.job_application.show.employment_history.heading"), href: "#employment_history_summary")
-      expect(page).to have_link(I18n.t("shared.job_application.show.personal_statement.heading"), href: "#personal_statement_summary")
-      expect(page).to have_link(I18n.t("shared.job_application.show.references.heading"), href: "#references_summary")
-      expect(page).to have_link(I18n.t("shared.job_application.show.ask_for_support.heading"), href: "#ask_for_support_summary")
-      expect(page).to have_link(I18n.t("shared.job_application.show.declarations.heading"), href: "#declarations_summary")
+      expect(page).to have_link(I18n.t("shared.job_application.show.personal_details.heading"), href: "#personal_details")
+      expect(page).to have_link(I18n.t("shared.job_application.show.professional_status.heading"), href: "#professional_status")
+      expect(page).to have_link(I18n.t("shared.job_application.show.qualifications.heading"), href: "#qualifications")
+      expect(page).to have_link(I18n.t("shared.job_application.show.employment_history.heading"), href: "#employment_history")
+      expect(page).to have_link(I18n.t("shared.job_application.show.personal_statement.heading"), href: "#personal_statement")
+      expect(page).to have_link(I18n.t("shared.job_application.show.references.heading"), href: "#references")
+      expect(page).to have_link(I18n.t("shared.job_application.show.ask_for_support.heading"), href: "#ask_for_support")
+      expect(page).to have_link(I18n.t("shared.job_application.show.declarations.heading"), href: "#declarations")
     end
 
-    expect(page).to have_css(".review-component", text: I18n.t("shared.job_application.show.personal_details.heading"))
-    expect(page).to have_css(".review-component", text: I18n.t("shared.job_application.show.professional_status.heading"))
-    expect(page).to have_css(".review-component", text: I18n.t("shared.job_application.show.qualifications.heading"))
-    expect(page).to have_css(".review-component", text: I18n.t("shared.job_application.show.employment_history.heading"))
-    expect(page).to have_css(".review-component", text: I18n.t("shared.job_application.show.personal_statement.heading"))
-    expect(page).to have_css(".review-component", text: I18n.t("shared.job_application.show.references.heading"))
-    expect(page).to have_css(".review-component", text: I18n.t("shared.job_application.show.ask_for_support.heading"))
-    expect(page).to have_css(".review-component", text: I18n.t("shared.job_application.show.declarations.heading"))
+    expect(page).to have_css(".review-component__section", text: I18n.t("shared.job_application.show.personal_details.heading"))
+    expect(page).to have_css(".review-component__section", text: I18n.t("shared.job_application.show.professional_status.heading"))
+    expect(page).to have_css(".review-component__section", text: I18n.t("shared.job_application.show.qualifications.heading"))
+    expect(page).to have_css(".review-component__section", text: I18n.t("shared.job_application.show.employment_history.heading"))
+    expect(page).to have_css(".review-component__section", text: I18n.t("shared.job_application.show.personal_statement.heading"))
+    expect(page).to have_css(".review-component__section", text: I18n.t("shared.job_application.show.references.heading"))
+    expect(page).to have_css(".review-component__section", text: I18n.t("shared.job_application.show.ask_for_support.heading"))
+    expect(page).to have_css(".review-component__section", text: I18n.t("shared.job_application.show.declarations.heading"))
 
     within ".timeline-component__item", text: I18n.t("jobseekers.job_applications.status_timestamps.submitted") do
       expect(page).to have_content("#{format_date(job_application.submitted_at.to_date)} at #{format_time(job_application.submitted_at)}")

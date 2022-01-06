@@ -1,54 +1,29 @@
+# This is an abstract class.  See VacancyReviewComponent or
+# JobApplicationReviewComponent for specific implementations.
 class ReviewComponent < GovukComponent::Base
-  attr_reader :id
+  renders_one :header
 
-  renders_one :heading, "HeadingComponent"
-  renders_one :body
+  renders_one :above
+  renders_one :below
 
-  def initialize(id:, classes: [], html_attributes: {})
-    super(classes: classes, html_attributes: html_attributes.merge(id: id))
+  def initialize(namespace:, show_tracks:, classes: [], html_attributes: {})
+    super(classes: classes, html_attributes: html_attributes)
 
-    @id = id
+    @namespace = namespace
+    @show_tracks = show_tracks
   end
 
   private
 
-  def default_classes
-    %w[review-component]
+  attr_reader(*%I[
+    namespace
+  ])
+
+  def show_tracks?
+    !!@show_tracks
   end
 
-  class HeadingComponent < GovukComponent::Base
-    attr_reader :title, :text, :href
-
-    def initialize(title:, text: nil, href: nil, classes: [], html_attributes: {})
-      super(classes: classes, html_attributes: html_attributes)
-
-      @title = title
-      @text = text
-      @href = href
-    end
-
-    def call
-      tag.div(class: classes, **html_attributes) do
-        safe_join([
-          tag.div(class: "review-component__heading__title") do
-            safe_join([
-              tag.h3(class: "govuk-heading-m") { title },
-              edit_link,
-            ].compact)
-          end,
-          tag.div(class: "review-component__heading__status") { content },
-        ].compact)
-      end
-    end
-
-    private
-
-    def default_classes
-      %w[review-component__heading]
-    end
-
-    def edit_link
-      govuk_link_to text, href, aria: { label: "#{text} #{title}" }, classes: "govuk-!-display-none-print" if text && href
-    end
+  def track_assigns
+    {}
   end
 end

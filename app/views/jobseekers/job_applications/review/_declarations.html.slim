@@ -1,17 +1,8 @@
-= render_divs_for_fields(Jobseekers::JobApplication::DeclarationsForm)
+- r.section :declarations do |s|
+  - s.row do |row|
+    - row.key text: t("helpers.legend.jobseekers_job_application_declarations_form.close_relationships", organisation: vacancy.organisation.name)
+    - row.value text: job_application_close_relationships_info(job_application)
 
-= render ReviewComponent.new id: "jobseekers-job-application-review-form-declarations-field-error" do |review|
-  - review.heading title: t("jobseekers.job_applications.build.declarations.heading"),
-                   text: job_application_review_edit_section_text(job_application, :declarations),
-                   href: jobseekers_job_application_build_path(job_application, :declarations) do
-      = review_section_tag(job_application, [:declarations], [Jobseekers::JobApplication::DeclarationsForm])
-
-  - review.body do
-    = govuk_summary_list do |summary_list|
-      - summary_list.row do |row|
-        - row.key text: t("helpers.legend.jobseekers_job_application_declarations_form.close_relationships", organisation: vacancy.organisation.name)
-        - row.value text: job_application_close_relationships_info(job_application)
-
-      - summary_list.row do |row|
-        - row.key text: t("helpers.legend.jobseekers_job_application_declarations_form.right_to_work_in_uk")
-        - row.value text: job_application.right_to_work_in_uk.humanize
+  - s.row do |row|
+    - row.key text: t("helpers.legend.jobseekers_job_application_declarations_form.right_to_work_in_uk")
+    - row.value text: job_application.right_to_work_in_uk.humanize
