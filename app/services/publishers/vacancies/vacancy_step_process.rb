@@ -13,8 +13,8 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
       working_patterns: %i[working_patterns],
       pay_package: %i[pay_package],
       important_dates: %i[important_dates],
-      documents: %i[documents],
       applying_for_the_job: applying_for_the_job_steps,
+      documents: %i[documents],
       job_summary: %i[job_summary],
       review: %i[review],
     })
