@@ -202,6 +202,33 @@ RSpec.describe "Creating a vacancy" do
         expect(current_path).to eq(organisation_job_summary_path(vacancy.id))
       end
 
+      scenario "only shows errors for a field once" do
+        visit organisation_path
+        click_on "Create a job listing"
+        click_on "Continue"
+
+        choose "Teacher"
+        click_on "Continue"
+        click_on "Continue"
+        choose "Secondary"
+        click_on "Continue"
+        fill_in "Job title", with: "test vacancy"
+        choose "Permanent"
+        click_on "Continue"
+
+        click_on "Cancel and return to manage jobs"
+        click_on "test vacancy"
+        click_on "Confirm and submit job"
+
+        # Top level errors
+        errors = page.all(".govuk-error-summary__list a").map(&:text)
+        expect(errors).to match_array(errors.uniq)
+
+        # Inline errors
+        errors = page.all(".govuk-summary-list__row a").map(&:text)
+        expect(errors).to match_array(errors.uniq)
+      end
+
       scenario "can be published at a later date" do
         vacancy = create(:vacancy, :draft, organisations: [school], publish_on: Time.zone.tomorrow, job_roles: %w[teacher], phase: "multiple_phases")
 

@@ -6,8 +6,10 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Vacan
   attr_reader :expires_at, :publish_on, :starts_on
   attr_writer :publish_on_day
 
+  validates(:publish_on, date: { on_or_after: :today, on_or_before: :far_future }, unless: lambda do
+    publish_on_day.blank? || disable_editing_publish_on? || (publish_on.is_a?(Date) && (publish_on.today? || publish_on.tomorrow?))
+  end)
   validates :publish_on_day, inclusion: { in: %w[today tomorrow another_day] }, unless: :disable_editing_publish_on?
-  validates :publish_on, date: { on_or_after: :today, on_or_before: :far_future }, if: proc { !disable_editing_publish_on? && publish_on_day == "another_day" }
   validates :expires_at, date: { on_or_after: :now, on_or_before: :far_future, after: :publish_on }
   validates :expiry_time, inclusion: { in: Vacancy::EXPIRY_TIME_OPTIONS }
   validates :starts_on, date: { on_or_after: :today, on_or_before: :far_future, after: :expires_at }, allow_blank: true,
