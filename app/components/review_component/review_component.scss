@@ -1,82 +1,84 @@
 @import 'base_component';
 
 .review-component {
-  &__heading {
-    display: flex;
-    margin-bottom: govuk-spacing(4);
+  &__section {
+    &__heading {
+      display: flex;
+      margin-bottom: govuk-spacing(4);
 
-    .govuk-link {
-      @include govuk-font($size: 16, $weight: bold);
+      .govuk-link {
+        @include govuk-font($size: 16, $weight: bold);
 
-      line-height: 1.6;
-      white-space: nowrap;
-
-      @include govuk-media-query($from: desktop) {
-        @include govuk-font($size: 19, $weight: bold);
-      }
-    }
-
-    &__title {
-      @include govuk-media-query($from: tablet) {
-        flex-basis: 75%;
-      }
-
-      .govuk-heading-m {
-        display: inline-block;
-        margin-bottom: 0;
-        margin-right: govuk-spacing(2);
-      }
-    }
-
-    &__status {
-      flex-grow: 1;
-      text-align: right;
-
-      .govuk-tag {
+        line-height: 1.6;
         white-space: nowrap;
-      }
-    }
-  }
 
-  .review-component__body {
-    margin-bottom: govuk-spacing(8);
-
-    .govuk-summary-list {
-      @include govuk-font(19);
-
-      border-collapse: collapse;
-      margin-bottom: 0;
-      margin-top: 0;
-
-      @include govuk-media-query($from: tablet) {
-        border-top: 1px solid $govuk-border-colour;
+        @include govuk-media-query($from: desktop) {
+          @include govuk-font($size: 19, $weight: bold);
+        }
       }
 
-      @include govuk-media-query($from: desktop) {
-        display: table;
-      }
-
-      .govuk-summary-list__row {
-        .govuk-summary-list__value {
-          border: 0;
-          padding-right: 0;
+      &__title {
+        @include govuk-media-query($from: tablet) {
+          flex-basis: 75%;
         }
 
-        .govuk-summary-list__key {
-          border: 0;
-          padding-right: 20px;
+        .govuk-heading-m {
+          display: inline-block;
+          margin-bottom: 0;
+          margin-right: govuk-spacing(2);
+        }
+      }
+
+      &__status {
+        flex-grow: 1;
+        text-align: right;
+
+        .govuk-tag {
+          white-space: nowrap;
         }
       }
     }
 
-    .govuk-accordion__section,
-    .review-component__body--border {
-      border-bottom: 1px solid $govuk-border-colour;
-      margin-top: -1px;
-    }
+    &__body {
+      margin-bottom: govuk-spacing(8);
 
-    .govuk-accordion__section--expanded {
-      border-bottom-style: none;
+      .govuk-summary-list {
+        @include govuk-font(19);
+
+        border-collapse: collapse;
+        margin-bottom: 0;
+        margin-top: 0;
+
+        @include govuk-media-query($from: tablet) {
+          border-top: 1px solid $govuk-border-colour;
+        }
+
+        @include govuk-media-query($from: desktop) {
+          display: table;
+        }
+
+        .govuk-summary-list__row {
+          .govuk-summary-list__value {
+            border: 0;
+            padding-right: 0;
+          }
+
+          .govuk-summary-list__key {
+            border: 0;
+            padding-right: 20px;
+          }
+        }
+      }
+
+      .govuk-accordion__section,
+      &--border {
+        border-bottom: 1px solid $govuk-border-colour;
+        margin-top: -1px;
+      }
+
+      .govuk-accordion__section--expanded {
+        border-bottom-style: none;
+      }
     }
   }
 }

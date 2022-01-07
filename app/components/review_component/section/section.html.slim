@@ -1,0 +1,7 @@
+li
+  - field_div_sets.each do |field_div_set|
+    = field_div_set
+
+  = tag.div(class: classes, id: id, **html_attributes) do
+    = heading
+    .review-component__section__body = content

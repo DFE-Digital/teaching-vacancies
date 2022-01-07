@@ -1,10 +1,10 @@
 - content_for :page_title_prefix, job_application_page_title_prefix(review_form, t(".title"))
 
-= render "banner"
+= job_application_review(@job_application, step_process: step_process, show_tracks: current_jobseeker.job_applications.not_draft.none?) do |r|
+  - r.header do
+    = render "banner"
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    / TODO: Confirm content
+  - r.above do
     - unless vacancy.listed?
       = govuk_notification_banner title_text: t("banners.important") do
         p.govuk-body = t(".deadline_passed")
@@ -12,26 +12,17 @@
     - unless review_form.errors.any?
       = render "shared/error_messages", model: @job_application, presenter: ErrorSummaryPresenter.new(@job_application.errors)
 
+    - if current_jobseeker.job_applications.not_draft.none?
+      .govuk-caption-m
+        = t("jobseekers.job_applications.current_step", current: step_process.current_step_group_number, total: step_process.total_step_groups)
+
+    h2.govuk-heading-l = t(".heading")
+
+  - render "job_application_review_sections", r: r
+
+  - r.below do
     = form_for review_form, url: jobseekers_job_application_submit_path(job_application), method: :post do |f|
       = f.govuk_error_summary
-
-      - if current_jobseeker.job_applications.not_draft.none?
-        .govuk-caption-m
-          = t("jobseekers.job_applications.current_step", current: step_process.current_step_group_number, total: step_process.total_step_groups)
-
-      h2.govuk-heading-l = t(".heading")
-
-      ol.app-task-list
-        li = render "jobseekers/job_applications/review/personal_details"
-        - if job_application.ask_professional_status?
-          li = render "jobseekers/job_applications/review/professional_status"
-        li = render "jobseekers/job_applications/review/qualifications"
-        li = render "jobseekers/job_applications/review/employment_history"
-        li = render "jobseekers/job_applications/review/personal_statement"
-        li = render "jobseekers/job_applications/review/references"
-        li = render "jobseekers/job_applications/review/equal_opportunities"
-        li = render "jobseekers/job_applications/review/ask_for_support"
-        li = render "jobseekers/job_applications/review/declarations"
 
       h3.govuk-heading-m = t(".confirmation.heading")
 
@@ -57,7 +48,3 @@
       - if vacancy.listed?
         = f.govuk_submit t("buttons.submit_application") do
           = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
-
-  - if current_jobseeker.job_applications.not_draft.none?
-    .govuk-grid-column-one-third
-      = render "jobseekers/job_applications/build/steps"
