@@ -2,16 +2,7 @@ class Jobseekers::ConfirmationsController < Devise::ConfirmationsController
   after_action :remove_devise_flash!, only: %i[create]
 
   def show
-    super do |resource|
-      unless resource.errors.empty?
-        # Track which error type is causing 'Your request was invalid' issues for users.
-        # This will be 'already_confirmed', 'confirmation_period_expired', 'invalid', or a combination.
-        request_event.trigger(:invalid_confirmation_attempt,
-                              errors: resource.errors.errors.map { |e| e.type.to_s },
-                              resource_identifier: StringAnonymiser.new(resource.id).to_s,
-                              email_identifier: StringAnonymiser.new(resource.email).to_s)
-      end
-    end
+    super if request.method == "POST"
   end
 
   protected

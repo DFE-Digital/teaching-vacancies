@@ -28,6 +28,9 @@ en:
       new:
         description: The link has expired. You need to request that a new link is sent to your email address (%{email}).
         title: Your request is no longer valid
+      show:
+        confirm: Confirm
+        title: Confirm your email address
     job_alert_feedbacks:
       edit:
         change_alert_link: Change your job alert criteria
