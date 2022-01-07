@@ -7,7 +7,7 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Vacan
   attr_writer :publish_on_day
 
   validates(:publish_on, date: { on_or_after: :today, on_or_before: :far_future }, unless: lambda do
-    disable_editing_publish_on? || (publish_on.is_a?(Date) && (publish_on.today? || publish_on.tomorrow?))
+    publish_on_day.blank? || disable_editing_publish_on? || (publish_on.is_a?(Date) && (publish_on.today? || publish_on.tomorrow?))
   end)
   validates :publish_on_day, inclusion: { in: %w[today tomorrow another_day] }, unless: :disable_editing_publish_on?
   validates :expires_at, date: { on_or_after: :now, on_or_before: :far_future, after: :publish_on }
