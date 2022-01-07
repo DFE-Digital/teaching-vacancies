@@ -13,7 +13,3 @@ Visit http://localhost:3000/rails/mailers.
 ### Edit the preview files
 
 Go to `spec/mailers/previews`.
-
-
-
-
