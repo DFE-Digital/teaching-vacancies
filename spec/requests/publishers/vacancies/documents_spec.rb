@@ -74,4 +74,30 @@ RSpec.describe "Documents" do
       end
     end
   end
+
+  describe "DELETE #destroy" do
+    let(:vacancy) { create(:vacancy, :with_supporting_documents, organisations: [organisation]) }
+    let(:document) { vacancy.supporting_documents.first }
+
+    it "triggers an event" do
+      expect {
+        delete organisation_job_documents_path(id: document.id, job_id: vacancy.id)
+      }.to have_triggered_event(:supporting_document_deleted)
+        .with_data(
+          vacancy_id: anonymised_form_of(vacancy.id),
+          document_type: "supporting_document",
+          name: "blank_job_spec.pdf",
+          size: 28_527,
+          content_type: "application/pdf",
+        )
+    end
+
+    it "removes the document" do
+      delete organisation_job_documents_path(id: document.id, job_id: vacancy.id)
+      follow_redirect!
+
+      expect(response.body).to include(I18n.t("jobs.file_delete_success_message", filename: document.filename))
+      expect(vacancy.reload.supporting_documents).to be_empty
+    end
+  end
 end

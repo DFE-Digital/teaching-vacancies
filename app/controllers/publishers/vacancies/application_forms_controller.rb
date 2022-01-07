@@ -65,13 +65,15 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
   end
 
   def send_event(event_type, application_form)
-    request_event.trigger(
-      event_type,
-      vacancy_id: StringAnonymiser.new(vacancy.id),
-      document_type: "application_form",
-      name: application_form.filename,
-      size: application_form.byte_size,
-      content_type: application_form.content_type,
-    )
+    fail_safe do
+      request_event.trigger(
+        event_type,
+        vacancy_id: StringAnonymiser.new(vacancy.id),
+        document_type: "application_form",
+        name: application_form.filename,
+        size: application_form.byte_size,
+        content_type: application_form.content_type,
+      )
+    end
   end
 end

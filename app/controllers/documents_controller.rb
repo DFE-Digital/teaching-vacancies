@@ -1,10 +1,6 @@
 class DocumentsController < ApplicationController
   def show
-    request_event.trigger(:vacancy_document_downloaded,
-                          vacancy_id: StringAnonymiser.new(vacancy.id),
-                          document_type: application_form? ? :application_form : :supporting_document,
-                          document_id: StringAnonymiser.new(file.id),
-                          filename: file.filename)
+    send_event
     redirect_to file, status: :moved_permanently
   end
 
@@ -26,5 +22,15 @@ class DocumentsController < ApplicationController
     return vacancy.application_form if application_form?
 
     vacancy.supporting_documents.find_by!(id: params[:id])
+  end
+
+  def send_event
+    fail_safe do
+      request_event.trigger(:vacancy_document_downloaded,
+                            vacancy_id: StringAnonymiser.new(vacancy.id),
+                            document_type: application_form? ? :application_form : :supporting_document,
+                            document_id: StringAnonymiser.new(file.id),
+                            filename: file.filename)
+    end
   end
 end
