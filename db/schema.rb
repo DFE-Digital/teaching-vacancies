@@ -348,6 +348,7 @@ ActiveRecord::Schema.define(version: 2021_12_16_161208) do
     t.text "family_name_ciphertext"
     t.text "given_name_ciphertext"
     t.datetime "dismissed_new_features_page_at"
+    t.datetime "unsubscribed_from_expired_vacancy_prompt_at"
     t.index ["oid"], name: "index_publishers_on_oid", unique: true
   end
 
@@ -469,6 +470,7 @@ ActiveRecord::Schema.define(version: 2021_12_16_161208) do
     t.tsvector "searchable_content"
     t.boolean "google_index_removed", default: false
     t.string "parental_leave_cover_contract_duration"
+    t.datetime "expired_vacancy_feedback_email_sent_at"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["geolocation"], name: "index_vacancies_on_geolocation", using: :gist
     t.index ["initially_indexed"], name: "index_vacancies_on_initially_indexed"
