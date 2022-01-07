@@ -15,6 +15,7 @@ RSpec.describe "Jobseekers can register" do
 
     click_on I18n.t("jobseekers.registrations.check_your_email.resend_link"), visible: false
     visit first_link_from_last_mail
+    click_on "Confirm"
 
     expect(current_path).to eq jobseekers_saved_jobs_path
   end
