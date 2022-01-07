@@ -68,7 +68,7 @@ RSpec.describe "Jobseekers can start or continue a job application" do
 
           click_on I18n.t("jobseekers.sessions.new.no_account.link")
           sign_up_jobseeker
-          visit first_link_from_last_mail
+          confirm_email_address
 
           expect(current_path).to eq(new_jobseekers_job_job_application_path(vacancy.id))
           expect(page).to have_css(".govuk-caption-l", text: vacancy.job_title)

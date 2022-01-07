@@ -56,7 +56,7 @@ RSpec.describe "Jobseekers can save a job" do
       save_job
       click_on I18n.t("jobseekers.sessions.new.no_account.link")
       sign_up_jobseeker
-      visit first_link_from_last_mail
+      confirm_email_address
       and_the_job_is_saved
     end
   end
