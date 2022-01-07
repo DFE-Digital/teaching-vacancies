@@ -4,6 +4,11 @@ module JobseekerHelpers
     click_on I18n.t("buttons.resend_email")
   end
 
+  def confirm_email_address
+    visit first_link_from_last_mail
+    click_on "Confirm"
+  end
+
   def sign_up_jobseeker(email: jobseeker.email, password: jobseeker.password)
     within(".new_jobseeker") do
       fill_in "Email address", with: email

@@ -25,7 +25,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
 
     context "when the confirmation token is valid" do
       it "confirms email, triggers email confirmed event and redirects to jobseeker saved jobs page" do
-        expect { visit first_link_from_last_mail }.to have_triggered_event(:jobseeker_email_confirmed).with_base_data(
+        expect { confirm_email_address }.to have_triggered_event(:jobseeker_email_confirmed).with_base_data(
           user_anonymised_jobseeker_id: StringAnonymiser.new(created_jobseeker.id).to_s,
         )
         expect(current_path).to eq(jobseekers_saved_jobs_path)
@@ -38,7 +38,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
         before { travel_to 3.hours.from_now }
 
         it "does not confirm email and redirects to resend confirmation page" do
-          expect { visit first_link_from_last_mail }.to have_triggered_event(:invalid_confirmation_attempt).with_data(
+          expect { confirm_email_address }.to have_triggered_event(:invalid_confirmation_attempt).with_data(
             errors: ["confirmation_period_expired"].to_s,
             resource_identifier: StringAnonymiser.new(created_jobseeker.id).to_s,
             email_identifier: StringAnonymiser.new(created_jobseeker.email).to_s,
@@ -59,7 +59,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
         before { created_jobseeker.confirm }
 
         it "tracks the error as a request event" do
-          expect { visit first_link_from_last_mail }.to have_triggered_event(:invalid_confirmation_attempt)
+          expect { confirm_email_address }.to have_triggered_event(:invalid_confirmation_attempt)
             .with_data(errors: ["already_confirmed"].to_s,
                        resource_identifier: StringAnonymiser.new(created_jobseeker.id).to_s,
                        email_identifier: StringAnonymiser.new(created_jobseeker.email).to_s)
