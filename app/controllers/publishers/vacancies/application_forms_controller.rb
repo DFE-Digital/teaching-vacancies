@@ -14,7 +14,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
   def destroy
     raise "Missing application form" unless vacancy.application_form.id == params[:id]
 
-    send_event(:application_form_deleted, vacancy.application_form)
+    send_event(:supporting_document_deleted, vacancy.application_form)
     filename = vacancy.application_form.filename
     vacancy.application_form.purge_later
 
@@ -43,7 +43,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
     application_form = form.valid_application_form
     if application_form
       vacancy.application_form.attach(application_form)
-      send_event(:application_form_created, vacancy.application_form)
+      send_event(:supporting_document_created, vacancy.application_form)
     end
 
     render "publishers/vacancies/build/applying_for_the_job_details"
@@ -68,6 +68,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
     request_event.trigger(
       event_type,
       vacancy_id: StringAnonymiser.new(vacancy.id),
+      document_type: "application_form",
       name: application_form.filename,
       size: application_form.byte_size,
       content_type: application_form.content_type,

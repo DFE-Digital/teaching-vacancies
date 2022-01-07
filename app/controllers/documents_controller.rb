@@ -2,6 +2,7 @@ class DocumentsController < ApplicationController
   def show
     request_event.trigger(:vacancy_document_downloaded,
                           vacancy_id: StringAnonymiser.new(vacancy.id),
+                          document_type: application_form? ? :application_form : :supporting_document,
                           document_id: StringAnonymiser.new(file.id),
                           filename: file.filename)
     redirect_to file, status: :moved_permanently
@@ -13,13 +14,17 @@ class DocumentsController < ApplicationController
     @vacancy ||= Vacancy.friendly.find(params[:job_id])
   end
 
+  def application_form?
+    vacancy.application_form.id == params[:id]
+  end
+
   def file
     @file ||= document_or_application_form
   end
 
   def document_or_application_form
-    return vacancy.application_form if vacancy.application_form.id == params[:id]
+    return vacancy.application_form if application_form?
 
-    vacancy.supporting_documents.find_by(id: params[:id])
+    vacancy.supporting_documents.find_by!(id: params[:id])
   end
 end

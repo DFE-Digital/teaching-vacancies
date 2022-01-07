@@ -8,13 +8,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
   def create
     form.valid_documents.each do |document|
       vacancy.supporting_documents.attach(document)
-      request_event.trigger(
-        :supporting_document_created,
-        vacancy_id: StringAnonymiser.new(vacancy.id),
-        name: document.original_filename,
-        size: document.size,
-        content_type: document.content_type,
-      )
+      send_event(:supporting_document_created, document)
     end
 
     render :show
@@ -23,14 +17,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
   def destroy
     document = vacancy.supporting_documents.find(params[:id])
     document.purge_later
-
-    request_event.trigger(
-      :supporting_document_deleted,
-      vacancy_id: StringAnonymiser.new(vacancy.id),
-      name: document.filename,
-      size: document.byte_size,
-      content_type: document.content_type,
-    )
+    send_event(:supporting_document_deleted, document)
 
     redirect_to organisation_job_documents_path(vacancy.id), flash: {
       success: t("jobs.file_delete_success_message", filename: document.filename),
@@ -60,5 +47,16 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     else
       redirect_to organisation_job_build_path(vacancy.id, :job_summary)
     end
+  end
+
+  def send_event(event_type, document)
+    request_event.trigger(
+      event_type,
+      vacancy_id: StringAnonymiser.new(vacancy.id),
+      document_type: "supporting_document",
+      name: document.original_filename,
+      size: document.size,
+      content_type: document.content_type,
+    )
   end
 end
