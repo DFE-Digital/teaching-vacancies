@@ -1,24 +1,21 @@
-- content_for :page_title_prefix, review_page_title_prefix(vacancy, show_errors: true)
+- content_for :page_title_prefix, review_page_title_prefix(vacancy,
+  show_errors: true)
 
-.govuk-main-wrapper
-  = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
+= vacancy_review(vacancy, step_process: step_process, back_to: "review", show_errors: true) do |r|
+  - r.header
+    = publishers_vacancy_form_page_heading(vacancy, step_process)
 
-  .vacancy.govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h2.govuk-heading-l = t("publishers.vacancies.steps.review_heading")
-      = render "shared/error_messages", model: vacancy, presenter: ErrorSummaryPresenter.new(vacancy.errors, ->(e) { organisation_job_build_path(job_id: vacancy.id, id: e.options[:step], back_to: "review") })
+  - r.above
+    h2.govuk-heading-l = t("publishers.vacancies.steps.review_heading")
+    = render "shared/error_messages", model: vacancy, presenter: r.error_presenter
+    p.govuk-body-l
+      - if vacancy.publish_on&.today?
+        = t("jobs.review")
+      - else
+        = t("jobs.review_future")
 
-      p.govuk-body-l
-        - if vacancy.publish_on&.today?
-          = t("jobs.review")
-        - else
-          = t("jobs.review_future")
+  - render "vacancy_review_sections", r: r
 
-      = render "edit_sections", back_to: "review", show_errors: true
-      = render "publish_buttons", back_to: "review"
-
-      = govuk_link_to t("buttons.back_to_manage_jobs"), jobs_with_type_organisation_path("draft", from_review: vacancy.id), class: "govuk-link--no-visited-state"
-
-    - unless vacancy.published?
-      .govuk-grid-column-one-third
-        = render "publishers/vacancies/build/steps"
+  - r.below
+    = render "publish_buttons", back_to: "review"
+    = govuk_link_to t("buttons.back_to_manage_jobs"), jobs_with_type_organisation_path("draft", from_review: vacancy.id), class: "govuk-link--no-visited-state"

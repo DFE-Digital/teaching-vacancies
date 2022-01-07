@@ -1,48 +1,39 @@
-= render_divs_for_fields(Jobseekers::JobApplication::EmploymentHistoryForm)
+- r.section :employment_history
+  - if job_application.employments.none?
+    p.govuk-body = t(".employment_history.none")
+  - else
+    = govuk_accordion do |accordion|
+      - employments.each_with_index do |employment, index|
+        - if employment.job?
+          - accordion.section heading_text: employment.job_title, html_attributes: { id: "#{employment.job_title}-#{index}" } do
+            = govuk_summary_list do |summary_list|
+              - summary_list.row do |row|
+                - row.key text: t("helpers.label.jobseekers_job_application_details_employment_form.organisation")
+                - row.value text: employment.organisation
 
-= render ReviewComponent.new id: "jobseekers-job-application-review-form-employment-history-field-error" do |review|
-  - review.heading title: t("jobseekers.job_applications.build.employment_history.heading"),
-                    text: job_application_review_edit_section_text(job_application, :employment_history),
-                    href: jobseekers_job_application_build_path(job_application, :employment_history),
-                    html_attributes: { id: "gaps_in_employment" } do
-      = review_section_tag(job_application, [:employment_history], [Jobseekers::JobApplication::EmploymentHistoryForm])
+              - summary_list.row do |row|
+                - row.key text: t("helpers.label.jobseekers_job_application_details_employment_form.subjects_html")
+                - row.value text: employment.subjects.presence || t("jobseekers.job_applications.not_defined")
 
-  - review.body do
-    - if job_application.employments.none?
-      p.govuk-body = t(".none")
-    - else
-      = govuk_accordion do |accordion|
-        - employments.each_with_index do |employment, index|
-          - if employment.job?
-            - accordion.section heading_text: employment.job_title, html_attributes: { id: "#{employment.job_title}-#{index}" } do
-              = govuk_summary_list do |summary_list|
+              - summary_list.row do |row|
+                - row.key text: t("helpers.label.jobseekers_job_application_details_employment_form.main_duties")
+                - row.value text: employment.main_duties
+
+              - summary_list.row do |row|
+                - row.key text: t("helpers.legend.jobseekers_job_application_details_employment_form.started_on")
+                - row.value text: employment.started_on
+
+              - summary_list.row do |row|
+                - row.key text: t("helpers.legend.jobseekers_job_application_details_employment_form.current_role")
+                - row.value text: employment.current_role.humanize
+
+              - if employment.current_role == "no"
                 - summary_list.row do |row|
-                  - row.key text: t("helpers.label.jobseekers_job_application_details_employment_form.organisation")
-                  - row.value text: employment.organisation
+                  - row.key text: t("helpers.legend.jobseekers_job_application_details_employment_form.ended_on")
+                  - row.value text: employment.ended_on
 
-                - summary_list.row do |row|
-                  - row.key text: t("helpers.label.jobseekers_job_application_details_employment_form.subjects_html")
-                  - row.value text: employment.subjects.presence || t("jobseekers.job_applications.not_defined")
+        - elsif employment.break?
+          = render "shared/job_application/explained_employment_break", accordion: accordion, employment: employment, index: index
 
-                - summary_list.row do |row|
-                  - row.key text: t("helpers.label.jobseekers_job_application_details_employment_form.main_duties")
-                  - row.value text: employment.main_duties
-
-                - summary_list.row do |row|
-                  - row.key text: t("helpers.legend.jobseekers_job_application_details_employment_form.started_on")
-                  - row.value text: employment.started_on
-
-                - summary_list.row do |row|
-                  - row.key text: t("helpers.legend.jobseekers_job_application_details_employment_form.current_role")
-                  - row.value text: employment.current_role.humanize
-
-                - if employment.current_role == "no"
-                  - summary_list.row do |row|
-                    - row.key text: t("helpers.legend.jobseekers_job_application_details_employment_form.ended_on")
-                    - row.value text: employment.ended_on
-
-          - elsif employment.break?
-            = render "shared/job_application/explained_employment_break", accordion: accordion, employment: employment, index: index
-
-          - if employment_history_gap?(index, employments)
-            = render "shared/job_application/unexplained_employment_break", accordion: accordion, employment: employment, index: index
+        - if employment_history_gap?(index, employments)
+          = render "shared/job_application/unexplained_employment_break", accordion: accordion, employment: employment, index: index

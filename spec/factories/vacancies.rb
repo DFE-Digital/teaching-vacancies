@@ -44,6 +44,7 @@ FactoryBot.define do
       end
     end
     personal_statement_guidance { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
+    phase { "secondary" }
     publish_on { Date.current }
     salary { factory_sample(SALARIES) }
     school_visits { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
