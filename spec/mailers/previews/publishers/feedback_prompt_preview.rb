@@ -6,6 +6,6 @@ class Publishers::FeedbackPromptPreview < ActionMailer::Preview
             run unless there is >=1 publisher and >=2 vacancies in the database."
     end
 
-    Publishers::FeedbackPromptMailer.prompt_for_feedback(Publisher.first, [Vacancy.first, Vacancy.second])
+    Publishers::ExpiredVacancyFeedbackPromptMailer.prompt_for_feedback(Publisher.first, [Vacancy.first, Vacancy.second, Vacancy.third, Vacancy.fourth, Vacancy.fifth])
   end
 end
