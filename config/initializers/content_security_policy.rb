@@ -16,8 +16,7 @@ Rails.application.config.content_security_policy do |policy|
                      *development_env_additional_connect_src # Allow using webpack-dev-server in development
 
   policy.font_src    :self,
-                     :data,
-                     "https://fonts.gstatic.com" # through Google Maps
+                     :data
 
   policy.frame_src   :self,
                      "https://www.recaptcha.net",
@@ -32,16 +31,13 @@ Rails.application.config.content_security_policy do |policy|
   policy.script_src  :self,
                      :unsafe_inline, # Backwards compatibility; ignored by modern browsers as we set a nonce for scripts
                      "https://cdn.rollbar.com",
-                     "https://maps.googleapis.com",
                      "https://www.google-analytics.com",
                      "https://www.googletagmanager.com",
                      "https://www.recaptcha.net"
 
   # Google Maps embed will not work without 'unsafe-inline' styles
   #   see: https://issuetracker.google.com/issues/132600807
-  policy.style_src   :self,
-                     :unsafe_inline,
-                     "https://fonts.googleapis.com" # through Google Maps
+  policy.style_src   :self
 
   # Specify URI for violation reports
   policy.report_uri "/errors/csp_violation"
