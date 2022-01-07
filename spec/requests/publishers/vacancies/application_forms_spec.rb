@@ -24,9 +24,10 @@ RSpec.describe "Documents" do
           post organisation_job_application_forms_path(vacancy.id), params: {
             publishers_job_listing_applying_for_the_job_details_form: { application_form: fixture_file_upload("blank_job_spec.pdf", "application/pdf") },
           }
-        }.to have_triggered_event(:application_form_created)
+        }.to have_triggered_event(:supporting_document_created)
           .with_data(
             vacancy_id: anonymised_form_of(vacancy.id),
+            document_type: "application_form",
             name: "blank_job_spec.pdf",
             size: 28_527,
             content_type: "application/pdf",
@@ -102,9 +103,10 @@ RSpec.describe "Documents" do
     it "triggers an event" do
       expect {
         delete organisation_job_application_forms_path(id: application_form.id, job_id: vacancy.id)
-      }.to have_triggered_event(:application_form_deleted)
+      }.to have_triggered_event(:supporting_document_deleted)
         .with_data(
           vacancy_id: anonymised_form_of(vacancy.id),
+          document_type: "application_form",
           name: "blank_job_spec.pdf",
           size: 28_527,
           content_type: "application/pdf",

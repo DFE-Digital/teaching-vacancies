@@ -25,6 +25,7 @@ RSpec.describe "Documents" do
       }.to have_triggered_event(:supporting_document_created)
         .with_data(
           vacancy_id: anonymised_form_of(vacancy.id),
+          document_type: "supporting_document",
           name: "blank_job_spec.pdf",
           size: 28_527,
           content_type: "application/pdf",
