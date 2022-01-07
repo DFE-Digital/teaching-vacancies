@@ -28,7 +28,7 @@ RSpec.describe "Jobseekers can submit a job application" do
 
       expect(page).to have_content(I18n.t("jobseekers.job_applications.submit.panel.title"))
 
-      visit first_link_from_last_mail
+      confirm_email_address
       expect(current_path).to eq(jobseekers_job_applications_path)
     end
   end
