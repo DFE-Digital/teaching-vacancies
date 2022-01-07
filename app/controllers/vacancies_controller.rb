@@ -36,7 +36,7 @@ class VacanciesController < ApplicationController
     params[:location] = params[:location_facet].titleize if params[:location_facet]
     params[:job_roles] = params[:job_role].parameterize.underscore if params[:job_role]
     params[:phases] = params[:education_phase].parameterize if params[:education_phase]
-    params[:subject]&.titleize
+    params[:subject] = params[:subject].tr("-", " ").gsub(" and ", " ") if params[:subject]
   end
 
   def search_params
