@@ -10,6 +10,11 @@ resource "cloudfoundry_service_instance" "postgres_instance" {
   }
 }
 
+resource "cloudfoundry_service_key" "postgres_instance_service_key" {
+  name             = "postgres_instance_service_key-${var.environment}"
+  service_instance = cloudfoundry_service_instance.postgres_instance.id
+}
+
 resource "cloudfoundry_service_instance" "redis_cache_instance" {
   name         = local.redis_cache_service_name
   space        = data.cloudfoundry_space.space.id
@@ -122,6 +127,7 @@ resource "cloudfoundry_route" "web_app_route" {
   space    = data.cloudfoundry_space.space.id
   hostname = local.web_app_name
 }
+
 
 resource "cloudfoundry_route" "web_app_route_cloudfront_apex" {
   for_each = toset(var.route53_a_records)
