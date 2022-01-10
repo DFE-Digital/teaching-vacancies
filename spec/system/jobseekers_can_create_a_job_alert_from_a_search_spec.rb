@@ -74,7 +74,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
           fill_in "Password", with: jobseeker.password
           click_on I18n.t("buttons.create_account")
         end
-        visit first_link_from_last_mail
+        confirm_email_address
         expect(current_path).to eq(jobseekers_subscriptions_path)
       end
 
@@ -84,7 +84,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
           click_on I18n.t("buttons.create_account")
         end
         sign_up_jobseeker
-        visit first_link_from_last_mail
+        confirm_email_address
         expect(current_path).to eq(jobseekers_subscriptions_path)
       end
     end

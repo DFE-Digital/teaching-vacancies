@@ -24,7 +24,7 @@ RSpec.describe "Jobseekers can change email" do
       expect(delivered_emails.second.to.first).to eq(new_email_address)
       expect(current_path).to eq(jobseekers_check_your_email_path)
 
-      visit first_link_from_last_mail
+      confirm_email_address
 
       expect(subscription.reload.email).to eq(new_email_address)
       expect(created_jobseeker.reload.email).to eq(new_email_address)

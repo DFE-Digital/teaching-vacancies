@@ -42,7 +42,7 @@ RSpec.describe "Jobseekers can unlock their account" do
           delivered_emails.count
         }.by(1)
 
-        visit first_link_from_last_mail
+        confirm_email_address
 
         expect(jobseeker.reload).not_to be_access_locked
 
