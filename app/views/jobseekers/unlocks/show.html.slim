@@ -1,0 +1,8 @@
+- content_for :page_title_prefix, t(".title")
+
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl = t(".title")
+
+      = govuk_button_to t(".confirm"), jobseekers_unlock_account_path, params: { unlock_token: params[:unlock_token] }
