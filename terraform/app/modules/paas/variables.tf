@@ -95,6 +95,7 @@ variable "db_backup_before_point_in_time" {
 
 }
 
+
 locals {
   app_env_api_keys = merge(
     yamldecode(data.aws_ssm_parameter.app_env_api_key_big_query.value),
@@ -112,13 +113,16 @@ locals {
     local.app_env_secrets,
     local.app_env_documents_bucket_credentials,
     local.app_env_domain,
+    local.postgres_instance_service_key,
     var.app_env_values #Because of merge order, if present, the value of DOMAIN in .tfvars.json will overwrite app_env_domain
   )
   app_cloudfoundry_service_instances = [
-    cloudfoundry_service_instance.postgres_instance.id,
     cloudfoundry_service_instance.redis_cache_instance.id,
     cloudfoundry_service_instance.redis_queue_instance.id,
   ]
+
+  postgres_instance_service_key = { DATABASE_URL = cloudfoundry_service_key.postgres_instance_service_key.credentials.uri }
+
   app_user_provided_service_bindings = var.logging_service_binding_enable ? [cloudfoundry_user_provided_service.logging.id] : []
   app_service_bindings               = concat(local.app_cloudfoundry_service_instances, local.app_user_provided_service_bindings)
   logging_service_name               = "${var.service_name}-logging-${var.environment}"
