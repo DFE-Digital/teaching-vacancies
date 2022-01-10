@@ -27,6 +27,7 @@ en:
     confirm_deletion: Confirm deletion
     confirm_destroy: Yes I am sure - delete this entry
     confirm_rejection: Confirm rejection
+    confirm_unsubscribe: Unsubscribe
     continue: Continue
     continue_to_account: Continue to my account
     continue_to_dsi: Continue to DfE Sign-in
@@ -514,6 +515,21 @@ en:
         end_listing_reason_options:
           suitable_candidate_found: We have found a suitable candidate and are no longer accepting applications
           end_early: We are no longer listing this role and want to end it earlier than the deadline
+      publishers_job_listing_expired_feedback_form:
+        hired_status_options:
+          hired_dont_know: I don't know
+          hired_no_listing: No, we hired, but not through a listing or service
+          hired_other_free: No, we hired through another free listing service
+          hired_paid: No, we hired through a paid service
+          hired_tvs: "Yes"
+          not_filled_not_looking: No, we’re no longer recruiting for this job
+          not_filled_ongoing: No, recruitment is ongoing
+        listed_elsewhere_options:
+          listed_dont_know: I don't know
+          listed_free: Yes, but only for free
+          listed_mix: Yes, a mix of paid and free listings
+          listed_paid: Yes, on one or more paid services
+          not_listed: "No"
       publishers_job_listing_extend_deadline_form:
         starts_asap_options:
           "true": As soon as possible
@@ -682,6 +698,9 @@ en:
         phase:  What education phase will the role be covering?
       publishers_job_listing_end_listing_form:
         end_listing_reason: Why would you like to end this job listing early?
+      publishers_job_listing_expired_feedback_form:
+        hired_status: Was the job filled on Teaching Vacancies?
+        listed_elsewhere: Was the job listed elsewhere?
       publishers_job_listing_extend_deadline_form:
         expires_at: Closing date
         expiry_time: Time application is due
