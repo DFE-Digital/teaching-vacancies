@@ -4,7 +4,7 @@ class SupportingDocumentComponent < GovukComponent::Base
   attr_reader :supporting_document
 
   def initialize(supporting_document:, classes: [], html_attributes: {})
-    super(classes: classes, html_attributes: html_attributes)
+    super(classes:, html_attributes:)
 
     @supporting_document = supporting_document
   end

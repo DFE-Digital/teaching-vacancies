@@ -28,7 +28,7 @@
           = render "publishers/vacancies/documents/documents"
           p.js-documents__no-files = t("jobs.no_files_message")
 
-        = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+        = render "publishers/vacancies/vacancy_form_partials/submit", f:
 
     - unless vacancy.published?
       .govuk-grid-column-one-third

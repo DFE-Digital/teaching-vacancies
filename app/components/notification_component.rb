@@ -2,7 +2,7 @@ class NotificationComponent < GovukComponent::Base
   attr_reader :notification
 
   def initialize(notification:, classes: [], html_attributes: {})
-    super(classes: classes, html_attributes: html_attributes)
+    super(classes:, html_attributes:)
 
     @notification = notification
   end

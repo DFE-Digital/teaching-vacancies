@@ -4,7 +4,7 @@ RSpec.describe Qualification do
   it { is_expected.to belong_to(:job_application) }
 
   describe "#name" do
-    let(:qualification) { build_stubbed(:qualification, name: name, category: category) }
+    let(:qualification) { build_stubbed(:qualification, name:, category:) }
 
     context "when the category is 'other_secondary' or 'other'" do
       let(:category) { "other_secondary" }

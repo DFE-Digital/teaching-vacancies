@@ -12,7 +12,7 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
   let!(:school1_draft_vacancy) { create(:vacancy, :draft, :at_one_school, organisations: [school1], job_title: "Science Teacher") }
   let!(:school2_draft_vacancy) { create(:vacancy, :draft, :at_one_school, organisations: [school2], job_title: "History Teacher") }
 
-  before { login_publisher(publisher: publisher, organisation: trust) }
+  before { login_publisher(publisher:, organisation: trust) }
 
   context "when no organisations have been previously selected" do
     context "when viewing active jobs tab" do
@@ -59,7 +59,7 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
   end
 
   context "when organisations have been previously selected" do
-    let!(:publisher_preference_trust) { PublisherPreference.create(publisher: publisher, organisation: trust, organisations: [school1, school2]) }
+    let!(:publisher_preference_trust) { PublisherPreference.create(publisher:, organisation: trust, organisations: [school1, school2]) }
 
     scenario "it shows filtered published vacancies" do
       visit organisation_path
@@ -80,7 +80,7 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
     let(:school5) { create(:school, name: "University", gias_data: { "TypeOfEstablishment (code)" => "29" }) }
 
     before do
-      login_publisher(publisher: publisher, organisation: local_authority1)
+      login_publisher(publisher:, organisation: local_authority1)
 
       allow(Rails.configuration).to receive(:local_authorities_extra_schools).and_return(local_authorities_extra_schools)
     end

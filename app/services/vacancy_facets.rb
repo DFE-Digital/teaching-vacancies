@@ -27,8 +27,8 @@ class VacancyFacets
 
   private
 
-  def cached(facet_name, &block)
-    Rails.cache.fetch([:vacancy_facets, facet_name], expires_in: CACHE_DURATION, &block)
+  def cached(facet_name, &)
+    Rails.cache.fetch([:vacancy_facets, facet_name], expires_in: CACHE_DURATION, &)
   end
 
   def sort_and_limit(facet, number_of_results: facet.count)

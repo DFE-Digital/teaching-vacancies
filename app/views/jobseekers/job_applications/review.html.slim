@@ -1,6 +1,6 @@
 - content_for :page_title_prefix, job_application_page_title_prefix(review_form, t(".title"))
 
-= job_application_review(@job_application, step_process: step_process, show_tracks: current_jobseeker.job_applications.not_draft.none?) do |r|
+= job_application_review(@job_application, step_process:, show_tracks: current_jobseeker.job_applications.not_draft.none?) do |r|
   - r.header do
     = render "banner"
 
@@ -18,7 +18,7 @@
 
     h2.govuk-heading-l = t(".heading")
 
-  - render "job_application_review_sections", r: r
+  - render "job_application_review_sections", r:
 
   - r.below do
     = form_for review_form, url: jobseekers_job_application_submit_path(job_application), method: :post do |f|

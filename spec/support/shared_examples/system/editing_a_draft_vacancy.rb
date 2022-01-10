@@ -2,8 +2,8 @@ RSpec.shared_examples "provides an overview of the draft vacancy form" do
   let(:step_process) do
     Publishers::Vacancies::VacancyStepProcess.new(
       :review,
-      vacancy: vacancy,
-      organisation: organisation,
+      vacancy:,
+      organisation:,
     )
   end
 

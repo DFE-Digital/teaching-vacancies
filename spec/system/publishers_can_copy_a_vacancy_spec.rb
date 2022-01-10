@@ -6,7 +6,7 @@ RSpec.describe "Copying a vacancy" do
 
   let!(:original_vacancy) { create_published_vacancy(organisations: [school]) }
 
-  before { login_publisher(publisher: publisher, organisation: school) }
+  before { login_publisher(publisher:, organisation: school) }
 
   describe "Cancelling the copy" do
     scenario "a copy can be cancelled using the cancel copy back link" do

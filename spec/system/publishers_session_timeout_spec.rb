@@ -6,7 +6,7 @@ RSpec.describe "Publisher session" do
 
   before do
     allow(AuthenticationFallback).to receive(:enabled?).and_return(false)
-    login_publisher(publisher: publisher, organisation: school)
+    login_publisher(publisher:, organisation: school)
   end
 
   after do

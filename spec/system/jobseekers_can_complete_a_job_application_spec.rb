@@ -4,7 +4,7 @@ RSpec.describe "Jobseekers can complete a job application" do
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy, organisations: [organisation], job_roles: %w[teacher]) }
   let(:organisation) { create(:school) }
-  let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
+  let(:job_application) { create(:job_application, :status_draft, jobseeker:, vacancy:) }
 
   before { login_as(jobseeker, scope: :jobseeker) }
 

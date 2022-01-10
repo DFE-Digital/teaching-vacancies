@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Publishers::SchoolOverviewComponent, type: :component do
-  let!(:inline_component) { render_inline(described_class.new(organisation: organisation)) }
+  let!(:inline_component) { render_inline(described_class.new(organisation:)) }
 
   context "when organisation is a Trust" do
     let(:organisation) { build(:trust) }

@@ -44,6 +44,6 @@ class ExportDsiApproversToBigQuery < BaseDsiBigQueryExporter
   end
 
   def api_response(page: 1)
-    DFESignIn::API.new.approvers(page: page)
+    DFESignIn::API.new.approvers(page:)
   end
 end

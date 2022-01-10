@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe AbTests do
-  subject { described_class.new(session, test_configuration: test_configuration) }
+  subject { described_class.new(session, test_configuration:) }
 
   let(:session) { {} }
   let(:test_configuration) do

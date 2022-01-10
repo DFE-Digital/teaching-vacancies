@@ -13,9 +13,9 @@
         = govuk_inset_text do
           - link = vacancy.allow_phase_to_be_set? ? govuk_link_to(t("publishers.vacancies.build.job_details.phase_inset_text.link_text"), organisation_job_build_path(vacancy.id, :education_phases)) : ""
           - if vacancy.one_phase?
-            = t("publishers.vacancies.build.job_details.phase_inset_text.one_phase_html", phase: vacancy.readable_phases.first.humanize, link: link)
+            = t("publishers.vacancies.build.job_details.phase_inset_text.one_phase_html", phase: vacancy.readable_phases.first.humanize, link:)
           - else
-            = t("publishers.vacancies.build.job_details.phase_inset_text.multiple_phases_html", link: link)
+            = t("publishers.vacancies.build.job_details.phase_inset_text.multiple_phases_html", link:)
 
         .govuk-character-count data-module="govuk-character-count" data-maxlength=100
           = f.govuk_text_field :job_title,
@@ -58,7 +58,7 @@
                 text_method: :first,
                 hint_method: :last
 
-        = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+        = render "publishers/vacancies/vacancy_form_partials/submit", f:
 
     - unless vacancy.published?
       .govuk-grid-column-one-third

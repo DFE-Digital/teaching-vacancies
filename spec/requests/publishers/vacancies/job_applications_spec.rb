@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Job applications" do
   let(:organisation) { build(:school) }
   let(:vacancy) { create(:vacancy, organisations: [organisation]) }
-  let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
+  let(:job_application) { create(:job_application, :status_submitted, vacancy:) }
   let(:publisher) { create(:publisher, accepted_terms_at: 1.day.ago) }
 
   before do
@@ -20,7 +20,7 @@ RSpec.describe "Job applications" do
     end
 
     context "when the job application status is draft" do
-      let(:job_application) { create(:job_application, :status_draft, vacancy: vacancy) }
+      let(:job_application) { create(:job_application, :status_draft, vacancy:) }
 
       it "raises an error" do
         expect { get(organisation_job_job_application_reject_path(vacancy.id, job_application.id)) }
@@ -29,7 +29,7 @@ RSpec.describe "Job applications" do
     end
 
     context "when the job application status is withdrawn" do
-      let(:job_application) { create(:job_application, :status_withdrawn, vacancy: vacancy) }
+      let(:job_application) { create(:job_application, :status_withdrawn, vacancy:) }
 
       it "raises an error" do
         expect { get(organisation_job_job_application_reject_path(vacancy.id, job_application.id)) }
@@ -47,7 +47,7 @@ RSpec.describe "Job applications" do
     end
 
     context "when the job application status is draft" do
-      let(:job_application) { create(:job_application, :status_draft, vacancy: vacancy) }
+      let(:job_application) { create(:job_application, :status_draft, vacancy:) }
 
       it "raises an error" do
         expect { get(organisation_job_job_application_shortlist_path(vacancy.id, job_application.id)) }
@@ -56,7 +56,7 @@ RSpec.describe "Job applications" do
     end
 
     context "when the job application status is withdrawn" do
-      let(:job_application) { create(:job_application, :status_withdrawn, vacancy: vacancy) }
+      let(:job_application) { create(:job_application, :status_withdrawn, vacancy:) }
 
       it "raises an error" do
         expect { get(organisation_job_job_application_shortlist_path(vacancy.id, job_application.id)) }
@@ -80,7 +80,7 @@ RSpec.describe "Job applications" do
     end
 
     context "when the job application status is not submitted" do
-      let(:job_application) { create(:job_application, :status_shortlisted, vacancy: vacancy) }
+      let(:job_application) { create(:job_application, :status_shortlisted, vacancy:) }
 
       it "does not update the job application status" do
         expect { get(organisation_job_job_application_path(vacancy.id, job_application.id)) }
@@ -89,7 +89,7 @@ RSpec.describe "Job applications" do
     end
 
     context "when the job application status is draft" do
-      let(:job_application) { create(:job_application, :status_draft, vacancy: vacancy) }
+      let(:job_application) { create(:job_application, :status_draft, vacancy:) }
 
       it "raises an error" do
         expect { get(organisation_job_job_application_path(vacancy.id, job_application.id)) }
@@ -98,7 +98,7 @@ RSpec.describe "Job applications" do
     end
 
     context "when the job application status is withdrawn" do
-      let(:job_application) { create(:job_application, :status_withdrawn, vacancy: vacancy) }
+      let(:job_application) { create(:job_application, :status_withdrawn, vacancy:) }
 
       it "redirects to the withdrawn page" do
         expect(get(organisation_job_job_application_path(vacancy.id, job_application.id)))
@@ -139,18 +139,18 @@ RSpec.describe "Job applications" do
         let(:params) { { publishers_job_application_update_status_form: { further_instructions: "do this" } } }
 
         it "updates the status" do
-          expect { post(organisation_job_job_application_update_status_path(vacancy.id, job_application.id), params: params) }
+          expect { post(organisation_job_job_application_update_status_path(vacancy.id, job_application.id), params:) }
             .to change { job_application.reload.status }.from("submitted").to("shortlisted")
         end
 
         it "sends an email" do
           assert_emails 1 do
-            post(organisation_job_job_application_update_status_path(vacancy.id, job_application.id), params: params)
+            post(organisation_job_job_application_update_status_path(vacancy.id, job_application.id), params:)
           end
         end
 
         it "redirects to job applications page" do
-          expect(post(organisation_job_job_application_update_status_path(vacancy.id, job_application.id), params: params))
+          expect(post(organisation_job_job_application_update_status_path(vacancy.id, job_application.id), params:))
             .to redirect_to(organisation_job_job_applications_path(vacancy.id))
         end
       end
@@ -159,39 +159,39 @@ RSpec.describe "Job applications" do
         let(:params) { { publishers_job_application_update_status_form: { rejection_reasons: "second choice" } } }
 
         it "updates the status" do
-          expect { post(organisation_job_job_application_update_status_path(vacancy.id, job_application.id), params: params) }
+          expect { post(organisation_job_job_application_update_status_path(vacancy.id, job_application.id), params:) }
             .to change { job_application.reload.status }.from("submitted").to("unsuccessful")
         end
 
         it "sends an email" do
           assert_emails 1 do
-            post(organisation_job_job_application_update_status_path(vacancy.id, job_application.id), params: params)
+            post(organisation_job_job_application_update_status_path(vacancy.id, job_application.id), params:)
           end
         end
 
         it "redirects to job applications page" do
-          expect(post(organisation_job_job_application_update_status_path(vacancy.id, job_application.id), params: params))
+          expect(post(organisation_job_job_application_update_status_path(vacancy.id, job_application.id), params:))
             .to redirect_to(organisation_job_job_applications_path(vacancy.id))
         end
       end
     end
 
     context "when the job application status is draft" do
-      let(:job_application) { create(:job_application, :status_draft, vacancy: vacancy) }
+      let(:job_application) { create(:job_application, :status_draft, vacancy:) }
       let(:params) { { publishers_job_application_update_status_form: { rejection_reasons: "second choice" } } }
 
       it "raises an error" do
-        expect { post(organisation_job_job_application_update_status_path(vacancy.id, job_application.id), params: params) }
+        expect { post(organisation_job_job_application_update_status_path(vacancy.id, job_application.id), params:) }
           .to raise_error(ActionController::RoutingError, /Cannot shortlist or reject/)
       end
     end
 
     context "when the job application status is withdrawn" do
-      let(:job_application) { create(:job_application, :status_withdrawn, vacancy: vacancy) }
+      let(:job_application) { create(:job_application, :status_withdrawn, vacancy:) }
       let(:params) { { publishers_job_application_update_status_form: { rejection_reasons: "second choice" } } }
 
       it "raises an error" do
-        expect { post(organisation_job_job_application_update_status_path(vacancy.id, job_application.id), params: params) }
+        expect { post(organisation_job_job_application_update_status_path(vacancy.id, job_application.id), params:) }
           .to raise_error(ActionController::RoutingError, /Cannot shortlist or reject/)
       end
     end

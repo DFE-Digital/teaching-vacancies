@@ -18,8 +18,8 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
     filename = vacancy.application_form.filename
     vacancy.application_form.purge_later
 
-    redirect_to organisation_job_build_path(vacancy.id, :applying_for_the_job_details, back_to: back_to), flash: {
-      success: t("jobs.file_delete_success_message", filename: filename),
+    redirect_to organisation_job_build_path(vacancy.id, :applying_for_the_job_details, back_to:), flash: {
+      success: t("jobs.file_delete_success_message", filename:),
     }
   end
 
@@ -36,7 +36,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
   def applying_for_the_job_details_form_params
     params.require(:publishers_job_listing_applying_for_the_job_details_form)
           .permit(:application_form, :application_link, :contact_email, :contact_number, :personal_statement_guidance, :school_visits, :how_to_apply)
-          .merge(completed_steps: completed_steps, current_organisation: current_organisation)
+          .merge(completed_steps:, current_organisation:)
   end
 
   def create_application_form

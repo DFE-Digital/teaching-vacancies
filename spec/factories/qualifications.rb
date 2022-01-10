@@ -3,7 +3,7 @@ FactoryBot.define do
     after(:create) do |qualification, evaluator|
       next unless qualification.secondary?
 
-      create_list(:qualification_result, evaluator.results_count, qualification: qualification)
+      create_list(:qualification_result, evaluator.results_count, qualification:)
       qualification.reload
     end
 

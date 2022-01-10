@@ -33,7 +33,7 @@ RSpec.describe "Main navigation for users to sign in and out" do
 
   context "when publisher is signed in" do
     before do
-      login_publisher(publisher: publisher, organisation: organisation)
+      login_publisher(publisher:, organisation:)
       visit root_path
     end
 

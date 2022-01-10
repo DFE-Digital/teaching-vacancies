@@ -7,7 +7,7 @@ class Publishers::OmniauthCallbacksController < Devise::OmniauthCallbacksControl
   end
 
   def dfe
-    authorisation = Authorisation.new(organisation_id: organisation_id, user_id: user_id).call
+    authorisation = Authorisation.new(organisation_id:, user_id:).call
     organisation = organisation_from_request
 
     if authorisation.authorised? && organisation

@@ -113,6 +113,6 @@ ruby:
       - panel.body do
         = render(FiltersComponent.new(form: f,
           filters: { total_count: @form.total_filters },
-          items: items,
+          items:,
           options: { remove_buttons: true, mobile_variant: true, close_all: true, autosubmit_form: true },
           html_attributes: { tabindex: "-1", id: "filters-component" }))

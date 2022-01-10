@@ -8,7 +8,7 @@ class SortComponent < GovukComponent::Base
   #                                  same interface as a RecordSort.
   # @param [Hash{Symbol => Object}] url_params Any necessary query parameters for the destination path
   def initialize(path:, sort:, url_params: {}, classes: [], html_attributes: {})
-    super(classes: classes, html_attributes: html_attributes)
+    super(classes:, html_attributes:)
 
     # TODO: Add an attribute to control whether the form uses form#submitListener (to decrease interdependency)
     @url_params = url_params

@@ -6,4 +6,4 @@
 /    per_page:      number of items to fetch per page
 /    remote:        data-remote
 li.pagination__item
-  == link_to_unless current_page.last?, t("views.pagination.last"), url, remote: remote, class: "pagination__link"
+  == link_to_unless current_page.last?, t("views.pagination.last"), url, remote:, class: "pagination__link"

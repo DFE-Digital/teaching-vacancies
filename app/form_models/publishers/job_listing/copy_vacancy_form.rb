@@ -9,7 +9,7 @@ class Publishers::JobListing::CopyVacancyForm < Publishers::JobListing::Importan
 
   def params_to_save
     # `completed_steps` is nil by default and would overwrite the copied vacancy's value
-    super.except(:completed_steps).merge(job_title: job_title)
+    super.except(:completed_steps).merge(job_title:)
   end
 
   private

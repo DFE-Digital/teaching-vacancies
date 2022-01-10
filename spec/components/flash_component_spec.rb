@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe FlashComponent, type: :component do
   let(:variant_name) { "notice" }
-  let(:kwargs) { { variant_name: variant_name, message: "Some message" } }
+  let(:kwargs) { { variant_name:, message: "Some message" } }
 
   subject! { render_inline(described_class.new(**kwargs)) }
 

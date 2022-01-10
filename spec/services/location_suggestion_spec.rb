@@ -17,7 +17,7 @@ RSpec.describe LocationSuggestion do
 
   describe "#get_suggestions_from_google" do
     let(:predictions) { [] }
-    let(:request_body) { { predictions: predictions }.to_json }
+    let(:request_body) { { predictions: }.to_json }
     let(:request_status) { 200 }
     let(:request_url) { "https://google_endpoint.google/magic_endpoint" }
     let(:query_hash) { { key: "test_key", input: location_input } }
@@ -40,7 +40,7 @@ RSpec.describe LocationSuggestion do
 
     context "the response contains an error message" do
       let(:error_message) { "This is an error" }
-      let(:request_body) { { error_message: error_message }.to_json }
+      let(:request_body) { { error_message: }.to_json }
 
       it "raises a GooglePlacesAutocompleteError" do
         expect { subject.send(:get_suggestions_from_google) }.to raise_error do
@@ -57,7 +57,7 @@ RSpec.describe LocationSuggestion do
   end
 
   describe "#suggestion_locations" do
-    let(:parsed_response) { { predictions: predictions }.deep_stringify_keys }
+    let(:parsed_response) { { predictions: }.deep_stringify_keys }
     let(:predictions) do
       [
         { description: "place, region, UK",

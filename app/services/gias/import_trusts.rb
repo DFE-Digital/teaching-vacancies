@@ -65,7 +65,7 @@ class Gias::ImportTrusts
         next unless school_id && group_id
 
         {
-          school_id: school_id,
+          school_id:,
           school_group_id: group_id,
           do_not_delete: true,
         }

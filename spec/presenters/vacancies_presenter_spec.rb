@@ -17,7 +17,7 @@ RSpec.describe VacanciesPresenter do
   end
 
   describe "#previous_api_url" do
-    let(:vacancies) { double(:vacancies, map: [], prev_page: prev_page, total_count: 0) }
+    let(:vacancies) { double(:vacancies, map: [], prev_page:, total_count: 0) }
 
     context "when there is a previous page" do
       let(:prev_page) { 4 }
@@ -37,7 +37,7 @@ RSpec.describe VacanciesPresenter do
   end
 
   describe "#next_api_url" do
-    let(:vacancies) { double(:vacancies, map: [], next_page: next_page, total_count: 0) }
+    let(:vacancies) { double(:vacancies, map: [], next_page:, total_count: 0) }
 
     context "when there is a next page" do
       let(:next_page) { 2 }

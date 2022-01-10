@@ -7,7 +7,7 @@ class ReviewComponent < GovukComponent::Base
   renders_one :below
 
   def initialize(namespace:, show_tracks:, classes: [], html_attributes: {})
-    super(classes: classes, html_attributes: html_attributes)
+    super(classes:, html_attributes:)
 
     @namespace = namespace
     @show_tracks = show_tracks

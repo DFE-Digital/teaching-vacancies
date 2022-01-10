@@ -156,6 +156,7 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.5.0)
+    digest (3.1.0)
     docile (1.4.0)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
@@ -279,6 +280,7 @@ GEM
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     inflection (1.0.0)
+    io-wait (0.2.1)
     ipaddr (1.2.3)
     jaro_winkler (1.5.4)
     jbuilder (2.11.5)
@@ -343,14 +345,29 @@ GEM
       nokogiri (~> 1)
       rake
     mini_mime (1.1.2)
-    mini_portile2 (2.6.1)
+    mini_portile2 (2.7.1)
     minitest (5.15.0)
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
+    net-imap (0.2.2)
+      digest
+      net-protocol
+      strscan
+    net-pop (0.1.1)
+      digest
+      net-protocol
+      timeout
+    net-protocol (0.1.2)
+      io-wait
+      timeout
+    net-smtp (0.3.1)
+      digest
+      net-protocol
+      timeout
     nio4r (2.5.8)
-    nokogiri (1.12.5)
-      mini_portile2 (~> 2.6.1)
+    nokogiri (1.13.0)
+      mini_portile2 (~> 2.7.0)
       racc (~> 1.4)
     noticed (1.5.5)
       http (>= 4.0.0)
@@ -583,6 +600,7 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
+    strscan (3.0.1)
     swd (1.3.0)
       activesupport (>= 3)
       attr_required (>= 0.0.5)
@@ -591,6 +609,7 @@ GEM
     thor (1.1.0)
     thread_safe (0.3.6)
     tilt (2.0.10)
+    timeout (0.2.0)
     trailblazer-option (0.1.2)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
@@ -707,6 +726,9 @@ DEPENDENCIES
   lockbox
   mail-notify
   mimemagic
+  net-imap
+  net-pop
+  net-smtp
   noticed
   omniauth
   omniauth_openid_connect
@@ -756,7 +778,7 @@ DEPENDENCIES
   zendesk_api
 
 RUBY VERSION
-   ruby 3.0.3p157
+   ruby 3.1.0p0
 
 BUNDLED WITH
    2.2.32

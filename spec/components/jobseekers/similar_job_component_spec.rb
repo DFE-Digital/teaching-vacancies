@@ -5,7 +5,7 @@ RSpec.describe Jobseekers::SimilarJobComponent, type: :component do
   let(:vacancy) { create(:vacancy, :at_one_school, organisations: [school]) }
 
   before do
-    render_inline(described_class.new(vacancy: vacancy))
+    render_inline(described_class.new(vacancy:))
   end
 
   it "renders the similar job link" do

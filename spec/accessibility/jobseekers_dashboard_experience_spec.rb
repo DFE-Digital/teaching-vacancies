@@ -43,7 +43,7 @@ RSpec.describe "Jobseeker dashboardexperience", type: :system, accessibility: tr
     let(:jobseeker_applications_enabled?) { true }
     let(:school) { create(:school) }
     let(:vacancy) { create(:vacancy, :published, organisations: [school]) }
-    let!(:submitted_job_application) { create(:job_application, :status_submitted, submitted_at: 1.day.ago, jobseeker: jobseeker, vacancy: vacancy) }
+    let!(:submitted_job_application) { create(:job_application, :status_submitted, submitted_at: 1.day.ago, jobseeker:, vacancy:) }
 
     before do
       visit jobseekers_job_applications_path

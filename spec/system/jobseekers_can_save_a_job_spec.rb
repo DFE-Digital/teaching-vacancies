@@ -19,7 +19,7 @@ RSpec.describe "Jobseekers can save a job" do
       end
 
       context "when the job is already saved" do
-        let!(:saved_job) { create(:saved_job, jobseeker: jobseeker, vacancy: vacancy) }
+        let!(:saved_job) { create(:saved_job, jobseeker:, vacancy:) }
 
         it "unsaves the job" do
           unsave_job
@@ -38,7 +38,7 @@ RSpec.describe "Jobseekers can save a job" do
       end
 
       context "when the job is already saved" do
-        let!(:saved_job) { create(:saved_job, jobseeker: jobseeker, vacancy: vacancy) }
+        let!(:saved_job) { create(:saved_job, jobseeker:, vacancy:) }
 
         it "does nothing after signing in" do
           save_job

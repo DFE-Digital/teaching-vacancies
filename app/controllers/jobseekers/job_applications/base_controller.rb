@@ -6,7 +6,7 @@ class Jobseekers::JobApplications::BaseController < Jobseekers::BaseController
   def step_process
     Jobseekers::JobApplications::JobApplicationStepProcess.new(
       current_step || :review,
-      job_application: job_application,
+      job_application:,
     )
   end
 

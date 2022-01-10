@@ -6,4 +6,4 @@
 /    per_page:      number of items to fetch per page
 /    remote:        data-remote
 li
-  = link_to_unless current_page.last?, "Next", url, rel: "next", remote: remote, class: "pagination__item pagination--next"
+  = link_to_unless current_page.last?, "Next", url, rel: "next", remote:, class: "pagination__item pagination--next"

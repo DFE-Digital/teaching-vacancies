@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Jobseekers can edit a draft job application" do
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
-  let(:job_application) { create(:job_application, first_name: "Steve", jobseeker: jobseeker, vacancy: vacancy) }
+  let(:job_application) { create(:job_application, first_name: "Steve", jobseeker:, vacancy:) }
 
   before { login_as(jobseeker, scope: :jobseeker) }
 

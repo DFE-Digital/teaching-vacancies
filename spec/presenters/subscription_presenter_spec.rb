@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe SubscriptionPresenter do
   let(:presenter) { described_class.new(subscription) }
-  let(:subscription) { Subscription.new(search_criteria: search_criteria) }
+  let(:subscription) { Subscription.new(search_criteria:) }
   let(:search_criteria) { { keyword: "english" } }
 
   describe "#formatted_search_criteria" do

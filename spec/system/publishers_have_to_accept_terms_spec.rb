@@ -6,7 +6,7 @@ RSpec.describe "Publishers can accept terms and conditions" do
   context "the user has not accepted the terms and conditions" do
     let(:publisher) { create(:publisher, accepted_terms_at: nil) }
 
-    before { login_publisher(publisher: publisher, organisation: school) }
+    before { login_publisher(publisher:, organisation: school) }
 
     scenario "they will see the terms and conditions" do
       visit organisation_path
@@ -65,7 +65,7 @@ RSpec.describe "Publishers can accept terms and conditions" do
   context "the user has accepted the terms and conditions" do
     let(:publisher) { create(:publisher, accepted_terms_at: Time.current) }
 
-    before { login_publisher(publisher: publisher, organisation: school) }
+    before { login_publisher(publisher:, organisation: school) }
 
     scenario "they will not see the terms and conditions" do
       visit organisation_path

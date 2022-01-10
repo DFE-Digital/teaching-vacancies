@@ -6,8 +6,8 @@ RSpec.describe JobApplicationReviewComponent::Section, type: :component do
   let(:args) { [job_application] }
   let(:kwargs) do
     {
-      name: name,
-      id: id,
+      name:,
+      id:,
     }
   end
 
@@ -69,7 +69,7 @@ RSpec.describe JobApplicationReviewComponent::Section, type: :component do
       url = Rails.application.routes.url_helpers.jobseekers_job_application_build_path(job_application, :personal_details)
       text = component.t("buttons.change")
 
-      expect(page).to have_css(".review-component__section__heading a[href='#{url}']", text: text)
+      expect(page).to have_css(".review-component__section__heading a[href='#{url}']", text:)
     end
 
     it "renders a status tag as the content" do

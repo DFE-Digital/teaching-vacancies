@@ -36,7 +36,7 @@ class Publishers::JobListing::JobRoleDetailsForm < Publishers::JobListing::Vacan
 
   def params_to_save
     {
-      completed_steps: completed_steps,
+      completed_steps:,
       additional_job_roles: additional_job_roles_to_save,
     }.compact
   end

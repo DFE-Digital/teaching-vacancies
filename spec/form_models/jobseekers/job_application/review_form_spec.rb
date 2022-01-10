@@ -5,7 +5,7 @@ RSpec.describe Jobseekers::JobApplication::ReviewForm, type: :model do
   let(:all_steps) { %w[personal_details professional_status employment_history] }
 
   subject do
-    described_class.new({ confirm_data_accurate: "1", confirm_data_usage: "1", completed_steps: completed_steps, all_steps: all_steps })
+    described_class.new({ confirm_data_accurate: "1", confirm_data_usage: "1", completed_steps:, all_steps: })
   end
 
   it { is_expected.to validate_acceptance_of(:confirm_data_accurate) }

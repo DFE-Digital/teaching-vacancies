@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe Publishers::VacancyFormSequence do
   subject(:sequence) do
     described_class.new(
-      vacancy: vacancy,
-      organisation: organisation,
+      vacancy:,
+      organisation:,
     )
   end
 

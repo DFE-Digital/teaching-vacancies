@@ -7,7 +7,7 @@ RSpec.describe BannerButtonComponent, type: :component do
   let(:params) { { key: "value" } }
   let(:icon) { "apply" }
 
-  let(:kwargs) { { text: text, href: href, method: method, params: params, icon: icon } }
+  let(:kwargs) { { text:, href:, method:, params:, icon: } }
 
   describe "rendered component" do
     subject! { render_inline(described_class.new(**kwargs)) }

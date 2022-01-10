@@ -11,7 +11,7 @@ RSpec.describe SubscriptionsController, recaptcha: true do
         }.symbolize_keys,
       }
     end
-    subject { post :create, params: params }
+    subject { post :create, params: }
     let(:created_subscription) { Subscription.last }
 
     before do
@@ -61,7 +61,7 @@ RSpec.describe SubscriptionsController, recaptcha: true do
         end
 
         it "sets the recaptcha score on the Subscription record" do
-          expect(subscription).to receive(:update).with(recaptcha_score: recaptcha_score)
+          expect(subscription).to receive(:update).with(recaptcha_score:)
           subject
         end
       end

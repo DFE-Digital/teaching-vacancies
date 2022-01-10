@@ -42,7 +42,7 @@
               data: { "form-target": "inputText" }
           = f.govuk_radio_button :starts_asap, "true", class: "clear-form__checkbox", label: { text: t("helpers.legend.publishers_job_listing_important_dates_form.start_asap") }, data: { action: "click->form#clearListener" }
 
-        = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+        = render "publishers/vacancies/vacancy_form_partials/submit", f:
 
     - unless vacancy.published?
       .govuk-grid-column-one-third

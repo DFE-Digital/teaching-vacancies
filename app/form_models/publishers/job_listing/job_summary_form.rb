@@ -18,6 +18,6 @@ class Publishers::JobListing::JobSummaryForm < Publishers::JobListing::VacancyFo
     when "at_multiple_schools"
       organisation = "schools"
     end
-    errors.add(:about_school, I18n.t("job_summary_errors.about_school.blank", organisation: organisation))
+    errors.add(:about_school, I18n.t("job_summary_errors.about_school.blank", organisation:))
   end
 end

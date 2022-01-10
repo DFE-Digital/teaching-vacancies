@@ -27,7 +27,7 @@ class Subscription < ApplicationRecord
   end
 
   def token
-    token_values = { id: id }
+    token_values = { id: }
     self.class.encryptor.encrypt_and_sign(token_values)
   end
 

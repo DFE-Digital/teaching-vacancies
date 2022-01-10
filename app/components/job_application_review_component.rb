@@ -9,8 +9,8 @@ class JobApplicationReviewComponent < ReviewComponent
 
   def initialize(job_application, step_process:, classes: [], html_attributes: {}, **kwargs)
     super(
-      classes: classes,
-      html_attributes: html_attributes,
+      classes:,
+      html_attributes:,
       namespace: "jobseekers/job_applications",
       **kwargs,
     )

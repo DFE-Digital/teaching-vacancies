@@ -8,7 +8,7 @@ class SendJobApplicationDataExpiryNotificationJob < ApplicationJob
       next unless vacancy.job_applications.any?
 
       vacancy.organisation.publishers.each do |publisher|
-        Publishers::JobApplicationDataExpiryNotification.with(vacancy: vacancy, publisher: publisher).deliver(publisher)
+        Publishers::JobApplicationDataExpiryNotification.with(vacancy:, publisher:).deliver(publisher)
       end
     end
   end

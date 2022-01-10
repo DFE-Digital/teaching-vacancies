@@ -52,7 +52,7 @@ RSpec.describe Vacancy do
     let(:job_application) { create(:job_application, vacancy: subject) }
 
     before do
-      Publishers::JobApplicationReceivedNotification.with(vacancy: subject, job_application: job_application)
+      Publishers::JobApplicationReceivedNotification.with(vacancy: subject, job_application:)
                                                     .deliver(subject.publisher)
       expect(Notification.count).to eq 1
       subject.destroy
@@ -469,7 +469,7 @@ RSpec.describe Vacancy do
   end
 
   describe "#readable_phases" do
-    subject { build(:vacancy, organisations: [organisation], phase: phase) }
+    subject { build(:vacancy, organisations: [organisation], phase:) }
     let!(:organisation) { create(:school, readable_phases: %w[primary middle]) }
 
     context "if the vacancy has a single phase" do
@@ -602,7 +602,7 @@ RSpec.describe Vacancy do
     end
 
     context "when the vacancy itself has a phase" do
-      subject { build_stubbed(:vacancy, phase: phase) }
+      subject { build_stubbed(:vacancy, phase:) }
 
       context "when the phase is primary" do
         let(:phase) { "primary" }
@@ -689,7 +689,7 @@ RSpec.describe Vacancy do
   end
 
   describe "#geolocation" do
-    subject { create(:vacancy, job_location: job_location, organisations: organisations) }
+    subject { create(:vacancy, job_location:, organisations:) }
 
     context "for single school vacancies" do
       let(:job_location) { :at_one_school }

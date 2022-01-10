@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Jobseekers can add references to their job application" do
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
-  let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
+  let(:job_application) { create(:job_application, :status_draft, jobseeker:, vacancy:) }
 
   before { login_as(jobseeker, scope: :jobseeker) }
 
@@ -25,7 +25,7 @@ RSpec.describe "Jobseekers can add references to their job application" do
   end
 
   context "when there is at least one reference" do
-    let!(:reference) { create(:reference, name: "John", job_application: job_application) }
+    let!(:reference) { create(:reference, name: "John", job_application:) }
 
     it "allows jobseekers to delete references" do
       visit jobseekers_job_application_build_path(job_application, :references)

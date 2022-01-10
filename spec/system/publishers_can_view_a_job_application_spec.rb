@@ -4,10 +4,10 @@ RSpec.describe "Publishers can view a job application" do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }
   let(:vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
-  let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
+  let(:job_application) { create(:job_application, :status_submitted, vacancy:) }
 
   before do
-    login_publisher(publisher: publisher, organisation: organisation)
+    login_publisher(publisher:, organisation:)
   end
 
   it "shows the timeline" do
@@ -37,7 +37,7 @@ RSpec.describe "Publishers can view a job application" do
   end
 
   context "when the job application status is unsuccessful" do
-    let(:job_application) { create(:job_application, :status_unsuccessful, vacancy: vacancy) }
+    let(:job_application) { create(:job_application, :status_unsuccessful, vacancy:) }
 
     it "shows the correct calls to action" do
       visit organisation_job_job_application_path(vacancy.id, job_application)
@@ -51,7 +51,7 @@ RSpec.describe "Publishers can view a job application" do
   end
 
   context "when the job application status is shortlisted" do
-    let(:job_application) { create(:job_application, :status_shortlisted, vacancy: vacancy) }
+    let(:job_application) { create(:job_application, :status_shortlisted, vacancy:) }
 
     it "shows the correct calls to action and timeline" do
       visit organisation_job_job_application_path(vacancy.id, job_application)
@@ -65,7 +65,7 @@ RSpec.describe "Publishers can view a job application" do
   end
 
   context "when the job application status is submitted" do
-    let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
+    let(:job_application) { create(:job_application, :status_submitted, vacancy:) }
 
     it "shows the correct calls to action and timeline" do
       visit organisation_job_job_application_path(vacancy.id, job_application)

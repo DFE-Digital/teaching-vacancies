@@ -1,6 +1,6 @@
 class ValidatableSummaryListComponent::RowComponent < GovukComponent::SummaryListComponent::RowComponent
   def initialize(attribute, record:, error_path:, show_errors: true, classes: [], html_attributes: {}, **options)
-    super(classes: classes, html_attributes: html_attributes)
+    super(classes:, html_attributes:)
 
     @attribute = attribute
     @record = record

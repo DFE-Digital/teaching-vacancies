@@ -8,7 +8,7 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
   let(:publisher) { create(:publisher) }
 
   before do
-    login_publisher(publisher: publisher, organisation: school)
+    login_publisher(publisher:, organisation: school)
   end
 
   context "when there are vacancies awaiting feedback" do

@@ -5,7 +5,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
   let(:school) { create(:school) }
 
   scenario "school" do
-    login_publisher(publisher: publisher, organisation: school)
+    login_publisher(publisher:, organisation: school)
     vacancy = create(:vacancy, status: "published", organisations: [school])
 
     visit organisation_path
@@ -17,7 +17,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
   end
 
   context "with no jobs" do
-    before { login_publisher(publisher: publisher, organisation: school) }
+    before { login_publisher(publisher:, organisation: school) }
 
     scenario "Publishers see a message informing them they have no jobs" do
       visit organisation_path
@@ -36,7 +36,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
       expired_vacancy
     end
 
-    before { login_publisher(publisher: publisher, organisation: school) }
+    before { login_publisher(publisher:, organisation: school) }
 
     scenario "jobs are split into sections" do
       create_list(:vacancy, 5, :published, organisations: [school])

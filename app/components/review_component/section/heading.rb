@@ -1,6 +1,6 @@
 class ReviewComponent::Section::Heading < GovukComponent::Base
   def initialize(title:, link_to: [], classes: [], html_attributes: {})
-    super(classes: classes, html_attributes: html_attributes)
+    super(classes:, html_attributes:)
 
     @title = title
     @text, @href = link_to

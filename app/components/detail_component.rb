@@ -5,7 +5,7 @@ class DetailComponent < GovukComponent::Base
   renders_one :actions
 
   def initialize(title: nil, classes: [], html_attributes: {})
-    super(classes: classes, html_attributes: html_attributes)
+    super(classes:, html_attributes:)
 
     @title = title
   end

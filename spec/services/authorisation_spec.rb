@@ -117,7 +117,7 @@ RSpec.describe Authorisation do
     subject do
       described_class.new(
         organisation_id: "939eac36-0777-48c2-9c2c-b87c948a9ee0",
-        user_id: user_id,
+        user_id:,
       )
     end
     let(:user_id) { "default_id" }
@@ -125,7 +125,7 @@ RSpec.describe Authorisation do
     context "user is a member of multiple organisations" do
       let(:user_id) { "161d1f6a-44f1-4a1a-940d-d1088c439da7" }
       it "has many" do
-        stub_sign_in_with_multiple_organisations(user_id: user_id)
+        stub_sign_in_with_multiple_organisations(user_id:)
         expect(subject.many_organisations?).to be(true)
       end
     end
@@ -133,7 +133,7 @@ RSpec.describe Authorisation do
     context "another user is a member of multiple organisations" do
       let(:user_id) { "another_user_id" }
       it "has many" do
-        stub_sign_in_with_multiple_organisations(user_id: user_id)
+        stub_sign_in_with_multiple_organisations(user_id:)
         expect(subject.many_organisations?).to be(true)
       end
     end
@@ -141,7 +141,7 @@ RSpec.describe Authorisation do
     context "user is member of a single organisation" do
       let(:user_id) { "another_user_id" }
       it "does not have many" do
-        stub_sign_in_with_single_organisation(user_id: user_id)
+        stub_sign_in_with_single_organisation(user_id:)
         expect(subject.many_organisations?).to be(false)
       end
     end

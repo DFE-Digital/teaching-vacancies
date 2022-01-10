@@ -6,7 +6,7 @@ RSpec.describe "Publishers can sign out with DfE Sign In" do
   before { allow(AuthenticationFallback).to receive(:enabled?).and_return(false) }
 
   scenario "as an authenticated user" do
-    login_publisher(publisher: publisher, organisation: school)
+    login_publisher(publisher:, organisation: school)
 
     visit root_path
 

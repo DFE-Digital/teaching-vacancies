@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe EmptySectionComponent, type: :component do
   let(:title) { "A lovely title" }
-  let(:kwargs) { { title: title } }
+  let(:kwargs) { { title: } }
 
   subject! { render_inline(described_class.new(**kwargs)) }
 

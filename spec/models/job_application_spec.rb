@@ -31,7 +31,7 @@ RSpec.describe JobApplication do
 
   describe "#email" do
     let(:jobseeker) { build_stubbed(:jobseeker, email: "backup-email@example.com") }
-    subject { build_stubbed(:job_application, email_address: email_address, jobseeker: jobseeker) }
+    subject { build_stubbed(:job_application, email_address:, jobseeker:) }
     let(:email_address) { "something@example.com" }
 
     context "when the application has an email address" do
@@ -74,7 +74,7 @@ RSpec.describe JobApplication do
 
   context "when submitted" do
     subject do
-      build(:job_application, vacancy: vacancy, disability: "no", age: "under_twenty_five", gender: "man", gender_description: "",
+      build(:job_application, vacancy:, disability: "no", age: "under_twenty_five", gender: "man", gender_description: "",
                               ethnicity: "black", ethnicity_description: "", orientation: "other",
                               orientation_description: "extravagant", religion: "other", religion_description: "agnostic")
     end
@@ -156,7 +156,7 @@ RSpec.describe JobApplication do
       expect { subject }
         .to have_delivered_notification("Publishers::JobApplicationReceivedNotification")
         .with_recipient(job_application.vacancy.publisher)
-        .and_params(vacancy: job_application.vacancy, job_application: job_application)
+        .and_params(vacancy: job_application.vacancy, job_application:)
     end
 
     it "delivers `application_submitted` email" do

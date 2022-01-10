@@ -7,7 +7,7 @@ RSpec.describe "Publishers can extend a deadline" do
   let(:expires_at) { vacancy.expires_at + 1.month }
 
   before do
-    login_publisher(publisher: publisher, organisation: organisation)
+    login_publisher(publisher:, organisation:)
     visit jobs_with_type_organisation_path(:published)
   end
 

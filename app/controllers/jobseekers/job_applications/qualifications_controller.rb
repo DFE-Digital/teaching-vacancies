@@ -43,7 +43,7 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
   def form_attributes
     case action_name
     when "new"
-      { category: category }
+      { category: }
     when "select_category"
       {}
     when "edit"

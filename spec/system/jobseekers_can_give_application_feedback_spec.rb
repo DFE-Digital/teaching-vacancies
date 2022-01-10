@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Jobseekers can give job application feedback after submitting the application" do
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
-  let(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+  let(:job_application) { create(:job_application, jobseeker:, vacancy:) }
   let(:comment) { "I will never use any other website again" }
 
   before { login_as(jobseeker, scope: :jobseeker) }
@@ -24,7 +24,7 @@ RSpec.describe "Jobseekers can give job application feedback after submitting th
     fill_in "jobseekers_job_application_feedback_form[comment]", with: comment
 
     expect { click_on I18n.t("buttons.submit_feedback") }.to change {
-      jobseeker.feedbacks.where(comment: comment, email: jobseeker.email, feedback_type: "application", rating: "somewhat_satisfied", user_participation_response: "interested").count
+      jobseeker.feedbacks.where(comment:, email: jobseeker.email, feedback_type: "application", rating: "somewhat_satisfied", user_participation_response: "interested").count
     }.by(1)
 
     expect(current_path).to eq(jobseekers_job_applications_path)

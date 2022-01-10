@@ -9,11 +9,11 @@ RSpec.describe GeneralFeedbackForm, type: :model do
   let(:params) do
     {
       comment: "Fancy",
-      email: email,
+      email:,
       report_a_problem: "no",
-      user_participation_response: user_participation_response,
-      visit_purpose: visit_purpose,
-      visit_purpose_comment: visit_purpose_comment,
+      user_participation_response:,
+      visit_purpose:,
+      visit_purpose_comment:,
     }
   end
 

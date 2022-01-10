@@ -11,7 +11,7 @@ RSpec.describe SendDailyAlertEmailJob do
     }
   end
 
-  let!(:subscription) { create(:subscription, search_criteria: search_criteria, frequency: :daily) }
+  let!(:subscription) { create(:subscription, search_criteria:, frequency: :daily) }
   let!(:vacancies) { create_list(:vacancy, 5, :published_slugged) }
 
   let(:mail) { double(:mail) }

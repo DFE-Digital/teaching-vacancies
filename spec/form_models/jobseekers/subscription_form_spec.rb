@@ -23,13 +23,13 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
     before { allow(radius_builder).to receive(:radius).and_return(expected_radius) }
 
     context "when keyword, job_roles, phases, working_patterns are provided in the params" do
-      let(:params) { { keyword: keyword, job_roles: job_roles, phases: phases, working_patterns: working_patterns } }
+      let(:params) { { keyword:, job_roles:, phases:, working_patterns: } }
 
       it_behaves_like "a form with the correct attributes"
     end
 
     context "when keyword, job_roles, phases, working_patterns are provided in the search_criteria param" do
-      let(:params) { { search_criteria: { keyword: keyword, job_roles: job_roles, phases: phases, working_patterns: working_patterns } } }
+      let(:params) { { search_criteria: { keyword:, job_roles:, phases:, working_patterns: } } }
 
       it_behaves_like "a form with the correct attributes"
     end
@@ -39,21 +39,21 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
 
       context "when a location is provided in the params" do
         let(:location) { "North Nowhere" }
-        let(:params) { { radius: radius, location: location } }
+        let(:params) { { radius:, location: } }
 
         it_behaves_like "a correct call of Search::RadiusBuilder"
       end
 
       context "when a location is provided in the search_criteria param" do
         let(:location) { "North Nowhere" }
-        let(:params) { { radius: radius, search_criteria: { location: location } } }
+        let(:params) { { radius:, search_criteria: { location: } } }
 
         it_behaves_like "a correct call of Search::RadiusBuilder"
       end
 
       context "when a location is not provided" do
         let(:location) { nil }
-        let(:params) { { radius: radius } }
+        let(:params) { { radius: } }
 
         it_behaves_like "a correct call of Search::RadiusBuilder"
       end
@@ -64,21 +64,21 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
 
       context "when a location is provided in the params" do
         let(:location) { "North Nowhere" }
-        let(:params) { { search_criteria: { radius: radius }, location: location } }
+        let(:params) { { search_criteria: { radius: }, location: } }
 
         it_behaves_like "a correct call of Search::RadiusBuilder"
       end
 
       context "when a location is provided in the search_criteria param" do
         let(:location) { "North Nowhere" }
-        let(:params) { { search_criteria: { radius: radius, location: location } } }
+        let(:params) { { search_criteria: { radius:, location: } } }
 
         it_behaves_like "a correct call of Search::RadiusBuilder"
       end
 
       context "when a location is not provided" do
         let(:location) { nil }
-        let(:params) { { search_criteria: { radius: radius } } }
+        let(:params) { { search_criteria: { radius: } } }
 
         it_behaves_like "a correct call of Search::RadiusBuilder"
       end
@@ -89,14 +89,14 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
 
       context "when a location is provided in the params" do
         let(:location) { "North Nowhere" }
-        let(:params) { { location: location } }
+        let(:params) { { location: } }
 
         it_behaves_like "a correct call of Search::RadiusBuilder"
       end
 
       context "when a location is provided in the search_criteria param" do
         let(:location) { "North Nowhere" }
-        let(:params) { { search_criteria: { location: location } } }
+        let(:params) { { search_criteria: { location: } } }
 
         it_behaves_like "a correct call of Search::RadiusBuilder"
       end
@@ -111,7 +111,7 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
   end
 
   describe "#search_criteria_hash" do
-    let(:params) { { keyword: keyword, job_roles: job_roles, radius: radius, location: location } }
+    let(:params) { { keyword:, job_roles:, radius:, location: } }
     let(:keyword) { "physics" }
     let(:radius) { nil }
     let(:location) { nil }
@@ -122,7 +122,7 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
       let(:job_roles) { %w[teacher] }
 
       it "is deleted from the hash" do
-        expect(subject.search_criteria_hash).to eq({ job_roles: job_roles })
+        expect(subject.search_criteria_hash).to eq({ job_roles: })
       end
     end
 
@@ -130,7 +130,7 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
       let(:job_roles) { [] }
 
       it "is deleted from the hash" do
-        expect(subject.search_criteria_hash).to eq({ keyword: keyword })
+        expect(subject.search_criteria_hash).to eq({ keyword: })
       end
     end
 
@@ -139,7 +139,7 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
 
       context "when location is not present" do
         it "omits radius value from the hash" do
-          expect(subject.search_criteria_hash).to eq({ keyword: keyword })
+          expect(subject.search_criteria_hash).to eq({ keyword: })
         end
       end
 
@@ -147,7 +147,7 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
         let(:location) { "North Nowhere" }
 
         it "includes radius value in the hash" do
-          expect(subject.search_criteria_hash).to eq({ keyword: keyword, location: location, radius: "10" })
+          expect(subject.search_criteria_hash).to eq({ keyword:, location:, radius: "10" })
         end
       end
     end

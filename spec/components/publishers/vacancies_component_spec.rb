@@ -4,12 +4,12 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
   let(:publisher) { create(:publisher) }
   let(:sort) { Publishers::VacancySort.new(organisation, selected_type).update(sort_by: "job_title") }
   let(:selected_type) { "published" }
-  let(:publisher_preference) { create(:publisher_preference, publisher: publisher, organisation: organisation) }
+  let(:publisher_preference) { create(:publisher_preference, publisher:, organisation:) }
   let(:email) { "publisher@example.net" }
 
   subject do
     described_class.new(
-      organisation: organisation, sort: sort, selected_type: selected_type, publisher_preference: publisher_preference, email: email,
+      organisation:, sort:, selected_type:, publisher_preference:, email:,
     )
   end
 
@@ -29,7 +29,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
       context "when organisation is a school" do
         let(:organisation) { create(:school, name: "A school with jobs") }
         let(:vacancy) { create(:vacancy, :published, organisations: [organisation]) }
-        let!(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
+        let!(:job_application) { create(:job_application, :status_submitted, vacancy:) }
 
         let!(:inline_component) { render_inline(subject) }
 
@@ -51,7 +51,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
         end
 
         context "when withdrawn applications have also been received" do
-          let(:withdrawn_job_application) { create(:job_application, :status_withdrawn, vacancy: vacancy) }
+          let(:withdrawn_job_application) { create(:job_application, :status_withdrawn, vacancy:) }
 
           it "does not affect the count" do
             expect(rendered_component).to include(I18n.t("jobs.manage.view_applicants", count: 1))
@@ -81,7 +81,7 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
         let(:open_school) { create(:school, name: "Open school") }
         let(:closed_school) { create(:school, :closed, name: "Closed school") }
         let!(:vacancy) { create(:vacancy, :published, :central_office, organisations: [organisation]) }
-        let!(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
+        let!(:job_application) { create(:job_application, :status_submitted, vacancy:) }
 
         let!(:inline_component) { render_inline(subject) }
 
@@ -131,9 +131,9 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
         let(:organisation) { create(:local_authority, schools: [open_school, closed_school]) }
         let(:open_school) { create(:school, name: "Open school") }
         let(:closed_school) { create(:school, :closed, name: "Closed school") }
-        let(:publisher_preference) { create(:publisher_preference, publisher: publisher, organisation: organisation, schools: [open_school]) }
+        let(:publisher_preference) { create(:publisher_preference, publisher:, organisation:, schools: [open_school]) }
         let!(:vacancy) { create(:vacancy, :published, :at_one_school, organisations: [open_school]) }
-        let!(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
+        let!(:job_application) { create(:job_application, :status_submitted, vacancy:) }
 
         let!(:inline_component) { render_inline(subject) }
 

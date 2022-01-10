@@ -6,7 +6,7 @@ RSpec.describe Jobseekers::SubscriptionMailer do
   let(:email) { "an@example.net" }
   let(:search_criteria) { { keyword: "English" } }
   let(:subscription) do
-    subscription = Subscription.create(email: email, frequency: "daily", search_criteria: search_criteria)
+    subscription = Subscription.create(email:, frequency: "daily", search_criteria:)
     # The hashing algorithm uses a random initialization vector to encrypt the token,
     # so is different every time, so we stub the token to be the same every time, so
     # it's clearer what we're testing when we test the unsubscribe link
@@ -19,9 +19,9 @@ RSpec.describe Jobseekers::SubscriptionMailer do
 
   let(:expected_data) do
     {
-      notify_template: notify_template,
+      notify_template:,
       email_identifier: anonymised_form_of(email),
-      user_anonymised_jobseeker_id: user_anonymised_jobseeker_id,
+      user_anonymised_jobseeker_id:,
       user_anonymised_publisher_id: nil,
       subscription_identifier: anonymised_form_of(subscription.id),
       uid: "a_unique_identifier",
@@ -49,7 +49,7 @@ RSpec.describe Jobseekers::SubscriptionMailer do
     end
 
     context "when the subscription email matches a jobseeker account" do
-      let(:jobseeker) { create(:jobseeker, email: email) }
+      let(:jobseeker) { create(:jobseeker, email:) }
       let(:user_anonymised_jobseeker_id) { anonymised_form_of(jobseeker.id) }
 
       it "triggers a `jobseeker_subscription_confirmation` email event with the anonymised jobseeker id" do
@@ -67,7 +67,7 @@ RSpec.describe Jobseekers::SubscriptionMailer do
 
     describe "create account section" do
       context "when the subscription email matches a jobseeker account" do
-        let!(:jobseeker) { create(:jobseeker, email: email) }
+        let!(:jobseeker) { create(:jobseeker, email:) }
 
         it "does not display create account section" do
           expect(body).not_to include(I18n.t("jobseekers.subscription_mailer.confirmation.create_account.heading"))
@@ -100,7 +100,7 @@ RSpec.describe Jobseekers::SubscriptionMailer do
     end
 
     context "when the subscription email matches a jobseeker account" do
-      let(:jobseeker) { create(:jobseeker, email: email) }
+      let(:jobseeker) { create(:jobseeker, email:) }
       let(:user_anonymised_jobseeker_id) { anonymised_form_of(jobseeker.id) }
 
       it "triggers a `jobseeker_subscription_update` email event with the anonymised jobseeker id" do

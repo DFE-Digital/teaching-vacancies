@@ -36,7 +36,7 @@ RSpec.describe "Users are redirected after sign in" do
       let(:job) { create(:vacancy, organisations: [school]) }
 
       before do
-        create(:job_application, jobseeker: jobseeker, vacancy: job)
+        create(:job_application, jobseeker:, vacancy: job)
       end
 
       scenario "directs the user to 'My Applications'" do
@@ -58,7 +58,7 @@ RSpec.describe "Users are redirected after sign in" do
   context "when the user is a publisher" do
     let!(:organisation) { create(:school) }
     let(:publisher) { create(:publisher) }
-    let(:vacancy) { create(:vacancy, publisher: publisher) }
+    let(:vacancy) { create(:vacancy, publisher:) }
 
     before { allow(AuthenticationFallback).to receive(:enabled?) { false } }
 

@@ -14,7 +14,7 @@
 
         = f.govuk_text_area :working_patterns_details, label: { size: "s", id: "working-pattern-details-label" }
 
-        = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+        = render "publishers/vacancies/vacancy_form_partials/submit", f:
 
     - unless vacancy.published?
       .govuk-grid-column-one-third

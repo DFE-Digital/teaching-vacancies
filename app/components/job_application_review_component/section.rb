@@ -5,9 +5,9 @@ class JobApplicationReviewComponent::Section < ReviewComponent::Section
   def initialize(job_application, forms: [], classes: [], html_attributes: {}, **kwargs)
     super(
       job_application,
-      forms: forms,
-      classes: classes,
-      html_attributes: html_attributes,
+      forms:,
+      classes:,
+      html_attributes:,
       **kwargs,
     )
 

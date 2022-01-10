@@ -9,8 +9,8 @@ class VacanciesPresenter < BasePresenter
     super(vacancies)
   end
 
-  def each(&block)
-    decorated_collection.each(&block)
+  def each(&)
+    decorated_collection.each(&)
   end
 
   def any?

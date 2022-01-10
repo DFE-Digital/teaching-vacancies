@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Publishers::JobListing::JobRoleDetailsForm, type: :model do
-  subject { described_class.new(vacancy: vacancy) }
+  subject { described_class.new(vacancy:) }
 
   shared_examples_for "a form with send_responsible radios" do
     it { is_expected.to validate_inclusion_of(:send_responsible).in_array(%w[yes no]) }

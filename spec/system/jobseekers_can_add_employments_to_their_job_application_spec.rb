@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Jobseekers can add employments and breaks to their job application" do
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
-  let!(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
+  let!(:job_application) { create(:job_application, :status_draft, jobseeker:, vacancy:) }
 
   before { login_as(jobseeker, scope: :jobseeker) }
 
@@ -41,8 +41,8 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
   context "managing employment history gaps" do
     before do
-      create(:employment, :job, job_application: job_application, started_on: Date.parse("2021-01-01"), ended_on: Date.parse("2021-02-01"))
-      create(:employment, :job, job_application: job_application, started_on: Date.parse("2021-06-01"), current_role: "yes")
+      create(:employment, :job, job_application:, started_on: Date.parse("2021-01-01"), ended_on: Date.parse("2021-02-01"))
+      create(:employment, :job, job_application:, started_on: Date.parse("2021-06-01"), current_role: "yes")
     end
 
     it "allows jobseekers to add, change and delete gaps in employment with prefilled start and end date" do
@@ -89,7 +89,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
   end
 
   context "when there is at least one role" do
-    let!(:employment) { create(:employment, organisation: "A school", job_application: job_application) }
+    let!(:employment) { create(:employment, organisation: "A school", job_application:) }
 
     it "allows jobseekers to delete employment history" do
       visit jobseekers_job_application_build_path(job_application, :employment_history)

@@ -2,13 +2,13 @@ class Publishers::VacancyFormSequence < FormSequence
   def initialize(vacancy:, organisation:)
     step_process = Publishers::Vacancies::VacancyStepProcess.new(
       :review,
-      vacancy: vacancy,
-      organisation: organisation,
+      vacancy:,
+      organisation:,
     )
 
     super(
       model: vacancy,
-      organisation: organisation,
+      organisation:,
       step_names: step_process.steps,
       form_prefix: "publishers/job_listing",
     )

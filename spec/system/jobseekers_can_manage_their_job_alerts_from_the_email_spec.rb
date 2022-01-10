@@ -6,7 +6,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the email" do
 
   let(:search_criteria) { { keyword: "Maths", location: "London" } }
   let(:frequency) { :daily }
-  let(:subscription) { create(:subscription, email: jobseeker.email, frequency: frequency, search_criteria: search_criteria) }
+  let(:subscription) { create(:subscription, email: jobseeker.email, frequency:, search_criteria:) }
 
   before do
     login_as(jobseeker, scope: :jobseeker) if jobseeker_signed_in?

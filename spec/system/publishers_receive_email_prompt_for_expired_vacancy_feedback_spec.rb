@@ -7,7 +7,7 @@ RSpec.describe "Creating a vacancy" do
 
   before do
     ActionMailer::Base.deliveries.clear
-    login_publisher(publisher: publisher, organisation: school)
+    login_publisher(publisher:, organisation: school)
   end
 
   after { travel_back }

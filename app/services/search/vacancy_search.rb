@@ -13,7 +13,7 @@ class Search::VacancySearch
     @location = search_criteria[:location]
     @radius = search_criteria[:radius]
 
-    @sort = sort || Search::VacancySort.new(keyword: keyword)
+    @sort = sort || Search::VacancySort.new(keyword:)
     @per_page = (per_page || DEFAULT_HITS_PER_PAGE).to_i
     @page = (page || DEFAULT_PAGE).to_i
   end

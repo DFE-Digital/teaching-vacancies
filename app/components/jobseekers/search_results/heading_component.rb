@@ -45,7 +45,7 @@ class Jobseekers::SearchResults::HeadingComponent < ViewComponent::Base
     return unless @location.present?
 
     # A radius of 0 is only possible for polygon searches.
-    t("jobs.search_result_heading.radius_html", count: @radius, units: units)
+    t("jobs.search_result_heading.radius_html", count: @radius, units:)
   end
 
   def units

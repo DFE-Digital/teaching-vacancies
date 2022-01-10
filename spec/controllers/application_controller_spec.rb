@@ -23,7 +23,7 @@ RSpec.describe ApplicationController do
     end
 
     it "triggers a `click_event` event on a request" do
-      expect { get :test_action, params: params }
+      expect { get :test_action, params: }
         .to have_triggered_event(:vacancy_save_to_account_clicked)
         .with_request_data.and_data(vacancy_id: "more_data")
     end
@@ -34,7 +34,7 @@ RSpec.describe ApplicationController do
       end
 
       it "does not trigger a `click_event` event" do
-        expect { get :test_action, params: params }.not_to have_triggered_event(:evil)
+        expect { get :test_action, params: }.not_to have_triggered_event(:evil)
       end
     end
   end
@@ -79,7 +79,7 @@ RSpec.describe ApplicationController do
 
     before do
       allow(AbTests).to receive(:new).and_return(ab_tests)
-      get :test_action, params: params
+      get :test_action, params:
     end
 
     describe "#ab_variant_for" do

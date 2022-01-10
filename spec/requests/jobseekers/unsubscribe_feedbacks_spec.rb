@@ -14,7 +14,7 @@ RSpec.describe "Job alert unsubscription feedback" do
         let(:params) { { jobseekers_unsubscribe_feedback_form: { comment: "Stop emailing me!" } } }
 
         it "redirects to the job alerts dashboard after feedback is submitted" do
-          expect { post(subscription_unsubscribe_feedbacks_path(subscription), params: params) }.to change { jobseeker.feedbacks.count }.by(1)
+          expect { post(subscription_unsubscribe_feedbacks_path(subscription), params:) }.to change { jobseeker.feedbacks.count }.by(1)
 
           expect(response).to redirect_to(jobseekers_subscriptions_path)
         end

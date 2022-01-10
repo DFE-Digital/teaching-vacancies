@@ -17,6 +17,6 @@ scope = ["https://www.googleapis.com/auth/indexing",
 
 key = StringIO.new(GOOGLE_API_JSON_KEY)
 authorizer = Google::Auth::ServiceAccountCredentials.make_creds(json_key_io: key,
-                                                                scope: scope)
+                                                                scope:)
 authorizer.fetch_access_token!
 Google::Apis::RequestOptions.default.authorization = authorizer

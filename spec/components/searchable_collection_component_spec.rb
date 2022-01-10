@@ -12,18 +12,18 @@ RSpec.describe SearchableCollectionComponent, type: :component do
 
   let(:base) do
     {
-      form: form,
-      input_type: input_type,
+      form:,
+      input_type:,
       label_text: "search colllection",
       attribute_name: :attributes,
-      collection: collection,
+      collection:,
       text_method: :first,
       hint_method: :first,
       value_method: :first,
     }
   end
 
-  let(:kwargs) { { collection: collection, form: form, input_type: :checkbox, attribute_name: :attributes, text_method: :first, hint_method: :first, value_method: :first } }
+  let(:kwargs) { { collection:, form:, input_type: :checkbox, attribute_name: :attributes, text_method: :first, hint_method: :first, value_method: :first } }
 
   it_behaves_like "a component that accepts custom classes"
   it_behaves_like "a component that accepts custom HTML attributes"

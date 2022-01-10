@@ -4,7 +4,7 @@ class PanelComponent < GovukComponent::Base
   attr_reader :heading_text, :button_text
 
   def initialize(button_text:, heading_text:, classes: [], html_attributes: {})
-    super(classes: classes, html_attributes: html_attributes)
+    super(classes:, html_attributes:)
 
     @button_text = button_text
     @heading_text = heading_text

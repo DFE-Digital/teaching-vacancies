@@ -5,7 +5,7 @@ RSpec.describe "Publisher dashboard experience", type: :system, accessibility: t
   let(:publisher) { create(:publisher) }
   let(:vacancy) { create(:vacancy, :published, organisations: [organisation]) }
 
-  before { login_publisher(publisher: publisher, organisation: organisation) }
+  before { login_publisher(publisher:, organisation:) }
 
   context "Publisher visits the vacancy dashboard page" do
     before do
@@ -19,7 +19,7 @@ RSpec.describe "Publisher dashboard experience", type: :system, accessibility: t
   end
 
   context "Publisher visits the manage applications page" do
-    let!(:job_application_submitted) { create(:job_application, :status_submitted, vacancy: vacancy) }
+    let!(:job_application_submitted) { create(:job_application, :status_submitted, vacancy:) }
 
     before { visit organisation_job_job_applications_path(vacancy.id) }
 

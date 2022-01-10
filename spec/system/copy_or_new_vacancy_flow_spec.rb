@@ -12,7 +12,7 @@ RSpec.describe "Copy-or-new vacancy flow" do
       create_published_vacancy(organisations: [school])
     end
 
-    login_publisher(publisher: publisher, organisation: school)
+    login_publisher(publisher:, organisation: school)
   end
 
   scenario "Publishers are directed into either copy or new vacancy flows" do

@@ -10,8 +10,8 @@ RSpec.describe Publisher do
 
   describe "#vacancies_with_job_applications_submitted_yesterday" do
     let!(:publisher) { create(:publisher) }
-    let!(:vacancy1) { create(:vacancy, publisher: publisher) }
-    let!(:vacancy2) { create(:vacancy, publisher: publisher) }
+    let!(:vacancy1) { create(:vacancy, publisher:) }
+    let!(:vacancy2) { create(:vacancy, publisher:) }
     let!(:job_application1) { create(:job_application, :status_submitted, vacancy: vacancy1, submitted_at: 1.day.ago) }
     let!(:job_application2) { create(:job_application, :status_submitted, vacancy: vacancy2, submitted_at: 2.days.ago) }
 

@@ -18,7 +18,7 @@ class EmailEvent < Event
 
   def base_data
     @base_data ||= super.merge(
-      request_ab_tests: ab_tests&.map { |test, variant| { test: test, variant: variant } },
+      request_ab_tests: ab_tests&.map { |test, variant| { test:, variant: } },
     )
   end
 

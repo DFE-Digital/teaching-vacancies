@@ -1,11 +1,11 @@
 require "rails_helper"
 
 RSpec.describe DestroyInactiveAccountsJob do
-  let!(:jobseeker) { create(:jobseeker, last_sign_in_at: last_sign_in_at) }
+  let!(:jobseeker) { create(:jobseeker, last_sign_in_at:) }
   let!(:subscription) { create(:subscription, email: jobseeker.email) }
   let!(:feedback) { create(:feedback, jobseeker_id: jobseeker.id) }
-  let!(:job_application) { create(:job_application, jobseeker: jobseeker) }
-  let!(:saved_job) { create(:saved_job, jobseeker: jobseeker) }
+  let!(:job_application) { create(:job_application, jobseeker:) }
+  let!(:saved_job) { create(:saved_job, jobseeker:) }
 
   before do
     allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false)

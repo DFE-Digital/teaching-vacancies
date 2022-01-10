@@ -4,7 +4,7 @@ class SearchableCollectionComponent < GovukComponent::Base
   # rubocop:disable Metrics/ParameterLists
   def initialize(form:, input_type:, attribute_name:, collection:, value_method:, text_method:, hint_method:, threshold: 10, scrollable: false, label_text: nil, classes: [], html_attributes: {})
     # rubocop:enable Metrics/ParameterLists
-    super(classes: classes, html_attributes: html_attributes)
+    super(classes:, html_attributes:)
 
     @form = form
     @input_type = input_type

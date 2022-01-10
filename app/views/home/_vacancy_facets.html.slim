@@ -7,7 +7,7 @@
           li
             = govuk_link_to location_path(city.parameterize) do
               => city
-              = t(".link_text_html", count: count)
+              = t(".link_text_html", count:)
 
       h3.govuk-heading-s = t(".counties")
       ul.govuk-list.two-column-list aria-label="#{t(".counties")} list"
@@ -15,7 +15,7 @@
           li
             = govuk_link_to location_path(county.parameterize) do
               => county
-              = t(".link_text_html", count: count)
+              = t(".link_text_html", count:)
 
     .govuk-grid-column-one-half
       h3.govuk-heading-s = t(".subjects")
@@ -24,7 +24,7 @@
           li
             = govuk_link_to subject_path(subject.parameterize) do
               => subject
-              = t(".link_text_html", count: count)
+              = t(".link_text_html", count:)
 
       h3.govuk-heading-s = t(".job_roles")
       ul.govuk-list.two-column-list aria-label="#{t(".job_roles")} list"
@@ -32,7 +32,7 @@
           li
             = govuk_link_to job_role_path(job_role.dasherize) do
               => t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{job_role}")
-              = t(".link_text_html", count: count)
+              = t(".link_text_html", count:)
 
       - if @vacancy_facets.additional_job_roles["ect_suitable"]&.positive?
         h3.govuk-heading-s = t(".ect_suitable.heading")
@@ -56,4 +56,4 @@
           li
             = govuk_link_to education_phase_path(phase.parameterize) do
               => phase.humanize
-              = t(".link_text_html", count: count)
+              = t(".link_text_html", count:)

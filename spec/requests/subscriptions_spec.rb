@@ -40,7 +40,7 @@ RSpec.describe "Subscriptions" do
   end
 
   describe "POST #create", recaptcha: true do
-    subject { post subscriptions_path, params: params }
+    subject { post subscriptions_path, params: }
 
     let(:params) do
       {

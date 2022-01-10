@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Jobseekers can review a job application" do
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
-  let(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+  let(:job_application) { create(:job_application, jobseeker:, vacancy:) }
 
   before do
     login_as(jobseeker, scope: :jobseeker)

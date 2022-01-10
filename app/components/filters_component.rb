@@ -6,7 +6,7 @@ class FiltersComponent < GovukComponent::Base
   end
 
   def initialize(filters:, form:, items:, options:, classes: [], html_attributes: {})
-    super(classes: classes, html_attributes: html_attributes)
+    super(classes:, html_attributes:)
 
     @filters = filters
     @form = form

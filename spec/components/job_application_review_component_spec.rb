@@ -6,8 +6,8 @@ RSpec.describe JobApplicationReviewComponent, type: :component do
   let(:args) { [job_application] }
   let(:kwargs) do
     {
-      show_tracks: show_tracks,
-      step_process: step_process,
+      show_tracks:,
+      step_process:,
     }
   end
 
@@ -16,7 +16,7 @@ RSpec.describe JobApplicationReviewComponent, type: :component do
   let(:step_process) do
     Jobseekers::JobApplications::JobApplicationStepProcess.new(
       :review,
-      job_application: job_application,
+      job_application:,
     )
   end
 

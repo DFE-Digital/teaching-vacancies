@@ -7,7 +7,7 @@ RSpec.describe "Editing a published vacancy" do
   let(:school2) { create(:school, name: "Second school") }
   let(:vacancy) { create(:vacancy, :central_office, :published, organisations: [school_group], job_roles: %w[teacher]) }
 
-  before { login_publisher(publisher: publisher, organisation: school_group) }
+  before { login_publisher(publisher:, organisation: school_group) }
 
   describe "#job_location" do
     scenario "can edit job location" do

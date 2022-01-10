@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe Publishers::JobListing::ApplyingForTheJobDetailsForm, type: :model do
-  subject { described_class.new(current_organisation: organisation, vacancy: vacancy) }
+  subject { described_class.new(current_organisation: organisation, vacancy:) }
 
   let(:organisation) { build_stubbed(:trust) }
-  let(:vacancy) { build_stubbed(:vacancy, enable_job_applications: enable_job_applications) }
+  let(:vacancy) { build_stubbed(:vacancy, enable_job_applications:) }
   let(:enable_job_applications) { true }
 
   it { is_expected.to allow_value("https://www.this-is-a-test-url.example.com").for(:application_link) }
@@ -22,7 +22,7 @@ RSpec.describe Publishers::JobListing::ApplyingForTheJobDetailsForm, type: :mode
   it { is_expected.not_to allow_value("invalid-01234").for(:contact_number) }
 
   context "when enable_job_applications is false" do
-    subject { described_class.new(current_organisation: organisation, vacancy: vacancy) }
+    subject { described_class.new(current_organisation: organisation, vacancy:) }
 
     let(:enable_job_applications) { false }
 

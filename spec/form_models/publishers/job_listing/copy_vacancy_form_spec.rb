@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Publishers::JobListing::CopyVacancyForm, type: :model do
-  subject { described_class.new({ job_title: job_title }, build_stubbed(:vacancy)) }
+  subject { described_class.new({ job_title: }, build_stubbed(:vacancy)) }
 
   it { is_expected.to validate_presence_of(:job_title) }
   it { is_expected.to validate_length_of(:job_title).is_at_least(4).is_at_most(100) }
@@ -13,7 +13,7 @@ RSpec.describe Publishers::JobListing::CopyVacancyForm, type: :model do
 
   describe "#params_to_save" do
     it "includes the job_title" do
-      expect(subject.params_to_save).to include(job_title: job_title)
+      expect(subject.params_to_save).to include(job_title:)
     end
   end
 end

@@ -15,7 +15,7 @@ class Jobseekers::SearchForm
     @job_roles = params[:job_roles] || params[:job_role] || []
     @phases = params[:phases]
     @working_patterns = params[:working_patterns]
-    @sort = Search::VacancySort.new(keyword: keyword).update(sort_by: params[:sort_by])
+    @sort = Search::VacancySort.new(keyword:).update(sort_by: params[:sort_by])
 
     set_radius(params[:radius])
     set_facet_options

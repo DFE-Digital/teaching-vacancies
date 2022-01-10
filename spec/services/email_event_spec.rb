@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe EmailEvent do
-  subject { described_class.new(notify_template, email, uid, jobseeker: jobseeker, publisher: publisher, ab_tests: ab_tests) }
+  subject { described_class.new(notify_template, email, uid, jobseeker:, publisher:, ab_tests:) }
 
   let(:notify_template) { "test_template" }
   let(:email) { "test@example.net" }

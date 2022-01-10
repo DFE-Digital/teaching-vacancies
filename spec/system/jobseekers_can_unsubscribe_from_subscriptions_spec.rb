@@ -38,7 +38,7 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
 
         expect { click_on I18n.t("buttons.submit_feedback") }.to change {
           subscription.feedbacks.where(comment: "Eggs",
-                                       email: email,
+                                       email:,
                                        feedback_type: "unsubscribe",
                                        other_unsubscribe_reason_comment: "Spam",
                                        search_criteria: subscription.search_criteria,

@@ -12,8 +12,8 @@ RSpec.describe VacancySelectorComponent, type: :component do
   let(:args) { [vacancies] }
   let(:kwargs) do
     {
-      label_text: label_text,
-      organisation: organisation,
+      label_text:,
+      organisation:,
     }
   end
 

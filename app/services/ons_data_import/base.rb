@@ -13,7 +13,7 @@ class OnsDataImport::Base
         name = feature["properties"][name_field].downcase
         next unless in_scope?(name)
 
-        location_polygon = LocationPolygon.find_or_create_by(name: name)
+        location_polygon = LocationPolygon.find_or_create_by(name:)
         type = LOCATIONS_MAPPED_TO_HUMAN_FRIENDLY_TYPES[name]
         geometry = feature["geometry"].to_json
 

@@ -46,6 +46,6 @@ class ExportDsiUsersToBigQuery < BaseDsiBigQueryExporter
   end
 
   def api_response(page: 1)
-    DFESignIn::API.new.users(page: page)
+    DFESignIn::API.new.users(page:)
   end
 end

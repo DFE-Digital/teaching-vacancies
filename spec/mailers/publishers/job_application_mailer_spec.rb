@@ -1,15 +1,15 @@
 require "rails_helper"
 
 RSpec.describe Publishers::JobApplicationMailer do
-  let(:publisher) { create(:publisher, email: email) }
+  let(:publisher) { create(:publisher, email:) }
   let(:email) { "test@example.net" }
   let(:organisation) { create(:school) }
-  let!(:vacancy) { create(:vacancy, publisher: publisher, organisations: [organisation]) }
+  let!(:vacancy) { create(:vacancy, publisher:, organisations: [organisation]) }
   let(:contact_email) { vacancy.contact_email }
 
   let(:expected_data) do
     {
-      notify_template: notify_template,
+      notify_template:,
       email_identifier: anonymised_form_of(email),
       user_anonymised_jobseeker_id: nil,
       user_anonymised_publisher_id: anonymised_form_of(publisher.oid),
@@ -17,10 +17,10 @@ RSpec.describe Publishers::JobApplicationMailer do
   end
 
   describe "#applications_received" do
-    let!(:job_application1) { create(:job_application, :status_submitted, vacancy: vacancy, submitted_at: 1.day.ago) }
-    let!(:job_application2) { create(:job_application, :status_submitted, vacancy: vacancy, submitted_at: 1.day.ago) }
-    let!(:job_application3) { create(:job_application, :status_submitted, vacancy: vacancy, submitted_at: 2.day.ago) }
-    let(:mail) { described_class.applications_received(publisher: publisher) }
+    let!(:job_application1) { create(:job_application, :status_submitted, vacancy:, submitted_at: 1.day.ago) }
+    let!(:job_application2) { create(:job_application, :status_submitted, vacancy:, submitted_at: 1.day.ago) }
+    let!(:job_application3) { create(:job_application, :status_submitted, vacancy:, submitted_at: 2.day.ago) }
+    let(:mail) { described_class.applications_received(publisher:) }
     let(:notify_template) { NOTIFY_PUBLISHER_JOB_APPLICATIONS_RECEIVED_TEMPLATE }
 
     it "sends a `publisher_applications_received` email" do

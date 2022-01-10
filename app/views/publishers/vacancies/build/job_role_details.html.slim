@@ -15,7 +15,7 @@
         - else
           = f.govuk_collection_radio_buttons :send_responsible, %w[yes no], :to_s, :capitalize, form_group: { classes: "govuk-!-width-two-thirds" }
 
-        = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+        = render "publishers/vacancies/vacancy_form_partials/submit", f:
 
     - unless vacancy.published?
       .govuk-grid-column-one-third

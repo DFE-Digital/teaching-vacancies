@@ -4,9 +4,9 @@ class VacancyReviewComponent::Section < ReviewComponent::Section
   def initialize(vacancy, forms: [], show_errors: false, back_to: nil, classes: [], html_attributes: {}, **kwargs)
     super(
       vacancy,
-      forms: forms,
-      classes: classes,
-      html_attributes: html_attributes,
+      forms:,
+      classes:,
+      html_attributes:,
       **kwargs,
     )
 
@@ -23,7 +23,7 @@ class VacancyReviewComponent::Section < ReviewComponent::Section
 
   def build_list
     list = nil
-    validatable_summary_list(@vacancy, show_errors: @show_errors, error_path: error_path) { |l| list = l }
+    validatable_summary_list(@vacancy, show_errors: @show_errors, error_path:) { |l| list = l }
     list
   end
 

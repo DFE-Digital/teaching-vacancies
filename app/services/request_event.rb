@@ -43,6 +43,6 @@ class RequestEvent < Event
   end
 
   def ab_tests
-    AbTests.new(session).current_variants.map { |test, variant| { test: test, variant: variant } }
+    AbTests.new(session).current_variants.map { |test, variant| { test:, variant: } }
   end
 end

@@ -16,7 +16,7 @@
 
         = f.govuk_text_area :benefits, label: { size: "s", id: "benefits-label" }
 
-        = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+        = render "publishers/vacancies/vacancy_form_partials/submit", f:
 
     - unless vacancy.published?
       .govuk-grid-column-one-third

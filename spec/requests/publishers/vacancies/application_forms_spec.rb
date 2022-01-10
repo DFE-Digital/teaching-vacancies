@@ -82,7 +82,7 @@ RSpec.describe "Documents" do
 
       before do
         post organisation_job_application_forms_path(vacancy.id), params: {
-          publishers_job_listing_applying_for_the_job_details_form: { how_to_apply: "Apply here", contact_email: contact_email },
+          publishers_job_listing_applying_for_the_job_details_form: { how_to_apply: "Apply here", contact_email: },
         }
       end
 

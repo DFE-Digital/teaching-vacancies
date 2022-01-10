@@ -31,10 +31,10 @@ Capybara.register_driver :chrome_headless do |app|
       app,
       browser: :remote,
       url: ENV["SELENIUM_HUB_URL"],
-      capabilities: capabilities,
+      capabilities:,
     )
   else
-    Capybara::Selenium::Driver.new(app, browser: :chrome, capabilities: capabilities)
+    Capybara::Selenium::Driver.new(app, browser: :chrome, capabilities:)
   end
 end
 Capybara.javascript_driver = :chrome_headless

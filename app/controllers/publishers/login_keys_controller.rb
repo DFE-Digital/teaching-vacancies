@@ -6,7 +6,7 @@ class Publishers::LoginKeysController < ApplicationController
 
   def create
     publisher = Publisher.find_by(email: params.dig(:publisher, :email).downcase.strip)
-    send_login_key(publisher: publisher) if publisher
+    send_login_key(publisher:) if publisher
   end
 
   def show
@@ -40,8 +40,8 @@ class Publishers::LoginKeysController < ApplicationController
 
   def send_login_key(publisher:)
     Publishers::AuthenticationFallbackMailer.sign_in_fallback(
-      login_key_id: generate_login_key(publisher: publisher).id,
-      publisher: publisher,
+      login_key_id: generate_login_key(publisher:).id,
+      publisher:,
     ).deliver_later
   end
 

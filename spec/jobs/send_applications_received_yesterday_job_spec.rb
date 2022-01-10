@@ -11,7 +11,7 @@ RSpec.describe SendApplicationsReceivedYesterdayJob do
   it "sends applications received emails" do
     expect(Publishers::JobApplicationMailer)
       .to receive(:applications_received)
-      .with(publisher: publisher)
+      .with(publisher:)
       .and_return(message_delivery)
 
     expect(message_delivery).to receive(:deliver_later)

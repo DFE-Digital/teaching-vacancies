@@ -9,7 +9,7 @@ RSpec.describe "Api::Map::Locations" do
   let(:polygon) { double(area: double(coordinates: [[[2.0, 1.0]], [[3.0, 2.0]], [[4.0, 3.0]]])) }
   let(:location_builder_double) do
     instance_double Search::LocationBuilder, search_with_polygons?: search_with_polygons,
-                                             polygon: polygon,
+                                             polygon:,
                                              point_coordinates: point
   end
 
@@ -20,7 +20,7 @@ RSpec.describe "Api::Map::Locations" do
 
   describe "GET /api/v1/maps/locations/:id.json", json: true do
     subject do
-      get api_map_location_path(location, api_version: 1, radius: radius, format: :json)
+      get api_map_location_path(location, api_version: 1, radius:, format: :json)
     end
 
     it "returns status :not_found if the request format is not JSON" do

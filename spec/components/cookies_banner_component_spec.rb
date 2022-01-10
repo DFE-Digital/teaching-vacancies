@@ -5,7 +5,7 @@ RSpec.describe CookiesBannerComponent, type: :component do
   let(:create_path) { "/cp" }
   let(:reject_path) { "/rp" }
 
-  let(:kwargs) { { create_path: create_path, reject_path: reject_path, preferences_path: preferences_path } }
+  let(:kwargs) { { create_path:, reject_path:, preferences_path: } }
 
   let!(:inline_component) { render_inline(described_class.new(**kwargs)) }
 

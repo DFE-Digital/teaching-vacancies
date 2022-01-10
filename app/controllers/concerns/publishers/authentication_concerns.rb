@@ -21,7 +21,7 @@ module Publishers::AuthenticationConcerns
       :publisher_sign_in_attempt,
       user_anonymised_publisher_id: StringAnonymiser.new(publisher_oid),
       success: success_or_failure == :success,
-      sign_in_type: sign_in_type,
+      sign_in_type:,
     )
   end
 end

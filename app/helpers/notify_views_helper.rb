@@ -97,6 +97,6 @@ module NotifyViewsHelper
   private
 
   def utm_params
-    { utm_source: uid, utm_medium: "email", utm_campaign: utm_campaign }
+    { utm_source: uid, utm_medium: "email", utm_campaign: }
   end
 end

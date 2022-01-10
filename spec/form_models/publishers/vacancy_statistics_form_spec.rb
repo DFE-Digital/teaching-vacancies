@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Publishers::VacancyStatisticsForm, type: :model do
   subject { described_class.new(params) }
 
-  let(:params) { { hired_status: hired_status, listed_elsewhere: listed_elsewhere } }
+  let(:params) { { hired_status:, listed_elsewhere: } }
 
   let(:hired_status) { "hired_tvs" }
   let(:listed_elsewhere) { "not_listed" }

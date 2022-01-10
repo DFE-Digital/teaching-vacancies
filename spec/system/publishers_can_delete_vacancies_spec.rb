@@ -6,7 +6,7 @@ RSpec.describe "School deleting vacancies" do
   let!(:vacancy) { create(:vacancy, :with_supporting_documents, :future_publish, organisations: [organisation]) }
 
   before do
-    login_publisher(publisher: publisher, organisation: organisation)
+    login_publisher(publisher:, organisation:)
     visit jobs_with_type_organisation_path(:pending)
     click_on vacancy.job_title
   end

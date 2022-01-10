@@ -3,15 +3,15 @@ require "rails_helper"
 RSpec.describe "Publishers can view their notifications" do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }
-  let(:vacancy) { create(:vacancy, :published, organisations: [organisation], publisher: publisher) }
-  let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
+  let(:vacancy) { create(:vacancy, :published, organisations: [organisation], publisher:) }
+  let(:job_application) { create(:job_application, :status_submitted, vacancy:) }
 
-  before { login_publisher(publisher: publisher, organisation: organisation) }
+  before { login_publisher(publisher:, organisation:) }
 
   context "when the notification was created outside the data access period" do
     before do
       travel_to 2.years.ago do
-        Publishers::JobApplicationReceivedNotification.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
+        Publishers::JobApplicationReceivedNotification.with(vacancy:, job_application:).deliver(vacancy.publisher)
       end
       visit publishers_notifications_path
     end
@@ -24,8 +24,8 @@ RSpec.describe "Publishers can view their notifications" do
   context "when paginating" do
     before do
       stub_const("Publishers::NotificationsController::DEFAULT_NOTIFICATIONS_PER_PAGE", 1)
-      Publishers::JobApplicationReceivedNotification.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
-      Publishers::JobApplicationReceivedNotification.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
+      Publishers::JobApplicationReceivedNotification.with(vacancy:, job_application:).deliver(vacancy.publisher)
+      Publishers::JobApplicationReceivedNotification.with(vacancy:, job_application:).deliver(vacancy.publisher)
       visit root_path
     end
 

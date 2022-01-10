@@ -16,10 +16,10 @@ class VacancyPresenter < BasePresenter
     params = {}
     if utm_source.present?
       params.merge!(
-        utm_source: utm_source,
-        utm_medium: utm_medium,
-        utm_campaign: utm_campaign,
-        utm_content: utm_content,
+        utm_source:,
+        utm_medium:,
+        utm_campaign:,
+        utm_content:,
       )
     end
     Rails.application.routes.url_helpers.job_url(model, params)
@@ -64,7 +64,7 @@ class VacancyPresenter < BasePresenter
       Vacancy.human_attribute_name("working_patterns.#{working_pattern}").downcase
     }.join(", ")
 
-    I18n.t("jobs.working_patterns_info", patterns: patterns, count: model_working_patterns.count).capitalize
+    I18n.t("jobs.working_patterns_info", patterns:, count: model_working_patterns.count).capitalize
   end
 
   def show_working_patterns

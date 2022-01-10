@@ -29,7 +29,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   def review
     reset_session_vacancy!
     session[:current_step] = :review
-    vacancy.update(completed_steps: completed_steps) if all_steps_valid?
+    vacancy.update(completed_steps:) if all_steps_valid?
     @vacancy = VacancyPresenter.new(vacancy)
   end
 

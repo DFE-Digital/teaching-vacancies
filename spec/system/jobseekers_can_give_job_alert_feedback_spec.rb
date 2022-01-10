@@ -12,7 +12,7 @@ end
 
 RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true do
   let(:search_criteria) { { keyword: "Math", location: "London" } }
-  let(:subscription) { create(:subscription, email: "bob@dylan.com", frequency: :daily, search_criteria: search_criteria) }
+  let(:subscription) { create(:subscription, email: "bob@dylan.com", frequency: :daily, search_criteria:) }
   let(:relevant_to_user) { true }
   let(:vacancies) { create_list(:vacancy, 2, :published) }
   let(:job_alert_vacancy_ids) { vacancies.pluck(:id) }
@@ -127,9 +127,9 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
   def follow_the_link_in_the_job_alert_email
     visit new_subscription_job_alert_feedback_url(
       token,
-      params: { job_alert_feedback: { relevant_to_user: relevant_to_user,
-                                      job_alert_vacancy_ids: job_alert_vacancy_ids,
-                                      search_criteria: search_criteria } },
+      params: { job_alert_feedback: { relevant_to_user:,
+                                      job_alert_vacancy_ids:,
+                                      search_criteria: } },
     )
   end
 end

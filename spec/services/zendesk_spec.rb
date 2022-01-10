@@ -25,11 +25,11 @@ RSpec.describe Zendesk, zendesk: true do
 
     let(:kwargs) do
       {
-        attachments: attachments,
-        comment: comment,
-        email_address: email_address,
-        name: name,
-        subject: subject,
+        attachments:,
+        comment:,
+        email_address:,
+        name:,
+        subject:,
       }
     end
 
@@ -50,7 +50,7 @@ RSpec.describe Zendesk, zendesk: true do
       service.create_request!(**kwargs)
       expect(requests).to have_received(:create!).with(
         requester: {
-          name: name,
+          name:,
           email: email_address,
         },
         subject: "[Support request] #{subject}",
@@ -72,7 +72,7 @@ RSpec.describe Zendesk, zendesk: true do
 
       it "uploads the attachments and assigns them to the comment" do
         expect(uploads).to receive(:create!)
-          .with(file: file).and_return(upload)
+          .with(file:).and_return(upload)
 
         service.create_request!(**kwargs)
 

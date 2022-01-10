@@ -5,7 +5,7 @@ class SendApplicationsReceivedYesterdayJob < ApplicationJob
     publishers_with_vacancies_with_applications_submitted_yesterday.each do |publisher|
       next unless publisher.email?
 
-      Publishers::JobApplicationMailer.applications_received(publisher: publisher).deliver_later
+      Publishers::JobApplicationMailer.applications_received(publisher:).deliver_later
       Rails.logger.info("Sidekiq: Sending job applications received yesterday for publisher id: #{publisher.id}")
     end
   end

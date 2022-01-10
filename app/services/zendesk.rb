@@ -16,7 +16,7 @@ class Zendesk
         uploads: attachments.reject(&:blank?).map { |a| client.uploads.create!(file: a).id },
       },
       requester: {
-        name: name,
+        name:,
         email: email_address,
       },
       subject: "[Support request] #{subject}",

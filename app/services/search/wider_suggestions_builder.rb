@@ -25,6 +25,6 @@ class Search::WiderSuggestionsBuilder
   private
 
   def wider_results(radius)
-    Search::VacancySearch.new(search_criteria.merge(radius: radius)).total_count
+    Search::VacancySearch.new(search_criteria.merge(radius:)).total_count
   end
 end

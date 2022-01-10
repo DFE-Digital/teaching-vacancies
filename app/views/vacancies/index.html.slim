@@ -11,7 +11,7 @@
   .grid-row
     .grid-column-left class="govuk-!-margin-bottom-3"
       = form_for @form, as: "", url: jobs_path, method: :get, html: { id: "filter-form", data: { controller: "form" }, class: "filters-form", role: "search", aria: { label: "Filter criteria" } } do |f|
-        = render "search", f: f
+        = render "search", f:
     .grid-column-right
       - if current_variant?(:"2021_11_desktop_search_results_page_test", :right_column)
         = form_for @form, as: "", url: jobs_path, method: :get, html: { id: "search-form", class: "filters-form", role: "search", aria: { label: "Search criteria" } } do |f|
@@ -44,7 +44,7 @@
         - if @vacancies.any?
           ul.vacancies role="list"
             - @vacancies.each do |vacancy|
-              = render(Jobseekers::VacancySummaryComponent.new(vacancy: vacancy))
+              = render(Jobseekers::VacancySummaryComponent.new(vacancy:))
 
         - elsif @vacancies_search.active_criteria?
           .divider-bottom

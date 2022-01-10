@@ -10,8 +10,8 @@ RSpec.describe ValidatableSummaryListComponent, type: :component do
   let(:list) do
     described_class.new(
       record,
-      error_path: error_path,
-      show_errors: show_errors,
+      error_path:,
+      show_errors:,
       **list_kwargs,
     )
   end
@@ -26,9 +26,9 @@ RSpec.describe ValidatableSummaryListComponent, type: :component do
     expect(ValidatableSummaryListComponent::RowComponent).to receive(:new)
       .with(
         attribute,
-        record: record,
-        show_errors: show_errors,
-        error_path: error_path,
+        record:,
+        show_errors:,
+        error_path:,
         **row_kwargs,
       )
     list.row(attribute, **row_kwargs)
@@ -38,9 +38,9 @@ RSpec.describe ValidatableSummaryListComponent, type: :component do
     expect(ValidatableSummaryListComponent::RowComponent).to receive(:new)
       .with(
         attribute,
-        record: record,
-        show_errors: show_errors,
-        error_path: error_path,
+        record:,
+        show_errors:,
+        error_path:,
         **row_kwargs,
       )
     list.row(attribute, **row_kwargs)

@@ -10,7 +10,7 @@ RSpec.describe "Creating a vacancy" do
   let(:created_vacancy) { Vacancy.last }
 
   before do
-    login_publisher(publisher: publisher, organisation: school_group)
+    login_publisher(publisher:, organisation: school_group)
     allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference))
   end
 

@@ -36,12 +36,12 @@ class Jobseekers::SubscriptionForm < BaseForm
 
   def search_criteria_hash
     {
-      keyword: keyword,
-      location: location,
+      keyword:,
+      location:,
       radius: (@location.present? ? radius : nil),
-      job_roles: job_roles,
-      phases: phases,
-      working_patterns: working_patterns,
+      job_roles:,
+      phases:,
+      working_patterns:,
     }.compact.delete_if { |_k, v| v.blank? || v.empty? }
   end
 

@@ -79,6 +79,6 @@ Vacancy.listed.each do |vacancy|
   statuses = JobApplication.statuses.keys
   Jobseeker.where.not(email: "jobseeker@example.com").each do |jobseeker|
     application_status = statuses.delete(statuses.sample)
-    FactoryBot.create(:job_application, :"status_#{application_status}", jobseeker: jobseeker, vacancy: vacancy)
+    FactoryBot.create(:job_application, :"status_#{application_status}", jobseeker:, vacancy:)
   end
 end

@@ -11,7 +11,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
     )
   end
 
-  before { login_publisher(publisher: publisher, organisation: organisation) }
+  before { login_publisher(publisher:, organisation:) }
 
   context "when a single school" do
     let(:organisation) { create(:school) }

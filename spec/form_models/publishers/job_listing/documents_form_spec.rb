@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Publishers::JobListing::DocumentsForm do
   describe "#valid_documents" do
-    subject { described_class.new(documents: documents) }
+    subject { described_class.new(documents:) }
 
     let(:valid_document) { double("Uploaded file", size: 9.99.megabytes, tempfile: valid_tempfile, original_filename: "file.pdf") }
     let(:too_large_document) { double("Uploaded file", size: 11.megabytes, original_filename: "file.pdf") }

@@ -4,7 +4,7 @@ class FlashComponent < GovukComponent::Base
   VARIANTS = %w[notice success warning alert].freeze
 
   def initialize(variant_name:, message:, classes: [], html_attributes: {})
-    super(classes: classes, html_attributes: html_attributes.merge(default_html_attributes))
+    super(classes:, html_attributes: html_attributes.merge(default_html_attributes))
 
     @variant_name = variant_name
     @message = message

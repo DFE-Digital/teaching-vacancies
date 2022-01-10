@@ -41,6 +41,6 @@ class Api::Map::LocationsController < Api::ApplicationController
   end
 
   def coordinates(boundary)
-    boundary.map { |lng, lat| { lat: lat, lng: lng } }
+    boundary.map { |lng, lat| { lat:, lng: } }
   end
 end

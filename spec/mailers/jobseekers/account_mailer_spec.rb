@@ -1,13 +1,13 @@
 require "rails_helper"
 
 RSpec.describe Jobseekers::AccountMailer do
-  let(:jobseeker) { create(:jobseeker, email: email) }
+  let(:jobseeker) { create(:jobseeker, email:) }
   let(:email) { "test@example.net" }
   let(:token) { "some-special-token" }
 
   let(:expected_data) do
     {
-      notify_template: notify_template,
+      notify_template:,
       email_identifier: anonymised_form_of(email),
       user_anonymised_jobseeker_id: anonymised_form_of(jobseeker.id),
       user_anonymised_publisher_id: nil,

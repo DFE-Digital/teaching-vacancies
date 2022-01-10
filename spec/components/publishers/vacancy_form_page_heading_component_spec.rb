@@ -9,8 +9,8 @@ RSpec.describe Publishers::VacancyFormPageHeadingComponent, type: :component do
 
   let(:vacancy_step_process) do
     instance_double(Publishers::Vacancies::VacancyStepProcess, current_step: "step_one",
-                                                               vacancy: vacancy,
-                                                               organisation: organisation,
+                                                               vacancy:,
+                                                               organisation:,
                                                                session: {})
   end
 

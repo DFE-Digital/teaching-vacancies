@@ -6,7 +6,7 @@ RSpec.describe Publishers::NoVacanciesComponent, type: :component do
 
   before do
     allow(Vacancy).to receive_message_chain(:in_organisation_ids, :active, :none?).and_return(no_vacancies)
-    render_inline(described_class.new(organisation: organisation, email: email))
+    render_inline(described_class.new(organisation:, email:))
   end
 
   context "when organisation has active vacancies" do

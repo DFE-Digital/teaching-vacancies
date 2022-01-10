@@ -4,7 +4,7 @@ RSpec.describe DashboardComponent, type: :component do
   let(:heading) { "A heading" }
   let(:link) { nil }
   let(:background) { nil }
-  let(:kwargs) { { background: background, heading: heading, link: link } }
+  let(:kwargs) { { background:, heading:, link: } }
 
   subject! { render_inline(described_class.new(**kwargs)) }
 

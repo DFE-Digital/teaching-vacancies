@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe SupportingDocumentComponent, type: :component do
   let(:vacancy) { create(:vacancy) }
   let(:supporting_document) { double("ActiveStorage attachment", id: "abcde-12345", filename: "job_desc.doc", byte_size: 100_000, record: vacancy) }
-  let(:kwargs) { { supporting_document: supporting_document } }
+  let(:kwargs) { { supporting_document: } }
 
   subject! { render_inline(described_class.new(**kwargs)) }
 

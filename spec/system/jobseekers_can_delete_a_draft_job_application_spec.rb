@@ -4,7 +4,7 @@ RSpec.describe "Jobseekers can delete a draft job application" do
   let(:jobseeker) { create(:jobseeker) }
   let(:organisation) { create(:school) }
   let(:vacancy) { create(:vacancy, organisations: [organisation]) }
-  let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+  let!(:job_application) { create(:job_application, jobseeker:, vacancy:) }
 
   before { login_as(jobseeker, scope: :jobseeker) }
 

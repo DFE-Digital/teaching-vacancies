@@ -1,20 +1,20 @@
 require "rails_helper"
 
 RSpec.describe Search::VacancySearch do
-  subject { described_class.new(form_hash, sort: sort, page: page, per_page: per_page) }
+  subject { described_class.new(form_hash, sort:, page:, per_page:) }
 
   let(:form_hash) do
     {
-      keyword: keyword,
-      location: location,
-      radius: radius,
+      keyword:,
+      location:,
+      radius:,
     }.compact
   end
 
   let(:keyword) { "maths teacher" }
   let(:location) { "Louth" }
   let(:radius) { 10 }
-  let(:sort) { Search::VacancySort.new(keyword: keyword) }
+  let(:sort) { Search::VacancySort.new(keyword:) }
   let(:per_page) { 20 }
   let(:page) { 1 }
 

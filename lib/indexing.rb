@@ -26,7 +26,7 @@ class Indexing
   private
 
   def call(action)
-    notification = API::UrlNotification.new(url: url, type: ACTIONS[action])
+    notification = API::UrlNotification.new(url:, type: ACTIONS[action])
     service.publish_url_notification(notification)
   end
 

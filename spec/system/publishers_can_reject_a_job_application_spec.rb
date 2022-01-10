@@ -4,10 +4,10 @@ RSpec.describe "Publishers can reject a job application" do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }
   let(:vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
-  let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
+  let(:job_application) { create(:job_application, :status_submitted, vacancy:) }
 
   before do
-    login_publisher(publisher: publisher, organisation: organisation)
+    login_publisher(publisher:, organisation:)
     visit organisation_job_job_application_path(vacancy.id, job_application.id)
   end
 

@@ -18,7 +18,7 @@
             = f.govuk_radio_button :enable_job_applications, true, link_errors: true
             = f.govuk_radio_button :enable_job_applications, "false"
 
-        = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+        = render "publishers/vacancies/vacancy_form_partials/submit", f:
 
     - unless vacancy.published?
       .govuk-grid-column-one-third

@@ -14,11 +14,11 @@ RSpec.describe Publishers::JobListing::ExtendDeadlineForm, type: :model do
       "expires_at(2i)" => expires_at.month.to_s,
       "expires_at(3i)" => expires_at.day.to_s,
       expiry_time: "9:00",
-      previous_deadline: previous_deadline,
+      previous_deadline:,
       "starts_on(1i)" => starts_on.year.to_s,
       "starts_on(2i)" => starts_on.month.to_s,
       "starts_on(3i)" => starts_on.day.to_s,
-      starts_asap: starts_asap,
+      starts_asap:,
     }
   end
 

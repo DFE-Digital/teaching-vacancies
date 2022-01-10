@@ -6,7 +6,7 @@ RSpec.describe Jobseekers::SearchForm, type: :model do
   describe "#initialize" do
     let(:radius_builder) { instance_double(Search::RadiusBuilder) }
     let(:expected_radius) { "1000" }
-    let(:params) { { radius: radius, location: location } }
+    let(:params) { { radius:, location: } }
 
     before { allow(radius_builder).to receive(:radius).and_return(expected_radius) }
 
@@ -47,7 +47,7 @@ RSpec.describe Jobseekers::SearchForm, type: :model do
     context "when user input contains trailing whitespace" do
       let(:keyword) { " teacher " }
       let(:location) { "the big smoke " }
-      let(:params) { { keyword: keyword, location: location } }
+      let(:params) { { keyword:, location: } }
 
       it "strips the whitespace before saving the attribute" do
         expect(subject.keyword).to eq "teacher"

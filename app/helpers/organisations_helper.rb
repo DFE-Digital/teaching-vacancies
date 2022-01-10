@@ -115,11 +115,11 @@ module OrganisationsHelper
   private
 
   def number_of_pupils(school)
-    I18n.t("schools.size.enrolled", pupils: pupils, number: school.gias_data["NumberOfPupils"])
+    I18n.t("schools.size.enrolled", pupils:, number: school.gias_data["NumberOfPupils"])
   end
 
   def school_capacity(school)
-    I18n.t("schools.size.up_to", capacity: school.gias_data["SchoolCapacity"], pupils: pupils)
+    I18n.t("schools.size.up_to", capacity: school.gias_data["SchoolCapacity"], pupils:)
   end
 
   def pupils

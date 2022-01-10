@@ -15,11 +15,11 @@ RSpec.describe Jobseekers::SavedJobSort do
       let(:sort_by) { "vacancies.expires_at" }
 
       it "updates the sort column" do
-        expect(subject.update(sort_by: sort_by).sort_by).to eq "vacancies.expires_at"
+        expect(subject.update(sort_by:).sort_by).to eq "vacancies.expires_at"
       end
 
       it "updates the sort order" do
-        expect(subject.update(sort_by: sort_by).order).to eq "asc"
+        expect(subject.update(sort_by:).order).to eq "asc"
       end
     end
 
@@ -27,11 +27,11 @@ RSpec.describe Jobseekers::SavedJobSort do
       let(:sort_by) { "something_nasty" }
 
       it "does not update the sort column" do
-        expect(subject.update(sort_by: sort_by).sort_by).to eq "created_at"
+        expect(subject.update(sort_by:).sort_by).to eq "created_at"
       end
 
       it "does not update the sort order" do
-        expect(subject.update(sort_by: sort_by).order).to eq "desc"
+        expect(subject.update(sort_by:).order).to eq "desc"
       end
     end
 
@@ -39,11 +39,11 @@ RSpec.describe Jobseekers::SavedJobSort do
       let(:sort_by) { nil }
 
       it "does not update the sort column" do
-        expect(subject.update(sort_by: sort_by).sort_by).to eq "created_at"
+        expect(subject.update(sort_by:).sort_by).to eq "created_at"
       end
 
       it "does not update the sort order" do
-        expect(subject.update(sort_by: sort_by).order).to eq "desc"
+        expect(subject.update(sort_by:).order).to eq "desc"
       end
     end
   end

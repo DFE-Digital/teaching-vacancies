@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Publishers::JobListing::JobSummaryForm, type: :model do
-  subject { described_class.new(params, build_stubbed(:vacancy, job_location: job_location)) }
+  subject { described_class.new(params, build_stubbed(:vacancy, job_location:)) }
 
   let(:params) { {} }
   let(:job_location) { "at_one_school" }

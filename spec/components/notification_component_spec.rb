@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe NotificationComponent, type: :component do
   let(:notification) { build_stubbed(:notification, :job_application_received).to_notification }
-  let(:kwargs) { { notification: notification } }
+  let(:kwargs) { { notification: } }
 
   before do
     allow(notification).to receive(:message).and_return("Test message")

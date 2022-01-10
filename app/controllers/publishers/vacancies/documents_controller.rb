@@ -41,7 +41,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
   def redirect_to_next_step
     return if documents_form_params[:documents]
 
-    vacancy.update(completed_steps: completed_steps)
+    vacancy.update(completed_steps:)
     if session[:current_step] == :review
       redirect_updated_job_with_message
     else
@@ -55,9 +55,9 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
         event_type,
         vacancy_id: StringAnonymiser.new(vacancy.id),
         document_type: "supporting_document",
-        name: name,
-        size: size,
-        content_type: content_type,
+        name:,
+        size:,
+        content_type:,
       )
     end
   end

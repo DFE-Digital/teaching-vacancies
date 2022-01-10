@@ -17,7 +17,7 @@ RSpec.describe "Saved jobs" do
   end
 
   describe "DELETE #destroy" do
-    let!(:saved_job) { create(:saved_job, jobseeker: jobseeker, vacancy: vacancy) }
+    let!(:saved_job) { create(:saved_job, jobseeker:, vacancy:) }
 
     context "when `redirect_to_dashboard` param is true" do
       it "redirects to `jobseekers_saved_jobs_path`" do

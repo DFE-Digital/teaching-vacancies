@@ -33,10 +33,10 @@ class UpdateDsiUsersInDb
 
   def create_organisation_publisher(user, urn, uid, la_code)
     if urn
-      organisation = Organisation.find_by(urn: urn)
+      organisation = Organisation.find_by(urn:)
       user.organisation_publishers.find_or_create_by(organisation_id: organisation.id) if organisation
     elsif uid
-      organisation = Organisation.find_by(uid: uid)
+      organisation = Organisation.find_by(uid:)
       user.organisation_publishers.find_or_create_by(organisation_id: organisation.id) if organisation
     elsif la_code
       organisation = Organisation.find_by(local_authority_code: la_code)
@@ -45,6 +45,6 @@ class UpdateDsiUsersInDb
   end
 
   def api_response(page: 1)
-    DFESignIn::API.new.users(page: page)
+    DFESignIn::API.new.users(page:)
   end
 end

@@ -3,7 +3,7 @@ class OnsDataImport::CreateComposites
     DOWNCASE_COMPOSITE_LOCATIONS.each do |name, constituents|
       Rails.logger.info("Creating composite polygon for '#{name}'")
 
-      composite = LocationPolygon.find_or_create_by(name: name)
+      composite = LocationPolygon.find_or_create_by(name:)
       quoted_constituents = constituents.map { |c| ActiveRecord::Base.connection.quote(c.downcase) }
 
       ActiveRecord::Base.connection.exec_update("

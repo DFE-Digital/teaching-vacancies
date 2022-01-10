@@ -1,6 +1,6 @@
 ARG PROD_PACKAGES="libxml2=2.9.12-r2 libxslt=1.1.34-r1 libpq=14.1-r4 tzdata=2021e-r0 shared-mime-info=2.1-r0"
 
-FROM ruby:3.0.3-alpine3.15 AS builder
+FROM ruby:3.1.0-alpine3.15 AS builder
 
 WORKDIR /app
 
@@ -33,7 +33,7 @@ RUN rm -rf node_modules log tmp yarn.lock && \
 
 
 # this stage reduces the image size.
-FROM ruby:3.0.3-alpine3.15 AS production
+FROM ruby:3.1.0-alpine3.15 AS production
 
 WORKDIR /app
 

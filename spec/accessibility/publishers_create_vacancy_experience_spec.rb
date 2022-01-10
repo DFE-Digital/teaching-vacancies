@@ -4,7 +4,7 @@ RSpec.describe "Publisher experience", type: :system, accessibility: true do
   let(:organisation) { create(:school) }
   let(:publisher) { create(:publisher) }
 
-  before { login_publisher(publisher: publisher, organisation: organisation) }
+  before { login_publisher(publisher:, organisation:) }
 
   context "Publisher creates a vacancy" do
     describe "Job details page" do

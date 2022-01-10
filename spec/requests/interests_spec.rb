@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Interests" do
   let(:application_link) { "http://foo.com" }
-  let(:vacancy) { create(:vacancy, application_link: application_link, organisations: [build(:school)]) }
+  let(:vacancy) { create(:vacancy, application_link:, organisations: [build(:school)]) }
 
   describe "GET #new" do
     it "redirects to the vacancy application link" do

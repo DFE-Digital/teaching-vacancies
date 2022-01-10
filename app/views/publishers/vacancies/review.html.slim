@@ -1,7 +1,7 @@
 - content_for :page_title_prefix, review_page_title_prefix(vacancy,
   show_errors: true)
 
-= vacancy_review(vacancy, step_process: step_process, back_to: "review", show_errors: true) do |r|
+= vacancy_review(vacancy, step_process:, back_to: "review", show_errors: true) do |r|
   - r.header
     = publishers_vacancy_form_page_heading(vacancy, step_process)
 
@@ -14,7 +14,7 @@
       - else
         = t("jobs.review_future")
 
-  - render "vacancy_review_sections", r: r
+  - render "vacancy_review_sections", r:
 
   - r.below
     = render "publish_buttons", back_to: "review"

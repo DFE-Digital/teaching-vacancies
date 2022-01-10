@@ -6,7 +6,7 @@ RSpec.describe "Publishers can end a job listing early" do
   let(:publisher) { create(:publisher) }
 
   before do
-    login_publisher(publisher: publisher, organisation: organisation)
+    login_publisher(publisher:, organisation:)
     visit organisation_jobs_path
   end
 

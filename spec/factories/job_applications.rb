@@ -58,7 +58,7 @@ FactoryBot.define do
         create_list :employment, 3, :job, job_application: job_application
         create_list :employment, 1, :break, job_application: job_application
         create_list :reference, 2, job_application: job_application
-        create_list :qualification, 3, job_application: job_application
+        create_list :qualification, 3, job_application:
       end
 
       job_application.update_columns(

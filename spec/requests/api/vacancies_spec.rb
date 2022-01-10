@@ -159,7 +159,7 @@ RSpec.describe "Api::Vacancies" do
       end
 
       describe "#employment_type" do
-        let(:vacancy) { create(:vacancy, working_patterns: working_patterns) }
+        let(:vacancy) { create(:vacancy, working_patterns:) }
 
         context "with single working patterns" do
           let(:working_patterns) { %w[full_time] }

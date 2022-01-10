@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe "Job applications qualifications" do
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
   let(:jobseeker) { create(:jobseeker) }
-  let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
-  let(:qualification) { create(:qualification, job_application: job_application) }
+  let(:job_application) { create(:job_application, :status_draft, jobseeker:, vacancy:) }
+  let(:qualification) { create(:qualification, job_application:) }
 
   before do
     sign_in(jobseeker, scope: :jobseeker)
@@ -12,7 +12,7 @@ RSpec.describe "Job applications qualifications" do
 
   describe "GET #select_category" do
     context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+      let(:job_application) { create(:job_application, :status_submitted, jobseeker:, vacancy:) }
 
       it "returns not_found" do
         get select_category_jobseekers_job_application_qualifications_path(job_application)
@@ -36,7 +36,7 @@ RSpec.describe "Job applications qualifications" do
       before { allow_any_instance_of(Jobseekers::JobApplication::Details::Qualifications::CategoryForm).to receive(:valid?).and_return(true) }
 
       it "does not create a qualification and renders the next step" do
-        expect { post submit_category_jobseekers_job_application_qualifications_path(job_application), params: params }
+        expect { post submit_category_jobseekers_job_application_qualifications_path(job_application), params: }
           .to(not_change { Qualification.count })
 
         expect(response).to redirect_to(new_jobseekers_job_application_qualification_path(job_application, category: "other"))
@@ -47,7 +47,7 @@ RSpec.describe "Job applications qualifications" do
       before { allow_any_instance_of(Jobseekers::JobApplication::Details::Qualifications::CategoryForm).to receive(:valid?).and_return(false) }
 
       it "does not create a qualification and renders the select_category page" do
-        expect { post submit_category_jobseekers_job_application_qualifications_path(job_application), params: params }
+        expect { post submit_category_jobseekers_job_application_qualifications_path(job_application), params: }
           .to(not_change { Qualification.count })
 
         expect(response).to render_template(:select_category)
@@ -59,7 +59,7 @@ RSpec.describe "Job applications qualifications" do
     let(:params) { { category: "gcse" } }
 
     context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+      let(:job_application) { create(:job_application, :status_submitted, jobseeker:, vacancy:) }
 
       it "returns not_found" do
         get new_jobseekers_job_application_qualification_path(job_application), params: params
@@ -69,14 +69,14 @@ RSpec.describe "Job applications qualifications" do
     end
 
     it "renders the new page" do
-      expect(get(new_jobseekers_job_application_qualification_path(job_application), params: params))
+      expect(get(new_jobseekers_job_application_qualification_path(job_application), params:))
         .to render_template(:new)
     end
   end
 
   describe "GET #edit" do
     context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+      let(:job_application) { create(:job_application, :status_submitted, jobseeker:, vacancy:) }
 
       it "returns not_found" do
         get edit_jobseekers_job_application_qualification_path(job_application, qualification)
@@ -98,7 +98,7 @@ RSpec.describe "Job applications qualifications" do
       end
 
       context "when the job application status is not draft" do
-        let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+        let(:job_application) { create(:job_application, :status_submitted, jobseeker:, vacancy:) }
 
         it "returns not_found" do
           post jobseekers_job_application_qualifications_path(job_application), params: params
@@ -111,7 +111,7 @@ RSpec.describe "Job applications qualifications" do
         before { allow_any_instance_of(Jobseekers::JobApplication::Details::Qualifications::DegreeForm).to receive(:valid?).and_return(true) }
 
         it "creates the qualification and redirects to the qualification build step" do
-          expect { post jobseekers_job_application_qualifications_path(job_application), params: params }
+          expect { post jobseekers_job_application_qualifications_path(job_application), params: }
             .to change { Qualification.count }.by(1)
 
           expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :qualifications))
@@ -120,7 +120,7 @@ RSpec.describe "Job applications qualifications" do
 
       context "when the form is invalid" do
         it "does not create the qualification and renders the new page" do
-          expect { post jobseekers_job_application_qualifications_path(job_application), params: params }
+          expect { post jobseekers_job_application_qualifications_path(job_application), params: }
             .to(not_change { Qualification.count })
 
           expect(response).to render_template(:new)
@@ -158,7 +158,7 @@ RSpec.describe "Job applications qualifications" do
         end
 
         it "creates the qualification with its results, and redirects to the qualification build step" do
-          expect { post jobseekers_job_application_qualifications_path(job_application), params: params }
+          expect { post jobseekers_job_application_qualifications_path(job_application), params: }
             .to change { Qualification.count }.by(1)
             .and change { QualificationResult.count }.by(2)
 
@@ -170,7 +170,7 @@ RSpec.describe "Job applications qualifications" do
         let(:result1_grade) { "" }
 
         it "does not create the qualification or qualification results and renders the new page" do
-          expect { post jobseekers_job_application_qualifications_path(job_application), params: params }
+          expect { post jobseekers_job_application_qualifications_path(job_application), params: }
             .to(not_change { Qualification.count + QualificationResult.count })
 
           expect(response).to render_template(:new)
@@ -182,7 +182,7 @@ RSpec.describe "Job applications qualifications" do
   describe "PATCH #update" do
     context "when updating a non-secondary qualification" do
       let!(:qualification) do
-        create(:qualification, job_application: job_application,
+        create(:qualification, job_application:,
                                category: "undergraduate",
                                finished_studying: original_finished_studying,
                                finished_studying_details: "Taking my time",
@@ -200,7 +200,7 @@ RSpec.describe "Job applications qualifications" do
         before { allow_any_instance_of(Jobseekers::JobApplication::Details::Qualifications::DegreeForm).to receive(:valid?).and_return(true) }
 
         it "updates the qualification and redirects to the qualification build step" do
-          expect { patch jobseekers_job_application_qualification_path(job_application, qualification), params: params }
+          expect { patch jobseekers_job_application_qualification_path(job_application, qualification), params: }
             .to change { qualification.reload.subject }.from("Haunting").to("Spooking")
 
           expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :qualifications))
@@ -210,7 +210,7 @@ RSpec.describe "Job applications qualifications" do
           let(:new_finished_studying) { "false" }
 
           it "deletes the grade and year data from the record" do
-            expect { patch jobseekers_job_application_qualification_path(job_application, qualification), params: params }
+            expect { patch jobseekers_job_application_qualification_path(job_application, qualification), params: }
               .to change { qualification.reload.grade }.from("1").to("")
               .and change { qualification.reload.year }.from(1990).to(nil)
           end
@@ -221,13 +221,13 @@ RSpec.describe "Job applications qualifications" do
           let(:new_finished_studying) { "true" }
 
           it "deletes the finished_studying_details data from the record" do
-            expect { patch jobseekers_job_application_qualification_path(job_application, qualification), params: params }
+            expect { patch jobseekers_job_application_qualification_path(job_application, qualification), params: }
               .to change { qualification.reload.finished_studying_details }.from("Taking my time").to("")
           end
         end
 
         context "when the job application status is not draft" do
-          let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+          let(:job_application) { create(:job_application, :status_submitted, jobseeker:, vacancy:) }
 
           it "returns not_found" do
             patch jobseekers_job_application_qualification_path(job_application, qualification), params: params
@@ -239,7 +239,7 @@ RSpec.describe "Job applications qualifications" do
 
       context "when the form is invalid" do
         it "does not update the qualification and renders the edit page" do
-          expect { patch jobseekers_job_application_qualification_path(job_application, qualification), params: params }
+          expect { patch jobseekers_job_application_qualification_path(job_application, qualification), params: }
             .to(not_change { qualification.reload.subject })
 
           expect(response).to render_template(:edit)
@@ -249,7 +249,7 @@ RSpec.describe "Job applications qualifications" do
 
     context "when updating a secondary qualification" do
       let!(:qualification) do
-        create(:qualification, job_application: job_application,
+        create(:qualification, job_application:,
                                category: "a_level",
                                institution: "Fancy School",
                                year: "1976")
@@ -288,7 +288,7 @@ RSpec.describe "Job applications qualifications" do
         end
 
         it "updates the qualification and its results, and redirects to the qualification build step" do
-          expect { patch jobseekers_job_application_qualification_path(job_application, qualification), params: params }
+          expect { patch jobseekers_job_application_qualification_path(job_application, qualification), params: }
             .to change { [qualification.reload.qualification_results.count, qualification.reload.year, result1.reload.grade] }
             .from([5, 1976, result1.grade])
             .to([4, 2018, "#{result1.grade}*"])
@@ -301,7 +301,7 @@ RSpec.describe "Job applications qualifications" do
         let(:result1_subject) { "" }
 
         it "does not create the qualification or qualification results and renders the edit page" do
-          expect { patch jobseekers_job_application_qualification_path(job_application, qualification), params: params }
+          expect { patch jobseekers_job_application_qualification_path(job_application, qualification), params: }
             .to(not_change { [qualification.reload.qualification_results.count, qualification.reload.year, result1.reload.grade] })
 
           expect(response).to render_template(:edit)
@@ -311,10 +311,10 @@ RSpec.describe "Job applications qualifications" do
   end
 
   describe "DELETE #destroy" do
-    let!(:qualification) { create(:qualification, job_application: job_application) }
+    let!(:qualification) { create(:qualification, job_application:) }
 
     context "when the job application status is not draft" do
-      let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+      let(:job_application) { create(:job_application, :status_submitted, jobseeker:, vacancy:) }
 
       it "returns not_found" do
         delete jobseekers_job_application_qualification_path(job_application, qualification)

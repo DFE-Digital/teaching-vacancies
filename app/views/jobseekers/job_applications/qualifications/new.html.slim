@@ -6,7 +6,7 @@
       .govuk-caption-l = t(".caption")
       h1.govuk-heading-xl = t(".heading.#{category}")
 
-      = form_for form, url: jobseekers_job_application_qualifications_path(job_application, category: category), method: :post do |f|
+      = form_for form, url: jobseekers_job_application_qualifications_path(job_application, category:), method: :post do |f|
         = f.govuk_error_summary link_base_errors_to: :subject
 
         = render "fields", f: f

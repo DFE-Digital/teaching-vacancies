@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe DetailComponent, type: :component do
   let(:title) { "Detail title" }
-  let(:kwargs) { { title: title } }
+  let(:kwargs) { { title: } }
 
   subject! { render_inline(described_class.new(**kwargs)) }
 

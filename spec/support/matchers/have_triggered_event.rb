@@ -7,7 +7,7 @@ RSpec::Matchers.define :have_triggered_event do |event_type|
     raise ArgumentError, "have_triggered_event only supports block expectations" unless proc.respond_to?(:call)
 
     all_data = (expected_base_data || {}).merge(type: event_type)
-    all_data[:data] = array_including(expected_data.map { |key, value| { key: key.to_s, value: value } }) if expected_data
+    all_data[:data] = array_including(expected_data.map { |key, value| { key: key.to_s, value: } }) if expected_data
 
     expect(proc).to have_enqueued_job(SendEventToDataWarehouseJob).with(Event::TABLE_NAME, hash_including(all_data))
   end

@@ -81,7 +81,7 @@ RSpec.describe Subscription do
       context "when token has extra data" do
         let(:token) do
           expires = Time.current + 2.days
-          token_values = { id: subscription.id, expires: expires }
+          token_values = { id: subscription.id, expires: }
           Subscription.encryptor.encrypt_and_sign(token_values)
         end
 
@@ -98,7 +98,7 @@ RSpec.describe Subscription do
     let(:date_today) { Date.current.to_time }
     let(:subscription) { create(:subscription, frequency: :daily, search_criteria: { keyword: "english" }) }
     let(:vacancies) { double("vacancies") }
-    let(:vacancy_search) { double(vacancies: vacancies) }
+    let(:vacancy_search) { double(vacancies:) }
 
     it "searches with an appropriate date range" do
       expect(Search::VacancySearch).to receive(:new).with(

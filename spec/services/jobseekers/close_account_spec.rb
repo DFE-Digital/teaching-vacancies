@@ -6,7 +6,7 @@ RSpec.describe Jobseekers::CloseAccount do
   let(:jobseeker) { create(:jobseeker) }
   let(:close_account_feedback_form_params) { {} }
   let!(:subscription) { create(:subscription, email: jobseeker.email, active: true) }
-  let!(:job_application) { create(:job_application, :reviewed, jobseeker: jobseeker) }
+  let!(:job_application) { create(:job_application, :reviewed, jobseeker:) }
 
   describe "#call" do
     before { subject.call }

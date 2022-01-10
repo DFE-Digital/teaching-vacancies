@@ -3,7 +3,7 @@ class CardComponent < GovukComponent::Base
   renders_one :body
 
   def initialize(classes: [], html_attributes: {})
-    super(classes: classes, html_attributes: html_attributes)
+    super(classes:, html_attributes:)
   end
 
   renders_many :action_items, lambda { |link:|

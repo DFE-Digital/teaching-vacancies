@@ -15,7 +15,7 @@ end
 json.openapi "3.0.0"
 
 json.data @vacancies.decorated_collection do |vacancy|
-  json.partial! "show", vacancy: vacancy
+  json.partial! "show", vacancy:
 end
 
 json.links do

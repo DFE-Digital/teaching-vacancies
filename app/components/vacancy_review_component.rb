@@ -12,7 +12,7 @@ class VacancyReviewComponent < ReviewComponent
   def initialize(vacancy, step_process:, back_to:, show_errors: false, classes: [], html_attributes: {})
     super(
       classes: Array(classes) + ["vacancy"],
-      html_attributes: html_attributes,
+      html_attributes:,
       namespace: "publishers/vacancies",
       show_tracks: !vacancy.published?,
     )

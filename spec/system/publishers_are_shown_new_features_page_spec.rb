@@ -5,7 +5,7 @@ RSpec.describe "Publishers are shown the new features page" do
 
   before do
     allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference))
-    login_publisher(publisher: publisher, organisation: organisation)
+    login_publisher(publisher:, organisation:)
     visit organisation_path
   end
 
@@ -34,7 +34,7 @@ RSpec.describe "Publishers are shown the new features page" do
     end
 
     context "when they have already used the new feature (published jobs that enable applications for education support roles)" do
-      let!(:vacancy) { create(:vacancy, enable_job_applications: true, main_job_role: "education_support", publisher: publisher, organisations: [organisation]) }
+      let!(:vacancy) { create(:vacancy, enable_job_applications: true, main_job_role: "education_support", publisher:, organisations: [organisation]) }
 
       before { visit organisation_path }
 

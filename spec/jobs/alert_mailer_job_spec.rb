@@ -4,7 +4,7 @@ RSpec.describe AlertMailerJob do
   let(:school) { create(:school) }
   let!(:vacancies) { create_list(:vacancy, 5, organisations: [school]) }
   let(:subscription) { create(:daily_subscription) }
-  let(:alert_run) { create(:alert_run, subscription: subscription) }
+  let(:alert_run) { create(:alert_run, subscription:) }
   let(:job) { Jobseekers::AlertMailer.alert(subscription.id, vacancies.pluck(:id)).deliver_later! }
 
   it "creates a run" do
@@ -41,12 +41,12 @@ RSpec.describe AlertMailerJob do
     allow_any_instance_of(AlertMailerJob).to receive(:subscription) { subscription }
     expect(AlertMailerJob.queue_adapter).to receive(:enqueue).twice.ordered
     expect(subscription).to receive(:alert_run_today) { alert_run }
-    expect(alert_run).to receive(:update).with(job_id: job_id).ordered
+    expect(alert_run).to receive(:update).with(job_id:).ordered
     job
   end
 
   context "if the job has not expired" do
-    let!(:alert_run) { create(:alert_run, subscription: subscription) }
+    let!(:alert_run) { create(:alert_run, subscription:) }
 
     it "delivers the mail" do
       expect { perform_enqueued_jobs { job } }.to change { delivered_emails.count }.by(1)
@@ -58,7 +58,7 @@ RSpec.describe AlertMailerJob do
   end
 
   context "if the job has expired" do
-    let!(:alert_run) { create(:alert_run, subscription: subscription, created_at: Time.current - 5.hours) }
+    let!(:alert_run) { create(:alert_run, subscription:, created_at: Time.current - 5.hours) }
 
     it "does not deliver the mail" do
       expect { perform_enqueued_jobs { job } }.to change { delivered_emails.count }.by(0)
@@ -66,7 +66,7 @@ RSpec.describe AlertMailerJob do
   end
 
   context "if the job has already been run" do
-    let!(:alert_run) { create(:alert_run, subscription: subscription, status: :sent) }
+    let!(:alert_run) { create(:alert_run, subscription:, status: :sent) }
 
     it "does not deliver the mail" do
       expect { perform_enqueued_jobs { job } }.to change { delivered_emails.count }.by(0)

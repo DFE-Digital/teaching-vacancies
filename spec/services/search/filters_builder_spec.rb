@@ -5,13 +5,13 @@ RSpec.describe Search::FiltersBuilder do
 
   let(:filters_hash) do
     {
-      from_date: from_date,
-      to_date: to_date,
-      job_roles: job_roles,
-      phases: phases,
-      working_patterns: working_patterns,
-      subjects: subjects,
-      newly_qualified_teacher: newly_qualified_teacher,
+      from_date:,
+      to_date:,
+      job_roles:,
+      phases:,
+      working_patterns:,
+      subjects:,
+      newly_qualified_teacher:,
     }
   end
 

@@ -8,8 +8,8 @@ class Publishers::JobListing::JobRoleForm < Publishers::JobListing::VacancyForm
 
   def params_to_save
     {
-      completed_steps: completed_steps,
-      main_job_role: main_job_role,
+      completed_steps:,
+      main_job_role:,
     }.compact
   end
 end

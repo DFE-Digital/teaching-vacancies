@@ -4,11 +4,11 @@ RSpec.describe Publishers::AuthenticationFallbackMailer do
   describe "the user receives the sign in email containing the magic link" do
     let(:publisher) { create(:publisher) }
     let(:login_key) { publisher.emergency_login_keys.create(not_valid_after: Time.current + 10.minutes) }
-    let(:mail) { described_class.sign_in_fallback(login_key_id: login_key.id, publisher: publisher) }
+    let(:mail) { described_class.sign_in_fallback(login_key_id: login_key.id, publisher:) }
     let(:notify_template) { "2f37ec1d-58ef-4cd9-9d0a-4272723dda3d" }
     let(:expected_data) do
       {
-        notify_template: notify_template,
+        notify_template:,
         email_identifier: anonymised_form_of(publisher.email),
         user_anonymised_jobseeker_id: nil,
         user_anonymised_publisher_id: anonymised_form_of(publisher.oid),

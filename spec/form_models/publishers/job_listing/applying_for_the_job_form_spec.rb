@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Publishers::JobListing::ApplyingForTheJobForm, type: :model do
-  subject { described_class.new(current_organisation: organisation, vacancy: vacancy) }
+  subject { described_class.new(current_organisation: organisation, vacancy:) }
 
   let(:organisation) { build_stubbed(:trust) }
   let(:vacancy) { build_stubbed(:vacancy) }
@@ -39,7 +39,7 @@ RSpec.describe Publishers::JobListing::ApplyingForTheJobForm, type: :model do
       context "when the vacancy has been listed and enable_job_applications is nil" do
         subject do
           described_class.new(current_organisation: organisation,
-                              vacancy: vacancy,
+                              vacancy:,
                               enable_job_applications: nil)
         end
 

@@ -6,18 +6,18 @@ RSpec.describe Publishers::ExportVacancyToCsv do
   let(:school) { create(:school) }
   let(:jobseeker) { create(:jobseeker) }
   let(:job_title) { "Example job title without commas so we can ignore whether to expect this to be wrapped in quotes" }
-  let(:vacancy) { create(:vacancy, job_title: job_title, organisations: [school]) }
+  let(:vacancy) { create(:vacancy, job_title:, organisations: [school]) }
   let(:number_of_unique_views) { 64 }
   let(:number_of_saves) { 1 }
 
   before do
-    number_of_saves.times { create(:saved_job, vacancy: vacancy, jobseeker: jobseeker) }
-    create(:job_application, :status_draft, vacancy: vacancy, jobseeker: jobseeker)
-    create(:job_application, :status_reviewed, vacancy: vacancy, jobseeker: jobseeker)
-    create(:job_application, :status_submitted, vacancy: vacancy, jobseeker: jobseeker)
-    create(:job_application, :status_shortlisted, vacancy: vacancy, jobseeker: jobseeker)
-    create(:job_application, :status_unsuccessful, vacancy: vacancy, jobseeker: jobseeker)
-    create(:job_application, :status_withdrawn, vacancy: vacancy, jobseeker: jobseeker)
+    number_of_saves.times { create(:saved_job, vacancy:, jobseeker:) }
+    create(:job_application, :status_draft, vacancy:, jobseeker:)
+    create(:job_application, :status_reviewed, vacancy:, jobseeker:)
+    create(:job_application, :status_submitted, vacancy:, jobseeker:)
+    create(:job_application, :status_shortlisted, vacancy:, jobseeker:)
+    create(:job_application, :status_unsuccessful, vacancy:, jobseeker:)
+    create(:job_application, :status_withdrawn, vacancy:, jobseeker:)
   end
 
   describe "#call" do

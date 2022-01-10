@@ -18,7 +18,7 @@ class OrganisationVacancyPresenter < BasePresenter
       I18n.t("jobs.days_to_apply.tomorrow")
     else
       days_remaining = (model.expires_at.to_date - Date.current).to_i
-      I18n.t("jobs.days_to_apply.remaining", days_remaining: days_remaining)
+      I18n.t("jobs.days_to_apply.remaining", days_remaining:)
     end
   end
 

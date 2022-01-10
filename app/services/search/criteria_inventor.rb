@@ -20,7 +20,7 @@ class Search::CriteriaInventor
       phases: @vacancy.readable_phases,
       job_roles: @vacancy.job_roles,
       subjects: @subjects,
-      keyword: keyword }.delete_if { |_k, v| v.blank? }
+      keyword: }.delete_if { |_k, v| v.blank? }
   end
 
   def keyword

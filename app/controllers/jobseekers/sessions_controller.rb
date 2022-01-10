@@ -50,7 +50,7 @@ class Jobseekers::SessionsController < Devise::SessionsController
       :jobseeker_sign_in_attempt,
       email_identifier: StringAnonymiser.new(params[:jobseeker][:email]),
       success: success_or_failure == :success,
-      errors: errors,
+      errors:,
     )
   end
 

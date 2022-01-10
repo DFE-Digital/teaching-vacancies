@@ -17,7 +17,7 @@ RSpec.describe Search::CriteriaInventor do
 
   let(:postcode) { "ab12 3cd" }
   let(:readable_phases) { %w[secondary primary] }
-  let(:school) { create(:school, postcode: postcode, readable_phases: readable_phases) }
+  let(:school) { create(:school, postcode:, readable_phases:) }
   let(:working_patterns) { %w[full_time part_time] }
   let(:subjects) { %w[English Maths] }
   let(:job_title) { "A wonderful job" }
@@ -27,11 +27,11 @@ RSpec.describe Search::CriteriaInventor do
   let(:postcode_from_mean_geolocation) { "OX14 JE1" }
   let(:vacancy) do
     create(:vacancy, location_trait, organisations: associated_orgs,
-                                     postcode_from_mean_geolocation: postcode_from_mean_geolocation,
-                                     working_patterns: working_patterns,
-                                     subjects: subjects,
-                                     job_title: job_title,
-                                     job_roles: job_roles)
+                                     postcode_from_mean_geolocation:,
+                                     working_patterns:,
+                                     subjects:,
+                                     job_title:,
+                                     job_roles:)
   end
 
   describe "#criteria" do

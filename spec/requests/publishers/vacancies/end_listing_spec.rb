@@ -44,7 +44,7 @@ RSpec.describe "End job listing early" do
       let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
 
       it "returns not_found" do
-        patch(organisation_job_end_listing_path(vacancy.id), params: params)
+        patch(organisation_job_end_listing_path(vacancy.id), params:)
 
         expect(response).to have_http_status(:not_found)
       end
@@ -54,7 +54,7 @@ RSpec.describe "End job listing early" do
       let(:vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
 
       it "returns not_found" do
-        patch(organisation_job_end_listing_path(vacancy.id), params: params)
+        patch(organisation_job_end_listing_path(vacancy.id), params:)
 
         expect(response).to have_http_status(:not_found)
       end
@@ -62,7 +62,7 @@ RSpec.describe "End job listing early" do
 
     it "updates expires_at, end_listing_reason, google index and redirects to the dashboard" do
       freeze_time do
-        expect { patch(organisation_job_end_listing_path(vacancy.id), params: params) }
+        expect { patch(organisation_job_end_listing_path(vacancy.id), params:) }
           .to change { vacancy.reload.expires_at }.from(1.week.from_now).to(Time.current)
           .and change { vacancy.reload.end_listing_reason }.from(nil).to("end_early")
           .and have_enqueued_job(UpdateGoogleIndexQueueJob)

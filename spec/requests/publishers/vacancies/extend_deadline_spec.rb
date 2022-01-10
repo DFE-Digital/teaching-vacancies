@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Extend deadline" do
   let(:organisation) { create(:school) }
-  let(:vacancy) { create(:vacancy, :published, publish_on: publish_on, expires_at: 1.month.from_now, organisations: [organisation]) }
+  let(:vacancy) { create(:vacancy, :published, publish_on:, expires_at: 1.month.from_now, organisations: [organisation]) }
   let(:publisher) { create(:publisher) }
   let(:publish_on) { 1.month.ago }
 
@@ -76,7 +76,7 @@ RSpec.describe "Extend deadline" do
       before { allow_any_instance_of(Publishers::JobListing::ExtendDeadlineForm).to receive(:valid?).and_return(false) }
 
       it "does not extend the deadline or update google index and renders show page" do
-        expect { patch organisation_job_extend_deadline_path(vacancy.id), params: params }
+        expect { patch organisation_job_extend_deadline_path(vacancy.id), params: }
           .to not_change { vacancy.reload.expires_at }
           .and not_have_enqueued_job(UpdateGoogleIndexQueueJob)
 
@@ -86,7 +86,7 @@ RSpec.describe "Extend deadline" do
 
     it "extends the deadline, updates google index and redirects to active jobs dashboard" do
       freeze_time do
-        expect { patch organisation_job_extend_deadline_path(vacancy.id), params: params }
+        expect { patch organisation_job_extend_deadline_path(vacancy.id), params: }
             .to change { vacancy.reload.expires_at }.from(1.month.from_now).to(expires_at.change({ hour: 9, minute: 0 }))
             .and have_enqueued_job(UpdateGoogleIndexQueueJob)
 

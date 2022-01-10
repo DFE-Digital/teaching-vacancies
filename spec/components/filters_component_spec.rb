@@ -13,10 +13,10 @@ RSpec.describe FiltersComponent, type: :component do
 
   let(:kwargs) do
     {
-      form: form,
-      filters: filters,
-      items: items,
-      options: options,
+      form:,
+      filters:,
+      items:,
+      options:,
     }
   end
 

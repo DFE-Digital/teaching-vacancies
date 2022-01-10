@@ -1,11 +1,11 @@
 require "rails_helper"
 
 RSpec.describe Jobseekers::JobApplications::JobApplicationStepProcess do
-  subject { described_class.new(current_step, job_application: job_application) }
+  subject { described_class.new(current_step, job_application:) }
 
   let(:current_step) { :personal_details }
 
-  let(:job_application) { build_stubbed(:job_application, vacancy: vacancy) }
+  let(:job_application) { build_stubbed(:job_application, vacancy:) }
 
   describe "#step_groups" do
     let(:all_possible_step_groups) do

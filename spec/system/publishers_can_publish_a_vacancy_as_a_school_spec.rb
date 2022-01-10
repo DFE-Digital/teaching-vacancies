@@ -4,7 +4,7 @@ RSpec.describe "Creating a vacancy" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school, :all_through, name: "Salisbury School") }
 
-  before { login_publisher(publisher: publisher, organisation: school) }
+  before { login_publisher(publisher:, organisation: school) }
 
   scenario "Visiting the school page" do
     visit organisation_path
@@ -22,7 +22,7 @@ RSpec.describe "Creating a vacancy" do
     let(:job_roles) { %i[teacher send_responsible] }
     let(:vacancy) do
       VacancyPresenter.new(build(:vacancy,
-                                 job_roles: job_roles,
+                                 job_roles:,
                                  phase: "multiple_phases",
                                  working_patterns: %w[full_time part_time],
                                  publish_on: Date.current))

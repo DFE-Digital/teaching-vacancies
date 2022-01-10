@@ -5,7 +5,7 @@ RSpec.describe Search::WiderSuggestionsBuilder do
 
   let(:search_params) do
     {
-      radius: radius,
+      radius:,
       keyword: "test",
       location: "somewhere",
       filters: [],

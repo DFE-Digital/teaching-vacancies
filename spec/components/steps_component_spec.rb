@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe StepsComponent, type: :component do
-  let(:kwargs) { { title: title } }
+  let(:kwargs) { { title: } }
   let(:title) { "Stepway to Heaven" }
 
   subject! { render_inline(described_class.new(**kwargs)) }
@@ -34,7 +34,7 @@ RSpec.describe StepsComponent, type: :component do
       context "when current and completed are false" do
         subject! do
           render_inline(described_class.new) do |steps|
-            steps.step(label: label)
+            steps.step(label:)
           end
         end
 
@@ -50,7 +50,7 @@ RSpec.describe StepsComponent, type: :component do
       context "when current is true and completed is false" do
         subject! do
           render_inline(described_class.new) do |steps|
-            steps.step(label: label, current: true, completed: false)
+            steps.step(label:, current: true, completed: false)
           end
         end
 

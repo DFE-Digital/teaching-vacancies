@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Publishers::JobApplicationDataExpiryNotification do
   let(:organisation) { create(:school) }
   let(:publisher) { create(:publisher) }
-  let(:vacancy) { create(:vacancy, publisher: publisher, organisations: [organisation]) }
+  let(:vacancy) { create(:vacancy, publisher:, organisations: [organisation]) }
 
   describe "#message" do
     subject { Notification.last.to_notification.message }
@@ -13,7 +13,7 @@ RSpec.describe Publishers::JobApplicationDataExpiryNotification do
 
     before do
       described_class
-        .with(vacancy: vacancy, publisher: publisher)
+        .with(vacancy:, publisher:)
         .deliver(publisher)
     end
 
@@ -30,7 +30,7 @@ RSpec.describe Publishers::JobApplicationDataExpiryNotification do
     context "when the notification is delivered today" do
       before do
         described_class
-          .with(vacancy: vacancy, publisher: publisher)
+          .with(vacancy:, publisher:)
           .deliver(publisher)
       end
 
@@ -43,7 +43,7 @@ RSpec.describe Publishers::JobApplicationDataExpiryNotification do
       before do
         travel_to 1.day.ago do
           described_class
-            .with(vacancy: vacancy, publisher: publisher)
+            .with(vacancy:, publisher:)
             .deliver(publisher)
         end
       end
@@ -57,7 +57,7 @@ RSpec.describe Publishers::JobApplicationDataExpiryNotification do
       before do
         travel_to DateTime.new(2000, 0o1, 0o1, 14, 30) do
           described_class
-            .with(vacancy: vacancy, publisher: publisher)
+            .with(vacancy:, publisher:)
             .deliver(publisher)
         end
       end

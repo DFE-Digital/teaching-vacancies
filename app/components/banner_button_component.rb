@@ -4,7 +4,7 @@ class BannerButtonComponent < GovukComponent::Base
   ICONS = %w[alert-white alert-blue apply check cross document green-tick info notice save saved search start success warning].freeze
 
   def initialize(text:, href:, method: :get, params: nil, icon: nil, classes: [], html_attributes: {})
-    super(classes: classes, html_attributes: html_attributes.merge(default_html_attributes))
+    super(classes:, html_attributes: html_attributes.merge(default_html_attributes))
 
     @text = text
     @href = href
@@ -14,7 +14,7 @@ class BannerButtonComponent < GovukComponent::Base
   end
 
   def call
-    button_to text, href, method: method, params: params, class: classes.append(icon_class), **html_attributes
+    button_to text, href, method:, params:, class: classes.append(icon_class), **html_attributes
   end
 
   private

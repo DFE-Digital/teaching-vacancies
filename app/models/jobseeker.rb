@@ -13,6 +13,6 @@ class Jobseeker < ApplicationRecord
   def update_subscription_emails
     return unless saved_change_to_attribute?(:email)
 
-    Subscription.where(email: email_previously_was).update(email: email)
+    Subscription.where(email: email_previously_was).update(email:)
   end
 end

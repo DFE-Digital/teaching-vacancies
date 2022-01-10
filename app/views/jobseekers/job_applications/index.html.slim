@@ -16,25 +16,25 @@
       - if current_jobseeker.job_applications.any?
         #applications-results
           - current_jobseeker.job_applications.includes(:vacancy).order(updated_at: :desc).draft.each do |job_application|
-            = render "job_application", job_application: job_application if job_application.vacancy.expires_at.future?
+            = render("job_application", job_application:) if job_application.vacancy.expires_at.future?
 
           - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).submitted.each do |job_application|
-            = render "job_application", job_application: job_application
+            = render "job_application", job_application:
 
           - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).reviewed.each do |job_application|
-            = render "job_application", job_application: job_application
+            = render "job_application", job_application:
 
           - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).shortlisted.each do |job_application|
-            = render "job_application", job_application: job_application
+            = render "job_application", job_application:
 
           - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).unsuccessful.each do |job_application|
-            = render "job_application", job_application: job_application
+            = render "job_application", job_application:
 
           - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).withdrawn.each do |job_application|
-            = render "job_application", job_application: job_application
+            = render "job_application", job_application:
 
           - current_jobseeker.job_applications.includes(:vacancy).order(updated_at: :desc).draft.each do |job_application|
-            = render "job_application", job_application: job_application unless job_application.vacancy.expires_at.future?
+            = render("job_application", job_application:) unless job_application.vacancy.expires_at.future?
 
       - else
         = render EmptySectionComponent.new title: t(".no_job_applications") do

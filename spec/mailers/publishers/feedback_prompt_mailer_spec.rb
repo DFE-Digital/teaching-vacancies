@@ -7,13 +7,13 @@ RSpec.describe Publishers::FeedbackPromptMailer do
 
   describe "prompt_for_feedback" do
     let(:email) { "dummy@dum.com" }
-    let(:publisher) { create(:publisher, email: email) }
+    let(:publisher) { create(:publisher, email:) }
     let(:mail) { described_class.prompt_for_feedback(publisher, vacancies) }
     let(:notify_template) { NOTIFY_PROMPT_FEEDBACK_FOR_EXPIRED_VACANCIES }
     let(:vacancies) { create_list(:vacancy, 2, :published) }
     let(:expected_data) do
       {
-        notify_template: notify_template,
+        notify_template:,
         email_identifier: anonymised_form_of(email),
         user_anonymised_jobseeker_id: nil,
         user_anonymised_publisher_id: anonymised_form_of(publisher.oid),

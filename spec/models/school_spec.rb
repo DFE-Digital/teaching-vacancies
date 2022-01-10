@@ -22,7 +22,7 @@ RSpec.describe School do
     let(:religious_character) { "Roman Catholic" }
     let(:gias_data) { { "ReligiousCharacter (name)" => religious_character } }
 
-    subject { build(:school, gias_data: gias_data) }
+    subject { build(:school, gias_data:) }
 
     it "returns religious character" do
       expect(subject.religious_character).to eq "Roman Catholic"

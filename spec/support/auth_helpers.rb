@@ -15,7 +15,7 @@ module AuthHelpers
       provider: "dfe",
       uid: "161d1f6a-44f1-4a1a-940d-d1088c439da7",
       info: {
-        email: email,
+        email:,
       },
       extra: {
         raw_info: {

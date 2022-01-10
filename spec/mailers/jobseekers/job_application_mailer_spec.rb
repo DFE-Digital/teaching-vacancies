@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Jobseekers::JobApplicationMailer do
-  let(:jobseeker) { create(:jobseeker, email: email) }
+  let(:jobseeker) { create(:jobseeker, email:) }
   let(:email) { "test@example.net" }
   let(:organisation) { build(:school) }
   let(:vacancy) { build(:vacancy, organisations: [organisation]) }
@@ -9,7 +9,7 @@ RSpec.describe Jobseekers::JobApplicationMailer do
 
   let(:expected_data) do
     {
-      notify_template: notify_template,
+      notify_template:,
       email_identifier: anonymised_form_of(email),
       user_anonymised_jobseeker_id: anonymised_form_of(jobseeker.id),
       user_anonymised_publisher_id: nil,
@@ -17,7 +17,7 @@ RSpec.describe Jobseekers::JobApplicationMailer do
   end
 
   describe "#application_shortlisted" do
-    let(:job_application) { build(:job_application, :status_shortlisted, jobseeker: jobseeker, vacancy: vacancy) }
+    let(:job_application) { build(:job_application, :status_shortlisted, jobseeker:, vacancy:) }
     let(:mail) { described_class.application_shortlisted(job_application) }
     let(:notify_template) { NOTIFY_JOBSEEKER_APPLICATION_SHORTLISTED_TEMPLATE }
 
@@ -35,7 +35,7 @@ RSpec.describe Jobseekers::JobApplicationMailer do
   end
 
   describe "#application_submitted" do
-    let(:job_application) { build(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+    let(:job_application) { build(:job_application, :status_submitted, jobseeker:, vacancy:) }
     let(:mail) { described_class.application_submitted(job_application) }
     let(:notify_template) { NOTIFY_JOBSEEKER_APPLICATION_SUBMITTED_TEMPLATE }
 
@@ -54,7 +54,7 @@ RSpec.describe Jobseekers::JobApplicationMailer do
   end
 
   describe "#application_unsuccessful" do
-    let(:job_application) { build(:job_application, :status_unsuccessful, jobseeker: jobseeker, vacancy: vacancy) }
+    let(:job_application) { build(:job_application, :status_unsuccessful, jobseeker:, vacancy:) }
     let(:mail) { described_class.application_unsuccessful(job_application) }
     let(:notify_template) { NOTIFY_JOBSEEKER_APPLICATION_UNSUCCESSFUL_TEMPLATE }
 

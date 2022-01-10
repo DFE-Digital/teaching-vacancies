@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
   subject { described_class.new(params, vacancy) }
 
-  let(:vacancy) { build_stubbed(:vacancy, publish_on: publish_on) }
+  let(:vacancy) { build_stubbed(:vacancy, publish_on:) }
 
   let(:publish_on_day) { "another_day" }
   let(:publish_on) { 6.months.from_now }
@@ -13,7 +13,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
 
   let(:params) do
     {
-      publish_on_day: publish_on_day,
+      publish_on_day:,
       "publish_on(1i)" => publish_on.year.to_s,
       "publish_on(2i)" => publish_on.month.to_s,
       "publish_on(3i)" => publish_on.day.to_s,
@@ -24,7 +24,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
       "starts_on(1i)" => starts_on.year.to_s,
       "starts_on(2i)" => starts_on.month.to_s,
       "starts_on(3i)" => starts_on.day.to_s,
-      starts_asap: starts_asap,
+      starts_asap:,
     }
   end
 

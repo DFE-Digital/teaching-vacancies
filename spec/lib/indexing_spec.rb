@@ -18,7 +18,7 @@ RSpec.describe Indexing do
           .to receive(:new).and_return(google_service)
         expect(Google::Apis::IndexingV3::UrlNotification)
           .to receive(:new)
-          .with(url: url, type: Indexing::ACTIONS[:update])
+          .with(url:, type: Indexing::ACTIONS[:update])
           .and_return(mock_request)
         expect(google_service).to receive(:publish_url_notification).with(mock_request)
 
@@ -32,7 +32,7 @@ RSpec.describe Indexing do
           .to receive(:new).and_return(google_service)
         expect(Google::Apis::IndexingV3::UrlNotification)
           .to receive(:new)
-          .with(url: url, type: Indexing::ACTIONS[:remove])
+          .with(url:, type: Indexing::ACTIONS[:remove])
           .and_return(mock_request)
         expect(google_service).to receive(:publish_url_notification).with(mock_request)
 

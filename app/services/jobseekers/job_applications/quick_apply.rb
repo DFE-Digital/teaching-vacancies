@@ -7,7 +7,7 @@ class Jobseekers::JobApplications::QuickApply
   end
 
   def job_application
-    new_job_application.assign_attributes(recent_job_application.slice(*attributes_to_copy).merge(completed_steps: completed_steps))
+    new_job_application.assign_attributes(recent_job_application.slice(*attributes_to_copy).merge(completed_steps:))
     copy_qualifications
     copy_employments
     copy_references
@@ -18,7 +18,7 @@ class Jobseekers::JobApplications::QuickApply
   private
 
   def new_job_application
-    @new_job_application ||= jobseeker.job_applications.create(vacancy: vacancy)
+    @new_job_application ||= jobseeker.job_applications.create(vacancy:)
   end
 
   def recent_job_application

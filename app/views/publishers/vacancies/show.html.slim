@@ -1,10 +1,10 @@
 - content_for :page_title_prefix, review_page_title_prefix(vacancy,
   show_errors: params[:show_errors])
 
-= vacancy_review(vacancy, step_process: step_process, back_to: "manage_draft", show_errors: params[:show_errors]) do |r|
+= vacancy_review(vacancy, step_process:, back_to: "manage_draft", show_errors: params[:show_errors]) do |r|
   - r.header
     div class="govuk-!-margin-bottom-4"
-      = render "publishers/vacancies/job_applications/banner", vacancy: vacancy, job_applications: vacancy.job_applications
+      = render "publishers/vacancies/job_applications/banner", vacancy:, job_applications: vacancy.job_applications
 
   - r.above
     h2.govuk-heading-l = t("jobs.manage_listing", state: (vacancy.draft? ? "draft" : "job"))
@@ -13,7 +13,7 @@
     - if params[:show_errors]
       = render "shared/error_messages", model: vacancy, presenter: r.error_presenter
 
-  - render "vacancy_review_sections", r: r
+  - render "vacancy_review_sections", r:
 
   - r.below
     = render "publish_buttons", back_to: "manage_draft" if vacancy.draft?

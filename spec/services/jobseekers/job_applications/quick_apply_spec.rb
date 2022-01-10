@@ -4,9 +4,9 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy) }
   let(:new_vacancy) { create(:vacancy) }
-  let!(:recent_job_application) { create(:job_application, :status_submitted, submitted_at: 1.day.ago, jobseeker: jobseeker, vacancy: vacancy) }
-  let!(:older_job_application) { create(:job_application, :status_submitted, submitted_at: 1.week.ago, jobseeker: jobseeker, vacancy: vacancy) }
-  let!(:draft_job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+  let!(:recent_job_application) { create(:job_application, :status_submitted, submitted_at: 1.day.ago, jobseeker:, vacancy:) }
+  let!(:older_job_application) { create(:job_application, :status_submitted, submitted_at: 1.week.ago, jobseeker:, vacancy:) }
+  let!(:draft_job_application) { create(:job_application, jobseeker:, vacancy:) }
 
   describe "#recent_job_application" do
     subject { described_class.new(jobseeker, new_vacancy).send(:recent_job_application) }

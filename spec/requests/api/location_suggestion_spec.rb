@@ -6,7 +6,7 @@ RSpec.describe "Api::LocationSuggestion" do
 
   describe "GET /api/v1/location_suggestion/lon?format=html" do
     it "returns status :not_found as only JSON format is allowed" do
-      get api_location_suggestion_path(api_version: 1), params: { location: location, format: :html }
+      get api_location_suggestion_path(api_version: 1), params: { location:, format: :html }
 
       expect(response).to have_http_status(:not_found)
     end
@@ -32,7 +32,7 @@ RSpec.describe "Api::LocationSuggestion" do
       let(:location) { "pl" }
 
       it "returns status :bad_request" do
-        get api_location_suggestion_path(api_version: 1), params: { format: :json, location: location }
+        get api_location_suggestion_path(api_version: 1), params: { format: :json, location: }
 
         expect(response).to have_http_status(:bad_request)
         expect(json[:error]).to eq("Insufficient location input")
@@ -44,7 +44,7 @@ RSpec.describe "Api::LocationSuggestion" do
       let(:matched_terms) { [%w[playful place], %w[place]] }
 
       subject do
-        get api_location_suggestion_path(api_version: 1), params: { format: :json, location: location }
+        get api_location_suggestion_path(api_version: 1), params: { format: :json, location: }
       end
 
       before do
@@ -74,7 +74,7 @@ RSpec.describe "Api::LocationSuggestion" do
       end
 
       it "returns status :bad_request" do
-        get api_location_suggestion_path(api_version: 1), params: { format: :json, location: location }
+        get api_location_suggestion_path(api_version: 1), params: { format: :json, location: }
 
         expect(response).to have_http_status(:bad_request)
         expect(json[:error]).to eq("HTTP error")
@@ -88,7 +88,7 @@ RSpec.describe "Api::LocationSuggestion" do
       end
 
       it "returns status :bad_request" do
-        get api_location_suggestion_path(api_version: 1), params: { format: :json, location: location }
+        get api_location_suggestion_path(api_version: 1), params: { format: :json, location: }
 
         expect(response).to have_http_status(:bad_request)
         expect(json[:error]).to eq("Google error")

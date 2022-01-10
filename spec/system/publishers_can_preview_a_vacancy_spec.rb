@@ -5,7 +5,7 @@ RSpec.describe "Publishers can preview a vacancy" do
   let(:school) { create(:school) }
   let(:vacancy) { create(:vacancy, :draft, job_roles: %w[teacher], organisations: [school]) }
 
-  before { login_publisher(publisher: publisher, organisation: school) }
+  before { login_publisher(publisher:, organisation: school) }
 
   context "when reviewing a draft vacancy" do
     before { visit organisation_job_review_path(vacancy.id) }

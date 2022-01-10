@@ -7,7 +7,7 @@ RSpec.describe "CORS" do
 
     before do
       allow_any_instance_of(LocationSuggestion).to receive(:suggest_locations).and_return([[], []])
-      get api_location_suggestion_path(params), headers: headers
+      get api_location_suggestion_path(params), headers:
     end
 
     context "when domain is defined in configuration" do
@@ -34,7 +34,7 @@ RSpec.describe "CORS" do
     let(:headers) { { HTTP_ORIGIN: "https://www.test.com" } }
 
     before do
-      get api_jobs_path(params), headers: headers
+      get api_jobs_path(params), headers:
     end
 
     it "is configured to allow a request from any domain" do
@@ -49,7 +49,7 @@ RSpec.describe "CORS" do
     let(:headers) { { HTTP_ORIGIN: "https://www.test.com" } }
 
     before do
-      get api_job_path(params), headers: headers
+      get api_job_path(params), headers:
     end
 
     it "is configured to allow a request from any domain" do

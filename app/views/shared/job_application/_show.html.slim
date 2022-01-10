@@ -9,5 +9,5 @@
     - navigation.anchor text: t(".ask_for_support.heading"), href: "#ask_for_support"
     - navigation.anchor text: t(".declarations.heading"), href: "#declarations"
 
-= job_application_review(job_application, step_process: step_process, show_tracks: false) do |r|
-  - render "jobseekers/job_applications/job_application_review_sections", r: r
+= job_application_review(job_application, step_process:, show_tracks: false) do |r|
+  - render "jobseekers/job_applications/job_application_review_sections", r:

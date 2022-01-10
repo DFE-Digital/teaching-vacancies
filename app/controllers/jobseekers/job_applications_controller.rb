@@ -14,7 +14,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def create
-    new_job_application = current_jobseeker.job_applications.create(vacancy: vacancy)
+    new_job_application = current_jobseeker.job_applications.create(vacancy:)
     redirect_to jobseekers_job_application_build_path(new_job_application, :personal_details)
   end
 

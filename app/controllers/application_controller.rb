@@ -110,7 +110,7 @@ class ApplicationController < ActionController::Base
   # https://github.com/ambethia/recaptcha#verify_recaptcha
   # https://github.com/ambethia/recaptcha#recaptcha_reply
   def recaptcha_is_invalid?(model = nil)
-    !verify_recaptcha(model: model, action: controller_name, minimum_score: SUSPICIOUS_RECAPTCHA_THRESHOLD) && recaptcha_reply
+    !verify_recaptcha(model:, action: controller_name, minimum_score: SUSPICIOUS_RECAPTCHA_THRESHOLD) && recaptcha_reply
   end
 
   def request_event

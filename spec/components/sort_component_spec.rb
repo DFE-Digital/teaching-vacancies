@@ -21,7 +21,7 @@ RSpec.describe SortComponent, type: :component do
   let(:number_of_sorting_options) { 2 }
   let(:active_sort_option) { sort.options.first }
 
-  let(:kwargs) { { path: path, sort: sort, url_params: url_params } }
+  let(:kwargs) { { path:, sort:, url_params: } }
 
   before do
     sort.update(sort_by: active_sort_option)

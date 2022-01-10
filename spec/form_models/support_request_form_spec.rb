@@ -9,10 +9,10 @@ RSpec.describe SupportRequestForm, type: :model do
   let(:params) do
     {
       email_address: "test@example.com",
-      is_for_whole_site: is_for_whole_site,
+      is_for_whole_site:,
       issue: "Help!",
       name: "A User",
-      page: page,
+      page:,
     }
   end
 

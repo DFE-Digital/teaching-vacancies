@@ -17,7 +17,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
     let(:other_school) { create(:school, name: "Some other school") }
     let(:trust) { create(:trust) }
     let(:local_authority) { create(:local_authority, local_authority_code: "100") }
-    let(:publisher) { create(:publisher, organisations: organisations, accepted_terms_at: 1.day.ago) }
+    let(:publisher) { create(:publisher, organisations:, accepted_terms_at: 1.day.ago) }
 
     let(:login_key) do
       publisher.emergency_login_keys.create(
@@ -30,10 +30,10 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
     before do
       allow_any_instance_of(Publishers::LoginKeysController)
         .to receive(:generate_login_key)
-        .with(publisher: publisher)
+        .with(publisher:)
         .and_return(login_key)
       allow(Publishers::AuthenticationFallbackMailer).to receive(:sign_in_fallback)
-        .with(login_key_id: login_key.id, publisher: publisher)
+        .with(login_key_id: login_key.id, publisher:)
         .and_return(message_delivery)
     end
 

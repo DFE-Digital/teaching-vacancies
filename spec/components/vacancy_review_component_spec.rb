@@ -6,8 +6,8 @@ RSpec.describe VacancyReviewComponent, type: :component do
   let(:args) { [vacancy] }
   let(:kwargs) do
     {
-      back_to: back_to,
-      step_process: step_process,
+      back_to:,
+      step_process:,
     }
   end
 
@@ -17,7 +17,7 @@ RSpec.describe VacancyReviewComponent, type: :component do
   let(:step_process) do
     Publishers::Vacancies::VacancyStepProcess.new(
       :review,
-      vacancy: vacancy,
+      vacancy:,
       organisation: school,
     )
   end

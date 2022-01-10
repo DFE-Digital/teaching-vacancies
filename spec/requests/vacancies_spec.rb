@@ -9,7 +9,7 @@ RSpec.describe "Vacancies" do
   end
 
   describe "GET #show" do
-    subject { get job_path(vacancy), params: params }
+    subject { get job_path(vacancy), params: }
 
     context "when vacancy is trashed" do
       let(:vacancy) { create(:vacancy, :trashed) }

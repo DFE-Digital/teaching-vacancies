@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Jobseekers::SearchResults::HeadingComponent, type: :component do
-  subject { render_inline(described_class.new(vacancies_search: vacancies_search, landing_page: landing_page)) }
+  subject { render_inline(described_class.new(vacancies_search:, landing_page:)) }
 
   let(:vacancies_search) { instance_double(Search::VacancySearch) }
   let(:landing_page) { nil }
@@ -62,7 +62,7 @@ RSpec.describe Jobseekers::SearchResults::HeadingComponent, type: :component do
 
     it "renders correct heading" do
       expect(rendered_component).to include(
-        I18n.t("jobs.search_result_heading.without_search_html", jobs_count: count, count: count),
+        I18n.t("jobs.search_result_heading.without_search_html", jobs_count: count, count:),
       )
     end
   end

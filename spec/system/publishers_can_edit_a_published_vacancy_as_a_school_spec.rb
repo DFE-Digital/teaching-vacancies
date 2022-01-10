@@ -3,7 +3,7 @@ RSpec.describe "Publishers can edit a vacancy" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school) }
 
-  before { login_publisher(publisher: publisher, organisation: school) }
+  before { login_publisher(publisher:, organisation: school) }
 
   context "when editing a published vacancy" do
     let(:vacancy) do

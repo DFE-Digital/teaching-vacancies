@@ -29,7 +29,7 @@ class Jobseekers::UnsubscribeFeedbacksController < ApplicationController
     unsubscribe_feedback_form_params.merge(
       feedback_type: "unsubscribe",
       jobseeker_id: current_jobseeker&.id,
-      subscription_id: subscription_id,
+      subscription_id:,
       search_criteria: @subscription.search_criteria,
     )
   end

@@ -6,9 +6,9 @@ RSpec.describe VacancyReviewComponent::Section, type: :component do
   let(:args) { [vacancy] }
   let(:kwargs) do
     {
-      name: name,
-      id: id,
-      back_to: back_to,
+      name:,
+      id:,
+      back_to:,
     }
   end
 
@@ -68,10 +68,10 @@ RSpec.describe VacancyReviewComponent::Section, type: :component do
     end
 
     it "renders a link to the form for that section" do
-      url = Rails.application.routes.url_helpers.organisation_job_build_path(vacancy.id, name, back_to: back_to)
+      url = Rails.application.routes.url_helpers.organisation_job_build_path(vacancy.id, name, back_to:)
       text = component.t("buttons.change")
 
-      expect(page).to have_css(".review-component__section__heading a[href='#{url}']", text: text)
+      expect(page).to have_css(".review-component__section__heading a[href='#{url}']", text:)
     end
 
     it "renders a status tag as the content" do
