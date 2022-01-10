@@ -489,6 +489,9 @@ en:
         form_submit: Request a new link
         heading: Request a new link to unlock your account
         title: Request a new link to unlock your account
+      show:
+        confirm: Confirm
+        title: Unlock your account
     unsubscribe_feedbacks:
       new:
         confirmation: You will no longer receive updates for this job alert.

@@ -25,7 +25,10 @@ RSpec.describe "Jobseekers can unlock their account" do
     end
 
     context "when the unlock token is invalid" do
-      before { visit jobseeker_unlock_url(unlock_token: "invalid token") }
+      before do
+        visit jobseeker_unlock_url(unlock_token: "invalid token")
+        click_on "Confirm"
+      end
 
       scenario "they are locked out of their account" do
         expect(jobseeker.reload).to be_access_locked
