@@ -15,7 +15,7 @@ RSpec.describe "Jobseekers can reset password" do
 
       expect(page).to have_content I18n.t("jobseekers.passwords.check_your_email_password.title")
 
-      confirm_email_address
+      visit first_link_from_last_mail
 
       click_on I18n.t("buttons.update_password")
 
@@ -34,7 +34,7 @@ RSpec.describe "Jobseekers can reset password" do
       fill_in "jobseeker[email]", with: jobseeker.email
       click_on I18n.t("buttons.continue")
       travel_to(3.hours.from_now) do
-        confirm_email_address
+        visit first_link_from_last_mail
 
         expect(page).to have_content(I18n.t("jobseekers.passwords.expired_token.title"))
 
