@@ -32,15 +32,6 @@ RSpec.describe "Jobseekers can sign in to their account" do
         .to have_triggered_event(:jobseeker_sign_in_attempt)
         .with_data(expected_data)
     end
-
-    it "does not display the Hiring staff sign-in section" do
-      sign_in_jobseeker(email: email, password: password)
-      visit root_path
-
-      within ".search-panel-banner .govuk-grid-column-one-third" do
-        expect(page).not_to have_content(I18n.t("home.index.publisher_section.title"))
-      end
-    end
   end
 
   context "when entering incorrect details" do
