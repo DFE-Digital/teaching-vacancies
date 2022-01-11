@@ -6,11 +6,21 @@ class ReviewComponent < GovukComponent::Base
   renders_one :above
   renders_one :below
 
+  renders_one :sidebar, ReviewComponent::Sidebar
+
   def initialize(namespace:, show_tracks:, classes: [], html_attributes: {})
     super(classes: classes, html_attributes: html_attributes)
 
     @namespace = namespace
     @show_tracks = show_tracks
+  end
+
+  def before_render
+    return unless show_tracks?
+
+    sidebar do
+      render("#{namespace}/build/steps", track_assigns)
+    end
   end
 
   private
