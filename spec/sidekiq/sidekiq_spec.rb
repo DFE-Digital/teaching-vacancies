@@ -18,6 +18,7 @@ RSpec.describe "Sidekiq configuration" do
       SeedDatabaseJob
       SendEntityImportedEventsToDataWarehouseJob
       SendEventToDataWarehouseJob
+      SendJobListingEndedEarlyNotificationJob
       UpdateGoogleIndexQueueJob
       Noticed::DeliveryMethods::Base
       Noticed::DeliveryMethods::Database

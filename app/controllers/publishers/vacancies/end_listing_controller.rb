@@ -5,6 +5,7 @@ class Publishers::Vacancies::EndListingController < Publishers::Vacancies::BaseC
     if form.valid?
       vacancy.update(form_params.merge(expires_at: Time.current))
       update_google_index(vacancy)
+      SendJobListingEndedEarlyNotificationJob.new.perform(vacancy)
       redirect_to jobs_with_type_organisation_path(:expired), success: t(".success", job_title: vacancy.job_title)
     else
       render :show

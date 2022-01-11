@@ -1,0 +1,5 @@
+# <%= t(".heading", job_title: @vacancy.job_title, organisation_name: @vacancy.parent_organisation.name) %>
+
+<%= t(".body", organisation_name: @vacancy.parent_organisation.name, link: jobseeker_job_application_link(@job_application)) %>
+
+<%= home_page_link(t(".home_page.link_text")) %>

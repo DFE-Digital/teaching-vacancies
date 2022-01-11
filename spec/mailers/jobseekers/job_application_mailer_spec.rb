@@ -23,7 +23,7 @@ RSpec.describe Jobseekers::JobApplicationMailer do
 
     it "sends a `jobseeker_application_shortlisted` email" do
       expect(mail.subject).to eq(I18n.t("jobseekers.job_application_mailer.application_shortlisted.subject"))
-      expect(mail.to).to eq(["test@example.net"])
+      expect(mail.to).to eq([jobseeker.email])
       expect(mail.body.encoded).to include(I18n.t("jobseekers.job_application_mailer.application_shortlisted.heading"))
                                .and include(I18n.t("jobseekers.job_application_mailer.shared.more_info.description",
                                                    email: "[#{contact_email}](mailto:#{contact_email})"))
@@ -41,7 +41,7 @@ RSpec.describe Jobseekers::JobApplicationMailer do
 
     it "sends a `jobseeker_application_submitted` email" do
       expect(mail.subject).to eq(I18n.t("jobseekers.job_application_mailer.application_submitted.subject"))
-      expect(mail.to).to eq(["test@example.net"])
+      expect(mail.to).to eq([jobseeker.email])
       expect(mail.body.encoded).to include(I18n.t("jobseekers.job_application_mailer.application_submitted.heading",
                                                   organisation_name: organisation.name))
                                .and include(I18n.t("jobseekers.job_application_mailer.shared.more_info.description",
@@ -60,7 +60,7 @@ RSpec.describe Jobseekers::JobApplicationMailer do
 
     it "sends a `jobseeker_application_unsuccessful` email" do
       expect(mail.subject).to eq(I18n.t("jobseekers.job_application_mailer.application_unsuccessful.subject"))
-      expect(mail.to).to eq(["test@example.net"])
+      expect(mail.to).to eq([jobseeker.email])
       expect(mail.body.encoded).to include(I18n.t("jobseekers.job_application_mailer.application_unsuccessful.heading"))
                                .and include(I18n.t("jobseekers.job_application_mailer.shared.more_info.description",
                                                    email: "[#{contact_email}](mailto:#{contact_email})"))
@@ -68,6 +68,24 @@ RSpec.describe Jobseekers::JobApplicationMailer do
 
     it "triggers a `jobseeker_application_unsuccessful` email event" do
       expect { mail.deliver_now }.to have_triggered_event(:jobseeker_application_unsuccessful).with_data(expected_data)
+    end
+  end
+
+  describe "#job_listing_ended_early" do
+    let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
+    let(:mail) { described_class.job_listing_ended_early(job_application, vacancy) }
+    let(:notify_template) { NOTIFY_JOBSEEKER_JOB_LISTING_ENDED_EARLY_TEMPLATE }
+
+    it "sends a `jobseeker_job_listing_ended_early` email" do
+      expect(mail.subject).to eq("Update on #{vacancy.job_title} at #{vacancy.parent_organisation.name}")
+      expect(mail.to).to eq([jobseeker.email])
+      expect(mail.body.encoded).to include(I18n.t("jobseekers.job_application_mailer.job_listing_ended_early.heading",
+                                                  job_title: vacancy.job_title, organisation_name: vacancy.parent_organisation.name))
+      expect(mail.body.encoded).to include(jobseekers_job_application_url(job_application))
+    end
+
+    it "triggers a `jobseeker_job_listing_ended_early` email event" do
+      expect { mail.deliver_now }.to have_triggered_event(:jobseeker_job_listing_ended_early).with_data(expected_data)
     end
   end
 end

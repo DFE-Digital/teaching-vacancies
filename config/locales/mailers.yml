@@ -115,6 +115,21 @@ en:
         feedback: Feedback from the school
         heading: Unfortunately your application was not successful this time
         subject: Your job application has been unsuccessful
+      job_listing_ended_early:
+        body: |
+          Unfortunately, %{organisation_name} has ended the job listing early and you can no longer apply for the role.
+
+          We appreciate the time you have invested in your draft application and understand that this might be disappointing news.
+
+          You can view your draft application %{link}.
+
+          Thank you for using Teaching Vacancies.
+        heading: "%{job_title} at %{organisation_name}"
+        home_page:
+          link_text: Find another job
+        job_application:
+          link_text: here
+        subject: Update on %{job_title} at %{organisation_name}
 
     subscription_mailer:
       confirmation:
