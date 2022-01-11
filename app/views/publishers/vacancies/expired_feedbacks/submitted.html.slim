@@ -1,0 +1,13 @@
+- content_for :page_title_prefix, t(".title")
+
+.govuk-grid-row class="govuk-!-margin-top-9"
+  .govuk-grid-column-two-thirds
+    = govuk_panel(title_text: t(".panel.heading"), text: t(".panel.body"))
+
+    h1.govuk-heading-m class="govuk-!-margin-top-5"
+      = t(".heading")
+
+    p.govuk-body class="govuk-!-margin-bottom-7"
+      = t(".description")
+
+    = govuk_link_to(t(".expired_vacancy_feedback_link_text"), jobs_with_type_organisation_path(:awaiting_feedback), class: "govuk-body-m")
