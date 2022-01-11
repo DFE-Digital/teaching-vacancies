@@ -5,7 +5,7 @@ RSpec.describe "Jobseekers can register" do
 
   it "allows jobseekers to reset their password" do
     visit root_path
-    click_on I18n.t("buttons.create_account")
+    click_on I18n.t("home.index.jobseeker_section.signed_out.create_account")
     fill_in "jobseeker[email]", with: email
     fill_in "jobseeker[password]", with: "Jobseeker1234"
     click_on I18n.t("buttons.create_account")
