@@ -44,6 +44,11 @@ module NotifyViewsHelper
     notify_link(url, t(".next_steps.link_text"))
   end
 
+  def jobseeker_job_application_link(job_application)
+    url = jobseekers_job_application_url(job_application, **utm_params)
+    notify_link(url, t(".job_application.link_text"))
+  end
+
   def privacy_policy_link
     url = page_url("privacy-policy", **utm_params)
     notify_link(url, t(".privacy_policy_link"))
