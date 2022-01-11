@@ -226,8 +226,16 @@ en:
   home:
     index:
       browse_all: Browse all teaching jobs in England
+      description: Search for teaching, school leadership and education support jobs in England. You can also apply for jobs, save jobs and set up job alerts.
+      jobseeker_section:
+        signed_in:
+          description: Apply for jobs you are interested in, and check the status of your applications.
+        signed_out:
+          create_account: create an account
+          description_html: "%{sign_in_link} or %{create_account_link} to apply for jobs that use the Teaching Vacancies application form."
+        title: Apply for jobs
+      location_label: City, county or postcode
       publisher_section:
-        title: Advertise a school job
         signed_in:
           description_html: "%{create_job_link} or %{manage_jobs_link}."
           link_text:
@@ -237,13 +245,10 @@ en:
           link_text:
             sign_in: Sign in
             sign_up: sign up
+        title: Advertise a school job
       title: Find a job in teaching
-    signed_in_jobseeker:
-      description: Apply for jobs you are interested in, and check the status of your applications.
-      title: Apply for jobs
-    signed_out_jobseeker:
-      description_html: "%{link} or create an account to apply for jobs that use the Teaching Vacancies application form."
-      title: Apply for jobs
+      title_h1: Find teacher and school jobs near you
+      title_h2: Welcome to Teaching Vacancies
     vacancy_facets:
       cities: Cities and towns with teaching and education support jobs
       counties: Counties with teaching and education support jobs
