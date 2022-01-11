@@ -19,7 +19,7 @@
     = render "publish_buttons", back_to: "manage_draft" if vacancy.draft?
     = govuk_link_to(t("buttons.back_to_manage_jobs"), back_to_manage_jobs_link(vacancy), class: "govuk-link--no-visited-state")
 
-    - if vacancy.published? && !vacancy.pending?
-      .govuk-grid-column-one-third.grey-cta-container class="govuk-!-padding-bottom-4"
-        h3 = t(".view_live_listing_title")
-        = open_in_new_tab_link_to(t(".view_live_listing_link"), job_path(vacancy.id))
+  - if vacancy.published? && !vacancy.pending?
+    - r.sidebar(classes: %w[grey-cta-container govuk-!-padding-bottom-4])
+      h3 = t(".view_live_listing_title")
+      = open_in_new_tab_link_to(t(".view_live_listing_link"), job_path(vacancy.id))
