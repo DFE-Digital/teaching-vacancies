@@ -30,9 +30,6 @@ shared:
     foo: 1
     bar: 1
     baz: 1
-  2021_10_mobile_search_panel_test:
-    present: 1
-    overlay: 1
 test:
   2021_04_cookie_consent_test:
     none: 0
@@ -41,6 +38,3 @@ test:
     bottom_blue: 0
     modal: 0
     gds: 0
-  2021_10_mobile_search_panel_test:
-    present: 1
-    overlay: 0

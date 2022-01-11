@@ -1,0 +1,15 @@
+= f.hidden_field :keyword, value: @form.keyword
+= f.hidden_field :location, value: @form.location
+= f.hidden_field :radius, value: @form.radius
+
+.search-controls__panel.search-controls__panel--mobile
+  .search-controls__panel__filters
+    h2.govuk-heading-m = t("jobs.search.title")
+
+    = render "shared/search/keyword", f: f
+    = render "shared/search/location", f: f
+    = render "shared/search/current_location", target: "location-field"
+    = render "shared/search/radius", f: f, wide: true
+
+    = f.hidden_field :sort_by, value: @form.sort.by
+    = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"
