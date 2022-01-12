@@ -27,6 +27,16 @@ module NotifyViewsHelper
     notify_link(url, t("#{confirmation_type}.link"))
   end
 
+  def expired_vacancy_feedback_link(vacancy)
+    url = new_organisation_job_expired_feedback_url(vacancy.signed_id)
+    notify_link(url, vacancy.job_title)
+  end
+
+  def expired_vacancy_unsubscribe_link(publisher)
+    url = confirm_unsubscribe_publishers_account_url(publisher_id: publisher.signed_id)
+    notify_link(url, "Unsubscribe from these emails")
+  end
+
   def home_page_link(text = t("app.title"))
     url = root_url(**utm_params)
     notify_link(url, text)
