@@ -51,14 +51,12 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
     scenario "it displays the hiring staff CTA section with the text for when they are signed out" do
       visit root_path
 
-      within ".search-panel-banner .govuk-grid-column-one-third" do
-        expect(page).to have_content(I18n.t("home.index.publisher_section.title"))
-        expect(page).to have_content(I18n.t("home.index.publisher_section.signed_out.description_html",
-                                            signin_link: I18n.t("home.index.publisher_section.signed_out.link_text.sign_in"),
-                                            signup_link: I18n.t("home.index.publisher_section.signed_out.link_text.sign_up")))
-        expect(page).to have_link(I18n.t("home.index.publisher_section.signed_out.link_text.sign_in"), href: publishers_sign_in_path)
-        expect(page).to have_link(I18n.t("home.index.publisher_section.signed_out.link_text.sign_up"), href: page_path("dsi-account-request"))
-      end
+      expect(page).to have_content(I18n.t("home.index.publisher_section.title"))
+      expect(page).to have_content(I18n.t("home.index.publisher_section.signed_out.description_html",
+                                          signin_link: I18n.t("home.index.publisher_section.signed_out.link_text.sign_in"),
+                                          signup_link: I18n.t("home.index.publisher_section.signed_out.link_text.sign_up")))
+      expect(page).to have_link(I18n.t("home.index.publisher_section.signed_out.link_text.sign_in"), href: publishers_sign_in_path)
+      expect(page).to have_link(I18n.t("home.index.publisher_section.signed_out.link_text.sign_up"), href: page_path("dsi-account-request"))
     end
   end
 
@@ -86,12 +84,10 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       sign_in_publisher
       visit root_path
 
-      within ".search-panel-banner .govuk-grid-column-one-third" do
-        expect(page).to have_content(I18n.t("home.index.publisher_section.title"))
-        expect(page).to have_link(I18n.t("home.index.publisher_section.signed_in.link_text.manage_jobs"), href: organisation_path)
-        click_on I18n.t("buttons.create_job")
-        expect(current_path).to eq(create_or_copy_organisation_jobs_path)
-      end
+      expect(page).to have_content(I18n.t("home.index.publisher_section.title"))
+      expect(page).to have_link(I18n.t("home.index.publisher_section.signed_in.link_text.manage_jobs"), href: organisation_path)
+      click_on I18n.t("buttons.create_job")
+      expect(current_path).to eq(create_or_copy_organisation_jobs_path)
     end
   end
 
