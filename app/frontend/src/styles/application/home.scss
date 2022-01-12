@@ -1,0 +1,57 @@
+.app-search-form-container {
+  @include govuk-media-query($until: tablet) {
+    background: url('../../images/TVS-logo.png') no-repeat 100% 10px/120px auto govuk-colour('dark-blue');
+    padding: govuk-spacing(4);
+
+    h1 {
+      padding-right: 100px;
+    }
+
+    .govuk-button {
+      margin-bottom: 0;
+      margin-top: govuk-spacing(4);
+    }
+  }
+
+  @include govuk-media-query($from: tablet) {
+    background: url('../../images/TVS-logo.png') no-repeat 100% 10px/150px auto govuk-colour('dark-blue');
+    padding: govuk-spacing(6);
+
+    h1 {
+      padding-right: 150px;
+    }
+
+    .govuk-button,
+    .govuk-form-group {
+      margin: 0;
+    }
+  }
+
+  .govuk-label,
+  .govuk-hint,
+  .govuk-link,
+  h1 {
+    color: govuk-colour('white');
+  }
+
+  .govuk-button {
+    width: auto;
+  }
+}
+
+.app-search-form-inner {
+  @include govuk-media-query($from: tablet) {
+    align-items: end;
+    display: flex;
+
+    > div {
+      padding-right: 30px;
+      width: 33.33%;
+    }
+  }
+
+  > div:last-child {
+    align-items: center;
+    display: flex;
+  }
+}
