@@ -11,10 +11,23 @@ jobs:
       CF_SPACE_NAME: teaching-vacancies-production
 
     steps:
+
+      - name: Get CF_USERNAME From ParameterStore
+        uses: "marvinpinto/action-inject-ssm-secrets@latest"
+        with:
+          ssm_parameter: "/teaching-vacancies/github_action/infra/cf_username_prod"
+          env_variable_name: CF_USERNAME_PROD
+
+      - name: Get CF_PASSWORD From ParameterStore
+        uses: "marvinpinto/action-inject-ssm-secrets@latest"
+        with:
+          ssm_parameter: "/teaching-vacancies/github_action/infra/cf_password_prod"
+          env_variable_name: CF_PASSWORD
+
       - uses: DFE-Digital/github-actions/setup-cf-cli@master
         with:
-          CF_USERNAME: ${{ secrets.CF_USERNAME_PROD }}
-          CF_PASSWORD: ${{ secrets.CF_PASSWORD_PROD }}
+          CF_USERNAME: ${CF_USERNAME_PROD}
+          CF_PASSWORD: ${CF_PASSWORD}
           CF_SPACE_NAME: "${{ env.CF_SPACE_NAME }}"
           CF_ORG_NAME: dfe
           CF_API_URL:  https://api.london.cloud.service.gov.uk

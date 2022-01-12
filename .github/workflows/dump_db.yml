@@ -22,13 +22,26 @@ jobs:
         role-duration-seconds: 3600
         role-skip-session-tagging: true
 
+    - name: Get CF_USERNAME From ParameterStore
+      uses: "marvinpinto/action-inject-ssm-secrets@latest"
+      with:
+        ssm_parameter: "/teaching-vacancies/github_action/infra/cf_username_prod"
+        env_variable_name: CF_USERNAME_PROD
+
+    - name: Get CF_PASSWORD From ParameterStore
+      uses: "marvinpinto/action-inject-ssm-secrets@latest"
+      with:
+        ssm_parameter: "/teaching-vacancies/github_action/infra/cf_password_prod"
+        env_variable_name: CF_PASSWORD
+
     - name: Setup cf cli
       uses: DFE-Digital/github-actions/setup-cf-cli@master
       with:
-        CF_USERNAME: ${{ secrets.CF_USERNAME }}
-        CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+        CF_USERNAME: ${CF_USERNAME_PROD}
+        CF_PASSWORD: ${CF_PASSWORD}
         CF_SPACE_NAME: teaching-vacancies-production
         INSTALL_CONDUIT: true
+
 
     - name: Install postgres client
       uses: DFE-Digital/github-actions/install-postgres-client@master
