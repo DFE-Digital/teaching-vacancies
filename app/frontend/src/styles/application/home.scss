@@ -23,6 +23,7 @@
 
     .govuk-button,
     .govuk-form-group {
+      align-self: flex-end;
       margin: 0;
     }
   }
@@ -32,10 +33,6 @@
   .govuk-link,
   h1 {
     color: govuk-colour('white');
-  }
-
-  .govuk-button {
-    width: auto;
   }
 }
 
