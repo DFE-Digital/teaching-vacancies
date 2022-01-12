@@ -69,16 +69,6 @@
           }
         }
       }
-
-      .govuk-accordion__section,
-      &--border {
-        border-bottom: 1px solid $govuk-border-colour;
-        margin-top: -1px;
-      }
-
-      .govuk-accordion__section--expanded {
-        border-bottom-style: none;
-      }
     }
   }
 }
