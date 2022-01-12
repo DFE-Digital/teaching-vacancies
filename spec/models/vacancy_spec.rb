@@ -393,7 +393,7 @@ RSpec.describe Vacancy do
     it { expect(stats_updated_at).to be_nil }
 
     it "saves the time that the stats updated at" do
-      travel_to(Time.zone.local("2019, 1, 1, 10, 4, 3")) do
+      travel_to(Time.zone.local(2019, 1, 1, 10, 4, 3)) do
         expired_job.update(listed_elsewhere: :listed_paid, hired_status: :hired_tvs)
 
         expect(stats_updated_at).to eq(Time.current)
@@ -401,7 +401,7 @@ RSpec.describe Vacancy do
     end
 
     it "does not update the stats when you are updating the job summary" do
-      travel_to(Time.zone.local("2019, 1, 1, 10, 4, 3")) do
+      travel_to(Time.zone.local(2019, 1, 1, 10, 4, 3)) do
         expired_job.update(job_advert: "I am description")
 
         expect(stats_updated_at).to be_nil
