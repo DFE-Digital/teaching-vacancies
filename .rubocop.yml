@@ -94,6 +94,15 @@ Lint/MissingSuper:
 Naming/AccessorMethodName:
   Enabled: false
 
+Naming/BlockForwarding:
+  # We do want to use this, but are blocked by Brakeman's parser not supporting 3.1 syntax
+  Enabled: false
+
+Style/HashSyntax:
+  # This causes some issues in Slim templates that require a wider style discussion, and is
+  # currently unsupported by Brakeman's parser
+  Enabled: false
+
 ##
 # Tech Debt
 # TODO: `rubocop-govuk` previously had all these metrics disabled as they are "just heuristics".
