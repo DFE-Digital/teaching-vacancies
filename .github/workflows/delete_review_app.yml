@@ -29,11 +29,34 @@ jobs:
         echo "LINK_TO_PR=https://github.com/${GITHUB_REPOSITORY}/pull/${{ github.event.number }}" >> $GITHUB_ENV
         echo "LINK_TO_APP=https://teaching-vacancies-${ENVIRONMENT}.london.cloudapps.digital" >> $GITHUB_ENV
 
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-west-2
+        role-to-assume: Deployments
+        role-duration-seconds: 3600
+        role-skip-session-tagging: true
+
+    - name: Get SLACK_WEBHOOK From ParameterStore
+      uses: "marvinpinto/action-inject-ssm-secrets@latest"
+      with:
+        ssm_parameter: "/teaching-vacancies/github_action/infra/slack_webhook"
+        env_variable_name: SLACK_WEBHOOK
+
+    - name: Get GIT_HUB_SERVICE_ACCOUNT_TOKEN From ParameterStore
+      uses: "marvinpinto/action-inject-ssm-secrets@latest"
+      with:
+        ssm_parameter: "/teaching-vacancies/github_action/infra/git_hub_service_account_token"
+        env_variable_name: GIT_HUB_SERVICE_ACCOUNT_TOKEN
+
+
     - name: Wait for this review app 'Deploy app' job to finish
       id: wait_for_deployment
       uses: fountainhead/action-wait-for-check@v1.0.0
       with:
-       token: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
+       token: ${{ env.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
        checkName: Deploy app (review)                   # Matrix job name within deploy_app workflow
        ref: ${{ github.event.pull_request.head.sha }}   # The deploy_app job is linked to the PR branch HEAD SHA
        timeoutSeconds: 1800
@@ -50,16 +73,6 @@ jobs:
 
     - uses: actions/checkout@v2
       name: Checkout Code
-
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: eu-west-2
-        role-to-assume: Deployments
-        role-duration-seconds: 3600
-        role-skip-session-tagging: true
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
@@ -112,5 +125,5 @@ jobs:
           Failed deletion of review app PR ${{ github.event.number }}
           See: <${{ env.LINK_TO_RUN }}|Workflow run> - <${{ env.LINK_TO_PR }}|Pull request> - <${{ env.LINK_TO_APP }}|Review app>
           <!channel>
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK: ${{env.SLACK_WEBHOOK}}
         SLACK_COLOR: ${{ job.status }}
