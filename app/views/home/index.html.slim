@@ -1,33 +1,48 @@
 - content_for :page_title_prefix, t(".title")
 
-.search-panel-banner
-  .govuk-width-container
-    .govuk-grid-row
-      .govuk-grid-column-two-thirds
-        .search-panel.location-search = render "search"
-      .govuk-grid-column-one-third
-        .signin.signin--jobseeker
-          - if jobseeker_signed_in?
-              = render "signed_in_jobseeker"
-          - else
-              = render "signed_out_jobseeker"
-        - unless jobseeker_signed_in?
-          .signin.signin--publisher
-            h2.govuk-heading-m = t(".publisher_section.title")
-            - if publisher_signed_in?
-              p.govuk-body = t(".publisher_section.signed_in.description_html",
-                create_job_link: govuk_link_to(t("buttons.create_job"), create_or_copy_organisation_jobs_path, class: "govuk-link--no-visited-state"),
-                manage_jobs_link: govuk_link_to(t(".publisher_section.signed_in.link_text.manage_jobs"), organisation_path, class: "govuk-link--no-visited-state"))
-            - else
-              p.govuk-body = t(".publisher_section.signed_out.description_html",
-                signin_link: govuk_link_to(t(".publisher_section.signed_out.link_text.sign_in"), publishers_sign_in_path, class: "govuk-link--no-visited-state"),
-                signup_link: govuk_link_to(t(".publisher_section.signed_out.link_text.sign_up"), page_path("dsi-account-request"), class: "govuk-link--no-visited-state"))
+.govuk-grid-row class="govuk-!-margin-bottom-6"
+  .govuk-grid-column-full
+    .app-search-form-container
+      h1.govuk-heading-l = t(".title_h1")
 
-.govuk-main-wrapper class="govuk-!-padding-top-0"
-  .govuk-grid-row
-    .govuk-grid-column-full
-      = render "vacancy_facets"
+      = form_for @form, as: "", url: jobs_path, html: { method: "get" } do |f|
+        .app-search-form-inner
+          = render "shared/search/keyword", f: f
+          = render "shared/search/location", f: f, label_text: t(".location_label"), show_hint: false, desktop: true
+          = f.govuk_submit t("buttons.search"), classes: "govuk-button--start icon icon--start icon--right"
 
-  .govuk-grid-row class="govuk-!-margin-top-2"
-    .govuk-grid-column-full
-      = govuk_link_to(t(".browse_all"), jobs_path, class: "govuk-!-font-size-19")
+.govuk-grid-row
+  .govuk-grid-column-one-half
+    h2.govuk-heading-m = t(".title_h2")
+    p.govuk-body = t(".description")
+
+  .govuk-grid-column-one-quarter
+    h2.govuk-heading-m = t(".jobseeker_section.title")
+    - if jobseeker_signed_in?
+      p.govuk-body = t(".jobseeker_section.signed_in.description")
+      = govuk_link_to t("buttons.view_account"), jobseeker_root_path, class: "govuk-link--no-visited-state"
+    - else
+      p.govuk-body = t(".jobseeker_section.signed_out.description_html",
+        sign_in_link: govuk_link_to(t("buttons.sign_in"), new_jobseeker_session_path, class: "govuk-link--no-visited-state"),
+        create_account_link: govuk_link_to(t(".jobseeker_section.signed_out.create_account"), new_jobseeker_registration_path, class: "govuk-link--no-visited-state"))
+
+  .govuk-grid-column-one-quarter
+    h2.govuk-heading-m = t(".publisher_section.title")
+    - if publisher_signed_in?
+      p.govuk-body = t(".publisher_section.signed_in.description_html",
+        create_job_link: govuk_link_to(t("buttons.create_job"), create_or_copy_organisation_jobs_path, class: "govuk-link--no-visited-state"),
+        manage_jobs_link: govuk_link_to(t(".publisher_section.signed_in.link_text.manage_jobs"), organisation_path, class: "govuk-link--no-visited-state"))
+    - else
+      p.govuk-body = t(".publisher_section.signed_out.description_html",
+        signin_link: govuk_link_to(t(".publisher_section.signed_out.link_text.sign_in"), publishers_sign_in_path, class: "govuk-link--no-visited-state"),
+        signup_link: govuk_link_to(t(".publisher_section.signed_out.link_text.sign_up"), page_path("dsi-account-request"), class: "govuk-link--no-visited-state"))
+
+hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
+
+.govuk-grid-row
+  .govuk-grid-column-full
+    = render "vacancy_facets"
+
+.govuk-grid-row class="govuk-!-margin-top-2"
+  .govuk-grid-column-full
+    = govuk_link_to(t(".browse_all"), jobs_path, class: "govuk-!-font-size-19")
