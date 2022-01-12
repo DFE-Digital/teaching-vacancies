@@ -9,7 +9,7 @@
         .app-search-form-inner
           = render "shared/search/keyword", f: f
           = render "shared/search/location", f: f, label_text: t(".location_label"), show_hint: false, desktop: true
-          = f.govuk_submit t("buttons.search"), classes: "govuk-button--start icon icon--start icon--right"
+          = f.govuk_submit t("buttons.search"), class: "govuk-button--start"
 
 .govuk-grid-row
   .govuk-grid-column-one-half
