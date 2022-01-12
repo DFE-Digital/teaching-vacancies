@@ -28,6 +28,12 @@ jobs:
           role-duration-seconds: 3600
           role-skip-session-tagging: true
 
+      - name: Get SLACK_WEBHOOK From ParameterStore
+        uses: "marvinpinto/action-inject-ssm-secrets@latest"
+        with:
+          ssm_parameter: "/teaching-vacancies/github_action/infra/slack_webhook"
+          env_variable_name: SLACK_WEBHOOK
+
       - name: Pin Terraform version
         uses: hashicorp/setup-terraform@v1
         with:
@@ -66,4 +72,4 @@ jobs:
           SLACK_USERNAME: CI Deployment
           SLACK_TITLE: ${{ github.event.inputs.environment }} env vars refresh ${{ job.status }}
           SLACK_MESSAGE: 'Deployment of Docker tag ${{ steps.get_docker_tag.outputs.tag }} to ${{ github.event.inputs.environment }} - ${{ job.status }}'
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK: ${SLACK_WEBHOOK }
