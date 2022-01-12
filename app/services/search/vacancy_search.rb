@@ -31,10 +31,6 @@ class Search::VacancySearch
     @location_search ||= Search::LocationBuilder.new(search_criteria[:location], search_criteria[:radius])
   end
 
-  def search_filters
-    @search_filters ||= Search::FiltersBuilder.new(search_criteria).filter_query
-  end
-
   def wider_search_suggestions
     return unless vacancies.empty? && search_criteria[:location].present?
 
