@@ -36,7 +36,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
     expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :employment_history))
     expect(page).to have_content("The Best Teacher")
-    expect(page).to have_content(Date.new(2020, 0o7, 1).to_s(:month_year))
+    expect(page).to have_content(Date.new(2020, 0o7, 1).to_formatted_s(:month_year))
   end
 
   context "managing employment history gaps" do
