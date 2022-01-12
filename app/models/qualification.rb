@@ -4,7 +4,7 @@ class Qualification < ApplicationRecord
   belongs_to :job_application
   has_many :qualification_results, dependent: :delete_all, autosave: true
   accepts_nested_attributes_for :qualification_results
-  encrypts :finished_studying_details
+  lockbox_encrypts :finished_studying_details
 
   SECONDARY_QUALIFICATIONS = %w[gcse as_level a_level other_secondary].freeze
 

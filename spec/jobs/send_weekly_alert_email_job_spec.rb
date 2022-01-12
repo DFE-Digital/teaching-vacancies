@@ -24,7 +24,7 @@ RSpec.describe SendWeeklyAlertEmailJob do
 
     it "sends an email" do
       expect(Jobseekers::AlertMailer).to receive(:alert).with(subscription.id, vacancies.pluck(:id)) { mail }
-      expect(mail).to receive(:deliver_later) { ActionMailer::DeliveryJob.new }
+      expect(mail).to receive(:deliver_later) { ActionMailer::MailDeliveryJob.new }
       perform_enqueued_jobs { job }
     end
 
