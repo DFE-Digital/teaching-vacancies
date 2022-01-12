@@ -35,12 +35,30 @@ jobs:
         PAAS_SPACE_NAME=$(jq -r .paas_space_name terraform/workspace-variables/${{ github.event.inputs.environment }}.tfvars.json)
         echo "PAAS_SPACE_NAME=${PAAS_SPACE_NAME}" >> $GITHUB_ENV
 
+    - name: Get CF_USERNAME From ParameterStore
+      uses: "marvinpinto/action-inject-ssm-secrets@latest"
+      with:
+        ssm_parameter: "/teaching-vacancies/github_action/infra/cf_username_prod"
+        env_variable_name: CF_USERNAME_PROD
+
+    - name: Get CF_PASSWORD From ParameterStore
+      uses: "marvinpinto/action-inject-ssm-secrets@latest"
+      with:
+        ssm_parameter: "/teaching-vacancies/github_action/infra/cf_password_prod"
+        env_variable_name: CF_PASSWORD
+
+    - name: Get SLACK_WEBHOOK From ParameterStore
+      uses: "marvinpinto/action-inject-ssm-secrets@latest"
+      with:
+        ssm_parameter: "/teaching-vacancies/github_action/infra/slack_webhook"
+        env_variable_name: SLACK_WEBHOOK
+
     - name: Setup cf cli
       uses: DFE-Digital/github-actions/setup-cf-cli@master
       with:
-        CF_USERNAME: ${{ secrets.CF_USERNAME_PROD }}
-        CF_PASSWORD: ${{ secrets.CF_PASSWORD_PROD }}
-        CF_SPACE_NAME: ${{ env.PAAS_SPACE_NAME }}
+        CF_USERNAME: ${CF_USERNAME_PROD}
+        CF_PASSWORD: ${CF_PASSWORD}
+        CF_SPACE_NAME: teaching-vacancies-production
         INSTALL_CONDUIT: true
 
     - name: Install postgres client
@@ -69,4 +87,4 @@ jobs:
         SLACK_USERNAME: CI Deployment
         SLACK_TITLE: Deployment ${{ job.status }}
         SLACK_MESSAGE: 'Restore sanitised production DB to ${{ github.event.inputs.environment }} - ${{ job.status }}'
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK: ${SLACK_WEBHOOK}
