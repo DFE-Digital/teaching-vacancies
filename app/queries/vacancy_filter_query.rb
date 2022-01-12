@@ -5,10 +5,7 @@ class VacancyFilterQuery < ApplicationQuery
     @scope = scope
   end
 
-  # This query currently takes an identical set of parameters in the hash as the
-  # legacy Algolia `FiltersBuilder` to make it possible to run both Algolia and
-  # the new DB-based search side by side. Once Algolia is gone for good, we can
-  # refactor this to be cleaner - e.g. moving from/to_date into their own scope
+  # TODO: Refactor this to be cleaner - e.g. moving from/to_date into their own scope
   def call(filters)
     from_date = filters[:from_date]&.to_time
     to_date = filters[:to_date]&.to_time
