@@ -51,6 +51,22 @@ jobs:
       - uses: actions/checkout@v2
         name: Checkout Code
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+          role-to-assume: Deployments
+          role-duration-seconds: 3600
+          role-skip-session-tagging: true
+
+      - name: Get SLACK_WEBHOOK From ParameterStore
+        uses: "marvinpinto/action-inject-ssm-secrets@latest"
+        with:
+          ssm_parameter: "/teaching-vacancies/github_action/infra/slack_webhook"
+          env_variable_name: ${SLACK_WEBHOOK}
+
       - name: Set environment variables (Push)
         if: github.event_name == 'push'
         run: |
@@ -149,7 +165,9 @@ jobs:
 
       - name: Push ${{ env.DOCKER_REPOSITORY }} images
         if: ${{ success() }}
-        run: docker image push --all-tags ${{ env.DOCKER_REPOSITORY }}
+        run: |
+          docker image push --all-tags ${{ env.DOCKER_REPOSITORY }}
+          exit 1
 
       - name: Notify twd_tv_dev channel on build workflow failure
         if: failure()
@@ -161,7 +179,7 @@ jobs:
           SLACK_MESSAGE: |
             Build failure on branch ${{env.GIT_BRANCH}} <!channel>
             See: <${{ env.LINK_TO_RUN }}|Workflow run>
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK: ${SLACK_WEBHOOK}
           SLACK_COLOR: failure
 
   deploy:
@@ -177,6 +195,22 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       name: Checkout Code
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-west-2
+        role-to-assume: Deployments
+        role-duration-seconds: 3600
+        role-skip-session-tagging: true
+
+    - name: Get SLACK_WEBHOOK From ParameterStore
+      uses: "marvinpinto/action-inject-ssm-secrets@latest"
+      with:
+        ssm_parameter: "/teaching-vacancies/github_action/infra/slack_webhook"
+        env_variable_name: ${SLACK_WEBHOOK}
 
     - name: Set environment variables from build output
       run: |
@@ -223,7 +257,7 @@ jobs:
         SLACK_USERNAME: CI Deployment
         SLACK_TITLE: Deployment failure
         SLACK_MESSAGE: 'Deployment of Docker image ${{ env.DOCKER_IMAGE_TAG }} to ${{ env.ENVIRONMENT }} - unsuccessful <!channel>'
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK: ${SLACK_WEBHOOK}
 
     - name: Exit whole workflow if ${{ env.ENVIRONMENT }} deployment was not successful
       if: steps.wait_for_deploy_app.outputs.conclusion != 'success'
@@ -268,7 +302,7 @@ jobs:
         SLACK_MESSAGE: |
           Deployment of Docker image ${{ env.DOCKER_IMAGE_TAG }} to ${{matrix.environment}} - ${{ job.status }}
           See: <${{ env.LINK_TO_RUN }}|Workflow run>
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK: ${SLACK_WEBHOOK}
         SLACK_COLOR: failure
 
   post_deployment:
@@ -295,6 +329,12 @@ jobs:
           role-to-assume: Deployments
           role-duration-seconds: 3600
           role-skip-session-tagging: true
+
+      - name: Get SLACK_WEBHOOK From ParameterStore
+        uses: "marvinpinto/action-inject-ssm-secrets@latest"
+        with:
+          ssm_parameter: "/teaching-vacancies/github_action/infra/slack_webhook"
+          env_variable_name: SLACK_WEBHOOK
 
       - name: Terraform pin version
         uses: hashicorp/setup-terraform@v1
@@ -323,5 +363,5 @@ jobs:
           SLACK_MESSAGE: |
             Deployment of Docker tag ${{ env.DOCKER_IMAGE_TAG }} - ${{ job.status }}
             See: <${{ env.LINK_TO_RUN }}|Workflow run>
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK: ${SLACK_WEBHOOK}
           SLACK_COLOR: ${{ job.status }}
