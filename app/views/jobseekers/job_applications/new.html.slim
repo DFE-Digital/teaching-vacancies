@@ -6,6 +6,8 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds class="govuk-!-margin-bottom-5"
+    = render "shared/flash_messages"
+
     h1.govuk-heading-l = t(".heading")
     p.govuk-body = t(".description.opening_html", job_link: govuk_link_to(vacancy.job_title, job_path(vacancy)), organisation_name: vacancy.parent_organisation_name)
     p.govuk-body = t(".description.requirements")

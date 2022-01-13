@@ -3,6 +3,8 @@
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-two-thirds
+      = render "shared/flash_messages"
+
       .govuk-caption-l = t(".caption")
       h1.govuk-heading-xl = t(".heading")
 

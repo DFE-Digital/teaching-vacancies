@@ -6,6 +6,8 @@
 .govuk-main-wrapper class="govuk-!-padding-top-3"
   = govuk_breadcrumbs breadcrumbs: { "#{t("breadcrumbs.home")}": root_path, "#{t("breadcrumbs.jobs")}": "" }
 
+  = render "shared/flash_messages"
+
   = jobseekers_search_results_heading(vacancies_search: @vacancies_search, landing_page: @landing_page)
 
   .grid-row

@@ -1,2 +1,4 @@
+= render "shared/flash_messages"
+
 = render "form", form_options: { url: subscriptions_path }, i18n_prefix: "subscriptions.new", button_text: t("buttons.subscribe") do
   = recaptcha
