@@ -11,10 +11,45 @@ jobs:
       CF_SPACE_NAME: teaching-vacancies-production
 
     steps:
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+          role-to-assume: Deployments
+          role-duration-seconds: 3600
+          role-skip-session-tagging: true
+
+      - name: Get CF_USERNAME From ParameterStore
+        uses: "marvinpinto/action-inject-ssm-secrets@latest"
+        with:
+          ssm_parameter: "/teaching-vacancies/github_action/infra/cf_username_prod"
+          env_variable_name: CF_USERNAME_PROD
+
+      - name: Get CF_PASSWORD From ParameterStore
+        uses: "marvinpinto/action-inject-ssm-secrets@latest"
+        with:
+          ssm_parameter: "/teaching-vacancies/github_action/infra/cf_password_prod"
+          env_variable_name: CF_PASSWORD
+
+      - name: Get PAAS_USER_WHITELIST From ParameterStore
+        uses: "marvinpinto/action-inject-ssm-secrets@latest"
+        with:
+          ssm_parameter: "/teaching-vacancies/github_action/infra/slack_paas_user_whitelist"
+          env_variable_name: PAAS_USER_WHITELIST
+
+      - name: Get SLACK_WEBHOOK From ParameterStore
+        uses: "marvinpinto/action-inject-ssm-secrets@latest"
+        with:
+          ssm_parameter: "/teaching-vacancies/github_action/infra/slack_webhook"
+          env_variable_name: SLACK_WEBHOOK
+
       - uses: DFE-Digital/github-actions/setup-cf-cli@master
         with:
-          CF_USERNAME: ${{ secrets.CF_USERNAME_PROD }}
-          CF_PASSWORD: ${{ secrets.CF_PASSWORD_PROD }}
+          CF_USERNAME: "${{env.CF_USERNAME_PROD}}"
+          CF_PASSWORD: "${{env.CF_PASSWORD}}"
           CF_SPACE_NAME: "${{ env.CF_SPACE_NAME }}"
           CF_ORG_NAME: dfe
           CF_API_URL:  https://api.london.cloud.service.gov.uk
@@ -30,6 +65,6 @@ jobs:
         run: |
           ./remote-checkout/scripts/check-users-in-space-developer-role.ps1 \
             -space "${{ env.CF_SPACE_NAME }}" \
-            -slack_webhook "${{secrets.SLACK_WEBHOOK}}" \
+            -slack_webhook "${{env.SLACK_WEBHOOK}}" \
             -unset true \
-            -whitelist "${{secrets.PAAS_USER_WHITELIST}}"
+            -whitelist "${{env.PAAS_USER_WHITELIST}}"

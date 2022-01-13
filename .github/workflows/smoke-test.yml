@@ -26,6 +26,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+          role-to-assume: Deployments
+          role-duration-seconds: 3600
+          role-skip-session-tagging: true
+
+      - name: Get SLACK_WEBHOOK From ParameterStore
+        uses: "marvinpinto/action-inject-ssm-secrets@latest"
+        with:
+          ssm_parameter: "/teaching-vacancies/github_action/infra/slack_webhook"
+          env_variable_name: SLACK_WEBHOOK
+
       - name: Prepare application environment
         uses: ./.github/actions/prepare-app-env
 
@@ -54,4 +70,4 @@ jobs:
           SLACK_ICON_EMOJI: ':cry:'
           SLACK_TITLE: Smoke test failed
           SLACK_MESSAGE: 'Smoke test failure in ${{ env.PAAS_ENVIRONMENT}} environment <!channel>'
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK: ${{env.SLACK_WEBHOOK}}
