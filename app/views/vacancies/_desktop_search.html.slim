@@ -1,0 +1,11 @@
+.search-results__header.search-results__header--border.desktop-only
+  h2.govuk-heading-m = t("jobs.search.title")
+  = render "shared/search/keyword", f: f
+  = render "shared/search/location", show_hint: false, desktop: true, f: f
+  = render "shared/search/radius", f: f, wide: true
+  = f.hidden_field :sort_by, value: @form.sort.by
+  = f.hidden_field :job_roles, value: @form.job_roles
+  = f.hidden_field :phases, value: @form.phases
+  = f.hidden_field :working_patterns, value: @form.working_patterns
+  .search-results__header__submit
+    = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-6 govuk-!-width-full"

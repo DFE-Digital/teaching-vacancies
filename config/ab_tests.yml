@@ -33,9 +33,6 @@ shared:
   2021_10_mobile_search_panel_test:
     present: 1
     overlay: 1
-  2021_11_desktop_search_results_page_test:
-    present: 1
-    right_column: 1
 test:
   2021_04_cookie_consent_test:
     none: 0
@@ -47,6 +44,3 @@ test:
   2021_10_mobile_search_panel_test:
     present: 1
     overlay: 0
-  2021_11_desktop_search_results_page_test:
-    present: 1
-    right_column: 0
