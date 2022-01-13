@@ -21,7 +21,7 @@ class ApplicationRecord < ActiveRecord::Base
     attributes_except_ciphertext.each_with_object({}) do |(key, value), anonymised|
       next unless export?(key)
 
-      value = value.to_s(:iso8601) if value.respond_to?(:strftime)
+      value = value.to_formatted_s(:iso8601) if value.respond_to?(:strftime)
       anonymised[key] = anonymise?(key) ? anonymise_value(value) : value
     end
   end
