@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { Application } from '@hotwired/stimulus';
+import { Application } from '@stimulus/core';
 import PanelController, {
   COMPONENT_CLASS,
   TOGGLE_ELEMENT_CLASS,

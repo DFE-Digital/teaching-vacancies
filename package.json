@@ -10,12 +10,13 @@
     "not dead"
   ],
   "dependencies": {
-    "@hotwired/stimulus": "^3.0.1",
     "@rails/webpacker": "^5.4.2",
+    "@stimulus/core": "=2.0.0",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^2.0.3",
     "axios": "^0.24.0",
     "classlist-polyfill": "^1.2.0",
+    "core-js": "^3.20.3",
     "govuk-frontend": "^4.0.0",
     "jquery": "^3.5.0",
     "jsdom": "^19.0.0",
@@ -57,7 +58,10 @@
     ],
     "moduleNameMapper": {
       "\\.scss$": "<rootDir>/app/frontend/src/__mocks__/style.js"
-    }
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!@stimulus/core)/"
+    ]
   },
   "resolutions": {
     "serialize-javascript": "^3.1.0",
