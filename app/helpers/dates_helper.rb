@@ -8,13 +8,13 @@ module DatesHelper
   def format_date(date, format = :default)
     return "No date given" unless date.present?
 
-    date.to_s(format).lstrip
+    date.to_formatted_s(format).lstrip
   end
 
   def format_time(time, format = :time_only)
     return unless time.present?
 
-    time.to_s(format).lstrip
+    time.to_formatted_s(format).lstrip
   end
 
   def day(date)
