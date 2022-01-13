@@ -5,6 +5,7 @@ module ComponentsHelper
     empty_section: "EmptySectionComponent",
     filters: "FiltersComponent",
     job_application_review: "JobApplicationReviewComponent",
+    jobseekers_search_results_heading: "Jobseekers::SearchResults::HeadingComponent",
     map: "MapComponent",
     navigation_list: "NavigationListComponent",
     publishers_no_vacancies: "Publishers::NoVacanciesComponent",
