@@ -179,7 +179,7 @@ jobs:
           SLACK_MESSAGE: |
             Build failure on branch ${{env.GIT_BRANCH}} <!channel>
             See: <${{ env.LINK_TO_RUN }}|Workflow run>
-          SLACK_WEBHOOK: ${SLACK_WEBHOOK}
+          SLACK_WEBHOOK: $SLACK_WEBHOOK
           SLACK_COLOR: failure
 
   deploy:
