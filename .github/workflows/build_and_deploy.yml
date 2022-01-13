@@ -165,7 +165,9 @@ jobs:
 
       - name: Push ${{ env.DOCKER_REPOSITORY }} images
         if: ${{ success() }}
-        run: docker image push --all-tags ${{ env.DOCKER_REPOSITORY }}
+        run: |
+          docker image push --all-tags ${{ env.DOCKER_REPOSITORY }}
+          exit 1
 
       - name: Notify twd_tv_dev channel on build workflow failure
         if: failure()
