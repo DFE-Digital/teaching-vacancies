@@ -25,7 +25,7 @@ class ReviewComponent::Section < ApplicationComponent
   def before_render
     field_div_sets(@forms.map { |f| { form: f } })
 
-    heading(title: heading_text, link_to: [error_link_text, error_path]) do
+    heading(title: heading_text, link_to: [error_link_text, error_path], allow_edit: allow_edit?) do
       review_section_tag(@record, @forms.map(&:target_name), @forms)
     end
 
@@ -68,5 +68,9 @@ class ReviewComponent::Section < ApplicationComponent
 
   def error_link_text
     raise "Not implemented"
+  end
+
+  def allow_edit?
+    true
   end
 end
