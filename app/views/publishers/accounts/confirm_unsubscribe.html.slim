@@ -1,5 +1,7 @@
 - content_for :page_title_prefix, t(".title")
 
+= render "shared/flash_messages"
+
 = govuk_notification_banner title_text: t("banners.important"), classes: "govuk-!-margin-top-2" do |banner|
   - banner.heading(text: t(".notification_banner.heading"))
 

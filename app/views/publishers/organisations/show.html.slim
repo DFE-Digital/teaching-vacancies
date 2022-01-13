@@ -3,6 +3,8 @@
 - content_for :skip_links do
   a.govuk-skip-link href="#vacancy-results" Skip to #{t("publishers.vacancies_component.#{@selected_type}.tab_heading")}
 
+= render "shared/flash_messages"
+
 = publishers_vacancies(organisation: current_organisation,
     sort: @sort,
     selected_type: @selected_type,

@@ -5,6 +5,8 @@
 - if vacancy.within_data_access_period? && job_applications.many?
   .govuk-grid-row class="govuk-!-margin-top-7"
     .govuk-grid-column-full
+      = render "shared/flash_messages"
+
       = render SortComponent.new path: method(:organisation_job_job_applications_path), sort: sort, url_params: { job_id: vacancy.id }
 
 .govuk-grid-row

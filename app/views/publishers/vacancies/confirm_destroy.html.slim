@@ -5,6 +5,8 @@
     .govuk-grid-column-two-thirds
       = govuk_back_link text: t("buttons.back"), href: organisation_job_path(vacancy.id), classes: "govuk-!-margin-bottom-7"
 
+      = render "shared/flash_messages"
+
       h2.govuk-caption-l = "#{vacancy.job_title} at #{vacancy_job_location(vacancy)}"
       h1.govuk-heading-l = t(".page_title")
 
