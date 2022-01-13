@@ -28,7 +28,7 @@
                   - row.value text: employment.subjects.presence || t("jobseekers.job_applications.not_defined")
                 - summary_list.row do |row|
                   - row.key text: t("jobseekers.job_applications.employments.started_on")
-                  - row.value text: employment.started_on.to_s(:month_year)
+                  - row.value text: employment.started_on.to_formatted_s(:month_year)
 
                 - case employment.current_role
                 - when "yes"
@@ -38,7 +38,7 @@
                 - when "no"
                   - summary_list.row do |row|
                     - row.key text: t("jobseekers.job_applications.employments.ended_on")
-                    - row.value text: employment.ended_on.to_s(:month_year)
+                    - row.value text: employment.ended_on.to_formatted_s(:month_year)
 
                 - summary_list.row do |row|
                   - row.key text: t("jobseekers.job_applications.employments.main_duties")
@@ -56,7 +56,7 @@
           = govuk_inset_text do
             h2.govuk-heading-s class="govuk-!-margin-bottom-1" = t(".break")
             p.govuk-body class="govuk-!-margin-bottom-0" = employment.reason_for_break
-            p.govuk-hint class="govuk-!-margin-top-0 govuk-!-margin-bottom-1" #{employment.started_on.to_s(:month_year)} to #{employment.ended_on.to_s(:month_year)}
+            p.govuk-hint class="govuk-!-margin-top-0 govuk-!-margin-bottom-1" #{employment.started_on.to_formatted_s(:month_year)} to #{employment.ended_on.to_formatted_s(:month_year)}
             = govuk_link_to edit_jobseekers_job_application_break_path(job_application, employment), class: "govuk-link--no-visited-state govuk-!-margin-right-3"
               = t("buttons.change")
               span.govuk-visually-hidden = " #{t('.break')} #{employment.started_on} to #{employment.ended_on}"
