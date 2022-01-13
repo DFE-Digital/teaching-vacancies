@@ -17,4 +17,7 @@
 
 ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular "is", "are"
+
+  inflect.acronym "ECT"
+  inflect.acronym "SENDCo"
 end

@@ -53,8 +53,6 @@ class Jobseekers::SearchResults::HeadingComponent < ViewComponent::Base
   end
 
   def job_role(role)
-    return role.sub("-", " ") unless role == "sendco"
-
-    t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{role}")
+    role.tr("-", " ").humanize(capitalize: false)
   end
 end
