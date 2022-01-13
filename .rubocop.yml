@@ -39,6 +39,13 @@ Layout/LineLength:
 Layout/MultilineMethodCallIndentation:
   Enabled: false
 
+Lint/Debugger:
+  DebuggerMethods:
+    Capybara:
+      - saop
+      - save_and_open_page
+      - save_and_open_screenshot
+
 # List as per https://docs.rubocop.org/rubocop/cops_naming.html#namingmethodparametername
 # plus `as`.
 Naming/MethodParameterName:

@@ -57,6 +57,10 @@ class JobApplication < ApplicationRecord
     vacancy.main_job_role.in? %w[teacher leadership]
   end
 
+  def deadline_passed?
+    draft? && vacancy&.expires_at&.past?
+  end
+
   private
 
   def update_status_timestamp
