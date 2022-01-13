@@ -61,6 +61,12 @@ jobs:
         role-duration-seconds: 3600
         role-skip-session-tagging: true
 
+    - name: Get SLACK_WEBHOOK From ParameterStore
+      uses: "marvinpinto/action-inject-ssm-secrets@latest"
+      with:
+        ssm_parameter: "/teaching-vacancies/github_action/infra/slack_webhook"
+        env_variable_name: SLACK_WEBHOOK
+
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
 
@@ -112,5 +118,5 @@ jobs:
           Failed deletion of review app PR ${{ github.event.number }}
           See: <${{ env.LINK_TO_RUN }}|Workflow run> - <${{ env.LINK_TO_PR }}|Pull request> - <${{ env.LINK_TO_APP }}|Review app>
           <!channel>
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK: ${SLACK_WEBHOOK}
         SLACK_COLOR: ${{ job.status }}
