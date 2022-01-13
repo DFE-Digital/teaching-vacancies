@@ -65,7 +65,7 @@ jobs:
         uses: "marvinpinto/action-inject-ssm-secrets@latest"
         with:
           ssm_parameter: "/teaching-vacancies/github_action/infra/slack_webhook"
-          env_variable_name: ${SLACK_WEBHOOK}
+          env_variable_name: SLACK_WEBHOOK
 
       - name: Set environment variables (Push)
         if: github.event_name == 'push'
@@ -210,7 +210,7 @@ jobs:
       uses: "marvinpinto/action-inject-ssm-secrets@latest"
       with:
         ssm_parameter: "/teaching-vacancies/github_action/infra/slack_webhook"
-        env_variable_name: ${SLACK_WEBHOOK}
+        env_variable_name: SLACK_WEBHOOK
 
     - name: Set environment variables from build output
       run: |
