@@ -20,10 +20,11 @@ en:
     link_download_attr: Teaching Vacancies application form guide
 
   banners:
+    action_required: Action required
     important: Important
+    notice: Important
     success: Success
     warning: Warning
-    action_required: Action required
 
   breadcrumbs:
     active_jobs: Active jobs

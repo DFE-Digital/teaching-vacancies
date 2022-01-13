@@ -38,7 +38,9 @@ html.govuk-template.app-html-class lang="en"
     .govuk-width-container
       main.govuk-main-wrapper#main-content role="main" class="govuk-!-padding-top-0"
         - flash.each do |variant, message|
-          = render FlashComponent.new(variant_name: convert_devise_flash_variant(variant, message), message: message)
+          - variant_name = convert_devise_flash_variant(variant, message)
+          = govuk_notification_banner title_text: t("banners.#{variant_name}"), classes: "govuk-notification-banner--#{variant_name} govuk-!-margin-top-2" do
+            = message
 
         = yield
 
