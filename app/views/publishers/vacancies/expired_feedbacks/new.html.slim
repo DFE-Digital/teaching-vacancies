@@ -3,6 +3,8 @@
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-full
+      = render "shared/flash_messages"
+
       span.govuk-caption-l class="govuk-!-margin-bottom-1"
         = vacancy.job_title
 
