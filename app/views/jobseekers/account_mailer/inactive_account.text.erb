@@ -4,6 +4,6 @@
 
 <%= t(".explanation") %>
 
-<%= t(".reactivate", date: 2.weeks.from_now.to_date.to_s(:day_month)) %>
+<%= t(".reactivate", date: 2.weeks.from_now.to_date.to_formatted_s(:day_month)) %>
 
 <%= sign_in_link %>
