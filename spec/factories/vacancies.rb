@@ -53,6 +53,10 @@ FactoryBot.define do
     working_patterns { factory_rand_sample(Vacancy.working_patterns.keys, 1..3) }
     working_patterns_details { Faker::Lorem.paragraph(sentence_count: 1) }
 
+    trait :with_organisation do
+      organisations { build_list(:school, 1) }
+    end
+
     trait :no_tv_applications do
       application_link { Faker::Internet.url(host: "example.com") }
       enable_job_applications { false }

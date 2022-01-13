@@ -41,4 +41,8 @@ class JobApplicationReviewComponent::Section < ReviewComponent::Section
   def url_helpers
     Rails.application.routes.url_helpers
   end
+
+  def allow_edit?
+    !@job_application.deadline_passed?
+  end
 end
