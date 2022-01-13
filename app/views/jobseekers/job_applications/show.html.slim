@@ -4,6 +4,8 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
+    = render "shared/flash_messages"
+
     - if job_application.shortlisted?
       = govuk_notification_banner title_text: t("banners.important"), classes: "govuk-!-margin-bottom-5" do |banner|
         - banner.heading text: t(".shortlist_alert.title")

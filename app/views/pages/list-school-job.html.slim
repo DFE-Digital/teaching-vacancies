@@ -3,6 +3,8 @@
 .publisher-landing-page
   .govuk-grid-row--blue
     .govuk-width-container
+      = render "shared/flash_messages"
+
       .govuk-grid-row.publisher-landing-page__header class=" govuk-!-margin-bottom-2"
           = govuk_phase_banner(classes: "govuk-!-margin-bottom-6 govuk-!-margin-left-3 govuk-!-margin-right-3", tag: { text: "beta" }) do
             | This is a new service - #{govuk_link_to "your feedback", new_feedback_path} will help us to improve it.
