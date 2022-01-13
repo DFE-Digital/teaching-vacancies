@@ -5,6 +5,8 @@
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-two-thirds
+      = render "shared/flash_messages"
+
       h1.govuk-heading-l = t(".sign_in.title")
 
       p = t(".sign_in.description")
