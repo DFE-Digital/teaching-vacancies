@@ -158,7 +158,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
   end
 
   def and_perform_a_search
-    within ".filters-form" do
+    within "#mobile-search-and-filters-form" do
       fill_in "keyword", with: "english"
       fill_in "location", with: location
       if search_with_polygons?
