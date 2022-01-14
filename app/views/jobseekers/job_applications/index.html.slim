@@ -9,6 +9,8 @@
 .govuk-main-wrapper class="govuk-!-padding-bottom-0"
   .govuk-grid-row
     .govuk-grid-column-full
+      = render "shared/flash_messages"
+
       h1.govuk-heading-l = t(".page_title_with_count", count: current_jobseeker.job_applications.count)
 
   .govuk-grid-row class="govuk-!-margin-top-0"

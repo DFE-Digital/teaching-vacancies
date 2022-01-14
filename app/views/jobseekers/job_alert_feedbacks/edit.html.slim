@@ -3,6 +3,8 @@
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-two-thirds
+      = render "shared/flash_messages"
+
       - unless @feedback.relevant_to_user
         = govuk_notification_banner title_text: t("banners.important") do
           = t(".change_alert_text_html", link: govuk_link_to(t(".change_alert_link"), edit_subscription_path(@subscription.token)))
