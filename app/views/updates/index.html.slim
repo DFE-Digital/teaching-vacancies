@@ -3,6 +3,8 @@
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-two-thirds
+      = render "shared/flash_messages"
+
       h1.govuk-heading-xl = t("updates.heading")
       h2.govuk-heading-s
         = t("updates.updates_description_html",

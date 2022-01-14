@@ -3,6 +3,8 @@
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-two-thirds
+      = render "shared/flash_messages"
+
       = form_for @general_feedback_form, url: feedback_path do |f|
         = f.govuk_error_summary
 
