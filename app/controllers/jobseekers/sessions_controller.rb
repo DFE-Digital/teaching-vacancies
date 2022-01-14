@@ -3,6 +3,7 @@ class Jobseekers::SessionsController < Devise::SessionsController
   before_action :render_resource_with_errors, only: %i[new]
   before_action :check_if_access_locked, only: %i[new]
   after_action only: %i[create] do
+    flash.clear
     trigger_jobseeker_sign_in_event(:success)
     reactivate_account_if_closed
   end
