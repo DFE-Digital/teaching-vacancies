@@ -1,5 +1,7 @@
 - content_for :page_title_prefix, job_application_page_title_prefix(review_form, t(".title"))
 
+= render "shared/flash_messages"
+
 = job_application_review(@job_application, step_process: step_process, show_tracks: current_jobseeker.job_applications.not_draft.none?) do |r|
   - r.header do
     = render "banner"

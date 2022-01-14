@@ -5,6 +5,8 @@
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds data-controller="upload-documents"
+      = render "shared/flash_messages"
+
       = form_for form, url: organisation_job_documents_path(vacancy.id, back_to: params[:back_to]) do |f|
         = f.govuk_error_summary
 

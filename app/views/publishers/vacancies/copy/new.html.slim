@@ -3,6 +3,8 @@
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-full
+      = render "shared/flash_messages"
+
       h1.govuk-heading-m = t("jobs.copy_job_title", job_title: vacancy.job_title)
 
   .govuk-grid-row

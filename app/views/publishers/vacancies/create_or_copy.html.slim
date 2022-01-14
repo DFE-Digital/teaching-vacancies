@@ -3,6 +3,8 @@
 .govuk-main-wrapper class="govuk-!-padding-bottom-0"
   .govuk-grid-row
     .govuk-grid-column-two-thirds
+      = render "shared/flash_messages"
+
       = form_tag organisation_jobs_path do
         .govuk-form-group
           fieldset.govuk-fieldset

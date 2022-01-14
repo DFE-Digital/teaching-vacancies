@@ -5,6 +5,8 @@
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
+      = render "shared/flash_messages"
+
       = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
         = f.govuk_error_summary
 
