@@ -1,6 +1,8 @@
 - content_for :page_title_prefix, review_page_title_prefix(vacancy,
   show_errors: true)
 
+= render "shared/flash_messages"
+
 = vacancy_review(vacancy, step_process: step_process, back_to: "review", show_errors: true) do |r|
   - r.header
     = publishers_vacancy_form_page_heading(vacancy, step_process)

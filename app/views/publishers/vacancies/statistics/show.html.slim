@@ -2,6 +2,8 @@
 
 = render "publishers/vacancies/job_applications/banner", vacancy: vacancy, job_applications: vacancy.job_applications
 
+= render "shared/flash_messages"
+
 .govuk-grid-row.vacancy class="govuk-!-margin-top-7"
   - if vacancy.draft? || vacancy.pending?
     .govuk-grid-column-full
