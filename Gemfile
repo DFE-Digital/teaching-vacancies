@@ -82,7 +82,9 @@ group :development do
   gem "solargraph", require: false
   gem "spring"
   gem "spring-commands-rspec"
-  gem "spring-watcher-listen"
+  # TODO: Add back when version supporting Spring >= 4.0 is released
+  #       see https://github.com/rails/spring-watcher-listen/issues/27
+  # gem "spring-watcher-listen"
   gem "web-console"
 end
 
