@@ -9,7 +9,7 @@ ENV DEV_PACKAGES="gcc=10.3.1_git20211027-r0 libc-dev=0.7.2-r3 make=4.3-r0 yarn=1
 RUN apk add --no-cache $PROD_PACKAGES $DEV_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
-RUN gem install bundler:2.2.32 --no-document
+RUN gem install bundler:2.3.5 --no-document
 
 
 COPY Gemfile* ./
@@ -41,7 +41,7 @@ ARG PROD_PACKAGES
 RUN apk -U upgrade && apk add --no-cache $PROD_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
-RUN gem install bundler:2.2.32 --no-document
+RUN gem install bundler:2.3.5 --no-document
 
 COPY --from=builder /app /app
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
