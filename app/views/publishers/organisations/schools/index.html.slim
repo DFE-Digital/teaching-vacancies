@@ -3,6 +3,7 @@
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-two-thirds
+      = render "shared/flash_messages"
 
       h1.govuk-heading-xl class="govuk-!-margin-bottom-0"
         = t(".title", organisation_type: organisation_type_basic(current_organisation))

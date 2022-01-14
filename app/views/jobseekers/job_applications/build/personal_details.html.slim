@@ -7,6 +7,8 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
+    = render "shared/flash_messages"
+
     - if current_jobseeker.job_applications.not_draft.none?
       = render "caption"
     h2.govuk-heading-l = t(".heading")

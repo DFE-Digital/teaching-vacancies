@@ -3,6 +3,8 @@
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-two-thirds
+      = render "shared/flash_messages"
+
       = govuk_panel title_text: t(".header.#{action_name}"), text: t(".body", email: @subscription.email)
 
       h2.govuk-heading-m = t(".next_step")
