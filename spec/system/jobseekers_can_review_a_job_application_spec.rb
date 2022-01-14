@@ -45,8 +45,8 @@ RSpec.describe "Jobseekers can review a job application" do
     within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.employment_history.heading") do
       job_application.employments.break.each do |employment|
         expect(page).to have_content(employment.reason_for_break)
-        expect(page).to have_content(employment.started_on.to_s(:month_year))
-        expect(page).to have_content(employment.ended_on.to_s(:month_year))
+        expect(page).to have_content(employment.started_on.to_formatted_s(:month_year))
+        expect(page).to have_content(employment.ended_on.to_formatted_s(:month_year))
       end
     end
 

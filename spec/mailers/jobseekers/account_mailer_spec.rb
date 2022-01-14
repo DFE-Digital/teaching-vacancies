@@ -89,7 +89,7 @@ RSpec.describe Jobseekers::AccountMailer do
       expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.inactive_account.subject"))
       expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.inactive_account.intro"))
       expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.inactive_account.explanation"))
-      expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.inactive_account.reactivate", date: 2.weeks.from_now.to_date.to_s(:day_month)))
+      expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.inactive_account.reactivate", date: 2.weeks.from_now.to_date.to_formatted_s(:day_month)))
       expect(mail.body.encoded).to include(new_jobseeker_session_path)
     end
   end
