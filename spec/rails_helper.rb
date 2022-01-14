@@ -140,3 +140,7 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
+
+def saop
+  save_and_open_page # rubocop:disable Lint/Debugger
+end

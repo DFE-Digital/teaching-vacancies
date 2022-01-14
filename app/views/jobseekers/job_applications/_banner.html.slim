@@ -10,7 +10,7 @@
   .govuk-body class="govuk-!-margin-bottom-5 govuk-!-display-none-print" = format_time_to_datetime_at(job_application.vacancy.expires_at)
 
   .status-tag
-    = job_application_status_tag(job_application.vacancy.expires_at.past? && job_application.draft? ? :deadline_passed : job_application.status)
+    = job_application_status_tag(job_application.deadline_passed? ? :deadline_passed : job_application.status)
 
   .govuk-button-group class="govuk-!-margin-bottom-0 govuk-!-margin-top-3 govuk-!-display-none-print"
     - if job_application.draft?

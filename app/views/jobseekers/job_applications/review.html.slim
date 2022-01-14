@@ -21,30 +21,31 @@
   - render "job_application_review_sections", r: r
 
   - r.below do
-    = form_for review_form, url: jobseekers_job_application_submit_path(job_application), method: :post do |f|
-      = f.govuk_error_summary
+    - unless @job_application.deadline_passed?
+      = form_for review_form, url: jobseekers_job_application_submit_path(job_application), method: :post do |f|
+        = f.govuk_error_summary
 
-      h3.govuk-heading-m = t(".confirmation.heading")
+        h3.govuk-heading-m = t(".confirmation.heading")
 
-      = f.govuk_check_boxes_fieldset :confirm_data_accurate, multiple: false, legend: nil do
-        = f.govuk_check_box :confirm_data_accurate, "1", 0, multiple: false, link_errors: true
+        = f.govuk_check_boxes_fieldset :confirm_data_accurate, multiple: false, legend: nil do
+          = f.govuk_check_box :confirm_data_accurate, "1", 0, multiple: false, link_errors: true
 
-      h3.govuk-heading-m = t(".confirmation.how_we_use_your_data.heading")
+        h3.govuk-heading-m = t(".confirmation.how_we_use_your_data.heading")
 
-      p.govuk-body = t(".confirmation.how_we_use_your_data.description")
+        p.govuk-body = t(".confirmation.how_we_use_your_data.description")
 
-      ul.govuk-list.govuk-list--bullet
-        li = t(".confirmation.how_we_use_your_data.list.dfe")
-        li = t(".confirmation.how_we_use_your_data.list.listing_organisation")
-        li = t(".confirmation.how_we_use_your_data.list.employer")
+        ul.govuk-list.govuk-list--bullet
+          li = t(".confirmation.how_we_use_your_data.list.dfe")
+          li = t(".confirmation.how_we_use_your_data.list.listing_organisation")
+          li = t(".confirmation.how_we_use_your_data.list.employer")
 
-      p.govuk-body
-        = t(".confirmation.how_we_use_your_data.privacy_policy.description_html",
-            link_to: govuk_link_to(t(".confirmation.how_we_use_your_data.privacy_policy.link_text"), page_path("privacy-policy")))
+        p.govuk-body
+          = t(".confirmation.how_we_use_your_data.privacy_policy.description_html",
+              link_to: govuk_link_to(t(".confirmation.how_we_use_your_data.privacy_policy.link_text"), page_path("privacy-policy")))
 
-      = f.govuk_check_boxes_fieldset :confirm_data_usage, multiple: false, legend: nil do
-        = f.govuk_check_box :confirm_data_usage, "1", 0, multiple: false, link_errors: true
+        = f.govuk_check_boxes_fieldset :confirm_data_usage, multiple: false, legend: nil do
+          = f.govuk_check_box :confirm_data_usage, "1", 0, multiple: false, link_errors: true
 
-      - if vacancy.listed?
-        = f.govuk_submit t("buttons.submit_application") do
-          = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
+        - if vacancy.listed?
+          = f.govuk_submit t("buttons.submit_application") do
+            = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
