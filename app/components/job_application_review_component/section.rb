@@ -43,6 +43,6 @@ class JobApplicationReviewComponent::Section < ReviewComponent::Section
   end
 
   def allow_edit?
-    !@job_application.deadline_passed?
+    !@job_application.deadline_passed? && !@job_application.submitted?
   end
 end

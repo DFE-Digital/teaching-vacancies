@@ -1,16 +1,14 @@
 require "rails_helper"
 
-RSpec.describe "Deadline-passed job applications" do
-  context "when an application is in “draft” status and the deadline for application has passed" do
-    let(:deadline) { 1.week.ago }
-
-    let(:vacancy) { create(:vacancy, :with_organisation, :published, expires_at: deadline) }
+RSpec.describe "Submitted job applications" do
+  context "when an application is in submitted status" do
+    let(:vacancy) { create(:vacancy, :with_organisation, :published) }
 
     let(:jobseeker) { create(:jobseeker) }
     let!(:job_application) do
       create(
         :job_application,
-        draft_at: deadline - 1.week,
+        :submitted,
         jobseeker: jobseeker,
         vacancy: vacancy,
       )
@@ -26,12 +24,12 @@ RSpec.describe "Deadline-passed job applications" do
         expect(page).to have_css("#applications-results > .card-component", count: 1)
       end
 
-      it "shows a status “tag” of “deadline passed”" do
-        expect(page).to have_css("#applications-results .govuk-tag", text: "deadline passed")
+      it "shows a status “tag” of “submitted”" do
+        expect(page).to have_css("#applications-results .govuk-tag", text: "submitted")
       end
 
       it "has a link to view the application" do
-        expect(page).to have_link(job_application.vacancy.job_title, href: jobseekers_job_application_review_path(job_application))
+        expect(page).to have_link(job_application.vacancy.job_title, href: jobseekers_job_application_path(job_application))
       end
     end
 
@@ -41,8 +39,8 @@ RSpec.describe "Deadline-passed job applications" do
         click_on job_application.vacancy.job_title
       end
 
-      it "has the application status of “deadline passed”" do
-        expect(page).to have_css(".job-application-review-banner .govuk-tag", text: "deadline passed")
+      it "has the application status of “submitted”" do
+        expect(page).to have_css(".job-application-review-banner .govuk-tag", text: "submitted")
       end
 
       it "does not show the section status indicators" do
