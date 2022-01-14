@@ -17,6 +17,8 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
+    = render "shared/flash_messages"
+
     .job-application-actions class="govuk-!-display-none-print"
       - if job_application.status.in?(%w[submitted reviewed])
         = govuk_button_link_to t("buttons.shortlist"), organisation_job_job_application_shortlist_path(vacancy.id, job_application.id), class: "govuk-!-margin-right-3"

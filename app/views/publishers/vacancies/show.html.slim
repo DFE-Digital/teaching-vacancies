@@ -1,6 +1,8 @@
 - content_for :page_title_prefix, review_page_title_prefix(vacancy,
   show_errors: params[:show_errors])
 
+= render "shared/flash_messages"
+
 = vacancy_review(vacancy, step_process: step_process, back_to: "manage_draft", show_errors: params[:show_errors]) do |r|
   - r.header
     div class="govuk-!-margin-bottom-4"

@@ -1,2 +1,4 @@
+= render "shared/flash_messages"
+
 = render "form", form_options: { url: subscription_path(@subscription.token), method: :patch }, i18n_prefix: "subscriptions.edit", button_text: t("buttons.update_alert") do |f|
   = f.hidden_field :token, value: @subscription.token
