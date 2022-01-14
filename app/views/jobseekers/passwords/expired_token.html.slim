@@ -3,6 +3,8 @@
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-two-thirds
+      = render "shared/flash_messages"
+
       h1.govuk-heading-xl = t(".title")
 
       p.govuk-body = t(".description", email: resource.email)

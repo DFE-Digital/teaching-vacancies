@@ -2,6 +2,8 @@
 
 = render "banner", vacancy: vacancy, job_applications: job_applications
 
+= render "shared/flash_messages"
+
 - if vacancy.within_data_access_period? && job_applications.many?
   .govuk-grid-row class="govuk-!-margin-top-7"
     .govuk-grid-column-full

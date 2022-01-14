@@ -2,6 +2,8 @@
 
 .govuk-grid-row class="govuk-!-margin-top-9"
   .govuk-grid-column-two-thirds
+    = render "shared/flash_messages"
+
     = govuk_panel(title_text: t(".panel.heading"), text: t(".panel.body"))
 
     h1.govuk-heading-m class="govuk-!-margin-top-5"
