@@ -1,5 +1,7 @@
 module AuthHelpers
-  def login_publisher(publisher:, organisation:, allow_reminders: false)
+  def login_publisher(publisher:, organisation: nil, allow_reminders: false)
+    organisation ||= publisher.organisations.first
+
     page.set_rack_session(visited_application_feature_reminder_page: true) unless allow_reminders
     page.set_rack_session(publisher_organisation_id: organisation.id)
     login_as(publisher, scope: :publisher)

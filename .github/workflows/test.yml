@@ -26,10 +26,10 @@ jobs:
             params: 'spec/system/jobseekers_*_spec.rb spec/system/jobseekers'
           -
             name: system - publishers
-            params: 'spec/system/publishers_*_spec.rb'
+            params: 'spec/system/publishers_*_spec.rb spec/system/publishers'
           -
             name: system - other & a11y
-            params: '--exclude-pattern "spec/system/jobseekers, spec/system/{jobseekers,publishers}_*_spec.rb" spec/system spec/accessibility'
+            params: '--exclude-pattern "spec/system/{jobseekers,publishers}, spec/system/{jobseekers,publishers}_*_spec.rb" spec/system spec/accessibility'
           -
             name: unit
             params: '--exclude-pattern "spec/{accessibility,system}/*_spec.rb"'
