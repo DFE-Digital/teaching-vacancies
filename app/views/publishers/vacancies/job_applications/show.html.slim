@@ -5,6 +5,8 @@
                                      "#{vacancy.job_title}": organisation_job_job_applications_path(vacancy.id),
                                      "#{job_application.name}": "" }
 
+  = render "shared/flash_messages"
+
   .govuk-caption-l class="govuk-!-margin-top-5"
     = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
 

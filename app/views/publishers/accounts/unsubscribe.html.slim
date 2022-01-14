@@ -1,3 +1,5 @@
 - content_for :page_title_prefix, t(".title")
 
+= render "shared/flash_messages"
+
 = govuk_panel title_text: t(".panel.heading"), text: t(".panel.body"), classes: "govuk-!-margin-top-5"

@@ -3,6 +3,8 @@
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-two-thirds
+      = render "shared/flash_messages"
+
       .govuk-caption-l = vacancy.job_title
       h1.govuk-heading-xl = t(".heading")
 

@@ -3,6 +3,8 @@
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-two-thirds
+      = render "shared/flash_messages"
+
       h1.govuk-heading-xl = t(".title")
 
       = govuk_button_to t(".confirm"), jobseekers_confirm_email_address_path, params: { confirmation_token: params[:confirmation_token] }
