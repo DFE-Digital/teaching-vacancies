@@ -1,4 +1,4 @@
-import { Controller } from '@hotwired/stimulus';
+import { Controller } from '@stimulus/core';
 
 export default class extends Controller {
   static targets = ['source'];
