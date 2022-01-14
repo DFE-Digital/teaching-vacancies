@@ -45,19 +45,6 @@
     label: t("jobs.application_deadline")
   - s.row :starts_on, text: vacancy.starts_asap? ? t("jobs.starts_asap") : format_date(vacancy.starts_on)
 
-- r.section :documents
-  dl.govuk-summary-list
-    - if vacancy.supporting_documents.none?
-      .govuk-summary-list__row
-        dt.govuk-summary-list__key class="govuk-!-font-weight-regular"
-          = t("jobs.no_supporting_documents")
-    - else
-      - vacancy.supporting_documents.each_with_index do |document, index|
-        .govuk-summary-list__row
-          dt.govuk-summary-list__key class=(index.zero? && "first-question")
-            h4.govuk-heading-s = "Document #{index + 1}"
-          dd.govuk-summary-list__value class=(index.zero? && "first-question") = document.filename
-
 - r.section :applying_for_the_job do |s|
   - unless current_organisation.group_type == "local_authority"
     - s.row :enable_job_applications
@@ -72,6 +59,19 @@
   - s.row :contact_email, text: govuk_mail_to(vacancy.contact_email, nil, "aria-label": t("jobs.aria_labels.contact_email_link", email: vacancy.contact_email))
   - s.row :contact_number, value_if_attribute_present: govuk_link_to(vacancy.contact_number, "tel:#{vacancy.contact_number}"), optional: true
   - s.row :school_visits, label: t("jobs.#{school_or_trust_visits(vacancy.parent_organisation)}"), optional: true
+
+- r.section :documents
+  dl.govuk-summary-list
+    - if vacancy.supporting_documents.none?
+      .govuk-summary-list__row
+        dt.govuk-summary-list__key class="govuk-!-font-weight-regular"
+          = t("jobs.no_supporting_documents")
+    - else
+      - vacancy.supporting_documents.each_with_index do |document, index|
+        .govuk-summary-list__row
+          dt.govuk-summary-list__key class=(index.zero? && "first-question")
+            h4.govuk-heading-s = "Document #{index + 1}"
+          dd.govuk-summary-list__value class=(index.zero? && "first-question") = document.filename
 
 - r.section :job_summary do |s|
   - s.row :job_advert
