@@ -24,7 +24,7 @@
         = govuk_button_link_to t("buttons.reject"), organisation_job_job_application_reject_path(vacancy.id, job_application.id), class: "govuk-button--warning govuk-!-margin-right-3"
       = govuk_button_link_to t("buttons.download_application"), "#", class: "govuk-button--secondary js-action print-application", "data-controller": "utils", "data-action": "click->utils#print"
 
-    = render "shared/job_application/show"
+    = render "shared/job_application/show", allow_edit: false
 
   .govuk-grid-column-one-third
     .account-sidebar class="govuk-!-display-none-print"
