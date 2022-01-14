@@ -25,6 +25,6 @@ RSpec.describe "Jobseekers can close and reactivate their account" do
     click_on I18n.t("buttons.sign_in_jobseeker")
     sign_in_jobseeker(email: jobseeker.email, password: jobseeker.password)
 
-    expect(page).to have_content(I18n.t("devise.sessions.signed_in"))
+    expect(current_path).to eq(jobseekers_job_applications_path)
   end
 end

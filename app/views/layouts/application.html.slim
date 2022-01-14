@@ -37,8 +37,7 @@ html.govuk-template.app-html-class lang="en"
 
     .govuk-width-container
       main.govuk-main-wrapper#main-content role="main" class="govuk-!-padding-top-0"
-        - flash.each do |variant, message|
-          = render FlashComponent.new(variant_name: convert_devise_flash_variant(variant, message), message: message)
+        = render "layouts/flash_messages"
 
         = yield
 
