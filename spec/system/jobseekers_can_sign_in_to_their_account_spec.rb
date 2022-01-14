@@ -24,7 +24,7 @@ RSpec.describe "Jobseekers can sign in to their account" do
 
     it "signs in the jobseeker" do
       sign_in_jobseeker(email: email, password: password)
-      expect(page).to have_content(I18n.t("devise.sessions.signed_in"))
+      expect(current_path).to eq(jobseeker_root_path)
     end
 
     it "triggers a successful `jobseeker_sign_in_attempt` event" do
@@ -101,7 +101,7 @@ RSpec.describe "Jobseekers can sign in to their account" do
     it "signs in the jobseeker on the second attempt" do
       sign_in_jobseeker(email: email, password: password)
       sign_in_jobseeker(email: email, password: jobseeker.password)
-      expect(page).to have_content(I18n.t("devise.sessions.signed_in"))
+      expect(current_path).to eq(jobseeker_root_path)
     end
   end
 end
