@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Deadline-passed job applications for jobseekers" do
-  context "when an application is in “draft” status and the deadline for application has passed" do
+  context "when an application is in 'draft' status and the deadline for application has passed" do
     let(:deadline) { 1.week.ago }
 
     let(:vacancy) { create(:vacancy, :with_organisation, :published, expires_at: deadline) }
@@ -20,13 +20,13 @@ RSpec.describe "Deadline-passed job applications for jobseekers" do
       login_as(jobseeker, scope: :jobseeker)
     end
 
-    describe "on the “my applications“ page" do
+    describe "on the 'my applications' page" do
       before do
         visit jobseekers_job_applications_path
         expect(page).to have_css("#applications-results > .card-component", count: 1)
       end
 
-      it "shows a status “tag” of “deadline passed”" do
+      it "shows a status 'tag' of 'deadline passed'" do
         expect(page).to have_css("#applications-results .govuk-tag", text: "deadline passed")
       end
 
@@ -41,7 +41,7 @@ RSpec.describe "Deadline-passed job applications for jobseekers" do
         click_on job_application.vacancy.job_title
       end
 
-      it "has the application status of “deadline passed”" do
+      it "has the application status of 'deadline passed'" do
         expect(page).to have_css(".job-application-review-banner .govuk-tag", text: "deadline passed")
       end
 
@@ -53,7 +53,7 @@ RSpec.describe "Deadline-passed job applications for jobseekers" do
         expect(page).not_to have_css(".review-component__section__heading a")
       end
 
-      it "removes the “submit application” section" do
+      it "removes the 'submit application' section" do
         expect(page).not_to have_css(".new_jobseekers_job_application_review_form")
       end
     end

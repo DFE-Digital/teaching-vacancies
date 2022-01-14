@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Draft job applications for publishers" do
-  context "when an application is in “submitted” status" do
+  context "when an application is in 'submitted' status" do
     let(:publisher) { create(:publisher, :with_organisation) }
 
     let(:vacancy) do
@@ -16,7 +16,7 @@ RSpec.describe "Draft job applications for publishers" do
       login_publisher(publisher: publisher)
     end
 
-    describe "on the “manage jobs“ page" do
+    describe "on the 'manage jobs' page" do
       before do
         visit organisation_path
         click_on vacancy.job_title
@@ -24,7 +24,7 @@ RSpec.describe "Draft job applications for publishers" do
         expect(page).to have_css(".card-component", count: 1)
       end
 
-      it "shows a status “tag” of “unread”" do
+      it "shows a status 'tag' of 'unread'" do
         expect(page).to have_css(".card-component .govuk-tag", text: "unread")
       end
 
@@ -41,7 +41,7 @@ RSpec.describe "Draft job applications for publishers" do
         click_on job_application.name
       end
 
-      it "has the application status of “reviewed”" do
+      it "has the application status of 'reviewed'" do
         expect(page).to have_css(".application-status .govuk-tag", text: "reviewed")
       end
 
@@ -53,7 +53,7 @@ RSpec.describe "Draft job applications for publishers" do
         expect(page).not_to have_css(".review-component__section__heading a")
       end
 
-      it "removes the “submit application” section" do
+      it "removes the 'submit application' section" do
         expect(page).not_to have_css(".new_jobseekers_job_application_review_form")
       end
     end

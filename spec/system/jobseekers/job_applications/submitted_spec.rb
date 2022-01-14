@@ -18,13 +18,13 @@ RSpec.describe "Submitted job applications for jobseekers" do
       login_as(jobseeker, scope: :jobseeker)
     end
 
-    describe "on the “my applications“ page" do
+    describe "on the 'my applications' page" do
       before do
         visit jobseekers_job_applications_path
         expect(page).to have_css("#applications-results > .card-component", count: 1)
       end
 
-      it "shows a status “tag” of “submitted”" do
+      it "shows a status 'tag' of 'submitted'" do
         expect(page).to have_css("#applications-results .govuk-tag", text: "submitted")
       end
 
@@ -39,7 +39,7 @@ RSpec.describe "Submitted job applications for jobseekers" do
         click_on job_application.vacancy.job_title
       end
 
-      it "has the application status of “submitted”" do
+      it "has the application status of 'submitted'" do
         expect(page).to have_css(".job-application-review-banner .govuk-tag", text: "submitted")
       end
 
@@ -51,7 +51,7 @@ RSpec.describe "Submitted job applications for jobseekers" do
         expect(page).not_to have_css(".review-component__section__heading a")
       end
 
-      it "removes the “submit application” section" do
+      it "removes the 'submit application' section" do
         expect(page).not_to have_css(".new_jobseekers_job_application_review_form")
       end
     end
