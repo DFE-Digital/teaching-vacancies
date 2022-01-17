@@ -17,8 +17,8 @@ RSpec.describe "Publishers can end a job listing early" do
 
     expect(page).to have_content("There is a problem")
 
-    choose I18n.t("helpers.label.publishers_job_listing_end_listing_form.end_listing_reason_options.suitable_candidate_found")
-    select "Teaching Vacancies"
+    choose I18n.t("helpers.label.publishers_job_listing_end_listing_form.hired_status_options.hired_other_free")
+    choose I18n.t("helpers.label.publishers_job_listing_end_listing_form.listed_elsewhere_options.listed_free")
 
     expect { click_on I18n.t("buttons.end_listing") }.to change { Vacancy.live.count }.from(1).to(0)
 
@@ -35,8 +35,8 @@ RSpec.describe "Publishers can end a job listing early" do
     it "sends an email to jobseekers with draft applications" do
       click_on vacancy.job_title
       click_on I18n.t("buttons.end_listing_early")
-      choose I18n.t("helpers.label.publishers_job_listing_end_listing_form.end_listing_reason_options.suitable_candidate_found")
-      select "Teaching Vacancies"
+      choose I18n.t("helpers.label.publishers_job_listing_end_listing_form.hired_status_options.hired_other_free")
+      choose I18n.t("helpers.label.publishers_job_listing_end_listing_form.listed_elsewhere_options.listed_free")
 
       expect(job).to receive(:perform).with(vacancy)
 
