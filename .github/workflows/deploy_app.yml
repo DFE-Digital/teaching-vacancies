@@ -21,17 +21,8 @@ jobs:
   deploy-app:
     name: Deploy ${{ github.event.inputs.tag }} to ${{ github.event.inputs.environment }}
     runs-on: ubuntu-20.04
+    concurrency: workflow-${{ github.ref }}
     steps:
-
-    - uses: DFE-Digital/github-actions/turnstyle@master
-      name: Check workflow concurrency
-      with:
-        initial-wait-seconds: 12
-        poll-interval-seconds: 20
-        abort-after-seconds: 3600
-        same-branch-only: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - uses: actions/checkout@v2
       name: Checkout Code
