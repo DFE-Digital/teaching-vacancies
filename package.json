@@ -10,7 +10,7 @@
     "not dead"
   ],
   "dependencies": {
-    "@hotwired/stimulus": "^3.0.1",
+    "@stimulus/core": "=2.0.0",
     "@rails/webpacker": "^5.4.2",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^2.0.3",
@@ -57,7 +57,10 @@
     ],
     "moduleNameMapper": {
       "\\.scss$": "<rootDir>/app/frontend/src/__mocks__/style.js"
-    }
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!@stimulus/core)/"
+    ]
   },
   "resolutions": {
     "serialize-javascript": "^3.1.0",
