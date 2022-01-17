@@ -2,7 +2,7 @@ class JobApplicationReviewComponent::Section < ReviewComponent::Section
   include JobApplicationsHelper
   include VacanciesHelper
 
-  def initialize(job_application, forms: [], classes: [], html_attributes: {}, **kwargs)
+  def initialize(job_application, allow_edit: nil, forms: [], classes: [], html_attributes: {}, **kwargs)
     super(
       job_application,
       forms: forms,
@@ -11,6 +11,7 @@ class JobApplicationReviewComponent::Section < ReviewComponent::Section
       **kwargs,
     )
 
+    @allow_edit = allow_edit
     @job_application = job_application
   end
 
@@ -43,6 +44,8 @@ class JobApplicationReviewComponent::Section < ReviewComponent::Section
   end
 
   def allow_edit?
-    !@job_application.deadline_passed?
+    return @allow_edit unless @allow_edit.nil?
+
+    !@job_application.deadline_passed? && !@job_application.submitted?
   end
 end
