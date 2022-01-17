@@ -43,4 +43,9 @@ Rails.application.configure do
 
   # Generate session nonces for permitted importmap and inline scripts
   config.content_security_policy_nonce_generator = ->(request) { request.session.id.to_s }
+
+  # Set nonce only for scripts
+  # TODO: We tried removing this and it caused a flood of CSP violations from Mobile Safari.
+  #       Investigate again later.
+  config.content_security_policy_nonce_directives = %w[script-src]
 end
