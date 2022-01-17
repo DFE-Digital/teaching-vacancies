@@ -88,9 +88,9 @@ en:
       inclusion: Please indicate if you'd like to participate in user research
   publisher_job_listing_expired_feedback_form: &publisher_job_listing_expired_feedback_form_errors
     hired_status:
-      inclusion: Please make sure you have submitted an answer for both questions
+      inclusion: Select an option for how the job was filled
     listed_elsewhere:
-      inclusion: Please make sure you have submitted an answer for both questions
+      inclusion: Select an option for how the job was listed
 
   # Publishers journey
   job_role_errors: &job_role_errors
@@ -257,10 +257,7 @@ en:
             <<: *publisher_job_listing_expired_feedback_form_errors
         publishers/job_listing/end_listing_form:
           attributes:
-            end_listing_reason:
-              inclusion: Select why you would like to end this job listing early
-            candidate_hired_from:
-              inclusion: Select how the successful candidate applied for the role
+            <<: *publisher_job_listing_expired_feedback_form_errors
         publishers/job_listing/extend_deadline_form:
           attributes:
             <<: *important_dates_errors
