@@ -26,16 +26,6 @@ RSpec.describe "Errors" do
     end
   end
 
-  describe "POST #csp_violation" do
-    let(:violation) { { "csp-report": { foo: "bar" } }.to_json }
-    it "sends the error to Rollbar" do
-      expect(Rollbar).to receive(:error).with("CSP Violation", details: violation)
-
-      post errors_csp_violation_path, params: violation
-      expect(response).to have_http_status(:no_content)
-    end
-  end
-
   describe "GET #invalid_recaptcha" do
     it "sends the error to Rollbar" do
       expect(Rollbar).to receive(:error).with("Invalid recaptcha", details: "this form")

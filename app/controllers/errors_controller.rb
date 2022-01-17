@@ -1,6 +1,6 @@
 class ErrorsController < ApplicationController
   skip_before_action :verify_authenticity_token,
-                     only: %i[not_found unprocessable_entity internal_server_error csp_violation]
+                     only: %i[not_found unprocessable_entity internal_server_error]
 
   def unauthorised
     respond_to do |format|
@@ -34,13 +34,6 @@ class ErrorsController < ApplicationController
     end
   end
 
-  def csp_violation
-    # Ignore spurious CSP violations from misbehaving browser plugins
-    Rollbar.error("CSP Violation", details: request.raw_post) if valid_csp_violation?(request.raw_post)
-
-    head :no_content
-  end
-
   def invalid_recaptcha
     @form = params[:form_name]
     Rollbar.error("Invalid recaptcha", details: @form)
@@ -48,19 +41,5 @@ class ErrorsController < ApplicationController
     respond_to do |format|
       format.html { render status: :unauthorized }
     end
-  end
-
-  private
-
-  def valid_csp_violation?(csp_violation)
-    csp_details = JSON.parse(csp_violation)["csp-report"]
-
-    # Misbehaving browser plugin(s)
-    return false if csp_details["document-uri"] == "about"
-    return false if csp_details["source-file"]&.start_with?("safari-web-extension")
-    # Facebook in-app browser injecting its own scripts
-    return false if csp_details["blocked-uri"]&.start_with?("https://connect.facebook.net")
-
-    true
   end
 end
