@@ -24,7 +24,6 @@ en:
     important: Important
     notice: Important
     success: Success
-    timedout: Important
     warning: Warning
 
   breadcrumbs:
