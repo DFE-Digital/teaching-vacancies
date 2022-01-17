@@ -313,8 +313,6 @@ shared:
     - parental_leave_cover_contract_duration
     - enable_job_applications
     - personal_statement_guidance
-    - end_listing_reason
-    - candidate_hired_from
     - completed_steps
     - working_patterns_details
     - phase

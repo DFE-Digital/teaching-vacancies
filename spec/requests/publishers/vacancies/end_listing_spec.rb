@@ -38,7 +38,7 @@ RSpec.describe "End job listing early" do
   end
 
   describe "PATCH #update" do
-    let(:params) { { publishers_job_listing_end_listing_form: { end_listing_reason: "end_early" } } }
+    let(:params) { { publishers_job_listing_end_listing_form: { hired_status: "hired_other_free", listed_elsewhere: "listed_free" } } }
 
     context "when the vacancy does not belong to the current organisation" do
       let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
@@ -60,11 +60,12 @@ RSpec.describe "End job listing early" do
       end
     end
 
-    it "updates expires_at, end_listing_reason, google index and redirects to the dashboard" do
+    it "updates expires_at, hired_status, listed_elsewhere, google index and redirects to the dashboard" do
       freeze_time do
         expect { patch(organisation_job_end_listing_path(vacancy.id), params: params) }
           .to change { vacancy.reload.expires_at }.from(1.week.from_now).to(Time.current)
-          .and change { vacancy.reload.end_listing_reason }.from(nil).to("end_early")
+          .and change { vacancy.reload.hired_status }.from(nil).to("hired_other_free")
+          .and change { vacancy.reload.listed_elsewhere }.from(nil).to("listed_free")
           .and have_enqueued_job(UpdateGoogleIndexQueueJob)
 
         expect(response).to redirect_to(jobs_with_type_organisation_path(:expired))

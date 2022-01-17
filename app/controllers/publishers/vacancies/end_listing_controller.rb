@@ -28,7 +28,7 @@ class Publishers::Vacancies::EndListingController < Publishers::Vacancies::BaseC
   end
 
   def form_params
-    params.require(:publishers_job_listing_end_listing_form).permit(:end_listing_reason, :candidate_hired_from)
+    (params[:publishers_job_listing_end_listing_form] || params).permit(:hired_status, :listed_elsewhere)
   end
 
   def vacancy
