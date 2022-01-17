@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_16_161208) do
+ActiveRecord::Schema.define(version: 2022_01_17_134852) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -456,8 +456,6 @@ ActiveRecord::Schema.define(version: 2021_12_16_161208) do
     t.integer "contract_type"
     t.string "fixed_term_contract_duration"
     t.text "personal_statement_guidance"
-    t.integer "end_listing_reason"
-    t.integer "candidate_hired_from"
     t.boolean "enable_job_applications"
     t.string "completed_steps", default: [], null: false, array: true
     t.string "actual_salary"
