@@ -214,7 +214,6 @@ Rails.application.routes.draw do
   # Well known URLs
   get ".well-known/change-password", to: redirect(status: 302) { Rails.application.routes.url_helpers.edit_jobseeker_registration_path(password_update: true) }
 
-  post "/errors/csp_violation", to: "errors#csp_violation"
   get "/invalid-recaptcha", to: "errors#invalid_recaptcha", as: "invalid_recaptcha"
   match "/401", as: :unauthorised, to: "errors#unauthorised", via: :all
   match "/404", as: :not_found, to: "errors#not_found", via: :all

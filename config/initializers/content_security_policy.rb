@@ -36,9 +36,6 @@ Rails.application.configure do
                        "https://www.recaptcha.net"
 
     policy.style_src   :self
-
-    # Specify URI for violation reports
-    policy.report_uri "/errors/csp_violation"
   end
 
   # Generate session nonces for permitted importmap and inline scripts
