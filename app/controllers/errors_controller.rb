@@ -57,6 +57,7 @@ class ErrorsController < ApplicationController
 
     # Misbehaving browser plugin(s)
     return false if csp_details["document-uri"] == "about"
+    return false if csp_details["source-file"]&.start_with?("safari-web-extension")
     # Facebook in-app browser injecting its own scripts
     return false if csp_details["blocked-uri"]&.start_with?("https://connect.facebook.net")
 
