@@ -38,15 +38,6 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - name: Check workflow concurrency
-        uses: DFE-Digital/github-actions/turnstyle@master
-        with:
-          initial-wait-seconds: 12
-          poll-interval-seconds: 20
-          abort-after-seconds: 1800
-          same-branch-only: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/checkout@v2
         name: Checkout Code
@@ -196,11 +187,12 @@ jobs:
     name: Deploy app
     strategy:
       max-parallel: 1
-      # Creates a variable 'environment' from the build job output 'matrix_environments'
+      # Creates a variable 'environment' from the build job output 'matrix_environment'
       # Its value is the list of environments. The matrix iterates once per environment and the value is accessed via ${{ matrix.environment }}
       matrix: ${{fromJSON(needs.build.outputs.matrix_environments)}}
     needs: [build]
     runs-on: ubuntu-20.04
+    concurrency: workflow-${{ github.ref }}
 
     steps:
     - uses: actions/checkout@v2
