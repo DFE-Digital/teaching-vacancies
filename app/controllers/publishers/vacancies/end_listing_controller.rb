@@ -6,7 +6,7 @@ class Publishers::Vacancies::EndListingController < Publishers::Vacancies::BaseC
       vacancy.update(form_params.merge(expires_at: Time.current))
       update_google_index(vacancy)
       SendJobListingEndedEarlyNotificationJob.new.perform(vacancy)
-      redirect_to jobs_with_type_organisation_path(:expired), success: t(".success", job_title: vacancy.job_title)
+      redirect_to organisation_job_path(vacancy.id), success: t(".success", job_title: vacancy.job_title)
     else
       render :show
     end
@@ -28,7 +28,7 @@ class Publishers::Vacancies::EndListingController < Publishers::Vacancies::BaseC
   end
 
   def form_params
-    params.require(:publishers_job_listing_end_listing_form).permit(:end_listing_reason, :candidate_hired_from)
+    (params[:publishers_job_listing_end_listing_form] || params).permit(:hired_status, :listed_elsewhere)
   end
 
   def vacancy
