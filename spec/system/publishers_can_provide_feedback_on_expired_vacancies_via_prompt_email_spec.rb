@@ -36,8 +36,6 @@ RSpec.describe "Publishers can provide feedback on expired vacancies via the pro
     scenario "they can provide feedback" do
       visit first_link_from_last_mail
 
-      expect(current_path).to eq(new_organisation_job_expired_feedback_path(first_vacancy_in_email.signed_id))
-
       choose I18n.t("helpers.label.publishers_job_listing_expired_feedback_form.hired_status_options.hired_tvs")
       click_on I18n.t("buttons.submit_feedback")
 
