@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { Application } from '@hotwired/stimulus';
+import { Application } from '@stimulus/core';
 import ManageQualificationsController from './manageQualifications';
 
 Application.start().register('manage-qualifications', ManageQualificationsController);

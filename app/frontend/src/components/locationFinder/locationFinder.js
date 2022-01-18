@@ -1,4 +1,4 @@
-import { Controller } from '@hotwired/stimulus';
+import { Controller } from '@stimulus/core';
 
 import loader from '../loadingIndicator/loadingIndicator';
 import api from '../../lib/api';
