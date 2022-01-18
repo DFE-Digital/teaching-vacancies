@@ -1,0 +1,29 @@
+.kramdown {
+  a {
+    @extend .govuk-link;
+  }
+
+  h1 {
+    @extend .govuk-heading-xl;
+  }
+
+  h2 {
+    @extend .govuk-heading-l;
+  }
+
+  h3 {
+    @extend .govuk-heading-m;
+  }
+
+  ol {
+    @extend .govuk-list, .govuk-list--number;
+  }
+
+  p {
+    @extend .govuk-body-m;
+  }
+
+  ul {
+    @extend .govuk-list, .govuk-list--bullet;
+  }
+}
