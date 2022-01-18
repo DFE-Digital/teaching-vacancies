@@ -1,6 +1,7 @@
 ---
 order: 1
 title: Find the best teachers
+meta_description: Bla bla bla this is my meta description
 ---
 ## Include the school perks
 List all the perks you can have working at your school

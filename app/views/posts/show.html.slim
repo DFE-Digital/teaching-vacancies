@@ -4,4 +4,7 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       h1 = @title
-      == @content
+      h2 Contents
+      ul == contents_list_items(@content)
+      hr.govuk-section-break.govuk-section-break--xl.govuk-section-break--visible
+      == @content.to_html

@@ -115,8 +115,7 @@ Rails.application.routes.draw do
 
   get "/pages/*id" => "pages#show", as: :page, format: false
 
-  get "/jobseeker-guides/*id" => "posts#show"
-  get "/get-help-hiring/*id" => "posts#show"
+  get "/:section/:file_name" => "posts#show", constraints: ->(request) { request.params[:section].in?(%w[jobseeker-guides get-help-hiring]) }
 
   get "/list-school-job" => "pages#show", defaults: { id: "list-school-job" }
 
