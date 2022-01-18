@@ -115,6 +115,9 @@ Rails.application.routes.draw do
 
   get "/pages/*id" => "pages#show", as: :page, format: false
 
+  get "/jobseeker-guides/*id" => "template_pages#show"
+  get "/get-help-hiring/*id" => "template_pages#show"
+
   get "/list-school-job" => "pages#show", defaults: { id: "list-school-job" }
 
   get "/cookies-preferences", to: "cookies_preferences#new", as: "cookies_preferences"

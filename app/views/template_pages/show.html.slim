@@ -1,0 +1,7 @@
+- content_for :page_title_prefix, @title
+
+.govuk-main-wrapper.kramdown
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl = @title
+      == @content
