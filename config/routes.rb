@@ -115,8 +115,8 @@ Rails.application.routes.draw do
 
   get "/pages/*id" => "pages#show", as: :page, format: false
 
-  get "/jobseeker-guides/*id" => "template_pages#show"
-  get "/get-help-hiring/*id" => "template_pages#show"
+  get "/jobseeker-guides/*id" => "posts#show"
+  get "/get-help-hiring/*id" => "posts#show"
 
   get "/list-school-job" => "pages#show", defaults: { id: "list-school-job" }
 

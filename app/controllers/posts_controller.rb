@@ -1,4 +1,4 @@
-class TemplatePagesController < ApplicationController
+class PostsController < ApplicationController
   def show
     @content = Kramdown::Document.new(parsed.content).to_html
     @title = parsed.front_matter["title"]
