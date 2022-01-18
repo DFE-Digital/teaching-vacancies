@@ -510,12 +510,7 @@ en:
           "true": As soon as possible
       publishers_job_listing_documents_form:
         documents: Upload files
-      publishers_job_listing_end_listing_form:
-        candidate_hired_from: Select how the successful candidate applied for the role
-        end_listing_reason_options:
-          suitable_candidate_found: We have found a suitable candidate and are no longer accepting applications
-          end_early: We are no longer listing this role and want to end it earlier than the deadline
-      publishers_job_listing_expired_feedback_form:
+      publishers_job_listing_expired_feedback_form: &expired_vacancy_feedback_shared_labels
         hired_status_options:
           hired_dont_know: I don't know
           hired_no_listing: No, we hired, but not through a listing or service
@@ -533,6 +528,8 @@ en:
       publishers_job_listing_extend_deadline_form:
         starts_asap_options:
           "true": As soon as possible
+      publishers_job_listing_end_listing_form:
+        <<: *expired_vacancy_feedback_shared_labels
       publishers_job_listing_feedback_form:
         email: What is your email address?
         comment_html: Do you have any suggestions on how we should improve the service? (optional<span class='govuk-visually-hidden'> field</span>)</span>
@@ -696,11 +693,11 @@ en:
         starts_on_html: Date job starts (optional<span class='govuk-visually-hidden'> field</span>)</span>
       publishers_job_listing_education_phases_form:
         phase:  What education phase will the role be covering?
-      publishers_job_listing_end_listing_form:
-        end_listing_reason: Why would you like to end this job listing early?
-      publishers_job_listing_expired_feedback_form:
+      publishers_job_listing_expired_feedback_form: &expired_vacancy_feedback_shared_legends
         hired_status: Was the job filled on Teaching Vacancies?
         listed_elsewhere: Was the job listed elsewhere?
+      publishers_job_listing_end_listing_form:
+        <<: *expired_vacancy_feedback_shared_legends
       publishers_job_listing_extend_deadline_form:
         expires_at: Closing date
         expiry_time: Time application is due
@@ -740,12 +737,6 @@ en:
         screenshot: Upload screenshots (optional)
 
     options:
-      publishers_job_listing_end_listing_form:
-        candidate_hired_from:
-          teaching_vacancies: Teaching Vacancies
-          other_free: We hired through a different free service
-          other_paid: We hired through a paid service
-          unknown: I don't know
       publishers_job_listing_copy_vacancy_form:
         expiry_time:
           "7:00": 7am
