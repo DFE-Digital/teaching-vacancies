@@ -162,6 +162,8 @@ Rails.application.routes.draw do
         resources :vacancies, only: %i[show]
       end
     end
+
+    resources :events, only: %i[create]
   end
 
   resource :new_features, only: %i[show update], controller: "publishers/new_features" do
