@@ -540,6 +540,13 @@ GEM
     semantic_logger (4.9.0)
       concurrent-ruby (~> 1.0)
     semantic_range (3.0.0)
+    sentry-ruby (4.9.2)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      faraday (~> 1.0)
+      sentry-ruby-core (= 4.9.2)
+    sentry-ruby-core (4.9.2)
+      concurrent-ruby
+      faraday
     shoulda-matchers (5.1.0)
       activesupport (>= 5.2.0)
     sidekiq (6.3.1)
@@ -752,6 +759,7 @@ DEPENDENCIES
   rubocop-rspec
   sanitize
   selenium-webdriver
+  sentry-ruby
   shoulda-matchers
   sidekiq
   sidekiq-cron
