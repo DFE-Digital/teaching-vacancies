@@ -1,10 +1,12 @@
-- content_for :page_title_prefix, @title
+- content_for :page_title_prefix, document.title
 
 .govuk-main-wrapper.kramdown
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      h1 = @title
+      h1 = document.title
       h2 Contents
-      ul == contents_list_items(@content)
+      ul
+        - document.h2_headings.each do |heading|
+          li = link_to(heading, "##{heading.parameterize}")
       hr.govuk-section-break.govuk-section-break--xl.govuk-section-break--visible
-      == @content.to_html
+      == document.content
