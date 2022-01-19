@@ -42,6 +42,7 @@ class MarkdownDocument
   private
 
   def file_content
+    binding.pry
     File.read(file_path)
   end
 

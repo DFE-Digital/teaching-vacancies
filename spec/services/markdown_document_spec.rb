@@ -12,10 +12,6 @@ RSpec.describe MarkdownDocument do
   before do
     expect(File).to receive(:file?).with(file_path).and_return(file_exists?)
     allow(File).to receive(:read).with(file_path).and_return(document_content)
-    # parsed = instance_double(FrontMatterParser::Parsed, front_matter: {}, content: "")
-    # expect(FrontMatterParser::Parser).to receive_message_chain(:new, :call).and_return(parsed)
-    # kramdown_document = instance_double(Kramdown::Document)
-    # expect(Kramdown::Document).to receive(:new).with(parsed.content).and_return(kramdown_document)
   end
 
   describe "#parse" do
