@@ -61,3 +61,5 @@ export const storageAvailable = (type, logMessage = false) => {
           && (storage && storage.length !== 0);
   }
 };
+
+export const railsCsrfToken = () => document.getElementsByName('csrf-token')[0].content;
