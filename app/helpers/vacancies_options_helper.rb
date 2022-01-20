@@ -14,10 +14,4 @@ module VacanciesOptionsHelper
       radii << [t("jobs.search.number_of_miles", count: radius), radius]
     end
   end
-
-  def candidate_hired_from_options
-    Vacancy.candidate_hired_froms.keys
-      .map { |k| [t("helpers.options.publishers_job_listing_end_listing_form.candidate_hired_from.#{k}"), k] }
-      .unshift(["Select a service or application method", ""])
-  end
 end
