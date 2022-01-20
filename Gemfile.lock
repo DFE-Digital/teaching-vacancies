@@ -205,6 +205,7 @@ GEM
       rake
     friendly_id (5.4.2)
       activerecord (>= 4.0.0)
+    front_matter_parser (1.0.1)
     fugit (1.5.2)
       et-orbi (~> 1.1, >= 1.1.8)
       raabro (~> 1.4)
@@ -704,6 +705,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   friendly_id
+  front_matter_parser
   geocoder
   google-apis-drive_v3
   google-apis-indexing_v3
