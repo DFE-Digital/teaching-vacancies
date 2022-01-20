@@ -115,6 +115,10 @@ Rails.application.routes.draw do
 
   get "/pages/*id" => "pages#show", as: :page, format: false
 
+  get "/:section/:post_name" => "posts#show",
+      constraints: { section: /(jobseeker-guides|get-help-hiring)/, post_name: /[\w-]+/ },
+      as: :post
+
   get "/list-school-job" => "pages#show", defaults: { id: "list-school-job" }
 
   get "/cookies-preferences", to: "cookies_preferences#new", as: "cookies_preferences"
