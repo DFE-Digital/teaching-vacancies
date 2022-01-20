@@ -32,5 +32,5 @@ p.govuk-body#awaiting_feedback_intro class="govuk-!-margin-bottom-4" = t("jobs.m
                 class: %w[govuk-!-width-full],
                 form: vacancy.id
 
-            div class=(organisation.school_group? ? "awaiting-feedback__options__submit awaiting-feedback__options__submit--school-group" : "awaiting-feedback__options__submit" )
+            .awaiting-feedback__options__submit
               = f.govuk_submit safe_join([t("buttons.submit"), tag.span(t("helpers.label.publishers_vacancy_statistics_form.submit_hidden_text", job_title: vacancy.job_title), class: "govuk-visually-hidden")]), classes: "govuk-button govuk-!-margin-top-0", form: vacancy.id
