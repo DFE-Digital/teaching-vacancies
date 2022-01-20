@@ -1,0 +1,13 @@
+- content_for :page_title_prefix, document.title
+- content_for :page_description, document.meta_description
+
+.govuk-main-wrapper.kramdown
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1 = document.title
+      h2 Contents
+      ul
+        - document.h2_headings.each do |heading|
+          li = link_to(heading, "##{heading.parameterize}")
+      hr.govuk-section-break.govuk-section-break--xl.govuk-section-break--visible
+      == document.content
