@@ -18,7 +18,6 @@
 
     &__options {
       @media (min-width: 1000px) {
-        align-items: flex-end;
         display: flex;
 
         &__select {
@@ -29,10 +28,6 @@
         &__submit {
           align-self: center;
           margin-top: govuk-spacing(3);
-
-          &--school-group {
-            margin-top: govuk-spacing(7);
-          }
         }
       }
 
