@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { Application } from '@hotwired/stimulus';
+import { Application } from '@stimulus/core';
 
 import FormController from './form';
 
