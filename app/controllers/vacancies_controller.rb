@@ -91,14 +91,17 @@ class VacanciesController < ApplicationController
 
   def trigger_search_performed_event
     fail_safe do
+      vacancy_ids = @vacancies_search.vacancies.map(&:id).map { |s| StringAnonymiser.new(s).to_s }
+      polygon_id = StringAnonymiser.new(@vacancies_search.location_search.polygon.id).to_s if @vacancies_search.location_search.polygon
+
       request_event.trigger(
         :search_performed,
         search_criteria: search_form.to_hash,
         sort_by: search_form.sort.by,
         page: params[:page] || 1,
         total_count: @vacancies_search.total_count,
-        vacancies_on_page: @vacancies_search.vacancies.map(&:id),
-        location_polygon_used: @vacancies_search.location_search.polygon&.id,
+        vacancies_on_page: vacancy_ids,
+        location_polygon_used: polygon_id,
       )
     end
   end
