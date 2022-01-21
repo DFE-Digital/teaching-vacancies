@@ -11,7 +11,6 @@ module "prometheus_all" {
   alert_rules                  = file("${path.module}/config/alert.rules.yml")
   alertmanager_slack_url       = local.alertmanager_slack_url
   alertmanager_slack_channel   = local.alertmanager_slack_channel
-  grafana_runtime_version      = "7.2.2"
   grafana_google_client_id     = local.secrets.grafana_google_client_id
   grafana_google_client_secret = local.secrets.grafana_google_client_secret
   redis_services = [
