@@ -11,22 +11,14 @@ on:
 env:
  DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
 
+concurrency: workflow-Replace-Postgres-Database-${{ github.ref }}
+
 jobs:
 
   replace-postgres-DB-and-apps:
     name: Replace PostgresDB and apps in ${{ github.event.inputs.environment }} environment
     runs-on: ubuntu-20.04
     steps:
-
-    - uses: DFE-Digital/github-actions/turnstyle@master
-      name: Check workflow concurrency
-      with:
-        initial-wait-seconds: 12
-        poll-interval-seconds: 20
-        abort-after-seconds: 3600
-        same-branch-only: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - uses: actions/checkout@v2
       name: Checkout Code
