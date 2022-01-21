@@ -20,6 +20,8 @@ on:
       - synchronize
       - reopened
 
+concurrency: workflow-Build-and-deploy-${{ github.ref }}
+
 env:
  DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
 
@@ -38,15 +40,6 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - name: Check workflow concurrency
-        uses: DFE-Digital/github-actions/turnstyle@master
-        with:
-          initial-wait-seconds: 12
-          poll-interval-seconds: 20
-          abort-after-seconds: 1800
-          same-branch-only: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/checkout@v2
         name: Checkout Code
