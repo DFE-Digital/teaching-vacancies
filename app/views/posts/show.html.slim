@@ -1,0 +1,17 @@
+- content_for :page_title_prefix, post.title
+- content_for :page_description, post.meta_description
+
+= govuk_breadcrumbs breadcrumbs: { t("breadcrumbs.home") => root_path,
+                                   params[:section].titleize.capitalize => "#",
+                                   post.title => "" }
+
+.govuk-main-wrapper.post
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1 = post.title
+      h2 = t(".contents")
+      ul
+        - post.h2_headings.each do |heading|
+          li = link_to(heading, "##{heading.parameterize}")
+      hr.govuk-section-break.govuk-section-break--xl.govuk-section-break--visible
+      == post.content
