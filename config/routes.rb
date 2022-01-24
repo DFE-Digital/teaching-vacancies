@@ -119,6 +119,10 @@ Rails.application.routes.draw do
       constraints: { section: /(jobseeker-guides|get-help-hiring)/, post_name: /[\w-]+/ },
       as: :post
 
+  get "/:section" => "posts#index",
+      constraints: { section: /(jobseeker-guides|get-help-hiring)/ },
+      as: :posts
+
   get "/list-school-job" => "pages#show", defaults: { id: "list-school-job" }
 
   get "/cookies-preferences", to: "cookies_preferences#new", as: "cookies_preferences"
