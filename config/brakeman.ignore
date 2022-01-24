@@ -7,13 +7,44 @@
       "check_name": "Secrets",
       "message": "Hardcoded value for `NOTIFY_JOBSEEKER_RESET_PASSWORD_TEMPLATE` in source code",
       "file": "config/initializers/notifications.rb",
-      "line": 10,
+      "line": 11,
       "link": "https://brakemanscanner.org/docs/warning_types/authentication/",
       "code": null,
       "render_path": null,
       "location": null,
       "user_input": null,
       "confidence": "Medium",
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "24062c57b5ebf41e370cdc934e79a6465da62a505547bc540b364ce04ab2fd4c",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped parameter value",
+      "file": "app/views/posts/show.html.slim",
+      "line": 17,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "MarkdownDocument.new(params[:section], params[:post_name]).content",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "PostsController",
+          "method": "show",
+          "line": 9,
+          "file": "app/controllers/posts_controller.rb",
+          "rendered": {
+            "name": "posts/show",
+            "file": "app/views/posts/show.html.slim"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "posts/show"
+      },
+      "user_input": "params[:section]",
+      "confidence": "Weak",
       "note": ""
     },
     {
@@ -93,6 +124,6 @@
       "note": "User input is coerced to integer"
     }
   ],
-  "updated": "2021-12-10 15:26:05 +0000",
-  "brakeman_version": "5.1.2"
+  "updated": "2022-01-24 16:26:07 +0000",
+  "brakeman_version": "5.2.0"
 }
