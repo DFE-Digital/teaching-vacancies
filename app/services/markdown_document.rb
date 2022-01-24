@@ -1,8 +1,20 @@
 class MarkdownDocument
+  include Comparable
+
+  attr_reader :section, :post_name
+
   def initialize(section, post_name)
     @section = section
     @post_name = post_name
     parse if exist?
+  end
+
+  def self.all(section)
+    file_path = Rails.root.join("app", "views", "content", section)
+
+    Dir.children(file_path).map { |file| file.split(".").first }.map do |post_name|
+      new(section, post_name)
+    end
   end
 
   def title
@@ -14,7 +26,7 @@ class MarkdownDocument
   end
 
   def date_posted
-    @front_matter["date_posted"]
+    Date.parse(@front_matter["date_posted"]) if @front_matter["date_posted"]
   end
 
   def meta_description
@@ -34,6 +46,14 @@ class MarkdownDocument
 
   def exist?
     File.exist?(file_path)
+  end
+
+  def order
+    @front_matter["order"] || Float::INFINITY
+  end
+
+  def <=>(other)
+    [order, title] <=> [other.order, other.title]
   end
 
   private
