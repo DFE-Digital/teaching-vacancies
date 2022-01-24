@@ -277,8 +277,14 @@ en:
         Read Teaching Vacancies' terms of use for jobseekers and schools. You must agree to these to use the service.
     
   posts:
+    index:
+      get-help-hiring:
+        title: Get help with hiring
+      jobseeker-guides:
+        title: Jobseeker guides
     show:
       contents: Contents
+      published_on: Published on
 
   schools:
     about_schools: About the schools
