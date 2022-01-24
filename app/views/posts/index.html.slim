@@ -1,0 +1,12 @@
+- content_for :page_title_prefix, t(".#{params[:section]}.title")
+
+= govuk_breadcrumbs breadcrumbs: { t("breadcrumbs.home") => root_path,
+                                   params[:section].titleize.capitalize => "" }
+
+.govuk-main-wrapper
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-xl = t(".#{params[:section]}.title")
+      ul.govuk-list
+        - @posts.sort.each do |post|
+          li = link_to(post.title, post_path(section: post.section, post_name: post.post_name))
