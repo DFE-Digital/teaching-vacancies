@@ -12,6 +12,7 @@ import ClipboardController from './components/clipboard/clipboard';
 import FormController from './components/form/form';
 import LocationFinderController from './components/locationFinder/locationFinder';
 import ManageQualificationsController from './components/manageQualifications/manageQualifications';
+import TrackedLinkController from './components/trackedLink/trackedLink';
 import UploadDocumentsController from './components/uploadDocuments/uploadDocuments';
 import UtilsController from './components/utils';
 
@@ -28,6 +29,7 @@ application.register('location-finder', LocationFinderController);
 application.register('manage-qualifications', ManageQualificationsController);
 application.register('map', MapController);
 application.register('panel', PanelController);
+application.register('tracked-link', TrackedLinkController);
 application.register('upload-documents', UploadDocumentsController);
 application.register('utils', UtilsController);
 application.register('vacancy-selector', VacancySelectorController);
