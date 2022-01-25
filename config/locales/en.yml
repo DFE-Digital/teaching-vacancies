@@ -275,7 +275,7 @@ en:
     terms-and-conditions:
       page_description:
         Read Teaching Vacancies' terms of use for jobseekers and schools. You must agree to these to use the service.
-    
+
   posts:
     show:
       contents: Contents
@@ -388,6 +388,7 @@ en:
       action_required: action required
       complete: complete
       not_started: not started
+      optional: optional
 
   shares:
     new:

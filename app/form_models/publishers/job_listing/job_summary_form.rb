@@ -10,7 +10,7 @@ class Publishers::JobListing::JobSummaryForm < Publishers::JobListing::VacancyFo
   def about_school_must_not_be_blank
     return if about_school.present?
 
-    case vacancy.job_location
+    case vacancy&.job_location
     when "central_office"
       organisation = "trust"
     when "at_one_school"
