@@ -95,6 +95,17 @@ RSpec.configure do |config|
     allow(Rails.application.config).to receive(:geocoder_lookup).and_return(:default)
   end
 
+  config.around(:each, :with_csrf_protection) do |example|
+    orig = ActionController::Base.allow_forgery_protection
+
+    begin
+      ActionController::Base.allow_forgery_protection = true
+      example.run
+    ensure
+      ActionController::Base.allow_forgery_protection = orig
+    end
+  end
+
   config.around(:each, zendesk: true) do |example|
     with_env("ZENDESK_API_KEY" => SecureRandom.uuid) do
       example.run
