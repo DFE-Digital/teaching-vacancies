@@ -11,7 +11,7 @@ section#school-overview class="govuk-!-margin-bottom-5"
     - if organisation.website.present? || organisation.url.present?
       - summary_list.row do |row|
         - row.key text: t("school_groups.website", organisation_type: organisation_type_basic(organisation).humanize)
-        - row.value text: open_in_new_tab_link_to(t("schools.website_link_text", organisation_name: organisation.name), organisation.website.presence || organisation.url, class: "link-wrap")
+        - row.value text: tracked_open_in_new_tab_link_to(t("schools.website_link_text", organisation_name: organisation.name), organisation.website.presence || organisation.url, link_type: :school_website, link_subject: StringAnonymiser.new(@vacancy.id).to_s, class: "link-wrap")
 
     - if @vacancy.contact_email.present?
       - summary_list.row do |row|
