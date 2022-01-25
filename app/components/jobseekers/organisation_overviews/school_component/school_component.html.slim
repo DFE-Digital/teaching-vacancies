@@ -26,7 +26,7 @@ section#school-overview
     - if organisation.website.present? || organisation.url.present?
       - summary_list.row do |row|
         - row.key text: t("schools.website")
-        - row.value text: open_in_new_tab_link_to(t("schools.website_link_text", organisation_name: organisation.name), organisation.website.presence || organisation.url, class: "wordwrap")
+        - row.value text: tracked_open_in_new_tab_link_to(t("schools.website_link_text", organisation_name: organisation.name), organisation.website.presence || organisation.url, link_type: :school_website, link_subject: StringAnonymiser.new(@vacancy.id), class: "wordwrap")
 
     - if @vacancy.contact_email.present?
       - summary_list.row do |row|
