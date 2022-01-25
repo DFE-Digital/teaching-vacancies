@@ -2,16 +2,16 @@ require "rails_helper"
 
 RSpec.describe StatusTagHelper do
   describe "#review_section_tag" do
-    context "when it is passed a job application" do
-      let(:job_application) { build_stubbed(:job_application, completed_steps: %w[personal_details professional_status]) }
-      let(:form_classes) { [Jobseekers::JobApplication::PersonalDetailsForm] }
+    subject { helper.review_section_tag(record, steps, form_classes) }
 
-      subject { helper.review_section_tag(job_application, steps, form_classes) }
+    context "when it is passed a job application" do
+      let(:record) { build_stubbed(:job_application, completed_steps: %w[personal_details professional_status]) }
+      let(:form_classes) { [Jobseekers::JobApplication::PersonalDetailsForm] }
 
       context "when there is an error on the step's form object" do
         let(:steps) { [:personal_details] }
 
-        before { job_application.errors.add(:city) }
+        before { record.errors.add(:city) }
 
         it "returns 'action required' tag" do
           expect(subject).to eq(helper.govuk_tag(text: I18n.t("shared.status_tags.action_required"), colour: "red"))
@@ -36,13 +36,11 @@ RSpec.describe StatusTagHelper do
     end
 
     context "when it is passed a vacancy" do
-      let(:vacancy) { build_stubbed(:vacancy, :draft, completed_steps: %w[job_role job_details]) }
+      let(:record) { build_stubbed(:vacancy, :draft, completed_steps: %w[job_role job_details]) }
       let(:form_classes) { [Publishers::JobListing::JobDetailsForm] }
 
-      subject { helper.review_section_tag(vacancy, steps, form_classes) }
-
       context "when is published" do
-        let(:vacancy) { build_stubbed(:vacancy) }
+        let(:record) { build_stubbed(:vacancy) }
         let(:steps) { [] }
 
         it "returns nil" do
@@ -53,7 +51,7 @@ RSpec.describe StatusTagHelper do
       context "when there is an error on the step's form object" do
         let(:steps) { %i[job_details] }
 
-        before { vacancy.errors.add(:job_title) }
+        before { record.errors.add(:job_title) }
 
         it "returns 'action required' tag" do
           expect(subject).to eq(helper.govuk_tag(text: I18n.t("shared.status_tags.action_required"), colour: "red"))
@@ -73,6 +71,28 @@ RSpec.describe StatusTagHelper do
 
         it "returns 'not started' tag" do
           expect(subject).to eq(helper.govuk_tag(text: I18n.t("shared.status_tags.not_started"), colour: "grey"))
+        end
+      end
+    end
+
+    context "when the whole section is optional" do
+      let(:record) { build_stubbed(:vacancy, :draft, completed_steps: completed_steps) }
+      let(:form_classes) { [Publishers::JobListing::DocumentsForm] }
+      let(:steps) { %w[documents] }
+
+      context "and it is not started" do
+        let(:completed_steps) { [] }
+
+        it "shows as 'optional'" do
+          expect(subject).to eq(helper.govuk_tag(text: I18n.t("shared.status_tags.optional"), colour: "grey"))
+        end
+      end
+
+      context "and it is completed" do
+        let(:completed_steps) { steps }
+
+        it "shows as 'optional'" do
+          expect(subject).to eq(helper.govuk_tag(text: I18n.t("shared.status_tags.optional"), colour: "grey"))
         end
       end
     end

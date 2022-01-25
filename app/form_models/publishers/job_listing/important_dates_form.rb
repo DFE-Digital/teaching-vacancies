@@ -20,6 +20,10 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Vacan
     %i[starts_asap starts_on publish_on expires_at]
   end
 
+  def self.optional?
+    new({}, Vacancy.new).valid?
+  end
+
   def initialize(params, vacancy)
     @expiry_time = params[:expiry_time] || vacancy.expires_at&.strftime("%k:%M")&.strip
 

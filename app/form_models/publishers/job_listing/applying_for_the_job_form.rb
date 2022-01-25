@@ -20,6 +20,6 @@ class Publishers::JobListing::ApplyingForTheJobForm < Publishers::JobListing::Va
     # but then changes the job role to one that does, enable_job_applications is nil, meaning the validation
     # for this field does not pass. We want the validations for the enable_job_applications field to pass
     # to prevent an error from being displayed on the review page in this situation when validate_all_steps is run.
-    self.enable_job_applications = false if (params[:current_organisation].local_authority? || vacancy.listed?) && enable_job_applications.blank?
+    self.enable_job_applications = false if (params[:current_organisation]&.local_authority? || vacancy&.listed?) && enable_job_applications.blank?
   end
 end
