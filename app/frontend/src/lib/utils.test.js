@@ -3,7 +3,7 @@
  */
 
 import {
-  getNewState, getUnixTimestampForDayStart, stringMatchesPostcode, convertMilesToMetres, convertEpochToUnixTimestamp, stringContainsNumber,
+  getNewState, getUnixTimestampForDayStart, stringMatchesPostcode, convertMilesToMetres, convertEpochToUnixTimestamp, stringContainsNumber, railsCsrfToken,
 } from './utils';
 
 describe('getNewState', () => {
@@ -96,5 +96,27 @@ describe('convertEpochToUnixTimestamp', () => {
 describe('getUnixTimestampForDayStart', () => {
   test('get the UNIX timestamp of the beggining of a supplied date', () => {
     expect(getUnixTimestampForDayStart(new Date('2020-05-28T18:45:34.181Z'))).toBe(1590624000);
+  });
+});
+
+describe('railsCsrfToken', () => {
+  describe('when the token is present in the document', () => {
+    beforeEach(() => {
+      document.head.innerHTML = '<meta name="csrf-token" content="aloha">';
+    });
+
+    test('extracts the Rails CSRF token from the HTML', () => {
+      expect(railsCsrfToken()).toBe('aloha');
+    });
+  });
+
+  describe('when the token is missing from the document', () => {
+    beforeEach(() => {
+      document.head.innerHTML = '<html><blink>Nothing to see here</blink></html>';
+    });
+
+    test('returns undefined', () => {
+      expect(railsCsrfToken()).toBeUndefined();
+    });
   });
 });
