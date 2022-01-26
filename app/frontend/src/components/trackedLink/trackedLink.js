@@ -33,6 +33,7 @@ export default class extends Controller {
       EVENT_TYPE,
       {
         link_type: this.linkTarget.dataset.linkType,
+        link_subject: this.linkTarget.dataset.linkSubject,
         text: this.linkTarget.innerText,
         href: this.linkTarget.href,
         mouse_button: e.button,
