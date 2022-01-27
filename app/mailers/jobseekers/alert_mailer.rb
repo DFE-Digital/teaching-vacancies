@@ -14,8 +14,20 @@ class Jobseekers::AlertMailer < Jobseekers::BaseMailer
     @to = subscription.email
 
     @vacancies = VacanciesPresenter.new(Vacancy.where(id: vacancy_ids).order(:expires_at))
+    view_mail(@template,
+              to: @to,
+              subject: I18n.t("jobseekers.alert_mailer.alert.subject.#{ab_tests[:"2022_01_alert_mailer_subject_lines_ab_test"]}",
+                              count: @vacancies.count,
+                              count_minus_one: @vacancies.count - 1,
+                              job_title: @vacancies.first.job_title,
+                              keywords: @subscription.search_criteria["keyword"].titleize,
+                              school_name: @vacancies.first.parent_organisation_name))
+  end
 
-    view_mail(@template, to: @to, subject: I18n.t("jobseekers.alert_mailer.alert.subject"))
+  def ab_tests
+    @alert_mailer_subject_lines_ab_test ||= %w[present_subject_line subject_line_variant_1 subject_line_variant_2 subject_line_variant_3 subject_line_variant_4 subject_line_variant_5].sample
+
+    { :"2022_01_alert_mailer_subject_lines_ab_test" => @alert_mailer_subject_lines_ab_test }
   end
 
   private

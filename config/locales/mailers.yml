@@ -73,7 +73,21 @@ en:
           relevant_link_text: Yes, they are relevant
           reason: This feedback helps us improve our service.
         salary: "Salary: %{salary}"
-        subject: Your job alert from Teaching Vacancies
+        subject:
+          present_subject_line: Your job alert from Teaching Vacancies
+          subject_line_variant_1:
+            one: "%{job_title} at %{school_name}"
+            other: "%{job_title} at %{school_name} and %{count_minus_one} other new job(s)"
+          subject_line_variant_2:
+            one: "%{school_name} is hiring for a %{job_title}"
+            other: "%{school_name} is hiring for a %{job_title} - and %{count_minus_one} other new job(s)"
+          subject_line_variant_3: Your job alert for %{keywords}
+          subject_line_variant_4:
+            one: "%{count} new job matches your criteria"
+            other: "%{count} new jobs match your criteria"
+          subject_line_variant_5:
+            one: "Your job alert: %{count} new job matches your criteria"
+            other: "Your job alert: %{count} new jobs match your criteria"
         summary:
           daily:
             one: A new job matching your search criteria was listed in the last day
