@@ -11,6 +11,8 @@ on:
       - 'terraform/monitoring/**'
       - '**.md'
 
+concurrency: workflow-Build-and-deploy-${{ github.ref }}
+
 env:
   DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
 
@@ -51,16 +53,6 @@ jobs:
         ssm_parameter: /teaching-vacancies/github_action/infra/git_hub_service_account_token
         env_variable_name: GIT_HUB_SERVICE_ACCOUNT_TOKEN
 
-
-    - name: Wait for this review app 'Deploy app' job to finish
-      id: wait_for_deployment
-      uses: fountainhead/action-wait-for-check@v1.0.0
-      with:
-       token: ${{ env.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
-       checkName: Deploy app (review)                   # Matrix job name within deploy_app workflow
-       ref: ${{ github.event.pull_request.head.sha }}   # The deploy_app job is linked to the PR branch HEAD SHA
-       timeoutSeconds: 1800
-       intervalSeconds: 15
 
     - name: check review status
       run: |
