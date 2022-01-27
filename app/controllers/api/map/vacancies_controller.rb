@@ -22,6 +22,7 @@ class Api::Map::VacanciesController < Api::ApplicationController
       data: {
         point: [organisation.geopoint.lat, organisation.geopoint.lon],
         meta: {
+          id: organisation.id,
           name: organisation.name,
           name_link: organisation.website || organisation.url,
           address: full_address(organisation),
