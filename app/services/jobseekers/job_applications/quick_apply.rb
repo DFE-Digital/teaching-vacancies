@@ -18,9 +18,9 @@ class Jobseekers::JobApplications::QuickApply
   private
 
   def relevant_steps
-    # The step process is needed in order to filter out the steps that are not relevant to the new job applicatio,
-    # for eg. professional status - see app/services/jobseekers/job_applications/job_application_step_process.rb:23
-    # The review step is used as the current step is required.
+    # The step process is needed in order to filter out the steps that are not relevant to the new job application,
+    # for eg. professional status - see https://github.com/DFE-Digital/teaching-vacancies/blob/75cec792d9e229fb866bdafc017f82501bd01001/app/services/jobseekers/job_applications/job_application_step_process.rb#L23
+    # The review step is used as a current step is required.
     Jobseekers::JobApplications::JobApplicationStepProcess.new(:review, job_application: new_job_application).steps
   end
 
