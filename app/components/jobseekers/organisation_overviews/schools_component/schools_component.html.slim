@@ -73,8 +73,5 @@ section#school-overview class="govuk-!-margin-bottom-5"
   - if vacancy.organisations.any?(&:geopoint)
     section#school-location
       h3.govuk-heading-l.section-heading = t("schools.school_location.other")
-      - vacancy.organisations.each do |organisation|
-        = govuk_link_to full_address(organisation), "https://www.google.com/maps/search/#{full_address(organisation)}+UK", "aria-label": t("schools.map_link_aria_label")
-        br
 
-      = map(items: [{ type: "vacancy", params: { id: vacancy.id } }].to_json, zoom: 10)
+      = map(items: [{ type: "vacancy", params: { id: vacancy.id }, links: map_links }], zoom: 10)
