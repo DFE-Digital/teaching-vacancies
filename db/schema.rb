@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_17_134852) do
+ActiveRecord::Schema.define(version: 2022_01_27_105405) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -469,6 +469,9 @@ ActiveRecord::Schema.define(version: 2022_01_17_134852) do
     t.boolean "google_index_removed", default: false
     t.string "parental_leave_cover_contract_duration"
     t.datetime "expired_vacancy_feedback_email_sent_at"
+    t.boolean "external"
+    t.string "external_reference"
+    t.string "external_advert_url"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["geolocation"], name: "index_vacancies_on_geolocation", using: :gist
     t.index ["initially_indexed"], name: "index_vacancies_on_initially_indexed"
