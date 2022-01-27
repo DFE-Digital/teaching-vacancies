@@ -1,22 +1,30 @@
 @import 'base_component';
 
 .account-survey-cta {
+  text-align: center;
   bottom: 0;
-  box-sizing: border-box;
-  display: block;
-  position: sticky;
 
-  @include govuk-media-query($until: desktop) {
-    margin: 0 -15px !important;
-  }
+  .wrapper {
+    display: inline-block;
+    position: sticky;
 
-  .account-survey-cta__content {
-    background-color: govuk-colour('orange');
-    color: govuk-colour('black');
-    padding: govuk-spacing(2);
+    @include govuk-media-query($until: desktop) {
+      margin: 0 -15px !important;
+    }
 
-    a {
-      color: govuk-colour('black');
+    .account-survey-cta__content {
+      background-color: govuk-colour('blue');
+      color: govuk-colour('white');
+      padding: govuk-spacing(3) govuk-spacing(4);
+
+      .govuk-button {
+        background: none;
+        border: 1px solid govuk-colour('white');
+        box-shadow: 0 2px 0 govuk-colour('white');
+        margin-bottom: 3px;
+        margin-left: govuk-spacing(4);
+        vertical-align: baseline;
+      }
     }
   }
 }
