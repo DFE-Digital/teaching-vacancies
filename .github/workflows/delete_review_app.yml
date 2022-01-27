@@ -11,6 +11,8 @@ on:
       - 'terraform/monitoring/**'
       - '**.md'
 
+concurrency: workflow-Build-and-deploy-${{ github.ref }}
+
 env:
   DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
 
