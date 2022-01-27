@@ -53,6 +53,8 @@ RSpec.describe Jobseekers::AlertMailer do
   end
 
   before do
+    # Ensure present variant of ab test is used
+    allow_any_instance_of(described_class).to receive(:ab_tests).and_return({ :"2022_01_alert_mailer_subject_lines_ab_test" => "present_subject_line" })
     # Stub the uid so that we can test links more easily
     allow_any_instance_of(ApplicationMailer).to receive(:uid).and_return("a_unique_identifier")
     subscription.create_alert_run
@@ -63,7 +65,7 @@ RSpec.describe Jobseekers::AlertMailer do
     let(:frequency) { "daily" }
 
     it "sends a job alert email" do
-      expect(mail.subject).to eq(I18n.t("jobseekers.alert_mailer.alert.subject"))
+      expect(mail.subject).to eq(I18n.t("jobseekers.alert_mailer.alert.subject.present_subject_line"))
       expect(mail.to).to eq([subscription.email])
       expect(body).to include(I18n.t("jobseekers.alert_mailer.alert.summary.daily", count: 1))
                   .and include(vacancies.first.job_title)
@@ -111,7 +113,7 @@ RSpec.describe Jobseekers::AlertMailer do
     let(:frequency) { "weekly" }
 
     it "sends a job alert email" do
-      expect(mail.subject).to eq(I18n.t("jobseekers.alert_mailer.alert.subject"))
+      expect(mail.subject).to eq(I18n.t("jobseekers.alert_mailer.alert.subject.present_subject_line"))
       expect(mail.to).to eq([subscription.email])
       expect(body).to include(I18n.t("jobseekers.alert_mailer.alert.summary.weekly", count: 1))
                   .and include(vacancies.first.job_title)
