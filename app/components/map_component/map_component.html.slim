@@ -1,2 +1,7 @@
-.map-component data-controller="map" data-config=@items data-zoom=@zoom
+= tag.div(class: classes, **html_attributes.merge({ data: { controller: "map", config: @items.to_json, zoom: @zoom } })) do
+  ol.govuk-list data-map-target="markersTextList"
+    - @items.each do |item|
+      noscript
+        - item[:links].each do |link|
+          li = govuk_link_to link[:text], link[:url], aria: { label: t("schools.map_link_aria_label") }
   .map-component__map id="map" role="presentation" data-map-target="map"
