@@ -8,7 +8,7 @@ on:
         required: true
         default: staging
 
-concurrency: workflow-Build-and-deploy-${{ github.ref }}
+concurrency: workflow-Build-and-deploy-dev
 
 jobs:
   refresh-env-vars:
