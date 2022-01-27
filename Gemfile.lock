@@ -728,6 +728,7 @@ DEPENDENCIES
   net-imap
   net-pop
   net-smtp
+  nokogiri
   noticed
   omniauth
   omniauth_openid_connect
