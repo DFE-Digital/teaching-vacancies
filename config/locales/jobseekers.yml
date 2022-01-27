@@ -22,8 +22,8 @@ en:
       new:
         title: Give feedback on Teaching Vacancies
     account_survey_link_component:
-      survey_link: Take our quick survey
-      survey_text_html: "%{link} about your experience of using Teaching Vacancies"
+      survey_link_text: Give feedback
+      survey_text: Take our quick survey about your experience of using Teaching Vacancies
     confirmations:
       new:
         description: The link has expired. You need to request that a new link is sent to your email address (%{email}).
