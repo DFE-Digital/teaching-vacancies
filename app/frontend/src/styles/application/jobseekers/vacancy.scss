@@ -55,4 +55,10 @@
       margin: 0;
     }
   }
+
+  .govuk-summary-list__value {
+    .govuk-hint {
+      display: block;
+    }
+  }
 }
