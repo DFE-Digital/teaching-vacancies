@@ -44,6 +44,4 @@
           = render EmptySectionComponent.new title: t(".zero_saved_jobs_title") do
             = t(".zero_saved_jobs_body_html", link_to: govuk_link_to(t(".link_find"), root_path))
 
-.govuk-grid-row
-  .govuk-grid-column-full
-    = render(Jobseekers::AccountSurveyLinkComponent.new(origin: url_for))
+- content_for :after_main, jobseekers_account_survey_link(origin: url_for)
