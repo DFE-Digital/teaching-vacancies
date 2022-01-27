@@ -6,25 +6,6 @@
     overflow-wrap: break-word;
   }
 
-  #map {
-    height: 500px;
-    margin-top: govuk-spacing(6);
-    width: 100%;
-
-    p {
-      @include govuk-font(16);
-      margin-bottom: govuk-spacing(1);
-    }
-
-    p:first-of-type {
-      margin-top: 0;
-    }
-
-    p:nth-of-type(3) {
-      margin-bottom: 0;
-    }
-  }
-
   .vacancy__banner-links {
     .govuk-grid-column-one-third {
       @media only screen and (max-width: $big-screen) {
