@@ -8,6 +8,8 @@ on:
         required: true
         default: staging
 
+concurrency: workflow-Build-and-deploy-dev
+
 jobs:
   refresh-env-vars:
     name: Refresh Env Vars
@@ -43,7 +45,7 @@ jobs:
       - name: Pin Terraform version
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: 0.15.5
+          terraform_version: 1.0.8
           terraform_wrapper: false
 
       - name: Get current Docker tag from Terraform output
