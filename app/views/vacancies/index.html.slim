@@ -18,7 +18,7 @@
       = form_for @form, as: "", url: jobs_path, method: :get, html: { id: "desktop-search-form", class: "filters-form", role: "search", aria: { label: "Search criteria" } } do |f|
         = render "desktop_search", f: f
 
-      = map(items: [{ type: "location", params: { location: params[:location], radius: params[:radius] } }].to_json, render: @display_map, zoom: 8)
+      = map(items: [{ type: "location", params: { location: params[:location], radius: params[:radius] } }], render: @display_map, zoom: 8)
 
       .search-results__header class="govuk-!-margin-bottom-3"
         .search-results__header-sorting
