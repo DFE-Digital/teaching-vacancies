@@ -604,6 +604,7 @@ en:
       publishers_job_listing_working_patterns_form:
         working_patterns_details_html: How many hours or days does the role cover? (optional<span class='govuk-visually-hidden'> field</span>)</span>
         working_patterns_options:
+          flexible: Flexible
           full_time: Full time
           part_time: Part time
           term_time: Term time
