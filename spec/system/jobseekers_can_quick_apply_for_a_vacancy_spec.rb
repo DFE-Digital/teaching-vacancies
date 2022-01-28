@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Jobseekers can withdraw a job application" do
+RSpec.describe "Jobseekers can quick apply for a job" do
   let(:jobseeker) { create(:jobseeker) }
   let(:old_vacancy) { create(:vacancy, organisations: [build(:school)]) }
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
