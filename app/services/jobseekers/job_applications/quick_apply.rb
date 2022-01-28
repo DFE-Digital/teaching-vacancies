@@ -17,6 +17,13 @@ class Jobseekers::JobApplications::QuickApply
 
   private
 
+  def relevant_steps
+    # The step process is needed in order to filter out the steps that are not relevant to the new job application,
+    # for eg. professional status - see https://github.com/DFE-Digital/teaching-vacancies/blob/75cec792d9e229fb866bdafc017f82501bd01001/app/services/jobseekers/job_applications/job_application_step_process.rb#L23
+    # The review step is used as a current step is required.
+    Jobseekers::JobApplications::JobApplicationStepProcess.new(:review, job_application: new_job_application).steps
+  end
+
   def new_job_application
     @new_job_application ||= jobseeker.job_applications.create(vacancy: vacancy)
   end
@@ -26,13 +33,17 @@ class Jobseekers::JobApplications::QuickApply
   end
 
   def attributes_to_copy
-    Jobseekers::JobApplication::PersonalDetailsForm.fields +
-      Jobseekers::JobApplication::ProfessionalStatusForm.fields +
-      Jobseekers::JobApplication::AskForSupportForm.fields
+    %i[personal_details professional_status ask_for_support].select { |step| relevant_steps.include?(step) }
+                                                            .map { |step| form_fields_from_step(step) }
+                                                            .flatten
+  end
+
+  def form_fields_from_step(step)
+    "jobseekers/job_application/#{step}_form".camelize.constantize.fields
   end
 
   def completed_steps
-    %w[personal_details professional_status qualifications employment_history references ask_for_support]
+    %w[personal_details professional_status qualifications employment_history references ask_for_support].select { |step| relevant_steps.include?(step.to_sym) }
   end
 
   def copy_qualifications
