@@ -24,7 +24,7 @@ RSpec.describe "Creating a vacancy" do
       VacancyPresenter.new(build(:vacancy,
                                  job_roles: job_roles,
                                  phase: "multiple_phases",
-                                 working_patterns: %w[full_time part_time],
+                                 working_patterns: Vacancy.working_patterns.keys,
                                  publish_on: Date.current))
     end
     let(:created_vacancy) { Vacancy.last }

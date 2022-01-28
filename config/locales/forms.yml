@@ -255,8 +255,8 @@ en:
         add_school: Add a school to your account
         edit_schools: "Can't see the school you are looking for?"
       publishers_job_listing_working_patterns_form:
-        working_patterns: Select all working patterns you will consider for the role. Flexible working options may attract more candidates
-        working_patterns_details: For example, '20 hours a week' or 'Tuesday and Wednesday mornings'
+        working_patterns: Select all working patterns you will consider for the role.
+        working_patterns_details: Include the number of hours or days (for example "20 hours per week" or "Monday to Wednesday") and information on any flexible working policies (for example staggered or compressed hours).
 
     label:
       publishers_new_features_form:
@@ -602,12 +602,13 @@ en:
         benefits_html: Additional allowances (optional<span class='govuk-visually-hidden'> field</span>)</span>
         salary: Annual or full time equivalent (FTE) salary
       publishers_job_listing_working_patterns_form:
-        working_patterns_details_html: How many hours or days does the role cover? (optional<span class='govuk-visually-hidden'> field</span>)</span>
+        working_patterns_details_html: What are the specifics of the working pattern? (optional<span class='govuk-visually-hidden'> field</span>)</span>
         working_patterns_options:
+          flexible: Flexible
           full_time: Full time
+          job_share: Job share
           part_time: Part time
           term_time: Term time
-          job_share: Job share
       publishers_vacancy_statistics_form:
         hired_status: Job filled on Teaching Vacancies?
         listed_elsewhere: Listed elsewhere?
