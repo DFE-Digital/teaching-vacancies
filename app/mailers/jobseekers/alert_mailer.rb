@@ -20,12 +20,11 @@ class Jobseekers::AlertMailer < Jobseekers::BaseMailer
                               count: @vacancies.count,
                               count_minus_one: @vacancies.count - 1,
                               job_title: @vacancies.first.job_title,
-                              keywords: @subscription.search_criteria["keyword"].titleize,
                               school_name: @vacancies.first.parent_organisation_name))
   end
 
   def ab_tests
-    @alert_mailer_subject_lines_ab_test ||= %w[present_subject_line subject_line_variant_1 subject_line_variant_2 subject_line_variant_3 subject_line_variant_4 subject_line_variant_5].sample
+    @alert_mailer_subject_lines_ab_test ||= %w[present_subject_line subject_line_variant_1 subject_line_variant_2 subject_line_variant_4 subject_line_variant_5].sample
 
     { :"2022_01_alert_mailer_subject_lines_ab_test" => @alert_mailer_subject_lines_ab_test }
   end
