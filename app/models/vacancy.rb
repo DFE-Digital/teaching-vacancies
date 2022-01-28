@@ -20,7 +20,7 @@ class Vacancy < ApplicationRecord
   # When removing a job_role or working_pattern, remember to update *subscriptions* that have the old values.
   array_enum job_roles: MAIN_JOB_ROLES.merge(ADDITIONAL_JOB_ROLES)
   array_enum key_stages: { early_years: 0, ks1: 1, ks2: 2 }
-  array_enum working_patterns: { full_time: 0, part_time: 100, job_share: 101, term_time: 102 }
+  array_enum working_patterns: { full_time: 0, part_time: 100, flexible: 104, job_share: 101, term_time: 102 }
   # Legacy vacancies can have these working_pattern options too: { compressed_hours: 102, staggered_hours: 103 }
 
   enum contract_type: { permanent: 0, fixed_term: 1, parental_leave_cover: 2 }
