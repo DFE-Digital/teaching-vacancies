@@ -19,6 +19,10 @@ Rails.application.routes.draw do
     root to: "errors#maintenance", as: "maintenance_root", via: :all
   end
 
+  # Deprecated routes should have a redirect added in `routes/legacy_redirects.rb` after they are
+  # removed from the routes (if at all possible), so our users don't get 404s:
+  draw :legacy_redirects
+
   devise_for :jobseekers, controllers: {
     confirmations: "jobseekers/confirmations",
     passwords: "jobseekers/passwords",
@@ -147,10 +151,6 @@ Rails.application.routes.draw do
     resources :unsubscribe_feedbacks, only: %i[new create], controller: "jobseekers/unsubscribe_feedbacks"
   end
 
-  get "teaching-jobs-for-nqt_suitable", to: redirect("teaching-jobs-for-ect-suitable")
-
-  get "sign-up-for-NQT-job-alerts", to: redirect("/sign-up-for-ECT-job-alerts")
-
   get "sign-up-for-ECT-job-alerts", to: "subscriptions#new", as: "ect_job_alerts", defaults: { ect_job_alert: true, search_criteria: { job_roles: ["ect_suitable"] } }
 
   namespace :api do
@@ -213,13 +213,6 @@ Rails.application.routes.draw do
 
     resources :schools, only: %i[index edit update], controller: "publishers/organisations/schools"
   end
-
-  # Legacy authentication paths (users may still have this bookmarked)
-  get "/identifications/new", to: redirect("/publishers/sign-in")
-  get "/publishers/sign_in", to: redirect("/publishers/sign-in")
-  get "/publishers/sign_out", to: redirect("/publishers/sign-out")
-  get "/publishers/account_requests/new", to: redirect("/publishers/account-requests/new")
-  get "/jobseekers/sign_in", to: redirect("/jobseekers/sign-in")
 
   # Well known URLs
   get ".well-known/change-password", to: redirect(status: 302) { Rails.application.routes.url_helpers.edit_jobseeker_registration_path(password_update: true) }
