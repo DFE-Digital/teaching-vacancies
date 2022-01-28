@@ -39,7 +39,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     raise ActionController::RoutingError, "Cannot submit application for non-listed job" unless vacancy.listed?
     raise ActionController::RoutingError, "Cannot submit non-draft application" unless job_application.draft?
 
-    if review_form.valid? && completed_steps_valid?
+    if review_form.valid? && all_steps_valid?
       job_application.submit!
       @application_feedback_form = Jobseekers::JobApplication::FeedbackForm.new
     else
@@ -82,10 +82,10 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   private
 
-  def completed_steps_valid?
-    # Check that all completed steps are valid, in case we have changed the validations since the step was completed.
+  def all_steps_valid?
+    # Check that all steps are valid, in case we have changed the validations since the step was completed.
     # NB: Only validates top-level step forms. Does not validate individual qualifications, employments, or references.
-    job_application.completed_steps.all? { |step| step_valid?(step) }
+    step_process.steps.excluding(:review).all? { |step| step_valid?(step) }
   end
 
   def step_valid?(step)
