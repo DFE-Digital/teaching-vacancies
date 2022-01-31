@@ -42,7 +42,7 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
       before do
         visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
-        within(".awaiting-feedback", text: vacancy.job_title) do
+        within(".awaiting-feedback__row", text: vacancy.job_title) do
           click_on I18n.t("buttons.submit")
         end
       end
@@ -88,7 +88,7 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
   end
 
   def submit_feedback_for(vacancy)
-    within(".awaiting-feedback", text: vacancy.job_title) do
+    within(".awaiting-feedback__row", text: vacancy.job_title) do
       select I18n.t("jobs.feedback.hired_status.hired_tvs"), from: "publishers_vacancy_statistics_form[hired_status]"
       select I18n.t("jobs.feedback.listed_elsewhere.listed_paid"), from: "publishers_vacancy_statistics_form[listed_elsewhere]"
       click_on I18n.t("buttons.submit")

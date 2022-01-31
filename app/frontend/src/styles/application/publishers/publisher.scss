@@ -56,40 +56,7 @@ $desktop-container-width: 1200px;
   .job-application-actions {
     display: flex;
   }
-
-  .govuk-summary-list {
-    &.summary-list--no-divider {
-      border-top: 0;
-
-      .govuk-summary-list__row {
-        border-top: 0;
-
-        @include govuk-media-query($until: desktop) {
-          border-bottom: 0;
-        }
-
-        .govuk-summary-list__key,
-        .govuk-summary-list__value,
-        .govuk-summary-list__actions {
-          border-bottom: 0;
-        }
-
-        &:last-child {
-          @include govuk-media-query($until: desktop) {
-            .govuk-summary-list__value {
-              padding-bottom: govuk-spacing(3);
-            }
-          }
-
-          .govuk-summary-list__key,
-          .govuk-summary-list__value,
-          .govuk-summary-list__actions {
-            border-bottom: 1px solid $govuk-border-colour;
-          }
-        }
-      }
-    }
-  }
+  
 }
 
 .job-applications-summary {

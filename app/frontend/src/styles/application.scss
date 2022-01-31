@@ -131,17 +131,16 @@ dd {
   margin: 0;
 }
 
-.govuk-section-break {
-  &--thick {
-    border-bottom: 5px solid #b1b4b6;
+.govuk-heading {
+  &--summary-list {
+    border-bottom: 6px solid $govuk-border-colour;
+    padding-bottom: govuk-spacing(2);
   }
 }
 
-.govuk-summary-list {
-  border-collapse: collapse;
-
-  .govuk-summary-list__row {
-    border-bottom: 1px solid $govuk-border-colour;
+.govuk-section-break {
+  &--thick {
+    border-bottom: 5px solid #b1b4b6;
   }
 }
 

@@ -16,9 +16,9 @@
 
   p.govuk-body For more information on our A/B and multivariate tests email #{govuk_mail_to(t("help.email"), t("help.email"))}.
 
-  dl.govuk-summary-list
+  = govuk_summary_list do |summary_list|
     - current_ab_variants.each do |test, variant|
-      .govuk-summary-list__row
-        dt.govuk-summary-list__key = test
-        dd.govuk-summary-list__value
+      - summary_list.row do |row|
+        - row.key text: test
+        - row.value
           span.govuk-tag.govuk-tag--blue = variant

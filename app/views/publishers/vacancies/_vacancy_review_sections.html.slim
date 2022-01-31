@@ -4,13 +4,12 @@
     - s.row :show_additional_job_roles, label: t("jobs.additional_job_roles"), optional: true
 
 - unless current_organisation.school?
-  - r.section :job_location, forms: %w[JobLocationForm SchoolsForm]
-    dl.govuk-summary-list
-      .govuk-summary-list__row
-        dt.govuk-summary-list__key
+  - r.section :job_location, forms: %w[JobLocationForm SchoolsForm] do
+    = govuk_summary_list do |summary_list|
+      - summary_list.row do |row|
+        - row.key
           h4.govuk-heading-s = vacancy_job_location_heading(vacancy)
-
-        dd.govuk-summary-list__value
+        - row.value
           ul.govuk-list
             - vacancy.organisations.each do |organisation|
               li class="govuk-!-font-weight-bold govuk-!-margin-bottom-4"
@@ -61,17 +60,15 @@
   - s.row :school_visits, label: t("jobs.#{school_or_trust_visits(vacancy.parent_organisation)}"), optional: true
 
 - r.section :documents
-  dl.govuk-summary-list
+  = govuk_summary_list do |summary_list|
     - if vacancy.supporting_documents.none?
-      .govuk-summary-list__row
-        dt.govuk-summary-list__key class="govuk-!-font-weight-regular"
-          = t("jobs.no_supporting_documents")
+      - summary_list.row do |row|
+        - row.key classes: ["govuk-!-font-weight-regular"], text: t("jobs.no_supporting_documents")
     - else
       - vacancy.supporting_documents.each_with_index do |document, index|
-        .govuk-summary-list__row
-          dt.govuk-summary-list__key class=(index.zero? && "first-question")
-            h4.govuk-heading-s = "Document #{index + 1}"
-          dd.govuk-summary-list__value class=(index.zero? && "first-question") = document.filename
+        - summary_list.row do |row|
+          - row.key text: "Document #{index + 1}"
+          - row.value text: document.filename
 
 - r.section :job_summary do |s|
   - s.row :job_advert

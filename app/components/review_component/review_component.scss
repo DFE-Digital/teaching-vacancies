@@ -42,32 +42,20 @@
     &__body {
       margin-bottom: govuk-spacing(8);
 
-      .govuk-summary-list {
-        @include govuk-font(19);
+      @include govuk-media-query($from: tablet) {
+        border-top: 1px solid $govuk-border-colour;
 
-        border-collapse: collapse;
-        margin-bottom: 0;
-        margin-top: 0;
-
-        @include govuk-media-query($from: tablet) {
-          border-top: 1px solid $govuk-border-colour;
+        > p {
+          padding-top: govuk-spacing(2);
         }
+      }
 
-        @include govuk-media-query($from: desktop) {
-          display: table;
-        }
+      .govuk-summary-list__value {
+        padding-right: 0;
+      }
 
-        .govuk-summary-list__row {
-          .govuk-summary-list__value {
-            border: 0;
-            padding-right: 0;
-          }
-
-          .govuk-summary-list__key {
-            border: 0;
-            padding-right: 20px;
-          }
-        }
+      .govuk-summary-list__key {
+        padding-right: govuk-spacing(2);
       }
     }
   }
