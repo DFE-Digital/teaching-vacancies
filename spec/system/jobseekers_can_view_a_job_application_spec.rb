@@ -45,7 +45,7 @@ RSpec.describe "Jobseekers can view a job application" do
     let(:job_application) { create(:job_application, :status_shortlisted, jobseeker: jobseeker, vacancy: vacancy) }
 
     it "displays what happens next notification and shortlisted date" do
-      expect(page).to have_content(I18n.t("jobseekers.job_applications.show.shortlist_alert.title"))
+      expect(page).to have_content(I18n.t("shared.job_application.show.shortlist_alert.title"))
 
       within ".timeline-component" do
         expect(page).to have_content(I18n.t("jobseekers.job_applications.status_timestamps.shortlisted"))
@@ -61,7 +61,7 @@ RSpec.describe "Jobseekers can view a job application" do
     let(:job_application) { create(:job_application, :status_unsuccessful, jobseeker: jobseeker, vacancy: vacancy) }
 
     it "displays feedback and unsuccessful date" do
-      expect(page).to have_content(I18n.t("jobseekers.job_applications.show.feedback"))
+      expect(page).to have_content(I18n.t("shared.job_application.show.feedback"))
       expect(page).to have_content(job_application.rejection_reasons)
 
       within ".timeline-component" do

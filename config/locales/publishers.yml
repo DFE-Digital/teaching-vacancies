@@ -283,7 +283,6 @@ en:
         show:
           page_title: Application
           status_heading: Applicant status
-          timeline: Timeline
         update_status:
           unsuccessful: "%{name} has been sent an email telling them their application has not been successful"
           shortlisted: "%{name} has been sent an email telling them that they have been shortlisted"
