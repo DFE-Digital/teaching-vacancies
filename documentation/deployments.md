@@ -65,20 +65,6 @@ Requirements:
 
 If no docker image tag is specified, the makefile defaults to using the `main` tag - as specified in the makfile's `terraform-app-init:` target
 
-### Refresh an environment with updated Parameter Store secrets
-
-The [refresh.yml](../.github/workflows/refresh.yml) workflow:
-- is triggered on demand
-- determines the current Docker image tag in use
-- downloads secrets from the [AWS SSM Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table)
-- uses Terraform to refresh the environment variables with the values from the Parameter Store
-
-Go to the [Refresh environment](https://github.com/DFE-Digital/teaching-vacancies/actions?query=workflow%3A%22Refresh+environment%22) workflow:
-Click "Run workflow", and choose:
-
-- Use workflow from `Branch: main`
-- Environment: e.g. `production` (or `staging`, `qa`, or `dev`)
-
 ### Deploy a specific tag to an environment - GitHub Actions
 
 If you need to deploy a particular image to an environment, including in a rollback situation, this is possible with the [deploy_app.yml](/.github/workflows/deploy_app.yml) workflow.
