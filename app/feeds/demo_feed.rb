@@ -64,7 +64,7 @@ class DemoFeed
       #   vacancy - need to discuss if we need these and if so get them added to feed
       subjects: [],
       working_patterns: %w[full_time],
-      job_advert: "🚧🚧🚧 This is an automatically imported vacancy. 🚧🚧🚧\n\nOnce we get a full job advert from the feed, it will show up here.",
+      job_advert: job_advert_text_for(item),
     }.merge(guess_organisation_attributes_for(item))
   end
 
@@ -85,6 +85,11 @@ class DemoFeed
         organisations: [school],
       }
     end
+  end
+
+  def job_advert_text_for(item)
+    # TODO: Does this need a bit of tidying? Probably.
+    item["a10:content/Vacancy/v.JobDescription"]
   end
 
   def school_group
