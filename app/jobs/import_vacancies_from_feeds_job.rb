@@ -1,0 +1,17 @@
+class ImportVacanciesFromFeedsJob < ApplicationJob
+  FEEDS = [DemoFeed].freeze
+
+  queue_as :default
+
+  def perform
+    FEEDS.each do |feed_klass|
+      feed_klass.new.each do |vacancy|
+        if vacancy.save
+          Rails.logger.info("Imported vacancy #{vacancy.id} from feed #{feed_klass.name}")
+        else
+          Rails.logger.error("Failed to save imported vacancy: #{vacancy.errors.inspect}")
+        end
+      end
+    end
+  end
+end
