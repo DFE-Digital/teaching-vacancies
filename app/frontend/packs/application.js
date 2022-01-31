@@ -3,7 +3,9 @@ require.context('../images', true);
 
 import Rails from 'rails-ujs';
 
-const HTMLDocument = document;
+const HTMLDocument = window.HTMLDocument;
+
+console.log('db1');
 
 import { initAll } from 'govuk-frontend';
 
