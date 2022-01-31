@@ -10,6 +10,14 @@
           = render "shared/search/keyword", f: f
           = render "shared/search/location", f: f, label_text: t(".location_label"), show_hint: false, desktop: true
           = f.govuk_submit t("buttons.search"), classes: "govuk-button--start"
+      - if current_variant?(:"2022_01_homepage_quick_links_test", :with_quick_links)
+        h3.govuk-heading-s = t("jobs.search.popular_searches.title")
+        .app-search-form-container__popular-searches
+          = govuk_link_to(t("jobs.search.popular_searches.links.primary"), subject_path(:primary))
+          = govuk_link_to(t("jobs.search.popular_searches.links.maths"), subject_path(:mathematics))
+          = govuk_link_to(t("jobs.search.popular_searches.links.science"), subject_path(:science))
+          = govuk_link_to(t("jobs.search.popular_searches.links.teaching_assistant"), job_role_path(:"teaching-assistant"))
+          = govuk_link_to(t("jobs.search.popular_searches.links.headteacher"), job_role_path(:leadership))
 
 .govuk-grid-row
   .govuk-grid-column-one-half
