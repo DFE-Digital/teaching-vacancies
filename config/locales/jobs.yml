@@ -174,7 +174,7 @@ en:
       one: Subject
       other: Subjects
     working_patterns: Working pattern
-    working_patterns_details: How many hours or days does the role cover?
+    working_patterns_details: Working pattern details
     working_patterns_info:
       one: '%{patterns}'
       other: Will consider %{patterns}
