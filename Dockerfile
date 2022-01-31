@@ -1,4 +1,4 @@
-ARG PROD_PACKAGES="libxml2=2.9.12-r2 libxslt=1.1.34-r1 libpq=14.1-r5 tzdata=2021e-r0 shared-mime-info=2.1-r0"
+ARG PROD_PACKAGES="libxml2=2.9.12-r2 libxslt=1.1.34-r1 libpq=14.1-r5 tzdata=2021e-r0 shared-mime-info=2.1-r0 gmp=6.2.1-r1"
 
 FROM ruby:3.1.0-alpine3.15 AS builder
 
