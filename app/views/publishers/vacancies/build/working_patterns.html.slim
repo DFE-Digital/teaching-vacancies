@@ -8,9 +8,8 @@
       = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
         = f.govuk_error_summary
 
-        h2.govuk-heading-l = t("publishers.vacancies.steps.working_patterns")
-
-        = f.govuk_collection_check_boxes :working_patterns, Vacancy.working_patterns.keys, :to_s, :to_s
+        = f.govuk_collection_check_boxes :working_patterns, Vacancy.working_patterns.keys, :to_s, :to_s,
+          legend: ->{ tag.h2(t("publishers.vacancies.steps.working_patterns"), class: "govuk-heading-l") }
 
         = f.govuk_text_area :working_patterns_details, label: { size: "s", id: "working-pattern-details-label" }
 
