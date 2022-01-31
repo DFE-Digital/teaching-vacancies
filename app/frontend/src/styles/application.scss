@@ -94,10 +94,8 @@ body {
     }
 
     .govuk-header__navigation {
-      .navigation-item--right {
-        @include govuk-media-query($from: tablet) {
-          float: right;
-        }
+      ul {
+        @extend .govuk-header__navigation--end;
       }
     }
   }
