@@ -74,6 +74,7 @@ en:
           reason: This feedback helps us improve our service.
         salary: "Salary: %{salary}"
         subject:
+          no_keywords: the latest roles
           present_subject_line: Your job alert from Teaching Vacancies
           subject_line_variant_1:
             one: "%{job_title} at %{school_name}"
