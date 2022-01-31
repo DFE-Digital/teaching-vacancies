@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Jobseekers::OrganisationOverviews::SchoolGroupComponent, type: :component do
-  let(:organisation) { create(:trust) }
+  let(:organisation) { create(:trust, name: "Cambridge Uni") }
   let(:vacancy) { create(:vacancy, :central_office, organisations: [organisation]) }
   let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
 
@@ -11,8 +11,8 @@ RSpec.describe Jobseekers::OrganisationOverviews::SchoolGroupComponent, type: :c
 
   describe "#render?" do
     context "when vacancy is at a school without a trust" do
-      let(:organisation) { create(:school) }
-      let(:vacancy) { create(:vacancy) }
+      let(:organisation) { create(:school, name: "Cambridge Uni") }
+      let(:vacancy) { create(:vacancy, organisations: [organisation]) }
 
       it "does not render the component" do
         expect(rendered_component).to be_blank
@@ -20,7 +20,7 @@ RSpec.describe Jobseekers::OrganisationOverviews::SchoolGroupComponent, type: :c
     end
 
     context "when vacancy is at a single school in a trust" do
-      let(:vacancy) { create(:vacancy, :at_one_school) }
+      let(:vacancy) { create(:vacancy, :at_one_school, organisations: [organisation]) }
 
       it "does not render the component" do
         expect(rendered_component).to be_blank

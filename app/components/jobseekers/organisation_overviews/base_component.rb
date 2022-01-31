@@ -10,4 +10,11 @@ class Jobseekers::OrganisationOverviews::BaseComponent < ViewComponent::Base
     @vacancy = vacancy
     @organisation = vacancy.parent_organisation
   end
+
+  def map_links
+    @map_links ||=
+      vacancy.organisations.map do |organisation|
+        { text: "#{organisation.name}, #{full_address(organisation)}", url: organisation_url(organisation), id: organisation.id }
+      end
+  end
 end
