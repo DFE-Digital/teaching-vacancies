@@ -3,9 +3,9 @@ require.context('../images', true);
 
 import Rails from 'rails-ujs';
 
-import { initAll } from 'govuk-frontend';
+const HTMLDocument = document;
 
-initAll();
+import { initAll } from 'govuk-frontend';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -15,3 +15,5 @@ import 'src/components';
 import 'src/styles/application.scss';
 
 Rails.start();
+
+initAll();
