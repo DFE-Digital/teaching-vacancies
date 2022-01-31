@@ -3,6 +3,8 @@ require.context('../images', true);
 
 import Rails from 'rails-ujs';
 
+const HTMLDocument = document;
+
 import { initAll } from 'govuk-frontend';
 
 import 'leaflet/dist/leaflet.css';
