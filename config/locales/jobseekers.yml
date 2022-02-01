@@ -339,13 +339,8 @@ en:
         title: Review your application — Application
         warning: You cannot review a non-draft job application
       show:
-        feedback: Feedback on your application
         page_title: View application
-        shortlist_alert:
-          title: What happens next with shortlisting?
-          body: "%{organisation} will be in touch soon with more information about next steps."
         status_heading: Application status
-        timeline: Timeline
       status_timestamps:
         rejected: Rejected
         reviewed: Reviewed

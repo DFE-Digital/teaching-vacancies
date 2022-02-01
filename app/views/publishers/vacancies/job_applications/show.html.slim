@@ -24,24 +24,4 @@
         = govuk_button_link_to t("buttons.reject"), organisation_job_job_application_reject_path(vacancy.id, job_application.id), class: "govuk-button--warning govuk-!-margin-right-3"
       = govuk_button_link_to t("buttons.download_application"), "#", class: "govuk-button--secondary js-action print-application", "data-controller": "utils", "data-action": "click->utils#print"
 
-    = render "shared/job_application/show", allow_edit: false
-
-  .govuk-grid-column-one-third
-    .account-sidebar class="govuk-!-display-none-print"
-      h2.account-sidebar__heading = t(".timeline")
-
-    = render TimelineComponent.new do |timeline|
-      - if job_application.withdrawn_at?
-        - timeline.item(key: t("jobseekers.job_applications.status_timestamps.withdrawn"),
-                        value: format_time_to_datetime_at(job_application.withdrawn_at))
-      - if job_application.unsuccessful_at?
-        - timeline.item(key: t("jobseekers.job_applications.status_timestamps.rejected"),
-                        value: format_time_to_datetime_at(job_application.unsuccessful_at))
-      - if job_application.shortlisted_at?
-        - timeline.item(key: t("jobseekers.job_applications.status_timestamps.shortlisted"),
-                        value: format_time_to_datetime_at(job_application.shortlisted_at))
-      - if job_application.reviewed_at?
-        - timeline.item(key: t("jobseekers.job_applications.status_timestamps.reviewed"),
-                        value: format_time_to_datetime_at(job_application.reviewed_at))
-      - timeline.item(key: t("jobseekers.job_applications.status_timestamps.submitted"),
-                      value: format_time_to_datetime_at(job_application.submitted_at))
+= render "shared/job_application/show", allow_edit: false

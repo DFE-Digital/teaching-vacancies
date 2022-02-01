@@ -362,6 +362,7 @@ en:
           salary: Salary
           started_on: Start date
           subjects: Subjects and key stages taught
+        feedback: Feedback on your application
         heading: Application sections
         personal_details:
           email: Email address
@@ -390,6 +391,10 @@ en:
           organisation: Organisation
           phone_number: Phone number
           relationship: Relationship to applicant
+        shortlist_alert:
+          title: What happens next with shortlisting?
+          body: "%{organisation} will be in touch soon with more information about next steps."
+        timeline: Timeline
     status_tags:
       action_required: action required
       complete: complete

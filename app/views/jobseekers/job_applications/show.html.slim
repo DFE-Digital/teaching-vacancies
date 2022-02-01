@@ -2,35 +2,13 @@
 
 = render "banner"
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    - if job_application.shortlisted?
-      = govuk_notification_banner title_text: t("banners.important"), classes: "govuk-!-margin-bottom-5" do |banner|
-        - banner.heading text: t(".shortlist_alert.title")
-        span class="govuk-!-margin-top-3" = t(".shortlist_alert.body", organisation: vacancy.parent_organisation_name)
+= render "shared/job_application/show" do
+  - if job_application.shortlisted?
+    = govuk_notification_banner title_text: t("banners.important"), classes: "govuk-!-margin-bottom-5" do |banner|
+      - banner.heading text: t(".shortlist_alert.title")
+      span class="govuk-!-margin-top-3" = t(".shortlist_alert.body", organisation: vacancy.parent_organisation_name)
 
-    - if job_application.unsuccessful? && job_application.rejection_reasons.present?
-      .grey-border-box class="govuk-!-display-none-print"
-        h3.govuk-heading-m = t(".feedback")
-        p.govuk-body class="govuk-!-margin-bottom-0" = job_application.rejection_reasons
-
-    = render "shared/job_application/show"
-
-  .govuk-grid-column-one-third class="govuk-!-display-none-print"
-    h2.govuk-heading-m = t(".timeline")
-
-    = render TimelineComponent.new do |timeline|
-      - if job_application.withdrawn_at?
-        - timeline.item(key: t("jobseekers.job_applications.status_timestamps.withdrawn"),
-                        value: format_time_to_datetime_at(job_application.withdrawn_at))
-      - if job_application.unsuccessful_at?
-        - timeline.item(key: t("jobseekers.job_applications.status_timestamps.unsuccessful"),
-                        value: format_date(job_application.unsuccessful_at.to_date))
-      - if job_application.shortlisted_at?
-        - timeline.item(key: t("jobseekers.job_applications.status_timestamps.shortlisted"),
-                        value: format_date(job_application.shortlisted_at.to_date))
-      - if job_application.reviewed_at?
-        - timeline.item(key: t("jobseekers.job_applications.status_timestamps.reviewed"),
-                        value: format_date(job_application.reviewed_at.to_date))
-      - timeline.item(key: t("jobseekers.job_applications.status_timestamps.submitted"),
-                      value: format_time_to_datetime_at(job_application.submitted_at))
+  - if job_application.unsuccessful? && job_application.rejection_reasons.present?
+    .grey-border-box class="govuk-!-display-none-print"
+      h3.govuk-heading-m = t(".feedback")
+      p.govuk-body class="govuk-!-margin-bottom-0" = job_application.rejection_reasons

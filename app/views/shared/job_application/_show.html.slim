@@ -1,13 +1,35 @@
-.anchor-link-list class="govuk-!-display-none-print"
-  = navigation_list(title: t(".application_sections")) do |navigation|
-    - navigation.anchor text: t(".personal_details.heading"), href: "#personal_details"
-    - navigation.anchor text: t(".professional_status.heading"), href: "#professional_status"
-    - navigation.anchor text: t(".qualifications.heading"), href: "#qualifications"
-    - navigation.anchor text: t(".employment_history.heading"), href: "#employment_history"
-    - navigation.anchor text: t(".personal_statement.heading"), href: "#personal_statement"
-    - navigation.anchor text: t(".references.heading"), href: "#references"
-    - navigation.anchor text: t(".ask_for_support.heading"), href: "#ask_for_support"
-    - navigation.anchor text: t(".declarations.heading"), href: "#declarations"
-
 = job_application_review(job_application, step_process: step_process, show_tracks: false, allow_edit: local_assigns[:allow_edit]) do |r|
   - render "jobseekers/job_applications/job_application_review_sections", r: r
+  - r.above do
+    = yield
+
+    .anchor-link-list class="govuk-!-display-none-print"
+      = navigation_list(title: t(".application_sections")) do |navigation|
+        - navigation.anchor text: t(".personal_details.heading"), href: "#personal_details"
+        - navigation.anchor text: t(".professional_status.heading"), href: "#professional_status"
+        - navigation.anchor text: t(".qualifications.heading"), href: "#qualifications"
+        - navigation.anchor text: t(".employment_history.heading"), href: "#employment_history"
+        - navigation.anchor text: t(".personal_statement.heading"), href: "#personal_statement"
+        - navigation.anchor text: t(".references.heading"), href: "#references"
+        - navigation.anchor text: t(".ask_for_support.heading"), href: "#ask_for_support"
+        - navigation.anchor text: t(".declarations.heading"), href: "#declarations"
+
+  - r.sidebar do
+    .account-sidebar class="govuk-!-display-none-print"
+      h2.account-sidebar__heading = t(".timeline")
+
+      = render TimelineComponent.new do |timeline|
+        - if job_application.withdrawn_at?
+          - timeline.item(key: t("jobseekers.job_applications.status_timestamps.withdrawn"),
+                          value: format_time_to_datetime_at(job_application.withdrawn_at))
+        - if job_application.unsuccessful_at?
+          - timeline.item(key: t("jobseekers.job_applications.status_timestamps.#{current_jobseeker.present? ? 'unsuccessful' : 'rejected'}"),
+                          value: format_time_to_datetime_at(job_application.unsuccessful_at))
+        - if job_application.shortlisted_at?
+          - timeline.item(key: t("jobseekers.job_applications.status_timestamps.shortlisted"),
+                          value: format_time_to_datetime_at(job_application.shortlisted_at))
+        - if job_application.reviewed_at?
+          - timeline.item(key: t("jobseekers.job_applications.status_timestamps.reviewed"),
+                          value: format_time_to_datetime_at(job_application.reviewed_at))
+        - timeline.item(key: t("jobseekers.job_applications.status_timestamps.submitted"),
+                        value: format_time_to_datetime_at(job_application.submitted_at))
