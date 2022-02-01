@@ -30,6 +30,9 @@ shared:
     foo: 1
     bar: 1
     baz: 1
+  2022_01_homepage_quick_links_test:
+    without_quick_links: 1
+    with_quick_links: 1
 test:
   2021_04_cookie_consent_test:
     none: 0
@@ -38,3 +41,6 @@ test:
     bottom_blue: 0
     modal: 0
     gds: 0
+  2022_01_homepage_quick_links_test:
+    without_quick_links: 1
+    with_quick_links: 0

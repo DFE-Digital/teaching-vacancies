@@ -62,6 +62,14 @@ en:
         zero: This area only
         one: '%{count} mile'
         other: '%{count} miles'
+      popular_searches:
+        links:
+          headteacher: Headteacher
+          maths: Maths
+          primary: Primary
+          science: Science
+          teaching_assistant: Teaching Assistant
+        title: "Popular searches:"
       title: Search job listings
       use_current_location_html: use current location<span class="govuk-visually-hidden"> to search teaching vacancies</span>
       within_radius: Search radius

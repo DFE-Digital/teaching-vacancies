@@ -31,8 +31,23 @@
   .govuk-label,
   .govuk-hint,
   .govuk-link,
-  h1 {
+  h1,
+  h3 {
     color: govuk-colour('white');
+  }
+
+  h3 {
+    margin-bottom: govuk-spacing(2);
+    margin-top: govuk-spacing(2);
+  }
+
+  &__popular-searches {
+    display: flex;
+    flex-wrap: wrap;
+
+    .govuk-link {
+      margin-right: govuk-spacing(2);
+    }
   }
 }
 
