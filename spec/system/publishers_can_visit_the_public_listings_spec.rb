@@ -39,7 +39,7 @@ RSpec.describe "School viewing public listings" do
     expect(page).to have_content(school.name)
     within("nav") { expect(page).to have_content(I18n.t("nav.school_page_link")) }
 
-    click_on(I18n.t("app.title"))
+    within("header") { click_on(I18n.t("app.title")) }
     expect(page).to have_content(I18n.t("jobs.heading"))
 
     click_on(I18n.t("nav.school_page_link"), match: :first)
