@@ -1,4 +1,6 @@
 .govuk-header {
+  border-bottom: 10px solid $govuk-brand-colour;
+
   @include govuk-media-query($from: tablet) {
     &__container {
       display: flex;
