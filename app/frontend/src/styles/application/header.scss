@@ -1,0 +1,20 @@
+.govuk-header {
+  @include govuk-media-query($from: tablet) {
+    &__container {
+      display: flex;
+    }
+
+    &__logo {
+      flex-grow: 1;
+    }
+
+    &__content {
+      flex-basis: auto;
+      width: auto;
+    }
+  }
+
+  &__navigation-list {
+    @extend .govuk-header__navigation--end;
+  }
+}

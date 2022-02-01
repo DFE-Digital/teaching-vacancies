@@ -207,7 +207,6 @@ en:
     create_a_job_alert: Create a job alert
     find_job: Find a teaching job
     for_schools: For schools
-    jobseekers_index_link: View public jobs
     notifications_index_link_html:
       zero: Notifications
       one: Notifications <span class="count-badge">%{count}<span class="govuk-visually-hidden"> unread</span></span>
