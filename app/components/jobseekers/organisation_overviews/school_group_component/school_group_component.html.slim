@@ -1,5 +1,5 @@
 section#school-overview class="govuk-!-margin-bottom-5"
-  h3.govuk-heading-l.section-heading
+  h3.govuk-heading-l.govuk-heading--summary-list
     = t("school_groups.trust_overview")
 
   = govuk_summary_list do |summary_list|
@@ -34,6 +34,8 @@ section#school-overview class="govuk-!-margin-bottom-5"
     p = vacancy.school_visits
 
   section#school-location
-    h3.govuk-heading-l.section-heading = t("school_groups.school_group_location")
+    h3.govuk-heading-l.govuk-heading--summary-list
+      = t("school_groups.school_group_location")
+    = govuk_link_to full_address(organisation), "https://www.google.com/maps/search/#{full_address(organisation)}+UK", "aria-label": t("schools.map_link_aria_label")
 
     = map(items: [{ type: "vacancy", params: { id: vacancy.id }, links: map_links }], show_map: organisation.geopoint)

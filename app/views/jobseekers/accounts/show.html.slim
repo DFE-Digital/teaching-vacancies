@@ -5,25 +5,20 @@
 .govuk-main-wrapper class="govuk-!-padding-bottom-0"
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      h1.govuk-heading-l = t(".page_title")
+      h1.govuk-heading-l.govuk-heading--summary-list
+        = t(".page_title")
 
-      dl.govuk-summary-list
-        .govuk-summary-list__row
-          dt.govuk-summary-list__key = t(".summary_list.email")
-          dd.govuk-summary-list__value = current_jobseeker.email
-          dd.govuk-summary-list__actions
-            = govuk_link_to edit_jobseeker_registration_path do
-              = t(".summary_list.change")
-              span.govuk-visually-hidden
-                = t(".summary_list.email")
-        .govuk-summary-list__row
-          dt.govuk-summary-list__key = t(".summary_list.password")
-          dd.govuk-summary-list__value = t(".summary_list.password_placeholder")
-          dd.govuk-summary-list__actions
-            = govuk_link_to edit_jobseeker_registration_path(password_update: true) do
-              = t(".summary_list.change")
-              span.govuk-visually-hidden
-                = t(".summary_list.password")
+      = govuk_summary_list do |summary_list|
+        - summary_list.row do |row|
+          - row.key text: t(".summary_list.email")
+          - row.value text: current_jobseeker.email
+          - row.action(text: t("buttons.change"), href: edit_jobseeker_registration_path, visually_hidden_text: t(".summary_list.email"))
+
+        - summary_list.row do |row|
+          - row.key text: t(".summary_list.password")
+          - row.value text: t(".summary_list.password_placeholder")
+          - row.action(text: t("buttons.change"), href: edit_jobseeker_registration_path(password_update: true), visually_hidden_text: t(".summary_list.password"))
+
       p = govuk_link_to t(".close_account"), jobseekers_confirm_destroy_account_path
 
     .govuk-grid-column-one-third

@@ -1,4 +1,5 @@
-h2.govuk-heading-m = t("schools.info", organisation: @organisation.name)
+h2.govuk-heading-m.govuk-heading--summary-list
+  = t("schools.info", organisation: @organisation.name)
 
 = govuk_summary_list do |summary_list|
   - summary_list.row do |row|

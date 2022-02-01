@@ -69,39 +69,39 @@
 
       .govuk-section-break.govuk-section-break--visible
 
-      dl.govuk-summary-list
-        .govuk-summary-list__row
-          dt.govuk-summary-list__key GCSEs, AS levels, A levels
-          dd.govuk-summary-list__value.qualifications__value
+      = govuk_summary_list do |summary_list|
+        - summary_list.row do |row|
+          - row.key text: "GCSEs, AS levels, A levels"
+          - row.value
             ul.govuk-list.govuk-list--bullet
               li School, college or organisation
-              li Subjects and grades
+              li Subjects and grade"
               li Year the qualifications were awarded
 
-        .govuk-summary-list__row
-          dt.govuk-summary-list__key Other UK qualification
-          dd.govuk-summary-list__value.qualifications__value
+        - summary_list.row do |row|
+          - row.key text: "Other UK qualification"
+          - row.value
             ul.govuk-list.govuk-list--bullet
               li Type of qualification
               li School, college, or organisation
               li Subjects and grades
               li Year the qualifications were awarded
 
-        .govuk-summary-list__row
-          dt.govuk-summary-list__key Undergraduate and postgraduate degrees
-          dd.govuk-summary-list__value.qualifications__value
+        - summary_list.row do |row|
+          - row.key text: "Undergraduate and postgraduate degrees"
+          - row.value
             ul.govuk-list.govuk-list--bullet
               li Subject
               li Awarding body
               li
                 | Candidates are asked whether they have finished studying for
-                |  this qualification. If they have, they are asked for the grade and
-                |  year of the qualification. If they have not, they are asked to give
-                |  further details.
+                |    this qualification. If they have, they are asked for the grade and
+                |    year of the qualification. If they have not, they are asked to give
+                |   further details."
 
-        .govuk-summary-list__row
-          dt.govuk-summary-list__key Any other qualification
-          dd.govuk-summary-list__value.qualifications__value
+        - summary_list.row do |row|
+          - row.key text: "Any other qualification"
+          - row.value
             ul.govuk-list.govuk-list--bullet
               li Name of the qualification or course
               li Subject
@@ -109,8 +109,8 @@
               li
                 | Candidates are asked whether they have finished studying for
                 |  this qualification. If they have, they are asked for the grade and
-                |  year of the qualification. If they have not, they are asked to give
-                |  further details.
+                |   year of the qualification. If they have not, they are asked to give
+                |   further details.
 
       = govuk_link_to "Back to top", "#heading", class: "govuk-link govuk-body"
 

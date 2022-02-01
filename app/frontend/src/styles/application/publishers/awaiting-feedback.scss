@@ -1,8 +1,5 @@
 .publisher {
   .awaiting-feedback {
-    display: block;
-    padding: govuk-spacing(4) 0;
-
     .govuk-form-group {
       margin-bottom: govuk-spacing(2);
     }
@@ -39,6 +36,11 @@
       .govuk-button {
         margin: 0;
       }
+    }
+
+    &__row {
+      border-bottom: 1px solid $govuk-border-colour;
+      padding: govuk-spacing(4) 0;
     }
   }
 }
