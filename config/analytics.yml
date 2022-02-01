@@ -301,7 +301,6 @@ shared:
     - subjects
     - school_visits
     - how_to_apply
-    - initially_indexed
     - job_location
     - readable_job_location
     - job_roles

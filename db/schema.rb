@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_17_134852) do
+ActiveRecord::Schema.define(version: 2022_02_01_101037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -446,7 +446,6 @@ ActiveRecord::Schema.define(version: 2022_01_17_134852) do
     t.string "subjects", array: true
     t.text "school_visits"
     t.text "how_to_apply"
-    t.boolean "initially_indexed", default: false
     t.integer "job_location"
     t.string "readable_job_location"
     t.integer "job_roles", array: true
@@ -471,7 +470,6 @@ ActiveRecord::Schema.define(version: 2022_01_17_134852) do
     t.datetime "expired_vacancy_feedback_email_sent_at"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["geolocation"], name: "index_vacancies_on_geolocation", using: :gist
-    t.index ["initially_indexed"], name: "index_vacancies_on_initially_indexed"
     t.index ["publisher_id"], name: "index_vacancies_on_publisher_id"
     t.index ["publisher_organisation_id"], name: "index_vacancies_on_publisher_organisation_id"
     t.index ["searchable_content"], name: "index_vacancies_on_searchable_content", using: :gin
