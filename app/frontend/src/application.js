@@ -18,6 +18,8 @@ import TrackedLinkController from './components/trackedLink/trackedLink';
 import UploadDocumentsController from './components/uploadDocuments/uploadDocuments';
 import UtilsController from './components/utils';
 
+try {
+
 const application = Application.start();
 
 application.warnings = false;
@@ -35,3 +37,7 @@ application.register('tracked-link', TrackedLinkController);
 application.register('upload-documents', UploadDocumentsController);
 application.register('utils', UtilsController);
 application.register('vacancy-selector', VacancySelectorController);
+
+} catch (e) {
+  console.log('application', e);
+}

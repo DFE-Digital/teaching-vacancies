@@ -14,8 +14,4 @@ import 'src/styles/application.scss';
 
 Rails.start();
 
-try {
-  initAll();
-} catch (e) {
-  console.log('this is the log i hope to see');
-}
+initAll();
