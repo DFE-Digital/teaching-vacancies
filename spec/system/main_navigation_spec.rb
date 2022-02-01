@@ -10,7 +10,7 @@ RSpec.describe "Main navigation for users to sign in and out" do
 
     it "renders the correct links" do
       within "nav" do
-        expect(page).to have_content(I18n.t("nav.find_job"))
+        expect(page).to have_content(I18n.t("nav.create_a_job_alert"))
         expect(page).to have_content(I18n.t("buttons.sign_in"))
       end
     end
