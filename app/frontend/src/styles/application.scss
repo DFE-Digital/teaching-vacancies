@@ -23,6 +23,7 @@ $govuk-new-link-styles: true;
 @import 'application/full-width-mast';
 @import 'application/govuk-notification-banner';
 @import 'application/govuk-phase-banner';
+@import 'application/header';
 @import 'application/home';
 @import 'application/icons';
 @import 'application/inset_text';
@@ -66,39 +67,6 @@ body {
       margin-right: auto;
       max-width: $desktop-container-width;
       width: 90%;
-    }
-  }
-
-  .govuk-header {
-    border-bottom: 0;
-
-    &__container {
-      border-bottom: 0;
-      margin-bottom: 0;
-    }
-
-    .govuk-header__logotype-text {
-      margin-left: govuk-spacing(1);
-    }
-
-    .govuk-phase-banner {
-      background-color: govuk-colour('white');
-      border: 0;
-      padding-bottom: 0;
-      padding-top: govuk-spacing(4);
-
-      .govuk-width-container {
-        border-bottom: 1px solid $govuk-border-colour;
-        padding-bottom: govuk-spacing(2);
-      }
-    }
-
-    .govuk-header__navigation {
-      .navigation-item--right {
-        @include govuk-media-query($from: tablet) {
-          float: right;
-        }
-      }
     }
   }
 }
@@ -158,10 +126,6 @@ dd {
   }
 }
 
-.phase-banner {
-  border-top: govuk-spacing(2) solid govuk-colour('orange');
-}
-
 .vacancies_index {
 
   @media only screen and (min-width: $small-screen) {
@@ -191,17 +155,6 @@ dd {
         color: $govuk-link-visited-colour;
       }
     }
-  }
-}
-
-.govuk-header__navigation {
-  .count-badge {
-    background-color: govuk-colour('white');
-    border-radius: govuk-spacing(1);
-    color: govuk-colour('black');
-    font-weight: bold;
-    margin-left: govuk-spacing(1);
-    padding: 0 govuk-spacing(1);
   }
 }
 

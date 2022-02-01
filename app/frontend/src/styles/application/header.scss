@@ -1,0 +1,31 @@
+.govuk-header {
+  @include govuk-media-query($from: tablet) {
+    &__container {
+      display: flex;
+    }
+
+    &__logo {
+      flex-grow: 1;
+    }
+
+    &__content {
+      flex-basis: auto;
+      width: auto;
+    }
+  }
+
+  &__navigation-list {
+    @extend .govuk-header__navigation--end;
+  }
+
+  &__navigation {
+    .count-badge {
+      background-color: govuk-colour('white');
+      border-radius: govuk-spacing(1);
+      color: govuk-colour('black');
+      font-weight: bold;
+      margin-left: govuk-spacing(1);
+      padding: 0 govuk-spacing(1);
+    }
+  }
+}
