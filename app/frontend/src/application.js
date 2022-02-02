@@ -1,7 +1,8 @@
 import 'core-js/modules/es.weak-map';
 import 'core-js/modules/es.weak-set';
-// import '@stimulus/polyfills';
+
 import { Application } from 'stimulus';
+import '@stimulus/polyfills';
 
 // view components
 import MapController from '../../components/map_component/map';
