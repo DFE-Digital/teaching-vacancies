@@ -18,6 +18,9 @@
           = f.govuk_radio_button :is_for_whole_site, :no
             = f.govuk_text_field :page, required: true
 
+          / noscript
+          /   = f.govuk_text_field :page, required: true
+
         = f.govuk_text_area :issue,
           label: { size: "m" },
           rows: 5,
@@ -30,6 +33,6 @@
             accept: "image/jpeg, image/png",
             enctype: "multipart/form-data"
 
-        = recaptcha
+        / = recaptcha
 
         = f.govuk_submit t("buttons.send_message")
