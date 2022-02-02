@@ -1,46 +1,18 @@
-= render BannerComponent.new do
-  - if vacancy.expires_at&.past?
-    = govuk_breadcrumbs breadcrumbs: { "#{t("publishers.vacancies_component.expired.tab_heading")}": jobs_with_type_organisation_path(:expired), "#{vacancy.job_title}": "" }
-  - elsif vacancy.pending?
-    = govuk_breadcrumbs breadcrumbs: { "#{t("publishers.vacancies_component.pending.tab_heading")}": jobs_with_type_organisation_path(:pending), "#{vacancy.job_title}": "" }
-  - elsif vacancy.draft?
-    = govuk_breadcrumbs breadcrumbs: { "#{t("publishers.vacancies_component.draft.tab_heading")}": jobs_with_type_organisation_path(:draft), "#{vacancy.job_title}": "" }
-  - else
-    = govuk_breadcrumbs breadcrumbs: { "#{t("publishers.vacancies_component.published.tab_heading")}": organisation_path, "#{vacancy.job_title}": "" }
+.govuk-grid-row
+  .govuk-grid-column-full
+    = govuk_breadcrumbs breadcrumbs: { "#{t("publishers.vacancies_component.#{vacancy.phase}.tab_heading")}": jobs_with_type_organisation_path(vacancy.phase), "#{vacancy.job_title}": "" }
+    - if current_organisation.school_group?
+      h2.govuk-caption-l = current_organisation.name
+    h1.govuk-heading-l class="govuk-!-margin-bottom-2" = vacancy.job_title
 
-  .govuk-grid-row
-    .govuk-grid-column-full
-      - if current_organisation.school_group?
-        h2.govuk-caption-l = current_organisation.name
-      h1.govuk-heading-l = vacancy.job_title
-
-  - if vacancy.enable_job_applications?
-    .govuk-grid-row.job-applications-summary
-      - if vacancy.expires_at.present?
-        .govuk-grid-column-one-quarter
-          .vacancy-deadline class=("vacancy-deadline--passed" if vacancy.expires_at.past?)
-            h4.govuk-body.govuk-caption-s class="govuk-!-font-weight-bold govuk-!-margin-bottom-0"
-              - if vacancy.expires_at.past?
-                = t(".deadline.after")
-              - else
-                = t(".deadline.before")
-            span.govuk-body = format_time_to_datetime_at(vacancy.expires_at)
-
-      - unless vacancy.draft? || !vacancy.within_data_access_period?
-        .govuk-grid-column-one-quarter
-          .application-count.govuk-tag class="govuk-tag--#{status_tag_colour(:submitted)}"
-            .govuk-heading-l = job_applications.submitted.count
-            h3.govuk-caption-s = t(".submitted", count: job_applications.submitted.count)
-
-        .govuk-grid-column-one-quarter
-          .application-count.govuk-tag class="govuk-tag--#{status_tag_colour(:shortlisted)}"
-            .govuk-heading-l = job_applications.shortlisted.count
-            h3.govuk-caption-s = t(".shortlisted", count: job_applications.shortlisted.count)
-
-        .govuk-grid-column-one-quarter
-          .application-count.govuk-tag class="govuk-tag--#{status_tag_colour(:unsuccessful)}"
-            .govuk-heading-l = job_applications.unsuccessful.count
-            h3.govuk-caption-s = t(".rejected", count: job_applications.unsuccessful.count)
+    - if vacancy.expires_at.present?
+        p.govuk-body.govuk-caption-s
+          span class="govuk-!-font-weight-bold"
+            - if vacancy.expires_at.past?
+              = t(".deadline.after")
+            - else
+              = t(".deadline.before")
+          span class="govuk-!-margin-left-1" = format_time_to_datetime_at(vacancy.expires_at)
 
 .govuk-grid-row
   .govuk-grid-column-full
