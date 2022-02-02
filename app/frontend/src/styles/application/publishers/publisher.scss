@@ -15,52 +15,8 @@ $desktop-container-width: 1200px;
     }
   }
 
-  .vacancy-deadline {
-    margin-top: 0;
-    padding: govuk-spacing(3) 0;
-
-    &--passed {
-      h4 {
-        color: $govuk-error-colour;
-      }
-    }
-  }
-
-  .application-count {
-    display: block;
-    margin: govuk-spacing(3);
-    padding: govuk-spacing(3);
-    text-transform: none;
-
-    @include govuk-media-query($from: tablet) {
-      height: 50%;
-      padding-bottom: govuk-spacing(4);
-    }
-
-    @include govuk-media-query($until: desktop) {
-      margin: govuk-spacing(3) 0;
-    }
-
-    .govuk-heading-l,
-    .govuk-caption-s {
-      color: inherit;
-      margin: 0;
-    }
-
-    .govuk-caption-s {
-      font-weight: normal;
-      letter-spacing: normal;
-    }
-  }
-
   .job-application-actions {
     display: flex;
   }
   
-}
-
-.job-applications-summary {
-  @include govuk-media-query($from: tablet) {
-    display: flex;
-  }
 }
