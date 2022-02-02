@@ -1,11 +1,11 @@
-ARG PROD_PACKAGES="libxml2=2.9.12-r2 libxslt=1.1.34-r1 libpq=14.1-r5 tzdata=2021e-r0 shared-mime-info=2.1-r0 gmp=6.2.1-r1"
+ARG PROD_PACKAGES="libxml2 libxslt libpq tzdata shared-mime-info"
 
 FROM ruby:3.1.0-alpine3.15 AS builder
 
 WORKDIR /app
 
 ARG PROD_PACKAGES
-ENV DEV_PACKAGES="gcc=10.3.1_git20211027-r0 libc-dev=0.7.2-r3 make=4.3-r0 yarn=1.22.17-r0 postgresql13-dev=13.5-r1 gmp=6.2.1-r1 build-base=0.5-r2 git"
+ENV DEV_PACKAGES="gcc libc-dev make yarn postgresql13-dev build-base git"
 RUN apk add --no-cache $PROD_PACKAGES $DEV_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
