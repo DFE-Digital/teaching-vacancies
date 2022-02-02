@@ -1,6 +1,6 @@
 import 'classlist-polyfill';
 import './uploadDocuments.scss';
-import { Controller } from '@hotwired/stimulus';
+import { Controller } from 'stimulus';
 
 export default class extends Controller {
   static targets = ['inputFileUpload', 'uploadFilesButton', 'selectFileButton', 'saveListingButton'];
