@@ -1,4 +1,4 @@
-import { Controller } from '@hotwired/stimulus';
+import { Controller } from 'stimulus';
 import './panel.scss';
 
 export const COMPONENT_CLASS = 'panel-component';
