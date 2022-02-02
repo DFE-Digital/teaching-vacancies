@@ -29,6 +29,7 @@
   }
 
   .govuk-grid-row--blue {
+    @include full-width-mast;
     background-color: $govuk-brand-colour;
   }
 
@@ -47,6 +48,7 @@
 
   &__header {
     padding-bottom: govuk-spacing(4);
+    padding-top: govuk-spacing(4);
 
     .govuk-body-l {
       color: govuk-colour('white');

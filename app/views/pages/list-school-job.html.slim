@@ -4,30 +4,27 @@
   .govuk-grid-row--blue
     .govuk-width-container
       .govuk-grid-row.publisher-landing-page__header class=" govuk-!-margin-bottom-2"
-          = govuk_phase_banner(classes: "govuk-!-margin-bottom-6 govuk-!-margin-left-3 govuk-!-margin-right-3", tag: { text: "beta" }) do
-            | This is a new service - #{govuk_link_to "your feedback", new_feedback_path} will help us to improve it.
+        .govuk-grid-column-two-thirds
+          h1.govuk-heading-l = "Save time and money on recruitment"
 
-          .govuk-grid-column-two-thirds
-            h1.govuk-heading-l = "Save time and money on recruitment"
+          p.govuk-body-l
+            | Teaching Vacancies is completely free. Save money on recruitment
+            |   advertising and spend it where it counts most – in the classroom.
 
-            p.govuk-body-l
-              | Teaching Vacancies is completely free. Save money on recruitment
-              |   advertising and spend it where it counts most – in the classroom.
+          p.govuk-body-l
+            | Teaching Vacancies puts you in control of your own recruitment. Post as
+            |   many vacancies as you want and directly publish and edit them for free.
 
-            p.govuk-body-l
-              | Teaching Vacancies puts you in control of your own recruitment. Post as
-              |   many vacancies as you want and directly publish and edit them for free.
+          .publisher-landing-page__account-actions
+            = govuk_start_button(text: "Sign in", href: page_path("sign-in"))
 
-            .publisher-landing-page__account-actions
-              = govuk_start_button(text: "Sign in", href: page_path("sign-in"))
+            .publisher-landing-page__account-actions__request-account-link
+              span.govuk-body-m
+                = "or"
+              = govuk_link_to("request a Teaching Vacancies account", page_path("dsi-account-request"), class: "govuk-body-m govuk-!-margin-left-1")
 
-              .publisher-landing-page__account-actions__request-account-link
-                span.govuk-body-m
-                  = "or"
-                = govuk_link_to("request a Teaching Vacancies account", page_path("dsi-account-request"), class: "govuk-body-m govuk-!-margin-left-1")
-
-          .govuk-grid-column-one-third class="govuk-!-padding-left-0"
-            img class="govuk-!-margin-top-2 publisher-landing-page__icons" src=asset_pack_path("media/images/publishers/landing_page/header_icons.png") alt="Save time and money on recruiting teachers" width="100%" height="100%"
+        .govuk-grid-column-one-third class="govuk-!-padding-left-0"
+          img class="govuk-!-margin-top-2 publisher-landing-page__icons" src=asset_pack_path("media/images/publishers/landing_page/header_icons.png") alt="Save time and money on recruiting teachers" width="100%" height="100%"
 
   .govuk-width-container
     .govuk-grid-row.publisher-landing-page__section class="govuk-!-padding-left-3"
