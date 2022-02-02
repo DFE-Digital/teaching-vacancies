@@ -1,7 +1,8 @@
 import 'core-js/modules/es.weak-map';
 import 'core-js/modules/es.weak-set';
+
+import { Application } from 'stimulus';
 import '@stimulus/polyfills';
-import { Application } from '@hotwired/stimulus';
 
 // view components
 import MapController from '../../components/map_component/map';
@@ -17,6 +18,8 @@ import ManageQualificationsController from './components/manageQualifications/ma
 import TrackedLinkController from './components/trackedLink/trackedLink';
 import UploadDocumentsController from './components/uploadDocuments/uploadDocuments';
 import UtilsController from './components/utils';
+
+try {
 
 const application = Application.start();
 
@@ -35,3 +38,7 @@ application.register('tracked-link', TrackedLinkController);
 application.register('upload-documents', UploadDocumentsController);
 application.register('utils', UtilsController);
 application.register('vacancy-selector', VacancySelectorController);
+
+} catch (e) {
+  console.log('application', e);
+}

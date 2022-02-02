@@ -10,14 +10,14 @@
     "not dead"
   ],
   "dependencies": {
-    "@hotwired/stimulus": "^3.0.1",
+    "stimulus": "^2.0.0",
     "@rails/webpacker": "^5.4.2",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^2.0.3",
     "axios": "^0.25.0",
     "classlist-polyfill": "^1.2.0",
     "core-js": "^3.20.3",
-    "govuk-frontend": "^4.0.0",
+    "govuk-frontend": "^3.14.0",
     "jquery": "^3.5.0",
     "jsdom": "^19.0.0",
     "leaflet": "^1.7.1",
