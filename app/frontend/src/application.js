@@ -1,6 +1,6 @@
 import 'core-js/modules/es.weak-map';
 import 'core-js/modules/es.weak-set';
-import '@stimulus/polyfills';
+// import '@stimulus/polyfills';
 import { Application } from 'stimulus';
 
 // view components
