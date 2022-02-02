@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { Application } from '@hotwired/stimulus';
+import { Application } from 'stimulus';
 
 import MapController from './map';
 

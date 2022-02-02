@@ -1,4 +1,4 @@
-import { Controller } from '@hotwired/stimulus';
+import { Controller } from 'stimulus';
 import { triggerEvent } from '../../lib/events';
 
 const EVENT_TYPE = 'tracked_link_clicked';

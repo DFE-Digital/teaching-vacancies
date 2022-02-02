@@ -1,6 +1,6 @@
 import 'leaflet';
 
-import { Controller } from '@hotwired/stimulus';
+import { Controller } from 'stimulus';
 
 import './map.scss';
 
