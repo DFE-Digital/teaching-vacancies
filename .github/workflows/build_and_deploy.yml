@@ -99,7 +99,7 @@ jobs:
         with:
             registry: ghcr.io
             username: ${{ github.repository_owner }}
-            password: ${{ env.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
+            password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push docker image from builder target
         uses: docker/build-push-action@v2
