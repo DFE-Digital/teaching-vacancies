@@ -10,13 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2022_02_01_101037) do
-||||||| parent of 4a76687ae (WIP Initial import of feed data)
-ActiveRecord::Schema.define(version: 2022_01_17_134852) do
-=======
-ActiveRecord::Schema.define(version: 2022_01_27_105405) do
->>>>>>> 4a76687ae (WIP Initial import of feed data)
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
