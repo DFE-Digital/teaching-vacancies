@@ -58,7 +58,7 @@ class JobApplication < ApplicationRecord
   end
 
   def deadline_passed?
-    draft? && vacancy&.expires_at&.past?
+    draft? && vacancy&.expired?
   end
 
   private

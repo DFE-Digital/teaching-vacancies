@@ -27,19 +27,6 @@ module VacanciesHelper
     "#{'Error: ' if vacancy.errors.present? && show_errors}#{page_title}"
   end
 
-  def back_to_manage_jobs_link(vacancy)
-    state = if vacancy.listed?
-              "published"
-            elsif vacancy.published? && vacancy.expires_at.future?
-              "pending"
-            elsif vacancy.published? && vacancy.expires_at.past?
-              "expired"
-            else
-              "draft"
-            end
-    jobs_with_type_organisation_path(state)
-  end
-
   def vacancy_or_organisation_description(vacancy)
     vacancy.about_school.presence || vacancy.parent_organisation.description.presence
   end

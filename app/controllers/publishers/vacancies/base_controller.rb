@@ -65,7 +65,7 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
                 success: t("messages.jobs.listing_updated_html",
                            job_title: vacancy.job_title,
                            link_to: helpers.govuk_link_to(t("messages.jobs.listing_updated_link_text"),
-                                                          helpers.back_to_manage_jobs_link(vacancy),
+                                                          jobs_with_type_organisation_path(vacancy.publication_status),
                                                           class: "govuk-link--no-visited-state"))
   end
 
