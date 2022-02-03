@@ -1,0 +1,111 @@
+name: Rebuild docker cache
+
+on:
+
+  workflow_dispatch:
+
+  schedule: # At 12:00 on Sunday
+    - cron: '0 12 * * 0'
+
+concurrency: workflow-Build-and-deploy-main
+
+env:
+ DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
+
+jobs:
+  build:
+    name: Build docker image
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout Code
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+          role-to-assume: Deployments
+          role-duration-seconds: 3600
+          role-skip-session-tagging: true
+
+      - name: Get SLACK_WEBHOOK From ParameterStore
+        uses: marvinpinto/action-inject-ssm-secrets@latest
+        with:
+          ssm_parameter: /teaching-vacancies/github_action/infra/slack_webhook
+          env_variable_name: SLACK_WEBHOOK
+
+      - name: Get SNYK_TOKEN From ParameterStore
+        uses: marvinpinto/action-inject-ssm-secrets@latest
+        with:
+          ssm_parameter: /teaching-vacancies/github_action/infra/snyk
+          env_variable_name: SNYK_TOKEN
+
+      - name: Set environment variables
+        run: |
+          GIT_REF=${{ github.ref }}
+          GIT_BRANCH=${GIT_REF##*/}
+          echo "GIT_BRANCH=${GIT_BRANCH}" >> $GITHUB_ENV
+          echo "DOCKER_IMAGE_TAG=${GIT_BRANCH}-${GITHUB_SHA}" >> $GITHUB_ENV
+          echo "LINK_TO_RUN=https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+            registry: ghcr.io
+            username: ${{ github.repository_owner }}
+            password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push docker image from builder target
+        uses: docker/build-push-action@v2
+        with:
+          build-args: |
+            BUILDKIT_INLINE_CACHE=1
+          push: true
+          # Tag with branch name for reuse
+          tags: ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
+          target: builder
+
+      - name: Build and push docker image from production target
+        uses: docker/build-push-action@v2
+        with:
+          build-args: |
+            BUILDKIT_INLINE_CACHE=1
+            COMMIT_SHA=${{ env.COMMIT_SHA }}
+          push: false
+          load: true
+          # Tag with branch name for reuse
+          # Tag with branch name and commit sha for unique identification
+          tags: |
+            ${{ env.DOCKER_REPOSITORY }}:${{ env.GIT_BRANCH }}
+            ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }}
+          target: production
+
+      - name: Scan ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }} image
+        run: |
+          docker run -t -e "SNYK_TOKEN=${{ env.SNYK_TOKEN }}" \
+            -v "/var/run/docker.sock:/var/run/docker.sock" \
+            -v "$GITHUB_WORKSPACE:/project"  \
+            snyk/snyk-cli:docker test --docker ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }} --file=Dockerfile
+
+      - name: Push ${{ env.DOCKER_REPOSITORY }} images
+        if: ${{ success() }}
+        run: docker image push --all-tags ${{ env.DOCKER_REPOSITORY }}
+
+      - name: Notify twd_tv_dev channel on build workflow failure
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2.2.0
+        env:
+          SLACK_CHANNEL: twd_tv_dev
+          SLACK_USERNAME: CI Deployment
+          SLACK_TITLE: Build failure on Rebuild cache workflow
+          SLACK_MESSAGE: |
+            Build failure on branch ${{env.GIT_BRANCH}} <!channel>
+            See: <${{ env.LINK_TO_RUN }}|Workflow run>
+          SLACK_WEBHOOK: ${{env.SLACK_WEBHOOK}}
+          SLACK_COLOR: failure

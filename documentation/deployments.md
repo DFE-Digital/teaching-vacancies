@@ -36,6 +36,12 @@ Furthermore, to help with workflow code reuse, we trigger a separate deployment 
 
 To block the calling workflow until the triggered workflow is completed, we use `action-wait-for-check`. This checks and waits on a `sha` (commit) instead of `ref` (branch), which is a moving target.
 
+
+### Refresh cached docker image: `ghcr.io/dfe-digital/teaching-vacancies:main`
+
+Refresh the cached `ghcr.io/dfe-digital/teaching-vacancies:main` image on Github packages. In case the build workflow fails at the `Scan ghcr.io/dfe-digital/teaching-vacancies:main image` stage, it may be that a fix is available but our cache is stale; with the vulnerable dependency. In this case use the [rebuild_docker_cache_workflow](../.github/workflows/rebuild_docker_cache.yml) to refresh the cache with updated packages. The rebuild_docker_cache_workflow is scheduled on a weekly run (12 noon on Sundays) and can also be triggered manaully via workflow dispatch.
+
+
 ### Build and deploy to an environment - Makefile
 
 This builds and deploys a Docker image from local code, then updates the environment to use that image

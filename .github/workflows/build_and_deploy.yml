@@ -34,7 +34,6 @@ jobs:
       matrix_environments: ${{ env.MATRIX_ENVIRONMENTS }}
       docker_image_tag: ${{ env.DOCKER_IMAGE_TAG }}
       commit_sha: ${{ env.COMMIT_SHA }}
-      scan_docker_image: ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }}
       LINK_TO_RUN: ${{ env.LINK_TO_RUN }}
     runs-on: ubuntu-20.04
 
@@ -100,7 +99,7 @@ jobs:
         with:
             registry: ghcr.io
             username: ${{ github.repository_owner }}
-            password: ${{ env.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
+            password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push docker image from builder target
         uses: docker/build-push-action@v2
@@ -159,7 +158,6 @@ jobs:
         run: echo "MATRIX_ENVIRONMENTS={\"environment\":[\"review\"]}" >> $GITHUB_ENV
 
       - name: Scan ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }} image
-        id: scan_docker_image
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           docker run -t -e "SNYK_TOKEN=${{ env.SNYK_TOKEN }}" \
