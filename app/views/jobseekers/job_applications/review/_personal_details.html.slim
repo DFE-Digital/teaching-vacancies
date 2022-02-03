@@ -8,7 +8,7 @@
     - row.value text: job_application.last_name
 
   - s.row do |row|
-    - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.previous_names_html")
+    - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.previous_names_review")
     - row.value text: job_application.previous_names.presence || t("jobseekers.job_applications.not_defined")
 
   - s.row do |row|
@@ -24,9 +24,9 @@
     - row.value text: job_application.email
 
   - s.row do |row|
-    - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number_html")
+    - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number_review")
     - row.value text: job_application.teacher_reference_number.presence || t("jobseekers.job_applications.not_defined")
 
   - s.row do |row|
-    - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.national_insurance_number_html")
+    - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.national_insurance_number_review")
     - row.value text: job_application.national_insurance_number.presence || t("jobseekers.job_applications.not_defined")

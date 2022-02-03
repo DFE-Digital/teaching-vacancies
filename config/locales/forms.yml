@@ -327,7 +327,7 @@ en:
         job_title: Job title
         main_duties: Main duties
         organisation: School or other organisation
-        salary_html: Salary (optional<span class='govuk-visually-hidden'> field</span>)</span>
+        subjects_review: Subjects and key stages taught
         subjects_html: Subjects and key stages taught (optional<span class='govuk-visually-hidden'> field</span>)</span>
       jobseekers_job_application_details_qualifications_category_form:
         category_options:
@@ -431,10 +431,13 @@ en:
         email_address: Email address
         first_name: First name
         last_name: Last name
+        national_insurance_number_review: National Insurance number
         national_insurance_number_html: National Insurance number (optional<span class='govuk-visually-hidden'> field</span>)</span>
         phone_number: Phone number
+        previous_names_review: Previous names
         previous_names_html: Previous names (optional<span class='govuk-visually-hidden'> field</span>)</span>
         street_address: Building and street
+        teacher_reference_number_review: Teacher reference number (TRN)
         teacher_reference_number_html: Teacher reference number (TRN) (optional<span class='govuk-visually-hidden'> field</span>)</span>
       jobseekers_job_application_personal_statement_form:
         personal_statement: Your personal statement
