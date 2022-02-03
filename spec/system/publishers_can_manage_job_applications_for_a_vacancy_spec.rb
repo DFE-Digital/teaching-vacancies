@@ -32,27 +32,8 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
           expect(page).to have_content(vacancy.job_title)
         end
 
-        within(".vacancy-deadline") do
-          expect(page).to have_content(format_time_to_datetime_at(vacancy.expires_at))
-          expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.deadline.after"))
-        end
-      end
-
-      it "shows total of each status for all applications" do
-        within(".application-count.govuk-tag--green") do
-          expect(page).to have_content("1")
-          expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.shortlisted", count: 1))
-        end
-
-        within(".application-count.govuk-tag--blue") do
-          expect(page).to have_content("1")
-          expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.submitted", count: 1))
-        end
-
-        within(".application-count.govuk-tag--red") do
-          expect(page).to have_content("1")
-          expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.rejected", count: 1))
-        end
+        expect(page).to have_content(format_time_to_datetime_at(vacancy.expires_at))
+        expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.deadline.after"))
       end
 
       it "shows a card for each application that has been submitted and no draft applications" do
@@ -207,7 +188,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
     describe "the summary section" do
       it "shows breadcrumb with link to active jobs in dashboard" do
         within(".govuk-breadcrumbs") do
-          expect(page).to have_link(I18n.t("publishers.vacancies_component.published.tab_heading"), href: organisation_path)
+          expect(page).to have_link(I18n.t("publishers.vacancies_component.published.tab_heading"), href: jobs_with_type_organisation_path(:published))
         end
       end
 
@@ -216,27 +197,8 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
           expect(page).to have_content(vacancy.job_title)
         end
 
-        within(".vacancy-deadline") do
-          expect(page).to have_content(format_time_to_datetime_at(vacancy.expires_at))
-          expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.deadline.before"))
-        end
-      end
-
-      it "shows total of each status for all applications" do
-        within(".application-count.govuk-tag--green") do
-          expect(page).to have_content("0")
-          expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.shortlisted", count: 0))
-        end
-
-        within(".application-count.govuk-tag--blue") do
-          expect(page).to have_content("0")
-          expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.submitted", count: 0))
-        end
-
-        within(".application-count.govuk-tag--red") do
-          expect(page).to have_content("0")
-          expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.rejected", count: 0))
-        end
+        expect(page).to have_content(format_time_to_datetime_at(vacancy.expires_at))
+        expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.deadline.before"))
       end
 
       it "shows that there are no applicants" do
@@ -258,10 +220,6 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
       it "shows no sort applications control" do
         expect(page).not_to have_css("#sort-column-field")
-      end
-
-      it "shows no application counts" do
-        expect(page).to have_css(".job-applications-summary .govuk-grid-column-one-quarter", count: 1)
       end
 
       it "shows text to tell user can no longer see applications" do
