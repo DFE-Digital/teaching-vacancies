@@ -1,5 +1,5 @@
 ##
-# An experimental parser for a vacancy feed.
+# An experimental parser for a vacancy feed for "Skywalker".
 #
 # Allows enumerating over the feed's and yields intialized `Vacancy` objects that can be manipulated
 # and persisted by calling code (e.g. an import job).
@@ -14,8 +14,8 @@
 #     of the feed's school group, and assign the vacancy to the school group itself if we fail
 #   - Question: What do we do with vacancies that are removed from the feed - do we need to prune
 #     vacancies that no longer come through as part of every update?
-class DemoFeed
-  FEED_URL = ENV.fetch("VACANCIES_FEED_URL_DEMO")
+class SkywalkerFeed
+  FEED_URL = ENV.fetch("VACANCIES_FEED_URL_SKYWALKER")
 
   class FeedItem
     def initialize(xml_node)
