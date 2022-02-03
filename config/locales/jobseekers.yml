@@ -259,7 +259,7 @@ en:
         heading: Helping you apply quicker
         save_and_return: You can save your application at any point and return to it later.
         title: Application
-      not_defined: Not defined (will not be seen on application)
+      not_defined: Not provided (will not be seen on application)
       qualifications:
         destroy:
           success: Your qualification was deleted
