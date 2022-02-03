@@ -8,7 +8,7 @@
     - if vacancy.expires_at.present?
         p.govuk-body.govuk-caption-s
           span class="govuk-!-font-weight-bold"
-            - if vacancy.expires_at.past?
+            - if vacancy.expired?
               = t(".deadline.after")
             - else
               = t(".deadline.before")

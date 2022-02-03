@@ -107,13 +107,10 @@ class Vacancy < ApplicationRecord
   end
 
   def publication_status
-    if expired?
-      "expired"
-    elsif pending?
-      "pending"
-    else
-      status
-    end
+    return "expired" if expired?
+    return "pending" if pending?
+
+    status
   end
 
   def can_receive_job_applications?

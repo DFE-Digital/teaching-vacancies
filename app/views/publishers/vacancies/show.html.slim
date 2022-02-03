@@ -17,7 +17,7 @@
 
   - r.below
     = render "publish_buttons", back_to: "manage_draft" if vacancy.draft?
-    = govuk_link_to(t("buttons.back_to_manage_jobs"), back_to_manage_jobs_link(vacancy), class: "govuk-link--no-visited-state")
+    = govuk_link_to(t("buttons.back_to_manage_jobs"), jobs_with_type_organisation_path(vacancy.publication_status), class: "govuk-link--no-visited-state")
 
   - if vacancy.published? && !vacancy.pending?
     - r.sidebar(classes: %w[grey-cta-container govuk-!-padding-bottom-4])
