@@ -126,6 +126,18 @@ class VacancyPresenter < BasePresenter
     [type, duration].compact.join(" ")
   end
 
+  # TODO: Just helps to differentiate different imports, should be removed when we productionise
+  def external_tag_colour
+    case model.external_feed_id
+    when "skywalker"
+      "green"
+    when "hansolo"
+      "purple"
+    else
+      "orange"
+    end
+  end
+
   private
 
   def greyed_additional_job_role(role)

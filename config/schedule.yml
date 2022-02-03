@@ -28,6 +28,11 @@ import_polygon_data:
   class: 'ImportPolygonDataJob'
   queue: low
 
+import_vacancies_from_feeds:
+  cron: '7 7 * * *' # at 7:07am every day
+  class: 'ImportVacanciesFromFeedsJob'
+  queue: default
+
 queue_applications_received:
   cron: '0 6 * * *'
   class: 'SendApplicationsReceivedYesterdayJob'
