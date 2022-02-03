@@ -189,6 +189,10 @@ class Vacancy < ApplicationRecord
     postcode
   end
 
+  def external?
+    external_feed_id.present?
+  end
+
   private
 
   def slug_candidates

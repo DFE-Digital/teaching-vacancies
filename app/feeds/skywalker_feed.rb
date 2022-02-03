@@ -31,9 +31,11 @@ class SkywalkerFeed
 
   def each
     items.each do |item|
-      v = Vacancy.find_or_initialize_by(external_reference: item["a10:content/Vacancy/VacancyID"])
+      v = Vacancy.find_or_initialize_by(
+        external_feed_id: "skywalker",
+        external_reference: item["a10:content/Vacancy/VacancyID"],
+      )
 
-      v.external = true
       # An external vacancy is by definition always published
       v.status = :published
       # Consider publish_on date to be the first time we saw this vacancy come through
@@ -52,8 +54,6 @@ class SkywalkerFeed
     expires_at = Time.zone.parse(item["a10:content/Vacancy/ExpiryDate"])
 
     {
-      external: true,
-
       # Known good fields from the existing barebones feed
       job_title: item["a10:content/Vacancy/VacancyTitle"],
       salary: item["a10:content/Vacancy/Salary"],
