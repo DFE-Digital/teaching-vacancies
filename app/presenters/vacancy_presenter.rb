@@ -5,6 +5,7 @@ class VacancyPresenter < BasePresenter
   delegate :location, to: :organisation
   delegate :working_patterns, to: :model, prefix: true
   delegate :job_roles, to: :model, prefix: true
+  delegate :expired?, to: :model
 
   HTML_STRIP_REGEX = %r{(&nbsp;|<div>|</div>|<!--block-->)+}
 
@@ -43,10 +44,6 @@ class VacancyPresenter < BasePresenter
 
   def benefits
     simple_format(fix_bullet_points(model.benefits)) if model.benefits.present?
-  end
-
-  def expired?
-    model.expires_at < Time.current
   end
 
   def publish_today?
