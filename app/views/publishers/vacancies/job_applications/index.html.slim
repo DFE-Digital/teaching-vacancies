@@ -1,6 +1,6 @@
 - content_for :page_title_prefix, current_organisation.name
 
-= render "banner", vacancy: vacancy, job_applications: job_applications
+= render "publishers/vacancies/banner", vacancy: vacancy, job_applications: job_applications
 
 - if vacancy.within_data_access_period? && job_applications.many?
   .govuk-grid-row class="govuk-!-margin-top-7"

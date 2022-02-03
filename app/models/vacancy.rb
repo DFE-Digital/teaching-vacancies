@@ -102,6 +102,17 @@ class Vacancy < ApplicationRecord
     published? && publish_on&.future?
   end
 
+  def expired?
+    published? && expires_at&.past?
+  end
+
+  def publication_status
+    return "expired" if expired?
+    return "pending" if pending?
+
+    status
+  end
+
   def can_receive_job_applications?
     enable_job_applications? && published? && !pending?
   end
