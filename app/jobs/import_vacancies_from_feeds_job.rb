@@ -1,5 +1,5 @@
 class ImportVacanciesFromFeedsJob < ApplicationJob
-  FEEDS = [SkywalkerFeed].freeze
+  FEEDS = [HansoloFeed, SkywalkerFeed].freeze
 
   queue_as :default
 

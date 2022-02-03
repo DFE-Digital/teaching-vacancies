@@ -130,7 +130,9 @@ class VacancyPresenter < BasePresenter
   def external_tag_colour
     case model.external_feed_id
     when "skywalker"
-      "yellow"
+      "green"
+    when "hansolo"
+      "purple"
     else
       "orange"
     end

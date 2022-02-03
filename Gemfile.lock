@@ -723,6 +723,7 @@ DEPENDENCIES
   launchy
   listen
   lockbox
+  loofah
   mail-notify
   mimemagic
   net-imap

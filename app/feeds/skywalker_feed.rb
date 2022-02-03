@@ -56,6 +56,7 @@ class SkywalkerFeed
     {
       # Known good fields from the existing barebones feed
       job_title: item["a10:content/Vacancy/VacancyTitle"],
+      job_advert: job_advert_text_for(item),
       salary: item["a10:content/Vacancy/Salary"],
       expires_at: expires_at,
       external_advert_url: item["link"],
@@ -64,7 +65,6 @@ class SkywalkerFeed
       #   vacancy - need to discuss if we need these and if so get them added to feed
       subjects: [],
       working_patterns: %w[full_time],
-      job_advert: job_advert_text_for(item),
     }.merge(guess_organisation_attributes_for(item))
   end
 
