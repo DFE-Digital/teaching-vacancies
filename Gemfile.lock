@@ -723,11 +723,13 @@ DEPENDENCIES
   launchy
   listen
   lockbox
+  loofah
   mail-notify
   mimemagic
   net-imap
   net-pop
   net-smtp
+  nokogiri
   noticed
   omniauth
   omniauth_openid_connect

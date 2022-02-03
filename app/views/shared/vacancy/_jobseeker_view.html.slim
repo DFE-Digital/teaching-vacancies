@@ -59,6 +59,14 @@
     = render "/vacancies/key_dates_sidebar"
 
   .govuk-grid-column-two-thirds
+    / TODO: This is here for testing purposes and needs to be removed before going live
+    - if @vacancy.external?
+      = govuk_notification_banner title_text: "🛸 Imported vacancy", classes: "govuk-!-margin-bottom-5" do
+        p.govuk-text
+          span.govuk-tag class="govuk-tag--#{@vacancy.external_tag_colour}" = @vacancy.external_feed_id
+          | &nbsp;This vacancy has been imported from an external feed.
+        p.govuk-text
+          = open_in_new_tab_link_to "View on source website", @vacancy.external_advert_url
 
     - if @vacancy.organisations.many?
       = govuk_notification_banner title_text: t("banners.important"), classes: "govuk-!-margin-bottom-5" do
