@@ -51,6 +51,7 @@ class Vacancy < ApplicationRecord
   scope :expired, (-> { published.where("expires_at < ?", Time.current) })
   scope :expired_yesterday, (-> { where("DATE(expires_at) = ?", 1.day.ago.to_date) })
   scope :expires_within_data_access_period, (-> { where("expires_at >= ?", Time.current - DATA_ACCESS_PERIOD_FOR_PUBLISHERS) })
+  scope :external, (-> { where(external: true) })
   scope :in_organisation_ids, (->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { organisation_id: ids }).distinct })
   scope :listed, (-> { published.where("publish_on <= ?", Date.current) })
   scope :live, (-> { listed.applicable })
@@ -186,6 +187,10 @@ class Vacancy < ApplicationRecord
     self.postcode_from_mean_geolocation = postcode
     save if persist
     postcode
+  end
+
+  def external?
+    external_feed_id.present?
   end
 
   private

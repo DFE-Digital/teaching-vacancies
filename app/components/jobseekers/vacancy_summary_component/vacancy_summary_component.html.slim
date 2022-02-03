@@ -1,5 +1,9 @@
 li.vacancy role="listitem" tab-index="0"
   h2.govuk-heading-m class="govuk-!-margin-bottom-0"
+    / TODO: This tag is just for testing purposes and needs to be removed before going live!
+    - if @vacancy.external?
+      strong.govuk-tag class="govuk-tag--#{@vacancy.external_tag_colour}" = @vacancy.external_feed_id
+      | &nbsp;
     = govuk_link_to(@vacancy.job_title, job_path(@vacancy), class: "view-vacancy-link")
   p.govuk-body
     = vacancy_full_job_location(@vacancy)
