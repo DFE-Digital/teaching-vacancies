@@ -36,6 +36,8 @@
                   - row.value text: safe_join([tag.div(t("helpers.label.jobseekers_job_application_details_qualifications_shared_labels.finished_studying_options.#{qualification.finished_studying}"), class: "govuk-body"), tag.div(qualification.finished_studying_details.presence, class: "govuk-body")])
 
           - detail.actions do
+            - if qualification.secondary?
+              = govuk_link_to t("buttons.add_another_subject"), edit_jobseekers_job_application_qualification_path(job_application, qualification, new_subject: true), class: "govuk-link--no-visited-state"
             = govuk_link_to t("buttons.change"), edit_jobseekers_job_application_qualification_path(job_application, qualification), class: "govuk-link--no-visited-state"
             = govuk_link_to t("buttons.delete"), jobseekers_job_application_qualification_path(job_application, qualification), method: :delete
 

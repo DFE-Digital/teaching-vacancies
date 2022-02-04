@@ -15,6 +15,6 @@
 
   span class="govuk-!-margin-bottom-6 govuk-!-margin-top-0 js-action button_to"
     button.govuk-delete-link id="add_subject" data-action="manage-qualifications#addRow"
-      = t("buttons.add_another_subject")
+      = "+ #{t('buttons.add_another_subject')}"
 
 = f.govuk_number_field :year, label: { size: "s" }, aria: { required: true }, width: 4

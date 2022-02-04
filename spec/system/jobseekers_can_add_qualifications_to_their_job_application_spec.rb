@@ -114,6 +114,28 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
         expect(page).to have_content("Hard Knocks")
       end
     end
+
+    it "has an 'add another subject' link" do
+      create(:qualification,
+             category: "gcse",
+             results_count: 1,
+             job_application: job_application)
+
+      visit jobseekers_job_application_build_path(job_application, :qualifications)
+
+      expect(page).to have_css(".detail-component", count: 1)
+      subject_list = page.find("dt.govuk-summary-list__key", text: "Subjects and grades").sibling("dd")
+      expect(subject_list).to have_css(".govuk-body", count: 1)
+
+      click_on "Add another subject"
+      fill_in "Subject 2", with: "A second subject"
+      fill_in "jobseekers_job_application_details_qualifications_secondary_common_form[qualification_results_attributes][1][grade]", with: "B"
+      click_on "Save qualifications"
+
+      expect(page).to have_css(".detail-component", count: 1)
+      subject_list = page.find("dt.govuk-summary-list__key", text: "Subjects and grades").sibling("dd")
+      expect(subject_list).to have_css(".govuk-body", count: 2)
+    end
   end
 
   def empty_second_qualification_result
