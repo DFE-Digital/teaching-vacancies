@@ -7,7 +7,7 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
   context "with the correct token" do
     before do
       visit unsubscribe_subscription_path(token)
-      click_on I18n.t("subscriptions.unsubscribe.button_text")
+      click_on I18n.t("buttons.unsubscribe")
     end
 
     let(:token) { subscription.token }

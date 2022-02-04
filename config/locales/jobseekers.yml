@@ -490,7 +490,8 @@ en:
     unsubscribe_feedbacks:
       new:
         confirmation: You will no longer receive updates for this job alert.
-        header: You have been unsubscribed from this alert
+        create_alert: create a new job alert
+        header: We've unsubscribed you from this job alert
         heading: Help us improve job alerts
         title: Subscription deleted
       create:

@@ -3,13 +3,11 @@
 .govuk-main-wrapper
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      h1.govuk-heading-l = t(".heading")
-
-      p.govuk-body = t(".description")
+      h1.govuk-heading-l = t(".title")
 
       = render Jobseekers::SubscriptionDetailsComponent.new(@subscription, current_subscription: true)
 
-      p.govuk-body = t(".edit_instead_html", edit_link: govuk_link_to(t(".edit_instead_link"), edit_subscription_path(@subscription.token)))
-      = t(".edit_instead_options_html")
+      p.govuk-body = t(".confirmation")
 
-      = govuk_button_to t(".button_text"), subscription_path(@subscription.token), method: :delete, class: "govuk-button--warning govuk-!-margin-top-5"
+      = govuk_button_to t("buttons.unsubscribe"), subscription_path(@subscription.token), method: :delete, class: "govuk-button--warning govuk-!-margin-top-2"
+      = govuk_link_to t("buttons.cancel"), root_path
