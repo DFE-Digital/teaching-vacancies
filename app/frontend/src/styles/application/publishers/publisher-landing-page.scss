@@ -1,81 +1,71 @@
 .publisher-landing-page {
-  margin-bottom: 150px;
+  &__header {
+    @include full-width-mast;
+    background-color: $govuk-brand-colour;
+    padding-bottom: govuk-spacing(4);
+    padding-top: govuk-spacing(4);
 
-  &__account-actions {
-    align-items: baseline;
-    column-gap: govuk-spacing(5);
-    display: flex;
-    flex-wrap: wrap;
+    &__image {
+      max-width: 275px;
 
-    &__request-account-link {
+      @include govuk-media-query($until: tablet) {
+        display: none;
+      }
+    }
+
+    .actions {
+      align-items: center;
+      column-gap: govuk-spacing(2);
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: govuk-spacing(1);
+
+      &__sign-in {
+        flex-basis: 100%;
+
+        @include govuk-media-query($from: tablet) {
+          flex-basis: auto;
+
+          .govuk-button {
+            margin-bottom: 0;
+          }
+        }
+
+        .govuk-button {
+          background-color: govuk-colour('white');
+          color: $govuk-brand-colour;
+
+          &:hover {
+            background-color: govuk-colour('light-grey');
+          }
+        }
+      }
+
       .govuk-body-m {
         color: govuk-colour('white');
-        display: inline;
+        flex-basis: auto;
+        margin-bottom: 0;
 
         &:focus {
           color: $govuk-focus-text-colour;
         }
       }
-    }
-  }
 
-  .govuk-button--start {
-    background-color: govuk-colour('white');
-    color: $govuk-brand-colour;
-
-    &:hover {
-      background-color: #d5e8f3;
-    }
-  }
-
-  .govuk-grid-row--blue {
-    background-color: $govuk-brand-colour;
-  }
-
-  .govuk-phase-banner {
-    border-top: 0;
-
-    &__content__tag {
-      background-color: govuk-colour('white');
-      color: $govuk-brand-colour;
+      &__request-account {
+        flex-grow: 1;
+      }
     }
 
-    &__text {
-      color: govuk-colour('white');
-    }
-  }
-
-  &__header {
-    padding-bottom: govuk-spacing(4);
-
-    .govuk-body-l {
-      color: govuk-colour('white');
-    }
-
-    .govuk-heading-l {
-      color: govuk-colour('white');
-    }
-
+    .govuk-body-l,
+    .govuk-heading-l,
     .govuk-link {
       color: govuk-colour('white');
     }
   }
 
-  &__icons {
-    max-width: 275px;
-
-    @include govuk-media-query($until: tablet) {
-      display: none;
-    }
-  }
-
-  &__section {
+  &__content {
     .govuk-link {
       display: block;
     }
-  }
-
-  &__sign-in-button {
-    color: $govuk-brand-colour;
   }
 }

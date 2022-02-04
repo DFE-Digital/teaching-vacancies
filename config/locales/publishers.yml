@@ -145,6 +145,10 @@ en:
         tab_heading: Active jobs
         with_count_html: Active jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
     vacancies:
+      banner:
+        deadline:
+          after: Deadline passed
+          before: Application deadline
       build:
         applying_for_the_job:
           banner:
@@ -236,23 +240,6 @@ en:
             body: Thank you
           title: Feedback submitted
       job_applications:
-        banner:
-          applications:
-            hide_count: Applications
-            show_count: Applications (%{count})
-          deadline:
-            after: Deadline passed
-            before: Application deadline
-          rejected:
-            one: Rejected application
-            other: Rejected applications
-          shortlisted:
-            one: Shortlisted application
-            other: Shortlisted applications
-          submitted:
-            one: Unread application
-            other: Unread applications
-          statistics: Statistics
         index:
           deadline:
             after: Deadline passed
@@ -350,7 +337,11 @@ en:
           withdrawn_applications: Withdrawn applications
         update:
           success: Thank you for submitting your feedback for %{job_title}
-
+      tabs_show:
+        applications:
+          hide_count: Applications
+          show_count: Applications (%{count})
+        statistics: Statistics
       vacancy_publisher_feedbacks:
         new:
           already_submitted: Feedback for this job has already been submitted

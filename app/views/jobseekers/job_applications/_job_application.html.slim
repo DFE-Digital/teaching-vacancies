@@ -18,7 +18,7 @@
 
     = tag.div(card.labelled_item(t(".closing_date"), OrganisationVacancyPresenter.new(job_application.vacancy).application_deadline))
 
-  - if job_application.draft? && job_application.vacancy.expires_at.past?
+  - if job_application.draft? && job_application.vacancy.expired?
     - card.action_item link: job_application_status_tag(:deadline_passed)
   - else
     - card.action_item link: job_application_status_tag(job_application.status)

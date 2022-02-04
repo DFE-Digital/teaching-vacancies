@@ -1,36 +1,36 @@
 - content_for :page_title_prefix, "List a school job"
 
 .publisher-landing-page
-  .govuk-grid-row--blue
+  .publisher-landing-page__header
     .govuk-width-container
-      .govuk-grid-row.publisher-landing-page__header class=" govuk-!-margin-bottom-2"
-          = govuk_phase_banner(classes: "govuk-!-margin-bottom-6 govuk-!-margin-left-3 govuk-!-margin-right-3", tag: { text: "beta" }) do
-            | This is a new service - #{govuk_link_to "your feedback", new_feedback_path} will help us to improve it.
+      .govuk-grid-row class=" govuk-!-margin-bottom-2"
+        .govuk-grid-column-two-thirds
+          h1.govuk-heading-l = "Save time and money on recruitment"
 
-          .govuk-grid-column-two-thirds
-            h1.govuk-heading-l = "Save time and money on recruitment"
+          p.govuk-body-l
+            | Teaching Vacancies is completely free. Save money on recruitment
+            |   advertising and spend it where it counts most – in the classroom.
 
-            p.govuk-body-l
-              | Teaching Vacancies is completely free. Save money on recruitment
-              |   advertising and spend it where it counts most – in the classroom.
+          p.govuk-body-l
+            | Teaching Vacancies puts you in control of your own recruitment. Post as
+            |   many vacancies as you want and directly publish and edit them for free.
 
-            p.govuk-body-l
-              | Teaching Vacancies puts you in control of your own recruitment. Post as
-              |   many vacancies as you want and directly publish and edit them for free.
+        .govuk-grid-column-one-third class="govuk-!-padding-left-0"
+          img class="govuk-!-margin-top-2 publisher-landing-page__header__image" src=asset_pack_path("media/images/publishers/landing_page/header_icons.png") alt="Save time and money on recruiting teachers" width="100%" height="100%"
 
-            .publisher-landing-page__account-actions
+      .govuk-grid-row
+        .govuk-grid-column-full
+          .actions
+            .actions__sign-in
               = govuk_start_button(text: "Sign in", href: page_path("sign-in"))
 
-              .publisher-landing-page__account-actions__request-account-link
-                span.govuk-body-m
-                  = "or"
-                = govuk_link_to("request a Teaching Vacancies account", page_path("dsi-account-request"), class: "govuk-body-m govuk-!-margin-left-1")
+            .govuk-body-m = "or"
 
-          .govuk-grid-column-one-third class="govuk-!-padding-left-0"
-            img class="govuk-!-margin-top-2 publisher-landing-page__icons" src=asset_pack_path("media/images/publishers/landing_page/header_icons.png") alt="Save time and money on recruiting teachers" width="100%" height="100%"
+            .actions__request-account.govuk-body-m
+              = govuk_link_to("request a Teaching Vacancies account", page_path("dsi-account-request"))
 
-  .govuk-width-container
-    .govuk-grid-row.publisher-landing-page__section class="govuk-!-padding-left-3"
+  .publisher-landing-page__content
+    .govuk-grid-row class="govuk-!-padding-left-3"
       .govuk-grid-column-one-half class="govuk-!-padding-left-0"
         h2.govuk-heading-m class="govuk-!-margin-top-4"
           | What is Teaching Vacancies?
@@ -52,7 +52,7 @@
 
     hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible class="govuk-!-margin-top-2 govuk-!-margin-bottom-2"
 
-    .govuk-grid-row.publisher-landing-page__section class="govuk-!-padding-left-3"
+    .govuk-grid-row class="govuk-!-padding-left-3"
       .govuk-grid-column-two-thirds class="govuk-!-padding-left-0"
         h2.govuk-heading-m class="govuk-!-margin-top-4"
           | Why should I use Teaching Vacancies?
@@ -64,7 +64,7 @@
         p.govuk-body
           | Last year we received over 2.5 million views of job vacancies from potential jobseekers.
 
-    .govuk-grid-row.publisher-landing-page__section class="govuk-!-padding-left-3"
+    .govuk-grid-row class="govuk-!-padding-left-3"
       .govuk-grid-column-one-third class="govuk-!-padding-left-0"
         h3.govuk-heading-m class="govuk-!-margin-top-4"
           | Save money
@@ -90,12 +90,12 @@
 
     hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible class="govuk-!-margin-top-2 govuk-!-margin-bottom-2"
 
-    .govuk-grid-row.publisher-landing-page__section class="govuk-!-padding-left-3"
+    .govuk-grid-row class="govuk-!-padding-left-3"
       .govuk-grid-column-one-half class="govuk-!-padding-left-0"
         h2.govuk-heading-l class="govuk-!-margin-top-4"
             | How does Teaching Vacancies work?
 
-    .govuk-grid-row.publisher-landing-page__section class="govuk-!-padding-left-3"
+    .govuk-grid-row class="govuk-!-padding-left-3"
       .govuk-grid-column-one-half class="govuk-!-padding-left-0"
         h3.govuk-heading-m class="govuk-!-margin-top-4"
           | Create a job listing
@@ -119,7 +119,7 @@
       .govuk-grid-column-one-half class="govuk-!-padding-left-0"
         img class="govuk-!-margin-top-4" src=asset_pack_path("media/images/publishers/landing_page/create_a_job_listing.png") alt="Create a job listing on Teaching Vacancies" width="100%" height="100%"
 
-    .govuk-grid-row.publisher-landing-page__section class="govuk-!-padding-left-3"
+    .govuk-grid-row class="govuk-!-padding-left-3"
       .govuk-grid-column-one-half class="govuk-!-padding-left-0"
         h3.govuk-heading-m class="govuk-!-margin-top-4"
             | Receive applications through Teaching Vacancies
@@ -140,7 +140,7 @@
       .govuk-grid-column-one-half class="govuk-!-padding-left-0"
         img class="govuk-!-margin-top-4" src=asset_pack_path("media/images/publishers/landing_page/receive_applications.png") alt="Receive job applications through Teaching Vacancies" width="100%" height="100%"
 
-    .govuk-grid-row.publisher-landing-page__section class="govuk-!-padding-left-3"
+    .govuk-grid-row class="govuk-!-padding-left-3"
       .govuk-grid-column-one-half class="govuk-!-padding-left-0"
         h3.govuk-heading-m class="govuk-!-margin-top-4"
           | Manage your jobs
@@ -154,7 +154,7 @@
       .govuk-grid-column-one-half class="govuk-!-padding-left-0"
         img class="govuk-!-margin-top-4" src=asset_pack_path("media/images/publishers/landing_page/manage_your_jobs.png") alt="Manage job listing on Teaching Vacancies" width="100%" height="100%"
 
-    .govuk-grid-row.publisher-landing-page__section class="govuk-!-padding-left-3"
+    .govuk-grid-row class="govuk-!-padding-left-3"
       .govuk-grid-column-one-half class="govuk-!-padding-left-0"
         h3.govuk-heading-m class="govuk-!-margin-top-4"
           | Manage applicants on a personalised dashboard
@@ -171,7 +171,7 @@
 
     hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible class="govuk-!-margin-top-2 govuk-!-margin-bottom-2"
 
-    .govuk-grid-row.publisher-landing-page__section class="govuk-!-padding-left-3"
+    .govuk-grid-row class="govuk-!-padding-left-3"
       h3.govuk-heading-m class="govuk-!-margin-top-4"
         | Who's using Teaching Vacancies?
 
@@ -199,7 +199,7 @@
 
     hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible class="govuk-!-margin-top-2 govuk-!-margin-bottom-2"
 
-    .govuk-grid-row.publisher-landing-page__section class="govuk-!-padding-left-3"
+    .govuk-grid-row class="govuk-!-padding-left-3"
       h3.govuk-heading-m class="govuk-!-margin-top-4 govuk-!-margin-bottom-6"
         | What schools say about Teaching Vacancies
 
@@ -218,7 +218,7 @@
 
     hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible class="govuk-!-margin-top-2 govuk-!-margin-bottom-2"
 
-    .govuk-grid-row.publisher-landing-page__section class="govuk-!-padding-left-3"
+    .govuk-grid-row class="govuk-!-padding-left-3"
       .govuk-grid-column-one-third class="govuk-!-padding-left-0"
         h3.govuk-heading-m class="govuk-!-margin-top-4"
           | Sign in

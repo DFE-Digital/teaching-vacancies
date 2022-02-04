@@ -1,7 +1,7 @@
 .govuk-header {
   border-bottom: govuk-spacing(2) solid $govuk-brand-colour;
 
-  @include govuk-media-query($from: tablet) {
+  @include govuk-media-query($from: desktop) {
     &__container {
       display: flex;
     }
