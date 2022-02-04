@@ -1,5 +1,6 @@
-= f.govuk_text_field :subject, label: { size: "s" }, aria: { required: true }
 = f.govuk_text_field :institution, label: { size: "s" }, aria: { required: true }
+
+= f.govuk_text_field :subject, label: { size: "s" }, aria: { required: true }
 
 = f.govuk_radio_buttons_fieldset :finished_studying do
   = f.govuk_radio_button :finished_studying, "true", link_errors: true do
