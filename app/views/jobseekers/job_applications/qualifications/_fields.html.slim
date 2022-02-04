@@ -2,8 +2,6 @@
 
 - case category
 - when "gcse", "as_level", "a_level", "other_secondary"
-  - if category == "other_secondary"
-    = f.govuk_text_field :name, label: { size: "s" }, aria: { required: true }, width: "two-thirds"
   = render "jobseekers/job_applications/qualifications/fields/secondary_school", f: f
 - when "undergraduate", "postgraduate"
   = render "jobseekers/job_applications/qualifications/fields/degree", f: f

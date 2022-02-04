@@ -1,3 +1,8 @@
+= f.govuk_text_field :institution, label: { size: "s" }, aria: { required: true }, width: "three-quarters"
+
+- if category == "other_secondary"
+  = f.govuk_text_field :name, label: { size: "s" }, aria: { required: true }, width: "two-thirds"
+
 = f.govuk_fieldset legend: { text: t("helpers.legend.jobseekers_job_application_details_qualifications_shared_legends.subjects") }, class: "subjects-and-grades", data: { controller: "manage-qualifications" } do
   - form.qualification_results.each_with_index do |result, idx|
     = f.fields_for :qualification_results, result do |result_form|
@@ -12,5 +17,4 @@
     button.govuk-delete-link id="add_subject" data-action="manage-qualifications#addRow"
       = t("buttons.add_another_subject")
 
-= f.govuk_text_field :institution, label: { size: "s" }, aria: { required: true }, width: "three-quarters"
 = f.govuk_number_field :year, label: { size: "s" }, aria: { required: true }, width: 4
