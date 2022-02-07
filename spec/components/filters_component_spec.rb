@@ -6,8 +6,8 @@ RSpec.describe FiltersComponent, type: :component do
   let(:filters) { { total_count: 2 } }
   let(:items) do
     [
-      { title: "Group 1", key: "group_1", options: [%w[option_1 OPTION_1]], selected: %w[option_1], value_method: :first, selected_method: :last },
-      { title: "Group 2", key: "group_2", options: [%w[option_1 OPTION_1]], selected: %w[option_1], value_method: :first, selected_method: :last },
+      { legend: "Group 1", key: "group_1", options: [%w[option_1 OPTION_1]], selected: %w[option_1], value_method: :first, selected_method: :last },
+      { legend: "Group 2", key: "group_2", options: [%w[option_1 OPTION_1]], selected: %w[option_1], value_method: :first, selected_method: :last },
     ]
   end
 
