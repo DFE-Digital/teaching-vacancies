@@ -4,7 +4,8 @@
 = vacancy_review(vacancy, step_process: step_process, back_to: "manage_draft", show_errors: params[:show_errors]) do |r|
   - r.header
     div class="govuk-!-margin-bottom-4"
-      = render "banner", vacancy: vacancy, job_applications: vacancy.job_applications
+      = render "banner", vacancy: vacancy
+      = render "tabs_show", vacancy: vacancy
 
   - r.above
     h2.govuk-heading-l = t("jobs.manage_listing", state: (vacancy.draft? ? "draft" : "job"))
