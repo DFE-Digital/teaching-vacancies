@@ -1,7 +1,6 @@
 module ComponentsHelper
   {
     card: "CardComponent",
-    dashboard: "DashboardComponent",
     empty_section: "EmptySectionComponent",
     filters: "FiltersComponent",
     job_application_review: "JobApplicationReviewComponent",
@@ -14,6 +13,7 @@ module ComponentsHelper
     publishers_vacancies: "Publishers::VacanciesComponent",
     publishers_vacancy_form_page_heading: "Publishers::VacancyFormPageHeadingComponent",
     review: "ReviewComponent",
+    tabs: "TabsComponent",
     vacancy_review: "VacancyReviewComponent",
     vacancy_selector: "VacancySelectorComponent",
     validatable_summary_list: "ValidatableSummaryListComponent",
