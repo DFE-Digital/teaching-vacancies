@@ -40,12 +40,12 @@ class VacanciesController < ApplicationController
   end
 
   def search_params
-    strip_empty_checkboxes(%i[job_roles phases working_patterns])
-    %w[job_role job_roles phases working_patterns].each do |facet|
+    strip_empty_checkboxes(%i[job_roles subjects phases working_patterns])
+    %w[job_role job_roles subjects phases working_patterns].each do |facet|
       params[facet] = params[facet].split if params[facet].is_a?(String)
     end
     params.permit(:keyword, :location, :radius, :subject, :sort_by,
-                  job_role: [], job_roles: [], phases: [], working_patterns: [])
+                  job_role: [], job_roles: [], subjects: [], phases: [], working_patterns: [])
   end
 
   def search_form
