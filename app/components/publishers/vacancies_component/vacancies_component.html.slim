@@ -1,13 +1,16 @@
-= dashboard(background: true, heading: t("jobs.manage.heading_html", organisation: @organisation.name, email: @email), link: { url: create_or_copy_organisation_jobs_path, text: t("buttons.create_job") }) do |d|
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h2.govuk-caption-l = t("jobs.manage.heading_html", organisation: @organisation.name, email: @email)
+    h1.govuk-heading-l class="govuk-!-margin-bottom-4" = t(".#{@selected_type}.with_count_html", count: @vacancies.count)
+  .govuk-grid-column-one-third
+    = govuk_button_link_to t("buttons.create_job"), create_or_copy_organisation_jobs_path, class: "float-right"
+
+= tabs do |t|
   - vacancy_links.each do |item|
-    - d.navigation_item item: item
+    - t.navigation_item item: item
 
 .govuk-main-wrapper
   .vacancies-component
-    .govuk-grid-row.vacancies-component__header class="govuk-!-margin-top-7"
-      .govuk-grid-column-full
-        h1.govuk-heading-l class="govuk-!-margin-bottom-4" = t(".#{@selected_type}.with_count_html", count: @vacancies.count)
-
     .govuk-grid-row
       - if @organisation.school_group?
         .govuk-grid-column-one-third class="govuk-!-margin-bottom-5"
