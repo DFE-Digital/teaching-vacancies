@@ -5,6 +5,11 @@
     .govuk-grid-column-two-thirds
       = govuk_panel title_text: t(".header"), text: t(".confirmation")
 
+      p.govuk-body
+        => govuk_link_to t("nav.find_job"), root_path, class: "govuk-link--no-visited-state"
+        | or
+        =< govuk_link_to t(".create_alert"), new_subscription_path, class: "govuk-link--no-visited-state"
+
       = form_for @unsubscribe_feedback_form, url: subscription_unsubscribe_feedbacks_path(@subscription) do |f|
         = f.govuk_error_summary
 

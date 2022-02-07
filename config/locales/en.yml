@@ -476,16 +476,7 @@ en:
       description: You can change the search criteria you have used by amending the keywords, location or filters before you create your alert.
       title: Create your job alert
     unsubscribe:
-      button_text: Unsubscribe
-      description: 'Clicking "Unsubscribe" will unsubscribe you from this job alert:'
-      edit_instead_html: 'You can %{edit_link} instead if you just want to change:'
-      edit_instead_link: edit this job alert
-      edit_instead_options_html: |
-        <ul class="govuk-list govuk-list--bullet">
-          <li>how often you get alerts</li>
-          <li>your alert criteria, for example keywords or location</li>
-        </ul>
-      heading: Unsubscribe from this job alert
+      confirmation: Are you sure you want to unsubscribe?
       guidance:
         heading: Want to unsubscribe?
         body: You can unsubscribe at any time by following the simple instructions at the bottom of the alert.
