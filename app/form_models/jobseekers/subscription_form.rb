@@ -1,7 +1,7 @@
 class Jobseekers::SubscriptionForm < BaseForm
   attr_accessor :email, :frequency,
                 :keyword, :location, :radius,
-                :job_roles, :phases, :working_patterns,
+                :job_roles, :subjects, :phases, :working_patterns,
                 :job_role_options, :ect_suitable_options, :send_responsible_options,
                 :phase_options, :working_pattern_options
 
@@ -19,6 +19,7 @@ class Jobseekers::SubscriptionForm < BaseForm
     @keyword = params[:keyword] || search_criteria[:keyword]
     @location = params[:location] || search_criteria[:location]
     @job_roles = params[:job_roles]&.reject(&:blank?) || search_criteria[:job_roles] || []
+    @subjects = params[:subjects]&.reject(&:blank?) || search_criteria[:subjects]
     @phases = params[:phases]&.reject(&:blank?) || search_criteria[:phases]
     @working_patterns = params[:working_patterns]&.reject(&:blank?) || search_criteria[:working_patterns]
 
@@ -40,6 +41,7 @@ class Jobseekers::SubscriptionForm < BaseForm
       location: location,
       radius: (@location.present? ? radius : nil),
       job_roles: job_roles,
+      subjects: subjects,
       phases: phases,
       working_patterns: working_patterns,
     }.compact.delete_if { |_k, v| v.blank? || v.empty? }

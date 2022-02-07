@@ -23,6 +23,30 @@
     }
   }
 
+  &--job-search {
+    border: 0;
+
+    .govuk-checkboxes__item {
+      margin-left: 0;
+    }
+
+    .govuk-fieldset {
+      background-color: govuk-colour('light-grey');
+    }
+
+    .searchable-collection-component--border {
+      background-color: govuk-colour('light-grey');
+    }
+
+    .searchable-collection-component__search {
+      margin-left: 0;
+    }
+
+    .searchable-collection-component--scrollable {
+      border: 3px solid transparent;
+    }
+  }
+
   &__search {
     background: #fff;
     margin: govuk-spacing(2);
