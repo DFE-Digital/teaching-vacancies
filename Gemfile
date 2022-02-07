@@ -44,8 +44,8 @@ gem "lockbox"
 gem "mail-notify"
 gem "mimemagic"
 gem "noticed"
-gem "omniauth"
-gem "omniauth_openid_connect"
+gem "omniauth", "< 2" # TODO: Pinned pending fixes
+gem "omniauth_openid_connect", "< 0.5" # TODO: Pinned pending fixes
 gem "parslet"
 gem "pg"
 gem "puma"
