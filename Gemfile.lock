@@ -282,7 +282,7 @@ GEM
     ice_nine (0.11.2)
     inflection (1.0.0)
     io-wait (0.2.1)
-    ipaddr (1.2.3)
+    ipaddr (1.2.4)
     jaro_winkler (1.5.4)
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
