@@ -1,26 +1,9 @@
 @import 'base_component';
 @import '../../frontend/src/styles/base/mixins';
 
-.dashboard-component {
-  margin: govuk-spacing(3) inherit;
-
+.tabs-component {
   @include govuk-media-query ($from: desktop) {
     border-bottom: 1px solid $govuk-border-colour;
-
-    &__button {
-      flex-grow: 1;
-      text-align: right;
-    }
-  }
-
-  .govuk-width-container {
-    display: block;
-    margin-bottom: govuk-spacing(3);
-    margin-left: 0;
-
-    @include govuk-media-query ($from: desktop) {
-      margin-bottom: 0;
-    }
   }
 
   h2 {
@@ -40,32 +23,6 @@
 
     &:focus {
       color: $govuk-focus-text-colour;
-    }
-  }
-
-  &--background {
-    @include full-width-mast;
-    background-color: govuk-colour('light-grey');
-    border-bottom: 0;
-    padding: govuk-spacing(3) 0 0;
-
-    @include govuk-media-query ($until: desktop) {
-      .govuk-width-container {
-        margin-left: govuk-spacing(3);
-      }
-    }
-
-    @include govuk-media-query ($from: desktop) {
-      .govuk-width-container {
-        margin-left: auto;
-      }
-    }
-  }
-
-  &__header {
-    display: block;
-    @include govuk-media-query ($from: desktop) {
-      display: flex;
     }
   }
 
@@ -137,22 +94,6 @@
           }
         }
       }
-    }
-  }
-
-  &__link {
-    float: right;
-
-    .govuk-button {
-      margin-bottom: 0;
-    }
-  }
-
-  .filters-information {
-    display: block;
-
-    .filters-applied-text {
-      line-height: 2em;
     }
   }
 }
