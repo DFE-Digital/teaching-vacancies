@@ -20,7 +20,7 @@
         - items.each do |group|
           - if group[:selected]&.any?
             .govuk-heading-s class="govuk-!-margin-bottom-0 govuk-!-font-weight-bold"
-              = group[:title]
+              = group[:legend]
 
           ul.filters-component__remove-tags
             - group[:options].each do |tag|
@@ -33,15 +33,31 @@
 
   .filters-component__groups
     - items.each do |group|
-      .filters-component__groups__group class="#{"small" if group[:small]}" data-group=group[:key]
-        = form.govuk_collection_check_boxes group[:attribute],
-          group[:options],
-          group[:value_method],
-          group[:text_method],
-          small: group[:small],
-          legend: { text: group[:legend], size: (group[:small] ? "s" : "m") },
-          hint: nil,
-          form_group: (options[:autosubmit_form] ? { data: { action: "change->form#submitListener" } } : {})
+      .filters-component__groups__group data-group=group[:key]
+        - if group[:attribute] == :subjects
+          = render SearchableCollectionComponent.new form: form,
+            input_type: :checkbox,
+            label_text: "Subject",
+            threshold: 10,
+            small: options[:filter_for] == :job_search,
+            scrollable: true,
+            attribute_name: :subjects,
+            collection:  group[:options],
+            value_method: group[:value_method].downcase,
+            text_method: group[:text_method],
+            hint_method: group[:hint_method],
+            form_group: (options[:autosubmit_form] ? { data: { action: "change->form#submitListener" } } : {}),
+            options: { bold_items: false, heading: group[:legend], use_case: options[:filter_for] }
+
+        - else
+          = form.govuk_collection_check_boxes group[:attribute],
+            group[:options],
+            group[:value_method],
+            group[:text_method],
+            small: group[:small],
+            legend: { text: group[:legend], size: (group[:small] ? "s" : "m") },
+            hint: nil,
+            form_group: (options[:autosubmit_form] ? { data: { action: "change->form#submitListener" } } : {})
 
   .filters-component__submit
     = form.govuk_submit t("buttons.apply_filters"), classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2 filters-component__submit-button"

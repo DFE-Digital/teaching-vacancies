@@ -29,6 +29,7 @@ class FiltersComponent < GovukComponent::Base
   def default_classes
     ["filters-component"].tap do |applied_classes|
       applied_classes.push(mobile_modifier("filters-component")) if options[:mobile_variant]
+      applied_classes.push("searchable-collection-component--job-search") if options[:filter_for] == :job_search
     end
   end
 end
