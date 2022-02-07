@@ -7,13 +7,7 @@
       h2.govuk-caption-l = current_organisation.name
     h1.govuk-heading-l class="govuk-!-margin-bottom-2" = vacancy.job_title
 
-    - if vacancy.expires_at.present?
+    - if vacancy.published?
       p.govuk-body.govuk-caption-s
-        span class="govuk-!-font-weight-bold"
-          - if vacancy.expired?
-            = t(".deadline.after")
-          - else
-            = t(".deadline.before")
+        span class="govuk-!-font-weight-bold" = vacancy.expired? ? t(".deadline.after") : t(".deadline.before")
         span class="govuk-!-margin-left-1" = format_time_to_datetime_at(vacancy.expires_at)
-
-= render "publishers/vacancies/tabs_show"
