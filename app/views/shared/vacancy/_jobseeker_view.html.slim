@@ -1,65 +1,62 @@
-= render BannerComponent.new do
-  - if !referred_from_jobs_path? && @vacancy.main_job_role == "teaching_assistant"
-    = govuk_breadcrumbs breadcrumbs: { "#{t("breadcrumbs.home")}": root_path,
-                                        "#{t("breadcrumbs.teaching_assistant")}": job_role_path("teaching_assistant".dasherize),
-                                        "#{@vacancy.job_title}": "" }
-  - else
-    = govuk_breadcrumbs breadcrumbs: { "#{t("breadcrumbs.home")}": root_path,
-                                        "#{t("breadcrumbs.jobs")}": referred_from_jobs_path? ? request.referrer : jobs_path,
-                                        "#{@vacancy.job_title}": "" }
+- if !referred_from_jobs_path? && @vacancy.main_job_role == "teaching_assistant"
+  = govuk_breadcrumbs breadcrumbs: { "#{t("breadcrumbs.home")}": root_path,
+                                      "#{t("breadcrumbs.teaching_assistant")}": job_role_path("teaching_assistant".dasherize),
+                                      "#{@vacancy.job_title}": "" }
+- else
+  = govuk_breadcrumbs breadcrumbs: { "#{t("breadcrumbs.home")}": root_path,
+                                      "#{t("breadcrumbs.jobs")}": referred_from_jobs_path? ? request.referrer : jobs_path,
+                                      "#{@vacancy.job_title}": "" }
 
-  - if @vacancy.expired?
-    = govuk_tag text: t("jobs.expired_tag").upcase,
-                colour: "orange",
-                classes: "govuk-!-margin-bottom-2 govuk-!-margin-top-4"
+- if @vacancy.expired?
+  = govuk_tag text: t("jobs.expired_tag").upcase,
+              colour: "orange",
+              classes: "govuk-!-margin-bottom-2 govuk-!-margin-top-4"
 
-  h1.govuk-heading-xl class="govuk-!-margin-bottom-2"
-    = @vacancy.job_title
-  h2.govuk-caption-l.job-caption class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
-    = vacancy_full_job_location(@vacancy)
+h1.govuk-heading-xl class="govuk-!-margin-bottom-2"
+  = @vacancy.job_title
+h2.govuk-caption-l.job-caption class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
+  = vacancy_full_job_location(@vacancy)
 
-  .govuk-grid-row.vacancy__banner-links
-    - if @vacancy.enable_job_applications? && @vacancy.expires_at.future?
-      .govuk-grid-column-one-third
-        - if defined?(job_application) && job_application.present?
-          - if job_application.draft?
-            = render BannerButtonComponent.new text: t("jobseekers.job_applications.banner_links.draft"),
-              href: jobseekers_job_application_review_path(job_application),
-              icon: "green-tick"
-          - elsif job_application.withdrawn?
-            = render BannerButtonComponent.new text: t("jobseekers.job_applications.banner_links.withdrawn"),
-              href: jobseekers_job_application_path(job_application),
-              icon: "green-tick"
-          - else
-            = render BannerButtonComponent.new text: t("jobseekers.job_applications.banner_links.submitted"),
-              href: jobseekers_job_application_path(job_application),
-              icon: "green-tick"
-        - else
-          = render BannerButtonComponent.new text: t("jobseekers.job_applications.banner_links.apply"),
-            href: new_jobseekers_job_job_application_path(@vacancy.id),
-            icon: "apply"
-
+.govuk-grid-row.vacancy__banner-links
+  - if @vacancy.enable_job_applications? && @vacancy.expires_at.future?
     .govuk-grid-column-one-third
-      = render BannerButtonComponent.new text: t("jobs.alert.similar.terse"),
-        href: new_subscription_path,
-        icon: "alert-blue",
-        params: { search_criteria: @invented_job_alert_search_criteria, vacancy_id: @vacancy.id }
+      - if defined?(job_application) && job_application.present?
+        - if job_application.draft?
+          = render BannerButtonComponent.new text: t("jobseekers.job_applications.banner_links.draft"),
+            href: jobseekers_job_application_review_path(job_application),
+            icon: "green-tick"
+        - elsif job_application.withdrawn?
+          = render BannerButtonComponent.new text: t("jobseekers.job_applications.banner_links.withdrawn"),
+            href: jobseekers_job_application_path(job_application),
+            icon: "green-tick"
+        - else
+          = render BannerButtonComponent.new text: t("jobseekers.job_applications.banner_links.submitted"),
+            href: jobseekers_job_application_path(job_application),
+            icon: "green-tick"
+      - else
+        = render BannerButtonComponent.new text: t("jobseekers.job_applications.banner_links.apply"),
+          href: new_jobseekers_job_job_application_path(@vacancy.id),
+          icon: "apply"
 
-    - unless defined?(job_application) && job_application.present?
-      .govuk-grid-column-one-third
-        = render BannerButtonComponent.new text: t("jobseekers.saved_jobs.#{@saved_job.present? ? 'saved' : 'save'}"),
-          href: @saved_job.present? ? jobseekers_saved_job_path(@vacancy.id, @saved_job) : new_jobseekers_saved_job_path(@vacancy.id),
-          icon: @saved_job.present? ? "saved" : "save",
-          method: @saved_job.present? ? :delete : :get,
-          params: { click_event: "vacancy_save_to_account_clicked", click_event_data: { vacancy_id: StringAnonymiser.new(@vacancy.id) } }
+  .govuk-grid-column-one-third
+    = render BannerButtonComponent.new text: t("jobs.alert.similar.terse"),
+      href: new_subscription_path,
+      icon: "alert-blue",
+      params: { search_criteria: @invented_job_alert_search_criteria, vacancy_id: @vacancy.id }
 
-.govuk-grid-row
+  - unless defined?(job_application) && job_application.present?
+    .govuk-grid-column-one-third
+      = render BannerButtonComponent.new text: t("jobseekers.saved_jobs.#{@saved_job.present? ? 'saved' : 'save'}"),
+        href: @saved_job.present? ? jobseekers_saved_job_path(@vacancy.id, @saved_job) : new_jobseekers_saved_job_path(@vacancy.id),
+        icon: @saved_job.present? ? "saved" : "save",
+        method: @saved_job.present? ? :delete : :get,
+        params: { click_event: "vacancy_save_to_account_clicked", click_event_data: { vacancy_id: StringAnonymiser.new(@vacancy.id) } }
 
+.govuk-grid-row class="govuk-!-margin-top-6"
   .govuk-grid-column-one-third
     = render "/vacancies/key_dates_sidebar"
 
   .govuk-grid-column-two-thirds
-
     - if @vacancy.organisations.many?
       = govuk_notification_banner title_text: t("banners.important"), classes: "govuk-!-margin-bottom-5" do
         = t("messages.jobs.multi_school_job_notification_html", organisation_type: organisation_type_basic(@vacancy.parent_organisation))
