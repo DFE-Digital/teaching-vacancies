@@ -1,0 +1,5 @@
+= tag.div(class: classes, **html_attributes)
+  h3.govuk-heading-s = @title
+  ul.govuk-list class="#{@list_class}"
+    - links.each do |link|
+      = link
