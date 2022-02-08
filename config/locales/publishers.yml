@@ -136,8 +136,8 @@ en:
         tab_heading: Draft jobs
         with_count_html: Draft jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
       expired:
-        tab_heading: Passed deadline
-        with_count_html: Passed deadline <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
+        tab_heading: Closed jobs
+        with_count_html: Closed jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
       pending:
         tab_heading: Scheduled jobs
         with_count_html: Scheduled jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>

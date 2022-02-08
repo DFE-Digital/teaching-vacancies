@@ -249,8 +249,4 @@ Rails.application.routes.draw do
         constraints: ->(request) { SUBJECT_OPTIONS.map(&:first).map(&:parameterize).include?(request.params[:subject].parameterize) },
         defaults: { pretty: :subject }
   end
-
-  get "/teaching-jobs-for-:job_role",
-      to: redirect { |params| "/#{params[:job_role].parameterize.dasherize}-jobs" },
-      constraints: ->(request) { Vacancy.job_roles.keys.map(&:dasherize).include?(request.params[:job_role].dasherize) }
 end

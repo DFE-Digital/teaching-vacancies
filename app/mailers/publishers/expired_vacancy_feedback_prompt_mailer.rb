@@ -6,6 +6,6 @@ class Publishers::ExpiredVacancyFeedbackPromptMailer < Publishers::BaseMailer
 
     @vacancies = vacancies
 
-    view_mail(@template, to: @to, subject: "Teaching Vacancies needs your feedback on expired job listings")
+    view_mail(@template, to: @to, subject: "Teaching Vacancies needs your feedback on closed job listings")
   end
 end

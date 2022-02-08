@@ -10,17 +10,17 @@ In case of any above database disaster, please do the following:
 
 ### Freeze pipeline
 
-Alert all developers that, no one should merge to main branch.
+Alert all developers that no one should merge to main branch.
 
 ### Maintenance mode
 
 In the instance of data loss, if the application is unavailable, the CDN may be forwarding requests to the [offline site](offline-site.md).
 If the application is still available and there is a risk of users adding data, enable [Maintenance mode](maintenance-mode.md).
 
-### setup virtual meeting
+### Set up a virtual meeting
 
 Set up virtual meeting via Zoom, Slack, Teams or Google Hangout, inviting all the relevant technical stakeholders. Regularly provide updates on
-the #tv_product Slack channel; to keep product owners abreast of developments.
+the #tv_product Slack channel to keep product owners abreast of developments.
 
 ## Data loss
 
@@ -98,14 +98,14 @@ cf service teaching-vacancies-postgres-production
 
 In case the database instance is lost, the objectives are:
 
-- Recreate the lost postgress database instance
+- Recreate the lost postgres database instance
 - Restore data from daily backup
 
-### Recreate the lost postgress database instance
+### Recreate the lost postgres database instance
 
 In case the database service is deleted or in an inconsistent state we must recreate it and repopulate it.
-First make sure it is full gone by running cf services and cf delete-service if necessary.
-Then recreate the lost postgress database instance using the following make recipes `terraform-app-plan` and `terraform-app-apply`:
+First make sure it is fully gone by running cf services and cf delete-service if necessary.
+Then recreate the lost postgres database instance using the makefile recipes `terraform-app-plan` and `terraform-app-apply`:
 
 ```
 make <env> terraform-app-plan passcode=MyPasscode tag=main-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714 ## to see the proposed changes.
@@ -118,10 +118,10 @@ This will create a new postgres database instance as described in the terraform 
 
 ### Restore Data From Daily Backup
 
-Once the lost database instance has been recreated, the last daily backup will need to be restored. To achieve this, use the following makefile recipe `restore-daily-backup`. The following would need to be set `passcode` (a [GOV.UK PaaS one-time passcode](https://login.london.cloud.service.gov.uk/passcode)), `CONFIRM_PRODUCTION` (true) and `tag` (cf app teaching-vacancies-production | grep "docker image" the tag is after the : i.e ghcr.io/dfe-digital/teaching-vacancies:main-7b736906654cbd42145420ad40fcbc6ec257bd1c)
+Once the lost database instance has been recreated, the last daily backup will need to be restored. To achieve this, use the makefile recipe `restore-daily-backup`. The following would need to be set: `passcode` (a [GOV.UK PaaS one-time passcode](https://login.london.cloud.service.gov.uk/passcode)), `CONFIRM_PRODUCTION` (true) and `tag` (cf app teaching-vacancies-production | grep "docker image" the tag is after the : i.e ghcr.io/dfe-digital/teaching-vacancies:main-7b736906654cbd42145420ad40fcbc6ec257bd1c)
 
 ```
 make <env> restore-daily-backup passcode=MyPasscode tag=main-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714
 ```
 
-This will, download the latest daily backup from AWS and then flourish the new database with data.
+This will download the latest daily backup from AWS and then populate the new database with data.
