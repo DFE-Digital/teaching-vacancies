@@ -1,14 +1,17 @@
 = tag.div(class: classes, **html_attributes) do
 
-  - if options[:publisher_preference]
-    .filters-component__heading
-      .filters-component__heading-container class="govuk-!-margin-bottom-4"
-        = govuk_link_to t(".add_or_remove_schools"), edit_publisher_preference_path(options[:publisher_preference]), class: "filters-component__link-button add-remove-schools govuk-link--no-visited-state"
+  .filters-component__heading
+    .filters-component__heading__container
+      - if options[:publisher_preference]
+        = govuk_link_to t(".add_or_remove_schools"), edit_publisher_preference_path(options[:publisher_preference]), class: "filters-component__link-button add-remove-schools govuk-link--no-visited-state govuk-!-margin-bottom-4"
+      - elsif options[:heading_text]
+        h2.govuk-heading-m class="govuk-!-margin-bottom-4"
+          = options[:heading_text]
 
   - if display_remove_buttons?
     .filters-component__remove
       .filters-component-filter__selected
-        .filters-component__section-heading class="govuk-!-margin-bottom-2"
+        .filters-component__section-heading
           .govuk-body class="govuk-!-margin-bottom-0"
             = t("shared.filter_group.current_selected_filters")
           button.filters-component__link-button.govuk-body.govuk-link id="filters-component-clear-all"
