@@ -11,10 +11,8 @@ RSpec.describe "Jobseekers can view a job application" do
   end
 
   it "displays all the job application information" do
-    within ".banner-component" do
-      expect(page).to have_content(vacancy.job_title)
-      expect(page).to have_content(job_application.status)
-    end
+    expect(page).to have_content(vacancy.job_title)
+    expect(page).to have_content(job_application.status)
 
     within ".navigation-list-component", text: I18n.t("shared.job_application.show.application_sections") do
       expect(page).to have_link(I18n.t("shared.job_application.show.personal_details.heading"), href: "#personal_details")
