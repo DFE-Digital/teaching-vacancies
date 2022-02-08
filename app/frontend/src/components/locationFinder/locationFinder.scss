@@ -2,7 +2,12 @@
 
 .location-finder {
   @include govuk-font(16);
+  display: block;
   position: relative;
+
+  @include govuk-media-query($from: tablet) {
+    display: none;
+  }
 
   &__link-prefix {
     color: inherit;
