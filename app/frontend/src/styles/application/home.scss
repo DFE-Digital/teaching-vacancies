@@ -36,6 +36,10 @@
     color: govuk-colour('white');
   }
 
+  .govuk-hint {
+    display: none;
+  }
+
   h3 {
     margin-bottom: govuk-spacing(2);
     margin-top: govuk-spacing(2);

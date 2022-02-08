@@ -7,6 +7,14 @@
     margin-bottom: 0;
   }
 
+  &__menu {
+    position: relative;
+
+    @include govuk-media-query($from: desktop) {
+      position: absolute;
+    }
+  }
+
   &__suggestions--highlight {
     font-weight: bold;
   }
