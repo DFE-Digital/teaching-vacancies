@@ -7,10 +7,18 @@ export default class extends Controller {
 
   connect() {
     emptyRow = this.rowTargets.find((row) => row.classList.contains('js-hidden'));
+
+    const params = new URLSearchParams(document.location.search);
+
+    if (params.get('new_subject') === 'true') {
+      this.addRow();
+    }
   }
 
   addRow(event) {
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+    }
 
     const newRow = emptyRow.cloneNode(true);
     newRow.classList.remove('js-hidden');
