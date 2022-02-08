@@ -249,18 +249,13 @@ en:
       title: Find a job in teaching
       title_h1: Find teacher and school jobs near you
       title_h2: Welcome to Teaching Vacancies
-    vacancy_facets:
+    landing_page_links:
       cities: Cities and towns with teaching and education support jobs
       counties: Counties with teaching and education support jobs
+      ect_suitable: Current jobs suitable for early career teachers
       education_phases: Current jobs by education phase
       job_roles: Current jobs by role
-      link_text_html: <span class="govuk-visually-hidden"> view </span><span class="bracket-content">%{count}</span><span class="govuk-visually-hidden"> vacancies listed</span>
-      ect_suitable:
-        heading: Current jobs suitable for early career teachers
-        link: Suitable for early career teachers
-      send_responsible:
-        heading: Current jobs with SEND responsibilities
-        link: SEND responsibilities
+      send_responsible: Current jobs with SEND responsibilities
       subjects: Current jobs by subject
 
   pages:
