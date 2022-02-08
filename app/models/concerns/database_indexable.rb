@@ -22,7 +22,7 @@ module DatabaseIndexable
     # `job_title` and `subject` are used for ranking (and weighted with 'A' here, the other
     # searchable fields get the lowest possible 'D' weight)
     Search::Postgres::TsvectorGenerator.new(
-      a: [job_title, subjects],
+      a: [unique_words(job_title), subjects],
       d: [
         readable_phases,
         VacancyPresenter.new(self).show_job_roles,
@@ -41,5 +41,13 @@ module DatabaseIndexable
         organisations.map(&:town).reject(&:blank?).uniq,
       ],
     ).tsvector
+  end
+
+  private
+
+  def unique_words(text)
+    return if text.nil?
+
+    text.downcase.scan(/\w+/).uniq
   end
 end
