@@ -24,7 +24,7 @@ RSpec.describe "Jobseekers can view and visit homepage facets" do
 
   describe "cities" do
     it "has the expected facet" do
-      expect(page).to have_content("London view 10 vacancies listed")
+      expect(page).to have_content("view 10 London jobs")
     end
 
     it "goes to the correct landing page and checks the job roles filter" do
@@ -38,7 +38,7 @@ RSpec.describe "Jobseekers can view and visit homepage facets" do
 
   describe "counties" do
     it "has the expected facet" do
-      expect(page).to have_content("Devon view 15 vacancies listed")
+      expect(page).to have_content("view 15 Devon jobs")
     end
 
     it "goes to the correct landing page and fills the location field" do
@@ -52,7 +52,7 @@ RSpec.describe "Jobseekers can view and visit homepage facets" do
 
   describe "education_phases" do
     it "has the expected facet" do
-      expect(page).to have_content("Middle view 3 vacancies listed")
+      expect(page).to have_content("view 3 Middle jobs")
     end
 
     it "goes to the correct landing page and fills the location field" do
@@ -66,7 +66,7 @@ RSpec.describe "Jobseekers can view and visit homepage facets" do
 
   describe "job roles" do
     it "has the expected facet" do
-      expect(page).to have_content("Teacher view 1 vacancies listed")
+      expect(page).to have_content("view 1 Teacher jobs")
     end
 
     it "goes to the correct landing page and checks the job roles filter" do
@@ -80,8 +80,8 @@ RSpec.describe "Jobseekers can view and visit homepage facets" do
 
   describe "additional job roles" do
     it "has the expected facets" do
-      expect(page).to have_content("Suitable for early career teachers view 2 vacancies listed")
-      expect(page).to have_content("SEND responsibilities view 3 vacancies listed")
+      expect(page).to have_content("view 2 Suitable for early career teachers jobs")
+      expect(page).to have_content("view 3 SEND responsibilities jobs")
     end
 
     it "early career teachers link goes to the correct landing page and checks the job roles filter" do
@@ -101,7 +101,7 @@ RSpec.describe "Jobseekers can view and visit homepage facets" do
 
   describe "subjects" do
     it "has the expected facet" do
-      expect(page).to have_content("English view 5 vacancies listed")
+      expect(page).to have_content("view 5 English jobs")
     end
 
     it "goes to the correct landing page and checks the job roles filter" do
