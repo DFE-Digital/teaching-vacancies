@@ -9,14 +9,14 @@ RSpec.describe "Jobseekers can view their dashboard" do
   end
 
   it "shows their email in the dashboard header" do
-    expect(page).to have_css(".dashboard-component") do |dashboard|
+    expect(page).to have_css(".tabs-component") do |dashboard|
       expect(dashboard).to have_css("h2", text: "jobseeker@example.com")
     end
   end
 
   it "shows `My applications` tab" do
-    expect(page).to have_css(".dashboard-component") do |dashboard|
-      expect(dashboard).to have_css(".dashboard-component-navigation__list") do |nav|
+    expect(page).to have_css(".tabs-component") do |dashboard|
+      expect(dashboard).to have_css(".tabs-component-navigation__list") do |nav|
         expect(nav).to have_link(I18n.t("jobseekers.job_applications.index.page_title"))
       end
     end
