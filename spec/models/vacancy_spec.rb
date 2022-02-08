@@ -64,18 +64,21 @@ RSpec.describe Vacancy do
   end
 
   describe "indexing for search" do
-    subject { build(:vacancy) }
+    subject(:vacancy) { build(:vacancy) }
 
     let(:generator) { instance_double(Search::Postgres::TsvectorGenerator, tsvector: "'Hello'") }
 
-    before do
-      expect(Search::Postgres::TsvectorGenerator).to receive(:new).with(Hash).and_return(generator)
-    end
-
     it "updates the searchable_content column on save" do
+      expect(Search::Postgres::TsvectorGenerator).to receive(:new).with(Hash).and_return(generator)
       expect(subject.searchable_content).to be_nil
       subject.save
       expect(subject.searchable_content).to eq("'Hello'")
+    end
+
+    it "compacts the title before indexing" do
+      vacancy.update(job_title: "Maths teacher maths maths maths!!!")
+      expect(Search::Postgres::TsvectorGenerator).to receive(:new).with(hash_including(a: [%w[maths teacher], anything])).and_return(generator)
+      vacancy.save
     end
   end
 

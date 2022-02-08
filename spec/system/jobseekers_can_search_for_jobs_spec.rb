@@ -31,7 +31,7 @@ RSpec.shared_examples "a successful search" do
 
     context "when sorting the jobs by most recently published" do
       it "displays the Maths jobs that were published most recently first" do
-        expect("Maths Teacher 1").to appear_before("Maths Teacher 2: The Return of Maths")
+        expect("Maths 1").to appear_before("Maths Teacher 2")
       end
     end
 
@@ -41,7 +41,7 @@ RSpec.shared_examples "a successful search" do
       end
 
       it "lists the most relevant jobs first" do
-        expect("Maths Teacher 2: The Return of Maths").to appear_before("Maths Teacher 1")
+        expect("Maths Teacher 2").to appear_before("Maths 1")
       end
     end
   end
@@ -49,8 +49,8 @@ end
 
 RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
   let(:school) { create(:school) }
-  let!(:maths_job1) { create(:vacancy, :past_publish, publish_on: Date.current - 1, id: "67991ea9-431d-4d9d-9c99-a78b80108fe1", job_title: "Maths Teacher 1", subjects: [], organisations: [school]) }
-  let!(:maths_job2) { create(:vacancy, :past_publish, publish_on: Date.current - 2, id: "7bfadb84-cf30-4121-88bd-a9f958440cc9", job_title: "Maths Teacher 2: The Return of Maths", subjects: [], organisations: [school]) }
+  let!(:maths_job1) { create(:vacancy, :past_publish, publish_on: Date.current - 1, id: "67991ea9-431d-4d9d-9c99-a78b80108fe1", job_title: "Maths 1", subjects: [], organisations: [school]) }
+  let!(:maths_job2) { create(:vacancy, :past_publish, publish_on: Date.current - 2, id: "7bfadb84-cf30-4121-88bd-a9f958440cc9", job_title: "Maths Teacher 2", subjects: [], organisations: [school]) }
   let!(:job1) { create(:vacancy, :past_publish, id: "20cc99ff-4fdb-4637-851a-68cf5f8fea9f", job_title: "Physics Teacher", subjects: [], organisations: [school]) }
   let!(:job2) { create(:vacancy, :past_publish, id: "9910d184-5686-4ffc-9322-69aa150c19d3", job_title: "PE Teacher", subjects: [], organisations: [school]) }
   let!(:job3) { create(:vacancy, :past_publish, id: "3bf67da6-039c-4ee1-bf59-8475672a0d2b", job_title: "Chemistry Teacher", subjects: [], organisations: [school]) }
