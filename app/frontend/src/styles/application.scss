@@ -144,18 +144,6 @@ dd {
   }
 }
 
-.home_index {
-  .vacancy-facets {
-    .govuk-link {
-      display: inline-block;
-
-      &:visited * {
-        color: $govuk-link-visited-colour;
-      }
-    }
-  }
-}
-
 // Per https://gov.uk footer
 .govuk-footer__list {
   padding-bottom: 40px;
