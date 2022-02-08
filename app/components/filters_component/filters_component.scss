@@ -1,23 +1,8 @@
 @import 'base_component';
 
-.panel-component__content--visible {
-  .filters-component {
-    @include govuk-media-query($until: desktop) {
-      .filters-component__submit {
-        bottom: 0;
-        display: flex;
-        position: sticky;
-
-        .govuk-button {
-          width: 100%;
-        }
-      }
-    }
-  }
-}
-
 .filters-component {
   background-color: govuk-colour('light-grey');
+  padding: $govuk-gutter-half;
 
   &:focus {
     outline: $govuk-focus-width solid $govuk-focus-colour;
@@ -43,84 +28,16 @@
   //not the best but cant figure a better way to sort this right now
   .add-remove-schools {
     @include govuk-media-query($until: desktop) {
-      position: static;
+      position: static; 
     }
-  }
-
-  &__open {
-    display: none;
   }
 
   &__heading {
-    background-color: govuk-colour('light-grey');
-    box-shadow: none;
-    display: none;
-    padding: govuk-spacing(3) govuk-spacing(3) 0 govuk-spacing(3);
-    position: relative;
-
-    @include govuk-media-query($until: desktop) {
-      margin-bottom: govuk-spacing(3);
-      padding: 0;
-      position: sticky;
-      top: 0;
-      z-index: 2000;
-    }
-
-    @include govuk-media-query($from: mobile) {
-      .govuk-heading-m {
-        display: none;
-      }
-
-      .govuk-button {
-        display: block;
-      }
-    }
-
-    @include govuk-media-query($from: desktop) {
-      display: block;
-
-      .govuk-heading-m {
-        display: block;
-      }
-
-      .govuk-button {
-        display: none;
-      }
-    }
-
-    .govuk-heading-m {
-      margin-bottom: 0;
-    }
-
-    .filters-button {
-      top: govuk-spacing(1);
-    }
-
-    &-container {
+    &__container {
       position: relative;
 
       .govuk-heading-s {
         margin-bottom: govuk-spacing(2);
-      }
-    }
-
-    &-applied {
-      display: none;
-
-      @include govuk-media-query($until: desktop) {
-        color: govuk-colour('black');
-        display: inline;
-        font-weight: normal;
-        margin: govuk-spacing(1);
-        text-decoration: none;
-      }
-    }
-
-    &-close-all {
-      top: govuk-spacing(1);
-
-      @include govuk-media-query($until: desktop) {
-        display: none;
       }
     }
   }
@@ -228,14 +145,33 @@
       }
     }
   }
+
+  
+  &__submit {
+    
+    bottom: 0;
+    display: flex;
+    position: sticky;
+
+    .govuk-button {
+      width: 100%;
+    }
+  }
 }
 
-.js-enabled .filters-component__submit {
-  display: none;
+.js-enabled {
+  .filters-component {
+    &__submit {
+      @include govuk-media-query($from: desktop) {
+        display: none;
+      }
+    }
+  }
 }
 
 .plain-styling .filters-component {
   background: none;
+  padding: 0;
 
   &__groups__group {
     border-bottom: 0;

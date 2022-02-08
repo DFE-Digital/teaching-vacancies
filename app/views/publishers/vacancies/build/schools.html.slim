@@ -19,7 +19,7 @@
           = render SearchableCollectionComponent.new form: f,
             input_type: @multiple_schools ? :checkbox : :radio_button,
             label_text: "search schools",
-            threshold: 10,
+            threshold: 5,
             attribute_name: :organisation_ids,
             collection: @school_options,
             value_method: :id,
