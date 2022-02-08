@@ -16,14 +16,12 @@ const application = Application.start();
 application.register('panel', PanelController);
 
 describe('panel', () => {
-  document.body.innerHTML = `<div class="${COMPONENT_CLASS}">
-  <div data-controller="panel">
+  document.body.innerHTML = `<div class="${COMPONENT_CLASS}" data-controller="panel" data-content-id="some-content" data-close-container="content-container">
   <button data-action="panel#toggleVisibility" class="${TOGGLE_ELEMENT_CLASS}" data-panel-target="toggle">panel toggle</button>
-  <div class="${CONTENT_ELEMENT_CLASS}" tabindex="-1" data-panel-target="content">
-    <button class="${CLOSE_ELEMENT_CLASS}" data-action="panel#toggleVisibility">close</button>
   </div>
-  </div>
-  </div>`;
+  <div class="${CONTENT_ELEMENT_CLASS}" tabindex="-1" data-panel-target="content" id="some-content">
+  <div class="content-container"></div>
+</div>`;
 
   let container;
   let openButton;

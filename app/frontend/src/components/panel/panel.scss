@@ -1,48 +1,12 @@
-@import 'base_component';
+@import '~govuk-frontend/govuk/base';
 
-.vacancies_index {
-  .search-controls {
-    .search-controls__panel {
-      border-bottom: 1px solid $govuk-border-colour;
-      margin-bottom: 0;
-      margin-top: 0;
-  
-      @include govuk-media-query($until: desktop) {
-        border-bottom: 0;
-      }
-
-      &--mobile {
-        @include govuk-media-query($from: desktop) {
-          display: none;
-        }
-      }
-
-      &:last-of-type {
-        border-bottom: 0;
-      }
-
-      .search-controls__panel__filters {
-        background-color: govuk-colour('light-grey');
-        border-bottom: 1px solid govuk-colour('mid-grey');
-        margin-bottom: 0;
-        margin-top: 0;
-        padding: $govuk-gutter-half;
-    
-        @include govuk-media-query($until: desktop) {
-          margin-bottom: $govuk-gutter;
-        }
-      }
-    }
-  }
-}
-  
 .js-enabled {
   .panel-component {
     &__toggle {
       display: block;
       width: 100%;
 
-      @include govuk-media-query($from: desktop) {
+      @include govuk-media-query($from: tablet) {
         display: none;
       }
     }
@@ -50,13 +14,12 @@
     &__content {
       background-color: govuk-colour('light-grey');
       overflow: hidden;
-      padding: govuk-spacing(3);
-      @include govuk-media-query($until: desktop) {
+      @include govuk-media-query($until: tablet) {
         display: none;
       }
 
       &:focus {
-        @include govuk-media-query($until: desktop) {
+        @include govuk-media-query($until: tablet) {
           outline: $govuk-focus-width solid $govuk-focus-colour;
         }
       }
@@ -64,7 +27,7 @@
       &--visible {
         display: block;
 
-        @include govuk-media-query($until: desktop) {
+        @include govuk-media-query($until: tablet) {
           border: 1px solid govuk-colour('mid-grey');
           bottom: 5px;
           max-width: 320px;
@@ -88,7 +51,7 @@
         right: 0;
         top: 0;
 
-        @include govuk-media-query($until: desktop) {
+        @include govuk-media-query($until: tablet) {
           display: block;
         }
 
