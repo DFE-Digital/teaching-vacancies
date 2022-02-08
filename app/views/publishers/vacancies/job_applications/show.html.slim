@@ -1,21 +1,20 @@
 - content_for :page_title_prefix, t(".page_title")
 
-= render BannerComponent.new
-  = govuk_breadcrumbs breadcrumbs: { "#{t("publishers.vacancies_component.published.tab_heading")}": jobs_with_type_organisation_path(:published),
-                                     "#{vacancy.job_title}": organisation_job_job_applications_path(vacancy.id),
-                                     "#{job_application.name}": "" }
+= govuk_breadcrumbs breadcrumbs: { "#{t("publishers.vacancies_component.published.tab_heading")}": jobs_with_type_organisation_path(:published),
+                                   "#{vacancy.job_title}": organisation_job_job_applications_path(vacancy.id),
+                                   "#{job_application.name}": "" }
 
-  .govuk-caption-l class="govuk-!-margin-top-5"
-    = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
+.govuk-caption-l class="govuk-!-margin-top-5"
+  = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
 
-  h1.govuk-heading-xl class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
-    = job_application.name
+h1.govuk-heading-xl class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
+  = job_application.name
 
-  .application-status class="govuk-!-display-none-print"
-    span.govuk-body class="govuk-!-margin-right-5" = t(".status_heading")
-    = publisher_job_application_status_tag(job_application.status)
+.application-status class="govuk-!-display-none-print"
+  span.govuk-body class="govuk-!-margin-right-5" = t(".status_heading")
+  = publisher_job_application_status_tag(job_application.status)
 
-.govuk-grid-row
+.govuk-grid-row class="govuk-!-margin-top-4"
   .govuk-grid-column-two-thirds
     .job-application-actions class="govuk-!-display-none-print"
       - if job_application.status.in?(%w[submitted reviewed])
