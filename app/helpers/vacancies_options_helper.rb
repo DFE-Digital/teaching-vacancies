@@ -1,5 +1,5 @@
 module VacanciesOptionsHelper
-  RADIUS_OPTIONS = [0, 1, 5, 10, 25, 50, 100, 200].freeze
+  RADIUS_OPTIONS = [0, 1, 5, 10, 15, 20, 25, 50, 100, 200].freeze
 
   def hired_status_options
     Vacancy.hired_statuses.keys.map { |k| [t("jobs.feedback.hired_status.#{k}"), k] }.unshift(["--", ""])

@@ -23,17 +23,20 @@ RSpec.describe Search::WiderSuggestionsBuilder do
 
       it "provides radius suggestions beyond the current radius" do
         expect(Search::VacancySearch).to receive(:new).with(hash_including(radius: 10)).and_return(pg_search)
+        expect(Search::VacancySearch).to receive(:new).with(hash_including(radius: 15)).and_return(pg_search)
+        expect(Search::VacancySearch).to receive(:new).with(hash_including(radius: 20)).and_return(pg_search)
         expect(Search::VacancySearch).to receive(:new).with(hash_including(radius: 25)).and_return(pg_search)
         expect(Search::VacancySearch).to receive(:new).with(hash_including(radius: 50)).and_return(pg_search)
         expect(Search::VacancySearch).to receive(:new).with(hash_including(radius: 100)).and_return(pg_search)
         expect(Search::VacancySearch).to receive(:new).with(hash_including(radius: 200)).and_return(pg_search)
 
-        allow(pg_search).to receive(:total_count).and_return(0, 0, 2, 4, 80)
+        allow(pg_search).to receive(:total_count).and_return(0, 0, 2, 4, 15, 80, 80)
 
         expect(subject.suggestions).to eq([
-          ["50", 2],
-          ["100", 4],
-          ["200", 80],
+          ["20", 2],
+          ["25", 4],
+          ["50", 15],
+          ["100", 80],
         ])
       end
     end
