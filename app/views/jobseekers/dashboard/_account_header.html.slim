@@ -1,5 +1,9 @@
-= render DashboardComponent.new background: true, heading: current_jobseeker.email do |dashboard|
-  - dashboard.navigation_item item: account_navigation_link(t("jobseekers.job_applications.index.page_title"), jobseekers_job_applications_path)
-  - dashboard.navigation_item item: account_navigation_link(t("jobseekers.saved_jobs.index.page_title"), jobseekers_saved_jobs_path)
-  - dashboard.navigation_item item: account_navigation_link(t("jobseekers.subscriptions.index.page_title"), jobseekers_subscriptions_path)
-  - dashboard.navigation_item item: account_navigation_link(t("jobseekers.accounts.show.page_title"), jobseekers_account_path)
+.govuk-grid-row class="govuk-!-margin-top-5"
+  .govuk-grid-column-full
+    h2.govuk-heading-m = current_jobseeker.email
+
+= tabs do |tabs|
+  - tabs.navigation_item item: account_navigation_link(t("jobseekers.job_applications.index.page_title"), jobseekers_job_applications_path)
+  - tabs.navigation_item item: account_navigation_link(t("jobseekers.saved_jobs.index.page_title"), jobseekers_saved_jobs_path)
+  - tabs.navigation_item item: account_navigation_link(t("jobseekers.subscriptions.index.page_title"), jobseekers_subscriptions_path)
+  - tabs.navigation_item item: account_navigation_link(t("jobseekers.accounts.show.page_title"), jobseekers_account_path)
