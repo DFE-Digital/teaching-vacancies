@@ -1,0 +1,6 @@
+li
+  = govuk_link_to @href do
+    span.govuk-visually-hidden view #{@count}
+    =< @text
+    span.govuk-visually-hidden< jobs
+  span< aria-hidden="true" (#{@count})

@@ -6,6 +6,7 @@ module ComponentsHelper
     job_application_review: "JobApplicationReviewComponent",
     jobseekers_account_survey_link: "Jobseekers::AccountSurveyLinkComponent",
     jobseekers_search_results_heading: "Jobseekers::SearchResults::HeadingComponent",
+    landing_page_link_group: "LandingPageLinkGroupComponent",
     map: "MapComponent",
     navigation_list: "NavigationListComponent",
     publishers_no_vacancies: "Publishers::NoVacanciesComponent",
