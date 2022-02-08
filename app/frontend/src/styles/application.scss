@@ -38,9 +38,7 @@ $govuk-new-link-styles: true;
 @import 'application/jobseekers/feedback-form';
 @import 'application/jobseekers/jobseeker';
 @import 'application/jobseekers/keyword-search';
-@import 'application/jobseekers/location-search';
 @import 'application/jobseekers/search-header';
-@import 'application/jobseekers/search-panel';
 @import 'application/jobseekers/vacancies';
 @import 'application/jobseekers/vacancy';
 
@@ -112,27 +110,6 @@ dd {
 
 .grey-cta-container {
   background-color: govuk-colour('light-grey');
-}
-
-.vacancies_index,
-.vacancies_index_landing {
-
-  @media only screen and (min-width: $small-screen) {
-    .grid-row {
-      display: flex;
-    }
-
-    .grid-column-left {
-      max-width: 33%;
-      min-width: 250px;
-      width: 100%;
-    }
-
-    .grid-column-right {
-      flex-basis: 1;
-      padding: 0 0 0 $govuk-gutter;
-    }
-  }
 }
 
 // Per https://gov.uk footer

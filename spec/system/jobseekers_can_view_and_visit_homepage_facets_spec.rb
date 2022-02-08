@@ -31,8 +31,8 @@ RSpec.describe "Jobseekers can view and visit homepage facets" do
       click_on "London"
 
       expect(current_path).to eq(location_path("london"))
-      expect(page.find("#mobile-search-and-filters-form").find("#location-field").value).to eq("London")
-      expect(page.find("#desktop-search-form").find("#location-field").value).to eq("London")
+      expect(page.find(".search-and-filters-form").find("#location-field").value).to eq("London")
+      expect(page.find(".search-and-filters-form").find("#location-field").value).to eq("London")
     end
   end
 
@@ -45,8 +45,8 @@ RSpec.describe "Jobseekers can view and visit homepage facets" do
       click_on "Devon"
 
       expect(current_path).to eq(location_path("devon"))
-      expect(page.find("#mobile-search-and-filters-form").find("#location-field").value).to eq("Devon")
-      expect(page.find("#desktop-search-form").find("#location-field").value).to eq("Devon")
+      expect(page.find(".search-and-filters-form").find("#location-field").value).to eq("Devon")
+      expect(page.find(".search-and-filters-form").find("#location-field").value).to eq("Devon")
     end
   end
 
@@ -109,8 +109,8 @@ RSpec.describe "Jobseekers can view and visit homepage facets" do
 
       expect(current_path).to eq(subject_path("english"))
       expect(page.title).to include(I18n.t("landing_pages.title", landing_page: "English"))
-      expect(page.find("#mobile-search-and-filters-form").find("#keyword-field").value).to eq("english")
-      expect(page.find("#desktop-search-form").find("#keyword-field").value).to eq("english")
+      expect(page.find(".search-and-filters-form").find("#keyword-field").value).to eq("english")
+      expect(page.find(".search-and-filters-form").find("#keyword-field").value).to eq("english")
     end
   end
 end

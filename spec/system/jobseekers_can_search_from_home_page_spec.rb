@@ -14,10 +14,10 @@ RSpec.describe "Searching on the home page" do
     click_on I18n.t("buttons.search")
 
     expect(current_path).to eq(jobs_path)
-    expect(page.find("#mobile-search-and-filters-form").find("#keyword-field").value).to eq("math")
-    expect(page.find("#desktop-search-form").find("#keyword-field").value).to eq("math")
-    expect(page.find("#mobile-search-and-filters-form").find("#location-field").value).to eq("bristol")
-    expect(page.find("#desktop-search-form").find("#location-field").value).to eq("bristol")
+    expect(page.find(".search-and-filters-form").find("#keyword-field").value).to eq("math")
+    expect(page.find(".search-and-filters-form").find("#keyword-field").value).to eq("math")
+    expect(page.find(".search-and-filters-form").find("#location-field").value).to eq("bristol")
+    expect(page.find(".search-and-filters-form").find("#location-field").value).to eq("bristol")
   end
 
   context "when the location is not a polygon" do
@@ -28,12 +28,12 @@ RSpec.describe "Searching on the home page" do
       click_on I18n.t("buttons.search")
 
       expect(current_path).to eq(jobs_path)
-      expect(page.find("#mobile-search-and-filters-form").find("#keyword-field").value).to eq("math")
-      expect(page.find("#desktop-search-form").find("#keyword-field").value).to eq("math")
-      expect(page.find("#mobile-search-and-filters-form").find("#location-field").value).to eq("my house")
-      expect(page.find("#desktop-search-form").find("#location-field").value).to eq("my house")
-      expect(page.find("#mobile-search-and-filters-form").find("#radius-field").value).to eq(Search::RadiusBuilder::DEFAULT_RADIUS_FOR_POINT_SEARCHES.to_s)
-      expect(page.find("#desktop-search-form").find("#radius-field").value).to eq(Search::RadiusBuilder::DEFAULT_RADIUS_FOR_POINT_SEARCHES.to_s)
+      expect(page.find(".search-and-filters-form").find("#keyword-field").value).to eq("math")
+      expect(page.find(".search-and-filters-form").find("#keyword-field").value).to eq("math")
+      expect(page.find(".search-and-filters-form").find("#location-field").value).to eq("my house")
+      expect(page.find(".search-and-filters-form").find("#location-field").value).to eq("my house")
+      expect(page.find(".search-and-filters-form").find("#radius-field").value).to eq(Search::RadiusBuilder::DEFAULT_RADIUS_FOR_POINT_SEARCHES.to_s)
+      expect(page.find(".search-and-filters-form").find("#radius-field").value).to eq(Search::RadiusBuilder::DEFAULT_RADIUS_FOR_POINT_SEARCHES.to_s)
     end
   end
 end
