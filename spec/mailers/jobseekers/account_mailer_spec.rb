@@ -33,8 +33,6 @@ RSpec.describe Jobseekers::AccountMailer do
       let(:email) { "unconfirmed@example.net" }
       let(:jobseeker) { create(:jobseeker, email: "test@example.net", unconfirmed_email: email) }
 
-      before { allow(jobseeker).to receive(:pending_reconfirmation?).and_return(true) }
-
       it "sends confirmation_instructions email" do
         expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.confirmation_instructions.reconfirmation.subject"))
         expect(mail.to).to eq(["unconfirmed@example.net"])
@@ -49,7 +47,7 @@ RSpec.describe Jobseekers::AccountMailer do
     end
 
     context "when the jobseeker is not pending reconfirmation" do
-      before { allow(jobseeker).to receive(:pending_reconfirmation?).and_return(false) }
+      before { jobseeker.confirm }
 
       it "sends a `jobseeker_confirmation_instructions` email" do
         expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.confirmation_instructions.subject"))
