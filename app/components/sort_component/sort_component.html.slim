@@ -19,4 +19,4 @@
             - if option.by == sort.by
               = option.display_name.humanize
             - else
-              = govuk_link_to(option.display_name.humanize, path.call(url_params.merge(sort_by: option.by)))
+              = govuk_link_to(safe_join([tag.span("#{t('jobs.sort_by.label')} ", class: "govuk-visually-hidden"), option.display_name.humanize]), path.call(url_params.merge(sort_by: option.by)))
