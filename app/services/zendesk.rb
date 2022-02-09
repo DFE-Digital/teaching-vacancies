@@ -28,7 +28,7 @@ class Zendesk
   def client
     # https://github.com/zendesk/zendesk_api_client_rb#configuration
     @client ||= ZendeskAPI::Client.new do |config|
-      config.url = "https://teachingjobs.zendesk.com/api/v2"
+      config.url = "https://becomingateacher.zendesk.com/api/v2"
 
       # "When using an API token to create requests on behalf of end users,
       # use the end user's email address and not an agent's email address"
