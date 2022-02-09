@@ -1,4 +1,4 @@
-name: Deploy App to Environment
+name: Deploy App via workflow Dispatch
 
 on:
   workflow_dispatch:

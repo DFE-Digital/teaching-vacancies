@@ -1,4 +1,4 @@
-name: Smoke Test
+name: Smoke Test workflow
 
 on:
   schedule:
@@ -15,53 +15,27 @@ on:
 
 jobs:
   smoke-test:
-
-    name: Smoke Test ${{ github.event.inputs.paas_environment }} ${{ github.event.inputs.sha }}
-
-    runs-on: ubuntu-20.04
-
+    name: Smoke Test ${{ inputs.paas_environment }} ${{ inputs.sha }}
     env:
       RAILS_ENV: test
+    runs-on: ubuntu-20.04
     steps:
+
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      - name: Trigger Smoke Test action
+        id: smoke-test
+        uses: ./.github/actions/smoke-test/
         with:
+          paas_environment: ${{ env.ENVIRONMENT }}
+          sha: ${{ inputs.sha }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-2
-          role-to-assume: Deployments
-          role-duration-seconds: 3600
-          role-skip-session-tagging: true
-
-      - name: Get SLACK_WEBHOOK From ParameterStore
-        uses: marvinpinto/action-inject-ssm-secrets@latest
-        with:
-          ssm_parameter: /teaching-vacancies/github_action/infra/slack_webhook
-          env_variable_name: SLACK_WEBHOOK
-
-      - name: Prepare application environment
-        uses: ./.github/actions/prepare-app-env
-
-      - name: set environment (scheduled smoke test)
-        if: ${{ github.event_name == 'schedule' }}
-        run: echo "PAAS_ENVIRONMENT=production" >> $GITHUB_ENV
-
-      - name: set environment (workflow dispatch)
-        if: ${{ github.event_name == 'workflow_dispatch' }}
-        run: |
-          echo "PAAS_ENVIRONMENT=${{ github.event.inputs.paas_environment }}" >> $GITHUB_ENV
-
-      - name: Run deployment smoke test
-        run:  bundle exec rspec spec/smoke_tests/jobseekers_can_view_homepage_spec.rb --tag smoke_test
-
-      - name: print environment
-        run: echo ${{ env.PAAS_ENVIRONMENT}}
+          event_name: ${{ github.event_name }}
 
       - name: Slack notification
-        if: failure()
+        if: steps.smoke-test.conclusion != 'success'
         uses: rtCamp/action-slack-notify@v2.2.0
         env:
           SLACK_CHANNEL: twd_tv_dev
