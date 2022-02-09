@@ -1,8 +1,16 @@
 class Jobseeker < ApplicationRecord
   lockbox_encrypts :last_sign_in_ip, :current_sign_in_ip
 
-  devise :database_authenticatable, :registerable, :recoverable, :validatable,
-         :confirmable, :lockable, :trackable, :timeoutable
+  devise(*%I[
+    confirmable
+    database_authenticatable
+    lockable
+    recoverable
+    registerable
+    timeoutable
+    trackable
+    validatable
+  ])
 
   has_many :feedbacks
   has_many :job_applications, dependent: :destroy
