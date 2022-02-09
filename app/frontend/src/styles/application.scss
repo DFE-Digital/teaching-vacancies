@@ -114,7 +114,8 @@ dd {
   background-color: govuk-colour('light-grey');
 }
 
-.vacancies_index {
+.vacancies_index,
+.vacancies_index_landing {
 
   @media only screen and (min-width: $small-screen) {
     .grid-row {

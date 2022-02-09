@@ -1,16 +1,20 @@
 class VacanciesController < ApplicationController
   helper_method :allow_sorting?, :job_application
 
-  before_action :set_landing_page_description, :set_map_display, :set_params_from_pretty_landing_page_params, only: %i[index]
-  after_action :trigger_search_performed_event, only: %i[index]
+  before_action :set_map_display, only: %i[index]
+  before_action :set_vacancies_search_and_vacancies, only: %i[index index_landing]
 
-  def index
-    @vacancies_search = Search::VacancySearch.new(
-      search_form.to_hash,
-      sort: search_form.sort,
-      page: params[:page],
-    )
-    @vacancies = VacanciesPresenter.new(@vacancies_search.vacancies)
+  after_action :trigger_search_performed_event, only: %i[index index_landing]
+
+  def index; end
+
+  def index_landing
+    if params[:pretty].present?
+      @landing_page = params[params[:pretty]]
+      @landing_page_translation = "#{params[:pretty]}.#{@landing_page.parameterize.underscore}"
+    end
+
+    render "index"
   end
 
   def show
@@ -32,20 +36,36 @@ class VacanciesController < ApplicationController
 
   private
 
-  def set_params_from_pretty_landing_page_params
-    params[:location] = params[:location_facet].titleize if params[:location_facet]
-    params[:job_roles] = params[:job_role].parameterize.underscore if params[:job_role]
-    params[:phases] = params[:education_phase].parameterize if params[:education_phase]
-    params[:subject] = params[:subject].tr("-", " ").gsub(" and ", " ") if params[:subject]
+  def set_vacancies_search_and_vacancies
+    @vacancies_search = Search::VacancySearch.new(
+      search_form.to_hash,
+      sort: search_form.sort,
+      page: params[:page],
+    )
+    @vacancies = VacanciesPresenter.new(@vacancies_search.vacancies)
   end
 
   def search_params
+    return landing_page_search_params if params[:pretty].present? || params[:location_facet].present?
+
     strip_empty_checkboxes(%i[job_roles phases working_patterns])
     %w[job_role job_roles phases working_patterns].each do |facet|
       params[facet] = params[facet].split if params[facet].is_a?(String)
     end
     params.permit(:keyword, :location, :radius, :subject, :sort_by,
                   job_role: [], job_roles: [], phases: [], working_patterns: [])
+  end
+
+  def landing_page_search_params
+    # TODO: This is nasty and for now replicates the logic that previously lived in the
+    # before_action `set_params_from_pretty_landing_page_params` and overwrote Rails's request
+    # parameters. It will be reworked in a future PR.
+    {
+      location: params[:location_facet].presence&.titleize,
+      job_roles: params[:job_role].presence&.parameterize&.underscore&.split,
+      phases: params[:education_phase].presence&.parameterize&.split,
+      subject: params[:subject].presence&.tr("-", " ")&.gsub(" and ", " "),
+    }.compact
   end
 
   def search_form
@@ -74,13 +94,6 @@ class VacanciesController < ApplicationController
 
   def set_headers
     response.set_header("X-Robots-Tag", "noarchive")
-  end
-
-  def set_landing_page_description
-    return unless params.key?(:pretty) && params.key?(params[:pretty])
-
-    @landing_page = params[params[:pretty]]
-    @landing_page_translation = "#{params[:pretty]}.#{@landing_page.parameterize.underscore}"
   end
 
   def set_map_display

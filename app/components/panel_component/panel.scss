@@ -1,6 +1,7 @@
 @import 'base_component';
 
-.vacancies_index {
+.vacancies_index,
+.vacancies_index_landing {
   .search-controls {
     .search-controls__panel {
       border-bottom: 1px solid $govuk-border-colour;
