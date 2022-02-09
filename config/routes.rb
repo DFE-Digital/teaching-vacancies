@@ -228,7 +228,7 @@ Rails.application.routes.draw do
       to: redirect { |params| "/teaching-jobs-#{params[:not_normalized].parameterize.dasherize}" },
       constraints: ->(request) { request.params[:not_normalized] != request.params[:not_normalized].parameterize.dasherize }
 
-  with_options(to: "vacancies#index") do
+  with_options(to: "vacancies#index_landing") do
     # If parameters are used that are the same as those in the search form, pagination with kaminari will break
     get "teaching-jobs-in-:location_facet",
         as: :location,
