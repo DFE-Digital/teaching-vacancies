@@ -1,0 +1,88 @@
+name: deploy workflow
+description: deploy's application
+
+inputs:
+  environment:
+    description: Environment
+    required: true
+  tag:
+    description: Docker tag
+    required: true
+  pr_id:
+    description: Pull Request
+    required: false
+  aws-access-key-id:
+    description: AWS-ID
+    required: true
+  aws-secret-access-key:
+    description: AWS-KEY
+    required: true
+
+runs:
+  using: composite
+  steps:
+
+    - uses: actions/checkout@v2
+      name: Checkout Code
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ inputs.aws-access-key-id }}
+        aws-secret-access-key: ${{ inputs.aws-secret-access-key }}
+        aws-region: eu-west-2
+        role-to-assume: Deployments
+        role-duration-seconds: 3600
+        role-skip-session-tagging: true
+
+    - name: Pin Terraform version
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.0.8
+
+    - name: Set environment variables for review
+      if: startsWith(github.event.inputs.environment, 'review')
+      shell: bash
+      run: |
+        PARAMETER_STORE_ENVIRONMENT=dev
+        TF_VAR_environment=${{ github.event.inputs.environment }}
+        echo "DEPLOY_ENV=review" >> $GITHUB_ENV
+        pr_id=${{ github.event.inputs.pr_id }}
+        echo "pr_id=${pr_id}" >> $GITHUB_ENV
+        echo "PARAMETER_STORE_ENVIRONMENT=${PARAMETER_STORE_ENVIRONMENT}" >> $GITHUB_ENV
+        echo "TF_VAR_environment=${TF_VAR_environment}" >> $GITHUB_ENV
+
+    - name: Set environment variables for non-review environments
+      if: startsWith(github.event.inputs.environment, 'review') != true
+      shell: bash
+      run: |
+        PARAMETER_STORE_ENVIRONMENT=${{ github.event.inputs.environment }}
+        DEPLOY_ENV=${{ github.event.inputs.environment }}
+        echo "PARAMETER_STORE_ENVIRONMENT=${PARAMETER_STORE_ENVIRONMENT}" >> $GITHUB_ENV
+        echo "DEPLOY_ENV=${DEPLOY_ENV}" >> $GITHUB_ENV
+        CONFIRM_PRODUCTION=YES
+        echo "CONFIRM_PRODUCTION=${CONFIRM_PRODUCTION}" >> $GITHUB_ENV
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+
+    - name: Download fetch_config.rb
+      shell: bash
+      run: |
+        echo "::group:: Download fetch_config.rb script"
+        curl -s https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/scripts/fetch_config/fetch_config.rb -o bin/fetch_config.rb
+        chmod +x bin/fetch_config.rb
+        echo "::endgroup::"
+
+    # Validate secrets stored in parameter store to prevent terraform from exposing them in case of an issue
+    - name: Validate secrets
+      shell: bash
+      run: |
+        gem install aws-sdk-ssm --no-document
+        bin/fetch_config.rb -s aws-ssm-parameter-path:/teaching-vacancies/${{ env.PARAMETER_STORE_ENVIRONMENT }}/app -d quiet \
+          && echo Data in "/teaching-vacancies/${{ env.PARAMETER_STORE_ENVIRONMENT }}" looks valid
+
+    - name: Deploy to environment
+      shell: bash
+      run: |
+        make ${{ env.DEPLOY_ENV }} ci tag=${{ github.event.inputs.tag }} terraform-app-apply
