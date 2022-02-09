@@ -241,8 +241,8 @@ jobs:
       uses: ./.github/actions/deploy/
       with:
         environment: ${{ env.ENVIRONMENT }}
-        tag: ${{ env.DOCKER_IMAGE_TAG }}"
-        pr_id: ${{ github.event.number }}"
+        tag: ${{ env.DOCKER_IMAGE_TAG }}
+        pr_id: ${{ github.event.number }}
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
