@@ -96,7 +96,7 @@ RSpec.describe Zendesk, zendesk: true do
       it "sets the URL" do
         service.create_request!(**kwargs)
         expect(config).to have_received(:url=)
-          .with("https://teachingjobs.zendesk.com/api/v2")
+          .with("https://becomingateacher.zendesk.com/api/v2")
       end
 
       it "sets the end user's email address" do

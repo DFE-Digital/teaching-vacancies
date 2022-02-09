@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://teachingjobs.zendesk.com/api/v2/requests
+    uri: https://becomingateacher.zendesk.com/api/v2/requests
     body:
       encoding: UTF-8
       string: '{"request":{"requester":{"name":"User In-Need","email":"test@example.com"},"subject":"[Support
@@ -38,7 +38,7 @@ http_interactions:
       X-Frame-Options:
       - SAMEORIGIN
       Location:
-      - https://teachingjobs.zendesk.com/api/v2/requests/20930.json
+      - https://becomingateacher.zendesk.com/api/v2/requests/20930.json
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Allow-Credentials:
@@ -75,7 +75,7 @@ http_interactions:
       Nel:
       - '{"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}'
       Set-Cookie:
-      - __cfruid=2a3d8506ae6f744b5c442f3d66fefdc03ac424bf-1634821577; path=/; domain=.teachingjobs.zendesk.com;
+      - __cfruid=2a3d8506ae6f744b5c442f3d66fefdc03ac424bf-1634821577; path=/; domain=.becomingateacher.zendesk.com;
         HttpOnly; Secure; SameSite=None
       Server:
       - cloudflare
@@ -83,7 +83,7 @@ http_interactions:
       - 6a1ab3b94c6d20e9-LHR
     body:
       encoding: UTF-8
-      string: '{"request":{"url":"https://teachingjobs.zendesk.com/api/v2/requests/20930.json","id":20930,"status":"new","priority":"normal","type":null,"subject":"[Support
+      string: '{"request":{"url":"https://becomingateacher.zendesk.com/api/v2/requests/20930.json","id":20930,"status":"new","priority":"normal","type":null,"subject":"[Support
         request] Teaching Vacancies","description":"Help!","organization_id":null,"via":{"channel":"api","source":{"from":{},"to":{},"rel":null}},"custom_fields":[],"requester_id":389521004560,"collaborator_ids":[],"email_cc_ids":[],"is_public":true,"due_at":null,"can_be_solved_by_me":false,"created_at":"2021-10-21T13:06:15Z","updated_at":"2021-10-21T13:06:15Z","recipient":null,"followup_source_id":null,"assignee_id":null,"fields":[]}}'
   recorded_at: Thu, 21 Oct 2021 13:06:17 GMT
 recorded_with: VCR 6.0.0

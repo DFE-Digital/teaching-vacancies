@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://teachingjobs.zendesk.com/api/v2/uploads
+    uri: https://becomingateacher.zendesk.com/api/v2/uploads
     body:
       encoding: ASCII-8BIT
       string: !binary |-
@@ -40,7 +40,7 @@ http_interactions:
       X-Frame-Options:
       - SAMEORIGIN
       Location:
-      - https://teachingjobs.zendesk.com/api/v2/attachments/373402291099.json
+      - https://becomingateacher.zendesk.com/api/v2/attachments/373402291099.json
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Allow-Credentials:
@@ -77,7 +77,7 @@ http_interactions:
       Nel:
       - '{"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}'
       Set-Cookie:
-      - __cfruid=74426d44a522d06a0f14375a5adfa6df8d5c1ccf-1635245544; path=/; domain=.teachingjobs.zendesk.com;
+      - __cfruid=74426d44a522d06a0f14375a5adfa6df8d5c1ccf-1635245544; path=/; domain=.becomingateacher.zendesk.com;
         HttpOnly; Secure; SameSite=None
       Server:
       - cloudflare
@@ -85,11 +85,11 @@ http_interactions:
       - 6a43228bcb93e654-LHR
     body:
       encoding: UTF-8
-      string: '{"upload":{"token":"igh28aFEQ9FpkDhNTgwzEmHmg","expires_at":"2021-10-29T10:52:24Z","attachments":[{"url":"https://teachingjobs.zendesk.com/api/v2/attachments/373402291099.json","id":373402291099,"file_name":"blank_job_spec.pdf","content_url":"https://teachingjobs.zendesk.com/attachments/token/sWGBMAEx6H6b0lXdmzVmt6Igq/?name=blank_job_spec.pdf","mapped_content_url":"https://teachingjobs.zendesk.com/attachments/token/sWGBMAEx6H6b0lXdmzVmt6Igq/?name=blank_job_spec.pdf","content_type":"application/pdf","size":28527,"width":null,"height":null,"inline":false,"deleted":false,"thumbnails":[]}],"attachment":{"url":"https://teachingjobs.zendesk.com/api/v2/attachments/373402291099.json","id":373402291099,"file_name":"blank_job_spec.pdf","content_url":"https://teachingjobs.zendesk.com/attachments/token/sWGBMAEx6H6b0lXdmzVmt6Igq/?name=blank_job_spec.pdf","mapped_content_url":"https://teachingjobs.zendesk.com/attachments/token/sWGBMAEx6H6b0lXdmzVmt6Igq/?name=blank_job_spec.pdf","content_type":"application/pdf","size":28527,"width":null,"height":null,"inline":false,"deleted":false,"thumbnails":[]}}}'
+      string: '{"upload":{"token":"igh28aFEQ9FpkDhNTgwzEmHmg","expires_at":"2021-10-29T10:52:24Z","attachments":[{"url":"https://becomingateacher.zendesk.com/api/v2/attachments/373402291099.json","id":373402291099,"file_name":"blank_job_spec.pdf","content_url":"https://becomingateacher.zendesk.com/attachments/token/sWGBMAEx6H6b0lXdmzVmt6Igq/?name=blank_job_spec.pdf","mapped_content_url":"https://becomingateacher.zendesk.com/attachments/token/sWGBMAEx6H6b0lXdmzVmt6Igq/?name=blank_job_spec.pdf","content_type":"application/pdf","size":28527,"width":null,"height":null,"inline":false,"deleted":false,"thumbnails":[]}],"attachment":{"url":"https://becomingateacher.zendesk.com/api/v2/attachments/373402291099.json","id":373402291099,"file_name":"blank_job_spec.pdf","content_url":"https://becomingateacher.zendesk.com/attachments/token/sWGBMAEx6H6b0lXdmzVmt6Igq/?name=blank_job_spec.pdf","mapped_content_url":"https://becomingateacher.zendesk.com/attachments/token/sWGBMAEx6H6b0lXdmzVmt6Igq/?name=blank_job_spec.pdf","content_type":"application/pdf","size":28527,"width":null,"height":null,"inline":false,"deleted":false,"thumbnails":[]}}}'
   recorded_at: Tue, 26 Oct 2021 10:52:24 GMT
 - request:
     method: post
-    uri: https://teachingjobs.zendesk.com/api/v2/requests
+    uri: https://becomingateacher.zendesk.com/api/v2/requests
     body:
       encoding: UTF-8
       string: '{"request":{"comment":{"body":"Help!","uploads":["igh28aFEQ9FpkDhNTgwzEmHmg"]},"requester":{"name":"User
@@ -126,7 +126,7 @@ http_interactions:
       X-Frame-Options:
       - SAMEORIGIN
       Location:
-      - https://teachingjobs.zendesk.com/api/v2/requests/20970.json
+      - https://becomingateacher.zendesk.com/api/v2/requests/20970.json
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Allow-Credentials:
@@ -163,7 +163,7 @@ http_interactions:
       Nel:
       - '{"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}'
       Set-Cookie:
-      - __cfruid=91c2c5ea666d8d6a4b6e75fba717dbc53e9ffc1c-1635245546; path=/; domain=.teachingjobs.zendesk.com;
+      - __cfruid=91c2c5ea666d8d6a4b6e75fba717dbc53e9ffc1c-1635245546; path=/; domain=.becomingateacher.zendesk.com;
         HttpOnly; Secure; SameSite=None
       Server:
       - cloudflare
@@ -171,7 +171,7 @@ http_interactions:
       - 6a43228e7bac75e3-LHR
     body:
       encoding: UTF-8
-      string: '{"request":{"url":"https://teachingjobs.zendesk.com/api/v2/requests/20970.json","id":20970,"status":"new","priority":"normal","type":null,"subject":"[Support
+      string: '{"request":{"url":"https://becomingateacher.zendesk.com/api/v2/requests/20970.json","id":20970,"status":"new","priority":"normal","type":null,"subject":"[Support
         request] Teaching Vacancies","description":"Help!","organization_id":null,"via":{"channel":"api","source":{"from":{},"to":{},"rel":null}},"custom_fields":[],"requester_id":389521004560,"collaborator_ids":[],"email_cc_ids":[],"is_public":true,"due_at":null,"can_be_solved_by_me":false,"created_at":"2021-10-26T10:52:25Z","updated_at":"2021-10-26T10:52:25Z","recipient":null,"followup_source_id":null,"assignee_id":null,"fields":[]}}'
   recorded_at: Tue, 26 Oct 2021 10:52:26 GMT
 recorded_with: VCR 6.0.0
