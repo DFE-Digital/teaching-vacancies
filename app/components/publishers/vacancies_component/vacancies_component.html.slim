@@ -1,8 +1,8 @@
 .govuk-grid-row
-  .govuk-grid-column-two-thirds
+  .govuk-grid-column-three-quarters
     h2.govuk-caption-l = t("jobs.manage.heading_html", organisation: @organisation.name, email: @email)
-    h1.govuk-heading-l class="govuk-!-margin-bottom-4" = t(".#{@selected_type}.with_count_html", count: @vacancies.count)
-  .govuk-grid-column-one-third
+    h1.govuk-heading-l class="govuk-!-margin-bottom-4 govuk-!-margin-top-2" = t(".#{@selected_type}.with_count_html", count: @vacancies.count)
+  .govuk-grid-column-one-quarter
     = govuk_button_link_to t("buttons.create_job"), create_or_copy_organisation_jobs_path, class: "govuk-!-margin-top-4 float-right"
 
 = tabs do |tabs|
