@@ -237,13 +237,15 @@ jobs:
         ENVIRONMENT=review-pr-${{ github.event.number }}
         echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
 
-    - name: Trigger Deploy App Workflow for ${{ env.ENVIRONMENT }}
-      uses: benc-uk/workflow-dispatch@v1.1
+    - name: Deploy App to ${{ env.ENVIRONMENT }} environment
+      uses: ./.github/actions/deploy/
       with:
-        workflow: Deploy App to Environment   # Name of the triggered workflow
-        token: ${{ env.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
-        ref: ${{ env.BUILD_GIT_TAG }}         # Different than branch HEAD SHA in case of a PR
-        inputs: '{"environment": "${{ env.ENVIRONMENT }}", "tag": "${{ env.DOCKER_IMAGE_TAG }}", "pr_id": "${{ github.event.number }}" }'
+        environment: ${{ env.ENVIRONMENT }}
+        tag: ${{ env.DOCKER_IMAGE_TAG }}"
+        pr_id: ${{ github.event.number }}"
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
 
     - name: Wait for Deploy App Workflow for ${{ env.ENVIRONMENT }}
       id: wait_for_deploy_app
