@@ -114,16 +114,6 @@ dd {
   background-color: govuk-colour('light-grey');
 }
 
-.bracket-content {
-  &::before {
-    content: '(';
-  }
-
-  &::after {
-    content: ')';
-  }
-}
-
 .vacancies_index {
 
   @media only screen and (min-width: $small-screen) {
@@ -140,18 +130,6 @@ dd {
     .grid-column-right {
       flex-basis: 1;
       padding: 0 0 0 $govuk-gutter;
-    }
-  }
-}
-
-.home_index {
-  .vacancy-facets {
-    .govuk-link {
-      display: inline-block;
-
-      &:visited * {
-        color: $govuk-link-visited-colour;
-      }
     }
   }
 }
