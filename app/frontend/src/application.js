@@ -5,7 +5,6 @@ import { Application } from '@hotwired/stimulus';
 
 // view components
 import MapController from '../../components/map_component/map';
-import PanelController from '../../components/panel_component/panel';
 import VacancySelectorController from '../../components/vacancy_selector_component/vacancy_selector';
 
 // js components
@@ -14,6 +13,7 @@ import ClipboardController from './components/clipboard/clipboard';
 import FormController from './components/form/form';
 import LocationFinderController from './components/locationFinder/locationFinder';
 import ManageQualificationsController from './components/manageQualifications/manageQualifications';
+import PanelController from './components/panel/panel';
 import TrackedLinkController from './components/trackedLink/trackedLink';
 import UploadDocumentsController from './components/uploadDocuments/uploadDocuments';
 import UtilsController from './components/utils';
