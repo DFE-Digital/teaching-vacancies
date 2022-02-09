@@ -13,7 +13,7 @@
     "@hotwired/stimulus": "^3.0.1",
     "@rails/webpacker": "^5.4.2",
     "@stimulus/polyfills": "^2.0.0",
-    "accessible-autocomplete": "^2.0.3",
+    "accessible-autocomplete": "^2.0.4",
     "axios": "^0.25.0",
     "classlist-polyfill": "^1.2.0",
     "core-js": "^3.21.0",
