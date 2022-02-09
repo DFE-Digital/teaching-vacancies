@@ -18,6 +18,11 @@ inputs:
     description: AWS-KEY
     required: true
 
+outputs:
+  conclusion:
+    description: "deployment conclusion"
+    value: ${{ steps.deployment-conclusion.outputs.conclusion }}
+
 runs:
   using: composite
   steps:
@@ -41,28 +46,28 @@ runs:
         terraform_version: 1.0.8
 
     - name: Set environment variables for review
-      if: startsWith(github.event.inputs.environment, 'review')
+      if: startsWith( inputs.environment, 'review')
       shell: bash
       run: |
         PARAMETER_STORE_ENVIRONMENT=dev
-        TF_VAR_environment=${{ github.event.inputs.environment }}
+        TF_VAR_environment=${{ inputs.environment }}
         echo "DEPLOY_ENV=review" >> $GITHUB_ENV
-        pr_id=${{ github.event.inputs.pr_id }}
+        pr_id=${{ inputs.pr_id }}
         echo "pr_id=${pr_id}" >> $GITHUB_ENV
         echo "PARAMETER_STORE_ENVIRONMENT=${PARAMETER_STORE_ENVIRONMENT}" >> $GITHUB_ENV
         echo "TF_VAR_environment=${TF_VAR_environment}" >> $GITHUB_ENV
 
-    - name: Set environment variables for non-review environments
-      if: startsWith(github.event.inputs.environment, 'review') != true
-      shell: bash
-      run: |
-        PARAMETER_STORE_ENVIRONMENT=${{ github.event.inputs.environment }}
-        DEPLOY_ENV=${{ github.event.inputs.environment }}
-        echo "PARAMETER_STORE_ENVIRONMENT=${PARAMETER_STORE_ENVIRONMENT}" >> $GITHUB_ENV
-        echo "DEPLOY_ENV=${DEPLOY_ENV}" >> $GITHUB_ENV
-        CONFIRM_PRODUCTION=YES
-        echo "CONFIRM_PRODUCTION=${CONFIRM_PRODUCTION}" >> $GITHUB_ENV
-
+#   - name: Set environment variables for non-review environments
+#     if: startsWith(github.event.inputs.environment, 'review') != true
+#     shell: bash
+#     run: |
+#       PARAMETER_STORE_ENVIRONMENT=${{ github.event.inputs.environment }}
+#       DEPLOY_ENV=${{ github.event.inputs.environment }}
+#       echo "PARAMETER_STORE_ENVIRONMENT=${PARAMETER_STORE_ENVIRONMENT}" >> $GITHUB_ENV
+#       echo "DEPLOY_ENV=${DEPLOY_ENV}" >> $GITHUB_ENV
+#       CONFIRM_PRODUCTION=YES
+#       echo "CONFIRM_PRODUCTION=${CONFIRM_PRODUCTION}" >> $GITHUB_ENV
+#
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
 
@@ -83,6 +88,7 @@ runs:
           && echo Data in "/teaching-vacancies/${{ env.PARAMETER_STORE_ENVIRONMENT }}" looks valid
 
     - name: Deploy to environment
+      id: deployment-conclusion
       shell: bash
       run: |
-        make ${{ env.DEPLOY_ENV }} ci tag=${{ github.event.inputs.tag }} terraform-app-apply
+        make ${{ env.DEPLOY_ENV }} ci tag=${{ inputs.tag }} terraform-app-apply
