@@ -59,11 +59,26 @@ ruby:
     },
   ]
 
+  subject_filters =
+    {
+      legend: t("jobs.filters.subject"),
+      key: "subjects",
+      attribute: :subjects,
+      selected: @form.subjects,
+      options: SUBJECT_OPTIONS,
+      value_method: :first,
+      text_method: :first,
+      selected_method: :first,
+      hint_method: :last,
+    }
+
+  items.insert(1, subject_filters) if current_variant?(:"2022_01_subjects_filters_test", :subjects_filters)
+
 .plain-styling
   = filters(form: f,
     filters: { total_count: 0, title: t("subscriptions.edit.filters") },
     items: items,
-    options: { remove_buttons: false, mobile_variant: false, close_all: false, autosubmit_form: false })
+    options: { remove_buttons: false, mobile_variant: false, close_all: false, autosubmit_form: false, filter_for: :job_alert })
 
 .divider-bottom
 
