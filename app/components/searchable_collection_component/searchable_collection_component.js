@@ -1,7 +1,7 @@
 import '../../frontend/src/lib/polyfill/closest.polyfill';
 import '../../frontend/src/lib/polyfill/from.polyfill';
 
-export const searchableClassNames = ['govuk-checkboxes__input', 'govuk-radiobuttons__input'];
+export const searchableClassNames = ['govuk-checkboxes__input', 'govuk-radios__input'];
 
 export const init = (container, classNames) => {
   let collection = [];
