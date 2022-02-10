@@ -11,7 +11,8 @@ li.vacancy role="listitem" tab-index="0"
     dd.double
       = @vacancy.salary
       - if @vacancy.actual_salary?
-        span.govuk-hint class="govuk-!-margin-bottom-0 govuk-!-margin-top-1 govuk-!-font-size-16" = t("jobs.actual_salary")
+        .govuk-hint class="govuk-!-margin-bottom-0 govuk-!-margin-top-1 govuk-!-font-size-16"
+          = t("jobs.actual_salary")
         = @vacancy.actual_salary
   dl
     dt = @vacancy.central_office? ? t("jobs.trust_type") : t("jobs.school_type")
