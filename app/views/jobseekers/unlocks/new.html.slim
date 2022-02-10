@@ -1,14 +1,13 @@
 - content_for :page_title_prefix, t(".title")
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h1.govuk-heading-xl = t(".heading")
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl = t(".heading")
 
-      = form_for resource, url: jobseeker_unlock_path do |f|
+    = form_for resource, url: jobseeker_unlock_path do |f|
 
-        p.govuk-body = t(".description")
+      p.govuk-body = t(".description")
 
-        = f.govuk_email_field :email, label: { size: "s" }, width: "two-thirds"
+      = f.govuk_email_field :email, label: { size: "s" }, width: "two-thirds"
 
-        = f.govuk_submit t(".form_submit"), classes: "govuk-!-margin-bottom-0"
+      = f.govuk_submit t(".form_submit"), classes: "govuk-!-margin-bottom-0"

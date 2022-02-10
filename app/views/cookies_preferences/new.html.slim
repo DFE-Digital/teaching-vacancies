@@ -1,54 +1,53 @@
 - content_for :page_title_prefix, t(".title")
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h1.govuk-heading-xl = t(".heading")
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl = t(".heading")
 
-      h2.govuk-heading-l = t(".subheading")
-      p.govuk-body = t(".body.explanation")
+    h2.govuk-heading-l = t(".subheading")
+    p.govuk-body = t(".body.explanation")
 
-      p.govuk-body = t(".body.details.intro")
-      ul.govuk-list.govuk-list--bullet
-        - t(".body.details.list").each do |list_text|
-          li = list_text
+    p.govuk-body = t(".body.details.intro")
+    ul.govuk-list.govuk-list--bullet
+      - t(".body.details.list").each do |list_text|
+        li = list_text
 
-      p.govuk-body = t(".body.anonymity")
+    p.govuk-body = t(".body.anonymity")
 
-      = render "cookies_consent_form"
+    = render "cookies_consent_form"
 
-      h2.govuk-heading-l = t(".body.usage.heading")
+    h2.govuk-heading-l = t(".body.usage.heading")
 
-      h3.govuk-heading-m = t(".body.usage.essential.heading")
-      p.govuk-body = t(".body.usage.essential.intro")
+    h3.govuk-heading-m = t(".body.usage.essential.heading")
+    p.govuk-body = t(".body.usage.essential.intro")
 
-      table.govuk-table
-        thead.govuk-table__head
-          th.govuk-table__header = t(".body.usage.essential.table.header.name")
-          th.govuk-table__header = t(".body.usage.essential.table.header.purpose")
-          th.govuk-table__header = t(".body.usage.essential.table.header.expires")
+    table.govuk-table
+      thead.govuk-table__head
+        th.govuk-table__header = t(".body.usage.essential.table.header.name")
+        th.govuk-table__header = t(".body.usage.essential.table.header.purpose")
+        th.govuk-table__header = t(".body.usage.essential.table.header.expires")
+      tr.govuk-table__row
+        td.govuk-table__cell = t(".body.usage.essential.table.teaching_vacancies.name")
+        td.govuk-table__cell = t(".body.usage.essential.table.teaching_vacancies.purpose")
+        td.govuk-table__cell = t(".body.usage.essential.table.teaching_vacancies.expires")
+      tr.govuk-table__row
+        td.govuk-table__cell = t(".body.usage.essential.table.consent.name")
+        td.govuk-table__cell = t(".body.usage.essential.table.consent.purpose")
+        td.govuk-table__cell = t(".body.usage.essential.table.consent.expires")
+
+    h3.govuk-heading-m = t(".body.usage.google_analytics.heading")
+    p.govuk-body = t(".body.usage.google_analytics.intro")
+
+    table.govuk-table
+      thead.govuk-table__head
+        th.govuk-table__header = t(".body.usage.google_analytics.table.header.name")
+        th.govuk-table__header = t(".body.usage.google_analytics.table.header.purpose")
+        th.govuk-table__header = t(".body.usage.google_analytics.table.header.expires")
+      - %w[first second third fourth].each do |row|
         tr.govuk-table__row
-          td.govuk-table__cell = t(".body.usage.essential.table.teaching_vacancies.name")
-          td.govuk-table__cell = t(".body.usage.essential.table.teaching_vacancies.purpose")
-          td.govuk-table__cell = t(".body.usage.essential.table.teaching_vacancies.expires")
-        tr.govuk-table__row
-          td.govuk-table__cell = t(".body.usage.essential.table.consent.name")
-          td.govuk-table__cell = t(".body.usage.essential.table.consent.purpose")
-          td.govuk-table__cell = t(".body.usage.essential.table.consent.expires")
+          td.govuk-table__cell = t(".body.usage.google_analytics.table.#{row}.name")
+          td.govuk-table__cell = t(".body.usage.google_analytics.table.#{row}.purpose")
+          td.govuk-table__cell = t(".body.usage.google_analytics.table.#{row}.expires")
 
-      h3.govuk-heading-m = t(".body.usage.google_analytics.heading")
-      p.govuk-body = t(".body.usage.google_analytics.intro")
-
-      table.govuk-table
-        thead.govuk-table__head
-          th.govuk-table__header = t(".body.usage.google_analytics.table.header.name")
-          th.govuk-table__header = t(".body.usage.google_analytics.table.header.purpose")
-          th.govuk-table__header = t(".body.usage.google_analytics.table.header.expires")
-        - %w[first second third fourth].each do |row|
-          tr.govuk-table__row
-            td.govuk-table__cell = t(".body.usage.google_analytics.table.#{row}.name")
-            td.govuk-table__cell = t(".body.usage.google_analytics.table.#{row}.purpose")
-            td.govuk-table__cell = t(".body.usage.google_analytics.table.#{row}.expires")
-
-      h2.govuk-heading-l = t(".body.service.heading")
-      p.govuk-body = t(".body.service.intro_html", feedback_link: govuk_link_to(t(".body.service.feedback"), new_feedback_path))
+    h2.govuk-heading-l = t(".body.service.heading")
+    p.govuk-body = t(".body.service.intro_html", feedback_link: govuk_link_to(t(".body.service.feedback"), new_feedback_path))

@@ -1,13 +1,12 @@
 - content_for :page_title_prefix, t(".title")
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h1.govuk-heading-xl = t(".title")
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl = t(".title")
 
-      p.govuk-body = t(".description", email: resource.email)
+    p.govuk-body = t(".description", email: resource.email)
 
-      = form_for resource, url: jobseeker_confirmation_path, method: :post do |f|
-        = f.hidden_field :email
+    = form_for resource, url: jobseeker_confirmation_path, method: :post do |f|
+      = f.hidden_field :email
 
-        = f.govuk_submit t("buttons.resend_email"), classes: "govuk-!-margin-bottom-0"
+      = f.govuk_submit t("buttons.resend_email"), classes: "govuk-!-margin-bottom-0"

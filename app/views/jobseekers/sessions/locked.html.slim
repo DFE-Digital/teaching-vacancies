@@ -1,12 +1,11 @@
 - content_for :page_title_prefix, t(".title")
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h1.govuk-heading-xl = t(".heading")
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl = t(".heading")
 
-      p.govuk-body = t(".description")
+    p.govuk-body = t(".description")
 
-      p.govuk-body-s = t(".instructions")
+    p.govuk-body-s = t(".instructions")
 
-      p.govuk-body-s = t(".having_trouble_html", mail_to: govuk_mail_to(t("help.email"), t(".report_it")))
+    p.govuk-body-s = t(".having_trouble_html", mail_to: govuk_mail_to(t("help.email"), t(".report_it")))

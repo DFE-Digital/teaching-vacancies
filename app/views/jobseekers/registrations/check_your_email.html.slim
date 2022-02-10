@@ -1,16 +1,15 @@
 - content_for :page_title_prefix, t(".title")
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h1.govuk-heading-xl = t(".title")
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl = t(".title")
 
-      p.govuk-body = t(".description")
+    p.govuk-body = t(".description")
 
-      p.govuk-body class="govuk-!-font-weight-bold" = @resource.email
+    p.govuk-body class="govuk-!-font-weight-bold" = @resource.email
 
-      p.govuk-body = t(".additional_instructions")
+    p.govuk-body = t(".additional_instructions")
 
-      = govuk_details summary_text: t(".resend_summary"), text: t(".resend_text_html", resend_link: govuk_link_to(t(".resend_link"), jobseekers_resend_instructions_path),
-                                                                                       restart_link: govuk_link_to(t(".restart_link"), new_jobseeker_registration_path),
-                                                                                       mail_to: govuk_mail_to(t("help.email")))
+    = govuk_details summary_text: t(".resend_summary"), text: t(".resend_text_html", resend_link: govuk_link_to(t(".resend_link"), jobseekers_resend_instructions_path),
+                                                                                     restart_link: govuk_link_to(t(".restart_link"), new_jobseeker_registration_path),
+                                                                                     mail_to: govuk_mail_to(t("help.email")))

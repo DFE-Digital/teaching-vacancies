@@ -1,6 +1,7 @@
 - content_for :page_title_prefix, t("error_pages.not_found")
 
-.govuk-main-wrapper
-  h1.govuk-heading-xl = t("error_pages.not_found")
-  p.govuk-body If you entered a web address please check it was correct.
-  p.govuk-body You can #{govuk_link_to("return to the homepage", "/")} to try and find the information you need.
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl = t("error_pages.not_found")
+    p.govuk-body If you entered a web address please check it was correct.
+    p.govuk-body You can #{govuk_link_to("return to the homepage", "/")} to try and find the information you need.
