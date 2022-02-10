@@ -66,7 +66,7 @@ class VacancyPresenter < BasePresenter
 
   def show_working_patterns
     if model.working_patterns_details?
-      safe_join([working_patterns, tag.br, tag.span(model.working_patterns_details, class: "govuk-hint govuk-!-margin-bottom-0")])
+      safe_join([working_patterns, tag.br, tag.span(model.working_patterns_details, class: "govuk-!-margin-bottom-0")])
     else
       working_patterns
     end
@@ -126,7 +126,7 @@ class VacancyPresenter < BasePresenter
   private
 
   def greyed_additional_job_role(role)
-    tag.span additional_job_role(role), class: "govuk-hint govuk-!-margin-bottom-0"
+    tag.span additional_job_role(role), class: "govuk-!-margin-bottom-0"
   end
 
   def fix_bullet_points(text)
