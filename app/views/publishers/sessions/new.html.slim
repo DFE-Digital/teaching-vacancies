@@ -1,16 +1,16 @@
 - content_for :page_title_prefix, t(".sign_in.title")
 
-= govuk_back_link text: t("buttons.back"), href: page_path("sign-in")
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: page_path("sign-in")
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h1.govuk-heading-l = t(".sign_in.title")
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l = t(".sign_in.title")
 
-      p = t(".sign_in.description")
-      = govuk_button_to t("buttons.continue_to_dsi"), publisher_dfe_omniauth_authorize_path, class: "govuk-!-margin-bottom-0", form_class: "publisher-sign-in"
+    p = t(".sign_in.description")
+    = govuk_button_to t("buttons.continue_to_dsi"), publisher_dfe_omniauth_authorize_path, class: "govuk-!-margin-bottom-0", form_class: "publisher-sign-in"
 
-    .govuk-grid-column-one-third.grey-cta-container
-      h2.account-sidebar__heading = t(".no_account.heading")
-      p.govuk-body = t("publishers.sessions.new.no_account.content_html", link: govuk_link_to(t(".no_account.login_link_text"), publisher_dfe_omniauth_authorize_path))
-      p.govuk-body = t(".no_account.account_request_html", link: govuk_link_to(t(".no_account.account_request_link_text"), page_path("dsi-account-request")))
+  .govuk-grid-column-one-third.grey-cta-container
+    h2.account-sidebar__heading = t(".no_account.heading")
+    p.govuk-body = t("publishers.sessions.new.no_account.content_html", link: govuk_link_to(t(".no_account.login_link_text"), publisher_dfe_omniauth_authorize_path))
+    p.govuk-body = t(".no_account.account_request_html", link: govuk_link_to(t(".no_account.account_request_link_text"), page_path("dsi-account-request")))
