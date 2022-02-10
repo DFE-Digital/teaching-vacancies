@@ -1,0 +1,38 @@
+name: smoke-test action
+description: smoke test application
+
+inputs:
+  paas_environment:
+    description: Environment
+    required: true
+  event_name:
+    description: type of event that triggred the smoke test
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Prepare application environment
+      uses: ./.github/actions/prepare-app-env
+
+    - name: set environment (scheduled smoke test)
+      shell: bash
+      if: ${{ inputs.event_name == 'schedule' }}
+      run: echo "PAAS_ENVIRONMENT=production" >> $GITHUB_ENV
+
+    - name: set environment (workflow dispatch)
+      shell: bash
+      if: ${{ inputs.event_name != 'schedule' }}
+      run: |
+        echo "PAAS_ENVIRONMENT=${{ inputs.paas_environment }}" >> $GITHUB_ENV
+
+    - name: Run deployment smoke test
+      shell: bash
+      run:  bundle exec rspec spec/smoke_tests/jobseekers_can_view_homepage_spec.rb --tag smoke_test
+
+    - name: print environment
+      shell: bash
+      run: echo ${{ env.PAAS_ENVIRONMENT}}
