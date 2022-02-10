@@ -11,27 +11,16 @@
 
 .govuk-grid-row.vacancies-component class="govuk-!-margin-top-7 govuk-!-margin-bottom-7"
   - if @organisation.school_group?
-    .govuk-grid-column-one-third
+    .govuk-grid-column-one-third class="govuk-!-margin-bottom-5"
       = form_for @publisher_preference, html: { data: { controller: "form", "hide-submit": true } } do |f|
-        = filters(filters: { total_count: @publisher_preference.organisations.count,
-                                      title: t("jobs.filters.job_filters") },
-                                      form: f,
-                                      items: [{ legend: "Locations",
-                                                key: "locations",
-                                                search: true,
-                                                scroll: true,
-                                                attribute: :organisation_ids,
-                                                selected: @publisher_preference.organisations.map(&:id),
-                                                options: @organisation_options,
-                                                value_method: :id,
-                                                text_method: :label,
-                                                selected_method: :name,
-                                                small: true }],
-                                      options: { remove_buttons: true,
-                                                mobile_variant: true,
-                                                autosubmit_form: true,
-                                                publisher_preference: (@publisher_preference if @organisation.local_authority?) },
-                  classes: "govuk-!-padding-left-3 govuk-!-padding-right-3 govuk-!-padding-top-0")
+        = filters(form: f,
+                  filters: { total_count: @publisher_preference.organisations.count },
+                  options: { remove_buttons: true, publisher_preference: (@publisher_preference if @organisation.local_authority?) },
+                  html_attributes: { tabindex: "-1" }) do |filters_component|
+                    - filters_component.remove_buttons do |rb|
+                      - rb.group(key: "locations", selected: @publisher_preference.organisations.map(&:id), options: @organisation_options, value_method: :id, selected_method: :name)
+
+                    - filters_component.group key: "locations", component: f.govuk_collection_check_boxes(:organisation_ids, @organisation_options, :id, :label, small: true, legend: { text: "Locations" }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
 
         = f.hidden_field :jobs_type, value: @selected_type
 

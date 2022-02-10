@@ -5,43 +5,22 @@
       - if options[:publisher_preference]
         = govuk_link_to t(".add_or_remove_schools"), edit_publisher_preference_path(options[:publisher_preference]), class: "filters-component__link-button add-remove-schools govuk-link--no-visited-state govuk-!-margin-bottom-4"
       - elsif options[:heading_text]
-        h2.govuk-heading-m class="govuk-!-margin-bottom-4"
+        h2.govuk-heading-m
           = options[:heading_text]
 
   - if display_remove_buttons?
     .filters-component__remove
-      .filters-component-filter__selected
-        .filters-component__section-heading
-          .govuk-body class="govuk-!-margin-bottom-0"
-            = t("shared.filter_group.current_selected_filters")
-          button.filters-component__link-button.govuk-body.govuk-link id="filters-component-clear-all"
-            = t("shared.filter_group.clear_all_filters")
+      .filters-component__remove__heading
+        .govuk-body class="govuk-!-margin-bottom-0"
+          = t("shared.filter_group.current_selected_filters")
+        button.filters-component__link-button.govuk-body.govuk-link id="filters-component-clear-all"
+          = t("shared.filter_group.clear_all_filters")
 
-        - items.each do |group|
-          - if group[:selected]&.any?
-            .govuk-heading-s class="govuk-!-margin-bottom-0 govuk-!-font-weight-bold"
-              = group[:title]
-
-          ul.filters-component__remove-tags
-            - group[:options].each do |tag|
-              - if group[:selected]&.include?(tag.send(group[:value_method]))
-                li
-                  button.filters-component__remove-tags__tag.icon.icon--left.icon--cross data-group=group[:key] data-key=tag.send(group[:value_method])
-                    span.govuk-visually-hidden
-                      = t("shared.filter_group.remove_filter_hidden")
-                    = tag.send(group[:selected_method])
+      = remove_buttons
 
   .filters-component__groups
-    - items.each do |group|
-      .filters-component__groups__group class="#{"small" if group[:small]}" data-group=group[:key]
-        = form.govuk_collection_check_boxes group[:attribute],
-          group[:options],
-          group[:value_method],
-          group[:text_method],
-          small: group[:small],
-          legend: { text: group[:legend], size: (group[:small] ? "s" : "m") },
-          hint: nil,
-          form_group: (options[:autosubmit_form] ? { data: { action: "change->form#submitListener" } } : {})
+    - groups.each do |group|
+      = group
 
   .filters-component__submit
     = form.govuk_submit t("buttons.apply_filters"), classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2 filters-component__submit-button"

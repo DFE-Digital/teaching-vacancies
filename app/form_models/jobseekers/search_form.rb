@@ -42,8 +42,8 @@ class Jobseekers::SearchForm
   def set_facet_options
     @job_role_options = Vacancy.main_job_role_options.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.main_job_role_options.#{option}")] }
     @phase_options = [%w[primary Primary], %w[middle Middle], %w[secondary Secondary], %w[16-19 16-19]]
-    @ect_suitable_options = [["ect_suitable", I18n.t("jobs.filters.ect_suitable_only"), I18n.t("jobs.filters.ect_suitable")]]
-    @send_responsible_options = [["send_responsible", I18n.t("jobs.filters.send_responsible_only"), I18n.t("jobs.filters.send_responsible")]]
+    @ect_suitable_options = [["ect_suitable", I18n.t("jobs.filters.ect_suitable"), I18n.t("jobs.filters.ect_suitable_only")]]
+    @send_responsible_options = [["send_responsible", I18n.t("jobs.filters.send_responsible"), I18n.t("jobs.filters.send_responsible_only")]]
     @working_pattern_options = Vacancy.working_patterns.keys.map do |option|
       [option, I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.#{option}")]
     end

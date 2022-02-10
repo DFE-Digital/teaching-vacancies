@@ -1,64 +1,57 @@
 ruby:
-  items = [
+  filter_types = [
     {
       legend: t("jobs.filters.job_roles"),
       key: "job_roles",
-      attribute: :job_roles,
-      selected: @form.job_roles.reject { |role| role == "ect_suitable" },
+      selected: @form.job_roles.reject { |role| role.in?(%w[ect_suitable send_responsible]) },
       options: @form.job_role_options,
       value_method: :first,
-      text_method: :last,
       selected_method: :last,
-      small: true,
     },
     {
       legend: t("jobs.filters.ect_suitable"),
       key: "ect_suitable",
-      attribute: :job_roles,
       selected: @form.job_roles.include?("ect_suitable") ? @form.job_roles : [],
       options: @form.ect_suitable_options,
       value_method: :first,
-      text_method: :second,
       selected_method: :last,
-      small: true,
     },
     {
       legend: t("jobs.filters.send_responsible"),
       key: "send_responsible",
-      attribute: :job_roles,
       selected: @form.job_roles.include?("send_responsible") ? @form.job_roles : [],
       options: @form.send_responsible_options,
       value_method: :first,
-      text_method: :second,
       selected_method: :last,
-      small: true,
     },
     {
       legend: t("jobs.filters.phases"),
       key: "education_phase",
-      attribute: :phases,
       selected: @form.phases,
       options: @form.phase_options,
       value_method: :first,
-      text_method: :last,
       selected_method: :last,
-      small: true,
     },
     {
       legend: t("jobs.filters.working_patterns"),
       key: "working_patterns",
-      attribute: :working_patterns,
       selected: @form.working_patterns,
       options: @form.working_pattern_options,
       value_method: :first,
-      text_method: :last,
       selected_method: :last,
-      small: true,
     },
   ]
 
 = filters(form: f,
   filters: { total_count: @form.total_filters },
-  items: items,
-  options: { heading_text: "Filter results", remove_buttons: true, mobile_variant: true, close_all: true, autosubmit_form: true },
-  html_attributes: { tabindex: "-1", id: id })
+  options: { heading_text: "Filter results", remove_buttons: true },
+  html_attributes: { tabindex: "-1", id: id }) do |filters_component|
+    - filters_component.remove_buttons do |rb|
+      - filter_types.each do |filter_type|
+        - rb.group(**filter_type)
+
+    - filters_component.group key: "job_roles", component: f.govuk_collection_check_boxes(:job_roles, @form.job_role_options, :first, :last, small: true, legend: { text: t("jobs.filters.job_roles") }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
+    - filters_component.group key: "ect_suitable", component: f.govuk_collection_check_boxes(:job_roles, @form.ect_suitable_options, :first, :last, small: true, legend: { text: t("jobs.filters.ect_suitable") }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
+    - filters_component.group key: "send_responsible", component: f.govuk_collection_check_boxes(:job_roles, @form.send_responsible_options, :first, :last, small: true, legend: { text: t("jobs.filters.send_responsible") }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
+    - filters_component.group key: "education_phase", component: f.govuk_collection_check_boxes(:phases, @form.phase_options, :first, :last, small: true, legend: { text: t("jobs.filters.phases") }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
+    - filters_component.group key: "working_patterns", component: f.govuk_collection_check_boxes(:working_patterns, @form.working_pattern_options, :first, :last, small: true, legend: { text: t("jobs.filters.working_patterns") }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
