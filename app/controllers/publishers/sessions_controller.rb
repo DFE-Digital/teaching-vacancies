@@ -1,6 +1,8 @@
 class Publishers::SessionsController < Devise::SessionsController
   before_action :redirect_to_authentication_fallback, only: %i[new]
 
+  def new; end
+
   def create
     publisher = Publisher.find(session[:publisher_id])
     organisation = publisher.organisations.find(params[:organisation_id])
