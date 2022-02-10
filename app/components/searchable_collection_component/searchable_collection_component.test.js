@@ -13,7 +13,7 @@ describe('searchCheckbox', () => {
 <input type="checkbox" value="abc" class="govuk-checkboxes__input" />
 </div>
 <div class="govuk-radiobuttons__item">
-<input type="radio" value="xyz" class="govuk-radiobuttons__input" />
+<input type="radio" value="xyz" class="govuk-radios__input" />
 </div>
 <div class="govuk-checkboxes__item">
 <input type="checkbox" value="mno" class="govuk-checkboxes__input" /><label>abc</label>
@@ -28,7 +28,7 @@ describe('searchCheckbox', () => {
       document.getElementsByClassName('searchable-collection-component__search-input')[0].dispatchEvent(new Event('keyup'));
 
       expect(document.getElementsByClassName('govuk-checkboxes__input')[0].parentElement.style.display).toBe('block');
-      expect(document.getElementsByClassName('govuk-radiobuttons__input')[0].parentElement.style.display).toBe('none');
+      expect(document.getElementsByClassName('govuk-radios__input')[0].parentElement.style.display).toBe('none');
       expect(document.getElementsByClassName('govuk-checkboxes__input')[1].parentElement.style.display).toBe('block');
 
       expect(document.getElementById('search-results').innerHTML).toBe('2 subjects match abc');
