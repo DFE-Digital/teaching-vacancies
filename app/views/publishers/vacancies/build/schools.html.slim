@@ -24,7 +24,8 @@
             collection: @school_options,
             value_method: :id,
             text_method: :name,
-            hint_method: :address
+            hint_method: :address,
+            classes: "govuk-!-margin-top-6"
 
         div class="govuk-!-margin-top-6"
           = render "publishers/vacancies/vacancy_form_partials/submit", f: f
