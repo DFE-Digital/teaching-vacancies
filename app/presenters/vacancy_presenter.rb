@@ -66,7 +66,7 @@ class VacancyPresenter < BasePresenter
 
   def show_working_patterns
     if model.working_patterns_details?
-      safe_join([working_patterns, tag.br, tag.span(model.working_patterns_details, class: "govuk-hint govuk-!-margin-bottom-0")])
+      safe_join([working_patterns, tag.br, tag.span(model.working_patterns_details, class: "govuk-!-margin-bottom-0")])
     else
       working_patterns
     end
@@ -81,7 +81,7 @@ class VacancyPresenter < BasePresenter
     #       and once people no longer need to view the legacy vacancies for reference.
     return show_job_roles unless main_job_role
 
-    safe_join [show_main_job_role, tag.br, model.additional_job_roles.map { |role| greyed_additional_job_role(role) }]
+    safe_join [show_main_job_role, tag.br, model.additional_job_roles.map { |role| tag.span additional_job_role(role), class: "govuk-!-margin-bottom-0" }]
   end
 
   def show_main_job_role
@@ -124,10 +124,6 @@ class VacancyPresenter < BasePresenter
   end
 
   private
-
-  def greyed_additional_job_role(role)
-    tag.span additional_job_role(role), class: "govuk-hint govuk-!-margin-bottom-0"
-  end
 
   def fix_bullet_points(text)
     # This is a band-aid solution for the problem where (particularly) job adverts contain bullet point characters
