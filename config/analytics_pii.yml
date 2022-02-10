@@ -49,6 +49,8 @@ shared:
     - id
     - publisher_preference_id
     - school_id
+  location_polygons:
+    - id
   notifications:
     - id
     - recipient_id
