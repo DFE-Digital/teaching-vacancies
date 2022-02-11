@@ -1,0 +1,9 @@
+li
+  = govuk_link_to(href) do
+    / Make link text more meaningful for screenreaders
+    span.govuk-visually-hidden = "view #{@landing_page.count} "
+    = @landing_page.name
+    span.govuk-visually-hidden = " jobs"
+
+  / Hide count from a11y tree as it's included in link text
+  span aria-hidden="true" = " (#{@landing_page.count})"
