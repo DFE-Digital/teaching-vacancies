@@ -4,43 +4,39 @@
   - content_for :skip_links do
     a.govuk-skip-link href="#vacancy-results" = t(".skip_link")
 
-= render "jobseekers/dashboard/account_header"
-
-.govuk-grid-row
-  .govuk-grid-column-full class="govuk-!-margin-top-5"
-    h1.govuk-heading-l = t(".page_title")
+= render "jobseekers/dashboard/account_header", title: t(".page_title")
 
 - if saved_jobs.many?
-  .govuk-grid-row class="govuk-!-margin-top-0"
+  .govuk-grid-row
     .govuk-grid-column-full
       = render SortComponent.new path: method(:jobseekers_saved_jobs_path), sort: sort
 
 .govuk-grid-row
   .govuk-grid-column-full
-      - if saved_jobs.any?
-        #vacancy-results
-          - saved_jobs.each do |saved_job|
-            = render CardComponent.new do |card|
-              - card.header do
-                = tag.div(govuk_link_to(saved_job.vacancy.job_title, job_path(saved_job.vacancy), class: "govuk-link--no-visited-state"))
-                = tag.div(vacancy_job_location(saved_job.vacancy))
+    - if saved_jobs.any?
+      #vacancy-results
+        - saved_jobs.each do |saved_job|
+          = render CardComponent.new do |card|
+            - card.header do
+              = tag.div(govuk_link_to(saved_job.vacancy.job_title, job_path(saved_job.vacancy), class: "govuk-link--no-visited-state"))
+              = tag.div(vacancy_job_location(saved_job.vacancy))
 
-              - card.body do
-                = tag.div(card.labelled_item(t(".added"), format_date(saved_job.created_at, :date_only)))
-                - if saved_job.vacancy.expired?
-                  = tag.div(t(".deadline_passed"), class: "govuk-!-font-weight-bold text-red")
-                = tag.div(card.labelled_item(t(".application_deadline"), OrganisationVacancyPresenter.new(saved_job.vacancy).application_deadline))
+            - card.body do
+              = tag.div(card.labelled_item(t(".added"), format_date(saved_job.created_at, :date_only)))
+              - if saved_job.vacancy.expired?
+                = tag.div(t(".deadline_passed"), class: "govuk-!-font-weight-bold text-red")
+              = tag.div(card.labelled_item(t(".application_deadline"), OrganisationVacancyPresenter.new(saved_job.vacancy).application_deadline))
 
-              - if saved_job.vacancy.enable_job_applications? && Vacancy.live.exists?(saved_job.vacancy.id) && current_jobseeker.job_applications.after_submission.find_by(vacancy_id: saved_job.vacancy.id).present?
-                - card.action_item link: govuk_link_to(safe_join([t(".view"), tag.span(" for #{saved_job.vacancy.job_title}", class: "govuk-visually-hidden")]), jobseekers_job_application_path(JobApplication.find_by(vacancy_id: saved_job.vacancy.id)))
-              - elsif saved_job.vacancy.enable_job_applications? && Vacancy.live.exists?(saved_job.vacancy.id) && current_jobseeker.job_applications.draft.find_by(vacancy_id: saved_job.vacancy.id).present?
-                - card.action_item link: govuk_link_to(safe_join([t(".continue"), tag.span(" for #{saved_job.vacancy.job_title}", class: "govuk-visually-hidden")]), jobseekers_job_application_review_path(JobApplication.find_by(vacancy_id: saved_job.vacancy.id)))
-              - elsif saved_job.vacancy.enable_job_applications? && Vacancy.live.exists?(saved_job.vacancy.id)
-                - card.action_item link: govuk_link_to(safe_join([t(".apply"), tag.span(" for #{saved_job.vacancy.job_title}", class: "govuk-visually-hidden")]), new_jobseekers_job_job_application_path(saved_job.vacancy.id))
-              - card.action_item link: govuk_link_to(safe_join([t(".delete"), tag.span(" for #{saved_job.vacancy.job_title}", class: "govuk-visually-hidden")]), jobseekers_saved_job_path(saved_job.vacancy.id, saved_job, redirect_to_dashboard: true), method: :delete, class: "govuk-delete-link")
+            - if saved_job.vacancy.enable_job_applications? && Vacancy.live.exists?(saved_job.vacancy.id) && current_jobseeker.job_applications.after_submission.find_by(vacancy_id: saved_job.vacancy.id).present?
+              - card.action_item link: govuk_link_to(safe_join([t(".view"), tag.span(" for #{saved_job.vacancy.job_title}", class: "govuk-visually-hidden")]), jobseekers_job_application_path(JobApplication.find_by(vacancy_id: saved_job.vacancy.id)))
+            - elsif saved_job.vacancy.enable_job_applications? && Vacancy.live.exists?(saved_job.vacancy.id) && current_jobseeker.job_applications.draft.find_by(vacancy_id: saved_job.vacancy.id).present?
+              - card.action_item link: govuk_link_to(safe_join([t(".continue"), tag.span(" for #{saved_job.vacancy.job_title}", class: "govuk-visually-hidden")]), jobseekers_job_application_review_path(JobApplication.find_by(vacancy_id: saved_job.vacancy.id)))
+            - elsif saved_job.vacancy.enable_job_applications? && Vacancy.live.exists?(saved_job.vacancy.id)
+              - card.action_item link: govuk_link_to(safe_join([t(".apply"), tag.span(" for #{saved_job.vacancy.job_title}", class: "govuk-visually-hidden")]), new_jobseekers_job_job_application_path(saved_job.vacancy.id))
+            - card.action_item link: govuk_link_to(safe_join([t(".delete"), tag.span(" for #{saved_job.vacancy.job_title}", class: "govuk-visually-hidden")]), jobseekers_saved_job_path(saved_job.vacancy.id, saved_job, redirect_to_dashboard: true), method: :delete, class: "govuk-delete-link")
 
-      - else
-        = render EmptySectionComponent.new title: t(".zero_saved_jobs_title") do
-          = t(".zero_saved_jobs_body_html", link_to: govuk_link_to(t(".link_find"), root_path))
+    - else
+      = render EmptySectionComponent.new title: t(".zero_saved_jobs_title") do
+        = t(".zero_saved_jobs_body_html", link_to: govuk_link_to(t(".link_find"), root_path))
 
 - content_for :after_main, jobseekers_account_survey_link(origin: url_for)
