@@ -10,9 +10,7 @@ class Jobseekers::SearchResults::HeadingComponent < ViewComponent::Base
   end
 
   def heading
-    if @landing_page.present? && Vacancy.job_roles.key?(@landing_page.underscore)
-      return t("jobs.search_result_heading.landing_page_html", jobs_count: @readable_count, landing_page: job_role(@landing_page), count: @total_count)
-    end
+    return @landing_page.heading if @landing_page
 
     if @keyword.blank? && @location.blank?
       return t("jobs.search_result_heading.without_search_html", jobs_count: @readable_count, count: @total_count)
