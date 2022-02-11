@@ -7,7 +7,7 @@ RSpec.describe "Job listing statistics" do
   let(:vacancy_stats) { double(number_of_unique_views: 42) }
 
   before do
-    allow_any_instance_of(Publishers::AuthenticationConcerns).to receive(:current_organisation).and_return(organisation)
+    allow_any_instance_of(Publishers::BaseController).to receive(:current_organisation).and_return(organisation)
     allow(Publishers::VacancyStats).to receive(:new).and_return(vacancy_stats)
     sign_in(publisher, scope: :publisher)
   end

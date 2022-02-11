@@ -6,11 +6,12 @@ en:
       send_paranoid_instructions: If your email address exists in our database, you will receive an email with instructions for how to confirm your email address in a few minutes.
     failure:
       already_authenticated: You are already signed in.
+      blank: Please provide your email address and password.
       inactive: Your account is not activated yet.
-      invalid: We did not recognise your sign-in details
-      locked: You have been locked out of your account because you have made too many attempts to log in.
+      invalid: We did not recognise your sign-in details.
       last_attempt: You have one more attempt before your account is locked.
-      not_found_in_database: We did not recognise your sign-in details
+      locked: You have been locked out of your account because you have made too many attempts to log in.
+      not_found_in_database: We did not recognise your sign-in details.
       timeout: Your session expired. Please sign in again to continue.
       unauthenticated: You need to sign in or create an account before continuing.
       unconfirmed: You have to confirm your email address before continuing.

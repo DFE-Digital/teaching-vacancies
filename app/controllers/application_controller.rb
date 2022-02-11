@@ -9,18 +9,13 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   before_action :redirect_to_canonical_domain, :set_headers
-  before_action :store_jobseeker_redirect_to!, if: -> { redirect_to_param.present? }
   before_action :trigger_click_event, if: -> { click_event_param.present? }
   before_action { EventContext.request_event = request_event }
-  before_action :destroy_jobseeker_return_to!
 
   after_action :trigger_page_visited_event, unless: :request_is_healthcheck?
 
-  helper_method :cookies_preference_set?, :current_variant?, :jobseeker_root_path, :referred_from_jobs_path?, :user_type, :utm_parameters
   helper GOVUKDesignSystemFormBuilder::BuilderHelper
 
-  include Publishers::AuthenticationConcerns
-  include DeviseFlashConcerns
   include AbTestable
 
   def check
@@ -40,42 +35,15 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def user_type
-    if jobseeker_signed_in?
-      :jobseeker
-    elsif publisher_signed_in?
-      :publisher
-    end
-  end
-
-  def jobseeker_root_path(*args)
-    if current_jobseeker.job_applications.any?
-      jobseekers_job_applications_path(*args)
-    else
-      super(*args)
-    end
-  end
-
-  def jobseeker_root_url(*args)
-    if current_jobseeker.job_applications.any?
-      jobseekers_job_applications_url(*args)
-    else
-      super(*args)
-    end
-  end
-
   def cookies_preference_set?
     cookies["consented-to-cookies"].present?
   end
-
-  def referred_from_jobs_path?
-    request_uri = URI(request.referrer || "")
-    request.host == request_uri.host && request_uri.path == jobs_path
-  end
+  helper_method :cookies_preference_set?
 
   def utm_parameters
     params.permit(:utm_source, :utm_medium, :utm_campaign, :utm_term, :utm_content)
   end
+  helper_method :utm_parameters
 
   def strip_empty_checkboxes(fields, form_key = nil)
     params_to_strip = params[form_key].present? ? params[form_key] : params
@@ -121,18 +89,6 @@ class ApplicationController < ActionController::Base
     request_event.trigger(:page_visited)
   end
 
-  def store_jobseeker_redirect_to!
-    store_location_for(:jobseeker, redirect_to_param)
-  end
-
-  def destroy_jobseeker_return_to!
-    session.delete(:jobseeker_return_to) unless devise_controller?
-  end
-
-  def redirect_to_param
-    params[:redirect_to]
-  end
-
   def trigger_click_event
     return unless VALID_CLICK_EVENT_TYPES.include?(click_event_param)
 
@@ -147,4 +103,15 @@ class ApplicationController < ActionController::Base
     # Any params that might be present must be explicitly permitted in order to convert to hash
     params[:click_event_data]&.permit(:vacancy_id)
   end
+
+  def current_organisation
+    @current_organisation ||= Organisation.find_by(id: session[:publisher_organisation_id])
+  end
+  helper_method :current_organisation
+
+  def referred_from_jobs_path?
+    request_uri = URI(request.referrer || "")
+    request.host == request_uri.host && request_uri.path == jobs_path
+  end
+  helper_method :referred_from_jobs_path?
 end

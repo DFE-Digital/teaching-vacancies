@@ -1,63 +1,42 @@
 class Jobseekers::SessionsController < Devise::SessionsController
-  before_action :sign_out_publisher!, only: %i[create]
-  before_action :render_resource_with_errors, only: %i[new]
-  before_action :check_if_access_locked, only: %i[new]
-  after_action only: %i[create] do
-    flash.clear
-    trigger_jobseeker_sign_in_event(:success)
-    reactivate_account_if_closed
+  include ReturnPathTracking::Helpers
+
+  def new
+    if (login_failure = params[:login_failure])
+      alert_text = t("devise.failure.#{login_failure}")
+      flash.now[:alert] = alert_text
+      trigger_jobseeker_sign_in_event(:failure, alert_text)
+    end
+
+    super do
+      unless redirected?
+        store_return_location(jobseeker_root_path, scope: :jobseeker)
+        session[:after_sign_in] = true
+      end
+    end
   end
 
-  AUTHENTICATION_FAILURE_MESSAGES = %w[
-    invalid not_found_in_database last_attempt
-  ].map { |error| I18n.t("devise.failure.#{error}") }.freeze
+  def create
+    if sign_in_params.values.any?(&:blank?)
+      redirect_to new_jobseeker_session_path(login_failure: :blank, redirected: redirected?)
+      return
+    end
 
-  def destroy
-    session.delete(:jobseeker_return_to)
-    super
+    sign_out_publisher!
+
+    super do
+      trigger_jobseeker_sign_in_event(:success)
+
+      if current_jobseeker.account_closed?
+        Jobseekers::ReactivateAccount.reactivate(current_jobseeker)
+        store_return_location(jobseeker_root_path, scope: :jobseeker)
+      end
+    end
   end
 
   private
 
-  def render_resource_with_errors
-    self.resource = resource_class.new
-    if params[:action] == "create" && sign_in_form.invalid?
-      sign_in_form.errors.each { |error| resource.errors.add(error.attribute, error.type) }
-    elsif AUTHENTICATION_FAILURE_MESSAGES.include?(flash[:alert])
-      resource.errors.add(:email, flash[:alert])
-      resource.errors.add(:password, "")
-    else
-      return
-    end
-    trigger_jobseeker_sign_in_event(:failure, resource.errors)
-    clear_flash_and_render(:new)
-  end
-
-  def sign_in_form
-    @sign_in_form ||= Jobseekers::SignInForm.new(sign_in_params)
-  end
-
-  def check_if_access_locked
-    clear_flash_and_render(:locked) if resource_class.find_by(email: sign_in_params[:email])&.access_locked?
-  end
-
-  def clear_flash_and_render(view)
-    flash.clear
-    render view
-  end
-
-  def trigger_jobseeker_sign_in_event(success_or_failure, errors = nil)
-    request_event.trigger(
-      :jobseeker_sign_in_attempt,
-      email_identifier: StringAnonymiser.new(params[:jobseeker][:email]),
-      success: success_or_failure == :success,
-      errors: errors,
-    )
-  end
-
-  def reactivate_account_if_closed
-    return unless current_jobseeker.account_closed_on?
-
-    Jobseekers::ReactivateAccount.new(current_jobseeker).call
+  def auth_options
+    super.merge(recall: "home#jobseeker_failed_login")
   end
 end

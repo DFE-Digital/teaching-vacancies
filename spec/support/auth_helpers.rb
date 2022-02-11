@@ -88,8 +88,8 @@ module AuthHelpers
     ).to_return(body: authorisation_response, status: 200)
   end
 
-  def sign_in_publisher
-    visit new_publisher_session_path
+  def sign_in_publisher(navigate: false)
+    visit new_publisher_session_path if navigate
     click_on I18n.t("buttons.continue_to_dsi")
   end
 
