@@ -27,7 +27,7 @@ RSpec.describe "School viewing public listings" do
     end
 
     scenario "A signed in school publisher sees a link back to their own dashboard when viewing public listings" do
-      visit root_path
+      visit new_publisher_session_path
 
       sign_in_publisher
 

@@ -7,7 +7,7 @@ RSpec.describe "End job listing early" do
 
   before do
     allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false)
-    allow_any_instance_of(Publishers::AuthenticationConcerns).to receive(:current_organisation).and_return(organisation)
+    allow_any_instance_of(Publishers::BaseController).to receive(:current_organisation).and_return(organisation)
     sign_in(publisher, scope: :publisher)
   end
 

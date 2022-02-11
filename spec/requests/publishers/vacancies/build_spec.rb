@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Publishers::Vacancies::BuildController" do
+RSpec.describe Publishers::Vacancies::BuildController do
   let(:publisher) { create(:publisher) }
   let(:school_group) { create(:trust, schools: [school1, school2]) }
   let(:school1) { create(:school, name: "First school") }
@@ -8,7 +8,7 @@ RSpec.describe "Publishers::Vacancies::BuildController" do
   let(:vacancy) { create(:vacancy, :at_one_school, :draft, postcode_from_mean_geolocation: "Old postcode", organisations: [school1]) }
 
   before do
-    allow_any_instance_of(Publishers::AuthenticationConcerns).to receive(:current_organisation).and_return(school_group)
+    allow_any_instance_of(described_class).to receive(:current_organisation).and_return(school_group)
     sign_in(publisher, scope: :publisher)
   end
 

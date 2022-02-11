@@ -34,7 +34,7 @@ RSpec.describe "Users can only be signed in to one type of account" do
         visit jobseekers_account_path
         expect(page).to have_content(I18n.t("jobseekers.accounts.show.page_title"))
 
-        visit root_path
+        visit new_publisher_session_path
         sign_in_publisher
         expect(page).to have_current_path(organisation_path)
 
