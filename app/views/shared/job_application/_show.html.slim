@@ -14,22 +14,21 @@
         - navigation.anchor text: t(".ask_for_support.heading"), href: "#ask_for_support"
         - navigation.anchor text: t(".declarations.heading"), href: "#declarations"
 
-  - r.sidebar do
-    .account-sidebar class="govuk-!-display-none-print"
-      h2.account-sidebar__heading = t(".timeline")
+  - r.sidebar(classes: %w[govuk-!-display-none-print]) do
+    h2.govuk-heading-m = t(".timeline")
 
-      = render TimelineComponent.new do |timeline|
-        - if job_application.withdrawn_at?
-          - timeline.item(key: t("jobseekers.job_applications.status_timestamps.withdrawn"),
-                          value: format_time_to_datetime_at(job_application.withdrawn_at))
-        - if job_application.unsuccessful_at?
-          - timeline.item(key: t("jobseekers.job_applications.status_timestamps.#{current_jobseeker.present? ? 'unsuccessful' : 'rejected'}"),
-                          value: format_time_to_datetime_at(job_application.unsuccessful_at))
-        - if job_application.shortlisted_at?
-          - timeline.item(key: t("jobseekers.job_applications.status_timestamps.shortlisted"),
-                          value: format_time_to_datetime_at(job_application.shortlisted_at))
-        - if job_application.reviewed_at?
-          - timeline.item(key: t("jobseekers.job_applications.status_timestamps.reviewed"),
-                          value: format_time_to_datetime_at(job_application.reviewed_at))
-        - timeline.item(key: t("jobseekers.job_applications.status_timestamps.submitted"),
-                        value: format_time_to_datetime_at(job_application.submitted_at))
+    = render TimelineComponent.new do |timeline|
+      - if job_application.withdrawn_at?
+        - timeline.item(key: t("jobseekers.job_applications.status_timestamps.withdrawn"),
+                        value: format_time_to_datetime_at(job_application.withdrawn_at))
+      - if job_application.unsuccessful_at?
+        - timeline.item(key: t("jobseekers.job_applications.status_timestamps.#{current_jobseeker.present? ? 'unsuccessful' : 'rejected'}"),
+                        value: format_time_to_datetime_at(job_application.unsuccessful_at))
+      - if job_application.shortlisted_at?
+        - timeline.item(key: t("jobseekers.job_applications.status_timestamps.shortlisted"),
+                        value: format_time_to_datetime_at(job_application.shortlisted_at))
+      - if job_application.reviewed_at?
+        - timeline.item(key: t("jobseekers.job_applications.status_timestamps.reviewed"),
+                        value: format_time_to_datetime_at(job_application.reviewed_at))
+      - timeline.item(key: t("jobseekers.job_applications.status_timestamps.submitted"),
+                      value: format_time_to_datetime_at(job_application.submitted_at))

@@ -10,7 +10,7 @@
     p = t(".sign_in.description")
     = govuk_button_to t("buttons.continue_to_dsi"), publisher_dfe_omniauth_authorize_path, class: "govuk-!-margin-bottom-0", form_class: "publisher-sign-in"
 
-  .govuk-grid-column-one-third.grey-cta-container
-    h2.account-sidebar__heading = t(".no_account.heading")
+  .govuk-grid-column-one-third
+    h2.govuk-heading-m = t(".no_account.heading")
     p.govuk-body = t("publishers.sessions.new.no_account.content_html", link: govuk_link_to(t(".no_account.login_link_text"), publisher_dfe_omniauth_authorize_path))
     p.govuk-body = t(".no_account.account_request_html", link: govuk_link_to(t(".no_account.account_request_link_text"), page_path("dsi-account-request")))
