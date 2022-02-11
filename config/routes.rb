@@ -224,29 +224,13 @@ Rails.application.routes.draw do
   match "/500", as: :internal_server_error, to: "errors#internal_server_error", via: :all
   match "/maintenance", as: :maintenance, to: "errors#maintenance", via: :all
 
-  get "/teaching-jobs-:not_normalized",
-      to: redirect { |params| "/teaching-jobs-#{params[:not_normalized].parameterize.dasherize}" },
-      constraints: ->(request) { request.params[:not_normalized] != request.params[:not_normalized].parameterize.dasherize }
+  get "teaching-jobs-in-:location_landing_page_name",
+      to: "vacancies#index",
+      as: :location_landing_page,
+      constraints: ->(params, _) { LocationLandingPage.exists?(params[:location_landing_page_name]) }
 
-  with_options(to: "vacancies#index_landing") do
-    # If parameters are used that are the same as those in the search form, pagination with kaminari will break
-    get "teaching-jobs-in-:location_facet",
-        as: :location,
-        constraints: ->(request) { LocationPolygon.include?(request.params[:location_facet].titleize) }
-
-    get "teaching-jobs-for-:education_phase",
-        as: :education_phase,
-        constraints: ->(request) { School.available_readable_phases.map(&:parameterize).include?(request.params[:education_phase].parameterize) },
-        defaults: { pretty: :education_phase }
-
-    get ":job_role-jobs",
-        as: :job_role,
-        constraints: ->(request) { Vacancy.job_roles.keys.map(&:dasherize).include?(request.params[:job_role].dasherize) },
-        defaults: { pretty: :job_role }
-
-    get "teaching-jobs-for-:subject",
-        as: :subject,
-        constraints: ->(request) { SUBJECT_OPTIONS.map(&:first).map(&:parameterize).include?(request.params[:subject].parameterize) },
-        defaults: { pretty: :subject }
-  end
+  get ":landing_page_slug",
+      to: "vacancies#index",
+      as: :landing_page,
+      constraints: ->(params, _) { LandingPage.exists?(params[:landing_page_slug]) }
 end

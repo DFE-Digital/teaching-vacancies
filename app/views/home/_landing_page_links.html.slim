@@ -1,23 +1,72 @@
 .govuk-grid-row
   .govuk-grid-column-one-half
     = landing_page_link_group title: t(".cities"), list_class: "two-column-list" do |group|
-      - @vacancy_facets.cities.each do |city, count|
-        = group.link city, location_path(city.parameterize), count: count
+      = group.location_landing_page "liverpool"
+      = group.location_landing_page "manchester"
+      = group.location_landing_page "sheffield"
+      = group.location_landing_page "leeds"
+      = group.location_landing_page "newcastle"
+      = group.location_landing_page "london"
+      = group.location_landing_page "bristol"
+      = group.location_landing_page "birmingham"
+      = group.location_landing_page "derby"
+      = group.location_landing_page "nottingham"
+      = group.location_landing_page "leicester"
+      = group.location_landing_page "portsmouth"
+      = group.location_landing_page "warrington"
+      = group.location_landing_page "milton-keynes"
+      = group.location_landing_page "wolverhampton"
+      = group.location_landing_page "bradford"
+      = group.location_landing_page "blackpool"
+      = group.location_landing_page "bolton"
+      = group.location_landing_page "brighton-and-hove"
+      = group.location_landing_page "york"
     = landing_page_link_group title: t(".counties"), list_class: "two-column-list" do |group|
-      - @vacancy_facets.counties.each do |county, count|
-        = group.link county, location_path(county.parameterize), count: count
+      = group.location_landing_page "lancashire"
+      = group.location_landing_page "hampshire"
+      = group.location_landing_page "kent"
+      = group.location_landing_page "gloucestershire"
+      = group.location_landing_page "cheshire-east"
+      = group.location_landing_page "cheshire-west-and-chester"
+      = group.location_landing_page "essex"
+      = group.location_landing_page "east-sussex"
+      = group.location_landing_page "west-sussex"
+      = group.location_landing_page "devon"
+      = group.location_landing_page "derbyshire"
+      = group.location_landing_page "oxfordshire"
+      = group.location_landing_page "cornwall"
+      = group.location_landing_page "suffolk"
+      = group.location_landing_page "cumbria"
+      = group.location_landing_page "dorset"
+      = group.location_landing_page "worcestershire"
+      = group.location_landing_page "nottinghamshire"
+      = group.location_landing_page "surrey"
+      = group.location_landing_page "leicestershire"
 
   .govuk-grid-column-one-half
     = landing_page_link_group title: t(".subjects"), list_class: "two-column-list" do |group|
-      - @vacancy_facets.subjects.each do |subject, count|
-        = group.link subject, subject_path(subject.parameterize), count: count
+      = group.landing_page "maths-teacher-jobs"
+      = group.landing_page "english-media-studies-teacher-jobs"
+      = group.landing_page "physical-education-teacher-jobs"
+      = group.landing_page "science-teacher-jobs"
+      = group.landing_page "history-teacher-jobs"
+      = group.landing_page "geography-teacher-jobs"
+      = group.landing_page "french-teacher-jobs"
+      = group.landing_page "spanish-teacher-jobs"
+      = group.landing_page "ict-computer-science-teacher-jobs"
+      = group.landing_page "art-design-technology-teacher-jobs"
     = landing_page_link_group title: t(".job_roles"), list_class: "two-column-list" do |group|
-      - @vacancy_facets.job_roles.each do |job_role, count|
-        = group.link t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{job_role}"), job_role_path(job_role.dasherize), count: count
+      = group.landing_page "education-support-jobs"
+      = group.landing_page "leadership-jobs"
+      = group.landing_page "sendco-jobs"
+      = group.landing_page "teacher-jobs"
+      = group.landing_page "teaching-assistant-jobs"
     = landing_page_link_group title: t(".ect_suitable") do |group|
-      = group.link "Suitable for early career teachers", job_role_path("ect-suitable"), count: @vacancy_facets.additional_job_roles["ect_suitable"]
+      = group.landing_page "ect-suitable-jobs"
     = landing_page_link_group title: t(".send_responsible") do |group|
-      = group.link "SEND responsibilities", job_role_path("send-responsible"), count: @vacancy_facets.additional_job_roles["send_responsible"]
+      = group.landing_page "send-responsible-jobs"
     = landing_page_link_group title: t(".education_phases") do |group|
-      - @vacancy_facets.education_phases.each do |phase, count|
-        = group.link phase.humanize, education_phase_path(phase.parameterize), count: count
+      = group.landing_page "primary-school-jobs"
+      = group.landing_page "middle-school-jobs"
+      = group.landing_page "secondary-school-jobs"
+      = group.landing_page "16-19-education-provider-jobs"
