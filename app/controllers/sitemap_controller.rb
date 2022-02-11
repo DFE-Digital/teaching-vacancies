@@ -1,54 +1,29 @@
 class SitemapController < ApplicationController
-  def show
+  def show # rubocop:disable Metrics/AbcSize
     map = XmlSitemap::Map.new(DOMAIN, secure: !Rails.env.development?) do |m|
-      add_vacancies(m)
-      add_locations(m)
-      add_subjects(m)
-      add_job_roles(m)
-      add_education_phases(m)
-      add_pages(m)
+      # Live vacancies
+      Vacancy.live.applicable.find_each do |vacancy|
+        m.add job_path(vacancy), updated: vacancy.updated_at, expires: vacancy.expires_at, period: "hourly", priority: 0.7
+      end
+
+      # Static landing pages
+      Rails.application.config.landing_pages.each_key do |landing_page|
+        m.add landing_page_path(landing_page), period: "hourly"
+      end
+
+      # Location landing pages
+      ALL_IMPORTED_LOCATIONS.each do |location|
+        m.add location_landing_page_path(location.parameterize), period: "hourly"
+      end
+
+      # Static pages
+      m.add page_path("privacy-policy"), period: "weekly"
+      m.add page_path("terms-and-conditions"), period: "weekly"
+      m.add page_path("cookies"), period: "weekly"
+      m.add page_path("accessibility"), period: "weekly"
     end
 
     expires_in 3.hours
     render xml: map.render
-  end
-
-  private
-
-  def add_vacancies(map)
-    Vacancy.live.applicable.find_each do |vacancy|
-      map.add job_path(vacancy), updated: vacancy.updated_at, expires: vacancy.expires_at, period: "hourly", priority: 0.7
-    end
-  end
-
-  def add_locations(map)
-    ALL_IMPORTED_LOCATIONS.each do |location|
-      map.add location_path(location.parameterize), period: "hourly"
-    end
-  end
-
-  def add_subjects(map)
-    SUBJECT_OPTIONS.map(&:first).each do |subject|
-      map.add subject_path(subject.parameterize), period: "hourly"
-    end
-  end
-
-  def add_job_roles(map)
-    Vacancy.job_roles.each_key do |job_role|
-      map.add job_role_path(job_role.dasherize), period: "hourly"
-    end
-  end
-
-  def add_education_phases(map)
-    School.available_readable_phases.each do |phase|
-      map.add education_phase_path(phase.dasherize), period: "hourly"
-    end
-  end
-
-  def add_pages(map)
-    map.add page_path("privacy-policy"), period: "weekly"
-    map.add page_path("terms-and-conditions"), period: "weekly"
-    map.add page_path("cookies"), period: "weekly"
-    map.add page_path("accessibility"), period: "weekly"
   end
 end
