@@ -1,35 +1,34 @@
 - content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.documents"))
 
-.govuk-main-wrapper class="govuk-!-padding-top-0"
-  = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
+= render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
 
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds data-controller="upload-documents"
-      = form_for form, url: organisation_job_documents_path(vacancy.id, back_to: params[:back_to]) do |f|
-        = f.govuk_error_summary
+.govuk-grid-row
+  .govuk-grid-column-two-thirds data-controller="upload-documents"
+    = form_for form, url: organisation_job_documents_path(vacancy.id, back_to: params[:back_to]) do |f|
+      = f.govuk_error_summary
 
-        h2.govuk-heading-l
-          = t("publishers.vacancies.steps.documents")
+      h2.govuk-heading-l
+        = t("publishers.vacancies.steps.documents")
 
-        = f.govuk_file_field :documents,
-          label: { size: "s" },
-          accept: ".doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, image/jpeg, image/png, video/mp4",
-          multiple: true,
-          enctype: "multipart/form-data",
-          "data-upload-documents-target": "inputFileUpload",
-          "data-action": "change->upload-documents#uploadFiles"
+      = f.govuk_file_field :documents,
+        label: { size: "s" },
+        accept: ".doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, image/jpeg, image/png, video/mp4",
+        multiple: true,
+        enctype: "multipart/form-data",
+        "data-upload-documents-target": "inputFileUpload",
+        "data-action": "change->upload-documents#uploadFiles"
 
-        button.govuk-button.govuk-button--secondary.display-none class="govuk-!-margin-bottom-3" data-upload-documents-target="selectFileButton" data-action="upload-documents#trigger_upload"
-          = t("buttons.select_file")
+      button.govuk-button.govuk-button--secondary.display-none class="govuk-!-margin-bottom-3" data-upload-documents-target="selectFileButton" data-action="upload-documents#trigger_upload"
+        = t("buttons.select_file")
 
-        = f.govuk_submit t("buttons.upload_files"), secondary: true, "data-upload-documents-target": "uploadFilesButton"
+      = f.govuk_submit t("buttons.upload_files"), secondary: true, "data-upload-documents-target": "uploadFilesButton"
 
-        .js-documents class=("js-documents--empty" if vacancy.supporting_documents.none?)
-          = render "publishers/vacancies/documents/documents"
-          p.js-documents__no-files = t("jobs.no_files_message")
+      .js-documents class=("js-documents--empty" if vacancy.supporting_documents.none?)
+        = render "publishers/vacancies/documents/documents"
+        p.js-documents__no-files = t("jobs.no_files_message")
 
-        = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+      = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
-    - unless vacancy.published?
-      .govuk-grid-column-one-third
-        = render "publishers/vacancies/build/steps"
+  - unless vacancy.published?
+    .govuk-grid-column-one-third
+      = render "publishers/vacancies/build/steps"

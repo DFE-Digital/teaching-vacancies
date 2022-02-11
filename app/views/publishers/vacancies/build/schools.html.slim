@@ -1,36 +1,35 @@
 - content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.job_location"))
 
-.govuk-main-wrapper class="govuk-!-padding-top-0"
-  = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
+= render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
 
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
-        = f.govuk_error_summary
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
+      = f.govuk_error_summary
 
-        h2.govuk-heading-l = t("publishers.vacancies.steps.job_location")
+      h2.govuk-heading-l = t("publishers.vacancies.steps.job_location")
 
-        = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_schools_form.organisation_id#{'s' if @multiple_schools}") } do
-          - if current_organisation.local_authority?
-            span.govuk-hint
-              = t("helpers.hint.publishers_job_listing_schools_form.edit_schools")
-              =< govuk_link_to t("helpers.hint.publishers_job_listing_schools_form.add_school"),
-                                 edit_publisher_preference_path(current_publisher_preference), class: "govuk-link--no-visited-state"
+      = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_schools_form.organisation_id#{'s' if @multiple_schools}") } do
+        - if current_organisation.local_authority?
+          span.govuk-hint
+            = t("helpers.hint.publishers_job_listing_schools_form.edit_schools")
+            =< govuk_link_to t("helpers.hint.publishers_job_listing_schools_form.add_school"),
+                               edit_publisher_preference_path(current_publisher_preference), class: "govuk-link--no-visited-state"
 
-          = render SearchableCollectionComponent.new form: f,
-            input_type: @multiple_schools ? :checkbox : :radio_button,
-            label_text: "search schools",
-            threshold: 10,
-            attribute_name: :organisation_ids,
-            collection: @school_options,
-            value_method: :id,
-            text_method: :name,
-            hint_method: :address,
-            classes: "govuk-!-margin-top-4"
+        = render SearchableCollectionComponent.new form: f,
+          input_type: @multiple_schools ? :checkbox : :radio_button,
+          label_text: "search schools",
+          threshold: 10,
+          attribute_name: :organisation_ids,
+          collection: @school_options,
+          value_method: :id,
+          text_method: :name,
+          hint_method: :address,
+          classes: "govuk-!-margin-top-4"
 
-        div class="govuk-!-margin-top-6"
-          = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+      div class="govuk-!-margin-top-6"
+        = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
-    - unless vacancy.published?
-      .govuk-grid-column-one-third
-        = render "steps"
+  - unless vacancy.published?
+    .govuk-grid-column-one-third
+      = render "steps"

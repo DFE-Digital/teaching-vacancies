@@ -1,25 +1,24 @@
 - content_for :page_title_prefix, current_organisation.name
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
 
-      h1.govuk-heading-xl class="govuk-!-margin-bottom-0"
-        = t(".title", organisation_type: organisation_type_basic(current_organisation))
+    h1.govuk-heading-xl class="govuk-!-margin-bottom-0"
+      = t(".title", organisation_type: organisation_type_basic(current_organisation))
+    p
+      = t(".description", organisation_type: organisation_type_basic(current_organisation))
+
+    = render "school_group"
+
+    h2.govuk-heading-l class="govuk-!-margin-bottom-0"
+      = t(".schools", count: current_organisation.schools.not_closed.count)
+
+    .schools
+      = render "schools"
+
+  .govuk-grid-column-one-third
+    .missing-information
+      h3.govuk-heading-m
+        = t(".missing_information_title")
       p
-        = t(".description", organisation_type: organisation_type_basic(current_organisation))
-
-      = render "school_group"
-
-      h2.govuk-heading-l class="govuk-!-margin-bottom-0"
-        = t(".schools", count: current_organisation.schools.not_closed.count)
-
-      .schools
-        = render "schools"
-
-    .govuk-grid-column-one-third
-      .missing-information
-        h3.govuk-heading-m
-          = t(".missing_information_title")
-        p
-          = t(".missing_information_description_html", organisation_type: organisation_type_basic(current_organisation), mail_to: govuk_mail_to(t("help.email"), t(".contact_support")))
+        = t(".missing_information_description_html", organisation_type: organisation_type_basic(current_organisation), mail_to: govuk_mail_to(t("help.email"), t(".contact_support")))

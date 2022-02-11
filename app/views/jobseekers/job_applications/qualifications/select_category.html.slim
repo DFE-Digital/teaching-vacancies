@@ -1,15 +1,14 @@
 - content_for :page_title_prefix, job_application_page_title_prefix(form, t(".title"))
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      .govuk-caption-l = t(".caption")
-      h1.govuk-heading-xl = t(".heading")
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    .govuk-caption-l = t(".caption")
+    h1.govuk-heading-xl = t(".heading")
 
-      = form_for form, url: submit_category_jobseekers_job_application_qualifications_path(job_application), method: :post do |f|
-        = f.govuk_error_summary
+    = form_for form, url: submit_category_jobseekers_job_application_qualifications_path(job_application), method: :post do |f|
+      = f.govuk_error_summary
 
-        = f.govuk_collection_radio_buttons :category, Qualification.categories.keys, :to_s
+      = f.govuk_collection_radio_buttons :category, Qualification.categories.keys, :to_s
 
-        = f.govuk_submit t("buttons.continue")
-        = govuk_button_link_to t("buttons.cancel"), jobseekers_job_application_build_path(job_application, :qualifications), class: "govuk-button--secondary govuk-!-margin-left-3"
+      = f.govuk_submit t("buttons.continue")
+      = govuk_button_link_to t("buttons.cancel"), jobseekers_job_application_build_path(job_application, :qualifications), class: "govuk-button--secondary govuk-!-margin-left-3"

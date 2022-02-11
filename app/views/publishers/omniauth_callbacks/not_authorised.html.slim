@@ -1,28 +1,27 @@
 - content_for :page_title_prefix do
   | The email you're signed in with isn't authorised to list jobs for this school
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h1.govuk-heading-xl The email you're signed in with isn't authorised to list jobs for this school
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl The email you're signed in with isn't authorised to list jobs for this school
 
-      p.govuk-body
-        | You've tried to sign in with #{email}, which is not authorised to list jobs for this school.
-        |  If you have an authorised account associated with another email, you must sign #{email} out of DfE Sign-in,
-        |  then sign into Teaching Vacancies with your authorised email. You can do this at
-        |  #{govuk_link_to("DfE Sign-in", "https://profile.signin.education.gov.uk/")}
+    p.govuk-body
+      | You've tried to sign in with #{email}, which is not authorised to list jobs for this school.
+      |  If you have an authorised account associated with another email, you must sign #{email} out of DfE Sign-in,
+      |  then sign into Teaching Vacancies with your authorised email. You can do this at
+      |  #{govuk_link_to("DfE Sign-in", "https://profile.signin.education.gov.uk/")}
 
-      h2.govuk-heading-m If you are signing in with an authorised email
+    h2.govuk-heading-m If you are signing in with an authorised email
 
-      p.govuk-body
-        | If you know the email you’ve signed in with is authorised then there could be a technical issue. Please try using
-        |  a different web browser to sign in or, if this fails, email #{govuk_mail_to(t("help.email"), t("help.email"))}
-        |  with 'help' in the subject line.
+    p.govuk-body
+      | If you know the email you’ve signed in with is authorised then there could be a technical issue. Please try using
+      |  a different web browser to sign in or, if this fails, email #{govuk_mail_to(t("help.email"), t("help.email"))}
+      |  with 'help' in the subject line.
 
-      h2.govuk-heading-m If you need an account
+    h2.govuk-heading-m If you need an account
 
-      p.govuk-body
-        | If you don’t have an authorised Teaching Vacancies account, you can get one if you work at a state-funded
-        |  school or trust providing primary or secondary education in England and have your headteacher or CEO’s approval.
-        |  Just ask them to send your full name and email address to #{govuk_mail_to(t("help.email"), t("help.email"))}.
-        |  Or email us your details directly, copying in your headteacher or CEO.
+    p.govuk-body
+      | If you don’t have an authorised Teaching Vacancies account, you can get one if you work at a state-funded
+      |  school or trust providing primary or secondary education in England and have your headteacher or CEO’s approval.
+      |  Just ask them to send your full name and email address to #{govuk_mail_to(t("help.email"), t("help.email"))}.
+      |  Or email us your details directly, copying in your headteacher or CEO.

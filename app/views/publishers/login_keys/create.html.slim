@@ -1,10 +1,9 @@
 - content_for :page_title_prefix, t("publishers.temp_login.check_your_email.page_title")
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h1.govuk-heading-l = t("publishers.temp_login.check_your_email.heading")
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l = t("publishers.temp_login.check_your_email.heading")
 
-      p.govuk-body = t("publishers.temp_login.check_your_email.sent")
+    p.govuk-body = t("publishers.temp_login.check_your_email.sent")
 
-      p.govuk-body = t("publishers.temp_login.check_your_email.check_spam_html", try_again: govuk_link_to("try again", new_publisher_session_path))
+    p.govuk-body = t("publishers.temp_login.check_your_email.check_spam_html", try_again: govuk_link_to("try again", new_publisher_session_path))
