@@ -1,49 +1,48 @@
 - content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.applying_for_the_job"))
 
-.govuk-main-wrapper class="govuk-!-padding-top-0"
-  = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
+= render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
 
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds data-controller="upload-documents"
-      = form_for form, url: organisation_job_application_forms_path(vacancy.id, back_to: params[:back_to]) do |f|
-        = f.govuk_error_summary
+.govuk-grid-row
+  .govuk-grid-column-two-thirds data-controller="upload-documents"
+    = form_for form, url: organisation_job_application_forms_path(vacancy.id, back_to: params[:back_to]) do |f|
+      = f.govuk_error_summary
 
-        h2.govuk-heading-l
-          = t("publishers.vacancies.steps.applying_for_the_job")
+      h2.govuk-heading-l
+        = t("publishers.vacancies.steps.applying_for_the_job")
 
-        - if vacancy.enable_job_applications?
-          = f.govuk_text_area :personal_statement_guidance, label: { size: "s" }
-        - else
-          = f.govuk_text_area :how_to_apply, label: { size: "s" }, rows: 10
-          = f.govuk_url_field :application_link, label: { size: "s" }
+      - if vacancy.enable_job_applications?
+        = f.govuk_text_area :personal_statement_guidance, label: { size: "s" }
+      - else
+        = f.govuk_text_area :how_to_apply, label: { size: "s" }, rows: 10
+        = f.govuk_url_field :application_link, label: { size: "s" }
 
-          = f.govuk_file_field :application_form,
-            label: { size: "s" },
-            accept: ".doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, image/jpeg, image/png, video/mp4",
-            enctype: "multipart/form-data",
-            "data-upload-documents-target": "inputFileUpload",
-            "data-action": "change->upload-documents#uploadFiles"
+        = f.govuk_file_field :application_form,
+          label: { size: "s" },
+          accept: ".doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, image/jpeg, image/png, video/mp4",
+          enctype: "multipart/form-data",
+          "data-upload-documents-target": "inputFileUpload",
+          "data-action": "change->upload-documents#uploadFiles"
 
-          button.govuk-button.govuk-button--secondary.display-none class="govuk-!-margin-bottom-3" data-upload-documents-target="selectFileButton" data-action="upload-documents#trigger_upload"
-            = t("buttons.select_file")
+        button.govuk-button.govuk-button--secondary.display-none class="govuk-!-margin-bottom-3" data-upload-documents-target="selectFileButton" data-action="upload-documents#trigger_upload"
+          = t("buttons.select_file")
 
-          = f.govuk_submit t("buttons.upload_files"), secondary: true, "data-upload-documents-target": "uploadFilesButton"
+        = f.govuk_submit t("buttons.upload_files"), secondary: true, "data-upload-documents-target": "uploadFilesButton"
 
-          .js-documents class=("js-documents--empty" unless vacancy.application_form.present?)
-            = render "publishers/vacancies/build/application_form"
-            p.js-documents__no-files = t("jobs.no_files_message")
+        .js-documents class=("js-documents--empty" unless vacancy.application_form.present?)
+          = render "publishers/vacancies/build/application_form"
+          p.js-documents__no-files = t("jobs.no_files_message")
 
-        = f.govuk_email_field :contact_email, label: { size: "s" }, required: true, width: "two-thirds"
+      = f.govuk_email_field :contact_email, label: { size: "s" }, required: true, width: "two-thirds"
 
-        = f.govuk_phone_field :contact_number, label: { size: "s" }, width: "one-third"
+      = f.govuk_phone_field :contact_number, label: { size: "s" }, width: "one-third"
 
-        = f.govuk_text_area :school_visits,
-          label: { id: "school-visits-label", text: t("helpers.label.publishers_job_listing_applying_for_the_job_details_form.#{school_or_trust_visits(vacancy.parent_organisation)}"), size: "s" },
-          hint: { text: vacancy_school_visits_hint(vacancy) },
-          rows: 10
+      = f.govuk_text_area :school_visits,
+        label: { id: "school-visits-label", text: t("helpers.label.publishers_job_listing_applying_for_the_job_details_form.#{school_or_trust_visits(vacancy.parent_organisation)}"), size: "s" },
+        hint: { text: vacancy_school_visits_hint(vacancy) },
+        rows: 10
 
-        = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+      = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
-    - unless vacancy.published?
-      .govuk-grid-column-one-third
-        = render "publishers/vacancies/build/steps"
+  - unless vacancy.published?
+    .govuk-grid-column-one-third
+      = render "publishers/vacancies/build/steps"

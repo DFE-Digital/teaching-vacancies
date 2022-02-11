@@ -1,22 +1,22 @@
 - content_for :page_title_prefix, t(".title")
 
-= govuk_back_link text: t("buttons.back"), href: new_jobseeker_session_path
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: new_jobseeker_session_path
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h1.govuk-heading-l = t(".title")
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l = t(".title")
 
-      = form_for resource, url: jobseeker_registration_path do |f|
-        = f.govuk_error_summary
+    = form_for resource, url: jobseeker_registration_path do |f|
+      = f.govuk_error_summary
 
-        p.govuk-body = t(".description")
+      p.govuk-body = t(".description")
 
-        = f.govuk_email_field :email, label: { size: "s" }, width: "two-thirds"
-        = f.govuk_password_field :password, label: { size: "s" }, width: "two-thirds"
+      = f.govuk_email_field :email, label: { size: "s" }, width: "two-thirds"
+      = f.govuk_password_field :password, label: { size: "s" }, width: "two-thirds"
 
-        = f.govuk_submit t("buttons.create_account"), classes: "govuk-!-margin-bottom-0"
+      = f.govuk_submit t("buttons.create_account"), classes: "govuk-!-margin-bottom-0"
 
-    .govuk-grid-column-one-third.grey-cta-container
-      h2.account-sidebar__heading = t(".sign_in.heading")
-      p.govuk-body = t(".sign_in.content_html", link_to: govuk_link_to(t(".sign_in.link"), new_jobseeker_session_path))
+  .govuk-grid-column-one-third.grey-cta-container
+    h2.account-sidebar__heading = t(".sign_in.heading")
+    p.govuk-body = t(".sign_in.content_html", link_to: govuk_link_to(t(".sign_in.link"), new_jobseeker_session_path))

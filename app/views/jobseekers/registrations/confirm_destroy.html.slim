@@ -1,23 +1,22 @@
 - content_for :page_title_prefix, t(".page_title")
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h1.govuk-heading-l = t(".page_title")
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l = t(".page_title")
 
-      p = t(".page_description_1")
-      p = t(".page_description_2")
+    p = t(".page_description_1")
+    p = t(".page_description_2")
 
-      = form_for @close_account_feedback_form, url: registration_path(current_jobseeker), method: :delete do |f|
-        = f.govuk_error_summary
+    = form_for @close_account_feedback_form, url: registration_path(current_jobseeker), method: :delete do |f|
+      = f.govuk_error_summary
 
-        = f.govuk_radio_buttons_fieldset(:reason, legend: { size: "m" }) do
-          - Feedback.close_account_reasons.each_key do |reason|
-            - if reason == "other_close_account_reason"
-              = f.govuk_radio_button :close_account_reason, reason do
-                = f.govuk_text_field :close_account_reason_comment, label: { hidden: true }
-            - else
-              = f.govuk_radio_button :close_account_reason, reason
+      = f.govuk_radio_buttons_fieldset(:reason, legend: { size: "m" }) do
+        - Feedback.close_account_reasons.each_key do |reason|
+          - if reason == "other_close_account_reason"
+            = f.govuk_radio_button :close_account_reason, reason do
+              = f.govuk_text_field :close_account_reason_comment, label: { hidden: true }
+          - else
+            = f.govuk_radio_button :close_account_reason, reason
 
-        = f.govuk_submit t("buttons.continue")
-        = govuk_button_link_to t("buttons.cancel"), jobseekers_account_path, class: "govuk-button--secondary govuk-!-margin-left-3"
+      = f.govuk_submit t("buttons.continue")
+      = govuk_button_link_to t("buttons.cancel"), jobseekers_account_path, class: "govuk-button--secondary govuk-!-margin-left-3"

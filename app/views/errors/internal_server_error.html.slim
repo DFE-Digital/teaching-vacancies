@@ -1,10 +1,11 @@
 - content_for :page_title_prefix, t("error_pages.server_error")
 
-.govuk-main-wrapper
-  h1.govuk-heading-xl = t("error_pages.server_error")
-  p.govuk-body We’re working to fix this, so please try again shortly.
-  p.govuk-body If you continue to have problems accessing Teaching Vacancies you can email #{govuk_mail_to t("help.email"), t("help.email")}
-  - if @rollbar_error_id.present?
-    p.govuk-body
-      | Please include this error number in your email, as it will help us identify the problem:
-    = govuk_inset_text(text: @rollbar_error_id)
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl = t("error_pages.server_error")
+    p.govuk-body We’re working to fix this, so please try again shortly.
+    p.govuk-body If you continue to have problems accessing Teaching Vacancies you can email #{govuk_mail_to t("help.email"), t("help.email")}
+    - if @rollbar_error_id.present?
+      p.govuk-body
+        | Please include this error number in your email, as it will help us identify the problem:
+      = govuk_inset_text(text: @rollbar_error_id)

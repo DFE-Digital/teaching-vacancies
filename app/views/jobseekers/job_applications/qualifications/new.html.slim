@@ -1,15 +1,14 @@
 - content_for :page_title_prefix, job_application_page_title_prefix(form, t(".title"))
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      .govuk-caption-l = t(".caption")
-      h1.govuk-heading-xl = t(".heading.#{category}")
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    .govuk-caption-l = t(".caption")
+    h1.govuk-heading-xl = t(".heading.#{category}")
 
-      = form_for form, url: jobseekers_job_application_qualifications_path(job_application, category: category), method: :post do |f|
-        = f.govuk_error_summary link_base_errors_to: :subject
+    = form_for form, url: jobseekers_job_application_qualifications_path(job_application, category: category), method: :post do |f|
+      = f.govuk_error_summary link_base_errors_to: :subject
 
-        = render "fields", f: f
+      = render "fields", f: f
 
-        = f.govuk_submit t("buttons.save_qualification.#{secondary? ? 'other' : 'one'}")
-        = govuk_button_link_to t("buttons.cancel"), select_category_jobseekers_job_application_qualifications_path(job_application), class: "govuk-button--secondary govuk-!-margin-left-3"
+      = f.govuk_submit t("buttons.save_qualification.#{secondary? ? 'other' : 'one'}")
+      = govuk_button_link_to t("buttons.cancel"), select_category_jobseekers_job_application_qualifications_path(job_application), class: "govuk-button--secondary govuk-!-margin-left-3"

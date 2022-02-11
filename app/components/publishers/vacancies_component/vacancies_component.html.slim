@@ -9,71 +9,69 @@
   - vacancy_links.each do |item|
     - tabs.navigation_item item: item
 
-.govuk-main-wrapper
-  .vacancies-component
-    .govuk-grid-row
-      - if @organisation.school_group?
-        .govuk-grid-column-one-third class="govuk-!-margin-bottom-5"
-          = form_for @publisher_preference, html: { data: { controller: "form", "hide-submit": true } } do |f|
-            = filters(filters: { total_count: @publisher_preference.organisations.count,
-                                          title: t("jobs.filters.job_filters") },
-                                          form: f,
-                                          items: [{ legend: "Locations",
-                                                    key: "locations",
-                                                    search: true,
-                                                    scroll: true,
-                                                    attribute: :organisation_ids,
-                                                    selected: @publisher_preference.organisations.map(&:id),
-                                                    options: @organisation_options,
-                                                    value_method: :id,
-                                                    text_method: :label,
-                                                    selected_method: :name,
-                                                    small: true }],
-                                          options: { remove_buttons: true,
-                                                    mobile_variant: true,
-                                                    autosubmit_form: true,
-                                                    publisher_preference: (@publisher_preference if @organisation.local_authority?) },
-                      classes: "govuk-!-padding-left-3 govuk-!-padding-right-3 govuk-!-padding-top-0")
+.govuk-grid-row.vacancies-component class="govuk-!-margin-top-7 govuk-!-margin-bottom-7"
+  - if @organisation.school_group?
+    .govuk-grid-column-one-third
+      = form_for @publisher_preference, html: { data: { controller: "form", "hide-submit": true } } do |f|
+        = filters(filters: { total_count: @publisher_preference.organisations.count,
+                                      title: t("jobs.filters.job_filters") },
+                                      form: f,
+                                      items: [{ legend: "Locations",
+                                                key: "locations",
+                                                search: true,
+                                                scroll: true,
+                                                attribute: :organisation_ids,
+                                                selected: @publisher_preference.organisations.map(&:id),
+                                                options: @organisation_options,
+                                                value_method: :id,
+                                                text_method: :label,
+                                                selected_method: :name,
+                                                small: true }],
+                                      options: { remove_buttons: true,
+                                                mobile_variant: true,
+                                                autosubmit_form: true,
+                                                publisher_preference: (@publisher_preference if @organisation.local_authority?) },
+                  classes: "govuk-!-padding-left-3 govuk-!-padding-right-3 govuk-!-padding-top-0")
 
-            = f.hidden_field :jobs_type, value: @selected_type
+        = f.hidden_field :jobs_type, value: @selected_type
 
-      .vacancies-component__content class=grid_column_class
-        - if @vacancies.many?
-          = render SortComponent.new sort: @sort, url_params: { type: @selected_type }, path: method(:jobs_with_type_organisation_path)
-        section#vacancy-results
-          - if vacancies.none?
-            = empty_section do
-              = no_jobs_text
-          - elsif @selected_type == "awaiting_feedback"
-            = render "publishers/organisations/vacancies_awaiting_feedback", organisation: @organisation, vacancies: @vacancies
-          - else
-            - vacancies.each do |vacancy|
-              = card(html_attributes: { id: dom_id(vacancy) }) do |c|
-                - c.header do
-                  = tag.div(govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id), class: "govuk-!-font-weight-bold govuk-!-font-size-24"))
-                  - if organisation.school_group?
-                    = tag.div(vacancy.readable_job_location)
+  .vacancies-component__content class=grid_column_class
+    - if @vacancies.many?
+      = render SortComponent.new sort: @sort, url_params: { type: @selected_type }, path: method(:jobs_with_type_organisation_path)
+    section#vacancy-results
+      - if vacancies.none?
+        = empty_section do
+          = no_jobs_text
+      - elsif @selected_type == "awaiting_feedback"
+        = render "publishers/organisations/vacancies_awaiting_feedback", organisation: @organisation, vacancies: @vacancies
+      - else
+        - vacancies.each do |vacancy|
+          = card(html_attributes: { id: dom_id(vacancy) }) do |c|
+            - c.header do
+              = tag.div(govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id), class: "govuk-!-font-weight-bold govuk-!-font-size-24"))
+              - if organisation.school_group?
+                = tag.div(vacancy.readable_job_location)
 
-                - c.body do
-                  - case @selected_type
-                  - when "published"
-                    - if vacancy.enable_job_applications
-                      - if vacancy.job_applications.where(status: %w[submitted reviewed shortlisted unsuccessful]).count.positive?
-                        = view_applicants(vacancy) unless vacancy_expired_over_a_year_ago?(vacancy)
-                      - else
-                        = tag.div(t("jobs.manage.view_applicants", count: 0), class: "govuk-!-font-size-19")
-                    = tag.div(c.labelled_item(t("jobs.manage.closing_date"), vacancy.application_deadline))
-                  - when "pending"
-                    = tag.div(c.labelled_item(t("jobs.publication_date"), vacancy.publish_on))
-                    = tag.div(c.labelled_item(t("jobs.manage.closing_date"), vacancy.application_deadline))
-                  - when "expired"
-                    - if vacancy.enable_job_applications
-                      - if !vacancy_expired_over_a_year_ago?(vacancy) && vacancy.job_applications.where.not(status: %w[draft withdrawn]).any?
-                        = view_applicants(vacancy)
-                      - else
-                        = tag.div(t("jobs.manage.view_applicants", count: 0), class: "govuk-!-font-size-19")
-                    = tag.div(c.labelled_item(t("jobs.date_listed"), vacancy.publish_on))
-                    = tag.div(c.labelled_item(t("jobs.manage.expired.expired_on"), vacancy.application_deadline))
-                  - when "draft"
-                    = tag.div(c.labelled_item(t("jobs.manage.draft.time_created"), format_date(vacancy.created_at.to_date)))
-                    = tag.div(c.labelled_item(t("jobs.manage.draft.time_updated"), format_date(vacancy.updated_at.to_date)))
+            - c.body do
+              - case @selected_type
+              - when "published"
+                - if vacancy.enable_job_applications
+                  - if vacancy.job_applications.where(status: %w[submitted reviewed shortlisted unsuccessful]).count.positive?
+                    = view_applicants(vacancy) unless vacancy_expired_over_a_year_ago?(vacancy)
+                  - else
+                    = tag.div(t("jobs.manage.view_applicants", count: 0), class: "govuk-!-font-size-19")
+                = tag.div(c.labelled_item(t("jobs.manage.closing_date"), vacancy.application_deadline))
+              - when "pending"
+                = tag.div(c.labelled_item(t("jobs.publication_date"), vacancy.publish_on))
+                = tag.div(c.labelled_item(t("jobs.manage.closing_date"), vacancy.application_deadline))
+              - when "expired"
+                - if vacancy.enable_job_applications
+                  - if !vacancy_expired_over_a_year_ago?(vacancy) && vacancy.job_applications.where.not(status: %w[draft withdrawn]).any?
+                    = view_applicants(vacancy)
+                  - else
+                    = tag.div(t("jobs.manage.view_applicants", count: 0), class: "govuk-!-font-size-19")
+                = tag.div(c.labelled_item(t("jobs.date_listed"), vacancy.publish_on))
+                = tag.div(c.labelled_item(t("jobs.manage.expired.expired_on"), vacancy.application_deadline))
+              - when "draft"
+                = tag.div(c.labelled_item(t("jobs.manage.draft.time_created"), format_date(vacancy.created_at.to_date)))
+                = tag.div(c.labelled_item(t("jobs.manage.draft.time_updated"), format_date(vacancy.updated_at.to_date)))

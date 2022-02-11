@@ -1,23 +1,23 @@
 - content_for :page_title_prefix do
   | Sign in to Teaching Vacancies
 
-= govuk_back_link text: t("buttons.back_to_teaching_vacancies"), href: root_path
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: root_path
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h1.govuk-heading-l Sign in to Teaching Vacancies
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l Sign in to Teaching Vacancies
 
-      h2.govuk-heading-m Jobseeker sign in
+    h2.govuk-heading-m Jobseeker sign in
 
-      p.govuk-body Sign in here to save and apply for jobs.
+    p.govuk-body Sign in here to save and apply for jobs.
 
-      = govuk_button_link_to t("buttons.sign_in_jobseeker"), new_jobseeker_session_path
+    = govuk_button_link_to t("buttons.sign_in_jobseeker"), new_jobseeker_session_path
 
-      .govuk-section-break.govuk-section-break--visible class="govuk-!-margin-bottom-5"
+    .govuk-section-break.govuk-section-break--visible class="govuk-!-margin-bottom-5"
 
-      h2.govuk-heading-m Hiring staff sign in
+    h2.govuk-heading-m Hiring staff sign in
 
-      p.govuk-body Sign in here to manage your job listings and applicants.
+    p.govuk-body Sign in here to manage your job listings and applicants.
 
-      = govuk_button_link_to t("buttons.sign_in_publisher"), new_publisher_session_path
+    = govuk_button_link_to t("buttons.sign_in_publisher"), new_publisher_session_path

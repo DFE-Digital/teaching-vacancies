@@ -1,16 +1,15 @@
 - content_for :page_title_prefix, t(".title.#{action_name}")
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = govuk_panel title_text: t(".header.#{action_name}"), text: t(".body", email: @subscription.email)
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = govuk_panel title_text: t(".header.#{action_name}"), text: t(".body", email: @subscription.email)
 
-      h2.govuk-heading-m = t(".next_step")
-      p.govuk-body = t(".next_step_details")
-      = render Jobseekers::SubscriptionDetailsComponent.new(@subscription)
+    h2.govuk-heading-m = t(".next_step")
+    p.govuk-body = t(".next_step_details")
+    = render Jobseekers::SubscriptionDetailsComponent.new(@subscription)
 
-      .divider-bottom class="govuk-!-padding-bottom-5"
-        p.govuk-body = t(".unsubscribe")
-        = govuk_link_to t(".back_to_search_results"), jobs_path(@subscription.search_criteria), class: "govuk-!-font-size-19"
+    .divider-bottom class="govuk-!-padding-bottom-5"
+      p.govuk-body = t(".unsubscribe")
+      = govuk_link_to t(".back_to_search_results"), jobs_path(@subscription.search_criteria), class: "govuk-!-font-size-19"
 
-      = render "jobseeker_account_prompt"
+    = render "jobseeker_account_prompt"
