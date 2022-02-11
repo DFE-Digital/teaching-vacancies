@@ -3,19 +3,10 @@ name: Smoke Test workflow
 on:
   schedule:
     - cron: '*/5 * * * *'
-  workflow_dispatch:
-    inputs:
-      sha:
-        description: GitHub SHA
-        required: true
-      paas_environment:
-        default: 'production'
-        required: true
-        description: Environment to test
 
 jobs:
   smoke-test:
-    name: Smoke Test ${{ inputs.paas_environment }} ${{ inputs.sha }}
+    name: Smoke Test Production
     env:
       RAILS_ENV: test
     runs-on: ubuntu-20.04
@@ -28,12 +19,12 @@ jobs:
         id: smoke-test
         uses: ./.github/actions/smoke-test/
         with:
-          paas_environment: ${{ env.ENVIRONMENT }}
-          sha: ${{ inputs.sha }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          paas_environment: 'production'
           event_name: ${{ github.event_name }}
-
+#          sha: ${{ inputs.sha }}
+#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#
       - name: Slack notification
         if: steps.smoke-test.conclusion != 'success'
         uses: rtCamp/action-slack-notify@v2.2.0

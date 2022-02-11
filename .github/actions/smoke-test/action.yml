@@ -5,15 +5,6 @@ inputs:
   paas_environment:
     description: Environment
     required: true
-  sha:
-    description: commit sha
-    required: true
-  aws-access-key-id:
-    description: AWS-ID
-    required: true
-  aws-secret-access-key:
-    description: AWS-KEY
-    required: true
   event_name:
     description: type of event that triggred the smoke test
     required: true
@@ -23,22 +14,6 @@ runs:
   steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ inputs.aws-access-key-id }}
-        aws-secret-access-key: ${{ inputs.aws-secret-access-key }}
-        aws-region: eu-west-2
-        role-to-assume: Deployments
-        role-duration-seconds: 3600
-        role-skip-session-tagging: true
-
-    - name: Get SLACK_WEBHOOK From ParameterStore
-      uses: marvinpinto/action-inject-ssm-secrets@latest
-      with:
-        ssm_parameter: /teaching-vacancies/github_action/infra/slack_webhook
-        env_variable_name: SLACK_WEBHOOK
 
     - name: Prepare application environment
       uses: ./.github/actions/prepare-app-env
