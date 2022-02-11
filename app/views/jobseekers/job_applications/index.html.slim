@@ -4,12 +4,9 @@
   - content_for :skip_links do
     a.govuk-skip-link href="#applications-results" = t(".skip_link")
 
-= render "jobseekers/dashboard/account_header"
+= render "jobseekers/dashboard/account_header", title: t(".page_title_with_count", count: current_jobseeker.job_applications.count)
 
-.govuk-grid-row class="govuk-!-padding-bottom-0"
-  .govuk-grid-column-full class="govuk-!-margin-top-5"
-    h1.govuk-heading-l = t(".page_title_with_count", count: current_jobseeker.job_applications.count)
-
+.govuk-grid-row
   .govuk-grid-column-full
     - if current_jobseeker.job_applications.any?
       #applications-results

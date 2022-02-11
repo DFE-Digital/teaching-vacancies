@@ -4,14 +4,10 @@
   - content_for :skip_links do
     a.govuk-skip-link href="#subscriptions-results" = t(".skip_link")
 
-= render "jobseekers/dashboard/account_header"
-
-.govuk-grid-row
-  .govuk-grid-column-full class="govuk-!-margin-top-5"
-    h1.govuk-heading-l = t(".page_title")
+= render "jobseekers/dashboard/account_header", title: t(".page_title")
 
 - if subscriptions.any?
-  .govuk-grid-row class="govuk-!-margin-top-0"
+  .govuk-grid-row
     .govuk-grid-column-two-thirds
       - if subscriptions.many?
         = render SortComponent.new path: method(:jobseekers_subscriptions_path), sort: sort
