@@ -1,35 +1,34 @@
 - content_for :page_title_prefix, t(".title", job_title: vacancy.job_title)
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      .govuk-caption-l = vacancy.job_title
-      h1.govuk-heading-xl = t(".heading")
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    .govuk-caption-l = vacancy.job_title
+    h1.govuk-heading-xl = t(".heading")
 
-      = govuk_inset_text do
-        = vacancy.expired? ? t(".deadline.past") : t(".deadline.future")
-        strong =< OrganisationVacancyPresenter.new(vacancy).application_deadline
+    = govuk_inset_text do
+      = vacancy.expired? ? t(".deadline.past") : t(".deadline.future")
+      strong =< OrganisationVacancyPresenter.new(vacancy).application_deadline
 
-      = form_for form, url: organisation_job_extend_deadline_path(vacancy.id), method: :patch do |f|
-        = f.govuk_error_summary
+    = form_for form, url: organisation_job_extend_deadline_path(vacancy.id), method: :patch do |f|
+      = f.govuk_error_summary
 
-        = f.govuk_date_field :expires_at,
-          hint: -> { t("helpers.hint.date", date: 1.month.from_now.strftime("%d %m %Y")) }
+      = f.govuk_date_field :expires_at,
+        hint: -> { t("helpers.hint.date", date: 1.month.from_now.strftime("%d %m %Y")) }
 
-        = f.govuk_collection_radio_buttons :expiry_time,
-          Vacancy::EXPIRY_TIME_OPTIONS,
-          ->(option) { option },
-          ->(option) { t("helpers.options.publishers_job_listing_extend_deadline_form.expiry_time.#{option}") }
+      = f.govuk_collection_radio_buttons :expiry_time,
+        Vacancy::EXPIRY_TIME_OPTIONS,
+        ->(option) { option },
+        ->(option) { t("helpers.options.publishers_job_listing_extend_deadline_form.expiry_time.#{option}") }
 
-        .clear-form data-controller="form"
-          = f.govuk_date_field :starts_on,
-            hint: -> { t("helpers.hint.date", date: 2.months.from_now.strftime("%d %m %Y")) },
-            data: { "form-target": "inputText" }
+      .clear-form data-controller="form"
+        = f.govuk_date_field :starts_on,
+          hint: -> { t("helpers.hint.date", date: 2.months.from_now.strftime("%d %m %Y")) },
+          data: { "form-target": "inputText" }
 
-          .clear-form__checkbox
-            = f.govuk_check_box :starts_asap, "true", 0, multiple: false, link_errors: false,
-            data: { action: "click->form#clearListener" }
+        .clear-form__checkbox
+          = f.govuk_check_box :starts_asap, "true", 0, multiple: false, link_errors: false,
+          data: { action: "click->form#clearListener" }
 
-        = f.govuk_submit t("buttons.extend_deadline"), classes: "govuk-!-margin-bottom-5"
+      = f.govuk_submit t("buttons.extend_deadline"), classes: "govuk-!-margin-bottom-5"
 
-      = govuk_link_to(t("buttons.cancel_extend_deadline"), organisation_path, class: "govuk-link--no-visited-state govuk-!-font-size-19")
+    = govuk_link_to(t("buttons.cancel_extend_deadline"), organisation_path, class: "govuk-link--no-visited-state govuk-!-font-size-19")

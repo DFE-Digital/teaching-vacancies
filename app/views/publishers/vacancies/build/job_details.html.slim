@@ -1,65 +1,64 @@
 - content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.job_details"))
 
-.govuk-main-wrapper class="govuk-!-padding-top-0"
-  = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
+= render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
 
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
-        = f.govuk_error_summary
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
+      = f.govuk_error_summary
 
-        h2.govuk-heading-l = t("publishers.vacancies.steps.job_details")
+      h2.govuk-heading-l = t("publishers.vacancies.steps.job_details")
 
-        = govuk_inset_text do
-          - link = vacancy.allow_phase_to_be_set? ? govuk_link_to(t("publishers.vacancies.build.job_details.phase_inset_text.link_text"), organisation_job_build_path(vacancy.id, :education_phases)) : ""
-          - if vacancy.one_phase?
-            = t("publishers.vacancies.build.job_details.phase_inset_text.one_phase_html", phase: vacancy.readable_phases.first.humanize, link: link)
-          - else
-            = t("publishers.vacancies.build.job_details.phase_inset_text.multiple_phases_html", link: link)
+      = govuk_inset_text do
+        - link = vacancy.allow_phase_to_be_set? ? govuk_link_to(t("publishers.vacancies.build.job_details.phase_inset_text.link_text"), organisation_job_build_path(vacancy.id, :education_phases)) : ""
+        - if vacancy.one_phase?
+          = t("publishers.vacancies.build.job_details.phase_inset_text.one_phase_html", phase: vacancy.readable_phases.first.humanize, link: link)
+        - else
+          = t("publishers.vacancies.build.job_details.phase_inset_text.multiple_phases_html", link: link)
 
-        .govuk-character-count data-module="govuk-character-count" data-maxlength=100
-          = f.govuk_text_field :job_title,
-            label: { size: "s" },
-            class: "govuk-input string required govuk-js-character-count",
-            required: true
-          span#publishers-job-listing-job-details-form-job-title-field-info.govuk-hint.govuk-character-count__message aria-live="polite"
-            | You can enter up to 100 characters
+      .govuk-character-count data-module="govuk-character-count" data-maxlength=100
+        = f.govuk_text_field :job_title,
+          label: { size: "s" },
+          class: "govuk-input string required govuk-js-character-count",
+          required: true
+        span#publishers-job-listing-job-details-form-job-title-field-info.govuk-hint.govuk-character-count__message aria-live="polite"
+          | You can enter up to 100 characters
 
-        = f.govuk_radio_buttons_fieldset :contract_type do
-          = f.govuk_radio_button :contract_type, :permanent, link_errors: true
+      = f.govuk_radio_buttons_fieldset :contract_type do
+        = f.govuk_radio_button :contract_type, :permanent, link_errors: true
 
-          = f.govuk_radio_button :contract_type, :fixed_term do
-            = f.govuk_text_field :fixed_term_contract_duration, label: { size: "s" }
+        = f.govuk_radio_button :contract_type, :fixed_term do
+          = f.govuk_text_field :fixed_term_contract_duration, label: { size: "s" }
 
-          = f.govuk_radio_button :contract_type, :parental_leave_cover do
-            = f.govuk_text_field :parental_leave_cover_contract_duration, label: { size: "s" }
+        = f.govuk_radio_button :contract_type, :parental_leave_cover do
+          = f.govuk_text_field :parental_leave_cover_contract_duration, label: { size: "s" }
 
-        - if vacancy.allow_key_stages?
-          = f.govuk_collection_check_boxes :key_stages, Vacancy.key_stages.keys, :to_s, :to_s,
-            hint: { text: t("helpers.hint.publishers_job_listing_job_details_form.key_stages.#{vacancy.one_phase? ? vacancy.readable_phases.first : 'multiple_phases'}") }
+      - if vacancy.allow_key_stages?
+        = f.govuk_collection_check_boxes :key_stages, Vacancy.key_stages.keys, :to_s, :to_s,
+          hint: { text: t("helpers.hint.publishers_job_listing_job_details_form.key_stages.#{vacancy.one_phase? ? vacancy.readable_phases.first : 'multiple_phases'}") }
 
-        - if vacancy.allow_subjects?
-          = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_job_details_form.subjects_html") } do
+      - if vacancy.allow_subjects?
+        = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_job_details_form.subjects_html") } do
 
-            label for="publishers-job-listing-job-details-form-subject-search"
-              span.govuk-visually-hidden | Subject filter
-            span.govuk-hint#publishers-job-listing-job-details-form-subjects-hint
-              = t("helpers.hint.publishers_job_listing_job_details_form.subjects")
+          label for="publishers-job-listing-job-details-form-subject-search"
+            span.govuk-visually-hidden | Subject filter
+          span.govuk-hint#publishers-job-listing-job-details-form-subjects-hint
+            = t("helpers.hint.publishers_job_listing_job_details_form.subjects")
 
-            div class="govuk-!-margin-bottom-6"
-              = render SearchableCollectionComponent.new form: f,
-                input_type: :checkbox,
-                label_text: "search subjects",
-                threshold: 10,
-                scrollable: true,
-                attribute_name: :subjects,
-                collection: SUBJECT_OPTIONS,
-                value_method: :first,
-                text_method: :first,
-                hint_method: :last
+          div class="govuk-!-margin-bottom-6"
+            = render SearchableCollectionComponent.new form: f,
+              input_type: :checkbox,
+              label_text: "search subjects",
+              threshold: 10,
+              scrollable: true,
+              attribute_name: :subjects,
+              collection: SUBJECT_OPTIONS,
+              value_method: :first,
+              text_method: :first,
+              hint_method: :last
 
-        = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+      = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
-    - unless vacancy.published?
-      .govuk-grid-column-one-third
-        = render "steps"
+  - unless vacancy.published?
+    .govuk-grid-column-one-third
+      = render "steps"

@@ -1,24 +1,25 @@
 - content_for :page_title_prefix do
   | A/B Testing
 
-.govuk-main-wrapper
-  h1.govuk-heading-l A/B Testing
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l A/B Testing
 
-  p.govuk-body We sometimes run A/B and multivariate tests to improve our service.
+    p.govuk-body We sometimes run A/B and multivariate tests to improve our service.
 
-  p.govuk-body
-    | In an A/B test we create two versions of a webpage and show some website visitors one and some the other.
-    |  This lets us see which version works better for our users.
+    p.govuk-body
+      | In an A/B test we create two versions of a webpage and show some website visitors one and some the other.
+      |  This lets us see which version works better for our users.
 
-  p.govuk-body Multivariate tests work in the same way, but use three or more versions of the webpage rather than just two.
+    p.govuk-body Multivariate tests work in the same way, but use three or more versions of the webpage rather than just two.
 
-  p.govuk-body Below are the versions of webpages that you will see when you browse the Teaching Vacancies website.
+    p.govuk-body Below are the versions of webpages that you will see when you browse the Teaching Vacancies website.
 
-  p.govuk-body For more information on our A/B and multivariate tests email #{govuk_mail_to(t("help.email"), t("help.email"))}.
+    p.govuk-body For more information on our A/B and multivariate tests email #{govuk_mail_to(t("help.email"), t("help.email"))}.
 
-  = govuk_summary_list do |summary_list|
-    - current_ab_variants.each do |test, variant|
-      - summary_list.row do |row|
-        - row.key text: test
-        - row.value
-          span.govuk-tag.govuk-tag--blue = variant
+    = govuk_summary_list do |summary_list|
+      - current_ab_variants.each do |test, variant|
+        - summary_list.row do |row|
+          - row.key text: test
+          - row.value
+            span.govuk-tag.govuk-tag--blue = variant

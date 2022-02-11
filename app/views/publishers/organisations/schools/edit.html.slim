@@ -1,22 +1,21 @@
 - content_for :page_title_prefix, @organisation.name.titlecase
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h1.govuk-heading-xl = t(".title", organisation_type: organisation_type_basic(@organisation))
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl = t(".title", organisation_type: organisation_type_basic(@organisation))
 
-      = form_for @organisation_form, url: organisation_school_path(@organisation), method: :patch do |f|
-        = f.govuk_error_summary
+    = form_for @organisation_form, url: organisation_school_path(@organisation), method: :patch do |f|
+      = f.govuk_error_summary
 
-        h2.govuk-heading-m = @organisation.name
+      h2.govuk-heading-m = @organisation.name
 
-        = f.govuk_url_field :website,
-          label: { text: t("helpers.label.publishers_organisation_form.website", organisation_type: organisation_type_basic(@organisation)&.capitalize), size: "s" },
-          value: @organisation_form.website.presence || @organisation.url
+      = f.govuk_url_field :website,
+        label: { text: t("helpers.label.publishers_organisation_form.website", organisation_type: organisation_type_basic(@organisation)&.capitalize), size: "s" },
+        value: @organisation_form.website.presence || @organisation.url
 
-        = f.govuk_text_area :description,
-          label: { text: t("helpers.label.publishers_organisation_form.description", organisation_type: organisation_type_basic(@organisation)), size: "s" },
-          hint: { text: t("helpers.hint.publishers_organisation_form.description", organisation_type: organisation_type_basic(@organisation)) },
-          rows: 10
+      = f.govuk_text_area :description,
+        label: { text: t("helpers.label.publishers_organisation_form.description", organisation_type: organisation_type_basic(@organisation)), size: "s" },
+        hint: { text: t("helpers.hint.publishers_organisation_form.description", organisation_type: organisation_type_basic(@organisation)) },
+        rows: 10
 
-        = f.govuk_submit t("buttons.save_changes")
+      = f.govuk_submit t("buttons.save_changes")

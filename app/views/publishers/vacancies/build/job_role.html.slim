@@ -1,24 +1,23 @@
 - content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.job_role"))
 
-.govuk-main-wrapper class=("govuk-!-padding-top-0" if vacancy.completed_steps.include?("review"))
-  = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
+= render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
 
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
-        = f.govuk_error_summary
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
+      = f.govuk_error_summary
 
-        h2.govuk-heading-l = t("publishers.vacancies.steps.job_role")
+      h2.govuk-heading-l = t("publishers.vacancies.steps.job_role")
 
-        = f.govuk_collection_radio_buttons :main_job_role, Vacancy.main_job_role_options, :to_s, bold_labels: true
+      = f.govuk_collection_radio_buttons :main_job_role, Vacancy.main_job_role_options, :to_s, bold_labels: true
 
-        .govuk-button-group
-          = f.govuk_submit t("buttons.continue")
-          - unless vacancy.published?
-            = govuk_link_to t("buttons.cancel_and_return_to_jobs"), jobs_with_type_organisation_path(:draft), class: "govuk-link--no-visited-state"
-            span.govuk-caption-m
-              = t("publishers.vacancies.create_or_copy.cancel_caption")
+      .govuk-button-group
+        = f.govuk_submit t("buttons.continue")
+        - unless vacancy.published?
+          = govuk_link_to t("buttons.cancel_and_return_to_jobs"), jobs_with_type_organisation_path(:draft), class: "govuk-link--no-visited-state"
+          span.govuk-caption-m
+            = t("publishers.vacancies.create_or_copy.cancel_caption")
 
-    - unless vacancy.published?
-      .govuk-grid-column-one-third
-        = render "steps"
+  - unless vacancy.published?
+    .govuk-grid-column-one-third
+      = render "steps"

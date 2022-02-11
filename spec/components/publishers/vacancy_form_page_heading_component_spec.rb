@@ -62,32 +62,4 @@ RSpec.describe Publishers::VacancyFormPageHeadingComponent, type: :component do
       end
     end
   end
-
-  describe "back_path" do
-    context "when the user came from the review or manage job listing page" do
-      let(:previous_step) { :review }
-
-      context "when the vacancy has been completed" do
-        it "renders a back link to the review page" do
-          assert_includes rendered_component, Rails.application.routes.url_helpers.organisation_job_review_path(vacancy.id)
-        end
-      end
-
-      context "when the vacancy has not been completed" do
-        before { vacancy.completed_steps = %i[step_one] }
-
-        it "renders a back link to the manage listing page" do
-          assert_includes rendered_component, Rails.application.routes.url_helpers.organisation_job_path(vacancy.id)
-        end
-      end
-    end
-
-    context "when the user came from another step" do
-      let(:previous_step) { :step_one }
-
-      it "renders a back link to the previous step" do
-        assert_includes rendered_component, Rails.application.routes.url_helpers.organisation_job_build_path(vacancy.id, previous_step)
-      end
-    end
-  end
 end

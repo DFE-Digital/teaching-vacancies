@@ -1,21 +1,20 @@
 - content_for :page_title_prefix, t("publishers.temp_login.choose_organisation.page_title")
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      - if @reason_for_failing_sign_in
-        = govuk_notification_banner title_text: t("banners.important") do |banner|
-          - banner.heading text: t("publishers.temp_login.choose_organisation.denial.title")
-          = t("publishers.temp_login.choose_organisation.denial.#{@reason_for_failing_sign_in}_html", try_again: govuk_link_to("try again", new_publisher_session_path))
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    - if @reason_for_failing_sign_in
+      = govuk_notification_banner title_text: t("banners.important") do |banner|
+        - banner.heading text: t("publishers.temp_login.choose_organisation.denial.title")
+        = t("publishers.temp_login.choose_organisation.denial.#{@reason_for_failing_sign_in}_html", try_again: govuk_link_to("try again", new_publisher_session_path))
 
-      - else
-        h1.govuk-heading-l = t("publishers.temp_login.choose_organisation.heading")
+    - else
+      h1.govuk-heading-l = t("publishers.temp_login.choose_organisation.heading")
 
-        p = t("publishers.temp_login.choose_organisation.please_select")
+      p = t("publishers.temp_login.choose_organisation.please_select")
 
-        - @publisher.organisations.each do |organisation|
-          p
-            - if organisation.school?
-              = govuk_link_to(location(organisation), create_publisher_session_path(organisation_id: organisation.id))
-            - else
-              = govuk_link_to(organisation.name, create_publisher_session_path(organisation_id: organisation.id))
+      - @publisher.organisations.each do |organisation|
+        p
+          - if organisation.school?
+            = govuk_link_to(location(organisation), create_publisher_session_path(organisation_id: organisation.id))
+          - else
+            = govuk_link_to(organisation.name, create_publisher_session_path(organisation_id: organisation.id))

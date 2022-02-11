@@ -1,23 +1,23 @@
 - content_for :page_title_prefix, @post.title
 - content_for :page_description, @post.meta_description
 
-= govuk_breadcrumbs breadcrumbs: { t("breadcrumbs.home") => root_path,
-                                   params[:section].titleize.capitalize => posts_path(section: params[:section]),
-                                   @post.title => "" }
+- content_for :breadcrumbs do
+  = govuk_breadcrumbs breadcrumbs: { t("breadcrumbs.home") => root_path,
+                                     params[:section].titleize.capitalize => posts_path(section: params[:section]),
+                                     @post.title => "" }
 
-.govuk-main-wrapper.post
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h1 = @post.title
-      h3 = t(".contents")
-      ul
-        - @post.h2_headings.each do |heading|
-          li = link_to(heading, "##{heading.parameterize}")
-      hr.govuk-section-break.govuk-section-break--xl.govuk-section-break--visible
-      == @post.content
+.govuk-grid-row.post
+  .govuk-grid-column-two-thirds
+    h1 = @post.title
+    h3 = t(".contents")
+    ul
+      - @post.h2_headings.each do |heading|
+        li = link_to(heading, "##{heading.parameterize}")
+    hr.govuk-section-break.govuk-section-break--xl.govuk-section-break--visible
+    == @post.content
 
-      - if @post.date_posted
-        span.govuk-body-s
-          = t(".published_on")
-          time datetime=@post.date_posted.to_formatted_s(:db)
-            = @post.date_posted.to_formatted_s
+    - if @post.date_posted
+      span.govuk-body-s
+        = t(".published_on")
+        time datetime=@post.date_posted.to_formatted_s(:db)
+          = @post.date_posted.to_formatted_s

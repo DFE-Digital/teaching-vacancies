@@ -1,24 +1,23 @@
 - content_for :page_title_prefix, t(".title")
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      - unless @feedback.relevant_to_user
-        = govuk_notification_banner title_text: t("banners.important") do
-          = t(".change_alert_text_html", link: govuk_link_to(t(".change_alert_link"), edit_subscription_path(@subscription.token)))
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    - unless @feedback.relevant_to_user
+      = govuk_notification_banner title_text: t("banners.important") do
+        = t(".change_alert_text_html", link: govuk_link_to(t(".change_alert_link"), edit_subscription_path(@subscription.token)))
 
-      h1.govuk-heading-xl = t(".heading")
+    h1.govuk-heading-xl = t(".heading")
 
-      = form_for @feedback_form, url: subscription_job_alert_feedback_path, method: :patch do |f|
-        = f.govuk_error_summary
+    = form_for @feedback_form, url: subscription_job_alert_feedback_path, method: :patch do |f|
+      = f.govuk_error_summary
 
-        = f.govuk_text_area :comment, label: { size: "s" }, max_chars: 1200, rows: 11
+      = f.govuk_text_area :comment, label: { size: "s" }, max_chars: 1200, rows: 11
 
-        = f.govuk_radio_buttons_fieldset(:user_participation_response, legend: { size: "s" }) do
-          = f.govuk_radio_button :user_participation_response, :interested, link_errors: true do
-            = f.govuk_email_field :email, value: (@feedback_form.email.presence || current_jobseeker&.email), required: true
-          = f.govuk_radio_button :user_participation_response, :uninterested
+      = f.govuk_radio_buttons_fieldset(:user_participation_response, legend: { size: "s" }) do
+        = f.govuk_radio_button :user_participation_response, :interested, link_errors: true do
+          = f.govuk_email_field :email, value: (@feedback_form.email.presence || current_jobseeker&.email), required: true
+        = f.govuk_radio_button :user_participation_response, :uninterested
 
-        = recaptcha
+      = recaptcha
 
-        = f.govuk_submit t("buttons.submit"), classes: "govuk-!-padding-left-8 govuk-!-padding-right-8"
+      = f.govuk_submit t("buttons.submit"), classes: "govuk-!-padding-left-8 govuk-!-padding-right-8"

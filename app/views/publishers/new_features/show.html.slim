@@ -1,26 +1,25 @@
 - content_for :page_title_prefix, t(".page_title")
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = form_for @new_features_form, url: new_features_path, method: :patch do |f|
-        = f.govuk_error_summary
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @new_features_form, url: new_features_path, method: :patch do |f|
+      = f.govuk_error_summary
 
-        h1.govuk-heading-l = t(".page_title")
+      h1.govuk-heading-l = t(".page_title")
 
-        h2.govuk-heading-m = t(".heading")
+      h2.govuk-heading-m = t(".heading")
 
-        p.govuk-body = t(".content")
+      p.govuk-body = t(".content")
 
-        = govuk_link_to t("application_pack.link_text", size: application_pack_asset_size), application_pack_asset_path, target: "_blank", class: "govuk-body", download: t("application_pack.link_download_attr")
+      = govuk_link_to t("application_pack.link_text", size: application_pack_asset_size), application_pack_asset_path, target: "_blank", class: "govuk-body", download: t("application_pack.link_download_attr")
 
-        = f.govuk_check_boxes_fieldset :dismiss,
-          legend: nil,
-          classes: "govuk-!-margin-top-6 govuk-!-margin-bottom-2" do
+      = f.govuk_check_boxes_fieldset :dismiss,
+        legend: nil,
+        classes: "govuk-!-margin-top-6 govuk-!-margin-bottom-2" do
 
-          = f.govuk_check_box :dismiss,
-            true,
-            multiple: false,
-            link_errors: true
+        = f.govuk_check_box :dismiss,
+          true,
+          multiple: false,
+          link_errors: true
 
-        = f.govuk_submit t("buttons.continue_to_account")
+      = f.govuk_submit t("buttons.continue_to_account")

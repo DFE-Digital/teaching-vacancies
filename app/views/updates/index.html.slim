@@ -1,17 +1,16 @@
 - content_for :page_title_prefix, t("updates.heading")
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h1.govuk-heading-xl = t("updates.heading")
-      h2.govuk-heading-s
-        = t("updates.updates_description_html",
-            link: govuk_link_to("provide feedback", new_feedback_path))
-      ul.updates-timeline.notes-timeline
-        - @updates.each do |date, updates_by_date|
-          li.updates-timeline__item
-            h3.updates-timeline__title.govuk-heading-s = format_date(date)
-            - updates_by_date.each do |update|
-              h4.govuk-heading-s = update[:name]
-              p.updates-timeline__by.notes-copy
-                = render "updates/update_files/#{update[:path]}"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl = t("updates.heading")
+    h2.govuk-heading-s
+      = t("updates.updates_description_html",
+          link: govuk_link_to("provide feedback", new_feedback_path))
+    ul.updates-timeline.notes-timeline
+      - @updates.each do |date, updates_by_date|
+        li.updates-timeline__item
+          h3.updates-timeline__title.govuk-heading-s = format_date(date)
+          - updates_by_date.each do |update|
+            h4.govuk-heading-s = update[:name]
+            p.updates-timeline__by.notes-copy
+              = render "updates/update_files/#{update[:path]}"

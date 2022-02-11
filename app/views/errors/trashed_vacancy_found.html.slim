@@ -1,12 +1,11 @@
 - content_for :page_title_prefix, "This job listing has been deleted"
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      .govuk-caption-l class="govuk-!-margin-bottom-2" = @vacancy.job_title
-      h1.govuk-heading-xl This job listing has been deleted
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    .govuk-caption-l class="govuk-!-margin-bottom-2" = @vacancy.job_title
+    h1.govuk-heading-xl This job listing has been deleted
 
-      p.govuk-body
-        | The school has deleted this job listing so it cannot be viewed.
+    p.govuk-body
+      | The school has deleted this job listing so it cannot be viewed.
 
-      = govuk_button_link_to "Search for another job", jobs_path
+    = govuk_button_link_to "Search for another job", jobs_path
