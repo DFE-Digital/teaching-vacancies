@@ -1,47 +1,46 @@
 - content_for :page_title_prefix, t(".page_title", organisation: current_organisation.name)
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = govuk_panel title_text: t(".success"), text: ""
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = govuk_panel title_text: t(".success"), text: ""
 
-      h2.govuk-heading-m = t(".what_happens_next")
+    h2.govuk-heading-m = t(".what_happens_next")
 
-      - if @vacancy.publish_today?
-        p.govuk-body = t(".date_posted_now")
-      - else
-        p.govuk-body = t(".date_posted", date: @vacancy.publish_on)
+    - if @vacancy.publish_today?
+      p.govuk-body = t(".date_posted_now")
+    - else
+      p.govuk-body = t(".date_posted", date: @vacancy.publish_on)
 
-      p.govuk-body
-        = t(".date_expires", application_deadline: OrganisationVacancyPresenter.new(@vacancy).application_deadline)
+    p.govuk-body
+      = t(".date_expires", application_deadline: OrganisationVacancyPresenter.new(@vacancy).application_deadline)
 
-      = govuk_button_link_to t(".view_jobs"), jobs_with_type_organisation_path(:published), class: "govuk-button--secondary"
-      = govuk_button_link_to t(".create_another_job_listing"), create_or_copy_organisation_jobs_path, class: "govuk-button--secondary govuk-!-margin-left-3"
+    = govuk_button_link_to t(".view_jobs"), jobs_with_type_organisation_path(:published), class: "govuk-button--secondary"
+    = govuk_button_link_to t(".create_another_job_listing"), create_or_copy_organisation_jobs_path, class: "govuk-button--secondary govuk-!-margin-left-3"
 
-      .divider-bottom
+    .divider-bottom
 
-      = render "shared/vacancy/copy_vacancy_link"
+    = render "shared/vacancy/copy_vacancy_link"
 
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h2.govuk-heading-m = t(".feedback.heading")
-      p.govuk-body = t(".feedback.description")
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h2.govuk-heading-m = t(".feedback.heading")
+    p.govuk-body = t(".feedback.description")
 
-      = form_for @feedback_form, url: organisation_job_feedback_path(@vacancy.id) do |f|
-        = f.govuk_error_summary
+    = form_for @feedback_form, url: organisation_job_feedback_path(@vacancy.id) do |f|
+      = f.govuk_error_summary
 
-        = f.govuk_radio_buttons_fieldset(:report_a_problem, legend: { size: "s" }) do
-          = f.govuk_radio_button :report_a_problem, :yes, link_errors: true do
-            p.govuk-body = t("help.report_a_problem_html", get_help_link: govuk_link_to(t("help.get_help_form"), new_support_request_path))
-          = f.govuk_radio_button :report_a_problem, :no, link_errors: true
+      = f.govuk_radio_buttons_fieldset(:report_a_problem, legend: { size: "s" }) do
+        = f.govuk_radio_button :report_a_problem, :yes, link_errors: true do
+          p.govuk-body = t("help.report_a_problem_html", get_help_link: govuk_link_to(t("help.get_help_form"), new_support_request_path))
+        = f.govuk_radio_button :report_a_problem, :no, link_errors: true
 
-        = f.govuk_collection_radio_buttons :rating, Feedback.ratings.keys, :to_s
+      = f.govuk_collection_radio_buttons :rating, Feedback.ratings.keys, :to_s
 
-        = f.govuk_text_area :comment, label: { size: "s" }, rows: 10
+      = f.govuk_text_area :comment, label: { size: "s" }, rows: 10
 
-        = f.govuk_radio_buttons_fieldset(:user_participation_response, legend: { size: "s" }) do
-          = f.govuk_radio_button :user_participation_response, :interested, link_errors: true do
-            = f.govuk_email_field :email, value: (@feedback_form.email.presence || current_publisher.email), required: true
-          = f.govuk_radio_button :user_participation_response, :uninterested
+      = f.govuk_radio_buttons_fieldset(:user_participation_response, legend: { size: "s" }) do
+        = f.govuk_radio_button :user_participation_response, :interested, link_errors: true do
+          = f.govuk_email_field :email, value: (@feedback_form.email.presence || current_publisher.email), required: true
+        = f.govuk_radio_button :user_participation_response, :uninterested
 
-        = f.govuk_submit t("buttons.submit_feedback")
+      = f.govuk_submit t("buttons.submit_feedback")

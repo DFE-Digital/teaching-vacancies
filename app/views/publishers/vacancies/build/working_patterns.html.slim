@@ -1,20 +1,19 @@
 - content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.working_patterns"))
 
-.govuk-main-wrapper class="govuk-!-padding-top-0"
-  = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
+= render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
 
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
-        = f.govuk_error_summary
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
+      = f.govuk_error_summary
 
-        = f.govuk_collection_check_boxes :working_patterns, Vacancy.working_patterns.keys, :to_s, :to_s,
-          legend: -> { tag.h2(t("publishers.vacancies.steps.working_patterns"), class: "govuk-heading-l") }
+      = f.govuk_collection_check_boxes :working_patterns, Vacancy.working_patterns.keys, :to_s, :to_s,
+        legend: -> { tag.h2(t("publishers.vacancies.steps.working_patterns"), class: "govuk-heading-l") }
 
-        = f.govuk_text_area :working_patterns_details, label: { size: "s", id: "working-pattern-details-label" }
+      = f.govuk_text_area :working_patterns_details, label: { size: "s", id: "working-pattern-details-label" }
 
-        = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+      = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
-    - unless vacancy.published?
-      .govuk-grid-column-one-third
-        = render "steps"
+  - unless vacancy.published?
+    .govuk-grid-column-one-third
+      = render "steps"

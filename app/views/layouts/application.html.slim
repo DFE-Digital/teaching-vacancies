@@ -30,15 +30,17 @@ html.govuk-template.app-html-class lang="en"
 
     = render "layouts/header"
 
-    .govuk-width-container.phase-banner class="govuk-!-display-none-print"
-      = govuk_phase_banner(tag: { text: "beta" }) do
+    .govuk-width-container
+      = govuk_phase_banner(tag: { text: "beta" }, classes: "govuk-!-display-none-print") do
         span.govuk-phase-banner__text
           | This is a new service - #{govuk_link_to "your feedback", new_feedback_path} will help us to improve it.
 
-    .govuk-width-container
-      main.govuk-main-wrapper#main-content role="main" class="govuk-!-padding-top-0"
-        = render "layouts/flash_messages"
+      - if content_for? :breadcrumbs
+        = yield(:breadcrumbs)
 
+      = render "layouts/flash_messages"
+
+      main#main-content.govuk-main-wrapper role="main"
         = yield
 
       = content_for :after_main

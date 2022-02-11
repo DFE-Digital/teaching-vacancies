@@ -1,34 +1,33 @@
 - content_for :page_title_prefix, t(".title")
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = govuk_panel title_text: t(".header"), text: t(".confirmation")
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = govuk_panel title_text: t(".header"), text: t(".confirmation")
 
-      p.govuk-body
-        => govuk_link_to t("nav.find_job"), root_path, class: "govuk-link--no-visited-state"
-        | or
-        =< govuk_link_to t(".create_alert"), new_subscription_path, class: "govuk-link--no-visited-state"
+    p.govuk-body
+      => govuk_link_to t("nav.find_job"), root_path, class: "govuk-link--no-visited-state"
+      | or
+      =< govuk_link_to t(".create_alert"), new_subscription_path, class: "govuk-link--no-visited-state"
 
-      = form_for @unsubscribe_feedback_form, url: subscription_unsubscribe_feedbacks_path(@subscription) do |f|
-        = f.govuk_error_summary
+    = form_for @unsubscribe_feedback_form, url: subscription_unsubscribe_feedbacks_path(@subscription) do |f|
+      = f.govuk_error_summary
 
-        h2.govuk-heading-l
-          = t(".heading")
+      h2.govuk-heading-l
+        = t(".heading")
 
-        = f.govuk_radio_buttons_fieldset(:reason) do
-          - Feedback.unsubscribe_reasons.each_key do |reason|
-            - if reason == "other_reason"
-              = f.govuk_radio_button :unsubscribe_reason, reason do
-                = f.govuk_text_field :other_unsubscribe_reason_comment, label: { size: "s" }
-            - else
-              = f.govuk_radio_button :unsubscribe_reason, reason
+      = f.govuk_radio_buttons_fieldset(:reason) do
+        - Feedback.unsubscribe_reasons.each_key do |reason|
+          - if reason == "other_reason"
+            = f.govuk_radio_button :unsubscribe_reason, reason do
+              = f.govuk_text_field :other_unsubscribe_reason_comment, label: { size: "s" }
+          - else
+            = f.govuk_radio_button :unsubscribe_reason, reason
 
-        = f.govuk_text_area :comment, label: { size: "s" }, max_chars: 1200
+      = f.govuk_text_area :comment, label: { size: "s" }, max_chars: 1200
 
-        = f.govuk_radio_buttons_fieldset(:user_participation_response, legend: { size: "s" }) do
-          = f.govuk_radio_button :user_participation_response, :interested, link_errors: true do
-            = f.govuk_email_field :email, value: (@unsubscribe_feedback_form.email.presence || current_jobseeker&.email), required: true
-          = f.govuk_radio_button :user_participation_response, :uninterested
+      = f.govuk_radio_buttons_fieldset(:user_participation_response, legend: { size: "s" }) do
+        = f.govuk_radio_button :user_participation_response, :interested, link_errors: true do
+          = f.govuk_email_field :email, value: (@unsubscribe_feedback_form.email.presence || current_jobseeker&.email), required: true
+        = f.govuk_radio_button :user_participation_response, :uninterested
 
-        = f.govuk_submit t("buttons.submit_feedback")
+      = f.govuk_submit t("buttons.submit_feedback")

@@ -1,23 +1,24 @@
 - content_for :page_title_prefix, t("error_pages.invalid_recaptcha.title")
 
-.govuk-main-wrapper
-  h1.govuk-heading-xl = t("error_pages.invalid_recaptcha.title")
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl = t("error_pages.invalid_recaptcha.title")
 
-  p.govuk-body-l
-    | We have been unable to complete your request because your web browser is causing our
-      security checks to fail.
+    p.govuk-body-l
+      | We have been unable to complete your request because your web browser is causing our
+        security checks to fail.
 
-  p.govuk-body To fix this, try:
+    p.govuk-body To fix this, try:
 
-  ul.govuk-list.govuk-list--bullet
-    li
-      | updating your operating system and browser with the latest security updates:
-        #{link_to("https://www.ncsc.gov.uk/collection/top-tips-for-staying-secure-online/install-the-latest-software-and-app-updates")}
-    li
-      | enabling Javascript for <strong>https://teaching-vacancies.service.gov.uk</strong> in your
-        browser settings: #{link_to("https://www.enable-javascript.com/")}
-    li
-      | disabling any browser plugins that can interfere with websites, such as ad blockers
+    ul.govuk-list.govuk-list--bullet
+      li
+        | updating your operating system and browser with the latest security updates:
+          #{link_to("https://www.ncsc.gov.uk/collection/top-tips-for-staying-secure-online/install-the-latest-software-and-app-updates")}
+      li
+        | enabling Javascript for <strong>https://teaching-vacancies.service.gov.uk</strong> in your
+          browser settings: #{link_to("https://www.enable-javascript.com/")}
+      li
+        | disabling any browser plugins that can interfere with websites, such as ad blockers
 
-  p.govuk-body
-    | If you still cannot use the service, get in touch: #{govuk_mail_to(t("help.email"), t("help.email"), class: "link-wrap", subject: t("error_pages.invalid_recaptcha.email_subject", form: @form))}.
+    p.govuk-body
+      | If you still cannot use the service, get in touch: #{govuk_mail_to(t("help.email"), t("help.email"), class: "link-wrap", subject: t("error_pages.invalid_recaptcha.email_subject", form: @form))}.

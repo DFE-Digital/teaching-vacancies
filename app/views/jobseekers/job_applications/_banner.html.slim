@@ -1,7 +1,8 @@
-.job-application-review-banner class="govuk-!-margin-bottom-7"
+- content_for :breadcrumbs do
   div class="govuk-!-display-none-print"
     = govuk_breadcrumbs breadcrumbs: { "#{t("breadcrumbs.job_applications")}": jobseekers_job_applications_path, "#{vacancy.job_title}": "" }
 
+.job-application-review-banner class="govuk-!-margin-bottom-7"
   h1.govuk-heading-xl class="govuk-!-margin-top-5 govuk-!-margin-bottom-4" = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
 
   .govuk-body class="govuk-!-margin-bottom-0 govuk-!-font-weight-bold govuk-!-display-none-print"
