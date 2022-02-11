@@ -6,38 +6,36 @@
 
 = render "jobseekers/dashboard/account_header"
 
-.govuk-main-wrapper class="govuk-!-padding-bottom-0"
-  .govuk-grid-row
-    .govuk-grid-column-full
-      h1.govuk-heading-l = t(".page_title_with_count", count: current_jobseeker.job_applications.count)
+.govuk-grid-row class="govuk-!-padding-bottom-0"
+  .govuk-grid-column-full class="govuk-!-margin-top-5"
+    h1.govuk-heading-l = t(".page_title_with_count", count: current_jobseeker.job_applications.count)
 
-  .govuk-grid-row class="govuk-!-margin-top-0"
-    .govuk-grid-column-full
-      - if current_jobseeker.job_applications.any?
-        #applications-results
-          - current_jobseeker.job_applications.includes(:vacancy).order(updated_at: :desc).draft.each do |job_application|
-            = render "job_application", job_application: job_application if job_application.vacancy.expires_at.future?
+  .govuk-grid-column-full
+    - if current_jobseeker.job_applications.any?
+      #applications-results
+        - current_jobseeker.job_applications.includes(:vacancy).order(updated_at: :desc).draft.each do |job_application|
+          = render "job_application", job_application: job_application if job_application.vacancy.expires_at.future?
 
-          - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).submitted.each do |job_application|
-            = render "job_application", job_application: job_application
+        - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).submitted.each do |job_application|
+          = render "job_application", job_application: job_application
 
-          - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).reviewed.each do |job_application|
-            = render "job_application", job_application: job_application
+        - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).reviewed.each do |job_application|
+          = render "job_application", job_application: job_application
 
-          - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).shortlisted.each do |job_application|
-            = render "job_application", job_application: job_application
+        - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).shortlisted.each do |job_application|
+          = render "job_application", job_application: job_application
 
-          - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).unsuccessful.each do |job_application|
-            = render "job_application", job_application: job_application
+        - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).unsuccessful.each do |job_application|
+          = render "job_application", job_application: job_application
 
-          - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).withdrawn.each do |job_application|
-            = render "job_application", job_application: job_application
+        - current_jobseeker.job_applications.includes(:vacancy).order(submitted_at: :desc).withdrawn.each do |job_application|
+          = render "job_application", job_application: job_application
 
-          - current_jobseeker.job_applications.includes(:vacancy).order(updated_at: :desc).draft.each do |job_application|
-            = render "job_application", job_application: job_application unless job_application.vacancy.expires_at.future?
+        - current_jobseeker.job_applications.includes(:vacancy).order(updated_at: :desc).draft.each do |job_application|
+          = render "job_application", job_application: job_application unless job_application.vacancy.expires_at.future?
 
-      - else
-        = render EmptySectionComponent.new title: t(".no_job_applications") do
-          = t(".no_job_applications_body_html", link_to: govuk_link_to(t(".find_and_apply"), root_path))
+    - else
+      = render EmptySectionComponent.new title: t(".no_job_applications") do
+        = t(".no_job_applications_body_html", link_to: govuk_link_to(t(".find_and_apply"), root_path))
 
 - content_for :after_main, jobseekers_account_survey_link(origin: url_for)

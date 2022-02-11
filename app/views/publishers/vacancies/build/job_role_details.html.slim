@@ -1,22 +1,21 @@
 - content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.job_role"))
 
-.govuk-main-wrapper class="govuk-!-padding-top-0"
-  = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
+= render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
 
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
-        = f.govuk_error_summary
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
+      = f.govuk_error_summary
 
-        h2.govuk-heading-l = t("publishers.vacancies.steps.job_role")
+      h2.govuk-heading-l = t("publishers.vacancies.steps.job_role")
 
-        - if vacancy.main_job_role == "teacher"
-          = f.govuk_collection_check_boxes :additional_job_roles, form.teacher_additional_job_roles_options, :to_s, :to_s
-        - else
-          = f.govuk_collection_radio_buttons :send_responsible, %w[yes no], :to_s, :capitalize, form_group: { classes: "govuk-!-width-two-thirds" }
+      - if vacancy.main_job_role == "teacher"
+        = f.govuk_collection_check_boxes :additional_job_roles, form.teacher_additional_job_roles_options, :to_s, :to_s
+      - else
+        = f.govuk_collection_radio_buttons :send_responsible, %w[yes no], :to_s, :capitalize, form_group: { classes: "govuk-!-width-two-thirds" }
 
-        = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+      = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
-    - unless vacancy.published?
-      .govuk-grid-column-one-third
-        = render "steps"
+  - unless vacancy.published?
+    .govuk-grid-column-one-third
+      = render "steps"

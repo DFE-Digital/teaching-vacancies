@@ -1,25 +1,24 @@
 - content_for :page_title_prefix, t("terms_and_conditions.page_title")
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = form_for @terms_and_conditions_form, url: terms_and_conditions_path, method: :patch do |f|
-        = f.govuk_error_summary
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @terms_and_conditions_form, url: terms_and_conditions_path, method: :patch do |f|
+      = f.govuk_error_summary
 
-        h1.govuk-heading-xl = t("terms_and_conditions.page_title")
-        p = t("terms_and_conditions.intro_html", link: govuk_link_to(t("terms_and_conditions.intro_link_text"), page_path("terms-and-conditions")))
-        p = t("terms_and_conditions.schools_section_html", link: govuk_link_to(t("terms_and_conditions.schools_section_link_text"), page_path("terms-and-conditions", anchor: "terms-and-conditions-for-schools-trusts-and-local-authorities-las")))
-        ul.govuk-list.govuk-list--bullet
-          - t("terms_and_conditions.summary_list").each do |item|
-            li = item
+      h1.govuk-heading-xl = t("terms_and_conditions.page_title")
+      p = t("terms_and_conditions.intro_html", link: govuk_link_to(t("terms_and_conditions.intro_link_text"), page_path("terms-and-conditions")))
+      p = t("terms_and_conditions.schools_section_html", link: govuk_link_to(t("terms_and_conditions.schools_section_link_text"), page_path("terms-and-conditions", anchor: "terms-and-conditions-for-schools-trusts-and-local-authorities-las")))
+      ul.govuk-list.govuk-list--bullet
+        - t("terms_and_conditions.summary_list").each do |item|
+          li = item
 
-        = f.govuk_check_boxes_fieldset :terms,
-          legend: { text: t("terms_and_conditions.please_accept"), size: "m" } do
+      = f.govuk_check_boxes_fieldset :terms,
+        legend: { text: t("terms_and_conditions.please_accept"), size: "m" } do
 
-          = f.govuk_check_box :terms,
-            true,
-            multiple: false,
-            link_errors: true,
-            label: { text: t("terms_and_conditions.label") }
+        = f.govuk_check_box :terms,
+          true,
+          multiple: false,
+          link_errors: true,
+          label: { text: t("terms_and_conditions.label") }
 
-        = f.govuk_submit t("buttons.accept_and_continue")
+      = f.govuk_submit t("buttons.accept_and_continue")

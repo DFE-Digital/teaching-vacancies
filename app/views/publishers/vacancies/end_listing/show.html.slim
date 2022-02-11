@@ -1,33 +1,32 @@
 - content_for :page_title_prefix, t(".title", job_title: vacancy.job_title)
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      .govuk-caption-l = vacancy.job_title
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    .govuk-caption-l = vacancy.job_title
 
-      h1.govuk-heading-xl = t(".heading")
+    h1.govuk-heading-xl = t(".heading")
 
-      = form_for form, url: organisation_job_end_listing_path(vacancy.id), method: :patch do |f|
-        = f.govuk_error_summary
+    = form_for form, url: organisation_job_end_listing_path(vacancy.id), method: :patch do |f|
+      = f.govuk_error_summary
 
-        = f.govuk_radio_buttons_fieldset(:hired_status, legend: { size: "m" }) do
-          = f.govuk_radio_button :hired_status, :hired_tvs
-          = f.govuk_radio_button :hired_status, :hired_other_free
-          = f.govuk_radio_button :hired_status, :hired_paid
-          = f.govuk_radio_button :hired_status, :hired_no_listing
-          = f.govuk_radio_button :hired_status, :not_filled_ongoing
-          = f.govuk_radio_button :hired_status, :not_filled_not_looking
-          = f.govuk_radio_divider
-          = f.govuk_radio_button :hired_status, :hired_dont_know
+      = f.govuk_radio_buttons_fieldset(:hired_status, legend: { size: "m" }) do
+        = f.govuk_radio_button :hired_status, :hired_tvs
+        = f.govuk_radio_button :hired_status, :hired_other_free
+        = f.govuk_radio_button :hired_status, :hired_paid
+        = f.govuk_radio_button :hired_status, :hired_no_listing
+        = f.govuk_radio_button :hired_status, :not_filled_ongoing
+        = f.govuk_radio_button :hired_status, :not_filled_not_looking
+        = f.govuk_radio_divider
+        = f.govuk_radio_button :hired_status, :hired_dont_know
 
-        = f.govuk_radio_buttons_fieldset(:listed_elsewhere, legend: { size: "m" }) do
-          = f.govuk_radio_button :listed_elsewhere, :listed_paid
-          = f.govuk_radio_button :listed_elsewhere, :listed_free
-          = f.govuk_radio_button :listed_elsewhere, :listed_mix
-          = f.govuk_radio_button :listed_elsewhere, :not_listed
-          = f.govuk_radio_divider
-          = f.govuk_radio_button :listed_elsewhere, :listed_dont_know
+      = f.govuk_radio_buttons_fieldset(:listed_elsewhere, legend: { size: "m" }) do
+        = f.govuk_radio_button :listed_elsewhere, :listed_paid
+        = f.govuk_radio_button :listed_elsewhere, :listed_free
+        = f.govuk_radio_button :listed_elsewhere, :listed_mix
+        = f.govuk_radio_button :listed_elsewhere, :not_listed
+        = f.govuk_radio_divider
+        = f.govuk_radio_button :listed_elsewhere, :listed_dont_know
 
-        = f.govuk_submit t("buttons.end_listing"), classes: "govuk-!-margin-bottom-5"
+      = f.govuk_submit t("buttons.end_listing"), classes: "govuk-!-margin-bottom-5"
 
-      = govuk_link_to(t("buttons.cancel_end_listing"), organisation_path, class: "govuk-link--no-visited-state govuk-!-font-size-19")
+    = govuk_link_to(t("buttons.cancel_end_listing"), organisation_path, class: "govuk-link--no-visited-state govuk-!-font-size-19")

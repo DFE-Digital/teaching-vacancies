@@ -1,26 +1,25 @@
 - content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.job_summary"))
 
-.govuk-main-wrapper class="govuk-!-padding-top-0"
-  = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
+= render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
 
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
-        = f.govuk_error_summary
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
+      = f.govuk_error_summary
 
-        h2.govuk-heading-l = t("publishers.vacancies.steps.job_summary")
+      h2.govuk-heading-l = t("publishers.vacancies.steps.job_summary")
 
-        = f.govuk_text_area :job_advert, label: { size: "s", id: "job-advert-label" }, rows: 10, required: true
+      = f.govuk_text_area :job_advert, label: { size: "s", id: "job-advert-label" }, rows: 10, required: true
 
-        = f.govuk_text_area :about_school,
-          label: { id: "about-school-label", text: t("helpers.label.publishers_job_listing_job_summary_form.about_organisation", organisation: vacancy_about_school_label_organisation(vacancy)), size: "s" },
-          hint: { text: vacancy_about_school_hint_text(vacancy) },
-          value: vacancy_about_school_value(vacancy),
-          rows: 10,
-          required: true
+      = f.govuk_text_area :about_school,
+        label: { id: "about-school-label", text: t("helpers.label.publishers_job_listing_job_summary_form.about_organisation", organisation: vacancy_about_school_label_organisation(vacancy)), size: "s" },
+        hint: { text: vacancy_about_school_hint_text(vacancy) },
+        value: vacancy_about_school_value(vacancy),
+        rows: 10,
+        required: true
 
-        = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+      = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
-    - unless vacancy.published?
-      .govuk-grid-column-one-third
-        = render "steps"
+  - unless vacancy.published?
+    .govuk-grid-column-one-third
+      = render "steps"

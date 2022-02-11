@@ -1,24 +1,24 @@
 - content_for :page_title_prefix, t(".title")
 
-= govuk_back_link text: t("buttons.back"), href: page_path("sign-in")
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: page_path("sign-in")
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h1.govuk-heading-l = t(".title")
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l = t(".title")
 
-      = form_for resource, url: new_jobseeker_session_path do |f|
-        = f.govuk_error_summary
+    = form_for resource, url: new_jobseeker_session_path do |f|
+      = f.govuk_error_summary
 
-        p.govuk-body = t(".description")
+      p.govuk-body = t(".description")
 
-        = f.govuk_email_field :email, label: { text: t("helpers.label.jobseekers_sign_in_form.email"), size: "s" }, width: "two-thirds"
-        = f.govuk_password_field :password, label: { text: t("helpers.label.jobseekers_sign_in_form.password"), size: "s" }, hint: nil, width: "two-thirds"
+      = f.govuk_email_field :email, label: { text: t("helpers.label.jobseekers_sign_in_form.email"), size: "s" }, width: "two-thirds"
+      = f.govuk_password_field :password, label: { text: t("helpers.label.jobseekers_sign_in_form.password"), size: "s" }, hint: nil, width: "two-thirds"
 
-        p.govuk-body = govuk_link_to(t(".forgotten"), new_jobseeker_password_path)
+      p.govuk-body = govuk_link_to(t(".forgotten"), new_jobseeker_password_path)
 
-        = f.govuk_submit t("buttons.sign_in"), classes: "govuk-!-margin-bottom-0"
+      = f.govuk_submit t("buttons.sign_in"), classes: "govuk-!-margin-bottom-0"
 
-    .govuk-grid-column-one-third.grey-cta-container
-      h2.account-sidebar__heading = t(".no_account.heading")
-      p.govuk-body = t(".no_account.content_html", link_to: govuk_link_to(t(".no_account.link"), new_jobseeker_registration_path))
+  .govuk-grid-column-one-third.grey-cta-container
+    h2.account-sidebar__heading = t(".no_account.heading")
+    p.govuk-body = t(".no_account.content_html", link_to: govuk_link_to(t(".no_account.link"), new_jobseeker_registration_path))

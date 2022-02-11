@@ -1,20 +1,19 @@
 - content_for :page_title_prefix, job_application_page_title_prefix(withdraw_form, t(".title"))
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      .govuk-caption-l class="govuk-!-margin-bottom-2" = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
-      h1.govuk-heading-xl = t(".heading")
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    .govuk-caption-l class="govuk-!-margin-bottom-2" = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
+    h1.govuk-heading-xl = t(".heading")
 
-      = form_for withdraw_form, url: jobseekers_job_application_withdraw_path(job_application), method: :post do |f|
-        = f.govuk_error_summary
+    = form_for withdraw_form, url: jobseekers_job_application_withdraw_path(job_application), method: :post do |f|
+      = f.govuk_error_summary
 
-        = f.govuk_radio_buttons_fieldset :withdraw_reason do
-          = f.govuk_radio_button :withdraw_reason, :another_role, link_errors: true
-          = f.govuk_radio_button :withdraw_reason, :changed_mind
-          = f.govuk_radio_button :withdraw_reason, :other
+      = f.govuk_radio_buttons_fieldset :withdraw_reason do
+        = f.govuk_radio_button :withdraw_reason, :another_role, link_errors: true
+        = f.govuk_radio_button :withdraw_reason, :changed_mind
+        = f.govuk_radio_button :withdraw_reason, :other
 
-        = govuk_notification_banner title_text: t("banners.warning"), classes: "govuk-notification-banner--warning" do
-          = t(".description")
+      = govuk_notification_banner title_text: t("banners.warning"), classes: "govuk-notification-banner--warning" do
+        = t(".description")
 
-        = f.govuk_submit t("buttons.withdraw_application")
+      = f.govuk_submit t("buttons.withdraw_application")
