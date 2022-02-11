@@ -15,6 +15,5 @@
     = govuk_button_to t("buttons.start_application"), quick_apply_jobseekers_job_job_application_path(vacancy.id)
 
   .govuk-grid-column-one-third
-    .account-sidebar
-      h2.account-sidebar__heading = t(".assistance.heading")
-      p.govuk-body-s = t(".assistance.content_html", privacy_html: govuk_link_to(t(".assistance.privacy"), page_path("privacy-policy")), terms_html: govuk_link_to(t(".assistance.terms"), page_path("terms-and-conditions")))
+    h2.govuk-heading-m = t(".assistance.heading")
+    p.govuk-body-s = t(".assistance.content_html", privacy_html: govuk_link_to(t(".assistance.privacy"), page_path("privacy-policy")), terms_html: govuk_link_to(t(".assistance.terms"), page_path("terms-and-conditions")))
