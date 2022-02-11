@@ -1,15 +1,16 @@
 - content_for :page_title_prefix, t(".page_title")
 
-.govuk-main-wrapper class="govuk-!-padding-top-0"
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = govuk_back_link text: t("buttons.back"), href: organisation_job_path(vacancy.id), classes: "govuk-!-margin-bottom-7"
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: organisation_job_path(vacancy.id), classes: "govuk-!-margin-bottom-7"
 
-      h2.govuk-caption-l = "#{vacancy.job_title} at #{vacancy_job_location(vacancy)}"
-      h1.govuk-heading-l = t(".page_title")
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
 
-      h3.govuk-heading-m = t(".are_you_sure")
+    h2.govuk-caption-l = "#{vacancy.job_title} at #{vacancy_job_location(vacancy)}"
+    h1.govuk-heading-l = t(".page_title")
 
-      = govuk_button_link_to t("buttons.confirm_deletion"), organisation_job_path(vacancy.id), method: :delete, class: "govuk-button--warning"
+    h3.govuk-heading-m = t(".are_you_sure")
 
-  = govuk_link_to t("buttons.cancel"), organisation_job_path(vacancy.id), class: "govuk-link--no-visited-state"
+    = govuk_button_link_to t("buttons.confirm_deletion"), organisation_job_path(vacancy.id), method: :delete, class: "govuk-button--warning"
+
+    = govuk_link_to t("buttons.cancel"), organisation_job_path(vacancy.id), class: "govuk-link--no-visited-state"

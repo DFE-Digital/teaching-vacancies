@@ -1,12 +1,11 @@
 - content_for :page_title_prefix, t(".title")
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      .govuk-caption-l = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
-      h1.govuk-heading-l = t(".heading")
-      p.govuk-heading-s = t(".confirmation_heading")
-      p.govuk-body = t(".confirmation_details")
-      = govuk_button_to t(".confirm"), jobseekers_job_application_path(job_application), method: :delete, class: "govuk-button--warning govuk-!-margin-bottom-3"
-      p.govuk-body
-        = govuk_link_to t(".cancel"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    .govuk-caption-l = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
+    h1.govuk-heading-l = t(".heading")
+    p.govuk-heading-s = t(".confirmation_heading")
+    p.govuk-body = t(".confirmation_details")
+    = govuk_button_to t(".confirm"), jobseekers_job_application_path(job_application), method: :delete, class: "govuk-button--warning govuk-!-margin-bottom-3"
+    p.govuk-body
+      = govuk_link_to t(".cancel"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"

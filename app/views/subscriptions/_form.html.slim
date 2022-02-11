@@ -1,21 +1,22 @@
 - content_for :page_title_prefix, t("#{i18n_prefix}.title")
 
-.govuk-main-wrapper
-  p = govuk_link_to t("app.back_to_homepage"), root_path
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    p = govuk_link_to t("app.back_to_homepage"), root_path
 
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = form_for @form, **local_assigns.fetch(:form_options, {}) do |f|
-        = f.govuk_error_summary
+    .govuk-grid-row
+      .govuk-grid-column-two-thirds
+        = form_for @form, **local_assigns.fetch(:form_options, {}) do |f|
+          = f.govuk_error_summary
 
-        h1.govuk-heading-xl class="govuk-!-margin-bottom-4" = t("#{i18n_prefix}.title")
+          h1.govuk-heading-xl class="govuk-!-margin-bottom-4" = t("#{i18n_prefix}.title")
 
-        p.govuk-body-m class="govuk-!-margin-bottom-4" = t("#{i18n_prefix}.description")
+          p.govuk-body-m class="govuk-!-margin-bottom-4" = t("#{i18n_prefix}.description")
 
-        .location-search = render "fields", f: f
+          .location-search = render "fields", f: f
 
-        = govuk_details summary_text: t("subscriptions.unsubscribe.guidance.heading"), text: t("subscriptions.unsubscribe.guidance.body")
+          = govuk_details summary_text: t("subscriptions.unsubscribe.guidance.heading"), text: t("subscriptions.unsubscribe.guidance.body")
 
-        = yield f
+          = yield f
 
-        = f.govuk_submit button_text, classes: "govuk-!-padding-left-8 govuk-!-padding-right-8"
+          = f.govuk_submit button_text, classes: "govuk-!-padding-left-8 govuk-!-padding-right-8"

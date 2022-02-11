@@ -1,25 +1,24 @@
 - content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.applying_for_the_job"))
 
-.govuk-main-wrapper class="govuk-!-padding-top-0"
-  = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
+= render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
 
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
-        = f.govuk_error_summary
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
+      = f.govuk_error_summary
 
-        h2.govuk-heading-l = t("publishers.vacancies.steps.applying_for_the_job")
-        p.govuk-body = t(".enable_job_applications_html", link: govuk_link_to(t("application_pack.link_text", size: application_pack_asset_size), application_pack_asset_path, target: "_blank", class: "govuk-body", download: t("application_pack.link_download_attr")))
+      h2.govuk-heading-l = t("publishers.vacancies.steps.applying_for_the_job")
+      p.govuk-body = t(".enable_job_applications_html", link: govuk_link_to(t("application_pack.link_text", size: application_pack_asset_size), application_pack_asset_path, target: "_blank", class: "govuk-body", download: t("application_pack.link_download_attr")))
 
-        - if vacancy.listed? || current_organisation.local_authority?
-          = f.hidden_field :enable_job_applications
-        - else
-          = f.govuk_radio_buttons_fieldset :enable_job_applications do
-            = f.govuk_radio_button :enable_job_applications, true, link_errors: true
-            = f.govuk_radio_button :enable_job_applications, "false"
+      - if vacancy.listed? || current_organisation.local_authority?
+        = f.hidden_field :enable_job_applications
+      - else
+        = f.govuk_radio_buttons_fieldset :enable_job_applications do
+          = f.govuk_radio_button :enable_job_applications, true, link_errors: true
+          = f.govuk_radio_button :enable_job_applications, "false"
 
-        = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+      = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
-    - unless vacancy.published?
-      .govuk-grid-column-one-third
-        = render "steps"
+  - unless vacancy.published?
+    .govuk-grid-column-one-third
+      = render "steps"

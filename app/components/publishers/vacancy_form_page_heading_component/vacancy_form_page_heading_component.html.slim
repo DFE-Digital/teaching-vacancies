@@ -1,9 +1,10 @@
 - if step_process.previous_step_or_review.present? && step_process.current_step != :review
-  = govuk_back_link text: t("buttons.back"), href: back_path, classes: "govuk-!-margin-bottom-7"
+  - content_for :breadcrumbs do
+    = govuk_back_link text: t("buttons.back"), href: back_path
 
 .govuk-grid-row
   .govuk-grid-column-full
-    h1.govuk-heading-m class="govuk-!-margin-top-5"
+    h1.govuk-heading-m
       - unless vacancy.published?
         span.govuk-caption-m
           = t("jobs.current_step", step: step_process.current_step_group_number, total: step_process.total_step_groups)

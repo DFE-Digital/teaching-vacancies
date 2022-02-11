@@ -1,212 +1,211 @@
 - content_for :page_title_prefix, "Job Application Preview"
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h2.govuk-heading-l#heading Teaching Vacancies application form
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h2.govuk-heading-l#heading Teaching Vacancies application form
 
-      p.govuk-body
-        | If you choose to use the Teaching Vacancies application form,
-        |  this is the information that candidates will be asked for.
+    p.govuk-body
+      | If you choose to use the Teaching Vacancies application form,
+      |  this is the information that candidates will be asked for.
 
-      p.govuk-body
-        | We have designed the form to help you easily identify high quality candidates, and to ensure your recruitment
-        |  processes meet the latest safeguarding requirements.
+    p.govuk-body
+      | We have designed the form to help you easily identify high quality candidates, and to ensure your recruitment
+      |  processes meet the latest safeguarding requirements.
 
-      p.govuk-body
-        | You will be able to manage applicants on a simple, personalised dashboard,
-        |  and notify unsuccessful candidates quickly and easily. You will have access to applications for one year.
+    p.govuk-body
+      | You will be able to manage applicants on a simple, personalised dashboard,
+      |  and notify unsuccessful candidates quickly and easily. You will have access to applications for one year.
 
-      .anchor-link-list
-        = render NavigationListComponent.new title: "Application sections" do |navigation|
-          - navigation.anchor text: "Personal details", href: "#personal_details_summary"
-          - navigation.anchor text: "Professional status", href: "#professional_status_summary"
-          - navigation.anchor text: "Education and qualifications", href: "#qualifications_summary"
-          - navigation.anchor text: "Current role and employment history", href: "#employment_history_summary"
-          - navigation.anchor text: "Personal statement", href: "#personal_statement_summary"
-          - navigation.anchor text: "References", href: "#references_summary"
-          - navigation.anchor text: "Equal opportunities and recruitment monitoring", href: "#equal_opportunities_summary"
-          - navigation.anchor text: "Ask for support if you have a disability or other needs", href: "#ask_for_support_summary"
-          - navigation.anchor text: "Declarations", href: "#declarations_summary"
+    .anchor-link-list
+      = render NavigationListComponent.new title: "Application sections" do |navigation|
+        - navigation.anchor text: "Personal details", href: "#personal_details_summary"
+        - navigation.anchor text: "Professional status", href: "#professional_status_summary"
+        - navigation.anchor text: "Education and qualifications", href: "#qualifications_summary"
+        - navigation.anchor text: "Current role and employment history", href: "#employment_history_summary"
+        - navigation.anchor text: "Personal statement", href: "#personal_statement_summary"
+        - navigation.anchor text: "References", href: "#references_summary"
+        - navigation.anchor text: "Equal opportunities and recruitment monitoring", href: "#equal_opportunities_summary"
+        - navigation.anchor text: "Ask for support if you have a disability or other needs", href: "#ask_for_support_summary"
+        - navigation.anchor text: "Declarations", href: "#declarations_summary"
 
-      h2.govuk-heading-m#personal_details_summary class="govuk-!-margin-top-8" Personal Details
+    h2.govuk-heading-m#personal_details_summary class="govuk-!-margin-top-8" Personal Details
 
-      .govuk-section-break.govuk-section-break--thick
+    .govuk-section-break.govuk-section-break--thick
 
-      .govuk-body class="govuk-!-margin-top-4" Candidates are asked for their:
+    .govuk-body class="govuk-!-margin-top-4" Candidates are asked for their:
 
-      ul.govuk-list.govuk-list--bullet
-        li Name
-        li Address
-        li Email
-        li Phone number
-        li Teacher reference number (TRN)
-        li National Insurance number
+    ul.govuk-list.govuk-list--bullet
+      li Name
+      li Address
+      li Email
+      li Phone number
+      li Teacher reference number (TRN)
+      li National Insurance number
 
-      = govuk_link_to "Back to top", "#heading", class: "govuk-link govuk-body"
+    = govuk_link_to "Back to top", "#heading", class: "govuk-link govuk-body"
 
-      h2.govuk-heading-m#professional_status_summary class="govuk-!-margin-top-7" Professional status
+    h2.govuk-heading-m#professional_status_summary class="govuk-!-margin-top-7" Professional status
 
-      .govuk-section-break.govuk-section-break--thick
+    .govuk-section-break.govuk-section-break--thick
 
-      .govuk-body class="govuk-!-margin-top-4" Candidates are asked whether they have qualified teacher status (QTS) and if so in what year it was awarded.
-      .govuk-body class="govuk-!-margin-top-4" They are also asked whether they have completed their statutory induction year.
+    .govuk-body class="govuk-!-margin-top-4" Candidates are asked whether they have qualified teacher status (QTS) and if so in what year it was awarded.
+    .govuk-body class="govuk-!-margin-top-4" They are also asked whether they have completed their statutory induction year.
 
-      = govuk_link_to "Back to top", "#heading", class: "govuk-link govuk-body"
+    = govuk_link_to "Back to top", "#heading", class: "govuk-link govuk-body"
 
-      h2.govuk-heading-m#qualifications_summary class="govuk-!-margin-top-7" Education and qualifications
+    h2.govuk-heading-m#qualifications_summary class="govuk-!-margin-top-7" Education and qualifications
 
-      .govuk-section-break.govuk-section-break--thick
+    .govuk-section-break.govuk-section-break--thick
 
-      .govuk-body class="govuk-!-margin-top-4"
-        | Candidates are asked to enter all their qualifications, including all GCSEs, A levels (or equivalents),
-        |  undergraduate and postgraduate degrees.
-      .govuk-body class="govuk-!-margin-top-4"
-        | They are also asked to enter other qualifications where they demonstrated skills that might help them in the
-        |  role. Candidates are asked for different information depending on the type of qualification.
+    .govuk-body class="govuk-!-margin-top-4"
+      | Candidates are asked to enter all their qualifications, including all GCSEs, A levels (or equivalents),
+      |  undergraduate and postgraduate degrees.
+    .govuk-body class="govuk-!-margin-top-4"
+      | They are also asked to enter other qualifications where they demonstrated skills that might help them in the
+      |  role. Candidates are asked for different information depending on the type of qualification.
 
-      h2.govuk-heading-s Qualification types
+    h2.govuk-heading-s Qualification types
 
-      .govuk-section-break.govuk-section-break--visible
+    .govuk-section-break.govuk-section-break--visible
 
-      = govuk_summary_list do |summary_list|
-        - summary_list.row do |row|
-          - row.key text: "GCSEs, AS levels, A levels"
-          - row.value
-            ul.govuk-list.govuk-list--bullet
-              li School, college or organisation
-              li Subjects and grade"
-              li Year the qualifications were awarded
+    = govuk_summary_list do |summary_list|
+      - summary_list.row do |row|
+        - row.key text: "GCSEs, AS levels, A levels"
+        - row.value
+          ul.govuk-list.govuk-list--bullet
+            li School, college or organisation
+            li Subjects and grade"
+            li Year the qualifications were awarded
 
-        - summary_list.row do |row|
-          - row.key text: "Other UK qualification"
-          - row.value
-            ul.govuk-list.govuk-list--bullet
-              li Type of qualification
-              li School, college, or organisation
-              li Subjects and grades
-              li Year the qualifications were awarded
+      - summary_list.row do |row|
+        - row.key text: "Other UK qualification"
+        - row.value
+          ul.govuk-list.govuk-list--bullet
+            li Type of qualification
+            li School, college, or organisation
+            li Subjects and grades
+            li Year the qualifications were awarded
 
-        - summary_list.row do |row|
-          - row.key text: "Undergraduate and postgraduate degrees"
-          - row.value
-            ul.govuk-list.govuk-list--bullet
-              li Subject
-              li Awarding body
-              li
-                | Candidates are asked whether they have finished studying for
-                |    this qualification. If they have, they are asked for the grade and
-                |    year of the qualification. If they have not, they are asked to give
-                |   further details."
+      - summary_list.row do |row|
+        - row.key text: "Undergraduate and postgraduate degrees"
+        - row.value
+          ul.govuk-list.govuk-list--bullet
+            li Subject
+            li Awarding body
+            li
+              | Candidates are asked whether they have finished studying for
+              |    this qualification. If they have, they are asked for the grade and
+              |    year of the qualification. If they have not, they are asked to give
+              |   further details."
 
-        - summary_list.row do |row|
-          - row.key text: "Any other qualification"
-          - row.value
-            ul.govuk-list.govuk-list--bullet
-              li Name of the qualification or course
-              li Subject
-              li School, college, university or other organisation
-              li
-                | Candidates are asked whether they have finished studying for
-                |  this qualification. If they have, they are asked for the grade and
-                |   year of the qualification. If they have not, they are asked to give
-                |   further details.
+      - summary_list.row do |row|
+        - row.key text: "Any other qualification"
+        - row.value
+          ul.govuk-list.govuk-list--bullet
+            li Name of the qualification or course
+            li Subject
+            li School, college, university or other organisation
+            li
+              | Candidates are asked whether they have finished studying for
+              |  this qualification. If they have, they are asked for the grade and
+              |   year of the qualification. If they have not, they are asked to give
+              |   further details.
 
-      = govuk_link_to "Back to top", "#heading", class: "govuk-link govuk-body"
+    = govuk_link_to "Back to top", "#heading", class: "govuk-link govuk-body"
 
-      h2.govuk-heading-m#employment_history_summary class="govuk-!-margin-top-7" Current role and employment history
+    h2.govuk-heading-m#employment_history_summary class="govuk-!-margin-top-7" Current role and employment history
 
-      .govuk-section-break.govuk-section-break--thick
+    .govuk-section-break.govuk-section-break--thick
 
-      .govuk-body class="govuk-!-margin-top-4"
-        | Candidates are asked to include all jobs they've had since they left full time education. This includes all
-        |  teaching roles, as well as any other jobs they have had. They can also include voluntary work if it is relevant to
-        |  their application.
-      .govuk-body class="govuk-!-margin-top-4"
-        | In order to comply with safeguarding guidelines, candidates are asked to give details about any gaps in
-        |  employment.
+    .govuk-body class="govuk-!-margin-top-4"
+      | Candidates are asked to include all jobs they've had since they left full time education. This includes all
+      |  teaching roles, as well as any other jobs they have had. They can also include voluntary work if it is relevant to
+      |  their application.
+    .govuk-body class="govuk-!-margin-top-4"
+      | In order to comply with safeguarding guidelines, candidates are asked to give details about any gaps in
+      |  employment.
 
-      .govuk-body class="govuk-!-margin-top-4" For each role, candidates are asked for the:
+    .govuk-body class="govuk-!-margin-top-4" For each role, candidates are asked for the:
 
-      ul.govuk-list.govuk-list--bullet
-        li School or organisation
-        li Job title
-        li Subjects and key stages taught (if applicable)
-        li Start date
-        li End date (if applicable)
-        li Main duties
+    ul.govuk-list.govuk-list--bullet
+      li School or organisation
+      li Job title
+      li Subjects and key stages taught (if applicable)
+      li Start date
+      li End date (if applicable)
+      li Main duties
 
-      = govuk_link_to "Back to top", "#heading", class: "govuk-link govuk-body"
+    = govuk_link_to "Back to top", "#heading", class: "govuk-link govuk-body"
 
-      h2.govuk-heading-m#personal_statement_summary class="govuk-!-margin-top-7" Personal statement
+    h2.govuk-heading-m#personal_statement_summary class="govuk-!-margin-top-7" Personal statement
 
-      .govuk-section-break.govuk-section-break--thick
+    .govuk-section-break.govuk-section-break--thick
 
-      .govuk-body class="govuk-!-margin-top-4"
-        | Candidates are asked to explain why they are suitable for the role. They are encouraged to refer to relevant
-        |  supporting documents, for example the job description and personal specification.
-      .govuk-body class="govuk-!-margin-top-4"
-        | If you want to, you can give additional guidance for candidates. For example, you might want to specify how
-        |  long their personal statement should be or what information they should include.
+    .govuk-body class="govuk-!-margin-top-4"
+      | Candidates are asked to explain why they are suitable for the role. They are encouraged to refer to relevant
+      |  supporting documents, for example the job description and personal specification.
+    .govuk-body class="govuk-!-margin-top-4"
+      | If you want to, you can give additional guidance for candidates. For example, you might want to specify how
+      |  long their personal statement should be or what information they should include.
 
-      = govuk_link_to "Back to top", "#heading", class: "govuk-link govuk-body"
+    = govuk_link_to "Back to top", "#heading", class: "govuk-link govuk-body"
 
-      h2.govuk-heading-m#references_summary class="govuk-!-margin-top-7" References
+    h2.govuk-heading-m#references_summary class="govuk-!-margin-top-7" References
 
-      .govuk-section-break.govuk-section-break--thick
+    .govuk-section-break.govuk-section-break--thick
 
-      .govuk-body class="govuk-!-margin-top-4" Candidates must provide two referees, including their current or most recent employer.
-      .govuk-body class="govuk-!-margin-top-4"
-        | If they do not currently work with children, but have done so in the past, they are asked to include a referee
-        |  from the last time they did so.
+    .govuk-body class="govuk-!-margin-top-4" Candidates must provide two referees, including their current or most recent employer.
+    .govuk-body class="govuk-!-margin-top-4"
+      | If they do not currently work with children, but have done so in the past, they are asked to include a referee
+      |  from the last time they did so.
 
-      .govuk-body class="govuk-!-margin-top-4" For each referee, candidates are asked to provide:
+    .govuk-body class="govuk-!-margin-top-4" For each referee, candidates are asked to provide:
 
-      ul.govuk-list.govuk-list--bullet
-        li Referee name
-        li Job title
-        li Organisation
-        li Relationship to applicant
-        li Phone number
-        li Email address
+    ul.govuk-list.govuk-list--bullet
+      li Referee name
+      li Job title
+      li Organisation
+      li Relationship to applicant
+      li Phone number
+      li Email address
 
-      = govuk_link_to "Back to top", "#heading", class: "govuk-link govuk-body"
+    = govuk_link_to "Back to top", "#heading", class: "govuk-link govuk-body"
 
-      h2.govuk-heading-m#equal_opportunities_summary class="govuk-!-margin-top-7" Equal opportunities and recruitment monitoring
+    h2.govuk-heading-m#equal_opportunities_summary class="govuk-!-margin-top-7" Equal opportunities and recruitment monitoring
 
-      .govuk-section-break.govuk-section-break--thick
+    .govuk-section-break.govuk-section-break--thick
 
-      .govuk-body class="govuk-!-margin-top-4"
-        | Candidates are asked to provide information on their gender, sexual orientation, ethnic group and religion or
-        |  belief. They are also asked whether they consider themselves to have a disability.
-      .govuk-body class="govuk-!-margin-top-4" These questions are optional and are used anonymously to monitor the inclusivity of the shortlisting process.
-      .govuk-body class="govuk-!-margin-top-4" You will not be able to view an individual candidate's answers to these questions.
+    .govuk-body class="govuk-!-margin-top-4"
+      | Candidates are asked to provide information on their gender, sexual orientation, ethnic group and religion or
+      |  belief. They are also asked whether they consider themselves to have a disability.
+    .govuk-body class="govuk-!-margin-top-4" These questions are optional and are used anonymously to monitor the inclusivity of the shortlisting process.
+    .govuk-body class="govuk-!-margin-top-4" You will not be able to view an individual candidate's answers to these questions.
 
-      = govuk_link_to "Back to top", "#heading", class: "govuk-link govuk-body"
+    = govuk_link_to "Back to top", "#heading", class: "govuk-link govuk-body"
 
-      h2.govuk-heading-m#ask_for_support_summary class="govuk-!-margin-top-7" Interview support
+    h2.govuk-heading-m#ask_for_support_summary class="govuk-!-margin-top-7" Interview support
 
-      .govuk-section-break.govuk-section-break--thick
+    .govuk-section-break.govuk-section-break--thick
 
-      .govuk-body class="govuk-!-margin-top-4"
-        | Candidates are asked whether they would like extra support so they can attend an interview. They might
-        |  request this if they have a disability, a mental health condition or educational needs.
+    .govuk-body class="govuk-!-margin-top-4"
+      | Candidates are asked whether they would like extra support so they can attend an interview. They might
+      |  request this if they have a disability, a mental health condition or educational needs.
 
-      = govuk_link_to "Back to top", "#heading", class: "govuk-link govuk-body"
+    = govuk_link_to "Back to top", "#heading", class: "govuk-link govuk-body"
 
-      h2.govuk-heading-m#declarations_summary class="govuk-!-margin-top-7" Declarations
+    h2.govuk-heading-m#declarations_summary class="govuk-!-margin-top-7" Declarations
 
-      .govuk-section-break.govuk-section-break--s.govuk-section-break--thick
+    .govuk-section-break.govuk-section-break--s.govuk-section-break--thick
 
-      .govuk-body class="govuk-!-margin-top-4"
-        | Candidates are asked whether they have any family or close relationships with anyone at the school, and to
-        |  provide details if so.
+    .govuk-body class="govuk-!-margin-top-4"
+      | Candidates are asked whether they have any family or close relationships with anyone at the school, and to
+      |  provide details if so.
 
-      .govuk-body class="govuk-!-margin-top-4" They are also asked whether they have the right to work in the UK.
+    .govuk-body class="govuk-!-margin-top-4" They are also asked whether they have the right to work in the UK.
 
-      .govuk-body class="govuk-!-margin-top-4"
-        | Candidates are not asked on their application form whether they are banned from working with children.
-        |  After shortlisting candidates, you should ask them whether they have a criminal record, or if there is
-        |  any other information that would make them unsuitable to work with children.
+    .govuk-body class="govuk-!-margin-top-4"
+      | Candidates are not asked on their application form whether they are banned from working with children.
+      |  After shortlisting candidates, you should ask them whether they have a criminal record, or if there is
+      |  any other information that would make them unsuitable to work with children.
 
-      = govuk_link_to "Back to top", "#heading", class: "govuk-link govuk-body"
+    = govuk_link_to "Back to top", "#heading", class: "govuk-link govuk-body"

@@ -1,18 +1,17 @@
 - content_for :page_title_prefix, t(".page_title")
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h2.govuk-heading-m class="govuk-!-margin-bottom-0"
-        = job_application.name
-      .govuk-caption-l
-        = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h2.govuk-heading-m class="govuk-!-margin-bottom-0"
+      = job_application.name
+    .govuk-caption-l
+      = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
 
-      h1.govuk-heading-xl class="govuk-!-margin-top-5 govuk-!-margin-bottom-5" = t(".heading")
+    h1.govuk-heading-xl class="govuk-!-margin-top-5 govuk-!-margin-bottom-5" = t(".heading")
 
-      = govuk_notification_banner title_text: t("banners.warning"), classes: "govuk-notification-banner--warning" do
-        = t(".alert")
+    = govuk_notification_banner title_text: t("banners.warning"), classes: "govuk-notification-banner--warning" do
+      = t(".alert")
 
-      = form_for form, url: organisation_job_job_application_update_status_path(vacancy.id, job_application.id) do |f|
-        = f.govuk_text_area :further_instructions, label: { size: "s" }, rows: 10
-        = f.govuk_submit t("buttons.shortlist")
+    = form_for form, url: organisation_job_job_application_update_status_path(vacancy.id, job_application.id) do |f|
+      = f.govuk_text_area :further_instructions, label: { size: "s" }, rows: 10
+      = f.govuk_submit t("buttons.shortlist")

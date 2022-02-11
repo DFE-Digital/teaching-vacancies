@@ -1,22 +1,21 @@
 - content_for :page_title_prefix, t("publishers.sessions.new.sign_in.title")
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = govuk_notification_banner title_text: t("banners.warning"), classes: "govuk-notification-banner--warning" do |banner|
-        - banner.heading text: t("publishers.temp_login.heading")
-        span class="govuk-!-margin-top-3" = t("publishers.temp_login.please_use_email")
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = govuk_notification_banner title_text: t("banners.warning"), classes: "govuk-notification-banner--warning" do |banner|
+      - banner.heading text: t("publishers.temp_login.heading")
+      span class="govuk-!-margin-top-3" = t("publishers.temp_login.please_use_email")
 
-      h1.govuk-heading-l = t("publishers.sessions.new.sign_in.title")
+    h1.govuk-heading-l = t("publishers.sessions.new.sign_in.title")
 
-      p = t("publishers.sessions.new.sign_in.description_fallback")
+    p = t("publishers.sessions.new.sign_in.description_fallback")
 
-      = form_for Publisher.new, url: login_keys_path do |f|
-        = f.govuk_email_field :email
+    = form_for Publisher.new, url: login_keys_path do |f|
+      = f.govuk_email_field :email
 
-        = f.govuk_submit t("buttons.submit"), classes: "fallback-authentication-submit-email-gtm govuk-!-margin-bottom-0"
+      = f.govuk_submit t("buttons.submit"), classes: "fallback-authentication-submit-email-gtm govuk-!-margin-bottom-0"
 
-    .govuk-grid-column-one-third.grey-cta-container
-      h2.account-sidebar__heading = t("publishers.sessions.new.no_account.heading")
-      p.govuk-body = t("publishers.sessions.new.no_account.content_html", link: govuk_link_to(t("publishers.sessions.new.no_account.login_link_text"), publisher_dfe_omniauth_authorize_path))
-      p.govuk-body = t("publishers.sessions.new.no_account.account_request_html", link: govuk_link_to(t("publishers.sessions.new.no_account.account_request_link_text"), page_path("dsi-account-request")))
+  .govuk-grid-column-one-third.grey-cta-container
+    h2.account-sidebar__heading = t("publishers.sessions.new.no_account.heading")
+    p.govuk-body = t("publishers.sessions.new.no_account.content_html", link: govuk_link_to(t("publishers.sessions.new.no_account.login_link_text"), publisher_dfe_omniauth_authorize_path))
+    p.govuk-body = t("publishers.sessions.new.no_account.account_request_html", link: govuk_link_to(t("publishers.sessions.new.no_account.account_request_link_text"), page_path("dsi-account-request")))

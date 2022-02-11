@@ -1,49 +1,47 @@
 - content_for :page_title_prefix, "#{@copy_form.errors.present? ? 'Error: ' : ''}Copy a job for #{current_organisation.name}"
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-full
-      h1.govuk-heading-m = t("jobs.copy_job_title", job_title: vacancy.job_title)
+.govuk-grid-row
+  .govuk-grid-column-full
+    h1.govuk-heading-m = t("jobs.copy_job_title", job_title: vacancy.job_title)
 
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = form_for @copy_form, url: organisation_job_copy_path do |f|
-        = f.govuk_error_summary
+  .govuk-grid-column-two-thirds
+    = form_for @copy_form, url: organisation_job_copy_path do |f|
+      = f.govuk_error_summary
 
-        h2.govuk-heading-l = t("jobs.new_job_listing_details")
+      h2.govuk-heading-l = t("jobs.new_job_listing_details")
 
-        .govuk-character-count data-module="govuk-character-count" data-maxlength=100
-          = f.govuk_text_field :job_title,
-            label: { size: "s" },
-            class: "govuk-input string required govuk-js-character-count",
-            required: true
-          span#publishers-job-listing-copy-vacancy-form-job-title-field-info.govuk-hint.govuk-character-count__message aria-live="polite"
-            | You can enter up to 100 characters
+      .govuk-character-count data-module="govuk-character-count" data-maxlength=100
+        = f.govuk_text_field :job_title,
+          label: { size: "s" },
+          class: "govuk-input string required govuk-js-character-count",
+          required: true
+        span#publishers-job-listing-copy-vacancy-form-job-title-field-info.govuk-hint.govuk-character-count__message aria-live="polite"
+          | You can enter up to 100 characters
 
-        = f.govuk_radio_buttons_fieldset :publish_on_day do
-          = f.govuk_radio_button :publish_on_day, :today, link_errors: true
-          = f.govuk_radio_button :publish_on_day, :tomorrow
-          = f.govuk_radio_button :publish_on_day, :another_day do
-            = f.govuk_date_field :publish_on,
-              hint: -> { t("helpers.hint.date", date: 1.week.from_now.strftime("%d %m %Y")) }
+      = f.govuk_radio_buttons_fieldset :publish_on_day do
+        = f.govuk_radio_button :publish_on_day, :today, link_errors: true
+        = f.govuk_radio_button :publish_on_day, :tomorrow
+        = f.govuk_radio_button :publish_on_day, :another_day do
+          = f.govuk_date_field :publish_on,
+            hint: -> { t("helpers.hint.date", date: 1.week.from_now.strftime("%d %m %Y")) }
 
-        = f.govuk_date_field :expires_at,
-          hint: -> { t("helpers.hint.date", date: 1.month.from_now.strftime("%d %m %Y")) }
+      = f.govuk_date_field :expires_at,
+        hint: -> { t("helpers.hint.date", date: 1.month.from_now.strftime("%d %m %Y")) }
 
-        = f.govuk_collection_radio_buttons :expiry_time,
-          Vacancy::EXPIRY_TIME_OPTIONS,
-          ->(option) { option },
-          ->(option) { t("helpers.options.publishers_job_listing_extend_deadline_form.expiry_time.#{option}") }
+      = f.govuk_collection_radio_buttons :expiry_time,
+        Vacancy::EXPIRY_TIME_OPTIONS,
+        ->(option) { option },
+        ->(option) { t("helpers.options.publishers_job_listing_extend_deadline_form.expiry_time.#{option}") }
 
-        .clear-form data-controller="form"
-          = f.govuk_date_field :starts_on,
-            hint: -> { t("helpers.hint.date", date: 2.months.from_now.strftime("%d %m %Y")) },
-            data: { "form-target": "inputText" }
+      .clear-form data-controller="form"
+        = f.govuk_date_field :starts_on,
+          hint: -> { t("helpers.hint.date", date: 2.months.from_now.strftime("%d %m %Y")) },
+          data: { "form-target": "inputText" }
 
-          .clear-form__checkbox
-            = f.govuk_check_box :starts_asap, "true", 0, multiple: false, link_errors: false,
-            data: { action: "click->form#clearListener" }
+        .clear-form__checkbox
+          = f.govuk_check_box :starts_asap, "true", 0, multiple: false, link_errors: false,
+          data: { action: "click->form#clearListener" }
 
-        = f.govuk_submit classes: "govuk-!-margin-bottom-5"
+      = f.govuk_submit classes: "govuk-!-margin-bottom-5"
 
-      = govuk_link_to(t("buttons.cancel_copy"), organisation_path, class: "govuk-link--no-visited-state govuk-!-font-size-19")
+    = govuk_link_to(t("buttons.cancel_copy"), organisation_path, class: "govuk-link--no-visited-state govuk-!-font-size-19")
