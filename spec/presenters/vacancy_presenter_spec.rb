@@ -199,7 +199,7 @@ RSpec.describe VacancyPresenter do
       it "returns a string containing the working pattern and working_patterns_details" do
         expect(subject.show_working_patterns).to eq(safe_join([subject.working_patterns,
                                                                tag.br,
-                                                               tag.span(subject.working_patterns_details, class: "govuk-hint govuk-!-margin-bottom-0")]))
+                                                               tag.span(subject.working_patterns_details, class: "govuk-!-margin-bottom-0")]))
       end
     end
   end
