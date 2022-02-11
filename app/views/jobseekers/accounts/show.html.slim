@@ -1,12 +1,9 @@
 - content_for :page_title_prefix, t(".page_title")
 
-= render "jobseekers/dashboard/account_header"
+= render "jobseekers/dashboard/account_header", title: t(".page_title")
 
 .govuk-grid-row
-  .govuk-grid-column-two-thirds class="govuk-!-margin-top-5"
-    h1.govuk-heading-l.govuk-heading--summary-list
-      = t(".page_title")
-
+  .govuk-grid-column-two-thirds
     = govuk_summary_list do |summary_list|
       - summary_list.row do |row|
         - row.key text: t(".summary_list.email")
@@ -21,8 +18,7 @@
     p = govuk_link_to t(".close_account"), jobseekers_confirm_destroy_account_path
 
   .govuk-grid-column-one-third
-    .account-sidebar class="govuk-!-margin-top-5"
-      h2.account-sidebar__heading = t(".assistance.heading")
-      p.govuk-body-s = t(".assistance.content_html", link: govuk_mail_to(t("help.email"), t(".assistance.link_text")))
+    h2.govuk-heading-m = t(".assistance.heading")
+    p.govuk-body-s = t(".assistance.content_html", link: govuk_mail_to(t("help.email"), t(".assistance.link_text")))
 
 - content_for :after_main, jobseekers_account_survey_link(origin: url_for)
