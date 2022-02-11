@@ -1,0 +1,39 @@
+name: Deploy App via workflow Dispatch
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Environment
+        required: true
+      tag:
+        description: Docker tag
+        required: true
+      pr_id:
+        description: Pull Request
+        required: false
+      aws-access-key-id:
+        description: AWS-ID
+        required: true
+      aws-secret-access-key:
+        description: AWS-KEY
+        required: true
+
+env:
+ DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
+
+jobs:
+
+  deploy-app:
+    name: Deploy ${{ github.event.inputs.tag }} to ${{ github.event.inputs.environment }}
+    runs-on: ubuntu-20.04
+    steps:
+
+    - name: Deploy App to ${{ env.ENVIRONMENT }} environment
+      uses: ./.github/actions/deploy/
+      with:
+        environment: ${{ env.ENVIRONMENT }}
+        tag: ${{ env.DOCKER_IMAGE_TAG }}
+        pr_id: ${{ github.event.number }}
+        aws-access-key-id: ${{ inputs.aws-access-key-id}}
+        aws-secret-access-key: ${{ inputs.aws-secret-access-key }}
