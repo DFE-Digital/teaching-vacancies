@@ -4,11 +4,6 @@ en:
     intro: >-
       Teaching Vacancies is a free job-listing service from the Department for Education.
       You can search and apply for jobs at schools or trusts in England, save jobs and set up job alerts.
-
-    location_description: >-
-      Find teaching jobs in %{location} with Teaching Vacancies, a free job-listing service from the Department for
-      Education
-    location_search_heading: Teaching jobs in %{location}
     skip_link: Skip to search results
 
     filters:
@@ -78,13 +73,6 @@ en:
       count_html:
         one: <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> job
         other: <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> jobs
-      landing_page_html:
-        one: >-
-          <span class='govuk-!-font-weight-bold'>%{jobs_count}</span>
-          <span class='govuk-!-font-weight-bold'>%{landing_page} job</span>
-        other: >-
-          <span class='govuk-!-font-weight-bold'>%{jobs_count}</span>
-          <span class='govuk-!-font-weight-bold'>%{landing_page} jobs</span>
       keyword_html:
         one: matches <span class='govuk-!-font-weight-bold'>&lsquo;%{keyword}&rsquo;</span>
         other: match <span class='govuk-!-font-weight-bold'>&lsquo;%{keyword}&rsquo;</span>
