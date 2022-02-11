@@ -1,6 +1,7 @@
 - content_for :page_title_prefix, t("jobs.preview_listing.page_title", organisation: current_organisation.name)
 
-.govuk-main-wrapper
-  .vacancy
-    = render "/publishers/vacancies/preview_banner"
-    = render "/shared/vacancy/jobseeker_view"
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    .vacancy
+      = render "/publishers/vacancies/preview_banner"
+      = render "/shared/vacancy/jobseeker_view"

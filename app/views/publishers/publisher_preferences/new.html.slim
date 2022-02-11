@@ -1,12 +1,11 @@
 - content_for :page_title_prefix, t(".page_title")
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      h1.govuk-heading-l = t(".page_title")
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l = t(".page_title")
 
-      p.govuk-body = t(".description_1")
+    p.govuk-body = t(".description_1")
 
-      p.govuk-body = t(".description_2")
+    p.govuk-body = t(".description_2")
 
-      = render "form", model: @publisher_preference
+    = render "form", model: @publisher_preference

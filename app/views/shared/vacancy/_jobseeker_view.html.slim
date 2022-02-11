@@ -1,11 +1,12 @@
-- if !referred_from_jobs_path? && @vacancy.main_job_role == "teaching_assistant"
-  = govuk_breadcrumbs breadcrumbs: { "#{t("breadcrumbs.home")}": root_path,
-                                      "#{t("breadcrumbs.teaching_assistant")}": job_role_path("teaching_assistant".dasherize),
-                                      "#{@vacancy.job_title}": "" }
-- else
-  = govuk_breadcrumbs breadcrumbs: { "#{t("breadcrumbs.home")}": root_path,
-                                      "#{t("breadcrumbs.jobs")}": referred_from_jobs_path? ? request.referrer : jobs_path,
-                                      "#{@vacancy.job_title}": "" }
+- content_for :breadcrumbs do
+  - if !referred_from_jobs_path? && @vacancy.main_job_role == "teaching_assistant"
+    = govuk_breadcrumbs breadcrumbs: { "#{t("breadcrumbs.home")}": root_path,
+                                        "#{t("breadcrumbs.teaching_assistant")}": job_role_path("teaching_assistant".dasherize),
+                                        "#{@vacancy.job_title}": "" }
+  - else
+    = govuk_breadcrumbs breadcrumbs: { "#{t("breadcrumbs.home")}": root_path,
+                                        "#{t("breadcrumbs.jobs")}": referred_from_jobs_path? ? request.referrer : jobs_path,
+                                        "#{@vacancy.job_title}": "" }
 
 - if @vacancy.expired?
   = govuk_tag text: t("jobs.expired_tag").upcase,

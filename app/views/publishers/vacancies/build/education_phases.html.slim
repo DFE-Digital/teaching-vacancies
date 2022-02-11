@@ -1,26 +1,25 @@
 - content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.education_phases"))
 
-.govuk-main-wrapper
-  .govuk-grid-row
-    .govuk-grid-column-full
-      = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
+.govuk-grid-row
+  .govuk-grid-column-full
+    = render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
 
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
-        = f.govuk_error_summary
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
+      = f.govuk_error_summary
 
-        h2.govuk-heading-l = t("publishers.vacancies.steps.education_phases")
+      h2.govuk-heading-l = t("publishers.vacancies.steps.education_phases")
 
-        = f.govuk_radio_buttons_fieldset(:phase, legend: { size: "m" }) do
-          = f.govuk_radio_button :phase, :primary, link_errors: true
-          = f.govuk_radio_button :phase, :secondary
-          = f.govuk_radio_button :phase, :"16-19"
-          = f.govuk_radio_divider
-          = f.govuk_radio_button :phase, :multiple_phases
+      = f.govuk_radio_buttons_fieldset(:phase, legend: { size: "m" }) do
+        = f.govuk_radio_button :phase, :primary, link_errors: true
+        = f.govuk_radio_button :phase, :secondary
+        = f.govuk_radio_button :phase, :"16-19"
+        = f.govuk_radio_divider
+        = f.govuk_radio_button :phase, :multiple_phases
 
-        = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+      = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
-    - unless vacancy.published?
-      .govuk-grid-column-one-third
-        = render "steps"
+  - unless vacancy.published?
+    .govuk-grid-column-one-third
+      = render "steps"
