@@ -21,10 +21,8 @@ RSpec.describe "Jobseekers can change password" do
     expect(current_path).to eq(jobseekers_account_path)
   end
 
-  context "when email is pending reconfirmation" do
-    before do
-      allow(jobseeker).to receive(:pending_reconfirmation?).and_return(true)
-    end
+  context "when email is not pending reconfirmation" do
+    before { jobseeker.confirm }
 
     it "changes the password and redirects to the account details page" do
       click_on I18n.t("buttons.update_password")

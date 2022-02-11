@@ -23,4 +23,8 @@ class Jobseeker < ApplicationRecord
 
     Subscription.where(email: email_previously_was).update(email: email)
   end
+
+  def account_closed?
+    !!account_closed_on
+  end
 end
