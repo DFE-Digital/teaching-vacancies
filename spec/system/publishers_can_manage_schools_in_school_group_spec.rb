@@ -53,7 +53,7 @@ RSpec.describe "Schools in your school group" do
     stub_sign_in_with_multiple_organisations
 
     visit root_path
-    sign_in_publisher
+    sign_in_publisher(navigate: true)
   end
 
   after do

@@ -1,5 +1,6 @@
 class Publishers::Vacancies::ExpiredFeedbacksController < Publishers::Vacancies::BaseController
-  skip_before_action :authenticate_publisher!, :check_terms_and_conditions
+  skip_before_action :authenticate_scope!
+  skip_before_action :check_terms_and_conditions
 
   helper_method :vacancy
 

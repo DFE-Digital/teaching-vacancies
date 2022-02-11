@@ -1,6 +1,4 @@
 class Jobseekers::ConfirmationsController < Devise::ConfirmationsController
-  after_action :remove_devise_flash!, only: %i[create]
-
   def show
     super if request.method == "POST"
   end

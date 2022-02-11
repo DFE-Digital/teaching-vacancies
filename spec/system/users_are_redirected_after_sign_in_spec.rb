@@ -93,8 +93,7 @@ RSpec.describe "Users are redirected after sign in" do
         visit organisation_job_path(vacancy)
         visit root_path
 
-        visit publishers_sign_in_path
-        sign_in_publisher
+        sign_in_publisher(navigate: true)
 
         expect(current_path).to eq(organisation_path)
       end

@@ -3,7 +3,7 @@ require "message_encryptor"
 
 RSpec.shared_examples "a successful sign in" do
   before do
-    visit root_path
+    visit new_publisher_session_path
   end
 
   scenario "it signs in the user successfully" do
@@ -19,7 +19,7 @@ end
 
 RSpec.shared_examples "a failed sign in" do |options|
   scenario "it does not sign-in the user, and tells the user what to do" do
-    visit root_path
+    visit new_publisher_session_path
 
     expect { sign_in_publisher }
       .to have_triggered_event(:publisher_sign_in_attempt)
@@ -72,7 +72,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
     it_behaves_like "a successful sign in"
 
     scenario "it redirects the sign in page to the school page" do
-      sign_in_publisher
+      sign_in_publisher(navigate: true)
       visit new_publisher_session_path
 
       expect(page).to have_content(organisation.name)
@@ -81,7 +81,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
     end
 
     scenario "it displays the hiring staff CTA section with the text for when they are signed in" do
-      sign_in_publisher
+      sign_in_publisher(navigate: true)
       visit root_path
 
       expect(page).to have_content(I18n.t("home.index.publisher_section.title"))
@@ -101,7 +101,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       stub_authorisation_step
       stub_sign_in_with_multiple_organisations
 
-      visit root_path
+      visit new_publisher_session_path
       sign_in_publisher
     end
 
@@ -145,7 +145,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
     it_behaves_like "a successful sign in"
 
     scenario "it redirects the sign in page to the trust page" do
-      visit root_path
+      visit new_publisher_session_path
       sign_in_publisher
       visit new_publisher_session_path
 
@@ -172,7 +172,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
 
     context "when user preferences have been set" do
       it "does not redirect the sign in page to the publisher preference page" do
-        visit root_path
+        visit new_publisher_session_path
         sign_in_publisher
 
         expect(page).to have_content(organisation.name)
@@ -185,7 +185,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       let(:publisher_preference) { nil }
 
       it "redirects the sign in page to the publisher preference page" do
-        visit root_path
+        visit new_publisher_session_path
         sign_in_publisher
 
         expect(current_path).to eq(new_publisher_preference_path)
@@ -210,7 +210,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
     end
 
     it "raises an error" do
-      visit root_path
+      visit new_publisher_session_path
 
       expect { sign_in_publisher }.to raise_error(Authorisation::ExternalServerError)
     end
@@ -225,7 +225,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       # OmniAuth doesn't mock the error being present, so allow `anything`
       expect(Rollbar).to receive(:error).with(anything, strategy: :dfe)
 
-      sign_in_publisher
+      sign_in_publisher(navigate: true)
 
       expect(current_path).to eq(new_publisher_session_path)
       expect(page).to have_content(I18n.t("publishers.omniauth_callbacks.failure.message"))
