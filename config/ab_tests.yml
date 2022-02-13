@@ -43,3 +43,7 @@ test:
   2022_01_subjects_filters_test:
     default: 1
     subjects_filters: 0
+visual:
+  2022_01_homepage_quick_links_test:
+    without_quick_links: 1
+    with_quick_links: 1

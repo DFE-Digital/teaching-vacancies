@@ -1,42 +1,119 @@
+const publicScenarios = require('./engine_scripts/scenarios/public');
+
 module.exports = {
   "id": "teacher_vacancies",
   "viewports": [
     {
       "label": "phone",
       "width": 320,
-      "height": 480
+      "height": 1000
     },
     {
       "label": "tablet",
       "width": 768,
       "height": 1024
-    }
-    ,
+    },
     {
       "label": "desktop",
       "width": 1300,
       "height": 1024
     }
   ],
-  "onBeforeScript": "puppet/onBefore.js",
-  "onReadyScript": "puppet/onReady.js",
+  "onBeforeScript": null,
+  "onReadyScript": "playwright/onReady.js",
   "scenarios": [
+    ...publicScenarios,
     {
-      "label": "2021_04_cookie_consent_ab_test_bottom_black",
-      "url": "http://localhost:3000/?ab_test_override%5B2021_04_cookie_consent_test%5D=bottom_black"
+      "label": "Jobseeker sign in",
+      "url": "http://localhost:3000/jobseekers/sign-in",
+      "delay": 100,
+      "hideSelectors": [".profiler-results"],
+      "selectors": [
+        "viewport"
+      ]
     },
     {
-      "label": "2021_04_cookie_consent_ab_test_bottom_blue",
-      "url": "http://localhost:3000/?ab_test_override%5B2021_04_cookie_consent_test%5D=bottom_blue"
+      "cookiePath": "config/backstop/cookies.json",
+      "label": "Jobseeker my applications page",
+      "url": "http://localhost:3000/jobseekers/job_applications",
+      "hideSelectors": [".profiler-results"],
+      "delay": 100,
+      "onReadyScript": "tasks/signInJobseeker.js",
+      "selectors": [
+        "viewport"
+      ]
     },
     {
-      "label": "2021_04_cookie_consent_ab_test_modal",
-      "url": "http://localhost:3000/?ab_test_override%5B2021_04_cookie_consent_test%5D=modal"
+      "cookiePath": "config/backstop/cookies.json",
+      "label": "Jobseeker view application page",
+      "url": "http://localhost:3000/jobseekers/job_applications",
+      "delay": 100,
+      "hideSelectors": [".profiler-results"],
+      "onReadyScript": "tasks/viewApplication.js",
+      "selectors": [
+        "viewport"
+      ]
     },
     {
-      "label": "2021_04_cookie_consent_ab_test_gds",
-      "url": "http://localhost:3000/?ab_test_override%5B2021_04_cookie_consent_test%5D=gds"
-    }
+      "cookiePath": "config/backstop/cookies.json",
+      "label": "Jobseeker saved jobs page",
+      "url": "http://localhost:3000/jobseekers/saved_jobs",
+      "delay": 100,
+      "hideSelectors": [".profiler-results"],
+      "onReadyScript": "tasks/signInJobseeker.js",
+      "selectors": [
+        "viewport"
+      ]
+    },
+    {
+      "cookiePath": "config/backstop/cookies.json",
+      "label": "Jobseeker view account page",
+      "url": "http://localhost:3000/jobseekers/account",
+      "delay": 100,
+      "hideSelectors": [".profiler-results"],
+      "onReadyScript": "tasks/signInJobseeker.js",
+      "selectors": [
+        "viewport"
+      ]
+    },
+    {
+      "label": "Jobseeker sign out",
+      "url": "http://localhost:3000",
+      "onReadyScript": "tasks/signOutJobseeker.js",
+      "delay": 2000,
+      "hideSelectors": [".profiler-results"],
+      "selectors": [
+        ".govuk-header__navigation-list"
+      ],
+      "viewports": [
+        {
+          "label": "desktop",
+          "width": 1300,
+          "height": 1024
+        }
+      ]
+    },
+    // {
+    //   "label": "Publisher sign in",
+    //   "url": "http://localhost:3000/publishers/sign-in",
+    //   "hideSelectors": [".profiler-results"],
+    //   "onReadyScript": "tasks/signInPublisher.js",
+    //   "delay": 1000,
+    //   "selectors": [
+    //     "document"
+    //   ]
+    // },
+    // {
+    //   "cookiePath": "config/backstop/cookies.json",
+    //   "label": "Jobseeker my applications page",
+    //   "url": "http://localhost:3000/jobseekers/job_applications",
+    //   "hideSelectors": [".profiler-results"],
+    //   "delay": 200,
+    //   "onReadyScript": "tasks/signInJobseeker.js",
+    //   "selectors": [
+    //     "viewport"
+    //   ]
+    // },
   ],
   "paths": {
     "bitmaps_reference": "visual_snapshots",
@@ -46,9 +123,10 @@ module.exports = {
     "ci_report": "visual_regression/ci_report"
   },
   "report": ["browser"],
-  "engine": "puppeteer",
+  "engine": "playwright",
   "engineOptions": {
-    "args": ["--no-sandbox"]
+    "args": ["--no-sandbox"],
+    "browser": "chromium"
   },
   "asyncCaptureLimit": 5,
   "asyncCompareLimit": 50,

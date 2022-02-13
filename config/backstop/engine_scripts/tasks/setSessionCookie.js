@@ -1,12 +1,9 @@
-module.exports = async (page, scenario, vp) => {
-  console.log('SCENARIO ON READY > ' + scenario.label);
-  await require('./clickAndHoverHelper')(page, scenario);
+const fs = require('fs');
 
-  await page.waitForNavigation();
+module.exports = async (page, scenario, viewport, isReference, browserContext) => {
+  console.log('SET SESSION COOKIE > ' + scenario.label);
 
   const cookies = await browserContext.cookies();
-
-  // console.log('sdfdsf', cookies)
 
   const [sessionCookie] = cookies.filter((c) => c.name === '_teachingvacancies_session');
 
@@ -25,13 +22,14 @@ module.exports = async (page, scenario, vp) => {
 
   const fsPromises = fs.promises;
   
-  fsPromises.writeFile('config/backstop/cookies.json', JSON.stringify(cookieData), (err) => {
-    if (err) {
-        throw err;
-    }
-    console.log("JSON data is saved.");
-  });
+  const writeCookies = async () => {
+    return fsPromises.writeFile('config/backstop/cookies.json', JSON.stringify(cookieData), (err) => {
+      if (err) {
+          throw err;
+      }
+      console.log("JSON data is saved.");
+    });
+  }
 
-  // add more ready handlers here...
-
+  await writeCookies();
 };
