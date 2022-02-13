@@ -37,7 +37,8 @@
     "stylelint-config-sass-guidelines": "^9.0.1",
     "stylelint-config-standard": "^25.0.0",
     "webpack": "^4.44.2",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^3.11.2",
+    "yaml": "^1.10.2"
   },
   "scripts": {
     "server": "rails s",
@@ -47,8 +48,12 @@
     "js:test:coverage": "jest --coverage",
     "js:lint": "eslint ./app/frontend/src ./app/components",
     "sass:lint": "yarn stylelint app/frontend/**/*.scss app/components/*/*.scss -q",
-    "visual:test": "backstop test --config='config/backstop/backstop.config.js'",
-    "visual:approve": "backstop approve --config='config/backstop/backstop.config.js'"
+    "visual:test:auth": "node app/frontend/backstop/auth/$AUTH_TYPE $TARGET_URL",
+    "visual:test:reference": "backstop reference --config='app/frontend/backstop/backstop.config.js' $AUTH_TYPE $TARGET_URL",
+    "visual:test:init": "AUTH_TYPE=jobseeker TARGET_URL=https://qa.teaching-vacancies.service.gov.uk yarn run visual:test:auth && AUTH_TYPE=jobseeker TARGET_URL=https://qa.teaching-vacancies.service.gov.uk yarn run visual:test:reference",
+    "visual:test:run": "AUTH_TYPE=jobseeker yarn run visual:test:auth && backstop test --config='app/frontend/backstop/backstop.config.js' jobseeker",
+    "visual:test:approve": "backstop approve --config='app/frontend/backstop/backstop.config.js'",
+    "postvisual:test:approve": "node app/frontend/backstop/tasks/clean.js"
   },
   "jest": {
     "testMatch": [

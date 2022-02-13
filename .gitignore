@@ -34,6 +34,8 @@ yarn-debug.log*
 
 # Ignore visual regression test data folder
 /visual_regression
+/visual_snapshots
+/app/frontend/backstop/cookies.json
 
 # Ignore application configuration
 /config/application.yml

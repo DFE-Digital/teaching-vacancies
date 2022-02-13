@@ -1,0 +1,58 @@
+name: UI visual testing
+
+on:
+  push:
+    branches:
+      - [ main-disabled ]
+    paths-ignore:
+    - 'bigquery/**'
+    - 'documentation/**'
+    - 'terraform/common/**'
+    - 'terraform/monitoring/**'
+    - '**.md'
+
+  pull_request:
+    branches: [ main-disabled ]
+
+jobs:
+
+  frontend-tests:
+    name: Run backstop
+
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+          role-to-assume: Deployments
+          role-duration-seconds: 3600
+          role-skip-session-tagging: true
+
+      - name: Get UI_TEST_USERNAME From ParameterStore
+        uses: marvinpinto/action-inject-ssm-secrets@latest
+        with:
+          ssm_parameter: /teaching-vacancies/github_action/infra/ui_test_username
+          env_variable_name: UI_TEST_USERNAME
+
+      - name: Get UI_TEST_PASSWORD From ParameterStore
+        uses: marvinpinto/action-inject-ssm-secrets@latest
+        with:
+          ssm_parameter: /teaching-vacancies/github_action/infra/ui_test_password
+          env_variable_name: UI_TEST_PASSWORD
+
+      - name: setup frontend visual regression
+        run: |
+          PR_ID=${{ github.event.number }}
+          echo "PR_ID=${PR_ID}" >> $GITHUB_ENV
+
+      - name: run frontend visual regression
+        run: |
+          yarn install
+          yarn run visual:test:jobseeker
