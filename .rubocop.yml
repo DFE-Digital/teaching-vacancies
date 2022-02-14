@@ -46,6 +46,10 @@ Lint/Debugger:
       - save_and_open_page
       - save_and_open_screenshot
 
+Lint/UselessMethodDefinition:
+  Exclude:
+    - "app/controllers/**/*_controller.rb"
+
 # List as per https://docs.rubocop.org/rubocop/cops_naming.html#namingmethodparametername
 # plus `as`.
 Naming/MethodParameterName:
