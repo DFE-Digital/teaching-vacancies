@@ -17,7 +17,7 @@
     padding: 0;
     position: absolute;
     right: 0;
-    top: 0;
+    top: 2px;
 
     span {
       line-height: 1em;
@@ -29,6 +29,10 @@
     &__container {
       position: relative;
 
+      .govuk-heading-m {
+        margin-bottom: govuk-spacing(2);
+      }
+
       .govuk-heading-s {
         margin-bottom: govuk-spacing(2);
       }
@@ -38,23 +42,25 @@
   &__remove {
     box-shadow: none;
     padding: govuk-spacing(1) 0;
+    position: relative;
 
     @include govuk-media-query($until: desktop) {
       display: none;
     }
 
-    .filters-component-filter__selected {
-      box-shadow: none;
-      position: relative;
-    }
-
     .govuk-heading-s {
       font-size: 1rem;
+      margin-bottom: 0;
+      margin-top: govuk-spacing(4);
     }
 
     .govuk-body {
       font-size: 1rem;
       font-weight: normal;
+    }
+
+    &__heading {
+      margin-bottom: govuk-spacing(2);
     }
 
     &-tags {
@@ -106,11 +112,6 @@
   &__groups {
     padding: govuk-spacing(1) 0;
 
-    .govuk-accordion__section-button {
-      font-size: 1.2rem;
-      padding: 0 0 govuk-spacing(1) 0;
-    }
-
     .govuk-form-group {
       margin-bottom: govuk-spacing(2);
     }
@@ -123,25 +124,16 @@
 
     &__group {
       border-bottom: 1px solid govuk-colour('mid-grey');
-      margin-bottom: govuk-spacing(7);
+      margin-bottom: govuk-spacing(5);
 
       &:last-of-type {
         border-bottom: 0;
-      }
-
-      &.small {
-        margin-bottom: govuk-spacing(3);
-
-        .govuk-checkboxes__label {
-          font-size: 1rem;
-        }
+        margin-bottom: 0;
       }
     }
   }
 
-  
   &__submit {
-    
     bottom: 0;
     display: flex;
     position: sticky;
@@ -165,6 +157,10 @@
 .plain-styling .filters-component {
   background: none;
   padding: 0;
+
+  &__submit {
+    display: none;
+  }
 
   &__groups__group {
     border-bottom: 0;

@@ -14,6 +14,7 @@ module ComponentsHelper
     publishers_vacancies: "Publishers::VacanciesComponent",
     publishers_vacancy_form_page_heading: "Publishers::VacancyFormPageHeadingComponent",
     review: "ReviewComponent",
+    searchable_collection: "SearchableCollectionComponent",
     tabs: "TabsComponent",
     vacancy_review: "VacancyReviewComponent",
     vacancy_selector: "VacancySelectorComponent",
