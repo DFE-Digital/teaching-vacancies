@@ -24,6 +24,11 @@
         margin-bottom: 3px;
         margin-left: govuk-spacing(4);
         vertical-align: baseline;
+
+        @include govuk-media-query($until: desktop) {
+          margin-left: 0;
+          margin-top: govuk-spacing(2);
+        }
       }
     }
   }

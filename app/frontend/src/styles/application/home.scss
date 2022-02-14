@@ -66,6 +66,12 @@
     }
   }
 
+  .autocomplete__menu {
+    @include govuk-media-query($from: desktop) {
+      position: absolute;
+    }
+  }
+
   > div:last-child {
     align-items: center;
     display: flex;
