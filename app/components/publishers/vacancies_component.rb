@@ -1,5 +1,6 @@
 class Publishers::VacanciesComponent < ViewComponent::Base
   include DatesHelper
+  include TabsHelper
 
   def initialize(organisation:, sort:, selected_type:, publisher_preference:, email:)
     @organisation = organisation
@@ -30,7 +31,7 @@ class Publishers::VacanciesComponent < ViewComponent::Base
   end
 
   def vacancy_type_tab_link(vacancy_type, selected)
-    govuk_link_to t(".#{vacancy_type}.tab_heading"), jobs_with_type_organisation_path(vacancy_type), class: "tabs-component-navigation__link", "aria-current": ("page" if selected)
+    tab_item t(".#{vacancy_type}.tab_heading"), jobs_with_type_organisation_path(vacancy_type), active: selected
   end
 
   def no_jobs_text
