@@ -1,6 +1,8 @@
 .jobseeker {
   .create-alert__button {
-    text-align: right;
+    .govuk-button {
+      margin-bottom: govuk-spacing(1);
+    }
   }
 
   .moj-filter-layout__content {
