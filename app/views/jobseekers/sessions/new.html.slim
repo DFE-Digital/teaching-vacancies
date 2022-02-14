@@ -17,8 +17,9 @@
 
       p.govuk-body = govuk_link_to(t(".forgotten"), new_jobseeker_password_path)
 
-      = f.govuk_submit t("buttons.sign_in"), classes: "govuk-!-margin-bottom-0"
+      = f.govuk_submit t("buttons.sign_in")
 
   .govuk-grid-column-one-third
     h2.govuk-heading-m = t(".no_account.heading")
+
     p.govuk-body = t(".no_account.content_html", link_to: govuk_link_to(t(".no_account.link"), new_jobseeker_registration_path))

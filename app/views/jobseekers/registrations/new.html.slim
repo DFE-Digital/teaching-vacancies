@@ -15,8 +15,9 @@
       = f.govuk_email_field :email, label: { size: "s" }, width: "two-thirds"
       = f.govuk_password_field :password, label: { size: "s" }, width: "two-thirds"
 
-      = f.govuk_submit t("buttons.create_account"), classes: "govuk-!-margin-bottom-0"
+      = f.govuk_submit t("buttons.create_account")
 
   .govuk-grid-column-one-third
     h2.govuk-heading-m = t(".sign_in.heading")
+
     p.govuk-body = t(".sign_in.content_html", link_to: govuk_link_to(t(".sign_in.link"), new_jobseeker_session_path))
