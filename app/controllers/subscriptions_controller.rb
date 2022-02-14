@@ -98,12 +98,12 @@ class SubscriptionsController < ApplicationController
 
   def search_criteria_params
     params.require(:search_criteria)
-          .permit(:keyword, :location, :radius, job_roles: [], phases: [], working_patterns: [])
+          .permit(:keyword, :location, :radius, job_roles: [], subjects: [], phases: [], working_patterns: [])
   end
 
   def subscription_params
     params.require(:jobseekers_subscription_form)
-          .permit(:email, :frequency, :keyword, :location, :radius, job_roles: [], phases: [], working_patterns: [])
+          .permit(:email, :frequency, :keyword, :location, :radius, job_roles: [], subjects: [], phases: [], working_patterns: [])
   end
 
   def token
