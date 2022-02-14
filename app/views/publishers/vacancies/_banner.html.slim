@@ -5,10 +5,10 @@
 .govuk-grid-row
   .govuk-grid-column-full
     - if current_organisation.school_group?
-      h2.govuk-caption-l = current_organisation.name
-    h1.govuk-heading-l class="govuk-!-margin-bottom-2" = vacancy.job_title
+      h2.govuk-caption-l class="govuk-!-margin-top-0" = current_organisation.name
+    h1.govuk-heading-l = vacancy.job_title
 
     - if vacancy.published?
-      p.govuk-body.govuk-caption-s
+      p.govuk-body.govuk-caption-s class="govuk-!-margin-top-2"
         span class="govuk-!-font-weight-bold" = vacancy.expired? ? t(".deadline.after") : t(".deadline.before")
         span class="govuk-!-margin-left-1" = format_time_to_datetime_at(vacancy.expires_at)

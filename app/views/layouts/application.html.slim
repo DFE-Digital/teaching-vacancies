@@ -14,8 +14,7 @@ html.govuk-template.app-html-class lang="en"
     link href=asset_pack_path("media/images/govuk-apple-touch-icon-167x167.png") rel="apple-touch-icon" sizes="167x167"
     link href=asset_pack_path("media/images/govuk-apple-touch-icon-152x152.png") rel="apple-touch-icon" sizes="152x152"
     link href=asset_pack_path("media/images/govuk-apple-touch-icon.png") rel="apple-touch-icon"
-    - if content_for? :head_links
-      = yield(:head_links)
+    = content_for :head_links
     = stylesheet_pack_tag "application", media: "all"
     meta content=asset_pack_path("media/images/govuk-opengraph-image.png") property="og:image"
     = csrf_meta_tags
@@ -35,8 +34,7 @@ html.govuk-template.app-html-class lang="en"
         span.govuk-phase-banner__text
           | This is a new service - #{govuk_link_to "your feedback", new_feedback_path} will help us to improve it.
 
-      - if content_for? :breadcrumbs
-        = yield(:breadcrumbs)
+      = content_for :breadcrumbs
 
       = render "layouts/flash_messages"
 

@@ -4,7 +4,7 @@
 = render "publishers/vacancies/tabs_show", vacancy: vacancy
 
 - if vacancy.within_data_access_period? && job_applications.many?
-  .govuk-grid-row class="govuk-!-margin-top-7"
+  .govuk-grid-row
     .govuk-grid-column-full
       = render SortComponent.new path: method(:organisation_job_job_applications_path), sort: sort, url_params: { job_id: vacancy.id }
 
