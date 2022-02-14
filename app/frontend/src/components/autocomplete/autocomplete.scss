@@ -9,10 +9,6 @@
 
   &__menu {
     position: relative;
-
-    @include govuk-media-query($from: desktop) {
-      position: absolute;
-    }
   }
 
   &__suggestions--highlight {
