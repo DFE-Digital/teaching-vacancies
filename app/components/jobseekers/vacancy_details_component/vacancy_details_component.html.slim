@@ -68,7 +68,7 @@ section#job-details class="govuk-!-margin-bottom-5"
       - elsif @vacancy.application_form.present?
         = govuk_button_link_to t("buttons.download_application_form", size: number_to_human_size(@vacancy.application_form.byte_size)), job_document_path(@vacancy, @vacancy.application_form.id)
   - else
-    = govuk_inset_text text: t("jobs.listing_expired"), classes: "govuk-!-font-weight-bold"
+    = govuk_inset_text text: t("jobs.expired_listing.notification"), classes: "govuk-!-font-weight-bold"
 
   - if @vacancy.supporting_documents.any?
     section#supporting-documents

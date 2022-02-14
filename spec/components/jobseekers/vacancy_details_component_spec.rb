@@ -142,7 +142,7 @@ RSpec.describe Jobseekers::VacancyDetailsComponent, type: :component do
     end
 
     it "renders the expiry warning text" do
-      expect(rendered_component).to include(I18n.t("jobs.listing_expired"))
+      expect(rendered_component).to include(I18n.t("jobs.expired_listing.notification"))
     end
   end
 end

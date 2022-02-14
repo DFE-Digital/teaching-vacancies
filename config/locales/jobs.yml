@@ -154,9 +154,12 @@ en:
       heading: Similar jobs nearby
     school_type: School type
     trust_type: Trust type
-    expired_tag: expired
-    listing_expired: This job post has expired.
-    listing_expired_on_html: This job expired on <span class='govuk-!-font-weight-regular'>%{date} – %{similar_jobs_link}</span>
+    expired_listing:
+      notification: This job post has expired.
+      tag: expired
+      timeline_heading_html: This job expired on <span class='govuk-!-font-weight-regular'>%{date}
+      timeline_heading_with_similar_jobs_link_html: This job expired on <span class='govuk-!-font-weight-regular'>%{date} – %{similar_jobs_link}</span>
+
 
     create_a_job_title: Create a job listing for %{organisation}
     create_a_job_title_no_org: Create a job listing
