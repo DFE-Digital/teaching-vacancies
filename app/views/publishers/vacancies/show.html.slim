@@ -3,11 +3,10 @@
 
 = vacancy_review(vacancy, step_process: step_process, back_to: "manage_draft", show_errors: params[:show_errors]) do |r|
   - r.header
-    = render "banner", vacancy: vacancy
+    = render "banner", vacancy: vacancy, title: t("jobs.manage_listing", state: (vacancy.draft? ? "draft" : "job"))
     = render "tabs_show", vacancy: vacancy
 
   - r.above
-    h2.govuk-heading-l = t("jobs.manage_listing", state: (vacancy.draft? ? "draft" : "job"))
     = render "actions"
 
     - if params[:show_errors]
