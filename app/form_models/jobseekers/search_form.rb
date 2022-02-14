@@ -3,7 +3,7 @@ class Jobseekers::SearchForm
 
   attr_reader :keyword,
               :location, :radius,
-              :job_roles, :phases, :working_patterns,
+              :job_roles, :subjects, :phases, :working_patterns,
               :job_role_options, :ect_suitable_options, :send_responsible_options,
               :phase_options, :working_pattern_options,
               :total_filters, :sort
@@ -13,6 +13,7 @@ class Jobseekers::SearchForm
     @keyword = params[:keyword] || params[:subject]
     @location = params[:location]
     @job_roles = params[:job_roles] || params[:job_role] || []
+    @subjects = params[:subjects]
     @phases = params[:phases]
     @working_patterns = params[:working_patterns]
     @sort = Search::VacancySort.new(keyword: keyword).update(sort_by: params[:sort_by])
@@ -28,6 +29,7 @@ class Jobseekers::SearchForm
       location: @location,
       radius: @radius,
       job_roles: @job_roles,
+      subjects: @subjects,
       phases: @phases,
       working_patterns: @working_patterns,
     }.delete_if { |k, v| v.blank? || (k.eql?(:radius) && @location.blank?) }
@@ -50,7 +52,7 @@ class Jobseekers::SearchForm
   end
 
   def set_total_filters
-    @total_filters = [@job_roles&.count, @phases&.count, @working_patterns&.count].compact.sum
+    @total_filters = [@job_roles&.count, @subjects&.count, @phases&.count, @working_patterns&.count].compact.sum
   end
 
   def set_radius(radius_param)

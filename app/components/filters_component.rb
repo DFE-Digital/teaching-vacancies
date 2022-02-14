@@ -1,21 +1,25 @@
 class FiltersComponent < GovukComponent::Base
-  attr_accessor :filters, :form, :options
+  attr_accessor :filters, :form, :options, :title
 
   def self.variants
     %w[default]
   end
 
-  def initialize(form:, options:, filters: {}, classes: [], html_attributes: {})
+  def initialize(form:, options:, filters: {}, title: nil, classes: [], html_attributes: {})
     super(classes: classes, html_attributes: html_attributes)
 
-    @filters = filters
     @form = form
     @options = options
+    @filters = filters
+    @title = title
   end
 
-  renders_many :groups, lambda { |key:, component:|
+  renders_many :groups, lambda { |key:, component:, title: nil|
     tag.div(key, class: "filters-component__groups__group", data: { group: key }) do
-      tag.div(component)
+      safe_join([
+        tag.h1(title, class: "govuk-fieldset__legend govuk-fieldset__legend--s"),
+        tag.div(component),
+      ])
     end
   }
 
