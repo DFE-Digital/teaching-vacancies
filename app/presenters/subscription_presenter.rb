@@ -39,6 +39,8 @@ class SubscriptionPresenter < BasePresenter
       render_location_filter(value, search_criteria["radius"])
     when "job_roles"
       render_job_roles_filter(value)
+    when "subjects"
+      render_subjects_filter(value)
     when "working_patterns"
       render_working_patterns_filter(value)
     when "phases"
@@ -62,6 +64,10 @@ class SubscriptionPresenter < BasePresenter
 
   def render_job_roles_filter(value)
     { job_roles: value.map { |role| I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{role}") }.join(", ") }
+  end
+
+  def render_subjects_filter(value)
+    { subjects: value.join(", ") }
   end
 
   def render_working_patterns_filter(value)
