@@ -16,6 +16,12 @@
         display: none;
       }
 
+      .autocomplete__menu {
+        @include govuk-media-query($from: desktop) {
+          position: absolute;
+        }
+      }
+
       .govuk-form-group,
       .search-results__controls__submit {
         flex-grow: 1;
