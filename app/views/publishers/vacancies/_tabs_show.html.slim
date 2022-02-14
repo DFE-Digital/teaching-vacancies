@@ -1,7 +1,7 @@
 .govuk-grid-row
   .govuk-grid-column-full
     = tabs do |tabs|
-      - tabs.navigation_item item: (govuk_link_to t("buttons.manage_listing"), organisation_job_path(vacancy.id), class: "tabs-component-navigation__link", "aria-current": ("page" if controller_name == "vacancies"))
+      - tabs.navigation_item item: tab_item(t("buttons.manage_listing"), organisation_job_path(vacancy.id), active: controller_name == "vacancies")
       - if vacancy.can_receive_job_applications? && !current_organisation.local_authority?
-        - tabs.navigation_item item: (govuk_link_to t("tabs.applications.hide_count"), organisation_job_job_applications_path(vacancy.id), class: "tabs-component-navigation__link", "aria-current": ("page" if controller_name == "job_applications"))
-      - tabs.navigation_item item: (govuk_link_to t("tabs.statistics"), organisation_job_statistics_path(vacancy.id), class: "tabs-component-navigation__link", "aria-current": ("page" if controller_name == "statistics"))
+        - tabs.navigation_item item: tab_item(t("tabs.applications.hide_count"), organisation_job_job_applications_path(vacancy.id), active: controller_name == "job_applications")
+      - tabs.navigation_item item: tab_item(t("tabs.statistics"), organisation_job_statistics_path(vacancy.id), active: controller_name == "statistics")
