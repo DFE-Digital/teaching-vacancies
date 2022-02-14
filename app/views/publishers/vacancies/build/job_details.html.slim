@@ -45,17 +45,18 @@
           span.govuk-hint#publishers-job-listing-job-details-form-subjects-hint
             = t("helpers.hint.publishers_job_listing_job_details_form.subjects")
 
-          div class="govuk-!-margin-bottom-6"
-            = render SearchableCollectionComponent.new form: f,
-              input_type: :checkbox,
-              label_text: "search subjects",
-              threshold: 10,
-              scrollable: true,
-              attribute_name: :subjects,
-              collection: SUBJECT_OPTIONS,
-              value_method: :first,
-              text_method: :first,
-              hint_method: :last
+            div class="govuk-!-margin-bottom-6"
+              = render SearchableCollectionComponent.new form: f,
+                input_type: :checkbox,
+                label_text: "search subjects",
+                threshold: 10,
+                scrollable: true,
+                attribute_name: :subjects,
+                collection: SUBJECT_OPTIONS,
+                value_method: :first,
+                text_method: :first,
+                hint_method: :last,
+                options: { bold_items: true }
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 
