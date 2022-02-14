@@ -15,17 +15,22 @@
   &--border {
     background-color: #fff;
     border: 2px solid $govuk-border-colour;
+    margin-top: govuk-spacing(2);
     padding: 0;
 
     .govuk-checkboxes__item,
     .govuk-radios__item {
       margin-left: govuk-spacing(2);
     }
+
+    .searchable-collection-component__search {
+      margin: govuk-spacing(2);
+    }
   }
 
   &__search {
     background: #fff;
-    margin: govuk-spacing(2);
+    margin: govuk-spacing(2) 0;
     position: relative;
 
     .searchable-collection-component__search-input {
