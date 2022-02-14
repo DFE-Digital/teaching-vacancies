@@ -42,7 +42,7 @@ RSpec.describe "Publishers can edit a vacancy" do
     end
 
     describe "#cancel_and_return_later" do
-      xscenario "can cancel and return from job details page" do
+      scenario "can cancel and return from job details page" do
         visit organisation_job_path(vacancy.id)
 
         click_header_link(I18n.t("publishers.vacancies.steps.job_details"))
