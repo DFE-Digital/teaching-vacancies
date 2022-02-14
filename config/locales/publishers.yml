@@ -337,10 +337,6 @@ en:
           withdrawn_applications: Withdrawn applications
         update:
           success: Thank you for submitting your feedback for %{job_title}
-      tabs_show:
-        applications:
-          hide_count: Applications
-          show_count: Applications (%{count})
         statistics: Statistics
       vacancy_publisher_feedbacks:
         new:
