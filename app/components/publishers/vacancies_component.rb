@@ -1,6 +1,5 @@
 class Publishers::VacanciesComponent < ViewComponent::Base
   include DatesHelper
-  include TabsHelper
 
   def initialize(organisation:, sort:, selected_type:, publisher_preference:, email:)
     @organisation = organisation
@@ -18,20 +17,8 @@ class Publishers::VacanciesComponent < ViewComponent::Base
     organisation.all_vacancies.active.any?
   end
 
-  def selected?(vacancy_type)
-    selected_type == vacancy_type
-  end
-
-  def vacancy_links
-    @vacancy_types.map { |vacancy_type| vacancy_type_tab_link(vacancy_type, selected?(vacancy_type)) }
-  end
-
   def grid_column_class
     organisation.school_group? ? "govuk-grid-column-two-thirds" : "govuk-grid-column-full"
-  end
-
-  def vacancy_type_tab_link(vacancy_type, selected)
-    tab_item t(".#{vacancy_type}.tab_heading"), jobs_with_type_organisation_path(vacancy_type), active: selected
   end
 
   def no_jobs_text

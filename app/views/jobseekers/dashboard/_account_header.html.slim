@@ -4,7 +4,7 @@
     h1.govuk-heading-l = title
 
 = tabs do |tabs|
-  - tabs.navigation_item item: tab_item(t("jobseekers.job_applications.index.page_title"), jobseekers_job_applications_path)
-  - tabs.navigation_item item: tab_item(t("jobseekers.saved_jobs.index.page_title"), jobseekers_saved_jobs_path)
-  - tabs.navigation_item item: tab_item(t("jobseekers.subscriptions.index.page_title"), jobseekers_subscriptions_path)
-  - tabs.navigation_item item: tab_item(t("jobseekers.accounts.show.page_title"), jobseekers_account_path)
+  - tabs.navigation_item text: t("jobseekers.job_applications.index.page_title"), link: jobseekers_job_applications_path
+  - tabs.navigation_item text: t("jobseekers.saved_jobs.index.page_title"), link: jobseekers_saved_jobs_path
+  - tabs.navigation_item text: t("jobseekers.subscriptions.index.page_title"), link: jobseekers_subscriptions_path
+  - tabs.navigation_item text: t("jobseekers.accounts.show.page_title"), link: jobseekers_account_path
