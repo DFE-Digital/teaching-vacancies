@@ -20,32 +20,6 @@
   text-decoration: underline;
 }
 
-.clear-form {
-  @media only screen and (max-width: 882px) {
-    flex-wrap: wrap;
-
-    .govuk-form-group {
-      flex-basis: 100%;
-    }
-  }
-
-  .govuk-checkboxes__item {
-    margin-bottom: govuk-spacing(6);
-    margin-left: govuk-spacing(4);
-  }
-
-  .clear-form__checkbox {
-    align-items: baseline;
-    align-self: flex-end;
-    display: flex;
-
-    &::before {
-      @include govuk-font($size: 19);
-      content: 'Or';
-    }
-  }
-}
-
 .inline-fields-container {
   display: flex;
 
