@@ -1,4 +1,7 @@
 class SubscriptionsController < ApplicationController
+  include ReturnPathTracking
+  self.authentication_scope = :jobseeker
+
   before_action :trigger_create_job_alert_clicked_event, only: :new, if: -> { vacancy_id.present? }
 
   def new
@@ -18,14 +21,13 @@ class SubscriptionsController < ApplicationController
     elsif recaptcha_is_invalid?
       redirect_to invalid_recaptcha_path(form_name: subscription.class.name.underscore.humanize)
     else
-      subscription.update(recaptcha_score: recaptcha_reply&.dig("score"))
-      Jobseekers::SubscriptionMailer.confirmation(subscription.id).deliver_later
-      trigger_subscription_event(:job_alert_subscription_created, subscription)
+      notify_new_subscription(subscription)
 
       if jobseeker_signed_in?
         redirect_to jobseekers_subscriptions_path, success: t(".success")
       else
         @jobseeker = Jobseeker.find_by(email: subscription.email)
+        store_return_location(jobseekers_subscriptions_path)
         render :confirm
       end
     end
@@ -50,6 +52,7 @@ class SubscriptionsController < ApplicationController
         redirect_to jobseekers_subscriptions_path, success: t(".success")
       else
         @jobseeker = Jobseeker.find_by(email: subscription.email)
+        store_return_location(jobseekers_subscriptions_path)
         render :confirm
       end
     else
@@ -75,6 +78,12 @@ class SubscriptionsController < ApplicationController
   end
 
   private
+
+  def notify_new_subscription(subscription)
+    subscription.update(recaptcha_score: recaptcha_reply&.dig("score"))
+    Jobseekers::SubscriptionMailer.confirmation(subscription.id).deliver_later
+    trigger_subscription_event(:job_alert_subscription_created, subscription)
+  end
 
   def trigger_create_job_alert_clicked_event
     request_event.trigger(:vacancy_create_job_alert_clicked, vacancy_id: StringAnonymiser.new(vacancy_id))
