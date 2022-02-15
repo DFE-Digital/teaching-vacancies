@@ -1,4 +1,4 @@
-= render partial: "vacancies/show"
+= render "vacancies/show"
 
 script.jobref type="application/ld+json"
   == render(partial: "api/vacancies/show", formats: [:json], locals: { vacancy: @vacancy })
