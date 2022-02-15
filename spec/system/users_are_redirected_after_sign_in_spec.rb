@@ -58,7 +58,7 @@ RSpec.describe "Users are redirected after sign in" do
   context "when the user is a publisher" do
     let!(:organisation) { create(:school) }
     let(:publisher) { create(:publisher) }
-    let(:vacancy) { create(:vacancy, publisher: publisher) }
+    let(:vacancy) { create(:vacancy, publisher: publisher, organisations: [organisation]) }
 
     before { allow(AuthenticationFallback).to receive(:enabled?) { false } }
 
@@ -79,21 +79,24 @@ RSpec.describe "Users are redirected after sign in" do
       OmniAuth.config.test_mode = previous_test_mode_value
     end
 
-    scenario "when the publisher was redirected to the sign in page" do
-      visit organisation_job_path(vacancy)
+    context "when a publisher is redirected to the sign in page" do
+      scenario "then the user is redirected back to the original page" do
+        visit organisation_job_path(vacancy)
+        expect(page).to have_text(I18n.t("publishers.sessions.new.sign_in.title"))
 
-      expect(page).to have_text(I18n.t("publishers.sessions.new.sign_in.title"))
+        sign_in_publisher
 
-      sign_in_publisher
+        expect(current_path).to eq(organisation_job_path(vacancy))
+      end
 
-      expect(current_path).to eq(organisation_job_path(vacancy))
-    end
+      scenario "then goes to a different page and signs in" do
+        visit organisation_job_path(vacancy)
+        visit root_path
 
-    scenario "when the publisher goes to the sign in page" do
-      visit publishers_sign_in_path
-      sign_in_publisher
+        sign_in_publisher(navigate: true)
 
-      expect(current_path).to eq(organisation_path)
+        expect(current_path).to eq(organisation_path)
+      end
     end
   end
 end

@@ -9,10 +9,9 @@
       .govuk-body = @subscription.email
 
       = f.hidden_field :email, value: @subscription.email
-
       = f.govuk_password_field :password, label: { text: t("helpers.label.jobseekers_sign_in_form.password"), size: "s" }, hint: nil, width: "two-thirds"
+      = hidden_field_tag :redirected, true
 
-      = hidden_field_tag :redirect_to, jobseekers_subscriptions_path
       = f.govuk_submit t("buttons.sign_in")
 
 - else
@@ -26,8 +25,6 @@
       .govuk-body = @subscription.email
 
       = f.hidden_field :email, value: @subscription.email
-
       = f.govuk_password_field :password, label: { size: "s" }, width: "two-thirds"
 
-      = hidden_field_tag :redirect_to, jobseekers_subscriptions_path
       = f.govuk_submit t("buttons.create_account"), classes: "govuk-!-margin-bottom-0"

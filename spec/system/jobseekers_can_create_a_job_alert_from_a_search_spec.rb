@@ -59,7 +59,9 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
         scenario "renders a sign in prompt form that redirects to sign in page on error then redirects to job alerts dashboard" do
           within "div[data-account-prompt='sign-in']" do
             expect(page).to have_content(I18n.t("subscriptions.jobseeker_account_prompt.heading.sign_in"))
-            click_on I18n.t("buttons.sign_in")
+            within(".edit_jobseeker") do
+              click_on I18n.t("buttons.sign_in")
+            end
           end
           sign_in_jobseeker
           expect(current_path).to eq(jobseekers_subscriptions_path)

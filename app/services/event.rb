@@ -20,6 +20,7 @@ class Event
         occurred_at: occurred_at(event_data),
         data: data.push(*event_data.map { |key, value| { key: key.to_s, value: formatted_value(value) } }),
       )
+
       SendEventToDataWarehouseJob.perform_later(TABLE_NAME, event_data)
     end
   end

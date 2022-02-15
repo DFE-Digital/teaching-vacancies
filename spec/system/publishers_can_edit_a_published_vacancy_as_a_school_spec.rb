@@ -41,18 +41,6 @@ RSpec.describe "Publishers can edit a vacancy" do
       expect(page).to_not have_content("Confirm and submit job")
     end
 
-    describe "#cancel_and_return_later" do
-      xscenario "can cancel and return from job details page" do
-        visit organisation_job_path(vacancy.id)
-
-        click_header_link(I18n.t("publishers.vacancies.steps.job_details"))
-
-        click_on I18n.t("buttons.cancel_and_return")
-
-        expect(page.current_path).to eq(organisation_job_path(vacancy.id))
-      end
-    end
-
     describe "#job_details" do
       scenario "can not be edited when validation fails" do
         visit organisation_job_path(vacancy.id)
