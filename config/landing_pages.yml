@@ -1,0 +1,148 @@
+shared:
+  ##
+  # Configuration for "static" (non-location) landing pages
+  #   Every key in this configuration file is a landing page slug that will be available on the
+  #   app at a root URL level, and the data nested below is treated as a search criteria hash of
+  #   the form you would pass into `VacancySearch`.
+  #   Landing pages for locations are dynamic and not specified here, they are based on the
+  #   `LocationPolygon`s in the database.
+  #   Don't forget to restart your Rails server after modifying this file locally.
+  #
+  # IMPORTANT: Every landing page defined here also needs corresponding content to be added to the
+  # translations file in `config/locales/landing_pages.yml`!
+  # IMPORTANT: When removing landing pages or changing the slug, make sure you also remove/update
+  # any links to them throughout the service, such as on the homepage!
+  #
+  # This file should ideally only be modified by developers (to ensure the format of the search
+  # criteria is correct and doesn't break the search engine).
+
+  ### Job roles
+  send-responsible-jobs:
+    job_roles:
+      - send_responsible
+  ect-suitable-jobs:
+    job_roles:
+      - ect_suitable
+  education-support-jobs:
+    job_roles:
+      - education_support
+  leadership-jobs:
+    job_roles:
+      - leadership
+  sendco-jobs:
+    job_roles:
+      - sendco
+  teacher-jobs:
+    job_roles:
+      - teacher
+  teaching-assistant-jobs:
+    job_roles:
+      - teaching_assistant
+
+  ### Phases
+  primary-school-jobs:
+    readable_phases:
+      - primary
+  middle-school-jobs:
+    readable_phases:
+      - middle
+  secondary-school-jobs:
+    readable_phases:
+      - secondary
+  16-19-education-provider-jobs:
+    readable_phases:
+      - "16-19"
+
+  ### Subjects
+  art-design-technology-teacher-jobs:
+    subjects:
+      - Art and design
+  biology-teacher-jobs:
+    subjects:
+      - Biology
+  chemistry-teacher-jobs:
+    subjects:
+      - Chemistry
+  classics-latin-teacher-jobs:
+    subjects:
+      - Classics
+  dance-drama-music-teacher-jobs:
+    subjects:
+      - Dance
+      - Drama
+      - Music
+  economics-business-studies-teacher-jobs:
+    subjects:
+      - Economics
+      - Business studies
+  english-media-studies-teacher-jobs:
+    subjects:
+      - English
+      - Media studies
+  food-technology-teacher-jobs:
+    subjects:
+      - Food Technology
+  french-teacher-jobs:
+    subjects:
+      - French
+  geography-teacher-jobs:
+    subjects:
+      - Geography
+  german-teacher-jobs:
+    subjects:
+      - German
+  health-relationships-social-care-teacher-jobs:
+    subjects:
+      - Health and social care
+      - Relationships and sex education
+  history-teacher-jobs:
+    subjects:
+      - History
+  ict-computer-science-teacher-jobs:
+    subjects:
+      - ICT
+      - Computing
+  mandarin-teacher-jobs:
+    subjects:
+      - Mandarin
+  maths-teacher-jobs:
+    subjects:
+      - Mathematics
+  mfl-teacher-jobs:
+    subjects:
+      - Languages
+  physical-education-teacher-jobs:
+    subjects:
+      - Physical education
+  physics-teacher-jobs:
+    subjects:
+      - Physics
+  politics-humanities-social-sciences-teacher-jobs:
+    subjects:
+      - Politics
+      - Humanities
+      - Social sciences
+  psychology-philosophy-sociology-re-teacher jobs:
+    subjects:
+      - Psychology
+      - Philosophy
+      - Sociology
+      - Religious education
+  science-teacher-jobs:
+    subjects:
+      - Science
+  spanish-teacher-jobs:
+    subjects:
+      - Spanish
+
+####################################################################################################
+# The data below is only used in automated tests, make sure you add your landing pages to the
+# `shared` section above!
+####################################################################################################
+test:
+  part-time-potions-and-sorcery-teacher-jobs:
+    working_patterns:
+      - part_time
+    subjects:
+      - Potions
+      - Sorcery
