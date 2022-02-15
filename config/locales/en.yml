@@ -495,6 +495,12 @@ en:
     create:
       success: Your request for help has been sent
 
+  tabs:
+    applications:
+      hide_count: Applications
+      show_count: Applications (%{count})
+    statistics: Statistics
+
   terms_and_conditions:
     intro_html: >-
       Before listing any role at your school on Teaching Vacancies you must first read our %{link} and

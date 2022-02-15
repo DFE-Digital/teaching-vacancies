@@ -24,7 +24,7 @@ RSpec.shared_examples "provides an overview of the draft vacancy form" do
   end
 
   it "indicates that you're reviewing a draft" do
-    expect(page).to have_css("h2", text: "Manage draft listing")
+    expect(page).to have_css("h1", text: "Manage draft listing")
   end
 
   it "shows the status of each stage" do
@@ -46,7 +46,7 @@ RSpec.shared_examples "provides an overview of the draft vacancy form" do
 
     click_on "Update listing"
 
-    expect(page).to have_css("h2", text: "Manage draft listing")
+    expect(page).to have_css("h1", text: "Manage draft listing")
     expect(page).not_to have_link("Enter a salary")
   end
 

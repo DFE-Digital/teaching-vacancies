@@ -27,13 +27,10 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
         end
       end
 
-      it "shows vacancy title and deadline passed" do
-        within("h1") do
+      it "shows breadcrumbs with vacancy title " do
+        within(".govuk-breadcrumbs") do
           expect(page).to have_content(vacancy.job_title)
         end
-
-        expect(page).to have_content(format_time_to_datetime_at(vacancy.expires_at))
-        expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.deadline.after"))
       end
 
       it "shows a card for each application that has been submitted and no draft applications" do
@@ -192,13 +189,10 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
         end
       end
 
-      it "shows vacancy title and deadline date" do
-        within("h1") do
+      it "shows breadcrumbs with vacancy title " do
+        within(".govuk-breadcrumbs") do
           expect(page).to have_content(vacancy.job_title)
         end
-
-        expect(page).to have_content(format_time_to_datetime_at(vacancy.expires_at))
-        expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.index.deadline.before"))
       end
 
       it "shows that there are no applicants" do

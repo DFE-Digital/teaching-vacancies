@@ -1,17 +1,15 @@
 - content_for :page_title_prefix, t(".title")
 
-= render "publishers/vacancies/banner", vacancy: vacancy
+= render "publishers/vacancies/banner", vacancy: vacancy, title: t(".title")
 = render "publishers/vacancies/tabs_show", vacancy: vacancy
 
 .govuk-grid-row.vacancy
   - if vacancy.draft? || vacancy.pending?
     .govuk-grid-column-full
-      h2.govuk-heading-l = t(".title")
       = govuk_inset_text text: t(".draft_vacancy")
 
   - else
     .govuk-grid-column-full
-      h2.govuk-heading-l = t(".title")
       - if vacancy.can_receive_job_applications?
         p.govuk-body
           = t(".intro")
