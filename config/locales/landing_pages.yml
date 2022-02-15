@@ -1,54 +1,208 @@
 en:
   landing_pages:
-    description:
-      additional_job_role:
-        ect_suitable: >-
-          Find teaching jobs suitable for early career teachers and NQTs in England.
-          Teaching Vacancies is a free job-listing service from the Department for Education.
-        sen_specialist: >-
-          Find special educational needs (SEN) and SENDCo jobs in England.
-          Teaching Vacancies is a free job-listing service from the Department for Education.
-      education_phase:
-        primary: >-
-          Find primary teaching jobs with Teaching Vacancies, a free job-listing service from the Department for
-          Education. Search for jobs teaching reception, KS1 or KS2.
-      job_role:
-        education_support: >-
-          Find education support jobs, such as teaching assistant or learning mentor roles, in England.
-          Teaching Vacancies is a free job-listing service from the Department for Education.
-        leadership: >-
-          Find middle and senior leadership jobs at schools and trusts in England. Teaching Vacancies is a free
-          job-listing service from the Department for Education.
-        sendco: >-
-          Find jobs with SEND responsibilities in England.
-          Teaching Vacancies is a free job-listing service from the Department for Education.
-        teacher: >-
-          Find teaching jobs at schools and trusts in England. Teaching Vacancies is a free job-listing service from
-          the Department for Education.
-        teaching_assistant: >-
-          Find teaching assistant jobs at schools near you on Teaching Vacancies. Search for TA jobs, apply online,
-          and set up email alerts for the latest vacancies.
-      subject:
-        design_and_technology: >-
-          Find design and technology teaching jobs in England. Teaching Vacancies is a free job-listing service from
-          the Department for Education.
-        early_years: >-
-          Find early years teaching jobs, including nursery and reception. Teaching Vacancies is a free job-listing
-          service from the Department for Education.
-        english: >-
-          Find English teaching jobs with Teaching Vacancies, a free job-listing service from the Department for
-          Education.
-        humanities: >-
-          Find humanities teaching jobs with Teaching Vacancies. Search for jobs teaching history, geography,
-          religion, philosophy, psychology, sociology and social sciences.
-        languages: >-
-          Find modern languages teaching jobs in England. Teaching Vacancies is a free job-listing service from the
-          Department for Education.
-        mathematics: >-
-          Find maths teaching jobs with Teaching Vacancies, a free job-listing service from the Department for
-          Education.
-        science: >-
-          Find science teaching jobs with Teaching Vacancies, a free job-listing service from the Department for
-          Education. Search for jobs teaching biology, chemistry or physics.
-    title: Teaching jobs for %{landing_page}
-    title_for_job_roles: "%{landing_page} Jobs"
+    ##
+    # Content for location landing pages
+    #   These are dynamic and will exist for any `LocationPolygon` in the database.
+    #   Any fields may contain `%{location}` to interpolate the location name, and heading may
+    #   contain `%{count}` to interpolate the count of vacancies for this landing page.
+    #   Unlike the other landing pages, `name` doesn't need to be specified as it will be equal to
+    #   the place name.
+    _location:
+      title: "School & Teaching Jobs in %{location}"
+      heading: "%{count} school and teaching jobs in %{location}"
+      meta_description: "Find teaching jobs in %{location} with Teaching Vacancies, a free job-listing service from the Department for Education"
+    ##
+    # Content for "static" (non-location) landing pages
+    #   Every key is a landing page slug and must exist in `config/landing_pages.yml`
+    #   The following subkeys must be set for every landing page:
+    #      - name: The name shown in the landing page links on the homepage
+    #      - title: The page title
+    #      - heading: The h1 heading shown on the page (may contain `%{count}` to interpolate the
+    #                 count of live vacancies)
+    #      - meta_description: The HTML <meta> and Open Graph description
+
+    ### Job roles
+    ect-suitable-jobs:
+      name: "Suitable for early career teachers"
+      title: "Early Career Teacher (ECT) & NQT Jobs"
+      heading: "%{count} early career teacher (ECT) jobs"
+      meta_description: "Find early career teacher (ECT, formerly known as NQT) jobs in local primary and secondary schools. Get your teaching career off to a great start."
+    education-support-jobs:
+      name: "Education support"
+      title: "Education & School Support Jobs"
+      heading: "%{count} education and school support jobs"
+      meta_description: "Find jobs for LSAs, HR managers, finance officers, admin assistants, cover supervisors and other non-teaching vacancies in schools near you."
+    leadership-jobs:
+      name: "Leadership"
+      title: "Headteacher & School Leadership Jobs"
+      heading: "%{count} headteacher and school leadership jobs"
+      meta_description: "Discover headteacher jobs, assistant and deputy head vacancies, and senior school leadership roles in primary and secondary schools near you."
+    sendco-jobs:
+      name: "SENDCo"
+      title: "SEND Coordinator (SENDCo) Jobs"
+      heading: "%{count} SENDCo jobs"
+      meta_description: "Find the latest special educational needs co-ordinator (SENDCo) jobs in schools near you. Apply for full time and part time vacancies."
+    send-responsible-jobs:
+      name: "SEND responsibilities"
+      title: "School Jobs with SEND Responsibilities"
+      heading: "%{count} school jobs with SEND responsibilities"
+      meta_description: "Find jobs in schools for SEND teachers and LSAs with responsibilities for looking after children with special educational needs and disabilities."
+    teacher-jobs:
+      name: "Teacher"
+      title: "Teacher Jobs"
+      heading: "%{count} teacher jobs"
+      meta_description: "Discover the latest full and part-time jobs for teachers. See which schools near you are hiring and apply directly on Teaching Vacancies from GOV.UK."
+    teaching-assistant-jobs:
+      name: "Teaching assistant"
+      title: "Teaching Assistant Jobs"
+      heading: "%{count} teaching assistant jobs"
+      meta_description: "Find full and part time teaching assistant jobs and classroom assistant vacancies. See which schools near you are currently hiring TAs and LSAs."
+
+    ### Education phases
+    primary-school-jobs:
+      name: "Primary"
+      title: "Primary School Teacher and Support Jobs"
+      heading: "%{count} primary school jobs"
+      meta_description: "Find primary school jobs for head teachers, teachers and teaching assistants. See the latest reception, KS1 and KS2 teaching jobs near you."
+    middle-school-jobs:
+      name: "Middle"
+      title: "Middle School Teacher and Support Jobs"
+      heading: "%{count} middle school jobs"
+      meta_description: "The latest middle school jobs near you. Teaching Vacancies has jobs for teachers, team leaders and support staff in middle schools across England."
+    secondary-school-jobs:
+      name: "Secondary"
+      title: "Secondary School Teacher and Support Jobs"
+      heading: "%{count} secondary school jobs"
+      meta_description: "Discover the latest jobs for maths teachers, science teachers, English teachers and more. Find your next secondary school job on Teaching Vacancies."
+    16-19-education-provider-jobs:
+      name: "16-19"
+      title: "16-19 Education Provider Jobs"
+      heading: "%{count} jobs with 16-19 education providers"
+      meta_description: "Use Teaching Vacancies to find FE college teacher jobs and more roles near you at sixth-form colleges and other providers of 16 to 19 education."
+
+    ### Subjects
+    art-design-technology-teacher-jobs:
+      name: "Art and Design Technology"
+      title: "Art & Design Technology (DT) Teacher Jobs"
+      heading: "%{count} art and design technology teacher jobs"
+      meta_description: "Search for the latest art and design teacher jobs in England. Apply for design technology (DT) teaching roles and set up alerts for new jobs near you."
+    biology-teacher-jobs:
+      name: "Biology"
+      title: "Biology Teacher Jobs"
+      heading: "%{count} biology teacher jobs"
+      meta_description: "Looking for your next biology teacher job? Teaching Vacancies has the latest biology teacher jobs in London, Birmingham, Manchester and across England."
+    chemistry-teacher-jobs:
+      name: "Chemistry"
+      title: "Chemistry Teacher Jobs"
+      heading: "%{count} chemistry teacher jobs"
+      meta_description: "Discover chemistry teacher jobs in secondary schools across England. Search and apply for full time and part time chemistry teacher jobs near you."
+    classics-latin-teacher-jobs:
+      name: "Classics"
+      title: "Classics & Latin Teacher Jobs"
+      heading: "%{count} classics and Latin teacher jobs"
+      meta_description: "Find your next Ancient Greek or Latin teaching position on Teaching Vacancies. Search and apply for the latest classics teacher jobs near you."
+    dance-drama-music-teacher-jobs:
+      name: "Dance, Drama and Music"
+      title: "Dance, Drama & Music Teacher Jobs"
+      heading: "%{count} dance, drama and music teacher jobs"
+      meta_description: "Find dance, drama and music teacher jobs on Teaching Vacancies. Set up alerts and apply for jobs teaching performing arts in schools near you."
+    economics-business-studies-teacher-jobs:
+      name: "Economics and Business Studies"
+      title: "Economics & Business Studies Teacher Jobs"
+      heading: "%{count} economics and business studies teacher jobs"
+      meta_description: "Find the latest economics and business studies teacher jobs near you. Search for your next role and set up job alerts on Teaching Vacancies."
+    english-media-studies-teacher-jobs:
+      name: "English and Media Studies"
+      title: "English & Media Studies Teacher Jobs"
+      heading: "%{count} English and media studies teacher jobs"
+      meta_description: "Find English teacher jobs in London, Birmingham, Liverpool and across England. Apply for media studies teaching jobs and set up alerts for the latest roles."
+    food-technology-teacher-jobs:
+      name: "Food Technology"
+      title: "Food Technology Teacher Jobs"
+      heading: "%{count} food technology teacher jobs"
+      meta_description: "Discover jobs for food technology teachers on Teaching Vacancies. Browse job descriptions and apply to get your next food technology teaching job."
+    french-teacher-jobs:
+      name: "French"
+      title: "French Teacher Jobs"
+      heading: "%{count} French teacher jobs"
+      meta_description: "Search for French teacher jobs in primary and secondary schools across England. Set up alerts to receive the latest jobs for French teachers near you."
+    geography-teacher-jobs:
+      name: "Geography"
+      title: "Geography Teacher Jobs"
+      heading: "%{count} geography teacher jobs"
+      meta_description: "Find geography teacher jobs in Cornwall, Kent and across England. Search for full time, part time and flexible jobs for geography teachers."
+    german-teacher-jobs:
+      name: "German"
+      title: "German Teacher Jobs"
+      heading: "%{count} German teacher jobs"
+      meta_description: "Search and apply for German teacher jobs near you on Teaching Vacancies. Set up alerts for jobs in London, Leeds and the rest of England."
+    health-relationships-social-care-teacher-jobs:
+      name: "Health and Social Care"
+      title: "Health & Social Care Teacher Jobs"
+      heading: "%{count} health, relationships and social care teacher jobs"
+      meta_description: "Find jobs for health and social care teachers on Teaching Vacancies. Find and apply for roles teaching all areas of personal health and relationships."
+    history-teacher-jobs:
+      name: "History"
+      title: "History Teacher Jobs"
+      heading: "%{count} history teacher jobs"
+      meta_description: "Find history teacher jobs near you on Teaching Vacancies. Set up alerts so you don't miss the latest full time and part time jobs for history teachers."
+    ict-computer-science-teacher-jobs:
+      name: "ICT and Computer Science"
+      title: "ICT & Computer Science Teacher Jobs"
+      heading: "%{count} ICT and computer science teacher jobs"
+      meta_description: "Search for computer science teacher jobs near you. Teaching Vacancies has the latest ICT teacher jobs in London, Manchester and across England."
+    mandarin-teacher-jobs:
+      name: "Mandarin"
+      title: "Mandarin Teacher Jobs"
+      heading: "%{count} Mandarin teacher jobs"
+      meta_description: "Search for full time and part time jobs for Mandarin teachers on Teaching Vacancies. Find schools near you hiring Mandarin Chinese teachers."
+    maths-teacher-jobs:
+      name: "Maths"
+      title: "Maths Teacher Jobs"
+      heading: "%{count} maths teacher jobs"
+      meta_description: "Find maths teacher jobs in London, York, Birmingham and across England. Set up alerts and apply for part time and full time mathematics teaching jobs."
+    mfl-teacher-jobs:
+      name: "Foreign Languages"
+      title: "Modern Foreign Language (MFL) Teacher Jobs"
+      heading: "%{count} modern foreign language (MFL) teacher jobs"
+      meta_description: "Looking for a job teaching modern foreign languages? Set up alerts and apply for the latest MFL teacher jobs in London, Birmingham and across England."
+    physical-education-teacher-jobs:
+      name: "Physical Education"
+      title: "Physical Education (PE) Teacher Jobs"
+      heading: "%{count} physical education (PE) teacher jobs"
+      meta_description: "Apply for your next PE teacher job on Teaching Vacancies. Find primary and secondary schools near you hiring physical education teachers."
+    physics-teacher-jobs:
+      name: "Physics"
+      title: "Physics Teacher Jobs"
+      heading: "%{count} physics teacher jobs"
+      meta_description: "Search for physics teacher jobs near you on Teaching Vacancies. Set up alerts for physics teaching roles in London, Brighton, Leeds and across England."
+    politics-humanities-social-sciences-teacher-jobs:
+      name: "Politics, Humanities and Social Sciences"
+      title: "Humanities & Social Sciences teacher jobs"
+      heading: "%{count} politics, humanities and social sciences teacher jobs"
+      meta_description: "Search the latest jobs for humanities and politics teachers near you. Set up alerts and apply for roles teaching the various areas of social science."
+    psychology-philosophy-sociology-re-teacher jobs:
+      name: "Psychology, Sociology and RE"
+      title: "Psychology, Sociology & RE Teacher Jobs"
+      heading: "%{count} psychology, philosophy, sociology and RE teacher jobs"
+      meta_description: "Find full time and part time jobs for RE and sociology teachers. See the latest roles in schools near you teaching religion, psychology and philosophy."
+    science-teacher-jobs:
+      name: "Science"
+      title: "Science Teacher Jobs"
+      heading: "%{count} science teacher jobs"
+      meta_description: "Find jobs for science teachers near you on Teaching Vacancies. Set up alerts to receive the latest science teacher jobs in primary and secondary schools."
+    spanish-teacher-jobs:
+      name: "Spanish"
+      title: "Spanish Teacher Jobs"
+      heading: "%{count} Spanish teacher jobs"
+      meta_description: "Search for Spanish teacher jobs near you on Teaching Vacancies. Find the latest full time and part time jobs for spanish teachers in schools across England."
+
+    ################################################################################################
+    # The following fake landing page is used in automated tests, please don't remove it and make
+    # sure to add all real landing pages above.
+    ################################################################################################
+    part-time-potions-and-sorcery-teacher-jobs:
+      name: "Potions and Sorcery"
+      title: "Spiffy Part Time Potions and Sorcery Jobs"
+      heading: "%{count} amazing jobs APPLY NOW"
+      meta_description: "Lorem ipsum dolor sit jobs, vacancies adipiscing elit."
