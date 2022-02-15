@@ -1,6 +1,4 @@
-.cookies-banner aria-label=t("cookies_preferences.banner.aria.label") role="region"
-  .govuk-width-container
-    h3.govuk-heading-s class="govuk-!-margin-bottom-2" = t("cookies_preferences.banner.heading")
-    p.govuk-body = t("cookies_preferences.banner.body")
-    = govuk_button_to t("buttons.accept_all_cookies"), create_cookies_preferences_path(cookies_consent: "yes", **utm_parameters), class: "govuk-!-margin-bottom-3", form_class: "inline-block govuk-!-margin-right-2"
-    = govuk_button_link_to t("buttons.set_preferences"), cookies_preferences_path(**utm_parameters), class: "govuk-button--secondary govuk-!-margin-bottom-3"
+- unless cookies_preference_set?
+  = render(CookiesBannerComponent.new(create_path: create_cookies_preferences_path(cookies_consent: "yes", **utm_parameters),
+                                      reject_path: create_cookies_preferences_path(cookies_consent: "no", **utm_parameters),
+                                      preferences_path: cookies_preferences_path(**utm_parameters)))
