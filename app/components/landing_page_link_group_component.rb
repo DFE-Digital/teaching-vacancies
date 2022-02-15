@@ -1,4 +1,6 @@
 class LandingPageLinkGroupComponent < GovukComponent::Base
+  include FailSafe
+
   def initialize(title:, list_class: "", classes: [], html_attributes: {})
     super(classes: classes, html_attributes: html_attributes)
 
@@ -6,16 +8,15 @@ class LandingPageLinkGroupComponent < GovukComponent::Base
     @list_class = list_class
   end
 
-  renders_many :links, lambda { |text, href, count:|
-    # Make link text more meaningful for screenreaders
-    link_content = tag.span(class: "govuk-visually-hidden") { "view #{count} " } +
-                   text +
-                   tag.span(class: "govuk-visually-hidden") { " jobs" }
-    # Hide count from a11y tree as it's included in link text
-    count_span = tag.span("aria-hidden": true) { " (#{count})" }
+  renders_many :landing_pages, ->(slug) { LandingPageLinkComponent.new(LandingPage[slug]) }
+  renders_many :location_landing_pages, ->(loc) { LandingPageLinkComponent.new(LocationLandingPage[loc]) }
 
-    tag.li { govuk_link_to(link_content, href) + count_span }
-  }
+  def render?
+    # Rendering this component triggers a lot of expensive queries if caching is disabled (e.g. in
+    # system tests or during local development). In order to render the component when developing
+    # locally, enable the cache by following instructions in `config/environments/development.rb`.
+    Rails.application.config.action_controller.perform_caching
+  end
 
   private
 
