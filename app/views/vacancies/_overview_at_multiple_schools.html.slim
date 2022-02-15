@@ -3,25 +3,25 @@ section#school-overview class="govuk-!-margin-bottom-5"
     = t("schools.schools_overview")
 
   = govuk_summary_list do |summary_list|
-    - if organisation.group_type != "local_authority"
+    - if vacancy.parent_organisation.group_type != "local_authority"
       - summary_list.row do |row|
         - row.key text: t("school_groups.type")
-        - row.value text: organisation.group_type
+        - row.value text: vacancy.parent_organisation.group_type
 
-    - if organisation.website.present? || organisation.url.present?
+    - if vacancy.parent_organisation.website.present? || vacancy.parent_organisation.url.present?
       - summary_list.row do |row|
-        - row.key text: t("school_groups.website", organisation_type: organisation_type_basic(organisation).humanize)
-        - row.value text: tracked_open_in_new_tab_link_to(t("schools.website_link_text", organisation_name: organisation.name), organisation.website.presence || organisation.url, link_type: :school_website, link_subject: StringAnonymiser.new(@vacancy.id).to_s, class: "link-wrap")
+        - row.key text: t("school_groups.website", organisation_type: organisation_type_basic(vacancy.parent_organisation).humanize)
+        - row.value text: tracked_open_in_new_tab_link_to(t("schools.website_link_text", organisation_name: vacancy.parent_organisation.name), vacancy.parent_organisation.website.presence || vacancy.parent_organisation.url, link_type: :school_website, link_subject: StringAnonymiser.new(vacancy.id).to_s, class: "link-wrap")
 
-    - if @vacancy.contact_email.present?
+    - if vacancy.contact_email.present?
       - summary_list.row do |row|
         - row.key text: t("jobs.contact_email")
-        - row.value text: govuk_mail_to(@vacancy.contact_email, @vacancy.contact_email, class: "link-wrap", subject: t("jobs.contact_email_subject", job: @vacancy.job_title), body: t("jobs.contact_email_body", url: job_url(@vacancy)))
+        - row.value text: govuk_mail_to(vacancy.contact_email, vacancy.contact_email, class: "link-wrap", subject: t("jobs.contact_email_subject", job: vacancy.job_title), body: t("jobs.contact_email_body", url: job_url(vacancy)))
 
-    - if @vacancy.contact_number.present?
+    - if vacancy.contact_number.present?
       - summary_list.row do |row|
         - row.key text: t("jobs.contact_number")
-        - row.value text: govuk_link_to(@vacancy.contact_number, "tel:#{@vacancy.contact_number}")
+        - row.value text: govuk_link_to(vacancy.contact_number, "tel:#{vacancy.contact_number}")
 
   - if vacancy.about_school.present?
     h4.govuk-heading-m
@@ -74,4 +74,4 @@ section#school-overview class="govuk-!-margin-bottom-5"
     section#school-location
       h3.govuk-heading-l.section-heading = t("schools.school_location.other")
 
-      = map(items: [{ type: "vacancy", params: { id: vacancy.id }, links: map_links }], zoom: 10)
+      = map(items: [{ type: "vacancy", params: { id: vacancy.id }, links: map_links(vacancy) }], zoom: 10)
