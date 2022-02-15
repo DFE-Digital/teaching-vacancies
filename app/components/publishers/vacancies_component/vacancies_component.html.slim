@@ -6,8 +6,8 @@
     = govuk_button_link_to t("buttons.create_job"), create_or_copy_organisation_jobs_path, class: "float-right"
 
 = tabs do |tabs|
-  - vacancy_links.each do |item|
-    - tabs.navigation_item item: item
+  - @vacancy_types.each do |vacancy_type|
+    - tabs.navigation_item text: t(".#{vacancy_type}.tab_heading"), link: jobs_with_type_organisation_path(vacancy_type), active: selected_type == vacancy_type
 
 .govuk-grid-row.vacancies-component class="govuk-!-margin-bottom-7"
   - if @organisation.school_group?
