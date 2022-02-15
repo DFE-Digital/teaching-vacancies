@@ -41,7 +41,7 @@
             - if @vacancies.any?
               ul.vacancies role="list"
                 - @vacancies.each do |vacancy|
-                  = render(Jobseekers::VacancySummaryComponent.new(vacancy: vacancy))
+                  = render "search_result", vacancy: vacancy
 
             - elsif @vacancies_search.active_criteria?
               .divider-bottom
