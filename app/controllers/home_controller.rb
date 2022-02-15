@@ -1,7 +1,6 @@
 class HomeController < ApplicationController
   def index
     @form = Jobseekers::SearchForm.new
-    @vacancy_facets = VacancyFacets.new
   end
 
   private
