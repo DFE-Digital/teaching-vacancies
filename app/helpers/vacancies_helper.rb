@@ -79,4 +79,10 @@ module VacanciesHelper
   def vacancy_step_completed?(vacancy, step)
     vacancy.completed_steps.include?(step.to_s)
   end
+
+  def map_links(vacancy)
+    vacancy.organisations.map do |organisation|
+      { text: "#{organisation.name}, #{full_address(organisation)}", url: organisation_url(organisation), id: organisation.id }
+    end
+  end
 end

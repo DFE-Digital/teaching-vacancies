@@ -62,10 +62,8 @@ h2.govuk-caption-l.job-caption class="govuk-!-margin-bottom-5 govuk-!-margin-top
       = govuk_notification_banner title_text: t("banners.important"), classes: "govuk-!-margin-bottom-5" do
         = t("messages.jobs.multi_school_job_notification_html", organisation_type: organisation_type_basic(@vacancy.parent_organisation))
 
-    = render(Jobseekers::VacancyDetailsComponent.new(vacancy: @vacancy))
-    = render(Jobseekers::OrganisationOverviews::SchoolGroupComponent.new(vacancy: @vacancy))
-    = render(Jobseekers::OrganisationOverviews::SchoolComponent.new(vacancy: @vacancy))
-    = render(Jobseekers::OrganisationOverviews::SchoolsComponent.new(vacancy: @vacancy))
+    = render "vacancies/job_details", vacancy: @vacancy
+    = render "vacancies/overview_#{@vacancy.job_location}", vacancy: @vacancy
 
     - if @similar_jobs.present?
       section#similar-jobs.similar-jobs class="govuk-!-margin-bottom-5"
