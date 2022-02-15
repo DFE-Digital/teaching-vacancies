@@ -1,0 +1,54 @@
+section#school-overview
+  h3.govuk-heading-l.section-heading
+    = t("schools.school_overview")
+
+  = govuk_summary_list do |summary_list|
+    - summary_list.row do |row|
+      - row.key text: t("schools.type")
+      - row.value text: organisation_type(vacancy.parent_organisation)
+
+    - summary_list.row do |row|
+      - row.key text: t("schools.phase")
+      - row.value text: school_phase(vacancy.parent_organisation)
+
+    - summary_list.row do |row|
+      - row.key text: t("schools.school_size")
+      - row.value text: school_size(vacancy.parent_organisation)
+
+    - summary_list.row do |row|
+      - row.key text: t("schools.age_range")
+      - row.value text: age_range(vacancy.parent_organisation)
+
+    - summary_list.row do |row|
+      - row.key text: t("schools.ofsted_report")
+      - row.value text: ofsted_report(vacancy.parent_organisation).present? ? open_in_new_tab_link_to(t("schools.view_ofsted_report"), ofsted_report(vacancy.parent_organisation), class: "wordwrap") : t("schools.no_information")
+
+    - if vacancy.parent_organisation.website.present? || vacancy.parent_organisation.url.present?
+      - summary_list.row do |row|
+        - row.key text: t("schools.website")
+        - row.value text: tracked_open_in_new_tab_link_to(t("schools.website_link_text", organisation_name: vacancy.parent_organisation.name), vacancy.parent_organisation.website.presence || vacancy.parent_organisation.url, link_type: :school_website, link_subject: StringAnonymiser.new(vacancy.id).to_s, class: "wordwrap")
+
+    - if vacancy.contact_email.present?
+      - summary_list.row do |row|
+        - row.key text: t("jobs.contact_email")
+        - row.value text: govuk_mail_to(vacancy.contact_email, vacancy.contact_email, class: "link-wrap", subject: t("jobs.contact_email_subject", job: vacancy.job_title), body: t("jobs.contact_email_body", url: job_url(vacancy)))
+
+    - if vacancy.contact_number.present?
+      - summary_list.row do |row|
+        - row.key text: t("jobs.contact_number")
+        - row.value text: govuk_link_to(vacancy.contact_number, "tel:#{vacancy.contact_number}")
+
+  - if vacancy.about_school.present?
+    h4.govuk-heading-m
+      = t("schools.info", organisation: vacancy.parent_organisation.name)
+    p = vacancy_or_organisation_description(vacancy)
+
+  - if vacancy.school_visits.present?
+    h4.govuk-heading-m
+      = t("jobs.school_visits_heading", school: vacancy.parent_organisation.name)
+    p = vacancy.school_visits
+
+  section#school-location
+    h3.govuk-heading-l.section-heading = t("schools.school_location.one")
+
+    = map(items: [{ type: "vacancy", params: { id: vacancy.id }, links: map_links(vacancy) }], show_map: vacancy.parent_organisation.geopoint)
