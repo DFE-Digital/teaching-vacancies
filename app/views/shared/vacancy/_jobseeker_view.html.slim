@@ -9,7 +9,7 @@
                                         "#{@vacancy.job_title}": "" }
 
 - if @vacancy.expired?
-  = govuk_tag text: t("jobs.expired_tag").upcase,
+  = govuk_tag text: t("jobs.expired_listing.tag").upcase,
               colour: "orange",
               classes: "govuk-!-margin-bottom-2 govuk-!-margin-top-4"
 
