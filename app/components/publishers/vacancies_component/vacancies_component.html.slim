@@ -5,11 +5,9 @@
   .govuk-grid-column-one-quarter
     = govuk_button_link_to t("buttons.create_job"), create_or_copy_organisation_jobs_path, class: "float-right"
 
-.govuk-grid-row
-  .govuk-grid-column-full
-    = tabs do |tabs|
-      - vacancy_links.each do |item|
-        - tabs.navigation_item item: item
+= tabs do |tabs|
+  - vacancy_links.each do |item|
+    - tabs.navigation_item item: item
 
 .govuk-grid-row.vacancies-component class="govuk-!-margin-bottom-7"
   - if @organisation.school_group?
