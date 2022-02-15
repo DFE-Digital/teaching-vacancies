@@ -52,7 +52,7 @@ Unit tests are run by the developers manually and by the automated workflow when
 
 When a pull request is merged to the master branch, a docker image is built and stored on [Docker hub](https://hub.docker.com/r/dfedigital/teaching-vacancies). This is the build artifact that will be deployed to all environments.
 
-The workflow then deploys to the staging environment. Staging has the same configuration as production and the data is refreshed daily with production data. We then run a smoke test to validate the application doesn't break in a production-like environment.
+The workflow then deploys to the staging environment. Staging has the same configuration as production. We then run a smoke test to validate the application doesn't break in a production-like environment.
 
 If successful, the workflow deploys to the production environment using a "blue-green" technique. This technique makes sure the new app runs successfully before allowing traffic from live user. It also allows a transition with zero downtime for users.
 

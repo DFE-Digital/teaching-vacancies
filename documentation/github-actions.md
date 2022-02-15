@@ -8,7 +8,7 @@
 
 ### Secret lifecycle
 
-With sufficient privileges, these are available under [Settings/Secrets](https://github.com/DFE-Digital/teaching-vacancies/settings/secrets)
+All scerets are stored on AWS parameterstore, with the exception of `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`, which are needed to bootstrap Github Action's workflow. With sufficient privileges, these are available under [Settings/Secrets](https://github.com/DFE-Digital/teaching-vacancies/settings/secrets)
 
 Secrets may be:
 - Added
