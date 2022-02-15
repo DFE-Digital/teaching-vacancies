@@ -1,6 +1,10 @@
 class Jobseekers::SavedJobsController < Jobseekers::BaseController
   helper_method :saved_jobs, :sort
 
+  def index
+    redirect_to jobseekers_job_applications_path if session.delete(:after_sign_in) && current_jobseeker.job_applications.any?
+  end
+
   # This action is not 'create' because we need to redirect here when an unauthenticated jobseeker attempts to save a job
   def new
     saved_job.save

@@ -16,7 +16,8 @@ Devise.setup do |config|
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
-  config.parent_controller = "Jobseekers::DeviseController"
+  # Default is `ApplicationController`
+  config.parent_controller = "AuthenticationController"
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -25,10 +26,10 @@ Devise.setup do |config|
   # config.mailer_sender = "please-change-me-at-config-initializers-devise@example.com"
 
   # Configure the class responsible to send e-mails.
-  config.mailer = "Jobseekers::AccountMailer"
+  config.mailer = "Jobseekers::AccountMailer" # This class will only allow sending to jobseekers
 
   # Configure the parent class responsible to send e-mails.
-  config.parent_mailer = "Mail::Notify::Mailer"
+  config.parent_mailer = "Mail::Notify::Mailer" # This must be set to avoid getting all the Devise::Mailer behaviour
 
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and
@@ -303,7 +304,8 @@ Devise.setup do |config|
   # change the failure app, you can configure them inside the config.warden block.
   #
   # config.warden do |manager|
-  #   manager.failure_app = JobseekerFailureApp
+  #   manager.intercept_401 = false
+  #   manager.default_strategies(scope: :user).unshift :some_external_strategy
   # end
 
   # ==> Mountable engine configurations

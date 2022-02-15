@@ -5,7 +5,6 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
   before_action :check_new_password_presence, only: %i[update]
   before_action :check_email_difference, only: %i[update]
   after_action :set_correct_update_message, only: %i[update]
-  after_action :remove_devise_flash!, only: %i[create update]
 
   def confirm_destroy
     @close_account_feedback_form = Jobseekers::CloseAccountFeedbackForm.new
