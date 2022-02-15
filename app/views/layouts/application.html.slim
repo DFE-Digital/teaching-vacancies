@@ -1,9 +1,9 @@
 doctype html
 html.govuk-template.app-html-class lang="en"
   head
-    = render partial: "shared/google_tag_manager_head" if cookies["consented-to-cookies"] == "yes"
-    = render partial: "shared/open_graph"
-    = render partial: "shared/meta"
+    = render "shared/google_tag_manager_head" if cookies["consented-to-cookies"] == "yes"
+    = render "shared/open_graph"
+    = render "shared/meta"
     meta charset="utf-8"
     title #{content_for :page_title_prefix} - #{t("app.title")}
     meta content="width=device-width, initial-scale=1" name="viewport"
@@ -19,33 +19,18 @@ html.govuk-template.app-html-class lang="en"
     meta content=asset_pack_path("media/images/govuk-opengraph-image.png") property="og:image"
     = csrf_meta_tags
 
-  body class=body_class
-    = render partial: "shared/google_tag_manager_body" if cookies["consented-to-cookies"] == "yes"
-    = javascript_tag(nonce: true) do
-      | document.body.className = ((document.body.className) ? document.body.className + " js-enabled" : "js-enabled");
+  body.js-enabled class=body_class
+    = render "shared/google_tag_manager_body" if cookies["consented-to-cookies"] == "yes"
     = render "shared/skip_links"
-
     = render EnvironmentBannerComponent.new
-
     = render "layouts/header"
-
     .govuk-width-container
-      = govuk_phase_banner(tag: { text: "beta" }, classes: "govuk-!-display-none-print") do
-        span.govuk-phase-banner__text
-          | This is a new service - #{govuk_link_to "your feedback", new_feedback_path} will help us to improve it.
-
+      = render "layouts/phase_banner"
       = content_for :breadcrumbs
-
       = render "layouts/flash_messages"
-
       main#main-content.govuk-main-wrapper role="main"
         = yield
-
       = content_for :after_main
-
     = render "layouts/footer"
-
-    - unless cookies_preference_set?
-      = render(CookiesBannerComponent.new(create_path: create_cookies_preferences_path(cookies_consent: "yes", **utm_parameters), reject_path: create_cookies_preferences_path(cookies_consent: "no", **utm_parameters), preferences_path: cookies_preferences_path(**utm_parameters)))
-
+    = render "layouts/cookies_banner"
     = javascript_pack_tag "application"
