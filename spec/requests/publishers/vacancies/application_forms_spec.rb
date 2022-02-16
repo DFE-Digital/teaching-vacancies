@@ -7,7 +7,7 @@ RSpec.describe "Documents" do
   let(:organisation) { build(:school) }
 
   before do
-    allow_any_instance_of(Publishers::AuthenticationConcerns).to receive(:current_organisation).and_return(organisation)
+    allow_any_instance_of(Publishers::BaseController).to receive(:current_organisation).and_return(organisation)
     sign_in(publisher, scope: :publisher)
   end
 

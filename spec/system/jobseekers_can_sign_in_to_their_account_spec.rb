@@ -4,11 +4,13 @@ RSpec.describe "Jobseekers can sign in to their account" do
   let(:jobseeker) { create(:jobseeker) }
   let(:expected_data) do
     {
-      email_identifier: anonymised_form_of(email),
+      email_identifier: anonymised_form_of(reported_email),
       success: successful_attempt?,
       errors: sign_in_errors,
     }
   end
+
+  let(:reported_email) { nil }
 
   before do
     visit root_path
@@ -21,6 +23,7 @@ RSpec.describe "Jobseekers can sign in to their account" do
     let(:password) { jobseeker.password }
     let(:successful_attempt?) { "true" }
     let(:sign_in_errors) { nil }
+    let(:reported_email) { email }
 
     it "signs in the jobseeker" do
       sign_in_jobseeker(email: email, password: password)
@@ -45,9 +48,7 @@ RSpec.describe "Jobseekers can sign in to their account" do
       it "does not sign in the jobseeker and displays an error message" do
         sign_in_jobseeker(email: email, password: password)
         expect(current_path).to eq(jobseeker_session_path)
-        expect(page).not_to have_selector(".govuk-notification")
-        expect(page).to have_content(I18n.t("activerecord.errors.models.jobseeker.attributes.email.blank"))
-        expect(page).to have_content(I18n.t("activerecord.errors.models.jobseeker.attributes.password.blank"))
+        expect(page).to have_content(I18n.t("devise.failure.blank"))
       end
 
       it "triggers an unsuccessful `jobseeker_sign_in_attempt` event" do
@@ -64,7 +65,6 @@ RSpec.describe "Jobseekers can sign in to their account" do
       it "does not sign in the jobseeker and displays a general error message" do
         sign_in_jobseeker(email: email, password: password)
         expect(current_path).to eq(jobseeker_session_path)
-        expect(page).not_to have_selector(".govuk-notification")
         expect(page).to have_content(I18n.t("devise.failure.invalid"))
       end
 
@@ -82,7 +82,6 @@ RSpec.describe "Jobseekers can sign in to their account" do
       it "does not sign in the jobseeker and displays a general error message" do
         sign_in_jobseeker(email: email, password: password)
         expect(current_path).to eq(jobseeker_session_path)
-        expect(page).not_to have_selector(".govuk-notification")
         expect(page).to have_content(I18n.t("devise.failure.invalid"))
       end
 
