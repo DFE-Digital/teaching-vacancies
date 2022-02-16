@@ -1,5 +1,4 @@
 - unless cookies_preference_set?
   a.govuk-skip-link href="#cookie-consent" = t("app.skip_link.cookie")
 a.govuk-skip-link href="#main-content" = t("app.skip_link.main")
-- if content_for?(:skip_links)
-  = yield(:skip_links)
+= content_for :skip_links
