@@ -26,7 +26,7 @@ class ErrorsController < ApplicationController
   end
 
   def internal_server_error
-    @rollbar_error_id = Rollbar.last_report[:uuid] if Rollbar.last_report.present?
+    @error_id = Sentry.last_event_id
 
     respond_to do |format|
       format.html { render status: :internal_server_error }
