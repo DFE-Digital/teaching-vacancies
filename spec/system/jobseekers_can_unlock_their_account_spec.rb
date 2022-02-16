@@ -15,7 +15,7 @@ RSpec.describe "Jobseekers can unlock their account" do
     scenario "they receive an email with unlocking instructions after their final failed attempt" do
       expect { sign_in_jobseeker(password: "wrong password") }.to change { delivered_emails.count }.by(1)
 
-      expect(page).to have_content(I18n.t("jobseekers.sessions.locked.heading"))
+      expect(page).to have_content("too many attempts")
     end
   end
 

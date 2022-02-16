@@ -1,5 +1,3 @@
 - flash.each do |variant, message|
-  - next if variant == "timedout"
-  - variant_name = convert_devise_flash_variant(variant, message)
-  = govuk_notification_banner title_text: t("banners.#{variant_name}"), classes: "govuk-notification-banner--#{variant_name} govuk-!-margin-top-2" do
+  = govuk_notification_banner title_text: t("banners.#{variant}"), classes: "govuk-notification-banner--#{variant} govuk-!-margin-top-2" do
     = raw(message)

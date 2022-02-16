@@ -21,6 +21,8 @@ RSpec.describe "Publisher session" do
       click_on I18n.t("buttons.continue")
 
       expect(page).to have_content(I18n.t("devise.failure.timeout"))
+      visit "/"
+      expect(page).not_to have_content(I18n.t("devise.failure.timeout"))
     end
   end
 

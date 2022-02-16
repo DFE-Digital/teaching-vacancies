@@ -21,6 +21,7 @@ en:
 
   banners:
     action_required: Action required
+    alert: Warning
     important: Important
     notice: Important
     success: Success
