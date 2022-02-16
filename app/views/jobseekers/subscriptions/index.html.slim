@@ -19,15 +19,15 @@
               - card.header do
                 - subscription.filtered_search_criteria.each_pair do |filter, value|
                   = tag.div(card.labelled_item(filter.humanize, value))
-                .manage-alert-controls
+                .subscription__manage-alert-controls
                   = govuk_button_link_to(t(".link_manage"), edit_subscription_path(subscription.token), secondary: true)
                   = govuk_link_to(t(".link_unsubscribe"), unsubscribe_subscription_path(subscription.token))
 
               - card.body do
-                . data-controller="form"
+                .subscription__frequency-form data-controller="form"
                   = form_for subscription, url: subscription_path(subscription.token), html: { method: "patch" } do |f|
                     = f.govuk_collection_radio_buttons :frequency, Subscription.frequencies.keys, :to_s, form_group: { data: { action: "change->form#submitListener" } }, inline: true
-                    .frequency-form__submit
+                    .subscription__frequency-form-submit
                       = f.govuk_submit t("buttons.save"), secondary: true
       - else
         = render EmptySectionComponent.new title: t(".zero_subscriptions_title") do
