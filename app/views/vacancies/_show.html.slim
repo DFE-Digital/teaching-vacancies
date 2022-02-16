@@ -5,7 +5,7 @@
                                                         deadline: format_date(@vacancy.expires_at, :date_only_shorthand))
 
 - if @vacancy.expired?
-  - content_for :no_index do
+  - content_for :meta_no_index do
     meta name="robots" content="noindex"
 
 .vacancy
