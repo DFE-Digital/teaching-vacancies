@@ -47,7 +47,7 @@ RSpec.describe "Copying a vacancy" do
     new_vacancy.job_title = "A new job title"
     new_vacancy.starts_on = 35.days.from_now
     new_vacancy.publish_on = 0.days.from_now
-    new_vacancy.expires_at = new_vacancy.expires_at = 30.days.from_now.change(hour: 9, minute: 0)
+    new_vacancy.expires_at = 30.days.from_now.change(hour: 9, minute: 0)
 
     visit organisation_path
     click_on original_vacancy.job_title

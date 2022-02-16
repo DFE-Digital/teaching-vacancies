@@ -36,6 +36,7 @@ class Publishers::Vacancies::CopyController < Publishers::Vacancies::BaseControl
 
   def reset_date_fields
     vacancy.expires_at = nil
+    vacancy.starts_asap = nil
     vacancy.starts_on = nil
     vacancy.publish_on = nil
   end
