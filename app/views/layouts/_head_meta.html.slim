@@ -1,0 +1,11 @@
+meta charset="utf-8"
+meta name="description" content=meta_description
+meta name="viewport" content="width=device-width, initial-scale=1"
+meta name="theme-color" content="#0B0C0C"
+= content_for :meta_no_index
+
+meta property="og:url" content=request.original_url
+meta property="og:type" content="article"
+meta property="og:title" content=content_for(:page_title_prefix).strip
+meta property="og:description" content=meta_description
+meta property="og:image" content=asset_pack_path("media/images/og_image.jpg")

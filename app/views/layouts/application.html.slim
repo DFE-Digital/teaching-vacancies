@@ -2,22 +2,10 @@ doctype html
 html.govuk-template.app-html-class lang="en"
   head
     = render "layouts/google_tag_manager_head" if cookies["consented-to-cookies"] == "yes"
-    = render "layouts/open_graph"
-    meta name="description" content=meta_description
-    = content_for :no_index
-    meta charset="utf-8"
+    = render "layouts/head_meta"
+    = render "layouts/head_links"
     title #{content_for :page_title_prefix} - #{t("app.title")}
-    meta content="width=device-width, initial-scale=1" name="viewport"
-    meta content="#0B0C0C" name="theme-color"
-    link href=asset_pack_path("media/images/favicon.ico") rel="shortcut icon" type="image/x-icon"
-    link color="#FFFFFF" href=asset_pack_path("media/images/govuk-mask-icon.svg") rel="mask-icon"
-    link href=asset_pack_path("media/images/govuk-apple-touch-icon-180x180.png") rel="apple-touch-icon" sizes="180x180"
-    link href=asset_pack_path("media/images/govuk-apple-touch-icon-167x167.png") rel="apple-touch-icon" sizes="167x167"
-    link href=asset_pack_path("media/images/govuk-apple-touch-icon-152x152.png") rel="apple-touch-icon" sizes="152x152"
-    link href=asset_pack_path("media/images/govuk-apple-touch-icon.png") rel="apple-touch-icon"
-    = content_for :head_links
     = stylesheet_pack_tag "application", media: "all"
-    meta content=asset_pack_path("media/images/govuk-opengraph-image.png") property="og:image"
     = csrf_meta_tags
 
   body class=body_class
