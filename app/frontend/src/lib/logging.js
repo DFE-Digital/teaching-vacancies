@@ -18,6 +18,8 @@ const consoleMock = {
 
 const mockLogger = environment === 'test' ? silentMock : consoleMock;
 
+// TODO: window.Rollbar will always be undefined as we have migrated away from Rollbar.
+//   We will re-implement logging with Sentry in the future.
 const Logger = window.Rollbar || mockLogger;
 
 export default Logger;
