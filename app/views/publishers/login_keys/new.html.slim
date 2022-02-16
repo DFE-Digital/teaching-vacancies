@@ -1,19 +1,21 @@
 - content_for :page_title_prefix, t("publishers.sessions.new.sign_in.title")
 
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: page_path("sign-in")
+
+= govuk_notification_banner title_text: t("banners.warning"), classes: "govuk-notification-banner--warning govuk-!-margin-top-0" do |banner|
+  - banner.heading text: t("publishers.temp_login.heading")
+  span class="govuk-!-margin-top-3" = t("publishers.temp_login.please_use_email")
+
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = govuk_notification_banner title_text: t("banners.warning"), classes: "govuk-notification-banner--warning" do |banner|
-      - banner.heading text: t("publishers.temp_login.heading")
-      span class="govuk-!-margin-top-3" = t("publishers.temp_login.please_use_email")
-
     h1.govuk-heading-l = t("publishers.sessions.new.sign_in.title")
-
     p = t("publishers.sessions.new.sign_in.description_fallback")
 
     = form_for Publisher.new, url: login_keys_path do |f|
-      = f.govuk_email_field :email
+      = f.govuk_email_field :email, label: { size: "s" }, width: "two-thirds"
 
-      = f.govuk_submit t("buttons.submit"), classes: "fallback-authentication-submit-email-gtm govuk-!-margin-bottom-0"
+      = f.govuk_submit t("buttons.submit")
 
   .govuk-grid-column-one-third
     h2.govuk-heading-m = t("publishers.sessions.new.no_account.heading")
