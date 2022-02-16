@@ -57,6 +57,8 @@ gem "recaptcha"
 gem "redis"
 gem "rollbar"
 gem "sanitize"
+gem "sentry-rails"
+gem "sentry-ruby"
 gem "sidekiq"
 gem "sidekiq-cron"
 gem "skylight"
@@ -67,6 +69,7 @@ gem "webpacker"
 gem "wicked"
 gem "xml-sitemap"
 gem "zendesk_api"
+
 
 # TODO: These are required by Ruby 3.1, but not automatically pulled in by Rails right now
 #  c.f. https://github.com/rails/rails/commit/5dd292f5511fedd91833dc8482baf696cb821af6
