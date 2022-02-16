@@ -36,7 +36,10 @@ class ErrorsController < ApplicationController
 
   def invalid_recaptcha
     @form = params[:form_name]
-    Rollbar.error("Invalid recaptcha", details: @form)
+    Sentry.with_scope do |scope|
+      scope.set_tags("form.name", @form)
+      Sentry.capture_message("Invalid recaptcha")
+    end
 
     respond_to do |format|
       format.html { render status: :unauthorized }
