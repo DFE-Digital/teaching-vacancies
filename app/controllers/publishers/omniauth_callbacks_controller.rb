@@ -22,8 +22,13 @@ class Publishers::OmniauthCallbacksController < Devise::OmniauthCallbacksControl
 
   def failure
     omniauth_error = request.respond_to?(:get_header) ? request.get_header("omniauth.error") : request.env["omniauth.error"]
-    Rollbar.error(omniauth_error, strategy: failed_strategy.name)
-    Rails.logger.error("DSI failure - strategy: #{failed_strategy.name}, reason: #{omniauth_error.inspect}")
+    Sentry.with_scope do |scope|
+      scope.set_tags(
+        "omniauth.error": omniauth_error,
+        "omniauth.failed_strategy": failed_strategy.name,
+      )
+      Sentry.capture_message("Omniauth error")
+    end
 
     redirect_to new_publisher_session_path, warning: t(".message")
   end

@@ -43,7 +43,7 @@ RSpec.describe Geocoding, geocode: true do
       end
 
       context "when Geocoder with `lookup: :google` returns status OVER_QUERY_LIMIT", vcr: { cassette_name: "geocoder_google_over_query_limit_os_valid" } do
-        it "logs an error to Rollbar" do
+        it "logs an error" do
           expect(Rails.logger).to receive(:error).with("Google Geocoding API responded with OVER_QUERY_LIMIT")
           subject.coordinates
         end
@@ -102,7 +102,7 @@ RSpec.describe Geocoding, geocode: true do
     end
 
     context "when Geocoder with `lookup: :google` returns status OVER_QUERY_LIMIT", vcr: { cassette_name: "geocoder_google_postcode_lookup_over_query_limit_openstreetmap_valid" } do
-      it "logs an error to Rollbar" do
+      it "logs an error" do
         expect(Rails.logger).to receive(:error).with("Google Geocoding API responded with OVER_QUERY_LIMIT")
         subject.postcode_from_coordinates
       end
@@ -114,7 +114,7 @@ RSpec.describe Geocoding, geocode: true do
       end
 
       context "when Geocoder with `lookup: :nominatim` returns an empty response", vcr: { cassette_name: "geocoder_google_postcode_lookup_over_query_limit_openstreetmap_empty" } do
-        it "logs an error to Rollbar" do
+        it "logs an error" do
           expect(Rails.logger).to receive(:error).with("Google Geocoding API responded with OVER_QUERY_LIMIT").ordered
           expect(Rails.logger).to receive(:error).with("Geocoding Nominatim API responded with error: Unable to geocode").ordered
           subject.postcode_from_coordinates
