@@ -17,11 +17,11 @@ RSpec.describe Jobseekers::SearchResults::HeadingComponent, type: :component do
     allow(vacancies_search).to receive_message_chain(:location_search, :radius).and_return(radius)
   end
 
-  context "when landing_page is a job role" do
-    let(:landing_page) { "teaching-assistant" }
+  context "when landing_page is given" do
+    let(:landing_page) { instance_double(LandingPage, heading: "10 sorcery jobs") }
 
     it "renders correct heading" do
-      expect(subject.text).to eq("10 teaching assistant jobs")
+      expect(subject.text).to eq("10 sorcery jobs")
     end
   end
 
