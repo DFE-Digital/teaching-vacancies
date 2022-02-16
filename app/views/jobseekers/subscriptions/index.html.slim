@@ -24,10 +24,11 @@
                   = govuk_link_to(t(".link_unsubscribe"), unsubscribe_subscription_path(subscription.token))
 
               - card.body do
-                .subscription-frequency data-controller="form"
+                . data-controller="form"
                   = form_for subscription, url: subscription_path(subscription.token), html: { method: "patch" } do |f|
-                    = f.govuk_collection_radio_buttons :frequency, Subscription.frequencies.keys, :to_s, form_group: { data: { action: "change->form#submitListener" } }
-
+                    = f.govuk_collection_radio_buttons :frequency, Subscription.frequencies.keys, :to_s, form_group: { data: { action: "change->form#submitListener" } }, inline: true
+                    .frequency-form__submit
+                      = f.govuk_submit t("buttons.save"), secondary: true
       - else
         = render EmptySectionComponent.new title: t(".zero_subscriptions_title") do
           = t(".zero_subscriptions_body_html", link_to: govuk_link_to(t(".link_create"), new_subscription_path))
