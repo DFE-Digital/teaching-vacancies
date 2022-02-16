@@ -286,4 +286,4 @@ To view the docker images stored on GitHub's container registry, you need to go 
 
 ### Docker image scan
 
-As part of the CI/CD, we conduct a Docker security scan using anchore/scan-action@v2, which uses Anchore Engine. This allows us a deep image inspection and vulnerability scan, which allows detailed analysis of container workloads, producing reports and defining policies that can be used in the software delivery lifecycle stack. The stateless scan result (SARIF format) is loaded to Github’s Security scanning alert console using github/codeql-action/upload-sarif@v1
+As part of the CI/CD, we conduct a Docker security scan using `snyk`, by invoking Snyk's docker image: `snyk/snyk-cli:docker`. This allows us a deep image inspection and vulnerability scan. When a vulnerability is detected while scanning, this breaks breaks CI/CD build. The vulnerability detected by `snyk`would need to be fixed before a successfully build can be completed. In order to limit-rate our scans, `snyk` scan is only invoked when a commit is merged to the `main` branch.

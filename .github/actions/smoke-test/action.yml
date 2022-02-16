@@ -23,7 +23,7 @@ runs:
       if: ${{ inputs.event_name == 'schedule' }}
       run: echo "PAAS_ENVIRONMENT=production" >> $GITHUB_ENV
 
-    - name: set environment (workflow dispatch)
+    - name: set environment
       shell: bash
       if: ${{ inputs.event_name != 'schedule' }}
       run: |
