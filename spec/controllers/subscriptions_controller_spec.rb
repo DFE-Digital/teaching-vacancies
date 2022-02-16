@@ -101,4 +101,67 @@ RSpec.describe SubscriptionsController, recaptcha: true do
       end
     end
   end
+
+  describe "#update" do
+    let(:subscription) { instance_double(Subscription).as_null_object }
+    let(:subscription_presenter) { instance_double(SubscriptionPresenter).as_null_object }
+
+    before do
+      allow(Subscription).to receive(:find_and_verify_by_token).with("123").and_return(subscription)
+      allow(subscription).to receive(:id).and_return("123")
+      allow(SubscriptionPresenter).to receive(:new).with(subscription).and_return(subscription_presenter)
+    end
+
+    context "when updating via subscription params" do
+      let(:params) do
+        {
+          id: "123",
+          subscription: {
+            frequency: "daily",
+          },
+        }
+      end
+      subject { patch :update, params: params }
+
+      it "updates the subscription frequency" do
+        expect(subscription).to receive(:update).with(frequency: params.dig(:subscription, :frequency))
+        subject
+      end
+    end
+
+    context "when updating via jobseeker subscription form" do
+      let(:form) { instance_double(Jobseekers::SubscriptionForm) }
+      let(:params) do
+        {
+          id: "123",
+          jobseekers_subscription_form: {
+            email: "foo@example.net",
+            frequency: "daily",
+            keyword: "english",
+          },
+        }
+      end
+
+      let(:job_alert_params) do
+        {
+          email: "foo@example.net",
+          frequency: "daily",
+          search_criteria: { keyword: "english" },
+        }
+      end
+
+      subject { patch :update, params: params }
+
+      before do
+        allow(Jobseekers::SubscriptionForm).to receive(:new).and_return(form)
+        allow(form).to receive(:job_alert_params).and_return(job_alert_params)
+        allow(form).to receive(:valid?).and_return(true)
+      end
+
+      it "updates the subscription" do
+        expect(subscription).to receive(:update).with(form.job_alert_params)
+        subject
+      end
+    end
+  end
 end

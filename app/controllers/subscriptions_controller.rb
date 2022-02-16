@@ -132,6 +132,7 @@ class SubscriptionsController < ApplicationController
       redirect_to jobseekers_subscriptions_path, success: t(".success")
     else
       @jobseeker = Jobseeker.find_by(email: subscription.email)
+      store_return_location(jobseekers_subscriptions_path)
       render :confirm
     end
   end
