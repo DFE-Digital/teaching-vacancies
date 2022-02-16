@@ -490,7 +490,6 @@ GEM
     rgeo-activerecord (7.0.1)
       activerecord (>= 5.0)
       rgeo (>= 1.0.0)
-    rollbar (3.3.0)
     rspec-core (3.11.0)
       rspec-support (~> 3.11.0)
     rspec-expectations (3.11.0)
@@ -755,7 +754,6 @@ DEPENDENCIES
   railties (~> 6.1.4.1)
   recaptcha
   redis
-  rollbar
   rspec-rails (= 5.0.2)
   rubocop-performance
   rubocop-rails
