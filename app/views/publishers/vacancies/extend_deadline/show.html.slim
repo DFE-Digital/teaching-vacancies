@@ -20,14 +20,13 @@
         ->(option) { option },
         ->(option) { t("helpers.options.publishers_job_listing_extend_deadline_form.expiry_time.#{option}") }
 
-      .clear-form data-controller="form"
-        = f.govuk_date_field :starts_on,
-          hint: -> { t("helpers.hint.date", date: 2.months.from_now.strftime("%d %m %Y")) },
-          data: { "form-target": "inputText" }
-
-        .clear-form__checkbox
-          = f.govuk_check_box :starts_asap, "true", 0, multiple: false, link_errors: false,
-          data: { action: "click->form#clearListener" }
+      = f.govuk_radio_buttons_fieldset :starts_asap, legend: { text: t("helpers.legend.publishers_job_listing_important_dates_form.starts_on") }, form_group: { data: { controller: "form" } } do
+        = f.govuk_radio_button :starts_asap, "false", link_errors: true, label: { text: t("helpers.legend.publishers_job_listing_important_dates_form.start_date_specific") } do
+          = f.govuk_date_field :starts_on,
+            legend: { text: "Enter date" },
+            hint: -> { t("helpers.hint.date", date: 2.months.from_now.strftime("%d %m %Y")) },
+            data: { "form-target": "inputText" }
+        = f.govuk_radio_button :starts_asap, "true", label: { text: t("helpers.legend.publishers_job_listing_important_dates_form.start_asap") }, data: { action: "click->form#clearListener" }
 
       = f.govuk_submit t("buttons.extend_deadline"), classes: "govuk-!-margin-bottom-5"
 
