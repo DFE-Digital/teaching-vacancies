@@ -65,7 +65,7 @@ module DFESignIn
     (1..number_of_pages).lazy.map do |page|
       response = api_response(page: page)
       if users_nil_or_empty?(response)
-        Rollbar.log(:error, "DfE Sign In API responded with nil users")
+        Sentry.capture_message("DfE Sign In API responded with nil users", level: :error)
         raise error_message_for(response)
       end
 
