@@ -24,8 +24,8 @@ RSpec.describe Kernel do
         expect { subject }.not_to raise_error
       end
 
-      it "notifies Rollbar of errors raised in the block" do
-        expect(Rollbar).to receive(:error).with(an_instance_of(RuntimeError))
+      it "notifies Sentry of errors raised in the block" do
+        expect(Sentry).to receive(:capture_exception).with(an_instance_of(RuntimeError))
         subject
       end
 
