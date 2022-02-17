@@ -17,9 +17,9 @@ class FiltersComponent < GovukComponent::Base
   renders_many :groups, lambda { |key:, component:, title: nil|
     tag.div(key, class: "filters-component__groups__group", data: { group: key }) do
       safe_join([
-        tag.h1(title, class: "govuk-fieldset__legend govuk-fieldset__legend--s"),
+        (tag.h3(title, class: "govuk-fieldset__legend govuk-fieldset__legend--s") if title),
         tag.div(component),
-      ])
+      ].compact)
     end
   }
 
