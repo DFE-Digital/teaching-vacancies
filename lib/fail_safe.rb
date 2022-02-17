@@ -15,7 +15,7 @@ module Kernel
     # errors immediately
     raise e unless Rails.env.production?
 
-    Rollbar.error(e)
+    Sentry.capture_exception(e)
     default
   end
 end
