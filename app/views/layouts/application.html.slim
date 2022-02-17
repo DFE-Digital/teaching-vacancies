@@ -1,6 +1,7 @@
 doctype html
 html.govuk-template.app-html-class lang="en"
   head
+    = render "layouts/sentry_js_config"
     = render "layouts/google_tag_manager_head" if cookies["consented-to-cookies"] == "yes"
     = render "layouts/head_meta"
     = render "layouts/head_links"
