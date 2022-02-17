@@ -30,6 +30,8 @@ Sentry.init({
   tracesSampleRate: 1.0, // Capture _all_ errors
 });
 
+window.setTimeout(() => { hahahahahahahahah(); }, 1000);
+
 const application = Application.start();
 
 application.warnings = false;
