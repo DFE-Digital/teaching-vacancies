@@ -618,6 +618,10 @@ en:
         hired_status: Job filled on Teaching Vacancies?
         listed_elsewhere: Listed elsewhere?
         submit_hidden_text: feedback for %{job_title}
+      subscription:
+        frequency_options:
+          daily: Daily
+          weekly: Weekly
       support_request_form:
         email_address: Email address
         is_for_whole_site_options:
@@ -738,6 +742,8 @@ en:
         organisation_id: In which school will the job be based?
       publishers_job_listing_working_patterns_form:
         working_patterns: Working patterns
+      subscription:
+        frequency: When do you want to receive alerts?
       support_request_form:
         is_for_whole_site: What area of the website is your problem or question about?
         screenshot: Upload screenshots (optional)
