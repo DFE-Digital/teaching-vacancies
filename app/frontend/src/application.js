@@ -1,3 +1,15 @@
+import * as Sentry from "@sentry/browser";
+import { BrowserTracing } from "@sentry/tracing";
+
+Sentry.init({
+  // `_sentry_config` is set in the <head> using application layout
+  dsn: _sentry_config.dsn,
+  environment: _sentry_config.environment,
+  release: _sentry_config.release,
+  integrations: [new BrowserTracing()],
+  tracesSampleRate: 1.0, // Capture _all_ errors
+});
+
 import 'core-js/modules/es.weak-map';
 import 'core-js/modules/es.weak-set';
 import '@stimulus/polyfills';
