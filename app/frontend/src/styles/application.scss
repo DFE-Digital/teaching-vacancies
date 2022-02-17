@@ -38,17 +38,6 @@ $govuk-new-link-styles: true;
 @import 'application/publishers/publisher-landing-page';
 @import 'application/publishers/print-application';
 
-body {
-  .govuk-width-container {
-    @include govuk-media-query($from: desktop) {
-      margin-left: auto;
-      margin-right: auto;
-      max-width: $desktop-container-width;
-      width: 90%;
-    }
-  }
-}
-
 p {
   @include govuk-font(19);
 }
