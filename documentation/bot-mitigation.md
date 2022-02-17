@@ -19,6 +19,6 @@ When form submissions have a recaptcha score below this threshold, we will:
 - invalidate the submission
 - redirect the bot to an /invalid-request page
 - provide an email link with the subject 'Invalid request - %{form name}'
-- log the event to Rollbar
+- log the event to Sentry
 
 This strategy should be monitored and revisited and iterated on to ensure we filter out bots as much as possible while impacting real users as infrequently as possible.
