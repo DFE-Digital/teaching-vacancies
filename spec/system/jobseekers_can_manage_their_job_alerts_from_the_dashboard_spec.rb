@@ -7,13 +7,14 @@ RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
     before { login_as(jobseeker, scope: :jobseeker) }
 
     context "when there are job alerts" do
-      let!(:subscription) { create(:subscription, email: jobseeker.email, search_criteria: { keyword: "Maths" }) }
+      let!(:subscription) { create(:subscription, email: jobseeker.email, search_criteria: { keyword: "Maths" }, frequency: "daily") }
 
       before { visit jobseekers_subscriptions_path }
 
       it "shows job alerts" do
         expect(page).to have_css("h1.govuk-heading-l", text: I18n.t("jobseekers.subscriptions.index.page_title"))
-        expect(page).to have_css(".card-component", count: 1) do |card|
+        expect(page).to have_css(".card-component", count: 1)
+        page.find(:css, ".card-component") do |card|
           expect(card).to have_css(".card-component__header", text: "KeywordMaths")
         end
       end
@@ -27,10 +28,28 @@ RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
 
           expect(page).to have_css("h1.govuk-heading-l", text: I18n.t("jobseekers.subscriptions.index.page_title"))
           expect(page).to have_content(I18n.t("subscriptions.update.success"))
-          expect(page).to have_css(".card-component", count: 1) do |card|
+          expect(page).to have_css(".card-component", count: 1)
+          page.find(:css, ".card-component") do |card|
             expect(card).to have_css(".card-component__header", text: "KeywordMaths")
             expect(card).to have_css(".card-component__header", text: "LocationIn London")
           end
+        end
+      end
+
+      context "when editing the alert frequency using the radio buttons" do
+        it "edits the frequency and redirects to the dashboard" do
+          choose I18n.t(".helpers.label.subscription.frequency_options.weekly")
+          click_button I18n.t("buttons.save")
+
+          expect(page).to have_css("h1.govuk-heading-l", text: I18n.t("jobseekers.subscriptions.index.page_title"))
+          expect(page).to have_content(I18n.t("subscriptions.update.success"))
+          expect(page).to have_css(".card-component", count: 1)
+          page.find(:css, ".card-component") do |card|
+            expect(card).to have_css(".card-component__header", text: "KeywordMaths")
+          end
+          expect(page).to have_checked_field(I18n.t(".helpers.label.subscription.frequency_options.weekly"))
+          expect(page).not_to have_checked_field(I18n.t(".helpers.label.subscription.frequency_options.daily"))
+          expect(subscription.reload.frequency).to eq("weekly")
         end
       end
 

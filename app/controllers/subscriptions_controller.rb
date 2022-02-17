@@ -40,23 +40,20 @@ class SubscriptionsController < ApplicationController
 
   def update
     subscription = Subscription.find_and_verify_by_token(token)
-    @form = Jobseekers::SubscriptionForm.new(subscription_params)
-    @subscription = SubscriptionPresenter.new(subscription)
 
-    if @form.valid?
-      subscription.update(@form.job_alert_params)
-      Jobseekers::SubscriptionMailer.update(subscription.id).deliver_later
-      trigger_subscription_event(:job_alert_subscription_updated, subscription)
-
-      if jobseeker_signed_in?
-        redirect_to jobseekers_subscriptions_path, success: t(".success")
-      else
-        @jobseeker = Jobseeker.find_by(email: subscription.email)
-        store_return_location(jobseekers_subscriptions_path)
-        render :confirm
-      end
+    if updating_frequency?
+      subscription.update(frequency: params.dig(:subscription, :frequency))
+      notify_and_redirect subscription
     else
-      render :edit
+      @form = Jobseekers::SubscriptionForm.new(subscription_params)
+      @subscription = SubscriptionPresenter.new(subscription)
+
+      if @form.valid?
+        subscription.update(@form.job_alert_params)
+        notify_and_redirect subscription
+      else
+        render :edit
+      end
     end
   end
 
@@ -121,5 +118,22 @@ class SubscriptionsController < ApplicationController
 
   def vacancy_id
     params.permit(:vacancy_id)[:vacancy_id]
+  end
+
+  def updating_frequency?
+    params[:subscription].present?
+  end
+
+  def notify_and_redirect(subscription)
+    Jobseekers::SubscriptionMailer.update(subscription.id).deliver_later
+    trigger_subscription_event(:job_alert_subscription_updated, subscription)
+
+    if jobseeker_signed_in?
+      redirect_to jobseekers_subscriptions_path, success: t(".success")
+    else
+      @jobseeker = Jobseeker.find_by(email: subscription.email)
+      store_return_location(jobseekers_subscriptions_path)
+      render :confirm
+    end
   end
 end
