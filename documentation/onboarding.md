@@ -50,5 +50,5 @@ Any team member can invite the new developer to the following services:
 
 * Google Analytics
 * GOV.UK Notify
-* Rollbar
+* Sentry
 * Skylight
