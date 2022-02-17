@@ -8,7 +8,7 @@
 
   .vacancy__banner-links {
     .govuk-grid-column-one-third {
-      @media only screen and (max-width: $big-screen) {
+      @media only screen and (max-width: 1020px) {
         width: 100%;
       }
     }
