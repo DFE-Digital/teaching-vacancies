@@ -20,22 +20,6 @@ In order to generate a new secret key:
 1. You need to generate a different key per environment
 1. Update `SECRET_KEY_BASE` in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/secrets` files
 
-### ROLLBAR_ACCESS_TOKEN
-Used to report server-side errors to Rollbar.
-1. Navigate to: Setting > Project access tokens
-1. Edit the token you want to revoke
-1. Select `Yes, disable this token` and click `Save`
-1. Click `Create a new access token`
-1. Select `post_server_item` and click `Save`
-1. Update `ROLLBAR_ACCESS_TOKEN` in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/secrets` files
-
-### ROLLBAR_CLIENT_ERRORS_ACCESS_TOKEN
-Used to report client-side errors to Rollbar.
-1. Access https://rollbar.com/
-1. Navigate to: Setting > Project access tokens > Create a new access token
-1. Select `post_client_item` and click Save
-1. Update `ROLLBAR_ACCESSROLLBAR_CLIENT_ERRORS_ACCESS_TOKEN_TOKEN` in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/secrets` files
-
 ### DFE_SIGN_IN_PASSWORD and DFE_SIGN_IN_SECRET
 * DFE_SIGN_IN_PASSWORD is used to encrypt JWT tokens to authorise a user with DFE sign-in.
 * DFE_SIGN_IN_SECRET is OAuth2 client secret. It is only know to the application and the authorising server.

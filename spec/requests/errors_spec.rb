@@ -27,8 +27,8 @@ RSpec.describe "Errors" do
   end
 
   describe "GET #invalid_recaptcha" do
-    it "sends the error to Rollbar" do
-      expect(Rollbar).to receive(:error).with("Invalid recaptcha", details: "this form")
+    it "sends the error to Sentry" do
+      expect(Sentry).to receive(:capture_exception).with("Invalid recaptcha")
 
       get invalid_recaptcha_path, params: { form_name: "this form" }
     end
