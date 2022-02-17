@@ -22,10 +22,10 @@ module.exports = {
   "onBeforeScript": null,
   "onReadyScript": "playwright/onReady.js",
   "scenarios": [
-    ...publicScenarios,
+
     {
       "label": "Jobseeker sign in",
-      "url": "http://localhost:3000/jobseekers/sign-in",
+      "url": "https://qa.teaching-vacancies.service.gov.uk/jobseekers/sign-in",
       "delay": 100,
       "hideSelectors": [".profiler-results"],
       "selectors": [
@@ -35,7 +35,7 @@ module.exports = {
     {
       "cookiePath": "config/backstop/cookies.json",
       "label": "Jobseeker my applications page",
-      "url": "http://localhost:3000/jobseekers/job_applications",
+      "url": "https://qa.teaching-vacancies.service.gov.uk/jobseekers/job_applications",
       "hideSelectors": [".profiler-results"],
       "delay": 100,
       "onReadyScript": "tasks/signInJobseeker.js",
@@ -46,7 +46,7 @@ module.exports = {
     {
       "cookiePath": "config/backstop/cookies.json",
       "label": "Jobseeker view application page",
-      "url": "http://localhost:3000/jobseekers/job_applications",
+      "url": "https://qa.teaching-vacancies.service.gov.uk/jobseekers/job_applications",
       "delay": 100,
       "hideSelectors": [".profiler-results"],
       "onReadyScript": "tasks/viewApplication.js",
@@ -57,7 +57,7 @@ module.exports = {
     {
       "cookiePath": "config/backstop/cookies.json",
       "label": "Jobseeker saved jobs page",
-      "url": "http://localhost:3000/jobseekers/saved_jobs",
+      "url": "https://qa.teaching-vacancies.service.gov.uk/jobseekers/saved_jobs",
       "delay": 100,
       "hideSelectors": [".profiler-results"],
       "onReadyScript": "tasks/signInJobseeker.js",
@@ -68,7 +68,7 @@ module.exports = {
     {
       "cookiePath": "config/backstop/cookies.json",
       "label": "Jobseeker view account page",
-      "url": "http://localhost:3000/jobseekers/account",
+      "url": "https://qa.teaching-vacancies.service.gov.uk/jobseekers/account",
       "delay": 100,
       "hideSelectors": [".profiler-results"],
       "onReadyScript": "tasks/signInJobseeker.js",
@@ -78,7 +78,7 @@ module.exports = {
     },
     {
       "label": "Jobseeker sign out",
-      "url": "http://localhost:3000",
+      "url": "https://qa.teaching-vacancies.service.gov.uk",
       "onReadyScript": "tasks/signOutJobseeker.js",
       "delay": 2000,
       "hideSelectors": [".profiler-results"],
@@ -95,7 +95,7 @@ module.exports = {
     },
     // {
     //   "label": "Publisher sign in",
-    //   "url": "http://localhost:3000/publishers/sign-in",
+    //   "url": "https://qa.teaching-vacancies.service.gov.uk/publishers/sign-in",
     //   "hideSelectors": [".profiler-results"],
     //   "onReadyScript": "tasks/signInPublisher.js",
     //   "delay": 1000,
@@ -106,7 +106,7 @@ module.exports = {
     // {
     //   "cookiePath": "config/backstop/cookies.json",
     //   "label": "Jobseeker my applications page",
-    //   "url": "http://localhost:3000/jobseekers/job_applications",
+    //   "url": "https://qa.teaching-vacancies.service.gov.uk/jobseekers/job_applications",
     //   "hideSelectors": [".profiler-results"],
     //   "delay": 200,
     //   "onReadyScript": "tasks/signInJobseeker.js",
@@ -122,7 +122,7 @@ module.exports = {
     "html_report": "visual_regression/html_report",
     "ci_report": "visual_regression/ci_report"
   },
-  "report": ["browser"],
+  "report": ["CI"],
   "engine": "playwright",
   "engineOptions": {
     "args": ["--no-sandbox"],

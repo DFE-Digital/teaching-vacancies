@@ -46,7 +46,7 @@
     "js:test:coverage": "jest --coverage",
     "js:lint": "eslint ./app/frontend/src ./app/components",
     "sass:lint": "yarn stylelint app/frontend/**/*.scss app/components/*/*.scss -q",
-    "visual:test": "backstop test --docker --config='config/backstop/backstop.config.js'",
+    "visual:test": "backstop test --config='config/backstop/backstop.config.js'",
     "visual:approve": "backstop approve --config='config/backstop/backstop.config.js'"
   },
   "jest": {
