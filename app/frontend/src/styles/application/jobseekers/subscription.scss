@@ -1,12 +1,12 @@
 .js-enabled {
-  .subscription {
+  .subscription-card {
     &__frequency-form-submit {
       display: none;
     }
   }
 }
 
-.subscription {
+.subscription-card {
   &__manage-alert-controls {
     align-items: center;
     display: flex;
