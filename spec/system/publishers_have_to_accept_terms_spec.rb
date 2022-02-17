@@ -47,7 +47,7 @@ RSpec.describe "Publishers can accept terms and conditions" do
         visit terms_and_conditions_path
         click_on(I18n.t("nav.sign_out"))
 
-        expect(page).to have_content(I18n.t("devise.sessions.signed_out"))
+        within("nav") { expect(page).to have_content(I18n.t("buttons.sign_in")) }
       end
 
       scenario "without authentication fallback" do
