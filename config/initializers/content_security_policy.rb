@@ -11,7 +11,7 @@ Rails.application.configure do
     development_env_additional_connect_src = %w[http://localhost:3035 ws://localhost:3035] if Rails.env.development?
     policy.connect_src :self,
                        "https://api.postcodes.io",
-                       "https://api.rollbar.com",
+                       "https://*.sentry.io",
                        "https://www.google-analytics.com",
                        *development_env_additional_connect_src # Allow using webpack-dev-server in development
 

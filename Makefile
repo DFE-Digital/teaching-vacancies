@@ -28,7 +28,7 @@ print-env: install-fetch-config ## make -s local print-env > .env
 local: ## local # Same values as the deployed dev environment, adapted for local developmemt
 		$(eval env=dev)
 		$(eval local_override=-d file:terraform/workspace-variables/local_app_env.yml -d file:terraform/workspace-variables/my_app_env.yml)
-		$(eval local_filter=| sed -e '/APP_ROLE=/d' -e '/RAILS_ENV=/d' -e '/ROLLBAR_ENV=/d')
+		$(eval local_filter=| sed -e '/APP_ROLE=/d' -e '/RAILS_ENV=/d')
 
 .PHONY: dev
 dev: ## dev
