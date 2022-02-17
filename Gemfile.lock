@@ -548,6 +548,9 @@ GEM
       sentry-ruby-core (= 5.1.0)
     sentry-ruby-core (5.1.0)
       concurrent-ruby
+    sentry-sidekiq (5.1.0)
+      sentry-ruby-core (~> 5.1.0)
+      sidekiq (>= 3.0)
     shoulda-matchers (5.1.0)
       activesupport (>= 5.2.0)
     sidekiq (6.4.1)
@@ -762,6 +765,7 @@ DEPENDENCIES
   selenium-webdriver
   sentry-rails
   sentry-ruby
+  sentry-sidekiq
   shoulda-matchers
   sidekiq
   sidekiq-cron
