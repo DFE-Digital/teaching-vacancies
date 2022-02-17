@@ -1,0 +1,28 @@
+name: ui test
+
+on:
+  push:
+    branches:
+      - '**'
+    paths-ignore:
+    - 'bigquery/**'
+    - 'documentation/**'
+    - 'terraform/common/**'
+    - 'terraform/monitoring/**'
+    - '**.md'
+
+jobs:
+
+  frontend-tests:
+    name: Run backstop
+
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: run frontend tests and linting
+        run: |
+          yarn install
+          yarn run visual:test
