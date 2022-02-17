@@ -8,14 +8,16 @@ const scenarios = [];
 const abTests = YAML.parse(file).visual;
 
 //purely demo code atm
-Object.values(abTests).forEach((test) => {
+Object.values(abTests).forEach((test, i) => {
   Object.keys(test).forEach((key) => {
     scenarios.push(
       {
         "label": `Home page ${key}`,
-        "url": `http://localhost:3000?ab_test_override[${[Object.keys(abTests)]}]=${key}`,
+        "url": `http://localhost:3000/?ab_test_override[${Object.keys(abTests)[i]}]=${key}`,
         "delay": 100,
+        "readySelector": ".govuk-footer",
         "hideSelectors": [".profiler-results"],
+        
         "selectors": [
           "viewport"
         ]
@@ -28,8 +30,10 @@ scenarios.push(...[
   {
     "label": "Search results",
     "url": "http://localhost:3000/jobs",
+    "readySelector": ".govuk-footer",
     "delay": 100,
     "hideSelectors": [".profiler-results"],
+    
     "selectors": [
       "viewport"
     ]
@@ -37,8 +41,10 @@ scenarios.push(...[
   {
     "label": "Vacancy",
     "url": "http://localhost:3000/jobs",
+    "readySelector": ".govuk-footer",
     "delay": 100,
     "hideSelectors": [".profiler-results"],
+    
     "clickSelector": ".vacancies .govuk-link",
     "selectors": [
       "viewport"
