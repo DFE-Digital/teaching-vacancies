@@ -1,0 +1,2 @@
+= javascript_tag(nonce: true) do
+  | var _sentry_config = { dsn: "#{Sentry.configuration.dsn}",  environment: "#{Rails.application.config.app_role}", release: "#{ENV["COMMIT_SHA"]}" };
