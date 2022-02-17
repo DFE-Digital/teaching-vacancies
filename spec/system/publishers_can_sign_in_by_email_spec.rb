@@ -8,8 +8,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
     within("nav") { click_on I18n.t("buttons.sign_in") }
     click_on I18n.t("buttons.sign_in_publisher")
 
-    expect(page).to have_content(I18n.t("publishers.temp_login.heading"))
-    expect(page).to have_content(I18n.t("publishers.temp_login.please_use_email"))
+    expect(page).to have_content(I18n.t("publishers.login_keys.new.notice"))
   end
 
   context "publisher flow" do
@@ -81,8 +80,6 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
           click_on(I18n.t("nav.sign_out"))
 
           within("nav") { expect(page).to have_content(I18n.t("buttons.sign_in")) }
-
-          expect(page).to have_content(I18n.t("devise.sessions.signed_out"))
 
           # Login link no longer works
           visit login_key_path(login_key)

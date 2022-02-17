@@ -4,6 +4,10 @@ class Publishers::LoginKeysController < ApplicationController
   before_action :redirect_signed_in_publishers, only: %i[new create show]
   before_action :redirect_for_dsi_authentication, only: %i[new create show]
 
+  def new
+    flash.now[:notice] = t(".notice")
+  end
+
   def create
     publisher = Publisher.find_by(email: params.dig(:publisher, :email).downcase.strip)
     send_login_key(publisher: publisher) if publisher

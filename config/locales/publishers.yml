@@ -13,6 +13,11 @@ en:
           heading: You have now unsubscribed
         title: You are now unsubscribed
 
+    login_keys:
+      new:
+        notice: >-
+          There are some technical problems with our sign in page.
+          We’re working on fixing it, but in the meantime you can still access your account.
     new_features:
       show:
         heading: Applications for education support roles
@@ -125,9 +130,6 @@ en:
         heading: Sign in to Teaching Vacancies
         subject: Sign in to Teaching Vacancies
       heading: Temporary login
-      please_use_email: >-
-        There are some technical problems with our sign in page.
-        We’re working on fixing it, but in the meantime you can still access your account.
     vacancies_component:
       awaiting_feedback:
         tab_heading: Jobs awaiting feedback
