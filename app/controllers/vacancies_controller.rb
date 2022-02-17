@@ -2,19 +2,17 @@ class VacanciesController < ApplicationController
   helper_method :allow_sorting?, :job_application
 
   before_action :set_map_display, only: %i[index]
-  before_action :set_vacancies_search_and_vacancies, only: %i[index index_landing]
+  before_action :set_landing_page, only: %i[index]
 
-  after_action :trigger_search_performed_event, only: %i[index index_landing]
+  after_action :trigger_search_performed_event, only: %i[index]
 
-  def index; end
-
-  def index_landing
-    if params[:pretty].present?
-      @landing_page = params[params[:pretty]]
-      @landing_page_translation = "#{params[:pretty]}.#{@landing_page.parameterize.underscore}"
-    end
-
-    render "index"
+  def index
+    @vacancies_search = Search::VacancySearch.new(
+      search_form.to_hash,
+      sort: search_form.sort,
+      page: params[:page],
+    )
+    @vacancies = VacanciesPresenter.new(@vacancies_search.vacancies)
   end
 
   def show
@@ -36,17 +34,16 @@ class VacanciesController < ApplicationController
 
   private
 
-  def set_vacancies_search_and_vacancies
-    @vacancies_search = Search::VacancySearch.new(
-      search_form.to_hash,
-      sort: search_form.sort,
-      page: params[:page],
-    )
-    @vacancies = VacanciesPresenter.new(@vacancies_search.vacancies)
+  def set_landing_page
+    if params[:landing_page_slug].present?
+      @landing_page = LandingPage[params[:landing_page_slug]]
+    elsif params[:location_landing_page_name].present?
+      @landing_page = LocationLandingPage[params[:location_landing_page_name]]
+    end
   end
 
   def search_params
-    return landing_page_search_params if params[:pretty].present? || params[:location_facet].present?
+    return @landing_page.criteria if @landing_page
 
     strip_empty_checkboxes(%i[job_roles subjects phases working_patterns])
     %w[job_role job_roles subjects phases working_patterns].each do |facet|
@@ -54,18 +51,6 @@ class VacanciesController < ApplicationController
     end
     params.permit(:keyword, :location, :radius, :subject, :sort_by,
                   job_role: [], job_roles: [], subjects: [], phases: [], working_patterns: [])
-  end
-
-  def landing_page_search_params
-    # TODO: This is nasty and for now replicates the logic that previously lived in the
-    # before_action `set_params_from_pretty_landing_page_params` and overwrote Rails's request
-    # parameters. It will be reworked in a future PR.
-    {
-      location: params[:location_facet].presence&.titleize,
-      job_roles: params[:job_role].presence&.parameterize&.underscore&.split,
-      phases: params[:education_phase].presence&.parameterize&.split,
-      subject: params[:subject].presence&.tr("-", " ")&.gsub(" and ", " "),
-    }.compact
   end
 
   def search_form
