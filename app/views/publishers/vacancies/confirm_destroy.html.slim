@@ -1,12 +1,12 @@
 - content_for :page_title_prefix, t(".page_title")
 
 - content_for :breadcrumbs do
-  = govuk_back_link text: t("buttons.back"), href: organisation_job_path(vacancy.id), classes: "govuk-!-margin-bottom-7"
+  = govuk_back_link text: t("buttons.back"), href: organisation_job_path(vacancy.id)
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
+    span.govuk-caption-l = "#{vacancy.job_title} at #{vacancy_job_location(vacancy)}"
 
-    h2.govuk-caption-l = "#{vacancy.job_title} at #{vacancy_job_location(vacancy)}"
     h1.govuk-heading-l = t(".page_title")
 
     h3.govuk-heading-m = t(".are_you_sure")
