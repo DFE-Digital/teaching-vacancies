@@ -54,7 +54,7 @@ ruby:
 
   filter_types.insert(1, subject_filters) if current_variant?(:"2022_01_subjects_filters_test", :subjects_filters)
 
-= filters(form: f,
+= filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
   filters: { total_count: @form.total_filters },
   options: { heading_text: "Filter results", remove_buttons: true },
   html_attributes: { tabindex: "-1", id: id }) do |filters_component|

@@ -6,7 +6,7 @@
 .divider-bottom class="govuk-!-margin-top-6 govuk-!-margin-bottom-4"
 
 .plain-styling
-  = filters(form: f,
+  = filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
     options: { remove_buttons: false }) do |filters_component|
       - filters_component.group key: "job_roles", component: f.govuk_collection_check_boxes(:job_roles, @form.job_role_options, :first, :last, small: false, legend: { text: t("jobs.filters.job_roles") }, hint: nil)
       - if current_variant?(:"2022_01_subjects_filters_test", :subjects_filters) || @form.subjects&.any?

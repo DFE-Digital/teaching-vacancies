@@ -7,7 +7,7 @@ RSpec.describe FiltersComponent, type: :component do
 
   let(:kwargs) do
     {
-      form: form,
+      submit_button: form.govuk_submit("apply filters"),
       filters: filters,
       options: options,
     }
