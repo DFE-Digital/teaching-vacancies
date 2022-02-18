@@ -1,4 +1,4 @@
-= tag.div(class: classes, **html_attributes) do
+= tag.div(class: classes, **html_attributes.merge({ data: { controller: "filters" } })) do
 
   .filters-component__heading
     .filters-component__heading__container
@@ -13,7 +13,7 @@
       .filters-component__remove__heading
         .govuk-body class="govuk-!-margin-bottom-0"
           = t("shared.filter_group.current_selected_filters")
-        button.filters-component__link-button.govuk-body.govuk-link id="filters-component-clear-all"
+        button.filters-component__link-button.govuk-body.govuk-link data-filters-target="clear" data-action="click->filters#clear"
           = t("shared.filter_group.clear_all_filters")
 
       = remove_buttons
@@ -22,5 +22,4 @@
     - groups.each do |group|
       = group
 
-  .filters-component__submit
-    = form.govuk_submit t("buttons.apply_filters"), classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2 filters-component__submit-button"
+  = submit_button
