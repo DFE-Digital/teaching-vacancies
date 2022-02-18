@@ -258,6 +258,7 @@ en:
       job_roles: Current jobs by role
       send_responsible: Current jobs with SEND responsibilities
       subjects: Current jobs by subject
+      working_patterns: Current jobs by working pattern
 
   pages:
     accessibility:
