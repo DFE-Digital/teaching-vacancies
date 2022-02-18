@@ -1,18 +1,30 @@
+ruby:
+  filter_types = [
+    {
+      legend: "filter group",
+      key: "preview_group_1",
+      selected: %w[option_1 option_2],
+      options: [%w[option_1 option1], %w[option_2 option2]],
+      value_method: :first,
+      selected_method: :last,
+    },
+    {
+      legend: "filter group",
+      key: "preview_group_2",
+      selected: %w[option_1 option_2],
+      options: [%w[option_1 option1], %w[option_2 option2]],
+      value_method: :first,
+      selected_method: :last,
+    },
+  ]
+
+- content_for :page_title_prefix do
+  | Component preview
+
 = form_for @preview_form, url: preview_view_component_path("#{@preview.preview_name}/#{@example_name}"), html: { method: "get" } do |f|
-  .govuk-grid-column-three-quarters
-
-    = render "design_system/header", preview_name: @preview_name
-
-    - @preview_variants.each do |variant|
-      div class="govuk-!-margin-bottom-9"
-        - if @preview_variants.count > 1
-          h3.govuk-heading-m = t("component.#{@preview_name}.#{variant}.title")
-          p.govuk-body = t("component.#{@preview_name}.#{variant}.description")
-        = render(@preview_class.new(form: f, options: { remove_buttons: @preview_form.remove_buttons, close_all: @preview_form.close_all }, filters: { total_count: 4, title: "Filters title" }, items: [{ title: "Group title", key: "preview_key", search: @preview_form.search, scroll: @preview_form.scroll, attribute: :options, selected: %w[option_1 option_2 option_3 option_4 option_5], options: [%w[option_1 one], %w[option_2 two], %w[option_3 three], %w[option_4 four], %w[option_5 five]], value_method: :first, text_method: :last, selected_method: :last, small: @preview_form.small }]))
-
-        h3.govuk-heading-s = t("heading.code")
-        pre
-          code = "render(#{@preview_class.name}.new(\n\tform: f <GOVUKDesignSystemFormBuilder> instance,\n\toptions: { remove_buttons: #{@preview_form.remove_buttons}, close_all: #{@preview_form.close_all} },\n\tfilters: { total_count: 5, title: 'Filters title' },\n\titems: [\n\t\t{\n\t\t\ttitle: 'Group title',\n\t\t\tkey: 'preview_key',\n\t\t\tsearch: #{@preview_form.search},\n\t\t\tscroll: #{@preview_form.scroll},\n\t\t\tattribute: :groups,\n\t\t\tselected: %w[option_1 option_2 option_3 option_4 option_5],\n\t\t\toptions: [%w[option_1 one], %w[option_2 two], %w[option_3 three], %w[option_4 four], %w[option_5 five]],\n\t\t\tvalue_method: :first,\n\t\t\ttext_method: :last,\n\t\t\tselected_method: :last,\n\t\t\tsmall: #{@preview_form.small}\n\t\t}\n\t]\n))"
-
-    - if @preview_interactive_options
-      = render "design_system/option_controls", form: f
+  = render(@preview_class.new(submit_button: f.govuk_submit(t("buttons.apply_filters")), filters: { total_count: 1 }, options: { heading_text: "Filters preview", remove_buttons: true })) do |filters_component|
+    - filters_component.remove_buttons do |rb|
+      - filter_types.each do |filter_type|
+        - rb.group(**filter_type)
+    - filters_component.group key: "preview_group_1", component: f.govuk_collection_check_boxes(:options, filter_types[0][:options], :first, :last, small: true, legend: { text: "filter group" }, hint: nil)
+    - filters_component.group key: "preview_group_2", component: f.govuk_collection_check_boxes(:options, filter_types[1][:options], :first, :last, small: true, legend: { text: "filter group" }, hint: nil)

@@ -41,6 +41,7 @@
 
   &__remove {
     box-shadow: none;
+    display: none;
     padding: govuk-spacing(1) 0;
     position: relative;
 
@@ -133,20 +134,20 @@
     }
   }
 
-  &__submit {
+  button[type='submit'] {
     bottom: 0;
-    display: flex;
     position: sticky;
-
-    .govuk-button {
-      width: 100%;
-    }
+    width: 100%;
   }
 }
 
 .js-enabled {
   .filters-component {
-    &__submit {
+    &__remove {
+      display: block;
+    }
+
+    button[type='submit'] {
       @include govuk-media-query($from: desktop) {
         display: none;
       }
@@ -158,7 +159,7 @@
   background: none;
   padding: 0;
 
-  &__submit {
+  button[type='submit'] {
     display: none;
   }
 
