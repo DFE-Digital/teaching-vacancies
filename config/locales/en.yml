@@ -6,7 +6,7 @@ en:
   app:
     back_to_homepage: Return to homepage
     description: >-
-      On Teaching Vacancies, early career teachers, experienced teachers and leaders can search for a job at a school or Trust in England and set up job alerts.
+      Find your next teaching job. Apply for jobs in schools and stay up-to-date with local teaching jobs on Teaching Vacancies.
     govuk: GOV.UK
     menu: Menu
     skip_link:
@@ -263,10 +263,16 @@ en:
     accessibility:
       page_description:
         Find out which areas of Teaching Vacancies are not yet fully accessible and when we plan to correct each issue.
+    dsi-account-request:
+      page_description: >-
+        Find out how to request an account so you can list jobs for free on Teaching Vacancies. Instructions for users with or without a DfE Sign-in account.
     privacy-policy:
       page_description: >-
         Find out what personal information Teaching Vacancies collects,
         how it is used, how long it is kept and what your data protection rights are.
+    sign-in:
+      page_description: >-
+        Sign in to the official place to find teaching jobs in England. Apply for jobs as a jobseeker, or advertise and manage job listings for your school.
     terms-and-conditions:
       page_description:
         Read Teaching Vacancies' terms of use for jobseekers and schools. You must agree to these to use the service.
@@ -482,6 +488,8 @@ en:
 
   support_requests:
     new:
+      page_description: >-
+        Are you experiencing difficulties using Teaching Vacancies? Ask a question or report a problem and we'll resolve your issue as soon as possible.
       screenshot_description: You can help us undestand your query by providing images of your screen.
       intro_html: |
         <p>
@@ -530,6 +538,8 @@ en:
 
   vacancies:
     index:
+      page_description: >-
+        Search for teaching jobs near you and other school jobs including headteacher and teaching assistant. Visit the official place to find teaching jobs.
       no_polygons: This search didn't use any polygons.
       wider_search_suggestions:
         heading:
