@@ -32,6 +32,7 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.3",
     "jest": "^27.5.1",
+    "jest-puppeteer": "^6.1.0",
     "postcss": "^8.4.8",
     "stylelint": "^14.6.0",
     "stylelint-config-sass-guidelines": "^9.0.1",
@@ -56,6 +57,7 @@
     "postvisual:test:approve": "node app/frontend/backstop/tasks/clean.js"
   },
   "jest": {
+    "preset": "jest-puppeteer",
     "testMatch": [
       "<rootDir>/app/frontend/src/**/*.test.js",
       "<rootDir>/app/components/**/*.test.js"

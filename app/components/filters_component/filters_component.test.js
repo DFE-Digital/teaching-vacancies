@@ -1,92 +1,50 @@
-/**
- * @jest-environment jsdom
- */
-
-import { Application } from '@hotwired/stimulus';
-
-import FiltersController from './filters_component';
-
-const initialiseStimulus = () => {
-  const application = Application.start();
-  application.register('filters', FiltersController);
-};
+/* global page:readonly */
+import FiltersComponent from './filters_component';
 
 describe('filters view component', () => {
-  beforeAll(() => {
-    initialiseStimulus();
-
-    document.body.innerHTML = `<form data-controller="form"><div class="filters-component" data-controller="filters">
-    <button data-action="click->filters#clear" data-filters-target="clear" id="clear">Clear filters</button>
-    <ul>
-    <li><button data-action="click->filters#remove" data-group="group_1" data-key="option_1">option1</button></li>
-    <li><button data-action="click->filters#remove" data-group="group_1" data-key="option_2">option2</button></li>
-    </ul>
-    <ul>
-    <li><button data-action="click->filters#remove" data-group="group_2" data-key="option_1">option1</button></li>
-    <li><button data-action="click->filters#remove" data-group="group_2" data-key="option_2">option2</button></li>
-    </ul>
-    <div data-filters-target="group" data-group="group_1">
-      <input class="govuk-checkboxes__input" type="checkbox" value="option_1" />
-      <input class="govuk-checkboxes__input" type="checkbox" value="option_2" />
-    </div>
-    <div data-filters-target="group" data-group="group_2">
-      <input class="govuk-checkboxes__input" type="checkbox" value="option_1" />
-      <input class="govuk-checkboxes__input" type="checkbox" value="option_2" />
-    </div>
-    </div>
-    </form>`;
+  beforeAll(async () => {
+    await page.goto('http://localhost:3000/components/filters_component/preview');
   });
 
   describe('clear all filters control', () => {
-    it('should uncheck all filters', () => {
-      const filterCheckboxes = Array.from(document.getElementsByTagName('input'));
-      const [form] = document.getElementsByTagName('form');
-
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
+    it('should uncheck all filters', async () => {
+      await page.evaluate(() => {
+        document.getElementById('new_filters_component_preview_form').addEventListener('submit', (e) => {
+          e.preventDefault();
+        });
       });
 
-      filterCheckboxes.forEach((checkbox) => {
-        expect(checkbox.checked).toBe(false);
-      });
+      await page.$$eval(`.${FiltersComponent.CHECKBOX_CLASS_SELECTOR}`, (el) => el[0].click());
+      let [checkboxChecked] = await page.$$eval(`.${FiltersComponent.CHECKBOX_CLASS_SELECTOR}`, (el) => el.map((cb) => cb.checked));
 
-      filterCheckboxes.forEach((checkbox) => {
-        checkbox.checked = true;
-      });
+      expect(checkboxChecked).toBe(true);
 
-      filterCheckboxes.forEach((checkbox) => {
-        expect(checkbox.checked).toBe(true);
-      });
+      await page.$$eval(`.${FiltersComponent.CHECKBOX_CLASS_SELECTOR}`, (el) => el[0].click());
+      [checkboxChecked] = await page.$$eval(`.${FiltersComponent.CHECKBOX_CLASS_SELECTOR}`, (el) => el.map((cb) => cb.checked));
 
-      document.getElementById('clear').click();
-
-      filterCheckboxes.forEach((checkbox) => {
-        expect(checkbox.checked).toBe(false);
-      });
+      expect(checkboxChecked).toBe(false);
     });
   });
 
   describe('remove button for specific filter control', () => {
-    it('should uncheck corresponding filter', () => {
-      const [form] = document.getElementsByTagName('form');
-
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
+    it('should uncheck corresponding filter', async () => {
+      await page.evaluate(() => {
+        document.getElementById('new_filters_component_preview_form').addEventListener('submit', (e) => {
+          e.preventDefault();
+        });
       });
 
-      const filterCheckbox1 = document.querySelector('[data-group="group_1"] input[value="option_1"]');
-      const filterCheckbox2 = document.querySelector('[data-group="group_2"] input[value="option_2"]');
+      await page.$$eval(`.${FiltersComponent.CHECKBOX_CLASS_SELECTOR}`, (el) => el[1].click());
+      let checkboxesChecked = await page.$$eval(`.${FiltersComponent.CHECKBOX_CLASS_SELECTOR}`, (el) => el.map((cb) => cb.checked));
 
-      filterCheckbox1.checked = true;
-      filterCheckbox2.checked = true;
+      expect(checkboxesChecked[0]).toBe(false);
+      expect(checkboxesChecked[1]).toBe(true);
 
-      const [removeGroup1, removeGroup2] = Array.from(document.getElementsByTagName('ul'));
+      await page.$$eval(FiltersComponent.CLEAR_BUTTON_SELECTOR, (el) => el[0].click());
 
-      removeGroup1.querySelector('button[data-key="option_1"]').click();
-      expect(filterCheckbox1.checked).toBe(false);
-
-      removeGroup2.querySelector('button[data-key="option_2"]').click();
-      expect(filterCheckbox2.checked).toBe(false);
+      checkboxesChecked = await page.$$eval(`.${FiltersComponent.CHECKBOX_CLASS_SELECTOR}`, (el) => el.map((cb) => cb.checked));
+      expect(checkboxesChecked[0]).toBe(false);
+      expect(checkboxesChecked[1]).toBe(false);
     });
   });
 });

@@ -7,6 +7,8 @@ const FiltersComponent = class extends Controller {
 
   static CHECKBOX_CLASS_SELECTOR = 'govuk-checkboxes__input';
 
+  static CLEAR_BUTTON_SELECTOR = '.filters-component__heading-link-button';
+
   connect() {
     if (document.documentElement.clientWidth <= FiltersComponent.MOBILE_BREAKPOINT) {
       this.mobileBehaviour();

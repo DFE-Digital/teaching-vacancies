@@ -1,4 +1,4 @@
-= tag.div(class: classes, **html_attributes) do
+= tag.div(class: classes, **html_attributes.merge({ data: { controller: "filters" } })) do
 
   .filters-component__heading
     - if options[:heading_text]
