@@ -13,7 +13,7 @@
       = render "shared/error_messages", model: @job_application, presenter: ErrorSummaryPresenter.new(@job_application.errors)
 
     - if current_jobseeker.job_applications.not_draft.none?
-      .govuk-caption-m
+      span.govuk-caption-m
         = t("jobseekers.job_applications.current_step", current: step_process.current_step_group_number, total: step_process.total_step_groups)
 
     h2.govuk-heading-l = t(".heading")

@@ -2,11 +2,10 @@
 
 .govuk-grid-row
   .govuk-grid-column-full
-    span.govuk-caption-l class="govuk-!-margin-bottom-1"
-      = vacancy.job_title
+    span.govuk-caption-l = vacancy.job_title
 
     h1.govuk-heading-xl class="govuk-!-margin-bottom-5"
-        = vacancy.hired_status.nil? ? t(".heading") : t(".provided.heading")
+      = vacancy.hired_status.nil? ? t(".heading") : t(".provided.heading")
 
     .govuk-grid-column-two-thirds class="govuk-!-padding-left-0"
       - if vacancy.hired_status.nil?
