@@ -2,10 +2,10 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    h2.govuk-heading-m class="govuk-!-margin-bottom-0"
-      = job_application.name
-    .govuk-caption-l
+    span.govuk-caption-l
       = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
+
+    h2.govuk-heading-m = job_application.name
 
     h1.govuk-heading-xl class="govuk-!-margin-top-5 govuk-!-margin-bottom-5" = t(".heading")
 

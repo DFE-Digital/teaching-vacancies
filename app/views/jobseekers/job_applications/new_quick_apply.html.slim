@@ -1,12 +1,10 @@
 - content_for :page_title_prefix, t(".title")
 
-.govuk-grid-row class="govuk-!-margin-top-7"
-  .govuk-grid-column-full
-    .govuk-caption-l = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
-    h2.govuk-heading-xl = t("jobseekers.job_applications.heading")
+span.govuk-caption-l = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
+h2.govuk-heading-xl = t("jobseekers.job_applications.heading")
 
 .govuk-grid-row
-  .govuk-grid-column-two-thirds class="govuk-!-margin-bottom-5"
+  .govuk-grid-column-two-thirds
     h1.govuk-heading-l = t(".heading")
     p.govuk-body = t(".description1")
     p.govuk-body = t(".description2")

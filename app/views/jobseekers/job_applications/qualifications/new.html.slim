@@ -2,7 +2,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    .govuk-caption-l = t(".caption")
+    span.govuk-caption-l = t(".caption")
     h1.govuk-heading-xl = t(".heading.#{category}")
 
     = form_for form, url: jobseekers_job_application_qualifications_path(job_application, category: category), method: :post do |f|
