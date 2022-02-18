@@ -5,10 +5,10 @@
                                      "#{vacancy.job_title}": organisation_job_job_applications_path(vacancy.id),
                                      "#{job_application.name}": "" }
 
-.govuk-caption-l
+span.govuk-caption-l
   = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
 
-h1.govuk-heading-xl class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
+h1.govuk-heading-xl class="govuk-!-margin-bottom-5"
   = job_application.name
 
 .application-status class="govuk-!-display-none-print"
