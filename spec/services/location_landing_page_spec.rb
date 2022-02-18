@@ -17,8 +17,9 @@ RSpec.describe LocationLandingPage do
   end
 
   describe ".exists?" do
-    it "returns whether the location polygon exists" do
+    it "returns whether a landing page exists for the given location name" do
       expect(described_class.exists?("narnia")).to be(true)
+      expect(described_class.exists?("Narnia")).to be(false)
       expect(described_class.exists?("blahrnia")).to be(false)
     end
   end
