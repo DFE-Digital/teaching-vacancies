@@ -197,6 +197,33 @@ en:
       heading: "%{count} Spanish teacher jobs"
       meta_description: "Search for Spanish teacher jobs near you on Teaching Vacancies. Find the latest full time and part time jobs for spanish teachers in schools across England."
 
+    ### Working patterns
+    flexible-working-jobs-in-schools:
+      name: "Flexible working"
+      title: "Flexible Working Jobs in Schools"
+      heading: "%{count} flexible working jobs in schools"
+      meta_description: "The latest jobs in schools near you that offer flexible working. Find roles that allow you to work varied hours to suit your individual circumstances."
+    full-time-school-jobs:
+      name: "Full time"
+      title: "Full Time Jobs in Schools"
+      heading: "%{count} full time jobs in schools"
+      meta_description: "Discover thousands of full time jobs in schools. Teaching Vacancies has full time jobs for teachers, headteachers, SEND coordinators and more."
+    part-time-school-jobs:
+      name: "Part time"
+      title: "Part Time Teaching & School Jobs"
+      heading: "%{count} part time teacher and school jobs"
+      meta_description: "Find and apply for part time teacher jobs near you. Discover jobs in local schools that offer flexible hours for teachers, teaching assistants and more."
+    school-job-shares:
+      name: "Job share"
+      title: "Job Shares for Teachers & School Staff"
+      heading: "%{count} job share vacancies for teachers and school staff"
+      meta_description: "Find a school job that works with your schedule. Apply on Teaching Vacancies for job share jobs for teachers, headteachers and teaching assistants."
+    school-term-time-jobs:
+      name: "Term time"
+      title: "School Term Time Jobs"
+      heading: "%{count} school term time jobs"
+      meta_description: "Looking for work that fits around school term time? Discover hundreds of term time only jobs in schools near you on Teaching Vacancies."
+
     ################################################################################################
     # The following fake landing page is used in automated tests, please don't remove it and make
     # sure to add all real landing pages above.
