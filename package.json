@@ -31,6 +31,7 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.3",
     "jest": "^27.5.1",
+    "jest-puppeteer": "^6.1.0",
     "stylelint": "^13.13.1",
     "stylelint-config-sass-guidelines": "^8.0.0",
     "stylelint-config-standard": "^22.0.0",
@@ -49,6 +50,7 @@
     "visual:approve": "backstop approve --config='config/backstop/backstop.config.js'"
   },
   "jest": {
+    "preset": "jest-puppeteer",
     "testMatch": [
       "<rootDir>/app/frontend/src/**/*.test.js",
       "<rootDir>/app/components/**/*.test.js"
