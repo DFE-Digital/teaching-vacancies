@@ -8,12 +8,7 @@
 
 - if subscriptions.any?
   .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      - if subscriptions.many?
-        = render SortComponent.new path: method(:jobseekers_subscriptions_path), sort: sort
-      p.empty
-
-    .govuk-grid-column-one-third.create-alert__button
+    .govuk-grow-column-full.create-alert__button
       = govuk_button_link_to t(".button_create"), new_subscription_path
 
 .govuk-grid-row
@@ -25,13 +20,16 @@
               - card.header do
                 - subscription.filtered_search_criteria.each_pair do |filter, value|
                   = tag.div(card.labelled_item(filter.humanize, value))
+                .subscription-card__manage-alert-controls
+                  = govuk_button_link_to(t(".link_manage"), edit_subscription_path(subscription.token), secondary: true)
+                  = govuk_link_to(t(".link_unsubscribe"), unsubscribe_subscription_path(subscription.token))
 
               - card.body do
-                = tag.div(card.labelled_item(t(".receiving"), t(".frequency.#{subscription.frequency}")))
-
-              - card.action_item link: govuk_link_to(t(".link_manage"), edit_subscription_path(subscription.token))
-              - card.action_item link: govuk_link_to(t(".link_unsubscribe"), unsubscribe_subscription_path(subscription.token))
-
+                .subscription-card__frequency-form data-controller="form"
+                  = form_for subscription, url: subscription_path(subscription.token), html: { method: "patch" } do |f|
+                    = f.govuk_collection_radio_buttons :frequency, Subscription.frequencies.keys, :to_s, form_group: { data: { action: "change->form#submitListener" } }, inline: true
+                    .subscription-card__frequency-form-submit
+                      = f.govuk_submit t("buttons.save"), secondary: true
       - else
         = render EmptySectionComponent.new title: t(".zero_subscriptions_title") do
           = t(".zero_subscriptions_body_html", link_to: govuk_link_to(t(".link_create"), new_subscription_path))
