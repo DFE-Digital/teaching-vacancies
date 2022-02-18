@@ -138,6 +138,23 @@ shared:
     subjects:
       - Spanish
 
+  ### Working patterns
+  flexible-working-jobs-in-schools:
+    working_patterns:
+      - flexible
+  full-time-school-jobs:
+    working_patterns:
+      - full_time
+  part-time-school-jobs:
+    working_patterns:
+      - part_time
+  school-job-shares:
+    working_patterns:
+      - job_share
+  school-term-time-jobs:
+    working_patterns:
+      - term_time
+
 ####################################################################################################
 # The data below is only used in automated tests, make sure you add your landing pages to the
 # `shared` section above!
