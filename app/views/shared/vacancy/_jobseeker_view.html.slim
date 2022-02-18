@@ -8,10 +8,8 @@
               colour: "orange",
               classes: "govuk-!-margin-bottom-2 govuk-!-margin-top-4"
 
-h1.govuk-heading-xl class="govuk-!-margin-bottom-2"
-  = @vacancy.job_title
-h2.govuk-caption-l.job-caption class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
-  = vacancy_full_job_location(@vacancy)
+span.govuk-caption-l.job-caption = vacancy_full_job_location(@vacancy)
+h1.govuk-heading-xl = @vacancy.job_title
 
 .govuk-grid-row.vacancy__banner-links
   - if @vacancy.enable_job_applications? && @vacancy.expires_at.future?
