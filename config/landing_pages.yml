@@ -41,16 +41,16 @@ shared:
 
   ### Phases
   primary-school-jobs:
-    readable_phases:
+    phases:
       - primary
   middle-school-jobs:
-    readable_phases:
+    phases:
       - middle
   secondary-school-jobs:
-    readable_phases:
+    phases:
       - secondary
   16-19-education-provider-jobs:
-    readable_phases:
+    phases:
       - "16-19"
 
   ### Subjects
