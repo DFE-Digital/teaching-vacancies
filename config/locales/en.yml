@@ -152,7 +152,6 @@ en:
     unprocessable_entity: We're unable to process your request.
 
   footer:
-    create_a_job_alert: Create a job alert
     headings:
       feedback: Feedback
       for_job_seekers: Job seekers
@@ -164,8 +163,6 @@ en:
     request_support: Get help or report a problem
     search_teaching_vacancies: Find a job
     service_support: Get support
-    sign_in: Sign in
-    your_account: My account
 
   general_feedbacks:
     create:
@@ -207,15 +204,15 @@ en:
   nav:
     create_a_job_alert: Create a job alert
     find_job: Find a teaching job
-    for_schools: For schools
-    notifications_index_link_html:
+    manage_jobs: Manage jobs
+    manage_settings: Manage settings
+    notifications_html:
       zero: Notifications
       one: Notifications <span class="count-badge">%{count}<span class="govuk-visually-hidden"> unread</span></span>
       other: Notifications <span class="count-badge">%{count}<span class="govuk-visually-hidden"> unread</span></span>
-    school_group_index_link: Schools in your %{organisation_type}
-    school_page_link: Manage jobs
-    sign_in: List a teaching job
+    sign_in: Sign in
     sign_out: Sign out
+    your_account: My account
 
   number:
     currency:
