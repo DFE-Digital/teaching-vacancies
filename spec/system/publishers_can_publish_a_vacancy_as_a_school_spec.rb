@@ -10,8 +10,6 @@ RSpec.describe "Creating a vacancy" do
     visit organisation_path
 
     expect(page).to have_content("Salisbury School")
-    expect(page).to have_content(/#{school.address}/)
-    expect(page).to have_content(/#{school.town}/)
 
     click_on I18n.t("buttons.create_job")
 

@@ -1,0 +1,31 @@
+- content_for :page_title_prefix, current_organisation.name
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l = t(".title", organisation_type: organisation_type_basic(current_organisation))
+
+    h2.govuk-heading-m.govuk-heading--summary-list
+      = t("schools.info", organisation: current_organisation.name)
+
+    = govuk_summary_list do |summary_list|
+      - summary_list.row do |row|
+        - row.key text: t("schools.description")
+        - row.value text: current_organisation.description.presence || "Not provided"
+        - row.action text: change_description(current_organisation), href: edit_publishers_school_path(current_organisation), classes: "govuk-link--no-visited-state"
+
+      - summary_list.row do |row|
+        - row.key text: t("schools.address")
+        - row.value text: full_address(current_organisation)
+
+      - summary_list.row do |row|
+        - row.key text: t("schools.school_age")
+        - row.value text: age_range(current_organisation)
+
+      - summary_list.row do |row|
+        - row.key text: t("schools.type")
+        - row.value text: current_organisation.school_type
+
+      - summary_list.row do |row|
+        - row.key text: t("school_groups.website", organisation_type: organisation_type_basic(current_organisation).humanize)
+        - row.value text: organisation_url(current_organisation) ? open_in_new_tab_link_to(organisation_url(current_organisation), organisation_url(current_organisation), class: "wordwrap") : t("jobs.not_defined")
+        - row.action text: change_website_url(current_organisation), href: edit_publishers_school_path(current_organisation), classes: "govuk-link--no-visited-state"
