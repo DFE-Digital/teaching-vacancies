@@ -1,0 +1,23 @@
+- content_for :page_title_prefix, @organisation.name
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l = t(".title", organisation_type: organisation_type_basic(@organisation))
+
+    p = t(".description", organisation_type: organisation_type_basic(@organisation))
+
+    h2.govuk-heading-m.govuk-heading--summary-list = @organisation.name
+
+    = render "organisation", organisation: @organisation
+
+    h2.govuk-heading-m
+      = t(".schools", count: @organisation.schools.not_closed.count)
+
+    - @organisation.schools.not_closed.order(:name).each do |school|
+      = govuk_details summary_text: school.name.titlecase,
+                      text: render("organisation", organisation: school),
+                      html_attributes: { data: { id: school.id } }
+
+  .govuk-grid-column-one-third
+    h3.govuk-heading-m = t(".missing_information_title")
+    p = t(".missing_information_description_html", organisation_type: organisation_type_basic(@organisation), mail_to: govuk_mail_to(t("help.email"), t(".contact_support")))
