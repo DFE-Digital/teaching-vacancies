@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Job applications" do
-  let(:organisation) { build(:school) }
+  let(:organisation) { create(:school) }
   let(:vacancy) { create(:vacancy, organisations: [organisation]) }
   let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
   let(:publisher) { create(:publisher, accepted_terms_at: 1.day.ago) }
