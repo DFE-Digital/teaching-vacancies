@@ -4,7 +4,7 @@
     = govuk_summary_list do |summary_list|
       - summary_list.row do |row|
         - row.key text: t("schools.description")
-        - row.value text: safe_join([tag.div(truncate(school.description, length: 130), class: "govuk-body"), tag.div(govuk_link_to(t("organisation.view_more_or_change"), edit_organisation_school_path(school), class: "govuk-link--no-visited-state govuk-body"))])
+        - row.value text: safe_join([tag.div(truncate(school.description, length: 130), class: "govuk-body"), tag.div(govuk_link_to(t("organisation.view_more_or_change"), edit_publishers_school_path(school), class: "govuk-link--no-visited-state govuk-body"))])
 
       - summary_list.row do |row|
         - row.key text: t("schools.address")
@@ -21,7 +21,7 @@
       - summary_list.row do |row|
         - row.key text: t("schools.website")
         - row.value text: organisation_url(school)
-        - row.action { safe_join([tag.div(govuk_link_to(t("buttons.change"), edit_organisation_school_path(school)), class: "govuk-link--no-visited-state"), tag.span(t("publishers.organisations.aria_change_website", organisation_type: organisation_type_basic(school)), class: "govuk-visually-hidden")]) }
+        - row.action { safe_join([tag.div(govuk_link_to(t("buttons.change"), edit_publishers_school_path(school)), class: "govuk-link--no-visited-state"), tag.span(t("publishers.organisations.aria_change_website", organisation_type: organisation_type_basic(school)), class: "govuk-visually-hidden")]) }
 
       - summary_list.row do |row|
         - row.key text: t("schools.urn")
