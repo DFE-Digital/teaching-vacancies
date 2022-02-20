@@ -8,7 +8,7 @@ module NavigationsHelper
   end
 
   def schools_in_your_trust_active?
-    request.original_fullpath =~ %r{^/organisation/schools}
+    request.original_fullpath =~ %r{^/publishers/schools}
   end
 
   def your_account_active?

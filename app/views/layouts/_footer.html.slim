@@ -22,9 +22,9 @@
             = link_to t("footer.search_teaching_vacancies"), root_url, class: "govuk-footer__link"
           li.govuk-footer__list-item
             - if jobseeker_signed_in?
-              = link_to t("footer.create_a_job_alert"), jobseekers_account_path, class: "govuk-footer__link"
+              = link_to t("nav.create_a_job_alert"), jobseekers_account_path, class: "govuk-footer__link"
             - else
-              = link_to t("footer.sign_in"), new_jobseeker_session_path, class: "govuk-footer__link"
+              = link_to t("nav.sign_in"), new_jobseeker_session_path, class: "govuk-footer__link"
 
       .govuk-grid-column-three-quarters
         h2.govuk-footer__heading.govuk-heading-m
@@ -37,4 +37,4 @@
               = link_to t("footer.manage_job_listings"), organisation_path, class: "govuk-footer__link"
           - else
             li.govuk-footer__list-item
-              = link_to t("footer.sign_in"), new_publisher_session_path, class: "govuk-footer__link"
+              = link_to t("nav.sign_in"), new_publisher_session_path, class: "govuk-footer__link"

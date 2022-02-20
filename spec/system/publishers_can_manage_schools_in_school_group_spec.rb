@@ -2,17 +2,14 @@ require "rails_helper"
 
 RSpec.shared_examples "a successful edit" do
   it "allows users to manage the schools and school group details" do
-    visit organisation_schools_path
+    visit publishers_schools_path
 
-    expect(page).to have_content(I18n.t("publishers.organisations.schools.index.title",
-                                        organisation_type: organisation_type_basic(school_group)))
+    expect(page).to have_content(I18n.t("nav.manage_settings"))
     expect(page).to have_content(school_group.name)
-    expect(page).to have_content(
-      I18n.t("publishers.organisations.schools.index.schools", count: school_group.schools.not_closed.count),
-    )
+    expect(page).to have_content(I18n.t("publishers.schools.index.schools", count: school_group.schools.not_closed.count))
     expect(page).not_to have_content("Closed school")
 
-    visit edit_organisation_school_path(school_group)
+    visit edit_publishers_school_path(school_group)
 
     expect(page).to have_content(school_group.name)
 
@@ -23,9 +20,9 @@ RSpec.shared_examples "a successful edit" do
     expect(page).to have_content("New description of the trust")
     expect(page).to have_content("Details updated for #{school_group.name}")
     expect(page).to have_content("https://www.this-is-a-test-url.example.com")
-    expect(page.current_path).to eq(organisation_schools_path)
+    expect(page.current_path).to eq(publishers_schools_path)
 
-    visit edit_organisation_school_path(school1)
+    visit edit_publishers_school_path(school1)
 
     fill_in "publishers_organisation_form[description]", with: "New description of the school"
     fill_in "publishers_organisation_form[website]", with: "https://www.this-is-a-test-url.example.com"
@@ -34,7 +31,7 @@ RSpec.shared_examples "a successful edit" do
     expect(page).to have_content("New description of the school")
     expect(page).to have_content("https://www.this-is-a-test-url.example.com")
     expect(page).to have_content("Details updated for #{school1.name}")
-    expect(page.current_path).to eq(organisation_schools_path)
+    expect(page.current_path).to eq(publishers_schools_path)
   end
 end
 
