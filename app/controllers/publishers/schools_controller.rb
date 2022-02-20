@@ -1,4 +1,4 @@
-class Publishers::Organisations::SchoolsController < Publishers::BaseController
+class Publishers::SchoolsController < Publishers::BaseController
   before_action :set_redirect_path, only: %i[edit update]
   before_action :set_organisation, only: %i[edit update]
 
@@ -31,7 +31,7 @@ class Publishers::Organisations::SchoolsController < Publishers::BaseController
   end
 
   def set_redirect_path
-    @redirect_path = current_organisation.school? ? organisation_path : organisation_schools_path
+    @redirect_path = current_organisation.school? ? organisation_path : publishers_schools_path
   end
 
   def organisation_params
