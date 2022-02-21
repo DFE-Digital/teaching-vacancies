@@ -35,6 +35,21 @@ RSpec.describe LandingPage do
     end
   end
 
+  describe ".matching" do
+    it "returns the first landing page exactly matching the given criteria, or nil if none matches" do
+      expect(
+        described_class
+          .matching(working_patterns: %w[part_time], subjects: %w[Potions Sorcery])
+          .slug,
+      ).to eq("part-time-potions-and-sorcery-teacher-jobs")
+
+      # Do not find based on partially matching criteria:
+      expect(described_class.matching(subjects: %w[Potions Sorcery])).to be_nil
+
+      expect(described_class.matching(foo: %w[bar])).to be_nil
+    end
+  end
+
   describe "#count" do
     it "performs a search and returns its total count" do
       expect(subject.count).to eq(42)

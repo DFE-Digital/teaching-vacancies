@@ -12,11 +12,6 @@ RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: tr
   end
 
   before do
-    allow(Rails.cache)
-      .to receive(:fetch)
-      .with([:similar_job_ids, vacancy.id], expires_in: Search::SimilarJobs::CACHE_DURATION)
-      .and_return([])
-
     visit job_path(vacancy)
   end
 

@@ -9,7 +9,7 @@ section#school-overview
 
     - summary_list.row do |row|
       - row.key text: t("schools.phase")
-      - row.value text: school_phase(vacancy.parent_organisation)
+      - row.value text: linked_school_phases(vacancy.parent_organisation)
 
     - summary_list.row do |row|
       - row.key text: t("schools.school_size")
