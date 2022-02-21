@@ -104,7 +104,7 @@ GEM
     axe-core-capybara (4.3.2)
       axe-core-api
       dumb_delegator
-    axe-core-rspec (4.3.2)
+    axe-core-rspec (4.4.0)
       axe-core-api
       dumb_delegator
       virtus
