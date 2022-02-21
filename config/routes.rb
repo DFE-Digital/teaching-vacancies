@@ -99,6 +99,7 @@ Rails.application.routes.draw do
       get "confirm-unsubscribe", to: "accounts#confirm_unsubscribe"
       patch "unsubscribe", to: "accounts#unsubscribe"
     end
+    resources :schools, only: %i[index show edit update]
   end
 
   scope :publishers do
@@ -210,8 +211,6 @@ Rails.application.routes.draw do
         post :update_status
       end
     end
-
-    resources :schools, only: %i[index edit update], controller: "publishers/organisations/schools"
   end
 
   # Well known URLs
