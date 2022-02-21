@@ -6,13 +6,14 @@
       = header.navigation_item text: t("nav.school_group_index_link", organisation_type: organisation_type_basic(current_organisation)), href: organisation_schools_path, active: schools_in_your_trust_active?
     = header.navigation_item text: t("nav.notifications_index_link_html", count: current_publisher.notifications.unread.count), href: publishers_notifications_path
     = header.navigation_item text: t("nav.sign_out"), href: destroy_publisher_session_path, options: { method: :delete }
-
-  - if jobseeker_signed_in?
+  - elsif jobseeker_signed_in?
     = header.navigation_item text: t("nav.find_job"), href: root_path, active: find_jobs_active?
     = header.navigation_item text: t("nav.create_a_job_alert"), href: new_subscription_path
     = header.navigation_item text: t("footer.your_account"), href: jobseeker_root_path, active: your_account_active?
     = header.navigation_item text: t("nav.sign_out"), href: destroy_jobseeker_session_path, options: { method: :delete }
-
-  - if !jobseeker_signed_in? && !publisher_signed_in?
+  - elsif support_user_signed_in?
+    = header.navigation_item text: t("nav.support_user_dashboard"), href: support_user_root_path, active: current_page?(support_user_root_path)
+    = header.navigation_item text: t("nav.sign_out"), href: destroy_support_user_session_path, options: { method: :delete }
+  - else
     = header.navigation_item text: t("nav.create_a_job_alert"), href: new_subscription_path
     = header.navigation_item text: t("buttons.sign_in"), href: page_path("sign-in")
