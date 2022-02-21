@@ -112,6 +112,17 @@ Rails.application.routes.draw do
     resources :publisher_preferences, only: %i[new create edit update], controller: "publishers/publisher_preferences"
   end
 
+  scope path: "support-users" do
+    devise_scope :support_user do
+      get "sign-in", to: "support_users/sessions#new", as: :new_support_user_session
+      delete "sign-out", to: "support_users/sessions#destroy", as: :destroy_support_user_session
+    end
+
+    root to: "support_users/dashboard#dashboard", as: :support_user_root
+  end
+
+  devise_for :support_users
+
   get "/auth/dfe", to: "omniauth_callbacks#passthru"
   get "/auth/dfe/callback", to: "omniauth_callbacks#dfe"
   if Rails.env.development?

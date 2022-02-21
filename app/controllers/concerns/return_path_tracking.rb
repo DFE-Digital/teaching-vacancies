@@ -42,6 +42,8 @@ module ReturnPathTracking
             }.to_query
           }.to_s
         end
+      when :support_user, SupportUser
+        new_support_user_session_path
       end
     end
 

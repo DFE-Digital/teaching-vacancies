@@ -19,10 +19,6 @@ module Authenticated
   end
 
   def user_type
-    if jobseeker_signed_in?
-      :jobseeker
-    elsif publisher_signed_in?
-      :publisher
-    end
+    authentication_scope if signed_in?
   end
 end

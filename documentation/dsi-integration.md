@@ -48,8 +48,6 @@ Sensitive values are set per-environment in the [AWS Systems Manager Parameter S
 DFE_SIGN_IN_IDENTIFIER=
 DFE_SIGN_IN_PASSWORD=
 DFE_SIGN_IN_SECRET=
-DFE_SIGN_IN_SERVICE_ACCESS_ROLE_ID=
-DFE_SIGN_IN_SERVICE_ID=
 ```
 
 ## DSI Contingency Fallback Playbook

@@ -15,8 +15,8 @@ class Publishers::SessionsController < Devise::SessionsController
     publisher = Publisher.find(session[:publisher_id])
 
     if publisher.organisations.exists?(id: params[:organisation_id])
-      sign_out_jobseeker!
       sign_in_publisher!(publisher)
+      sign_out_except(:publisher)
 
       trigger_publisher_sign_in_event(:success, :email)
       redirect_to organisation_path
