@@ -7,7 +7,7 @@ console.log(`hello world - fake username: ${UI_TEST_USERNAME}`)
 
 module.exports = async (page, scenario, viewport, isReference, browserContext) => {
 
-//  const UI_TEST_USERNAME = process.env.UI_TEST_USERNAME
+  const UI_TEST_USERNAME = "foo";
 //  const UI_TEST_PASSWORD = process.env.UI_TEST_PASSWORD
 
   console.log('JOBSEEKER SIGN IN > ', scenario.label, viewport.label);
