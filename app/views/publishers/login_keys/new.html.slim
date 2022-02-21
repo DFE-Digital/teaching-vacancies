@@ -19,5 +19,5 @@
 
   .govuk-grid-column-one-third
     h2.govuk-heading-m = t("publishers.sessions.new.no_account.heading")
-    p.govuk-body = t("publishers.sessions.new.no_account.content_html", link: govuk_link_to(t("publishers.sessions.new.no_account.login_link_text"), publisher_dfe_omniauth_authorize_path))
+    p.govuk-body = t("publishers.sessions.new.no_account.content_html", link: govuk_link_to(t("publishers.sessions.new.no_account.login_link_text"), auth_dfe_path))
     p.govuk-body = t("publishers.sessions.new.no_account.account_request_html", link: govuk_link_to(t("publishers.sessions.new.no_account.account_request_link_text"), page_path("dsi-account-request")))

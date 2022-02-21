@@ -89,7 +89,6 @@ Rails.application.routes.draw do
   end
 
   devise_for :publishers, controllers: {
-    omniauth_callbacks: "publishers/omniauth_callbacks",
     sessions: "publishers/sessions",
   }
 
@@ -111,6 +110,14 @@ Rails.application.routes.draw do
     resources :login_keys, only: %i[show new create], controller: "publishers/login_keys"
 
     resources :publisher_preferences, only: %i[new create edit update], controller: "publishers/publisher_preferences"
+  end
+
+  get "/auth/dfe", to: "omniauth_callbacks#passthru"
+  get "/auth/dfe/callback", to: "omniauth_callbacks#dfe"
+  if Rails.env.development?
+    devise_scope :support_user do
+      get "/auth/dfe/fake", to: "omniauth_callbacks#fake"
+    end
   end
 
   root "home#index"
