@@ -1,7 +1,7 @@
 const fs = require('fs');
 
-const UI_TEST_USERNAME="foo"
-const UI_TEST_PASSWORD=process.env.UI_TEST_PASSWORD
+const UI_TEST_USERNAME = process.env.UI_TEST_USERNAME
+const UI_TEST_PASSWORD = process.env.UI_TEST_PASSWORD
 
 
 
@@ -14,8 +14,8 @@ module.exports = async (page, scenario, viewport, isReference, browserContext) =
   await page.waitForSelector('button[type="submit"]');
 
   await page.evaluate(() => {
-    document.querySelector('#jobseeker-email-field').value = UI_TEST_USERNAME};
-    document.querySelector('#jobseeker-password-field').value = `${UI_TEST_PASSWORD}`;
+    document.querySelector('#jobseeker-email-field').value = UI_TEST_USERNAME;
+    document.querySelector('#jobseeker-password-field').value = UI_TEST_PASSWORD;
     document.cookie = "consented-to-cookies=yes path=/";
   });
 
