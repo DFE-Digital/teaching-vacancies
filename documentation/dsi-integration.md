@@ -38,7 +38,7 @@ The following are set per-environment, e.g. [terraform/workspace-variables/dev_a
 
 ```
 DFE_SIGN_IN_ISSUER: https://test-oidc.signin.education.gov.uk
-DFE_SIGN_IN_REDIRECT_URL: https://dev.teaching-vacancies.service.gov.uk/publishers/auth/dfe/callback
+DFE_SIGN_IN_REDIRECT_URL: https://dev.teaching-vacancies.service.gov.uk/auth/dfe/callback
 DFE_SIGN_IN_URL: https://test-api.signin.education.gov.uk
 ```
 
@@ -48,8 +48,6 @@ Sensitive values are set per-environment in the [AWS Systems Manager Parameter S
 DFE_SIGN_IN_IDENTIFIER=
 DFE_SIGN_IN_PASSWORD=
 DFE_SIGN_IN_SECRET=
-DFE_SIGN_IN_SERVICE_ACCESS_ROLE_ID=
-DFE_SIGN_IN_SERVICE_ID=
 ```
 
 ## DSI Contingency Fallback Playbook

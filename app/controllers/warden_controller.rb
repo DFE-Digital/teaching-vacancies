@@ -17,12 +17,20 @@ class WardenController < ApplicationController
     forced_login(:publisher)
   end
 
+  def support_user_forced_login
+    forced_login(:support_user)
+  end
+
   def jobseeker_failed_login
     failed_login(:jobseeker)
   end
 
   def publisher_failed_login
     failed_login(:jobseeker)
+  end
+
+  def support_user_failed_login
+    failed_login(:support_user)
   end
 
   private
