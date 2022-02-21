@@ -48,8 +48,6 @@ Sensitive values are set per-environment in the [AWS Systems Manager Parameter S
 DFE_SIGN_IN_IDENTIFIER=
 DFE_SIGN_IN_PASSWORD=
 DFE_SIGN_IN_SECRET=
-DFE_SIGN_IN_SERVICE_ACCESS_ROLE_ID=
-DFE_SIGN_IN_SERVICE_ID=
 ```
 
 ## DSI Contingency Fallback Playbook
@@ -58,7 +56,7 @@ DFE_SIGN_IN_SERVICE_ID=
 
 We rely on DfE Sign In (DSI) to provide our authentication and authorisation.
 
-This is a contingency plan for when DSI has an outage. The fallback authentication method relies on the data we have on users from our nightly job UpdateDsiUsersInDbJob: specifically, the email addresses and the organisation URNs.
+This is a contingency plan for when DSI has an outage. The fallback authentication method relies on the data we have on users from our nightly job UpdateDSIUsersInDbJob: specifically, the email addresses and the organisation URNs.
 
 It replaces the DSI sign in method with one whereby the user is prompted to enter their email address, and clicks a unique login link. This login link works only once and expires after a configurable time.
 
