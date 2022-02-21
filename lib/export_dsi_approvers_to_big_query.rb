@@ -1,6 +1,6 @@
 require "base_dsi_exporter"
 
-class ExportDsiApproversToBigQuery < BaseDsiBigQueryExporter
+class ExportDSIApproversToBigQuery < BaseDSIBigQueryExporter
   TABLE_NAME = "dsi_approvers".freeze
 
   def run!
