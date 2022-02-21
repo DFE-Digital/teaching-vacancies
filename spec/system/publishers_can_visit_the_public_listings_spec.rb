@@ -37,12 +37,12 @@ RSpec.describe "School viewing public listings" do
 
   def link_to_dashboard_is_visible_to_publishers?
     expect(page).to have_content(school.name)
-    within("nav") { expect(page).to have_content(I18n.t("nav.school_page_link")) }
+    within("nav") { expect(page).to have_content(I18n.t("nav.manage_jobs")) }
 
     within("header") { click_on(I18n.t("app.title")) }
     expect(page).to have_content(I18n.t("jobs.heading"))
 
-    click_on(I18n.t("nav.school_page_link"), match: :first)
+    within("nav") { click_on(I18n.t("nav.manage_jobs")) }
     expect(page).to have_content(school.name)
   end
 end

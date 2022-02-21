@@ -25,7 +25,7 @@ RSpec.describe "Main navigation for users to sign in and out" do
     it "renders the correct links" do
       within "nav" do
         expect(page).to have_content(I18n.t("nav.find_job"))
-        expect(page).to have_content(I18n.t("footer.your_account"))
+        expect(page).to have_content(I18n.t("nav.your_account"))
         expect(page).to have_content(I18n.t("nav.sign_out"))
       end
     end
@@ -39,8 +39,8 @@ RSpec.describe "Main navigation for users to sign in and out" do
 
     it "renders the correct links" do
       within "nav" do
-        expect(page).to have_content(I18n.t("nav.school_page_link"))
-        expect(page).to have_content(I18n.t("nav.notifications_index_link_html", count: 0))
+        expect(page).to have_content(I18n.t("nav.manage_jobs"))
+        expect(page).to have_content(I18n.t("nav.notifications_html", count: 0))
         expect(page).to have_content(I18n.t("nav.sign_out"))
       end
     end

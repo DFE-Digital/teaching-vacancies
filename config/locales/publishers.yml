@@ -45,20 +45,6 @@ en:
     organisations:
       aria_change_description: '%{organisation_type} description'
       aria_change_website: '%{organisation_type} website'
-      schools:
-        index:
-          contact_support: contact our support team
-          description: Jobseekers will see this information in job listings about the schools and job locations within the %{organisation_type}
-          missing_information_title: Is information missing or incorrect?
-          missing_information_description_html: >-
-            If a school in your %{organisation_type} is missing from this list,
-            or the information isn't correct, please %{mail_to}.
-          schools: Schools (%{count})
-          title: Schools in your %{organisation_type}
-        edit:
-          title: Change %{organisation_type} details
-        update:
-          success_html: Details updated for <span class="govuk-!-font-weight-bold">%{organisation}</span>
       show:
         awaiting:
           one: You have %{count} job awaiting feedback
@@ -69,6 +55,22 @@ en:
         at_multiple_schools: More than one school
         at_multiple_schools_with_count: More than one school (%{count})
         central_office: Trust head office
+    schools:
+      index:
+        contact_support: contact our support team
+        description: Jobseekers will see this information in job listings about the schools and job locations within the %{organisation_type}
+        missing_information_title: Is information missing or incorrect?
+        missing_information_description_html: >-
+          If a school in your %{organisation_type} is missing from this list,
+          or the information isn't correct, please %{mail_to}.
+        schools: Schools (%{count})
+        title: Schools in your %{organisation_type}
+      edit:
+        title: Change %{organisation_type} details
+      show:
+        title: Manage settings
+      update:
+        success_html: Details updated for <span class="govuk-!-font-weight-bold">%{organisation}</span>
     publisher_preferences:
       new:
         description_1: >-
