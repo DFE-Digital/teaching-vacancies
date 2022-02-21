@@ -46,7 +46,7 @@ section#school-overview class="govuk-!-margin-bottom-5"
 
             - summary_list.row do |row|
               - row.key text: t("schools.phase")
-              - row.value text: school_phase(organisation)
+              - row.value text: linked_school_phases(organisation)
 
             - summary_list.row do |row|
               - row.key text: t("schools.school_size")

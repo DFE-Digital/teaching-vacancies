@@ -82,8 +82,17 @@ module OrganisationsHelper
     end
   end
 
-  def school_phase(school)
-    school.readable_phases&.map(&:capitalize)&.reject(&:blank?)&.join(", ")
+  def linked_school_phases(school)
+    safe_join(
+      (school.readable_phases || []).map do |phase|
+        lp = LandingPage.matching(phases: [phase])
+        if lp
+          govuk_link_to(lp.name, landing_page_path(lp.slug))
+        else
+          tag.span { phase.capitalize }
+        end
+      end, ", "
+    )
   end
 
   def school_size(school)

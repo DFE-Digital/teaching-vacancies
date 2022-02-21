@@ -15,8 +15,15 @@ class LandingPage
     new(slug, criteria)
   end
 
+  def self.matching(criteria)
+    slug = Rails.application.config.landing_pages.key(criteria)
+    return unless slug
+
+    self[slug]
+  end
+
   def initialize(slug, criteria)
-    @slug = slug
+    @slug = slug.to_s
     @criteria = criteria
   end
 
