@@ -13,10 +13,6 @@ class Publishers::VacanciesComponent < ViewComponent::Base
     set_vacancies
   end
 
-  def render?
-    organisation.all_vacancies.active.any?
-  end
-
   def grid_column_class
     organisation.school_group? ? "govuk-grid-column-two-thirds" : "govuk-grid-column-full"
   end

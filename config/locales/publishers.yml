@@ -37,8 +37,6 @@ en:
           zero: No unread notifications
           one: 1 unread notification
           other: "%{count} unread notifications"
-    no_vacancies_component:
-      heading: You have no job listings to manage
     omniauth_callbacks:
       failure:
         message: Your session has expired so you have been logged out. Please sign in again to your account below.

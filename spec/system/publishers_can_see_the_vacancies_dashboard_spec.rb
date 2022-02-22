@@ -16,16 +16,6 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
     expect(page).to have_content(vacancy.job_advert)
   end
 
-  context "with no jobs" do
-    before { login_publisher(publisher: publisher, organisation: school) }
-
-    scenario "Publishers see a message informing them they have no jobs" do
-      visit organisation_path
-
-      expect(page).to have_content(I18n.t("publishers.no_vacancies_component.heading"))
-    end
-  end
-
   context "viewing the lists of jobs on the school page" do
     let!(:published_vacancy) { create(:vacancy, :published, organisations: [school]) }
     let!(:draft_vacancy) { create(:vacancy, :draft, organisations: [school]) }

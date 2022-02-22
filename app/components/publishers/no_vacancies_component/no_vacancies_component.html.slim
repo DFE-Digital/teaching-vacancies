@@ -1,9 +1,0 @@
-.govuk-grid-row class="govuk-!-margin-top-5"
-  .govuk-grid-column-full
-    h2.govuk-heading-m = t("jobs.manage.heading_html", organisation: @organisation.name, email: @email)
-
-.govuk-grid-row.no-jobs-border class="govuk-!-margin-bottom-5"
-  .govuk-grid-column-full
-    h2.govuk-heading-m = t(".heading")
-
-    = govuk_button_to t("buttons.create_job"), organisation_jobs_path
