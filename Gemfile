@@ -100,7 +100,6 @@ group :development, :test do
   gem "pry"
   gem "pry-byebug"
   gem "pry-rails"
-  gem "rack-mini-profiler"
   gem "rails-controller-testing"
   gem "rspec-rails", "5.0.2" # TODO: Pinned pending https://github.com/rspec/rspec-rails/pull/2570
   gem "rubocop-performance"

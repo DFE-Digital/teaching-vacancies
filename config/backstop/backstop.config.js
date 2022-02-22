@@ -1,42 +1,36 @@
+const publicScenarios = require('./scenarios/public');
+const commonScenarios = require('./scenarios/common');
+let userScenarios = [];
+
+if (process.argv[4]) {
+  userScenarios = require(`./scenarios/${process.argv[4]}`);
+}
+
 module.exports = {
   "id": "teacher_vacancies",
   "viewports": [
     {
       "label": "phone",
       "width": 320,
-      "height": 480
+      "height": 1000
     },
     {
       "label": "tablet",
       "width": 768,
       "height": 1024
-    }
-    ,
+    },
     {
       "label": "desktop",
       "width": 1300,
       "height": 1024
     }
   ],
-  "onBeforeScript": "puppet/onBefore.js",
-  "onReadyScript": "puppet/onReady.js",
+  "onBeforeScript": "playwright/onBefore.js",
+  "onReadyScript": "playwright/onReady.js",
   "scenarios": [
-    {
-      "label": "2021_04_cookie_consent_ab_test_bottom_black",
-      "url": "http://localhost:3000/?ab_test_override%5B2021_04_cookie_consent_test%5D=bottom_black"
-    },
-    {
-      "label": "2021_04_cookie_consent_ab_test_bottom_blue",
-      "url": "http://localhost:3000/?ab_test_override%5B2021_04_cookie_consent_test%5D=bottom_blue"
-    },
-    {
-      "label": "2021_04_cookie_consent_ab_test_modal",
-      "url": "http://localhost:3000/?ab_test_override%5B2021_04_cookie_consent_test%5D=modal"
-    },
-    {
-      "label": "2021_04_cookie_consent_ab_test_gds",
-      "url": "http://localhost:3000/?ab_test_override%5B2021_04_cookie_consent_test%5D=gds"
-    }
+    ...commonScenarios,
+    ...publicScenarios,
+    ...userScenarios,
   ],
   "paths": {
     "bitmaps_reference": "visual_snapshots",
@@ -46,12 +40,13 @@ module.exports = {
     "ci_report": "visual_regression/ci_report"
   },
   "report": ["browser"],
-  "engine": "puppeteer",
+  "engine": "playwright",
   "engineOptions": {
-    "args": ["--no-sandbox"]
+    "args": ["--no-sandbox"],
+    "browser": "chromium"
   },
   "asyncCaptureLimit": 5,
   "asyncCompareLimit": 50,
-  "debug": false,
+  "debug": true,
   "debugWindow": false
 }
