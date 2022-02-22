@@ -2,7 +2,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   skip_before_action :verify_authenticity_token, only: :dfe
 
   def dfe
-    authorisation = Authorisation.new(organisation_id: organisation_id, user_id: user_id).call
+    authorisation = Authorisation.new(organisation_id: organisation_id, user_id: user_id)
 
     if authorisation.authorised_support_user?
       sign_in_support_user
