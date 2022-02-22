@@ -20,10 +20,21 @@ module.exports = async (page, scenario, viewport, isReference, browserContext) =
     "sameSite": sessionCookie.sameSite
   });
 
+  cookieData.push({
+    "name": "consented-to-cookies",
+    "value": "yes",
+    "domain": "localhost",
+    "path": "/",
+    "expires": 1661095944,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  })
+
   const fsPromises = fs.promises;
   
   const writeCookies = async () => {
-    return fsPromises.writeFile('config/backstop/cookies.json', JSON.stringify(cookieData), (err) => {
+    await fsPromises.writeFile('config/backstop/cookies.json', JSON.stringify(cookieData), (err) => {
       if (err) {
           throw err;
       }

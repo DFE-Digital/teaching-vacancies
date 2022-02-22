@@ -46,7 +46,8 @@
     "js:test:coverage": "jest --coverage",
     "js:lint": "eslint ./app/frontend/src ./app/components",
     "sass:lint": "yarn stylelint app/frontend/**/*.scss app/components/*/*.scss -q",
-    "visual:test": "backstop test --config='config/backstop/backstop.config.js'",
+    "visual:test": "node config/backstop/auth/$USERTYPE && backstop test --config='config/backstop/backstop.config.js' $USERTYPE",
+    "visual:test:jobseeker": "USERTYPE=jobseeker yarn run visual:test",
     "visual:approve": "backstop approve --config='config/backstop/backstop.config.js'"
   },
   "jest": {

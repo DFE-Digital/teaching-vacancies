@@ -417,8 +417,6 @@ GEM
       rack (>= 1.0, < 3)
     rack-cors (1.1.1)
       rack (>= 2.0.0)
-    rack-mini-profiler (2.3.3)
-      rack (>= 1.2.0)
     rack-oauth2 (1.19.0)
       activesupport
       attr_required
@@ -739,7 +737,6 @@ DEPENDENCIES
   puma
   rack-attack
   rack-cors
-  rack-mini-profiler
   rack_session_access
   rails-controller-testing
   rails-html-sanitizer
