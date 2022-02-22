@@ -20,8 +20,11 @@ const fs = require('fs');
   //   document.querySelector('#jobseeker-password-field').value = 'password';
   // });
 
-  await page.fill('#jobseeker-email-field', 'jobseeker@example.com');
-  await page.fill('#jobseeker-password-field', 'password');
+  const UI_TEST_USERNAME = process.env.UI_TEST_USERNAME;
+  const UI_TEST_PASSWORD = process.env.UI_TEST_PASSWORD;
+
+  await page.fill('#jobseeker-email-field', UI_TEST_USERNAME);
+  await page.fill('#jobseeker-password-field', UI_TEST_PASSWORD);
 
   await page.click('button[type="submit"]');
 
