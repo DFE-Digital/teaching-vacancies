@@ -8,7 +8,7 @@
     h1.govuk-heading-l = t("publishers.sessions.new.sign_in.title")
     p = t("publishers.sessions.new.sign_in.description_fallback")
 
-    = form_for Publisher.new, url: login_keys_path do |f|
+    = form_for Publisher.new, url: publishers_login_keys_path do |f|
       = f.govuk_email_field :email, label: { size: "s" }, width: "two-thirds"
 
       = f.govuk_submit t("buttons.submit")

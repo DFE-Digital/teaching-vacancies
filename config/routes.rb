@@ -99,6 +99,7 @@ Rails.application.routes.draw do
       get "confirm-unsubscribe", to: "accounts#confirm_unsubscribe"
       patch "unsubscribe", to: "accounts#unsubscribe"
     end
+    resources :login_keys, only: %i[show new create]
     resources :schools, only: %i[index show edit update]
   end
 
@@ -108,9 +109,6 @@ Rails.application.routes.draw do
       get "auth", to: "publishers/sessions#create", as: :create_publisher_session
       delete "sign-out", to: "publishers/sessions#destroy", as: :destroy_publisher_session
     end
-
-    resources :login_keys, only: %i[show new create], controller: "publishers/login_keys"
-
     resources :publisher_preferences, only: %i[new create edit update], controller: "publishers/publisher_preferences"
   end
 
