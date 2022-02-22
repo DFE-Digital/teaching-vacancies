@@ -47,4 +47,4 @@ jobs:
       - name: run frontend tests and linting
         run: |
           yarn install
-          yarn run visual:test
+          yarn run visual:test:jobseeker
