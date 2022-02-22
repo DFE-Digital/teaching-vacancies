@@ -1,6 +1,10 @@
 const publicScenarios = require('./scenarios/public');
 const commonScenarios = require('./scenarios/common');
-const userScenarios = require(`./scenarios/${process.argv[4]}`);
+let userScenarios = [];
+
+if (process.argv[4]) {
+  userScenarios = require(`./scenarios/${process.argv[4]}`);
+}
 
 module.exports = {
   "id": "teacher_vacancies",
