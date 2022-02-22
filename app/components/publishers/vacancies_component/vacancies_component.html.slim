@@ -3,7 +3,10 @@
     span.govuk-caption-l = t("jobs.manage.heading_html", organisation: @organisation.name, email: @email)
     h1.govuk-heading-l = t(".#{@selected_type}.with_count_html", count: @vacancies.count)
   .govuk-grid-column-one-quarter
-    = govuk_button_link_to t("buttons.create_job"), create_or_copy_organisation_jobs_path, class: "float-right"
+    - if @organisation.all_vacancies.active.any?
+      = govuk_button_link_to t("buttons.create_job"), create_or_copy_organisation_jobs_path, class: "float-right"
+    - else
+      = govuk_button_to t("buttons.create_job"), organisation_jobs_path, class: "float-right"
 
 = tabs do |tabs|
   - @vacancy_types.each do |vacancy_type|

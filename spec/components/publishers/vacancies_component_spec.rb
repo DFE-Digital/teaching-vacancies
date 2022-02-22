@@ -19,8 +19,8 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
 
     before { render_inline(subject) }
 
-    it "does not render the vacancies component" do
-      expect(rendered_component).to be_blank
+    it "renders the Create a job listing button that skips the copy existing page" do
+      expect(rendered_component).to include(Rails.application.routes.url_helpers.organisation_jobs_path)
     end
   end
 
@@ -32,6 +32,10 @@ RSpec.describe Publishers::VacanciesComponent, type: :component do
         let!(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
 
         let!(:inline_component) { render_inline(subject) }
+
+        it "renders the Create a job listing button that does not skip the copy existing page" do
+          expect(rendered_component).to include(Rails.application.routes.url_helpers.create_or_copy_organisation_jobs_path)
+        end
 
         it "renders the vacancies component" do
           expect(inline_component.css(".vacancies-component__content").to_html).not_to be_blank
