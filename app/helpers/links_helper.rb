@@ -1,4 +1,12 @@
 module LinksHelper
+  def landing_page_link_or_text(landing_page_criteria, text)
+    lp = LandingPage.matching(landing_page_criteria)
+    return tag.span { text } unless lp
+
+    link_text = t("landing_pages.accessible_link_text_html", name: lp.name)
+    govuk_link_to(link_text, landing_page_path(lp.slug), class: "govuk-link--text-colour")
+  end
+
   def tracked_link_to(text, href, **kwargs)
     govuk_link_to(text, href, **kwargs.deep_merge(data: {
       controller: "tracked-link",

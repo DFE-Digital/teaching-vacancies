@@ -85,12 +85,7 @@ module OrganisationsHelper
   def linked_school_phases(school)
     safe_join(
       (school.readable_phases || []).map do |phase|
-        lp = LandingPage.matching(phases: [phase])
-        if lp
-          govuk_link_to(lp.name, landing_page_path(lp.slug))
-        else
-          tag.span { phase.capitalize }
-        end
+        landing_page_link_or_text({ phases: [phase] }, phase.capitalize)
       end, ", "
     )
   end

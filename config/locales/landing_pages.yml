@@ -1,6 +1,13 @@
 en:
   landing_pages:
     ##
+    # Link text for screenreaders
+    #   Having links that just say e.g. "Teacher" is not very accessible out of context. This markup
+    #   helps users relying on screenreaders to make sense of links to landing pages.
+    #   Don't edit this unless you know what you are doing!
+    accessible_link_text_html: '<span class="visually-hidden">View all </span>%{name}<span class="visually-hidden">jobs</span>'
+    accessible_link_text_with_count_html: '<span class="visually-hidden">View %{count} </span>%{name}<span class="visually-hidden">jobs</span>'
+    ##
     # Content for location landing pages
     #   These are dynamic and will exist for any `LocationPolygon` in the database.
     #   Any fields may contain `%{location}` to interpolate the location name, and heading may
