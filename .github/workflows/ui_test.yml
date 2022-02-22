@@ -11,6 +11,9 @@ on:
     - 'terraform/monitoring/**'
     - '**.md'
 
+  pull_request:
+    branches: [ main ]
+
 jobs:
 
   frontend-tests:
@@ -43,6 +46,11 @@ jobs:
         with:
           ssm_parameter: /teaching-vacancies/github_action/infra/ui_test_password
           env_variable_name: UI_TEST_PASSWORD
+
+      - name: run frontend tests and linting
+        run: |
+          PR_ID=${{ github.event.number }}
+          echo "PR_ID=${PR_ID}" >> $GITHUB_ENV
 
       - name: run frontend tests and linting
         run: |
