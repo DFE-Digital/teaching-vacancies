@@ -126,8 +126,11 @@ Rails.application.routes.draw do
 
   devise_for :support_users
 
-  get "/auth/dfe", to: "omniauth_callbacks#passthru"
-  get "/auth/dfe/callback", to: "omniauth_callbacks#dfe"
+  devise_scope :publisher do
+    get "/auth/dfe", to: "omniauth_callbacks#passthru"
+    get "/auth/dfe/callback", to: "omniauth_callbacks#dfe"
+  end
+
   if Rails.env.development?
     devise_scope :support_user do
       get "/auth/dfe/fake", to: "omniauth_callbacks#fake"
