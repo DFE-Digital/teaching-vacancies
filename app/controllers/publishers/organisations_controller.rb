@@ -17,7 +17,7 @@ class Publishers::OrganisationsController < Publishers::BaseController
     return unless current_organisation.local_authority?
     return if PublisherPreference.find_by(publisher: current_publisher, organisation: current_organisation)
 
-    redirect_to new_publisher_preference_path
+    redirect_to new_publishers_publisher_preference_path
   end
 
   def render_draft_saved_message

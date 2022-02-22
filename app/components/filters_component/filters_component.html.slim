@@ -3,7 +3,7 @@
   .filters-component__heading
     .filters-component__heading__container
       - if options[:publisher_preference]
-        = govuk_link_to t(".add_or_remove_schools"), edit_publisher_preference_path(options[:publisher_preference]), class: "filters-component__link-button add-remove-schools govuk-link--no-visited-state govuk-!-margin-bottom-4"
+        = govuk_link_to t(".add_or_remove_schools"), edit_publishers_publisher_preference_path(options[:publisher_preference]), class: "filters-component__link-button add-remove-schools govuk-link--no-visited-state govuk-!-margin-bottom-4"
       - elsif options[:heading_text]
         h2.govuk-heading-m
           = options[:heading_text]

@@ -86,7 +86,7 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
     end
 
     it "shows filters and results of only the schools that publisher selects in preference page" do
-      visit new_publisher_preference_path
+      visit new_publishers_publisher_preference_path
       click_on I18n.t("buttons.save_and_continue")
 
       expect(page).to have_content(I18n.t("publishers.publisher_preferences.form.missing_schools_error"))

@@ -1,4 +1,4 @@
-= form_for model do |f|
+= form_for [:publishers, model] do |f|
   = f.govuk_check_boxes_fieldset :school_ids_fieldset,
     legend: { text: t(".schools_in", organisation: current_organisation.name) },
     classes: "checkbox-label__bold govuk-!-margin-top-5" do

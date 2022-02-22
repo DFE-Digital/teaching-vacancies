@@ -121,7 +121,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       let!(:school_group) { create(:local_authority, local_authority_code: "323", schools: [school]) }
 
       it "associates the user with the local_authority instead of the school" do
-        expect(current_path).to eq(new_publisher_preference_path)
+        expect(current_path).to eq(new_publishers_publisher_preference_path)
       end
 
       it "shows the local_authority name" do
@@ -188,7 +188,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
         visit new_publisher_session_path
         sign_in_publisher
 
-        expect(current_path).to eq(new_publisher_preference_path)
+        expect(current_path).to eq(new_publishers_publisher_preference_path)
       end
     end
   end

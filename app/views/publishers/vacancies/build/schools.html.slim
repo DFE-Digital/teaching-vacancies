@@ -14,7 +14,7 @@
           span.govuk-hint
             = t("helpers.hint.publishers_job_listing_schools_form.edit_schools")
             =< govuk_link_to t("helpers.hint.publishers_job_listing_schools_form.add_school"),
-                               edit_publisher_preference_path(current_publisher_preference), class: "govuk-link--no-visited-state"
+                               edit_publishers_publisher_preference_path(current_publisher_preference), class: "govuk-link--no-visited-state"
 
         = render SearchableCollectionComponent.new form: f,
           input_type: @multiple_schools ? :checkbox : :radio_button,
