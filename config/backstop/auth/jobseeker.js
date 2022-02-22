@@ -1,11 +1,14 @@
 const { chromium } = require('playwright');
 const fs = require('fs');
+const PR_ID = process.env.PR_ID;
+
+console.log(`This is the ${PR_ID}` )
 
 (async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext();
   const page = await context.newPage();
-  await page.goto('https://teaching-vacancies-review-pr-4666.london.cloudapps.digital/jobseekers/sign-in');
+  await page.goto(`https://teaching-vacancies-review-pr-${PR_ID}.london.cloudapps.digital/jobseekers/sign-in`);
 
   const fsPromises = fs.promises;
 
