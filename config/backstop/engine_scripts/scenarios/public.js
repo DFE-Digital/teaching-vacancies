@@ -13,7 +13,7 @@ Object.values(abTests).forEach((test) => {
     scenarios.push(
       {
         "label": `Home page ${key}`,
-        "url": `http://localhost:3000?ab_test_override[${[Object.keys(abTests)]}]=${key}`,
+        "url": `https://teaching-vacancies-review-pr-4666.london.cloudapps.digital?ab_test_override[${[Object.keys(abTests)]}]=${key}`,
         "delay": 100,
         "hideSelectors": [".profiler-results"],
         "selectors": [
@@ -27,7 +27,7 @@ Object.values(abTests).forEach((test) => {
 scenarios.push(...[
   {
     "label": "Search results",
-    "url": "http://localhost:3000/jobs",
+    "url": "https://teaching-vacancies-review-pr-4666.london.cloudapps.digital/jobs",
     "delay": 100,
     "hideSelectors": [".profiler-results"],
     "selectors": [
@@ -36,7 +36,7 @@ scenarios.push(...[
   },
   {
     "label": "Vacancy",
-    "url": "http://localhost:3000/jobs",
+    "url": "https://teaching-vacancies-review-pr-4666.london.cloudapps.digital/jobs",
     "delay": 100,
     "hideSelectors": [".profiler-results"],
     "clickSelector": ".vacancies .govuk-link",

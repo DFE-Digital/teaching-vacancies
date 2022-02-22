@@ -1,7 +1,7 @@
 module.exports = [
   {
     "label": "Common Footer",
-    "url": "http://localhost:3000",
+    "url": "https://teaching-vacancies-review-pr-4666.london.cloudapps.digital",
     "readySelector": ".govuk-main-wrapper",
     "selectors": [
       ".govuk-footer"
@@ -9,7 +9,7 @@ module.exports = [
   },
   {
     "label": "Common Phase banner",
-    "url": "http://localhost:3000",
+    "url": "https://teaching-vacancies-review-pr-4666.london.cloudapps.digital",
     "readySelector": ".govuk-main-wrapper",
     "selectors": [
       ".govuk-phase-banner"
@@ -17,7 +17,7 @@ module.exports = [
   },
   {
     "label": "Common Cookie consent",
-    "url": "http://localhost:3000",
+    "url": "https://teaching-vacancies-review-pr-4666.london.cloudapps.digital",
     "readySelector": ".govuk-main-wrapper",
     "cookieConsent": false,
     "selectors": [

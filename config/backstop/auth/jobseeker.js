@@ -5,7 +5,7 @@ const fs = require('fs');
   const browser = await chromium.launch();
   const context = await browser.newContext();
   const page = await context.newPage();
-  await page.goto('http://localhost:3000/jobseekers/sign-in');
+  await page.goto('https://teaching-vacancies-review-pr-4666.london.cloudapps.digital/jobseekers/sign-in');
 
   const fsPromises = fs.promises;
 

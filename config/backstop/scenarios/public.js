@@ -13,7 +13,7 @@ Object.values(abTests).forEach((test, i) => {
     scenarios.push(
       {
         "label": `Home page ${key}`,
-        "url": `http://localhost:3000/?ab_test_override[${Object.keys(abTests)[i]}]=${key}`,
+        "url": `https://teaching-vacancies-review-pr-4666.london.cloudapps.digital/?ab_test_override[${Object.keys(abTests)[i]}]=${key}`,
         "readySelector": ".govuk-main-wrapper",
         "removeSelectors": [".govuk-footer"],
         "selectors": [
@@ -27,7 +27,7 @@ Object.values(abTests).forEach((test, i) => {
 scenarios.push(...[
   // {
   //   "label": "Search results",
-  //   "url": "http://localhost:3000/jobs",
+  //   "url": "https://teaching-vacancies-review-pr-4666.london.cloudapps.digital/jobs",
   //   "readySelector": ".govuk-main-wrapper",
   //   "selectors": [
   //     "viewport"
@@ -35,7 +35,7 @@ scenarios.push(...[
   // },
   {
     "label": "Sign in",
-    "url": "http://localhost:3000/pages/sign-in",
+    "url": "https://teaching-vacancies-review-pr-4666.london.cloudapps.digital/pages/sign-in",
     "readySelector": ".govuk-main-wrapper",
     "removeSelectors": [".govuk-footer"],
     "selectors": [
@@ -44,7 +44,7 @@ scenarios.push(...[
   },
   {
     "label": "Cookie preferences",
-    "url": "http://localhost:3000/cookies-preferences",
+    "url": "https://teaching-vacancies-review-pr-4666.london.cloudapps.digital/cookies-preferences",
     "readySelector": ".govuk-main-wrapper",
     "removeSelectors": [".govuk-footer"],
     "selectors": [
@@ -53,7 +53,7 @@ scenarios.push(...[
   },
   {
     "label": "Accessibility",
-    "url": "http://localhost:3000/pages/accessibility",
+    "url": "https://teaching-vacancies-review-pr-4666.london.cloudapps.digital/pages/accessibility",
     "readySelector": ".govuk-main-wrapper",
     "removeSelectors": [".govuk-footer"],
     "selectors": [
@@ -62,7 +62,7 @@ scenarios.push(...[
   },
   {
     "label": "Support request",
-    "url": "http://localhost:3000/support_request/new",
+    "url": "https://teaching-vacancies-review-pr-4666.london.cloudapps.digital/support_request/new",
     "readySelector": ".govuk-main-wrapper",
     "removeSelectors": [".govuk-footer"],
     "selectors": [
@@ -71,7 +71,7 @@ scenarios.push(...[
   },
   {
     "label": "Submit feedback",
-    "url": "http://localhost:3000/feedback/new",
+    "url": "https://teaching-vacancies-review-pr-4666.london.cloudapps.digital/feedback/new",
     "readySelector": ".govuk-main-wrapper",
     "removeSelectors": [".govuk-footer"],
     "selectors": [
@@ -80,7 +80,7 @@ scenarios.push(...[
   },
   // {
   //   "label": "Vacancy",
-  //   "url": "http://localhost:3000/jobs",
+  //   "url": "https://teaching-vacancies-review-pr-4666.london.cloudapps.digital/jobs",
   //   "readySelector": ".govuk-main-wrapper",
   //   "clickSelector": ".vacancies .govuk-link",
   //   "selectors": [
