@@ -108,10 +108,4 @@ class ApplicationController < ActionController::Base
     @current_organisation ||= Organisation.find_by(id: session[:publisher_organisation_id])
   end
   helper_method :current_organisation
-
-  def referred_from_jobs_path?
-    request_uri = URI(request.referrer || "")
-    request.host == request_uri.host && request_uri.path == jobs_path
-  end
-  helper_method :referred_from_jobs_path?
 end
