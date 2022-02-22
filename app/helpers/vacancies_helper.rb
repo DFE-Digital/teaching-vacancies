@@ -85,4 +85,26 @@ module VacanciesHelper
       { text: "#{organisation.name}, #{full_address(organisation)}", url: organisation_url(organisation), id: organisation.id }
     end
   end
+
+  # Determines a set of breadcrumbs for a vacancy view page based on whether the user has arrived
+  # there from a search results page (take them back to search results) or somewhere else (take
+  # them to the appropriate landing page, or if all else fails, the "all jobs" page)
+  def vacancy_breadcrumbs(vacancy)
+    referrer = URI(request.referrer || "")
+    referred_from_jobs_path = referrer.host == request.host && referrer.path == jobs_path
+
+    parent_breadcrumb = if referred_from_jobs_path
+                          { t("breadcrumbs.jobs") => request.referrer }
+                        elsif (lp = LandingPage.matching(job_roles: [vacancy.main_job_role]))
+                          { lp.title => landing_page_path(lp.slug) }
+                        else
+                          { t("breadcrumbs.jobs") => jobs_path }
+                        end
+
+    {
+      "#{t("breadcrumbs.home")}": root_path,
+      **parent_breadcrumb,
+      "#{vacancy.job_title}": "",
+    }
+  end
 end

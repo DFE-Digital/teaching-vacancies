@@ -1,7 +1,5 @@
 - content_for :breadcrumbs do
-  = govuk_breadcrumbs breadcrumbs: { "#{t("breadcrumbs.home")}": root_path,
-                                      "#{t("breadcrumbs.jobs")}": referred_from_jobs_path? ? request.referrer : jobs_path,
-                                      "#{@vacancy.job_title}": "" }
+  = govuk_breadcrumbs breadcrumbs: vacancy_breadcrumbs(@vacancy)
 
 - if @vacancy.expired?
   = govuk_tag text: t("jobs.expired_listing.tag").upcase,
