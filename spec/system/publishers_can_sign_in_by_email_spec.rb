@@ -61,7 +61,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
           expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
           # Expect that the link in the email goes to the landing page
-          visit login_key_path(login_key)
+          visit publishers_login_key_path(login_key)
 
           expect(page).to have_content("Choose your organisation")
           expect(page).not_to have_content(I18n.t("publishers.temp_login.choose_organisation.denial.title"))
@@ -82,19 +82,19 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
           within("nav") { expect(page).to have_content(I18n.t("buttons.sign_in")) }
 
           # Login link no longer works
-          visit login_key_path(login_key)
+          visit publishers_login_key_path(login_key)
           expect(page).to have_content("used")
           expect(page).not_to have_content("Choose your organisation")
         end
       end
 
       it "cannot sign in if key has expired" do
-        visit new_login_key_path
+        visit new_publishers_login_key_path
         fill_in "publisher[email]", with: publisher.email
         expect(message_delivery).to receive(:deliver_later)
         click_on I18n.t("buttons.submit")
         travel 5.hours do
-          visit login_key_path(login_key)
+          visit publishers_login_key_path(login_key)
           expect(page).to have_content("expired")
           expect(page).not_to have_content("Choose your organisation")
         end
@@ -119,7 +119,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
             expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
             # Expect that the link in the email goes to the landing page
-            expect { visit login_key_path(login_key) }
+            expect { visit publishers_login_key_path(login_key) }
               .to have_triggered_event(:publisher_sign_in_attempt)
               .with_base_data(user_anonymised_publisher_id: anonymised_form_of(publisher.oid))
               .and_data(success: "true", sign_in_type: "email")
@@ -150,7 +150,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
             expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
             # Expect that the link in the email goes to the landing page
-            expect { visit login_key_path(login_key) }
+            expect { visit publishers_login_key_path(login_key) }
               .to have_triggered_event(:publisher_sign_in_attempt)
               .with_base_data(user_anonymised_publisher_id: anonymised_form_of(publisher.oid))
               .and_data(success: "true", sign_in_type: "email")
@@ -184,7 +184,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
             expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
             # Expect that the link in the email goes to the landing page
-            expect { visit login_key_path(login_key) }
+            expect { visit publishers_login_key_path(login_key) }
               .to have_triggered_event(:publisher_sign_in_attempt)
               .with_base_data(user_anonymised_publisher_id: anonymised_form_of(publisher.oid))
               .and_data(success: "true", sign_in_type: "email")

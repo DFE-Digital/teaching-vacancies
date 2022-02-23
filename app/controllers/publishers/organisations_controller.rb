@@ -17,7 +17,7 @@ class Publishers::OrganisationsController < Publishers::BaseController
     return unless current_organisation.local_authority?
     return if PublisherPreference.find_by(publisher: current_publisher, organisation: current_organisation)
 
-    redirect_to new_publisher_preference_path
+    redirect_to new_publishers_publisher_preference_path
   end
 
   def render_draft_saved_message
@@ -35,7 +35,7 @@ class Publishers::OrganisationsController < Publishers::BaseController
   end
 
   def redirect_to_new_features_page
-    redirect_to new_features_path if session[:visited_new_features_page].nil? && show_new_features_page?
+    redirect_to publishers_new_features_path if session[:visited_new_features_page].nil? && show_new_features_page?
   end
 
   def show_new_features_page?

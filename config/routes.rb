@@ -94,12 +94,18 @@ Rails.application.routes.draw do
   }
 
   namespace :publishers do
-    resources :notifications, only: %i[index]
     resource :account do
       get "confirm-unsubscribe", to: "accounts#confirm_unsubscribe"
       patch "unsubscribe", to: "accounts#unsubscribe"
     end
+    resources :login_keys, only: %i[show new create]
+    resource :new_features, only: %i[show update] do
+      get :reminder
+    end
+    resources :notifications, only: %i[index]
+    resources :publisher_preferences, only: %i[new create edit update]
     resources :schools, only: %i[index show edit update]
+    resource :terms_and_conditions, only: %i[show update]
   end
 
   scope :publishers do
@@ -108,10 +114,6 @@ Rails.application.routes.draw do
       get "auth", to: "publishers/sessions#create", as: :create_publisher_session
       delete "sign-out", to: "publishers/sessions#destroy", as: :destroy_publisher_session
     end
-
-    resources :login_keys, only: %i[show new create], controller: "publishers/login_keys"
-
-    resources :publisher_preferences, only: %i[new create edit update], controller: "publishers/publisher_preferences"
   end
 
   root "home#index"
@@ -166,12 +168,6 @@ Rails.application.routes.draw do
 
     resources :events, only: %i[create]
   end
-
-  resource :new_features, only: %i[show update], controller: "publishers/new_features" do
-    get :reminder
-  end
-
-  resource :terms_and_conditions, only: %i[show update], controller: "publishers/terms_and_conditions"
 
   resource :organisation, only: %i[show edit update], controller: "publishers/organisations" do
     scope constraints: { type: /(published|draft|pending|expired|awaiting_feedback)/ } do

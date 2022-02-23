@@ -55,7 +55,7 @@ RSpec.describe "Users can only be signed in to one type of account" do
         visit jobseekers_account_path
         expect(page).to have_content(I18n.t("jobseekers.accounts.show.page_title"))
 
-        visit login_key_path(login_key)
+        visit publishers_login_key_path(login_key)
         expect(page).to have_current_path(organisation_path)
 
         visit jobseekers_account_path
@@ -95,7 +95,7 @@ RSpec.describe "Users can only be signed in to one type of account" do
         expect(current_path).to eq(jobseekers_saved_jobs_path)
 
         visit organisation_path
-        expect(current_path).to eq(new_login_key_path)
+        expect(current_path).to eq(new_publishers_login_key_path)
       end
     end
   end

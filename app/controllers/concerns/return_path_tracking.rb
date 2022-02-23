@@ -33,7 +33,7 @@ module ReturnPathTracking
         new_jobseeker_session_path
       when :publisher, Publisher
         if AuthenticationFallback.enabled?
-          new_login_key_path
+          new_publishers_login_key_path
         else
           URI.parse("#{ENV['DFE_SIGN_IN_ISSUER']}/session/end").tap { |uri|
             uri.query = {

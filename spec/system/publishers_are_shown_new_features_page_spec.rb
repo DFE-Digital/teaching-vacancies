@@ -13,10 +13,10 @@ RSpec.describe "Publishers are shown the new features page" do
     let(:publisher) { create(:publisher, dismissed_new_features_page_at: nil) }
 
     it "redirects them to the new features page after logging in" do
-      expect(current_path).to eq(new_features_path)
+      expect(current_path).to eq(publishers_new_features_path)
       expect(page.get_rack_session_key("visited_new_features_page")).to eq(true)
 
-      visit new_features_path
+      visit publishers_new_features_path
       check I18n.t("helpers.label.publishers_new_features_form.dismiss_options.true")
       click_on I18n.t("buttons.continue_to_account")
 

@@ -12,12 +12,12 @@ RSpec.describe "Redirect to correct authentication method" do
       before { get new_publisher_session_path }
 
       it "redirects to the fallback authentication domain" do
-        expect(response).to redirect_to(new_login_key_path)
+        expect(response).to redirect_to(new_publishers_login_key_path)
       end
     end
 
     context "when trying to sign in via fallback authentication method" do
-      before { get new_login_key_path }
+      before { get new_publishers_login_key_path }
 
       it "does not redirect" do
         expect(response.status).not_to eq(302)
@@ -37,7 +37,7 @@ RSpec.describe "Redirect to correct authentication method" do
     end
 
     context "when trying to sign in via fallback authentication method" do
-      before { get new_login_key_path }
+      before { get new_publishers_login_key_path }
 
       it "redirects to the DfE Sign In authentication domain" do
         expect(response).to redirect_to(new_publisher_session_path)

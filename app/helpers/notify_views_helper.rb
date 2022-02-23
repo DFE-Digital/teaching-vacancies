@@ -13,7 +13,7 @@ module NotifyViewsHelper
   end
 
   def choose_organisation_link(token)
-    url = login_key_url(token, **utm_params)
+    url = publishers_login_key_url(token, **utm_params)
     notify_link(url)
   end
 

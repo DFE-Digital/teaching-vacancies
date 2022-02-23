@@ -15,7 +15,7 @@
 .govuk-grid-row.vacancies-component class="govuk-!-margin-bottom-7"
   - if @organisation.school_group?
     .govuk-grid-column-one-third class="govuk-!-margin-bottom-5"
-      = form_for @publisher_preference, html: { data: { controller: "form", "hide-submit": true } } do |f|
+      = form_for [:publishers, @publisher_preference], html: { data: { controller: "form", "hide-submit": true } } do |f|
         = filters(form: f,
                   filters: { total_count: @publisher_preference.organisations.count },
                   options: { remove_buttons: true, publisher_preference: (@publisher_preference if @organisation.local_authority?) },

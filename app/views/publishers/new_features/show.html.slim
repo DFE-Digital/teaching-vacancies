@@ -2,7 +2,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @new_features_form, url: new_features_path, method: :patch do |f|
+    = form_for @new_features_form, url: publishers_new_features_path, method: :patch do |f|
       = f.govuk_error_summary
 
       h1.govuk-heading-l = t(".page_title")

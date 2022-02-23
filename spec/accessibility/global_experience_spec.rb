@@ -6,7 +6,7 @@ RSpec.describe "Global experience", type: :system, accessibility: true do
 
   context "A global user" do
     describe "visits the T&C page" do
-      before { visit terms_and_conditions_path }
+      before { visit publishers_terms_and_conditions_path }
       it "it meets accessibility standards" do
         expect(page).to meet_accessibility_standards
       end

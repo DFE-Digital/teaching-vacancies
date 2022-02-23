@@ -2,7 +2,7 @@ class Publishers::SessionsController < Devise::SessionsController
   include ReturnPathTracking::Helpers
 
   def new
-    redirect_to new_login_key_path if AuthenticationFallback.enabled?
+    redirect_to new_publishers_login_key_path if AuthenticationFallback.enabled?
 
     if (login_failure = params[:login_failure])
       flash.now[:alert] = t("devise.failure.#{login_failure}")
