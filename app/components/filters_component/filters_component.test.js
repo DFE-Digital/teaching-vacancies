@@ -2,161 +2,91 @@
  * @jest-environment jsdom
  */
 
-import filterGroup, {
-  init,
-  addRemoveFilterEvent,
-  addRemoveAllFiltersEvent,
-  removeFilterHandler,
-  removeAllFiltersHandler,
-  getFilterGroup,
-  findFilterCheckboxInGroup,
-  getFilterCheckboxesInGroup,
-  unCheckCheckbox,
-  getFilterGroups,
-  CHECKBOX_CLASS_SELECTOR,
-  CHECKBOX_GROUP_CLASS_SELECTOR,
-  REMOVE_FILTER_CLASS_SELECTOR,
-} from './filters_component';
+import { Application } from '@hotwired/stimulus';
 
-describe('filterGroup', () => {
-  let onRemove = null;
+import FiltersController from './filters_component';
 
-  beforeEach(() => {
-    jest.resetAllMocks();
-    onRemove = jest.fn();
+const initialiseStimulus = () => {
+  const application = Application.start();
+  application.register('filters', FiltersController);
+};
+
+describe('filters view component', () => {
+  beforeAll(() => {
+    initialiseStimulus();
+
+    document.body.innerHTML = `<form data-controller="form"><div class="filters-component" data-controller="filters">
+    <button data-action="click->filters#clear" data-filters-target="clear" id="clear">Clear filters</button>
+    <ul>
+    <li><button data-action="click->filters#remove" data-group="group_1" data-key="option_1">option1</button></li>
+    <li><button data-action="click->filters#remove" data-group="group_1" data-key="option_2">option2</button></li>
+    </ul>
+    <ul>
+    <li><button data-action="click->filters#remove" data-group="group_2" data-key="option_1">option1</button></li>
+    <li><button data-action="click->filters#remove" data-group="group_2" data-key="option_2">option2</button></li>
+    </ul>
+    <div data-filters-target="group" data-group="group_1">
+      <input class="govuk-checkboxes__input" type="checkbox" value="option_1" />
+      <input class="govuk-checkboxes__input" type="checkbox" value="option_2" />
+    </div>
+    <div data-filters-target="group" data-group="group_2">
+      <input class="govuk-checkboxes__input" type="checkbox" value="option_1" />
+      <input class="govuk-checkboxes__input" type="checkbox" value="option_2" />
+    </div>
+    </div>
+    </form>`;
   });
 
-  describe('init', () => {
-    test('adds event listener to element that calls handler with correct arguments', () => {
-      filterGroup.addRemoveFilterEvent = jest.fn();
-      const addRemoveFilterEventMock = jest.spyOn(filterGroup, 'addRemoveFilterEvent');
+  describe('clear all filters control', () => {
+    it('should uncheck all filters', () => {
+      const filterCheckboxes = Array.from(document.getElementsByTagName('input'));
+      const [form] = document.getElementsByTagName('form');
 
-      filterGroup.addRemoveAllFiltersEvent = jest.fn();
-      const addRemoveAllFiltersEventMock = jest.spyOn(filterGroup, 'addRemoveAllFiltersEvent');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+      });
 
-      document.body.innerHTML = `<form data-controller="form"><div class='filters-component'>
-<h2 id="filters-component-show-mobile"></h2>
-<button class="${REMOVE_FILTER_CLASS_SELECTOR}">remove</button>
-<button class="${REMOVE_FILTER_CLASS_SELECTOR}">remove</button>
-<button id="filters-component-clear-all">remove</button>
-<button id="filters-component-close-all">remove</button>
-</div>
-</form>`;
+      filterCheckboxes.forEach((checkbox) => {
+        expect(checkbox.checked).toBe(false);
+      });
 
-      init(
-        REMOVE_FILTER_CLASS_SELECTOR,
-        'filters-component-clear-all',
-        'filters-component-close-panel',
-        'filters-component-show-mobile',
-      );
+      filterCheckboxes.forEach((checkbox) => {
+        checkbox.checked = true;
+      });
 
-      expect(addRemoveFilterEventMock).toHaveBeenCalledTimes(2);
-      expect(addRemoveAllFiltersEventMock).toHaveBeenCalledTimes(1);
+      filterCheckboxes.forEach((checkbox) => {
+        expect(checkbox.checked).toBe(true);
+      });
+
+      document.getElementById('clear').click();
+
+      filterCheckboxes.forEach((checkbox) => {
+        expect(checkbox.checked).toBe(false);
+      });
     });
   });
 
-  describe('addRemoveFilterEvent', () => {
-    test('adds event listener to element that calls handler with correct arguments', () => {
-      filterGroup.removeFilterHandler = jest.fn();
-      const removeFilterMock = jest.spyOn(filterGroup, 'removeFilterHandler');
+  describe('remove button for specific filter control', () => {
+    it('should uncheck corresponding filter', () => {
+      const [form] = document.getElementsByTagName('form');
 
-      document.body.innerHTML = '<button id="test-button" data-group="filter-group" data-key="filter-key">click me</button>';
-      const button = document.getElementById('test-button');
-      filterGroup.getFilterGroup = jest.fn(() => 'group');
-      addRemoveFilterEvent(button, onRemove);
-      button.dispatchEvent(new Event('click'));
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+      });
 
-      expect(removeFilterMock).toHaveBeenCalledWith('group', 'filter-key', onRemove);
-    });
-  });
+      const filterCheckbox1 = document.querySelector('[data-group="group_1"] input[value="option_1"]');
+      const filterCheckbox2 = document.querySelector('[data-group="group_2"] input[value="option_2"]');
 
-  describe('addRemoveAllFiltersEvent', () => {
-    test('adds event listener to element that calls handler with correct arguments', () => {
-      filterGroup.removeAllFiltersHandler = jest.fn();
-      const removeAllFiltersMock = jest.spyOn(filterGroup, 'removeAllFiltersHandler');
+      filterCheckbox1.checked = true;
+      filterCheckbox2.checked = true;
 
-      document.body.innerHTML = '<a id="remove-filters-component">remove all</a>';
-      const button = document.getElementById('remove-filters-component');
-      addRemoveAllFiltersEvent(button, onRemove);
-      button.dispatchEvent(new Event('click'));
+      const [removeGroup1, removeGroup2] = Array.from(document.getElementsByTagName('ul'));
 
-      expect(removeAllFiltersMock).toHaveBeenCalledWith(onRemove);
-    });
-  });
+      removeGroup1.querySelector('button[data-key="option_1"]').click();
+      expect(filterCheckbox1.checked).toBe(false);
 
-  describe('removeFilterHandler', () => {
-    document.body.innerHTML = `<div id="group"><input id="test-checkbox" type="checkbox" class="${CHECKBOX_CLASS_SELECTOR}" value="filter-key" checked /><div>`;
-    const checkbox = document.getElementById('test-checkbox');
-    const group = document.getElementById('group');
-
-    test('removes checked attribute for filter checkbox in group', () => {
-      expect(checkbox.checked).toBe(true);
-      removeFilterHandler(group, 'filter-key', onRemove);
-      expect(checkbox.checked).toBe(false);
-    });
-  });
-
-  describe('removeAllFiltersHandler', () => {
-    document.body.innerHTML = `<div class="${CHECKBOX_GROUP_CLASS_SELECTOR}">
-<input type="checkbox" class="${CHECKBOX_CLASS_SELECTOR}" checked />
-</div>
-<div class="${CHECKBOX_GROUP_CLASS_SELECTOR}">
-<input type="checkbox" class="${CHECKBOX_CLASS_SELECTOR}" checked />
-</div>`;
-
-    test('removes checked attribute for all filter checkboxes', () => {
-      removeAllFiltersHandler(onRemove);
-      Array.from(document.getElementsByClassName(CHECKBOX_CLASS_SELECTOR)).forEach((checkbox) => expect(checkbox.checked).toBe(false));
-    });
-  });
-
-  describe('getFilterGroup', () => {
-    test('finds the container element for a group of filters-component', () => {
-      document.body.innerHTML = `<div class="${CHECKBOX_GROUP_CLASS_SELECTOR}" data-group="x"></div><div id="should-find" class="${CHECKBOX_GROUP_CLASS_SELECTOR}" data-group="y"></div>`;
-      const shouldFind = document.getElementById('should-find');
-
-      expect(getFilterGroup('y')).toEqual(shouldFind);
-    });
-  });
-
-  describe('findFilterCheckboxInGroup', () => {
-    test('finds a checkbox with a specified value in a group', () => {
-      document.body.innerHTML = `<div id="group">
-<input class="${CHECKBOX_CLASS_SELECTOR}" value="x" />
-<input value="y" />
-<input id="should-find" class="${CHECKBOX_CLASS_SELECTOR}" value="z" />
-</div>`;
-
-      const group = document.getElementById('group');
-      const shouldFind = document.getElementById('should-find');
-
-      expect(findFilterCheckboxInGroup(group, 'y')).toEqual(undefined);
-      expect(findFilterCheckboxInGroup(group, 'z')).toEqual(shouldFind);
-    });
-  });
-
-  describe('unCheckCheckbox', () => {
-    test('sets the checked attribute to false', () => {
-      document.body.innerHTML = '<input id="test-checkbox" type="checkbox" checked />';
-      const checkbox = document.getElementById('test-checkbox');
-      expect(checkbox.checked).toBe(true);
-      unCheckCheckbox(checkbox);
-      expect(checkbox.checked).toBe(false);
-    });
-  });
-
-  describe('getFilterGroups', () => {
-    test('finds all filter group container elements', () => {
-      document.body.innerHTML = `<div class="${CHECKBOX_GROUP_CLASS_SELECTOR}"></div><div></div><div class="${CHECKBOX_GROUP_CLASS_SELECTOR}"></div>`;
-      expect(getFilterGroups().length).toBe(2);
-    });
-  });
-
-  describe('getFilterCheckboxesInGroup', () => {
-    test('finds all checkbox inputs in a group', () => {
-      document.body.innerHTML = `<div id="group"><input class="${CHECKBOX_CLASS_SELECTOR}" /><input value="y" /><input class="${CHECKBOX_CLASS_SELECTOR}" /></div>`;
-      const group = document.getElementById('group');
-      expect(getFilterCheckboxesInGroup(group).length).toBe(2);
+      removeGroup2.querySelector('button[data-key="option_2"]').click();
+      expect(filterCheckbox2.checked).toBe(false);
     });
   });
 });

@@ -1,103 +1,68 @@
-import '../../frontend/src/lib/polyfill/closest.polyfill';
-import '../../frontend/src/lib/polyfill/from.polyfill';
-import 'classlist-polyfill';
+import { Controller } from '@hotwired/stimulus';
 
-export const CHECKBOX_CLASS_SELECTOR = 'govuk-checkboxes__input';
-export const CHECKBOX_GROUP_CLASS_SELECTOR = 'filters-component__groups__group';
-export const REMOVE_FILTER_CLASS_SELECTOR = 'filters-component__remove-tags__tag';
-export const MOBILE_BREAKPOINT = 768;
+const FiltersComponent = class extends Controller {
+  static targets = ['clear', 'group'];
 
-window.addEventListener(
-  'DOMContentLoaded',
-  () => init(
-    REMOVE_FILTER_CLASS_SELECTOR,
-    'filters-component-clear-all',
-  ),
-);
+  static MOBILE_BREAKPOINT = 768;
 
-export const init = (removeButtonSelector, clearButtonId) => {
-  const clearFiltersEl = document.getElementById(clearButtonId);
+  static CHECKBOX_CLASS_SELECTOR = 'govuk-checkboxes__input';
 
-  Array.from(document.getElementsByClassName(removeButtonSelector)).forEach((removeButton) => filterGroup.addRemoveFilterEvent(removeButton));
-
-  if (clearFiltersEl) {
-    filterGroup.addRemoveAllFiltersEvent(clearFiltersEl);
-  }
-
-  Array.from(document.getElementsByClassName('filters-component')).forEach((filtersEl) => {
-    if (document.documentElement.clientWidth <= MOBILE_BREAKPOINT) {
-      mobileFiltersBehaviour(filtersEl);
+  connect() {
+    if (document.documentElement.clientWidth <= FiltersComponent.MOBILE_BREAKPOINT) {
+      this.mobileBehaviour();
     } else {
-      desktopFiltersBehaviour(filtersEl);
+      this.desktopBehaviour();
     }
 
     if (window.matchMedia) {
-      const mediaQuery = `(max-width: ${MOBILE_BREAKPOINT}px)`;
+      const mediaQuery = `(max-width: ${FiltersComponent.MOBILE_BREAKPOINT}px)`;
       const mediaQueryList = window.matchMedia(mediaQuery);
 
       if (mediaQueryList.addEventListener) {
         mediaQueryList.addEventListener('change', (e) => {
           if (e.matches) {
-            mobileFiltersBehaviour(filtersEl);
+            this.mobileBehaviour();
           } else {
-            desktopFiltersBehaviour(filtersEl);
+            this.desktopBehaviour();
           }
         });
       }
     }
-  });
+  }
+
+  remove(e) {
+    FiltersComponent.unCheckCheckbox(FiltersComponent.findCheckboxInGroup(this.getGroupEl(e.target.dataset.group), e.target.dataset.key));
+  }
+
+  clear() {
+    this.groupTargets.forEach((groupEl) => FiltersComponent.getCheckboxesInGroup(groupEl).forEach((checkbox) => FiltersComponent.unCheckCheckbox(checkbox)));
+  }
+
+  mobileBehaviour() {
+    this.element.closest('form').removeAttribute('data-controller');
+    this.element.setAttribute('tabindex', '-1');
+  }
+
+  desktopBehaviour() {
+    this.element.closest('form').setAttribute('data-controller', 'form');
+    this.element.removeAttribute('tabindex');
+  }
+
+  getGroupEl(groupName) {
+    return this.groupTargets.filter((group) => group.dataset.group === groupName)[0];
+  }
+
+  static findCheckboxInGroup(groupEl, key) {
+    return FiltersComponent.getCheckboxesInGroup(groupEl).filter((checkbox) => checkbox.value === key)[0];
+  }
+
+  static unCheckCheckbox(checkbox) {
+    checkbox.checked = false;
+  }
+
+  static getCheckboxesInGroup(groupEl) {
+    return Array.from(groupEl.getElementsByClassName(FiltersComponent.CHECKBOX_CLASS_SELECTOR));
+  }
 };
 
-const mobileFiltersBehaviour = (filtersEl) => {
-  filtersEl.closest('form').removeAttribute('data-controller');
-  filtersEl.setAttribute('tabindex', '-1');
-};
-
-const desktopFiltersBehaviour = (filtersEl) => {
-  filtersEl.closest('form').setAttribute('data-controller', 'form');
-  filtersEl.removeAttribute('tabindex');
-};
-
-export const addRemoveFilterEvent = (el, onClear) => {
-  el.addEventListener('click', () => {
-    filterGroup.removeFilterHandler(filterGroup.getFilterGroup(el.dataset.group), el.dataset.key, onClear);
-  });
-};
-
-export const removeFilterHandler = (group, key) => {
-  filterGroup.unCheckCheckbox(filterGroup.findFilterCheckboxInGroup(group, key));
-};
-
-export const addRemoveAllFiltersEvent = (el, onClear) => {
-  el.addEventListener('click', () => {
-    filterGroup.removeAllFiltersHandler(onClear);
-  });
-};
-
-export const removeAllFiltersHandler = () => {
-  filterGroup.getFilterGroups().forEach((groupEl) => filterGroup.getFilterCheckboxesInGroup(groupEl).forEach((checkbox) => filterGroup.unCheckCheckbox(checkbox)));
-};
-
-export const unCheckCheckbox = (checkbox) => { checkbox.checked = false; };
-
-export const getFilterGroup = (groupName) => getFilterGroups().filter((group) => group.dataset.group === groupName)[0];
-
-export const getFilterGroups = () => Array.from(document.getElementsByClassName(CHECKBOX_GROUP_CLASS_SELECTOR));
-
-export const findFilterCheckboxInGroup = (groupEl, key) => getFilterCheckboxesInGroup(groupEl).filter((checkbox) => checkbox.value === key)[0];
-
-export const getFilterCheckboxesInGroup = (groupEl) => Array.from(groupEl.getElementsByClassName(CHECKBOX_CLASS_SELECTOR));
-
-const filterGroup = {
-  removeFilterHandler,
-  removeAllFiltersHandler,
-  getFilterGroup,
-  getFilterGroups,
-  unCheckCheckbox,
-  findFilterCheckboxInGroup,
-  getFilterCheckboxesInGroup,
-  addRemoveFilterEvent,
-  addRemoveAllFiltersEvent,
-};
-
-export default filterGroup;
+export default FiltersComponent;
