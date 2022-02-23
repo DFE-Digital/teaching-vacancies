@@ -4,6 +4,7 @@ import '@stimulus/polyfills';
 import { Application } from '@hotwired/stimulus';
 
 // view components
+import FiltersController from '../../components/filters_component/filters_component';
 import MapController from '../../components/map_component/map';
 import VacancySelectorController from '../../components/vacancy_selector_component/vacancy_selector';
 
@@ -26,6 +27,7 @@ window.Stimulus = application;
 
 application.register('autocomplete', AutocompleteController);
 application.register('clipboard', ClipboardController);
+application.register('filters', FiltersController);
 application.register('form', FormController);
 application.register('location-finder', LocationFinderController);
 application.register('manage-qualifications', ManageQualificationsController);
