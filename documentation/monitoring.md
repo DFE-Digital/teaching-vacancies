@@ -5,7 +5,7 @@
 ### Application logs
 
 - [Sidekiq](https://teaching-vacancies.service.gov.uk/sidekiq)
-- [Check the Rollbar dashboard](https://rollbar.com/dfe/teacher-vacancies/) to see if any Errors are being logged.
+- [Check the Sentry dashboard](https://sentry.io/organizations/teaching-vacancies/issues) to see if any Errors are being logged.
 - [Check the Logit event log](https://dashboard.logit.io) - Open Teaching Vacancy stack.
 
 ### Deployment logs
