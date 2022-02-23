@@ -3,16 +3,17 @@
     legend: { text: t(".schools_in", organisation: current_organisation.name) },
     classes: "checkbox-label__bold govuk-!-margin-top-5" do
 
-    = render SearchableCollectionComponent.new form: f,
-      input_type: :checkbox,
-      label_text: "search organisation schools",
-      threshold: 10,
-      attribute_name: :school_ids,
-      collection: current_organisation.schools.not_universities.not_closed.order(:name),
-      value_method: :id,
-      text_method: :name,
-      hint_method: :address,
-      options: { bold_items: true }
+    = searchable_collection(collection: f.govuk_collection_check_boxes(:school_ids,
+          current_organisation.schools.not_universities.not_closed.order(:name),
+          :id,
+          :name,
+          :address,
+          legend: nil,
+          hint: nil,
+          classes: "checkbox-label__bold"),
+          collection_count: current_organisation.schools.not_universities.not_closed.order(:name).count,
+          options: { border: true },
+          label_text: "search organisation schools")
 
   - if current_organisation.schools_outside_local_authority.not_closed.any?
     = f.govuk_check_boxes_fieldset :school_ids_fieldset,
@@ -20,16 +21,17 @@
       hint: { text: t(".schools_out_hint_html", email: govuk_mail_to(t("help.email"), t("help.email"))) },
       classes: "checkbox-label__bold govuk-!-margin-top-5" do
 
-      = render SearchableCollectionComponent.new form: f,
-        input_type: :checkbox,
-        label_text: "search schools outside local authority",
-        threshold: 10,
-        attribute_name: :school_ids,
-        collection: current_organisation.schools_outside_local_authority.not_closed.order(:name),
-        value_method: :id,
-        text_method: :name,
-        hint_method: :address,
-        options: { bold_items: true }
+      = searchable_collection(collection: f.govuk_collection_check_boxes(:school_ids,
+          current_organisation.schools_outside_local_authority.not_closed.order(:name),
+          :id,
+          :name,
+          :address,
+          legend: nil,
+          hint: nil,
+          classes: "checkbox-label__bold"),
+          collection_count: current_organisation.schools_outside_local_authority.not_closed.order(:name).count,
+          options: { border: true },
+          label_text: "search schools outside local authority")
   - else
     h3.govuk-heading-s = t(".schools_out", organisation: current_organisation.name)
     p.govuk-body = t(".schools_out_hint_html", email: govuk_mail_to(t("help.email"), t("help.email")))
