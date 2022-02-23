@@ -102,6 +102,7 @@ Rails.application.routes.draw do
     resources :login_keys, only: %i[show new create]
     resources :publisher_preferences, only: %i[new create edit update]
     resources :schools, only: %i[index show edit update]
+    resource :terms_and_conditions, only: %i[show update]
   end
 
   scope :publishers do
@@ -168,8 +169,6 @@ Rails.application.routes.draw do
   resource :new_features, only: %i[show update], controller: "publishers/new_features" do
     get :reminder
   end
-
-  resource :terms_and_conditions, only: %i[show update], controller: "publishers/terms_and_conditions"
 
   resource :organisation, only: %i[show edit update], controller: "publishers/organisations" do
     scope constraints: { type: /(published|draft|pending|expired|awaiting_feedback)/ } do

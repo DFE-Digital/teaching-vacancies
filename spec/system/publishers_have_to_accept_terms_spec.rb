@@ -15,7 +15,7 @@ RSpec.describe "Publishers can accept terms and conditions" do
     end
 
     scenario "they can accept the terms and conditions" do
-      visit terms_and_conditions_path
+      visit publishers_terms_and_conditions_path
 
       expect(publisher).not_to be_accepted_terms_at
 
@@ -28,7 +28,7 @@ RSpec.describe "Publishers can accept terms and conditions" do
     end
 
     scenario "an error is shown if they don’t accept" do
-      visit terms_and_conditions_path
+      visit publishers_terms_and_conditions_path
 
       expect(publisher).not_to be_accepted_terms_at
 
@@ -44,7 +44,7 @@ RSpec.describe "Publishers can accept terms and conditions" do
       scenario "with authentication fallback" do
         allow(AuthenticationFallback).to receive(:enabled?).and_return(true)
 
-        visit terms_and_conditions_path
+        visit publishers_terms_and_conditions_path
         click_on(I18n.t("nav.sign_out"))
 
         within("nav") { expect(page).to have_content(I18n.t("buttons.sign_in")) }
@@ -53,7 +53,7 @@ RSpec.describe "Publishers can accept terms and conditions" do
       scenario "without authentication fallback" do
         allow(AuthenticationFallback).to receive(:enabled?).and_return(false)
 
-        visit terms_and_conditions_path
+        visit publishers_terms_and_conditions_path
 
         click_on(I18n.t("nav.sign_out"))
 
