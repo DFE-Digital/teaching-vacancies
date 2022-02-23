@@ -20,22 +20,6 @@ In order to generate a new secret key:
 1. You need to generate a different key per environment
 1. Update `SECRET_KEY_BASE` in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/secrets` files
 
-### ROLLBAR_ACCESS_TOKEN
-Used to report server-side errors to Rollbar.
-1. Navigate to: Setting > Project access tokens
-1. Edit the token you want to revoke
-1. Select `Yes, disable this token` and click `Save`
-1. Click `Create a new access token`
-1. Select `post_server_item` and click `Save`
-1. Update `ROLLBAR_ACCESS_TOKEN` in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/secrets` files
-
-### ROLLBAR_CLIENT_ERRORS_ACCESS_TOKEN
-Used to report client-side errors to Rollbar.
-1. Access https://rollbar.com/
-1. Navigate to: Setting > Project access tokens > Create a new access token
-1. Select `post_client_item` and click Save
-1. Update `ROLLBAR_ACCESSROLLBAR_CLIENT_ERRORS_ACCESS_TOKEN_TOKEN` in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/secrets` files
-
 ### DFE_SIGN_IN_PASSWORD and DFE_SIGN_IN_SECRET
 * DFE_SIGN_IN_PASSWORD is used to encrypt JWT tokens to authorise a user with DFE sign-in.
 * DFE_SIGN_IN_SECRET is OAuth2 client secret. It is only know to the application and the authorising server.
@@ -119,6 +103,25 @@ To create a new key:
 1. Navigate to My Keys > Add a new key
 1. Enter key name, select `OS Names API` and click `Save Key`
 1. Update `ORDNANCE_SURVEY_API_KEY` in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/secrets` files
+
+### SENTRY_DSN and SENTRY_FRONTEND_DSN
+
+Two separate DSNs for Sentry:
+- `SENTRY_DSN` is used by the `sentry-ruby` gem
+- `SENTRY_FRONTEND_DSN` is used to track Javascript errors
+
+They don't necessarily need to be separate, but as `SENTRY_FRONTEND_DSN` must by definition be
+public, this gives us some kind of separation. These are identical for all environments for the sake
+of simplicity, and `Rails.application.configuration.app_role` is used to set Sentry's concept of
+environment.
+
+Locally, you shouldn't need those API keys as you wouldn't want to do error tracking, but you can
+set them for testing purposes in `.env.local` if needed.
+
+To rotate keys:
+1. Go to https://sentry.io/settings/teaching-vacancies/projects/teaching-vacancies/keys/
+1. Revoke/recreate the key you want to change
+1. Update the values in Parameter Store in all of the environments' secrets files
 
 ### SKYLIGHT_AUTHENTICATION
 Used by the app to report performance data to [Skylight](https://www.skylight.io/).

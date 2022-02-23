@@ -221,9 +221,8 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       OmniAuth.config.mock_auth[:dfe] = :invalid_client
     end
 
-    it "logs an error to Rollbar and takes the user to the sign in page with an error message" do
-      # OmniAuth doesn't mock the error being present, so allow `anything`
-      expect(Rollbar).to receive(:error).with(anything, strategy: :dfe)
+    it "logs an error to Sentry and takes the user to the sign in page with an error message" do
+      expect(Sentry).to receive(:capture_message)
 
       sign_in_publisher(navigate: true)
 
