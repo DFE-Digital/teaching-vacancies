@@ -17,7 +17,7 @@ namespace :dsi do
   desc "Update DfE Sign-in users data"
   task update_users: :environment do
     require "update_dsi_users_in_db"
-    UpdateDsiUsersInDb.new.run!
+    UpdateDSIUsersInDb.new.run!
   end
 end
 

@@ -1,7 +1,7 @@
 require "rails_helper"
 require "update_dsi_users_in_db"
 
-RSpec.describe UpdateDsiUsersInDb do
+RSpec.describe UpdateDSIUsersInDb do
   let(:test_file_1_path) { Rails.root.join("spec/fixtures/dfe_sign_in_service_users_response_page_1.json") }
   let(:test_file_2_path) { Rails.root.join("spec/fixtures/dfe_sign_in_service_users_response_page_2.json") }
   let(:test_file_empty_users_path) { Rails.root.join("spec/fixtures/dfe_sign_in_service_users_empty_response.json") }

@@ -1,6 +1,6 @@
 require "dfe_sign_in_api"
 
-class UpdateDsiUsersInDb
+class UpdateDSIUsersInDb
   include DFESignIn
 
   def run!
