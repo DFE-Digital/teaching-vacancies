@@ -6,7 +6,10 @@ section#job-details class="govuk-!-margin-bottom-5"
     - if vacancy.job_roles.any?
       - summary_list.row do |row|
         - row.key text: t("jobs.job_role")
-        - row.value text: vacancy.all_job_roles
+        - row.value do
+          ul.govuk-list
+            - vacancy.job_role_names.each do |role|
+              li = role
 
     - if vacancy.key_stages.any?
       - summary_list.row do |row|

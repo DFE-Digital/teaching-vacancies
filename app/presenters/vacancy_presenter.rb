@@ -76,12 +76,11 @@ class VacancyPresenter < BasePresenter
     model_working_patterns.compact.map(&:upcase).join(", ")
   end
 
-  def all_job_roles
-    # TODO: This line can go at some point after the 30th of September 2021 (when all the legacy vacancies have expired)
-    #       and once people no longer need to view the legacy vacancies for reference.
-    return show_job_roles unless main_job_role
-
-    safe_join [show_main_job_role, tag.br, model.additional_job_roles.map { |role| tag.span additional_job_role(role), class: "govuk-!-margin-bottom-0" }]
+  def job_role_names
+    [
+      show_main_job_role,
+      *additional_job_roles.map { |role| additional_job_role(role) },
+    ]
   end
 
   def show_main_job_role
