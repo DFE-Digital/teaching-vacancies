@@ -35,7 +35,7 @@ class Publishers::OrganisationsController < Publishers::BaseController
   end
 
   def redirect_to_new_features_page
-    redirect_to new_features_path if session[:visited_new_features_page].nil? && show_new_features_page?
+    redirect_to publishers_new_features_path if session[:visited_new_features_page].nil? && show_new_features_page?
   end
 
   def show_new_features_page?

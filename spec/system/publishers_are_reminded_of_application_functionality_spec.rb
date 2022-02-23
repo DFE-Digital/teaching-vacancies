@@ -57,7 +57,7 @@ RSpec.describe "Application feature reminder" do
 
       it "does not show the reminder page" do
         visit organisation_path
-        expect(current_path).to eq(new_features_path)
+        expect(current_path).to eq(publishers_new_features_path)
         check I18n.t("helpers.label.publishers_new_features_form.dismiss_options.true")
         click_on I18n.t("buttons.continue_to_account")
         visit organisation_path
