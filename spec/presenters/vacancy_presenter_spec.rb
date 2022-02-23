@@ -162,20 +162,6 @@ RSpec.describe VacancyPresenter do
     end
   end
 
-  describe "#all_job_roles" do
-    let(:vacancy) { build_stubbed(:vacancy) }
-
-    it "returns the main job role" do
-      expect(subject.all_job_roles).to include subject.show_main_job_role
-    end
-
-    it "returns the additional job roles" do
-      vacancy.additional_job_roles.each do |additional_job_role|
-        expect(subject.all_job_roles).to include subject.additional_job_role(additional_job_role)
-      end
-    end
-  end
-
   describe "#working_patterns" do
     context "when working_patterns is unset" do
       let(:vacancy) { build_stubbed(:vacancy, :without_working_patterns) }
