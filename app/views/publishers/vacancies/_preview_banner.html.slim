@@ -4,5 +4,7 @@
     p.govuk-body = t("jobs.preview_listing.summary.body_html", count: @vacancy.publish_on.today? ? 0 : 1, date: @vacancy.publish_on.to_s.strip)
     - if @vacancy.enable_job_applications?
       p.govuk-body = t("jobs.preview_listing.summary.data_retention")
-    = govuk_button_to t("buttons.submit_for_publication"), organisation_job_publish_path(@vacancy.id), class: "govuk-!-margin-bottom-0 submit-listing-with-preview-gtm", form_class: "inline-block govuk-!-margin-right-2"
-    = govuk_button_link_to t("buttons.make_changes"), organisation_job_review_path(@vacancy.id), class: "govuk-button--secondary govuk-!-margin-bottom-0"
+
+    .govuk-button-group class="govuk-!-margin-bottom-0"
+      = govuk_link_to t("buttons.submit_for_publication"), organisation_job_publish_path(@vacancy.id), class: "govuk-button govuk-button--primary"
+      = govuk_button_link_to t("buttons.make_changes"), organisation_job_review_path(@vacancy.id), class: "govuk-button--secondary"
