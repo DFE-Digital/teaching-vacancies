@@ -5,26 +5,4 @@
         input.govuk-input.searchable-collection-component__search-input.icon.icon--left.icon--search.js-action placeholder=t("helpers.hint.publishers_job_listing_job_details_form.subjects_placeholder") aria-label="#{label_text}" aria-expanded="true" aria-describedby="publishers-job-listing-job-details-form-subjects-hint" aria-owns="subjects__listbox" role="combobox"
         .govuk-visually-hidden aria-live="polite" role="status" id="search-results"
 
-    - case input_type
-    - when :checkbox
-      = form.govuk_collection_check_boxes attribute_name,
-        collection,
-        value_method,
-        text_method,
-        hint_method,
-        small: small_items?,
-        classes: ("checkbox-label__bold" if options[:bold_items]),
-        legend: nil,
-        hint: nil,
-        form_group: form_group
-
-    - when :radio_button
-      = form.govuk_collection_radio_buttons attribute_name,
-        collection,
-        value_method,
-        text_method,
-        hint_method,
-        small: small_items?,
-        classes: ("radiobutton-label__bold" if options[:bold_items]),
-        legend: nil,
-        hint: nil
+    = collection
