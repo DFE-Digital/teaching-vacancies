@@ -9,7 +9,7 @@ end
 
 # Override response to return 204 No Content (instead of 429) so our monitoring doesn't count it
 # as a failed request
-Rack::Attack.throttled_response = lambda do |_request|
+Rack::Attack.throttled_responder = lambda do |_request|
   [204, {}, ["\n"]]
 end
 
