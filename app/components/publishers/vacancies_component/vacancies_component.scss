@@ -1,24 +1,6 @@
 @import 'base_component';
 
 .vacancies-component {
-  .vacancies-component__header {
-    position: relative;
-
-    .moj-action-bar__filter {
-      position: absolute;
-      right: 0;
-      top: 0;
-
-      @include govuk-media-query($until: desktop) {
-        display: none;
-      }
-
-      &::after {
-        width: 0;
-      }
-    }
-  }
-
   .filters-component {
     background: none;
     padding-left: 0 !important;
