@@ -455,6 +455,10 @@ en:
               invalid:  Enter a phone number in the correct format
             relationship:
               blank: Enter the referee's relationship to you, for example line manager
+        publishers/job_application/notes_form:
+          attributes:
+            content:
+              blank: Enter a note
 
         support_request_form:
           attributes:

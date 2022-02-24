@@ -488,6 +488,9 @@ en:
         description: Description of %{organisation_type}
         website: '%{organisation_type} website'
 
+      publishers_job_application_notes_form:
+        content: Add a note
+
       publishers_job_application_update_status_form:
         further_instructions_html: Any further instructions? (optional<span class='govuk-visually-hidden'> field</span>)</span>
         rejection_reasons_html: What are the reasons for the rejection? (optional<span class='govuk-visually-hidden'> field</span>)</span>

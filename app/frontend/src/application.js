@@ -12,6 +12,7 @@ import MapController from '../../components/map_component/map';
 import VacancySelectorController from '../../components/vacancy_selector_component/vacancy_selector';
 
 // js components
+import ShowHiddenContentController from './components/showHiddenContent/showHiddenContent';
 import AutocompleteController from './components/autocomplete/autocomplete';
 import ClipboardController from './components/clipboard/clipboard';
 import FormController from './components/form/form';
@@ -37,6 +38,7 @@ application.warnings = false;
 application.debug = false;
 window.Stimulus = application;
 
+application.register('show-hidden-content', ShowHiddenContentController);
 application.register('autocomplete', AutocompleteController);
 application.register('clipboard', ClipboardController);
 application.register('filters', FiltersController);
