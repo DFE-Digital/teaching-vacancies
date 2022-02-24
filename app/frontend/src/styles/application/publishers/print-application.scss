@@ -1,5 +1,5 @@
 @media print {
-  .publishers_vacancies_job_applications_show {
+  .publisher {
     .review-component__section__body {
       margin-bottom: govuk-spacing(4);
 
@@ -63,6 +63,15 @@
     .govuk-notification-banner__title,
     .govuk-caption-l {
       color: $govuk-text-colour !important;
+    }
+
+    .job-application__notes {
+      display: block !important;
+      margin-top: govuk-spacing(4);
+
+      .govuk-body-s {
+        font-size: 0.8em;
+      }
     }
   }
 }
