@@ -28,6 +28,7 @@ class JobApplication < ApplicationRecord
   belongs_to :jobseeker
   belongs_to :vacancy
 
+  has_many :notes, dependent: :destroy
   has_many :qualifications, dependent: :destroy
   has_many :employments, dependent: :destroy
   has_many :references, dependent: :destroy
