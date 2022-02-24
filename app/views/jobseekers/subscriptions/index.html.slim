@@ -8,8 +8,8 @@
 
 - if subscriptions.any?
   .govuk-grid-row
-    .govuk-grow-column-full.create-alert__button
-      = govuk_button_link_to t(".button_create"), new_subscription_path
+    .govuk-grow-column-full
+      = govuk_button_link_to t(".button_create"), new_subscription_path, class: "float-right govuk-!-margin-bottom-0"
 
 .govuk-grid-row
   .govuk-grid-column-full
