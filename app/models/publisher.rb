@@ -1,6 +1,7 @@
 class Publisher < ApplicationRecord
   has_many :emergency_login_keys
   has_many :feedbacks
+  has_many :notes, dependent: :destroy
   has_many :notifications, as: :recipient, dependent: :destroy
   has_many :organisation_publishers, dependent: :destroy
   has_many :organisations, through: :organisation_publishers

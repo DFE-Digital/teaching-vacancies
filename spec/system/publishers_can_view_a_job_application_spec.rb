@@ -42,7 +42,7 @@ RSpec.describe "Publishers can view a job application" do
     it "shows the correct calls to action" do
       visit organisation_job_job_application_path(vacancy.id, job_application)
 
-      expect(page).to have_css(".job-application-actions") do |actions|
+      expect(page).to have_css(".job-application__actions") do |actions|
         expect(actions).not_to have_css("a", class: "govuk-button", text: I18n.t("buttons.shortlist"))
         expect(actions).not_to have_css("a", class: "govuk-button--warning", text: I18n.t("buttons.reject"))
         expect(actions).to have_css("a", class: "govuk-button--secondary", text: I18n.t("buttons.download_application"))
@@ -56,7 +56,7 @@ RSpec.describe "Publishers can view a job application" do
     it "shows the correct calls to action and timeline" do
       visit organisation_job_job_application_path(vacancy.id, job_application)
 
-      expect(page).to have_css(".job-application-actions") do |actions|
+      expect(page).to have_css(".job-application__actions") do |actions|
         expect(actions).not_to have_css("a", class: "govuk-button", text: I18n.t("buttons.shortlist"))
         expect(actions).to have_css("a", class: "govuk-button--warning", text: I18n.t("buttons.reject"))
         expect(actions).to have_css("a", class: "govuk-button--secondary", text: I18n.t("buttons.download_application"))
@@ -70,7 +70,7 @@ RSpec.describe "Publishers can view a job application" do
     it "shows the correct calls to action and timeline" do
       visit organisation_job_job_application_path(vacancy.id, job_application)
 
-      expect(page).to have_css(".job-application-actions") do |actions|
+      expect(page).to have_css(".job-application__actions") do |actions|
         expect(actions).to have_css("a", class: "govuk-button", text: I18n.t("buttons.shortlist"))
         expect(actions).to have_css("a", class: "govuk-button--warning", text: I18n.t("buttons.reject"))
         expect(actions).to have_css("a", class: "govuk-button--secondary", text: I18n.t("buttons.download_application"))
