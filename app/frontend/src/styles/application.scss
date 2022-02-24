@@ -26,15 +26,11 @@ $govuk-new-link-styles: true;
 @import 'application/inset_text';
 @import 'application/pagination';
 @import 'application/posts';
-@import 'application/school';
 @import 'application/signin';
 @import 'application/tabs';
 @import 'application/timeline';
 @import 'application/typography';
 
-@import 'application/jobseekers/cookies-banner';
-@import 'application/jobseekers/feedback-form';
-@import 'application/jobseekers/jobseeker';
 @import 'application/jobseekers/keyword-search';
 @import 'application/jobseekers/search-header';
 @import 'application/jobseekers/subscription';

@@ -51,9 +51,7 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha
     end
 
     it "creates a job alert and redirects to the subscriptions index page" do
-      within ".create-alert__button" do
-        click_on I18n.t("jobseekers.subscriptions.index.button_create")
-      end
+      click_on I18n.t("jobseekers.subscriptions.index.button_create"), match: :first
       an_invalid_form_is_rejected
       expect { create_a_job_alert }.to change { Subscription.count }.by(1)
       and_the_job_alert_is_on_the_index_page
