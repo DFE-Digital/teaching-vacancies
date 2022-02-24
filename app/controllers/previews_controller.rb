@@ -1,5 +1,5 @@
 class PreviewsController < ApplicationController
-  layout "design_system"
+  layout "application"
 
   before_action :find_preview, only: :previews
   before_action :require_local!, unless: :show_previews?
@@ -7,15 +7,15 @@ class PreviewsController < ApplicationController
   def index
     @previews = ViewComponent::Preview.all
     @page_title = "Component Previews"
-    render "design_system/index"
+    render "application/index"
   end
 
   def previews
     @previews = ViewComponent::Preview.all
+    @page_title = "Component Previews"
 
     @preview_variants = @preview.component_class.variants
     @preview_form = @preview.form.new(params)
-    @preview_interactive_options = @preview.interactive_options
     @preview_name = @preview.component_name
     @preview_class = @preview.component_class
 
