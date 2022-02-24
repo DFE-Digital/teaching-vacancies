@@ -1,5 +1,5 @@
 class FiltersComponentPreview < ViewComponent::Preview
-  layout "design_system"
+  layout "application"
 
   def self.component_name
     component_class.to_s.underscore.humanize.split.first.downcase
@@ -10,11 +10,7 @@ class FiltersComponentPreview < ViewComponent::Preview
   end
 
   def self.form
-    FiltersComponentPreview::OptionsForm
-  end
-
-  def self.interactive_options
-    %w[remove_buttons close_all search small scroll]
+    FiltersComponentPreview::Form
   end
 
   def preview; end
