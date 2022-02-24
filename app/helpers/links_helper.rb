@@ -4,7 +4,7 @@ module LinksHelper
     return tag.span { text } unless lp
 
     link_text = t("landing_pages.accessible_link_text_html", name: lp.name)
-    govuk_link_to(link_text, landing_page_path(lp.slug), class: "govuk-link--text-colour")
+    govuk_link_to(link_text, landing_page_path(lp.slug), text_colour: true)
   end
 
   def tracked_link_to(text, href, **kwargs)
