@@ -3,6 +3,7 @@
 
   @include govuk-media-query($from: desktop) {
     &__container {
+      align-items: center;
       display: flex;
     }
 
