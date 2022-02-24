@@ -1,19 +1,13 @@
 - content_for :page_title_prefix, t(".page_title")
 
-- content_for :breadcrumbs do
-  = govuk_breadcrumbs breadcrumbs: { "#{t("publishers.vacancies_component.published.tab_heading")}": jobs_with_type_organisation_path(:published),
-                                     "#{vacancy.job_title}": organisation_job_job_applications_path(vacancy.id),
-                                     "#{job_application.name}": "" }
+= render "header"
 
-span.govuk-caption-l
-  = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
-
-h1.govuk-heading-xl class="govuk-!-margin-bottom-5"
-  = job_application.name
-
-.application-status class="govuk-!-display-none-print"
-  span.govuk-body class="govuk-!-margin-right-5" = t(".status_heading")
-  = publisher_job_application_status_tag(job_application.status)
+.job-application-notes class="govuk-!-display-none"
+  h2.govuk-heading-m = t(".notes.heading")
+  - job_application.notes.each do |note|
+    p.govuk-body-m = note.content
+    p.govuk-body-s By #{note.publisher.given_name} #{note.publisher.family_name}, #{note.created_at}
+    hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
 
 .govuk-grid-row class="govuk-!-margin-top-4"
   .govuk-grid-column-two-thirds

@@ -72,7 +72,8 @@ dd {
 @media print {
   .govuk-header,
   .govuk-breadcrumbs,
-  .govuk-footer {
-    display: none;
+  .govuk-footer,
+  .tabs-component {
+    display: none !important;
   }
 }

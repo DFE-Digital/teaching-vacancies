@@ -8,6 +8,7 @@ en:
     add_another_reference: Add another referee
     add_another_subject: Add another subject
     add_job: Add a job
+    add_note: Add note
     add_qualification: Add a qualification
     add_reference: Add a referee
     apply_filters: Apply filters
@@ -487,6 +488,9 @@ en:
       publishers_organisation_form:
         description: Description of %{organisation_type}
         website: '%{organisation_type} website'
+
+      publishers_job_application_notes_form:
+        content: Add a note
 
       publishers_job_application_update_status_form:
         further_instructions_html: Any further instructions? (optional<span class='govuk-visually-hidden'> field</span>)</span>

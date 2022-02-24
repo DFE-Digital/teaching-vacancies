@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_16_122359) do
+ActiveRecord::Schema.define(version: 2022_02_17_113218) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -260,6 +260,16 @@ ActiveRecord::Schema.define(version: 2022_02_16_122359) do
     t.index ["name"], name: "index_location_polygons_on_name"
   end
 
+  create_table "notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "content"
+    t.uuid "publisher_id", null: false
+    t.uuid "job_application_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["job_application_id"], name: "index_notes_on_job_application_id"
+    t.index ["publisher_id"], name: "index_notes_on_publisher_id"
+  end
+
   create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "recipient_type", null: false
     t.uuid "recipient_id", null: false
@@ -478,6 +488,8 @@ ActiveRecord::Schema.define(version: 2022_02_16_122359) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "emergency_login_keys", "publishers"
+  add_foreign_key "notes", "job_applications"
+  add_foreign_key "notes", "publishers"
   add_foreign_key "publisher_preferences", "publishers"
   add_foreign_key "qualification_results", "qualifications"
   add_foreign_key "vacancies", "organisations", column: "publisher_organisation_id"
