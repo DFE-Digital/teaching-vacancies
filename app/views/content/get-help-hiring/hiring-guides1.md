@@ -11,9 +11,7 @@ Example text
 ## This is another example subtitle
 More example text
 
-* One
-* Two
-* Three
+
 
 1. One
 2. Two
