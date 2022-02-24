@@ -15,8 +15,14 @@ $desktop-container-width: 1200px;
     }
   }
 
-  .job-application-actions {
-    display: flex;
+  .job-application {
+    &__actions {
+      display: flex;
+    }
+
+    &__notes {
+      display: none;
+    }
   }
 
   .add-remove-schools {
