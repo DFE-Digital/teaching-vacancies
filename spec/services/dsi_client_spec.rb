@@ -17,7 +17,7 @@ RSpec.describe DSIClient do
     end
 
     it "returns the user's roles" do
-      expect(client.role_ids).to eq(["test-role-id"])
+      expect(client.role_ids).to eq(["test-hiring-staff-role-id"])
     end
 
     context "when the response is a 404" do

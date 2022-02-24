@@ -5,7 +5,7 @@ RSpec.describe Authorisation do
     described_class.new(organisation_id: "123", user_id: "456", dsi_client:)
   end
 
-  let(:dsi_client) { instance_double("DSIClient", role_ids:, organisations:) }
+  let(:dsi_client) { instance_double("DSIClient", role_ids:) }
   let(:role_ids) { [] }
   let(:organisations) { [] }
 
