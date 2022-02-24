@@ -33,7 +33,6 @@ export default class extends Controller {
         element: this.element.getElementsByClassName(SUGGESTIONS_CLASSNAME).item(0),
         id: formInput.id,
         name: formInput.name,
-        defaultValue: currentInputValue,
         displayMenu: position,
         source: (query, populateResults) => {
           currentInputValue = query;
@@ -43,7 +42,6 @@ export default class extends Controller {
         templates: {
           suggestion: (value) => suggestionHTML(value, currentInputValue),
         },
-        tNoResults: () => 'Loading...',
       });
     }
   }
