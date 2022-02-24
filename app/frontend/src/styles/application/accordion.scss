@@ -25,19 +25,3 @@
   font-size: 1.2rem;
   padding: 0 0 govuk-spacing(1) 0;
 }
-
-.moj-filter__selected {
-  box-shadow: none;
-  padding: govuk-spacing(2);
-  position: relative;
-}
-
-.moj-filter__heading-action {
-  position: absolute;
-  right: govuk-spacing(2);
-  top: govuk-spacing(2);
-
-  p {
-    margin: 0;
-  }
-}
