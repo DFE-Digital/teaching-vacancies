@@ -201,6 +201,7 @@ Rails.application.routes.draw do
       resource :extend_deadline, only: %i[show update], controller: "publishers/vacancies/extend_deadline"
 
       resources :job_applications, only: %i[index show], controller: "publishers/vacancies/job_applications" do
+        resources :notes, only: %i[index create], controller: "publishers/vacancies/job_applications/notes"
         get :shortlist
         get :reject
         get :withdrawn
