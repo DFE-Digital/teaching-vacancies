@@ -1,0 +1,29 @@
+- content_for :page_title_prefix, "Page title"
+
+= render "publishers/vacancies/job_applications/header"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h2.govuk-heading-m = t(".heading")
+
+    .govuk-grid-row data-controller="show-hidden-content"
+      .govuk-grid-column-two-thirds
+        = govuk_button_to t(".add_note"), "#", secondary: true, data: { action: "click->show-hidden-content#show" }
+
+        = form_for @notes_form, id: "test", url: organisation_job_job_application_notes_path(vacancy.id, job_application), html: { data: { "show-hidden-content-target": "content" } } do |f|
+          = f.govuk_error_summary
+
+          = f.govuk_text_area :content, rows: 5, max_words: 150
+
+          = f.govuk_submit t("buttons.save") do
+            = govuk_link_to t("buttons.cancel"), "#"
+
+    - job_application.notes.each do |note|
+      p.govuk-body-m = note.content
+      p.govuk-body-s = t(".signature", given_name: note.publisher.given_name, family_name: note.publisher.family_name, created_at: note.created_at)
+      hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
+
+  .govuk-grid-column-one-third
+    h2.govuk-heading-s = t(".privacy.title")
+    p.govuk-body = t(".privacy.body")
+    p.govuk-body = t(".privacy.notice")
