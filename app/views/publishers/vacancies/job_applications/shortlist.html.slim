@@ -9,9 +9,9 @@
 
     h1.govuk-heading-xl class="govuk-!-margin-top-5 govuk-!-margin-bottom-5" = t(".heading")
 
-    = govuk_notification_banner title_text: t("banners.warning"), classes: "govuk-notification-banner--warning" do
-      = t(".alert")
-
     = form_for form, url: organisation_job_job_application_update_status_path(vacancy.id, job_application.id) do |f|
       = f.govuk_text_area :further_instructions, label: { size: "s" }, rows: 10
+
+      = govuk_warning_text(text: t(".alert"))
+
       = f.govuk_submit t("buttons.shortlist")

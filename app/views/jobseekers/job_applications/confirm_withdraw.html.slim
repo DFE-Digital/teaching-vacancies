@@ -13,7 +13,6 @@
         = f.govuk_radio_button :withdraw_reason, :changed_mind
         = f.govuk_radio_button :withdraw_reason, :other
 
-      = govuk_notification_banner title_text: t("banners.warning"), classes: "govuk-notification-banner--warning" do
-        = t(".description")
+      = govuk_warning_text(text: t(".description"))
 
       = f.govuk_submit t("buttons.withdraw_application")
