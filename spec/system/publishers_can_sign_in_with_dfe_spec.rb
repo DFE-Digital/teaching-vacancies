@@ -227,7 +227,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       sign_in_publisher(navigate: true)
 
       expect(current_path).to eq(new_publisher_session_path)
-      expect(page).to have_content(I18n.t("publishers.omniauth_callbacks.failure.message"))
+      expect(page).to have_content(I18n.t("omniauth_callbacks.failure.message"))
     end
   end
 end
