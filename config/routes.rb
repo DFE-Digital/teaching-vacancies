@@ -131,6 +131,8 @@ Rails.application.routes.draw do
     get "/auth/dfe/callback", to: "omniauth_callbacks#dfe"
   end
 
+  get "/publishers/auth/dfe/callback", to: redirect(path: "/auth/dfe/callback")
+
   if Rails.env.development?
     devise_scope :support_user do
       get "/auth/dfe/fake", to: "omniauth_callbacks#fake"
