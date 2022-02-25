@@ -131,6 +131,10 @@ Rails.application.routes.draw do
     get "/auth/dfe/callback", to: "omniauth_callbacks#dfe"
   end
 
+  # FIXME: Remove this once the DSI callback URL changes are done
+  get "/publishers/auth/dfe/callback", to: redirect(path: "/auth/dfe/callback")
+
+  # FIXME: Remove this once the DSI role changes are done
   if Rails.env.development?
     devise_scope :support_user do
       get "/auth/dfe/fake", to: "omniauth_callbacks#fake"
