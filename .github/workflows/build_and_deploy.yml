@@ -244,8 +244,6 @@ jobs:
         environment: ${{ env.ENVIRONMENT }}
         tag: ${{ env.DOCKER_IMAGE_TAG }}
         pr_id: ${{ github.event.number }}
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     - name: Notify twd_tv_dev channel on ${{ env.ENVIRONMENT }} deployment failure
       if: steps.deploy_app_to_env.conclusion != 'success'
