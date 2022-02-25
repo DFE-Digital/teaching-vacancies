@@ -12,12 +12,7 @@ on:
       pr_id:
         description: Pull Request
         required: false
-      aws-access-key-id:
-        description: AWS-ID
-        required: true
-      aws-secret-access-key:
-        description: AWS-KEY
-        required: true
+
 
 env:
  DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
@@ -35,5 +30,5 @@ jobs:
         environment: ${{ env.ENVIRONMENT }}
         tag: ${{ env.DOCKER_IMAGE_TAG }}
         pr_id: ${{ github.event.number }}
-        aws-access-key-id: ${{ inputs.aws-access-key-id}}
-        aws-secret-access-key: ${{ inputs.aws-secret-access-key }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
