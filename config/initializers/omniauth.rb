@@ -28,5 +28,9 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     },
   )
 
-  on_failure { |env| OmniauthCallbacksController.action(:failure).call(env) }
+  on_failure do |env|
+    OmniauthCallbacksController
+      .action(:failure)
+      .call(env.merge("devise.mapping" => Devise.mappings[:publisher]))
+  end
 end
