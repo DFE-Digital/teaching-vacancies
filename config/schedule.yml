@@ -15,7 +15,7 @@ email_feedback_prompt:
 
 export_users:
   cron: '0 01 * * *'
-  class: 'ExportDsiUsersToBigQueryJob'
+  class: 'ExportDSIUsersToBigQueryJob'
   queue: low
 
 import_organisation_data:
@@ -95,5 +95,5 @@ stream_equal_opportunities_report_publication_job:
 
 update_dsi_users_in_db:
   cron: '0 0 * * *'
-  class: 'UpdateDsiUsersInDbJob'
+  class: 'UpdateDSIUsersInDbJob'
   queue: low

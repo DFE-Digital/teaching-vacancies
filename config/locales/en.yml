@@ -201,6 +201,10 @@ en:
       central_office: Trust overview
     view_more_or_change: View more or change
 
+  omniauth_callbacks:
+    failure:
+      message: Your session has expired so you have been logged out. Please sign in again to your account below.
+
   nav:
     create_a_job_alert: Create a job alert
     find_job: Find a teaching job
