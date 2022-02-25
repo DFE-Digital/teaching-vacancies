@@ -19,6 +19,6 @@
     = govuk_link_to(t("buttons.back_to_manage_jobs"), jobs_with_type_organisation_path(vacancy.publication_status), class: "govuk-link--no-visited-state")
 
   - if vacancy.published? && !vacancy.pending?
-    - r.sidebar(classes: %w[grey-cta-container govuk-!-padding-bottom-4])
+    - r.sidebar(classes: %w[govuk-!-padding-bottom-4])
       h3 = t(".view_live_listing_title")
       = open_in_new_tab_link_to(t(".view_live_listing_link"), job_path(vacancy.id))
