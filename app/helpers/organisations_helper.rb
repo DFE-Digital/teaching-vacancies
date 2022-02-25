@@ -2,7 +2,7 @@ module OrganisationsHelper
   include AddressHelper
 
   OFSTED_REPORT_ENDPOINT = "https://reports.ofsted.gov.uk/oxedu_providers/full/(urn)/".freeze
-  APPLICATION_PACK_FILENAME = "teaching-vacancies-application-form-guide-sept-21.pdf".freeze
+  APPLICATION_PACK_FILENAME = "teaching-vacancies-application-form-guide-feb-22.pdf".freeze
 
   def age_range(school)
     return t("schools.not_given") unless school.minimum_age? && school.maximum_age?
