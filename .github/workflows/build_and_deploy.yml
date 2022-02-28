@@ -30,7 +30,6 @@ jobs:
     if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name != 'pull_request'
     name: Build docker image
     outputs:
-      build_git_tag: ${{steps.tag_version.outputs.new_tag}}
       matrix_environments: ${{ env.MATRIX_ENVIRONMENTS }}
       docker_image_tag: ${{ env.DOCKER_IMAGE_TAG }}
       commit_sha: ${{ env.COMMIT_SHA }}
@@ -222,7 +221,6 @@ jobs:
       run: |
         echo "COMMIT_SHA=${{ needs.build.outputs.commit_sha }}" >> $GITHUB_ENV
         echo "DOCKER_IMAGE_TAG=${{ needs.build.outputs.docker_image_tag }}" >> $GITHUB_ENV
-        echo "BUILD_GIT_TAG=${{ needs.build.outputs.build_git_tag}}" >> $GITHUB_ENV
         echo "LINK_TO_RUN=${{ needs.build.outputs.LINK_TO_RUN}}" >> $GITHUB_ENV
 
     - name: Set environment variable (Push)
