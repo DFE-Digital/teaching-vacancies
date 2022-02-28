@@ -8,34 +8,18 @@
     outline: $govuk-focus-width solid $govuk-focus-colour;
   }
 
-  &__link-button {
-    background-color: transparent;
-    background-repeat: no-repeat;
-    border: 0;
-    cursor: pointer;
-    font-size: 0.9rem;
-    padding: 0;
-    position: absolute;
-    right: 0;
-    top: 2px;
-
-    span {
-      line-height: 1em;
-      padding-left: govuk-spacing(4);
-    }
-  }
-
   &__heading {
-    &__container {
-      position: relative;
+    position: relative;
 
-      .govuk-heading-m {
-        margin-bottom: govuk-spacing(2);
-      }
+    &-link-button {
+      background-color: transparent;
+      border: 0;
+      cursor: pointer;
+      padding: 0;
+    }
 
-      .govuk-heading-s {
-        margin-bottom: govuk-spacing(2);
-      }
+    .govuk-heading-m {
+      margin-bottom: govuk-spacing(2);
     }
   }
 
@@ -45,14 +29,13 @@
     padding: govuk-spacing(1) 0;
     position: relative;
 
-    @include govuk-media-query($until: desktop) {
-      display: none;
+    @include govuk-media-query($from: tablet) {
+      display: block;
     }
 
     .govuk-heading-s {
       font-size: 1rem;
       margin-bottom: 0;
-      margin-top: govuk-spacing(4);
     }
 
     .govuk-body {
@@ -60,8 +43,18 @@
       font-weight: normal;
     }
 
+    &-group {
+      margin-bottom: 0;
+      margin-top: govuk-spacing(4);
+    }
+
     &__heading {
+      display: flex;
       margin-bottom: govuk-spacing(2);
+
+      &-title {
+        flex-grow: 1;
+      }
     }
 
     &-tags {
@@ -143,10 +136,6 @@
 
 .js-enabled {
   .filters-component {
-    &__remove {
-      display: block;
-    }
-
     button[type='submit'] {
       @include govuk-media-query($from: desktop) {
         display: none;
