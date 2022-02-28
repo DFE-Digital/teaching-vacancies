@@ -1,7 +1,7 @@
 require "dfe_sign_in_api"
 require "google/cloud/bigquery"
 
-class BaseDsiBigQueryExporter
+class BaseDSIBigQueryExporter
   include DFESignIn
 
   attr_reader :dataset
