@@ -1,7 +1,7 @@
 require "rails_helper"
 require "export_dsi_users_to_big_query"
 
-RSpec.describe ExportDsiUsersToBigQuery do
+RSpec.describe ExportDSIUsersToBigQuery do
   before do
     expect(bigquery_stub).to receive(:dataset).with("test_dataset").and_return(dataset_stub)
     expect(dataset_stub).to receive(:table).and_return(table_stub)
@@ -10,7 +10,7 @@ RSpec.describe ExportDsiUsersToBigQuery do
     expect(dfe_sign_in_api).to receive(:users).at_least(:once).and_return(api_response)
   end
 
-  subject { ExportDsiUsersToBigQuery.new(bigquery: bigquery_stub) }
+  subject { ExportDSIUsersToBigQuery.new(bigquery: bigquery_stub) }
 
   let(:bigquery_stub) { instance_double("Google::Cloud::Bigquery::Project") }
   let(:dataset_stub) { instance_double("Google::Cloud::Bigquery::Dataset") }
