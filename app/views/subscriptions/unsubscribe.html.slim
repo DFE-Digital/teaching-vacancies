@@ -8,5 +8,7 @@
 
     p.govuk-body = t(".confirmation")
 
-    = govuk_button_to t("buttons.unsubscribe"), subscription_path(@subscription.token), method: :delete, class: "govuk-button--warning govuk-!-margin-top-2"
-    = govuk_link_to t("buttons.cancel"), root_path
+    .govuk-button-group
+      = govuk_button_link_to t("buttons.unsubscribe"), subscription_path(@subscription.token), method: :delete, class: "govuk-button--warning"
+
+      = govuk_link_to t("buttons.cancel"), root_path, class: "govuk-link--no-visited-state"
