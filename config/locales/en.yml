@@ -404,9 +404,6 @@ en:
     new:
       job_at: "Looking for a teaching job? Check out %{title} at %{organisation}"
 
-  filters_component:
-    add_or_remove_schools: Add or remove schools
-
   stats:
     intro: >-
       This page is an event log used by the service team to measure and monitor the stability and performance of
