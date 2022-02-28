@@ -6,14 +6,14 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if authorisation.authorised_support_user?
       sign_in_support_user
-      trigger_support_user_sign_in_event(:success, :dsi)
+      trigger_successful_support_user_sign_in_event(:dsi)
       redirect_to after_sign_in_path_for(:support_user)
     elsif authorisation.authorised_publisher?
       sign_in_publisher(organisation_from_request)
-      trigger_publisher_sign_in_event(:success, :dsi)
+      trigger_successful_publisher_sign_in_event(:dsi)
       redirect_to after_sign_in_path_for(:publisher)
     else
-      trigger_publisher_sign_in_event(:failure, :dsi, user_id)
+      trigger_failed_dsi_sign_in_event(:dsi, user_id)
       render "not_authorised", locals: { email: auth_hash["info"]["email"] }
     end
   end
