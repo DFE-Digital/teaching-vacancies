@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe RequestEvent do
   subject do
-    described_class.new(request, response, session, jobseeker, publisher)
+    described_class.new(request, response, session, jobseeker, publisher, support_user)
   end
 
   let(:request) do
@@ -28,6 +28,7 @@ RSpec.describe RequestEvent do
 
   let(:publisher) { instance_double(Publisher, oid: 1234) }
   let(:jobseeker) { instance_double(Jobseeker, id: 4321) }
+  let(:support_user) { instance_double(SupportUser, oid: 5432) }
 
   let(:ab_tests) { double(AbTests, current_variants: { foo: :bar }) }
 
@@ -53,6 +54,7 @@ RSpec.describe RequestEvent do
         user_anonymised_session_id: anonymised_form_of("1337"),
         user_anonymised_jobseeker_id: anonymised_form_of("4321"),
         user_anonymised_publisher_id: anonymised_form_of("1234"),
+        user_anonymised_support_user_id: anonymised_form_of("5432"),
         data: [{ key: "foo", value: "Bar" }],
       }
     end

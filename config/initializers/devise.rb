@@ -274,30 +274,9 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-  dfe_sign_in_issuer_uri    = URI(ENV.fetch("DFE_SIGN_IN_ISSUER", "example"))
-  dfe_sign_in_identifier    = ENV.fetch("DFE_SIGN_IN_IDENTIFIER", "example")
-  dfe_sign_in_secret        = ENV.fetch("DFE_SIGN_IN_SECRET", "example")
-  dfe_sign_in_redirect_uri  = ENV.fetch("DFE_SIGN_IN_REDIRECT_URL", "example")
 
-  dfe_sign_in_issuer_url = "#{dfe_sign_in_issuer_uri}:#{dfe_sign_in_issuer_uri.port}" if dfe_sign_in_issuer_uri.port
-  config.omniauth :dfe,
-                  name: :dfe,
-                  discovery: true,
-                  response_type: :code,
-                  issuer: dfe_sign_in_issuer_url,
-                  client_signing_alg: :RS256,
-                  scope: %i[openid profile email organisation],
-                  client_options: {
-                    port: dfe_sign_in_issuer_uri.port,
-                    scheme: dfe_sign_in_issuer_uri.scheme,
-                    host: dfe_sign_in_issuer_uri.host,
-                    identifier: dfe_sign_in_identifier,
-                    secret: dfe_sign_in_secret,
-                    redirect_uri: dfe_sign_in_redirect_uri,
-                    authorization_endpoint: "/auth",
-                    jwks_uri: "/certs",
-                    userinfo_endpoint: "/me",
-                  }
+  # NB: This has been extracted per
+  # https://github.com/heartcombo/devise/wiki/OmniAuth-with-multiple-models
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

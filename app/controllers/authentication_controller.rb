@@ -2,14 +2,17 @@
 class AuthenticationController < ApplicationController
   private
 
-  def sign_out_jobseeker!
-    sign_out(:jobseeker)
-  end
+  def sign_out_except(scope)
+    %i[
+      jobseeker
+      publisher
+      support_user
+    ].each do |s|
+      next if s == scope
 
-  def sign_out_publisher!
-    clear_extra_publisher_session_entries
-
-    sign_out(:publisher)
+      clear_extra_publisher_session_entries if s == :publisher
+      sign_out(s)
+    end
   end
 
   def clear_extra_publisher_session_entries
@@ -30,11 +33,26 @@ class AuthenticationController < ApplicationController
     )
   end
 
-  def trigger_publisher_sign_in_event(success_or_failure, sign_in_type, publisher_oid = nil)
+  def trigger_successful_publisher_sign_in_event(sign_in_type, publisher_oid = nil)
     request_event.trigger(
-      :publisher_sign_in_attempt,
+      :successful_publisher_sign_in_attempt,
       user_anonymised_publisher_id: StringAnonymiser.new(publisher_oid),
-      success: success_or_failure == :success,
+      sign_in_type: sign_in_type,
+    )
+  end
+
+  def trigger_successful_support_user_sign_in_event(sign_in_type, oid = nil)
+    request_event.trigger(
+      :successful_support_user_sign_in_attempt,
+      user_anonymised_support_user_id: StringAnonymiser.new(oid),
+      sign_in_type: sign_in_type,
+    )
+  end
+
+  def trigger_failed_dsi_sign_in_event(sign_in_type, oid = nil)
+    request_event.trigger(
+      :failed_dsi_sign_in_attempt,
+      user_anonymised_id: StringAnonymiser.new(oid),
       sign_in_type: sign_in_type,
     )
   end
