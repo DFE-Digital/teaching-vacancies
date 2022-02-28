@@ -1,77 +1,23 @@
-section#school-overview class="govuk-!-margin-bottom-5"
-  h3.govuk-heading-l.govuk-heading--summary-list
-    = t("schools.schools_overview")
+section#school-overview
+  h3.govuk-heading-l.govuk-heading--summary-list = t("schools.schools_overview")
 
-  = govuk_summary_list do |summary_list|
-    - if vacancy.parent_organisation.group_type != "local_authority"
-      - summary_list.row do |row|
-        - row.key text: t("school_groups.type")
-        - row.value text: vacancy.parent_organisation.group_type
-
-    - if vacancy.parent_organisation.website.present? || vacancy.parent_organisation.url.present?
-      - summary_list.row do |row|
-        - row.key text: t("school_groups.website", organisation_type: organisation_type_basic(vacancy.parent_organisation).humanize)
-        - row.value text: tracked_open_in_new_tab_link_to(t("schools.website_link_text", organisation_name: vacancy.parent_organisation.name), vacancy.parent_organisation.website.presence || vacancy.parent_organisation.url, link_type: :school_website, link_subject: StringAnonymiser.new(vacancy.id).to_s, class: "link-wrap")
-
-    - if vacancy.contact_email.present?
-      - summary_list.row do |row|
-        - row.key text: t("jobs.contact_email")
-        - row.value text: govuk_mail_to(vacancy.contact_email, vacancy.contact_email, class: "link-wrap", subject: t("jobs.contact_email_subject", job: vacancy.job_title), body: t("jobs.contact_email_body", url: job_url(vacancy)))
-
-    - if vacancy.contact_number.present?
-      - summary_list.row do |row|
-        - row.key text: t("jobs.contact_number")
-        - row.value text: govuk_link_to(vacancy.contact_number, "tel:#{vacancy.contact_number}")
+  = render "vacancies/school_group", organisation: vacancy.parent_organisation, vacancy: vacancy
 
   - if vacancy.about_school.present?
-    h4.govuk-heading-m
-      = t("schools.about_schools")
-    = vacancy.about_school
+    h4.govuk-heading-m = t("schools.about_schools")
+    p = vacancy.about_school
 
-  h4.govuk-heading-m class="govuk-!-margin-bottom-0"
-    = t("schools.school_details")
-
-  #accordion-default.govuk-accordion data-module="govuk-accordion"
-    - vacancy.organisations.each_with_index do |organisation, index|
-      .govuk-accordion__section
-        .govuk-accordion__section-header
-          h3.govuk-accordion__section-heading
-            span.govuk-accordion__section-button id="accordion-default-heading-#{index}"
-              = organisation.name
-        .govuk-accordion__section-content id="accordion-default-content-#{index}" aria-labelledby="accordion-default-heading-#{index}"
-          = govuk_summary_list do |summary_list|
-            - summary_list.row do |row|
-              - row.key text: t("schools.type")
-              - row.value text: organisation_type(organisation)
-
-            - summary_list.row do |row|
-              - row.key text: t("schools.phase")
-              - row.value text: linked_school_phases(organisation)
-
-            - summary_list.row do |row|
-              - row.key text: t("schools.school_size")
-              - row.value text: school_size(organisation)
-
-            - summary_list.row do |row|
-              - row.key text: t("schools.age_range")
-              - row.value text: age_range(organisation)
-
-            - summary_list.row do |row|
-              - row.key text: t("schools.ofsted_report")
-              - row.value text: ofsted_report(organisation).present? ? open_in_new_tab_link_to(t("schools.view_ofsted_report"), ofsted_report(organisation), class: "wordwrap") : t("schools.no_information")
-
-            - if organisation.website.present? || organisation.url.present?
-              - summary_list.row do |row|
-                - row.key text: t("schools.website")
-                - row.value text: open_in_new_tab_link_to(t("schools.website_link_text", organisation_name: organisation.name), organisation.website.presence || organisation.url, class: "wordwrap")
+  h4.govuk-heading-m = t("schools.school_details")
+  = govuk_accordion do |accordion|
+    - vacancy.organisations.each do |organisation|
+      - accordion.section heading_text: organisation.name do
+        = render "school", organisation: organisation, vacancy: vacancy, contact_details: false
 
   - if vacancy.school_visits.present?
-    h4.govuk-heading-m
-      = t("schools.schools_visits")
-    = vacancy.school_visits
+    h4.govuk-heading-m = t("schools.schools_visits")
+    p = vacancy.school_visits
 
   - if vacancy.organisations.any?(&:geopoint)
     section#school-location
-      h3.govuk-heading-l.section-heading = t("schools.school_location.other")
-
+      h3.govuk-heading-l.govuk-heading--summary-list = t("schools.school_location.other")
       = map(items: [{ type: "vacancy", params: { id: vacancy.id }, links: map_links(vacancy) }], zoom: 10)
