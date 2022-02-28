@@ -24,6 +24,8 @@ require_relative "../lib/fail_safe"
 require_relative "../lib/modules/aws_ip_ranges"
 require_relative "../lib/vcap_services"
 
+require "rack-mini-profiler" if ENV["RACK_MINI_PROFILER"] == "true" && !Rails.env.production?
+
 module TeacherVacancyService
   class Application < Rails::Application
     config.load_defaults 6.1
