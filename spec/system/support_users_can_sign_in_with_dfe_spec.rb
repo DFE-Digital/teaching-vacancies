@@ -8,9 +8,9 @@ RSpec.shared_examples "a successful sign in" do
 
   scenario "it signs in the user successfully" do
     expect { sign_in_support_user }
-      .to have_triggered_event(:support_user_sign_in_attempt)
+      .to have_triggered_event(:successful_support_user_sign_in_attempt)
       .with_base_data(user_anonymised_support_user_id: anonymised_form_of(user_oid))
-      .with_data(success: "true", sign_in_type: "dsi")
+      .with_data(sign_in_type: "dsi")
 
     within("nav") { expect(page).to have_selector(:link_or_button, I18n.t("nav.sign_out")) }
     within("nav") { expect(page).to have_selector(:link_or_button, I18n.t("nav.support_user_dashboard")) }
@@ -22,8 +22,8 @@ RSpec.shared_examples "a failed sign in" do |options|
     visit new_support_user_session_path
 
     expect { sign_in_support_user }
-      .to have_triggered_event(:publisher_sign_in_attempt)
-      .with_data(success: "false", sign_in_type: "dsi", user_anonymised_publisher_id: anonymised_form_of(user_oid))
+      .to have_triggered_event(:failed_dsi_sign_in_attempt)
+      .with_data(sign_in_type: "dsi", user_anonymised_id: anonymised_form_of(user_oid))
 
     expect(page).to have_content(/The email you're signed in with isn't authorised to list jobs for this school/i)
     expect(page).to have_content(options[:email])

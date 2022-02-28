@@ -33,20 +33,26 @@ class AuthenticationController < ApplicationController
     )
   end
 
-  def trigger_publisher_sign_in_event(success_or_failure, sign_in_type, publisher_oid = nil)
+  def trigger_successful_publisher_sign_in_event(sign_in_type, publisher_oid = nil)
     request_event.trigger(
-      :publisher_sign_in_attempt,
+      :successful_publisher_sign_in_attempt,
       user_anonymised_publisher_id: StringAnonymiser.new(publisher_oid),
-      success: success_or_failure == :success,
       sign_in_type: sign_in_type,
     )
   end
 
-  def trigger_support_user_sign_in_event(success_or_failure, sign_in_type, oid = nil)
+  def trigger_successful_support_user_sign_in_event(sign_in_type, oid = nil)
     request_event.trigger(
-      :support_user_sign_in_attempt,
+      :successful_support_user_sign_in_attempt,
       user_anonymised_support_user_id: StringAnonymiser.new(oid),
-      success: success_or_failure == :success,
+      sign_in_type: sign_in_type,
+    )
+  end
+
+  def trigger_failed_dsi_sign_in_event(sign_in_type, oid = nil)
+    request_event.trigger(
+      :failed_dsi_sign_in_attempt,
+      user_anonymised_id: StringAnonymiser.new(oid),
       sign_in_type: sign_in_type,
     )
   end
