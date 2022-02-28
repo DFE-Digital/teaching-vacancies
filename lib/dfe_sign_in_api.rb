@@ -22,7 +22,7 @@ module DFESignIn
     def perform_request(endpoint, page, page_size)
       token = generate_jwt_token
       response = HTTParty.get(
-        "#{DFE_SIGN_IN_URL}#{endpoint}?page=#{page}&pageSize=#{page_size}",
+        "#{ENV['DFE_SIGN_IN_URL']}#{endpoint}?page=#{page}&pageSize=#{page_size}",
         headers: { "Authorization" => "Bearer #{token}" },
       )
 
@@ -40,7 +40,7 @@ module DFESignIn
         aud: "signin.education.gov.uk",
       }
 
-      JWT.encode(payload, DFE_SIGN_IN_PASSWORD, "HS256")
+      JWT.encode(payload, ENV["DFE_SIGN_IN_PASSWORD"], "HS256")
     end
   end
 

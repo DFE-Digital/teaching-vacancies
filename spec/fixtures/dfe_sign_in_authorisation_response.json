@@ -4,7 +4,7 @@
   "organisationId":"939eac36-0777-48c2-9c2c-b87c948a9ee0",
   "roles":[
     {
-      "id":"test-role-id",
+      "id":"test-hiring-staff-role-id",
       "name":"Access to Find a job in teaching",
       "code":"TVSACCESS",
       "numericId":"152",
