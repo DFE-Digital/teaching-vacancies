@@ -64,8 +64,8 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
     let!(:organisation) { create(:school, urn: "110627") }
 
     before do
-      stub_authentication_step email: dsi_email_address
-      stub_authorisation_step
+      stub_publisher_authentication_step email: dsi_email_address
+      stub_publisher_authorisation_step
       stub_sign_in_with_multiple_organisations
     end
 
@@ -89,6 +89,15 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       click_on I18n.t("buttons.create_job")
       expect(current_path).to eq(create_or_copy_organisation_jobs_path)
     end
+
+    context "when navigating to support user login page" do
+      it "does not redirect to support user dashboard" do
+        sign_in_publisher(navigate: true)
+        visit new_support_user_session_path
+
+        expect(current_path).not_to eq(support_user_root_path)
+      end
+    end
   end
 
   context "with DSI data including a school group (trust or local authority) that the school belongs to" do
@@ -97,8 +106,8 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
 
     before do
       publisher.update organisations: [school, school_group]
-      stub_authentication_step(school_urn: "246757", email: dsi_email_address)
-      stub_authorisation_step
+      stub_publisher_authentication_step(school_urn: "246757", email: dsi_email_address)
+      stub_publisher_authorisation_step
       stub_sign_in_with_multiple_organisations
 
       visit new_publisher_session_path
@@ -137,8 +146,8 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
     before do
       allow(PublisherPreference).to receive(:find_by).and_return(publisher_preference)
 
-      stub_authentication_step(school_urn: nil, trust_uid: organisation.uid, email: dsi_email_address)
-      stub_authorisation_step
+      stub_publisher_authentication_step(school_urn: nil, trust_uid: organisation.uid, email: dsi_email_address)
+      stub_publisher_authorisation_step
       stub_sign_in_with_multiple_organisations
     end
 
@@ -163,8 +172,8 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       allow(Rails.configuration).to receive(:enforce_local_authority_allowlist).and_return(true)
       allow(PublisherPreference).to receive(:find_by).and_return(publisher_preference)
 
-      stub_authentication_step(school_urn: nil, la_code: organisation.local_authority_code, email: dsi_email_address)
-      stub_authorisation_step
+      stub_publisher_authentication_step(school_urn: nil, la_code: organisation.local_authority_code, email: dsi_email_address)
+      stub_publisher_authorisation_step
       stub_sign_in_with_multiple_organisations
     end
 
@@ -196,8 +205,8 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
   context "with valid credentials but no authorisation" do
     before do
       create(:school, urn: "110627")
-      stub_authentication_step(email: "another_email@example.com")
-      stub_authorisation_step_with_not_found
+      stub_publisher_authentication_step(email: "another_email@example.com")
+      stub_publisher_authorisation_step_with_not_found
     end
 
     it_behaves_like "a failed sign in", email: "another_email@example.com"
@@ -205,8 +214,8 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
 
   context "when there is was an error with DfE Sign-in" do
     before do
-      stub_authentication_step
-      stub_authorisation_step_with_external_error
+      stub_publisher_authentication_step
+      stub_publisher_authorisation_step_with_external_error
     end
 
     it "raises an error" do
@@ -227,7 +236,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       sign_in_publisher(navigate: true)
 
       expect(current_path).to eq(new_publisher_session_path)
-      expect(page).to have_content(I18n.t("publishers.omniauth_callbacks.failure.message"))
+      expect(page).to have_content(I18n.t("omniauth_callbacks.failure.message"))
     end
   end
 end

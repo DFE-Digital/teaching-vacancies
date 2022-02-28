@@ -21,7 +21,7 @@ RSpec.shared_examples "a DFE Sign In endpoint" do
   context "when the response status is unknown" do
     before do
       stub_request(:get,
-                   "#{DFE_SIGN_IN_URL}#{api_path}?page=1&pageSize=#{page_size}")
+                   "#{ENV['DFE_SIGN_IN_URL']}#{api_path}?page=1&pageSize=#{page_size}")
         .to_return(body: "", status: 499)
     end
     it "raises an unknown response error" do
@@ -53,7 +53,7 @@ RSpec.shared_examples "a DFE Sign In endpoint" do
         stub_api_response_for_page(1)
         subject.call
 
-        expect(a_request(:get, "#{DFE_SIGN_IN_URL}#{api_path}?page=1&pageSize=#{page_size}")
+        expect(a_request(:get, "#{ENV['DFE_SIGN_IN_URL']}#{api_path}?page=1&pageSize=#{page_size}")
           .with(headers: { "Authorization" => "Bearer #{expected_token}" }))
           .to have_been_made
       end
@@ -70,19 +70,19 @@ RSpec.shared_examples "a DFE Sign In endpoint" do
 
   def stub_api_response_for_page(page)
     stub_request(:get,
-                 "#{DFE_SIGN_IN_URL}#{api_path}?page=#{page}&pageSize=#{page_size}")
+                 "#{ENV['DFE_SIGN_IN_URL']}#{api_path}?page=#{page}&pageSize=#{page_size}")
       .to_return(body: response_file(page), status: 200)
   end
 
   def stub_api_response_with_external_error(page)
     stub_request(:get,
-                 "#{DFE_SIGN_IN_URL}#{api_path}?page=#{page}&pageSize=#{page_size}")
+                 "#{ENV['DFE_SIGN_IN_URL']}#{api_path}?page=#{page}&pageSize=#{page_size}")
       .to_return(body: "", status: 500)
   end
 
   def stub_api_response_with_forbidden_error(page)
     stub_request(:get,
-                 "#{DFE_SIGN_IN_URL}#{api_path}?page=#{page}&pageSize=#{page_size}")
+                 "#{ENV['DFE_SIGN_IN_URL']}#{api_path}?page=#{page}&pageSize=#{page_size}")
       .to_return(body: '{"success":false,"message":"jwt expired"}', status: 403)
   end
 
@@ -93,7 +93,7 @@ RSpec.shared_examples "a DFE Sign In endpoint" do
       aud: "signin.education.gov.uk",
     }
 
-    JWT.encode(payload, DFE_SIGN_IN_PASSWORD, "HS256")
+    JWT.encode(payload, ENV["DFE_SIGN_IN_PASSWORD"], "HS256")
   end
 end
 

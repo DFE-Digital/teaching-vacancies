@@ -20,8 +20,8 @@ RSpec.describe "School viewing public listings" do
   context "when signed in with DfE Sign In" do
     before do
       stub_accepted_terms_and_conditions
-      stub_authentication_step(school_urn: "110627")
-      stub_authorisation_step
+      stub_publisher_authentication_step(school_urn: "110627")
+      stub_publisher_authorisation_step
       stub_sign_in_with_multiple_organisations
       allow(AuthenticationFallback).to receive(:enabled?) { false }
     end
