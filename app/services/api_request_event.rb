@@ -7,6 +7,6 @@ class ApiRequestEvent < RequestEvent
   end
 
   def base_data
-    @base_data ||= super.except(:request_ab_tests, :user_anonymised_jobseeker_id, :user_anonymised_publisher_id)
+    @base_data ||= super.except(:request_ab_tests, :user_anonymised_jobseeker_id, :user_anonymised_publisher_id, :user_anonymised_support_user_id)
   end
 end
