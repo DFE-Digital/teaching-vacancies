@@ -41,4 +41,4 @@
 
     h3.govuk-heading-s Need help logging in?
 
-    p.govuk-body Contact us at #{govuk_mail_to("teaching.vacancies@education.gov.uk")}
+    p.govuk-body = govuk_link_to("Request support", new_support_request_path)
