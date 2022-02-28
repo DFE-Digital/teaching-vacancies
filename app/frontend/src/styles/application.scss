@@ -18,7 +18,6 @@ $govuk-new-link-styles: true;
 
 @import 'application/accordion';
 @import 'application/applications';
-@import 'application/footer';
 @import 'application/form';
 @import 'application/header';
 @import 'application/home';
@@ -26,15 +25,8 @@ $govuk-new-link-styles: true;
 @import 'application/inset_text';
 @import 'application/pagination';
 @import 'application/posts';
-@import 'application/school';
-@import 'application/signin';
-@import 'application/tabs';
 @import 'application/timeline';
-@import 'application/typography';
 
-@import 'application/jobseekers/cookies-banner';
-@import 'application/jobseekers/feedback-form';
-@import 'application/jobseekers/jobseeker';
 @import 'application/jobseekers/keyword-search';
 @import 'application/jobseekers/search-header';
 @import 'application/jobseekers/subscription';
@@ -43,14 +35,9 @@ $govuk-new-link-styles: true;
 
 @import 'application/publishers/awaiting-feedback';
 @import 'application/publishers/information-summary';
-@import 'application/publishers/interruption-card';
 @import 'application/publishers/publisher-landing-page';
-@import 'application/publishers/og-preview';
 @import 'application/publishers/print-application';
 @import 'application/publishers/publisher';
-@import 'application/publishers/scrollable-panel';
-@import 'application/publishers/share-url';
-@import 'application/publishers/statistics';
 
 body {
   .govuk-width-container {
@@ -63,27 +50,8 @@ body {
   }
 }
 
-button:not(.govuk-button) {
-  font-family: 'GDS Transport', arial, sans-serif;
-}
-
-input[type='search'] {
-  box-sizing: border-box;
-}
-
 p {
   @include govuk-font(19);
-}
-
-strong,
-b,
-dt {
-  color: $govuk-text-colour;
-  font-weight: bold;
-}
-
-dd {
-  color: $govuk-text-colour;
 }
 
 dl,
@@ -98,17 +66,6 @@ dd {
   }
 }
 
-.govuk-section-break {
-  &--thick {
-    border-bottom: 5px solid #b1b4b6;
-  }
-}
-
-.grey-cta-container {
-  background-color: govuk-colour('light-grey');
-}
-
-// Per https://gov.uk footer
 .govuk-footer__list {
   padding-bottom: 40px;
 }
