@@ -28,7 +28,7 @@
     h2.govuk-heading-m = t(".jobseeker_section.title")
     - if jobseeker_signed_in?
       p.govuk-body = t(".jobseeker_section.signed_in.description")
-      div class="govuk-!-margin-bottom-3" = govuk_link_to t("buttons.view_account"), jobseeker_root_path, class: "govuk-link--no-visited-state"
+      .govuk-body class="govuk-!-margin-bottom-3" = govuk_link_to t("buttons.view_account"), jobseeker_root_path, class: "govuk-link--no-visited-state"
     - else
       p.govuk-body = t(".jobseeker_section.signed_out.description_html",
         sign_in_link: govuk_link_to(t("buttons.sign_in"), new_jobseeker_session_path, class: "govuk-link--no-visited-state"),
