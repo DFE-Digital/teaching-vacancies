@@ -19,8 +19,8 @@ RSpec.describe "Users can only be signed in to one type of account" do
       before do
         OmniAuth.config.test_mode = true
         stub_accepted_terms_and_conditions
-        stub_authentication_step email: dsi_email_address
-        stub_authorisation_step
+        stub_publisher_authentication_step email: dsi_email_address
+        stub_publisher_authorisation_step
         stub_sign_in_with_multiple_organisations
       end
 

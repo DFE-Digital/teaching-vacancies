@@ -1,9 +1,9 @@
 require "update_dsi_users_in_db"
 
-class UpdateDsiUsersInDbJob < ApplicationJob
+class UpdateDSIUsersInDbJob < ApplicationJob
   queue_as :low
 
   def perform
-    UpdateDsiUsersInDb.new.run!
+    UpdateDSIUsersInDb.new.run!
   end
 end
