@@ -1,7 +1,7 @@
 # A fake DSI sign out endpoint to be mounted in test environments
 # Intercepts requests for the DFE_SIGN_IN_ISSUER (overridden in `environments/test.rb`)
 # and redirects if the location is the log out endpoint
-class FakeDsiSignOutEndpoint
+class FakeDSISignOutEndpoint
   def initialize(app)
     @app = app
   end
