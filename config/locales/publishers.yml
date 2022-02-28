@@ -131,6 +131,7 @@ en:
         subject: Sign in to Teaching Vacancies
       heading: Temporary login
     vacancies_component:
+      add_or_remove_schools: Add or remove schools
       awaiting_feedback:
         tab_heading: Jobs awaiting feedback
         with_count_html: Awaiting feedback <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>

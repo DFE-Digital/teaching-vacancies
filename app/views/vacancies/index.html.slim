@@ -20,7 +20,7 @@
             .search-results__controls
               = render "search", f: f
 
-            .panel-component.js-action data-controller="panel" data-content-id="filters-component" data-close-container="filters-component__heading__container"
+            .panel-component.js-action data-controller="panel" data-content-id="filters-component" data-close-container="filters-component__heading"
               button.panel-component__toggle.govuk-button.govuk-button--secondary type="button" data-panel-target="toggle" data-action="panel#toggleVisibility"
                 = t("buttons.filters_toggle_panel", count: @form.total_filters)
 
