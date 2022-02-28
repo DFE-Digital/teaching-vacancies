@@ -89,6 +89,15 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       click_on I18n.t("buttons.create_job")
       expect(current_path).to eq(create_or_copy_organisation_jobs_path)
     end
+
+    context "when navigating to support user login page" do
+      it "does not redirect to support user dashboard" do
+        sign_in_publisher(navigate: true)
+        visit new_support_user_session_path
+
+        expect(current_path).not_to eq(support_user_root_path)
+      end
+    end
   end
 
   context "with DSI data including a school group (trust or local authority) that the school belongs to" do
@@ -227,7 +236,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       sign_in_publisher(navigate: true)
 
       expect(current_path).to eq(new_publisher_session_path)
-      expect(page).to have_content(I18n.t("publishers.omniauth_callbacks.failure.message"))
+      expect(page).to have_content(I18n.t("omniauth_callbacks.failure.message"))
     end
   end
 end

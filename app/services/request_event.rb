@@ -4,17 +4,18 @@
 # This includes additional information in the event that allows us to put the event into the
 # context of a user request. This event can only meaningfully be triggered in controllers.
 class RequestEvent < Event
-  def initialize(request, response, session, current_jobseeker, current_publisher)
+  def initialize(request, response, session, current_jobseeker, current_publisher, current_support_user)
     @request = request
     @response = response
     @session = session
     @current_jobseeker = current_jobseeker
     @current_publisher = current_publisher
+    @current_support_user = current_support_user
   end
 
   private
 
-  attr_reader :request, :response, :session, :current_jobseeker, :current_publisher
+  attr_reader :request, :response, :session, :current_jobseeker, :current_publisher, :current_support_user
 
   def base_data
     @base_data ||= super.merge(
@@ -31,6 +32,7 @@ class RequestEvent < Event
       user_anonymised_session_id: anonymise(session.id),
       user_anonymised_jobseeker_id: anonymise(current_jobseeker&.id),
       user_anonymised_publisher_id: anonymise(current_publisher&.oid),
+      user_anonymised_support_user_id: anonymise(current_support_user&.oid),
     )
   end
 
