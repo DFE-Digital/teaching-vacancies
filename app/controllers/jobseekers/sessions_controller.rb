@@ -22,7 +22,7 @@ class Jobseekers::SessionsController < Devise::SessionsController
       return
     end
 
-    sign_out_publisher!
+    sign_out_except(:jobseeker)
 
     super do
       trigger_jobseeker_sign_in_event(:success)

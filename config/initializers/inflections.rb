@@ -20,4 +20,5 @@ ActiveSupport::Inflector.inflections do |inflect|
 
   inflect.acronym "ECT"
   inflect.acronym "SENDCo"
+  inflect.acronym "DSI"
 end

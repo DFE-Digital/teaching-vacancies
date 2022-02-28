@@ -7,9 +7,9 @@ module AuthHelpers
     login_as(publisher, scope: :publisher)
   end
 
-  def stub_authentication_step(organisation_id: "939eac36-0777-48c2-9c2c-b87c948a9ee0",
-                               school_urn: "110627", trust_uid: nil, la_code: nil,
-                               email: "an-email@example.com")
+  def stub_publisher_authentication_step(organisation_id: "939eac36-0777-48c2-9c2c-b87c948a9ee0",
+                                         school_urn: "110627", trust_uid: nil, la_code: nil,
+                                         email: "an-email@example.com")
     category = "001" if school_urn.present?
     category = "010" if trust_uid.present?
     category = "002" if la_code.present?
@@ -33,8 +33,25 @@ module AuthHelpers
     )
   end
 
-  def stub_authorisation_step(organisation_id: "939eac36-0777-48c2-9c2c-b87c948a9ee0",
-                              fixture_file: "dfe_sign_in_authorisation_response.json")
+  def stub_support_user_authentication_step(organisation_id: "939eac36-0777-48c2-9c2c-b87c948a9ee0", email: "an-email@example.com")
+    OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
+      provider: "dfe",
+      uid: "161d1f6a-44f1-4a1a-940d-d1088c439da7",
+      info: {
+        email: email,
+      },
+      extra: {
+        raw_info: {
+          organisation: {
+            id: organisation_id,
+          },
+        },
+      },
+    )
+  end
+
+  def stub_publisher_authorisation_step(organisation_id: "939eac36-0777-48c2-9c2c-b87c948a9ee0",
+                                        fixture_file: "dfe_sign_in_publisher_authorisation_response.json")
     user_id = "161d1f6a-44f1-4a1a-940d-d1088c439da7"
     authorisation_response = File.read(Rails.root.join("spec", "fixtures", fixture_file))
 
@@ -44,7 +61,18 @@ module AuthHelpers
     ).to_return(body: authorisation_response, status: 200)
   end
 
-  def stub_authorisation_step_with_not_found
+  def stub_support_user_authorisation_step(organisation_id: "939eac36-0777-48c2-9c2c-b87c948a9ee0",
+                                           fixture_file: "dfe_sign_in_support_user_authorisation_response.json")
+    user_id = "161d1f6a-44f1-4a1a-940d-d1088c439da7"
+    authorisation_response = File.read(Rails.root.join("spec", "fixtures", fixture_file))
+
+    stub_request(
+      :get,
+      "https://test-url.local/services/test-service-id/organisations/#{organisation_id}/users/#{user_id}",
+    ).to_return(body: authorisation_response, status: 200)
+  end
+
+  def stub_publisher_authorisation_step_with_not_found
     authorisation_response = File.read(
       Rails.root.join("spec/fixtures/dfe_sign_in_missing_authorisation_response.html"),
     )
@@ -55,7 +83,7 @@ module AuthHelpers
     ).to_return(body: authorisation_response, status: 404)
   end
 
-  def stub_authorisation_step_with_external_error
+  def stub_publisher_authorisation_step_with_external_error
     authorisation_response = File.read(
       Rails.root.join("spec/fixtures/dfe_sign_in_authorisation_external_error.json"),
     )
@@ -90,6 +118,11 @@ module AuthHelpers
 
   def sign_in_publisher(navigate: false)
     visit new_publisher_session_path if navigate
+    click_on I18n.t("buttons.continue_to_dsi")
+  end
+
+  def sign_in_support_user(navigate: false)
+    visit new_support_user_session_path if navigate
     click_on I18n.t("buttons.continue_to_dsi")
   end
 
