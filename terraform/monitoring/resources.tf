@@ -19,4 +19,5 @@ module "prometheus_all" {
     "${local.service_name}-staging/${local.service_name}-redis-queue-staging",
     "${local.service_name}-staging/${local.service_name}-redis-cache-staging"
   ]
+  enable_prometheus_yearly = true
 }
