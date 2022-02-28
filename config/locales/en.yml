@@ -216,6 +216,7 @@ en:
       other: Notifications <span class="count-badge">%{count}<span class="govuk-visually-hidden"> unread</span></span>
     sign_in: Sign in
     sign_out: Sign out
+    support_user_dashboard: Hello support user
     your_account: My account
 
   number:
@@ -505,6 +506,19 @@ en:
       heading: Get help
     create:
       success: Your request for help has been sent
+
+  support_users:
+    sessions:
+      new:
+        no_account:
+          account_request_html: If you don't yet have access to Teaching Vacancies you can %{link}
+          account_request_link_text: request an account
+          content_html: If you have a DfE Sign-in account but can't access Teaching Vacancies, %{link} and select 'Request access to a service'
+          heading: Don't have an account yet?
+          login_link_text: log in
+        sign_in:
+          description: Use DfE Sign-in to access your Teaching Vacancies account.
+          title: Support user sign in
 
   tabs:
     applications:
