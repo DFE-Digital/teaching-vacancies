@@ -30,7 +30,6 @@ jobs:
     if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name != 'pull_request'
     name: Build docker image
     outputs:
-      build_git_tag: ${{steps.tag_version.outputs.new_tag}}
       matrix_environments: ${{ env.MATRIX_ENVIRONMENTS }}
       docker_image_tag: ${{ env.DOCKER_IMAGE_TAG }}
       commit_sha: ${{ env.COMMIT_SHA }}
@@ -138,13 +137,6 @@ jobs:
             ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }}
           target: production
 
-      # Creates a unique git tag to help synchronising dependent jobs
-      - name: Bump version and push tag
-        id: tag_version
-        uses: mathieudutour/github-tag-action@v6.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Set matrix environments (Push to main)
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: echo "MATRIX_ENVIRONMENTS={\"environment\":[\"staging\",\"production\",\"qa\", \"research\"]}" >> $GITHUB_ENV
@@ -222,7 +214,6 @@ jobs:
       run: |
         echo "COMMIT_SHA=${{ needs.build.outputs.commit_sha }}" >> $GITHUB_ENV
         echo "DOCKER_IMAGE_TAG=${{ needs.build.outputs.docker_image_tag }}" >> $GITHUB_ENV
-        echo "BUILD_GIT_TAG=${{ needs.build.outputs.build_git_tag}}" >> $GITHUB_ENV
         echo "LINK_TO_RUN=${{ needs.build.outputs.LINK_TO_RUN}}" >> $GITHUB_ENV
 
     - name: Set environment variable (Push)
