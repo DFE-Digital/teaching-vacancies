@@ -15,8 +15,7 @@
             .govuk-fieldset__heading = t("helpers.legend.publishers_job_listing_important_dates_form.publish_on")
           p = format_date vacancy.publish_on
         br
-        .display-none
-          = f.govuk_date_field :publish_on
+        = f.govuk_date_field :publish_on, class: "govuk-!-display-none"
       - else
         = f.govuk_radio_buttons_fieldset :publish_on_day do
           = f.govuk_radio_button :publish_on_day, :today, link_errors: true

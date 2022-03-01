@@ -18,7 +18,7 @@
         "data-upload-documents-target": "inputFileUpload",
         "data-action": "change->upload-documents#uploadFiles"
 
-      button.govuk-button.govuk-button--secondary.display-none class="govuk-!-margin-bottom-3" data-upload-documents-target="selectFileButton" data-action="upload-documents#trigger_upload"
+      button.govuk-button.govuk-button--secondary class="govuk-!-display-none govuk-!-margin-bottom-3" data-upload-documents-target="selectFileButton" data-action="upload-documents#trigger_upload"
         = t("buttons.select_file")
 
       = f.govuk_submit t("buttons.upload_files"), secondary: true, "data-upload-documents-target": "uploadFilesButton"
