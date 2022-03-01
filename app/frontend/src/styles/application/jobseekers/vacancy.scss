@@ -14,20 +14,6 @@
     }
   }
 
-  .section-heading {
-    border-bottom: 6px solid $govuk-border-colour;
-    padding-bottom: govuk-spacing(2);
-  }
-
-  .vacancy-apply-link {
-    margin-bottom: 0;
-    width: auto;
-
-    @media only screen and (max-width: 640px) {
-      padding: 12px;
-    }
-  }
-
   .similar-jobs {
     .govuk-grid-row {
       align-items: stretch;

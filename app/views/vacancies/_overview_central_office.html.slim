@@ -1,41 +1,16 @@
-section#school-overview class="govuk-!-margin-bottom-5"
-  h3.govuk-heading-l.govuk-heading--summary-list
-    = t("school_groups.trust_overview")
+section#school-overview
+  h3.govuk-heading-l.govuk-heading--summary-list = t("school_groups.trust_overview")
 
-  = govuk_summary_list do |summary_list|
-    - if vacancy.parent_organisation.group_type != "local_authority"
-      - summary_list.row do |row|
-        - row.key text: t("school_groups.type")
-        - row.value text: vacancy.parent_organisation.group_type
-
-    - if vacancy.parent_organisation.website.present? || vacancy.parent_organisation.url.present?
-      - summary_list.row do |row|
-        - row.key text: t("school_groups.website", organisation_type: organisation_type_basic(vacancy.parent_organisation).humanize)
-        - row.value text: tracked_open_in_new_tab_link_to(t("schools.website_link_text", organisation_name: vacancy.parent_organisation.name), vacancy.parent_organisation.website.presence || vacancy.parent_organisation.url, link_type: :school_website, link_subject: StringAnonymiser.new(vacancy.id).to_s, class: "link-wrap")
-
-    - if vacancy.contact_email.present?
-      - summary_list.row do |row|
-        - row.key text: t("jobs.contact_email")
-        - row.value text: govuk_mail_to(vacancy.contact_email, vacancy.contact_email, class: "link-wrap", subject: t("jobs.contact_email_subject", job: vacancy.job_title), body: t("jobs.contact_email_body", url: job_url(vacancy)))
-
-    - if vacancy.contact_number.present?
-      - summary_list.row do |row|
-        - row.key text: t("jobs.contact_number")
-        - row.value text: govuk_link_to(vacancy.contact_number, "tel:#{vacancy.contact_number}")
+  = render "vacancies/school_group", organisation: vacancy.parent_organisation, vacancy: vacancy
 
   - if vacancy_or_organisation_description(vacancy).present?
-    h4.govuk-heading-m
-      = t("school_groups.info", school_group: vacancy.parent_organisation.name)
+    h4.govuk-heading-m = t("school_groups.info", school_group: vacancy.parent_organisation.name)
     p = vacancy_or_organisation_description(vacancy)
 
   - if vacancy.school_visits.present?
-    h4.govuk-heading-m
-      = t("school_groups.trust_visits", school_group: vacancy.parent_organisation.name)
+    h4.govuk-heading-m = t("school_groups.trust_visits", school_group: vacancy.parent_organisation.name)
     p = vacancy.school_visits
 
   section#school-location
-    h3.govuk-heading-l.govuk-heading--summary-list
-      = t("school_groups.school_group_location")
-    = govuk_link_to full_address(vacancy.parent_organisation), "https://www.google.com/maps/search/#{full_address(vacancy.parent_organisation)}+UK", "aria-label": t("schools.map_link_aria_label")
-
+    h3.govuk-heading-l.govuk-heading--summary-list = t("school_groups.school_group_location")
     = map(items: [{ type: "vacancy", params: { id: vacancy.id }, links: map_links(vacancy) }], show_map: vacancy.parent_organisation.geopoint)
