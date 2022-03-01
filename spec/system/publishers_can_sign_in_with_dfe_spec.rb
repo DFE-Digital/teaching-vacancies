@@ -1,29 +1,29 @@
 require "rails_helper"
 require "message_encryptor"
 
-RSpec.shared_examples "a successful sign in" do
+RSpec.shared_examples "a successful Publisher sign in" do
   before do
     visit new_publisher_session_path
   end
 
   scenario "it signs in the user successfully" do
     expect { sign_in_publisher }
-      .to have_triggered_event(:publisher_sign_in_attempt)
+      .to have_triggered_event(:successful_publisher_sign_in_attempt)
       .with_base_data(user_anonymised_publisher_id: anonymised_form_of(user_oid))
-      .and_data(success: "true", sign_in_type: "dsi")
+      .and_data(sign_in_type: "dsi")
 
     within("nav") { expect(page).to have_selector(:link_or_button, I18n.t("nav.sign_out")) }
     within("nav") { expect(page).to have_selector(:link_or_button, I18n.t("nav.manage_jobs")) }
   end
 end
 
-RSpec.shared_examples "a failed sign in" do |options|
+RSpec.shared_examples "a failed Publisher sign in" do |options|
   scenario "it does not sign-in the user, and tells the user what to do" do
     visit new_publisher_session_path
 
     expect { sign_in_publisher }
-      .to have_triggered_event(:publisher_sign_in_attempt)
-      .with_data(success: "false", sign_in_type: "dsi", user_anonymised_publisher_id: anonymised_form_of(user_oid))
+      .to have_triggered_event(:failed_dsi_sign_in_attempt)
+      .with_data(sign_in_type: "dsi", user_anonymised_id: anonymised_form_of(user_oid))
 
     expect(page).to have_content(/The email you're signed in with isn't authorised to list jobs for this school/i)
     expect(page).to have_content(options[:email])
@@ -64,12 +64,12 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
     let!(:organisation) { create(:school, urn: "110627") }
 
     before do
-      stub_authentication_step email: dsi_email_address
-      stub_authorisation_step
+      stub_publisher_authentication_step email: dsi_email_address
+      stub_publisher_authorisation_step
       stub_sign_in_with_multiple_organisations
     end
 
-    it_behaves_like "a successful sign in"
+    it_behaves_like "a successful Publisher sign in"
 
     scenario "it redirects the sign in page to the school page" do
       sign_in_publisher(navigate: true)
@@ -89,6 +89,15 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       click_on I18n.t("buttons.create_job")
       expect(current_path).to eq(create_or_copy_organisation_jobs_path)
     end
+
+    context "when navigating to support user login page" do
+      it "does not redirect to support user dashboard" do
+        sign_in_publisher(navigate: true)
+        visit new_support_user_session_path
+
+        expect(current_path).not_to eq(support_user_root_path)
+      end
+    end
   end
 
   context "with DSI data including a school group (trust or local authority) that the school belongs to" do
@@ -97,8 +106,8 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
 
     before do
       publisher.update organisations: [school, school_group]
-      stub_authentication_step(school_urn: "246757", email: dsi_email_address)
-      stub_authorisation_step
+      stub_publisher_authentication_step(school_urn: "246757", email: dsi_email_address)
+      stub_publisher_authorisation_step
       stub_sign_in_with_multiple_organisations
 
       visit new_publisher_session_path
@@ -137,12 +146,12 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
     before do
       allow(PublisherPreference).to receive(:find_by).and_return(publisher_preference)
 
-      stub_authentication_step(school_urn: nil, trust_uid: organisation.uid, email: dsi_email_address)
-      stub_authorisation_step
+      stub_publisher_authentication_step(school_urn: nil, trust_uid: organisation.uid, email: dsi_email_address)
+      stub_publisher_authorisation_step
       stub_sign_in_with_multiple_organisations
     end
 
-    it_behaves_like "a successful sign in"
+    it_behaves_like "a successful Publisher sign in"
 
     scenario "it redirects the sign in page to the trust page" do
       visit new_publisher_session_path
@@ -163,12 +172,12 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       allow(Rails.configuration).to receive(:enforce_local_authority_allowlist).and_return(true)
       allow(PublisherPreference).to receive(:find_by).and_return(publisher_preference)
 
-      stub_authentication_step(school_urn: nil, la_code: organisation.local_authority_code, email: dsi_email_address)
-      stub_authorisation_step
+      stub_publisher_authentication_step(school_urn: nil, la_code: organisation.local_authority_code, email: dsi_email_address)
+      stub_publisher_authorisation_step
       stub_sign_in_with_multiple_organisations
     end
 
-    it_behaves_like "a successful sign in"
+    it_behaves_like "a successful Publisher sign in"
 
     context "when user preferences have been set" do
       it "does not redirect the sign in page to the publisher preference page" do
@@ -196,17 +205,17 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
   context "with valid credentials but no authorisation" do
     before do
       create(:school, urn: "110627")
-      stub_authentication_step(email: "another_email@example.com")
-      stub_authorisation_step_with_not_found
+      stub_publisher_authentication_step(email: "another_email@example.com")
+      stub_publisher_authorisation_step_with_not_found
     end
 
-    it_behaves_like "a failed sign in", email: "another_email@example.com"
+    it_behaves_like "a failed Publisher sign in", email: "another_email@example.com"
   end
 
   context "when there is was an error with DfE Sign-in" do
     before do
-      stub_authentication_step
-      stub_authorisation_step_with_external_error
+      stub_publisher_authentication_step
+      stub_publisher_authorisation_step_with_external_error
     end
 
     it "raises an error" do
@@ -227,7 +236,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       sign_in_publisher(navigate: true)
 
       expect(current_path).to eq(new_publisher_session_path)
-      expect(page).to have_content(I18n.t("publishers.omniauth_callbacks.failure.message"))
+      expect(page).to have_content(I18n.t("omniauth_callbacks.failure.message"))
     end
   end
 end

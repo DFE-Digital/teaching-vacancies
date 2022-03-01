@@ -118,7 +118,7 @@ group :test do
   gem "selenium-webdriver"
   gem "shoulda-matchers"
   gem "simplecov"
-  gem "vcr"
+  gem "vcr", github: "vcr/vcr", ref: "7ac8292c289ca98dcb4254b59e1ee29e2205d8b3"
   gem "webmock"
 end
 

@@ -69,8 +69,8 @@ RSpec.describe "Users are redirected after sign in" do
 
       stub_accepted_terms_and_conditions
       OmniAuth.config.test_mode = true
-      stub_authentication_step(organisation_id: organisation.id, school_urn: organisation.urn)
-      stub_authorisation_step(organisation_id: organisation.id)
+      stub_publisher_authentication_step(organisation_id: organisation.id, school_urn: organisation.urn)
+      stub_publisher_authorisation_step(organisation_id: organisation.id)
 
       example.run
 
