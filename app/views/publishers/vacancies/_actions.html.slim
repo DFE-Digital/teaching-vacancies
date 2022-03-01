@@ -1,4 +1,4 @@
-.vacancy-actions
+.govuk-button-group
   - if vacancy.published?
     = govuk_button_link_to t("buttons.copy_listing"), new_organisation_job_copy_path(vacancy.id), class: "govuk-button--secondary"
     - unless vacancy.pending?

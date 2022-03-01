@@ -19,8 +19,7 @@
       = govuk_button_link_to t("buttons.download_stats"), organisation_job_statistics_path(vacancy.id, format: :csv), class: "govuk-button--secondary"
 
     .govuk-grid-column-two-thirds
-      h3.govuk-heading-m.govuk-heading--summary-list
-        = t(".listing_data")
+      h3.govuk-heading-m.govuk-heading--summary-list = t(".listing_data")
 
       = govuk_summary_list html_attributes: { id: "vacancy_statistics" } do |summary_list|
         - summary_list.row do |row|
@@ -32,8 +31,7 @@
           - row.value text: vacancy.saved_jobs.count
 
       - if vacancy.can_receive_job_applications?
-        h3.govuk-heading-m.govuk-heading--summary-list
-          = t(".application_data")
+        h3.govuk-heading-m.govuk-heading--summary-list = t(".application_data")
 
         = govuk_summary_list html_attributes: { id: "job_applications_statistics" } do |summary_list|
           - summary_list.row do |row|

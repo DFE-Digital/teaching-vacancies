@@ -17,11 +17,11 @@ h1.govuk-heading-xl class="govuk-!-margin-bottom-5"
 
 .govuk-grid-row class="govuk-!-margin-top-4"
   .govuk-grid-column-two-thirds
-    .job-application-actions class="govuk-!-display-none-print"
+    .govuk-button-group class="govuk-!-display-none-print"
       - if job_application.status.in?(%w[submitted reviewed])
-        = govuk_button_link_to t("buttons.shortlist"), organisation_job_job_application_shortlist_path(vacancy.id, job_application.id), class: "govuk-!-margin-right-3"
+        = govuk_button_link_to t("buttons.shortlist"), organisation_job_job_application_shortlist_path(vacancy.id, job_application.id)
       - if job_application.status.in?(%w[submitted reviewed shortlisted])
-        = govuk_button_link_to t("buttons.reject"), organisation_job_job_application_reject_path(vacancy.id, job_application.id), class: "govuk-button--warning govuk-!-margin-right-3"
+        = govuk_button_link_to t("buttons.reject"), organisation_job_job_application_reject_path(vacancy.id, job_application.id), class: "govuk-button--warning"
       = govuk_button_link_to t("buttons.download_application"), "#", class: "govuk-button--secondary js-action print-application", "data-controller": "utils", "data-action": "click->utils#print"
 
 = render "shared/job_application/show", allow_edit: false
