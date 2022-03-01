@@ -62,14 +62,14 @@ section#job-details class="govuk-!-margin-bottom-5"
         h4.govuk-heading-m = t("publishers.vacancies.steps.applying_for_the_job")
         p = vacancy.how_to_apply
 
-      - if vacancy.application_link.present? && vacancy.application_form.present?
-        = open_in_new_tab_button_link_to t("jobs.apply"), new_job_interest_path(vacancy.id), class: "govuk-button--secondary vacancy-apply-link govuk-!-margin-bottom-5", "aria-label": t("jobs.aria_labels.apply_link")
-        br
-        = govuk_button_link_to t("buttons.download_application_form", size: number_to_human_size(vacancy.application_form.byte_size)), job_document_path(vacancy, vacancy.application_form.id), class: "govuk-button--secondary"
-      - elsif vacancy.application_link.present?
-        = open_in_new_tab_button_link_to t("jobs.apply"), new_job_interest_path(vacancy.id), class: "vacancy-apply-link govuk-!-margin-bottom-5", "aria-label": t("jobs.aria_labels.apply_link")
-      - elsif vacancy.application_form.present?
-        = govuk_button_link_to t("buttons.download_application_form", size: number_to_human_size(vacancy.application_form.byte_size)), job_document_path(vacancy, vacancy.application_form.id)
+      .govuk-button-group
+        - if vacancy.application_link.present? && vacancy.application_form.present?
+          = open_in_new_tab_button_link_to t("jobs.apply"), new_job_interest_path(vacancy.id), class: "govuk-button--primary", "aria-label": t("jobs.aria_labels.apply_link")
+          = govuk_button_link_to t("buttons.download_application_form", size: number_to_human_size(vacancy.application_form.byte_size)), job_document_path(vacancy, vacancy.application_form.id), class: "govuk-button--secondary"
+        - elsif vacancy.application_link.present?
+          = open_in_new_tab_button_link_to t("jobs.apply"), new_job_interest_path(vacancy.id), "aria-label": t("jobs.aria_labels.apply_link")
+        - elsif vacancy.application_form.present?
+          = govuk_button_link_to t("buttons.download_application_form", size: number_to_human_size(vacancy.application_form.byte_size)), job_document_path(vacancy, vacancy.application_form.id)
   - else
     = govuk_inset_text text: t("jobs.expired_listing.notification"), classes: "govuk-!-font-weight-bold"
 
