@@ -1,7 +1,7 @@
 require "rails_helper"
 require "message_encryptor"
 
-RSpec.shared_examples "a successful sign in" do
+RSpec.shared_examples "a successful Support User sign in" do
   before do
     visit new_support_user_session_path
   end
@@ -17,7 +17,7 @@ RSpec.shared_examples "a successful sign in" do
   end
 end
 
-RSpec.shared_examples "a failed sign in" do |options|
+RSpec.shared_examples "a failed Support User sign in" do |options|
   scenario "it does not sign-in the user, and tells the user what to do" do
     visit new_support_user_session_path
 
@@ -50,7 +50,7 @@ RSpec.describe "Support users can sign in with DfE Sign In" do
       stub_support_user_authorisation_step
     end
 
-    it_behaves_like "a successful sign in"
+    it_behaves_like "a successful Support User sign in"
 
     scenario "it redirects the sign in page to the support user dashboard" do
       sign_in_support_user(navigate: true)
@@ -78,7 +78,7 @@ RSpec.describe "Support users can sign in with DfE Sign In" do
       stub_publisher_authorisation_step_with_not_found
     end
 
-    it_behaves_like "a failed sign in", email: "another_email@example.com"
+    it_behaves_like "a failed Support User sign in", email: "another_email@example.com"
   end
 
   context "when there is was an error with DfE Sign-in" do

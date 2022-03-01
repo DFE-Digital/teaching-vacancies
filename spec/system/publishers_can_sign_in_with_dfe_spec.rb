@@ -1,7 +1,7 @@
 require "rails_helper"
 require "message_encryptor"
 
-RSpec.shared_examples "a successful sign in" do
+RSpec.shared_examples "a successful Publisher sign in" do
   before do
     visit new_publisher_session_path
   end
@@ -17,7 +17,7 @@ RSpec.shared_examples "a successful sign in" do
   end
 end
 
-RSpec.shared_examples "a failed sign in" do |options|
+RSpec.shared_examples "a failed Publisher sign in" do |options|
   scenario "it does not sign-in the user, and tells the user what to do" do
     visit new_publisher_session_path
 
@@ -69,7 +69,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       stub_sign_in_with_multiple_organisations
     end
 
-    it_behaves_like "a successful sign in"
+    it_behaves_like "a successful Publisher sign in"
 
     scenario "it redirects the sign in page to the school page" do
       sign_in_publisher(navigate: true)
@@ -151,7 +151,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       stub_sign_in_with_multiple_organisations
     end
 
-    it_behaves_like "a successful sign in"
+    it_behaves_like "a successful Publisher sign in"
 
     scenario "it redirects the sign in page to the trust page" do
       visit new_publisher_session_path
@@ -177,7 +177,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       stub_sign_in_with_multiple_organisations
     end
 
-    it_behaves_like "a successful sign in"
+    it_behaves_like "a successful Publisher sign in"
 
     context "when user preferences have been set" do
       it "does not redirect the sign in page to the publisher preference page" do
@@ -209,7 +209,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       stub_publisher_authorisation_step_with_not_found
     end
 
-    it_behaves_like "a failed sign in", email: "another_email@example.com"
+    it_behaves_like "a failed Publisher sign in", email: "another_email@example.com"
   end
 
   context "when there is was an error with DfE Sign-in" do
