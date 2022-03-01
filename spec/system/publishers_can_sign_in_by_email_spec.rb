@@ -69,9 +69,9 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
           expect(page).to have_content(trust.name)
           expect(page).to have_content(local_authority.name)
           expect { click_on school.name }
-            .to have_triggered_event(:publisher_sign_in_attempt)
+            .to have_triggered_event(:successful_publisher_sign_in_attempt)
             .with_base_data(user_anonymised_publisher_id: anonymised_form_of(publisher.oid))
-            .and_data(success: "true", sign_in_type: "email")
+            .and_data(sign_in_type: "email")
 
           expect(page).to have_content(school.name)
           expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
@@ -120,9 +120,9 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
 
             # Expect that the link in the email goes to the landing page
             expect { visit publishers_login_key_path(login_key) }
-              .to have_triggered_event(:publisher_sign_in_attempt)
+              .to have_triggered_event(:successful_publisher_sign_in_attempt)
               .with_base_data(user_anonymised_publisher_id: anonymised_form_of(publisher.oid))
-              .and_data(success: "true", sign_in_type: "email")
+              .and_data(sign_in_type: "email")
 
             expect(page).not_to have_content("Choose your organisation")
             expect(page).to have_content(school.name)
@@ -151,9 +151,9 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
 
             # Expect that the link in the email goes to the landing page
             expect { visit publishers_login_key_path(login_key) }
-              .to have_triggered_event(:publisher_sign_in_attempt)
+              .to have_triggered_event(:successful_publisher_sign_in_attempt)
               .with_base_data(user_anonymised_publisher_id: anonymised_form_of(publisher.oid))
-              .and_data(success: "true", sign_in_type: "email")
+              .and_data(sign_in_type: "email")
 
             expect(page).not_to have_content("Choose your organisation")
             expect(page).to have_content(trust.name)
@@ -185,9 +185,9 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
 
             # Expect that the link in the email goes to the landing page
             expect { visit publishers_login_key_path(login_key) }
-              .to have_triggered_event(:publisher_sign_in_attempt)
+              .to have_triggered_event(:successful_publisher_sign_in_attempt)
               .with_base_data(user_anonymised_publisher_id: anonymised_form_of(publisher.oid))
-              .and_data(success: "true", sign_in_type: "email")
+              .and_data(sign_in_type: "email")
 
             expect(page).not_to have_content("Choose your organisation")
             expect(page).to have_content(local_authority.name)

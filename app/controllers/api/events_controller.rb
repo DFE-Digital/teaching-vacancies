@@ -23,7 +23,7 @@ class Api::EventsController < Api::ApplicationController
   end
 
   def frontend_event
-    FrontendEvent.new(request, response, session, current_jobseeker, current_publisher)
+    FrontendEvent.new(request, response, session, current_jobseeker, current_publisher, current_support_user)
   end
 
   def bad_request
