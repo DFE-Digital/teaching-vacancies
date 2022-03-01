@@ -13,6 +13,7 @@ module "prometheus_all" {
   alertmanager_slack_channel   = local.alertmanager_slack_channel
   grafana_google_client_id     = local.secrets.grafana_google_client_id
   grafana_google_client_secret = local.secrets.grafana_google_client_secret
+  enable_prometheus_yearly     = true
   redis_services = [
     "${local.service_name}-production/${local.service_name}-redis-queue-production",
     "${local.service_name}-production/${local.service_name}-redis-cache-production",
