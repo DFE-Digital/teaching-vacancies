@@ -20,8 +20,8 @@ en:
     link_download_attr: Teaching Vacancies application form guide
 
   banners:
-    action_required: Action required
     alert: Warning
+    error: Error
     important: Important
     notice: Important
     success: Success
