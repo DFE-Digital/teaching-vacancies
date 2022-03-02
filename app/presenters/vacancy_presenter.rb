@@ -76,13 +76,6 @@ class VacancyPresenter < BasePresenter
     model_working_patterns.compact.map(&:upcase).join(", ")
   end
 
-  def job_role_names
-    [
-      show_main_job_role,
-      *additional_job_roles.map { |role| additional_job_role(role) },
-    ]
-  end
-
   def show_main_job_role
     I18n.t("helpers.label.publishers_job_listing_job_role_form.main_job_role_options.#{main_job_role}")
   end

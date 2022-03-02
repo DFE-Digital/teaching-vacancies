@@ -80,6 +80,16 @@ module VacanciesHelper
     vacancy.completed_steps.include?(step.to_s)
   end
 
+  def linked_job_roles(vacancy)
+    tag.ul class: "govuk-list" do
+      safe_join(
+        vacancy.job_roles.map do |job_role|
+          tag.li landing_page_link_or_text({ job_roles: [job_role] }, job_role.capitalize)
+        end,
+      )
+    end
+  end
+
   def map_links(vacancy)
     vacancy.organisations.map do |organisation|
       { text: "#{organisation.name}, #{full_address(organisation)}", url: organisation_url(organisation), id: organisation.id }
