@@ -243,6 +243,11 @@ en:
             body: Thank you
           title: Feedback submitted
       job_applications:
+        header:
+          status_heading: Applicant status
+          tabs:
+            application: Application
+            notes: Notes
         index:
           deadline:
             after: Deadline passed
@@ -262,6 +267,16 @@ en:
           submitted:
             one: Unread application
             other: Unread applications
+        notes:
+          create:
+            success: A note has been added
+          index:
+            heading: Notes
+            page_title: Application notes
+            privacy:
+              body: When you add a note to an application, it will only be visible to you and colleagues with access to applications for this job listing.
+              notice: The note will not be visible to the applicant.
+              title: Notes privacy
         reject:
           alert: The candidate will be sent an email telling them that their application has not been successful.
           heading: Reject applicant
@@ -272,7 +287,8 @@ en:
           page_title: Shortlist applicant
         show:
           page_title: Application
-          status_heading: Applicant status
+          notes:
+            heading: Notes
         update_status:
           unsuccessful: "%{name} has been sent an email telling them their application has not been successful"
           shortlisted: "%{name} has been sent an email telling them that they have been shortlisted"
