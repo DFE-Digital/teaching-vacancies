@@ -33,7 +33,7 @@
               - card.action_item link: govuk_link_to(safe_join([t(".continue"), tag.span(" for #{saved_job.vacancy.job_title}", class: "govuk-visually-hidden")]), jobseekers_job_application_review_path(JobApplication.find_by(vacancy_id: saved_job.vacancy.id)))
             - elsif saved_job.vacancy.enable_job_applications? && Vacancy.live.exists?(saved_job.vacancy.id)
               - card.action_item link: govuk_link_to(safe_join([t(".apply"), tag.span(" for #{saved_job.vacancy.job_title}", class: "govuk-visually-hidden")]), new_jobseekers_job_job_application_path(saved_job.vacancy.id))
-            - card.action_item link: govuk_link_to(safe_join([t(".delete"), tag.span(" for #{saved_job.vacancy.job_title}", class: "govuk-visually-hidden")]), jobseekers_saved_job_path(saved_job.vacancy.id, saved_job, redirect_to_dashboard: true), method: :delete, class: "govuk-delete-link")
+            - card.action_item link: govuk_link_to(safe_join([t(".delete"), tag.span(" for #{saved_job.vacancy.job_title}", class: "govuk-visually-hidden")]), jobseekers_saved_job_path(saved_job.vacancy.id, saved_job, redirect_to_dashboard: true), method: :delete)
 
     - else
       = render EmptySectionComponent.new title: t(".zero_saved_jobs_title") do
