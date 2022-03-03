@@ -19,7 +19,7 @@ section#job-details class="govuk-!-margin-bottom-5"
 
     - summary_list.row do |row|
       - row.key text: t("jobs.working_patterns")
-      - row.value text: vacancy.show_working_patterns
+      - row.value text: linked_working_patterns(vacancy)
 
     - if vacancy.contract_type
       - summary_list.row do |row|

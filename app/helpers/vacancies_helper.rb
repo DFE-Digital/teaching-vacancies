@@ -90,6 +90,19 @@ module VacanciesHelper
     end
   end
 
+  def linked_working_patterns(vacancy)
+    tag.ul class: "govuk-list" do
+      safe_join [
+        tag.li do
+          vacancy.model_working_patterns.map { |working_pattern|
+            landing_page_link_or_text({ working_patterns: [working_pattern] }, working_pattern.capitalize)
+          }.join(", ").html_safe
+        end,
+        tag.li { tag.span(vacancy.working_patterns_details) },
+      ]
+    end
+  end
+
   def map_links(vacancy)
     vacancy.organisations.map do |organisation|
       { text: "#{organisation.name}, #{full_address(organisation)}", url: organisation_url(organisation), id: organisation.id }
