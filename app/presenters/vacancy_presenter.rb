@@ -50,37 +50,14 @@ class VacancyPresenter < BasePresenter
     model.publish_on == Date.current
   end
 
-  def working_patterns?
-    model_working_patterns.present?
-  end
-
   def working_patterns
-    return unless working_patterns?
-
-    patterns = model_working_patterns.map { |working_pattern|
+    model_working_patterns.map { |working_pattern|
       Vacancy.human_attribute_name("working_patterns.#{working_pattern}").downcase
-    }.join(", ")
-
-    I18n.t("jobs.working_patterns_info", patterns: patterns, count: model_working_patterns.count).capitalize
-  end
-
-  def show_working_patterns
-    if model.working_patterns_details?
-      safe_join([working_patterns, tag.br, tag.span(model.working_patterns_details, class: "govuk-!-margin-bottom-0")])
-    else
-      working_patterns
-    end
+    }.join(", ").capitalize
   end
 
   def working_patterns_for_job_schema
     model_working_patterns.compact.map(&:upcase).join(", ")
-  end
-
-  def job_role_names
-    [
-      show_main_job_role,
-      *additional_job_roles.map { |role| additional_job_role(role) },
-    ]
   end
 
   def show_main_job_role

@@ -163,30 +163,10 @@ RSpec.describe VacancyPresenter do
   end
 
   describe "#working_patterns" do
-    context "when working_patterns is unset" do
-      let(:vacancy) { build_stubbed(:vacancy, :without_working_patterns) }
+    let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time], working_patterns_details: nil) }
 
-      it "returns nil" do
-        expect(subject.working_patterns).to be_nil
-      end
-    end
-
-    context "when only working_patterns is set" do
-      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time], working_patterns_details: nil) }
-
-      it "returns a string only containing the working pattern" do
-        expect(subject.show_working_patterns).to eq(I18n.t("jobs.working_patterns_info", patterns: "full time, part time", count: 2))
-      end
-    end
-
-    context "when both working_patterns and working_patterns_details have been set" do
-      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time]) }
-
-      it "returns a string containing the working pattern and working_patterns_details" do
-        expect(subject.show_working_patterns).to eq(safe_join([subject.working_patterns,
-                                                               tag.br,
-                                                               tag.span(subject.working_patterns_details, class: "govuk-!-margin-bottom-0")]))
-      end
+    it "returns working patterns" do
+      expect(subject.working_patterns).to eq("Full time, part time")
     end
   end
 

@@ -22,11 +22,10 @@ li.vacancy role="listitem" tab-index="0"
           .govuk-body-s class="govuk-!-margin-bottom-0" = organisation_type
       - else
         = organisation_type(vacancy.parent_organisation)
-  - if vacancy.working_patterns?
-    dl
-      dt = t("jobs.working_patterns")
-      dd.double
-        = vacancy.working_patterns
+  dl
+    dt = t("jobs.working_patterns")
+    dd.double
+      = vacancy.working_patterns
   dl
     dt = t("jobs.expires_at")
     dd.double
