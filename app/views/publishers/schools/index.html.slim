@@ -20,4 +20,4 @@
 
   .govuk-grid-column-one-third
     h3.govuk-heading-m = t(".missing_information_title")
-    p = t(".missing_information_description_html", organisation_type: organisation_type_basic(@organisation), mail_to: govuk_mail_to(t("help.email"), t(".contact_support")))
+    p = t(".missing_information_description_html", organisation_type: organisation_type_basic(@organisation), contact_support_link: govuk_link_to(t(".contact_support"), new_support_request_path))

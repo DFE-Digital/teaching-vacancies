@@ -372,8 +372,8 @@ en:
     passwords:
       check_your_email_password:
         description: We have sent you an email with instructions on how to reset your password.
-        having_trouble_html: Still having trouble? %{mail_to} to our support team.
-        report_it: Report it
+        having_trouble_html: Still having trouble? %{request_support_link}.
+        request_support_link: Request support
         title: Check your email
       edit:
         new_password: New password
@@ -392,8 +392,9 @@ en:
         description: "We have sent you an email with instructions on how to verify your email address. We sent the email to:"
         having_trouble_html: Still having trouble? %{mail_to} to our support team.
         report_it: Report it
+        request_support_link: Request support
         resend_summary: Need us to resend the email?
-        resend_text_html: If you did not receive the email, you can %{resend_link} or %{restart_link}.<br><br>Need help? Email us at %{mail_to}
+        resend_text_html: If you did not receive the email, you can %{resend_link} or %{restart_link}.<br><br>Need help? %{request_support_link}.
         resend_link: request a new one
         restart_link: provide another email address
         title: Check your email
@@ -455,10 +456,10 @@ en:
         title: Jobseeker sign in
       locked:
         description: You have been locked out of your account because you have made too many attempts to log in.
-        having_trouble_html: Still having trouble? %{mail_to} to our support team.
+        having_trouble_html: Still having trouble? %{request_support_link}.
         heading: Too many password attempts
         instructions: We have sent an email to your registered email address with instructions on how to unlock your account.
-        report_it: Report it
+        request_support_link: Request support
         title: Too many password attempts
     subscriptions:
       index:

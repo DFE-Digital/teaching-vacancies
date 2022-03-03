@@ -12,4 +12,4 @@
 
     = govuk_details summary_text: t(".resend_summary"), text: t(".resend_text_html", resend_link: govuk_link_to(t(".resend_link"), jobseekers_resend_instructions_path),
                                                                                      restart_link: govuk_link_to(t(".restart_link"), new_jobseeker_registration_path),
-                                                                                     mail_to: govuk_mail_to(t("help.email")))
+                                                                                     request_support_link: govuk_link_to(t(".request_support_link"), new_support_request_path))
