@@ -46,26 +46,25 @@ h2.govuk-caption-l.job-caption class="govuk-!-margin-bottom-5 govuk-!-margin-top
         method: @saved_job.present? ? :delete : :get,
         params: { click_event: "vacancy_save_to_account_clicked", click_event_data: { vacancy_id: StringAnonymiser.new(@vacancy.id) } }
 
-.govuk-grid-row class="govuk-!-margin-top-6"
+.govuk-grid-row class="govuk-!-margin-top-6" class="#{current_variant_container_name(:similar_jobs_position)}"
   .govuk-grid-column-one-third
     = render "/vacancies/key_dates_sidebar"
-    .similar_jobs_position_test--hidden-mobile
-      - if current_variant?(:"2022_02_similar_jobs_position_test", :left) && @similar_jobs.present?
-        section class="govuk-!-margin-top-5"
-          h3.govuk-heading-m = t("jobs.similar_jobs.heading")
+    - if current_variant?(:similar_jobs_position, :left) && @similar_jobs.present?
+      section.similar-jobs
+        h3.govuk-heading-m = t("jobs.similar_jobs.heading")
+        .govuk-grid-row class="govuk-!-margin-left-0"
           - @similar_jobs.each do |vacancy|
-            .similar-job
+            .similar-jobs__job
               = govuk_link_to(vacancy.job_title, job_path(vacancy), class: "view-similar-job-gtm")
-              p.govuk-body-s class="govuk-!-margin-bottom-0 govuk-!-font-weight-bold"
+              p.govuk-body class="govuk-!-margin-bottom-0 govuk-!-font-weight-bold"
                 = vacancy.parent_organisation.name
-              p.govuk-body-s class=" govuk-!-margin-bottom-0"
+              p.govuk-body class=" govuk-!-margin-bottom-0"
                 = full_address(vacancy.parent_organisation)
 
-        .govuk-grid-row class="govuk-!-margin-left-0"
-          section
-            p.icon.icon--left.icon--alert-blue
-              = govuk_link_to(t("jobs.alert.similar.verbose.link_text"), new_subscription_path(search_criteria: @invented_job_alert_search_criteria, vacancy_id: @vacancy.id), id: "job-alert-link-from-bottom-of-job-listing-gtm")
-              =< t("jobs.alert.similar.verbose.reminder")
+        section
+          p.icon.icon--left.icon--alert-blue
+            = govuk_link_to(t("jobs.alert.similar.verbose.link_text"), new_subscription_path(search_criteria: @invented_job_alert_search_criteria, vacancy_id: @vacancy.id), id: "job-alert-link-from-bottom-of-job-listing-gtm")
+            =< t("jobs.alert.similar.verbose.reminder")
 
   .govuk-grid-column-two-thirds
     - if @vacancy.organisations.many?
@@ -75,28 +74,16 @@ h2.govuk-caption-l.job-caption class="govuk-!-margin-bottom-5 govuk-!-margin-top
     = render "vacancies/job_details", vacancy: @vacancy
     = render "vacancies/overview_#{@vacancy.job_location}", vacancy: @vacancy
 
-    - if current_variant?(:"2022_02_similar_jobs_position_test", :default) && @similar_jobs.present?
-      section
+    - if @similar_jobs.present?
+      section.similar-jobs
         h3.govuk-heading-m = t("jobs.similar_jobs.heading")
         .govuk-grid-row class="govuk-!-margin-left-0"
           - @similar_jobs.each do |vacancy|
-            .similar-job class="govuk-grid-column-one-half"
+            .similar-jobs__job class="govuk-grid-column-one-half"
               = govuk_link_to(vacancy.job_title, job_path(vacancy), class: "view-similar-job-gtm")
-              p.govuk-body-s class="govuk-!-margin-bottom-0 govuk-!-font-weight-bold"
+              p.govuk-body class="govuk-!-margin-bottom-0 govuk-!-font-weight-bold"
                 = vacancy.parent_organisation.name
-              p.govuk-body-s class=" govuk-!-margin-bottom-0"
-                = full_address(vacancy.parent_organisation)
-
-    - elsif current_variant?(:"2022_02_similar_jobs_position_test", :left) && @similar_jobs.present?
-      .similar_jobs_position_test--show-mobile
-        section class="govuk-!-margin-top-5"
-          h3.govuk-heading-m = t("jobs.similar_jobs.heading")
-          - @similar_jobs.each do |vacancy|
-            .similar-job
-              = govuk_link_to(vacancy.job_title, job_path(vacancy), class: "view-similar-job-gtm")
-              p.govuk-body-s class="govuk-!-margin-bottom-0 govuk-!-font-weight-bold"
-                = vacancy.parent_organisation.name
-              p.govuk-body-s class=" govuk-!-margin-bottom-0"
+              p.govuk-body class=" govuk-!-margin-bottom-0"
                 = full_address(vacancy.parent_organisation)
 
     section

@@ -36,7 +36,7 @@ shared:
   2022_01_subjects_filters_test:
     default: 1
     subjects_filters: 1
-  2022_02_similar_jobs_position_test:
+  similar_jobs_position:
     default: 1
     left: 1
 test:
@@ -46,6 +46,6 @@ test:
   2022_01_subjects_filters_test:
     default: 1
     subjects_filters: 0
-  2022_02_similar_jobs_position_test:
+  similar_jobs_position:
     default: 1
     left: 0

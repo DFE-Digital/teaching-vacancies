@@ -16,6 +16,7 @@ $govuk-new-link-styles: true;
 @import 'base/utilities';
 @import 'global/variables';
 
+@import 'application/ab-tests';
 @import 'application/accordion';
 @import 'application/applications';
 @import 'application/form';

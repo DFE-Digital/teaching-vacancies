@@ -1,0 +1,17 @@
+.ab-test {
+  &__similar_jobs_position--left {
+    .govuk-grid-column-one-third .similar-jobs {
+      display: none;
+      @include govuk-media-query ($from: tablet) {
+        display: block;
+      }
+    }
+
+    .govuk-grid-column-two-thirds .similar-jobs {
+      display: block;
+      @include govuk-media-query ($from: tablet) {
+        display: none;
+      }
+    }
+  }
+}
