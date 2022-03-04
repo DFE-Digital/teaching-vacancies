@@ -67,11 +67,11 @@ section#job-details class="govuk-!-margin-bottom-5"
         p.govuk-body = vacancy.how_to_apply
 
       - if vacancy.application_link.present? && vacancy.application_form.present?
-        = open_in_new_tab_button_link_to t("jobs.apply"), new_job_interest_path(vacancy.id), class: "govuk-button--secondary govuk-!-margin-bottom-5", "aria-label": t("jobs.aria_labels.apply_link")
+        = apply_link(vacancy, class: "govuk-button--secondary govuk-!-margin-bottom-5")
         br
         = govuk_button_link_to t("buttons.download_application_form", size: number_to_human_size(vacancy.application_form.byte_size)), job_document_path(vacancy, vacancy.application_form.id), class: "govuk-button--secondary"
       - elsif vacancy.application_link.present?
-        = open_in_new_tab_button_link_to t("jobs.apply"), new_job_interest_path(vacancy.id), class: "govuk-!-margin-bottom-5", "aria-label": t("jobs.aria_labels.apply_link")
+        = apply_link(vacancy, class: "govuk-!-margin-bottom-5")
       - elsif vacancy.application_form.present?
         = govuk_button_link_to t("buttons.download_application_form", size: number_to_human_size(vacancy.application_form.byte_size)), job_document_path(vacancy, vacancy.application_form.id)
   - else

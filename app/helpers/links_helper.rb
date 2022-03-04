@@ -1,6 +1,16 @@
 module LinksHelper
-  def tracked_link_to(text, href, **kwargs)
-    govuk_link_to(text, href, **kwargs.deep_merge(data: {
+  def tracked_link_to(*args, **kwargs)
+    tracked_link_of_style(:govuk_link_to, *args, **kwargs)
+  end
+
+  def tracked_button_link_to(*args, **kwargs)
+    tracked_link_of_style(:govuk_button_link_to, *args, **kwargs)
+  end
+
+  def tracked_link_of_style(method_name, *args, **kwargs)
+    raise ArgumentError, "Supports :govuk_link_to and :govuk_button_link_to" unless %i[govuk_link_to govuk_button_link_to].include?(method_name)
+
+    send(method_name, *args, **kwargs.deep_merge(data: {
       controller: "tracked-link",
       action: %w[click auxclick contextmenu].map { |a| "#{a}->tracked-link#track" }.join(" "),
       "tracked-link-target": "link",
@@ -10,14 +20,30 @@ module LinksHelper
   end
 
   def open_in_new_tab_link_to(text, href, **kwargs)
-    govuk_link_to("#{text} (opens in new tab)", href, target: "_blank", rel: "noreferrer noopener", **kwargs)
+    govuk_link_to(t("app.opens_in_new_tab", link_text: text), href, target: "_blank", rel: "noreferrer noopener", **kwargs)
   end
 
   def tracked_open_in_new_tab_link_to(text, href, **kwargs)
-    tracked_link_to("#{text} (opens in new tab)", href, target: "_blank", rel: "noreferrer noopener", **kwargs)
+    tracked_link_to(t("app.opens_in_new_tab", link_text: text), href, target: "_blank", rel: "noreferrer noopener", **kwargs)
+  end
+
+  def tracked_open_in_new_tab_button_link_to(text, href, **kwargs)
+    tracked_button_link_to(t("app.opens_in_new_tab", link_text: text), href, target: "_blank", rel: "noreferrer noopener", **kwargs)
   end
 
   def open_in_new_tab_button_link_to(text, href, **kwargs)
-    govuk_button_link_to("#{text} (opens in new tab)", href, target: "_blank", rel: "noopener", **kwargs)
+    govuk_button_link_to(t("app.opens_in_new_tab", link_text: text), href, target: "_blank", rel: "noopener", **kwargs)
+  end
+
+  def apply_link(vacancy, **kwargs)
+    tracked_open_in_new_tab_button_link_to(
+      t("jobs.apply"),
+      vacancy.application_link,
+      "aria-label": t("jobs.aria_labels.apply_link"),
+      link_type: :get_more_information,
+      link_subject: StringAnonymiser.new(vacancy.id).to_s,
+      **kwargs,
+    )
+  end
   end
 end
