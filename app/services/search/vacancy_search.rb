@@ -60,7 +60,7 @@ class Search::VacancySearch
   private
 
   def scope
-    scope = Vacancy.live
+    scope = Vacancy.live.includes(:organisations)
     scope = scope.search_by_location(location, radius) if location
     scope = scope.search_by_filter(search_criteria) if search_criteria.any?
     scope = scope.search_by_full_text(keyword) if keyword.present?
