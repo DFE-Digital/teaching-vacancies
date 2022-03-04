@@ -1,7 +1,7 @@
 - if vacancy.contact_email.present?
   - summary_list.row do |row|
     - row.key text: t("jobs.contact_email")
-    - row.value text: govuk_mail_to(vacancy.contact_email, vacancy.contact_email, class: "link-wrap", subject: t("jobs.contact_email_subject", job: vacancy.job_title), body: t("jobs.contact_email_body", url: job_url(vacancy)))
+    - row.value text: contact_email_link(vacancy, class: "link-wrap")
 
 - if vacancy.contact_number.present?
   - summary_list.row do |row|

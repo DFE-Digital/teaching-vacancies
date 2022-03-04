@@ -7,8 +7,18 @@ module LinksHelper
     tracked_link_of_style(:govuk_button_link_to, *args, **kwargs)
   end
 
+  def tracked_mail_to(*args, **kwargs)
+    tracked_link_of_style(:govuk_mail_to, *args, **kwargs)
+  end
+
   def tracked_link_of_style(method_name, *args, **kwargs)
-    raise ArgumentError, "Supports :govuk_link_to and :govuk_button_link_to" unless %i[govuk_link_to govuk_button_link_to].include?(method_name)
+    permitted_styles = %i[
+      govuk_button_link_to
+      govuk_link_to
+      govuk_mail_to
+    ]
+
+    raise ArgumentError, "Supports #{permitted_styles.to_sentence}" unless permitted_styles.include?(method_name)
 
     send(method_name, *args, **kwargs.deep_merge(data: {
       controller: "tracked-link",
@@ -16,6 +26,7 @@ module LinksHelper
       "tracked-link-target": "link",
       "link-type": kwargs.delete(:link_type),
       "link-subject": kwargs.delete(:link_subject),
+      "tracked-link-text": kwargs.delete(:tracked_link_text),
     }))
   end
 
@@ -66,6 +77,19 @@ module LinksHelper
       ofsted_report(organisation),
       link_type: :ofsted_report,
       link_subject: anon(vacancy&.id),
+      **kwargs,
+    )
+  end
+
+  def contact_email_link(vacancy, **kwargs)
+    tracked_mail_to(
+      vacancy.contact_email,
+      vacancy.contact_email,
+      subject: t("jobs.contact_email_subject", job: vacancy.job_title),
+      body: t("jobs.contact_email_body", url: job_url(vacancy)),
+      link_type: :contact_email,
+      link_subject: anon(vacancy.id),
+      tracked_link_text: anon(vacancy.contact_email),
       **kwargs,
     )
   end
