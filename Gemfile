@@ -96,7 +96,6 @@ group :development, :test do
   gem "axe-core-capybara"
   gem "axe-core-rspec"
   gem "brakeman"
-  gem "bullet"
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "dotenv-rails"
   gem "pry"

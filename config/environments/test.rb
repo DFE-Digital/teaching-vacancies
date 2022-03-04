@@ -55,14 +55,6 @@ Rails.application.configure do
   # Use test geocoder lookup, unless otherwise specified
   config.geocoder_lookup = :test
 
-  # Bullet gem configuration
-  config.after_initialize do
-    Bullet.enable = true
-    # TODO: Causing lots of issues with FactoryBot-created qualification results
-    #   see: https://github.com/flyerhzm/bullet/issues/435
-    Bullet.raise = false
-  end
-
   config.active_storage.service = :test
 
   require "fake_dsi_sign_out_endpoint"
