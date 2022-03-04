@@ -22,6 +22,7 @@ RSpec.describe Search::VacancySearch do
 
   before do
     allow(Vacancy).to receive(:live).and_return(scope)
+    allow(scope).to receive(:includes).with(:organisations).and_return(scope)
     allow(scope).to receive(:search_by_location).with("Louth", 10).and_return(scope)
     allow(scope).to receive(:search_by_filter).and_return(scope)
     allow(scope).to receive(:search_by_full_text).with("maths teacher").and_return(scope)
