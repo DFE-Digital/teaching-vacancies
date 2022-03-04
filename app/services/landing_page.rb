@@ -22,6 +22,15 @@ class LandingPage
     self[slug]
   end
 
+  def self.partially_matching(criteria)
+    value = criteria.values.flatten.first
+    criteria = Rails.application.config.landing_pages.values.find { |c| c.values.first.include? value }
+    slug = Rails.application.config.landing_pages.key(criteria)
+    return unless slug
+
+    self[slug]
+  end
+
   def initialize(slug, criteria)
     @slug = slug.to_s
     @criteria = criteria

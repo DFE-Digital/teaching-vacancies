@@ -90,6 +90,12 @@ module VacanciesHelper
     end
   end
 
+  def linked_subjects(vacancy)
+    vacancy.subjects.map { |subject|
+      landing_page_link_or_text({ subjects: [subject] }, subject, match: :partial)
+    }.join(", ").html_safe
+  end
+
   def linked_working_patterns(vacancy)
     tag.ul class: "govuk-list" do
       safe_join [

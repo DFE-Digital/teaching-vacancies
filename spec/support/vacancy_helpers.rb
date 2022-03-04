@@ -161,8 +161,8 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.show_key_stages) if vacancy.key_stages.present?
     expect(page).to have_content(vacancy.show_subjects)
 
-    expect(page).to have_content(strip_tags(vacancy.working_patterns))
-    expect(page).to have_content(strip_tags(vacancy.working_patterns_details))
+    expect(page).to have_content(vacancy.working_patterns)
+    expect(page).to have_content(vacancy.working_patterns_details)
 
     expect(page).to have_content(vacancy.salary)
     expect(page.html).to include(vacancy.benefits)
@@ -196,7 +196,7 @@ module VacancyHelpers
     vacancy = VacancyPresenter.new(vacancy)
     expect(page).to have_content(vacancy.job_title)
     expect(page).to have_content(vacancy.show_main_job_role)
-    expect(page).to have_content(vacancy.show_subjects)
+    vacancy.subjects.each { |subject| expect(page).to have_content subject }
 
     expect(page).to have_content(strip_tags(vacancy.working_patterns))
 

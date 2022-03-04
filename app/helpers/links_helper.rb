@@ -1,9 +1,10 @@
 module LinksHelper
-  def landing_page_link_or_text(landing_page_criteria, text)
-    lp = LandingPage.matching(landing_page_criteria)
+  def landing_page_link_or_text(landing_page_criteria, text, match: :exact)
+    lp = match == :exact ? LandingPage.matching(landing_page_criteria) : LandingPage.partially_matching(landing_page_criteria)
     return tag.span { text } unless lp
 
-    link_text = t("landing_pages.accessible_link_text_html", name: lp.name)
+    text = match == :exact ? lp.name : landing_page_criteria.values.flatten.first
+    link_text = t("landing_pages.accessible_link_text_html", name: text)
     govuk_link_to(link_text, landing_page_path(lp.slug), text_colour: true)
   end
 
