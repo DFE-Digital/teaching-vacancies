@@ -2,6 +2,6 @@
   ol.govuk-list data-map-target="markersTextList"
     - @items.each do |item|
       - item[:links]&.each do |link|
-        li = govuk_link_to link[:text], link[:url], aria: { label: t("schools.map_link_aria_label") }
+        li = map_link(link[:text], link[:url], vacancy_id: link[:vacancy_id], aria: { label: t("schools.map_link_aria_label") })
   - if @show_map
     .map-component__map id="map" role="presentation"

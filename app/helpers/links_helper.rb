@@ -93,4 +93,14 @@ module LinksHelper
       **kwargs,
     )
   end
+
+  def map_link(text, url, vacancy_id: nil, **kwargs)
+    tracked_link_to(
+      text,
+      url,
+      link_type: :google_maps,
+      link_subject: anon(vacancy_id),
+      **kwargs,
+    )
+  end
 end

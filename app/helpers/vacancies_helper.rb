@@ -72,7 +72,12 @@ module VacanciesHelper
 
   def map_links(vacancy)
     vacancy.organisations.map do |organisation|
-      { text: "#{organisation.name}, #{full_address(organisation)}", url: organisation_url(organisation), id: organisation.id }
+      {
+        id: organisation.id,
+        text: "#{organisation.name}, #{full_address(organisation)}",
+        url: organisation_url(organisation),
+        vacancy_id: vacancy.id,
+      }
     end
   end
 
