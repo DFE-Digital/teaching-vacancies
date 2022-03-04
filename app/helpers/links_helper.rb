@@ -35,6 +35,16 @@ module LinksHelper
     govuk_button_link_to(t("app.opens_in_new_tab", link_text: text), href, target: "_blank", rel: "noopener", **kwargs)
   end
 
+  def school_website_link(organisation, vacancy: nil, **kwargs)
+    tracked_open_in_new_tab_link_to(
+      t("schools.website_link_text", organisation_name: organisation.name),
+      organisation.website.presence || organisation.url,
+      link_type: :school_website,
+      link_subject: StringAnonymiser.new(vacancy&.id).to_s,
+      **kwargs,
+    )
+  end
+
   def apply_link(vacancy, **kwargs)
     tracked_open_in_new_tab_button_link_to(
       t("jobs.apply"),

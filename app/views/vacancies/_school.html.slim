@@ -22,7 +22,7 @@
   - if organisation.website.present? || organisation.url.present?
     - summary_list.row do |row|
       - row.key text: t("schools.website")
-      - row.value text: tracked_open_in_new_tab_link_to(t("schools.website_link_text", organisation_name: organisation.name), organisation.website.presence || organisation.url, link_type: :school_website, link_subject: StringAnonymiser.new(vacancy.id).to_s, class: "wordwrap")
+      - row.value text: school_website_link(organisation, vacancy:, class: "wordwrap")
 
   - if contact_details
     = render "vacancies/contact_details", vacancy: vacancy, summary_list: summary_list
