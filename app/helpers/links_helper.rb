@@ -35,12 +35,16 @@ module LinksHelper
     govuk_button_link_to(t("app.opens_in_new_tab", link_text: text), href, target: "_blank", rel: "noopener", **kwargs)
   end
 
+  def anon(value)
+    StringAnonymiser.new(value).to_s
+  end
+
   def school_website_link(organisation, vacancy: nil, **kwargs)
     tracked_open_in_new_tab_link_to(
       t("schools.website_link_text", organisation_name: organisation.name),
       organisation.website.presence || organisation.url,
       link_type: :school_website,
-      link_subject: StringAnonymiser.new(vacancy&.id).to_s,
+      link_subject: anon(vacancy&.id),
       **kwargs,
     )
   end
@@ -51,9 +55,18 @@ module LinksHelper
       vacancy.application_link,
       "aria-label": t("jobs.aria_labels.apply_link"),
       link_type: :get_more_information,
-      link_subject: StringAnonymiser.new(vacancy.id).to_s,
+      link_subject: anon(vacancy.id),
       **kwargs,
     )
   end
+
+  def ofsted_report_link(organisation, vacancy: nil, **kwargs)
+    tracked_open_in_new_tab_link_to(
+      t("schools.view_ofsted_report"),
+      ofsted_report(organisation),
+      link_type: :ofsted_report,
+      link_subject: anon(vacancy&.id),
+      **kwargs,
+    )
   end
 end

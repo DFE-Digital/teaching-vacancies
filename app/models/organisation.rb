@@ -60,4 +60,8 @@ class Organisation < ApplicationRecord
 
     update(gias_data_hash: computed_hash)
   end
+
+  def has_ofsted_report?
+    urn.present?
+  end
 end
