@@ -13,7 +13,6 @@
     "@hotwired/stimulus": "^3.0.1",
     "@rails/webpacker": "^5.4.2",
     "@sentry/browser": "^6.17.9",
-    "@sentry/tracing": "^6.18.1",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^2.0.4",
     "axios": "^0.26.0",
