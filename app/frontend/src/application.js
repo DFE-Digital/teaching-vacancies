@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/browser';
-import { BrowserTracing } from '@sentry/tracing';
 
 import 'core-js/modules/es.weak-map';
 import 'core-js/modules/es.weak-set';
@@ -28,8 +27,8 @@ Sentry.init({
   dsn: window.sentryConfig.dsn,
   environment: window.sentryConfig.environment,
   release: window.sentryConfig.release,
-  integrations: [new BrowserTracing()],
-  tracesSampleRate: 1.0, // Capture _all_ errors
+  integrations: [],
+  tracesSampleRate: 0, // Disable tracing (performance monitoring, doesn't impact errors)
 });
 
 const application = Application.start();

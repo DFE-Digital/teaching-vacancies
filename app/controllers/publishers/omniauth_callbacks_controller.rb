@@ -22,12 +22,21 @@ class Publishers::OmniauthCallbacksController < Devise::OmniauthCallbacksControl
 
   def failure
     omniauth_error = request.respond_to?(:get_header) ? request.get_header("omniauth.error") : request.env["omniauth.error"]
+
     Sentry.with_scope do |scope|
       scope.set_tags(
         "omniauth.error": omniauth_error,
         "omniauth.failed_strategy": failed_strategy.name,
       )
-      Sentry.capture_message("Omniauth error")
+
+      if omniauth_error.is_a?(OmniAuth::Strategies::OpenIDConnect::CallbackError)
+        scope.set_tags(
+          "omniauth.error_type": omniauth_error.error,
+          "omniauth.error_reason": omniauth_error.error_reason,
+        )
+      end
+
+      Sentry.capture_message("User failed to sign in with DfE Sign In")
     end
 
     redirect_to new_publisher_session_path, warning: t(".message")
