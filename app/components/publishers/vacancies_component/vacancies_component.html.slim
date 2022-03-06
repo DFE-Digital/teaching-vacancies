@@ -14,23 +14,24 @@
 
 .govuk-grid-row.vacancies-component class="govuk-!-margin-bottom-7"
   - if @organisation.school_group?
-    .govuk-grid-column-one-third class="govuk-!-margin-bottom-5"
+    .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-4"
       - if @publisher_preference
         = govuk_link_to t(".add_or_remove_schools"), edit_publishers_publisher_preference_path(@publisher_preference), class: "govuk-link--no-visited-state"
 
-      = form_for [:publishers, @publisher_preference], html: { data: { controller: "form", "hide-submit": true } } do |f|
-        = filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
-                  filters: { total_count: @publisher_preference.organisations.count },
-                  options: { remove_buttons: true, publisher_preference: (@publisher_preference if @organisation.local_authority?) },
-                  html_attributes: { tabindex: "-1" }) do |filters_component|
-                    - filters_component.remove_buttons do |rb|
-                      - rb.group(key: "locations", selected: @publisher_preference.organisations.map(&:id), options: @organisation_options, value_method: :id, selected_method: :name)
+      div class="govuk-!-margin-top-2"
+        = form_for [:publishers, @publisher_preference], html: { data: { controller: "form", "hide-submit": true } } do |f|
+          = filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
+                    filters: { total_count: @publisher_preference.organisations.count },
+                    options: { remove_buttons: true, publisher_preference: (@publisher_preference if @organisation.local_authority?) },
+                    html_attributes: { tabindex: "-1" }) do |filters_component|
+                      - filters_component.remove_buttons do |rb|
+                        - rb.group(key: "locations", selected: @publisher_preference.organisations.map(&:id), options: @organisation_options, value_method: :id, selected_method: :name)
 
-                    - filters_component.group key: "locations", component: f.govuk_collection_check_boxes(:organisation_ids, @organisation_options, :id, :label, small: true, legend: { text: "Locations" }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
+                      - filters_component.group key: "locations", component: f.govuk_collection_check_boxes(:organisation_ids, @organisation_options, :id, :label, small: true, legend: { text: "Locations" }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
 
-        = f.hidden_field :jobs_type, value: @selected_type
+          = f.hidden_field :jobs_type, value: @selected_type
 
-  .vacancies-component__content class=grid_column_class
+  .govuk-grid-column-two-thirds-at-desktop.vacancies-component__content
     - if @vacancies.many?
       = render SortComponent.new sort: @sort, url_params: { type: @selected_type }, path: method(:jobs_with_type_organisation_path)
     section#vacancy-results

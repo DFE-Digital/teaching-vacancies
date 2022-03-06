@@ -1,12 +1,3 @@
-input.button-as-link {
-  background: none;
-  border: 0;
-  cursor: pointer;
-  margin-bottom: 0;
-  outline: inherit;
-  padding: 0;
-}
-
 .wordwrap {
   word-wrap: break-word;
 }
@@ -56,7 +47,7 @@ input.button-as-link {
 
 .govuk-form-group--error {
   select {
-    border: 4px solid #d4351c;
+    border: 4px solid $govuk-error-colour;
   }
 }
 
@@ -128,9 +119,4 @@ input.button-as-link {
   .js-hidden {
     display: none !important;
   }
-}
-
-ul li + br,
-ul > br {
-  display: none;
 }

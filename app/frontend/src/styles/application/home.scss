@@ -58,10 +58,10 @@
 .app-search-form-inner {
   @include govuk-media-query($from: tablet) {
     align-items: end;
+    column-gap: govuk-spacing(4);
     display: flex;
 
     > div {
-      padding-right: 30px;
       width: 33.33%;
     }
   }

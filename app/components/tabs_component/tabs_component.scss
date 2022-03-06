@@ -1,10 +1,11 @@
 @import 'base_component';
 
 .tabs-component {
-  margin-bottom: govuk-spacing(7);
+  margin-bottom: govuk-spacing(4);
 
   @include govuk-media-query ($from: desktop) {
     border-bottom: 1px solid $govuk-border-colour;
+    margin-bottom: govuk-spacing(7);
   }
 
   .govuk-link {

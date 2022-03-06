@@ -1,0 +1,13 @@
+.govuk-footer {
+  &__list {
+    padding-bottom: govuk-spacing(7);
+  }
+
+  &__navigation {
+    .govuk-footer__link {
+      border: 0;
+      margin-bottom: 0;
+      padding: 0;
+    }
+  }
+}

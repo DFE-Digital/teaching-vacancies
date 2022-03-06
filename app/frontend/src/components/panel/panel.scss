@@ -6,7 +6,7 @@
       display: block;
       width: 100%;
 
-      @include govuk-media-query($from: tablet) {
+      @include govuk-media-query($from: desktop) {
         display: none;
       }
     }
@@ -14,12 +14,12 @@
     &__content {
       background-color: govuk-colour('light-grey');
       overflow: hidden;
-      @include govuk-media-query($until: tablet) {
+      @include govuk-media-query($until: desktop) {
         display: none;
       }
 
       &:focus {
-        @include govuk-media-query($until: tablet) {
+        @include govuk-media-query($until: desktop) {
           outline: $govuk-focus-width solid $govuk-focus-colour;
         }
       }
@@ -27,7 +27,7 @@
       &--visible {
         display: block;
 
-        @include govuk-media-query($until: tablet) {
+        @include govuk-media-query($until: desktop) {
           border: 1px solid govuk-colour('mid-grey');
           bottom: 5px;
           max-width: 320px;
@@ -51,7 +51,7 @@
         right: 0;
         top: 0;
 
-        @include govuk-media-query($until: tablet) {
+        @include govuk-media-query($until: desktop) {
           display: block;
         }
 

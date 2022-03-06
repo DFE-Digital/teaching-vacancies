@@ -32,7 +32,7 @@
         ul.govuk-footer__list
           - if publisher_signed_in?
             li.govuk-footer__list-item
-              = button_to(t("footer.list_a_teaching_job"), organisation_jobs_path, class: "govuk-footer__link button-as-link")
+              = button_to(t("footer.list_a_teaching_job"), organisation_jobs_path, class: "govuk-footer__link govuk-body-s")
             li.govuk-footer__list-item
               = link_to t("footer.manage_job_listings"), organisation_path, class: "govuk-footer__link"
           - else
