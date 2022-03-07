@@ -63,7 +63,7 @@ jobs:
       if: steps.wait_for_deployment.outputs.conclusion != 'success' && env.HTTP_CODE != '200'
       run: exit 1
 
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       name: Checkout Code
 
     - name: Set up Ruby
