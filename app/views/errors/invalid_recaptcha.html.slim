@@ -21,4 +21,4 @@
         | disabling any browser plugins that can interfere with websites, such as ad blockers
 
     p.govuk-body
-      | If you still cannot use the service, get in touch: #{govuk_mail_to(t("help.email"), t("help.email"), class: "link-wrap", subject: t("error_pages.invalid_recaptcha.email_subject", form: @form))}.
+      | If you still cannot use the service, #{govuk_link_to(t("error_pages.invalid_recaptcha.request_support_link"), new_support_request_path)}.

@@ -133,6 +133,7 @@ en:
   error_pages:
     invalid_recaptcha:
       email_subject: ReCAPTCHA issue - %{form}
+      request_support_link: request support
       title: Sorry, we cannot process your request
     not_found: Page not found.
     server_error: Sorry, there’s a technical issue at our end
@@ -178,6 +179,7 @@ en:
     gias_url: https://www.get-information-schools.service.gov.uk/
     report_a_problem_html: To report a problem, or for support using Teaching Vacancies, please use the %{get_help_link}
     get_help_form: support form
+    request_support_link: request support
 
   jobseekers:
     passwords:

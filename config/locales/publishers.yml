@@ -60,7 +60,7 @@ en:
         missing_information_title: Is information missing or incorrect?
         missing_information_description_html: >-
           If a school in your %{organisation_type} is missing from this list,
-          or the information isn't correct, please %{mail_to}.
+          or the information isn't correct, please %{contact_support_link}.
         schools: Schools (%{count})
         title: Schools in your %{organisation_type}
       edit:
