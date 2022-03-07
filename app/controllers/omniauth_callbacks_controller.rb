@@ -40,16 +40,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     redirect_to new_publisher_session_path, warning: t(".message")
   end
 
-  def fake
-    raise "Not permitted outside development" unless Rails.env.development?
-
-    support_user = SupportUser.last
-    sign_in(support_user)
-    sign_out_except(:support_user)
-
-    redirect_to after_sign_in_path_for(:support_user)
-  end
-
   private
 
   def auth_hash
