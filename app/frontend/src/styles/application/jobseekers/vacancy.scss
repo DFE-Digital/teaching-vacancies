@@ -19,7 +19,13 @@
       align-items: stretch;
       display: flex;
       flex-wrap: wrap;
-      margin: 0;
+      margin-bottom: govuk-spacing(2);
+    }
+
+    &__job {
+      border-left: govuk-spacing(1) solid govuk-colour('orange');
+      margin-bottom: govuk-spacing(4);
+      padding-left: govuk-spacing(2);
     }
   }
 
