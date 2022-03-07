@@ -32,6 +32,8 @@ class Jobseekers::SessionsController < Devise::SessionsController
         store_return_location(jobseeker_root_path, scope: :jobseeker)
       end
     end
+
+    flash.delete(:notice)
   end
 
   private
