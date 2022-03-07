@@ -5,7 +5,7 @@ class Api::VacanciesController < Api::ApplicationController
   MAX_API_RESULTS_PER_PAGE = 100
 
   def index
-    records = Vacancy.includes(organisation_vacancies: :organisation)
+    records = Vacancy.includes(:organisations)
                      .live
                      .page(page_number)
                      .per(MAX_API_RESULTS_PER_PAGE)
