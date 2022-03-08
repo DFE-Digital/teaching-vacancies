@@ -296,7 +296,6 @@ shared:
     - expires_at
     - actual_salary
     - salary
-    - legacy_job_roles
     - about_school
     - subjects
     - school_visits
