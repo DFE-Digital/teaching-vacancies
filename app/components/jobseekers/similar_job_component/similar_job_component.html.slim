@@ -1,6 +1,0 @@
-.similar-job.govuk-grid-column-one-half
-  = govuk_link_to(vacancy.job_title, job_path(vacancy), class: "view-similar-job-gtm")
-  p.govuk-body-s class="govuk-!-margin-bottom-0 govuk-!-font-weight-bold"
-    = vacancy.parent_organisation.name
-  p.govuk-body-s class="govuk-!-margin-bottom-0 govuk-!-margin-top-0"
-    = full_address(vacancy.parent_organisation)
