@@ -15,7 +15,7 @@ section#job-details class="govuk-!-margin-bottom-5"
     - if vacancy.subjects.any?
       - summary_list.row do |row|
         - row.key text: t("jobs.subject", count: vacancy.subjects.count)
-        - row.value text: vacancy.show_subjects
+        - row.value text: linked_subjects(vacancy)
 
     - summary_list.row do |row|
       - row.key text: t("jobs.working_patterns")
