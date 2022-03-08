@@ -1,8 +1,8 @@
 class OmniAuth::Strategies::Dfe < OmniAuth::Strategies::OpenIDConnect; end
 
 # FIXME: Remove these once the DSI role changes are done
-ENV["DFE_SIGN_IN_SERVICE_ACCESS_ROLE_ID"] ||= ENV["DFE_SIGN_IN_HIRING_STAFF_ROLE_ID"]
-ENV["DFE_SIGN_IN_HIRING_STAFF_ROLE_ID"] ||= ENV["DFE_SIGN_IN_SERVICE_ACCESS_ROLE_ID"]
+ENV["DFE_SIGN_IN_SERVICE_ACCESS_ROLE_ID"] ||= ENV["DFE_SIGN_IN_PUBLISHER_ROLE_ID"]
+ENV["DFE_SIGN_IN_PUBLISHER_ROLE_ID"] ||= ENV["DFE_SIGN_IN_SERVICE_ACCESS_ROLE_ID"]
 
 Rails.application.config.middleware.use OmniAuth::Builder do
   dfe_sign_in_issuer_uri    = URI(ENV.fetch("DFE_SIGN_IN_ISSUER", "example"))

@@ -1,6 +1,6 @@
 class Authorisation
   ROLES = {
-    publisher: ENV["DFE_SIGN_IN_HIRING_STAFF_ROLE_ID"],
+    publisher: ENV["DFE_SIGN_IN_PUBLISHER_ROLE_ID"],
     support_user: ENV["DFE_SIGN_IN_SUPPORT_USER_ROLE_ID"],
   }.freeze
 

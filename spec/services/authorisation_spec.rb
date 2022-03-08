@@ -11,7 +11,7 @@ RSpec.describe Authorisation do
 
   describe "#authorised_publisher?" do
     context "when roles include the publisher role ID" do
-      let(:role_ids) { ["test-hiring-staff-role-id"] }
+      let(:role_ids) { ["test-publisher-role-id"] }
 
       it { should be_authorised_publisher }
     end
@@ -92,7 +92,7 @@ RSpec.describe Authorisation do
   context "when both roles are present" do
     let(:role_ids) do
       %w[
-        test-hiring-staff-role-id
+        test-publisher-role-id
         test-support-user-role-id
       ]
     end
