@@ -34,7 +34,6 @@ en:
       updated: Your account has been updated successfully.
       updated_but_not_signed_in: Your account has been updated successfully, but since your password was changed, you need to sign in again
     sessions:
-      signed_in: Welcome to your Teaching Vacancies account.
       signed_out: You have been successfully signed out.
       already_signed_out: Signed out successfully.
     unlocks:
