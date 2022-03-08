@@ -4,16 +4,6 @@ module VacanciesHelper
 
   WORD_EXCEPTIONS = %w[and the of upon].freeze
 
-  def format_location_name(location)
-    uncapitalize_words(location.titleize)
-  end
-
-  def uncapitalize_words(location_name)
-    array = location_name.split
-    array.map! { |word| WORD_EXCEPTIONS.include?(word.downcase) ? word.downcase : word }
-    array.join(" ")
-  end
-
   def page_title_prefix(vacancy, form_object, page_heading)
     if vacancy.published?
       "#{form_object.errors.present? ? 'Error: ' : ''}Edit the #{page_heading} for #{vacancy.job_title}"
