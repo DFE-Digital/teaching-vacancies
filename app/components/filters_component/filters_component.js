@@ -3,7 +3,7 @@ import { Controller } from '@hotwired/stimulus';
 const FiltersComponent = class extends Controller {
   static targets = ['clear', 'group'];
 
-  static MOBILE_BREAKPOINT = 640;
+  static MOBILE_BREAKPOINT = 768;
 
   static CHECKBOX_CLASS_SELECTOR = 'govuk-checkboxes__input';
 

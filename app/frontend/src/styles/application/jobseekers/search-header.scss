@@ -1,15 +1,13 @@
 .search-results {
   &__controls {
     background-color: govuk-colour('light-grey');
-    margin-bottom: govuk-spacing(6);
+    margin-bottom: govuk-spacing(4);
     padding: $govuk-gutter-half;
 
     @include govuk-media-query($from: tablet) {
       background-color: transparent;
       border-bottom: 1px solid $govuk-border-colour;
       column-gap: govuk-spacing(2);
-      display: flex;
-      flex-direction: row;
       padding: 0;
 
       .govuk-heading-m {
@@ -22,9 +20,28 @@
         }
       }
 
-      .govuk-form-group,
-      .search-results__controls__submit {
-        flex-grow: 1;
+      &__input {
+        column-gap: govuk-spacing(4);
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        > * {
+          flex-grow: 1;
+        }
+
+        &__submit {
+          flex-basis: 100%;
+
+          @media (min-width: 1020px) { 
+            flex-basis: auto;
+            margin-top: govuk-spacing(6);
+          }
+        }
+
+        @media (min-width: 1020px) { 
+          flex-wrap: nowrap;
+        }
       }
 
       .govuk-hint {
@@ -32,8 +49,12 @@
       }
     }
 
-    .govuk-select[name='radius'] {
-      width: 100%;
+    .location-search__radius {
+      flex-basis: 200px;
+
+      .govuk-select[name='radius'] {
+        width: 100%;
+      }
     }
   }
 

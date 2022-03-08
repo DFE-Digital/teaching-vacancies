@@ -12,10 +12,10 @@
 
     = form_for @form, as: "", url: jobs_path, method: :get, html: { class: "search-and-filters-form", data: { controller: "form" }, role: "search", aria: { label: "Filter criteria" } } do |f|
       .govuk-grid-row
-        .govuk-grid-column-one-third class="govuk-!-margin-bottom-3"
+        .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-3"
           = render "filters", f: f, id: "filters-component", classes: "govuk-!-padding-top-3"
 
-        .govuk-grid-column-two-thirds
+        .govuk-grid-column-two-thirds-at-desktop
           .search-results
             .search-results__controls
               = render "search", f: f
@@ -32,7 +32,7 @@
                   = render SortComponent.new path: method(:jobs_path), sort: @vacancies_search.sort, url_params: @form.to_hash
               - unless @vacancies_search.out_of_bounds?
                 .search-results__header-stats
-                  .govuk-body
+                  .govuk-body class="govuk-!-margin-bottom-1"
                     - if @vacancies_search.total_count <= @vacancies_search.per_page
                       = t("jobs.number_of_results_one_page_html", count: @vacancies_search.total_count)
                     - else

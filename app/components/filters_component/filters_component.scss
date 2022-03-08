@@ -26,20 +26,22 @@
   &__remove {
     box-shadow: none;
     display: none;
+    margin-bottom: govuk-spacing(2);
     padding: govuk-spacing(1) 0;
     position: relative;
 
-    @include govuk-media-query($from: tablet) {
+    @include govuk-media-query($from: desktop) {
       display: block;
     }
 
     .govuk-heading-s {
-      font-size: 1rem;
+      @include govuk-font(16);
+      font-weight: bold;
       margin-bottom: 0;
     }
 
     .govuk-body {
-      font-size: 1rem;
+      @include govuk-font(16);
       font-weight: normal;
     }
 
@@ -64,21 +66,22 @@
       padding-left: 0;
 
       li {
-        display: inline-block;
+        display: inline;
         margin-right: govuk-spacing(2);
       }
 
       &__tag {
+        @include govuk-font(16);
         background-color: govuk-colour('white');
         border-radius: govuk-spacing(1);
         border-width: 1px;
         cursor: pointer;
-        font-size: 1rem;
         -webkit-font-smoothing: antialiased;
         font-weight: 400;
         line-height: 1.25;
         margin-top: 5px;
         padding: 5px;
+        text-align: left;
 
         &::after {
           height: 0;
@@ -91,7 +94,7 @@
 
         &.icon--left {
           background-position: govuk-spacing(1);
-          padding-left: 28px;
+          padding-left: govuk-spacing(6);
         }
 
         .fa-times {
