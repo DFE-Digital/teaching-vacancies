@@ -33,7 +33,7 @@ class DSIClient
   end
 
   def uri_for_path(path)
-    URI(ENV["DFE_SIGN_IN_URL"]).tap do |uri|
+    URI(ENV.fetch("DFE_SIGN_IN_URL")).tap do |uri|
       uri.path = path
     end
   end
@@ -56,11 +56,11 @@ class DSIClient
   end
 
   def service_id
-    ENV["DFE_SIGN_IN_SERVICE_ID"]
+    ENV.fetch("DFE_SIGN_IN_SERVICE_ID")
   end
 
   def password
-    ENV["DFE_SIGN_IN_PASSWORD"]
+    ENV.fetch("DFE_SIGN_IN_PASSWORD")
   end
 
   class Response
