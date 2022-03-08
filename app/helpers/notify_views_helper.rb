@@ -7,11 +7,6 @@ module NotifyViewsHelper
     "[#{text}](#{url})"
   end
 
-  def awaiting_feedback_jobs_link
-    url = jobs_with_type_organisation_url(type: "awaiting_feedback", **utm_params)
-    notify_link(url, "here")
-  end
-
   def choose_organisation_link(token)
     url = publishers_login_key_url(token, **utm_params)
     notify_link(url)
@@ -67,11 +62,6 @@ module NotifyViewsHelper
   def publisher_job_applications_link(vacancy)
     url = organisation_job_job_applications_url(vacancy, **utm_params)
     notify_link(url, t(".view_applications", count: vacancy.job_applications.submitted_yesterday.count))
-  end
-
-  def publisher_sign_in_link
-    url = new_publisher_session_url(**utm_params)
-    notify_link(url, "sign into your Teaching Vacancies account")
   end
 
   def reset_password_link(token)

@@ -10,30 +10,8 @@ module OrganisationsHelper
     "#{school.minimum_age} to #{school.maximum_age}"
   end
 
-  def edit_vacancy_section_number(section, organisation)
-    sections = {
-      job_location: 1,
-      job_details: 2,
-      pay_package: 3,
-      important_dates: 4,
-      documents: 5,
-      applying_for_the_job: 6,
-      job_summary: 7,
-    }
-    section_number = organisation.school_group? ? sections[section] : sections[section] - 1
-    "#{section_number}."
-  end
-
   def full_address(organisation)
     address_join([organisation.address, organisation.town, organisation.county, organisation.postcode])
-  end
-
-  def change_description(organisation)
-    safe_join([t("buttons.change"), tag.span(t("publishers.organisations.aria_change_description", organisation_type: organisation_type_basic(organisation)), class: "govuk-visually-hidden")])
-  end
-
-  def change_website_url(organisation)
-    safe_join([t("buttons.change"), tag.span(t("publishers.organisations.aria_change_website", organisation_type: organisation_type_basic(organisation)), class: "govuk-visually-hidden")])
   end
 
   def location(organisation)
