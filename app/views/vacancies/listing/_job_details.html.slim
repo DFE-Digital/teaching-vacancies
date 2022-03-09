@@ -66,6 +66,11 @@ section#job-details class="govuk-!-margin-bottom-5"
         h3.govuk-heading-m = t("publishers.vacancies.steps.applying_for_the_job")
         p.govuk-body = vacancy.how_to_apply
 
+      - if vacancy.external?
+        h4.govuk-heading-m = t("publishers.vacancies.steps.applying_for_the_job")
+        p This school accepts applications through their own website, where you may also find more information about this job.
+        = open_in_new_tab_button_link_to "View advert on school website", vacancy.external_advert_url, class: "govuk-!-margin-bottom-5"
+
       - if vacancy.application_link.present? && vacancy.application_form.present?
         = apply_link(vacancy, class: "govuk-button--secondary govuk-!-margin-bottom-5")
         br

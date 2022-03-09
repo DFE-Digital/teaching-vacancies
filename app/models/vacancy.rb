@@ -101,6 +101,10 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
     ADDITIONAL_JOB_ROLES.keys.map(&:to_s)
   end
 
+  def external?
+    external_feed_source.present?
+  end
+
   def organisation
     @organisation ||= organisations.one? ? organisations.first : organisations.first&.school_groups&.first
   end
