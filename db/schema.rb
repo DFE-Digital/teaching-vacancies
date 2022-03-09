@@ -489,6 +489,10 @@ ActiveRecord::Schema.define(version: 2022_03_22_142612) do
     t.boolean "google_index_removed", default: false
     t.string "parental_leave_cover_contract_duration"
     t.datetime "expired_vacancy_feedback_email_sent_at"
+    t.string "external_feed_source"
+    t.string "external_reference"
+    t.string "external_advert_url"
+    t.jsonb "external_documents", default: []
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["geolocation"], name: "index_vacancies_on_geolocation", using: :gist
     t.index ["publisher_id"], name: "index_vacancies_on_publisher_id"
