@@ -9,27 +9,9 @@ RSpec.describe "Vacancies" do
   end
 
   describe "GET #show" do
-    subject { get job_path(vacancy), params: params }
-
-    context "when vacancy is trashed" do
-      let(:vacancy) { create(:vacancy, :trashed) }
-      let(:params) { { id: vacancy.id } }
-
-      it "renders errors/trashed_vacancy_found" do
-        expect(subject).to render_template("errors/trashed_vacancy_found")
-      end
-
-      it "returns not found" do
-        subject
-        expect(response).to have_http_status(:not_found)
-      end
-    end
+    subject { get job_path("missing-id") }
 
     context "when vacancy does not exist" do
-      let(:vacancy) { "missing-id" }
-
-      let(:params) { { id: "missing-id" } }
-
       it "renders errors/not_found" do
         expect(subject).to render_template("errors/not_found")
       end

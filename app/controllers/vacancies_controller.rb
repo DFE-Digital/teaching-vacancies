@@ -1,6 +1,4 @@
 class VacanciesController < ApplicationController
-  helper_method :allow_sorting?, :job_application
-
   before_action :set_map_display, only: %i[index]
   before_action :set_landing_page, only: %i[index]
 
@@ -16,20 +14,11 @@ class VacanciesController < ApplicationController
   end
 
   def show
-    begin
-      vacancy = Vacancy.listed.friendly.find(id)
-    rescue ActiveRecord::RecordNotFound
-      @vacancy = Vacancy.trashed.friendly.find(id)
-
-      return render "/errors/trashed_vacancy_found", status: :not_found
-    end
-
-    return redirect_to(job_path(vacancy), status: :moved_permanently) if old_vacancy_path?(vacancy)
-
-    @saved_job = current_jobseeker&.saved_jobs&.find_by(vacancy_id: vacancy.id)
-    @vacancy = VacancyPresenter.new(vacancy)
+    @saved_job = current_jobseeker&.saved_jobs&.find_by(vacancy: vacancy)
+    @job_application = current_jobseeker&.job_applications&.find_by(vacancy: vacancy)
     @invented_job_alert_search_criteria = Search::CriteriaInventor.new(vacancy).criteria
     @similar_jobs = Search::SimilarJobs.new(vacancy).similar_jobs
+    @vacancy = VacancyPresenter.new(vacancy)
   end
 
   private
@@ -57,24 +46,8 @@ class VacanciesController < ApplicationController
     @form = Jobseekers::SearchForm.new(search_params)
   end
 
-  def job_application
-    @job_application ||= current_jobseeker&.job_applications&.find_by(vacancy_id: vacancy.id)
-  end
-
   def vacancy
-    @vacancy ||= Vacancy.listed.friendly.find(id)
-  end
-
-  def old_vacancy_path?(vacancy)
-    request.path != job_path(vacancy) && !request.format.json?
-  end
-
-  def id
-    params[:id]
-  end
-
-  def allow_sorting?
-    @vacancies_search.sort.many? && @vacancies.many?
+    @vacancy ||= Vacancy.listed.friendly.find(params[:id])
   end
 
   def set_headers
