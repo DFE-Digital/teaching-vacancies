@@ -35,8 +35,6 @@ Read [this Atlassian tutorial](https://www.atlassian.com/git/tutorials/comparing
 
 This section details the process for updating the search mappings to point a user-inputted search term to a defined polygon.
 
-Before making a change, you can check how a search currently works by using the [map easter egg](#map-easter-egg).
-
 1. Go to the [mapped_locations.yml](../config/data/ons_mappings/mapped_locations.yml) file which contains a list of all of the mappings that have been applied, in alphabetical order.
 2. Click the pencil icon which will allow you to [edit the file](https://github.com/DFE-Digital/teaching-vacancies/edit/master/config/data/ons_mappings/mapped_locations.yml). Navigate to the desired row, and input your new mapping in YAML format. The format is
   ```
@@ -55,16 +53,3 @@ Before making a change, you can check how a search currently works by using the 
   * deployed to the `staging` environment
   * smoke-tested on the `staging` environment
   * deployed to the `production` environment
-6. You can verify that your change is working as expected by searching for the new mapping(s) on production, using the [map easter egg](#map-easter-egg).
-
-## Map easter egg
-
-If you find yourself wondering about how or where a search for a location is working, you can immediately satisfy your curiosity by adding the cheat code '+map' to the end of the location search query.
-
-This will display a polygon for polygon searches, or a marker for location point searches, as below:
-
- * If the location has been successfully mapped to the polygon:
-<img width="950" alt="Screenshot 2021-01-27 at 15 56 29" src="https://user-images.githubusercontent.com/60350599/106018923-f9237980-60b9-11eb-8ca0-236336d91098.png">
-
-* If the mapping has been unsuccessful:
-<img width="928" alt="Screenshot 2021-01-27 at 16 10 46" src="https://user-images.githubusercontent.com/60350599/106019158-3ee04200-60ba-11eb-921f-b222cdfbca9b.png">

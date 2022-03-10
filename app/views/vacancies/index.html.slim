@@ -24,8 +24,6 @@
               button.panel-component__toggle.govuk-button.govuk-button--secondary type="button" data-panel-target="toggle" data-action="panel#toggleVisibility"
                 = t("buttons.filters_toggle_panel", count: @form.total_filters)
 
-            = map(items: [{ type: "location", params: { location: params[:location], radius: params[:radius] } }], render: @display_map, zoom: 8)
-
             .search-results__header class="govuk-!-margin-bottom-3"
               .search-results__header-sorting
                 - if @vacancies_search.sort.many? && @vacancies.many?

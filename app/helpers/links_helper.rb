@@ -53,7 +53,7 @@ module LinksHelper
   def school_website_link(organisation, vacancy: nil, **kwargs)
     tracked_open_in_new_tab_link_to(
       t("schools.website_link_text", organisation_name: organisation.name),
-      organisation.website.presence || organisation.url,
+      organisation.url,
       link_type: :school_website,
       link_subject: anon(vacancy&.id),
       **kwargs,
@@ -98,7 +98,7 @@ module LinksHelper
     tracked_link_to(
       text,
       url,
-      link_type: :google_maps,
+      link_type: :school_website_from_map,
       link_subject: anon(vacancy_id),
       **kwargs,
     )

@@ -29,10 +29,11 @@ export default class extends Controller {
       setTimeout(() => { this.redirect(); }, 100);
     }
 
+    let trackedLinkText;
     if (this.linkTarget.dataset.trackedLinkText) {
-      const trackedLinkText = this.linkTarget.dataset.trackedLinkText;
+      trackedLinkText = this.linkTarget.dataset.trackedLinkText;
     } else {
-      const trackedLinkText = this.linkTarget.innerText;
+      trackedLinkText = this.linkTarget.innerText;
     }
 
     triggerEvent(

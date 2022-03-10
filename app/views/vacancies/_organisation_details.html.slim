@@ -24,6 +24,6 @@ section#school-overview
   section#school-location
     h3.govuk-heading-l.heading--border-bottom = t("organisations.locations.#{vacancy.job_location}")
     - if vacancy.organisations.one?
-      = map items: [{ type: "vacancy", params: { id: vacancy.id }, links: map_links(vacancy) }], show_map: vacancy.parent_organisation.geopoint
+      = map(vacancy:)
     - else
-      = map items: [{ type: "vacancy", params: { id: vacancy.id }, links: map_links(vacancy) }], zoom: 10
+      = map(vacancy:, zoom: 10)

@@ -19,7 +19,7 @@
     - row.key text: t("schools.ofsted_report")
     - row.value text: organisation.has_ofsted_report? ? ofsted_report_link(organisation, vacancy:, class: "wordwrap") : t("schools.no_information")
 
-  - if organisation.website.present? || organisation.url.present?
+  - if organisation.url.present?
     - summary_list.row do |row|
       - row.key text: t("schools.website")
       - row.value text: school_website_link(organisation, vacancy:, class: "wordwrap")

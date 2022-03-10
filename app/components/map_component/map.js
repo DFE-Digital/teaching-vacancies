@@ -4,36 +4,33 @@ import { Controller } from '@hotwired/stimulus';
 
 import './map.scss';
 
-import api from '../../frontend/src/lib/api';
-
 const MapController = class extends Controller {
-  static targets = ['markersTextList'];
+  static targets = ['markersTextList', 'organisation'];
 
   connect() {
-    const config = JSON.parse(this.element.dataset.config);
+    if (!this.element.querySelector('#map')) {
+      return;
+    }
 
-    api.getMapData(config).then((items) => {
-      if (!items.length) return;
+    const singleOrg = this.organisationTargets.length === 1;
 
-      if (!this.map) {
-        const [mapCenter] = items.filter((mapItem) => mapItem.data.point);
-        this.create(mapCenter.data.point, this.element.dataset.zoom);
+    this.organisationTargets.forEach((organisation, index) => {
+      const point = {
+        lat: organisation.dataset.lat,
+        lon: organisation.dataset.lon,
+      };
+
+      if (index === 0) {
+        this.create(point, this.element.dataset.zoom);
       }
 
-      const bounds = [];
-
-      this.markersTextListTarget.innerHTML = '';
-
-      items.forEach((item, index) => {
-        this[item.type](item.data, items.length === 1, index + 1);
-        bounds.push(item.data.point);
-      });
-
-      if (items.length > 1) {
-        this.markersTextListTarget.classList.add('govuk-list--number');
-        this.setMapBounds(bounds);
-      }
+      this.addMarker(point, organisation, index, singleOrg);
     });
+
+    if (!singleOrg) {
+      this.markersTextListTarget.classList.add('govuk-list--number');
+      this.setMapBounds();
+    }
   }
 
   create(point, zoom) {
@@ -45,29 +42,36 @@ const MapController = class extends Controller {
     ).addTo(this.map);
   }
 
-  polygon({ coordinates }) {
-    L.polygon(coordinates, { color: 'green' }).addTo(this.map);
-  }
+  addMarker(point, organisation, index, singleOrg) {
+    const originalLink = organisation.querySelector('a');
 
-  marker({ point, meta }, showPopup, index) {
     const marker = L.marker(point, {
-      icon: MapController.markerIcon(showPopup ? '' : `<span aria-label="${meta.name}, ${meta.address}">${index}</span>`),
+      icon: MapController.markerIcon(singleOrg ? '' : `<span aria-label="${originalLink.innerText}">${index + 1}</span>`),
       riseOnHover: true,
     });
 
+    const addressBlock = organisation.querySelector('.pop-up');
+    addressBlock.remove();
+    addressBlock.hidden = false;
+
     marker.addTo(this.map).bindPopup(
-      MapController.popupHTML(meta),
+      addressBlock.outerHTML,
       { className: 'map-component__map__popup' },
     );
 
     // use keydown event as leaflet doesnt recognise focus
     marker.on('keydown', MapController.openMarkerPopup);
 
-    if (!showPopup) {
-      this.markerItemHtml(`${meta.name}, ${meta.address}`);
-    } else {
+    if (singleOrg) {
+      originalLink.remove();
       marker.openPopup();
+    } else {
+      originalLink.replaceWith(originalLink.innerText);
     }
+  }
+
+  setMapBounds() {
+    this.map.fitBounds(this.markerTargets.map((m) => m.dataset.point));
   }
 
   static markerIcon(html) {
@@ -78,26 +82,8 @@ const MapController = class extends Controller {
     });
   }
 
-  setMapBounds(bounds) {
-    this.map.fitBounds(bounds);
-  }
-
-  markerItemHtml(text) {
-    this.markersTextListTarget.insertAdjacentHTML('beforeend', `<li>${text}</li>`);
-  }
-
   static openMarkerPopup(e) {
     e.target.openPopup();
-  }
-
-  static popupHTML(data) {
-    return `<h4 class="govuk-body-m govuk-!-margin-bottom-2">
-    <a class="govuk-link" href="${data.name_link}">${data.name}</a>
-    </h4>
-    <ul class="govuk-list govuk-body-s">
-    <li>${data.organisation_type}</li>
-    <li>${data.address}</li>
-    </ul>`;
   }
 };
 
