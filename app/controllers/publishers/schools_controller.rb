@@ -9,7 +9,7 @@ class Publishers::SchoolsController < Publishers::BaseController
 
   def edit
     @organisation_form = Publishers::OrganisationForm.new(
-      description: organisation.description, website: organisation.website,
+      description: organisation.description, url_override: organisation.url_override,
     )
   end
 
@@ -35,6 +35,6 @@ class Publishers::SchoolsController < Publishers::BaseController
   end
 
   def organisation_params
-    params.require(:publishers_organisation_form).permit(:description, :website)
+    params.require(:publishers_organisation_form).permit(:description, :url_override)
   end
 end

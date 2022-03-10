@@ -1,5 +1,5 @@
 class Publishers::OrganisationForm < BaseForm
-  attr_accessor :description, :website
+  attr_accessor :description, :url_override
 
-  validates :website, url: { allow_blank: true }
+  validates :url_override, url: { allow_blank: true }
 end

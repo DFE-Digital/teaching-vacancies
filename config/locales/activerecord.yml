@@ -19,7 +19,7 @@ en:
       less_than_or_equal_to: The year the qualification was awarded must be the current year or in the past
       not_a_number: Enter the year the qualification was awarded
   organisation_errors: &organisation_errors
-    website:
+    url_override:
       url: Enter a link in the correct format, like www.school.ac.uk
   subscription_errors: &subscription_errors
     email:

@@ -23,7 +23,7 @@ FactoryBot.define do
     postcode { Faker::Address.postcode }
     town { Faker::Address.city.delete("'") }
     uid { Faker::Number.number(digits: 5).to_s }
-    website { Faker::Internet.url(host: "example.com") }
+    url_override { Faker::Internet.url(host: "example.com") }
   end
 
   factory :local_authority, parent: :school_group do

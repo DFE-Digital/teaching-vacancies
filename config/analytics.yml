@@ -180,7 +180,7 @@ shared:
     - created_at
     - updated_at
     - readable_phases
-    - website
+    - url_override
     - region
     - detailed_school_type
     - school_type

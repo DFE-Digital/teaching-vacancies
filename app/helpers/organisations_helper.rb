@@ -68,16 +68,6 @@ module OrganisationsHelper
     I18n.t("schools.no_information")
   end
 
-  def organisation_url(school)
-    if school.website?
-      school.website
-    elsif school.url?
-      school.url
-    else
-      false
-    end
-  end
-
   def application_pack_asset_size
     (File.size("public/#{APPLICATION_PACK_FILENAME}") / 1.0.megabyte).round(1)
   end

@@ -25,6 +25,10 @@ class Organisation < ApplicationRecord
     local_authority? ? "#{read_attribute(:name)} local authority" : read_attribute(:name)
   end
 
+  def url
+    url_override.presence || super
+  end
+
   def schools_outside_local_authority
     school_urns = Rails.configuration.local_authorities_extra_schools&.dig(local_authority_code.to_i)
     School.where(urn: school_urns)
