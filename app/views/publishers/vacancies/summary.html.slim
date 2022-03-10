@@ -6,7 +6,7 @@
 
     h2.govuk-heading-m = t(".what_happens_next")
 
-    - if @vacancy.publish_today?
+    - if @vacancy.publish_on.today?
       p.govuk-body = t(".date_posted_now")
     - else
       p.govuk-body = t(".date_posted", date: @vacancy.publish_on)

@@ -23,14 +23,6 @@ RSpec.describe VacancyPresenter do
     end
   end
 
-  describe "#publish_today?" do
-    let(:vacancy) { build_stubbed(:vacancy, publish_on: Date.current) }
-
-    it "verifies that the publish_on is set to today" do
-      expect(subject.publish_today?).to eq(true)
-    end
-  end
-
   describe "#job_advert" do
     let(:vacancy) { build_stubbed(:vacancy, job_advert: "<script> call();</script>Sanitized content") }
 

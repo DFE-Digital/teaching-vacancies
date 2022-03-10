@@ -41,10 +41,6 @@ class VacancyPresenter < BasePresenter
     simple_format(fix_bullet_points(model.benefits)) if model.benefits.present?
   end
 
-  def publish_today?
-    model.publish_on == Date.current
-  end
-
   def readable_working_patterns
     model.working_patterns.map { |working_pattern|
       Vacancy.human_attribute_name("working_patterns.#{working_pattern}").downcase
