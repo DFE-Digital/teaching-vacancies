@@ -102,9 +102,7 @@ RSpec.shared_examples "provides an overview of the draft vacancy form" do
 
       click_on "Confirm and submit job"
 
-      within ".review-component__section#working_patterns" do
-        click_on "Select a working pattern"
-      end
+      click_on "Select a working pattern"
 
       check "Full time"
       click_on "Update listing"
@@ -131,9 +129,7 @@ RSpec.shared_examples "provides an overview of the draft vacancy form" do
 
       click_on "Preview job listing"
 
-      within ".review-component__section#working_patterns" do
-        click_on "Select a working pattern"
-      end
+      click_on "Select a working pattern"
 
       check "Full time"
       click_on "Update listing"

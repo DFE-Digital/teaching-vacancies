@@ -1,7 +1,7 @@
 - r.section :job_role do |s|
-  - s.row :show_main_job_role, label: t("jobs.main_job_role"), optional: true
+  - s.row :readable_main_job_role, label: t("jobs.main_job_role"), optional: true
   - unless vacancy.main_job_role == "sendco"
-    - s.row :show_additional_job_roles, label: t("jobs.additional_job_roles"), optional: true
+    - s.row :readable_additional_job_roles, label: t("jobs.additional_job_roles"), optional: true
 
 - unless current_organisation.school?
   - r.section :job_location, forms: %w[JobLocationForm SchoolsForm] do
@@ -22,17 +22,17 @@
   - s.row :job_title
   - s.row :contract_type, text: vacancy.contract_type_with_duration
   - if vacancy.allow_key_stages?
-    - s.row :show_key_stages, label: t("jobs.key_stage", count: vacancy.key_stages.count), optional: true
+    - s.row :readable_key_stages, label: t("jobs.key_stage", count: vacancy.key_stages.count), optional: true
   - if vacancy.allow_subjects?
-    - s.row :show_subjects, label: t("jobs.subject", count: vacancy.subjects.count), optional: true
+    - s.row :readable_subjects, label: t("jobs.subject", count: vacancy.subjects.count), optional: true
 
 - r.section :working_patterns do |s|
-  - s.row :working_patterns
+  - s.row :readable_working_patterns, label: t("jobs.working_patterns")
   - s.row :working_patterns_details
 
 - r.section :pay_package do |s|
   - s.row :salary
-  - s.row :actual_salary, optional: true unless vacancy.model_working_patterns == ["full_time"]
+  - s.row :actual_salary, optional: true unless vacancy.working_patterns == ["full_time"]
   - s.row :benefits, optional: true
 
 - r.section :important_dates do |s|
