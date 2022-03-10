@@ -162,11 +162,11 @@ RSpec.describe VacancyPresenter do
     end
   end
 
-  describe "#working_patterns" do
+  describe "#humanized_working_patterns" do
     let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time], working_patterns_details: nil) }
 
     it "returns working patterns" do
-      expect(subject.working_patterns).to eq("Full time, part time")
+      expect(subject.humanized_working_patterns).to eq("Full time, part time")
     end
   end
 

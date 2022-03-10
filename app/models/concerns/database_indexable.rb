@@ -29,7 +29,7 @@ module DatabaseIndexable
         VacancyPresenter.new(self).show_key_stages,
         parent_organisation_name,
         organisations.schools.map { |school| school.school_groups.map(&:name) }.flatten,
-        VacancyPresenter.new(self).working_patterns,
+        VacancyPresenter.new(self).humanized_working_patterns,
         organisations.map(&:name),
         organisations.map(&:county).uniq,
         organisations.schools.map(&:detailed_school_type).uniq,

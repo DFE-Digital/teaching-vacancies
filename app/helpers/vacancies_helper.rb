@@ -90,7 +90,7 @@ module VacanciesHelper
     tag.ul class: "govuk-list" do
       safe_join [
         tag.li do
-          vacancy.model_working_patterns.map { |working_pattern|
+          vacancy.working_patterns.map { |working_pattern|
             landing_page_link_or_text({ working_patterns: [working_pattern] }, working_pattern.capitalize)
           }.join(", ").html_safe
         end,

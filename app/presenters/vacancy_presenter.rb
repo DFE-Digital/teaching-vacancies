@@ -2,11 +2,6 @@ class VacancyPresenter < BasePresenter
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::UrlHelper
 
-  delegate :location, to: :organisation
-  delegate :working_patterns, to: :model, prefix: true
-  delegate :job_roles, to: :model, prefix: true
-  delegate :expired?, to: :model
-
   HTML_STRIP_REGEX = %r{(&nbsp;|<div>|</div>|<!--block-->)+}
 
   def columns
@@ -50,14 +45,14 @@ class VacancyPresenter < BasePresenter
     model.publish_on == Date.current
   end
 
-  def working_patterns
-    model_working_patterns.map { |working_pattern|
+  def humanized_working_patterns
+    model.working_patterns.map { |working_pattern|
       Vacancy.human_attribute_name("working_patterns.#{working_pattern}").downcase
     }.join(", ").capitalize
   end
 
   def working_patterns_for_job_schema
-    model_working_patterns.compact.map(&:upcase).join(", ")
+    model.working_patterns.compact.map(&:upcase).join(", ")
   end
 
   def show_main_job_role

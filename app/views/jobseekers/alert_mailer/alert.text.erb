@@ -7,7 +7,7 @@
   <%= vacancy_full_job_location(vacancy) %>
 
   <%= t(".salary", salary: vacancy.salary) %>
-  <%= t(".working_pattern", working_pattern: vacancy.working_patterns) %>
+  <%= t(".working_pattern", working_pattern: vacancy.humanized_working_patterns) %>
   <%= t(".closing_date", closing_date: format_time_to_datetime_at(vacancy.expires_at)) %>
 
   ---

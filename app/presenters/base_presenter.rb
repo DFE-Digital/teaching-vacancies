@@ -1,4 +1,5 @@
 require "delegate"
+
 class BasePresenter < SimpleDelegator
   private
 

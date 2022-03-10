@@ -53,8 +53,7 @@ module VacancyHelpers
   end
 
   def fill_in_working_patterns_form_fields(vacancy)
-    working_patterns = vacancy.try(:model_working_patterns).presence || vacancy.working_patterns
-    working_patterns.each do |working_pattern|
+    vacancy.working_patterns.each do |working_pattern|
       check Vacancy.human_attribute_name(working_pattern.to_s), name: "publishers_job_listing_working_patterns_form[working_patterns][]", visible: false
     end
 
@@ -161,7 +160,7 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.show_key_stages) if vacancy.key_stages.present?
     expect(page).to have_content(vacancy.show_subjects)
 
-    expect(page).to have_content(vacancy.working_patterns)
+    expect(page).to have_content(vacancy.humanized_working_patterns)
     expect(page).to have_content(vacancy.working_patterns_details)
 
     expect(page).to have_content(vacancy.salary)
@@ -198,7 +197,7 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.show_main_job_role)
     vacancy.subjects.each { |subject| expect(page).to have_content subject }
 
-    expect(page).to have_content(strip_tags(vacancy.working_patterns))
+    expect(page).to have_content(vacancy.humanized_working_patterns)
 
     expect(page).to have_content(vacancy.salary)
     expect(page.html).to include(vacancy.benefits)
