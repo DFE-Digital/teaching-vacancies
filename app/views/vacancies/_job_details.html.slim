@@ -10,7 +10,7 @@ section#job-details class="govuk-!-margin-bottom-5"
     - if vacancy.key_stages.any?
       - summary_list.row do |row|
         - row.key text: t("jobs.key_stage", count: vacancy.key_stages.count)
-        - row.value text: vacancy.show_key_stages
+        - row.value text: vacancy.readable_key_stages
 
     - if vacancy.subjects.any?
       - summary_list.row do |row|

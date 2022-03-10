@@ -45,7 +45,7 @@ class VacancyPresenter < BasePresenter
     model.publish_on == Date.current
   end
 
-  def humanized_working_patterns
+  def readable_working_patterns
     model.working_patterns.map { |working_pattern|
       Vacancy.human_attribute_name("working_patterns.#{working_pattern}").downcase
     }.join(", ").capitalize
@@ -55,32 +55,31 @@ class VacancyPresenter < BasePresenter
     model.working_patterns.compact.map(&:upcase).join(", ")
   end
 
-  def show_main_job_role
+  def readable_main_job_role
     I18n.t("helpers.label.publishers_job_listing_job_role_form.main_job_role_options.#{main_job_role}")
   end
 
-  def show_additional_job_roles
+  def readable_additional_job_roles
     return unless model.additional_job_roles.any?
 
-    tag.ul safe_join(model.additional_job_roles.map { |role| tag.li additional_job_role(role) }), class: "govuk-list"
+    roles = model.additional_job_roles.map do |role|
+      tag.li I18n.t("helpers.label.publishers_job_listing_job_role_details_form.additional_job_roles_options.#{role}")
+    end
+    tag.ul safe_join(roles), class: "govuk-list"
   end
 
-  def additional_job_role(role)
-    I18n.t("helpers.label.publishers_job_listing_job_role_details_form.additional_job_roles_options.#{role}")
-  end
-
-  def show_job_roles(exclude_ect_suitable: false)
+  def readable_job_roles(exclude_ect_suitable: false)
     roles = exclude_ect_suitable ? model.job_roles.excluding("ect_suitable") : model.job_roles
     roles.map { |role| I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{role}") }.join(", ")
   end
 
-  def show_key_stages
+  def readable_key_stages
     model.key_stages&.map { |key_stage|
       I18n.t("helpers.label.publishers_job_listing_job_details_form.key_stages_options.#{key_stage}")
     }&.join(", ")
   end
 
-  def show_subjects
+  def readable_subjects
     model.subjects&.join(", ")
   end
 

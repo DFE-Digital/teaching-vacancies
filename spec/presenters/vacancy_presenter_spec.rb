@@ -162,11 +162,11 @@ RSpec.describe VacancyPresenter do
     end
   end
 
-  describe "#humanized_working_patterns" do
+  describe "#readable_working_patterns" do
     let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time], working_patterns_details: nil) }
 
     it "returns working patterns" do
-      expect(subject.humanized_working_patterns).to eq("Full time, part time")
+      expect(subject.readable_working_patterns).to eq("Full time, part time")
     end
   end
 
@@ -248,34 +248,34 @@ RSpec.describe VacancyPresenter do
     end
   end
 
-  describe "#show_subjects" do
+  describe "#readable_subjects" do
     let(:vacancy) { build_stubbed(:vacancy, subjects: %w[Acrobatics Tapestry]) }
 
     it "joins them correctly" do
-      expect(subject.show_subjects).to eq("Acrobatics, Tapestry")
+      expect(subject.readable_subjects).to eq("Acrobatics, Tapestry")
     end
 
     context "when there are no subjects" do
       let(:vacancy) { build_stubbed(:vacancy, subjects: []) }
 
       it "returns empty string" do
-        expect(subject.show_subjects).to be_blank
+        expect(subject.readable_subjects).to be_blank
       end
     end
   end
 
-  describe "#show_key_stages" do
+  describe "#readable_key_stages" do
     let(:vacancy) { build_stubbed(:vacancy, key_stages: %w[ks1 early_years]) }
 
     it "joins them correctly" do
-      expect(subject.show_key_stages).to eq("KS1, Early years")
+      expect(subject.readable_key_stages).to eq("KS1, Early years")
     end
 
     context "when there are no subjects" do
       let(:vacancy) { build_stubbed(:vacancy, key_stages: []) }
 
       it "returns empty string" do
-        expect(subject.show_key_stages).to be_blank
+        expect(subject.readable_key_stages).to be_blank
       end
     end
   end

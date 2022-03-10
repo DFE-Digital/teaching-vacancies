@@ -151,16 +151,16 @@ module VacancyHelpers
       expect(page).to have_content(full_address(vacancy.organisations.first))
     end
 
-    expect(page).to have_content(vacancy.show_main_job_role)
-    expect(page).to have_content(strip_tags(vacancy.show_additional_job_roles)) if vacancy.additional_job_roles.any?
+    expect(page).to have_content(vacancy.readable_main_job_role)
+    expect(page).to have_content(strip_tags(vacancy.readable_additional_job_roles)) if vacancy.additional_job_roles.any?
 
     expect(page).to have_content(vacancy.phase&.humanize) if vacancy.phase.present?
     expect(page).to have_content(vacancy.contract_type_with_duration)
     expect(page).to have_content(vacancy.job_title)
-    expect(page).to have_content(vacancy.show_key_stages) if vacancy.key_stages.present?
-    expect(page).to have_content(vacancy.show_subjects)
+    expect(page).to have_content(vacancy.readable_key_stages) if vacancy.key_stages.present?
+    expect(page).to have_content(vacancy.readable_subjects)
 
-    expect(page).to have_content(vacancy.humanized_working_patterns)
+    expect(page).to have_content(vacancy.readable_working_patterns)
     expect(page).to have_content(vacancy.working_patterns_details)
 
     expect(page).to have_content(vacancy.salary)
@@ -194,10 +194,10 @@ module VacancyHelpers
   def verify_vacancy_show_page_details(vacancy)
     vacancy = VacancyPresenter.new(vacancy)
     expect(page).to have_content(vacancy.job_title)
-    expect(page).to have_content(vacancy.show_main_job_role)
+    expect(page).to have_content(vacancy.readable_main_job_role)
     vacancy.subjects.each { |subject| expect(page).to have_content subject }
 
-    expect(page).to have_content(vacancy.humanized_working_patterns)
+    expect(page).to have_content(vacancy.readable_working_patterns)
 
     expect(page).to have_content(vacancy.salary)
     expect(page.html).to include(vacancy.benefits)
