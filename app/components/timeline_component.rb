@@ -10,7 +10,7 @@ class TimelineComponent < GovukComponent::Base
   renders_many :items, lambda { |key:, value:|
     tag.li(class: "timeline-component__item") do
       safe_join([
-        tag.h3(class: "timeline-component__key govuk-heading-s") { key },
+        tag.h4(class: "timeline-component__key govuk-heading-s") { key },
         tag.p(class: "timeline-component__value govuk-body") { value },
       ])
     end

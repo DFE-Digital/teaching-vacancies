@@ -1,10 +1,9 @@
 section#school-overview
-  h3.govuk-heading-l.heading--border-bottom = t("schools.school_overview")
+  h2.govuk-heading-l.heading--border-bottom = t("schools.info", organisation: vacancy.parent_organisation.name)
 
   = render "vacancies/school", organisation: vacancy.parent_organisation, vacancy: vacancy, contact_details: true
 
   - if vacancy_or_organisation_description(vacancy).present?
-    h4.govuk-heading-m = t("schools.info", organisation: vacancy.parent_organisation.name)
     p = vacancy_or_organisation_description(vacancy)
 
   - if vacancy.school_visits.present?
