@@ -14,7 +14,9 @@ class Publishers::Vacancies::FeedbacksController < Publishers::Vacancies::BaseCo
   private
 
   def feedback_form_params
-    params.require(:publishers_job_listing_feedback_form).permit(:comment, :email, :rating, :report_a_problem, :user_participation_response)
+    params.require(:publishers_job_listing_feedback_form)
+          .permit(:comment, :email, :rating, :report_a_problem, :user_participation_response)
+          .each_value { |value| value.try(:strip!) unless value.frozen? }
   end
 
   def feedback_attributes

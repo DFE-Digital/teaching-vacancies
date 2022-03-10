@@ -33,6 +33,6 @@ class SupportRequestsController < ApplicationController
       name
       page
       screenshot
-    ])
+    ]).each_value { |value| value.try(:strip!) unless value.frozen? }
   end
 end

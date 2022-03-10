@@ -77,7 +77,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   def update_params
-    form_params.merge(completed_steps: job_application.completed_steps.append(step.to_s).uniq)
+    form_params.merge(completed_steps: job_application.completed_steps.append(step.to_s).uniq).each_value { |value| value.try(:strip!) unless value.frozen? }
   end
 
   def vacancy

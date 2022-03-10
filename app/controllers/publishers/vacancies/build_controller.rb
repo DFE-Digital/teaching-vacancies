@@ -101,7 +101,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   end
 
   def update_vacancy
-    vacancy.assign_attributes(form.params_to_save)
+    vacancy.assign_attributes(form.params_to_save.each_value { |value| value.try(:strip!) unless value.frozen? })
     vacancy.set_postcode_from_mean_geolocation(persist: false)
     vacancy.refresh_slug
     update_google_index(vacancy) if vacancy.listed?

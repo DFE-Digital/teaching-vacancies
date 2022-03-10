@@ -24,6 +24,7 @@ class Publishers::Vacancies::CopyController < Publishers::Vacancies::BaseControl
   private
 
   def copy_form_params
+    params.dig(:publishers_job_listing_copy_vacancy_form, :job_title).try(:strip!)
     params.require(:publishers_job_listing_copy_vacancy_form)
           .permit(:job_title, :publish_on, :publish_on_day, :expires_at, :expiry_time, :starts_on, :starts_asap)
   end
