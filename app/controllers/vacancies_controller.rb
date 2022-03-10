@@ -14,6 +14,7 @@ class VacanciesController < ApplicationController
   end
 
   def show
+    vacancy = Vacancy.listed.friendly.find(params[:id])
     @saved_job = current_jobseeker&.saved_jobs&.find_by(vacancy: vacancy)
     @job_application = current_jobseeker&.job_applications&.find_by(vacancy: vacancy)
     @invented_job_alert_search_criteria = Search::CriteriaInventor.new(vacancy).criteria
@@ -23,12 +24,8 @@ class VacanciesController < ApplicationController
 
   private
 
-  def set_landing_page
-    if params[:landing_page_slug].present?
-      @landing_page = LandingPage[params[:landing_page_slug]]
-    elsif params[:location_landing_page_name].present?
-      @landing_page = LocationLandingPage[params[:location_landing_page_name]]
-    end
+  def search_form
+    @form = Jobseekers::SearchForm.new(search_params)
   end
 
   def search_params
@@ -42,12 +39,12 @@ class VacanciesController < ApplicationController
                   job_role: [], job_roles: [], subjects: [], phases: [], working_patterns: [])
   end
 
-  def search_form
-    @form = Jobseekers::SearchForm.new(search_params)
-  end
-
-  def vacancy
-    @vacancy ||= Vacancy.listed.friendly.find(params[:id])
+  def set_landing_page
+    if params[:landing_page_slug].present?
+      @landing_page = LandingPage[params[:landing_page_slug]]
+    elsif params[:location_landing_page_name].present?
+      @landing_page = LocationLandingPage[params[:location_landing_page_name]]
+    end
   end
 
   def set_headers
