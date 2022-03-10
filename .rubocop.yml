@@ -68,6 +68,10 @@ Naming/MethodParameterName:
     - pp
     - to
 
+Naming/PredicateName:
+  ForbiddenPrefixes:
+    - is_
+
 Style/BlockDelimiters:
   EnforcedStyle: braces_for_chaining
 
