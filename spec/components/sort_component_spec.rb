@@ -39,8 +39,8 @@ RSpec.describe SortComponent, type: :component do
     end
   end
 
-  context "when there are two sorting options available" do
-    let(:number_of_sorting_options) { 2 }
+  context "when there are four sorting options available" do
+    let(:number_of_sorting_options) { 4 }
 
     it "renders the list instead of the drop-down" do
       expect(page).to have_css("ul.sort-component__list")
@@ -57,8 +57,8 @@ RSpec.describe SortComponent, type: :component do
     end
   end
 
-  context "when there are more than two sorting options available" do
-    let(:number_of_sorting_options) { 3 }
+  context "when there are more than four sorting options available" do
+    let(:number_of_sorting_options) { 5 }
 
     it "renders the drop-down instead of the list" do
       expect(page).to have_css("select[name='sort_by']")

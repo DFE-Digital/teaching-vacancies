@@ -14,7 +14,7 @@
   &__list-item {
     display: inline-block;
 
-    &:first-child::after {
+    &:not(:last-child)::after {
       border-right: 1px solid $govuk-border-colour;
       content: '';
       display: inline-block;

@@ -13,6 +13,9 @@
     - tabs.navigation_item text: t(".#{vacancy_type}.tab_heading"), link: jobs_with_type_organisation_path(vacancy_type), active: selected_type == vacancy_type
 
 .govuk-grid-row.vacancies-component class="govuk-!-margin-bottom-7"
+  - if @vacancies.many?
+    .govuk-grid-column-full
+      = render SortComponent.new sort: @sort, url_params: { type: @selected_type }, path: method(:jobs_with_type_organisation_path)
   - if @organisation.school_group?
     .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-4"
       - if @publisher_preference
@@ -30,10 +33,7 @@
                       - filters_component.group key: "locations", component: f.govuk_collection_check_boxes(:organisation_ids, @organisation_options, :id, :label, small: true, legend: { text: "Locations" }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
 
           = f.hidden_field :jobs_type, value: @selected_type
-
   .govuk-grid-column-two-thirds-at-desktop.vacancies-component__content
-    - if @vacancies.many?
-      = render SortComponent.new sort: @sort, url_params: { type: @selected_type }, path: method(:jobs_with_type_organisation_path)
     section#vacancy-results
       - if vacancies.none?
         = empty_section do

@@ -1,5 +1,5 @@
 = tag.div(class: classes, **html_attributes) do
-  - if sort.count > 2
+  - if sort.count > 4
     = form_for sort_form, as: "", url: path.call(url_params), method: :get, data: { controller: "form", "hide-submit": true } do |f|
       = f.govuk_collection_select :sort_by,
         sort,
