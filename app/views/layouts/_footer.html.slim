@@ -1,21 +1,21 @@
 = govuk_footer(meta_items: footer_links) do |footer|
   - footer.navigation
       .govuk-grid-column-one-quarter
-        h2.govuk-footer__heading.govuk-heading-m
+        span.govuk-footer__heading.govuk-heading-m
           = t("footer.headings.support")
         ul.govuk-footer__list
           li.govuk-footer__list-item
             = link_to t("footer.request_support"), new_support_request_path, class: "govuk-footer__link"
 
       .govuk-grid-column-three-quarters
-        h2.govuk-footer__heading.govuk-heading-m
+        span.govuk-footer__heading.govuk-heading-m
           = t("footer.headings.feedback")
         ul.govuk-footer__list
           li.govuk-footer__list-item
             = link_to t("footer.provide_feedback"), new_feedback_path, class: "govuk-footer__link"
 
       .govuk-grid-column-one-quarter
-        h2.govuk-footer__heading.govuk-heading-m
+        span.govuk-footer__heading.govuk-heading-m
           = t("footer.headings.for_job_seekers")
         ul.govuk-footer__list
           li.govuk-footer__list-item
@@ -27,7 +27,7 @@
               = link_to t("nav.sign_in"), new_jobseeker_session_path, class: "govuk-footer__link"
 
       .govuk-grid-column-three-quarters
-        h2.govuk-footer__heading.govuk-heading-m
+        span.govuk-footer__heading.govuk-heading-m
           = t("footer.headings.for_schools")
         ul.govuk-footer__list
           - if publisher_signed_in?

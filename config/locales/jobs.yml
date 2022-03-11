@@ -163,6 +163,7 @@ en:
 
     job_title: Job title
     job_role: Job role
+    job_summary: "%{job_title} job summary"
     key_stage:
       one: Key stage
       other: Key stages

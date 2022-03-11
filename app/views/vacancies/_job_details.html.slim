@@ -1,46 +1,54 @@
 section#job-details class="govuk-!-margin-bottom-5"
-  h3.govuk-heading-l.heading--border-bottom = t("publishers.vacancies.steps.job_details")
+  h2.govuk-heading-l.heading--border-bottom = t("publishers.vacancies.steps.job_details")
 
   = govuk_summary_list do |summary_list|
     - if vacancy.job_roles.any?
       - summary_list.row do |row|
-        - row.key text: t("jobs.job_role")
+        - row.key do
+          h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.job_role")
         - row.value text: linked_job_roles(vacancy)
 
     - if vacancy.key_stages.any?
       - summary_list.row do |row|
-        - row.key text: t("jobs.key_stage", count: vacancy.key_stages.count)
+        - row.key do
+          h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.key_stage", count: vacancy.key_stages.count)
         - row.value text: vacancy.readable_key_stages
 
     - if vacancy.subjects.any?
       - summary_list.row do |row|
-        - row.key text: t("jobs.subject", count: vacancy.subjects.count)
+        - row.key do
+          h3.govuk-heading-s = t("jobs.subject", count: vacancy.subjects.count)
         - row.value text: linked_subjects(vacancy)
 
     - summary_list.row do |row|
-      - row.key text: t("jobs.working_patterns")
+      - row.key do
+        h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.working_patterns")
       - row.value text: linked_working_patterns(vacancy)
 
     - if vacancy.contract_type
       - summary_list.row do |row|
-        - row.key text: t("jobs.contract_type")
+        - row.key do
+          h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.contract_type")
         - row.value text: vacancy.contract_type_with_duration
 
     - if vacancy.actual_salary?
       - summary_list.row do |row|
-        - row.key text: t("jobs.annual_salary")
+        - row.key do
+          h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.annual_salary")
         - row.value text: vacancy.salary
 
       - summary_list.row do |row|
-        - row.key text: t("jobs.actual_salary")
+        - row.key do
+          h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.actual_salary")
         - row.value text: vacancy.actual_salary
 
     - else
       - summary_list.row do |row|
-        - row.key text: t("jobs.salary")
+        - row.key do
+          h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.salary")
         - row.value text: vacancy.salary
 
-  h4.govuk-heading-m = t("publishers.vacancies.steps.job_summary")
+  h2.govuk-heading-m = t("jobs.job_summary", job_title: vacancy.job_title)
   p = vacancy.job_advert
 
   - if vacancy.benefits.present?
@@ -49,13 +57,13 @@ section#job-details class="govuk-!-margin-bottom-5"
 
   - if vacancy.expires_at.future?
     - if vacancy.enable_job_applications?
-      h4.govuk-heading-m = t("jobseekers.job_applications.applying_for_the_job_heading")
+      h3.govuk-heading-m = t("jobseekers.job_applications.applying_for_the_job_heading")
       p = t("jobseekers.job_applications.applying_for_the_job_paragraph")
       = govuk_button_link_to t("jobseekers.job_applications.apply"), new_jobseekers_job_job_application_path(vacancy.id)
 
     - else
       - if vacancy.how_to_apply.present?
-        h4.govuk-heading-m = t("publishers.vacancies.steps.applying_for_the_job")
+        h3.govuk-heading-m = t("publishers.vacancies.steps.applying_for_the_job")
         p = vacancy.how_to_apply
 
       - if vacancy.application_link.present? && vacancy.application_form.present?
