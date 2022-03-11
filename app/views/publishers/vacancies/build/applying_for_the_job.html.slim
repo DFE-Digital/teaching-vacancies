@@ -8,7 +8,7 @@
       = f.govuk_error_summary
 
       h2.govuk-heading-l = t("publishers.vacancies.steps.applying_for_the_job")
-      p.govuk-body = t(".enable_job_applications_html", link: govuk_link_to(t("application_pack.link_text", size: application_pack_asset_size), application_pack_asset_path, target: "_blank", class: "govuk-body", download: t("application_pack.link_download_attr")))
+      p.govuk-body = t(".enable_job_applications_html", link: application_pack_link(vacancy, class: "govuk-body"))
 
       - if vacancy.listed? || current_organisation.local_authority?
         = f.hidden_field :enable_job_applications
