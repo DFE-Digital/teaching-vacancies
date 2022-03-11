@@ -91,4 +91,4 @@ h2.govuk-caption-l.job-caption class="govuk-!-margin-bottom-5 govuk-!-margin-top
         = govuk_link_to(t("jobs.alert.similar.verbose.link_text"), new_subscription_path(search_criteria: @invented_job_alert_search_criteria, vacancy_id: @vacancy.id), id: "job-alert-link-from-bottom-of-job-listing-gtm")
         =< t("jobs.alert.similar.verbose.reminder")
 
-    = render "shared/vacancy/copy_vacancy_link"
+    = render "vacancies/copy_vacancy_link"
