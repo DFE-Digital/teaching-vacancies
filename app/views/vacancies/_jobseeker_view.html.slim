@@ -49,22 +49,8 @@ h2.govuk-caption-l.job-caption class="govuk-!-margin-bottom-5 govuk-!-margin-top
 .govuk-grid-row class="govuk-!-margin-top-6" class="#{current_variant_container_name(:similar_jobs_position)}"
   .govuk-grid-column-one-third
     = render "/vacancies/key_dates_sidebar"
-    - if current_variant?(:similar_jobs_position, :left) && @similar_jobs.present?
-      section.similar-jobs
-        h3.govuk-heading-m = t("jobs.similar_jobs.heading")
-        .govuk-grid-row class="govuk-!-margin-left-0"
-          - @similar_jobs.each do |vacancy|
-            .similar-jobs__job
-              = govuk_link_to(vacancy.job_title, job_path(vacancy), class: "view-similar-job-gtm")
-              p.govuk-body class="govuk-!-margin-bottom-0 govuk-!-font-weight-bold"
-                = vacancy.parent_organisation.name
-              p.govuk-body class=" govuk-!-margin-bottom-0"
-                = full_address(vacancy.parent_organisation)
-
-        section
-          p.icon.icon--left.icon--alert-blue
-            = govuk_link_to(t("jobs.alert.similar.verbose.link_text"), new_subscription_path(search_criteria: @invented_job_alert_search_criteria, vacancy_id: @vacancy.id), id: "job-alert-link-from-bottom-of-job-listing-gtm")
-            =< t("jobs.alert.similar.verbose.reminder")
+    - if current_variant?(:similar_jobs_position, :left)
+      = render "vacancies/similar_jobs", vacancy: @vacancy, similar_jobs: @similar_jobs, invented_job_alert_search_criteria: @invented_job_alert_search_criteria, column_one_half: false
 
   .govuk-grid-column-two-thirds
     - if @vacancy.organisations.many?
@@ -73,22 +59,5 @@ h2.govuk-caption-l.job-caption class="govuk-!-margin-bottom-5 govuk-!-margin-top
 
     = render "vacancies/job_details", vacancy: @vacancy
     = render "vacancies/overview_#{@vacancy.job_location}", vacancy: @vacancy
-
-    - if @similar_jobs.present?
-      section.similar-jobs
-        h3.govuk-heading-m = t("jobs.similar_jobs.heading")
-        .govuk-grid-row class="govuk-!-margin-left-0"
-          - @similar_jobs.each do |vacancy|
-            .similar-jobs__job class="govuk-grid-column-one-half"
-              = govuk_link_to(vacancy.job_title, job_path(vacancy), class: "view-similar-job-gtm")
-              p.govuk-body class="govuk-!-margin-bottom-0 govuk-!-font-weight-bold"
-                = vacancy.parent_organisation.name
-              p.govuk-body class=" govuk-!-margin-bottom-0"
-                = full_address(vacancy.parent_organisation)
-
-    section
-      p.icon.icon--left.icon--alert-blue
-        = govuk_link_to(t("jobs.alert.similar.verbose.link_text"), new_subscription_path(search_criteria: @invented_job_alert_search_criteria, vacancy_id: @vacancy.id), id: "job-alert-link-from-bottom-of-job-listing-gtm")
-        =< t("jobs.alert.similar.verbose.reminder")
-
+    = render "vacancies/similar_jobs", vacancy: @vacancy, similar_jobs: @similar_jobs, invented_job_alert_search_criteria: @invented_job_alert_search_criteria, column_one_half: true
     = render "vacancies/copy_vacancy_link"
