@@ -1,5 +1,5 @@
 section#school-overview
-  h3.govuk-heading-l.govuk-heading--summary-list = t("school_groups.trust_overview")
+  h3.govuk-heading-l.heading--border-bottom = t("school_groups.trust_overview")
 
   = render "vacancies/school_group", organisation: vacancy.parent_organisation, vacancy: vacancy
 
@@ -12,5 +12,5 @@ section#school-overview
     p = vacancy.school_visits
 
   section#school-location
-    h3.govuk-heading-l.govuk-heading--summary-list = t("school_groups.school_group_location")
+    h3.govuk-heading-l.heading--border-bottom = t("school_groups.school_group_location")
     = map(items: [{ type: "vacancy", params: { id: vacancy.id }, links: map_links(vacancy) }], show_map: vacancy.parent_organisation.geopoint)
