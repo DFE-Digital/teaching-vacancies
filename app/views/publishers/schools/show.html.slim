@@ -4,6 +4,6 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-l = t(".title", organisation_type: organisation_type_basic(@organisation))
 
-    h2.govuk-heading-m.govuk-heading--summary-list = @organisation.name
+    h2.govuk-heading-m.heading--border-bottom = @organisation.name
 
     = render "organisation", organisation: @organisation

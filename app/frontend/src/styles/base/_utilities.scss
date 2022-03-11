@@ -96,7 +96,7 @@
 }
 
 .grey-border-box {
-  border: 5px solid govuk-colour('mid-grey');
+  border: govuk-spacing(1) solid govuk-colour('mid-grey');
   margin-bottom: govuk-spacing(5);
   padding: govuk-spacing(5);
 
@@ -105,6 +105,11 @@
     margin-bottom: govuk-spacing(5);
     padding: govuk-spacing(3);
   }
+}
+
+.heading--border-bottom {
+  border-bottom: govuk-spacing(1) solid $govuk-border-colour;
+  padding-bottom: govuk-spacing(2);
 }
 
 .js-action {

@@ -1,5 +1,5 @@
 section#school-overview
-  h3.govuk-heading-l.govuk-heading--summary-list = t("schools.schools_overview")
+  h3.govuk-heading-l.heading--border-bottom = t("schools.schools_overview")
 
   = render "vacancies/school_group", organisation: vacancy.parent_organisation, vacancy: vacancy
 
@@ -19,5 +19,5 @@ section#school-overview
 
   - if vacancy.organisations.any?(&:geopoint)
     section#school-location
-      h3.govuk-heading-l.govuk-heading--summary-list = t("schools.school_location.other")
+      h3.govuk-heading-l.heading--border-bottom = t("schools.school_location.other")
       = map(items: [{ type: "vacancy", params: { id: vacancy.id }, links: map_links(vacancy) }], zoom: 10)
