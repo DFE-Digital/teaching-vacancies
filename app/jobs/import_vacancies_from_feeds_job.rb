@@ -10,7 +10,7 @@ class ImportVacanciesFromFeedsJob < ApplicationJob
         if vacancy.save
           Rails.logger.info("Imported vacancy #{vacancy.id} from feed #{feed_klass.name}")
         else
-            Rails.logger.error("Failed to save imported vacancy: #{vacancy.errors.inspect}")
+          Rails.logger.error("Failed to save imported vacancy: #{vacancy.errors.inspect}")
         end
       end
     end
