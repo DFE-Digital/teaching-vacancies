@@ -1,5 +1,4 @@
 require "rails_helper"
-require "clear_emergency_login_keys_job"
 
 RSpec.describe ClearEmergencyLoginKeysJob do
   subject(:job) { described_class.perform_later }
