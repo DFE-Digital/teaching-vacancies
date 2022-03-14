@@ -17,7 +17,7 @@ section#job-details class="govuk-!-margin-bottom-5"
     - if vacancy.subjects.any?
       - summary_list.row do |row|
         - row.key do
-          h3.govuk-heading-s = t("jobs.subject", count: vacancy.subjects.count)
+          h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.subject", count: vacancy.subjects.count)
         - row.value text: linked_subjects(vacancy)
 
     - summary_list.row do |row|
