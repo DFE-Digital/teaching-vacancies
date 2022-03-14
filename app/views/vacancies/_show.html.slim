@@ -12,15 +12,7 @@
     meta name="robots" content="noindex"
 
 .vacancy
-  - if @vacancy.expired?
-    = govuk_tag text: t("jobs.expired_listing.tag").upcase,
-                colour: "orange",
-                classes: "govuk-!-margin-bottom-2 govuk-!-margin-top-4"
-
-  h1.govuk-heading-xl class="govuk-!-margin-bottom-2"
-    = @vacancy.job_title
-  h2.govuk-caption-l.job-caption class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
-    = vacancy_full_job_location(@vacancy)
+  = render "vacancies/banner", vacancy: @vacancy
 
   = render "vacancies/banner_links", vacancy: @vacancy,
                                      saved_job: @saved_job,
@@ -31,6 +23,7 @@
   .govuk-grid-row class="govuk-!-margin-top-6" class="#{current_variant_container_name(:similar_jobs_position)}"
     .govuk-grid-column-one-third
       = render "/vacancies/key_dates_sidebar"
+
       - if current_variant?(:similar_jobs_position, :left)
         = render "vacancies/similar_jobs", vacancy: @vacancy, similar_jobs: @similar_jobs, invented_job_alert_search_criteria: @invented_job_alert_search_criteria, column_one_half: false
 
