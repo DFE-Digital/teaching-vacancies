@@ -1,0 +1,9 @@
+- if vacancy.expired?
+  = govuk_tag text: t("jobs.expired_listing.tag").upcase,
+              colour: "orange",
+              classes: "govuk-!-margin-bottom-2 govuk-!-margin-top-4"
+
+h1.govuk-heading-xl class="govuk-!-margin-bottom-2"
+  = vacancy.job_title
+h2.govuk-caption-l.job-caption class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
+  = vacancy_full_job_location(vacancy)

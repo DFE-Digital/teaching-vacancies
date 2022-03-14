@@ -1,0 +1,34 @@
+.govuk-grid-row.vacancy__banner-links
+  - if vacancy.enable_job_applications? && vacancy.listed?
+    .govuk-grid-column-one-third
+      - if job_application
+        - if job_application.draft?
+          = render BannerButtonComponent.new text: t("jobseekers.job_applications.banner_links.draft"),
+            href: jobseekers_job_application_review_path(job_application),
+            icon: "green-tick"
+        - elsif job_application.withdrawn?
+          = render BannerButtonComponent.new text: t("jobseekers.job_applications.banner_links.withdrawn"),
+            href: jobseekers_job_application_path(job_application),
+            icon: "green-tick"
+        - else
+          = render BannerButtonComponent.new text: t("jobseekers.job_applications.banner_links.submitted"),
+            href: jobseekers_job_application_path(job_application),
+            icon: "green-tick"
+      - else
+        = render BannerButtonComponent.new text: t("jobseekers.job_applications.banner_links.apply"),
+          href: new_jobseekers_job_job_application_path(vacancy.id),
+          icon: "apply"
+
+  .govuk-grid-column-one-third
+    = render BannerButtonComponent.new text: t("jobs.alert.similar.terse"),
+      href: new_subscription_path,
+      icon: "alert-blue",
+      params: { search_criteria: invented_job_alert_search_criteria, vacancy_id: vacancy.id }
+
+  - unless job_application
+    .govuk-grid-column-one-third
+      = render BannerButtonComponent.new text: t("jobseekers.saved_jobs.#{saved_job ? 'saved' : 'save'}"),
+        href: saved_job ? jobseekers_saved_job_path(vacancy.id, saved_job) : new_jobseekers_saved_job_path(vacancy.id),
+        icon: saved_job ? "saved" : "save",
+        method: saved_job ? :delete : :get,
+        params: { click_event: "vacancy_save_to_account_clicked", click_event_data: { vacancy_id: StringAnonymiser.new(vacancy.id) } }
