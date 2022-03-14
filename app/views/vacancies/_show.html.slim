@@ -25,7 +25,11 @@
       = render "/vacancies/key_dates_sidebar"
 
       - if current_variant?(:similar_jobs_position, :left)
-        = render "vacancies/similar_jobs", vacancy: @vacancy, similar_jobs: @similar_jobs, invented_job_alert_search_criteria: @invented_job_alert_search_criteria, column_one_half: false
+        = render "vacancies/similar_jobs", vacancy: @vacancy,
+                                           similar_jobs: @similar_jobs,
+                                           invented_job_alert_search_criteria: @invented_job_alert_search_criteria,
+                                           location_landing_page: @location_landing_page,
+                                           column_one_half: false
 
     .govuk-grid-column-two-thirds
       - if @vacancy.organisations.many?
@@ -33,6 +37,13 @@
           = t("messages.jobs.multi_school_job_notification_html", organisation_type: organisation_type_basic(@vacancy.parent_organisation))
 
       = render "vacancies/job_details", vacancy: @vacancy
+
       = render "vacancies/overview_#{@vacancy.job_location}", vacancy: @vacancy
-      = render "vacancies/similar_jobs", vacancy: @vacancy, similar_jobs: @similar_jobs, invented_job_alert_search_criteria: @invented_job_alert_search_criteria, column_one_half: true
+
+      = render "vacancies/similar_jobs", vacancy: @vacancy,
+                                         similar_jobs: @similar_jobs,
+                                         invented_job_alert_search_criteria: @invented_job_alert_search_criteria,
+                                         location_landing_page: @location_landing_page,
+                                         column_one_half: true
+
       = render "vacancies/copy_vacancy_link"
