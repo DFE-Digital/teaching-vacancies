@@ -4,9 +4,42 @@
                                                         organisation: @vacancy.parent_organisation.name,
                                                         deadline: format_date(@vacancy.expires_at, :date_only_shorthand))
 
+- content_for :breadcrumbs do
+  = govuk_breadcrumbs breadcrumbs: vacancy_breadcrumbs(@vacancy)
+
 - if @vacancy.expired?
   - content_for :meta_no_index do
     meta name="robots" content="noindex"
 
 .vacancy
-  = render "vacancies/jobseeker_view"
+  - if @vacancy.expired?
+    = govuk_tag text: t("jobs.expired_listing.tag").upcase,
+                colour: "orange",
+                classes: "govuk-!-margin-bottom-2 govuk-!-margin-top-4"
+
+  h1.govuk-heading-xl class="govuk-!-margin-bottom-2"
+    = @vacancy.job_title
+  h2.govuk-caption-l.job-caption class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
+    = vacancy_full_job_location(@vacancy)
+
+  = render "vacancies/banner_links", vacancy: @vacancy,
+                                     saved_job: @saved_job,
+                                     job_application: @job_application,
+                                     similar_jobs: @similar_jobs,
+                                     invented_job_alert_search_criteria: @invented_job_alert_search_criteria
+
+  .govuk-grid-row class="govuk-!-margin-top-6" class="#{current_variant_container_name(:similar_jobs_position)}"
+    .govuk-grid-column-one-third
+      = render "/vacancies/key_dates_sidebar"
+      - if current_variant?(:similar_jobs_position, :left)
+        = render "vacancies/similar_jobs", vacancy: @vacancy, similar_jobs: @similar_jobs, invented_job_alert_search_criteria: @invented_job_alert_search_criteria, column_one_half: false
+
+    .govuk-grid-column-two-thirds
+      - if @vacancy.organisations.many?
+        = govuk_notification_banner title_text: t("banners.important"), classes: "govuk-!-margin-bottom-5" do
+          = t("messages.jobs.multi_school_job_notification_html", organisation_type: organisation_type_basic(@vacancy.parent_organisation))
+
+      = render "vacancies/job_details", vacancy: @vacancy
+      = render "vacancies/overview_#{@vacancy.job_location}", vacancy: @vacancy
+      = render "vacancies/similar_jobs", vacancy: @vacancy, similar_jobs: @similar_jobs, invented_job_alert_search_criteria: @invented_job_alert_search_criteria, column_one_half: true
+      = render "vacancies/copy_vacancy_link"
