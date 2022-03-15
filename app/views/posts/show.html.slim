@@ -20,4 +20,4 @@
       span.govuk-body-s
         = t(".published_on")
         time datetime=@post.date_posted.to_formatted_s(:db)
-          = @post.date_posted.to_formatted_s
+          =< @post.date_posted.to_formatted_s
