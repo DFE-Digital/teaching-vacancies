@@ -29,7 +29,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
     scenario "can edit job location" do
       visit organisation_job_review_path(vacancy.id)
 
-      expect(page).to have_content(I18n.t("school_groups.job_location_heading.central_office"))
+      expect(page).to have_content(I18n.t("organisations.job_location_heading.central_office"))
       expect(page).to have_content(full_address(organisation))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eq(
         I18n.t("publishers.organisations.readable_job_location.central_office"),
@@ -42,7 +42,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
       click_on I18n.t("buttons.update_job")
 
       expect(page.current_path).to eq(organisation_job_review_path(vacancy.id))
-      expect(page).to have_content(I18n.t("school_groups.job_location_heading.at_one_school"))
+      expect(page).to have_content(I18n.t("organisations.job_location_heading.at_one_school"))
       expect(page).to have_content(full_address(school1))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eq(school1.name)
 
@@ -53,7 +53,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
       click_on I18n.t("buttons.update_job")
 
       expect(page.current_path).to eq(organisation_job_review_path(vacancy.id))
-      expect(page).to have_content(I18n.t("school_groups.job_location_heading.at_one_school"))
+      expect(page).to have_content(I18n.t("organisations.job_location_heading.at_one_school"))
       expect(page).to have_content(full_address(school2))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eq(school2.name)
 
@@ -65,14 +65,14 @@ RSpec.describe "Publishers can edit a draft vacancy" do
       click_on I18n.t("buttons.update_job")
 
       expect(page.current_path).to eq(organisation_job_review_path(vacancy.id))
-      expect(page).to have_content(I18n.t("school_groups.job_location_heading.at_multiple_schools",
+      expect(page).to have_content(I18n.t("organisations.job_location_heading.at_multiple_schools",
                                           organisation_type: "trust"))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eq("More than one school (2)")
 
       change_job_location(vacancy, "central_office", "Multi-academy trust")
 
       expect(page.current_path).to eq(organisation_job_review_path(vacancy.id))
-      expect(page).to have_content(I18n.t("school_groups.job_location_heading.central_office"))
+      expect(page).to have_content(I18n.t("organisations.job_location_heading.central_office"))
       expect(page).to have_content(full_address(organisation))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eq(
         I18n.t("publishers.organisations.readable_job_location.central_office"),

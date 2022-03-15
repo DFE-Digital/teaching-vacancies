@@ -287,13 +287,28 @@ en:
       contents: Contents
       published_on: Published on
 
+  organisations:
+    about:
+      at_one_school: About %{organisation}
+      at_multiple_schools: About the schools
+      central_office: About %{organisation}
+    job_location_heading:
+      central_office: Trust head office
+      at_one_school: Single school
+      at_multiple_schools: At more than one school in the %{organisation_type}
+    locations:
+      at_one_school: School location
+      at_multiple_schools: School locations
+      central_office: Head office location
+    visits:
+      at_one_school: Arranging a visit to %{organisation}
+      at_multiple_schools: Arranging a visit to one of the schools
+      central_office: Arranging a visit to %{organisation}
+
   schools:
-    about_schools: About the schools
     address: Address
     age_range: Age range
     description: Description
-    info: About %{organisation}
-    map_aria_label: Interactive map showing school location
     map_link_aria_label: Open in Google Maps
     no_information: No information available
     not_given: Not given
@@ -301,13 +316,7 @@ en:
     phase: Education phase
     school_age: School age
     school_details: School details
-    school_location:
-      one: School location
-      other: School locations
-    school_overview: School overview
     school_size: School size
-    schools_overview: Schools overview
-    schools_visits: Arranging a visit to one of the schools
     size:
       enrolled: '%{number} %{pupils} enrolled'
       up_to: 'Up to %{capacity} %{pupils}'
@@ -322,16 +331,8 @@ en:
     address: Trust address
     description: Description
     group_type: Group type
-    info: About %{school_group}
-    job_location_heading:
-      central_office: Trust head office
-      at_one_school: Single school
-      at_multiple_schools: At more than one school in the %{organisation_type}
-    map_aria_label: Interactive map showing trust location
-    school_group_location: Head office location
     school_visits_heading: Arranging a visit to %{school}
     trust_overview: Trust overview
-    trust_visits: Arrange a visit to %{school_group}
     type: Trust type
     uid: Unique identifier (UID)
     website: '%{organisation_type} website'

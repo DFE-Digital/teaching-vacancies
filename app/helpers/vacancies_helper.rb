@@ -52,9 +52,9 @@ module VacanciesHelper
   end
 
   def vacancy_job_location_heading(vacancy)
-    return t("school_groups.job_location_heading.#{vacancy.job_location}") unless vacancy.at_multiple_schools?
+    return t("organisations.job_location_heading.#{vacancy.job_location}") unless vacancy.at_multiple_schools?
 
-    t("school_groups.job_location_heading.at_multiple_schools", organisation_type: organisation_type_basic(vacancy.parent_organisation))
+    t("organisations.job_location_heading.at_multiple_schools", organisation_type: organisation_type_basic(vacancy.parent_organisation))
   end
 
   def vacancy_listing_page_title_prefix(vacancy)

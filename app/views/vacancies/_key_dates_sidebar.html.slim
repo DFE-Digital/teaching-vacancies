@@ -1,15 +1,15 @@
 = render TimelineComponent.new do |timeline|
-  - if @vacancy.expired? && @similar_jobs.present?
+  - if vacancy.expired? && similar_jobs.present?
     - timeline.heading(title: t("jobs.expired_listing.timeline_heading_with_similar_jobs_link_html",
-                       date: format_date(@vacancy.expires_at, :date_only),
+                       date: format_date(vacancy.expires_at, :date_only),
                        similar_jobs_link: govuk_link_to(t("jobs.similar_jobs.anchor_link_text"), "#similar-jobs", { no_visited_state: true })))
-  - elsif @vacancy.expired?
-    - timeline.heading(title: t("jobs.expired_listing.timeline_heading_html", date: format_date(@vacancy.expires_at, :date_only)))
+  - elsif vacancy.expired?
+    - timeline.heading(title: t("jobs.expired_listing.timeline_heading_html", date: format_date(vacancy.expires_at, :date_only)))
   - else
-    - timeline.heading(title: OrganisationVacancyPresenter.new(@vacancy).days_to_apply)
-  - if @vacancy.starts_on.present?
-    - timeline.item(key: t("jobs.starts_on"), value: format_date(@vacancy.starts_on))
-  - elsif @vacancy.starts_asap?
+    - timeline.heading(title: OrganisationVacancyPresenter.new(vacancy).days_to_apply)
+  - if vacancy.starts_on.present?
+    - timeline.item(key: t("jobs.starts_on"), value: format_date(vacancy.starts_on))
+  - elsif vacancy.starts_asap?
     - timeline.item(key: t("jobs.starts_on"), value: t("jobs.starts_asap"))
-  - timeline.item(key: t("jobs.application_deadline"), value: OrganisationVacancyPresenter.new(@vacancy).application_deadline)
-  - timeline.item(key: t("jobs.date_listed"), value: format_date(@vacancy.publish_on))
+  - timeline.item(key: t("jobs.application_deadline"), value: OrganisationVacancyPresenter.new(vacancy).application_deadline)
+  - timeline.item(key: t("jobs.date_listed"), value: format_date(vacancy.publish_on))

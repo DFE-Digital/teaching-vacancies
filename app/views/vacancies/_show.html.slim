@@ -22,7 +22,7 @@
 
   .govuk-grid-row class="#{current_variant_container_name(:similar_jobs_position)} govuk-!-margin-top-6"
     .govuk-grid-column-one-third
-      = render "/vacancies/key_dates_sidebar"
+      = render "vacancies/key_dates_sidebar", vacancy: @vacancy, similar_jobs: @similar_jobs
 
       - if current_variant?(:similar_jobs_position, :left)
         = render "vacancies/similar_jobs", vacancy: @vacancy,
@@ -38,7 +38,7 @@
 
       = render "vacancies/job_details", vacancy: @vacancy
 
-      = render "vacancies/overview_#{@vacancy.job_location}", vacancy: @vacancy
+      = render "vacancies/organisation_details", vacancy: @vacancy
 
       = render "vacancies/similar_jobs", vacancy: @vacancy,
                                          similar_jobs: @similar_jobs,
@@ -46,4 +46,4 @@
                                          location_landing_page: @location_landing_page,
                                          column_one_half: true
 
-      = render "vacancies/copy_vacancy_link"
+      = render "vacancies/copy_vacancy_link", vacancy: @vacancy
