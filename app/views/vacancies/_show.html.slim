@@ -28,7 +28,7 @@
         = render "vacancies/similar_jobs", vacancy: @vacancy,
                                            similar_jobs: @similar_jobs,
                                            invented_job_alert_search_criteria: @invented_job_alert_search_criteria,
-                                           location_landing_page: @location_landing_page,
+                                           linked_locations: linked_locations(@vacancy),
                                            column_one_half: false
 
     .govuk-grid-column-two-thirds
@@ -43,7 +43,7 @@
       = render "vacancies/similar_jobs", vacancy: @vacancy,
                                          similar_jobs: @similar_jobs,
                                          invented_job_alert_search_criteria: @invented_job_alert_search_criteria,
-                                         location_landing_page: @location_landing_page,
+                                         linked_locations: linked_locations(@vacancy),
                                          column_one_half: true
 
       = render "vacancies/copy_vacancy_link", vacancy: @vacancy

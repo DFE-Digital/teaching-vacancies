@@ -60,14 +60,6 @@ module OrganisationsHelper
     end
   end
 
-  def linked_school_phases(school)
-    safe_join(
-      (school.readable_phases || []).map do |phase|
-        landing_page_link_or_text({ phases: [phase] }, phase.capitalize)
-      end, ", "
-    )
-  end
-
   def school_size(school)
     if school.gias_data.present?
       return number_of_pupils(school) if school.gias_data["NumberOfPupils"].present?

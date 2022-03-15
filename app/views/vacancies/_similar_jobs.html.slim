@@ -15,7 +15,9 @@ section
     = govuk_link_to(t("jobs.alert.similar.verbose.link_text"), new_subscription_path(search_criteria: invented_job_alert_search_criteria, vacancy_id: vacancy.id), id: "job-alert-link-from-bottom-of-job-listing-gtm")
     =< t("jobs.alert.similar.verbose.reminder")
 
-- if location_landing_page
+- if linked_locations.any?
   section
     p.icon.icon--left.icon--map-blue
-      = t("jobs.location_jobs_html", link: govuk_link_to(t("jobs.location_jobs_link", location: location_landing_page.name), location_landing_page_path(location_landing_page.location)))
+      = t("jobs.location_find_more_html", location_link: linked_locations.first,
+                                          second_location_link: linked_locations.second,
+                                          count: linked_locations.size)
