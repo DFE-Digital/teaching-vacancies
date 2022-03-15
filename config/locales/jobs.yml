@@ -90,7 +90,6 @@ en:
         one: There is <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> job listed
         other: There are <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> jobs listed
 
-
     legacy_job_alert:
       link: Receive a job alert
       link_html: "%{link_to} whenever a job matching this search is published"
@@ -160,6 +159,8 @@ en:
     current_step: Step %{step} of %{total}
 
     location: Location
+    location_jobs_html: Find more %{link}
+    location_jobs_link: school jobs in %{location}
 
     job_title: Job title
     job_role: Job role
