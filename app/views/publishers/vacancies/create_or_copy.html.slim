@@ -2,6 +2,13 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
+    .help-guide-container--mobile.help-guide-container--border-bottom
+      h3.govuk-heading-m = t(".job_ad_guide.title")
+      p.govuk-body = t(".job_ad_guide.description_mobile")
+      = govuk_link_to(t(".job_ad_guide.link_text"),
+                                                      post_path(section: "get-help-hiring", post_name: "creating-the-perfect-teacher-job-advert"),
+                                                      class: "govuk-link--no-visited-state")
+
     = form_tag organisation_jobs_path do
       .govuk-form-group
         fieldset.govuk-fieldset
@@ -18,3 +25,10 @@
       button.govuk-button = t(".form.submit")
       p class="govuk-!-margin-top-0"
         = govuk_link_to t(".cancel"), organisation_jobs_path
+  .govuk-grid-column-one-third
+    .help-guide-container--desktop
+      h3.govuk-heading-m = t(".job_ad_guide.title")
+      p.govuk-body = t(".job_ad_guide.description_desktop")
+      = govuk_link_to(t(".job_ad_guide.link_text"),
+                                                      post_path(section: "get-help-hiring", post_name: "creating-the-perfect-teacher-job-advert"),
+                                                      class: "govuk-link--no-visited-state")

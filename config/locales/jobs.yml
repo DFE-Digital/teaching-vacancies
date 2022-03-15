@@ -17,6 +17,11 @@ en:
       expired:
         tab_heading: Closed jobs
         with_count_html: Closed jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
+      how_to_accept_job_applications_guide:
+        description_desktop: Find out the simplest way to get candidates to apply for your jobs.
+        description_mobile: Get guidance around how to accept vacancies
+        link_text: View article
+        title: How to accept job applications on Teaching Vacancies
       pending:
         tab_heading: Scheduled jobs
         with_count_html: Scheduled jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>

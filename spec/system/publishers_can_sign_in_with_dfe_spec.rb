@@ -52,11 +52,9 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       visit root_path
 
       expect(page).to have_content(I18n.t("home.index.publisher_section.title"))
-      expect(page).to have_content(I18n.t("home.index.publisher_section.signed_out.description_html",
-                                          signin_link: I18n.t("home.index.publisher_section.signed_out.link_text.sign_in"),
-                                          signup_link: I18n.t("home.index.publisher_section.signed_out.link_text.sign_up")))
+      expect(page).to have_content(I18n.t("home.index.publisher_section.signed_out.description_html"))
       expect(page).to have_link(I18n.t("home.index.publisher_section.signed_out.link_text.sign_in"), href: publishers_sign_in_path)
-      expect(page).to have_link(I18n.t("home.index.publisher_section.signed_out.link_text.sign_up"), href: page_path("dsi-account-request"))
+      expect(page).to have_link(I18n.t("home.index.publisher_section.signed_out.link_text.create_account"), href: page_path("dsi-account-request"))
     end
   end
 

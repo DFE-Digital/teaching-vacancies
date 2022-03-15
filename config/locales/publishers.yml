@@ -210,6 +210,11 @@ en:
             create_new: Start with a blank template
           submit: Continue
         heading: What do you want to do?
+        job_ad_guide:
+          description_desktop: Find out the essential things to include to attract the right candidates for your role.
+          description_mobile: Get guidance around how to attract top talent.
+          link_text: View article
+          title: How to create the perfect teacher job ad
         page_title: Create or copy a job listing
       destroy:
         success_html: >-
