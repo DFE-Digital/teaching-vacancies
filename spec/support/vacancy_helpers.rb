@@ -143,9 +143,9 @@ module VacancyHelpers
 
     unless vacancy.parent_organisation.school?
       if vacancy.at_multiple_schools?
-        expect(page).to have_content(t("school_groups.job_location_heading.at_multiple_schools", organisation_type: organisation_type_basic(vacancy.parent_organisation)))
+        expect(page).to have_content(t("organisations.job_location_heading.at_multiple_schools", organisation_type: organisation_type_basic(vacancy.parent_organisation)))
       else
-        expect(page).to have_content(I18n.t("school_groups.job_location_heading.#{vacancy.job_location}"))
+        expect(page).to have_content(I18n.t("organisations.job_location_heading.#{vacancy.job_location}"))
       end
       expect(page).to have_content(vacancy.organisations.first.name)
       expect(page).to have_content(full_address(vacancy.organisations.first))

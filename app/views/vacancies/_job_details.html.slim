@@ -49,22 +49,22 @@ section#job-details class="govuk-!-margin-bottom-5"
         - row.value text: vacancy.salary
 
   h2.govuk-heading-m = t("jobs.job_summary", job_title: vacancy.job_title)
-  p = vacancy.job_advert
+  p.govuk-body = vacancy.job_advert
 
   - if vacancy.benefits.present?
     h4.govuk-heading-m = t("jobs.benefits")
-    p = vacancy.benefits
+    p.govuk-body = vacancy.benefits
 
   - if vacancy.expires_at.future?
     - if vacancy.enable_job_applications?
       h3.govuk-heading-m = t("jobseekers.job_applications.applying_for_the_job_heading")
-      p = t("jobseekers.job_applications.applying_for_the_job_paragraph")
+      p.govuk-body = t("jobseekers.job_applications.applying_for_the_job_paragraph")
       = govuk_button_link_to t("jobseekers.job_applications.apply"), new_jobseekers_job_job_application_path(vacancy.id)
 
     - else
       - if vacancy.how_to_apply.present?
         h3.govuk-heading-m = t("publishers.vacancies.steps.applying_for_the_job")
-        p = vacancy.how_to_apply
+        p.govuk-body = vacancy.how_to_apply
 
       - if vacancy.application_link.present? && vacancy.application_form.present?
         = open_in_new_tab_button_link_to t("jobs.apply"), new_job_interest_path(vacancy.id), class: "govuk-button--secondary govuk-!-margin-bottom-5", "aria-label": t("jobs.aria_labels.apply_link")

@@ -1,0 +1,29 @@
+section#school-overview
+  h2.govuk-heading-l.heading--border-bottom = t("organisations.about.#{vacancy.job_location}", organisation: vacancy.parent_organisation.name)
+
+  - case vacancy.job_location
+  - when "at_one_school"
+    = render "vacancies/school", organisation: vacancy.parent_organisation, vacancy: vacancy, contact_details: true
+  - when "central_office", "at_multiple_schools"
+    = render "vacancies/school_group", organisation: vacancy.parent_organisation, vacancy: vacancy
+
+  - if vacancy_or_organisation_description(vacancy).present?
+    p.govuk-body = vacancy_or_organisation_description(vacancy)
+
+  - if vacancy.organisations.many?
+    h4.govuk-heading-m = t("schools.school_details")
+    = govuk_accordion do |accordion|
+      - vacancy.organisations.each do |organisation|
+        - accordion.section heading_text: organisation.name do
+          = render "school", organisation: organisation, vacancy: vacancy, contact_details: false
+
+  - if vacancy.school_visits?
+    h4.govuk-heading-m = t("organisations.visits.#{vacancy.job_location}", organisation: vacancy.parent_organisation.name)
+    p.govuk-body = vacancy.school_visits
+
+  section#school-location
+    h3.govuk-heading-l.heading--border-bottom = t("organisations.locations.#{vacancy.job_location}")
+    - if vacancy.organisations.one?
+      = map items: [{ type: "vacancy", params: { id: vacancy.id }, links: map_links(vacancy) }], show_map: vacancy.parent_organisation.geopoint
+    - else
+      = map items: [{ type: "vacancy", params: { id: vacancy.id }, links: map_links(vacancy) }], zoom: 10
