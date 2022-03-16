@@ -21,7 +21,8 @@
           accept: ".doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, image/jpeg, image/png, video/mp4",
           enctype: "multipart/form-data",
           "data-upload-documents-target": "inputFileUpload",
-          "data-action": "change->upload-documents#uploadFiles"
+          "data-action": "change->upload-documents#uploadFiles",
+          hint: -> { t("helpers.hint.publishers_job_listing_applying_for_the_job_details_form.application_form_html", accessibility_link: document_accessibility_link(vacancy)) }
 
         button.govuk-button.govuk-button--secondary class="govuk-!-display-none govuk-!-margin-bottom-3" data-upload-documents-target="selectFileButton" data-action="upload-documents#trigger_upload"
           = t("buttons.select_file")
