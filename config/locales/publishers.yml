@@ -202,7 +202,7 @@ en:
         page_title: Create or copy a job listing
       destroy:
         success_html: >-
-          %{job_title} has been <span class="govuk-!-font-weight-bold delete-listing-success-gtm">deleted</span>
+          %{job_title} has been <span class="govuk-!-font-weight-bold">deleted</span>
       end_listing:
         show:
           heading: End job listing early

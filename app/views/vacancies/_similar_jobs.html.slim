@@ -4,7 +4,7 @@
     .govuk-grid-row class="govuk-!-margin-left-0"
       - similar_jobs.each do |vacancy|
         .similar-jobs__job class=("govuk-grid-column-one-half" if column_one_half)
-          = govuk_link_to(vacancy.job_title, job_path(vacancy), class: "view-similar-job-gtm")
+          = govuk_link_to(vacancy.job_title, job_path(vacancy))
           p.govuk-body class="govuk-!-margin-bottom-0 govuk-!-font-weight-bold"
             = vacancy.parent_organisation.name
           p.govuk-body class=" govuk-!-margin-bottom-0"
@@ -12,7 +12,7 @@
 
 section
   p.icon.icon--left.icon--alert-blue
-    = govuk_link_to(t("jobs.alert.similar.verbose.link_text"), new_subscription_path(search_criteria: invented_job_alert_search_criteria, vacancy_id: vacancy.id), id: "job-alert-link-from-bottom-of-job-listing-gtm")
+    = govuk_link_to(t("jobs.alert.similar.verbose.link_text"), new_subscription_path(search_criteria: invented_job_alert_search_criteria, vacancy_id: vacancy.id))
     =< t("jobs.alert.similar.verbose.reminder")
 
 - if location_landing_page
