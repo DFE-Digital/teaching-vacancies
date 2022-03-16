@@ -22,7 +22,7 @@
     "jquery": "^3.5.0",
     "jsdom": "^19.0.0",
     "leaflet": "^1.7.1",
-    "rails-ujs": "^5.2.6"
+    "rails-ujs": "^5.2.7"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",
