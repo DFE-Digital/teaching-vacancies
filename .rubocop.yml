@@ -154,6 +154,7 @@ Metrics/MethodLength:
 Metrics/ModuleLength:
   Max: 113 # Default 100
   Exclude:
+    - "app/helpers/**/*"
     - "spec/**/*"
 
 Metrics/ParameterLists:
