@@ -15,14 +15,14 @@
     "@sentry/browser": "^6.18.2",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^2.0.4",
-    "axios": "^0.26.0",
+    "axios": "^0.26.1",
     "classlist-polyfill": "^1.2.0",
     "core-js": "^3.21.1",
     "govuk-frontend": "^4.0.1",
     "jquery": "^3.5.0",
     "jsdom": "^19.0.0",
     "leaflet": "^1.7.1",
-    "rails-ujs": "^5.2.6"
+    "rails-ujs": "^5.2.7"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",
@@ -33,7 +33,7 @@
     "eslint-plugin-import": "^2.25.3",
     "jest": "^27.5.1",
     "postcss": "^8.4.8",
-    "stylelint": "^14.5.3",
+    "stylelint": "^14.6.0",
     "stylelint-config-sass-guidelines": "^9.0.1",
     "stylelint-config-standard": "^25.0.0",
     "webpack": "^4.44.2",
