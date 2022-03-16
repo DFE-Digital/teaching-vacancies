@@ -9,9 +9,8 @@
 
       h2.govuk-heading-m = @organisation.name
 
-      = f.govuk_url_field :website,
-        label: { text: t("helpers.label.publishers_organisation_form.website", organisation_type: organisation_type_basic(@organisation)&.capitalize), size: "s" },
-        value: @organisation_form.website.presence || @organisation.url
+      = f.govuk_url_field :url_override,
+        label: { text: t("helpers.label.publishers_organisation_form.url_override", organisation_type: organisation_type_basic(@organisation), gias_url: @organisation[:url]), size: "s" }
 
       = f.govuk_text_area :description,
         label: { text: t("helpers.label.publishers_organisation_form.description", organisation_type: organisation_type_basic(@organisation)), size: "s" },

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_17_113218) do
+ActiveRecord::Schema.define(version: 2022_03_10_103754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -323,7 +323,7 @@ ActiveRecord::Schema.define(version: 2022_02_17_113218) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "readable_phases", array: true
-    t.string "website"
+    t.string "url_override"
     t.string "region"
     t.string "detailed_school_type"
     t.string "school_type"

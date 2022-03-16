@@ -1,5 +1,4 @@
 class VacanciesController < ApplicationController
-  before_action :set_map_display, only: %i[index]
   before_action :set_landing_page, only: %i[index]
 
   after_action :trigger_search_performed_event, only: %i[index]
@@ -49,12 +48,6 @@ class VacanciesController < ApplicationController
 
   def set_headers
     response.set_header("X-Robots-Tag", "noarchive")
-  end
-
-  def set_map_display
-    @display_map = params[:location]&.include?("+map")
-
-    params[:location]&.gsub!("+map", "")
   end
 
   def trigger_search_performed_event

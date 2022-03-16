@@ -68,6 +68,10 @@ Naming/MethodParameterName:
     - pp
     - to
 
+Naming/PredicateName:
+  ForbiddenPrefixes:
+    - is_
+
 Style/BlockDelimiters:
   EnforcedStyle: braces_for_chaining
 
@@ -150,6 +154,7 @@ Metrics/MethodLength:
 Metrics/ModuleLength:
   Max: 113 # Default 100
   Exclude:
+    - "app/helpers/**/*"
     - "spec/**/*"
 
 Metrics/ParameterLists:

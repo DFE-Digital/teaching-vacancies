@@ -70,12 +70,6 @@ module VacanciesHelper
     vacancy.completed_steps.include?(step.to_s)
   end
 
-  def map_links(vacancy)
-    vacancy.organisations.map do |organisation|
-      { text: "#{organisation.name}, #{full_address(organisation)}", url: organisation_url(organisation), id: organisation.id }
-    end
-  end
-
   # Determines a set of breadcrumbs for a vacancy view page based on whether the user has arrived
   # there from a search results page (take them back to search results) or somewhere else (take
   # them to the appropriate landing page, or if all else fails, the "all jobs" page)

@@ -7,13 +7,14 @@ en:
     back_to_homepage: Return to homepage
     description: >-
       Find your next teaching job. Apply for jobs in schools and stay up-to-date with local teaching jobs on Teaching Vacancies.
+    environment_html: This is not the live Teaching Vacancies website. You are currently viewing the <span class="govuk-!-font-weight-bold">%{environment}</span> version of the site.
     govuk: GOV.UK
     menu: Menu
+    opens_in_new_tab: "%{link_text} (opens in a new tab)"
     skip_link:
       cookie: Skip to cookie consent
       main: Skip to main content
     title: Teaching Vacancies
-    environment_html: This is not the live Teaching Vacancies website. You are currently viewing the <span class="govuk-!-font-weight-bold">%{environment}</span> version of the site.
 
   application_pack:
     link_text: Download more information about the application form (%{size} MB, PDF)
@@ -309,7 +310,6 @@ en:
     address: Address
     age_range: Age range
     description: Description
-    map_link_aria_label: Open in Google Maps
     no_information: No information available
     not_given: Not given
     ofsted_report: Ofsted report
@@ -402,10 +402,6 @@ en:
       complete: complete
       not_started: not started
       optional: optional
-
-  shares:
-    new:
-      job_at: "Looking for a teaching job? Check out %{title} at %{organisation}"
 
   stats:
     intro: >-

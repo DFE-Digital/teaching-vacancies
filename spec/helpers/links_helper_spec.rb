@@ -8,8 +8,8 @@ RSpec.describe LinksHelper do
     let(:href) { "/open-me-please" }
     let(:kwargs) { { class: "special-class", data: { awesome: "true" } } }
 
-    it "returns a link with (open in new tab) text and correct class" do
-      expect(subject).to have_link("#{text} (opens in new tab)", href: href, class: "govuk-link special-class")
+    it "returns a link with (open in a new tab) text and correct class" do
+      expect(subject).to have_link("#{text} (opens in a new tab)", href: href, class: "govuk-link special-class")
     end
 
     it "returns a link with correct attributes" do

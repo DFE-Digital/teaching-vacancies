@@ -1,7 +1,19 @@
-= tag.div(class: classes, **html_attributes.merge({ data: { controller: "map", config: @items.to_json, zoom: @zoom } })) do
+= tag.div(class: classes, **html_attributes.merge(data: { controller: "map", zoom: @zoom })) do
   ol.govuk-list data-map-target="markersTextList"
-    - @items.each do |item|
-      - item[:links]&.each do |link|
-        li = govuk_link_to link[:text], link[:url], aria: { label: t("schools.map_link_aria_label") }
-  - if @show_map
+    - @vacancy.organisations.each do |org|
+      - if org.geopoint.present?
+        = tag.li(data: { "map-target": "organisation", lat: org.geopoint.lat, lon: org.geopoint.lon })
+          = link_to("#{org.name}, #{full_address(org)}", org.url)
+
+          .pop-up hidden=true
+            h4 class="govuk-body-m govuk-!-margin-bottom-2"
+              = map_link(org.name, org.url, vacancy_id: @vacancy.id)
+
+            ul class="govuk-list govuk-body-s"
+              li = organisation_type(org)
+              li = full_address(org)
+      - else
+        = link_to("#{org.name}, #{full_address(org)}", org.url)
+
+  - if show_map?
     .map-component__map id="map" role="presentation"

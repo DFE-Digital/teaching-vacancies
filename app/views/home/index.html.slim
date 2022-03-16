@@ -13,11 +13,11 @@
       - if current_variant?(:"2022_01_homepage_quick_links_test", :with_quick_links)
         h3.govuk-heading-s = t("jobs.search.popular_searches.title")
         .app-search-form-container__popular-searches
-          = govuk_link_to(t("jobs.search.popular_searches.links.primary"), landing_page_path("primary-school-jobs"))
-          = govuk_link_to(t("jobs.search.popular_searches.links.maths"), landing_page_path("maths-teacher-jobs"))
-          = govuk_link_to(t("jobs.search.popular_searches.links.science"), landing_page_path("science-teacher-jobs"))
-          = govuk_link_to(t("jobs.search.popular_searches.links.teaching_assistant"), landing_page_path("teaching-assistant-jobs"))
-          = govuk_link_to(t("jobs.search.popular_searches.links.headteacher"), landing_page_path("leadership-jobs"))
+          = search_keyword_quick_link("primary", page: "primary-school-jobs")
+          = search_keyword_quick_link("maths", page: "maths-teacher-jobs")
+          = search_keyword_quick_link("science", page: "science-teacher-jobs")
+          = search_keyword_quick_link("teaching_assistant", page: "teaching-assistant-jobs")
+          = search_keyword_quick_link("headteacher", page: "leadership-jobs")
 
 .govuk-grid-row
   .govuk-grid-column-one-half

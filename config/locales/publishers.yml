@@ -166,6 +166,7 @@ en:
             %{link}
           step_title: Applying for the job
         documents:
+          accessibility_link_text: How to make documents accessible
           step_title: Supporting documents
         important_dates:
           step_title: Important dates and deadlines

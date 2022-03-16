@@ -29,12 +29,19 @@ export default class extends Controller {
       setTimeout(() => { this.redirect(); }, 100);
     }
 
+    let trackedLinkText;
+    if (this.linkTarget.dataset.trackedLinkText) {
+      trackedLinkText = this.linkTarget.dataset.trackedLinkText;
+    } else {
+      trackedLinkText = this.linkTarget.innerText;
+    }
+
     triggerEvent(
       EVENT_TYPE,
       {
         link_type: this.linkTarget.dataset.linkType,
         link_subject: this.linkTarget.dataset.linkSubject,
-        text: this.linkTarget.innerText,
+        text: trackedLinkText,
         href: this.linkTarget.href,
         mouse_button: e.button,
       },

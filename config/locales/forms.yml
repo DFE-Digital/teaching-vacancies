@@ -187,7 +187,7 @@ en:
           <ul class="govuk-list govuk-list--bullet">
           <li>in pdf or doc format</li>
           <li>smaller than 10 MB</li>
-          <li>accessible for users with disabilities or impairments - <a class="govuk-link" target="_blank" href="https://www.gov.uk/guidance/publishing-accessible-documents#writing-accessible-documents">how to make documents accessible (opens in new tab)</a>.</li>
+          <li>accessible for users with disabilities or impairments - %{accessibility_link}
           </ul>
         application_link: Direct candidates to apply on your school or council website. Leave this blank if you will be uploading an application form attachment.
         contact_email: Tell candidates where they can send documents or ask questions (this will be shown publicly)
@@ -208,7 +208,7 @@ en:
           <ul class="govuk-list govuk-list--bullet">
           <li>in pdf, jpeg, png, mp4, doc, ppt or xls format</li>
           <li>smaller than 10 MB</li>
-          <li>accessible for users with disabilities or impairments - <a class="govuk-link" target="_blank" href="https://www.gov.uk/guidance/publishing-accessible-documents#writing-accessible-documents">how to make documents accessible (opens in new tab)</a>.</li>
+          <li>accessible for users with disabilities or impairments - %{accessibility_link}
           </ul>
       publishers_job_listing_feedback_form:
         email: >-
@@ -487,7 +487,7 @@ en:
 
       publishers_organisation_form:
         description: Description of %{organisation_type}
-        website: '%{organisation_type} website'
+        url_override: "Override the %{organisation_type}'s website (defaults to \"%{gias_url}\")"
 
       publishers_job_application_notes_form:
         content: Add a note
