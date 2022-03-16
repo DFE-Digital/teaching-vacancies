@@ -2,4 +2,4 @@
   .job-alert-cta__fade
   .job-alert-cta__content class="govuk-heading-s govuk-!-font-weight-regular govuk-!-margin-0" id="job-alert-cta"
     .icon.icon--left.icon--alert-white
-      = t("subscriptions.link.help_text_html", link: govuk_link_to(t("subscriptions.link.text"), new_subscription_path(search_criteria: @vacancies_search.active_criteria, coordinates_present: @vacancies_search.point_coordinates.present?), id: "job-alert-link-sticky-gtm"))
+      = t("subscriptions.link.help_text_html", link: govuk_link_to(t("subscriptions.link.text"), new_subscription_path(search_criteria: @vacancies_search.active_criteria, coordinates_present: @vacancies_search.point_coordinates.present?)))

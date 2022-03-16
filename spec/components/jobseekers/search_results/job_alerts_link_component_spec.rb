@@ -19,7 +19,7 @@ RSpec.describe Jobseekers::SearchResults::JobAlertsLinkComponent, type: :compone
 
     it "renders the job alerts link" do
       expect(inline_component.css(
-        "a#job-alert-link-sticky-gtm[href="\
+        "a[href="\
         "'#{Rails.application.routes.url_helpers.new_subscription_path(search_criteria: active_hash, coordinates_present: true)}']",
       ).to_html).to include(I18n.t("subscriptions.link.text"))
     end
