@@ -56,10 +56,10 @@
                     = view_applicants(vacancy) unless vacancy_expired_over_a_year_ago?(vacancy)
                   - else
                     = tag.div(t("jobs.manage.view_applicants", count: 0), class: "govuk-!-font-size-19")
-                = tag.div(c.labelled_item(t("jobs.manage.closing_date"), vacancy.application_deadline))
+                = tag.div(c.labelled_item(t("jobs.manage.closing_date"), format_time_to_datetime_at(vacancy.expires_at)))
               - when "pending"
                 = tag.div(c.labelled_item(t("jobs.publication_date"), vacancy.publish_on))
-                = tag.div(c.labelled_item(t("jobs.manage.closing_date"), vacancy.application_deadline))
+                = tag.div(c.labelled_item(t("jobs.manage.closing_date"), format_time_to_datetime_at(vacancy.expires_at)))
               - when "expired"
                 - if vacancy.enable_job_applications
                   - if !vacancy_expired_over_a_year_ago?(vacancy) && vacancy.job_applications.where.not(status: %w[draft withdrawn]).any?
@@ -67,7 +67,7 @@
                   - else
                     = tag.div(t("jobs.manage.view_applicants", count: 0), class: "govuk-!-font-size-19")
                 = tag.div(c.labelled_item(t("jobs.date_listed"), vacancy.publish_on))
-                = tag.div(c.labelled_item(t("jobs.manage.expired.expired_on"), vacancy.application_deadline))
+                = tag.div(c.labelled_item(t("jobs.manage.expired.expired_on"), format_time_to_datetime_at(vacancy.expires_at)))
               - when "draft"
                 = tag.div(c.labelled_item(t("jobs.manage.draft.time_created"), format_date(vacancy.created_at.to_date)))
                 = tag.div(c.labelled_item(t("jobs.manage.draft.time_updated"), format_date(vacancy.updated_at.to_date)))

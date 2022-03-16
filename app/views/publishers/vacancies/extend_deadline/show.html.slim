@@ -7,7 +7,7 @@
 
     = govuk_inset_text do
       = vacancy.expired? ? t(".deadline.past") : t(".deadline.future")
-      strong =< OrganisationVacancyPresenter.new(vacancy).application_deadline
+      strong =< format_time_to_datetime_at(vacancy.expires_at)
 
     = form_for form, url: organisation_job_extend_deadline_path(vacancy.id), method: :patch do |f|
       = f.govuk_error_summary
