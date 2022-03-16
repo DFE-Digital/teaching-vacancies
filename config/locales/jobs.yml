@@ -159,8 +159,9 @@ en:
     current_step: Step %{step} of %{total}
 
     location: Location
-    location_jobs_html: Find more %{link}
-    location_jobs_link: school jobs in %{location}
+    location_find_more_html:
+      one: Find more school jobs in %{location_link}
+      other: Find more school jobs in %{location_link} and %{second_location_link}
 
     job_title: Job title
     job_role: Job role

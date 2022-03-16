@@ -19,7 +19,6 @@ class VacanciesController < ApplicationController
     @job_application = current_jobseeker&.job_applications&.find_by(vacancy: vacancy)
     @invented_job_alert_search_criteria = Search::CriteriaInventor.new(vacancy).criteria
     @similar_jobs = Search::SimilarJobs.new(vacancy).similar_jobs
-    @location_landing_page = location_landing_page(vacancy.location.last&.parameterize)
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
@@ -56,10 +55,6 @@ class VacanciesController < ApplicationController
     @display_map = params[:location]&.include?("+map")
 
     params[:location]&.gsub!("+map", "")
-  end
-
-  def location_landing_page(location)
-    LocationLandingPage[location] if location && LocationLandingPage.exists?(location)
   end
 
   def trigger_search_performed_event
