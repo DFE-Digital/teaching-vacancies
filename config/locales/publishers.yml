@@ -343,7 +343,7 @@ en:
       statistics:
         show:
           application_data: Application data
-          draft_vacancy: Once you have published the vacancy you will be able to see how many jobseekers are viewing and saving this job
+          draft_vacancy: Once you have published the vacancy you will be able to see how many jobseekers are viewing and saving this job.
           explanation: This is to ensure the anonymity of applicants who submit equal opportunities information.
           intro: This may include data from candidates who have withdrawn their applications.
           listing_data: Listing data
