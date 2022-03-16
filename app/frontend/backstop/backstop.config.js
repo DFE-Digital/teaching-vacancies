@@ -3,16 +3,14 @@ require('dotenv').config();
 const TEST_ENV_URL = 'http://localhost:3000';
 const TEMP_FOLDER = 'lib/.tmp'
 
-//create array of scenarios
+//create flat array of scenarios
 let scenarios = [
   ...require('./scenarios/public'),
   ...require('./scenarios/common'),
-  ...require('./scenarios/components')
+  ...require('./scenarios/components'),
+  ...require('./scenarios/publisher'),
+  ...require('./scenarios/jobseeker')
 ];
-
-//add scenarios for auth type
-scenarios.push(...require(`./scenarios/publisher`));
-scenarios.push(...require(`./scenarios/jobseeker`));
 
 // map variants on pages that have abtests running 
 const { hasVariants, mapVariants } = require('./scenarios/abtest');
@@ -36,8 +34,8 @@ module.exports = {
   "viewports": [
     {
       "label": "phone",
-      "width": 320,
-      "height": 1000
+      "width": 480,
+      "height": 1024
     },
     {
       "label": "tablet",
@@ -46,7 +44,7 @@ module.exports = {
     },
     {
       "label": "desktop",
-      "width": 1300,
+      "width": 1020,
       "height": 1024
     }
   ],
