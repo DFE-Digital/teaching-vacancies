@@ -1,7 +1,7 @@
 class Publishers::NewFeaturesController < Publishers::BaseController
   skip_before_action :check_terms_and_conditions, only: %i[show update reminder]
 
-  NEW_FEATURES_PAGE_UPDATED_AT = DateTime.new(2022, 1, 7).freeze # This constant lives here so that we remember to update it.
+  NEW_FEATURES_PAGE_UPDATED_AT = DateTime.new(2022, 3, 17).freeze # This constant lives here so that we remember to update it.
 
   def show
     @new_features_form = Publishers::NewFeaturesForm.new
