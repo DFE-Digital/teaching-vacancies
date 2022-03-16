@@ -1,6 +1,5 @@
 li
-  = govuk_link_to(href) do
-    = t("landing_pages.accessible_link_text_with_count_html", name: @landing_page.name, count: @landing_page.count)
+  = landing_page_link
 
   / Hide count from a11y tree as it's included in link text
   span aria-hidden="true" = " (#{@landing_page.count})"

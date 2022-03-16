@@ -134,4 +134,13 @@ module LinksHelper
       **kwargs,
     )
   end
+
+  def search_keyword_quick_link(type, page:, **kwargs)
+    tracked_link_to(
+      t("jobs.search.popular_searches.links.#{type}"),
+      landing_page_path(page),
+      link_type: :search_keyword_quick_link,
+      **kwargs,
+    )
+  end
 end
