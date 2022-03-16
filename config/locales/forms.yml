@@ -208,7 +208,7 @@ en:
           <ul class="govuk-list govuk-list--bullet">
           <li>in pdf, jpeg, png, mp4, doc, ppt or xls format</li>
           <li>smaller than 10 MB</li>
-          <li>accessible for users with disabilities or impairments - <a class="govuk-link" target="_blank" href="https://www.gov.uk/guidance/publishing-accessible-documents#writing-accessible-documents">how to make documents accessible (opens in new tab)</a>.</li>
+          <li>accessible for users with disabilities or impairments - %{accessibility_link}
           </ul>
       publishers_job_listing_feedback_form:
         email: >-

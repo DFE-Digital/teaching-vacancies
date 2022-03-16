@@ -124,4 +124,14 @@ module LinksHelper
       **kwargs,
     )
   end
+
+  def document_accessibility_link(vacancy, **kwargs)
+    tracked_open_in_new_tab_link_to(
+      t("publishers.vacancies.build.documents.accessibility_link_text"),
+      "https://www.gov.uk/guidance/publishing-accessible-documents#writing-accessible-documents",
+      link_type: :document_accessibility_guidance,
+      link_subject: anon(vacancy.id),
+      **kwargs,
+    )
+  end
 end
