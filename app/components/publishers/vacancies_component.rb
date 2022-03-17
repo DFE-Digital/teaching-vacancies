@@ -14,7 +14,7 @@ class Publishers::VacanciesComponent < ViewComponent::Base
   end
 
   def grid_column_class
-    organisation.school_group? ? "govuk-grid-column-two-thirds" : "govuk-grid-column-full"
+    organisation.school_group? ? "govuk-grid-column-two-thirds-at-desktop" : "govuk-grid-column-full"
   end
 
   def no_jobs_text
