@@ -70,7 +70,7 @@ module NotifyViewsHelper
   end
 
   def show_link(vacancy)
-    url = vacancy.share_url(**utm_params)
+    url = job_url(vacancy, **utm_params)
     notify_link(url, vacancy.job_title)
   end
 

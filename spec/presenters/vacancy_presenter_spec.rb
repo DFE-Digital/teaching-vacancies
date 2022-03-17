@@ -180,22 +180,6 @@ RSpec.describe VacancyPresenter do
     end
   end
 
-  describe "#share_url" do
-    let(:vacancy) { create(:vacancy, job_title: "PE Teacher") }
-
-    it "returns the absolute public url for the job post" do
-      expected_url = URI("localhost:3000/jobs/pe-teacher")
-      expect(subject.share_url).to match(expected_url.to_s)
-    end
-
-    context "when campaign parameters are passed" do
-      it "builds the campaign URL" do
-        expected_campaign_url = URI("http://localhost:3000/jobs/pe-teacher?utm_medium=interpretative_dance&utm_source=alert_run_id")
-        expect(subject.share_url(utm_source: "alert_run_id", utm_medium: "interpretative_dance")).to match(expected_campaign_url.to_s)
-      end
-    end
-  end
-
   describe "#fixed_term_contract_duration" do
     let(:vacancy) { build_stubbed(:vacancy, contract_type: contract_type, fixed_term_contract_duration: fixed_term_contract_duration) }
 
