@@ -48,7 +48,7 @@ You’re only a teacher some of the time. If you take part in any activities out
 
 ### Any relationship you have with the school
 
-Schools want to be confident the potential new teacher joining, has an understanding of the school environment. . Mention any visits you’ve made to the school, your local knowledge, or if any of your own children have been (or currently are) students.
+Schools want to be confident the potential new teacher joining, has an understanding of the school environment. Mention any visits you’ve made to the school, your local knowledge, or if any of your own children have been (or currently are) students.
 
 ## What should you not include?
 
