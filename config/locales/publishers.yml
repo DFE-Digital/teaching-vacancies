@@ -20,9 +20,9 @@ en:
           We’re working on fixing it, but in the meantime you can still access your account.
     new_features:
       show:
-        heading: Applications for education support roles
+        heading: Applicant notes
         content: >-
-          You can now receive and manage applications for education support roles on Teaching Vacancies.
+          You can now add notes to each application for your jobs. These will be visible to colleagues with access to each job listing, but can not be seen by candidates. All notes will be included when you print or download application details.
         page_title: New features for hiring staff
       reminder:
         content: You can now receive and manage job applications for all roles on Teaching Vacancies, including education support roles.

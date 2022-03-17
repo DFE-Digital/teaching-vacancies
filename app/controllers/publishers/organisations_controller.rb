@@ -40,10 +40,13 @@ class Publishers::OrganisationsController < Publishers::BaseController
 
   def show_new_features_page?
     return false if current_organisation.local_authority?
-
     return false if publisher_has_used_feature?
 
-    current_publisher.dismissed_new_features_page_at.blank?
+    if (dismissed_at = current_publisher.dismissed_new_features_page_at)
+      dismissed_at >= Publishers::NewFeaturesController::NEW_FEATURES_PAGE_UPDATED_AT
+    else
+      true
+    end
   end
 
   def publisher_has_used_feature?
