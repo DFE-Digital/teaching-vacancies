@@ -1,0 +1,15 @@
+- content_for :page_title_prefix do
+  | Component preview
+
+= form_for @preview_form, url: preview_view_component_path("#{@preview.preview_name}/#{@example_name}"), html: { method: "get" } do |f|
+  = render(@preview_class.new(collection: f.govuk_collection_check_boxes(:options,
+    @preview.options,
+    :first,
+    :first,
+    :last,
+    legend: nil,
+    hint: nil,
+    classes: "checkbox-label__bold"),
+    collection_count: @preview.options.count,
+    options: { border: true },
+    label_text: "search subjects"))

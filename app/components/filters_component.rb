@@ -1,10 +1,6 @@
 class FiltersComponent < GovukComponent::Base
   attr_accessor :filters, :submit_button, :options, :title
 
-  def self.variants
-    %w[default]
-  end
-
   def initialize(submit_button:, options:, filters: {}, title: nil, classes: [], html_attributes: {})
     super(classes: classes, html_attributes: html_attributes.merge({ data: { controller: "filters" } }))
 
