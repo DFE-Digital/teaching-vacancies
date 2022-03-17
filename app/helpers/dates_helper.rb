@@ -26,4 +26,15 @@ module DatesHelper
       date.strftime("%-d %B")
     end
   end
+
+  def days_to_apply(date)
+    case date
+    when Date.current
+      t("jobs.days_to_apply.today")
+    when Date.tomorrow
+      t("jobs.days_to_apply.tomorrow")
+    else
+      t("jobs.days_to_apply.remaining", days_remaining: (date - Date.current).to_i)
+    end
+  end
 end

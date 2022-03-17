@@ -16,7 +16,7 @@
     - when "withdrawn"
       = tag.div(card.labelled_item(t(".withdrawn"), format_time_to_datetime_at(job_application.updated_at)))
 
-    = tag.div(card.labelled_item(t(".closing_date"), OrganisationVacancyPresenter.new(job_application.vacancy).application_deadline))
+    = tag.div(card.labelled_item(t(".closing_date"), format_time_to_datetime_at(job_application.vacancy.expires_at)))
 
   - if job_application.draft? && job_application.vacancy.expired?
     - card.action_item link: job_application_status_tag(:deadline_passed)

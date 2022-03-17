@@ -243,9 +243,7 @@ RSpec.describe "Creating a vacancy" do
         visit organisation_job_review_path(vacancy.id)
         click_on I18n.t("buttons.submit_job_listing")
 
-        expect(page)
-          .to have_content(I18n.t("publishers.vacancies.summary.date_expires",
-                                  application_deadline: OrganisationVacancyPresenter.new(vacancy).application_deadline))
+        expect(page).to have_content(I18n.t("publishers.vacancies.summary.date_expires", application_deadline: format_time_to_datetime_at(vacancy.expires_at)))
       end
 
       scenario "a published vacancy cannot be republished" do

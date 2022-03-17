@@ -57,7 +57,6 @@ class Publishers::VacanciesComponent < ViewComponent::Base
     @vacancies = @vacancies.send(selected_scope)
                            .order(sort.by => sort.order)
                            .reject { |vacancy| vacancy.job_title.blank? }
-                           .map { |v| OrganisationVacancyPresenter.new(v) }
   end
 
   def include_job_applications?

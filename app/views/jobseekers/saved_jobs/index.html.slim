@@ -25,7 +25,7 @@
               = tag.div(card.labelled_item(t(".added"), format_date(saved_job.created_at, :date_only)))
               - if saved_job.vacancy.expired?
                 = tag.div(t(".deadline_passed"), class: "govuk-!-font-weight-bold text-red")
-              = tag.div(card.labelled_item(t(".application_deadline"), OrganisationVacancyPresenter.new(saved_job.vacancy).application_deadline))
+              = tag.div(card.labelled_item(t(".application_deadline"), format_time_to_datetime_at(saved_job.vacancy.expires_at)))
 
             - if saved_job.vacancy.enable_job_applications? && Vacancy.live.exists?(saved_job.vacancy.id) && current_jobseeker.job_applications.after_submission.find_by(vacancy_id: saved_job.vacancy.id).present?
               - card.action_item link: govuk_link_to(safe_join([t(".view"), tag.span(" for #{saved_job.vacancy.job_title}", class: "govuk-visually-hidden")]), jobseekers_job_application_path(JobApplication.find_by(vacancy_id: saved_job.vacancy.id)))
