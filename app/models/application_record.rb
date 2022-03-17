@@ -1,6 +1,8 @@
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
+  before_save :strip_attributes
+
   after_create { EventContext.trigger_event(:entity_created, event_data) }
   after_update { EventContext.trigger_event(:entity_updated, event_data) unless saved_change_to_attribute?(:last_activity_at) }
   after_destroy { EventContext.trigger_event(:entity_destroyed, event_data) }
@@ -41,5 +43,9 @@ class ApplicationRecord < ActiveRecord::Base
     when Array
       value.map { |string| StringAnonymiser.new(string).to_s }
     end
+  end
+
+  def strip_attributes
+    attributes.each_value { |value| value.try(:strip!) unless value.frozen? }
   end
 end
