@@ -21,7 +21,7 @@ RSpec.describe Jobseekers::AlertMailer do
   let(:school) { create(:school) }
   let(:mail) { described_class.alert(subscription.id, vacancies.pluck(:id)) }
   # The array of vacancies is set to length 1 because the order varies, making it hard to test url parameters.
-  let(:vacancies) { VacanciesPresenter.new(create_list(:vacancy, 1, :published, organisations: [school])).decorated_collection }
+  let(:vacancies) { create_list(:vacancy, 1, :published, organisations: [school]).map { |vacancy| VacancyPresenter.new(vacancy) } }
   let(:campaign_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "#{frequency}_alert" } }
   let(:relevant_job_alert_feedback_url) do
     new_subscription_job_alert_feedback_url(

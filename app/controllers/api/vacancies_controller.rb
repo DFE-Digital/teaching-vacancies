@@ -5,12 +5,11 @@ class Api::VacanciesController < Api::ApplicationController
   MAX_API_RESULTS_PER_PAGE = 100
 
   def index
-    records = Vacancy.includes(:organisations)
-                     .live
-                     .page(page_number)
-                     .per(MAX_API_RESULTS_PER_PAGE)
-                     .order(publish_on: :desc)
-    @vacancies = VacanciesPresenter.new(records)
+    @vacancies = Vacancy.includes(:organisations)
+                        .live
+                        .page(page_number)
+                        .per(MAX_API_RESULTS_PER_PAGE)
+                        .order(publish_on: :desc)
 
     respond_to do |format|
       format.json

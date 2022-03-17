@@ -15,7 +15,9 @@ class Jobseekers::AlertMailer < Jobseekers::BaseMailer
     @template = subscription.daily? ? NOTIFY_SUBSCRIPTION_DAILY_TEMPLATE : NOTIFY_SUBSCRIPTION_WEEKLY_TEMPLATE
     @to = subscription.email
 
-    @vacancies = VacanciesPresenter.new(Vacancy.where(id: vacancy_ids).order(:expires_at))
+    @vacancies = Vacancy.where(id: vacancy_ids)
+                        .order(:expires_at)
+                        .map { |vacancy| VacancyPresenter.new(vacancy) }
 
     view_mail(@template,
               to: @to,

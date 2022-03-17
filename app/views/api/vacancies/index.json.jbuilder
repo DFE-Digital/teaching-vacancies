@@ -14,16 +14,16 @@ json.info do
 end
 json.openapi "3.0.0"
 
-json.data @vacancies.decorated_collection do |vacancy|
-  json.partial! "show", vacancy: vacancy
+json.data @vacancies.each do |vacancy|
+  json.partial! "show", vacancy: VacancyPresenter.new(vacancy)
 end
 
 json.links do
-  json.self  @vacancies.current_api_url
-  json.first @vacancies.first_api_url
-  json.last  @vacancies.last_api_url
-  json.prev  @vacancies.previous_api_url
-  json.next  @vacancies.next_api_url
+  json.self  api_jobs_url(page: @vacancies.current_page, format: :json)
+  json.first api_jobs_url(page: 1, format: :json)
+  json.last  api_jobs_url(page: @vacancies.total_pages, format: :json)
+  json.prev((api_jobs_url(page: @vacancies.prev_page, format: :json) if @vacancies.prev_page))
+  json.next((api_jobs_url(page: @vacancies.next_page, format: :json) if @vacancies.next_page))
 end
 
 json.meta do

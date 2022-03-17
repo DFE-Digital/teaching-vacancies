@@ -1,7 +1,7 @@
 section class="govuk-!-margin-top-3"
   .govuk-inset-text data-controller="clipboard"
     h3.govuk-heading-m = t("jobs.share_this_job")
-    input data-clipboard-target="source" type="text" value=vacancy.share_url readonly=true class="govuk-input govuk-!-width-two-thirds govuk-!-margin-bottom-2"
+    input data-clipboard-target="source" type="text" value=job_url(vacancy) readonly=true class="govuk-input govuk-!-width-two-thirds govuk-!-margin-bottom-2"
     button.govuk-button.govuk-button--secondary data-action="clipboard#copy"
       = t("buttons.copy_url")
       span.govuk-visually-hidden = " to clipboard for #{vacancy.job_title}"

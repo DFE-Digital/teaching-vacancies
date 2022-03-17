@@ -77,11 +77,11 @@ RSpec.describe "Api::Vacancies" do
 
       it "includes the correct pagination links" do
         expect(links_object).to include(
-          self: "http://localhost:3000/api/v1/jobs.json?page=2",
-          first: "http://localhost:3000/api/v1/jobs.json?page=1",
-          last: "http://localhost:3000/api/v1/jobs.json?page=4",
-          next: "http://localhost:3000/api/v1/jobs.json?page=3",
-          prev: "http://localhost:3000/api/v1/jobs.json?page=1",
+          self: api_jobs_url(page: 2, format: :json),
+          first: api_jobs_url(page: 1, format: :json),
+          last: api_jobs_url(page: 4, format: :json),
+          next: api_jobs_url(page: 3, format: :json),
+          prev: api_jobs_url(page: 1, format: :json),
         )
       end
 
