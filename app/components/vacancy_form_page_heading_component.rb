@@ -1,4 +1,4 @@
-class Publishers::VacancyFormPageHeadingComponent < ViewComponent::Base
+class VacancyFormPageHeadingComponent < ViewComponent::Base
   delegate :current_organisation, to: :helpers
 
   def initialize(vacancy, step_process)

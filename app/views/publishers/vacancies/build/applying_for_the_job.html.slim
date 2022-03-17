@@ -1,6 +1,6 @@
 - content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.applying_for_the_job"))
 
-= render Publishers::VacancyFormPageHeadingComponent.new(vacancy, step_process)
+= vacancy_form_page_heading(vacancy, step_process)
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds

@@ -3,7 +3,7 @@
 
 = vacancy_review(vacancy, step_process: step_process, back_to: "review", show_errors: true) do |r|
   - r.header
-    = publishers_vacancy_form_page_heading(vacancy, step_process)
+    = vacancy_form_page_heading(vacancy, step_process)
 
   - r.above
     h2.govuk-heading-l = t("publishers.vacancies.steps.review_heading")

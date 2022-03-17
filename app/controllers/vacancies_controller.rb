@@ -1,6 +1,5 @@
 class VacanciesController < ApplicationController
   before_action :set_landing_page, only: %i[index]
-
   after_action :trigger_search_performed_event, only: %i[index]
 
   def index
