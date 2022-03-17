@@ -62,6 +62,7 @@ class SkywalkerFeed
       # TODO: What about central office/multiple school vacancies?
       job_location: :at_one_school,
       organisations: organisations_for(item),
+      about_school: organisations_for(item).first&.description,
     }
   end
 
