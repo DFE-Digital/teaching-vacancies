@@ -1,24 +1,32 @@
-const TEST_ENV_URL = process.argv[5] || 'http://localhost:3000';
+require('dotenv').config();
 
-//create array of scenarios
+const TEST_ENV_URL = 'http://localhost:3000';
+const TEMP_FOLDER = 'lib/.tmp'
+
+//create flat array of scenarios
 let scenarios = [
   ...require('./scenarios/public'),
-  ...require('./scenarios/common')
+  ...require('./scenarios/common'),
+  ...require('./scenarios/components'),
+  ...require('./scenarios/publisher'),
+  ...require('./scenarios/jobseeker')
 ];
-
-//add scenarios for auth type
-if (process.argv[4]) {
-  scenarios.push(...require(`./scenarios/${process.argv[4]}`));
-}
 
 // map variants on pages that have abtests running 
 const { hasVariants, mapVariants } = require('./scenarios/abtest');
 
-scenarios = scenarios.map((scenario) => hasVariants(scenario.label) ? mapVariants(scenario) : scenario ).flat();
+scenarios = scenarios.map((scenario) => hasVariants(scenario.label) ? mapVariants(scenario) : scenario).flat();
+
+const Path = require('path');
 
 //map host of server to scenario urls
 scenarios = scenarios.map((scenario) => {
-  return {...scenario, url: `${TEST_ENV_URL}${scenario.url}`}
+
+  if (scenario.cookiePath) {
+    scenario.cookiePath = Path.join(__dirname, TEMP_FOLDER, scenario.cookiePath)
+  }
+
+  return {...scenario, url: `${TEST_ENV_URL}${scenario.url}`, BASE_URL: TEST_ENV_URL}
 });
 
 module.exports = {
@@ -26,8 +34,8 @@ module.exports = {
   "viewports": [
     {
       "label": "phone",
-      "width": 320,
-      "height": 1000
+      "width": 480,
+      "height": 1024
     },
     {
       "label": "tablet",
@@ -36,7 +44,7 @@ module.exports = {
     },
     {
       "label": "desktop",
-      "width": 1300,
+      "width": 1020,
       "height": 1024
     }
   ],
@@ -46,7 +54,7 @@ module.exports = {
   "paths": {
     "bitmaps_reference": "visual_snapshots",
     "bitmaps_test": "visual_regression/bitmaps_test",
-    "engine_scripts": "app/frontend/backstop/engine_scripts",
+    "engine_scripts": "app/frontend/backstop/lib",
     "html_report": "visual_regression/html_report",
     "ci_report": "visual_regression/ci_report"
   },

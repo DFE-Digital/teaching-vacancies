@@ -168,7 +168,18 @@ This works by testing snapshot images in a branch or environment against accepte
 
 This is currently a tool for developers to test changes locally against the QA environment. Running the test suite will create and load a UI in the browser to report on and for you to compare visual changes.
 
-There are three stages to testing:
+### Setup
+
+Add the following variables to your local `.env` file:
+
+```bash
+VISUAL_TEST_JOBSEEKER_USERNAME=xxx
+VISUAL_TEST_JOBSEEKER_PASSWORD=xxx
+VISUAL_TEST_PUBLISHER_USERNAME=xxx
+VISUAL_TEST_PUBLISHER_PASSWORD=xxx
+```
+
+### Usage
 
 ```bash
 # Create reference snapshot images

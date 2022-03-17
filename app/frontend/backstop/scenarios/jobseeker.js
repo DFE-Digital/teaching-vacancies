@@ -1,6 +1,10 @@
+const AUTH_TYPE = 'jobseeker';
+
 module.exports = [
   {
-    "cookiePath": "app/frontend/backstop/cookies.json",
+    "onBeforeScript": "auth.js",
+    "AUTH_TYPE": AUTH_TYPE,
+    "cookiePath": `${AUTH_TYPE}.json`,
     "label": "Jobseeker my applications page",
     "url": "/jobseekers/job_applications",
     "readySelector": ".govuk-main-wrapper",
@@ -10,7 +14,9 @@ module.exports = [
     ]
   },
   {
-    "cookiePath": "app/frontend/backstop/cookies.json",
+    "onBeforeScript": "auth.js",
+    "AUTH_TYPE": AUTH_TYPE,
+    "cookiePath": `${AUTH_TYPE}.json`,
     "label": "Jobseeker view application page",
     "url": "/jobseekers/job_applications",
     "readySelector": ".govuk-main-wrapper",
@@ -21,7 +27,9 @@ module.exports = [
     ]
   },
   {
-    "cookiePath": "app/frontend/backstop/cookies.json",
+    "onBeforeScript": "auth.js",
+    "AUTH_TYPE": AUTH_TYPE,
+    "cookiePath": `${AUTH_TYPE}.json`,
     "label": "Jobseeker saved jobs page",
     "url": "/jobseekers/saved_jobs",
     "readySelector": ".govuk-main-wrapper",
@@ -31,7 +39,9 @@ module.exports = [
     ]
   },
   {
-    "cookiePath": "app/frontend/backstop/cookies.json",
+    "onBeforeScript": "auth.js",
+    "AUTH_TYPE": AUTH_TYPE,
+    "cookiePath": `${AUTH_TYPE}.json`,
     "label": "Jobseeker view account page",
     "url": "/jobseekers/account",
     "readySelector": ".govuk-main-wrapper",
