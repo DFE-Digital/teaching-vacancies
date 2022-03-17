@@ -71,7 +71,9 @@ const MapController = class extends Controller {
   }
 
   setMapBounds() {
-    this.map.fitBounds(this.markerTargets.map((m) => m.dataset.point));
+    this.map.fitBounds(
+      this.organisationTargets.map((o) => ({ lat: o.dataset.lat, lon: o.dataset.lon })),
+    );
   }
 
   static markerIcon(html) {
