@@ -143,4 +143,13 @@ module LinksHelper
       **kwargs,
     )
   end
+
+  def dsi_account_request_link(**kwargs)
+    tracked_button_link_to(
+      t("buttons.request_dsi_account"),
+      ENV.fetch("DFE_SIGN_IN_REGISTRATION_URL", "https://profile.signin.education.gov.uk/register"),
+      link_type: :dsi_account_request,
+      **kwargs,
+    )
+  end
 end
