@@ -15,7 +15,7 @@
     "@sentry/browser": "^6.18.2",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^2.0.4",
-    "axios": "^0.26.0",
+    "axios": "^0.26.1",
     "classlist-polyfill": "^1.2.0",
     "core-js": "^3.21.1",
     "govuk-frontend": "^4.0.1",
