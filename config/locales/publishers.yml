@@ -127,23 +127,6 @@ en:
         heading: Sign in to Teaching Vacancies
         subject: Sign in to Teaching Vacancies
       heading: Temporary login
-    vacancies_component:
-      add_or_remove_schools: Add or remove schools
-      awaiting_feedback:
-        tab_heading: Jobs awaiting feedback
-        with_count_html: Awaiting feedback <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
-      draft:
-        tab_heading: Draft jobs
-        with_count_html: Draft jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
-      expired:
-        tab_heading: Closed jobs
-        with_count_html: Closed jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
-      pending:
-        tab_heading: Scheduled jobs
-        with_count_html: Scheduled jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
-      published:
-        tab_heading: Active jobs
-        with_count_html: Active jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
     vacancies:
       banner:
         deadline:

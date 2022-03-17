@@ -1,7 +1,7 @@
 .govuk-grid-row
   .govuk-grid-column-three-quarters
     span.govuk-caption-l = t("jobs.manage.heading_html", organisation: @organisation.name, email: @email)
-    h1.govuk-heading-l = t(".#{@selected_type}.with_count_html", count: @vacancies.count)
+    h1.govuk-heading-l = t("jobs.dashboard.#{@selected_type}.with_count_html", count: @vacancies.count)
   .govuk-grid-column-one-quarter
     - if @organisation.all_vacancies.active.any?
       = govuk_button_link_to t("buttons.create_job"), create_or_copy_organisation_jobs_path, class: "float-right"
@@ -10,7 +10,7 @@
 
 = tabs do |tabs|
   - @vacancy_types.each do |vacancy_type|
-    - tabs.navigation_item text: t(".#{vacancy_type}.tab_heading"), link: jobs_with_type_organisation_path(vacancy_type), active: selected_type == vacancy_type
+    - tabs.navigation_item text: t("jobs.dashboard.#{vacancy_type}.tab_heading"), link: jobs_with_type_organisation_path(vacancy_type), active: selected_type == vacancy_type
 
 .govuk-grid-row.vacancies-component class="govuk-!-margin-bottom-7"
   - if @vacancies.many?
@@ -19,7 +19,7 @@
   - if @organisation.school_group?
     .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-4"
       - if @publisher_preference
-        = govuk_link_to t(".add_or_remove_schools"), edit_publishers_publisher_preference_path(@publisher_preference), class: "govuk-link--no-visited-state"
+        = govuk_link_to t("jobs.dashboard.add_or_remove_schools"), edit_publishers_publisher_preference_path(@publisher_preference), class: "govuk-link--no-visited-state"
 
       div class="govuk-!-margin-top-2"
         = form_for [:publishers, @publisher_preference], html: { data: { controller: "form", "hide-submit": true } } do |f|

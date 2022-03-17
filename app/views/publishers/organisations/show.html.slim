@@ -1,10 +1,10 @@
 - content_for :page_title_prefix, current_organisation.name
 
 - content_for :skip_links do
-  a.govuk-skip-link href="#vacancy-results" Skip to #{t("publishers.vacancies_component.#{@selected_type}.tab_heading")}
+  a.govuk-skip-link href="#vacancy-results" Skip to #{t("jobs.dashboard.#{@selected_type}.tab_heading")}
 
-= publishers_vacancies(organisation: current_organisation,
-    sort: @sort,
-    selected_type: @selected_type,
-    publisher_preference: @publisher_preference,
-    email: current_publisher.email)
+= dashboard(organisation: current_organisation,
+            sort: @sort,
+            selected_type: @selected_type,
+            publisher_preference: @publisher_preference,
+            email: current_publisher.email)
