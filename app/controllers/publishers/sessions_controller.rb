@@ -15,13 +15,13 @@ class Publishers::SessionsController < Devise::SessionsController
     publisher = Publisher.find(session[:publisher_id])
 
     if publisher.organisations.exists?(id: params[:organisation_id])
-      sign_out_jobseeker!
       sign_in_publisher!(publisher)
+      sign_out_except(:publisher)
 
-      trigger_publisher_sign_in_event(:success, :email)
+      trigger_successful_publisher_sign_in_event(:email)
       redirect_to organisation_path
     else
-      trigger_publisher_sign_in_event(:failure, :email, publisher.oid)
+      trigger_failed_dsi_sign_in_event(:email, publisher.oid)
       redirect_to new_publisher_session_path, notice: t(".not_authorised")
     end
   end

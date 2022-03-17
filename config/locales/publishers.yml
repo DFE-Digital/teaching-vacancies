@@ -37,9 +37,6 @@ en:
           zero: No unread notifications
           one: 1 unread notification
           other: "%{count} unread notifications"
-    omniauth_callbacks:
-      failure:
-        message: Your session has expired so you have been logged out. Please sign in again to your account below.
     organisations:
       aria_change_description: '%{organisation_type} description'
       aria_change_website: '%{organisation_type} website'

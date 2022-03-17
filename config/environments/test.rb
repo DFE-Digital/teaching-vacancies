@@ -59,7 +59,7 @@ Rails.application.configure do
 
   require "fake_dsi_sign_out_endpoint"
   ENV["DFE_SIGN_IN_ISSUER"] = "http://fake.dsi.example.com"
-  config.middleware.insert_before 0, FakeDsiSignOutEndpoint
+  config.middleware.insert_before 0, FakeDSISignOutEndpoint
 end
 
 # Avoid OmniAuth output in tests:

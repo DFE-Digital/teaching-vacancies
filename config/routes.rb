@@ -89,7 +89,6 @@ Rails.application.routes.draw do
   end
 
   devise_for :publishers, controllers: {
-    omniauth_callbacks: "publishers/omniauth_callbacks",
     sessions: "publishers/sessions",
   }
 
@@ -115,6 +114,25 @@ Rails.application.routes.draw do
       delete "sign-out", to: "publishers/sessions#destroy", as: :destroy_publisher_session
     end
   end
+
+  scope path: "support-users" do
+    devise_scope :support_user do
+      get "sign-in", to: "support_users/sessions#new", as: :new_support_user_session
+      delete "sign-out", to: "support_users/sessions#destroy", as: :destroy_support_user_session
+    end
+
+    root to: "support_users/dashboard#dashboard", as: :support_user_root
+  end
+
+  devise_for :support_users
+
+  devise_scope :publisher do
+    get "/auth/dfe", to: "omniauth_callbacks#passthru"
+    get "/auth/dfe/callback", to: "omniauth_callbacks#dfe"
+  end
+
+  # FIXME: Remove this once the DSI callback URL changes are done
+  get "/publishers/auth/dfe/callback", to: redirect(path: "/auth/dfe/callback")
 
   root "home#index"
 

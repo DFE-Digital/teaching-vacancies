@@ -1,0 +1,17 @@
+{
+  "userId":"161d1f6a-44f1-4a1a-940d-d1088c439da7",
+  "serviceId":"E348F7D4-93D9-4B43-9B78-C84D80C2F34C",
+  "organisationId":"939eac36-0777-48c2-9c2c-b87c948a9ee0",
+  "roles":[
+    {
+      "id":"test-publisher-role-id",
+      "name":"Access to Find a job in teaching",
+      "code":"TVSACCESS",
+      "numericId":"152",
+      "status": {
+        "id":1
+      }
+    }
+  ],
+  "identifiers":[]
+}

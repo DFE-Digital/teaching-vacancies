@@ -433,6 +433,16 @@ ActiveRecord::Schema.define(version: 2022_03_10_103754) do
     t.datetime "unsubscribed_at"
   end
 
+  create_table "support_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "oid"
+    t.string "email"
+    t.string "given_name"
+    t.string "family_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["oid"], name: "index_support_users_on_oid"
+  end
+
   create_table "vacancies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "job_title"
     t.string "slug", null: false

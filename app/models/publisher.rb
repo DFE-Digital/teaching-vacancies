@@ -10,7 +10,7 @@ class Publisher < ApplicationRecord
 
   lockbox_encrypts :family_name, :given_name
 
-  devise :omniauthable, :timeoutable, omniauth_providers: %i[dfe]
+  devise :timeoutable
   self.timeout_in = 60.minutes # Overrides default Devise configuration
 
   def vacancies_with_job_applications_submitted_yesterday
