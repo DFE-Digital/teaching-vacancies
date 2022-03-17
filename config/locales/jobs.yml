@@ -99,7 +99,7 @@ en:
         descending:
           saved_job: date added (most recent)
           subscription: date subscribed (most recent)
-          vacancy: date drafted (most recent)
+          vacancy: date created (most recent)
       expires_at:
         ascending:
           saved_job: application deadline (soonest)
@@ -302,7 +302,7 @@ en:
         no_jobs:
           no_filters: You currently have no draft jobs.
           with_filters: There are no draft jobs for the schools you have selected.
-        time_created: Date drafted
+        time_created: Date created
         time_updated: Date last updated
       edit_link_text: Edit listing
       extend_link_text: Extend deadline
