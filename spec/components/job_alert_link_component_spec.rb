@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Jobseekers::SearchResults::JobAlertsLinkComponent, type: :component do
+RSpec.describe JobAlertLinkComponent, type: :component do
   subject { described_class.new(vacancies_search: vacancies_search, count: 1) }
 
   let(:vacancies_search) { instance_double(Search::VacancySearch) }

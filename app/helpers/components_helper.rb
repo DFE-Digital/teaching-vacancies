@@ -5,6 +5,7 @@ module ComponentsHelper
     dashboard: "DashboardComponent",
     empty_section: "EmptySectionComponent",
     filters: "FiltersComponent",
+    job_alert_link: "JobAlertLinkComponent",
     job_application_review: "JobApplicationReviewComponent",
     jobseekers_search_results_heading: "Jobseekers::SearchResults::HeadingComponent",
     landing_page_link_group: "LandingPageLinkGroupComponent",

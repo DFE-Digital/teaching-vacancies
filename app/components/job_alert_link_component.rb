@@ -1,4 +1,4 @@
-class Jobseekers::SearchResults::JobAlertsLinkComponent < ViewComponent::Base
+class JobAlertLinkComponent < ViewComponent::Base
   def initialize(vacancies_search:, count:)
     @vacancies_search = vacancies_search
     @count = count

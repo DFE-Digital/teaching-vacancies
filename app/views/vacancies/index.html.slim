@@ -78,4 +78,4 @@
               = paginate @vacancies_search.vacancies
             span.govuk-body#vacancies-stats-bottom
 
-          = render(Jobseekers::SearchResults::JobAlertsLinkComponent.new(vacancies_search: @vacancies_search, count: @vacancies.count))
+          = job_alert_link(vacancies_search: @vacancies_search, count: @vacancies.count)
