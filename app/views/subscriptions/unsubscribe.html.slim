@@ -4,7 +4,7 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-l = t(".title")
 
-    = render Jobseekers::SubscriptionDetailsComponent.new(@subscription, current_subscription: true)
+    = render "subscription_details", subscription: @subscription, current_subscription: true
 
     p.govuk-body = t(".confirmation")
 

@@ -1,26 +1,25 @@
 @import 'base_component';
 
 .job-alert-cta {
+  bottom: 0;
+  box-sizing: border-box;
+  display: block;
+  margin-bottom: -40px;
+  position: sticky;
 
   @include govuk-media-query($until: desktop) {
-    margin: 0 -15px !important
+    margin: 0 -15px !important;
   }
 
-  position: sticky;
-  display: block;
-  box-sizing: border-box;
-  bottom: 0;
-  margin-bottom: -40px;
-
   .job-alert-cta__fade {
-    height: 6px;
     background: linear-gradient(transparent, $govuk-border-colour);
+    height: 6px;
   }
 
   .job-alert-cta__content {
     background-color: $govuk-brand-colour;
-    padding: govuk-spacing(2);
     color: govuk-colour('white');
+    padding: govuk-spacing(2);
 
     a {
       color: govuk-colour('white');
@@ -33,9 +32,9 @@
     .alert-icon {
       display: inline;
       left: 2px;
+      margin-right: govuk-spacing(1);
       position: relative;
       top: 2px;
-      margin-right: govuk-spacing(1);
     }
   }
 }

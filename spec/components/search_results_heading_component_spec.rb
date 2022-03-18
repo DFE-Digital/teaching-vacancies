@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Jobseekers::SearchResults::HeadingComponent, type: :component do
+RSpec.describe SearchResultsHeadingComponent, type: :component do
   subject { render_inline(described_class.new(vacancies_search: vacancies_search, landing_page: landing_page)) }
 
   let(:vacancies_search) { instance_double(Search::VacancySearch) }
