@@ -162,10 +162,10 @@ RSpec.describe "Api::Vacancies" do
         let(:vacancy) { create(:vacancy, working_patterns: working_patterns) }
 
         context "with single working patterns" do
-          let(:working_patterns) { %w[full_time] }
+          let(:working_patterns) { %w[full_time part_time] }
 
-          it "maps full_time working pattern to FULL_TIME" do
-            expect(json.to_h).to include(employmentType: "FULL_TIME")
+          it "maps full_time working pattern to Full time, part time" do
+            expect(json.to_h).to include(employmentType: %w[FULL_TIME PART_TIME])
           end
         end
       end

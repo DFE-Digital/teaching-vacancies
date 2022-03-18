@@ -5,24 +5,6 @@ RSpec.describe VacancyPresenter do
 
   let(:vacancy) { build(:vacancy) }
 
-  describe "#expired?" do
-    context "when the vacancy has expired by now" do
-      let(:vacancy) { build_stubbed(:vacancy, expires_at: 1.hour.ago) }
-
-      it "returns true" do
-        expect(subject).to be_expired
-      end
-    end
-
-    context "when the vacancy expires later today" do
-      let(:vacancy) { build_stubbed(:vacancy, expires_at: 1.hour.from_now) }
-
-      it "returns false" do
-        expect(subject).not_to be_expired
-      end
-    end
-  end
-
   describe "#job_advert" do
     let(:vacancy) { build_stubbed(:vacancy, job_advert: "<script> call();</script>Sanitized content") }
 
@@ -155,7 +137,7 @@ RSpec.describe VacancyPresenter do
   end
 
   describe "#readable_working_patterns" do
-    let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time], working_patterns_details: nil) }
+    let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time]) }
 
     it "returns working patterns" do
       expect(subject.readable_working_patterns).to eq("Full time, part time")
@@ -166,16 +148,16 @@ RSpec.describe VacancyPresenter do
     context "when working_patterns is unset" do
       let(:vacancy) { build_stubbed(:vacancy, :without_working_patterns) }
 
-      it "returns blank" do
-        expect(subject.working_patterns_for_job_schema).to be_blank
+      it "returns an empty array" do
+        expect(subject.working_patterns_for_job_schema).to eq []
       end
     end
 
     context "when working_patterns is set" do
-      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time]) }
+      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time], fixed_term_contract_duration: "2 months") }
 
-      it "returns a string containing the working pattern" do
-        expect(subject.working_patterns_for_job_schema).to eq("FULL_TIME, PART_TIME")
+      it "returns an array of strings compatible with Google Jobs" do
+        expect(subject.working_patterns_for_job_schema).to eq %w[FULL_TIME PART_TIME TEMPORARY]
       end
     end
   end

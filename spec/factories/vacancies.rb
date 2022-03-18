@@ -154,6 +154,7 @@ FactoryBot.define do
       to_create { |instance| instance.save(validate: false) }
       sequence(:slug) { |n| "slug-#{n}" }
       working_patterns { nil }
+      fixed_term_contract_duration { nil }
     end
 
     trait :with_feedback do

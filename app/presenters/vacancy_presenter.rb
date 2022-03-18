@@ -34,7 +34,11 @@ class VacancyPresenter < BasePresenter
   end
 
   def working_patterns_for_job_schema
-    model.working_patterns.compact.map(&:upcase).join(", ")
+    [
+      ("FULL_TIME" if model.working_patterns.include?("full_time")),
+      ("PART_TIME" if model.working_patterns.include?("part_time")),
+      ("TEMPORARY" if model.fixed_term_contract_duration?),
+    ].compact
   end
 
   def readable_main_job_role
