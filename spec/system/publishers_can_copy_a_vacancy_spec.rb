@@ -117,7 +117,7 @@ RSpec.describe "Copying a vacancy" do
 
     scenario "a job can be successfully copied" do
       visit organisation_path
-      click_on I18n.t("publishers.vacancies_component.pending.tab_heading")
+      click_on I18n.t("jobs.dashboard.pending.tab_heading")
       click_on original_vacancy.job_title
       click_on I18n.t("buttons.copy_listing")
 
@@ -144,7 +144,7 @@ RSpec.describe "Copying a vacancy" do
       new_vacancy.expires_at = 30.days.from_now.change(hour: 9, minute: 0)
 
       visit organisation_path
-      click_on I18n.t("publishers.vacancies_component.expired.tab_heading")
+      click_on I18n.t("jobs.dashboard.expired.tab_heading")
       click_on original_vacancy.job_title
       click_on I18n.t("buttons.copy_listing")
 

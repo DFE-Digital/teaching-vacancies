@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Publishers::VacanciesComponent, type: :component do
+RSpec.describe DashboardComponent, type: :component do
   let(:publisher) { create(:publisher) }
   let(:sort) { Publishers::VacancySort.new(organisation, selected_type).update(sort_by: "job_title") }
   let(:selected_type) { "published" }

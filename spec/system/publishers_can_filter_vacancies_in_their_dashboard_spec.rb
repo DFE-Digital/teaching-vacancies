@@ -101,7 +101,7 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
       expect(page).to_not have_content(school1_draft_vacancy.job_title)
       expect(page).to_not have_content(school2_draft_vacancy.job_title)
 
-      click_on I18n.t("publishers.vacancies_component.add_or_remove_schools")
+      click_on I18n.t("jobs.dashboard.add_or_remove_schools")
       uncheck school1.name
       click_on I18n.t("buttons.save_and_continue")
 

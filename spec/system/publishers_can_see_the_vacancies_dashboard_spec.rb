@@ -33,18 +33,18 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
 
       visit organisation_path
 
-      expect(page).to have_content(I18n.t("publishers.vacancies_component.published.tab_heading"))
-      expect(page).to have_content(I18n.t("publishers.vacancies_component.draft.tab_heading"))
-      expect(page).to have_content(I18n.t("publishers.vacancies_component.pending.tab_heading"))
-      expect(page).to have_content(I18n.t("publishers.vacancies_component.expired.tab_heading"))
-      expect(page).to have_content(I18n.t("publishers.vacancies_component.awaiting_feedback.tab_heading"))
+      expect(page).to have_content(I18n.t("jobs.dashboard.published.tab_heading"))
+      expect(page).to have_content(I18n.t("jobs.dashboard.draft.tab_heading"))
+      expect(page).to have_content(I18n.t("jobs.dashboard.pending.tab_heading"))
+      expect(page).to have_content(I18n.t("jobs.dashboard.expired.tab_heading"))
+      expect(page).to have_content(I18n.t("jobs.dashboard.awaiting_feedback.tab_heading"))
     end
 
     scenario "with published vacancies" do
       visit organisation_path
 
       within(".tabs-component-navigation__list") do
-        click_on(I18n.t("publishers.vacancies_component.published.tab_heading"))
+        click_on(I18n.t("jobs.dashboard.published.tab_heading"))
       end
 
       within(".vacancies-component__content") do
@@ -57,7 +57,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
       visit organisation_path
 
       within(".tabs-component-navigation__list") do
-        click_on(I18n.t("publishers.vacancies_component.draft.tab_heading"))
+        click_on(I18n.t("jobs.dashboard.draft.tab_heading"))
       end
 
       within(".vacancies-component__content") do
@@ -73,7 +73,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
       visit organisation_path
 
       within(".tabs-component-navigation__list") do
-        click_on(I18n.t("publishers.vacancies_component.pending.tab_heading"))
+        click_on(I18n.t("jobs.dashboard.pending.tab_heading"))
       end
 
       within(".vacancies-component__content") do
@@ -89,7 +89,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
       visit organisation_path
 
       within(".tabs-component-navigation__list") do
-        click_on(I18n.t("publishers.vacancies_component.expired.tab_heading"))
+        click_on(I18n.t("jobs.dashboard.expired.tab_heading"))
       end
 
       within(".vacancies-component__content") do
@@ -108,7 +108,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
         visit organisation_path
 
         within(".tabs-component-navigation__list") do
-          click_on(I18n.t("publishers.vacancies_component.draft.tab_heading"))
+          click_on(I18n.t("jobs.dashboard.draft.tab_heading"))
         end
 
         within(".vacancies-component__content") do

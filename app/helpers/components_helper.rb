@@ -1,6 +1,7 @@
 module ComponentsHelper
   {
     card: "CardComponent",
+    dashboard: "DashboardComponent",
     empty_section: "EmptySectionComponent",
     filters: "FiltersComponent",
     job_application_review: "JobApplicationReviewComponent",
@@ -9,13 +10,10 @@ module ComponentsHelper
     landing_page_link_group: "LandingPageLinkGroupComponent",
     map: "MapComponent",
     navigation_list: "NavigationListComponent",
-    publishers_no_vacancies: "Publishers::NoVacanciesComponent",
-    publishers_school_overview: "Publishers::SchoolOverviewComponent",
-    publishers_vacancies: "Publishers::VacanciesComponent",
-    publishers_vacancy_form_page_heading: "Publishers::VacancyFormPageHeadingComponent",
     review: "ReviewComponent",
     searchable_collection: "SearchableCollectionComponent",
     tabs: "TabsComponent",
+    vacancy_form_page_heading: "VacancyFormPageHeadingComponent",
     vacancy_review: "VacancyReviewComponent",
     vacancy_selector: "VacancySelectorComponent",
     validatable_summary_list: "ValidatableSummaryListComponent",

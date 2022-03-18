@@ -1,4 +1,4 @@
-class Publishers::VacanciesComponent < ViewComponent::Base
+class DashboardComponent < ViewComponent::Base
   include DatesHelper
 
   def initialize(organisation:, sort:, selected_type:, publisher_preference:, email:)

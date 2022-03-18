@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Publishers::VacancyFormPageHeadingComponent, type: :component do
+RSpec.describe VacancyFormPageHeadingComponent, type: :component do
   let(:organisation) { create(:school, name: "Teaching Vacancies Academy") }
   let(:vacancy) { create(:vacancy, status, organisations: [organisation], job_title: "Test job title", completed_steps: %w[step_one step_two]) }
   let(:status) { :published }

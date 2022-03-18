@@ -1,5 +1,5 @@
 - content_for :breadcrumbs do
-  = govuk_breadcrumbs breadcrumbs: { "#{t("publishers.vacancies_component.#{vacancy.publication_status}.tab_heading")}": jobs_with_type_organisation_path(vacancy.publication_status),
+  = govuk_breadcrumbs breadcrumbs: { "#{t("jobs.dashboard.#{vacancy.publication_status}.tab_heading")}": jobs_with_type_organisation_path(vacancy.publication_status),
                                      "#{vacancy.job_title}": "" }
 
 .govuk-grid-row
