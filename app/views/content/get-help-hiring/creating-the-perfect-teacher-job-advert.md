@@ -14,7 +14,7 @@ When posting a new role on Teaching Vacancies, the job listing process will walk
 
 ### Job details
 
-The first few steps will ask you about the type of role you’re recruiting for, the working pattern, any subject areas it covers and whether it has any SEND responsibilities. As well as being summarised on the final job advert, this information feeds into the search and job alert options we provide to jobseekers. By ticking the right boxes you’re immediately putting your role in front of a relevant audience.
+The first few steps will ask you about the type of role you’re recruiting for, the working pattern, the subject areas it covers and whether it has any SEND responsibilities. As well as being summarised on the final job advert, this information feeds into the search and job alert options we provide to jobseekers. By ticking the right boxes you’re immediately putting your role in front of a relevant audience.
 
 You’ll also need to select a job title. Our research suggests that jobseekers respond to short, simple job titles. While it’s tempting to cram as much information as possible into this field, we recommend putting yourself in the shoes of applicants and considering how they search for jobs.
 
@@ -28,12 +28,14 @@ Teacher salaries can be complicated compared to some other industries, so when l
 
 * **Annual or full time equivalent (FTE) salary** - this is simply what the role would pay per year, regardless of any particular working patterns. If it’s a full time role, enter the full basic salary (or a salary band) here. If it’s not, calculate this from the number of days or weeks per year the role covers.
 * **Actual salary** - for part time, flexible, job share or term time roles, provide the candidate with specific information on the money they will receive. You may decide to state this per year or per month, depending on the nature of the role.
-* **Additional allowances** - many schools offer teachers benefits beyond their monthly wages. This is you opportunity to list an salary sacrifice schemes, cycle to work vouchers, tax-free childcare, and any other bonuses related to working at your school. You may also want to detail the training and career development opportunities you offer.
+* **Additional allowances** - many schools offer teachers benefits beyond their monthly wages. This is your opportunity to list salary sacrifice schemes, cycle to work vouchers, tax-free childcare, and any other bonuses related to working at your school. You may also want to detail the training and career development opportunities you offer.
 
-However you decide to best describe the salary on offer using these filed, avoid referring to pay in a way that doesn’t make sense to people outside your organisation. Those you work with may inherently understand the grades or bands you use, or acronyms such as MPS or UPS, but don’t assume your candidates will. Make it easy for them by providing a straightforward numerical value.
+However you decide to best describe the salary on offer using these fields, avoid referring to pay in a way that doesn’t make sense to people outside your organisation. Those you work with may have an understanding of the grades or bands you use, or acronyms such as MPS or UPS, but don’t assume your candidates will. Make it easy for them by providing a straightforward numerical value.
 
 ### Application method
 On Teaching Vacancies we offer two ways for you to receive applications, either through our built-in application form, or through your own method.
+
+* Read our guidance on [how to accept job applications on Teaching Vacancies](/accepting-job-applications-on-teaching-vacancies)
 
 If you choose the former you’ll have the benefit of managing candidates in one place from the start of the process all the way through to offering someone the job. If you choose the latter, you can point applicants to a form on your website, or ask them to submit attachments via an email address.
 
@@ -41,7 +43,8 @@ Whichever route you go down, make sure it’s clear to the candidate exactly wha
 
 It’s also recommended to provide some basic information about the interview and selection process. Will candidates be able to visit the school? Will there be a single interview or a series? Will they be conducted by an individual or a panel? Are there any tests or presentations involved? Let candidates know exactly what they’re letting themselves in for.
 
-School details
+### School details
+
 Jobseekers are just as interested in where they’ll be working and who they’ll be working with, as they are in what they’ll be doing.
 
 Beyond the basic address and contact information, we recommend providing a brief summary of the environment your school offers pupils and some of the values that you expect to see across the school community.
@@ -50,11 +53,11 @@ This is a chance to demonstrate what makes your school different from the rest, 
 
 ## What should be included in a teacher job description?
 
-You may have noticed we haven’t yet mentioned the actual the job description. While the information above is essential to get right, it’s the job details section where you need to spend the majority of your time and effort.
+While the information above is essential to get right, it’s the job description section where you need to spend the majority of your time and effort.
 
 ### Job description length
 
-Analysis of applications made through Teaching Vacancies suggest that around 300 to 500 words is the optimal amount of text to present to jobseekers. Any less and you’re potentially leaving out something important. Any more and you’re in danger of providing too much unnecessary information. 
+Analysis of applications made through Teaching Vacancies suggest that around 300 to 500 words is the optimal amount of text to present to jobseekers. Any less and you’re potentially leaving out something important. Any more and you’re in danger of providing too much unnecessary information.
 
 Within this space, the tone should be overwhelmingly positive. Readers can form a lot of impressions about a school from the writing style of a job advert.
 
@@ -95,7 +98,7 @@ The final step of posting a job on Teaching Vacancies offers you a chance to pre
 We highly recommend taking off your hiring staff hat and looking at your job advert with an objective eye and asking yourself these questions:
 
 * **How does it look on a mobile?** The majority of candidates search for jobs on smartphones, so look at the preview link on a small screen to ensure it flows as you’d like it to and it’s pleasing to the eye.
-* **Is there any duplicate information?** Some job ads include salaries or working patterns within the job description, despite these already being summarised at the top of the job advert template. Remove anything that’s already included elsewhere.
+* **Is there any duplicate information?** Some schools post job ads including salaries or working patterns within the job description, despite these already being summarised at the top of the job advert template. Remove anything that’s already included elsewhere.
 * **Does it comply with employment legislation?** While you’re perfectly within your rights to ask that candidates meet certain criteria, it’s illegal to refer to age, gender, and various other personal characteristics. This also applies to phrases such as 'recent graduate' or 'highly experienced', so focus more on what you want candidates to be able to do, rather than how long they’ve been doing it.
 
 And finally, edit your text thoroughly. Like any piece of writing, your first draft should look very different from your final version. Don’t rely on your computer’s spell checker, and make use of the many online tools that help you write in a simpler, clearer and more persuasive way.
