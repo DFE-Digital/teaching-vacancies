@@ -26,7 +26,7 @@ class Jobseekers::AlertMailer < Jobseekers::BaseMailer
                               count_minus_one: @vacancies.count - 1,
                               job_title: @vacancies.first.job_title,
                               keywords: @subscription.search_criteria["keyword"].nil? ? I18n.t("jobseekers.alert_mailer.alert.subject.no_keywords") : @subscription.search_criteria["keyword"]&.titleize,
-                              school_name: @vacancies.first.parent_organisation_name))
+                              school_name: @vacancies.first.organisation_name))
   end
 
   def ab_tests

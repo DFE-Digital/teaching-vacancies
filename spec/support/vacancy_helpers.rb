@@ -141,9 +141,9 @@ module VacancyHelpers
     vacancy.reload
     vacancy = VacancyPresenter.new(vacancy) unless vacancy.is_a?(VacancyPresenter)
 
-    unless vacancy.parent_organisation.school?
+    unless vacancy.organisation.school?
       if vacancy.at_multiple_schools?
-        expect(page).to have_content(t("organisations.job_location_heading.at_multiple_schools", organisation_type: organisation_type_basic(vacancy.parent_organisation)))
+        expect(page).to have_content(t("organisations.job_location_heading.at_multiple_schools", organisation_type: organisation_type_basic(vacancy.organisation)))
       else
         expect(page).to have_content(I18n.t("organisations.job_location_heading.#{vacancy.job_location}"))
       end
@@ -245,17 +245,17 @@ module VacancyHelpers
         "@type": "Place",
         address: {
           "@type": "PostalAddress",
-          addressLocality: vacancy.parent_organisation.town,
-          addressRegion: vacancy.parent_organisation.region,
-          streetAddress: vacancy.parent_organisation.address,
-          postalCode: vacancy.parent_organisation.postcode,
+          addressLocality: vacancy.organisation.town,
+          addressRegion: vacancy.organisation.region,
+          streetAddress: vacancy.organisation.address,
+          postalCode: vacancy.organisation.postcode,
         },
       },
       url: job_url(vacancy),
       hiringOrganization: {
         "@type": "Organization",
-        name: vacancy.parent_organisation.name,
-        identifier: vacancy.parent_organisation.urn,
+        name: vacancy.organisation_name,
+        identifier: vacancy.organisation.urn,
         description: vacancy.about_school,
       },
       validThrough: vacancy.expires_at.to_time.iso8601,

@@ -11,7 +11,7 @@
       - banner.heading(text: t(".notice.title"))
       span class="govuk-!-margin-top-3" = t(".notice.body")
 
-    p.govuk-body = t(".next_step.shortlisted", organisation: vacancy.parent_organisation.name)
+    p.govuk-body = t(".next_step.shortlisted", organisation: vacancy.organisation_name)
 
     = govuk_button_link_to t(".next_step.view_applications"), jobseekers_job_applications_path, class: "govuk-button--secondary govuk-!-margin-bottom-3"
 

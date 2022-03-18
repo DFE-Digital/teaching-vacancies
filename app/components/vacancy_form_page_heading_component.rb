@@ -21,7 +21,7 @@ class VacancyFormPageHeadingComponent < ViewComponent::Base
   end
 
   def organisation_from_job_location
-    vacancy.at_multiple_schools? ? "multiple schools" : vacancy.parent_organisation_name
+    vacancy.at_multiple_schools? ? "multiple schools" : vacancy.organisation_name
   end
 
   def back_path

@@ -1,5 +1,5 @@
 - content_for :breadcrumbs do
   = govuk_back_link text: t("buttons.back"), href: back_path
 
-span.govuk-caption-l = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
+span.govuk-caption-l = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.organisation_name)
 h2.govuk-heading-xl = t("jobseekers.job_applications.heading")

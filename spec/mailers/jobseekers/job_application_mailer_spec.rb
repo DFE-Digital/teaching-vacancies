@@ -77,10 +77,10 @@ RSpec.describe Jobseekers::JobApplicationMailer do
     let(:notify_template) { NOTIFY_JOBSEEKER_JOB_LISTING_ENDED_EARLY_TEMPLATE }
 
     it "sends a `jobseeker_job_listing_ended_early` email" do
-      expect(mail.subject).to eq("Update on #{vacancy.job_title} at #{vacancy.parent_organisation.name}")
+      expect(mail.subject).to eq("Update on #{vacancy.job_title} at #{vacancy.organisation_name}")
       expect(mail.to).to eq([jobseeker.email])
       expect(mail.body.encoded).to include(I18n.t("jobseekers.job_application_mailer.job_listing_ended_early.heading",
-                                                  job_title: vacancy.job_title, organisation_name: vacancy.parent_organisation.name))
+                                                  job_title: vacancy.job_title, organisation_name: vacancy.organisation_name))
       expect(mail.body.encoded).to include(jobseekers_job_application_url(job_application))
     end
 

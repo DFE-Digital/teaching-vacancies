@@ -27,7 +27,7 @@ module DatabaseIndexable
         readable_phases,
         VacancyPresenter.new(self).readable_job_roles,
         VacancyPresenter.new(self).readable_key_stages,
-        parent_organisation_name,
+        organisation_name,
         organisations.schools.map { |school| school.school_groups.map(&:name) }.flatten,
         VacancyPresenter.new(self).readable_working_patterns,
         organisations.map(&:name),

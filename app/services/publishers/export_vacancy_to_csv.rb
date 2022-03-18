@@ -22,7 +22,7 @@ class Publishers::ExportVacancyToCsv
 
   def base_columns
     {
-      "Organisation" => vacancy.organisation.name,
+      "Organisation" => vacancy.organisation_name,
       I18n.t("jobs.job_title") => vacancy.job_title,
       I18n.t("publishers.vacancies.statistics.show.views_by_jobseeker") => @number_of_unique_views,
       I18n.t("publishers.vacancies.statistics.show.saves_by_jobseeker") => vacancy.saved_jobs.count,

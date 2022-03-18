@@ -34,7 +34,7 @@ class Search::CriteriaInventor
   def location
     return @vacancy.organisation.postcode if @vacancy.organisations.one?
 
-    @vacancy.postcode_from_mean_geolocation || @vacancy.set_postcode_from_mean_geolocation || @vacancy.parent_organisation.postcode
+    @vacancy.postcode_from_mean_geolocation || @vacancy.set_postcode_from_mean_geolocation || @vacancy.organisation.postcode
   end
 
   def subjects

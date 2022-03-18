@@ -1,11 +1,11 @@
 section#school-overview
-  h2.govuk-heading-l.heading--border-bottom = t("organisations.about.#{vacancy.job_location}", organisation: vacancy.parent_organisation.name)
+  h2.govuk-heading-l.heading--border-bottom = t("organisations.about.#{vacancy.job_location}", organisation: vacancy.organisation_name)
 
   - case vacancy.job_location
   - when "at_one_school"
-    = render "vacancies/school", organisation: vacancy.parent_organisation, vacancy: vacancy, contact_details: true
+    = render "vacancies/school", organisation: vacancy.organisation, vacancy: vacancy, contact_details: true
   - when "central_office", "at_multiple_schools"
-    = render "vacancies/school_group", organisation: vacancy.parent_organisation, vacancy: vacancy
+    = render "vacancies/school_group", organisation: vacancy.organisation, vacancy: vacancy
 
   - if vacancy_or_organisation_description(vacancy).present?
     p.govuk-body = vacancy_or_organisation_description(vacancy)
@@ -15,10 +15,10 @@ section#school-overview
     = govuk_accordion do |accordion|
       - vacancy.organisations.each do |organisation|
         - accordion.section heading_text: organisation.name do
-          = render "school", organisation: organisation, vacancy: vacancy, contact_details: false
+          = render "vacancies/school", organisation: organisation, vacancy: vacancy, contact_details: false
 
   - if vacancy.school_visits?
-    h4.govuk-heading-m = t("organisations.visits.#{vacancy.job_location}", organisation: vacancy.parent_organisation.name)
+    h4.govuk-heading-m = t("organisations.visits.#{vacancy.job_location}", organisation: vacancy.organisation_name)
     p.govuk-body = vacancy.school_visits
 
   section#school-location

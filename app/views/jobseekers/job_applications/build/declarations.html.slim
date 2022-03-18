@@ -11,7 +11,7 @@
     = form_for form, url: wizard_path, method: :patch do |f|
       = f.govuk_error_summary
 
-      = f.govuk_radio_buttons_fieldset :close_relationships, legend: { text: t("helpers.legend.jobseekers_job_application_declarations_form.close_relationships", organisation: vacancy.organisation.name) } do
+      = f.govuk_radio_buttons_fieldset :close_relationships, legend: { text: t("helpers.legend.jobseekers_job_application_declarations_form.close_relationships", organisation: vacancy.organisation_name) } do
         = f.govuk_radio_button :close_relationships, :yes, link_errors: true do
           = f.govuk_text_field :close_relationships_details
         = f.govuk_radio_button :close_relationships, :no

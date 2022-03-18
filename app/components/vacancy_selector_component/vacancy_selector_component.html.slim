@@ -10,4 +10,4 @@ fieldset.govuk-fieldset data-controller="vacancy-selector" data-vacancy-selector
           span class="job-title govuk-!-font-weight-bold" = vacancy.job_title
           .job-ends-on.govuk-hint class="govuk-!-margin-bottom-0" = t(".job.expires_on", date: vacancy.expires_at.to_date || t(".job.not_set"))
           - if organisation.trust_or_la?
-            span class="job-organisation-name govuk-hint govuk-!-margin-bottom-0" = vacancy.organisation.name
+            span class="job-organisation-name govuk-hint govuk-!-margin-bottom-0" = vacancy.organisation_name
