@@ -8,6 +8,8 @@ import { Application } from '@hotwired/stimulus';
 import Rails from 'rails-ujs';
 
 // view components
+import EditorController from './components/editor/editor';
+import EditorPreviewController from './components/editor/preview';
 import FiltersController from './components/filters/filters';
 import MapController from './components/map/map';
 import MapSidebarController from './components/map/sidebar';
@@ -50,6 +52,8 @@ application.register('map', MapController);
 application.register('map-sidebar', MapSidebarController);
 application.register('panel', PanelController);
 application.register('searchable-collection', SearchableCollectionComponent);
+application.register('editor', EditorController);
+application.register('editor-preview', EditorPreviewController);
 application.register('show-hidden-content', ShowHiddenContentController);
 application.register('tracked-link', TrackedLinkController);
 application.register('upload-documents', UploadDocumentsController);

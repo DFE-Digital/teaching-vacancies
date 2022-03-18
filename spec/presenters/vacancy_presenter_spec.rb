@@ -126,10 +126,6 @@ RSpec.describe VacancyPresenter do
 
   let(:vacancy) { build(:vacancy) }
 
-  describe "#job_advert" do
-    it_behaves_like "a fields that outputs the correct HTML", :job_advert
-  end
-
   describe "#about_school" do
     it_behaves_like "a fields that outputs the correct HTML", :about_school
   end

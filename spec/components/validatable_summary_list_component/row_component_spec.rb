@@ -209,7 +209,7 @@ RSpec.describe ValidatableSummaryListComponent::RowComponent, type: :component d
         end
 
         it "uses the attribute value" do
-          expect(row.build_text).to eq(nil)
+          expect(row.build_text).to eq("")
         end
       end
     end

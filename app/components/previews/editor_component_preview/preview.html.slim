@@ -1,0 +1,15 @@
+- content_for :page_title_prefix do
+  | Component preview
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    .govuk-form-group
+      .rich-editor data-controller="editor-preview" data-action="editor:update->editor-preview#update"
+        = form_for @preview_form, url: preview_view_component_path("#{@preview.preview_name}/#{@example_name}"), html: { method: "get" } do |f|
+          = render(@preview_class.new(form_input: f.govuk_text_area(:options, label: { size: "s", id: "job-advert-label" }, rows: 10, required: true), value: "hello", field_name: "example", hint: "Editor hint text", label: { text: "Editor label text" }))
+
+        h2.govuk-heading-s Debug HTML preview
+        p.govuk-body-s
+          | This is the underlying HTML content of the editor field above. It lets us check that if we used this component, it would produce sensible HTML &mdash; especially when pasting from misbehaving word processing software or other websites.
+        .govuk-inset-text
+          code data-editor-preview-target="debugPreview"

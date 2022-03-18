@@ -12,6 +12,7 @@ module ComponentsHelper
     map: "MapComponent",
     navigation_list: "NavigationListComponent",
     review: "ReviewComponent",
+    editor: "EditorComponent",
     search_results_heading: "SearchResultsHeadingComponent",
     searchable_collection: "SearchableCollectionComponent",
     supportal_table: "SupportalTableComponent",

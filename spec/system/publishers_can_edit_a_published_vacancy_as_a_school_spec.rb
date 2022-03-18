@@ -297,10 +297,10 @@ RSpec.describe "Publishers can edit a vacancy" do
         end
         click_header_link(I18n.t("publishers.vacancies.steps.job_summary"))
 
-        fill_in "publishers_job_listing_job_summary_form[job_advert]", with: ""
+        find("#publishers-job-listing-job-summary-form-job-advert-field").set("")
         click_on I18n.t("buttons.update_job")
 
-        within_row_for(text: I18n.t("jobs.job_advert")) do
+        within_row_for(element: ".editor-component__label", text: I18n.t("jobs.job_advert")) do
           expect(page).to have_content(I18n.t("job_summary_errors.job_advert.blank"))
         end
       end
@@ -309,7 +309,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         visit organisation_job_path(vacancy.id)
         click_header_link(I18n.t("publishers.vacancies.steps.job_summary"))
 
-        fill_in "publishers_job_listing_job_summary_form[job_advert]", with: "A summary about the job."
+        find("#publishers-job-listing-job-summary-form-job-advert-field").set("A summary about the job.")
         click_on I18n.t("buttons.update_job")
 
         expect(current_path).to eq(organisation_job_path(vacancy.id))
@@ -323,7 +323,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         visit organisation_job_path(vacancy.id)
         click_header_link(I18n.t("publishers.vacancies.steps.job_summary"))
 
-        fill_in "publishers_job_listing_job_summary_form[job_advert]", with: "A summary about the job."
+        find("#publishers-job-listing-job-summary-form-job-advert-field").set("A summary about the job.")
         click_on I18n.t("buttons.update_job")
       end
     end

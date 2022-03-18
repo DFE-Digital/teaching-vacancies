@@ -49,7 +49,7 @@ section#job-details class="govuk-!-margin-bottom-5"
         - row.value text: vacancy.salary
 
   h2.govuk-heading-m = t("jobs.job_summary", job_title: vacancy.job_title)
-  p.govuk-body = vacancy.job_advert
+  == vacancy.job_advert
 
   - if vacancy.benefits.present?
     h4.govuk-heading-m = t("jobs.benefits")
