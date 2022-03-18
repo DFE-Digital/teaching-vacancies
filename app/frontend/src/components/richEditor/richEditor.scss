@@ -1,0 +1,17 @@
+@import '~govuk-frontend/govuk/all';
+
+.rich-editor__editor {
+  @extend .govuk-textarea;
+
+  p:first-child {
+    margin-top: 0;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  ul {
+    @extend .govuk-list, .govuk-list--bullet;
+  }
+}

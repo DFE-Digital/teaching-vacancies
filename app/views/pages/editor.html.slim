@@ -1,0 +1,25 @@
+- content_for(:page_title_prefix, "Editor")
+h1.govuk-heading-l Editor
+p.govuk-text-l This is a demo of a possible rich text editor for job adverts.
+
+
+hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    .govuk-form-group
+      h2.govuk-label-wrapper
+        label.govuk-label.govuk-label--s for="editor" Job advert
+      div.govuk-hint
+        | Enter a lovely job advert. You can also copy and paste from word processing software.
+      #editor.rich-editor data-controller="rich-editor"
+        div.rich-editor__editor contenteditable="true" data-rich-editor-target="editor" data-action="input->rich-editor#updateDebugPreview paste->rich-editor#handlePaste blur->rich-editor#tidy"
+          p I am a paragraph
+          p I am another paragraph
+
+        hr.govuk-section-break.govuk-section-break--l
+        h2.govuk-heading-s Debug HTML preview
+        p.govuk-body-s
+          | This is the underlying HTML content of the editor field above. It lets us check that if we used this component, it would produce sensible HTML &mdash; especially when pasting from misbehaving word processing software or other websites.
+        .govuk-inset-text
+          code data-rich-editor-target="debugPreview"
