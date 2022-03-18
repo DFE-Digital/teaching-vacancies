@@ -1,4 +1,4 @@
-class Jobseekers::SearchResults::HeadingComponent < ViewComponent::Base
+class SearchResultsHeadingComponent < ViewComponent::Base
   def initialize(vacancies_search:, landing_page:)
     @vacancies_search = vacancies_search
     @landing_page = landing_page
