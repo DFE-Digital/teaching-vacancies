@@ -21,7 +21,7 @@ en:
         success: Thank you for your feedback
       new:
         title: Give feedback on Teaching Vacancies
-    account_survey_link_component:
+    account_survey:
       survey_link_text: Give feedback
       survey_text: Take our quick survey about your experience of using Teaching Vacancies
     confirmations:

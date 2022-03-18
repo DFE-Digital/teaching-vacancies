@@ -1,11 +1,11 @@
 module ComponentsHelper
   {
+    account_survey_link: "AccountSurveyLinkComponent",
     card: "CardComponent",
     dashboard: "DashboardComponent",
     empty_section: "EmptySectionComponent",
     filters: "FiltersComponent",
     job_application_review: "JobApplicationReviewComponent",
-    jobseekers_account_survey_link: "Jobseekers::AccountSurveyLinkComponent",
     jobseekers_search_results_heading: "Jobseekers::SearchResults::HeadingComponent",
     landing_page_link_group: "LandingPageLinkGroupComponent",
     map: "MapComponent",

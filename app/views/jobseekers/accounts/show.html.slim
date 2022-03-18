@@ -21,4 +21,4 @@
     h2.govuk-heading-m = t(".assistance.heading")
     p.govuk-body-s = t(".assistance.content_html", link: govuk_link_to(t(".assistance.link_text"), new_support_request_path))
 
-- content_for :after_main, jobseekers_account_survey_link(origin: url_for)
+- content_for :after_main, account_survey_link(origin: url_for)
