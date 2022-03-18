@@ -15,3 +15,7 @@
     @extend .govuk-list, .govuk-list--bullet;
   }
 }
+
+.rich-editor__toolbar {
+  margin-bottom: 10px;
+}

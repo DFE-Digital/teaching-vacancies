@@ -13,7 +13,9 @@ hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
       div.govuk-hint
         | Enter a lovely job advert. You can also copy and paste from word processing software.
       #editor.rich-editor data-controller="rich-editor"
-        div.rich-editor__editor contenteditable="true" data-rich-editor-target="editor" data-action="input->rich-editor#updateDebugPreview paste->rich-editor#handlePaste blur->rich-editor#tidy"
+        .rich-editor__toolbar
+          button.govuk-button.govuk-button--secondary class="govuk-!-margin-bottom-0" data-action="click->rich-editor#insertList" Insert list
+        .rich-editor__editor contenteditable="true" data-rich-editor-target="editor" data-action="input->rich-editor#updateDebugPreview paste->rich-editor#handlePaste blur->rich-editor#tidy"
           p I am a paragraph
           p I am another paragraph
 

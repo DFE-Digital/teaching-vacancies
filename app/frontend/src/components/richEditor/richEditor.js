@@ -72,6 +72,10 @@ const RichEditorController = class extends Controller {
     this.updateDebugPreview();
   }
 
+  insertList() {
+    document.execCommand("insertUnorderedList", false, null);
+  }
+
   // Updates the debug preview to show the raw HTML content of the editor field
   // TODO: Remove this method when productionising the component
   updateDebugPreview() {
