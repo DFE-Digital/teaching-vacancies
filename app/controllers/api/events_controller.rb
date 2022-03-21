@@ -1,6 +1,7 @@
 class Api::EventsController < Api::ApplicationController
   # Prevent arbitrary events/data from being triggered by the frontend
   EVENT_ALLOWLIST = {
+    copied_to_clipboard: %i[description subject],
     tracked_link_clicked: %i[link_type link_subject text href mouse_button],
   }.freeze
 
