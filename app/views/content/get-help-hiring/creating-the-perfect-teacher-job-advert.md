@@ -35,7 +35,7 @@ However you decide to best describe the salary on offer using these fields, avoi
 ### Application method
 On Teaching Vacancies we offer two ways for you to receive applications, either through our built-in application form, or through your own method.
 
-* Read our guidance on [how to accept job applications on Teaching Vacancies](/accepting-job-applications-on-teaching-vacancies)
+* Read our guidance on [how to accept job applications on Teaching Vacancies](/get-help-hiring/accepting-job-applications-on-teaching-vacancies)
 
 If you choose the former you’ll have the benefit of managing candidates in one place from the start of the process all the way through to offering someone the job. If you choose the latter, you can point applicants to a form on your website, or ask them to submit attachments via an email address.
 
