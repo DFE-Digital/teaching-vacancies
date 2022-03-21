@@ -504,6 +504,7 @@ en:
       success: Your request for help has been sent
 
   support_users:
+    papertrail_display_name: "%{first_name} %{last_name} (DfE Teaching Vacancies team)"
     sessions:
       new:
         no_account:
@@ -517,6 +518,7 @@ en:
           title: Support user sign in
 
   tabs:
+    activity_log: Activity log
     applications:
       hide_count: Applications
       show_count: Applications (%{count})

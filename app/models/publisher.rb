@@ -18,4 +18,8 @@ class Publisher < ApplicationRecord
              .joins(:job_applications)
              .where("DATE(job_applications.submitted_at) = ? AND job_applications.status = ?", Date.yesterday, 1)
   end
+
+  def papertrail_display_name
+    "#{given_name} #{family_name}"
+  end
 end

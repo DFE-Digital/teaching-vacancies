@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   before_action :redirect_to_canonical_domain, :set_headers
   before_action :trigger_click_event, if: -> { click_event_param.present? }
   before_action { EventContext.request_event = request_event }
+  before_action :set_paper_trail_whodunnit
 
   after_action :trigger_page_visited_event, unless: :request_is_healthcheck?
 
@@ -108,4 +109,8 @@ class ApplicationController < ActionController::Base
     @current_organisation ||= Organisation.find_by(id: session[:publisher_organisation_id])
   end
   helper_method :current_organisation
+
+  def user_for_paper_trail
+    current_publisher || current_support_user
+  end
 end

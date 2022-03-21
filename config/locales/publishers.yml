@@ -12,7 +12,34 @@ en:
           body: You will no longer receive feedback requests for your listing
           heading: You have now unsubscribed
         title: You are now unsubscribed
-
+    activity_log:
+      about_school: There were changes to about %{organisation_type}
+      application_link: Link to online application changed to %{new_value}
+      contact_email: Contact email changed to %{new_value}
+      contact_number: Contact number changed to %{new_value}
+      contract_type: Contract type changed to %{new_value}
+      expires_at: Application deadline changed to %{new_value}
+      how_to_apply: How to apply changed to %{new_value}
+      job_advert: There were changes to the job advert
+      job_roles:
+        one: Job role changed to %{new_value}
+        other: Job roles changed to %{new_value}
+      job_title: Job title changed to %{new_value}
+      key_stage:
+        one: Key stage changed to {new_value}
+        other: Key stages changed to {new_value}
+      no_changes: Changes to the job listing will be listed here.
+      personal_statement_guidance: Personal statement guidance changed to %{new_value}
+      salary: Salary changed to %{new_value}
+      school_visits: "%{organisation_type} visits changed to %{new_value}"
+      starts_on: Expected start date changed to %{new_value}
+      subjects:
+        one: Subject changed to %{new_value}
+        other: Subjects changed to %{new_value}
+      working_patterns:
+        one: Working pattern changed to %{new_value}
+        other: Working patterns changed to %{new_value}
+      show_value_changed: "%{attribute} changed to %{new_value}"
     login_keys:
       new:
         notice: >-
@@ -128,6 +155,9 @@ en:
         subject: Sign in to Teaching Vacancies
       heading: Temporary login
     vacancies:
+      activity_log:
+        show:
+          page_title: Activity log
       banner:
         deadline:
           after: Deadline passed
