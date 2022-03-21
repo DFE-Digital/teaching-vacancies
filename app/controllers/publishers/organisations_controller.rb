@@ -43,7 +43,7 @@ class Publishers::OrganisationsController < Publishers::BaseController
     return false if publisher_has_used_feature?
 
     if (dismissed_at = current_publisher.dismissed_new_features_page_at)
-      dismissed_at >= Publishers::NewFeaturesController::NEW_FEATURES_PAGE_UPDATED_AT
+      dismissed_at < Publishers::NewFeaturesController::NEW_FEATURES_PAGE_UPDATED_AT
     else
       true
     end
