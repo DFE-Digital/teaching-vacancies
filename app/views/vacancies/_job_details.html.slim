@@ -1,7 +1,7 @@
 section#job-details class="govuk-!-margin-bottom-5"
   h2.govuk-heading-l.heading--border-bottom = t("publishers.vacancies.steps.job_details")
 
-  = govuk_summary_list do |summary_list|
+  = govuk_summary_list actions: false do |summary_list|
     - if vacancy.job_roles.any?
       - summary_list.row do |row|
         - row.key do

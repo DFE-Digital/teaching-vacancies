@@ -1,4 +1,4 @@
-= govuk_summary_list do |summary_list|
+= govuk_summary_list actions: false do |summary_list|
   - summary_list.row do |row|
     - row.key text: t("schools.type")
     - row.value text: organisation_type(organisation)
