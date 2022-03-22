@@ -41,6 +41,8 @@ $govuk-new-link-styles: true;
 @import 'application/publishers/landing-page';
 @import 'application/publishers/print-application';
 
+@import 'application/support-users/feedbacks';
+
 @media print {
   .govuk-header,
   .govuk-breadcrumbs,

@@ -1,0 +1,15 @@
+= form_tag support_users_feedback_recategorize_path
+  = hidden_field_tag :tab, params[:action]
+
+  button.govuk-button.govuk-button--secondary = "Save changes"
+
+  - if @feedbacks.where(category: nil).any?
+    h2.govuk-heading-m = "Uncategorised"
+    = render local_assigns.fetch(:table_name, "feedback_table"), feedbacks: @feedbacks.where(category: nil), type: :uncategorised
+    button.govuk-button.govuk-button--secondary = "Save changes"
+
+  - @categories.each do |category, category_name|
+    - if @feedbacks.where(category: category).any?
+      h2.govuk-heading-m = category_name
+      = render local_assigns.fetch(:table_name, "feedback_table"), feedbacks: @feedbacks.where(category: category), type: category
+      button.govuk-button.govuk-button--secondary = "Save changes"
