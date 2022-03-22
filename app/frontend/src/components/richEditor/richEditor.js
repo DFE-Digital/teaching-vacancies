@@ -72,8 +72,13 @@ const RichEditorController = class extends Controller {
     this.updateDebugPreview();
   }
 
-  insertList() {
-    document.execCommand("insertUnorderedList", false, null);
+  performEditorAction(event) {
+    const action = event.target.dataset.editorAction;
+    document.execCommand(action, false, null);
+  }
+
+  labelClicked() {
+    this.editorTarget.focus();
   }
 
   // Updates the debug preview to show the raw HTML content of the editor field

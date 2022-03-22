@@ -18,4 +18,34 @@
 
 .rich-editor__toolbar {
   margin-bottom: 10px;
+
+  button {
+    @include govuk-font(16);
+
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    padding: 4px 8px;
+    outline: 0;
+    cursor: pointer;
+
+    background-color: govuk-colour("white");
+    background-size: 40px 40px;
+    background-position: 50% 50%;
+    border: 2px solid govuk-colour("black");
+
+    &::-moz-focus-inner {
+      padding: 0;
+      border: 0;
+    }
+
+    &:focus {
+      background-color: $govuk-focus-colour;
+      color: $govuk-focus-text-colour;
+      box-shadow: 0 -2px $govuk-focus-colour, 0 4px $govuk-focus-text-colour;
+      outline: none;
+      position: relative;
+      z-index: 2;
+    }
+  }
 }

@@ -8,14 +8,15 @@ hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     .govuk-form-group
-      h2.govuk-label-wrapper
-        label.govuk-label.govuk-label--s for="editor" Job advert
-      div.govuk-hint
-        | Enter a lovely job advert. You can also copy and paste from word processing software.
       #editor.rich-editor data-controller="rich-editor"
+        h2.govuk-label-wrapper
+          label.govuk-label.govuk-label--s for="editor_field" data-action="click->rich-editor#labelClicked" Job advert
+        div.govuk-hint
+          | Enter a lovely job advert. You can also copy and paste from word processing software.
         .rich-editor__toolbar
-          button.govuk-button.govuk-button--secondary class="govuk-!-margin-bottom-0" data-action="click->rich-editor#insertList" Insert list
-        .rich-editor__editor contenteditable="true" data-rich-editor-target="editor" data-action="input->rich-editor#updateDebugPreview paste->rich-editor#handlePaste blur->rich-editor#tidy"
+          button.icon.icon--richtext-ul data-action="rich-editor#performEditorAction" data-editor-action="insertUnorderedList"
+            span.govuk-visually-hidden List
+        #editor_field.rich-editor__editor contenteditable="true" data-rich-editor-target="editor" data-action="input->rich-editor#updateDebugPreview paste->rich-editor#handlePaste blur->rich-editor#tidy"
           p I am a paragraph
           p I am another paragraph
 
