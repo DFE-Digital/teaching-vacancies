@@ -12,8 +12,8 @@ RSpec.shared_examples "a successful Support User sign in" do
       .with_base_data(user_anonymised_support_user_id: anonymised_form_of(user_oid))
       .with_data(sign_in_type: "dsi")
 
-    within("nav") { expect(page).to have_selector(:link_or_button, I18n.t("nav.sign_out")) }
-    within("nav") { expect(page).to have_selector(:link_or_button, I18n.t("nav.support_user_dashboard")) }
+    within(".govuk-header__navigation") { expect(page).to have_selector(:link_or_button, I18n.t("nav.sign_out")) }
+    within(".govuk-header__navigation") { expect(page).to have_selector(:link_or_button, I18n.t("nav.support_user_dashboard")) }
   end
 end
 
@@ -27,7 +27,7 @@ RSpec.shared_examples "a failed Support User sign in" do |options|
 
     expect(page).to have_content(/The email you're signed in with isn't authorised to list jobs for this school/i)
     expect(page).to have_content(options[:email])
-    within("nav") { expect(page).not_to have_content(I18n.t("nav.school_page_link")) }
+    within(".govuk-header__navigation") { expect(page).not_to have_content(I18n.t("nav.school_page_link")) }
   end
 end
 
@@ -57,8 +57,7 @@ RSpec.describe "Support users can sign in with DfE Sign In" do
       visit new_support_user_session_path
 
       expect(current_path).to eq(support_user_root_path)
-      # FIXME: fill in with content translation
-      expect(page).to have_content("Hello support user")
+      expect(page).to have_content("Dashboard")
     end
 
     context "when navigating to publisher login page" do

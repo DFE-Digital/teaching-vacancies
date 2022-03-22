@@ -1,3 +1,8 @@
-- content_for :page_title_prefix, "Hello support user"
+- content_for :page_title_prefix, "Support user dashboard"
 
-<p>Hello support user</p>
+h1.govuk-heading-l = "Dashboard"
+
+nav
+  ul.govuk-list
+    li
+      = govuk_link_to "View user feedback", support_users_feedback_general_path
