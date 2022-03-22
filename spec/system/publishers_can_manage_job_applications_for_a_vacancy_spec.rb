@@ -34,7 +34,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       end
 
       it "shows a card for each application that has been submitted and no draft applications" do
-        expect(page).to have_css(".card-component", count: 4)
+        expect(page).to have_css(".govuk-summary-list__row", count: 4)
       end
 
       context "when sorting the job applications by a virtual attribute" do
@@ -54,31 +54,31 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       let(:status) { "submitted" }
 
       it "shows applicant name that links to application" do
-        within(".application-#{status} .card-component__header") do
+        within(".application-#{status} .govuk-summary-list__key") do
           expect(page).to have_link("#{job_application_submitted.first_name} #{job_application_submitted.last_name}", href: organisation_job_job_application_path(vacancy.id, job_application_submitted.id))
         end
       end
 
       it "shows blue submitted tag" do
-        within(".application-#{status} .card-component__body") do
+        within(".application-#{status} .govuk-summary-list__value") do
           expect(page).to have_css(".govuk-tag--blue", text: "unread")
         end
       end
 
       it "shows date application was received" do
-        within(".application-#{status} .card-component__body") do
+        within(".application-#{status} .govuk-summary-list__value") do
           expect(page).to have_content(job_application_submitted.submitted_at.strftime("%d %B %Y at %H:%M"))
         end
       end
 
       it "has action to reject application" do
-        within(".application-#{status} .card-component__actions") do
+        within(".application-#{status} .govuk-summary-list__actions") do
           expect(page).to have_link(I18n.t("buttons.reject"), href: organisation_job_job_application_reject_path(vacancy.id, job_application_submitted.id))
         end
       end
 
       it "has action to shortlist application" do
-        within(".application-#{status} .card-component__actions") do
+        within(".application-#{status} .govuk-summary-list__actions") do
           expect(page).to have_link(I18n.t("buttons.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, job_application_submitted.id))
         end
       end
@@ -88,31 +88,31 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       let(:status) { "reviewed" }
 
       it "shows applicant name that links to application" do
-        within(".application-#{status} .card-component__header") do
+        within(".application-#{status} .govuk-summary-list__key") do
           expect(page).to have_link("#{job_application_reviewed.first_name} #{job_application_reviewed.last_name}", href: organisation_job_job_application_path(vacancy.id, job_application_reviewed.id))
         end
       end
 
       it "shows blue submitted tag" do
-        within(".application-#{status} .card-component__body") do
+        within(".application-#{status} .govuk-summary-list__value") do
           expect(page).to have_css(".govuk-tag--purple", text: "reviewed")
         end
       end
 
       it "shows date application was received" do
-        within(".application-#{status} .card-component__body") do
+        within(".application-#{status} .govuk-summary-list__value") do
           expect(page).to have_content(job_application_reviewed.submitted_at.strftime("%d %B %Y at %H:%M"))
         end
       end
 
       it "has action to reject application" do
-        within(".application-#{status} .card-component__actions") do
+        within(".application-#{status} .govuk-summary-list__actions") do
           expect(page).to have_link(I18n.t("buttons.reject"), href: organisation_job_job_application_reject_path(vacancy.id, job_application_reviewed.id))
         end
       end
 
       it "has action to shortlist application" do
-        within(".application-#{status} .card-component__actions") do
+        within(".application-#{status} .govuk-summary-list__actions") do
           expect(page).to have_link(I18n.t("buttons.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, job_application_reviewed.id))
         end
       end
@@ -122,25 +122,25 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       let(:status) { "shortlisted" }
 
       it "shows applicant name that links to application" do
-        within(".application-#{status} .card-component__header") do
+        within(".application-#{status} .govuk-summary-list__key") do
           expect(page).to have_link("#{job_application_shortlisted.first_name} #{job_application_shortlisted.last_name}", href: organisation_job_job_application_path(vacancy.id, job_application_shortlisted.id))
         end
       end
 
       it "shows green shortlisted tag" do
-        within(".application-#{status} .card-component__body") do
+        within(".application-#{status} .govuk-summary-list__value") do
           expect(page).to have_css(".govuk-tag--green", text: "shortlisted")
         end
       end
 
       it "shows date application was received" do
-        within(".application-#{status} .card-component__body") do
+        within(".application-#{status} .govuk-summary-list__value") do
           expect(page).to have_content(job_application_shortlisted.submitted_at.strftime("%d %B %Y at %H:%M"))
         end
       end
 
       it "has action to reject application only" do
-        within(".application-#{status} .card-component__actions") do
+        within(".application-#{status} .govuk-summary-list__actions") do
           expect(page).to have_link(I18n.t("buttons.reject"), href: organisation_job_job_application_reject_path(vacancy.id, job_application_shortlisted.id))
           expect(page).not_to have_link(I18n.t("buttons.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, job_application_shortlisted.id))
         end
@@ -151,28 +151,26 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       let(:status) { "unsuccessful" }
 
       it "shows applicant name that links to application" do
-        within(".application-#{status} .card-component__header") do
+        within(".application-#{status} .govuk-summary-list__key") do
           expect(page).to have_link("#{job_application_unsuccessful.first_name} #{job_application_unsuccessful.last_name}", href: organisation_job_job_application_path(vacancy.id, job_application_unsuccessful.id))
         end
       end
 
       it "shows red shortlisted tag" do
-        within(".application-#{status} .card-component__body") do
+        within(".application-#{status} .govuk-summary-list__value") do
           expect(page).to have_css(".govuk-tag--red", text: "rejected")
         end
       end
 
       it "shows date application was received" do
-        within(".application-#{status} .card-component__body") do
+        within(".application-#{status} .govuk-summary-list__value") do
           expect(page).to have_content(job_application_unsuccessful.submitted_at.strftime("%d %B %Y at %H:%M"))
         end
       end
 
       it "has no actions" do
-        within(".application-#{status} .card-component__actions") do
-          expect(page).not_to have_link(I18n.t("buttons.reject"), href: organisation_job_job_application_reject_path(vacancy.id, job_application_unsuccessful.id))
-          expect(page).not_to have_link(I18n.t("buttons.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, job_application_unsuccessful.id))
-        end
+        expect(page).not_to have_link(I18n.t("buttons.reject"), href: organisation_job_job_application_reject_path(vacancy.id, job_application_unsuccessful.id))
+        expect(page).not_to have_link(I18n.t("buttons.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, job_application_unsuccessful.id))
       end
     end
   end
@@ -209,7 +207,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
     describe "the summary section" do
       it "shows no application cards" do
-        expect(page).not_to have_css(".card-component")
+        expect(page).not_to have_css(".govuk-summary-list__row")
       end
 
       it "shows no sort applications control" do

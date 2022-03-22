@@ -21,11 +21,11 @@ RSpec.describe "Draft job applications for publishers" do
         visit organisation_path
         click_on vacancy.job_title
         click_on "Applications"
-        expect(page).to have_css(".card-component", count: 1)
+        expect(page).to have_css(".govuk-summary-list__row", count: 1)
       end
 
       it "shows a status 'tag' of 'unread'" do
-        expect(page).to have_css(".card-component .govuk-tag", text: "unread")
+        expect(page).to have_css(".govuk-summary-list__row .govuk-tag", text: "unread")
       end
 
       it "has a link to view the application" do
