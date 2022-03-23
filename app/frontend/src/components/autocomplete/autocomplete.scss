@@ -9,6 +9,7 @@
 
   &__menu {
     position: relative;
+    z-index: 1;
   }
 
   &__suggestions--highlight {
