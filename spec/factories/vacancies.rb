@@ -150,13 +150,6 @@ FactoryBot.define do
       starts_on { Date.current + 3.months }
     end
 
-    trait :without_working_patterns do
-      to_create { |instance| instance.save(validate: false) }
-      sequence(:slug) { |n| "slug-#{n}" }
-      working_patterns { nil }
-      fixed_term_contract_duration { nil }
-    end
-
     trait :with_feedback do
       listed_elsewhere { :listed_paid }
       hired_status { :hired_tvs }
