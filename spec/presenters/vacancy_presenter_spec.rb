@@ -145,19 +145,35 @@ RSpec.describe VacancyPresenter do
   end
 
   describe "#working_patterns_for_job_schema" do
-    context "when working_patterns is unset" do
-      let(:vacancy) { build_stubbed(:vacancy, :without_working_patterns) }
+    context "when FULL_TIME" do
+      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time], fixed_term_contract_duration: nil) }
 
-      it "returns an empty array" do
-        expect(subject.working_patterns_for_job_schema).to eq []
+      it "returns an array containing FULL_TIME" do
+        expect(subject.working_patterns_for_job_schema).to eq %w[FULL_TIME]
       end
     end
 
-    context "when working_patterns is set" do
-      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time], fixed_term_contract_duration: "2 months") }
+    context "when PART_TIME" do
+      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[part_time], fixed_term_contract_duration: nil) }
 
-      it "returns an array of strings compatible with Google Jobs" do
-        expect(subject.working_patterns_for_job_schema).to eq %w[FULL_TIME PART_TIME TEMPORARY]
+      it "returns an array containing PART_TIME" do
+        expect(subject.working_patterns_for_job_schema).to eq %w[PART_TIME]
+      end
+    end
+
+    context "when TEMPORARY" do
+      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[term_time], fixed_term_contract_duration: "2 months") }
+
+      it "returns an array containing TEMPORARY" do
+        expect(subject.working_patterns_for_job_schema).to eq %w[TEMPORARY]
+      end
+    end
+
+    context "when OTHER" do
+      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[term_time], fixed_term_contract_duration: nil) }
+
+      it "returns an array containing OTHER" do
+        expect(subject.working_patterns_for_job_schema).to eq %w[OTHER]
       end
     end
   end
