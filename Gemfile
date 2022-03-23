@@ -43,6 +43,8 @@ gem "mimemagic"
 gem "noticed"
 gem "omniauth", "< 2" # TODO: Pinned pending fixes
 gem "omniauth_openid_connect", "< 0.4" # TODO: Pinned pending fixes
+gem "paper_trail"
+gem "paper_trail-globalid"
 gem "parslet"
 gem "pg"
 gem "puma"

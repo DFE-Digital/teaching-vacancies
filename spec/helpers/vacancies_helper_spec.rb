@@ -63,4 +63,77 @@ RSpec.describe VacanciesHelper do
       end
     end
   end
+
+  describe "#vacancy_activity_log_item" do
+    subject { vacancy_activity_log_item(attribute, new_value, organisation_type) }
+    let(:vacancy) { create(:vacancy, organisations: [school], publisher_organisation: school) }
+    let(:school) { create(:school) }
+    let(:organisation_type) { organisation_type_basic(vacancy.organisation) }
+
+    context "when the translation requires a count" do
+      let(:attribute) { "subjects" }
+      let(:new_value) { %w[Maths Science Physics] }
+
+      it "returns the correct pluralised translation" do
+        expect(subject).to eq(I18n.t("publishers.activity_log.#{attribute}", new_value: new_value.to_sentence,
+                                                                             count: new_value.count))
+      end
+    end
+
+    context "when the translation requires the organisation type" do
+      let(:attribute) { "about_school" }
+      let(:new_value) { "This is a school description" }
+
+      it "returns the correct translation" do
+        expect(subject).to eq(I18n.t("publishers.activity_log.#{attribute}", organisation_type: organisation_type))
+      end
+    end
+
+    context "when the attribute is an array enum" do
+      let(:attribute) { "job_roles" }
+      let(:new_value) { [1, 2, 3] }
+
+      it "returns the correct pluralised translation" do
+        expect(subject).to eq(I18n.t("publishers.activity_log.#{attribute}", new_value: new_value.to_sentence,
+                                                                             count: new_value.count))
+      end
+    end
+
+    context "when the new value is a date" do
+      let(:attribute) { "expires_at" }
+      let(:new_value) { "2022-08-11T12:00:00.000+01:00" }
+
+      it "returns the correct translation with the date formatted" do
+        expect(subject).to eq(I18n.t("publishers.activity_log.#{attribute}", new_value: format_date(new_value.to_date)))
+      end
+    end
+
+    context "when the expected start date has been changed to 'As soon as possible'" do
+      let(:attribute) { "starts_on" }
+      let(:new_value) { nil }
+
+      it "returns the correct translation" do
+        expect(subject).to eq(I18n.t("publishers.activity_log.#{attribute}", new_value: t("jobs.starts_asap")))
+      end
+    end
+
+    context "when the attribute is 'school_visits'" do
+      let(:attribute) { "school_visits" }
+      let(:new_value) { "Information on visiting the school" }
+
+      it "returns the correct translation" do
+        expect(subject).to eq(I18n.t("publishers.activity_log.school_visits", organisation_type: organisation_type.capitalize,
+                                                                              new_value: new_value))
+      end
+    end
+
+    context "when none of the contexts above apply" do
+      let(:attribute) { "how_to_apply" }
+      let(:new_value) { "Show us if you can do the worm" }
+
+      it "returns the correct translation" do
+        expect(subject).to eq(I18n.t("publishers.activity_log.#{attribute}", new_value: new_value.humanize))
+      end
+    end
+  end
 end

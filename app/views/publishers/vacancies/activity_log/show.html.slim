@@ -1,0 +1,17 @@
+- content_for :page_title_prefix, t(".page_title")
+
+= render "publishers/vacancies/banner", vacancy: vacancy, title: "Activity log"
+= render "publishers/vacancies/tabs_show", vacancy: vacancy
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    - unless @versions.present?
+      p.govuk-body-m = t("publishers.activity_log.no_changes")
+    - @versions.each do |version|
+      - version.changeset.each_pair do |attribute, diff|
+        p.govuk-body class="govuk-!-font-weight-bold"
+          = vacancy_activity_log_item(attribute, diff.last, organisation_type_basic(vacancy.organisation))
+
+      p.govuk-body-s class="govuk-!-margin-top-1"
+        | By #{version.actor.papertrail_display_name} on #{version.created_at}
+      hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible

@@ -1,6 +1,6 @@
 require "geocoding"
 
-class Vacancy < ApplicationRecord
+class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
   extend FriendlyId
   extend ArrayEnum
 
@@ -16,6 +16,12 @@ class Vacancy < ApplicationRecord
   #       we should refactor the data model.
   MAIN_JOB_ROLES = { teacher: 0, leadership: 1, teaching_assistant: 6, education_support: 4, sendco: 5 }.freeze
   ADDITIONAL_JOB_ROLES = { send_responsible: 2, ect_suitable: 3 }.freeze
+
+  ATTRIBUTES_TO_TRACK_IN_ACTIVITY_LOG = %i[
+    about_school application_link contact_email contact_number contract_type expires_at how_to_apply job_advert
+    job_roles job_role_details job_title key_stages personal_statement_guidance salary school_visits subjects starts_on
+    working_patterns
+  ].freeze
 
   # When removing a job_role or working_pattern, remember to update *subscriptions* that have the old values.
   array_enum job_roles: MAIN_JOB_ROLES.merge(ADDITIONAL_JOB_ROLES)
@@ -67,12 +73,25 @@ class Vacancy < ApplicationRecord
   validate :enable_job_applications_cannot_be_changed_once_listed
 
   has_noticed_notifications
+  has_paper_trail on: [:update],
+                  only: ATTRIBUTES_TO_TRACK_IN_ACTIVITY_LOG,
+                  if: proc { |vacancy| vacancy.listed? }
 
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
   before_save :refresh_geolocation, if: -> { job_location_changed? }
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[7:00 8:00 9:00 10:00 11:00 12:00 13:00 14:00 15:00 16:00 17:00 23:59].freeze
+
+  # Class method added to help with the mapping of array_enums for paper_trail, which stores the changes
+  # as an array of integers in the version.
+  def self.array_enums
+    {
+      job_roles: job_roles,
+      key_stages: key_stages,
+      working_patterns: working_patterns,
+    }
+  end
 
   def self.main_job_role_options
     MAIN_JOB_ROLES.keys.map(&:to_s)

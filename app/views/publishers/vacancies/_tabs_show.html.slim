@@ -3,3 +3,5 @@
   - if vacancy.can_receive_job_applications? && !current_organisation.local_authority?
     - tabs.navigation_item text: t("tabs.applications.hide_count"), link: organisation_job_job_applications_path(vacancy.id), active: controller_name == "job_applications"
   - tabs.navigation_item text: t("tabs.statistics"), link: organisation_job_statistics_path(vacancy.id), active: controller_name == "statistics"
+  - if vacancy.listed? || vacancy.expired?
+    = tabs.navigation_item text: t("tabs.activity_log"), link: organisation_job_activity_log_path(vacancy.id), active: controller_name == "activity_log"

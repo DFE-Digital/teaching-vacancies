@@ -91,4 +91,21 @@ module VacanciesHelper
       "#{vacancy.job_title}": "",
     }
   end
+
+  def vacancy_activity_log_item(attribute, new_value, organisation_type)
+    new_value.map! { |value| Vacancy.array_enums[attribute.to_sym].key(value).humanize } if attribute.to_sym.in?(Vacancy.array_enums)
+
+    case attribute
+    when "job_roles", "key_stages", "subjects", "working_patterns"
+      t("publishers.activity_log.#{attribute}", new_value: new_value.to_sentence, count: new_value.count)
+    when "about_school", "job_advert"
+      t("publishers.activity_log.#{attribute}", organisation_type: organisation_type)
+    when "expires_at", "starts_on"
+      t("publishers.activity_log.#{attribute}", new_value: (new_value.nil? ? t("jobs.starts_asap") : format_date(new_value.to_date)))
+    when "school_visits"
+      t("publishers.activity_log.school_visits", organisation_type: organisation_type.capitalize, new_value: new_value)
+    else
+      t("publishers.activity_log.#{attribute}", new_value: new_value.humanize)
+    end
+  end
 end
