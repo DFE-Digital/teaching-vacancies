@@ -1,0 +1,3 @@
+= form_tag url_for, method: "get" do
+  = select_tag :reporting_period, options_for_select(FeedbackReportingPeriod.all.reverse.map { |rp| [rp.to_s, rp.from.strftime("%F")] }, params[:reporting_period]), class: "govuk-select"
+  button.govuk-button.govuk-button--secondary = "Go"

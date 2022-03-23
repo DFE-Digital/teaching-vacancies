@@ -84,4 +84,76 @@ RSpec.describe "Feedback supportal section" do
       end
     end
   end
+
+  describe "Reporting periods" do
+    let!(:old_job_alert_feedback) do
+      create(
+        :feedback,
+        feedback_type: :job_alert,
+        comment: "Some old job alert feedback text",
+        created_at: "2022-03-16 10:00",
+      )
+    end
+
+    let!(:older_job_alert_feedback) do
+      create(
+        :feedback,
+        feedback_type: :job_alert,
+        comment: "Some older job alert feedback text",
+        created_at: "2022-01-05 10:00",
+      )
+    end
+
+    let!(:old_other_feedback) do
+      create(
+        :feedback,
+        feedback_type: :jobseeker_account,
+        comment: "Some old other feedback text",
+        created_at: "2022-03-16 10:00",
+      )
+    end
+
+    let!(:older_other_feedback) do
+      create(
+        :feedback,
+        feedback_type: :jobseeker_account,
+        comment: "Some older other feedback text",
+        created_at: "2022-01-05 10:00",
+      )
+    end
+
+    it "allows selecting a reporting period which persists between tabs" do
+      click_on "View user feedback"
+
+      expect(page).to have_text(other_feedback.comment)
+      expect(page).not_to have_text(old_other_feedback.comment)
+      expect(page).not_to have_text(older_other_feedback.comment)
+
+      select "2022-03-15 -> 2022-03-21", from: "reporting_period"
+      click_on "Go"
+
+      expect(page).not_to have_text(other_feedback.comment)
+      expect(page).to have_text(old_other_feedback.comment)
+      expect(page).not_to have_text(older_other_feedback.comment)
+
+      click_on "Job alerts"
+
+      expect(page).not_to have_text(job_alert_feedback.comment)
+      expect(page).to have_text(old_job_alert_feedback.comment)
+      expect(page).not_to have_text(older_job_alert_feedback.comment)
+
+      select "2022-01-04 -> 2022-01-10", from: "reporting_period"
+      click_on "Go"
+
+      expect(page).not_to have_text(job_alert_feedback.comment)
+      expect(page).not_to have_text(old_job_alert_feedback.comment)
+      expect(page).to have_text(older_job_alert_feedback.comment)
+
+      click_on "General"
+
+      expect(page).not_to have_text(other_feedback.comment)
+      expect(page).not_to have_text(old_other_feedback.comment)
+      expect(page).to have_text(older_other_feedback.comment)
+    end
+  end
 end
