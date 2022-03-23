@@ -3,7 +3,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
     @feedbacks = Feedback
       .except_job_alerts
       .order(created_at: :desc)
-      .where(created_at: 2.weeks.ago..)
+      .where(created_at: reporting_period.date_range)
 
     @categories = Feedback::NON_JOB_ALERT_CATEGORIES
     @categories_for_select = @categories.invert
@@ -13,7 +13,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
     @feedbacks = Feedback
       .job_alerts
       .order(created_at: :desc)
-      .where(created_at: 2.weeks.ago..)
+      .where(created_at: reporting_period.date_range)
 
     @categories = Feedback::JOB_ALERT_CATEGORIES
     @categories_for_select = @categories.invert
@@ -30,9 +30,9 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
 
     case params[:tab]
     when "job_alerts"
-      redirect_to support_users_feedback_job_alerts_path
+      redirect_to support_users_feedback_job_alerts_path(reporting_period: params[:reporting_period])
     else
-      redirect_to support_users_feedback_general_path
+      redirect_to support_users_feedback_general_path(reporting_period: params[:reporting_period])
     end
   end
 
@@ -88,5 +88,9 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
     elsif %i[vacancy_publisher].include?(feedback.feedback_type)
       "hiring staff"
     end
+  end
+
+  def reporting_period
+    FeedbackReportingPeriod.for(params[:reporting_period].presence || Date.today)
   end
 end
