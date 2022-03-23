@@ -67,14 +67,15 @@ module.exports = [
     ]
   },
   //having an issue with this test atm
-  // {
-  //   "label": "Vacancy",
-  //   "url": "/jobs",
-  //   "readySelector": ".govuk-main-wrapper",
-  //   "clickSelector": ".vacancies .govuk-link",
-  //   "removeSelectors": [".govuk-footer", ".environment-banner-component", "#school-location"],
-  //   "selectors": [
-  //     ".govuk-main-wrapper"
-  //   ]
-  // }
+  {
+    "label": "Vacancy",
+    "url": "/jobs",
+    "delay": 1000,
+    "readySelector": ".govuk-main-wrapper",
+    "clickSelector": ".vacancies .govuk-link",
+    "removeSelectors": [".govuk-footer", ".environment-banner-component", "#school-location"],
+    "selectors": [
+      ".govuk-main-wrapper"
+    ]
+  }
 ];
