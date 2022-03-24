@@ -17,3 +17,27 @@
     }
   }
 }
+
+.help-guide-container {
+  &--border-bottom {
+    border-bottom: 1px solid $govuk-border-colour;
+  }
+
+  &--desktop {
+    background-color: govuk-colour('light-grey');
+    padding: govuk-spacing(3);
+
+    @include govuk-media-query($until: desktop) {
+      display: none;
+    }
+  }
+
+  &--mobile {
+    margin-bottom: govuk-spacing(3);
+    padding-bottom: govuk-spacing(4);
+
+    @include govuk-media-query($from: desktop) {
+      display: none;
+    }
+  }
+}

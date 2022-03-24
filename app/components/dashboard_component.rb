@@ -14,7 +14,7 @@ class DashboardComponent < ViewComponent::Base
   end
 
   def grid_column_class
-    organisation.school_group? ? "govuk-grid-column-two-thirds-at-desktop" : "govuk-grid-column-full"
+    organisation.school_group? ? "govuk-grid-column-two-thirds-at-desktop" : "govuk-grid-column-three-quarters"
   end
 
   def no_jobs_text

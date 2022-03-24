@@ -23,17 +23,19 @@
   .govuk-grid-column-one-half
     h2.govuk-heading-m = t(".title_h2")
     p.govuk-body = t(".description")
-
+    p.govuk-body = t(".personal_statement_section.description_html",
+                     personal_statement_guide_link: govuk_link_to(t(".personal_statement_section.link_text"),
+                                                    post_path(section: "jobseeker-guides", post_name: "how-to-write-teacher-personal-statement"),
+                                                    class: "govuk-link--no-visited-state"))
   .govuk-grid-column-one-quarter
     h2.govuk-heading-m = t(".jobseeker_section.title")
     - if jobseeker_signed_in?
       p.govuk-body = t(".jobseeker_section.signed_in.description")
       .govuk-body class="govuk-!-margin-bottom-3" = govuk_link_to t("buttons.view_account"), jobseeker_root_path, class: "govuk-link--no-visited-state"
     - else
-      p.govuk-body = t(".jobseeker_section.signed_out.description_html",
-        sign_in_link: govuk_link_to(t("buttons.sign_in"), new_jobseeker_session_path, class: "govuk-link--no-visited-state"),
-        create_account_link: govuk_link_to(t(".jobseeker_section.signed_out.create_account"), new_jobseeker_registration_path, class: "govuk-link--no-visited-state"))
-
+      p.govuk-body = t(".jobseeker_section.signed_out.description_html")
+      = govuk_button_link_to(t("buttons.sign_in"), new_jobseeker_session_path, class: "govuk-!-margin-bottom-2")
+      p.govuk-body = t(".jobseeker_section.signed_out.create_account_html", create_account_link: govuk_link_to(t(".jobseeker_section.signed_out.link_text.create_account"), new_jobseeker_registration_path, class: "govuk-link--no-visited-state"))
   .govuk-grid-column-one-quarter
     h2.govuk-heading-m = t(".publisher_section.title")
     - if publisher_signed_in?
@@ -41,9 +43,9 @@
         create_job_link: govuk_link_to(t("buttons.create_job"), create_or_copy_organisation_jobs_path, class: "govuk-link--no-visited-state"),
         manage_jobs_link: govuk_link_to(t(".publisher_section.signed_in.link_text.manage_jobs"), organisation_path, class: "govuk-link--no-visited-state"))
     - else
-      p.govuk-body = t(".publisher_section.signed_out.description_html",
-        signin_link: govuk_link_to(t(".publisher_section.signed_out.link_text.sign_in"), publishers_sign_in_path, class: "govuk-link--no-visited-state"),
-        signup_link: govuk_link_to(t(".publisher_section.signed_out.link_text.sign_up"), page_path("dsi-account-request"), class: "govuk-link--no-visited-state"))
+      p.govuk-body = t(".publisher_section.signed_out.description_html")
+      = govuk_button_link_to(t(".publisher_section.signed_out.link_text.sign_in"), publishers_sign_in_path, class: "govuk-!-margin-bottom-2")
+      p.govuk-body = t(".publisher_section.signed_out.create_account_html", create_account_link: govuk_link_to(t(".publisher_section.signed_out.link_text.create_account"), page_path("dsi-account-request"), class: "govuk-link--no-visited-state"))
 
 hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
 

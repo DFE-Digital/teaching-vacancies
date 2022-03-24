@@ -5,8 +5,9 @@
                                      params[:section].titleize.capitalize => "" }
 
 .govuk-grid-row
-  .govuk-grid-column-two-thirds
+  .govuk-grid-column-full
     h1.govuk-heading-xl = t(".#{params[:section]}.title")
+    p.govuk-body = t(".#{params[:section]}.description")
     ul.govuk-list
       - @posts.sort.each do |post|
         li = govuk_link_to(post.title, post_path(section: post.section, post_name: post.post_name))

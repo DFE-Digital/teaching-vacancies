@@ -114,6 +114,11 @@ en:
             Please explain why you are suitable for this role. You should refer to the person specification in the job
             description, and include any relevant personal qualities and experiences.
           heading: Personal statement
+          personal_statement_guide:
+            description_desktop: Find out how to sell your skills and experience to school recruiters.
+            description_mobile: Get guidance around creating the perfect personal statement.
+            link_text: View article
+            title: How to write a teacher personal statement
           step_title: Personal statement
           title: Personal statement — Application
         process_title: Application steps

@@ -1,5 +1,11 @@
 .govuk-grid-row
   .govuk-grid-column-three-quarters
+    .help-guide-container--mobile.help-guide-container--border-bottom
+      h3.govuk-heading-m = t("jobs.dashboard.how_to_accept_job_applications_guide.title")
+      p.govuk-body = t("jobs.dashboard.how_to_accept_job_applications_guide.description_mobile")
+      = govuk_link_to(t("jobs.dashboard.how_to_accept_job_applications_guide.link_text"),
+                      post_path(section: "get-help-hiring", post_name: "accepting-job-applications-on-teaching-vacancies"),
+                      class: "govuk-link--no-visited-state")
     span.govuk-caption-l = t("jobs.manage.heading_html", organisation: @organisation.name, email: @email)
     h1.govuk-heading-l = t("jobs.dashboard.#{@selected_type}.with_count_html", count: @vacancies.count)
   .govuk-grid-column-one-quarter
@@ -33,6 +39,13 @@
                       - filters_component.group key: "locations", component: f.govuk_collection_check_boxes(:organisation_ids, @organisation_options, :id, :label, small: true, legend: { text: "Locations" }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
 
           = f.hidden_field :jobs_type, value: @selected_type
+
+      .help-guide-container--desktop class="govuk-!-margin-top-4"
+        h3.govuk-heading-m = t("jobs.dashboard.how_to_accept_job_applications_guide.title")
+        p.govuk-body = t("jobs.dashboard.how_to_accept_job_applications_guide.description_desktop")
+        = govuk_link_to(t("jobs.dashboard.how_to_accept_job_applications_guide.link_text"),
+                        post_path(section: "get-help-hiring", post_name: "accepting-job-applications-on-teaching-vacancies"),
+                        class: "govuk-link--no-visited-state")
   .vacancies-component__content class=grid_column_class
     section#vacancy-results
       - if vacancies.none?
@@ -71,3 +84,11 @@
               - when "draft"
                 = tag.div(c.labelled_item(t("jobs.manage.draft.time_created"), format_date(vacancy.created_at.to_date)))
                 = tag.div(c.labelled_item(t("jobs.manage.draft.time_updated"), format_date(vacancy.updated_at.to_date)))
+  - unless @organisation.school_group?
+    .govuk-grid-column-one-quarter
+      .help-guide-container--desktop
+        h3.govuk-heading-m = t("jobs.dashboard.how_to_accept_job_applications_guide.title")
+        p.govuk-body = t("jobs.dashboard.how_to_accept_job_applications_guide.description_desktop")
+        = govuk_link_to(t("jobs.dashboard.how_to_accept_job_applications_guide.link_text"),
+                        post_path(section: "get-help-hiring", post_name: "accepting-job-applications-on-teaching-vacancies"),
+                        class: "govuk-link--no-visited-state")

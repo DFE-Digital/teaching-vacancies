@@ -159,6 +159,8 @@ en:
       for_job_seekers: Job seekers
       for_schools: Hiring staff
       support: Support
+    job_ad_guide: How to create the perfect teacher job ad
+    job_application_guide: How to accept job applications on Teaching Vacancies
     list_a_teaching_job: List a job
     manage_job_listings: Manage job listings
     provide_feedback: Provide feedback on Teaching Vacancies
@@ -217,6 +219,8 @@ en:
       zero: Notifications
       one: Notifications <span class="count-badge">%{count}<span class="govuk-visually-hidden"> unread</span></span>
       other: Notifications <span class="count-badge">%{count}<span class="govuk-visually-hidden"> unread</span></span>
+    personal_statement: Writing a personal statement
+    school_hiring_guide: School hiring guide
     sign_in: Sign in
     sign_out: Sign out
     support_user_dashboard: Hello support user
@@ -232,26 +236,33 @@ en:
   home:
     index:
       browse_all: Browse all teaching jobs in England
-      description: Search for teaching, school leadership and education support jobs in England. You can also apply for jobs, save jobs and set up job alerts.
+      description: Search for teaching, school leadership and education support jobs in England.
       jobseeker_section:
         signed_in:
           description: Apply for jobs you are interested in, and check the status of your applications.
         signed_out:
-          create_account: create an account
-          description_html: "%{sign_in_link} or %{create_account_link} to apply for jobs that use the Teaching Vacancies application form."
-        title: Apply for jobs
+          create_account_html: or %{create_account_link}.
+          description_html: Save and apply for jobs in schools.
+          link_text:
+            create_account: create an account
+        title: For jobseekers
       location_label: City, county or postcode
+      personal_statement_section:
+        description_html: You can also apply for jobs, set up job alerts and %{personal_statement_guide_link}.
+        link_text: read advice for jobseekers
       publisher_section:
         signed_in:
           description_html: "%{create_job_link} or %{manage_jobs_link}."
           link_text:
             manage_jobs: manage your jobs
         signed_out:
-          description_html: "%{signin_link} to manage your job listings and applicants or %{signup_link}."
+          create_account_html: or %{create_account_link}.
+          description_html: Post jobs and manage applications.
           link_text:
+            create_account: create an account
             sign_in: Sign in
             sign_up: sign up
-        title: Advertise a job
+        title: For hiring staff
       title: Find a job in teaching
       title_h1: Find teacher and school jobs near you
       title_h2: Welcome to Teaching Vacancies
@@ -286,8 +297,13 @@ en:
   posts:
     index:
       get-help-hiring:
-        title: Get help with hiring
+        title: School hiring guides
+        description: >-
+          Read expert advice on how to hire excellent staff for your school.
+          Get tips on various aspects of the recruitment process and guidance on how to use the Teaching Vacancies service.
       jobseeker-guides:
+        # TODO: Add jobseeker guides description
+        description: ""
         title: Jobseeker guides
     show:
       contents: Contents
