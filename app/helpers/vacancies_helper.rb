@@ -18,17 +18,17 @@ module VacanciesHelper
   end
 
   def vacancy_or_organisation_description(vacancy)
-    vacancy.about_school.presence || vacancy.parent_organisation.description.presence
+    vacancy.about_school.presence || vacancy.organisation.description.presence
   end
 
   def vacancy_about_school_label_organisation(vacancy)
-    vacancy.organisations.many? ? "the schools" : vacancy.parent_organisation.name
+    vacancy.organisations.many? ? "the schools" : vacancy.organisation_name
   end
 
   def vacancy_about_school_hint_text(vacancy)
-    return t("helpers.hint.publishers_job_listing_job_summary_form.about_schools", organisation_type: organisation_type_basic(vacancy.parent_organisation)) if vacancy.organisations.many?
+    return t("helpers.hint.publishers_job_listing_job_summary_form.about_schools", organisation_type: organisation_type_basic(vacancy.organisation)) if vacancy.organisations.many?
 
-    t("helpers.hint.publishers_job_listing_job_summary_form.about_organisation", organisation_type: organisation_type_basic(vacancy.parent_organisation).capitalize)
+    t("helpers.hint.publishers_job_listing_job_summary_form.about_organisation", organisation_type: organisation_type_basic(vacancy.organisation).capitalize)
   end
 
   def vacancy_about_school_value(vacancy)
@@ -38,14 +38,14 @@ module VacanciesHelper
   end
 
   def vacancy_job_location(vacancy)
-    organisation = vacancy.parent_organisation
+    organisation = vacancy.organisation
     return "#{t('publishers.organisations.readable_job_location.at_multiple_schools')}, #{organisation.name}" if vacancy.at_multiple_schools?
 
     address_join([organisation.name, organisation.town, organisation.county])
   end
 
   def vacancy_full_job_location(vacancy)
-    organisation = vacancy.parent_organisation
+    organisation = vacancy.organisation
     return "#{t('publishers.organisations.readable_job_location.at_multiple_schools')}, #{organisation.name}" if vacancy.at_multiple_schools?
 
     address_join([organisation.name, organisation.town, organisation.county, organisation.postcode])
@@ -54,15 +54,15 @@ module VacanciesHelper
   def vacancy_job_location_heading(vacancy)
     return t("organisations.job_location_heading.#{vacancy.job_location}") unless vacancy.at_multiple_schools?
 
-    t("organisations.job_location_heading.at_multiple_schools", organisation_type: organisation_type_basic(vacancy.parent_organisation))
+    t("organisations.job_location_heading.at_multiple_schools", organisation_type: organisation_type_basic(vacancy.organisation))
   end
 
   def vacancy_listing_page_title_prefix(vacancy)
-    "#{vacancy.job_title} - #{vacancy.at_one_school? ? vacancy.parent_organisation.town : vacancy.parent_organisation.name}"
+    "#{vacancy.job_title} - #{vacancy.at_one_school? ? vacancy.organisation.town : vacancy.organisation_name}"
   end
 
   def vacancy_school_visits_hint(vacancy)
-    organisation = organisation_type_basic(vacancy.parent_organisation).tr(" ", "_")
+    organisation = organisation_type_basic(vacancy.organisation).tr(" ", "_")
     t("helpers.hint.publishers_job_listing_applying_for_the_job_details_form.#{organisation}_visits")
   end
 

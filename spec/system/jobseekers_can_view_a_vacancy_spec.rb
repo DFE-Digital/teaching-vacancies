@@ -73,7 +73,7 @@ RSpec.describe "Viewing a single published vacancy" do
 
         expect(page.find('meta[name="description"]', visible: false)["content"])
           .to eq(I18n.t("vacancies.show.page_description", job_title: vacancy.job_title,
-                                                           organisation: vacancy.parent_organisation.name,
+                                                           organisation: vacancy.organisation_name,
                                                            deadline: format_date(vacancy.expires_at, :date_only_shorthand)))
       end
 
@@ -82,7 +82,7 @@ RSpec.describe "Viewing a single published vacancy" do
 
         expect(page.find('meta[property="og:description"]', visible: false)["content"])
           .to eq(I18n.t("vacancies.show.page_description", job_title: vacancy.job_title,
-                                                           organisation: vacancy.parent_organisation.name,
+                                                           organisation: vacancy.organisation_name,
                                                            deadline: format_date(vacancy.expires_at, :date_only_shorthand)))
       end
     end

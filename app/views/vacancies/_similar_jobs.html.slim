@@ -6,9 +6,9 @@
         .similar-jobs__job class=("govuk-grid-column-one-half" if column_one_half)
           = similar_job_link(vacancy)
           p.govuk-body class="govuk-!-margin-bottom-0 govuk-!-font-weight-bold"
-            = vacancy.parent_organisation.name
+            = vacancy.organisation_name
           p.govuk-body class=" govuk-!-margin-bottom-0"
-            = full_address(vacancy.parent_organisation)
+            = full_address(vacancy.organisation)
 
 section
   p.icon.icon--left.icon--alert-blue

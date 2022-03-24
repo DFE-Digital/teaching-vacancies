@@ -57,7 +57,7 @@
     - s.row :how_to_apply
   - s.row :contact_email, text: govuk_mail_to(vacancy.contact_email, nil, "aria-label": t("jobs.aria_labels.contact_email_link", email: vacancy.contact_email))
   - s.row :contact_number, value_if_attribute_present: govuk_link_to(vacancy.contact_number, "tel:#{vacancy.contact_number}"), optional: true
-  - s.row :school_visits, label: t("jobs.#{school_or_trust_visits(vacancy.parent_organisation)}"), optional: true
+  - s.row :school_visits, label: t("jobs.#{school_or_trust_visits(vacancy.organisation)}"), optional: true
 
 - r.section :documents
   = govuk_summary_list do |summary_list|

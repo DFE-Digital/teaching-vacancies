@@ -1,6 +1,6 @@
 - r.section :declarations do |s|
   - s.row do |row|
-    - row.key text: t("helpers.legend.jobseekers_job_application_declarations_form.close_relationships", organisation: vacancy.organisation.name)
+    - row.key text: t("helpers.legend.jobseekers_job_application_declarations_form.close_relationships", organisation: vacancy.organisation_name)
     - row.value text: job_application_close_relationships_info(job_application)
 
   - s.row do |row|

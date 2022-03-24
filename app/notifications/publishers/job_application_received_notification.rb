@@ -9,7 +9,7 @@ class Publishers::JobApplicationReceivedNotification < Noticed::Base
 
   def message
     t("notifications.publishers/job_application_received_notification.message_html",
-      link: application_link, job_title: vacancy.job_title, organisation: vacancy.parent_organisation_name)
+      link: application_link, job_title: vacancy.job_title, organisation: vacancy.organisation_name)
   end
 
   def timestamp

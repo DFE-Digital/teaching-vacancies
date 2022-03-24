@@ -2,7 +2,7 @@ class Jobseekers::JobApplicationMailer < Jobseekers::BaseMailer
   def application_shortlisted(job_application)
     @job_application = job_application
     @vacancy = @job_application.vacancy
-    @organisation_name = @vacancy.parent_organisation.name
+    @organisation_name = @vacancy.organisation_name
     @contact_email = @vacancy.contact_email
     @jobseeker = @job_application.jobseeker
 
@@ -14,7 +14,7 @@ class Jobseekers::JobApplicationMailer < Jobseekers::BaseMailer
 
   def application_submitted(job_application)
     @vacancy = job_application.vacancy
-    @organisation_name = @vacancy.parent_organisation.name
+    @organisation_name = @vacancy.organisation_name
     @contact_email = @vacancy.contact_email
     @jobseeker = job_application.jobseeker
 
@@ -27,7 +27,7 @@ class Jobseekers::JobApplicationMailer < Jobseekers::BaseMailer
   def application_unsuccessful(job_application)
     @job_application = job_application
     @vacancy = @job_application.vacancy
-    @organisation_name = @vacancy.parent_organisation.name
+    @organisation_name = @vacancy.organisation_name
     @contact_email = @vacancy.contact_email
     @jobseeker = @job_application.jobseeker
 
@@ -45,6 +45,6 @@ class Jobseekers::JobApplicationMailer < Jobseekers::BaseMailer
     @template = NOTIFY_JOBSEEKER_JOB_LISTING_ENDED_EARLY_TEMPLATE
     @to = job_application.jobseeker.email
 
-    view_mail(@template, to: @to, subject: t(".subject", job_title: @vacancy.job_title, organisation_name: @vacancy.parent_organisation.name))
+    view_mail(@template, to: @to, subject: t(".subject", job_title: @vacancy.job_title, organisation_name: @vacancy.organisation_name))
   end
 end

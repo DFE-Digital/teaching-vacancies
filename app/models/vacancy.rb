@@ -49,7 +49,7 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :organisation_vacancies, dependent: :destroy
   has_many :organisations, through: :organisation_vacancies, dependent: :destroy, after_add: :refresh_geolocation, after_remove: :refresh_geolocation
 
-  delegate :name, to: :parent_organisation, prefix: true, allow_nil: true
+  delegate :name, to: :organisation, prefix: true, allow_nil: true
 
   scope :active, (-> { where(status: %i[published draft]) })
   scope :applicable, (-> { where("expires_at >= ?", Time.current) })
@@ -102,11 +102,7 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def organisation
-    organisations.first
-  end
-
-  def parent_organisation
-    organisations.many? ? organisations.first.school_groups.first : organisation
+    @organisation ||= organisations.one? ? organisations.first : organisations.first&.school_groups&.first
   end
 
   def location
@@ -221,7 +217,7 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
   private
 
   def slug_candidates
-    [:job_title, %i[job_title parent_organisation_name], %i[job_title location]]
+    [:job_title, %i[job_title organisation_name], %i[job_title location]]
   end
 
   def on_expired_vacancy_feedback_submitted_update_stats_updated_at

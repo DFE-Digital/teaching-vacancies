@@ -6,7 +6,7 @@
   - if job_application.shortlisted?
     = govuk_notification_banner title_text: t("banners.important"), classes: "govuk-!-margin-bottom-5" do |banner|
       - banner.heading text: t(".shortlist_alert.title")
-      span class="govuk-!-margin-top-3" = t(".shortlist_alert.body", organisation: vacancy.parent_organisation_name)
+      span class="govuk-!-margin-top-3" = t(".shortlist_alert.body", organisation: vacancy.organisation_name)
 
   - if job_application.unsuccessful? && job_application.rejection_reasons.present?
     .grey-border-box class="govuk-!-display-none-print"
