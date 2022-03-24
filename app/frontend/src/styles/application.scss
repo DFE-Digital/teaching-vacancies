@@ -12,6 +12,7 @@ $govuk-new-link-styles: true;
 
 @import '~govuk-frontend/govuk/all';
 
+@import 'base/global';
 @import 'base/grid';
 @import 'base/mixins';
 @import 'base/utilities';
@@ -39,20 +40,6 @@ $govuk-new-link-styles: true;
 @import 'application/publishers/information-summary';
 @import 'application/publishers/landing-page';
 @import 'application/publishers/print-application';
-
-p {
-  @include govuk-font(19);
-}
-
-dl,
-dd {
-  margin: 0;
-}
-
-ul li + br,
-ul > br {
-  display: none;
-}
 
 @media print {
   .govuk-header,

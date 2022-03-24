@@ -101,8 +101,8 @@ en:
       date: For example, %{date}
       general_feedback_form:
         comment_html: >-
-          <p>Please do not include any information that could identify you personally
-          (such as your name or the name of your school).</p><p>(Limit is 1,200 characters)</p>
+          <p class="govuk-hint">Please do not include any information that could identify you personally
+          (such as your name or the name of your school).</p><p class="govuk-hint">(Limit is 1,200 characters)</p>
         email: >-
           We'll only use this to tell you about opportunities to take part in user research that helps us improve
           Department for Education services.

@@ -13,7 +13,7 @@ p.govuk-body#awaiting_feedback_intro class="govuk-!-margin-bottom-4" = t("jobs.m
 
             dl.govuk-body-s class="govuk-!-margin-top-1"
               dt = t("jobs.manage.closing_date")
-              dd = format_time_to_datetime_at(vacancy.expires_at)
+              dd class="govuk-!-margin-left-0" = format_time_to_datetime_at(vacancy.expires_at)
 
           .govuk-grid-column-two-thirds.awaiting-feedback__options
             .awaiting-feedback__options__select

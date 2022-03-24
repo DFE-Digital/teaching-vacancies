@@ -12,6 +12,11 @@
     display: inline-block;
   }
 
+  dl,
+  dd {
+    margin: 0;
+  }
+
   dt {
     &::after {
       content: ':';

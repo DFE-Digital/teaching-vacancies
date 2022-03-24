@@ -35,7 +35,7 @@ module.exports = {
     {
       "label": "phone",
       "width": 480,
-      "height": 1024
+      "height": 1200
     },
     {
       "label": "tablet",
