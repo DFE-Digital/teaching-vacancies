@@ -365,59 +365,6 @@ en:
       current_selected_filters: Selected filters
       remove_filter_hidden: Remove this filter
       return_to_results: Return to results
-    job_application:
-      show:
-        application_sections: Application sections
-        ask_for_support:
-          heading: Ask for support if you have a disability or other needs
-          support_needed: Do you want to ask for support so that you can attend an interview?
-        declarations:
-          close_relationships: Do you have any family or close relationship with people within %{organisation}
-          heading: Declarations
-          right_to_work_in_uk: Do you have the right to work in the UK?
-        employment_history:
-          current_role: Is this your current role?
-          ended_on: End date
-          heading: Current role and employment history
-          main_duties: Main duties
-          none: The candidate has not included any roles or employment history.
-          organisation: School or other organisation
-          salary: Salary
-          started_on: Start date
-          subjects: Subjects and key stages taught
-        feedback: Feedback on your application
-        heading: Application sections
-        personal_details:
-          email: Email address
-          heading: Personal details
-          first_name: First name
-          last_name: Last name
-          national_insurance_number: National Insurance number
-          phone_number: Phone number
-          previous_names: Previous names
-          teacher_reference_number: Teacher reference number (TRN)
-          your_address: Your address
-        personal_statement:
-          heading: Personal statement
-        professional_status:
-          heading: Professional status
-          statutory_induction_complete: Have you completed your statutory induction year?
-          qualified_teacher_status: Do you have qualified teacher status (QTS)?
-        qualifications:
-          heading: Education and qualifications
-          none: The candidate has not included any qualifications.
-          subjects_and_grades: Subjects and grades
-        references:
-          email: Email address
-          heading: References
-          job_title: Job title
-          organisation: Organisation
-          phone_number: Phone number
-          relationship: Relationship to applicant
-        shortlist_alert:
-          title: What happens next with shortlisting?
-          body: "%{organisation} will be in touch soon with more information about next steps."
-        timeline: Timeline
     status_tags:
       action_required: action required
       complete: complete
