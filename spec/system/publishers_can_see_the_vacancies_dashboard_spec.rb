@@ -47,10 +47,8 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
         click_on(I18n.t("jobs.dashboard.published.tab_heading"))
       end
 
-      within(".vacancies-component__content") do
-        expect(page).to have_content(published_vacancy.job_title)
-        expect(page).to have_css(".card-component", count: 1)
-      end
+      expect(page).to have_content(published_vacancy.job_title)
+      expect(page).to have_css(".govuk-summary-list", count: 1)
     end
 
     scenario "with draft vacancies" do
@@ -60,13 +58,11 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
         click_on(I18n.t("jobs.dashboard.draft.tab_heading"))
       end
 
-      within(".vacancies-component__content") do
-        expect(page).to have_content(I18n.t("jobs.manage.draft.time_created"))
-        expect(page).to have_content(format_date(draft_vacancy.created_at.to_date))
-        expect(page).to have_content(format_date(draft_vacancy.updated_at.to_date))
-        expect(page).to have_content(draft_vacancy.job_title)
-        expect(page).to have_css(".card-component", count: 1)
-      end
+      expect(page).to have_content(I18n.t("jobs.manage.draft.time_created"))
+      expect(page).to have_content(format_date(draft_vacancy.created_at.to_date))
+      expect(page).to have_content(format_date(draft_vacancy.updated_at.to_date))
+      expect(page).to have_content(draft_vacancy.job_title)
+      expect(page).to have_css(".govuk-summary-list", count: 1)
     end
 
     scenario "with pending vacancies" do
@@ -76,13 +72,11 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
         click_on(I18n.t("jobs.dashboard.pending.tab_heading"))
       end
 
-      within(".vacancies-component__content") do
-        expect(page).to have_content(I18n.t("jobs.publication_date"))
-        expect(page).to have_content(pending_vacancy.job_title)
-        expect(page).to have_content(format_date(pending_vacancy.publish_on))
-        expect(page).to have_content(format_date(pending_vacancy.expires_at.to_date))
-        expect(page).to have_css(".card-component", count: 1)
-      end
+      expect(page).to have_content(I18n.t("jobs.publication_date"))
+      expect(page).to have_content(pending_vacancy.job_title)
+      expect(page).to have_content(format_date(pending_vacancy.publish_on))
+      expect(page).to have_content(format_date(pending_vacancy.expires_at.to_date))
+      expect(page).to have_css(".govuk-summary-list", count: 1)
     end
 
     scenario "with expired vacancies" do
@@ -92,12 +86,10 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
         click_on(I18n.t("jobs.dashboard.expired.tab_heading"))
       end
 
-      within(".vacancies-component__content") do
-        expect(page).to have_content(expired_vacancy.job_title)
-        expect(page).to have_content(format_date(expired_vacancy.expires_at.to_date))
-        expect(page).to have_content(format_date(expired_vacancy.publish_on))
-        expect(page).to have_css(".card-component", count: 1)
-      end
+      expect(page).to have_content(expired_vacancy.job_title)
+      expect(page).to have_content(format_date(expired_vacancy.expires_at.to_date))
+      expect(page).to have_content(format_date(expired_vacancy.publish_on))
+      expect(page).to have_css(".govuk-summary-list", count: 1)
     end
 
     context "when a draft vacancy has been updated" do
@@ -111,10 +103,8 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
           click_on(I18n.t("jobs.dashboard.draft.tab_heading"))
         end
 
-        within(".vacancies-component__content") do
-          expect(page).to have_content(format_date(draft_vacancy.created_at.to_date))
-          expect(page).to have_content(format_date(draft_vacancy.updated_at.to_date))
-        end
+        expect(page).to have_content(format_date(draft_vacancy.created_at.to_date))
+        expect(page).to have_content(format_date(draft_vacancy.updated_at.to_date))
       end
     end
   end

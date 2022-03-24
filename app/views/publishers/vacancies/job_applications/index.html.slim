@@ -11,19 +11,20 @@
 .govuk-grid-row
   .govuk-grid-column-full
     - if job_applications.any? && vacancy.within_data_access_period?
-      - sorted_job_applications.each do |application|
-        = render CardComponent.new(classes: "application-#{application.status}") do |card|
-          - card.header do
-            = tag.div(job_application_view_applicant(vacancy, application))
+      = govuk_summary_list do |summary_list|
+        - sorted_job_applications.each do |application|
+          - summary_list.row classes: "application-#{application.status}" do |row|
+            - row.key do
+              = job_application_view_applicant(vacancy, application)
 
-          - card.body do
-            = tag.div(publisher_job_application_status_tag(application.status))
-            = tag.div(card.labelled_item(t(".received"), application.submitted_at.strftime("%d %B %Y at %H:%M")))
+            - row.value do
+              = publisher_job_application_status_tag(application.status)
+              p.govuk-body-s #{t(".received")}: #{application.submitted_at.strftime("%d %B %Y at %H:%M")}
 
-          - if application.status.in?(%w[reviewed shortlisted submitted])
-            - if application.reviewed? || application.submitted?
-              - card.action_item link: govuk_link_to(safe_join([t("buttons.shortlist"), tag.span(" #{application.name}", class: "govuk-visually-hidden")]), organisation_job_job_application_shortlist_path(vacancy.id, application.id))
-            - card.action_item link: govuk_link_to(safe_join([t("buttons.reject"), tag.span(" #{application.name}", class: "govuk-visually-hidden")]), organisation_job_job_application_reject_path(vacancy.id, application.id))
+            - if application.status.in?(%w[reviewed shortlisted submitted])
+              - if application.reviewed? || application.submitted?
+                - row.action text: t("buttons.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, application.id), visually_hidden_text: " #{application.name}"
+              - row.action text: t("buttons.reject"), href: organisation_job_job_application_reject_path(vacancy.id, application.id), visually_hidden_text: " #{application.name}"
 
     - elsif !vacancy.within_data_access_period?
       = govuk_inset_text do

@@ -37,16 +37,12 @@ RSpec.describe DashboardComponent, type: :component do
           expect(rendered_component).to include(Rails.application.routes.url_helpers.create_or_copy_organisation_jobs_path)
         end
 
-        it "renders the vacancies component" do
-          expect(inline_component.css(".vacancies-component__content").to_html).not_to be_blank
-        end
-
         it "renders the number of jobs in the heading" do
           expect(inline_component.css("h1.govuk-heading-l").text).to include("Active jobs (1)")
         end
 
         it "renders the vacancy job title in the table" do
-          expect(inline_component.css(".card-component").to_html).to include(vacancy.job_title)
+          expect(inline_component.css(".govuk-summary-list").to_html).to include(vacancy.job_title)
         end
 
         it "renders the link to view applicants" do
@@ -64,7 +60,7 @@ RSpec.describe DashboardComponent, type: :component do
         end
 
         it "does not render the vacancy readable job location in the table" do
-          expect(inline_component.css(".card-component #vacancy_location").to_html).to be_blank
+          expect(inline_component.css(".govuk-summary-list #vacancy_location").to_html).to be_blank
         end
 
         it "does not render the filters sidebar" do
@@ -89,21 +85,17 @@ RSpec.describe DashboardComponent, type: :component do
 
         let!(:inline_component) { render_inline(subject) }
 
-        it "renders the vacancies component" do
-          expect(inline_component.css(".vacancies-component__content").to_html).not_to be_blank
-        end
-
         it "renders the number of jobs in the heading" do
           expect(inline_component.css("h1.govuk-heading-l").text).to include("Active jobs (1)")
         end
 
         it "renders the vacancy job title in the table" do
-          expect(inline_component.css(".card-component").to_html).to include(vacancy.job_title)
+          expect(inline_component.css(".govuk-summary-list").to_html).to include(vacancy.job_title)
         end
 
         it "renders the vacancy readable job location in the table" do
           expect(
-            inline_component.css(".card-component__header").to_html,
+            inline_component.css(".govuk-summary-list__key").to_html,
           ).to include(vacancy.readable_job_location)
         end
 
@@ -141,16 +133,12 @@ RSpec.describe DashboardComponent, type: :component do
 
         let!(:inline_component) { render_inline(subject) }
 
-        it "renders the vacancies component" do
-          expect(inline_component.css(".vacancies-component__content").to_html).not_to be_blank
-        end
-
         it "renders the number of jobs in the heading" do
           expect(inline_component.css("h1.govuk-heading-l").text).to include("Active jobs (1)")
         end
 
         it "renders the vacancy job title in the table" do
-          expect(inline_component.css(".card-component").to_html).to include(vacancy.job_title)
+          expect(inline_component.css(".govuk-summary-list").to_html).to include(vacancy.job_title)
         end
 
         it "does not render the link to view applicants" do
@@ -159,7 +147,7 @@ RSpec.describe DashboardComponent, type: :component do
 
         it "renders the vacancy readable job location in the table" do
           expect(
-            inline_component.css(".card-component__header").to_html,
+            inline_component.css(".govuk-summary-list__key").to_html,
           ).to include(vacancy.readable_job_location)
         end
 
