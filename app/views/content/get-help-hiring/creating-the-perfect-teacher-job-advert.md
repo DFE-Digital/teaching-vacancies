@@ -1,6 +1,6 @@
 ---
 order: 100
-title: How to create the perfect teacher job ad
+title: How to create the perfect teacher job advert
 meta_description: Expert advice on what information to include when creating a job advert, from the job title all the way through to how to apply.
 date_posted: 18/03/2022
 category_tags: how-to
@@ -26,8 +26,8 @@ Naturally, a jobseeker’s eyes are often drawn to the salary field. They want t
 
 Teacher salaries can be complicated compared to some other industries, so when listing a job there are three separate fields to give you space to be transparent and explain the exact remuneration related to the role:
 
-* **Annual or full time equivalent (FTE) salary** - this is simply what the role would pay per year, regardless of any particular working patterns. If it’s a full time role, enter the full basic salary (or a salary band) here. If it’s not, calculate this from the number of days or weeks per year the role covers.
-* **Actual salary** - for part time, flexible, job share or term time roles, provide the candidate with specific information on the money they will receive. You may decide to state this per year or per month, depending on the nature of the role.
+* **Annual or full time equivalent (FTE) salary** - this is simply what the role would pay per year, regardless of any particular working patterns. If it’s a [full time](/full-time-school-jobs) role, enter the full basic salary (or a salary band) here. If it’s not, calculate this from the number of days or weeks per year the role covers.
+* **Actual salary** - for [part time](/part-time-school-jobs), [flexible](/flexible-working-jobs-in-schools), [job share](/school-job-shares) or [term time](/school-term-time-jobs) roles, provide the candidate with specific information on the money they will receive. You may decide to state this per year or per month, depending on the nature of the role.
 * **Additional allowances** - many schools offer teachers benefits beyond their monthly wages. This is your opportunity to list salary sacrifice schemes, cycle to work vouchers, tax-free childcare, and any other bonuses related to working at your school. You may also want to detail the training and career development opportunities you offer.
 
 However you decide to best describe the salary on offer using these fields, avoid referring to pay in a way that doesn’t make sense to people outside your organisation. Those you work with may have an understanding of the grades or bands you use, or acronyms such as MPS or UPS, but don’t assume your candidates will. Make it easy for them by providing a straightforward numerical value.
