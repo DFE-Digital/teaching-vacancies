@@ -33,7 +33,7 @@
                   - row.value text: employment.ended_on
 
         - elsif employment.break?
-          = render "shared/job_application/explained_employment_break", accordion: accordion, employment: employment, index: index
+          = render "jobseekers/job_applications/explained_employment_break", accordion: accordion, employment: employment, index: index
 
         - if employment_history_gap?(index, employments)
-          = render "shared/job_application/unexplained_employment_break", accordion: accordion, employment: employment, index: index
+          = render "jobseekers/job_applications/unexplained_employment_break", accordion: accordion, employment: employment, index: index

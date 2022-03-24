@@ -2,7 +2,7 @@
 
 = render "banner"
 
-= render "shared/job_application/show" do
+= render "jobseekers/job_applications/show" do
   - if job_application.shortlisted?
     = govuk_notification_banner title_text: t("banners.important"), classes: "govuk-!-margin-bottom-5" do |banner|
       - banner.heading text: t(".shortlist_alert.title")
