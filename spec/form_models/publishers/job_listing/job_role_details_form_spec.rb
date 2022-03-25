@@ -56,6 +56,12 @@ RSpec.describe Publishers::JobListing::JobRoleDetailsForm, type: :model do
     it_behaves_like "a form with send_responsible radios"
   end
 
+  context "when main job role is middle leader" do
+    let(:vacancy) { build(:vacancy, main_job_role: "middle_leader") }
+
+    it_behaves_like "a form with send_responsible radios"
+  end
+
   context "when main job role is education support" do
     let(:vacancy) { build(:vacancy, main_job_role: "education_support") }
 
