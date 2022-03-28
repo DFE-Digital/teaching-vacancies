@@ -2,11 +2,18 @@ class MapComponent < GovukComponent::Base
   include LinksHelper
   include OrganisationsHelper
 
-  def initialize(vacancy:, zoom: 13, classes: [], html_attributes: {})
+  def initialize(vacancies:, popup_variant:, zoom: 13, show_location_list: true, polygons: [], classes: [], html_attributes: {})
     super(classes: classes, html_attributes: html_attributes)
 
-    @vacancy = vacancy
+    @vacancies = vacancies
     @zoom = zoom
+    @popup_variant = popup_variant
+    @show_location_list = show_location_list
+    @polygons = polygons
+  end
+
+  def show_location_list_class
+    @show_location_list ? "" : "govuk-!-display-none"
   end
 
   private
@@ -16,6 +23,6 @@ class MapComponent < GovukComponent::Base
   end
 
   def show_map?
-    @show_map ||= @vacancy.organisations.where.not(geopoint: nil).any?
+    @show_map ||= @vacancies[0].organisations.where.not(geopoint: nil).any?
   end
 end

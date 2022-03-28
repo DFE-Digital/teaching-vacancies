@@ -63,6 +63,7 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
   scope :pending, (-> { published.where("publish_on > ?", Date.current) })
   scope :published_on_count, (->(date) { published.where(publish_on: date.all_day).count })
 
+  scope :search_within_area, ->(area) { where("ST_Intersects(?, geolocation)", area.to_s) }
   scope :search_by_filter, VacancyFilterQuery
   scope :search_by_location, VacancyLocationQuery
   scope :search_by_full_text, VacancyFullTextSearchQuery

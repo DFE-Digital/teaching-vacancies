@@ -3,6 +3,7 @@ class Jobseekers::SearchForm
 
   attr_reader :keyword,
               :location, :radius,
+              :transportation_type, :travel_time, :commute_location,
               :job_roles, :subjects, :phases, :working_patterns,
               :job_role_options, :ect_suitable_options, :send_responsible_options,
               :phase_options, :working_pattern_options,
@@ -16,6 +17,11 @@ class Jobseekers::SearchForm
     @subjects = params[:subjects]
     @phases = params[:phases]
     @working_patterns = params[:working_patterns]
+
+    @transportation_type = params[:transportation_type]
+    @travel_time = params[:travel_time]
+    @commute_location = params[:commute_location]
+
     @sort = Search::VacancySort.new(keyword: keyword).update(sort_by: params[:sort_by])
 
     set_radius(params[:radius])
@@ -28,6 +34,9 @@ class Jobseekers::SearchForm
       keyword: @keyword,
       location: @location,
       radius: @radius,
+      transportation_type: @transportation_type,
+      travel_time: @travel_time,
+      commute_location: @commute_location,
       job_roles: @job_roles,
       subjects: @subjects,
       phases: @phases,

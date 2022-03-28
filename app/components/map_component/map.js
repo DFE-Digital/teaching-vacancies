@@ -40,6 +40,14 @@ const MapController = class extends Controller {
       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       { attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' },
     ).addTo(this.map);
+
+    JSON.parse(document.getElementById('polygons').dataset.polygons).forEach((polygon) => {
+      this.polygon({ coordinates: polygon });
+    });
+  }
+
+  polygon({ coordinates }) {
+    L.polygon(coordinates[0].map((point) => point.reverse()), { color: '#0b0c0c', weight: 1, smoothFactor: 2 }).addTo(this.map);
   }
 
   addMarker(point, organisation, index, singleOrg) {
@@ -50,6 +58,7 @@ const MapController = class extends Controller {
       riseOnHover: true,
     });
 
+    // const addressBlock = organisation.querySelector('.pop-up');
     const addressBlock = organisation.querySelector('.pop-up');
     addressBlock.remove();
     addressBlock.hidden = false;

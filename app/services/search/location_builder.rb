@@ -9,13 +9,13 @@ class Search::LocationBuilder
 
   def initialize(location, radius)
     @location = location
-    @radius = Search::RadiusBuilder.new(location, radius).radius
+    # @radius = Search::RadiusBuilder.new(location, radius).radius
     @location_filter = {}
 
     if NATIONWIDE_LOCATIONS.include?(@location&.downcase)
       @location = nil
     elsif search_with_polygons?
-      @polygon = LocationPolygon.buffered(@radius).with_name(location)
+      @polygon = LocationPolygon.with_name(location)
     elsif @location.present?
       @location_filter = build_location_filter
     end
@@ -34,7 +34,7 @@ class Search::LocationBuilder
   def build_location_filter
     {
       point_coordinates: Geocoding.new(location).coordinates,
-      radius: convert_miles_to_metres(radius),
+      # radius: convert_miles_to_metres(radius),
     }
   end
 end

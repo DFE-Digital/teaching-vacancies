@@ -5,13 +5,17 @@ class Search::VacancySearch
   extend Forwardable
   def_delegators :location_search, :point_coordinates
 
-  attr_reader :search_criteria, :keyword, :location, :radius, :sort, :page, :per_page
+  attr_reader :search_criteria, :keyword, :location, :radius, :commute_location, :transportation_type, :travel_time, :sort, :page, :per_page
 
   def initialize(search_criteria, sort: nil, page: nil, per_page: nil)
     @search_criteria = search_criteria
     @keyword = search_criteria[:keyword]
     @location = search_criteria[:location]
     @radius = search_criteria[:radius]
+
+    @commute_location = search_criteria[:location]
+    @transportation_type = search_criteria[:transportation_type]
+    @travel_time = search_criteria[:travel_time]
 
     @sort = sort || Search::VacancySort.new(keyword: keyword)
     @per_page = (per_page || DEFAULT_HITS_PER_PAGE).to_i
@@ -29,6 +33,10 @@ class Search::VacancySearch
 
   def location_search
     @location_search ||= Search::LocationBuilder.new(search_criteria[:location], search_criteria[:radius])
+  end
+
+  def commute_search?
+    commute_location && transportation_type && travel_time
   end
 
   def wider_search_suggestions
@@ -57,10 +65,15 @@ class Search::VacancySearch
     vacancies.total_count
   end
 
+  def commute_area
+    @commute_area ||= TravelTime.new(commute_location, transportation_type, travel_time).commute_area
+  end
+
   private
 
   def scope
     scope = Vacancy.live.includes(:organisations)
+    scope = scope.search_within_area(commute_area) if commute_search?
     scope = scope.search_by_location(location, radius) if location
     scope = scope.search_by_filter(search_criteria) if search_criteria.any?
     scope = scope.search_by_full_text(keyword) if keyword.present?

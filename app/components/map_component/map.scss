@@ -26,6 +26,10 @@
       &__popup {
         margin-bottom: 32px;
         margin-left: 2px;
+
+        .pop-up * {
+          font-size: 1.1em;
+        }
       }
     }
   }
