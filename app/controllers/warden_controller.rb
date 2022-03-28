@@ -45,6 +45,7 @@ class WardenController < ApplicationController
     }
 
     params_hash[:login_failure] = login_failure if login_failure
+    params_hash[:attempted_path] = attempted_path if forced_login_requires_alert?
 
     redirect_to send("new_#{scope}_session_path", params_hash)
   end
@@ -61,5 +62,9 @@ class WardenController < ApplicationController
     return :timeout if flash[:timedout]
 
     request.env.dig("warden.options", :message)
+  end
+
+  def forced_login_requires_alert?
+    %w[job_application/new saved_job/new].any? { |path_fragment| attempted_path.include?(path_fragment) }
   end
 end

@@ -2,11 +2,15 @@ class Jobseekers::SessionsController < Devise::SessionsController
   include ReturnPathTracking::Helpers
 
   def new
-    if (login_failure = params[:login_failure])
+    if (attempted_path = params[:attempted_path])
+      alert_text = t("jobseekers.forced_login.#{forced_login_resource(attempted_path)}",
+                     account_creation_link: helpers.govuk_link_to(t("jobseekers.forced_login.create_account"), new_jobseeker_registration_url))
+    elsif (login_failure = params[:login_failure])
       alert_text = t("devise.failure.#{login_failure}")
-      flash.now[:alert] = alert_text
       trigger_jobseeker_sign_in_event(:failure, alert_text)
     end
+
+    flash.now[:alert] = alert_text
 
     super do
       unless redirected?
@@ -40,5 +44,9 @@ class Jobseekers::SessionsController < Devise::SessionsController
 
   def auth_options
     super.merge(recall: "warden#jobseeker_failed_login")
+  end
+
+  def forced_login_resource(attempted_path)
+    %w[job_application/new saved_job/new].select { |path_fragment| attempted_path.include?(path_fragment) }.join[/^\w*/]
   end
 end

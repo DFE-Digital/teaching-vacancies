@@ -4,57 +4,69 @@ RSpec.describe "Job applications" do
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
   let(:jobseeker) { create(:jobseeker) }
 
-  before do
-    sign_in(jobseeker, scope: :jobseeker)
-  end
-
   describe "GET #new" do
-    context "when the job is not live" do
-      let(:vacancy) { create(:vacancy, :expired, organisations: [build(:school)]) }
+    context "when the jobseeker is not signed in" do
+      before { get(new_jobseekers_job_job_application_path(vacancy.id)) }
 
-      it "does not trigger a `vacancy_apply_clicked` event and returns not found" do
-        expect { get new_jobseekers_job_job_application_path(vacancy.id) }.to not_have_triggered_event(:vacancy_apply_clicked)
+      it "redirects to the sign in page with a flash message explaining why" do
+        follow_redirect!
 
-        expect(response).to have_http_status(:not_found)
+        expect(flash[:alert]).to be_present
       end
     end
 
-    context "when the job is live" do
-      it "triggers a `vacancy_apply_clicked` event" do
-        expect { get new_jobseekers_job_job_application_path(vacancy.id) }
-          .to have_triggered_event(:vacancy_apply_clicked).with_data(vacancy_id: anonymised_form_of(vacancy.id))
-      end
+    context "when the jobseeker is signed in " do
+      before { sign_in(jobseeker, scope: :jobseeker) }
 
-      context "when a job application for the job already exists" do
-        let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+      context "when the job is not live" do
+        let(:vacancy) { create(:vacancy, :expired, organisations: [build(:school)]) }
 
-        it "redirects to `jobseekers_job_applications_path`" do
-          expect(get(new_jobseekers_job_job_application_path(vacancy.id))).to redirect_to(jobseekers_job_applications_path)
+        it "does not trigger a `vacancy_apply_clicked` event and returns not found" do
+          expect { get new_jobseekers_job_job_application_path(vacancy.id) }.to not_have_triggered_event(:vacancy_apply_clicked)
+
+          expect(response).to have_http_status(:not_found)
         end
       end
 
-      context "when a non-draft job application already exists" do
-        let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
-        let(:new_vacancy) { create(:vacancy, organisations: [build(:school)]) }
-
-        it "redirects to `new_quick_apply_jobseekers_job_job_application_path`" do
-          expect(get(new_jobseekers_job_job_application_path(new_vacancy.id)))
-            .to redirect_to(new_quick_apply_jobseekers_job_job_application_path(new_vacancy.id))
-        end
-      end
-
-      context "when the vacancy does not enable job applications" do
-        let(:vacancy) { create(:vacancy, enable_job_applications: false, organisations: [build(:school)]) }
-
-        it "raises an error" do
+      context "when the job is live" do
+        it "triggers a `vacancy_apply_clicked` event" do
           expect { get new_jobseekers_job_job_application_path(vacancy.id) }
-            .to raise_error(ActionController::RoutingError, /Cannot apply for this vacancy/)
+            .to have_triggered_event(:vacancy_apply_clicked).with_data(vacancy_id: anonymised_form_of(vacancy.id))
+        end
+
+        context "when a job application for the job already exists" do
+          let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+
+          it "redirects to `jobseekers_job_applications_path`" do
+            expect(get(new_jobseekers_job_job_application_path(vacancy.id))).to redirect_to(jobseekers_job_applications_path)
+          end
+        end
+
+        context "when a non-draft job application already exists" do
+          let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+          let(:new_vacancy) { create(:vacancy, organisations: [build(:school)]) }
+
+          it "redirects to `new_quick_apply_jobseekers_job_job_application_path`" do
+            expect(get(new_jobseekers_job_job_application_path(new_vacancy.id)))
+              .to redirect_to(new_quick_apply_jobseekers_job_job_application_path(new_vacancy.id))
+          end
+        end
+
+        context "when the vacancy does not enable job applications" do
+          let(:vacancy) { create(:vacancy, enable_job_applications: false, organisations: [build(:school)]) }
+
+          it "raises an error" do
+            expect { get new_jobseekers_job_job_application_path(vacancy.id) }
+              .to raise_error(ActionController::RoutingError, /Cannot apply for this vacancy/)
+          end
         end
       end
     end
   end
 
   describe "POST #create" do
+    before { sign_in(jobseeker, scope: :jobseeker) }
+
     context "when the job is not live" do
       let(:vacancy) { create(:vacancy, :expired, organisations: [build(:school)]) }
 
@@ -92,6 +104,8 @@ RSpec.describe "Job applications" do
   end
 
   describe "GET #new_quick_apply" do
+    before { sign_in(jobseeker, scope: :jobseeker) }
+
     context "when a job application for the job already exists" do
       let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
@@ -142,6 +156,8 @@ RSpec.describe "Job applications" do
   end
 
   describe "POST #quick_apply" do
+    before { sign_in(jobseeker, scope: :jobseeker) }
+
     context "when a job application for the job already exists" do
       let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
@@ -205,6 +221,8 @@ RSpec.describe "Job applications" do
       }
     end
 
+    before { sign_in(jobseeker, scope: :jobseeker) }
+
     context "when the job is not listed" do
       let(:vacancy) { create(:vacancy, :expired, organisations: [build(:school)]) }
 
@@ -255,6 +273,8 @@ RSpec.describe "Job applications" do
   end
 
   describe "GET #show" do
+    before { sign_in(jobseeker, scope: :jobseeker) }
+
     context "when the application is not a draft" do
       let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
@@ -273,6 +293,8 @@ RSpec.describe "Job applications" do
   end
 
   describe "GET #confirm_destroy" do
+    before { sign_in(jobseeker, scope: :jobseeker) }
+
     context "when the application is a draft" do
       let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
@@ -291,6 +313,8 @@ RSpec.describe "Job applications" do
   end
 
   describe "GET #review" do
+    before { sign_in(jobseeker, scope: :jobseeker) }
+
     context "when the application is not a draft" do
       let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
@@ -309,6 +333,8 @@ RSpec.describe "Job applications" do
   end
 
   describe "DELETE #destroy" do
+    before { sign_in(jobseeker, scope: :jobseeker) }
+
     context "when the application is a draft" do
       let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
@@ -332,6 +358,8 @@ RSpec.describe "Job applications" do
   end
 
   describe "GET #confirm_withdraw" do
+    before { sign_in(jobseeker, scope: :jobseeker) }
+
     context "when the application is submitted" do
       let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
@@ -357,6 +385,8 @@ RSpec.describe "Job applications" do
       { jobseekers_job_application_withdraw_form: { withdraw_reason: withdraw_reason },
         origin: origin }
     end
+
+    before { sign_in(jobseeker, scope: :jobseeker) }
 
     context "when the application is submitted" do
       let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
