@@ -44,6 +44,11 @@ en:
       title: "Headteacher & School Leadership Jobs"
       heading: "%{count} headteacher and school leadership jobs"
       meta_description: "Discover headteacher jobs, assistant and deputy head vacancies, and senior school leadership roles in primary and secondary schools near you."
+    middle-leader-jobs:
+      name: "Middle leader"
+      title: "Middle Leader & Department Head Jobs"
+      heading: "%{count} middle leader and department head jobs"
+      meta_description: "Search for middle leader and department head jobs in schools near you. Set up email alerts so you don't miss out on the latest vacancies for subject leads."
     sendco-jobs:
       name: "SENDCo"
       title: "SEND Coordinator (SENDCo) Jobs"
