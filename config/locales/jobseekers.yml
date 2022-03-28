@@ -31,6 +31,10 @@ en:
       show:
         confirm: Confirm
         title: Confirm your email address
+    forced_login:
+      create_account: create an account
+      job_application: You need to login or %{account_creation_link} with Teaching Vacancies to apply for this job.
+      saved_job: You need to login or %{account_creation_link} with Teaching Vacancies to save this job.
     job_alert_feedbacks:
       edit:
         change_alert_link: Change your job alert criteria
