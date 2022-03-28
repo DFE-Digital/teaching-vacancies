@@ -20,7 +20,7 @@ module LandingPagesHelper
     tag.ul class: "govuk-list" do
       safe_join(
         vacancy.job_roles.map do |job_role|
-          tag.li landing_page_link_or_text({ job_roles: [job_role] }, job_role.capitalize)
+          tag.li landing_page_link_or_text({ job_roles: [job_role] }, job_role.humanize)
         end,
       )
     end
