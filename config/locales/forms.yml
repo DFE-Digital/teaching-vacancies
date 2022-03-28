@@ -233,8 +233,9 @@ en:
           You can list all the roles below on Teaching Vacancies. You cannot list other roles such as
           finance manager, administrative assistant, cleaner or chef.
         main_job_role_options:
-          leadership: Includes Deputy/Assistant Head, Headteacher, and trust-level roles
           education_support: Includes learning support and tutors
+          leadership: Includes Deputy/Assistant Head, Headteacher, and trust-level roles
+          middle_leader: Includes Heads of Year or Department
           sendco: Special educational needs and disabilities coordinator
           teaching_assistant: Includes Higher Level Teaching Assistants (HLTAs) and SEND teaching assistants
       publishers_job_listing_job_role_details_form:
@@ -579,26 +580,28 @@ en:
         # TODO: These job_roles_options are no longer on this form, but are used throughout the
         #  app and need to be refactored later
         job_roles_options:
-          education_support: Education support
-          leadership: Leadership
           ect_suitable: Suitable for early career teachers
           ect_suitable_hidden_prefix: Only show results
+          education_support: Education support
+          leadership: Leadership
+          middle_leader: Middle leader
           sen_specialist: Special Educational Needs and Disability Coordinator (SENDCo)
           send_responsible: Special Educational Needs and Disability Coordinator (SENDCo)
-          teaching_assistant: Teaching assistant
           sendco: SENDCo
           teacher: Teacher
+          teaching_assistant: Teaching assistant
         key_stages_options:
           early_years: Early years
           ks1: KS1
           ks2: KS2
       publishers_job_listing_job_role_form:
         main_job_role_options:
-          teacher: Teacher
-          leadership: Leadership
-          teaching_assistant: Teaching assistant
-          sendco: SENDCo
           education_support: Education support
+          leadership: Leadership
+          middle_leader: Middle leader
+          sendco: SENDCo
+          teacher: Teacher
+          teaching_assistant: Teaching assistant
       publishers_job_listing_job_role_details_form:
         additional_job_roles_options:
           ect_suitable: Suitable for early career teachers

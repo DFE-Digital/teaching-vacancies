@@ -55,7 +55,7 @@ class JobApplication < ApplicationRecord
   end
 
   def ask_professional_status?
-    vacancy.main_job_role.in? %w[teacher leadership]
+    vacancy.main_job_role.in? %w[teacher leadership middle_leader]
   end
 
   def deadline_passed?
