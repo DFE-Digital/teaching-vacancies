@@ -33,8 +33,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
           "omniauth.error_reason": omniauth_error.error_reason,
         )
       end
-
-      Sentry.capture_message("User failed to sign in with DfE Sign In")
     end
 
     redirect_to new_publisher_session_path, warning: t(".message")
