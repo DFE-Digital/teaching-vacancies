@@ -29,6 +29,9 @@ shared:
   leadership-jobs:
     job_roles:
       - leadership
+  middle-leader-jobs:
+    job_roles:
+      - middle_leader
   sendco-jobs:
     job_roles:
       - sendco
