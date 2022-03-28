@@ -107,6 +107,12 @@
   }
 }
 
+.grey-background-box {
+  background-color: govuk-colour('light-grey');
+  margin-bottom: govuk-spacing(5);
+  padding: govuk-spacing(5);
+}
+
 .heading--border-bottom {
   border-bottom: govuk-spacing(1) solid $govuk-border-colour;
   padding-bottom: govuk-spacing(2);

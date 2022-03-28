@@ -1,0 +1,26 @@
+.grey-background-box
+  h2.govuk-heading-m = "Commute time"
+
+  = f.govuk_collection_select :transportation_type,
+      transportation_type_options,
+      :downcase,
+      :humanize,
+      label: { text: "Travel type", size: "s" },
+      class: %w[govuk-!-width-full],
+      options: { selected: @form.transportation_type, include_blank: true }
+
+  = f.govuk_collection_select :travel_time,
+      travel_time_options,
+      :to_i,
+      :humanize,
+      label: { text: "Max commute time", size: "s" },
+      class: %w[govuk-!-width-full],
+      options: { selected: @form.travel_time, include_blank: true }
+
+  .autocomplete.location-field__container data-source="getLocationSuggestions" data-controller="autocomplete"
+    = f.govuk_text_field :commute_location,
+        label: { text: "Street or postcode", size: "s" },
+        hint: { text: "Enter a specific location", size: "s" },
+        class: %w[location-finder__input],
+        form_group: { classes: "govuk-!-margin-bottom-0" },
+        data: { coordinates: @vacancies_search&.point_coordinates || @point_coordinates }
