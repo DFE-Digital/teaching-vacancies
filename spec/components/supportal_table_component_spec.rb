@@ -27,7 +27,7 @@ RSpec.describe SupportalTableComponent, type: :component do
       t.datetime "Timestamp", :created_at
       t.boolean "Relevant?", :relevant_to_user
       t.text "Comment", :comment
-      t.sentence("Criteria") { |f| (f.search_criteria || {}).keys }
+      t.tags("Criteria") { |f| (f.search_criteria || {}).keys }
       t.string "Email", :email
       t.column("Generic column") { "generic text" }
     end
@@ -61,8 +61,8 @@ RSpec.describe SupportalTableComponent, type: :component do
     %w[
       boolean
       datetime
-      sentence
       string
+      tags
       text
     ].each do |type|
       expect(page).to have_css("th.column-width--#{type}", count: 1)
@@ -87,7 +87,8 @@ RSpec.describe SupportalTableComponent, type: :component do
   it "formats certain column types" do
     expect(page).to have_css("tbody .govuk-table__row:last-of-type") do |row|
       expect(row).to have_text("Yes") # boolean
-      expect(row).to have_text("Keyword and Radius") # sentence
+      expect(row).to have_text("Keyword") # tags
+      expect(row).to have_text("Radius") # tags
     end
   end
 end

@@ -2,43 +2,43 @@
 - content_for :width_container_class, "app-width-container--full"
 
 = render "tabs"
-= govuk_table html_attributes: { "data-testid": "job-alert-unsubscribe-reason"} do |table|
-  - table.caption(size: 'm', text: 'Job alert unsubscribe - reason given')
+= govuk_table html_attributes: { "data-testid": "job-alert-unsubscribe-reason" } do |table|
+  - table.caption(size: "m", text: "Job alert unsubscribe - reason given")
 
   - table.head do |head|
     - head.row do |row|
-      - row.cell(header: true, text: 'Reporting period')
-      - row.cell(header: true, text: 'Job found')
-      - row.cell(header: true, text: 'Circumstances change')
-      - row.cell(header: true, text: 'Not relevant')
-      - row.cell(header: true, text: 'Other reason')
+      - row.cell(header: true, text: "Reporting period")
+      - row.cell(header: true, text: "Job found")
+      - row.cell(header: true, text: "Circumstances change")
+      - row.cell(header: true, text: "Not relevant")
+      - row.cell(header: true, text: "Other reason")
 
   - table.body do |body|
-    - FeedbackReportingPeriod.all.reverse.each do |period|
+    - FeedbackReportingPeriod.all.reverse_each do |period|
       - results = reporting_period_summary(period, feedback_type: :unsubscribe, grouping_key: :unsubscribe_reason)
-      - body.row html_attributes: { "data-testid": period.to_s} do |row|
+      - body.row html_attributes: { "data-testid": period.to_s } do |row|
         - row.cell(header: true, text: period.to_s)
         - row.cell(text: results["job_found"])
         - row.cell(text: results["circumstances_change"])
         - row.cell(text: results["not_relevant"])
         - row.cell(text: results["other_reason"])
 
-= govuk_table html_attributes: { "data-testid": "satisfaction-rating-jobseekers"} do |table|
-  - table.caption(size: 'm', text: 'Satisfaction rating - jobseekers')
+= govuk_table html_attributes: { "data-testid": "satisfaction-rating-jobseekers" } do |table|
+  - table.caption(size: "m", text: "Satisfaction rating - jobseekers")
 
   - table.head do |head|
     - head.row do |row|
-      - row.cell(header: true, text: 'Reporting period')
-      - row.cell(header: true, text: 'Highly satisfied')
-      - row.cell(header: true, text: 'Somewhat satisfied')
-      - row.cell(header: true, text: 'Neither')
-      - row.cell(header: true, text: 'Somewhat dissatisfied')
-      - row.cell(header: true, text: 'Highly dissatisfied')
+      - row.cell(header: true, text: "Reporting period")
+      - row.cell(header: true, text: "Highly satisfied")
+      - row.cell(header: true, text: "Somewhat satisfied")
+      - row.cell(header: true, text: "Neither")
+      - row.cell(header: true, text: "Somewhat dissatisfied")
+      - row.cell(header: true, text: "Highly dissatisfied")
 
   - table.body do |body|
-    - FeedbackReportingPeriod.all.reverse.each do |period|
+    - FeedbackReportingPeriod.all.reverse_each do |period|
       - results = reporting_period_summary(period, feedback_type: :jobseeker_account, grouping_key: :rating)
-      - body.row html_attributes: { "data-testid": period.to_s} do |row|
+      - body.row html_attributes: { "data-testid": period.to_s } do |row|
         - row.cell(header: true, text: period.to_s)
         - row.cell(text: results["highly_satisfied"])
         - row.cell(text: results["somewhat_satisfied"])
@@ -46,22 +46,22 @@
         - row.cell(text: results["somewhat_dissatisfied"])
         - row.cell(text: results["highly_dissatisfied"])
 
-= govuk_table html_attributes: { "data-testid": "satisfaction-rating-hiring-staff"} do |table|
-  - table.caption(size: 'm', text: 'Satisfaction rating - hiring staff')
+= govuk_table html_attributes: { "data-testid": "satisfaction-rating-hiring-staff" } do |table|
+  - table.caption(size: "m", text: "Satisfaction rating - hiring staff")
 
   - table.head do |head|
     - head.row do |row|
-      - row.cell(header: true, text: 'Reporting period')
-      - row.cell(header: true, text: 'Highly satisfied')
-      - row.cell(header: true, text: 'Somewhat satisfied')
-      - row.cell(header: true, text: 'Neither')
-      - row.cell(header: true, text: 'Somewhat dissatisfied')
-      - row.cell(header: true, text: 'Highly dissatisfied')
+      - row.cell(header: true, text: "Reporting period")
+      - row.cell(header: true, text: "Highly satisfied")
+      - row.cell(header: true, text: "Somewhat satisfied")
+      - row.cell(header: true, text: "Neither")
+      - row.cell(header: true, text: "Somewhat dissatisfied")
+      - row.cell(header: true, text: "Highly dissatisfied")
 
   - table.body do |body|
-    - FeedbackReportingPeriod.all.reverse.each do |period|
+    - FeedbackReportingPeriod.all.reverse_each do |period|
       - results = reporting_period_summary(period, feedback_type: :vacancy_publisher, grouping_key: :rating)
-      - body.row html_attributes: { "data-testid": period.to_s} do |row|
+      - body.row html_attributes: { "data-testid": period.to_s } do |row|
         - row.cell(header: true, text: period.to_s)
         - row.cell(text: results["highly_satisfied"])
         - row.cell(text: results["somewhat_satisfied"])
@@ -69,19 +69,19 @@
         - row.cell(text: results["somewhat_dissatisfied"])
         - row.cell(text: results["highly_dissatisfied"])
 
-= govuk_table html_attributes: { "data-testid": "satisfaction-rating-job-alerts"} do |table|
-  - table.caption(size: 'm', text: 'Satisfaction rating - job alerts')
+= govuk_table html_attributes: { "data-testid": "satisfaction-rating-job-alerts" } do |table|
+  - table.caption(size: "m", text: "Satisfaction rating - job alerts")
 
   - table.head do |head|
     - head.row do |row|
-      - row.cell(header: true, text: 'Reporting period')
-      - row.cell(header: true, text: 'Relevant')
-      - row.cell(header: true, text: 'Not relevant')
+      - row.cell(header: true, text: "Reporting period")
+      - row.cell(header: true, text: "Relevant")
+      - row.cell(header: true, text: "Not relevant")
 
   - table.body do |body|
-    - FeedbackReportingPeriod.all.reverse.each do |period|
+    - FeedbackReportingPeriod.all.reverse_each do |period|
       - results = reporting_period_summary(period, feedback_type: :job_alert, grouping_key: :relevant_to_user)
-      - body.row html_attributes: { "data-testid": period.to_s} do |row|
+      - body.row html_attributes: { "data-testid": period.to_s } do |row|
         - row.cell(header: true, text: period.to_s)
         - row.cell(text: results[true].to_s)
         - row.cell(text: results[false].to_s)
