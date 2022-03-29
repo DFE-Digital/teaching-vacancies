@@ -2,7 +2,7 @@
   "name": "teaching-vacancies",
   "private": true,
   "engine": {
-    "node": ">=8.0.0"
+    "node": ">=14.0.0"
   },
   "browserslist": [
     "last 2 major versions",
