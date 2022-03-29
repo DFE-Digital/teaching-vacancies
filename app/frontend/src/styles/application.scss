@@ -14,6 +14,7 @@ $govuk-new-link-styles: true;
 
 @import 'base/global';
 @import 'base/grid';
+@import 'base/icons';
 @import 'base/mixins';
 @import 'base/utilities';
 
@@ -24,7 +25,6 @@ $govuk-new-link-styles: true;
 @import 'application/form';
 @import 'application/header';
 @import 'application/home';
-@import 'application/icons';
 @import 'application/inset_text';
 @import 'application/pagination';
 @import 'application/posts';
