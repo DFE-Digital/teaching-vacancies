@@ -1,5 +1,27 @@
 require "rails_helper"
 
+RSpec.shared_examples "has a satisfaction rating table" do |data_testid, number_of_options|
+  it "has the correct values" do
+    expect(page).to have_selector("table[data-testid='#{data_testid}']")
+
+    within(find("table[data-testid='#{data_testid}']")) do
+      within(find('tr[data-testid="2022-03-22 -> 2022-03-28"]')) do
+        (1..number_of_options).each do |n|
+          expect(find("td:nth-child(#{n + 1})").text).to eq(n.to_s)
+        end
+      end
+    end
+
+    within(find("table[data-testid='#{data_testid}']")) do
+      within(find('tr[data-testid="2022-02-22 -> 2022-02-28"]')) do
+        (1..number_of_options).each do |n|
+          expect(find("td:nth-child(#{n + 1})").text).to eq((n + number_of_options).to_s)
+        end
+      end
+    end
+  end
+end
+
 RSpec.describe "Feedback supportal section" do
   let!(:job_alert_feedback) do
     create(
@@ -82,6 +104,58 @@ RSpec.describe "Feedback supportal section" do
       within ".supportal-table-component--insufficient_job_alerts" do
         expect(page).to have_text("Some job alert feedback text")
       end
+    end
+  end
+
+  describe "Satisfaction ratings" do
+    before do
+      feedback_types = {
+        unsubscribe: { unsubscribe_reason: %i[job_found circumstances_change not_relevant other_reason] },
+        jobseeker_account: { rating: %i[highly_satisfied somewhat_satisfied neither somewhat_dissatisfied highly_dissatisfied] },
+        vacancy_publisher: { rating: %i[highly_satisfied somewhat_satisfied neither somewhat_dissatisfied highly_dissatisfied] },
+        job_alert: { relevant_to_user: %i[true false] },
+      }
+
+      feedback_types.each do |feedback_type, groupings|
+        groupings.each do |grouping_key, feedback_responses|
+          feedback_responses.each do |feedback_response|
+            create_list(
+              :feedback,
+              feedback_responses.index(feedback_response) + 1,
+              feedback_type: feedback_type,
+              created_at: Time.new(2022, 3, 23, 10, 0),
+              grouping_key => feedback_response,
+            )
+
+            create_list(
+              :feedback,
+              feedback_responses.index(feedback_response) + feedback_responses.count + 1,
+              feedback_type: feedback_type,
+              created_at: Time.new(2022, 2, 23, 10, 0),
+              grouping_key => feedback_response,
+            )
+          end
+        end
+      end
+
+      click_on "View user feedback"
+      click_on "Satisfaction ratings"
+    end
+
+    context "'Job alert unsubscribe - reason given' table" do
+      include_examples "has a satisfaction rating table", "job-alert-unsubscribe-reason", 4
+    end
+
+    context "'Satisfaction rating - jobseekers' table" do
+      include_examples "has a satisfaction rating table", "satisfaction-rating-jobseekers", 5
+    end
+
+    context "'Satisfaction rating - hiring staff' table" do
+      include_examples "has a satisfaction rating table", "satisfaction-rating-hiring-staff", 5
+    end
+
+    context "'Satisfaction rating - job alerts' table" do
+      include_examples "has a satisfaction rating table", "satisfaction-rating-job-alerts", 2
     end
   end
 

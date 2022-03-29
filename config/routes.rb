@@ -127,6 +127,7 @@ Rails.application.routes.draw do
   namespace :support_users, path: "support-users" do
     get "feedback/general", to: "feedbacks#general"
     get "feedback/job-alerts", to: "feedbacks#job_alerts"
+    get "feedback/satisfaction-ratings", to: "feedbacks#satisfaction_ratings"
 
     post "feedback/recategorize", to: "feedbacks#recategorize"
   end

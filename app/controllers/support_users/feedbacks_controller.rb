@@ -19,6 +19,8 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
     @categories_for_select = @categories.invert
   end
 
+  def satisfaction_ratings; end
+
   def recategorize
     params.fetch(:feedbacks).each do |feedback_params|
       next if (category = feedback_params[:category]).blank?
@@ -93,4 +95,13 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
   def reporting_period
     FeedbackReportingPeriod.for(params[:reporting_period].presence || Date.today)
   end
+
+  def reporting_period_summary(reporting_period, feedback_type:, grouping_key:)
+    Feedback.where(
+      feedback_type: feedback_type,
+      created_at: reporting_period.date_range,
+    ).group(grouping_key).count
+  end
+
+  helper_method :reporting_period_summary
 end

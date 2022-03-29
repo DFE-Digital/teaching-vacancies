@@ -1,6 +1,10 @@
+h1.govuk-heading-xl = "User Feedback"
+
 .govuk-tabs
   ul.govuk-tabs__list
     li class="govuk-tabs__list-item #{"govuk-tabs__list-item--selected" if current_page?(support_users_feedback_general_path)}"
       = link_to_unless_current("General", support_users_feedback_general_path(reporting_period: params[:reporting_period]), class: "govuk-tabs__tab")
     li class="govuk-tabs__list-item #{"govuk-tabs__list-item--selected" if current_page?(support_users_feedback_job_alerts_path)}"
       = link_to_unless_current("Job alerts", support_users_feedback_job_alerts_path(reporting_period: params[:reporting_period]), class: "govuk-tabs__tab")
+    li class="govuk-tabs__list-item #{"govuk-tabs__list-item--selected" if current_page?(support_users_feedback_satisfaction_ratings_path)}"
+      = link_to_unless_current("Satisfaction ratings", support_users_feedback_satisfaction_ratings_path(reporting_period: params[:reporting_period]), class: "govuk-tabs__tab")
