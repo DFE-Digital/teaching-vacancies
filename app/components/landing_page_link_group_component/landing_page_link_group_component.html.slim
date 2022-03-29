@@ -1,5 +1,11 @@
 = tag.div(class: classes, **html_attributes)
-  h3.govuk-heading-s = @title
-  ul.govuk-list class="#{@list_class}"
-    - (landing_pages + location_landing_pages).each do |landing_page|
-      = landing_page
+  - if @title
+    h3.govuk-heading-s = @title
+  - elsif @subgroup
+    div = title_landing_page
+  - else
+    h3 class="govuk-heading-s govuk-!-margin-bottom-2" = title_landing_page
+
+  ul.govuk-list class="#{list_class}"
+    - landing_pages.each do |landing_page|
+      li = landing_page

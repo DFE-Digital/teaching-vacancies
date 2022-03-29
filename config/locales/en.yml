@@ -267,14 +267,12 @@ en:
       title_h1: Find teacher and school jobs near you
       title_h2: Welcome to Teaching Vacancies
     landing_page_links:
-      cities: Cities and towns with teaching and education support jobs
-      counties: Counties with teaching and education support jobs
-      ect_suitable: Current jobs suitable for early career teachers
-      education_phases: Current jobs by education phase
-      job_roles: Current jobs by role
-      send_responsible: Current jobs with SEND responsibilities
-      subjects: Current jobs by subject
-      working_patterns: Current jobs by working pattern
+      education_phases: School phases
+      job_roles: Job roles
+      jobs_by_location: School and teaching jobs by location
+      jobs_by_school_type_and_role: Jobs by type of school and role
+      jobs_by_subject: Teaching jobs by subject
+      working_patterns: Working patterns
 
   pages:
     accessibility:
