@@ -14,6 +14,12 @@ RSpec.describe FeedbackReportingPeriod do
       expect(all_periods.last).to eq(described_class.for(Date.today))
       expect(all_periods.count).to eq(((all_periods.first.from...all_periods.last.from).count / 7) + 1)
     end
+
+    context "when there is no feedback" do
+      before { Feedback.destroy_all }
+
+      it { should be_empty }
+    end
   end
 
   describe ".new(from:, to:)" do

@@ -13,7 +13,11 @@ class FeedbackReportingPeriod
   end
 
   def self.all
-    first_period = self.for(Feedback.order(:created_at).first.created_at)
+    first_feedback = Feedback.order(:created_at).first
+
+    return [] if first_feedback.nil?
+
+    first_period = self.for(first_feedback.created_at)
 
     first_period.from.step(Date.today, 7).map do |tuesday|
       self.for(tuesday)
