@@ -40,7 +40,7 @@ class DSIClient
 
   def request_for_uri(uri)
     Net::HTTP::Get.new(uri).tap do |request|
-      request["Authorization"] = "bearer #{jwt_token}"
+      request["Authorization"] = "Bearer #{jwt_token}"
       request["Content-Type"] = "application/json"
     end
   end
