@@ -30,24 +30,14 @@ shared:
     foo: 1
     bar: 1
     baz: 1
-  2022_01_subjects_filters_test:
-    default: 1
-    subjects_filters: 1
   similar_jobs_position:
     default: 1
     left: 1
 test:
-  2022_01_subjects_filters_test:
-    default: 1
-    subjects_filters: 0
   similar_jobs_position:
     default: 1
     left: 0
 visual:
-  search:
-    2022_01_subjects_filters_test:
-      default: 1
-      subjects_filters: 1
   similar_jobs_position:
     default: 1
     left: 1
