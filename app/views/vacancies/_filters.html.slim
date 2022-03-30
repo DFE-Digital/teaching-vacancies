@@ -9,6 +9,14 @@ ruby:
       selected_method: :last,
     },
     {
+      legend: t("jobs.filters.subject"),
+      key: "subjects",
+      selected: @form.subjects,
+      options: SUBJECT_OPTIONS,
+      value_method: :first,
+      selected_method: :first,
+      },
+    {
       legend: t("jobs.filters.ect_suitable"),
       key: "ect_suitable",
       selected: @form.job_roles.include?("ect_suitable") ? @form.job_roles : [],
@@ -42,18 +50,6 @@ ruby:
     },
   ]
 
-    subject_filters =
-      {
-        legend: t("jobs.filters.subject"),
-        key: "subjects",
-        selected: @form.subjects,
-        options: SUBJECT_OPTIONS,
-        value_method: :first,
-        selected_method: :first,
-      }
-
-  filter_types.insert(1, subject_filters) if current_variant?(:"2022_01_subjects_filters_test", :subjects_filters)
-
 = filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
   filters: { total_count: @form.total_filters },
   options: { heading_text: "Filter results", remove_buttons: true },
@@ -62,19 +58,18 @@ ruby:
       - filter_types.each do |filter_type|
         - rb.group(**filter_type)
     - filters_component.group key: "job_roles", component: f.govuk_collection_check_boxes(:job_roles, @form.job_role_options, :first, :last, small: true, legend: { text: t("jobs.filters.job_roles") }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
-    - if current_variant?(:"2022_01_subjects_filters_test", :subjects_filters)
-      - filters_component.group key: "subjects", title: t("jobs.filters.subject"), component: searchable_collection(collection: f.govuk_collection_check_boxes(:subjects,
-          SUBJECT_OPTIONS,
-          :first,
-          :first,
-          :last,
-          small: true,
-          legend: nil,
-          hint: nil,
-          form_group: { data: { action: "change->form#submitListener" } }),
-          collection_count: SUBJECT_OPTIONS.count,
-          options: { scrollable: true },
-          label_text: t("jobs.filters.subject"))
+    - filters_component.group key: "subjects", title: t("jobs.filters.subject"), component: searchable_collection(collection: f.govuk_collection_check_boxes(:subjects,
+        SUBJECT_OPTIONS,
+        :first,
+        :first,
+        :last,
+        small: true,
+        legend: nil,
+        hint: nil,
+        form_group: { data: { action: "change->form#submitListener" } }),
+        collection_count: SUBJECT_OPTIONS.count,
+        options: { scrollable: true },
+        label_text: t("jobs.filters.subject"))
     - filters_component.group key: "ect_suitable", component: f.govuk_collection_check_boxes(:job_roles, @form.ect_suitable_options, :first, :last, small: true, legend: { text: t("jobs.filters.ect_suitable") }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
     - filters_component.group key: "send_responsible", component: f.govuk_collection_check_boxes(:job_roles, @form.send_responsible_options, :first, :last, small: true, legend: { text: t("jobs.filters.send_responsible") }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
     - filters_component.group key: "education_phase", component: f.govuk_collection_check_boxes(:phases, @form.phase_options, :first, :last, small: true, legend: { text: t("jobs.filters.phases") }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
