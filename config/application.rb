@@ -109,6 +109,8 @@ module TeacherVacancyService
     config.view_component.preview_controller = "PreviewsController"
     config.view_component.show_previews = true
 
+    Rails.autoloaders.main.ignore(Rails.root.join("app/frontend"))
+
     config.after_initialize do |app|
       # Catch-all 404 route
       # Defined here instead of routes.rb to ensure it doesn't override gem/engine routes
