@@ -82,9 +82,9 @@
                   - t("jobs.none_listed", count: Vacancy.listed.count).each do |sentence|
                     p = sentence
 
-            .pagination-and-stats
-              .pagination-results
-                = paginate @vacancies_search.vacancies
-              span.govuk-body#vacancies-stats-bottom
+          .pagination-and-stats
+            .pagination-results
+              = paginate @vacancies_search.vacancies
+            span.govuk-body#vacancies-stats-bottom
 
-            = job_alert_link(vacancies_search: @vacancies_search, count: @vacancies.count)
+          = job_alert_link(vacancies_search: @vacancies_search, count: @vacancies.count)
