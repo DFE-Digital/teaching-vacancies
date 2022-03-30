@@ -22,6 +22,7 @@
     "jquery": "^3.5.0",
     "jsdom": "^19.0.0",
     "leaflet": "^1.7.1",
+    "leaflet.fullscreen": "^2.2.0",
     "rails-ujs": "^5.2.7"
   },
   "devDependencies": {
@@ -48,7 +49,7 @@
     "js:test": "jest",
     "js:test:coverage": "jest --coverage",
     "js:lint": "eslint ./app/frontend/src ./app/components",
-    "sass:lint": "yarn stylelint app/frontend/**/*.scss app/components/*/*.scss -q",
+    "sass:lint": "yarn stylelint app/frontend/**/*.scss app/components/**/*.scss -q",
     "backstop:execute": "backstop $CMD --config='app/frontend/backstop/backstop.config.js'",
     "visual:test:reference": "CMD=reference yarn run backstop:execute",
     "visual:test:run": "CMD=test yarn run backstop:execute",
