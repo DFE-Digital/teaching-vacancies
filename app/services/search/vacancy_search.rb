@@ -35,6 +35,10 @@ class Search::VacancySearch
     @location_search ||= Search::LocationBuilder.new(search_criteria[:location], search_criteria[:radius])
   end
 
+  def commute_search?
+    commute_location && transportation_type && travel_time
+  end
+
   def wider_search_suggestions
     return unless vacancies.empty? && search_criteria[:location].present?
 
@@ -69,7 +73,7 @@ class Search::VacancySearch
 
   def scope
     scope = Vacancy.live.includes(:organisations)
-    scope = scope.search_within_area(commute_area) if commute_location && transportation_type && travel_time
+    scope = scope.search_within_area(commute_area) if commute_search?
     scope = scope.search_by_location(location, radius) if location
     scope = scope.search_by_filter(search_criteria) if search_criteria.any?
     scope = scope.search_by_full_text(keyword) if keyword.present?

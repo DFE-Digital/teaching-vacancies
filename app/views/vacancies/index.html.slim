@@ -37,7 +37,8 @@
                     - else
                       = t("jobs.number_of_results_html", first: @vacancies_search.page_from, last: @vacancies_search.page_to, count: @vacancies_search.total_count)
 
-          = map(vacancies: @vacancies, popup_variant: "vacancy", show_location_list: false, polygons: @vacancies_search.commute_area.coordinates.to_json)
+          - if @vacancies_search.commute_search?
+            = map(vacancies: @vacancies, popup_variant: "vacancy", show_location_list: false, polygons: @vacancies_search.commute_area.coordinates.to_json)
 
           #search-results
             - if @vacancies.any?
@@ -83,5 +84,3 @@
             span.govuk-body#vacancies-stats-bottom
 
           = job_alert_link(vacancies_search: @vacancies_search, count: @vacancies.count)
-
-
