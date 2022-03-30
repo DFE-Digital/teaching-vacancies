@@ -16,7 +16,7 @@ class SearchResultsHeadingComponent < ViewComponent::Base
       return t("jobs.search_result_heading.without_search_html", jobs_count: @readable_count, count: @total_count)
     end
 
-    [count_phrase, keyword_phrase, radius_phrase, location_phrase].compact.join(" ")
+    [count_phrase, keyword_phrase, location_phrase].compact.join(" ")
   end
 
   private
@@ -39,12 +39,12 @@ class SearchResultsHeadingComponent < ViewComponent::Base
     t("jobs.search_result_heading.location_html", location: @location)
   end
 
-  def radius_phrase
-    return unless @location.present?
+  # def radius_phrase
+  #   return unless @location.present?
 
-    # A radius of 0 is only possible for polygon searches.
-    t("jobs.search_result_heading.radius_html", count: @radius, units: units)
-  end
+  #   # A radius of 0 is only possible for polygon searches.
+  #   t("jobs.search_result_heading.radius_html", count: @radius, units: units)
+  # end
 
   def units
     t("jobs.search_result_heading.unit_of_length").pluralize(@radius.to_i)

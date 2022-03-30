@@ -13,13 +13,16 @@
     = form_for @form, as: "", url: jobs_path, method: :get, html: { class: "search-and-filters-form", data: { controller: "form" }, role: "search", aria: { label: "Filter criteria" } } do |f|
       .govuk-grid-row
         .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-3"
+          = render "search", f: f
           = render "commute_time_filters", f: f
           = render "filters", f: f, id: "filters-component", classes: "govuk-!-padding-top-3"
 
         .govuk-grid-column-two-thirds-at-desktop
           .search-results
-            .search-results__controls
-              = render "search", f: f
+
+            = tabs do |tabs|
+              - tabs.navigation_item text: "List view", link: url_for(@form.to_hash.merge(view: "list")), active: params[:view] != "map"
+              - tabs.navigation_item text: "Map view", link: url_for(@form.to_hash.merge(view: "map")), active: params[:view] == "map"
 
             .panel-component.js-action data-controller="panel" data-content-id="filters-component" data-close-container="filters-component__heading"
               button.panel-component__toggle.govuk-button.govuk-button--secondary type="button" data-panel-target="toggle" data-action="panel#toggleVisibility"
@@ -37,12 +40,7 @@
                     - else
                       = t("jobs.number_of_results_html", first: @vacancies_search.page_from, last: @vacancies_search.page_to, count: @vacancies_search.total_count)
 
-          - if @vacancies_search.commute_search?
-            = tabs do |tabs|
-              - tabs.navigation_item text: "List view", link: url_for(@form.to_hash.merge(view: "list")), active: params[:view] != "map"
-              - tabs.navigation_item text: "Map view", link: url_for(@form.to_hash.merge(view: "map")), active: params[:view] == "map"
-
-          - if @vacancies_search.commute_search? && params[:view] == "map"
+          - if params[:view] == "map"
             = map(vacancies: @vacancies, popup_variant: "vacancy", show_location_list: false, polygons: @vacancies_search.commute_area.coordinates.to_json)
 
           - else
@@ -84,9 +82,9 @@
                   - t("jobs.none_listed", count: Vacancy.listed.count).each do |sentence|
                     p = sentence
 
-            .pagination-and-stats
-              .pagination-results
-                = paginate @vacancies_search.vacancies
-              span.govuk-body#vacancies-stats-bottom
+          .pagination-and-stats
+            .pagination-results
+              = paginate @vacancies_search.vacancies
+            span.govuk-body#vacancies-stats-bottom
 
-            = job_alert_link(vacancies_search: @vacancies_search, count: @vacancies.count)
+          = job_alert_link(vacancies_search: @vacancies_search, count: @vacancies.count)

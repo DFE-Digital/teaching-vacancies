@@ -1,9 +1,7 @@
-h2.govuk-heading-m = t("jobs.search.title")
-.search-results__controls__input
+.grey-background-box
   = render "vacancies/search/keyword", f: f
   = render "vacancies/search/location", show_hint: false, f: f
   = render "vacancies/search/current_location", target: "location-field"
-  = render "vacancies/search/radius", f: f, wide: true
   = f.hidden_field :sort_by, value: @form.sort.by
   .search-results__controls__input__submit
     = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"

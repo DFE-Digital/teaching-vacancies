@@ -47,7 +47,7 @@ const MapController = class extends Controller {
   }
 
   polygon({ coordinates }) {
-    L.polygon(coordinates[0].map((point) => point.reverse()), { color: 'green' }).addTo(this.map);
+    L.polygon(coordinates[0].map((point) => point.reverse()), { color: '#282c5d' }).addTo(this.map);
   }
 
   addMarker(point, organisation, index, singleOrg) {

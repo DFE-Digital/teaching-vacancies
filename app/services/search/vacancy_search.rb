@@ -13,7 +13,7 @@ class Search::VacancySearch
     @location = search_criteria[:location]
     @radius = search_criteria[:radius]
 
-    @commute_location = search_criteria[:commute_location]
+    @commute_location = search_criteria[:location]
     @transportation_type = search_criteria[:transportation_type]
     @travel_time = search_criteria[:travel_time]
 
