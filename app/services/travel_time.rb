@@ -10,7 +10,7 @@ class TravelTime
   end
 
   def commute_area
-    shapes = response["results"].first["shapes"]
+    shapes = response["results"] ? response["results"].first["shapes"] : []
     polygons = shapes.map { |shape| polygon_from_points(shape) }
     factory.multi_polygon(polygons)
   end
