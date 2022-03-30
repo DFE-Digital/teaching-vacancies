@@ -1,6 +1,4 @@
 class Jobseekers::AlertMailer < Jobseekers::BaseMailer
-  ALERT_MAILER_TEST_VARIANTS = %w[present_subject_line subject_line_variant_1 subject_line_variant_2 subject_line_variant_3 subject_line_variant_4 subject_line_variant_5].freeze
-
   after_action :jobseeker
 
   self.delivery_job = AlertMailerJob
@@ -21,20 +19,11 @@ class Jobseekers::AlertMailer < Jobseekers::BaseMailer
 
     view_mail(@template,
               to: @to,
-              subject: I18n.t("jobseekers.alert_mailer.alert.subject.#{ab_tests[:"2022_01_alert_mailer_subject_lines_ab_test"]}",
+              subject: I18n.t("jobseekers.alert_mailer.alert.subject",
                               count: @vacancies.count,
                               count_minus_one: @vacancies.count - 1,
                               job_title: @vacancies.first.job_title,
-                              keywords: @subscription.search_criteria["keyword"].nil? ? I18n.t("jobseekers.alert_mailer.alert.subject.no_keywords") : @subscription.search_criteria["keyword"]&.titleize,
                               school_name: @vacancies.first.organisation_name))
-  end
-
-  def ab_tests
-    { :"2022_01_alert_mailer_subject_lines_ab_test" => alert_mailer_test_selected_variant }
-  end
-
-  def alert_mailer_test_selected_variant
-    @alert_mailer_test_selected_variant ||= ALERT_MAILER_TEST_VARIANTS.sample
   end
 
   private
