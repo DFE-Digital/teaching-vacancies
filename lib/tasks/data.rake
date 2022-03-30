@@ -66,3 +66,12 @@ namespace :publishers do
     Publisher.update_all(dismissed_new_features_page_at: nil)
   end
 end
+
+require_relative "../apply_client"
+namespace :candidate_api do
+  desc "Fetch candidate info and output as a CSV to the given file"
+  task fetch_as_csv: :environment do
+    csv = ApplyClient.recruited_candidates_csv(recruitment_cycle_year: ENV.fetch("RECRUITMENT_CYCLE_YEAR").to_i)
+    File.write(ENV.fetch("OUTPUT_FILE"), csv)
+  end
+end
