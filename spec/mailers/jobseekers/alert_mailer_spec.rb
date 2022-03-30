@@ -65,7 +65,11 @@ RSpec.describe Jobseekers::AlertMailer do
     let(:frequency) { "daily" }
 
     it "sends a job alert email" do
-      expect(mail.subject).to eq(I18n.t("jobseekers.alert_mailer.alert.subject.present_subject_line"))
+      expect(mail.subject).to eq(I18n.t("jobseekers.alert_mailer.alert.subject",
+                                        count: vacancies.count,
+                                        count_minus_one: vacancies.count - 1,
+                                        job_title: vacancies.first.job_title,
+                                        school_name: vacancies.first.organisation_name))
       expect(mail.to).to eq([subscription.email])
       expect(body).to include(I18n.t("jobseekers.alert_mailer.alert.summary.daily", count: 1))
                   .and include(vacancies.first.job_title)
@@ -113,7 +117,11 @@ RSpec.describe Jobseekers::AlertMailer do
     let(:frequency) { "weekly" }
 
     it "sends a job alert email" do
-      expect(mail.subject).to eq(I18n.t("jobseekers.alert_mailer.alert.subject.present_subject_line"))
+      expect(mail.subject).to eq(I18n.t("jobseekers.alert_mailer.alert.subject",
+                                        count: vacancies.count,
+                                        count_minus_one: vacancies.count - 1,
+                                        job_title: vacancies.first.job_title,
+                                        school_name: vacancies.first.organisation_name))
       expect(mail.to).to eq([subscription.email])
       expect(body).to include(I18n.t("jobseekers.alert_mailer.alert.summary.weekly", count: 1))
                   .and include(vacancies.first.job_title)
