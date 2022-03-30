@@ -1,0 +1,6 @@
+h4 class="govuk-body-m govuk-!-margin-bottom-2"
+    = map_link(org.name, org.url, vacancy_id: vacancy.id)
+
+ul class="govuk-list govuk-body-s"
+    li = organisation_type(org)
+    li = full_address(org)

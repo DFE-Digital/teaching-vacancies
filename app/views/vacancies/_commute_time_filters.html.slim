@@ -24,3 +24,6 @@
         class: %w[location-finder__input],
         form_group: { classes: "govuk-!-margin-bottom-0" },
         data: { coordinates: @vacancies_search&.point_coordinates || @point_coordinates }
+
+  div class="govuk-!-margin-top-4"
+    = f.govuk_submit("Apply Commute time")
