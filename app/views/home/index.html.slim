@@ -10,14 +10,13 @@
           = render "vacancies/search/keyword", f: f
           = render "vacancies/search/location", f: f, label_text: t(".location_label"), show_hint: false, desktop: true
           = f.govuk_submit t("buttons.search"), classes: "govuk-button--start"
-      - if current_variant?(:"2022_01_homepage_quick_links_test", :with_quick_links)
-        h3.govuk-heading-s = t("jobs.search.popular_searches.title")
-        .app-search-form-container__popular-searches
-          = search_keyword_quick_link("primary", page: "primary-school-jobs")
-          = search_keyword_quick_link("maths", page: "maths-teacher-jobs")
-          = search_keyword_quick_link("science", page: "science-teacher-jobs")
-          = search_keyword_quick_link("teaching_assistant", page: "teaching-assistant-jobs")
-          = search_keyword_quick_link("headteacher", page: "leadership-jobs")
+      h3.govuk-heading-s = t("jobs.search.popular_searches.title")
+      .app-search-form-container__popular-searches
+        = search_keyword_quick_link("primary", page: "primary-school-jobs")
+        = search_keyword_quick_link("maths", page: "maths-teacher-jobs")
+        = search_keyword_quick_link("science", page: "science-teacher-jobs")
+        = search_keyword_quick_link("teaching_assistant", page: "teaching-assistant-jobs")
+        = search_keyword_quick_link("headteacher", page: "leadership-jobs")
 
 .govuk-grid-row
   .govuk-grid-column-one-half
