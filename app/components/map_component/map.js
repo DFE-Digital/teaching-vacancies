@@ -14,14 +14,13 @@ const MapController = class extends Controller {
 
     const singleOrg = this.organisationTargets.length === 1;
 
-    var markers = L.markerClusterGroup({
-      iconCreateFunction: function(cluster) {
-        return L.divIcon({
-          className: 'map-component__map__cluster--default',
-          iconSize: [24, 24],
-          html: '<span>' + cluster.getChildCount() + '</span>' });
-      },
-      maxClusterRadius: 24
+    const markers = L.markerClusterGroup({
+      iconCreateFunction: (cluster) => L.divIcon({
+        className: 'map-component__map__cluster--default',
+        iconSize: [24, 24],
+        html: `<span>${cluster.getChildCount()}</span>`,
+      }),
+      maxClusterRadius: 24,
     });
 
     this.organisationTargets.forEach((organisation, index) => {
@@ -34,7 +33,7 @@ const MapController = class extends Controller {
         this.create(point, this.element.dataset.zoom);
       }
 
-      let marker = this.addMarker(point, organisation, index, singleOrg, this.element.dataset.show_marker_numbers);
+      const marker = MapController.addMarker(point, organisation, index, singleOrg, this.element.dataset.show_marker_numbers);
 
       markers.addLayer(marker);
     });
@@ -64,11 +63,11 @@ const MapController = class extends Controller {
     L.polygon(coordinates[0].map((point) => point.reverse()), { color: '#0b0c0c', weight: 1, smoothFactor: 2 }).addTo(this.map);
   }
 
-  addMarker(point, organisation, index, singleOrg, show_marker_numbers) {
+  static addMarker(point, organisation, index, singleOrg, showMarkerNumbers) {
     const originalLink = organisation.querySelector('a');
 
     const marker = L.marker(point, {
-      icon: MapController.markerIcon(singleOrg ? '' : `<span aria-label="${originalLink.innerText}">${show_marker_numbers ? index + 1 : ''}</span>`),
+      icon: MapController.markerIcon(singleOrg ? '' : `<span aria-label="${originalLink.innerText}">${showMarkerNumbers ? index + 1 : ''}</span>`),
       riseOnHover: true,
     });
 
