@@ -12,7 +12,7 @@
         - else
           = link_to("#{org.name}, #{full_address(org)}", org.url)
 
-  div#polygons class="govuk-!-display-none" data-polygons="#{@polygons}"
+  #polygons class="govuk-!-display-none" data-polygons="#{@polygons}"
 
   - if show_map?
     .map-component__map id="map" role="presentation"
