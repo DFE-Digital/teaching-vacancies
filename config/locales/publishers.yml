@@ -53,6 +53,7 @@ en:
         page_title: New features for hiring staff
       reminder:
         content: You can now receive and manage job applications for all roles on Teaching Vacancies, including education support roles.
+        how_applications_work_link: How applications work on Teaching Vacancies
         page_title: A reminder about applications
 
     notifications:
@@ -164,6 +165,7 @@ en:
           before: Application deadline
       build:
         applying_for_the_job:
+          accepting_job_applications_link_text: why you should use Teaching Vacancies for applications
           banner:
             heading: Teaching Vacancies application form
             description:
@@ -173,7 +175,7 @@ en:
           enable_job_applications_html: >-
             Candidates can apply using the Teaching Vacancies application form,
             or you can direct them to another service, like the local authority or a school's website.
-            %{link}
+            Read about %{link}.
           step_title: Applying for the job
         documents:
           accessibility_link_text: How to make documents accessible

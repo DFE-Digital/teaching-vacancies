@@ -39,14 +39,8 @@
               = button_to(t("footer.list_a_teaching_job"), organisation_jobs_path, class: "govuk-footer__link govuk-body-s")
             li.govuk-footer__list-item
               = link_to t("footer.manage_job_listings"), organisation_path, class: "govuk-footer__link"
-            li.govuk-footer__list-item
-              = link_to t("footer.job_ad_guide"),
-                        post_path(section: "get-help-hiring", post_name: "creating-the-perfect-teacher-job-advert"),
-                        class: "govuk-footer__link"
-            li.govuk-footer__list-item
-              = link_to t("footer.job_application_guide"),
-                        post_path(section: "get-help-hiring", post_name: "accepting-job-applications-on-teaching-vacancies"),
-                        class: "govuk-footer__link"
           - else
             li.govuk-footer__list-item
               = link_to t("nav.sign_in"), new_publisher_session_path, class: "govuk-footer__link"
+          li.govuk-footer__list-item
+            = link_to t("footer.school_hiring_guides"), posts_path(section: "get-help-hiring"), class: "govuk-footer__link"
