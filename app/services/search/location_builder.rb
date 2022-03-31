@@ -7,7 +7,7 @@ class Search::LocationBuilder
 
   attr_reader :location, :location_filter, :polygon, :radius
 
-  def initialize(location)
+  def initialize(location, radius)
     @location = location
     # @radius = Search::RadiusBuilder.new(location, radius).radius
     @location_filter = {}
