@@ -4,7 +4,7 @@
     .govuk-grid-row class="govuk-!-margin-left-0"
       - similar_jobs.each do |vacancy|
         .similar-jobs__job class=("govuk-grid-column-one-half" if column_one_half)
-          = similar_job_link(vacancy)
+          p.govuk-body class="govuk-!-margin-bottom-1" = similar_job_link(vacancy)
           p.govuk-body class="govuk-!-margin-bottom-0 govuk-!-font-weight-bold"
             = vacancy.organisation_name
           p.govuk-body class=" govuk-!-margin-bottom-0"

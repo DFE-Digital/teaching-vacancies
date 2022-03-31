@@ -20,5 +20,5 @@
 
   - if vacancy.published? && !vacancy.pending?
     - r.sidebar(classes: %w[govuk-!-padding-bottom-4])
-      h3 = t(".view_live_listing_title")
+      h3.govuk-heading-s = t(".view_live_listing_title")
       = open_in_new_tab_link_to(t(".view_live_listing_link"), job_path(vacancy.id))

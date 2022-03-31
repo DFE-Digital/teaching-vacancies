@@ -5,7 +5,7 @@ RSpec.shared_examples "a successful search" do
     let(:keyword) { "Teacher" }
 
     it "displays page 1 jobs" do
-      expect(page).to have_css("li.vacancy", count: 2)
+      within("ul.vacancies") { expect(page).to have_css("li", count: 2) }
       expect(page).to have_css(".search-results__header-stats", text: strip_tags(I18n.t("jobs.number_of_results_html", first: 1, last: 2, count: 6)))
     end
 
@@ -15,7 +15,7 @@ RSpec.shared_examples "a successful search" do
           click_on "3"
         end
 
-        expect(page).to have_css("li.vacancy", count: 2)
+        within("ul.vacancies") { expect(page).to have_css("li", count: 2) }
         expect(page).to have_css(".search-results__header-stats", text: strip_tags(I18n.t("jobs.number_of_results_html", first: 5, last: 6, count: 6)))
       end
     end
