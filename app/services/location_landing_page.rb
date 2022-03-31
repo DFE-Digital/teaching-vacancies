@@ -16,11 +16,11 @@ class LocationLandingPage < LandingPage
 
   def initialize(location)
     @location = location
-    @criteria = { location: location.titleize }
+    @criteria = { location: name }
   end
 
   def name
-    location.titleize
+    (MAPPED_LOCATIONS[location.tr("-", " ")] || location).titleize.gsub(/\bAnd\b/, "and")
   end
 
   private
