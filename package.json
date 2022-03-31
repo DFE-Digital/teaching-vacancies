@@ -22,6 +22,7 @@
     "jquery": "^3.5.0",
     "jsdom": "^19.0.0",
     "leaflet": "^1.7.1",
+    "leaflet.markercluster": "^1.5.3",
     "rails-ujs": "^5.2.7"
   },
   "devDependencies": {

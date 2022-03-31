@@ -17,8 +17,20 @@
         span {
           color: govuk-colour('light-grey');
           display: block;
-          font-weight: bold;
-          line-height: govuk-spacing(4);
+          line-height: govuk-spacing(5);
+          text-align: center;
+        }
+      }
+
+      &__cluster--default {
+        background-color: govuk-colour('green');
+        border: 1px solid $govuk-input-border-colour;
+
+        span {
+          @include govuk-font(19);
+          color: govuk-colour('white');
+          display: block;
+          line-height: govuk-spacing(9);
           text-align: center;
         }
       }
