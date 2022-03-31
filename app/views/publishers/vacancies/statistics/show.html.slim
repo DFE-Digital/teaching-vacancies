@@ -3,7 +3,7 @@
 = render "publishers/vacancies/banner", vacancy: vacancy, title: t(".title")
 = render "publishers/vacancies/tabs_show", vacancy: vacancy
 
-.govuk-grid-row.vacancy
+.govuk-grid-row
   - if vacancy.draft? || vacancy.pending?
     .govuk-grid-column-full
       = govuk_inset_text text: t(".draft_vacancy")
