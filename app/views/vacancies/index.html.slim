@@ -1,9 +1,6 @@
 - content_for :skip_links do
   a.govuk-skip-link href="#search-results" = t("jobs.skip_link")
 
-- content_for :breadcrumbs do
-  = govuk_breadcrumbs breadcrumbs: { "#{t("breadcrumbs.home")}": root_path, "#{t("breadcrumbs.jobs")}": "" }
-
 = render "title_and_description"
 
 .govuk-grid-row
