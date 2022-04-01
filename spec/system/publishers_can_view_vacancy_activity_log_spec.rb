@@ -34,6 +34,7 @@ RSpec.describe "Publishers can view a vacancy's activity log", versioning: true 
     expect(page).to have_content(I18n.t("publishers.activity_log.job_title", new_value: new_job_title))
     expect(page).to have_content(I18n.t("publishers.activity_log.contract_type", new_value: new_contract_type.humanize))
     expect(page).to have_content(I18n.t("publishers.activity_log.subjects", new_value: new_subjects.to_sentence, count: new_subjects.count))
-    expect(page).to have_content("By #{publisher.papertrail_display_name} on #{vacancy.versions.first.created_at}")
+    expect(page).to have_content(publisher.papertrail_display_name)
+    expect(page).to have_content(vacancy.versions.first.created_at)
   end
 end
