@@ -18,28 +18,28 @@ $govuk-new-link-styles: true;
 @import 'base/mixins';
 @import 'base/utilities';
 
-@import 'application/ab-tests';
-@import 'application/accordion';
-@import 'application/applications';
-@import 'application/footer';
-@import 'application/form';
-@import 'application/header';
-@import 'application/home';
-@import 'application/inset_text';
-@import 'application/pagination';
-@import 'application/posts';
-@import 'application/similar_jobs';
-@import 'application/timeline';
+@import 'layouts/ab-tests';
+@import 'layouts/accordion';
+@import 'layouts/applications';
+@import 'layouts/footer';
+@import 'layouts/form';
+@import 'layouts/header';
+@import 'layouts/home';
+@import 'layouts/inset_text';
+@import 'layouts/pagination';
+@import 'layouts/posts';
+@import 'layouts/similar_jobs';
+@import 'layouts/timeline';
 
-@import 'application/jobseekers/keyword-search';
-@import 'application/jobseekers/search-header';
-@import 'application/jobseekers/subscription';
-@import 'application/jobseekers/vacancies';
+@import 'layouts/jobseekers/keyword-search';
+@import 'layouts/jobseekers/search-header';
+@import 'layouts/jobseekers/subscription';
+@import 'layouts/jobseekers/vacancies';
 
-@import 'application/publishers/awaiting-feedback';
-@import 'application/publishers/information-summary';
-@import 'application/publishers/landing-page';
-@import 'application/publishers/print-application';
+@import 'layouts/publishers/awaiting-feedback';
+@import 'layouts/publishers/information-summary';
+@import 'layouts/publishers/landing-page';
+@import 'layouts/publishers/print-application';
 
 @media print {
   .govuk-header,
