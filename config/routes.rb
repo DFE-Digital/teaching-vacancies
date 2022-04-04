@@ -131,9 +131,6 @@ Rails.application.routes.draw do
     get "/auth/dfe/callback", to: "omniauth_callbacks#dfe"
   end
 
-  # FIXME: Remove this once the DSI callback URL changes are done
-  get "/publishers/auth/dfe/callback", to: redirect(path: "/auth/dfe/callback")
-
   root "home#index"
 
   get "sitemap" => "sitemap#show", format: "xml"
