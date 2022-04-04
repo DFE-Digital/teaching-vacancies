@@ -28,7 +28,7 @@ RSpec.describe "Application feature reminder" do
       click_on "Continue"
 
       expect(page).to have_content(I18n.t("publishers.new_features.reminder.page_title"))
-      expect(page).to have_link(I18n.t("application_pack.link_text", size: application_pack_asset_size), href: application_pack_asset_path)
+      expect(page).to have_link(I18n.t("publishers.new_features.reminder.how_applications_work_link"), href: post_path(section: "get-help-hiring", post_name: "accepting-job-applications-on-teaching-vacancies"))
 
       click_on I18n.t("buttons.reminder_continue")
 

@@ -16,10 +16,6 @@ en:
       main: Skip to main content
     title: Teaching Vacancies
 
-  application_pack:
-    link_text: Download more information about the application form (%{size} MB, PDF)
-    link_download_attr: Teaching Vacancies application form guide
-
   banners:
     alert: Warning
     error: Error
@@ -159,12 +155,11 @@ en:
       for_job_seekers: Job seekers
       for_schools: Hiring staff
       support: Support
-    job_ad_guide: How to create the perfect teacher job ad
-    job_application_guide: How to accept job applications on Teaching Vacancies
     list_a_teaching_job: List a job
     manage_job_listings: Manage job listings
     provide_feedback: Provide feedback on Teaching Vacancies
     request_support: Get help or report a problem
+    school_hiring_guides: School hiring guides
     search_teaching_vacancies: Find a job
     service_support: Get support
 
@@ -220,7 +215,7 @@ en:
       one: Notifications <span class="count-badge">%{count}<span class="govuk-visually-hidden"> unread</span></span>
       other: Notifications <span class="count-badge">%{count}<span class="govuk-visually-hidden"> unread</span></span>
     personal_statement: Writing a personal statement
-    school_hiring_guide: School hiring guide
+    school_hiring_guides: School hiring guides
     sign_in: Sign in
     sign_out: Sign out
     support_user_dashboard: Hello support user

@@ -114,17 +114,6 @@ module LinksHelper
     )
   end
 
-  def application_pack_link(vacancy, **kwargs)
-    tracked_open_in_new_tab_link_to(
-      t("application_pack.link_text", size: application_pack_asset_size),
-      application_pack_asset_path,
-      download: t("application_pack.link_download_attr"),
-      link_type: :application_form_info,
-      link_subject: anon(vacancy.id),
-      **kwargs,
-    )
-  end
-
   def document_accessibility_link(vacancy, **kwargs)
     tracked_open_in_new_tab_link_to(
       t("publishers.vacancies.build.documents.accessibility_link_text"),
