@@ -3,6 +3,7 @@ Rails.application.configure do
 
   synonyms = YAML.load_file(config_dir.join("synonyms.yml"))
   oneway_synonyms = YAML.load_file(config_dir.join("oneway_synonyms.yml"))
+  keyword_filter_mappings = YAML.load_file(config_dir.join("keyword_filter_mappings.yml"))
 
   # Generate lists of all terms that have synonyms so we can look for them in search queries and
   # trigger our synonym logic
@@ -18,10 +19,18 @@ Rails.application.configure do
     .uniq
     .sort_by { |phrase| phrase.count(" ") }
     .reverse
+  keyword_filter_mapping_triggers = keyword_filter_mappings
+    .keys
+    .uniq
+    .sort_by { |phrase| phrase.count(" ") }
+    .reverse
 
   config.x.search.synonyms = synonyms
   config.x.search.synonym_triggers = synonym_triggers
 
   config.x.search.oneway_synonyms = oneway_synonyms
   config.x.search.oneway_synonym_triggers = oneway_synonym_triggers
+
+  config.x.search.keyword_filter_mappings = keyword_filter_mappings
+  config.x.search.keyword_filter_mapping_triggers = keyword_filter_mapping_triggers
 end

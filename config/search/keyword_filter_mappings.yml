@@ -1,0 +1,620 @@
+# Map keyword "trigger" terms to search filters
+"16-19":
+  phases:
+    - 16-19
+"accounting teacher":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Accounting
+"art":
+  subjects:
+    - Art and design
+"assistant head":
+  job_roles:
+    - leadership
+"biology":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Biology
+"business studies":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Business studies
+"ceo":
+  job_roles:
+    - leadership
+"chemistry":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Chemistry
+"citizenship":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Citizenship
+"classics":
+  subjects:
+    - Classics
+"computer":
+  subjects:
+    - Computing
+    - ICT
+"computing":
+  subjects:
+    - Computing
+    - ICT
+"control":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Design and technology
+"dance":
+  subjects:
+    - Dance
+"deputy":
+  job_roles:
+    - leadership
+"design":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Art and design
+    - Design and technology
+"drama":
+  subjects:
+    - Drama
+"dt":
+  subjects:
+    - Design and technology
+"early career teacher":
+  job_roles:
+    - ect_suitable
+"early career teachers":
+  job_roles:
+    - ect_suitable
+"early years":
+  phases:
+    - primary
+"ect":
+  job_roles:
+    - ect_suitable
+"ects":
+  job_roles:
+    - ect_suitable
+"english":
+  subjects:
+    - English
+"eyfs":
+  phases:
+    - primary
+"fe":
+  phases:
+    - 16-19
+"film":
+  subjects:
+    - Media studies
+"finance teacher":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Accounting
+"flexible":
+  working_patterns:
+    - flexible
+"flexible working":
+  working_patterns:
+    - flexible
+"food technology":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Food technology
+"french":
+  subjects:
+    - French
+"full time":
+  working_patterns:
+    - full_time
+"further education":
+  phases:
+    - 16-19
+"geography":
+  subjects:
+    - Geography
+"german":
+  subjects:
+    - German
+"greek":
+  subjects:
+    - Classics
+"head of english":
+  job_roles:
+    - middle_leader
+"head of history":
+  job_roles:
+    - middle_leader
+"head of maths":
+  job_roles:
+    - middle_leader
+"head of mfl":
+  job_roles:
+    - middle_leader
+"head of school":
+  job_roles:
+    - leadership
+"head of science":
+  job_roles:
+    - middle_leader
+"head of sixth form":
+  job_roles:
+    - middle_leader
+"head of year":
+  job_roles:
+    - middle_leader
+"head teacher":
+  job_roles:
+    - leadership
+"headteacher":
+  job_roles:
+    - leadership
+"health":
+  subjects:
+    - Health and social care
+"history":
+  subjects:
+    - History
+"hlta":
+  job_roles:
+    - teaching_assistant
+"hospitality":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Food technology
+"humanities":
+  subjects:
+    - Humanities
+    - History
+    - Geography
+    - Law
+    - Health and Social Care
+    - Religious studies
+    - Sociology
+    - Psychology
+    - Social sciences
+    - Philosophy
+    - Politics
+"ict":
+  subjects:
+    - Computing
+    - ICT
+"it":
+  subjects:
+    - Computing
+    - ICT
+"job share":
+  working_patterns:
+    - job_share
+"key stage 1":
+  phases:
+    - primary
+"key stage 2":
+  phases:
+    - primary
+    - middle
+"key stage 3":
+  phases:
+    - middle
+    - secondary
+"key stage 4":
+  phases:
+    - secondary
+"key stage 5":
+  phases:
+    - secondary
+    - 16-19
+"ks1":
+  phases:
+    - primary
+"ks2":
+  phases:
+    - primary
+    - middle
+"ks3":
+  phases:
+    - middle
+    - secondary
+"ks4":
+  phases:
+    - secondary
+"ks5":
+  phases:
+    - secondary
+    - 16-19
+"languages":
+  subjects:
+    - Languages
+    - French
+    - German
+    - Spanish
+    - Mandarin
+"latin":
+  subjects:
+    - Classics
+"law":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Law
+"leader":
+  job_roles:
+    - middle_leader
+    - leadership
+"leadership":
+  job_roles:
+    - middle_leader
+    - leadership
+"learning support assistant":
+  job_roles:
+    - teaching_assistant
+    - education_support
+"literacy":
+  phases:
+    - primary
+  subjects:
+    - English
+"literature":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - English
+"lsa":
+  job_roles:
+    - teaching_assistant
+    - education_support
+"mandarin":
+  subjects:
+    - Mandarin
+"math":
+  subjects:
+    - Mathematics
+    - Statistics
+"mathematics":
+  subjects:
+    - Mathematics
+    - Statistics
+"maths":
+  subjects:
+    - Mathematics
+    - Statistics
+"media":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Media studies
+"mfl":
+  subjects:
+    - Languages
+    - French
+    - German
+    - Spanish
+    - Mandarin
+"middle leader":
+  job_roles:
+    - middle_leader
+"middle leadership":
+  job_roles:
+    - middle_leader
+"middle school":
+  phases:
+    - middle
+"middle schools":
+  phases:
+    - middle
+"music":
+  subjects:
+    - Music
+"newly qualified teacher":
+  job_roles:
+    - ect_suitable
+"newly qualified teachers":
+  job_roles:
+    - ect_suitable
+"nqt":
+  job_roles:
+    - ect_suitable
+"nqts":
+  job_roles:
+    - ect_suitable
+"numeracy":
+  phases:
+    - primary
+  subjects:
+    - Mathematics
+"nursery":
+  phases:
+    - primary
+"part time":
+  working_patterns:
+    - part_time
+    - job_share
+"pe":
+  subjects:
+    - Physical education
+"performing":
+  subjects:
+    - Drama
+"phase leader":
+  job_roles:
+    - middle_leader
+"philosophy":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Philosophy
+"phonics":
+  phases:
+    - primary
+  subjects:
+    - English
+"photography":
+  subjects:
+    - Art and design
+    - Media studies
+"physical education":
+  subjects:
+    - Physical education
+"physics":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Physics
+"politics":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Politics
+"primary":
+  phases:
+    - primary
+"primary school":
+  phases:
+    - primary
+"primary schools":
+  phases:
+    - primary
+"principal":
+  job_roles:
+    - leadership
+"product":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Design and technology
+"pshe":
+  subjects:
+    - Relationships and sex education
+"psychology":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Psychology
+"re":
+  subjects:
+    - Religious education
+"reception":
+  phases:
+    - primary
+"relationships":
+  subjects:
+    - Relationships and sex education
+"religion":
+  subjects:
+    - Religious education
+"religious education":
+  subjects:
+    - Religious education
+"religious studies":
+  subjects:
+    - Religious education
+"rs":
+  subjects:
+    - Religious education
+"rse":
+  subjects:
+    - Relationships and sex education
+"russian":
+  subjects:
+    - Languages
+"science":
+  subjects:
+    - Science
+    - Biology
+    - Chemistry
+    - Physics
+"secondary":
+  phases:
+    - secondary
+"secondary school":
+  phases:
+    - secondary
+"secondary schools":
+  phases:
+    - secondary
+"sen":
+  job_roles:
+    - send_responsible
+"senco":
+  job_roles:
+    - sendco
+"send":
+  job_roles:
+    - send_responsible
+"sendco":
+  job_roles:
+    - sendco
+"senior leader":
+  job_roles:
+    - leadership
+"senior leadership":
+  job_roles:
+    - leadership
+"senior leadership team":
+  job_roles:
+    - leadership
+"sex education":
+  subjects:
+    - Relationships and sex education
+"sixth form":
+  phases:
+    - 16-19
+    - secondary
+"slt":
+  job_roles:
+    - leadership
+"social care":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Health and social care
+"social science":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Social sciences
+    - Sociology
+"social sciences":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Social sciences
+    - Sociology
+"sociology":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Social sciences
+    - Sociology
+"spanish":
+  subjects:
+    - Spanish
+"special educational needs":
+  job_roles:
+    - send_responsible
+"special educational needs co-ordinator":
+  job_roles:
+    - sendco
+"special educational needs coordinator":
+  job_roles:
+    - sendco
+"sport":
+  subjects:
+    - Physical education
+"sports":
+  subjects:
+    - Physical education
+"statistics":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Statistics
+"suitable for ect":
+  job_roles:
+    - ect_suitable
+"suitable for ects":
+  job_roles:
+    - ect_suitable
+"suitable for nqt":
+  job_roles:
+    - ect_suitable
+"suitable for nqts":
+  job_roles:
+    - ect_suitable
+"support":
+  job_roles:
+    - education_support
+"systems":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Design and technology
+"ta":
+  job_roles:
+    - teaching_assistant
+"teach":
+  job_roles:
+    - teacher
+    - middle_leader
+"teacher":
+  job_roles:
+    - teacher
+    - middle_leader
+"teacher of accounting":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Accounting
+"teacher of finance":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Accounting
+"teachers":
+  job_roles:
+    - teacher
+    - middle_leader
+"teaching":
+  job_roles:
+    - teacher
+    - middle_leader
+"teaching assistant":
+  job_roles:
+    - teaching_assistant
+"teaching assistants":
+  job_roles:
+    - teaching_assistant
+"term time":
+  working_patterns:
+    - term_time
+"textiles":
+  phases:
+    - secondary
+    - 16-19
+  subjects:
+    - Design and technology
+"theatre":
+  subjects:
+    - Drama
+"tlr":
+  job_roles:
+    - middle_leader
