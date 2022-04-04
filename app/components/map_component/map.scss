@@ -2,11 +2,12 @@
 
 .js-enabled {
   .map-component {
+    margin-bottom: govuk-spacing(4);
+    margin-top: govuk-spacing(4);
+
     &__map {
       border: 1px solid $govuk-border-colour;
       height: 400px;
-      margin-bottom: govuk-spacing(4);
-      margin-top: govuk-spacing(4);
       width: 100%;
 
       &__marker--default {
