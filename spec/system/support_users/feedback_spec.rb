@@ -34,7 +34,7 @@ RSpec.describe "Feedback supportal section" do
   let!(:other_feedback) do
     create(
       :feedback,
-      feedback_type: :jobseeker_account,
+      feedback_type: :general,
       comment: "Some other feedback text",
     )
   end
@@ -181,7 +181,7 @@ RSpec.describe "Feedback supportal section" do
     let!(:old_other_feedback) do
       create(
         :feedback,
-        feedback_type: :jobseeker_account,
+        feedback_type: :general,
         comment: "Some old other feedback text",
         created_at: "2022-03-16 10:00",
       )
@@ -190,7 +190,7 @@ RSpec.describe "Feedback supportal section" do
     let!(:older_other_feedback) do
       create(
         :feedback,
-        feedback_type: :jobseeker_account,
+        feedback_type: :general,
         comment: "Some older other feedback text",
         created_at: "2022-01-05 10:00",
       )

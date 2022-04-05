@@ -43,4 +43,5 @@ class Feedback < ApplicationRecord
 
   scope :job_alerts, -> { where(feedback_type: :job_alert) }
   scope :except_job_alerts, -> { where.not(feedback_type: :job_alert) }
+  scope :with_comments, -> { except_job_alerts.where.not(comment: "") }
 end

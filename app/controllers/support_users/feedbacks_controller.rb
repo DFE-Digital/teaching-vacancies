@@ -1,7 +1,7 @@
 class SupportUsers::FeedbacksController < SupportUsers::BaseController
   def general
     @feedbacks = Feedback
-      .except_job_alerts
+      .with_comments
       .order(created_at: :desc)
       .where(created_at: reporting_period.date_range)
 
