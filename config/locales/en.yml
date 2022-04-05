@@ -520,13 +520,14 @@ en:
         results:
           one: (%{count} result)
           other: (%{count} results)
+    search:
+      title_and_description:
+        title:
+          zero: Find a job in teaching - Search results
+          one: Find a job in teaching - Search results
+          other: Find a job in teaching - Search results page %{count}
     show:
       page_description: '%{job_title} job from %{organisation}. Apply by %{deadline}.'
-    title_and_description:
-      title:
-        zero: Find a job in teaching - Search results
-        one: Find a job in teaching - Search results
-        other: Find a job in teaching - Search results page %{count}
 
   vacancy_selector_component:
     job:

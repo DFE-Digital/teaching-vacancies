@@ -1,7 +1,7 @@
 - content_for :skip_links do
   a.govuk-skip-link href="#search-results" = t("jobs.skip_link")
 
-= render "title_and_description"
+= render "vacancies/search/title_and_description"
 
 .govuk-grid-row
   .govuk-grid-column-full
@@ -10,12 +10,12 @@
     = form_for @form, as: "", url: jobs_path, method: :get, html: { class: "search-and-filters-form", data: { controller: "form" }, role: "search", aria: { label: "Filter criteria" } } do |f|
       .govuk-grid-row
         .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-3"
-          = render "filters", f: f, id: "filters-component", classes: "govuk-!-padding-top-3"
+          = render "vacancies/search/filters", f: f, id: "filters-component", classes: "govuk-!-padding-top-3"
 
         .govuk-grid-column-two-thirds-at-desktop
           .search-results
             .search-results__controls
-              = render "search", f: f
+              = render "vacancies/search/main_filters", f: f
 
             .panel-component.js-action data-controller="panel" data-content-id="filters-component" data-close-container="filters-component__heading"
               button.panel-component__toggle.govuk-button.govuk-button--secondary type="button" data-panel-target="toggle" data-action="panel#toggleVisibility"
@@ -36,7 +36,7 @@
             - if @vacancies.any?
               ul.vacancies role="list"
                 - @vacancies.each do |vacancy|
-                  = render "search_result", vacancy: vacancy
+                  = render "vacancies/search/result", vacancy: vacancy
 
             - elsif @vacancies_search.active_criteria?
               .divider-bottom
