@@ -71,7 +71,7 @@ module.exports = [
     "url": "/jobs",
     "delay": 1000,
     "readySelector": ".govuk-main-wrapper",
-    "clickSelector": ".vacancies .govuk-link",
+    "clickSelector": ".search-results .govuk-link",
     "removeSelectors": [".govuk-footer", ".environment-banner-component", "#school-location"],
     "selectors": [
       ".govuk-main-wrapper"

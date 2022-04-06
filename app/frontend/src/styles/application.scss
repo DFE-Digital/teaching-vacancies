@@ -18,30 +18,32 @@ $govuk-new-link-styles: true;
 @import 'base/mixins';
 @import 'base/utilities';
 
-@import 'layouts/ab-tests';
-@import 'layouts/accordion';
-@import 'layouts/applications';
-@import 'layouts/footer';
-@import 'layouts/form';
 @import 'layouts/header';
-@import 'layouts/home';
-@import 'layouts/inset_text';
+@import 'layouts/footer';
 @import 'layouts/pagination';
-@import 'layouts/posts';
-@import 'layouts/similar_jobs';
-@import 'layouts/timeline';
 
-@import 'layouts/jobseekers/keyword-search';
-@import 'layouts/jobseekers/search-header';
-@import 'layouts/jobseekers/subscription';
-@import 'layouts/jobseekers/vacancies';
+@import 'layouts/home';
+@import 'layouts/vacancies';
+@import 'layouts/subscriptions';
 
-@import 'layouts/publishers/awaiting-feedback';
-@import 'layouts/publishers/information-summary';
-@import 'layouts/publishers/landing-page';
-@import 'layouts/publishers/print-application';
-
+//introduced seperately to current refactoring, might need tweaking
 @import 'layouts/support-users/feedbacks';
+
+//still to refactor
+@import 'application/accordion';
+@import 'application/applications';
+@import 'application/form';
+@import 'application/inset_text';
+@import 'application/posts';
+@import 'application/timeline';
+
+@import 'application/publishers/awaiting-feedback';
+@import 'application/publishers/information-summary';
+@import 'application/publishers/landing-page';
+@import 'application/publishers/print-application';
+
+//this is a temporary dumping ground for stuff im not sure what to do with yet
+@import 'application/temp';
 
 @media print {
   .govuk-header,

@@ -1,0 +1,7 @@
+&index {
+  @import './search';
+
+  .govuk-main-wrapper {
+    padding-top: govuk-spacing(2);
+  }
+}
