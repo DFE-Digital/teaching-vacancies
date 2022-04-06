@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_21_150026) do
+ActiveRecord::Schema.define(version: 2022_03_22_142612) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -151,6 +151,7 @@ ActiveRecord::Schema.define(version: 2022_03_21_150026) do
     t.boolean "exported_to_bigquery", default: false, null: false
     t.integer "close_account_reason"
     t.text "close_account_reason_comment"
+    t.string "category"
     t.index ["vacancy_id"], name: "index_feedbacks_on_vacancy_id"
   end
 

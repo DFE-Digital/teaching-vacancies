@@ -1,0 +1,32 @@
+@import 'base_component';
+
+.supportal-table-component {
+  &.govuk-table {
+    font-size: 1em;
+  }
+
+  .column-width {
+    &--text {
+      width: 20em;
+    }
+
+    &--tags {
+      width: 20em;
+    }
+
+    &--datetime {
+      width: 10em;
+    }
+  }
+
+  .tags-list {
+    li {
+      display: inline-block;
+      margin-right: 5px;
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+  }
+}

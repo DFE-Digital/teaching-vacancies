@@ -1,3 +1,8 @@
-- content_for :page_title_prefix, "Hello support user"
+- content_for :page_title_prefix, t("support_users.dashboard.title")
 
-<p>Hello support user</p>
+h1.govuk-heading-l = t("support_users.dashboard.heading")
+
+nav
+  ul.govuk-list
+    li
+      = govuk_link_to t("support_users.dashboard.user_feedback_link"), support_users_feedback_general_path

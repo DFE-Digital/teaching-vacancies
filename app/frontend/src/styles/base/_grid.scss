@@ -1,3 +1,7 @@
+.app-width-container--full {
+  @include govuk-width-container(1920px);
+}
+
 .govuk-grid-column-one-third-at-desktop {
   @include govuk-grid-column(one-third, $at: desktop);
 }

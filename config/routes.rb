@@ -124,6 +124,14 @@ Rails.application.routes.draw do
     root to: "support_users/dashboard#dashboard", as: :support_user_root
   end
 
+  namespace :support_users, path: "support-users" do
+    get "feedback/general", to: "feedbacks#general"
+    get "feedback/job-alerts", to: "feedbacks#job_alerts"
+    get "feedback/satisfaction-ratings", to: "feedbacks#satisfaction_ratings"
+
+    post "feedback/recategorize", to: "feedbacks#recategorize"
+  end
+
   devise_for :support_users
 
   devise_scope :publisher do
