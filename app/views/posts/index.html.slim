@@ -1,4 +1,5 @@
-- content_for :page_title_prefix, t(".#{params[:section]}.title")
+- content_for :page_title_prefix, t(".#{params[:section]}.page_title")
+- content_for :page_description, t(".#{params[:section]}.meta_description")
 
 - content_for :breadcrumbs do
   = govuk_breadcrumbs breadcrumbs: { t("breadcrumbs.home") => root_path,
