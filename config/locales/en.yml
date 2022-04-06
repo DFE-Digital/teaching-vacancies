@@ -460,6 +460,11 @@ en:
       success: Your request for help has been sent
 
   support_users:
+    dashboard:
+      heading: Dashboard
+      title: Support user dashboard
+      user_feedback_link: View user feedback
+
     papertrail_display_name: "%{first_name} %{last_name} (DfE Teaching Vacancies team)"
     sessions:
       new:

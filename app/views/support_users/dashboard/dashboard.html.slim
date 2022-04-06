@@ -1,8 +1,8 @@
-- content_for :page_title_prefix, "Support user dashboard"
+- content_for :page_title_prefix, t("support_users.dashboard.title")
 
-h1.govuk-heading-l = "Dashboard"
+h1.govuk-heading-l = t("support_users.dashboard.heading")
 
 nav
   ul.govuk-list
     li
-      = govuk_link_to "View user feedback", support_users_feedback_general_path
+      = govuk_link_to t("support_users.dashboard.user_feedback_link"), support_users_feedback_general_path

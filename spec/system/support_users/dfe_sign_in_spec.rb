@@ -57,7 +57,7 @@ RSpec.describe "Support users can sign in with DfE Sign In" do
       visit new_support_user_session_path
 
       expect(current_path).to eq(support_user_root_path)
-      expect(page).to have_content("Dashboard")
+      expect(page).to have_content(I18n.t("support_users.dashboard.heading"))
     end
 
     context "when navigating to publisher login page" do
