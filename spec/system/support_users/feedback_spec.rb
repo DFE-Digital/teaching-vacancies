@@ -114,6 +114,8 @@ RSpec.describe "Feedback supportal section" do
         jobseeker_account: { rating: %i[highly_satisfied somewhat_satisfied neither somewhat_dissatisfied highly_dissatisfied] },
         vacancy_publisher: { rating: %i[highly_satisfied somewhat_satisfied neither somewhat_dissatisfied highly_dissatisfied] },
         job_alert: { relevant_to_user: %i[true false] },
+        application: { rating: %i[highly_satisfied somewhat_satisfied neither somewhat_dissatisfied highly_dissatisfied] },
+        close_account: { close_account_reason: %i[too_many_emails not_getting_any_value not_looking_for_job other_close_account_reason] },
       }
 
       feedback_types.each do |feedback_type, groupings|
@@ -156,6 +158,14 @@ RSpec.describe "Feedback supportal section" do
 
     context "'Satisfaction rating - job alerts' table" do
       include_examples "has a satisfaction rating table", "satisfaction-rating-job-alerts", 2
+    end
+
+    context "'Satisfaction rating - job application' table" do
+      include_examples "has a satisfaction rating table", "satisfaction-rating-job-application", 5
+    end
+
+    context "'Close account reason' table" do
+      include_examples "has a satisfaction rating table", "close-account-reason", 4
     end
   end
 
