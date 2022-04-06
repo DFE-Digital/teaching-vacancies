@@ -1,15 +1,15 @@
-.app-search-form-container
+.search
   h1.govuk-heading-l = t(".title_h1")
 
   = form_for @form, as: "", url: jobs_path, html: { method: "get" } do |f|
-    .app-search-form-inner
+    .search__form
       = render "vacancies/search/keyword", f: f
       = render "vacancies/search/location", f: f, label_text: t(".location_label"), show_hint: false, desktop: true
       = f.govuk_submit t("buttons.search"), classes: "govuk-button--start"
 
   h3.govuk-heading-s = t("jobs.search.popular_searches.title")
 
-  .app-search-form-container__popular-searches
+  .search__popular
     = search_keyword_quick_link("primary", page: "primary-school-jobs")
     = search_keyword_quick_link("maths", page: "maths-teacher-jobs")
     = search_keyword_quick_link("science", page: "science-teacher-jobs")

@@ -15,8 +15,8 @@ RSpec.describe "Jobseekers can view all the jobs" do
   describe "pagination" do
     shared_examples "jobseekers can view jobs and navigate between pages" do
       scenario "jobseekers can view jobs and navigate between pages" do
-        within("ul.vacancies") { expect(page).to have_css("li", count: 2) }
-        expect(page).to have_css(".search-results__header-stats", text: "Showing 1 to 2 of 5 results")
+        within("ul.search-results") { expect(page).to have_css("li", count: 2) }
+        expect(page).to have_css(".search-results-sorting__stats", text: "Showing 1 to 2 of 5 results")
 
         expect(page).not_to have_content(I18n.t("jobs.sort_by.most_relevant").humanize)
         expect(page).not_to have_content(I18n.t("jobs.sort_by.publish_on.descending").humanize)
@@ -25,22 +25,22 @@ RSpec.describe "Jobseekers can view all the jobs" do
           click_on "Next"
         end
 
-        within("ul.vacancies") { expect(page).to have_css("li", count: 2) }
-        expect(page).to have_css(".search-results__header-stats", text: "Showing 3 to 4 of 5 results")
+        within("ul.search-results") { expect(page).to have_css("li", count: 2) }
+        expect(page).to have_css(".search-results-sorting__stats", text: "Showing 3 to 4 of 5 results")
 
         within "ul.pagination" do
           click_on "Previous"
         end
 
-        within("ul.vacancies") { expect(page).to have_css("li", count: 2) }
-        expect(page).to have_css(".search-results__header-stats", text: "Showing 1 to 2 of 5 results")
+        within("ul.search-results") { expect(page).to have_css("li", count: 2) }
+        expect(page).to have_css(".search-results-sorting__stats", text: "Showing 1 to 2 of 5 results")
 
         within "ul.pagination" do
           click_on "3"
         end
 
-        within("ul.vacancies") { expect(page).to have_css("li", count: 1) }
-        expect(page).to have_css(".search-results__header-stats", text: "Showing 5 to 5 of 5 results")
+        within("ul.search-results") { expect(page).to have_css("li", count: 1) }
+        expect(page).to have_css(".search-results-sorting__stats", text: "Showing 5 to 5 of 5 results")
       end
     end
 

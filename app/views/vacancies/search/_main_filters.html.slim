@@ -1,0 +1,6 @@
+h2.govuk-heading-m = t("jobs.search.title")
+= render "vacancies/search/keyword", f: f
+= render "vacancies/search/location", show_hint: false, f: f
+= render "vacancies/search/current_location", target: "location-field"
+= render "vacancies/search/radius", f: f, wide: true
+= f.hidden_field :sort_by, value: @form.sort.by

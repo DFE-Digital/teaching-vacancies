@@ -1,3 +1,8 @@
+.keyword-text {
+  @include govuk-responsive-margin(3, 'bottom');
+}
+
+//dashboard jobseeker subscription styles
 .js-enabled {
   .subscription-card {
     &__frequency-form-submit {

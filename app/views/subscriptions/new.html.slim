@@ -1,2 +1,9 @@
-= render "form", form_options: { url: subscriptions_path }, i18n_prefix: "subscriptions.new", button_text: t("buttons.subscribe") do
-  = recaptcha
+- content_for :page_title_prefix, t("subscriptions.new.title")
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("app.back_to_homepage"), href: root_path
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = render "form", form_options: { url: subscriptions_path }, i18n_prefix: "subscriptions.new", button_text: t("buttons.subscribe") do
+      = recaptcha

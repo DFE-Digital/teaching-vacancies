@@ -5,8 +5,8 @@ RSpec.shared_examples "a successful search" do
     let(:keyword) { "Teacher" }
 
     it "displays page 1 jobs" do
-      within("ul.vacancies") { expect(page).to have_css("li", count: 2) }
-      expect(page).to have_css(".search-results__header-stats", text: strip_tags(I18n.t("jobs.number_of_results_html", first: 1, last: 2, count: 6)))
+      within("ul.search-results") { expect(page).to have_css("li", count: 2) }
+      expect(page).to have_css(".search-results-sorting__stats", text: strip_tags(I18n.t("jobs.number_of_results_html", first: 1, last: 2, count: 6)))
     end
 
     context "when navigating between pages" do
@@ -15,8 +15,8 @@ RSpec.shared_examples "a successful search" do
           click_on "3"
         end
 
-        within("ul.vacancies") { expect(page).to have_css("li", count: 2) }
-        expect(page).to have_css(".search-results__header-stats", text: strip_tags(I18n.t("jobs.number_of_results_html", first: 5, last: 6, count: 6)))
+        within("ul.search-results") { expect(page).to have_css("li", count: 2) }
+        expect(page).to have_css(".search-results-sorting__stats", text: strip_tags(I18n.t("jobs.number_of_results_html", first: 5, last: 6, count: 6)))
       end
     end
   end
@@ -26,7 +26,7 @@ RSpec.shared_examples "a successful search" do
     let(:keyword) { "Maths Teacher" }
 
     it "displays only the Maths jobs" do
-      expect(page).to have_css(".search-results__header-stats", text: strip_tags(I18n.t("jobs.number_of_results_one_page_html", count: 2)))
+      expect(page).to have_css(".search-results-sorting__stats", text: strip_tags(I18n.t("jobs.number_of_results_one_page_html", count: 2)))
     end
 
     context "when sorting the jobs by most recently published" do

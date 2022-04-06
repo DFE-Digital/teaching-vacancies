@@ -17,7 +17,7 @@ module.exports = async (browserContext, scenario, consent = true) => {
       "value": "yes",
       "domain": url.host,
       "path": "/",
-      "expires": Date.now() + 3600,
+      "expires": -1,
       "httpOnly": false,
       "secure": url.protocol === 'https:' ? true : false,
       "sameSite": "Lax"
