@@ -291,13 +291,20 @@ en:
   posts:
     index:
       get-help-hiring:
-        title: School hiring guides
         description: >-
           Read expert advice on how to hire excellent staff for your school.
           Get tips on various aspects of the recruitment process and guidance on how to use the Teaching Vacancies service.
+        meta_description: >-
+          Expert advice on how to hire excellent staff for your school. Get tips on the recruitment process and guidance on how to use Teaching Vacancies.
+        page_title: Hiring Advice for Schools
+        title: School hiring guides
       jobseeker-guides:
-        # TODO: Add jobseeker guides description
-        description: ""
+        description: >-
+          Looking for your next teaching job, or another role within a school? Take a look at our expert advice covering applications, interviews, and more
+           to help you in your job search.
+        meta_description: >-
+          Take a look at expert advice from Teaching Vacancies for people looking for jobs in schools. Guides cover applications, interviews, and much more.
+        page_title: Advice for School Jobskeekers
         title: Jobseeker guides
     show:
       contents: Contents
