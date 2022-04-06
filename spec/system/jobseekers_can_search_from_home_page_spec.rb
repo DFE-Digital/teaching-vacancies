@@ -9,7 +9,7 @@ RSpec.describe "Searching on the home page" do
 
   scenario "persists search terms to the jobs index page" do
     fill_in I18n.t("jobs.search.keyword"), with: "math"
-    fill_in I18n.t("home.index.location_label"), with: "bristol"
+    fill_in I18n.t("home.search.location_label"), with: "bristol"
 
     click_on I18n.t("buttons.search")
 
@@ -23,7 +23,7 @@ RSpec.describe "Searching on the home page" do
   context "when the location is not a polygon" do
     scenario "resets radius to a default radius" do
       fill_in I18n.t("jobs.search.keyword"), with: "math"
-      fill_in I18n.t("home.index.location_label"), with: "my house"
+      fill_in I18n.t("home.search.location_label"), with: "my house"
 
       click_on I18n.t("buttons.search")
 
