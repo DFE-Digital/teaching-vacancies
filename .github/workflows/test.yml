@@ -35,7 +35,7 @@ jobs:
             params: '--exclude-pattern "spec/system/{jobseekers,publishers,support_users}, spec/system/{jobseekers,publishers}_*_spec.rb" spec/system spec/accessibility'
           -
             name: unit
-            params: '--exclude-pattern "spec/{accessibility,system}"'
+            params: '--exclude-pattern "spec/{accessibility,system}/*_spec.rb, spec/system/{jobseekers,publishers,support_users}/*_spec.rb"'
 
     env:
       RAILS_ENV: test
