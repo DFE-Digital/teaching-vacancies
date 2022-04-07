@@ -524,17 +524,18 @@ en:
       page_description: >-
         Search for teaching jobs near you and other school jobs including headteacher and teaching assistant. Visit the official place to find teaching jobs.
       no_polygons: This search didn't use any polygons.
-      wider_search_suggestions:
-        heading:
-          keyword_html: Try browsing for &lsquo;%{keyword}&rsquo; in a wider location search
-          no_keyword: Try browsing in a wider location search
-        suggestion_html: '%{search_link} %{count}'
-        radius_distance: '%{radius} miles'
-        results:
-          one: (%{count} result)
-          other: (%{count} results)
     search:
-      title_and_description:
+      no_results_suggestions:
+        wider_search_suggestions:
+          heading:
+            keyword_html: Try browsing for &lsquo;%{keyword}&rsquo; in a wider location search
+            no_keyword: Try browsing in a wider location search
+          suggestion_html: '%{search_link} %{count}'
+          radius_distance: '%{radius} miles'
+          results:
+            one: (%{count} result)
+            other: (%{count} results)
+      page_title_and_description:
         title:
           zero: Find a job in teaching - Search results
           one: Find a job in teaching - Search results
