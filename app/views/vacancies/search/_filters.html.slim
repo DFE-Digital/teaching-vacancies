@@ -53,7 +53,7 @@ ruby:
 = filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
   filters: { total_count: @form.total_filters },
   options: { heading_text: "Filter results", remove_buttons: true },
-  html_attributes: { tabindex: "-1", id: id }) do |filters_component|
+  html_attributes: { tabindex: "-1", id: "filters-component" }) do |filters_component|
     - filters_component.remove_buttons do |rb|
       - filter_types.each do |filter_type|
         - rb.group(**filter_type)

@@ -1,0 +1,29 @@
+.divider-bottom
+  .govuk-heading-m = t("jobs.no_jobs.heading")
+  p.govuk-body
+    = t("jobs.no_jobs.intro")
+    ul.govuk-list.govuk-list--bullet
+      - t("jobs.no_jobs.suggestions").each do |list_item|
+        li = list_item
+
+- if vacancies_search.wider_search_suggestions.present?
+  .divider-bottom
+    - if vacancies_search.keyword.present?
+      .govuk-heading-m = t(".wider_search_suggestions.heading.keyword_html", keyword: vacancies_search.keyword)
+    - else
+      .govuk-heading-m = t(".wider_search_suggestions.heading.no_keyword")
+    ul.govuk-list.govuk-list--bullet
+      - vacancies_search.wider_search_suggestions.each do |wider_radius|
+        li = t(".wider_search_suggestions.suggestion_html",
+               search_link: govuk_link_to(t(".wider_search_suggestions.radius_distance", radius: wider_radius.first), jobs_path(vacancies_search.search_criteria.merge(radius: wider_radius.first))),
+               count: t(".wider_search_suggestions.results", count: wider_radius.last))
+
+span.govuk-heading-m
+  = t("subscriptions.link.no_search_results.text_html",
+      link_to: govuk_link_to(t("subscriptions.link.no_search_results.link"), new_subscription_path(search_criteria: vacancies_search.active_criteria)))
+
+p class="govuk-!-margin-1"
+  = t("subscriptions.benefits.title")
+  ul.govuk-list.govuk-list--bullet
+    - t("subscriptions.benefits.list").each do |list_item|
+      li = list_item

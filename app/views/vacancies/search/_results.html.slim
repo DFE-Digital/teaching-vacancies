@@ -1,0 +1,13 @@
+#search-results
+  - if vacancies.any?
+    ul.vacancies role="list"
+      - vacancies.each do |vacancy|
+        = render "vacancies/search/result", vacancy: vacancy
+
+  - elsif vacancies_search.active_criteria?
+    = render "vacancies/search/no_results_suggestions", vacancies_search: vacancies_search
+
+  - else
+    .empty
+      - t("jobs.none_listed", count: Vacancy.listed.count).each do |sentence|
+        p = sentence
