@@ -16,6 +16,10 @@ class MapComponent < GovukComponent::Base
     @show_location_list ? "" : "govuk-!-display-none"
   end
 
+  def show_marker_numbers
+    @show_location_list
+  end
+
   private
 
   def default_classes

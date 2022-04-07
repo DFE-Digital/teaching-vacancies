@@ -1,4 +1,4 @@
-= tag.div(class: classes, **html_attributes.merge(data: { controller: "map", zoom: @zoom })) do
+= tag.div(class: classes, **html_attributes.merge(data: { controller: "map", zoom: @zoom, show_marker_numbers: show_marker_numbers })) do
   ol.govuk-list data-map-target="markersTextList"
     - @vacancies.each do |vacancy|
       - vacancy.organisations.each do |org|

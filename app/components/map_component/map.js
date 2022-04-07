@@ -14,6 +14,15 @@ const MapController = class extends Controller {
 
     const singleOrg = this.organisationTargets.length === 1;
 
+    const markers = L.markerClusterGroup({
+      iconCreateFunction: (cluster) => L.divIcon({
+        className: 'map-component__map__cluster--default',
+        iconSize: [24, 24],
+        html: `<span>${cluster.getChildCount()}</span>`,
+      }),
+      maxClusterRadius: 24,
+    });
+
     this.organisationTargets.forEach((organisation, index) => {
       const point = {
         lat: organisation.dataset.lat,
@@ -24,8 +33,12 @@ const MapController = class extends Controller {
         this.create(point, this.element.dataset.zoom);
       }
 
-      this.addMarker(point, organisation, index, singleOrg);
+      const marker = MapController.addMarker(point, organisation, index, singleOrg, this.element.dataset.show_marker_numbers);
+
+      markers.addLayer(marker);
     });
+
+    this.map.addLayer(markers);
 
     if (!singleOrg) {
       this.markersTextListTarget.classList.add('govuk-list--number');
@@ -50,20 +63,19 @@ const MapController = class extends Controller {
     L.polygon(coordinates[0].map((point) => point.reverse()), { color: '#0b0c0c', weight: 1, smoothFactor: 2 }).addTo(this.map);
   }
 
-  addMarker(point, organisation, index, singleOrg) {
+  static addMarker(point, organisation, index, singleOrg, showMarkerNumbers) {
     const originalLink = organisation.querySelector('a');
 
     const marker = L.marker(point, {
-      icon: MapController.markerIcon(singleOrg ? '' : `<span aria-label="${originalLink.innerText}">${index + 1}</span>`),
+      icon: MapController.markerIcon(singleOrg ? '' : `<span aria-label="${originalLink.innerText}">${showMarkerNumbers ? index + 1 : ''}</span>`),
       riseOnHover: true,
     });
 
-    // const addressBlock = organisation.querySelector('.pop-up');
     const addressBlock = organisation.querySelector('.pop-up');
     addressBlock.remove();
     addressBlock.hidden = false;
 
-    marker.addTo(this.map).bindPopup(
+    marker.bindPopup(
       addressBlock.outerHTML,
       { className: 'map-component__map__popup' },
     );
@@ -77,6 +89,8 @@ const MapController = class extends Controller {
     } else {
       originalLink.replaceWith(originalLink.innerText);
     }
+
+    return marker;
   }
 
   setMapBounds() {
@@ -88,7 +102,7 @@ const MapController = class extends Controller {
   static markerIcon(html) {
     return L.divIcon({
       className: 'map-component__map__marker--default',
-      iconSize: [20, 20],
+      iconSize: [16, 16],
       html,
     });
   }
