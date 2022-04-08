@@ -1,13 +1,34 @@
-#search-results
-  - if vacancies.any?
-    ul.vacancies role="list"
-      - vacancies.each do |vacancy|
-        = render "vacancies/search/result", vacancy: vacancy
-
-  - elsif vacancies_search.active_criteria?
-    = render "vacancies/search/no_results_suggestions", vacancies_search: vacancies_search
-
-  - else
-    .empty
-      - t("jobs.none_listed", count: Vacancy.listed.count).each do |sentence|
-        p = sentence
+ul.vacancies role="list"
+  - vacancies.each do |vacancy|
+    li role="listitem" tab-index="0"
+      h2.govuk-heading-m class="govuk-!-margin-bottom-0"
+        = govuk_link_to(vacancy.job_title, job_path(vacancy), class: "view-vacancy-link")
+      p.govuk-body
+        = vacancy_full_job_location(vacancy)
+      dl
+        - if vacancy.actual_salary?
+          dt = t("jobs.annual_salary")
+        - else
+          dt = t("jobs.salary")
+        dd.double
+          = vacancy.salary
+          - if vacancy.actual_salary?
+            .govuk-hint class="govuk-!-margin-bottom-0 govuk-!-margin-top-1 govuk-!-font-size-16"
+              = t("jobs.actual_salary")
+            = vacancy.actual_salary
+      dl
+        dt = vacancy.central_office? ? t("jobs.trust_type") : t("jobs.school_type")
+        dd.double
+          - if vacancy.at_multiple_schools?
+            - organisation_types(vacancy.organisations).each do |organisation_type|
+              .govuk-body-s class="govuk-!-margin-bottom-0" = organisation_type
+          - else
+            = organisation_type(vacancy.organisation)
+      dl
+        dt = t("jobs.working_patterns")
+        dd.double
+          = vacancy.readable_working_patterns
+      dl
+        dt = t("jobs.expires_at")
+        dd.double
+          = format_time_to_datetime_at(vacancy.expires_at)

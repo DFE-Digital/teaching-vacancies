@@ -14,6 +14,12 @@
       = render "vacancies/search/fields", f: f
       = render "vacancies/search/open_filters_button", form: @form
       = render "vacancies/search/stats", form: @form, vacancies_search: @vacancies_search, vacancies: @vacancies
-      = render "vacancies/search/results", vacancies_search: @vacancies_search, vacancies: @vacancies
+      #search-results
+        - if @vacancies.any?
+          = render "vacancies/search/results", vacancies: @vacancies
+        - elsif @vacancies_search.active_criteria?
+          = render "vacancies/search/no_results_suggestions", vacancies_search: @vacancies_search
+        - else
+          = render "vacancies/search/no_results"
       = render "vacancies/search/pagination", vacancies_search: @vacancies_search
       = job_alert_link(vacancies_search: @vacancies_search, count: @vacancies.count)
