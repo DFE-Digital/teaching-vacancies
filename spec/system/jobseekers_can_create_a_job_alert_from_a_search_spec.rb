@@ -160,19 +160,17 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
   end
 
   def and_perform_a_search
-    within ".search-and-filters-form" do
-      fill_in "keyword", with: "english"
-      fill_in "location", with: location
-      if search_with_polygons?
-        select "25 miles", from: "radius"
-      end
-      check I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.teacher")
-      check I18n.t("jobs.filters.ect_suitable_only")
-      check I18n.t("jobs.filters.send_responsible_only")
-      check I18n.t("jobs.education_phase_options.primary")
-      check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.full_time")
-      click_on I18n.t("buttons.search")
+    fill_in "keyword", with: "english"
+    fill_in "location", with: location
+    if search_with_polygons?
+      select "25 miles", from: "radius"
     end
+    check I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.teacher")
+    check I18n.t("jobs.filters.ect_suitable_only")
+    check I18n.t("jobs.filters.send_responsible_only")
+    check I18n.t("jobs.education_phase_options.primary")
+    check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.full_time")
+    click_on I18n.t("buttons.search")
   end
 
   def and_the_search_criteria_are_populated

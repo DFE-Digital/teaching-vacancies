@@ -62,8 +62,8 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
     before do
       stub_const("Search::VacancySearch::DEFAULT_HITS_PER_PAGE", per_page)
       visit jobs_path
-      page.find(".search-and-filters-form").fill_in "Keyword", with: keyword
-      page.find(".search-and-filters-form").click_on I18n.t("buttons.search")
+      fill_in "Keyword", with: keyword
+      click_on I18n.t("buttons.search")
     end
 
     it_behaves_like "a successful search"
@@ -73,8 +73,8 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
     before do
       stub_const("Search::VacancySearch::DEFAULT_HITS_PER_PAGE", per_page)
       visit jobs_path
-      page.find(".search-and-filters-form").fill_in "Keyword", with: keyword
-      page.find(".search-and-filters-form").click_on I18n.t("buttons.search")
+      fill_in "Keyword", with: keyword
+      click_on I18n.t("buttons.search")
     end
 
     it_behaves_like "a successful search"
