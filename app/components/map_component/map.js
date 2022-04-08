@@ -34,7 +34,7 @@ const MapController = class extends Controller {
   }
 
   create(point, zoom) {
-    this.map = L.map('map', { tap: false, fullscreenControl: true }).setView(point, zoom);
+    this.map = L.map('map', { tap: false }).setView(point, zoom);
 
     L.tileLayer(
       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
