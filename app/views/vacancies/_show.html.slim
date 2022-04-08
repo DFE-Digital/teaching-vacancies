@@ -13,11 +13,11 @@
 
 = render "vacancies/listing/banner", vacancy: @vacancy
 
-= render "vacancies/listing/banner_links", vacancy: @vacancy,
-                                           saved_job: @saved_job,
-                                           job_application: @job_application,
-                                           similar_jobs: @similar_jobs,
-                                           invented_job_alert_search_criteria: @invented_job_alert_search_criteria
+= render "vacancies/listing/banner_buttons", vacancy: @vacancy,
+                                             saved_job: @saved_job,
+                                             job_application: @job_application,
+                                             similar_jobs: @similar_jobs,
+                                             invented_job_alert_search_criteria: @invented_job_alert_search_criteria
 
 .govuk-grid-row class="#{current_variant_container_name(:similar_jobs_position)} govuk-!-margin-top-6"
   .govuk-grid-column-one-third
