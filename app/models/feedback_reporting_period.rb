@@ -42,7 +42,7 @@ class FeedbackReportingPeriod
   end
 
   def date_range
-    @from..@to
+    (@from.beginning_of_day)..(@to.end_of_day)
   end
 
   def self.parse_date(dateish)

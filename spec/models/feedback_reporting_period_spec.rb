@@ -76,9 +76,11 @@ RSpec.describe FeedbackReportingPeriod do
   end
 
   describe "#date_range" do
+    let(:period_start) { Date.new(2022, 1, 4).beginning_of_day }
+    let(:period_end) { Date.new(2022, 1, 10).end_of_day }
+
     it "returns the date range" do
-      expect(described_class.new(from: "2022-01-04", to: "2022-01-10").date_range)
-        .to eq(Date.new(2022, 1, 4)..Date.new(2022, 1, 10))
+      expect(described_class.new(from: "2022-01-04", to: "2022-01-10").date_range).to eq(period_start..period_end)
     end
   end
 end
