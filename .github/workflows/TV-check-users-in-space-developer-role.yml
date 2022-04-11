@@ -64,8 +64,8 @@ jobs:
       - name: Run powershell script
         shell: pwsh
         run: |
-          ./remote-checkout/scripts/check-users-in-space-developer-role.ps1 \
-            -Space "${{ env.CF_SPACE_NAME }}" \
-            -SlackWebhook "${{env.SLACK_WEBHOOK}}" \
-            -Unset \
+          ./remote-checkout/scripts/check-users-in-space-developer-role.ps1 `
+            -Space "${{ env.CF_SPACE_NAME }}" `
+            -SlackWebhook "${{env.SLACK_WEBHOOK}}" `
+            -Unset `
             -Whitelist "${{env.PAAS_USER_WHITELIST}}"
