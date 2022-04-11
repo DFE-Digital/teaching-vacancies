@@ -160,6 +160,22 @@ role_arn=arn:aws:iam::530003481352:role/SecretEditor
 source_profile=teaching-vacancies
 ```
 
+If needed, two other profiles can also be included for the Deployments and Administrator roles. 
+
+```
+[profile Deployments]
+mfa_serial=arn:aws:iam::530003481352:mfa/<YOUR-AWS-USERNAME>
+region=eu-west-2
+role_arn=arn:aws:iam::530003481352:role/Deployments
+source_profile=teaching-vacancies
+
+[profile Administrator]
+mfa_serial=arn:aws:iam::530003481352:mfa/<YOUR-AWS-USERNAME>
+region=eu-west-2
+role_arn=arn:aws:iam::530003481352:role/Administrator
+source_profile=teaching-vacancies
+```
+
 Then use AWS Vault to set the credentials:
 ```bash
 aws-vault add teaching-vacancies
