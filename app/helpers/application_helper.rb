@@ -37,4 +37,8 @@ module ApplicationHelper
       "Accessibility" => page_path("accessibility"),
     }
   end
+
+  def include_google_tag_manager?
+    cookies["consented-to-cookies"] == "yes" && Rails.configuration.app_role.production?
+  end
 end

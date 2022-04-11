@@ -1,7 +1,7 @@
 doctype html
 html.govuk-template.app-html-class lang="en"
   head
-    = render "layouts/google_tag_manager_head" if cookies["consented-to-cookies"] == "yes"
+    = render "layouts/google_tag_manager_head" if include_google_tag_manager?
     = render "layouts/head_meta"
     = render "layouts/head_links"
     title #{content_for :page_title_prefix} - #{t("app.title")}
@@ -10,7 +10,7 @@ html.govuk-template.app-html-class lang="en"
     = render "layouts/sentry_js_config"
 
   body class=body_class
-    = render "layouts/google_tag_manager_body" if cookies["consented-to-cookies"] == "yes"
+    = render "layouts/google_tag_manager_body" if include_google_tag_manager?
     = render "layouts/add_js_enabled_class_to_body"
     = render "layouts/skip_links"
     = render EnvironmentBannerComponent.new
