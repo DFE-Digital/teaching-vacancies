@@ -1,0 +1,30 @@
+@import '~govuk-frontend/govuk/base';
+
+.inline-fields-container {
+  display: flex;
+
+  .govuk-form-group {
+    // Align fields vertically if e.g. one field has an inline error
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    padding-left: govuk-spacing(3);
+    white-space: nowrap;
+
+    &.govuk-form-group--error:not(:first-of-type) {
+      // Remove vertical red error bar
+      border-left: 0;
+    }
+
+    &:first-of-type:not(.govuk-form-group--error) {
+      padding-left: 0;
+    }
+  }
+
+  &:first-of-type {
+    .button_to {
+      visibility: hidden;
+    }
+  }
+}

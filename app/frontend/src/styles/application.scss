@@ -13,33 +13,32 @@ $govuk-new-link-styles: true;
 @import '~govuk-frontend/govuk/all';
 
 @import 'base/global';
+@import 'base/govuk/components/accordion';
+@import 'base/govuk/components/error-summary';
+@import 'base/govuk/components/inset-text';
 @import 'base/grid';
+@import 'base/form';
 @import 'base/icons';
 @import 'base/mixins';
-@import 'base/utilities';
+@import 'base/utilities'; 
 
-@import 'layouts/header';
 @import 'layouts/footer';
+@import 'layouts/header';
+@import 'layouts/help-guide';
 @import 'layouts/pagination';
 
-@import 'layouts/home';
-@import 'layouts/vacancies';
-@import 'layouts/subscriptions';
-
-//introduced seperately to current refactoring, might need tweaking
+@import 'layouts/home/index';
+@import 'layouts/jobseekers/subscriptions/index';
+@import 'layouts/pages/list-school-job';
+@import 'layouts/posts/index';
+@import 'layouts/publishers/organisations/show';
+@import 'layouts/subscriptions/new';
 @import 'layouts/support-users/feedbacks';
+@import 'layouts/updates/index';
+@import 'layouts/vacancies/index';
+@import 'layouts/vacancies/show';
 
 //still to refactor
-@import 'application/accordion';
-@import 'application/applications';
-@import 'application/form';
-@import 'application/inset_text';
-@import 'application/posts';
-@import 'application/timeline';
-
-@import 'application/publishers/awaiting-feedback';
-@import 'application/publishers/information-summary';
-@import 'application/publishers/landing-page';
 @import 'application/publishers/print-application';
 
 //this is a temporary dumping ground for stuff im not sure what to do with yet

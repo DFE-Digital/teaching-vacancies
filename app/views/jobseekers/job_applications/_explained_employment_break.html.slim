@@ -1,5 +1,5 @@
-- accordion.section heading_text: "", html_attributes: { class: "govuk-accordion__section--expanded employment-break", id: "employment-break-#{index}" } do
-  = govuk_inset_text classes: "govuk-!-margin-top-3 govuk-!-margin-bottom-3" do
+- accordion.section heading_text: "", html_attributes: { class: "govuk-accordion__section--expanded", id: "employment-break-#{index}" } do
+  = govuk_inset_text classes: "govuk-!-margin-top-3 govuk-!-margin-bottom-3 govuk-inset-text--blue" do
     h2.govuk-heading-s class="govuk-!-margin-bottom-1" = t("jobseekers.job_applications.build.employment_history.break")
     p.govuk-body class="govuk-!-margin-bottom-0" = employment.reason_for_break
     p.govuk-hint class="govuk-!-margin-top-1 govuk-!-margin-bottom-1" #{employment.started_on.to_formatted_s(:month_year)} to #{employment.ended_on.to_formatted_s(:month_year) || "present"}

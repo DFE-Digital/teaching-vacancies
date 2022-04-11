@@ -1,0 +1,73 @@
+.pages_show {
+  .list-school-job {
+    &__header {
+      @include full-width-mast;
+      background-color: $govuk-brand-colour;
+      padding-bottom: govuk-spacing(4);
+      padding-top: govuk-spacing(4);
+
+      &__image {
+        max-width: 275px;
+
+        @include govuk-media-query($until: tablet) {
+          display: none;
+        }
+      }
+
+      .actions {
+        align-items: center;
+        column-gap: govuk-spacing(2);
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: govuk-spacing(1);
+
+        &__sign-in {
+          flex-basis: 100%;
+
+          @include govuk-media-query($from: tablet) {
+            flex-basis: auto;
+
+            .govuk-button {
+              margin-bottom: 0;
+            }
+          }
+
+          .govuk-button {
+            background-color: govuk-colour('white');
+            color: $govuk-brand-colour;
+
+            &:hover {
+              background-color: govuk-colour('light-grey');
+            }
+          }
+        }
+
+        .govuk-body-m {
+          color: govuk-colour('white');
+          flex-basis: auto;
+          margin-bottom: 0;
+
+          &:focus {
+            color: $govuk-focus-text-colour;
+          }
+        }
+
+        &__request-account {
+          flex-grow: 1;
+        }
+      }
+
+      .govuk-body-l,
+      .govuk-heading-l,
+      .govuk-link {
+        color: govuk-colour('white');
+      }
+    }
+
+    &__content {
+      .govuk-link {
+        display: block;
+      }
+    }
+  }
+}

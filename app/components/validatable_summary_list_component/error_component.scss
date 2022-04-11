@@ -1,17 +1,10 @@
-// Cribbed from https://github.com/DFE-Digital/publish-teacher-training/blob/5d77c60c887877390d2d1e1b4dcd4369de6ed03e/app/webpacker/stylesheets/_inset-text.scss
-.govuk-inset-text {
-  .govuk-summary-list__value & {
-    margin-top: 0;
-    padding-bottom: 0;
-    padding-top: 0;
-  }
-}
+@import 'base_component';
 
-.app-inset-text--narrow-border {
+.inset-text--narrow-border {
   border-left-width: $govuk-border-width-narrow;
 }
 
-.app-inset-text--error {
+.inset-text--error {
   border-color: $govuk-error-colour;
   border-left-width: $govuk-border-width;
 

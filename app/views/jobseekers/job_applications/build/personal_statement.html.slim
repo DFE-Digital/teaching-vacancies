@@ -17,7 +17,7 @@
       - else
         = t(".banner_no_documents_html", job_link: open_in_new_tab_link_to("‘#{job_application.vacancy.job_title}’", job_path(job_application.vacancy)))
 
-    .help-guide-container--mobile
+    .help-guide--mobile
       h3.govuk-heading-m = t(".personal_statement_guide.title")
       p.govuk-body = t(".personal_statement_guide.description_mobile")
       = govuk_link_to(t(".personal_statement_guide.link_text"),
@@ -44,7 +44,7 @@
         span.govuk-caption-m
           = t("jobseekers.job_applications.cancel_caption")
   .govuk-grid-column-one-third
-    .help-guide-container--desktop class="govuk-!-margin-top-6"
+    .help-guide--desktop class="govuk-!-margin-top-6"
       h3.govuk-heading-m = t(".personal_statement_guide.title")
       p.govuk-body = t(".personal_statement_guide.description_desktop")
       = govuk_link_to(t(".personal_statement_guide.link_text"),

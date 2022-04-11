@@ -2,44 +2,18 @@
   @include govuk-responsive-margin(3, 'bottom');
 }
 
-//dashboard jobseeker subscription styles
-.js-enabled {
-  .subscription-card {
-    &__frequency-form-submit {
-      display: none;
-    }
+//old inset_text.scss
+.govuk-inset-text {
+  .govuk-summary-list__value & {
+    margin-top: 0;
+    padding-bottom: 0;
+    padding-top: 0;
   }
 }
 
-.subscription-card {
-  &__manage-alert-controls {
-    align-items: center;
-    display: flex;
-    gap: govuk-spacing(3);
-    margin-bottom: govuk-spacing(5);
-    margin-top: govuk-spacing(5);
-
-    .govuk-button {
-      margin-bottom: 0;
-    }
-
-    .govuk-button,
-    .govuk-link {
-      @include govuk-media-query ($until: tablet) {
-        width: 50%;
-      }
-    }
+//these should be details component
+.employment-break {
+  .govuk-accordion__section-header {
+    display: none;
   }
-
-  &__frequency-form {
-    .govuk-radios {
-      gap: govuk-spacing(3);
-    }
-  }
-}
-
-.create-alert__button {
-  margin-bottom: 0;
-  padding: 0 govuk-spacing(3);
-  text-align: right;
 }

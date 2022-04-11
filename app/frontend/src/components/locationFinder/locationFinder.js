@@ -3,7 +3,6 @@ import { Controller } from '@hotwired/stimulus';
 import loader from '../loadingIndicator/loadingIndicator';
 import api from '../../lib/api';
 import logger from '../../lib/logging';
-import './locationFinder.scss';
 
 export const ERROR_MESSAGE = 'Unable to find your location';
 export const LOGGING_MESSAGE = '[component: locationFinder]: Unable to find user location';

@@ -2,7 +2,7 @@
   div class="govuk-!-display-none-print"
     = govuk_breadcrumbs breadcrumbs: { "#{t("breadcrumbs.job_applications")}": jobseekers_job_applications_path, "#{vacancy.job_title}": "" }
 
-.job-application-review-banner class="govuk-!-margin-bottom-7"
+.divider-bottom.review-banner class="govuk-!-margin-bottom-7"
   h1.govuk-heading-xl class="govuk-!-margin-bottom-4" = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.organisation_name)
 
   .govuk-body class="govuk-!-margin-bottom-0 govuk-!-font-weight-bold govuk-!-display-none-print"
@@ -12,7 +12,7 @@
   .status-tag
     = job_application_status_tag(job_application.deadline_passed? ? :deadline_passed : job_application.status)
 
-  .govuk-button-group class="govuk-!-margin-bottom-0 govuk-!-margin-top-3 govuk-!-display-none-print"
+  .govuk-button-group class="govuk-!-margin-bottom-3 govuk-!-margin-top-3 govuk-!-display-none-print"
     - if job_application.draft?
       = govuk_button_link_to t("buttons.delete_application"), jobseekers_job_application_confirm_destroy_path(job_application), class: "govuk-button--warning govuk-!-margin-bottom-4"
     - if job_application.status.in?(%w[reviewed shortlisted submitted])

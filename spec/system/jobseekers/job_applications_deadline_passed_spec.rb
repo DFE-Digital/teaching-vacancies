@@ -42,7 +42,7 @@ RSpec.describe "Deadline-passed job applications for jobseekers" do
       end
 
       it "has the application status of 'deadline passed'" do
-        expect(page).to have_css(".job-application-review-banner .govuk-tag", text: "deadline passed")
+        expect(page).to have_css(".review-banner .govuk-tag", text: "deadline passed")
       end
 
       it "does not show the section status indicators" do

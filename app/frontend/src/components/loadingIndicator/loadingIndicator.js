@@ -1,5 +1,3 @@
-import './loadingIndicator.scss';
-
 export const CLASS_NAME = 'loading-indicator__spinner';
 
 const loadingIndicator = class {

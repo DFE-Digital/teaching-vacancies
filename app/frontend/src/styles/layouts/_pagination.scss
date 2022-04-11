@@ -17,7 +17,7 @@
 
   }
 
-  .pagination__item {
+  &__item {
     @include govuk-font(19);
     border: 3px solid transparent;
     color: govuk-colour('blue');
@@ -44,8 +44,8 @@
     }
   }
 
-  .pagination--prev::before,
-  .pagination--next::after {
+  &--prev::before,
+  &--next::after {
     background: transparent;
     border-style: solid;
     color: govuk-colour('black');
@@ -58,36 +58,23 @@
     width: 10px;
   }
 
-  .pagination--prev::before {
+  &--prev::before {
     border-width: 3px 0 0 3px;
     margin-right: govuk-spacing(1);
   }
 
-  .pagination--next::after {
+  &--next::after {
     border-width: 0 3px 3px 0;
     margin-left: govuk-spacing(1);
   }
 
-  .pagination__link {
+  &__link {
     display: block;
     padding: 5px 10px;
     text-decoration: none;
   }
 }
 
-.pagination-results {
+.pagination-controls {
   display: inline-block;
-}
-
-.pagination-and-stats {
-  #vacancies-stats-bottom {
-    margin-bottom: 0;
-    margin-top: 1rem;
-
-    @media (min-width: 1020px) {
-      float: right;
-      margin-left: 0.5rem;
-      margin-top: 0.25rem;
-    }
-  }
 }

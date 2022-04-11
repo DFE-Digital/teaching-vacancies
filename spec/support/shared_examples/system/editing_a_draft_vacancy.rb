@@ -63,7 +63,7 @@ RSpec.shared_examples "provides an overview of the draft vacancy form" do
     end
 
     it "provides inline validation errors which link to the relevant form parts" do
-      within "#pay_package .app-inset-text--error" do
+      within "#pay_package .inset-text--error" do
         expect(page).to have_link("Enter a salary", href: organisation_job_build_path(job_id: vacancy.id, id: "pay_package", back_to: "manage_draft"))
       end
     end
@@ -82,7 +82,7 @@ RSpec.shared_examples "provides an overview of the draft vacancy form" do
     end
 
     it "provides inline validation errors which link to the relevant form parts" do
-      within "#pay_package .app-inset-text--error" do
+      within "#pay_package .inset-text--error" do
         expect(page).to have_link("Enter a salary", href: organisation_job_build_path(job_id: vacancy.id, id: "pay_package", back_to: "manage_draft"))
       end
     end
