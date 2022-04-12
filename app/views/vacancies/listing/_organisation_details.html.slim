@@ -24,6 +24,6 @@ section#school-overview
   section#school-location
     h3.govuk-heading-l.heading--border-bottom = t("organisations.locations.#{vacancy.job_location}")
     - if vacancy.organisations.one?
-      = map(vacancy: vacancy)
+      = map(markers: organisation_map_markers(vacancy))
     - else
-      = map(vacancy: vacancy, zoom: 10)
+      = map(markers: organisation_map_markers(vacancy), zoom: 10)

@@ -23,17 +23,17 @@ describe('map', () => {
 
     document.body.innerHTML = `<div class="map-component" data-controller="map" data-zoom="12">
     <ol data-map-target="markersTextList">
-      <li data-map-target="organisation" data-lat="51" data-lon="0.14">
+      <li data-map-target="marker" data-lat="51" data-lon="0.14">
         <div class="pop-up" hidden>
           <a href="https://school.example.com">Test School</a>
         </div>
       </li>
-      <li data-map-target="organisation" data-lat="52" data-lon="0.15">
+      <li data-map-target="marker" data-lat="52" data-lon="0.15">
         <div class="pop-up" hidden>
           <a href="https://school2.example.com">Test School 2</a>
         </div>
       </li>
-      <li data-map-target="organisation" data-lat="53" data-lon="0.16">
+      <li data-map-target="marker" data-lat="53" data-lon="0.16">
         <div class="pop-up" hidden>
           <a href="https://school3.example.com">Test School 3</a>
         </div>

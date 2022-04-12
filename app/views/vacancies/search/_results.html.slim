@@ -6,10 +6,7 @@ ul.vacancies role="list"
       p.govuk-body
         = vacancy_full_job_location(vacancy)
       dl
-        - if vacancy.actual_salary?
-          dt = t("jobs.annual_salary")
-        - else
-          dt = t("jobs.salary")
+        dt = vacancy.actual_salary? ? t("jobs.annual_salary") : t("jobs.salary")
         dd.double
           = vacancy.salary
           - if vacancy.actual_salary?
