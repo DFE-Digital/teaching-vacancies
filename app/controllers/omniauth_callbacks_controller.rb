@@ -107,5 +107,28 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     session.update(publisher_organisation_id: publisher_organisation.id) if publisher_organisation
   end
 
+  def not_found(error)
+    # Overrides `ApplicationController`, which globally rescues all `ActiveRecord::RecordNotFound`
+    # errors and shows a "page not found" error page to the user.
+    # It's unexpected for a record to not be found as part of the sign in process, so send this
+    # error to our error tracking system so it can be investigated.
+    Sentry.with_scope do |scope|
+      scope.set_context(
+        "Authentication Context",
+        {
+          user_id: user_id,
+          auth_hash_info: auth_hash["info"],
+          auth_hash_extra: auth_hash["extra"],
+        },
+      )
+
+      Sentry.capture_exception(error)
+    end
+
+    Rails.logger.error("Not found error encountered during sign in", error)
+
+    super
+  end
+
   class OrganisationCategoryNotFound < StandardError; end
 end

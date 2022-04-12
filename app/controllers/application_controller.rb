@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
     render json: { status: "OK" }, status: :ok
   end
 
-  def not_found
+  def not_found(_error = nil)
     respond_to do |format|
       format.html { render "errors/not_found", status: :not_found }
       format.json do
