@@ -9,7 +9,6 @@ DFE_SIGN_IN_URL: https://test-api.signin.education.gov.uk
 DISABLE_EXPENSIVE_JOBS: true
 DOMAIN: qa.teaching-vacancies.service.gov.uk
 ENFORCE_LOCAL_AUTHORITY_ALLOWLIST: false
-GOOGLE_ANALYTICS_PROFILE_ID: ga:171744074
 RAILS_ENV: production
 RAILS_LOG_TO_STDOUT: true
 RAILS_MAX_THREADS: 5
