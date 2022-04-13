@@ -5,7 +5,7 @@
 }
 
 .js-enabled {
-  form[data-controller='form'][data-hide-submit='true'] {
+  form[data-hide-submit='true'] {
     .govuk-button {
       display: none;
     }
