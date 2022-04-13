@@ -29,7 +29,7 @@
     "backstopjs": "^6.0.2",
     "concurrently": "^7.1.0",
     "dotenv": "^16.0.0",
-    "eslint": "^8.11.0",
+    "eslint": "^8.13.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.3",
     "jest": "^27.5.1",
@@ -39,7 +39,7 @@
     "stylelint-config-standard": "^25.0.0",
     "webpack": "^4.44.2",
     "webpack-dev-server": "^3.11.2",
-    "yaml": "^1.10.2"
+    "yaml": "^2.0.0"
   },
   "scripts": {
     "server": "rails s",
