@@ -19,24 +19,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def failure
-    omniauth_error = request.respond_to?(:get_header) ? request.get_header("omniauth.error") : request.env["omniauth.error"]
-
-    Sentry.with_scope do |scope|
-      scope.set_tags(
-        "omniauth.error": omniauth_error,
-        "omniauth.failed_strategy": failed_strategy.name,
-      )
-
-      if omniauth_error.is_a?(OmniAuth::Strategies::OpenIDConnect::CallbackError)
-        scope.set_tags(
-          "omniauth.error_type": omniauth_error.error,
-          "omniauth.error_reason": omniauth_error.error_reason,
-        )
-      end
-
-      Sentry.capture_message("User failed to sign in with DfE Sign In")
-    end
-
+    report_omniauth_error
     redirect_to new_publisher_session_path, warning: t(".message")
   end
 
@@ -128,6 +111,30 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     Rails.logger.error("Not found error encountered during sign in", error)
 
     super
+  end
+
+  def report_omniauth_error
+    omniauth_error = request.respond_to?(:get_header) ? request.get_header("omniauth.error") : request.env["omniauth.error"]
+
+    # This error means DSI has redirected the user back to us after the user's session has expired
+    # on _their_ end - it's an expected occurrence and not an error we want to track.
+    return if omniauth_error.respond_to?(:error) && omniauth_error.error.to_s == "sessionexpired"
+
+    Sentry.with_scope do |scope|
+      scope.set_tags(
+        "omniauth.error": omniauth_error,
+        "omniauth.failed_strategy": failed_strategy.name,
+      )
+
+      if omniauth_error.is_a?(OmniAuth::Strategies::OpenIDConnect::CallbackError)
+        scope.set_tags(
+          "omniauth.error_type": omniauth_error.error,
+          "omniauth.error_reason": omniauth_error.error_reason,
+        )
+      end
+
+      Sentry.capture_message("User failed to sign in with DfE Sign In")
+    end
   end
 
   class OrganisationCategoryNotFound < StandardError; end
