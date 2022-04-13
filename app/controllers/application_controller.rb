@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
+  before_action :set_sentry_user
   before_action :redirect_to_canonical_domain, :set_headers
   before_action :trigger_click_event, if: -> { click_event_param.present? }
   before_action { EventContext.request_event = request_event }
@@ -112,5 +113,14 @@ class ApplicationController < ActionController::Base
 
   def user_for_paper_trail
     current_publisher || current_support_user
+  end
+
+  def set_sentry_user
+    fail_safe do
+      user = current_publisher || current_support_user || current_jobseeker
+      return unless user
+
+      Sentry.set_user(id: user.id, "User Type": user.class.name)
+    end
   end
 end
