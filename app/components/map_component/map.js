@@ -5,29 +5,29 @@ import { Controller } from '@hotwired/stimulus';
 import './map.scss';
 
 const MapController = class extends Controller {
-  static targets = ['markersTextList', 'organisation'];
+  static targets = ['markersTextList', 'marker'];
 
   connect() {
     if (!this.element.querySelector('#map')) {
       return;
     }
 
-    const singleOrg = this.organisationTargets.length === 1;
+    const singleMarker = this.markerTargets.length === 1;
 
-    this.organisationTargets.forEach((organisation, index) => {
+    this.markerTargets.forEach((marker, index) => {
       const point = {
-        lat: organisation.dataset.lat,
-        lon: organisation.dataset.lon,
+        lat: marker.dataset.lat,
+        lon: marker.dataset.lon,
       };
 
       if (index === 0) {
         this.create(point, this.element.dataset.zoom);
       }
 
-      this.addMarker(point, organisation, index, singleOrg);
+      this.addMarker(point, marker, index, singleMarker);
     });
 
-    if (!singleOrg) {
+    if (!singleMarker) {
       this.markersTextListTarget.classList.add('govuk-list--number');
       this.setMapBounds();
     }
@@ -42,29 +42,29 @@ const MapController = class extends Controller {
     ).addTo(this.map);
   }
 
-  addMarker(point, organisation, index, singleOrg) {
-    const originalLink = organisation.querySelector('a');
+  addMarker(point, marker, index, singleMarker) {
+    const originalLink = marker.querySelector('a');
 
-    const marker = L.marker(point, {
-      icon: MapController.markerIcon(singleOrg ? '' : `<span aria-label="${originalLink.innerText}">${index + 1}</span>`),
+    const leafletMarker = L.marker(point, {
+      icon: MapController.markerIcon(singleMarker ? '' : `<span aria-label="${originalLink.innerText}">${index + 1}</span>`),
       riseOnHover: true,
     });
 
-    const addressBlock = organisation.querySelector('.pop-up');
+    const addressBlock = marker.querySelector('.pop-up');
     addressBlock.remove();
     addressBlock.hidden = false;
 
-    marker.addTo(this.map).bindPopup(
+    leafletMarker.addTo(this.map).bindPopup(
       addressBlock.outerHTML,
       { className: 'map-component__map__popup' },
     );
 
     // use keydown event as leaflet doesnt recognise focus
-    marker.on('keydown', MapController.openMarkerPopup);
+    leafletMarker.on('keydown', MapController.openMarkerPopup);
 
-    if (singleOrg) {
+    if (singleMarker) {
       originalLink.remove();
-      marker.openPopup();
+      leafletMarker.openPopup();
     } else {
       originalLink.replaceWith(originalLink.innerText);
     }
@@ -72,7 +72,7 @@ const MapController = class extends Controller {
 
   setMapBounds() {
     this.map.fitBounds(
-      this.organisationTargets.map((o) => ({ lat: o.dataset.lat, lon: o.dataset.lon })),
+      this.markerTargets.map((m) => ({ lat: m.dataset.lat, lon: m.dataset.lon })),
     );
   }
 

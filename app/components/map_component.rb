@@ -1,11 +1,8 @@
 class MapComponent < GovukComponent::Base
-  include LinksHelper
-  include OrganisationsHelper
-
-  def initialize(vacancy:, zoom: 13, classes: [], html_attributes: {})
+  def initialize(markers:, zoom: 13, classes: [], html_attributes: {})
     super(classes: classes, html_attributes: html_attributes)
 
-    @vacancy = vacancy
+    @markers = markers
     @zoom = zoom
   end
 
@@ -16,6 +13,10 @@ class MapComponent < GovukComponent::Base
   end
 
   def show_map?
-    @show_map ||= @vacancy.organisations.where.not(geopoint: nil).any?
+    @markers.any? { |marker| marker[:geopoint] }
+  end
+
+  def google_maps_link(address)
+    govuk_link_to address, "https://www.google.com/maps/search/#{address}+UK", "aria-label": "Open in Google Maps"
   end
 end

@@ -1,9 +1,17 @@
 require "rails_helper"
 
 RSpec.describe MapComponent, type: :component do
-  let(:kwargs) { { vacancy: vacancy, zoom: 10 } }
-  let(:vacancy) { create(:vacancy, organisations: schools) }
-  let(:schools) { create_list(:school, 2) }
+  let(:kwargs) { { markers: markers, zoom: 10 } }
+  let(:markers) do
+    [
+      {
+        geopoint: double("geopoint", lat: 1, lon: 2),
+        heading: "marker_heading",
+        description: "marker_description",
+        address: "marker_address",
+      },
+    ]
+  end
 
   subject! { render_inline(described_class.new(**kwargs)) }
 
@@ -16,12 +24,11 @@ RSpec.describe MapComponent, type: :component do
       expect(component["data-zoom"]).to eq("10")
     end
 
-    it "displays a list of marker links" do
-      expect(page).to have_css("ol") do |markers|
-        schools.each do |school|
-          expect(markers).to have_css("li a[href='#{school.url}']", text: school.name)
-        end
-      end
+    it "renders a list of markers" do
+      expect(page).to have_content "marker_heading"
+      expect(page).to have_content "marker_description"
+      expect(page).to have_content "marker_address"
+      expect(page).to have_selector("li[data-map-target='marker'][data-lat=1][data-lon=2]")
     end
 
     it "renders a map container" do
