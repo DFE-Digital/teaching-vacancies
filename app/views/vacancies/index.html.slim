@@ -16,9 +16,7 @@
         .search-results-controls__submit
           = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"
 
-      .panel-component.js-action data-controller="panel" data-content-id="filters-component" data-close-container="filters-component__heading"
-        button.panel-component__toggle.govuk-button.govuk-button--secondary type="button" data-panel-target="toggle" data-action="panel#toggleVisibility"
-          = t("buttons.filters_toggle_panel", count: @form.total_filters)
+      = render "vacancies/search/open_filters_button", form: @form
 
       = render "vacancies/search/stats", form: @form, vacancies_search: @vacancies_search, vacancies: @vacancies
       #search-results

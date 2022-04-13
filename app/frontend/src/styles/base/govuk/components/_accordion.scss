@@ -1,3 +1,7 @@
 .govuk-accordion__controls {
   display: none;
 }
+
+.js-enabled .govuk-accordion__section-content {
+  padding-bottom: govuk-spacing(4);
+}

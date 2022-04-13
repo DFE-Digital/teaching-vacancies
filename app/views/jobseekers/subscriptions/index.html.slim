@@ -9,8 +9,8 @@
 .govuk-grid-row
   .govuk-grid-column-full
       - if subscriptions.any?
-        = govuk_button_link_to t(".button_create"), new_subscription_path
         #subscriptions-results
+          = govuk_button_link_to t(".button_create"), new_subscription_path
           - subscriptions.each do |subscription|
             = render CardComponent.new do |card|
               - card.header do

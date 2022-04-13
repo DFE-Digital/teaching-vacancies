@@ -1,4 +1,5 @@
-.posts_index {
+.posts_index,
+.posts_show {
   .post {
     a {
       @extend .govuk-link;
