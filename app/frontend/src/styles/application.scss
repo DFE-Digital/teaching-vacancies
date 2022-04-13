@@ -34,15 +34,3 @@ $govuk-new-link-styles: true;
 @import 'layouts/updates/index';
 @import 'layouts/vacancies/index';
 @import 'layouts/vacancies/show';
-
-//still to refactor
-@import 'application/publishers/print-application';
-
-@media print {
-  .govuk-header,
-  .govuk-breadcrumbs,
-  .govuk-footer,
-  .tabs-component {
-    display: none !important;
-  }
-}

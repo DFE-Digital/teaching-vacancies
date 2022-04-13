@@ -24,7 +24,7 @@ RSpec.describe JobApplicationReviewComponent, type: :component do
 
   it "does not render a task list by default" do
     render_inline(component)
-    expect(page).not_to have_css("ol.app-task-list")
+    expect(page).not_to have_css("ol.task-list")
   end
 
   context "if sections are provided" do
@@ -38,10 +38,10 @@ RSpec.describe JobApplicationReviewComponent, type: :component do
     end
 
     it "renders each section as part of a task list, between 'above' and 'below'" do
-      expect(page).to have_css("ol.app-task-list")
-      expect(page).to have_css("ol.app-task-list li", count: 2)
-      expect(page).to have_css("p#above + ol.app-task-list")
-      expect(page).to have_css("ol.app-task-list + p#below")
+      expect(page).to have_css("ol.task-list")
+      expect(page).to have_css("ol.task-list li", count: 2)
+      expect(page).to have_css("p#above + ol.task-list")
+      expect(page).to have_css("ol.task-list + p#below")
     end
   end
 
