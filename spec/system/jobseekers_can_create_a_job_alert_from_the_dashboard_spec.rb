@@ -51,7 +51,7 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha
     end
 
     it "creates a job alert and redirects to the subscriptions index page" do
-      within ".create-alert__button" do
+      within "#subscriptions-results" do
         click_on I18n.t("jobseekers.subscriptions.index.button_create")
       end
       an_invalid_form_is_rejected

@@ -1,0 +1,119 @@
+.vacancies_index {
+  .search-results {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    h2 {
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    p {
+      margin-bottom: $govuk-gutter-half;
+    }
+
+    >li {
+      border-bottom: 1px solid $govuk-border-colour;
+      margin-bottom: $govuk-gutter-half;
+      padding-bottom: $govuk-gutter-half;
+
+      &:first-child {
+        border-top: 1px solid $govuk-border-colour;
+        padding-top: $govuk-gutter-half;
+      }
+
+      dl {
+        @include govuk-font(16);
+        display: flex;
+        margin: 0;
+        width: 100%;
+      }
+
+      dt,
+      dd {
+        padding-bottom: govuk-spacing(1);
+        vertical-align: top;
+      }
+
+      dt {
+        flex-basis: 30%;
+        font-weight: bold;
+      }
+
+      dd {
+        flex-basis: 70%;
+        margin-left: govuk-spacing(1);
+      }
+    }
+  }
+
+  .search-results-controls {
+    background-color: govuk-colour('light-grey');
+    margin-bottom: govuk-spacing(4);
+    padding: $govuk-gutter-half;
+
+    @include govuk-media-query($from: tablet) {
+      background-color: transparent;
+      border-bottom: 1px solid $govuk-border-colour;
+      column-gap: govuk-spacing(4);
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      padding: 0;
+
+      .govuk-heading-m {
+        display: none;
+      }
+
+      .autocomplete__menu {
+        @include govuk-media-query($from: desktop) {
+          position: absolute;
+        }
+      }
+
+      >* {
+        flex-grow: 1;
+      }
+
+      &__submit {
+        flex-basis: 100%;
+
+        @media (min-width: 1020px) {
+          flex-basis: auto;
+          margin-top: govuk-spacing(6);
+        }
+      }
+
+      @media (min-width: 1020px) {
+        flex-wrap: nowrap;
+      }
+
+      .govuk-hint {
+        display: none;
+      }
+    }
+
+    .location-search__radius {
+      flex-basis: 200px;
+
+      .govuk-select[name='radius'] {
+        width: 100%;
+      }
+    }
+  }
+
+  .search-results-sorting {
+    @include govuk-media-query($from: tablet) {
+      align-items: center;
+      column-gap: govuk-spacing(2);
+      display: flex;
+      flex-direction: row;
+
+      &__stats {
+        flex-grow: 1;
+        text-align: right;
+      }
+    }
+  }
+}

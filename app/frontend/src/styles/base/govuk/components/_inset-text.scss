@@ -1,0 +1,11 @@
+.govuk-inset-text {
+  .govuk-summary-list__value & {
+    margin-top: 0;
+    padding-bottom: 0;
+    padding-top: 0;
+  }
+
+  &--blue {
+    border-left-color: govuk-colour('light-blue');
+  }
+}

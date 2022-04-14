@@ -13,7 +13,7 @@
 
   - s.row do |row|
     - row.key text: t("helpers.legend.jobseekers_job_application_personal_details_form.your_address")
-    - row.value text: safe_join([tag.div(job_application.street_address, class: "govuk-body"), tag.div(job_application.city, class: "govuk-body"), tag.div(job_application.postcode, class: "govuk-body"), tag.div(job_application.country, class: "govuk-body")])
+    - row.value text: safe_join([tag.div(job_application.street_address), tag.div(job_application.city), tag.div(job_application.postcode), tag.div(job_application.country)])
 
   - s.row do |row|
     - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.phone_number")

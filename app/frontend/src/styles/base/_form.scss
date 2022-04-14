@@ -1,0 +1,13 @@
+.govuk-select {
+  &.govuk-input--error {
+    border: 4px solid $govuk-error-colour;
+  }
+}
+
+.js-enabled {
+  form[data-hide-submit='true'] {
+    .govuk-button {
+      display: none;
+    }
+  }
+}

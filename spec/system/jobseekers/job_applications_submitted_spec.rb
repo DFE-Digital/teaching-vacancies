@@ -40,7 +40,7 @@ RSpec.describe "Submitted job applications for jobseekers" do
       end
 
       it "has the application status of 'submitted'" do
-        expect(page).to have_css(".job-application-review-banner .govuk-tag", text: "submitted")
+        expect(page).to have_css(".review-banner .govuk-tag", text: "submitted")
       end
 
       it "does not show the section status indicators" do

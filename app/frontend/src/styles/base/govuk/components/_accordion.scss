@@ -1,0 +1,34 @@
+.govuk-accordion__controls {
+  display: none;
+}
+
+.js-enabled .govuk-accordion__section-content {
+  padding-bottom: govuk-spacing(4);
+}
+
+.govuk-accordion__section--no-header .govuk-accordion__section-header {
+  display: none;
+}
+
+@media print {
+  .govuk-accordion {
+    border: 0 !important;
+  }
+
+  .govuk-accordion__section {
+    margin-top: govuk-spacing(4);
+  }
+
+  .govuk-accordion__section-toggle {
+    display: none !important;
+  }
+
+  .govuk-accordion__section-content {
+    display: block !important;
+    padding-bottom: 0 !important;
+  }
+
+  .govuk-accordion__section-heading * {
+    font-size: 1.1em !important;
+  }
+}

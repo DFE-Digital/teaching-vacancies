@@ -1,24 +1,4 @@
-.employment-break {
-  .govuk-accordion__section-header {
-    display: none;
-  }
-}
-
-.employment-history-gap {
-  border-left: 10px solid govuk-colour('light-blue');
-}
-
-.job-application-review-banner {
-  .govuk-button-group {
-    border-bottom: 1px solid $govuk-border-colour;
-
-    .view-listing-link {
-      margin-left: auto;
-    }
-  }
-}
-
-.help-guide-container {
+.help-guide {
   &--border-bottom {
     border-bottom: 1px solid $govuk-border-colour;
   }

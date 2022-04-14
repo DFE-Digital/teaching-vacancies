@@ -11,8 +11,13 @@
       = render "vacancies/search/filters", f: f
 
     .govuk-grid-column-two-thirds-at-desktop
-      = render "vacancies/search/fields", f: f
+      .search-results-controls class="govuk-!-margin-bottom-3"
+        = render "vacancies/search/fields", f: f
+        .search-results-controls__submit
+          = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"
+
       = render "vacancies/search/open_filters_button", form: @form
+
       = render "vacancies/search/stats", form: @form, vacancies_search: @vacancies_search, vacancies: @vacancies
       #search-results
         - if @vacancies.any?

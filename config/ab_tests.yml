@@ -17,7 +17,7 @@
 #     new participants, set its weight to 0 instead.
 #   - You need to restart your Rails server when changing this file in development
 #   - You can add a query parameter such as the below to force a particular variant:
-#     ?ab_test_override[2021_01_testing_test]=red
+#     ?ab_test_override[similar_jobs_position]=default
 shared:
   # A fake test to test (ha!) the AB testing functionality
   2021_01_testing_test:

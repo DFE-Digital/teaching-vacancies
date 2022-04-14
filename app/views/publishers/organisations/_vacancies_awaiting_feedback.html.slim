@@ -1,36 +1,32 @@
 p.govuk-body#awaiting_feedback_intro class="govuk-!-margin-bottom-4" = t("jobs.manage.awaiting_feedback.intro")
 
-.awaiting-feedback
-  - vacancies.each do |vacancy|
-    = form_for vacancy_statistics_form(vacancy), url: organisation_job_statistics_path(vacancy.id), html: { id: vacancy.id, method: "patch" } do |f|
-      = f.govuk_error_summary(t("errors.publishers.job_statistics.error_summary", job_title: vacancy.job_title))
-      .awaiting-feedback__row id=dom_id(vacancy)
-        .govuk-grid-row
-          .govuk-grid-column-one-third
-            = govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id), class: "govuk-!-font-weight-bold govuk-!-font-size-24")
-            - if organisation.school_group?
-              .govuk-body = vacancy.readable_job_location
+- vacancies.each do |vacancy|
+  = form_for vacancy_statistics_form(vacancy), url: organisation_job_statistics_path(vacancy.id), html: { id: vacancy.id, method: "patch" } do |f|
+    = f.govuk_error_summary(t("errors.publishers.job_statistics.error_summary", job_title: vacancy.job_title))
+    .feedback-row.divider-bottom class="govuk-!-margin-bottom-4" id=dom_id(vacancy)
+      .govuk-grid-row
+        .govuk-grid-column-one-third
+          = govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id), class: "govuk-!-font-weight-bold govuk-!-font-size-24")
+          - if organisation.school_group?
+            .govuk-body = vacancy.readable_job_location
 
-            dl.govuk-body-s class="govuk-!-margin-top-1"
-              dt = t("jobs.manage.closing_date")
-              dd class="govuk-!-margin-left-0" = format_time_to_datetime_at(vacancy.expires_at)
+          dl.govuk-body-s class="govuk-!-margin-top-1"
+            dt = t("jobs.manage.closing_date")
+            dd class="govuk-!-margin-left-0" = format_time_to_datetime_at(vacancy.expires_at)
 
-          .govuk-grid-column-two-thirds.awaiting-feedback__options
-            .awaiting-feedback__options__select
-              = f.govuk_collection_select :hired_status,
-                hired_status_options,
-                :last,
-                :first,
-                class: %w[govuk-!-width-full],
-                form: vacancy.id
+        .govuk-grid-column-two-thirds
+          = f.govuk_collection_select :hired_status,
+            hired_status_options,
+            :last,
+            :first,
+            class: %w[govuk-!-width-full],
+            form: vacancy.id
 
-            .awaiting-feedback__options__select
-              = f.govuk_collection_select :listed_elsewhere,
-                listed_elsewhere_options,
-                :last,
-                :first,
-                class: %w[govuk-!-width-full],
-                form: vacancy.id
+          = f.govuk_collection_select :listed_elsewhere,
+            listed_elsewhere_options,
+            :last,
+            :first,
+            class: %w[govuk-!-width-full],
+            form: vacancy.id
 
-            div class=(organisation.school_group? ? "awaiting-feedback__options__submit awaiting-feedback__options__submit--school-group" : "awaiting-feedback__options__submit" )
-              = f.govuk_submit safe_join([t("buttons.submit"), tag.span(t("helpers.label.publishers_vacancy_statistics_form.submit_hidden_text", job_title: vacancy.job_title), class: "govuk-visually-hidden")]), classes: "govuk-button govuk-!-margin-top-0", form: vacancy.id
+          = f.govuk_submit safe_join([t("buttons.submit"), tag.span(t("helpers.label.publishers_vacancy_statistics_form.submit_hidden_text", job_title: vacancy.job_title), class: "govuk-visually-hidden")]), classes: "govuk-button govuk-!-margin-top-0", form: vacancy.id

@@ -1,4 +1,4 @@
-.app-search-form-container {
+.search {
   @include govuk-media-query($until: tablet) {
     background: url('../../images/TVS-logo.png') no-repeat 100% 10px/120px auto govuk-colour('dark-blue');
     padding: govuk-spacing(4);
@@ -45,7 +45,30 @@
     margin-top: govuk-spacing(2);
   }
 
-  &__popular-searches {
+  &__form {
+    @include govuk-media-query($from: tablet) {
+      align-items: end;
+      column-gap: govuk-spacing(4);
+      display: flex;
+
+      >div {
+        width: 33.33%;
+      }
+    }
+
+    .autocomplete__menu {
+      @include govuk-media-query($from: desktop) {
+        position: absolute;
+      }
+    }
+
+    >div:last-child {
+      align-items: center;
+      display: flex;
+    }
+  }
+
+  &__popular {
     display: flex;
     flex-wrap: wrap;
 
@@ -53,31 +76,4 @@
       margin-right: govuk-spacing(2);
     }
   }
-}
-
-.app-search-form-inner {
-  @include govuk-media-query($from: tablet) {
-    align-items: end;
-    column-gap: govuk-spacing(4);
-    display: flex;
-
-    > div {
-      width: 33.33%;
-    }
-  }
-
-  .autocomplete__menu {
-    @include govuk-media-query($from: desktop) {
-      position: absolute;
-    }
-  }
-
-  > div:last-child {
-    align-items: center;
-    display: flex;
-  }
-}
-
-.home_index .govuk-main-wrapper {
-  padding-top: govuk-spacing(2);
 }

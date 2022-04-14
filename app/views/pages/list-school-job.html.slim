@@ -1,7 +1,7 @@
 - content_for :page_title_prefix, "List a school job"
 
-.publisher-landing-page
-  .publisher-landing-page__header
+.list-school-job
+  .list-school-job__header
     .govuk-width-container
       .govuk-grid-row class=" govuk-!-margin-bottom-2"
         .govuk-grid-column-two-thirds
@@ -29,7 +29,7 @@
             .actions__request-account.govuk-body-m
               = govuk_link_to("request a Teaching Vacancies account", page_path("dsi-account-request"))
 
-  .publisher-landing-page__content
+  .list-school-job__content
     .govuk-grid-row class="govuk-!-padding-left-3"
       .govuk-grid-column-one-half class="govuk-!-padding-left-0"
         h2.govuk-heading-m class="govuk-!-margin-top-4"
@@ -227,4 +227,4 @@
 
         = govuk_link_to("Request a Teaching Vacancies account", publishers_account_requests_new_path, class: "govuk-body-m govuk-!-margin-bottom-4")
 
-    .publisher-landing-page__spacer
+    .list-school-job__spacer

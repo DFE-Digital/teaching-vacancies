@@ -67,11 +67,29 @@ module.exports = [
     ]
   },
   {
+    "label": "Updates",
+    "url": "/updates",
+    "readySelector": ".govuk-main-wrapper",
+    "removeSelectors": [".govuk-footer", ".environment-banner-component"],
+    "selectors": [
+      ".govuk-main-wrapper"
+    ]
+  },
+  {
+    "label": "jobseeker guides",
+    "url": "/jobseeker-guides",
+    "readySelector": ".govuk-main-wrapper",
+    "removeSelectors": [".govuk-footer", ".environment-banner-component"],
+    "selectors": [
+      ".govuk-main-wrapper"
+    ]
+  },
+  {
     "label": "Vacancy",
     "url": "/jobs",
     "delay": 1000,
     "readySelector": ".govuk-main-wrapper",
-    "clickSelector": ".vacancies .govuk-link",
+    "clickSelector": ".search-results .govuk-link",
     "removeSelectors": [".govuk-footer", ".environment-banner-component", "#school-location"],
     "selectors": [
       ".govuk-main-wrapper"

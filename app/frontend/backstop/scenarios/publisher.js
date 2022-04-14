@@ -69,7 +69,7 @@ module.exports = [
     "url": "/organisation/jobs",
     "readySelector": ".govuk-main-wrapper",
     "removeSelectors": [".govuk-footer", ".environment-banner-component"],
-    "clickSelector": ".card-component .govuk-link",
+    "clickSelector": ".govuk-summary-list__row .govuk-link",
     "selectors": [
       ".govuk-main-wrapper"
     ]
@@ -82,7 +82,7 @@ module.exports = [
     "url": "/organisation/jobs",
     "readySelector": ".govuk-main-wrapper",
     "removeSelectors": [".govuk-footer", ".environment-banner-component"],
-    "clickSelector": ".card-component__content div:nth-child(2) .govuk-link",
+    "clickSelector": ".govuk-summary-list__value .govuk-link",
     "selectors": [
       ".govuk-main-wrapper"
     ]

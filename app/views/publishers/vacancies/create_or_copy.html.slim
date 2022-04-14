@@ -2,7 +2,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    .help-guide-container--mobile.help-guide-container--border-bottom
+    .help-guide--mobile.help-guide--border-bottom
       h3.govuk-heading-m = t(".job_ad_guide.title")
       p.govuk-body = t(".job_ad_guide.description_mobile")
       = govuk_link_to(t(".job_ad_guide.link_text"),
@@ -26,7 +26,7 @@
       p class="govuk-!-margin-top-0"
         = govuk_link_to t(".cancel"), organisation_jobs_path
   .govuk-grid-column-one-third
-    .help-guide-container--desktop
+    .help-guide--desktop
       h3.govuk-heading-m = t(".job_ad_guide.title")
       p.govuk-body = t(".job_ad_guide.description_desktop")
       = govuk_link_to(t(".job_ad_guide.link_text"),
