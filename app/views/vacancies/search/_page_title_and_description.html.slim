@@ -1,5 +1,5 @@
-- if @landing_page
-  - content_for :page_title_prefix, @landing_page.title
-  - content_for :page_description, @landing_page.meta_description
+- if landing_page
+  - content_for :page_title_prefix, landing_page.title
+  - content_for :page_description, landing_page.meta_description
 - else
   - content_for :page_title_prefix, t(".title", count: params[:page].to_i)
