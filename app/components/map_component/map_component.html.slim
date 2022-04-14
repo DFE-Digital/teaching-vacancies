@@ -1,10 +1,8 @@
 = tag.div(class: classes, **html_attributes.merge(data: { controller: "map", zoom: @zoom })) do
-  ol.govuk-list data-map-target="markersTextList"
+  div data-map-target="markersTextList"
     - @markers.each do |marker|
       - if marker[:geopoint]
-        = tag.li(data: { "map-target": "marker", lat: marker[:geopoint].lat, lon: marker[:geopoint].lon })
-          = google_maps_link(marker[:address])
-
+        = tag.div(data: { "map-target": "marker", lat: marker[:geopoint].lat, lon: marker[:geopoint].lon })
           .pop-up hidden=true
             h4 class="govuk-body-m govuk-!-margin-bottom-2"
               = marker[:heading]
