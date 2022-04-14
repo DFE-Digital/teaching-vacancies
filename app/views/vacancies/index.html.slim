@@ -1,23 +1,18 @@
 - content_for :skip_links do
   a.govuk-skip-link href="#search-results" = t("jobs.skip_link")
 
-= render "vacancies/search/page_title_and_description"
+= render "vacancies/search/page_title_and_description", landing_page: @landing_page
 
 = search_results_heading(vacancies_search: @vacancies_search, landing_page: @landing_page)
 
 = form_for @form, as: "", url: jobs_path, method: :get, html: { data: { controller: "form" }, role: "search" } do |f|
   .govuk-grid-row
     .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-3"
-      = render "vacancies/search/filters", f: f
+      = render "vacancies/search/filters", f: f, form: @form
 
     .govuk-grid-column-two-thirds-at-desktop
-      .search-results-controls class="govuk-!-margin-bottom-3"
-        = render "vacancies/search/fields", f: f
-        .search-results-controls__submit
-          = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0 govuk-!-width-full"
-
+      = render "vacancies/search/fields", f: f, form: @form
       = render "vacancies/search/open_filters_button", form: @form
-
       = render "vacancies/search/stats", form: @form, vacancies_search: @vacancies_search, vacancies: @vacancies
       #search-results
         - if @vacancies.any?
