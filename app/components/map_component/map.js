@@ -1,4 +1,5 @@
 import 'leaflet';
+import 'leaflet.fullscreen/Control.FullScreen';
 
 import { Controller } from '@hotwired/stimulus';
 

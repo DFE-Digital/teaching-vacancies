@@ -11,8 +11,6 @@ import 'leaflet.fullscreen/Control.FullScreen.css';
 import 'src/application';
 import 'src/components';
 
-import 'leaflet.fullscreen/Control.FullScreen';
-
 import 'src/styles/application.scss';
 
 Rails.start();
