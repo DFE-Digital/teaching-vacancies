@@ -18,7 +18,7 @@
           = f.govuk_submit t("buttons.save") do
             = govuk_link_to t("buttons.cancel"), organisation_job_job_application_notes_path(vacancy.id, job_application)
 
-    - job_application.notes.each do |note|
+    - job_application.notes.order(created_at: :desc).each do |note|
       span.govuk-body-m = note.content
       = govuk_link_to(t("buttons.delete"), organisation_job_job_application_note_path(vacancy.id, job_application, note), method: :delete, class: "float-right")
       p.govuk-body-s class="govuk-!-margin-top-1"
