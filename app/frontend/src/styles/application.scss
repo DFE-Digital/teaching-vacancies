@@ -19,8 +19,9 @@ $govuk-new-link-styles: true;
 @import 'base/form';
 @import 'base/grid';
 @import 'base/icons';
+@import 'base/lists';
 @import 'base/mixins';
-@import 'base/utilities'; 
+@import 'base/utilities';
 
 @import 'layouts/footer';
 @import 'layouts/header';
