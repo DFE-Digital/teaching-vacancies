@@ -2,8 +2,6 @@ require "rails_helper"
 require "sanitize"
 
 RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
-  let(:job_title_link_selector) { ".view-vacancy-link" }
-
   let(:school) { create(:school) }
   let(:publisher) { create(:publisher) }
 

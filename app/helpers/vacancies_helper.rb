@@ -17,6 +17,35 @@ module VacanciesHelper
     "#{'Error: ' if vacancy.errors.present? && show_errors}#{page_title}"
   end
 
+  def salary_label(vacancy)
+    vacancy.actual_salary? ? t("jobs.annual_salary") : t("jobs.salary")
+  end
+
+  def salary_value(vacancy)
+    safe_join [vacancy.salary, actual_salary(vacancy)]
+  end
+
+  def actual_salary(vacancy)
+    return unless vacancy.actual_salary?
+
+    [
+      tag.div(t("jobs.actual_salary"), class: "govuk-hint govuk-!-margin-bottom-0 govuk-!-margin-top-1 govuk-!-font-size-16"),
+      vacancy.actual_salary,
+    ]
+  end
+
+  def organisation_type_label(vacancy)
+    vacancy.central_office? ? t("jobs.trust_type") : t("jobs.school_type")
+  end
+
+  def organisation_type_value(vacancy)
+    return organisation_type(vacancy.organisation) unless vacancy.at_multiple_schools?
+
+    safe_join(organisation_types(vacancy.organisations).map do |organisation_type|
+      tag.div(organisation_type, class: "govuk-body-s govuk-!-margin-bottom-0")
+    end)
+  end
+
   def vacancy_or_organisation_description(vacancy)
     vacancy.about_school.presence || vacancy.organisation.description.presence
   end
