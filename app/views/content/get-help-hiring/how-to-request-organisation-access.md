@@ -20,6 +20,7 @@ Your account will show which organisations your email address is associated with
 If you have access to an organisation but not Teaching Vacancies, you will need to [add the service to your account](#getting-access-to-the-teaching-vacancies-service).
 
 ## Getting access to organisations
+
 ### Managing vacancies for a single school
 
 If you’re not yet associated with the school you’d like to manage vacancies for, you can ‘Request access to an organisation’ from your DfE Sign-in dashboard. Search for the school by name, URN, or UKPRN.
