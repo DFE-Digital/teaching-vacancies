@@ -1,0 +1,11 @@
+.support_users_feedbacks_general,
+.support_users_feedbacks_job_alerts,
+.support_users_feedbacks_satisfaction_ratings {
+  .govuk-width-container {
+    @include govuk-width-container(1920px);
+  }
+
+  table tr:hover {
+    background-color: govuk-colour('light-grey');
+  }
+}

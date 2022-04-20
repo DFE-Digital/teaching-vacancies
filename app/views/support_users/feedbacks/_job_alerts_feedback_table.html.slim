@@ -9,5 +9,5 @@
   - t.tags("Working patterns") { |f| (f.search_criteria || {})["working_patterns"] }
   - t.column("Category") do |f|
     - capture do
-      = select_tag "feedbacks[][category]", options_for_select(@categories_for_select), include_blank: "No change"
+      = select_tag "feedbacks[][category]", options_for_select(@categories_for_select), include_blank: "No change", class: "govuk-select"
       = hidden_field_tag "feedbacks[][id]", f.id
