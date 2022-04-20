@@ -34,12 +34,12 @@
     "eslint-plugin-import": "^2.25.3",
     "jest": "^27.5.1",
     "postcss": "^8.4.8",
-    "stylelint": "^14.6.0",
+    "stylelint": "^14.7.1",
     "stylelint-config-sass-guidelines": "^9.0.1",
     "stylelint-config-standard": "^25.0.0",
     "webpack": "^4.44.2",
     "webpack-dev-server": "^3.11.2",
-    "yaml": "^1.10.2"
+    "yaml": "^2.0.1"
   },
   "scripts": {
     "server": "rails s",
