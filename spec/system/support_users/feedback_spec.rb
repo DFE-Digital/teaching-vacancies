@@ -145,26 +145,32 @@ RSpec.describe "Feedback supportal section" do
     end
 
     context "'Job alert unsubscribe - reason given' table" do
+      before { click_on "Job alert unsubscribe" }
       include_examples "has a satisfaction rating table", "job-alert-unsubscribe-reason", 4
     end
 
     context "'Satisfaction rating - jobseekers' table" do
+      before { click_on "Jobseeker" }
       include_examples "has a satisfaction rating table", "satisfaction-rating-jobseekers", 5
     end
 
     context "'Satisfaction rating - hiring staff' table" do
+      before { click_on "Hiring staff" }
       include_examples "has a satisfaction rating table", "satisfaction-rating-hiring-staff", 5
     end
 
     context "'Satisfaction rating - job alerts' table" do
+      before { click_on "Job alert relevance" }
       include_examples "has a satisfaction rating table", "satisfaction-rating-job-alerts", 2
     end
 
     context "'Satisfaction rating - job application' table" do
+      before { click_on "Job applications" }
       include_examples "has a satisfaction rating table", "satisfaction-rating-job-application", 5
     end
 
     context "'Close account reason' table" do
+      before { click_on "Close account reason" }
       include_examples "has a satisfaction rating table", "close-account-reason", 4
     end
   end

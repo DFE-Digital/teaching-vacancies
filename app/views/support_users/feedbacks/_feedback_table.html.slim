@@ -2,6 +2,7 @@
   - t.datetime "Timestamp", :created_at
   - t.tags("Source") { |f| source_for(f) }
   - t.tags("Who") { |f| who(f) }
+  - t.text("Contact email") { |f| contact_email_for(f) }
   - t.text "Comment", :comment
   - t.column("Category") do |f|
     - capture do

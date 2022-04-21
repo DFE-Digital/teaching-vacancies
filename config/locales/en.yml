@@ -472,6 +472,57 @@ en:
       heading: Dashboard
       title: Support user dashboard
       user_feedback_link: View user feedback
+    feedbacks:
+      general:
+        title: General feedback
+      job_alerts:
+        title: Job alerts feedback
+      satisfaction_ratings:
+        application:
+          tab_heading: Job applications
+          table_headings:
+            highly_satisfied: Highly satisfied
+            somewhat_satisfied: Somewhat satisfied
+            neither: Neither
+            somewhat_dissatisfied: Somewhat dissatisfied
+            highly_dissatisfied: Highly dissatisfied
+        reporting_period: Reporting period
+        close_account:
+          tab_heading: Close account reason
+          table_headings:
+            too_many_emails: Too many emails
+            not_getting_any_value: Not getting any value
+            not_looking_for_job: Not looking for job
+            other_close_account_reason: Other
+        job_alert:
+          tab_heading: Job alert relevance
+          table_headings:
+            true: Relevant
+            false: Not relevant
+        jobseeker_account:
+          tab_heading: Jobseeker satisfaction
+          table_headings:
+            highly_satisfied: Highly satisfied
+            somewhat_satisfied: Somewhat satisfied
+            neither: Neither
+            somewhat_dissatisfied: Somewhat dissatisfied
+            highly_dissatisfied: Highly dissatisfied
+        title: Satisfaction ratings
+        unsubscribe:
+          tab_heading: Job alert unsubscribe reason
+          table_headings:
+            job_found: Job found
+            circumstances_change: Circumstances change
+            not_relevant: Not relevant
+            other_reason: Other reason
+        vacancy_publisher:
+          tab_heading: Hiring staff satisfaction
+          table_headings:
+            highly_satisfied: Highly satisfied
+            somewhat_satisfied: Somewhat satisfied
+            neither: Neither
+            somewhat_dissatisfied: Somewhat dissatisfied
+            highly_dissatisfied: Highly dissatisfied
 
     papertrail_display_name: "%{first_name} %{last_name} (DfE Teaching Vacancies team)"
     sessions:
