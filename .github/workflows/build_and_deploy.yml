@@ -321,7 +321,7 @@ jobs:
           env_variable_name: GIT_HUB_SERVICE_ACCOUNT_TOKEN
 
       - name: Terraform pin version
-        uses: hashicorp/setup-terraform@v1
+        uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.0.8
 
