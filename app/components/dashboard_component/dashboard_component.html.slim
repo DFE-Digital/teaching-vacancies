@@ -1,95 +1,111 @@
-.govuk-grid-row
-  .govuk-grid-column-three-quarters
-    .help-guide--mobile.help-guide--border-bottom
-      h3.govuk-heading-m = t("jobs.dashboard.how_to_accept_job_applications_guide.title")
-      p.govuk-body = t("jobs.dashboard.how_to_accept_job_applications_guide.description_mobile")
-      = govuk_link_to(t("jobs.dashboard.how_to_accept_job_applications_guide.link_text"),
-                      post_path(section: "get-help-hiring", post_name: "accepting-job-applications-on-teaching-vacancies"),
-                      class: "govuk-link--no-visited-state")
-    span.govuk-caption-l = t("jobs.manage.heading_html", organisation: @organisation.name, email: @email)
-    h1.govuk-heading-l = t("jobs.dashboard.#{@selected_type}.with_count_html", count: @vacancies.count)
-  .govuk-grid-column-one-quarter
-    - if @organisation.all_vacancies.active.any?
-      = govuk_button_link_to t("buttons.create_job"), create_or_copy_organisation_jobs_path, class: "float-right"
-    - else
-      = govuk_button_to t("buttons.create_job"), organisation_jobs_path, class: "float-right"
-
-= tabs do |tabs|
-  - @vacancy_types.each do |vacancy_type|
-    - tabs.navigation_item text: t("jobs.dashboard.#{vacancy_type}.tab_heading"), link: jobs_with_type_organisation_path(vacancy_type), active: selected_type == vacancy_type
-
-.govuk-grid-row class="govuk-!-margin-bottom-7"
-  - if @vacancies.many?
-    .govuk-grid-column-full
-      = render SortComponent.new sort: @sort, url_params: { type: @selected_type }, path: method(:jobs_with_type_organisation_path)
-  - if @organisation.school_group?
-    .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-4"
-      - if @publisher_preference
-        = govuk_link_to t("jobs.dashboard.add_or_remove_schools"), edit_publishers_publisher_preference_path(@publisher_preference), class: "govuk-link--no-visited-state"
-
-      div class="govuk-!-margin-top-2"
-        = form_for [:publishers, @publisher_preference], html: { data: { controller: "form", "hide-submit": true } } do |f|
-          = filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
-                    filters: { total_count: @publisher_preference.organisations.count },
-                    options: { remove_buttons: true, publisher_preference: (@publisher_preference if @organisation.local_authority?) },
-                    html_attributes: { tabindex: "-1" }) do |filters_component|
-                      - filters_component.remove_buttons do |rb|
-                        - rb.group(key: "locations", selected: @publisher_preference.organisations.map(&:id), options: @organisation_options, value_method: :id, selected_method: :name)
-
-                      - filters_component.group key: "locations", component: f.govuk_collection_check_boxes(:organisation_ids, @organisation_options, :id, :label, small: true, legend: { text: "Locations" }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
-
-          = f.hidden_field :jobs_type, value: @selected_type
-
-      .help-guide--desktop class="govuk-!-margin-top-4"
+= tag.div(class: classes, **html_attributes) do
+  .govuk-grid-row
+    .govuk-grid-column-three-quarters
+      .help-guide--mobile.help-guide--border-bottom
         h3.govuk-heading-m = t("jobs.dashboard.how_to_accept_job_applications_guide.title")
-        p.govuk-body = t("jobs.dashboard.how_to_accept_job_applications_guide.description_desktop")
+        p.govuk-body = t("jobs.dashboard.how_to_accept_job_applications_guide.description_mobile")
         = govuk_link_to(t("jobs.dashboard.how_to_accept_job_applications_guide.link_text"),
                         post_path(section: "get-help-hiring", post_name: "accepting-job-applications-on-teaching-vacancies"),
                         class: "govuk-link--no-visited-state")
-  #vacancy-results class=grid_column_class
-    - if vacancies.none?
-      = empty_section do
-        = no_jobs_text
-    - elsif @selected_type == "awaiting_feedback"
-      = render "publishers/organisations/vacancies_awaiting_feedback", organisation: @organisation, vacancies: @vacancies
-    - else
-      = govuk_summary_list actions: false do |summary_list|
-        - vacancies.each do |vacancy|
-          - summary_list.row do |row|
-            - row.key do
-              = govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id))
-              - if organisation.school_group?
-                p.govuk-body-s = vacancy.readable_job_location
-
-            - row.value do
-              - case @selected_type
-              - when "published"
-                - if vacancy.enable_job_applications
-                  - if vacancy.job_applications.where(status: %w[submitted reviewed shortlisted unsuccessful]).count.positive?
-                    = view_applicants(vacancy) unless vacancy_expired_over_a_year_ago?(vacancy)
-                  - else
-                    p.govuk-body-s = t("jobs.manage.view_applicants", count: 0)
-                p.govuk-body-s #{t("jobs.manage.closing_date")}: #{format_time_to_datetime_at(vacancy.expires_at)}
-              - when "pending"
-                p.govuk-body-s class="govuk-!-margin-bottom-0" #{t("jobs.publication_date")}: #{vacancy.publish_on}
-                p.govuk-body-s #{t("jobs.manage.closing_date")}: #{format_time_to_datetime_at(vacancy.expires_at)}
-              - when "expired"
-                - if vacancy.enable_job_applications
-                  - if !vacancy_expired_over_a_year_ago?(vacancy) && vacancy.job_applications.where.not(status: %w[draft withdrawn]).any?
-                    = view_applicants(vacancy)
-                  - else
-                    p.govuk-body-s = t("jobs.manage.view_applicants", count: 0)
-                p.govuk-body-s class="govuk-!-margin-bottom-0" #{t("jobs.date_listed")}: #{vacancy.publish_on}
-                p.govuk-body-s #{t("jobs.manage.expired.expired_on")}: #{format_time_to_datetime_at(vacancy.expires_at)}
-              - when "draft"
-                p.govuk-body-s class="govuk-!-margin-bottom-0" #{t("jobs.manage.draft.time_created")}: #{format_date(vacancy.created_at.to_date)}
-                p.govuk-body-s #{t("jobs.manage.draft.time_updated")}: #{format_date(vacancy.updated_at.to_date)}
-
-  - unless @organisation.school_group?
+      span.govuk-caption-l = t("jobs.manage.heading_html", organisation: @organisation.name, email: @email)
+      h1.govuk-heading-l = t("jobs.dashboard.#{@selected_type}.with_count_html", count: @vacancies.count)
     .govuk-grid-column-one-quarter
-      .help-guide--desktop
-        h3.govuk-heading-m = t("jobs.dashboard.how_to_accept_job_applications_guide.title")
-        p.govuk-body = t("jobs.dashboard.how_to_accept_job_applications_guide.description_desktop")
-        = govuk_link_to(t("jobs.dashboard.how_to_accept_job_applications_guide.link_text"),
-                        post_path(section: "get-help-hiring", post_name: "accepting-job-applications-on-teaching-vacancies"),
-                        class: "govuk-link--no-visited-state")
+      - if @organisation.all_vacancies.active.any?
+        = govuk_button_link_to t("buttons.create_job"), create_or_copy_organisation_jobs_path, class: "float-right"
+      - else
+        = govuk_button_to t("buttons.create_job"), organisation_jobs_path, class: "float-right"
+
+  = tabs do |tabs|
+    - @vacancy_types.each do |vacancy_type|
+      - tabs.navigation_item text: t("jobs.dashboard.#{vacancy_type}.tab_heading"), link: jobs_with_type_organisation_path(vacancy_type), active: selected_type == vacancy_type
+
+  .govuk-grid-row class="govuk-!-margin-bottom-7"
+    - if @vacancies.many?
+      .govuk-grid-column-full
+        = render SortComponent.new sort: @sort, url_params: { type: @selected_type }, path: method(:jobs_with_type_organisation_path)
+    - if @organisation.school_group?
+      .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-4"
+        - if @publisher_preference
+          = govuk_link_to t("jobs.dashboard.add_or_remove_schools"), edit_publishers_publisher_preference_path(@publisher_preference), class: "govuk-link--no-visited-state"
+
+        div class="govuk-!-margin-top-2"
+          = form_for [:publishers, @publisher_preference], html: { data: { controller: "form", "hide-submit": true } } do |f|
+            = filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
+                      filters: { total_count: @publisher_preference.organisations.count },
+                      options: { remove_buttons: true, publisher_preference: (@publisher_preference if @organisation.local_authority?) },
+                      html_attributes: { tabindex: "-1" }) do |filters_component|
+                        - filters_component.remove_buttons do |rb|
+                          - rb.group(key: "locations", selected: @publisher_preference.organisations.map(&:id), options: @organisation_options, value_method: :id, selected_method: :name)
+
+                        - filters_component.group key: "locations", component: f.govuk_collection_check_boxes(:organisation_ids, @organisation_options, :id, :label, small: true, legend: { text: "Locations" }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
+
+            = f.hidden_field :jobs_type, value: @selected_type
+
+        .help-guide--desktop class="govuk-!-margin-top-4"
+          h3.govuk-heading-m = t("jobs.dashboard.how_to_accept_job_applications_guide.title")
+          p.govuk-body = t("jobs.dashboard.how_to_accept_job_applications_guide.description_desktop")
+          = govuk_link_to(t("jobs.dashboard.how_to_accept_job_applications_guide.link_text"),
+                          post_path(section: "get-help-hiring", post_name: "accepting-job-applications-on-teaching-vacancies"),
+                          class: "govuk-link--no-visited-state")
+    #vacancy-results class=grid_column_class
+      - if vacancies.none?
+        = empty_section do
+          = no_jobs_text
+      - elsif @selected_type == "awaiting_feedback"
+        = render "publishers/organisations/vacancies_awaiting_feedback", organisation: @organisation, vacancies: @vacancies
+      - else
+        = govuk_summary_list actions: false do |summary_list|
+          - vacancies.each do |vacancy|
+            - summary_list.row do |row|
+              - row.key do
+                = govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id))
+                - if organisation.school_group?
+                  p.govuk-body-s = vacancy.readable_job_location
+
+              - row.value do
+                - case @selected_type
+                - when "published"
+                  div class="govuk-!-margin-bottom-1"
+                    - if vacancy.enable_job_applications
+                      - if vacancy.job_applications.where(status: %w[submitted reviewed shortlisted unsuccessful]).count.positive?
+                        = view_applicants(vacancy) unless vacancy_expired_over_a_year_ago?(vacancy)
+                      - else
+                        p.govuk-body-s = t("jobs.manage.view_applicants", count: 0)
+                  dl
+                    dt = "#{t('jobs.manage.closing_date')}:"
+                    dd = format_time_to_datetime_at(vacancy.expires_at)
+                - when "pending"
+                  dl
+                    dt = "#{t('jobs.publication_date')}:"
+                    dd = vacancy.publish_on
+                  dl
+                    dt = "#{t('jobs.manage.closing_date')}:"
+                    dd = format_time_to_datetime_at(vacancy.expires_at)
+                - when "expired"
+                  - if vacancy.enable_job_applications
+                    - if !vacancy_expired_over_a_year_ago?(vacancy) && vacancy.job_applications.where.not(status: %w[draft withdrawn]).any?
+                      = view_applicants(vacancy)
+                    - else
+                      p.govuk-body-s = t("jobs.manage.view_applicants", count: 0)
+                  dl
+                    dt = "#{t('jobs.date_listed')}:"
+                    dd = vacancy.publish_on
+                  dl
+                    dt = "#{t('jobs.manage.expired.expired_on')}:"
+                    dd = format_time_to_datetime_at(vacancy.expires_at)
+                - when "draft"
+                  dl
+                    dt = "#{t('jobs.manage.draft.time_created')}:"
+                    dd = format_date(vacancy.created_at.to_date)
+                  dl
+                    dt = "#{t('jobs.manage.draft.time_updated')}:"
+                    dd = format_date(vacancy.updated_at.to_date)
+
+    - unless @organisation.school_group?
+      .govuk-grid-column-one-quarter
+        .help-guide--desktop
+          h3.govuk-heading-m = t("jobs.dashboard.how_to_accept_job_applications_guide.title")
+          p.govuk-body = t("jobs.dashboard.how_to_accept_job_applications_guide.description_desktop")
+          = govuk_link_to(t("jobs.dashboard.how_to_accept_job_applications_guide.link_text"),
+                          post_path(section: "get-help-hiring", post_name: "accepting-job-applications-on-teaching-vacancies"),
+                          class: "govuk-link--no-visited-state")

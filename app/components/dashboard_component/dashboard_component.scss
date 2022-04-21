@@ -1,0 +1,10 @@
+@import 'base_component';
+
+.dashboard-component {
+  .govuk-summary-list__key,
+  .govuk-summary-list__actions {
+    @include govuk-media-query ($until: tablet) {
+      display: block;
+    }
+  }
+}

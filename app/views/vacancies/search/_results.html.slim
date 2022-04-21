@@ -5,16 +5,15 @@ ul.search-results role="list"
         = govuk_link_to(vacancy.job_title, job_path(vacancy), class: "view-vacancy-link")
       p.govuk-body
         = vacancy_full_job_location(vacancy)
-      .compact-list
-        dl
-          dt = salary_label(vacancy)
-          dd = salary_value(vacancy)
-        dl
-          dt = organisation_type_label(vacancy)
-          dd = organisation_type_value(vacancy)
-        dl
-          dt = t("jobs.working_patterns")
-          dd = vacancy.readable_working_patterns
-        dl
-          dt = t("jobs.expires_at")
-          dd = format_time_to_datetime_at(vacancy.expires_at)
+      dl
+        dt class="govuk-!-font-weight-bold" = salary_label(vacancy)
+        dd = salary_value(vacancy)
+      dl
+        dt class="govuk-!-font-weight-bold" = organisation_type_label(vacancy)
+        dd = organisation_type_value(vacancy)
+      dl
+        dt class="govuk-!-font-weight-bold" = t("jobs.working_patterns")
+        dd = vacancy.readable_working_patterns
+      dl
+        dt class="govuk-!-font-weight-bold" = t("jobs.expires_at")
+        dd = format_time_to_datetime_at(vacancy.expires_at)

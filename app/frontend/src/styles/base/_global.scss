@@ -2,6 +2,21 @@ p {
   @extend .govuk-body;
 }
 
+dl {
+  @extend .govuk-body-s;
+  margin-bottom: govuk-spacing(1);
+  margin-top: 0;
+
+  dt,
+  dd {
+    display: inline-block;
+  }
+
+  dd {
+    margin-left: govuk-spacing(1);
+  }
+}
+
 @media print {
   .govuk-header,
   .govuk-breadcrumbs,

@@ -7,16 +7,6 @@
   display: flex;
   padding: govuk-spacing(4) 0 0;
 
-  dt,
-  dd {
-    display: inline-block;
-  }
-
-  dl,
-  dd {
-    margin: 0;
-  }
-
   dt {
     &::after {
       content: ':';

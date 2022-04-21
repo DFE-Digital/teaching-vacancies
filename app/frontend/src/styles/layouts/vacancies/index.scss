@@ -4,10 +4,6 @@
     margin: 0;
     padding: 0;
 
-    h2 {
-      font-size: 22px;
-    }
-
     >li {
       border-bottom: 1px solid $govuk-border-colour;
       margin-bottom: $govuk-gutter-half;
@@ -16,6 +12,18 @@
       &:first-child {
         border-top: 1px solid $govuk-border-colour;
         padding-top: $govuk-gutter-half;
+      }
+    }
+
+    dl {
+      display: flex;
+
+      dt {
+        flex-basis: 30%;
+      }
+
+      dd {
+        flex-basis: 70%;
       }
     }
   }
