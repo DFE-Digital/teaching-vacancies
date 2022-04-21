@@ -28,7 +28,7 @@ RSpec.describe MapComponent, type: :component do
       expect(page).to have_content "marker_heading"
       expect(page).to have_content "marker_description"
       expect(page).to have_content "marker_address"
-      expect(page).to have_selector("li[data-map-target='marker'][data-lat=1][data-lon=2]")
+      expect(page).to have_selector("div[data-map-target='marker'][data-lat=1][data-lon=2]")
     end
 
     it "renders a map container" do
