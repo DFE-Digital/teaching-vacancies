@@ -52,7 +52,8 @@ RSpec.describe "Application feature reminder" do
       expect(current_path).to eq(organisation_job_build_path(last_vacancy.id, :job_role))
     end
 
-    context "when the publisher has seen the new features page during the current session" do
+    # TODO: Temporarily disabled for TEVA-4099
+    xcontext "when the publisher has seen the new features page during the current session" do
       let(:publisher) { create(:publisher, dismissed_new_features_page_at: nil) }
 
       it "does not show the reminder page" do

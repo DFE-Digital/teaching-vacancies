@@ -1,6 +1,7 @@
 require "rails_helper"
 
-RSpec.describe "Publishers are shown the new features page" do
+# TODO: Temporarily disabled for TEVA-4099
+RSpec.xdescribe "Publishers are shown the new features page" do
   let(:organisation) { create(:school) }
 
   before do

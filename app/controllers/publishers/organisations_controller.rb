@@ -1,6 +1,7 @@
 class Publishers::OrganisationsController < Publishers::BaseController
   before_action :show_publisher_preferences
-  before_action :redirect_to_new_features_page, only: %i[show]
+  # TODO: Temporarily disabled for TEVA-4099
+  # before_action :redirect_to_new_features_page, only: %i[show]
 
   helper_method :vacancy_statistics_form
 
