@@ -15,8 +15,4 @@ class MapComponent < GovukComponent::Base
   def show_map?
     @markers.any? { |marker| marker[:geopoint] }
   end
-
-  def google_maps_link(address)
-    govuk_link_to address, "https://www.google.com/maps/search/#{address}+UK", "aria-label": "Open in Google Maps"
-  end
 end
