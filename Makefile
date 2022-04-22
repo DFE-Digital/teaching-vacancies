@@ -22,6 +22,12 @@ print-env: install-fetch-config ## make -s local print-env > .env
 			-f shell-env-var \
 			$(local_override) -d stdout $(local_filter)
 
+edit-app-secrets: install-fetch-config ## make dev edit-app-secrets
+		$(if $(env), , $(error Usage: make <env> edit-app-secrets))
+		bin/fetch_config.rb -s aws-ssm-parameter:/teaching-vacancies/$(env)/app/secrets \
+			-f yaml -e -c \
+			-d aws-ssm-parameter:/teaching-vacancies/$(env)/app/secrets
+
 ##@ Set environment and corresponding configuration
 
 .PHONY: local
