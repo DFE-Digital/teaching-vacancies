@@ -2,23 +2,24 @@
 
 = render "jobseekers/dashboard/account_header", title: t(".page_title")
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = govuk_summary_list do |summary_list|
-      - summary_list.row do |row|
-        - row.key text: t(".summary_list.email")
-        - row.value text: current_jobseeker.email
-        - row.action(text: t("buttons.change"), href: edit_jobseeker_registration_path, visually_hidden_text: t(".summary_list.email"))
+.dashboard-component
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = govuk_summary_list do |summary_list|
+        - summary_list.row do |row|
+          - row.key text: t(".summary_list.email")
+          - row.value text: current_jobseeker.email
+          - row.action(text: t("buttons.change"), href: edit_jobseeker_registration_path, visually_hidden_text: t(".summary_list.email"))
 
-      - summary_list.row do |row|
-        - row.key text: t(".summary_list.password")
-        - row.value text: t(".summary_list.password_placeholder")
-        - row.action(text: t("buttons.change"), href: edit_jobseeker_registration_path(password_update: true), visually_hidden_text: t(".summary_list.password"))
+        - summary_list.row do |row|
+          - row.key text: t(".summary_list.password")
+          - row.value text: t(".summary_list.password_placeholder")
+          - row.action(text: t("buttons.change"), href: edit_jobseeker_registration_path(password_update: true), visually_hidden_text: t(".summary_list.password"))
 
-    p = govuk_link_to t(".close_account"), jobseekers_confirm_destroy_account_path
+      p = govuk_link_to t(".close_account"), jobseekers_confirm_destroy_account_path
 
-  .govuk-grid-column-one-third
-    h2.govuk-heading-m = t(".assistance.heading")
-    p.govuk-body-s = t(".assistance.content_html", link: govuk_link_to(t(".assistance.link_text"), new_support_request_path))
+    .govuk-grid-column-one-third
+      h2.govuk-heading-m = t(".assistance.heading")
+      p.govuk-body-s = t(".assistance.content_html", link: govuk_link_to(t(".assistance.link_text"), new_support_request_path))
 
-- content_for :after_main, account_survey_link(origin: url_for)
+  - content_for :after_main, account_survey_link(origin: url_for)

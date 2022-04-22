@@ -1,7 +1,8 @@
-class DashboardComponent < ViewComponent::Base
+class DashboardComponent < GovukComponent::Base
   include DatesHelper
 
-  def initialize(organisation:, sort:, selected_type:, publisher_preference:, email:)
+  def initialize(organisation:, sort:, selected_type:, publisher_preference:, email:, classes: [], html_attributes: {})
+    super(classes: classes, html_attributes: html_attributes)
     @organisation = organisation
     @sort = sort
     @publisher_preference = publisher_preference
@@ -79,5 +80,9 @@ class DashboardComponent < ViewComponent::Base
     @organisation_options.unshift(
       Option.new(id: organisation.id, name: "Trust head office", label: "Trust head office (#{count})"),
     )
+  end
+
+  def default_classes
+    %w[dashboard-component]
   end
 end
