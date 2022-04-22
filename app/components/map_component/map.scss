@@ -2,31 +2,52 @@
 
 .js-enabled {
   .map-component {
-    margin-bottom: govuk-spacing(4);
-    margin-top: govuk-spacing(4);
-
     &__map {
       border: 1px solid $govuk-border-colour;
       height: 400px;
+      margin-bottom: govuk-spacing(4);
+      margin-top: govuk-spacing(4);
       width: 100%;
 
-      &__marker--default {
-        background-color: govuk-colour('red');
-        border: 1px solid $govuk-input-border-colour;
-        border-radius: 12px;
+      &__marker {
+        &:focus {
+          outline: $govuk-focus-width solid $govuk-focus-colour;
+        }
+      }
+
+      &__cluster {
+        background-color: govuk-colour('light-blue');
+        border: 2px solid $govuk-input-border-colour;
+        border-radius: 50%;
+
+        &:focus {
+          outline: $govuk-focus-width solid $govuk-focus-colour;
+        }
 
         span {
-          color: govuk-colour('light-grey');
+          color: govuk-colour('white');
           display: block;
-          font-weight: bold;
-          line-height: govuk-spacing(4);
+          font-size: 1.2em;
+          line-height: 2 !important;
           text-align: center;
+        }
+
+        &--medium {
+          background-color: govuk-colour('blue');
+        }
+
+        &--large {
+          background-color: govuk-colour('dark-blue');
         }
       }
 
       &__popup {
         margin-bottom: 32px;
         margin-left: 2px;
+
+        .pop-up * {
+          font-size: 1.1em;
+        }
       }
     }
   }

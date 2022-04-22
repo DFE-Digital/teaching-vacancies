@@ -14,7 +14,10 @@
         padding-top: $govuk-gutter-half;
       }
     }
+  }
 
+  .search-results,
+  .map-component .pop-up {
     dl {
       display: flex;
 
