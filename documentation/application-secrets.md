@@ -1,4 +1,20 @@
-## API Keys
+## Application secrets
+
+The application requires sensitive configuration which may be specific to each environment. It is stored securely in AWS SSM parameter store.
+
+To read the whole application configuration of an environment (e.g. dev), run:
+
+```
+% aws-vault exec SecretEditor -- make dev print-env
+```
+
+To edit the application secrets of an environment (e.g. dev), run:
+
+```
+% aws-vault exec SecretEditor -- make dev edit-app-secrets
+```
+
+You will have the opportunity to verify and confirm before pushing the change. All the secrets are versioned, so in case of issue, a previous version can be restored.
 
 ### cloudwatch_slack_hook_url
 Terraform variable containing encrypted URL to the Slack webhook. cloudwatch_ops_genie_api_key is not actually used but is commonly set to the same value as cloudwatch_slack_hook_url.
