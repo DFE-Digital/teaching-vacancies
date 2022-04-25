@@ -40,7 +40,7 @@ class Zendesk
   end
 
   def api_key
-    @api_key ||= ENV["ZENDESK_API_KEY"]
+    @api_key ||= ENV.fetch("ZENDESK_API_KEY", nil)
   end
 
   class ConfigurationError < StandardError; end

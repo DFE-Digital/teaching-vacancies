@@ -24,7 +24,7 @@ require_relative "../lib/fail_safe"
 require_relative "../lib/modules/aws_ip_ranges"
 require_relative "../lib/vcap_services"
 
-require "rack-mini-profiler" if ENV["RACK_MINI_PROFILER"] == "true" && !Rails.env.production?
+require "rack-mini-profiler" if ENV.fetch("RACK_MINI_PROFILER", nil) == "true" && !Rails.env.production?
 
 module TeacherVacancyService
   class Application < Rails::Application
@@ -64,7 +64,7 @@ module TeacherVacancyService
     config.action_mailer.delivery_method = :notify
     config.action_mailer.deliver_later_queue_name = :high
     config.action_mailer.notify_settings = {
-      api_key: ENV["NOTIFY_KEY"],
+      api_key: ENV.fetch("NOTIFY_KEY", nil),
     }
 
     config.active_storage.routes_prefix = "/attachments"
@@ -74,7 +74,7 @@ module TeacherVacancyService
 
     # Set up backing services through VCAP_SERVICES if running on Cloudfoundry (GOV.UK PaaS)
     if ENV["VCAP_SERVICES"].present?
-      vcap_services = VcapServices.new(ENV["VCAP_SERVICES"])
+      vcap_services = VcapServices.new(ENV.fetch("VCAP_SERVICES", nil))
 
       config.redis_queue_url = vcap_services.named_service_url(:redis, "queue")
       config.redis_cache_url = vcap_services.named_service_url(:redis, "cache")
@@ -94,15 +94,15 @@ module TeacherVacancyService
     config.analytics = config_for(:analytics)
     config.analytics_pii = config_for(:analytics_pii)
 
-    config.big_query_dataset = ENV["BIG_QUERY_DATASET"]
+    config.big_query_dataset = ENV.fetch("BIG_QUERY_DATASET", nil)
 
-    config.enforce_local_authority_allowlist = ActiveModel::Type::Boolean.new.cast(ENV["ENFORCE_LOCAL_AUTHORITY_ALLOWLIST"])
+    config.enforce_local_authority_allowlist = ActiveModel::Type::Boolean.new.cast(ENV.fetch("ENFORCE_LOCAL_AUTHORITY_ALLOWLIST", nil))
 
     config.geocoder_lookup = :default
 
     config.landing_pages = config_for(:landing_pages)
 
-    config.maintenance_mode = ActiveModel::Type::Boolean.new.cast(ENV["MAINTENANCE_MODE"])
+    config.maintenance_mode = ActiveModel::Type::Boolean.new.cast(ENV.fetch("MAINTENANCE_MODE", nil))
 
     config.view_component.preview_paths << "#{Rails.root}/app/components/previews"
     config.view_component.preview_route = "/components"

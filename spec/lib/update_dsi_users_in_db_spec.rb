@@ -16,7 +16,7 @@ RSpec.describe UpdateDSIUsersInDb do
       allow(update_dfe_sign_in_users).to receive(:number_of_pages).and_return(2)
 
       [test_file_1_path, test_file_2_path].each_with_index do |file_path, index|
-        stub_request(:get, "#{ENV['DFE_SIGN_IN_URL']}/users?page=#{index + 1}&pageSize=#{DFESignIn::API::USERS_PAGE_SIZE}")
+        stub_request(:get, "#{ENV.fetch('DFE_SIGN_IN_URL', nil)}/users?page=#{index + 1}&pageSize=#{DFESignIn::API::USERS_PAGE_SIZE}")
           .to_return(
             body: File.read(file_path),
           )
@@ -50,13 +50,13 @@ RSpec.describe UpdateDSIUsersInDb do
     it "raises an error when it finds no users in the response" do
       allow(update_dfe_sign_in_users).to receive(:number_of_pages).and_return(1)
 
-      stub_request(:get, "#{ENV['DFE_SIGN_IN_URL']}/users?page=1&pageSize=#{DFESignIn::API::USERS_PAGE_SIZE}")
+      stub_request(:get, "#{ENV.fetch('DFE_SIGN_IN_URL', nil)}/users?page=1&pageSize=#{DFESignIn::API::USERS_PAGE_SIZE}")
           .to_return(
             body: File.read(test_file_empty_users_path),
           )
       expect { update_dfe_sign_in_users.run! }.to raise_error("failed request")
 
-      stub_request(:get, "#{ENV['DFE_SIGN_IN_URL']}/users?page=1&pageSize=#{DFESignIn::API::USERS_PAGE_SIZE}")
+      stub_request(:get, "#{ENV.fetch('DFE_SIGN_IN_URL', nil)}/users?page=1&pageSize=#{DFESignIn::API::USERS_PAGE_SIZE}")
           .to_return(
             body: "{}",
           )
