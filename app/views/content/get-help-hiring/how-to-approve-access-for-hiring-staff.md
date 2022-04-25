@@ -7,7 +7,9 @@ category_tags: how-to
 ---
 
 Access to Teaching Vacancies is managed through [DfE Sign-in](https://services.signin.education.gov.uk/), which allows organisation administrators to manage various services provided by the Department for Education.
+
 If hiring staff from a school, multi-academy trust (MAT) or local authority (LA) need to post a job on Teaching Vacancies, they can only do so after being granted access by an approver at the relevant organisation.
+
 This guidance is for account approvers who grant people access to accounts and services. If you require approval rights and are looking to post jobs, [read our guidance on requesting access to organisations on Teaching Vacancies](https://teaching-vacancies.service.gov.uk/get-help-hiring/how-to-request-organisation-access).
 
 ## Granting access to users
@@ -28,6 +30,7 @@ These steps will need to be repeated for each individual you need to add to the 
 
 ## Responding to requests for access
 Users with a DfE Sign-in account can request access to organisations and services. These requests are treated as separate steps: first, they need to be approved to join an organisation, and, second, they need to be approved to access a service. 
+
 You will receive an email for each request that is made, and any active requests will be available to view on your DfE Sign-in dashboard.
 
 ## Managing users for your organisation
