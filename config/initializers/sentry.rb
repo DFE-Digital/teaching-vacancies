@@ -14,5 +14,5 @@ Sentry.init do |config|
   config.excluded_exceptions -= ["ActiveRecord::RecordNotFound"]
 
   config.environment = Rails.application.config.app_role
-  config.release = ENV["COMMIT_SHA"]
+  config.release = ENV.fetch("COMMIT_SHA", nil)
 end

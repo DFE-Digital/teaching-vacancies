@@ -35,7 +35,7 @@ module ReturnPathTracking
         if AuthenticationFallback.enabled?
           new_publishers_login_key_path
         else
-          URI.parse("#{ENV['DFE_SIGN_IN_ISSUER']}/session/end").tap { |uri|
+          URI.parse("#{ENV.fetch('DFE_SIGN_IN_ISSUER')}/session/end").tap { |uri|
             uri.query = {
               post_logout_redirect_uri: new_publisher_session_url,
               id_token_hint: session[:publisher_dsi_token_hint],

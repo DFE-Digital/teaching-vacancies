@@ -28,7 +28,7 @@ Capybara.register_driver :chrome_headless do |app|
     Capybara::Selenium::Driver.new(
       app,
       browser: :remote,
-      url: ENV["SELENIUM_HUB_URL"],
+      url: ENV.fetch("SELENIUM_HUB_URL", nil),
       capabilities: capabilities,
     )
   else
@@ -140,7 +140,7 @@ VCR.configure do |config|
   config.configure_rspec_metadata!
   config.ignore_localhost = true
   config.ignore_hosts "ea-edubase-api-prod.azurewebsites.net", "selenium-chrome"
-  config.ignore_hosts IPSocket.getaddress(Socket.gethostname) if ENV["DEVCONTAINER"] == "true"
+  config.ignore_hosts IPSocket.getaddress(Socket.gethostname) if ENV.fetch("DEVCONTAINER", nil) == "true"
 end
 
 Shoulda::Matchers.configure do |config|
