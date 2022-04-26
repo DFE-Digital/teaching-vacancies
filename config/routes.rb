@@ -202,7 +202,7 @@ Rails.application.routes.draw do
       collection do
         get :create_or_copy, to: "publishers/vacancies#create_or_copy", path: "create-or-copy"
         get :select_a_job_for_copying, to: "publishers/vacancies#select_a_job_for_copying", path: "select-a-job-for-copying"
-        post :redirect_to_copy_job, to: "publishers/vacancies#redirect_to_copy_job"
+        get :redirect_to_copy_job, to: "publishers/vacancies#redirect_to_copy_job"
       end
 
       get :confirm_destroy

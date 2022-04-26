@@ -321,9 +321,7 @@ en:
         heading: Review the job listing
         steps: Create a job listing steps
       select_a_job_for_copying:
-        cancel: Cancel and return to manage jobs
-        form:
-          submit: Continue
+        closing_date: "Closing date: %{date}"
         heading: Select a job to copy
         page_title: Select a job to copy
       show:
