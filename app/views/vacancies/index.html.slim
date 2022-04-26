@@ -11,9 +11,9 @@
       = render "vacancies/search/filters", f: f, form: @form
 
     .govuk-grid-column-two-thirds-at-desktop
-      = render "vacancies/search/fields", f: f, form: @form
+      = render "vacancies/search/fields_and_button", f: f, form: @form
       = render "vacancies/search/open_filters_button", form: @form
-      = render "vacancies/search/stats", form: @form, vacancies_search: @vacancies_search, vacancies: @vacancies
+      = render "vacancies/search/sort_and_stats", form: @form, vacancies_search: @vacancies_search, vacancies: @vacancies
       #search-results
         - if @vacancies.any?
           = render "vacancies/search/results", vacancies: @vacancies
