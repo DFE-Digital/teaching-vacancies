@@ -19,16 +19,9 @@
                                              similar_jobs: @similar_jobs,
                                              invented_job_alert_search_criteria: @invented_job_alert_search_criteria
 
-.govuk-grid-row class="#{current_variant_container_name(:similar_jobs_position)} govuk-!-margin-top-6"
+.govuk-grid-row class="govuk-!-margin-top-6"
   .govuk-grid-column-one-third
     = render "vacancies/listing/key_dates_sidebar", vacancy: @vacancy, similar_jobs: @similar_jobs
-
-    - if current_variant?(:similar_jobs_position, :left)
-      = render "vacancies/listing/similar_jobs", vacancy: @vacancy,
-                                                 similar_jobs: @similar_jobs,
-                                                 invented_job_alert_search_criteria: @invented_job_alert_search_criteria,
-                                                 linked_locations: linked_locations(@vacancy),
-                                                 column_one_half: false
 
   .govuk-grid-column-two-thirds
     = render "vacancies/listing/multi_school_banner", vacancy: @vacancy
@@ -40,7 +33,6 @@
     = render "vacancies/listing/similar_jobs", vacancy: @vacancy,
                                                similar_jobs: @similar_jobs,
                                                invented_job_alert_search_criteria: @invented_job_alert_search_criteria,
-                                               linked_locations: linked_locations(@vacancy),
-                                               column_one_half: true
+                                               linked_locations: linked_locations(@vacancy)
 
     = render "vacancies/listing/copy_vacancy_link", vacancy: @vacancy
