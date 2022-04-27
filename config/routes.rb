@@ -39,6 +39,8 @@ Rails.application.routes.draw do
 
   get "/sha", to: "sha#sha"
 
+  get "/robots.txt", to: "robots#show"
+
   namespace :jobseekers do
     devise_scope :jobseeker do
       get :check_your_email, to: "registrations#check_your_email", as: :check_your_email

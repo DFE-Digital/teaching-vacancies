@@ -1,3 +1,4 @@
+<%- if Rails.configuration.app_role.production? %>
 SITEMAP: https://teaching-vacancies.service.gov.uk/sitemap.xml
 User-agent: *
 Allow: /
@@ -7,3 +8,6 @@ Disallow: /documents/
 Disallow: /attachments/
 Disallow: /*-jobs*?*
 Disallow: /*/sign-in
+<%- else %>
+Disallow: /
+<% end %>
