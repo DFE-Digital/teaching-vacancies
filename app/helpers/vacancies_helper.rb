@@ -137,4 +137,8 @@ module VacanciesHelper
       t("publishers.activity_log.#{attribute}", new_value: new_value.humanize)
     end
   end
+
+  def vacancy_select_a_job_to_copy_hint(vacancy)
+    safe_join [tag.div(t(".closing_date", date: vacancy.expires_at)), tag.div(vacancy.organisation_name, class: "govuk-!-margin-top-1")]
+  end
 end

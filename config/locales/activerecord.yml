@@ -93,6 +93,9 @@ en:
       inclusion: Select an option for how the job was listed
 
   # Publishers journey
+  select_a_job_for_copying_errors: &select_a_job_for_copying_errors
+    vacancy_id:
+      blank: Select a job to copy
   job_role_errors: &job_role_errors
     main_job_role:
       inclusion: Select a job role
@@ -209,6 +212,9 @@ en:
             <<: *unsubscribe_feedback_errors
 
         # Publishers journey
+        publishers/job_listing/select_a_job_for_copying_form:
+          attributes:
+            <<: *select_a_job_for_copying_errors
         publishers/job_listing/job_role_form:
           attributes:
             <<: *job_role_errors
@@ -506,3 +512,4 @@ en:
             <<: *important_dates_errors
             <<: *applying_for_the_job_errors
             <<: *job_summary_errors
+            <<: *select_a_job_for_copying_errors

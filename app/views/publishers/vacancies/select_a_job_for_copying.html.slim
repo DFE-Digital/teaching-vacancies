@@ -2,10 +2,21 @@
 
 .govuk-grid-row
   .govuk-grid-column-full
-    = form_tag redirect_to_copy_job_organisation_jobs_path do
-      .govuk-form-group
-        = vacancy_selector(vacancies.published.order(:job_title), organisation: current_organisation, label_text: t(".heading"))
+    = form_for @form, url: redirect_to_copy_job_organisation_jobs_path, method: :get do |f|
+      = f.govuk_error_summary
 
-      button.govuk-button = t(".form.submit")
-      p class="govuk-!-margin-top-0"
-        = govuk_link_to t(".cancel"), organisation_jobs_path
+      = f.govuk_fieldset legend: { text: t(".heading"), size: "l" } do
+        = searchable_collection(collection: f.govuk_collection_radio_buttons(:vacancy_id,
+          vacancies.published,
+          :id,
+          :job_title,
+          ->(vacancy) { vacancy_select_a_job_to_copy_hint(vacancy) },
+          legend: nil,
+          classes: "govuk-!-margin-top-2"),
+          collection_count: vacancies.count,
+          options: { border: false, threshold: 5 })
+      .govuk-button-group
+        button.govuk-button class="govuk-!-margin-top-4"
+          = t("buttons.continue")
+        p class="govuk-!-margin-top-0"
+          = govuk_link_to t("buttons.cancel_and_return_to_jobs"), organisation_jobs_path
