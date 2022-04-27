@@ -3,7 +3,7 @@
 = vacancy_form_page_heading(vacancy, step_process)
 
 .govuk-grid-row
-  .govuk-grid-column-two-thirds data-controller="upload-documents"
+  .govuk-grid-column-two-thirds data-controller="upload-documents" data-upload-documents-inactive=vacancy.enable_job_applications?
     = form_for form, url: organisation_job_application_forms_path(vacancy.id, back_to: params[:back_to]) do |f|
       = f.govuk_error_summary
 
