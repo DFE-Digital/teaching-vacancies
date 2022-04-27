@@ -5,9 +5,11 @@ export default class extends Controller {
   static targets = ['inputFileUpload', 'uploadFilesButton', 'selectFileButton', 'saveListingButton'];
 
   connect() {
-    this.inputFileUploadTarget.classList.add('govuk-!-display-none');
-    this.uploadFilesButtonTarget.classList.add('govuk-!-display-none');
-    this.selectFileButtonTarget.classList.remove('govuk-!-display-none');
+    if (!this.inactive) {
+      this.inputFileUploadTarget.classList.add('govuk-!-display-none');
+      this.uploadFilesButtonTarget.classList.add('govuk-!-display-none');
+      this.selectFileButtonTarget.classList.remove('govuk-!-display-none');
+    }
   }
 
   trigger_upload(event) {
