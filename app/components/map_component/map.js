@@ -51,7 +51,7 @@ const MapController = class extends Controller {
     });
 
     const addressBlock = marker.querySelector('.pop-up');
-    addressBlock.remove();
+    addressBlock.parentNode.removeChild(addressBlock);
     addressBlock.hidden = false;
 
     leafletMarker.addTo(this.map).bindPopup(
