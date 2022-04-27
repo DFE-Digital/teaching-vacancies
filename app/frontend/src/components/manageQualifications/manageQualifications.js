@@ -1,12 +1,10 @@
 import { Controller } from '@hotwired/stimulus';
 
-let emptyRow;
-
 export default class extends Controller {
   static targets = ['row'];
 
   connect() {
-    emptyRow = this.rowTargets.find((row) => row.classList.contains('js-hidden'));
+    this.emptyRow = this.rowTargets.find((row) => row.classList.contains('js-hidden'));
 
     const params = new URLSearchParams(document.location.search);
 
@@ -20,11 +18,11 @@ export default class extends Controller {
       event.preventDefault();
     }
 
-    const newRow = emptyRow.cloneNode(true);
+    const newRow = this.emptyRow.cloneNode(true);
     newRow.classList.remove('js-hidden');
-    emptyRow.before(newRow);
+    this.emptyRow.before(newRow);
     this.renumberRows();
-    newRow.getElementsByClassName('govuk-input')[0].focus();
+    newRow.querySelector('.govuk-input').focus();
   }
 
   deleteRow(event) {
