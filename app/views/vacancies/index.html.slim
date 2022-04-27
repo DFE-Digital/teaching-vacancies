@@ -1,5 +1,5 @@
 - content_for :skip_links do
-  a.govuk-skip-link href="#search-results" = t("jobs.skip_link")
+  = govuk_skip_link(href: "#search-results", text: t("jobs.skip_link"))
 
 = render "vacancies/search/page_title_and_description", landing_page: @landing_page
 

@@ -1,7 +1,7 @@
 - content_for :page_title_prefix, current_organisation.name
 
 - content_for :skip_links do
-  a.govuk-skip-link href="#vacancy-results" Skip to #{t("jobs.dashboard.#{@selected_type}.tab_heading")}
+  = govuk_skip_link(href: "#vacancy-results", text: t(".skip_link", heading: t("jobs.dashboard.#{@selected_type}.tab_heading")))
 
 = dashboard(organisation: current_organisation,
             sort: @sort,
