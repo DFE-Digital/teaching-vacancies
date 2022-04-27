@@ -2928,10 +2928,10 @@ core-js-compat@^3.20.2, core-js-compat@^3.21.0:
     browserslist "^4.19.1"
     semver "7.0.0"
 
-core-js@^3.16.2, core-js@^3.22.1, core-js@^3.4.0:
-  version "3.22.1"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.22.1.tgz#1936e4f1da82675fe22ae10ee60ef638cd9752fd"
-  integrity sha512-l6CwCLq7XgITOQGhv1dIUmwCFoqFjyQ6zQHUCQlS0xKmb9d6OHIg8jDiEoswhaettT21BSF5qKr6kbvE+aKwxw==
+core-js@^3.16.2, core-js@^3.22.2, core-js@^3.4.0:
+  version "3.22.2"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.22.2.tgz#3ea0a245b0895fa39d1faa15fe75d91ade504a01"
+  integrity sha512-Z5I2vzDnEIqO2YhELVMFcL1An2CIsFe9Q7byZhs8c/QxummxZlAHw33TUHbIte987LkisOgL0LwQ1P9D6VISnA==
 
 core-util-is@~1.0.0:
   version "1.0.3"
@@ -9272,10 +9272,10 @@ stylelint-scss@^4.0.0:
     postcss-selector-parser "^6.0.6"
     postcss-value-parser "^4.1.0"
 
-stylelint@^14.7.1:
-  version "14.7.1"
-  resolved "https://registry.yarnpkg.com/stylelint/-/stylelint-14.7.1.tgz#f1b3236cbf9e1b25a04d03f76250943a58d3f37f"
-  integrity sha512-rUOWm67hrzGXXyO/cInENEejF4urh1dLgOb9cr/3XLDb/t/A+rXQp3p6+no8o8QCKTgBUdhVUq/bXMgE988PJw==
+stylelint@^14.8.0:
+  version "14.8.0"
+  resolved "https://registry.yarnpkg.com/stylelint/-/stylelint-14.8.0.tgz#506959bc1424610cdac9eaefca8fb2420292cf73"
+  integrity sha512-uIyIWMSBSVcj73Gn3nTvPyNsYdwTpxo1W6dWTIa1nm8JKgUi3FIobSXLgrRE6joLidoA0FdgAhCaqxwTF2ikrQ==
   dependencies:
     balanced-match "^2.0.0"
     colord "^2.9.2"
