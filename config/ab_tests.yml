@@ -30,14 +30,5 @@ shared:
     foo: 1
     bar: 1
     baz: 1
-  similar_jobs_position:
-    default: 1
-    left: 1
 test:
-  similar_jobs_position:
-    default: 1
-    left: 0
 visual:
-  similar_jobs_position:
-    default: 1
-    left: 1
