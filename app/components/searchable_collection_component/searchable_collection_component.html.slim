@@ -3,6 +3,6 @@
     - if searchable?
       .searchable-collection-component__search
         input.govuk-input.searchable-collection-component__search-input.icon.icon--left.icon--search.js-action placeholder=t("helpers.hint.publishers_job_listing_job_details_form.subjects_placeholder") aria-label="#{label_text}" aria-expanded="true" aria-describedby="publishers-job-listing-job-details-form-subjects-hint" aria-owns="subjects__listbox" role="combobox"
-        .govuk-visually-hidden aria-live="polite" role="status" id="search-results"
+        .govuk-visually-hidden aria-live="polite" role="status" class="collection-match"
 
     = collection
