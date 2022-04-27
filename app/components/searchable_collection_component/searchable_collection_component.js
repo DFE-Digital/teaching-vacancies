@@ -35,9 +35,9 @@ export const init = (container, classNames) => {
     });
 
     if (e.target.value.length) {
-      document.getElementById('search-results').innerHTML = `${visibleItems.length} subjects match ${e.target.value}`;
+      container.querySelector('.collection-match').innerHTML = `${visibleItems.length} subjects match ${e.target.value}`;
     } else {
-      document.getElementById('search-results').innerHTML = '';
+      container.querySelector('.collection-match').innerHTML = '';
     }
   });
 
