@@ -8,6 +8,8 @@ class SupportalTableComponent < GovukComponent::Base
     text
   ].freeze
 
+  TAG_COLOURS = { "jobseeker" => "blue", "hiring staff" => "green", "unknown" => "red" }.freeze
+
   def initialize(entries:, classes: [], html_attributes: {})
     super(classes: classes, html_attributes: html_attributes)
 
@@ -34,7 +36,7 @@ class SupportalTableComponent < GovukComponent::Base
   def govuk_tags(array)
     tag.ul(class: "govuk-list tags-list") do
       Array(array).compact.each do |text|
-        concat(tag.li { govuk_tag(text: text.humanize) })
+        concat(tag.li { govuk_tag(text: text.humanize, colour: TAG_COLOURS[text]) })
       end
     end
   end

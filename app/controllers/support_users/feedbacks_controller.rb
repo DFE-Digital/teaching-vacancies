@@ -1,7 +1,9 @@
 class SupportUsers::FeedbacksController < SupportUsers::BaseController
+  include SupportUsers::SatisfactionRatingTypes
+
   def general
     @feedbacks = Feedback
-      .with_comments
+      .with_comments_or_contactable
       .order(created_at: :desc)
       .where(created_at: reporting_period.date_range)
 
@@ -19,7 +21,10 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
     @categories_for_select = @categories.invert
   end
 
-  def satisfaction_ratings; end
+  def satisfaction_ratings
+    @satisfaction_rating_type = SATISFACTION_RATING_TYPES.find { |type| type[:feedback_type] == params[:satisfaction_rating_type]&.to_sym } || SATISFACTION_RATING_TYPES.first
+    @satisfaction_ratings ||= SATISFACTION_RATING_TYPES
+  end
 
   def recategorize
     params.fetch(:feedbacks).each do |feedback_params|
@@ -41,7 +46,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
   private
 
   def source_for(feedback)
-    [identified_or_authenticated(feedback), user_type(feedback)].compact
+    identified_or_authenticated(feedback)
   end
   helper_method :source_for
 
@@ -49,6 +54,11 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
     user_type(feedback)
   end
   helper_method :who
+
+  def contact_email_for(feedback)
+    feedback.email if feedback.user_participation_response == "interested"
+  end
+  helper_method :contact_email_for
 
   def identified_or_authenticated(feedback)
     if authenticated?(feedback)
@@ -85,10 +95,12 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
   end
 
   def unauthenticated_user_type(feedback)
-    if %i[jobseeker_account job_alert application unsubscribe].include?(feedback.feedback_type)
+    if %i[jobseeker_account job_alert application unsubscribe].include?(feedback.feedback_type) || feedback.visit_purpose == "find_teaching_job"
       "jobseeker"
-    elsif %i[vacancy_publisher].include?(feedback.feedback_type)
+    elsif %i[vacancy_publisher].include?(feedback.feedback_type) || feedback.visit_purpose == "list_teaching_job"
       "hiring staff"
+    else
+      "unknown"
     end
   end
 
