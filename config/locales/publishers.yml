@@ -74,6 +74,7 @@ en:
           other: You have %{count} jobs awaiting feedback
         job_applications: When you create a job listing you can now choose for candidates to apply through Teaching Vacancies.
         job_applications_link_text: Preview the application form
+        skip_link: Skip to %{heading}
       readable_job_location:
         at_multiple_schools: More than one school
         at_multiple_schools_with_count: More than one school (%{count})

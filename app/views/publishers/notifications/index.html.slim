@@ -2,7 +2,7 @@
 
 - if notifications.any?
   - content_for :skip_links do
-    a.govuk-skip-link href="#notifications-results" = t(".skip_link")
+    = govuk_skip_link(href: "#notifications-results", text: t(".skip_link"))
 
 .govuk-grid-row
   .govuk-grid-column-full
