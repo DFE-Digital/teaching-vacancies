@@ -89,7 +89,7 @@ It’s useful for candidates to be able to understand what criteria you’ll be 
 
 It’s important you make a distinction between which of these are required or desired. Candidates are likely to take literal notice of this information, so don’t state that they must have a certain level of education if in reality you’d be more lenient with that. 
 
-You don’t want to put anyone off applying by making the criteria too strict, but you also don’t want to have a flood of applications to wade through if you’re to vague with your description.
+You don’t want to put anyone off applying by making the criteria too strict, but you also don’t want to have a flood of applications to wade through if you’re too vague with your description.
 
 ## What should you check before you publish your job advert?
 
