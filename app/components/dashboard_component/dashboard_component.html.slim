@@ -25,7 +25,7 @@
         = render SortComponent.new sort: @sort, url_params: { type: @selected_type }, path: method(:jobs_with_type_organisation_path)
     - if @organisation.school_group?
       .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-4"
-        - if @publisher_preference
+        - if @organisation.local_authority?
           = govuk_link_to t("jobs.dashboard.add_or_remove_schools"), edit_publishers_publisher_preference_path(@publisher_preference), class: "govuk-link--no-visited-state"
 
         div class="govuk-!-margin-top-2"
