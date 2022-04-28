@@ -21,7 +21,9 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Vacan
   end
 
   def self.optional?
-    new({}, Vacancy.new).valid?
+    form_section = new({}, Vacancy.new)
+    form_section.skip_after_validation_big_query_callback = true
+    form_section.valid?
   end
 
   def initialize(params, vacancy)
