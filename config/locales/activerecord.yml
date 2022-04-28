@@ -465,6 +465,7 @@ en:
           attributes:
             content:
               blank: Enter a note
+              too_long: A note must not be more than 150 characters
 
         support_request_form:
           attributes:
