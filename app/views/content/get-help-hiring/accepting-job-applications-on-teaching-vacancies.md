@@ -64,7 +64,7 @@ If the applicant does not currently work with children, but has done so in the p
 
 Candidates are asked to provide information on whether they have a disability as well as their age, gender, sexual orientation and ethnic group.
 
-This information is not to used as part of candidate selection, however it does allow you to anonymously monitor the inclusivity of your recruitment process.
+This information is not be to used as part of candidate selection, however it does allow you to anonymously monitor the inclusivity of your recruitment process.
 
 For each question, applicants are given the opportunity to answer ‘Prefer not to say’. For any question where they answer ‘Other', we provide an option to include further details.
 
