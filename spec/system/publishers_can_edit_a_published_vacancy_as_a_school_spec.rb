@@ -328,4 +328,23 @@ RSpec.describe "Publishers can edit a vacancy" do
       end
     end
   end
+
+  context "when a vacancy is external" do
+    let!(:vacancy) do
+      create(
+        :vacancy, :external, :at_one_school, :published, :expires_tomorrow,
+        job_title: "Imported vacancy",
+        organisations: [school]
+      )
+    end
+
+    scenario "it is visible on the dashboard but cannot be edited" do
+      visit organisation_path
+      expect(page).to have_content("Imported vacancy")
+      expect(page).not_to have_link("Imported vacancy")
+
+      visit organisation_job_path(vacancy.id)
+      expect(page).to have_content(I18n.t("error_pages.not_found"))
+    end
+  end
 end

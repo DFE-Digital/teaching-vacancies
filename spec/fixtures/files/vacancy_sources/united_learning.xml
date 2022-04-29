@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:a10="http://www.w3.org/2005/Atom" version="2.0">
+   <channel>
+       <title>United Learning RSS Feed</title>
+       <link>https://unitedlearning.current-vacancies.com/RSSFeeds/Vacancies/UNITEDLEAR?feedID=C8E62F84748A4306A68C06C1C583F242</link>
+       <description>United Learning RSS Feed</description>
+       <item>
+           <link>https://unitedlearning.current-vacancies.com/Jobs/FeedLink/2648837</link>
+           <title>Head of Geography</title>
+           <a10:updated>2022-04-29T10:29:57Z</a10:updated>
+           <a10:content type="text/xml">
+               <Vacancy>
+                   <VacancyID>751190</VacancyID>
+                   <vTitle>Head of Geography</vTitle>
+                   <VacancyPublishInfoID>2648837</VacancyPublishInfoID>
+                   <Vacancy_title>Head of Geography</Vacancy_title>
+                   <Salary>PT/EPT + TLR 2B</Salary>
+                   <Advert_text>Lorem ipsum dolor sit amet</Advert_text>
+                   <Vacancy_ID>NTXTP751190</Vacancy_ID>
+                   <Expiry_date>15/05/2022 12:00:00</Expiry_date>
+                   <Job_roles>teacher</Job_roles>
+                   <ect_suitable>yes</ect_suitable>
+                   <send_responsible>yes</send_responsible>
+                   <Working_patterns>full_time</Working_patterns>
+                   <Subjects>Geography</Subjects>
+                   <Job_location>at_one_school</Job_location>
+                   <Contract_type>permanent</Contract_type>
+                   <Phase>Secondary</Phase>
+                   <URN>136636</URN>
+                   <Key_stages>ks2</Key_stages>
+                   <Documents>
+                      <document>
+                          <name><![CDATA[Job Description - Head of Department Final April 21 TCC (6) (3) (1).pdf]]></name>
+                          <extension>pdf</extension>
+                          <size>225131</size>
+                          <url><![CDATA[https://unitedlearning.current-vacancies.com/Jobs/DownloadDocument/934437?cid=1567&pubid=2648837]]></url>
+                      </document>
+                   </Documents>
+               </Vacancy>
+           </a10:content>
+       </item>
+   </channel>
+</rss>

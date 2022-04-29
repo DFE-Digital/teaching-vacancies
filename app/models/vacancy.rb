@@ -34,7 +34,7 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enum job_location: { at_one_school: 0, at_multiple_schools: 1, central_office: 2 }
   enum listed_elsewhere: { listed_paid: 0, listed_free: 1, listed_mix: 2, not_listed: 3, listed_dont_know: 4 }
   enum phase: { primary: 0, secondary: 1, "16-19": 2, multiple_phases: 3 }
-  enum status: { published: 0, draft: 1, trashed: 2 }
+  enum status: { published: 0, draft: 1, trashed: 2, removed_from_external_system: 3 }
 
   belongs_to :publisher, optional: true
   belongs_to :publisher_organisation, class_name: "Organisation", optional: true
@@ -63,6 +63,9 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
   scope :pending, (-> { published.where("publish_on > ?", Date.current) })
   scope :published_on_count, (->(date) { published.where(publish_on: date.all_day).count })
 
+  scope :internal, (-> { where(external_source: nil) })
+  scope :external, (-> { where.not(external_source: nil) })
+
   scope :search_by_filter, VacancyFilterQuery
   scope :search_by_location, VacancyLocationQuery
   scope :search_by_full_text, VacancyFullTextSearchQuery
@@ -71,6 +74,7 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   validates :slug, presence: true
   validate :enable_job_applications_cannot_be_changed_once_listed
+  validates_with ExternalVacancyValidator, if: :external?
 
   has_noticed_notifications
   has_paper_trail on: [:update],
@@ -99,6 +103,10 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def self.additional_job_role_options
     ADDITIONAL_JOB_ROLES.keys.map(&:to_s)
+  end
+
+  def external?
+    external_source.present?
   end
 
   def organisation

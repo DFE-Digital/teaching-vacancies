@@ -177,6 +177,14 @@ en:
       blank: Enter a job advert
     about_school:
       blank: Enter a description of the %{organisation}
+
+  # External vacancies errors
+  external_errors: &external_errors
+    external_reference:
+      blank: Enter an external reference
+    external_advert_url:
+      blank: Enter an external advert URL
+
   errors:
     format: "%{message}"
     title:
@@ -513,3 +521,4 @@ en:
             <<: *applying_for_the_job_errors
             <<: *job_summary_errors
             <<: *select_a_job_for_copying_errors
+            <<: *external_errors
