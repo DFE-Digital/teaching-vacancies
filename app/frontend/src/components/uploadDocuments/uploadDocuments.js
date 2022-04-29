@@ -1,18 +1,22 @@
 import 'classlist-polyfill';
 import { Controller } from '@hotwired/stimulus';
 
-export default class extends Controller {
+const UploadDocumentsController = class extends Controller {
   static targets = ['inputFileUpload', 'uploadFilesButton', 'selectFileButton', 'saveListingButton'];
 
+  static values = {
+    inactive: Boolean,
+  };
+
   connect() {
-    if (!this.inactive) {
+    if (!this.inactiveValue) {
       this.inputFileUploadTarget.classList.add('govuk-!-display-none');
       this.uploadFilesButtonTarget.classList.add('govuk-!-display-none');
       this.selectFileButtonTarget.classList.remove('govuk-!-display-none');
     }
   }
 
-  trigger_upload(event) {
+  triggerUpload(event) {
     event.preventDefault();
     this.inputFileUploadTarget.click();
   }
@@ -46,4 +50,6 @@ Uploading<span class='upload-progress'><div class='upload-progress-spinner'></di
       });
     }
   }
-}
+};
+
+export default UploadDocumentsController;

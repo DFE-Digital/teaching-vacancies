@@ -3,7 +3,7 @@
 = vacancy_form_page_heading(vacancy, step_process)
 
 .govuk-grid-row
-  .govuk-grid-column-two-thirds data-controller="upload-documents" data-upload-documents-inactive=vacancy.enable_job_applications?
+  .govuk-grid-column-two-thirds data-controller="upload-documents" data-upload-documents-inactive-value=vacancy.enable_job_applications?
     = form_for form, url: organisation_job_application_forms_path(vacancy.id, back_to: params[:back_to]) do |f|
       = f.govuk_error_summary
 
@@ -24,7 +24,7 @@
           "data-action": "change->upload-documents#uploadFiles",
           hint: -> { t("helpers.hint.publishers_job_listing_applying_for_the_job_details_form.application_form_html", accessibility_link: document_accessibility_link(vacancy)) }
 
-        button.govuk-button.govuk-button--secondary class="govuk-!-display-none govuk-!-margin-bottom-3" data-upload-documents-target="selectFileButton" data-action="upload-documents#trigger_upload"
+        button.govuk-button.govuk-button--secondary class="govuk-!-display-none govuk-!-margin-bottom-3" data-upload-documents-target="selectFileButton" data-action="upload-documents#triggerUpload"
           = t("buttons.select_file")
 
         = f.govuk_submit t("buttons.upload_files"), secondary: true, "data-upload-documents-target": "uploadFilesButton"
