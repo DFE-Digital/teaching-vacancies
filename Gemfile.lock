@@ -717,6 +717,7 @@ DEPENDENCIES
   net-imap
   net-pop
   net-smtp
+  nokogiri
   noticed
   omniauth (< 2)
   omniauth_openid_connect (< 0.4)

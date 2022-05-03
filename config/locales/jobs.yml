@@ -278,6 +278,10 @@ en:
     share_on_twitter: Share to Twitter
     share_this_job: Share this job
 
+    external:
+      notice: This school accepts applications through their own website, where you may also find more information about this job.
+      link: View advert on school website
+
     preview_listing:
       heading: Preview this job listing
       message: See how this job listing will appear to jobseekers on Teaching Vacancies
@@ -329,6 +333,8 @@ en:
         time_updated: Date last updated
       edit_link_text: Edit listing
       extend_link_text: Extend deadline
+      external_notice: This job listing was imported from your organisation's recruitment system and cannot be changed on Teaching Vacancies.
+      external_tag: Imported
       heading_html: "%{email} <span class='govuk-!-font-weight-regular'>- %{organisation}</span>"
       expired:
         expired_on: Listing ended

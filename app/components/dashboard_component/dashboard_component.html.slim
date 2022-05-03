@@ -58,7 +58,12 @@
           - vacancies.each do |vacancy|
             - summary_list.row do |row|
               - row.key do
-                = govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id))
+                - if vacancy.external?
+                  = vacancy.job_title
+                  p class="govuk-!-margin-bottom-1"
+                    span.govuk-tag.govuk-tag--turquoise = t("jobs.manage.external_tag")
+                - else
+                  = govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id))
                 - if organisation.school_group?
                   p.govuk-body-s = vacancy.readable_job_location
 
@@ -100,6 +105,9 @@
                   dl
                     dt = "#{t('jobs.manage.draft.time_updated')}:"
                     dd = format_date(vacancy.updated_at.to_date)
+                - if vacancy.external?
+                  p.govuk-body-xs.external-notice
+                    = t("jobs.manage.external_notice")
 
     - unless @organisation.school_group?
       .govuk-grid-column-one-quarter

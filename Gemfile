@@ -40,6 +40,7 @@ gem "kramdown"
 gem "lockbox"
 gem "mail-notify"
 gem "mimemagic"
+gem "nokogiri"
 gem "noticed"
 gem "omniauth", "< 2" # TODO: Pinned pending fixes
 gem "omniauth_openid_connect", "< 0.4" # TODO: Pinned pending fixes

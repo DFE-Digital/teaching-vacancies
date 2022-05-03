@@ -21,7 +21,8 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
   end
 
   def vacancy
-    @vacancy ||= vacancies.find(params[:job_id].presence || params[:id])
+    # Scope to internal vacancies to disallow editing of external ones
+    @vacancy ||= vacancies.internal.find(params[:job_id].presence || params[:id])
   end
 
   def form_sequence

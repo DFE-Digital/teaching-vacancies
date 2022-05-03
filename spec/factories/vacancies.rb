@@ -174,5 +174,11 @@ FactoryBot.define do
         )
       end
     end
+
+    trait :external do
+      external_source { "may_the_feed_be_with_you" }
+      external_reference { "J3D1" }
+      external_advert_url { "https://example.com/jobs/123" }
+    end
   end
 end
