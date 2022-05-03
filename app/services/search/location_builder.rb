@@ -29,6 +29,10 @@ class Search::LocationBuilder
     location_filter[:point_coordinates]
   end
 
+  def radius_in_meters
+    location_filter[:radius]
+  end
+
   private
 
   def build_location_filter

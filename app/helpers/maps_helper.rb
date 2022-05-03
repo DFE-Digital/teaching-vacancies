@@ -1,7 +1,7 @@
 module MapsHelper
-  def vacancy_map_markers(vacancies, polygon)
+  def vacancy_map_markers(vacancies, polygon, coordinates, radius)
     vacancies.map { |vacancy|
-      vacancy.organisations.within_polygon(polygon).map do |organisation|
+      vacancy.organisations.within_polygon(polygon).within_area(coordinates, radius).map do |organisation|
         {
           geopoint: organisation.geopoint,
           heading: govuk_link_to(vacancy.job_title, job_path(vacancy)),
