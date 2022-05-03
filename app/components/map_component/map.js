@@ -28,6 +28,7 @@ const map = {
   }),
   createPolygon: ({ coordinates }) => L.polygon(coordinates.map((point) => point.reverse()), { color: '#0b0c0c', weight: 1, smoothFactor: 2 }),
   createCircle: (radius, point) => L.circle(point, { radius, color: '#0b0c0c', weight: 1 }),
+  layerBounds: (layer) => layer.getBounds(),
   createMarker: (point, variant, popup) => {
     const marker = L.marker(point, {
       icon: map.markerIcon(popup.title, variant),

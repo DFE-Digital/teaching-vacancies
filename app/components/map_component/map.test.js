@@ -7,17 +7,20 @@ import { Application } from '@hotwired/stimulus';
 import MapController from './controller';
 import map from './map';
 
+let application;
+
 const initialiseStimulus = () => {
-  const application = Application.start();
+  application = Application.start();
   application.register('map', MapController);
 };
 
 jest.mock('../../frontend/src/lib/api');
 const mockCreateMap = jest.fn();
-const mockAddLayer = jest.fn();
+const mockAddToMap = jest.fn();
 const mockCreateCluster = jest.fn();
 const mockCreatePolygon = jest.fn();
 const mockCreateCircle = jest.fn();
+const mockLayerBounds = jest.fn();
 const mockAddMarkerToCluster = jest.fn();
 const mockSetMapBounds = jest.fn();
 const mockCreateMarker = jest.fn();
@@ -42,7 +45,7 @@ beforeEach(() => {
 
 beforeAll(() => {
   jest.mock('./controller', () => jest.fn().mockImplementation(() => ({
-    addLayer: mockAddLayer,
+    addToMap: mockAddToMap,
     addMarkerToCluster: mockAddMarkerToCluster,
     setMapBounds: mockSetMapBounds,
     getTargetPopup: mockGetTargetPopup,
@@ -54,6 +57,7 @@ beforeAll(() => {
     createMarker: mockCreateMarker,
     createPolygon: mockCreatePolygon,
     createCircle: mockCreateCircle,
+    layerBounds: mockLayerBounds,
   })));
 
   spies = {
@@ -62,7 +66,8 @@ beforeAll(() => {
     createCircle: jest.spyOn(map, 'createCircle'),
     createCluster: jest.spyOn(map, 'createCluster'),
     createMarker: jest.spyOn(map, 'createMarker'),
-    addLayer: jest.spyOn(MapController.prototype, 'addLayer'),
+    layerBounds: jest.spyOn(map, 'layerBounds'),
+    addToMap: jest.spyOn(MapController.prototype, 'addToMap'),
     addMarkerToCluster: jest.spyOn(MapController.prototype, 'addMarkerToCluster'),
     setMapBounds: jest.spyOn(MapController.prototype, 'setMapBounds'),
     getTargetPopup: jest.spyOn(MapController, 'getTargetPopup'),
@@ -83,7 +88,7 @@ describe('when map is initialised with one item', () => {
     expect(spies.createMarker).toHaveBeenCalledTimes(1);
     expect(spies.getTargetPopup).toHaveBeenCalledTimes(1);
     expect(spies.addMarkerToCluster).not.toHaveBeenCalled();
-    expect(spies.addLayer).toHaveBeenCalledTimes(1);
+    expect(spies.addToMap).toHaveBeenCalledTimes(1);
     expect(spies.setMapBounds).not.toHaveBeenCalled();
   });
 });
@@ -100,7 +105,9 @@ describe('when map is initialised with a polygon', () => {
     expect(spies.createMarker).toHaveBeenCalledTimes(1);
     expect(spies.createPolygon).toHaveBeenCalledWith({ coordinates: [[0, 0], [0, 1], [1, 1], [1, 0]] });
     expect(spies.addMarkerToCluster).not.toHaveBeenCalled();
-    expect(spies.addLayer).toHaveBeenCalledTimes(2);
+    expect(spies.addToMap).toHaveBeenCalledTimes(2);
+    expect(spies.layerBounds).toHaveBeenCalled();
+    expect(spies.setMapBounds).toHaveBeenCalledTimes(1);
   });
 });
 
@@ -121,7 +128,9 @@ describe('when map is initialised with a center point and radius', () => {
   test('a circle showing radius is added to map', () => {
     expect(spies.createPolygon).toHaveBeenCalledTimes(0);
     expect(spies.createCircle).toHaveBeenCalledWith('10', [50, 10]);
-    expect(spies.addLayer).toHaveBeenCalledTimes(3);
+    expect(spies.addToMap).toHaveBeenCalledTimes(3);
+    expect(spies.layerBounds).toHaveBeenCalled();
+    expect(spies.setMapBounds).toHaveBeenCalledTimes(1);
   });
 });
 
@@ -137,7 +146,7 @@ describe('when map is initialised with more than one marker', () => {
     expect(spies.createMarker).toHaveBeenCalledTimes(3);
     expect(spies.getTargetPopup).toHaveBeenCalledTimes(3);
     expect(spies.addMarkerToCluster).toHaveBeenCalledTimes(3);
-    expect(spies.addLayer).toHaveBeenCalledTimes(1);
-    expect(spies.setMapBounds).toHaveBeenCalledTimes(1);
+    expect(spies.addToMap).toHaveBeenCalledTimes(1);
+    expect(spies.setMapBounds).toHaveBeenCalledWith([{ lat: '51', lon: '0.14' }, { lat: '51', lon: '0.14' }, { lat: '51', lon: '0.14' }]);
   });
 });
