@@ -6,7 +6,7 @@
 = search_results_heading(vacancies_search: @vacancies_search, landing_page: @landing_page)
 
 - if support_user_signed_in? && @vacancies_search.location
-  = map(markers: vacancy_map_markers(@vacancies_search.all),
+  = map(markers: vacancy_map_markers(@vacancies_search.all, @vacancies_search.location_search.polygon),
         polygon: @vacancies_search.location_search.polygon&.area&.coordinates,
         point: @vacancies_search.location_search.location_filter[:point_coordinates],
         radius: @vacancies_search.location_search.location_filter[:radius])
