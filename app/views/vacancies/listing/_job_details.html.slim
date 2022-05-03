@@ -69,7 +69,7 @@ section#job-details class="govuk-!-margin-bottom-5"
       - if vacancy.external?
         h4.govuk-heading-m = t("publishers.vacancies.steps.applying_for_the_job")
         p = t("jobs.external.notice")
-        = open_in_new_tab_button_link_to t("jobs.external.link"), vacancy.external_advert_url, class: "govuk-!-margin-bottom-5"
+        = external_advert_link vacancy, class: "govuk-!-margin-bottom-5"
 
       - if vacancy.application_link.present? && vacancy.application_form.present?
         = apply_link(vacancy, class: "govuk-button--secondary govuk-!-margin-bottom-5")
