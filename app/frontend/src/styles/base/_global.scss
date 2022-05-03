@@ -7,13 +7,20 @@ dl {
   margin-bottom: govuk-spacing(1);
   margin-top: 0;
 
-  dt,
-  dd {
-    display: inline-block;
+  @include govuk-media-query($from: desktop) {
+    dt,
+    dd {
+      display: inline-block;
+    }
+
+
+    dd {
+      margin-left: govuk-spacing(1);
+    }
   }
 
   dd {
-    margin-left: govuk-spacing(1);
+    margin-left: 0;
   }
 }
 
