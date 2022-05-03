@@ -13,6 +13,10 @@ class Organisation < ApplicationRecord
   scope :trusts, -> { school_groups.where.not(uid: nil) }
   scope :local_authorities, -> { school_groups.where.not(local_authority_code: nil) }
   scope :within_polygon, ->(location_polygon) { where("ST_Intersects(?, geopoint)", location_polygon.area.to_s) if location_polygon }
+  scope :within_area, lambda { |coordinates, radius|
+    point = "POINT(#{coordinates&.second} #{coordinates&.first})"
+    where("ST_DWithin(geopoint, ?, ?)", point, radius) if coordinates && radius
+  }
 
   alias_attribute :data, :gias_data
 
