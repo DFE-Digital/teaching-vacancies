@@ -22,11 +22,14 @@ const MapController = class extends Controller {
         this.map = map.create(point, MapController.DEFAULT_ZOOM);
 
         if (this.element.dataset.radius && this.element.dataset.point) {
-          this.addLayer(map.createMarker(JSON.parse(this.element.dataset.point), 'location', {
+          this.addToMap(map.createMarker(JSON.parse(this.element.dataset.point), 'location', {
             html: '<span class="govuk-body">Search location<span>',
           }));
 
-          this.addLayer(map.createCircle(this.element.dataset.radius, JSON.parse(this.element.dataset.point)));
+          const circle = map.createCircle(this.element.dataset.radius, JSON.parse(this.element.dataset.point));
+
+          this.addToMap(circle);
+          this.setMapBounds(map.layerBounds(circle));
         }
       }
 
@@ -35,19 +38,22 @@ const MapController = class extends Controller {
       if (this.markerTargets.length > 1) {
         this.addMarkerToCluster(marker);
       } else if (marker) {
-        this.addLayer(marker);
+        this.addToMap(marker);
         marker.openPopup();
       }
     });
 
     if (this.element.dataset.polygon) {
-      this.addPolygon(this.element.dataset.polygon);
+      const [data] = JSON.parse(this.element.dataset.polygon);
+      const polygon = map.createPolygon({ coordinates: data });
+      this.setMapBounds(map.layerBounds(polygon));
+      this.addToMap(polygon);
     }
 
-    this.addLayer(this.clusterGroup);
+    this.addToMap(this.clusterGroup);
 
-    if (this.markerTargets.length > 1) {
-      this.setMapBounds();
+    if (this.markerTargets.length > 1 && !this.bounds) {
+      this.setMapBounds(this.markerTargets.map((m) => ({ lat: m.dataset.lat, lon: m.dataset.lon })));
     }
   }
 
@@ -70,14 +76,7 @@ const MapController = class extends Controller {
     return properties;
   }
 
-  addPolygon(data = []) {
-    JSON.parse(data).forEach((polygon) => {
-      const polygonLayer = map.createPolygon({ coordinates: polygon });
-      this.addLayer(polygonLayer);
-    });
-  }
-
-  addLayer(layer) {
+  addToMap(layer) {
     this.map.addLayer(layer);
   }
 
@@ -85,10 +84,9 @@ const MapController = class extends Controller {
     this.clusterGroup.addLayer(marker);
   }
 
-  setMapBounds() {
-    this.map.fitBounds(
-      this.markerTargets.map((m) => ({ lat: m.dataset.lat, lon: m.dataset.lon })),
-    );
+  setMapBounds(bounds) {
+    this.bounds = bounds;
+    this.map.fitBounds(bounds);
   }
 
   static getTargetPopup(target) {
