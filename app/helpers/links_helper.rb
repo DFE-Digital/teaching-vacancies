@@ -60,6 +60,16 @@ module LinksHelper
     )
   end
 
+  def external_advert_link(vacancy, **kwargs)
+    tracked_open_in_new_tab_button_link_to(
+      t("jobs.external.link"),
+      vacancy.external_advert_url,
+      link_type: :external_advert_link,
+      link_subject: anon(vacancy.id),
+      **kwargs,
+    )
+  end
+
   def apply_link(vacancy, **kwargs)
     tracked_open_in_new_tab_button_link_to(
       t("jobs.apply"),
