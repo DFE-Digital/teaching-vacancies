@@ -1,15 +1,20 @@
-= tag.div(class: classes, **html_attributes.merge(data: { controller: "map", zoom: @zoom })) do
-  div data-map-target="markersTextList"
+= tag.div(class: classes, **html_attributes.merge(data: { controller: "map", zoom: @zoom, point: @point, polygon: @polygon, radius: radius })) do
+  .markers data-map-target="markersTextList"
     - @markers.each do |marker|
       - if marker[:geopoint]
-        div data-map-target="marker" data-lat=marker[:geopoint].lat data-lon=marker[:geopoint].lon
+        .markers__marker data-map-target="marker" data-lat=marker[:geopoint].lat data-lon=marker[:geopoint].lon
           .pop-up hidden=true
-            h4 class="govuk-body-m govuk-!-margin-bottom-2"
+            p.govuk-heading-s.marker-title class="govuk-!-margin-bottom-2"
               = marker[:heading]
 
-            ul class="govuk-list govuk-body-s"
+            ul.govuk-list.govuk-body-s
               li = marker[:description]
               li = marker[:address]
+
+            - marker[:details]&.each do |item|
+              dl
+                dt = item[:label]
+                dd = item[:value]
 
   - if show_map?
     .map-component__map id="map" role="presentation"

@@ -1,92 +1,58 @@
 import 'leaflet';
+import 'leaflet.markercluster/dist/leaflet.markercluster';
+import { GestureHandling } from 'leaflet-gesture-handling';
 
-import { Controller } from '@hotwired/stimulus';
-
-import './map.scss';
-
-const MapController = class extends Controller {
-  static targets = ['markersTextList', 'marker'];
-
-  connect() {
-    if (!this.element.querySelector('#map')) {
-      return;
-    }
-
-    const singleMarker = this.markerTargets.length === 1;
-
-    this.markerTargets.forEach((marker, index) => {
-      const point = {
-        lat: marker.dataset.lat,
-        lon: marker.dataset.lon,
-      };
-
-      if (index === 0) {
-        this.create(point, this.element.dataset.zoom);
-      }
-
-      this.addMarker(point, marker, index, singleMarker);
-    });
-
-    if (!singleMarker) {
-      this.markersTextListTarget.classList.add('govuk-list--number');
-      this.setMapBounds();
-    }
-  }
-
-  create(point, zoom) {
-    this.map = L.map('map', { tap: false }).setView(point, zoom);
+const map = {
+  create: (point, zoom) => {
+    L.Map.addInitHook('addHandler', 'gestureHandling', GestureHandling);
+    const m = L.map('map', { tap: false, gestureHandling: true }).setView(point, zoom);
 
     L.tileLayer(
       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       { attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' },
-    ).addTo(this.map);
-  }
+    ).addTo(m);
 
-  addMarker(point, marker, index, singleMarker) {
-    const originalLink = marker.querySelector('a');
+    return m;
+  },
+  createCluster: (iconCreateFunction) => L.markerClusterGroup({
+    iconCreateFunction: (cluster) => {
+      const properties = iconCreateFunction(cluster.getChildCount());
 
-    const leafletMarker = L.marker(point, {
-      icon: MapController.markerIcon(singleMarker ? '' : `<span aria-label="${originalLink.innerText}">${index + 1}</span>`),
+      return L.divIcon({
+        className: `map-component__map__cluster map-component__map__cluster--${properties.style}`,
+        iconSize: [properties.size, properties.size],
+        html: `<span>${properties.text}<span class="govuk-visually-hidden">vacancies</span></span>`,
+      });
+    },
+    maxClusterRadius: 40,
+  }),
+  createPolygon: ({ coordinates }) => L.polygon(coordinates.map((point) => point.reverse()), { color: '#0b0c0c', weight: 1, smoothFactor: 2 }),
+  createCircle: (radius, point) => L.circle(point, { radius, color: '#0b0c0c', weight: 1 }),
+  createMarker: (point, variant, popup) => {
+    const marker = L.marker(point, {
+      icon: map.markerIcon(popup.title, variant),
       riseOnHover: true,
     });
 
-    const addressBlock = marker.querySelector('.pop-up');
-    addressBlock.parentNode.removeChild(addressBlock);
-    addressBlock.hidden = false;
+    if (popup) {
+      marker.bindPopup(
+        popup.html,
+        { className: 'map-component__map__popup' },
+      );
 
-    leafletMarker.addTo(this.map).bindPopup(
-      addressBlock.outerHTML,
-      { className: 'map-component__map__popup' },
-    );
-
-    // use keydown event as leaflet doesnt recognise focus
-    leafletMarker.on('keydown', MapController.openMarkerPopup);
-
-    if (singleMarker) {
-      originalLink.remove();
-      leafletMarker.openPopup();
-    } else {
-      originalLink.replaceWith(originalLink.innerText);
+      marker.on('keydown', map.closeMarkerPopup);
     }
-  }
 
-  setMapBounds() {
-    this.map.fitBounds(
-      this.markerTargets.map((m) => ({ lat: m.dataset.lat, lon: m.dataset.lon })),
-    );
-  }
-
-  static markerIcon(html) {
-    return L.divIcon({
-      className: 'map-component__map__marker--default',
-      iconSize: [20, 20],
-      html,
-    });
-  }
-
-  static openMarkerPopup(e) {
-    e.target.openPopup();
-  }
+    return marker;
+  },
+  closeMarkerPopup: (e) => {
+    e.target.closePopup();
+  },
+  markerIcon: (title, variant) => L.divIcon({
+    className: `icon icon--map-${variant} map-component__map__marker`,
+    iconSize: [22, 30],
+    html: `<span class="govuk-visually-hidden">${title}</span>`,
+  }),
 };
 
-export default MapController;
+export default map;

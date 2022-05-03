@@ -49,6 +49,10 @@ class Search::VacancySearch
     [(page * per_page), total_count].min
   end
 
+  def all
+    @all ||= scope.map { |vacancy| VacancyPresenter.new(vacancy) }
+  end
+
   def vacancies
     @vacancies ||= scope.page(page).per(per_page)
   end
