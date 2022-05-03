@@ -12,7 +12,7 @@ class Organisation < ApplicationRecord
   scope :school_groups, -> { where(type: "SchoolGroup") }
   scope :trusts, -> { school_groups.where.not(uid: nil) }
   scope :local_authorities, -> { school_groups.where.not(local_authority_code: nil) }
-  scope :within_polygon, ->(location_polygon) { where("ST_Intersects(?, geopoint)", location_polygon.area.to_s) }
+  scope :within_polygon, ->(location_polygon) { where("ST_Intersects(?, geopoint)", location_polygon.area.to_s) if location_polygon }
 
   alias_attribute :data, :gias_data
 
