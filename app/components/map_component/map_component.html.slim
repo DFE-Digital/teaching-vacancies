@@ -1,8 +1,8 @@
 = tag.div(class: classes, **html_attributes.merge(data: { controller: "map", zoom: @zoom, point: @point, polygon: @polygon, radius: radius })) do
-  div data-map-target="markersTextList"
+  .markers data-map-target="markersTextList"
     - @markers.each do |marker|
       - if marker[:geopoint]
-        div data-map-target="marker" data-lat=marker[:geopoint].lat data-lon=marker[:geopoint].lon
+        .markers__marker data-map-target="marker" data-lat=marker[:geopoint].lat data-lon=marker[:geopoint].lon
           .pop-up hidden=true
             p.govuk-heading-s.marker-title class="govuk-!-margin-bottom-2"
               = marker[:heading]

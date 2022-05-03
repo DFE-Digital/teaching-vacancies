@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe MapComponent, type: :component do
-  let(:kwargs) { { markers: markers, zoom: 10 } }
+  let(:kwargs) { { markers: markers } }
   let(:markers) do
     [
       {
@@ -19,11 +19,6 @@ RSpec.describe MapComponent, type: :component do
   it_behaves_like "a component that accepts custom HTML attributes"
 
   context "renders map component" do
-    it "that has correct data attributes" do
-      component = page.find(".map-component")
-      expect(component["data-zoom"]).to eq("10")
-    end
-
     it "renders a list of markers" do
       expect(page).to have_content "marker_heading"
       expect(page).to have_content "marker_description"
