@@ -316,3 +316,6 @@ shared:
     - phase
     - key_stages
     - geolocation
+    - external_source
+    - external_reference
+    - external_advert_url
