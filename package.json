@@ -34,7 +34,8 @@
     "eslint": "^8.14.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.3",
-    "jest": "^27.5.1",
+    "jest": "^28.0.3",
+    "jest-environment-jsdom": "^28.0.2",
     "postcss": "^8.4.8",
     "stylelint": "^14.8.2",
     "stylelint-config-sass-guidelines": "^9.0.1",
@@ -67,7 +68,8 @@
     ],
     "moduleNameMapper": {
       "\\.scss$": "<rootDir>/app/frontend/src/__mocks__/style.js"
-    }
+    },
+    "testEnvironment": "jest-environment-jsdom"
   },
   "resolutions": {
     "serialize-javascript": "^3.1.0",
