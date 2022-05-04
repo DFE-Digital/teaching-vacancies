@@ -1,7 +1,12 @@
 module MapsHelper
-  def vacancy_map_markers(vacancies, polygon, coordinates, radius)
+  def vacancy_map_markers(vacancies, polygon, coordinates, radius) # rubocop:disable Metrics/MethodLength
+    organisation_ids = Organisation.in_vacancy_ids(vacancies.pluck(:id))
+                                   .within_polygon(polygon)
+                                   .within_area(coordinates, radius)
+                                   .pluck(:id)
+
     vacancies.map { |vacancy|
-      vacancy.organisations.within_polygon(polygon).within_area(coordinates, radius).map do |organisation|
+      vacancy.organisations.select { |organisation| organisation.id.in?(organisation_ids) }.map do |organisation|
         {
           geopoint: organisation.geopoint,
           heading: govuk_link_to(vacancy.job_title, job_path(vacancy)),
