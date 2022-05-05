@@ -1,6 +1,4 @@
 class SitemapController < ApplicationController
-  REDIRECTED_LOCATION_LANDING_PAGES = YAML.load_file("config/data/redirected_location_landing_pages.yml").freeze
-
   def show # rubocop:disable Metrics/AbcSize
     map = XmlSitemap::Map.new(DOMAIN, secure: !Rails.env.development?) do |m|
       # Live vacancies
@@ -14,7 +12,7 @@ class SitemapController < ApplicationController
       end
 
       # Location landing pages
-      (ALL_IMPORTED_LOCATIONS - REDIRECTED_LOCATION_LANDING_PAGES).each do |location|
+      (ALL_IMPORTED_LOCATIONS + REDIRECTED_LOCATION_LANDING_PAGES.values - REDIRECTED_LOCATION_LANDING_PAGES.keys).map(&:parameterize).uniq.each do |location|
         m.add location_landing_page_path(location.parameterize), period: "hourly"
       end
 

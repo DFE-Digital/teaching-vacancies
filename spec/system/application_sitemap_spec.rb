@@ -9,7 +9,7 @@ RSpec.describe "Application sitemap" do
       document = Nokogiri::XML::Document.parse(body)
       nodes = document.search("url")
 
-      expect(nodes.count).to eq(269)
+      expect(nodes.count).to eq(268)
       expect(nodes.search("loc[text()='#{root_url(protocol: 'https')}']").text)
         .to eq(root_url(protocol: "https"))
 
@@ -22,7 +22,7 @@ RSpec.describe "Application sitemap" do
         expect(nodes.search("loc:contains('#{job_path(expired_job, protocol: 'https')}')").text).to be_blank
       end
 
-      (ALL_IMPORTED_LOCATIONS - SitemapController::REDIRECTED_LOCATION_LANDING_PAGES).each do |location|
+      (ALL_IMPORTED_LOCATIONS + REDIRECTED_LOCATION_LANDING_PAGES.values - REDIRECTED_LOCATION_LANDING_PAGES.keys).map(&:parameterize).uniq.each do |location|
         url = location_landing_page_url(location.parameterize, protocol: "https")
         expect(nodes.search("loc:contains('#{url}')").map(&:text)).to include(url)
       end
