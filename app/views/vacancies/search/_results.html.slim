@@ -13,7 +13,7 @@ ul.search-results role="list"
         dd = organisation_type_value(vacancy)
       dl
         dt class="govuk-!-font-weight-bold" = t("jobs.working_patterns")
-        dd = vacancy.readable_working_patterns
+        dd = working_patterns(vacancy)
       dl
         dt class="govuk-!-font-weight-bold" = t("jobs.expires_at")
         dd = format_time_to_datetime_at(vacancy.expires_at)

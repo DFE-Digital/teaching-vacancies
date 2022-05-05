@@ -50,7 +50,7 @@ class Search::VacancySearch
   end
 
   def all
-    @all ||= scope.map { |vacancy| VacancyPresenter.new(vacancy) }
+    @all ||= scope
   end
 
   def vacancies

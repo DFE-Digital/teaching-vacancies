@@ -14,7 +14,7 @@ module MapsHelper
           details: [
             { label: t("jobs.salary"), value: salary_value(vacancy) },
             { label: organisation_type_label(vacancy), value: organisation_type(organisation) },
-            { label: t("jobs.working_patterns"), value: vacancy.readable_working_patterns },
+            { label: t("jobs.working_patterns"), value: working_patterns(vacancy) },
             { label: t("jobs.expires_at"), value: format_time_to_datetime_at(vacancy.expires_at) },
           ],
         }
