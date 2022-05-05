@@ -141,4 +141,10 @@ module VacanciesHelper
   def vacancy_select_a_job_to_copy_hint(vacancy)
     safe_join [tag.div(t(".closing_date", date: vacancy.expires_at)), tag.div(vacancy.organisation_name, class: "govuk-!-margin-top-1")]
   end
+
+  def working_patterns(vacancy)
+    vacancy.working_patterns.map { |working_pattern|
+      Vacancy.human_attribute_name("working_patterns.#{working_pattern}").downcase
+    }.join(", ").capitalize
+  end
 end

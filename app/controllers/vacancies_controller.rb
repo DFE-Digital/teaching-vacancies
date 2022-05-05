@@ -8,7 +8,7 @@ class VacanciesController < ApplicationController
       sort: search_form.sort,
       page: params[:page],
     )
-    @vacancies = @vacancies_search.vacancies.map { |vacancy| VacancyPresenter.new(vacancy) }
+    @vacancies = @vacancies_search.vacancies
   end
 
   def show
