@@ -47,6 +47,9 @@ GEM
     activerecord (6.1.4.7)
       activemodel (= 6.1.4.7)
       activesupport (= 6.1.4.7)
+    activerecord-analyze (0.10.1)
+      activerecord (>= 5.1.0)
+      railties (>= 5.1.0)
     activerecord-import (1.4.0)
       activerecord (>= 4.2)
     activerecord-postgis-adapter (7.1.1)
@@ -672,6 +675,7 @@ DEPENDENCIES
   activejob (~> 6.1.4.1)
   activemodel (~> 6.1.4.1)
   activerecord (~> 6.1.4.1)
+  activerecord-analyze
   activerecord-import
   activerecord-postgis-adapter
   activerecord-session_store

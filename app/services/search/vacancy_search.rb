@@ -69,6 +69,20 @@ class Search::VacancySearch
     scope = scope.search_by_filter(search_criteria) if search_criteria.any?
     scope = scope.search_by_full_text(keyword) if keyword.present?
     scope = scope.reorder(sort.by => sort.order) if sort&.by_db_column?
+
+    # TODO: This is temporary to identify performance bottlenecks
+    if location == "lincolnshire"
+      Rails.logger.info(scope.analyze(
+                          format: :text,
+                          verbose: true,
+                          costs: true,
+                          settings: true,
+                          buffers: true,
+                          timing: true,
+                          summary: true,
+                        ))
+    end
+
     scope
   end
 end
