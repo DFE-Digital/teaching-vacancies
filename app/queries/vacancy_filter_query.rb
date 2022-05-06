@@ -15,7 +15,7 @@ class VacancyFilterQuery < ApplicationQuery
     # Job alert specific filters
     built_scope = built_scope.where(publish_on: (from_date..)) if from_date
     built_scope = built_scope.where(publish_on: (..to_date)) if to_date
-    built_scope = built_scope.where("subjects && ARRAY[?]::varchar[]", filters[:subjects]) if filters[:subjects].present?
+    built_scope = built_scope.where("vacancies.subjects && ARRAY[?]::varchar[]", filters[:subjects]) if filters[:subjects].present?
 
     # General filters
     main_job_roles = extract_main_job_roles(filters[:job_roles])
@@ -26,7 +26,7 @@ class VacancyFilterQuery < ApplicationQuery
     working_patterns = fix_legacy_working_patterns(filters[:working_patterns])
     built_scope = built_scope.with_any_of_working_patterns(working_patterns) if working_patterns.present?
 
-    built_scope = built_scope.where("readable_phases && ARRAY[?]::varchar[]", filters[:phases]) if filters[:phases].present?
+    built_scope = built_scope.where("vacancies.readable_phases && ARRAY[?]::varchar[]", filters[:phases]) if filters[:phases].present?
 
     built_scope
   end
