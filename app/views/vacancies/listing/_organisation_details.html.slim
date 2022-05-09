@@ -23,4 +23,4 @@ section#school-overview
 
   section#school-location
     h3.govuk-heading-l.heading--border-bottom = t("organisations.locations.#{vacancy.job_location}")
-    = map(markers: organisation_map_markers(vacancy))
+    = map(markers: organisation_map_markers(vacancy), marker_type: "organisation")

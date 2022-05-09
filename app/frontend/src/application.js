@@ -7,7 +7,7 @@ import { Application } from '@hotwired/stimulus';
 
 // view components
 import FiltersController from '../../components/filters_component/filters_component';
-import MapController from '../../components/map_component/controller';
+import MapController from '../../components/map_component/map_component';
 
 // js components
 import AutocompleteController from './components/autocomplete/autocomplete';

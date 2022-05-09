@@ -21,7 +21,7 @@ const map = {
       return L.divIcon({
         className: `map-component__map__cluster map-component__map__cluster--${properties.style}`,
         iconSize: [properties.size, properties.size],
-        html: `<span>${properties.text}<span class="govuk-visually-hidden">vacancies</span></span>`,
+        html: `<span>${properties.text}<span class="govuk-visually-hidden"> vacancies</span></span>`,
       });
     },
     maxClusterRadius: 40,
@@ -29,30 +29,20 @@ const map = {
   createPolygon: ({ coordinates }) => L.polygon(coordinates.map((point) => point.reverse()), { color: '#0b0c0c', weight: 1, smoothFactor: 2 }),
   createCircle: (radius, point) => L.circle(point, { radius, color: '#0b0c0c', weight: 1 }),
   layerBounds: (layer) => layer.getBounds(),
-  createMarker: (point, variant, popup) => {
-    const marker = L.marker(point, {
-      icon: map.markerIcon(popup.title, variant),
-      riseOnHover: true,
-    });
+  createMarker: (point, variant, popupHandler) => {
+    const marker = L.marker(point, { icon: map.markerIcon(variant) });
 
-    if (popup) {
-      marker.bindPopup(
-        popup.html,
-        { className: 'map-component__map__popup' },
-      );
-
-      marker.on('keydown', map.closeMarkerPopup);
+    if (popupHandler) {
+      marker.bindPopup('', { className: 'map-component__map__popup' });
+      marker.on('keydown', (e) => e.target.closePopup());
+      marker.on('popupopen', () => popupHandler(marker));
     }
 
     return marker;
   },
-  closeMarkerPopup: (e) => {
-    e.target.closePopup();
-  },
-  markerIcon: (title, variant) => L.divIcon({
+  markerIcon: (variant) => L.divIcon({
     className: `icon icon--map-${variant} map-component__map__marker`,
     iconSize: [22, 30],
-    html: `<span class="govuk-visually-hidden">${title}</span>`,
   }),
 };
 
