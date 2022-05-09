@@ -182,10 +182,7 @@ Rails.application.routes.draw do
     scope "v:api_version", api_version: /1/ do
       resources :jobs, only: %i[index show], controller: "vacancies"
       get "/location_suggestion(/:location)", to: "location_suggestion#show", as: :location_suggestion
-      namespace :map do
-        resources :locations, only: %i[show]
-        resources :vacancies, only: %i[show]
-      end
+      resources :markers, only: %i[show]
     end
 
     resources :events, only: %i[create]
