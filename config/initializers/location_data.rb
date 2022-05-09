@@ -43,3 +43,5 @@ CITIES = (ons_cities.map(&:first) + ons_region_cities + ons_unitary_authority_ci
   # Reject duplicates caused by mapping locations, e.g. use Telford & Wrekin instead of Telford as location facets, rather than both.
   mapped_locations_from_file.include?(city.downcase)
 end
+
+REDIRECTED_LOCATION_LANDING_PAGES = YAML.load_file("config/data/redirected_location_landing_pages.yml").freeze

@@ -10,6 +10,8 @@ module LandingPagesHelper
 
   def linked_locations(vacancy)
     vacancy.location.last(2).map(&:parameterize).filter_map do |location|
+      location = REDIRECTED_LOCATION_LANDING_PAGES[location] || location
+
       next unless location && LocationLandingPage.exists?(location)
 
       govuk_link_to(LocationLandingPage[location].name, location_landing_page_path(LocationLandingPage[location].location))
