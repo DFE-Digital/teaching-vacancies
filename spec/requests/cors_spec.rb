@@ -29,6 +29,34 @@ RSpec.describe "CORS" do
     end
   end
 
+  describe "/api/v1/markers/:id.json" do
+    let(:organisation) { create(:school) }
+    let(:vacancy) { create(:vacancy, organisations: [organisation]) }
+    let(:params) { { id: vacancy.id, parent_id: organisation.id, format: :json, api_version: 1 } }
+
+    before do
+      get api_marker_path(params), headers: headers
+    end
+
+    context "when domain is defined in configuration" do
+      let(:headers) { { HTTP_ORIGIN: Rails.application.config.allowed_cors_origin.call } }
+
+      it "allows the request" do
+        expect(response.headers["X-Rack-CORS"]).to eq("hit")
+        expect(response.headers["Access-Control-Allow-Origin"]).to eq(Rails.application.config.allowed_cors_origin.call)
+      end
+    end
+
+    context "when domain is not defined in configuration" do
+      let(:headers) { { HTTP_ORIGIN: "https://www.test.com" } }
+
+      it "does not allow the request" do
+        expect(response.headers["X-Rack-CORS"]).to include("miss")
+        expect(response.headers["Access-Control-Allow-Origin"]).to be_blank
+      end
+    end
+  end
+
   describe "/api/v1/jobs.json" do
     let(:params) { { api_version: 1, format: "json" } }
     let(:headers) { { HTTP_ORIGIN: "https://www.test.com" } }

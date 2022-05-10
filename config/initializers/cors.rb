@@ -16,5 +16,9 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors, debug: Rails.en
     resource "/api/v1/location_suggestion/*",
              headers: :any,
              methods: :get
+
+    resource "/api/v1/markers/*",
+             headers: :any,
+             methods: :get
   end
 end
