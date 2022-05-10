@@ -101,15 +101,15 @@ en:
                 expires: 90 days
                 name: _gcl_aw, _gcl_dc & _gcl_au
                 purpose: Used to distinguish anonymous users
-              sixth:
+              fourth:
                 expires: 13 months
                 name: IDE, ANID, DSID, FLC, AID, TAID & exchange_uid
                 purpose: Used to distinguish which adverts for Teaching Vacancies users have seen and clicked on
-              seventh:
+              fifth:
                 expires: 10 minutes
                 name: _gat_UA_11508887-2
                 purpose: Used to regulate how quickly data is passed to Google Analytics
-              eighth:
+              sixth:
                 expires: 10 minutes
                 name: _gat_UA_145652997-2
                 purpose: Used to regulate how quickly data is passed to Google Analytics
