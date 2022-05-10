@@ -113,7 +113,6 @@ en:
                 expires: 10 minutes
                 name: _gat_UA_145652997-2
                 purpose: Used to regulate how quickly data is passed to Google Analytics
-                
           heading: How we use cookies
         service:
           feedback: Your feedback
