@@ -35,7 +35,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
 
     context "when the confirmation token is invalid" do
       context "when the confirmation period has expired" do
-        before { travel_to 3.hours.from_now }
+        before { travel_to 3.days.from_now }
 
         context "when the confirmation email is resent" do
           it "resends confirmation email and redirects to check your email page" do
