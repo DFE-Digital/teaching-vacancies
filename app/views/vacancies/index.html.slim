@@ -12,6 +12,7 @@
       / When the user refines their search, this helps us figure out if they've changed the
       / keyword(s), or just adjusted the filters
       = f.hidden_field :previous_keyword, value: @vacancies_search.keyword
+      = f.hidden_field :show_map, value: params[:show_map]
 
     .govuk-grid-column-two-thirds-at-desktop
       = render "vacancies/search/fields_and_button", f: f, form: @form
@@ -19,10 +20,10 @@
       = render "vacancies/search/sort_and_stats", form: @form, vacancies_search: @vacancies_search, vacancies: @vacancies
       - if @vacancies_search.location
         = tabs do |tabs|
-          - tabs.navigation_item text: "list view", link: url_for(search_params), active: !params[:map]
-          - tabs.navigation_item text: "map view", link: url_for(search_params.merge(map: true)), active: params[:map]
+          - tabs.navigation_item text: "list view", link: url_for(search_params), active: !params[:show_map]
+          - tabs.navigation_item text: "map view", link: url_for(search_params.merge(show_map: true)), active: params[:show_map]
 
-        - if params[:map]
+        - if params[:show_map]
           = map(markers: vacancy_map_markers(@vacancies_search.all,
                                             @vacancies_search.location_search.polygon,
                                             @vacancies_search.location_search.point_coordinates,
@@ -33,12 +34,12 @@
 
       #search-results
         - if @vacancies.any?
-          - unless params[:map]
+          - unless params[:show_map]
             = render "vacancies/search/results", vacancies: @vacancies
         - elsif @vacancies_search.active_criteria?
           = render "vacancies/search/no_results_suggestions", vacancies_search: @vacancies_search
         - else
           = render "vacancies/search/no_results"
-      - unless params[:map]
+      - unless params[:show_map]
         = render "vacancies/search/pagination", vacancies_search: @vacancies_search
       = job_alert_link(vacancies_search: @vacancies_search, count: @vacancies.count)
