@@ -33,11 +33,12 @@ class Search::LocationBuilder
     location_filter[:radius]
   end
 
-  def polygon_coordinates
-    return unless polygon
-    return polygon.area.coordinates if polygon.area.instance_of?(RGeo::Geographic::SphericalPolygonImpl)
+  def geojson_point
+    RGeo::GeoJSON.encode(location_filter[:point_coordinates])
+  end
 
-    polygon.area.coordinates.flatten(1) # Flatten one level in case of MultiPolygon
+  def geojson_polygon
+    RGeo::GeoJSON.encode(polygon.area)
   end
 
   private

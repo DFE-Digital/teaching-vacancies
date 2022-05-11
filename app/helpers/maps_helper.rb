@@ -10,7 +10,7 @@ module MapsHelper
         {
           id: vacancy.id,
           parent_id: organisation.id,
-          geopoint: organisation.geopoint,
+          geopoint: RGeo::GeoJSON.encode(organisation.geopoint),
         }
       end
     }.flatten
@@ -21,7 +21,7 @@ module MapsHelper
       {
         id: vacancy.id,
         parent_id: organisation.id,
-        geopoint: organisation.geopoint,
+        geopoint: RGeo::GeoJSON.encode(organisation.geopoint),
       }
     end
   end

@@ -7,7 +7,7 @@ RSpec.describe MapComponent, type: :component do
       {
         id: "id",
         parent_id: "parent",
-        geopoint: double("geopoint", lat: 1, lon: 2),
+        geopoint: "GeoJSONPoint",
       },
     ]
   end
@@ -19,7 +19,7 @@ RSpec.describe MapComponent, type: :component do
 
   context "renders map component" do
     it "renders a list of markers" do
-      expect(page).to have_selector("div[data-map-target='marker'][data-lat=1][data-lon=2]")
+      expect(page).to have_selector("div[data-map-target='marker'][data-point=GeoJSONPoint]")
       expect(page).to have_selector("div[data-id='id']")
       expect(page).to have_selector("div[data-parent-id='parent']")
     end
