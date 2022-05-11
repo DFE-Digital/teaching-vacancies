@@ -7,7 +7,7 @@ namespace :db do
   desc "Generates 1000 random vacancies for testing purposes"
   task create_random_vacancies: :environment do
     1000.times do
-      school = School.order(Arel.sql("RANDOM()")).first
+      school = School.not_closed.order(Arel.sql("RANDOM()")).first
       FactoryBot.create(:vacancy, organisations: [school])
     end
   end
