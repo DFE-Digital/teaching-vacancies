@@ -1,0 +1,15 @@
+- content_for(:page_title_prefix) { "Sign In error" }
+
+h1.govuk-heading-xl Sorry, we cannot sign you in
+
+p.govuk-body You are trying to sign in to Teaching Vacancies on behalf of #{@org_name}, which is an organisation of type "#{@org_type}". This type of organisation cannot use Teaching Vacancies.
+
+p.govuk-body To use Teaching Vacancies, you must sign in on behalf of one of the following types of organisation on DfE Sign In:
+
+ul.govuk-list.govuk-list--bullet
+  li Single establishment (for example, a school or a single-academy trust)
+  li Multi-academy trust
+  li Local authority
+
+p.govuk-body
+  | If you are not sure why you are seeing this error, you can #{link_to("report a problem", new_support_request_path)}.

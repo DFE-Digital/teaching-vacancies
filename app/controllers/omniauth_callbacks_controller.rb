@@ -1,6 +1,9 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   skip_before_action :verify_authenticity_token, only: :dfe
 
+  class OrganisationCategoryNotFound < StandardError; end
+  rescue_from OrganisationCategoryNotFound, with: :unknown_organisation_category
+
   def dfe
     authorisation = Authorisation.new(organisation_id: organisation_id, user_id: user_id)
 
@@ -21,6 +24,13 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def failure
     report_omniauth_error
     redirect_to new_publisher_session_path, warning: t(".message")
+  end
+
+  def unknown_organisation_category
+    @org_name = auth_hash.dig("extra", "raw_info", "organisation", "name")
+    @org_type = auth_hash.dig("extra", "raw_info", "organisation", "category", "name")
+
+    render "unknown_organisation_category", status: :forbidden
   end
 
   private
@@ -44,12 +54,23 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def organisation_from_request
     # https://github.com/DFE-Digital/login.dfe.public-api#how-do-ids-map-to-categories-and-types
     case (cat_id = auth_hash.dig("extra", "raw_info", "organisation", "category", "id"))
-    when "001"
+    when "001" # single establishment
       School.find_by!(urn: auth_hash.dig("extra", "raw_info", "organisation", "urn"))
-    when "002"
+    when "002" # local authority
       SchoolGroup.find_by!(local_authority_code: auth_hash.dig("extra", "raw_info", "organisation", "establishmentNumber"))
-    when "010"
+    when "010" # multi-academy trust
       SchoolGroup.find_by!(uid: auth_hash.dig("extra", "raw_info", "organisation", "uid"))
+    when "013" # single-academy trust
+      # If the user is trying to sign in as a single-academy trust, try and find the school
+      # contained within the trust and use that instead
+      uid = auth_hash.dig("extra", "raw_info", "organisation", "uid")
+      contained_school = School.find_by(
+        "gias_data->>'TrustSchoolFlag (code)' = ? AND gias_data->>'Trusts (code)' = ?",
+        "5", # "Supported by a single-academy trust"
+        uid,
+      )
+
+      contained_school || raise("Could not find a school contained in SAT (UID #{uid})")
     else
       raise OrganisationCategoryNotFound, "Organisation category ID `#{cat_id}`"
     end
@@ -136,6 +157,4 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       Sentry.capture_message("User failed to sign in with DfE Sign In")
     end
   end
-
-  class OrganisationCategoryNotFound < StandardError; end
 end
