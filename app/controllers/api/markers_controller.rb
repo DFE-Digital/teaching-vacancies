@@ -10,6 +10,7 @@ class Api::MarkersController < Api::ApplicationController
     render json: {
       heading_text: heading_text,
       heading_url: heading_url,
+      anonymised_id: StringAnonymiser.new(vacancy.id).to_s,
       address: full_address(organisation),
       description: description,
       details: details,
