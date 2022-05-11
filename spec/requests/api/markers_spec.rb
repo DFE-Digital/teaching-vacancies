@@ -47,6 +47,7 @@ RSpec.describe "Api::Markers" do
         subject
         expect(json).to include(heading_text: organisation.name)
         expect(json).to include(heading_url: organisation.url)
+        expect(json).to include(anonymised_id: StringAnonymiser.new(vacancy.id).to_s)
         expect(json).to include(address: full_address(organisation))
         expect(json).to include(description: organisation_type(organisation))
         expect(json).to include(details: nil)
