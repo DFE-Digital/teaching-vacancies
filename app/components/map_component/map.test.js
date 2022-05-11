@@ -106,7 +106,6 @@ describe('when map is initialised with a polygon', () => {
     expect(spies.createPolygon).toHaveBeenCalledWith({ coordinates: [[0, 0], [0, 1], [1, 1], [1, 0]] });
     expect(spies.addMarkerToCluster).not.toHaveBeenCalled();
     expect(spies.addToMap).toHaveBeenCalledTimes(2);
-    expect(spies.layerBounds).toHaveBeenCalled();
     expect(spies.setMapBounds).toHaveBeenCalledTimes(1);
   });
 });
