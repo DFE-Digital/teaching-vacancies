@@ -18,7 +18,8 @@
     .govuk-grid-column-two-thirds-at-desktop
       = render "vacancies/search/fields_and_button", f: f, form: @form
       = render "vacancies/search/open_filters_button", form: @form
-      = render "vacancies/search/sort_and_stats", form: @form, vacancies_search: @vacancies_search, vacancies: @vacancies
+      - if params[:show_map].blank? || !@vacancies_search.location
+        = render "vacancies/search/sort_and_stats", form: @form, vacancies_search: @vacancies_search, vacancies: @vacancies
       - if @vacancies_search.location
         = tabs do |tabs|
           - tabs.navigation_item text: "list view", link: url_for(search_params), active: !params[:show_map]
@@ -35,7 +36,7 @@
 
       #search-results
         - if @vacancies.any?
-          - unless params[:show_map]
+          - if params[:show_map].blank? || !@vacancies_search.location
             = render "vacancies/search/results", vacancies: @vacancies
         - elsif @vacancies_search.active_criteria?
           = render "vacancies/search/no_results_suggestions", vacancies_search: @vacancies_search
