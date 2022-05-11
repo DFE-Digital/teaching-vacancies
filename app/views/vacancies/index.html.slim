@@ -12,7 +12,6 @@
       / When the user refines their search, this helps us figure out if they've changed the
       / keyword(s), or just adjusted the filters
       = f.hidden_field :previous_keyword, value: @vacancies_search.keyword
-      = f.hidden_field :map, value: params[:map]
 
     .govuk-grid-column-two-thirds-at-desktop
       = render "vacancies/search/fields_and_button", f: f, form: @form
@@ -34,7 +33,7 @@
 
       #search-results
         - if @vacancies.any?
-          - if !params[:map]
+          - unless params[:map]
             = render "vacancies/search/results", vacancies: @vacancies
         - elsif @vacancies_search.active_criteria?
           = render "vacancies/search/no_results_suggestions", vacancies_search: @vacancies_search
