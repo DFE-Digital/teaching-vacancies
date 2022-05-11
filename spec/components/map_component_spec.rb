@@ -5,10 +5,9 @@ RSpec.describe MapComponent, type: :component do
   let(:markers) do
     [
       {
+        id: "id",
+        parent_id: "parent",
         geopoint: double("geopoint", lat: 1, lon: 2),
-        heading: "marker_heading",
-        description: "marker_description",
-        address: "marker_address",
       },
     ]
   end
@@ -20,10 +19,9 @@ RSpec.describe MapComponent, type: :component do
 
   context "renders map component" do
     it "renders a list of markers" do
-      expect(page).to have_content "marker_heading"
-      expect(page).to have_content "marker_description"
-      expect(page).to have_content "marker_address"
       expect(page).to have_selector("div[data-map-target='marker'][data-lat=1][data-lon=2]")
+      expect(page).to have_selector("div[data-id='id']")
+      expect(page).to have_selector("div[data-parent-id='parent']")
     end
 
     it "renders a map container" do

@@ -1,9 +1,11 @@
 import { Controller } from '@hotwired/stimulus';
-import map from './map';
+import map from './leaflet';
+import MarkerData from './marker_service';
+import popup from './marker_popup';
 import './map.scss';
 
 const MapController = class extends Controller {
-  static targets = ['markersTextList', 'marker'];
+  static targets = ['marker'];
 
   static DEFAULT_ZOOM = 13;
 
@@ -22,9 +24,9 @@ const MapController = class extends Controller {
         this.map = map.create(point, MapController.DEFAULT_ZOOM);
 
         if (this.element.dataset.radius && this.element.dataset.point) {
-          this.addToMap(map.createMarker(JSON.parse(this.element.dataset.point), 'location', {
-            html: '<span class="govuk-body">Search location<span>',
-          }));
+          const locationMarker = map.createMarker(JSON.parse(this.element.dataset.point), 'location');
+
+          this.addToMap(locationMarker);
 
           const circle = map.createCircle(this.element.dataset.radius, JSON.parse(this.element.dataset.point));
 
@@ -33,7 +35,11 @@ const MapController = class extends Controller {
         }
       }
 
-      const marker = map.createMarker(point, 'pin', MapController.getTargetPopup(markerTarget));
+      const marker = map.createMarker(point, 'pin', (m) => {
+        MarkerData.getMetaData(markerTarget.dataset.id, markerTarget.dataset.parentId, markerTarget.dataset.markerType).then((markerData) => {
+          m.setPopupContent(popup(markerData));
+        });
+      });
 
       if (this.markerTargets.length > 1) {
         this.addMarkerToCluster(marker);
@@ -91,17 +97,6 @@ const MapController = class extends Controller {
   setMapBounds(bounds) {
     this.bounds = bounds;
     this.map.fitBounds(bounds);
-  }
-
-  static getTargetPopup(target) {
-    const popupHTML = target.querySelector('.pop-up');
-    popupHTML.parentNode.removeChild(popupHTML);
-    popupHTML.hidden = false;
-
-    return {
-      title: popupHTML.querySelector('.marker-title').textContent,
-      html: popupHTML.outerHTML,
-    };
   }
 };
 

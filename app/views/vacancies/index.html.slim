@@ -12,7 +12,8 @@
                                      @vacancies_search.location_search.radius_in_meters),
         polygon: @vacancies_search.location_search.polygon_coordinates,
         point: @vacancies_search.location_search.point_coordinates,
-        radius: @vacancies_search.location_search.radius_in_meters)
+        radius: @vacancies_search.location_search.radius_in_meters,
+        marker_type: "vacancy")
 
 = form_for @form, as: "", url: jobs_path, method: :get, html: { data: { controller: "form" }, role: "search" } do |f|
   .govuk-grid-row
