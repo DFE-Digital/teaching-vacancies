@@ -30,7 +30,7 @@
     "@babel/eslint-parser": "^7.17.0",
     "backstopjs": "^6.0.2",
     "concurrently": "^7.1.0",
-    "dotenv": "^16.0.0",
+    "dotenv": "^16.0.1",
     "eslint": "^8.14.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.3",
