@@ -36,6 +36,7 @@ class VacanciesController < ApplicationController
     params.permit(:keyword, :location, :radius, :subject, :sort_by,
                   job_role: [], job_roles: [], subjects: [], phases: [], working_patterns: [])
   end
+  helper_method :search_params
 
   # Determines additional filters to apply if the user's keyword(s) match certain phrases
   # (to improve quality of results)
