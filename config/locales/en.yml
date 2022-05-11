@@ -44,24 +44,24 @@ en:
         view: View cookies
       heading: Cookies on Teaching Vacancies
     form:
-      legend: Do you want to accept Google Analytics cookies?
+      legend: Do you want to accept analytics cookies?
       options:
-        consent: Yes, opt-in to Google Analytics cookies
+        consent: Yes, opt-in to analytics cookies
         no_consent: No, do not use cookies to track my website usage
     new:
       body:
         anonymity: >-
-          We don't allow Google to use or share our analytics data. We anonymise any personally identifiable data,
+          We anonymise any personally identifiable data,
           like your IP address or your postcode before we share it with Google.
         details:
-          intro: 'Google Analytics stores information about:'
+          intro: 'We store information about:'
           list:
             - the pages you visit on Teaching Vacancies
             - how long you spend on each page
             - how you got to the site
             - what you click on while you're visiting the site
         explanation: >-
-          We use Google Analytics software to collect information about how you use Teaching Vacancies.
+          We use analytics software to collect information about how you use Teaching Vacancies and/or whether advertising provided by Google helped you to find the site.
           We do this to make sure the site is meeting the needs of our users and to help us make improvements
           based on those needs.
         usage:
@@ -82,8 +82,8 @@ en:
                 name: _teachingvacancies_session
                 purpose: Stores encrypted information about your time on the website
           google_analytics:
-            heading: Measuring website usage (Google Analytics)
-            intro: 'Google Analytics sets the following cookies:'
+            heading: Measuring website usage (analytics)
+            intro: 'Google sets the following cookies:'
             table:
               header:
                 expires: Expires
@@ -98,10 +98,18 @@ en:
                 name: _gid
                 purpose: Used to distinguish anonymous users
               third:
+                expires: 90 days
+                name: _gcl_aw, _gcl_dc & _gcl_au
+                purpose: Used to distinguish anonymous users
+              fourth:
+                expires: 13 months
+                name: IDE, ANID, DSID, FLC, AID, TAID & exchange_uid
+                purpose: Used to distinguish which adverts for Teaching Vacancies users have seen and clicked on
+              fifth:
                 expires: 10 minutes
                 name: _gat_UA_11508887-2
                 purpose: Used to regulate how quickly data is passed to Google Analytics
-              fourth:
+              sixth:
                 expires: 10 minutes
                 name: _gat_UA_145652997-2
                 purpose: Used to regulate how quickly data is passed to Google Analytics
