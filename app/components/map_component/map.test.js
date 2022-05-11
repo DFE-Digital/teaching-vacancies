@@ -89,19 +89,20 @@ describe('when map is initialised with one item', () => {
   });
 });
 
-describe('when map is initialised with a polygon', () => {
+describe('when map is initialised with polygons', () => {
   beforeEach(() => {
     document.getElementById('markers').insertAdjacentHTML('afterbegin', getMarkerHTML(1));
-    document.getElementById('map-component').setAttribute('data-polygon', '[[[0, 0],[0, 1],[1, 1],[1, 0]]]');
+    document.getElementById('map-component').setAttribute('data-polygon', '[[[0, 0],[0, 2],[2, 2]], [[0, 0],[0, 1],[1, 1]]]');
     jest.resetAllMocks();
     initialiseStimulus();
   });
 
-  test('a map object is created with one marker and a polygon', () => {
+  test('a map object is created with one marker and polygons', () => {
     expect(spies.createMarker).toHaveBeenCalledTimes(1);
-    expect(spies.createPolygon).toHaveBeenCalledWith({ coordinates: [[0, 0], [0, 1], [1, 1], [1, 0]] });
+    expect(spies.createPolygon).toHaveBeenNthCalledWith(1, { coordinates: [[0, 0], [0, 2], [2, 2]] });
+    expect(spies.createPolygon).toHaveBeenNthCalledWith(2, { coordinates: [[0, 0], [0, 1], [1, 1]] });
     expect(spies.addMarkerToCluster).not.toHaveBeenCalled();
-    expect(spies.addToMap).toHaveBeenCalledTimes(2);
+    expect(spies.addToMap).toHaveBeenCalledTimes(3);
     expect(spies.setMapBounds).toHaveBeenCalledTimes(1);
   });
 });
