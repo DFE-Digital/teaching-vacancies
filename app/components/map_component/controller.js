@@ -44,10 +44,14 @@ const MapController = class extends Controller {
     });
 
     if (this.element.dataset.polygon) {
-      const [data] = JSON.parse(this.element.dataset.polygon);
-      const polygon = map.createPolygon({ coordinates: data });
-      this.setMapBounds(map.layerBounds(polygon));
-      this.addToMap(polygon);
+      const coordinates = [];
+      JSON.parse(this.element.dataset.polygon).forEach((data) => {
+        coordinates.push(data);
+        const polygon = map.createPolygon({ coordinates: data });
+        this.addToMap(polygon);
+      });
+
+      this.setMapBounds(coordinates);
     }
 
     this.addToMap(this.clusterGroup);
