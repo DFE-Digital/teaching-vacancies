@@ -28,7 +28,7 @@ RSpec.describe UnitedLearningVacancySource do
       expect(vacancy.subjects).to eq(%w[Geography])
       expect(vacancy.working_patterns).to eq(%w[full_time])
       expect(vacancy.contract_type).to eq("permanent")
-      expect(vacancy.phase).to eq("secondary")
+      expect(vacancy.phase).to eq("multiple_phases")
 
       expect(vacancy.job_location).to eq("at_one_school")
       expect(vacancy.organisations.first).to eq(school)
