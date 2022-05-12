@@ -64,7 +64,9 @@ class UnitedLearningVacancySource
       subjects: item["Subjects"].presence&.split(","),
       working_patterns: item["Working_patterns"].presence&.split(","),
       contract_type: item["Contract_type"].presence,
-      phase: item["Phase"].presence&.downcase,
+      # TODO: This is coming through unexpectedly in the feed - the parameterize call can be removed
+      #       when the correct values are coming through
+      phase: item["Phase"].presence&.parameterize(separator: "_"),
 
       # TODO: What about central office/multiple school vacancies?
       job_location: :at_one_school,
