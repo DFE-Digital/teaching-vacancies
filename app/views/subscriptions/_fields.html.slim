@@ -3,7 +3,7 @@
 = render "vacancies/search/current_location", target: "jobseekers-subscription-form-location-field"
 = render "vacancies/search/radius", f: f, wide: false
 
-.divider-bottom class="govuk-!-margin-top-6 govuk-!-margin-bottom-4"
+.divider-bottom class="govuk-!-margin-top-6"
 
 .plain-styling
   = filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
@@ -25,7 +25,7 @@
       - filters_component.group key: "education_phase", component: f.govuk_collection_check_boxes(:phases, @form.phase_options, :first, :last, small: false, legend: { text: t("jobs.filters.phases") }, hint: nil)
       - filters_component.group key: "working_patterns", component: f.govuk_collection_check_boxes(:working_patterns, @form.working_pattern_options, :first, :last, small: false, legend: { text: t("jobs.filters.working_patterns") }, hint: nil)
 
-.divider-bottom class="govuk-!-margin-top-4 govuk-!-margin-bottom-6"
+.divider-bottom class="govuk-!-margin-top-4"
 
 - if jobseeker_signed_in?
   = f.hidden_field :email, value: current_jobseeker.email

@@ -2,6 +2,12 @@ import 'leaflet';
 import 'leaflet.markercluster/dist/leaflet.markercluster';
 import { GestureHandling } from 'leaflet-gesture-handling';
 
+const SHAPE_STYLES = {
+  color: '#505a5f',
+  weight: 2,
+  opacity: 0.4,
+};
+
 const map = {
   create: (point, zoom) => {
     L.Map.addInitHook('addHandler', 'gestureHandling', GestureHandling);
@@ -14,9 +20,9 @@ const map = {
 
     return m;
   },
-  createCluster: (iconCreateFunction) => L.markerClusterGroup({
+  createCluster: (clusterIcon) => L.markerClusterGroup({
     iconCreateFunction: (cluster) => {
-      const properties = iconCreateFunction(cluster.getChildCount());
+      const properties = clusterIcon(cluster.getChildCount());
 
       return L.divIcon({
         className: `map-component__map__cluster map-component__map__cluster--${properties.style}`,
@@ -26,8 +32,8 @@ const map = {
     },
     maxClusterRadius: 40,
   }),
-  createPolygon: ({ coordinates }) => L.polygon(coordinates.map((point) => point.reverse()), { color: '#0b0c0c', weight: 1, smoothFactor: 2 }),
-  createCircle: (radius, point) => L.circle(point, { radius, color: '#0b0c0c', weight: 1 }),
+  createPolygon: ({ coordinates }) => L.polygon(coordinates.map((point) => point.reverse()), Object.assign(SHAPE_STYLES, { smoothFactor: 2 })),
+  createCircle: (radius, point) => L.circle(point, Object.assign(SHAPE_STYLES, { radius })),
   layerBounds: (layer) => layer.getBounds(),
   createMarker: (point, variant, popupHandler) => {
     const marker = L.marker(point, { icon: map.markerIcon(variant) });

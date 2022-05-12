@@ -5,7 +5,7 @@
 import { Application } from '@hotwired/stimulus';
 
 import MapController from './map_component';
-import map from './leaflet';
+import map from './map';
 
 let application;
 
@@ -15,6 +15,7 @@ const initialiseStimulus = () => {
 };
 
 jest.mock('../../frontend/src/lib/api');
+
 const mockCreateMap = jest.fn();
 const mockAddToMap = jest.fn();
 const mockCreateCluster = jest.fn();
@@ -24,12 +25,13 @@ const mockLayerBounds = jest.fn();
 const mockAddMarkerToCluster = jest.fn();
 const mockSetMapBounds = jest.fn();
 const mockCreateMarker = jest.fn();
+
 let spies;
 
 const getMarkerHTML = (count) => {
   let markerHTML = '';
   for (let step = 0; step < count; step += 1) {
-    markerHTML += `<div data-map-target="marker" data-id="marker-${step}" data-lat="51" data-lon="0.14"></div>`;
+    markerHTML += '<div data-map-target="marker" data-lat="51" data-lon="0.14"></div>';
   }
   return markerHTML;
 };
@@ -49,7 +51,7 @@ beforeAll(() => {
     setMapBounds: mockSetMapBounds,
   })));
 
-  jest.mock('./leaflet', () => jest.fn().mockImplementation(() => ({
+  jest.mock('./map', () => jest.fn().mockImplementation(() => ({
     create: mockCreateMap,
     createCluster: mockCreateCluster,
     createMarker: mockCreateMarker,
@@ -71,17 +73,19 @@ beforeAll(() => {
   };
 });
 
-describe('when map is initialised with one item', () => {
+describe('when map is initialised with one marker', () => {
   beforeEach(() => {
     document.getElementById('markers').insertAdjacentHTML('afterbegin', getMarkerHTML(1));
     jest.resetAllMocks();
     initialiseStimulus();
   });
 
-  test('a map object is created with one marker', () => {
-    expect(spies.createMap).toHaveBeenCalledTimes(1);
+  test('a map object is created', () => {
     expect(spies.createMap).toHaveBeenCalledWith({ lat: '51', lon: '0.14' }, MapController.DEFAULT_ZOOM);
     expect(spies.createCluster).toHaveBeenCalledTimes(1);
+  });
+
+  test('one marker is added to map', () => {
     expect(spies.createMarker).toHaveBeenCalledTimes(1);
     expect(spies.addMarkerToCluster).not.toHaveBeenCalled();
     expect(spies.addToMap).toHaveBeenCalledTimes(1);
@@ -92,12 +96,17 @@ describe('when map is initialised with one item', () => {
 describe('when map is initialised with polygons', () => {
   beforeEach(() => {
     document.getElementById('markers').insertAdjacentHTML('afterbegin', getMarkerHTML(1));
-    document.getElementById('map-component').setAttribute('data-polygon', '[[[0, 0],[0, 2],[2, 2]], [[0, 0],[0, 1],[1, 1]]]');
+    document.getElementById('map-component').setAttribute('data-polygons', '[[[0, 0],[0, 2],[2, 2]], [[0, 0],[0, 1],[1, 1]]]');
     jest.resetAllMocks();
     initialiseStimulus();
   });
 
-  test('a map object is created with one marker and polygons', () => {
+  test('a map object is created', () => {
+    expect(spies.createMap).toHaveBeenCalledWith({ lat: '51', lon: '0.14' }, MapController.DEFAULT_ZOOM);
+    expect(spies.createCluster).toHaveBeenCalledTimes(1);
+  });
+
+  test('one marker and polygons are added to map', () => {
     expect(spies.createMarker).toHaveBeenCalledTimes(1);
     expect(spies.createPolygon).toHaveBeenNthCalledWith(1, { coordinates: [[0, 0], [0, 2], [2, 2]] });
     expect(spies.createPolygon).toHaveBeenNthCalledWith(2, { coordinates: [[0, 0], [0, 1], [1, 1]] });
@@ -132,16 +141,20 @@ describe('when map is initialised with a center point and radius', () => {
 
 describe('when map is initialised with more than one marker', () => {
   beforeEach(() => {
-    document.getElementById('markers').insertAdjacentHTML('afterbegin', getMarkerHTML(3));
+    document.getElementById('markers').insertAdjacentHTML('afterbegin', getMarkerHTML(2));
     jest.resetAllMocks();
     initialiseStimulus();
   });
 
-  test('a map object is created with markers added to cluster', () => {
+  test('a map object is created', () => {
+    expect(spies.createMap).toHaveBeenCalledWith({ lat: '51', lon: '0.14' }, MapController.DEFAULT_ZOOM);
     expect(spies.createCluster).toHaveBeenCalledTimes(1);
-    expect(spies.createMarker).toHaveBeenCalledTimes(3);
-    expect(spies.addMarkerToCluster).toHaveBeenCalledTimes(3);
+  });
+
+  test('markers are added to cluster', () => {
+    expect(spies.createMarker).toHaveBeenCalledTimes(2);
+    expect(spies.addMarkerToCluster).toHaveBeenCalledTimes(2);
     expect(spies.addToMap).toHaveBeenCalledTimes(1);
-    expect(spies.setMapBounds).toHaveBeenCalledWith([{ lat: '51', lon: '0.14' }, { lat: '51', lon: '0.14' }, { lat: '51', lon: '0.14' }]);
+    expect(spies.setMapBounds).toHaveBeenCalledWith([{ lat: '51', lon: '0.14' }, { lat: '51', lon: '0.14' }]);
   });
 });
