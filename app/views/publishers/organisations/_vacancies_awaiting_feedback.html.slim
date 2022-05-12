@@ -3,7 +3,7 @@ p.govuk-body#awaiting_feedback_intro class="govuk-!-margin-bottom-4" = t("jobs.m
 - vacancies.each do |vacancy|
   = form_for vacancy_statistics_form(vacancy), url: organisation_job_statistics_path(vacancy.id), html: { id: vacancy.id, method: "patch" } do |f|
     = f.govuk_error_summary(t("errors.publishers.job_statistics.error_summary", job_title: vacancy.job_title))
-    .feedback-row.divider-bottom class="govuk-!-margin-bottom-4" id=dom_id(vacancy)
+    .feedback-row.divider-bottom id=dom_id(vacancy)
       .govuk-grid-row
         .govuk-grid-column-one-third
           = govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id), class: "govuk-!-font-weight-bold govuk-!-font-size-24")

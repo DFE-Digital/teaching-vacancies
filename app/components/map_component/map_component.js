@@ -1,5 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
-import map from './leaflet';
+import map from './map';
 import MarkerData from './marker_service';
 import popup from './marker_popup';
 import './map.scss';
@@ -25,13 +25,8 @@ const MapController = class extends Controller {
 
         if (this.element.dataset.radius && this.element.dataset.point) {
           const locationMarker = map.createMarker(JSON.parse(this.element.dataset.point), 'location');
-
           this.addToMap(locationMarker);
-
-          const circle = map.createCircle(this.element.dataset.radius, JSON.parse(this.element.dataset.point));
-
-          this.addToMap(circle);
-          this.setMapBounds(map.layerBounds(circle));
+          this.addCircle();
         }
       }
 
@@ -43,27 +38,37 @@ const MapController = class extends Controller {
 
       if (this.markerTargets.length > 1) {
         this.addMarkerToCluster(marker);
+
+        if (!this.bounds) {
+          this.setMapBounds(this.markerTargets.map((m) => ({ lat: m.dataset.lat, lon: m.dataset.lon })));
+        }
       } else if (marker) {
         this.addToMap(marker);
         marker.openPopup();
       }
     });
 
-    if (this.element.dataset.polygon) {
+    this.addPolygons();
+
+    this.addToMap(this.clusterGroup);
+  }
+
+  addCircle() {
+    const circle = map.createCircle(this.element.dataset.radius, JSON.parse(this.element.dataset.point));
+    this.addToMap(circle);
+    this.setMapBounds(map.layerBounds(circle));
+  }
+
+  addPolygons() {
+    if (this.element.dataset.polygons) {
       const coordinates = [];
-      JSON.parse(this.element.dataset.polygon).forEach((data) => {
+      JSON.parse(this.element.dataset.polygons).forEach((data) => {
         coordinates.push(data);
         const polygon = map.createPolygon({ coordinates: data });
         this.addToMap(polygon);
       });
 
       this.setMapBounds(coordinates);
-    }
-
-    this.addToMap(this.clusterGroup);
-
-    if (this.markerTargets.length > 1 && !this.bounds) {
-      this.setMapBounds(this.markerTargets.map((m) => ({ lat: m.dataset.lat, lon: m.dataset.lon })));
     }
   }
 
@@ -78,7 +83,6 @@ const MapController = class extends Controller {
 
     MapController.CLUSTER_THRESHOLDS.forEach((threshold, i) => {
       if (numberMarkers >= threshold) {
-        properties.text = `${threshold}+`;
         properties.style = styles[i];
       }
     });
