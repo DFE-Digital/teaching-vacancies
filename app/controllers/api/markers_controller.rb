@@ -7,19 +7,14 @@ class Api::MarkersController < Api::ApplicationController
   before_action :check_valid_params, only: %i[show]
 
   def show
-    json = {
+    render json: {
       heading_text: heading_text,
       heading_url: heading_url,
+      anonymised_id: anonymised_id,
       address: full_address(organisation),
       description: description,
       details: details,
     }
-
-    if tracked
-      json["anonymised_id"] = StringAnonymiser.new(vacancy.id).to_s
-    end
-
-    render json: json
   end
 
   private
@@ -40,8 +35,8 @@ class Api::MarkersController < Api::ApplicationController
     params[:marker_type] == "vacancy" ? job_path(vacancy) : organisation.url
   end
 
-  def tracked
-    params[:marker_type] == "organisation"
+  def anonymised_id
+    StringAnonymiser.new(vacancy.id).to_s if params[:marker_type] == "organisation"
   end
 
   def description
