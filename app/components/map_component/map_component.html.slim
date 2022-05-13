@@ -1,4 +1,4 @@
-= tag.div(class: classes, **html_attributes.merge(data: { controller: "map", zoom: @zoom, point: @point, polygons: @polygon, radius: radius })) do
+= tag.div(class: classes, **html_attributes.merge(data: { controller: "map", point: @point, polygons: @polygon, radius: radius })) do
   .markers
     - @markers.each do |marker|
       - if marker[:geopoint]

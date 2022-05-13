@@ -1,55 +1,57 @@
 import 'leaflet';
-import 'leaflet.markercluster/dist/leaflet.markercluster';
 import { GestureHandling } from 'leaflet-gesture-handling';
 
-const SHAPE_STYLES = {
-  color: '#505a5f',
-  weight: 2,
-  opacity: 0.4,
-};
-
-const map = {
-  create: (point, zoom) => {
+const Map = class {
+  constructor(point, zoom) {
     L.Map.addInitHook('addHandler', 'gestureHandling', GestureHandling);
-    const m = L.map('map', { tap: false, gestureHandling: true }).setView(point, zoom);
+    this.container = L.map('map', { tap: false, gestureHandling: true }).setView(point.coordinates.reverse(), zoom);
 
     L.tileLayer(
       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       { attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' },
-    ).addTo(m);
+    ).addTo(this.container);
+  }
 
-    return m;
-  },
-  createCluster: (clusterIcon) => L.markerClusterGroup({
-    iconCreateFunction: (cluster) => {
-      const properties = clusterIcon(cluster.getChildCount());
+  createMarker({
+    point,
+    variant,
+    popup = {},
+    addToLayer,
+  }) {
+    L.geoJSON(point, {
+      pointToLayer: (feature, latlng) => {
+        const marker = L.marker(latlng, { icon: Map.markerIcon(variant) });
 
-      return L.divIcon({
-        className: `map-component__map__cluster map-component__map__cluster--${properties.style}`,
-        iconSize: [properties.size, properties.size],
-        html: `<span>${properties.text}<span class="govuk-visually-hidden"> vacancies</span></span>`,
-      });
-    },
-    maxClusterRadius: 40,
-  }),
-  createPolygon: ({ coordinates }) => L.polygon(coordinates.map((point) => point.reverse()), Object.assign(SHAPE_STYLES, { smoothFactor: 2 })),
-  createCircle: (radius, point) => L.circle(point, Object.assign(SHAPE_STYLES, { radius })),
-  layerBounds: (layer) => layer.getBounds(),
-  createMarker: (point, variant, popupHandler) => {
-    const marker = L.marker(point, { icon: map.markerIcon(variant) });
+        if (popup.data) {
+          marker.bindPopup('', { className: 'map-component__map__popup' });
+          marker.on('keydown', (e) => e.target.closePopup());
+          marker.on('popupopen', () => popup.data(marker));
 
-    if (popupHandler) {
-      marker.bindPopup('', { className: 'map-component__map__popup' });
-      marker.on('keydown', (e) => e.target.closePopup());
-      marker.on('popupopen', () => popupHandler(marker));
-    }
+          if (popup.open) {
+            marker.on('add', () => marker.openPopup());
+          }
+        }
+        addToLayer ? addToLayer.addLayer(marker) : this.container.addLayer(marker);
+      },
+    });
+  }
 
-    return marker;
-  },
-  markerIcon: (variant) => L.divIcon({
-    className: `icon icon--map-${variant} map-component__map__marker`,
-    iconSize: [22, 30],
-  }),
+  static createPolygon(polygon, styles) {
+    return L.geoJSON(polygon, Object.assign(styles, { smoothFactor: 2 }));
+  }
+
+  static createCircle(radius, point, styles) {
+    return L.geoJSON(point, {
+      pointToLayer: (feature, latlng) => L.circle(latlng, Object.assign(styles, { radius })),
+    });
+  }
+
+  static markerIcon(variant) {
+    return L.divIcon({
+      className: `icon icon--map-${variant} map-component__map__marker`,
+      iconSize: [22, 30],
+    });
+  }
 };
 
-export default map;
+export default Map;
