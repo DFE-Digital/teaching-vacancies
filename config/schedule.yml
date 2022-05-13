@@ -78,11 +78,6 @@ reset_sessions:
   class: 'ResetSessionsJob'
   queue: low
 
-send_feedback:
-  cron: '10 0 * * *'
-  class: 'SendFeedbackToBigQueryJob'
-  queue: low
-
 send_inactive_account_email:
   cron: '0 8 * * *'
   class: 'SendInactiveAccountEmailJob'
