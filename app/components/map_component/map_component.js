@@ -1,7 +1,8 @@
 import { Controller } from '@hotwired/stimulus';
-import map from './map';
-import MarkerData from './marker_service';
-import popup from './marker_popup';
+import Map from './map';
+import Cluster from './cluster';
+import MarkerData from './marker/service';
+import popup from './marker/popup';
 import './map.scss';
 
 const MapController = class extends Controller {
@@ -9,98 +10,67 @@ const MapController = class extends Controller {
 
   static DEFAULT_ZOOM = 13;
 
-  static CLUSTER_THRESHOLDS = [5, 20];
+  static SHAPE_STYLES = {
+    color: '#505a5f',
+    weight: 2,
+    opacity: 0.4,
+  };
 
   connect() {
-    this.clusterGroup = map.createCluster(MapController.clusterIconProperties);
+    this.createMap();
 
-    this.markerTargets.forEach((markerTarget, index) => {
-      const point = {
-        lat: markerTarget.dataset.lat,
-        lon: markerTarget.dataset.lon,
-      };
-
-      if (index === 0) {
-        this.map = map.create(point, MapController.DEFAULT_ZOOM);
-
-        if (this.element.dataset.radius && this.element.dataset.point) {
-          const locationMarker = map.createMarker(JSON.parse(this.element.dataset.point), 'location');
-          this.addToMap(locationMarker);
-          this.addCircle();
-        }
-      }
-
-      const marker = map.createMarker(point, 'pin', (m) => {
-        MarkerData.getMetaData(markerTarget.dataset.id, markerTarget.dataset.parentId, markerTarget.dataset.markerType).then((markerData) => {
-          m.setPopupContent(popup(markerData));
-        });
-      });
-
-      if (this.markerTargets.length > 1) {
-        this.addMarkerToCluster(marker);
-
-        if (!this.bounds) {
-          this.setMapBounds(this.markerTargets.map((m) => ({ lat: m.dataset.lat, lon: m.dataset.lon })));
-        }
-      } else if (marker) {
-        this.addToMap(marker);
-        marker.openPopup();
-      }
-    });
-
-    this.addPolygons();
-
-    this.addToMap(this.clusterGroup);
-  }
-
-  addCircle() {
-    const circle = map.createCircle(this.element.dataset.radius, JSON.parse(this.element.dataset.point));
-    this.addToMap(circle);
-    this.setMapBounds(map.layerBounds(circle));
-  }
-
-  addPolygons() {
-    if (this.element.dataset.polygons) {
-      const coordinates = [];
-      JSON.parse(this.element.dataset.polygons).forEach((data) => {
-        coordinates.push(data);
-        const polygon = map.createPolygon({ coordinates: data });
-        this.addToMap(polygon);
-      });
-
-      this.setMapBounds(coordinates);
+    if (this.element.dataset.radius) {
+      this.addMarker({ point: this.point, variant: 'location' });
+      this.addShape(Map.createCircle(this.radius, this.point, MapController.SHAPE_STYLES));
     }
-  }
 
-  static clusterIconProperties(numberMarkers) {
-    const properties = {
-      text: numberMarkers,
-      size: 30,
-      style: 'default',
-    };
-
-    const styles = ['medium', 'large'];
-
-    MapController.CLUSTER_THRESHOLDS.forEach((threshold, i) => {
-      if (numberMarkers >= threshold) {
-        properties.style = styles[i];
-      }
+    this.markerTargets.forEach((markerTarget) => {
+      this.addMarker({
+        point: JSON.parse(markerTarget.dataset.point),
+        variant: 'pin',
+        popup: {
+          data: (marker) => MarkerData.getMetaData(markerTarget.dataset).then((markerData) => marker.setPopupContent(popup(markerData))),
+          open: this.markerTargets.length === 1,
+        },
+        addToLayer: this.cluster.group,
+      });
     });
 
-    return properties;
+    if (this.polygons) {
+      this.addShape(Map.createPolygon(this.polygons, MapController.SHAPE_STYLES));
+    }
+
+    this.addLayer(this.cluster.group);
   }
 
-  addToMap(layer) {
-    this.map.addLayer(layer);
+  get radius() {
+    return this.element.dataset.radius;
   }
 
-  addMarkerToCluster(marker) {
-    this.clusterGroup.addLayer(marker);
+  get point() {
+    return this.element.dataset.point ? JSON.parse(this.element.dataset.point) : JSON.parse(this.markerTargets[0].dataset.point);
   }
 
-  setMapBounds(bounds) {
-    this.bounds = bounds;
-    this.map.fitBounds(bounds);
+  get polygons() {
+    return this.element.dataset.polygons ? JSON.parse(this.element.dataset.polygons) : false;
+  }
+
+  createMap() {
+    this.map = new Map(this.point, MapController.DEFAULT_ZOOM);
+    this.cluster = new Cluster();
+  }
+
+  addMarker(options) {
+    this.map.createMarker(options);
+  }
+
+  addShape(layer) {
+    this.addLayer(layer);
+    this.map.container.fitBounds(layer.getBounds());
+  }
+
+  addLayer(layer) {
+    this.map.container.addLayer(layer);
   }
 };
 
