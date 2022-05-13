@@ -8,7 +8,6 @@ class Search::LocationBuilder
   attr_reader :location, :location_filter, :polygon, :radius
 
   def initialize(location, radius)
-
     @location = location
     @radius = Search::RadiusBuilder.new(location, radius).radius
     @location_filter = {}
@@ -35,10 +34,9 @@ class Search::LocationBuilder
   end
 
   def geojson_point
-    if location_filter[:point_coordinates]
-      factory = RGeo::ActiveRecord::SpatialFactoryStore.instance.default
-      RGeo::GeoJSON.encode(factory.point(*location_filter[:point_coordinates].reverse))
-    end
+    return unless location_filter[:point_coordinates]
+
+    RGeo::GeoJSON.encode(factory.point(*location_filter[:point_coordinates].reverse))
   end
 
   def geojson_polygon
@@ -52,5 +50,9 @@ class Search::LocationBuilder
       point_coordinates: Geocoding.new(location).coordinates,
       radius: convert_miles_to_metres(radius),
     }
+  end
+
+  def factory
+    @factory ||= RGeo::ActiveRecord::SpatialFactoryStore.instance.default
   end
 end
