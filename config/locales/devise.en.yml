@@ -14,7 +14,10 @@ en:
       not_found_in_database: We did not recognise your sign-in details.
       timeout: Your session expired. Please sign in again to continue.
       unauthenticated: You need to sign in or create an account before continuing.
-      unconfirmed: You have to confirm your email address before continuing.
+      unconfirmed: |
+        You cannot sign in because you have not yet confirmed your email address using the link in the email we sent you when you signed up for Teaching Vacancies.
+
+        If you signed up more than two weeks ago, or have lost the email, contact us using the 'Get help or report a problem' link on the bottom of this page.
     omniauth_callbacks:
       failure: "Could not authenticate you from %{kind} because \"%{reason}\"."
       success: "Successfully authenticated from %{kind} account."
