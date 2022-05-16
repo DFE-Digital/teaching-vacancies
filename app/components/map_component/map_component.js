@@ -21,7 +21,7 @@ const MapController = class extends Controller {
 
     if (this.element.dataset.radius) {
       this.addMarker({ point: this.point, variant: 'location' });
-      this.addShape(Map.createCircle(this.radius, this.point, MapController.SHAPE_STYLES));
+      this.addLayer(Map.createCircle(this.radius, this.point, MapController.SHAPE_STYLES));
     }
 
     this.markerTargets.forEach((markerTarget) => {
@@ -37,7 +37,7 @@ const MapController = class extends Controller {
     });
 
     if (this.polygons) {
-      this.addShape(Map.createPolygon(this.polygons, MapController.SHAPE_STYLES));
+      this.addLayer(Map.createPolygon(this.polygons, MapController.SHAPE_STYLES));
     }
 
     this.addLayer(this.cluster.group);
@@ -64,13 +64,12 @@ const MapController = class extends Controller {
     this.map.createMarker(options);
   }
 
-  addShape(layer) {
-    this.addLayer(layer);
-    this.map.container.fitBounds(layer.getBounds());
-  }
-
   addLayer(layer) {
     this.map.container.addLayer(layer);
+
+    if (this.markerTargets.length > 1) {
+      this.map.container.fitBounds(layer.getBounds());
+    }
   }
 };
 

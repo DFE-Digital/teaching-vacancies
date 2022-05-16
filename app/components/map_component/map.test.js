@@ -32,13 +32,13 @@ beforeAll(() => {
   </div>`;
 
   jest.mock('./map_component', () => jest.fn().mockImplementation(() => ({
-    addShape: jest.fn(),
+    addLayer: jest.fn(),
     addMarker: jest.fn(),
   })));
 
   spies = {
     addMarker: jest.spyOn(MapController.prototype, 'addMarker'),
-    addShape: jest.spyOn(MapController.prototype, 'addShape'),
+    addLayer: jest.spyOn(MapController.prototype, 'addLayer'),
   };
 });
 
@@ -73,6 +73,6 @@ describe('when map is initialised', () => {
   });
 
   test('polygons and radius circles are added to map', () => {
-    expect(spies.addShape).toHaveBeenCalledTimes(2);
+    expect(spies.addLayer).toHaveBeenCalledTimes(3);
   });
 });
