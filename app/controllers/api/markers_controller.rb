@@ -20,7 +20,7 @@ class Api::MarkersController < Api::ApplicationController
   private
 
   def vacancy
-    @vacancy ||= Vacancy.listed.find(params[:id])
+    @vacancy ||= Vacancy.find(params[:id])
   end
 
   def organisation
@@ -40,9 +40,7 @@ class Api::MarkersController < Api::ApplicationController
   end
 
   def description
-    return if params[:marker_type] == "vacancy"
-
-    organisation_type(organisation)
+    organisation_type(organisation) if params[:marker_type] == "organisation"
   end
 
   def details
