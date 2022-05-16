@@ -17,6 +17,10 @@ const MapController = class extends Controller {
   };
 
   connect() {
+    if (this.markerTargets.length === 0) {
+      return;
+    }
+
     this.createMap();
 
     if (this.element.dataset.radius) {
