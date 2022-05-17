@@ -1,7 +1,16 @@
-import 'leaflet.markercluster/dist/leaflet.markercluster';
-
 const Cluster = class {
-  static CLUSTER_THRESHOLDS = [5, 20];
+  static CLUSTER_BOUNDRIES = [
+    {
+      threshold: 10,
+      style: 'medium',
+    },
+    {
+      threshold: 50,
+      style: 'large',
+    },
+  ];
+
+  static CLUSTER_LIMIT = 50;
 
   constructor() {
     this.group = L.markerClusterGroup({
@@ -25,11 +34,13 @@ const Cluster = class {
       style: 'default',
     };
 
-    const styles = ['medium', 'large'];
+    Cluster.CLUSTER_BOUNDRIES.forEach((boundray) => {
+      if (numberMarkers >= boundray.threshold) {
+        properties.style = boundray.style;
+      }
 
-    Cluster.CLUSTER_THRESHOLDS.forEach((threshold, i) => {
-      if (numberMarkers >= threshold) {
-        properties.style = styles[i];
+      if (numberMarkers >= Cluster.CLUSTER_LIMIT) {
+        properties.text = `${Cluster.CLUSTER_LIMIT}+`;
       }
     });
 
