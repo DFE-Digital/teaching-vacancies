@@ -42,7 +42,18 @@ beforeAll(() => {
   };
 });
 
-describe('when map is initialised', () => {
+describe('when map is initialised with no layers', () => {
+  beforeAll(() => {
+    jest.resetAllMocks();
+    initialiseStimulus();
+  });
+
+  test('a map is not rendered', () => {
+    expect(document.querySelector('.map-component__map').children.length).toEqual(0);
+  });
+});
+
+describe('when map is initialised with layers', () => {
   beforeAll(() => {
     document.getElementById('markers').insertAdjacentHTML('afterbegin', getMarkerHTML(1, 'vacancy'));
     document.getElementById('markers').insertAdjacentHTML('afterbegin', getMarkerHTML(1, 'organisation'));

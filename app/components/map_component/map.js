@@ -1,5 +1,7 @@
 import 'leaflet';
+import 'leaflet.markercluster/dist/leaflet.markercluster';
 import { GestureHandling } from 'leaflet-gesture-handling';
+import popupTemplate from './marker/popup';
 
 const Map = class {
   constructor(point, zoom) {
@@ -22,18 +24,22 @@ const Map = class {
       pointToLayer: (feature, latlng) => {
         const marker = L.marker(latlng, { icon: Map.markerIcon(variant) });
 
-        if (popup.data) {
-          marker.bindPopup('', { className: 'map-component__map__popup' });
-          marker.on('keydown', (e) => e.target.closePopup());
-          marker.on('popupopen', () => popup.data(marker));
+        if (popup.data) Map.createMarkerPopup(marker, popup);
 
-          if (popup.open) {
-            marker.on('add', () => marker.openPopup());
-          }
-        }
         addToLayer ? addToLayer.addLayer(marker) : this.container.addLayer(marker);
       },
     });
+  }
+
+  static createMarkerPopup(marker, { data, open }) {
+    marker.bindPopup('', { className: 'map-component__map__popup' });
+    marker.on('keydown', (e) => e.target.closePopup());
+    marker.on('popupopen', async () => {
+      const markerData = await data(marker);
+      marker.setPopupContent(popupTemplate(markerData));
+    });
+
+    if (open) marker.on('add', () => marker.openPopup());
   }
 
   static createPolygon(polygon, styles) {

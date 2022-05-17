@@ -2,7 +2,6 @@ import { Controller } from '@hotwired/stimulus';
 import Map from './map';
 import Cluster from './cluster';
 import MarkerData from './marker/service';
-import popup from './marker/popup';
 import './map.scss';
 
 const MapController = class extends Controller {
@@ -11,15 +10,15 @@ const MapController = class extends Controller {
   static DEFAULT_ZOOM = 13;
 
   static SHAPE_STYLES = {
-    color: '#505a5f',
-    weight: 2,
-    opacity: 0.4,
+    color: '#0b0c0c',
+    fillOpacity: '0.6',
+    fillColor: '#b1b4b6',
+    weight: 1,
+    opacity: 1,
   };
 
   connect() {
-    if (this.markerTargets.length === 0) {
-      return;
-    }
+    if (this.markerTargets.length === 0) return;
 
     this.createMap();
 
@@ -33,16 +32,14 @@ const MapController = class extends Controller {
         point: JSON.parse(markerTarget.dataset.point),
         variant: 'pin',
         popup: {
-          data: (marker) => MarkerData.getMetaData(markerTarget.dataset).then((markerData) => marker.setPopupContent(popup(markerData))),
+          data: () => MarkerData.getMetaData(markerTarget.dataset),
           open: this.markerTargets.length === 1,
         },
         addToLayer: this.cluster.group,
       });
     });
 
-    if (this.polygons) {
-      this.addLayer(Map.createPolygon(this.polygons, MapController.SHAPE_STYLES));
-    }
+    if (this.polygons) this.addLayer(Map.createPolygon(this.polygons, MapController.SHAPE_STYLES));
 
     this.addLayer(this.cluster.group);
   }
@@ -71,9 +68,7 @@ const MapController = class extends Controller {
   addLayer(layer) {
     this.map.container.addLayer(layer);
 
-    if (this.markerTargets.length > 1) {
-      this.map.container.fitBounds(layer.getBounds());
-    }
+    if (this.markerTargets.length > 1) this.map.container.fitBounds(layer.getBounds());
   }
 };
 
