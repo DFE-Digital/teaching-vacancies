@@ -1,8 +1,8 @@
 = tag.div(class: classes, **html_attributes.merge(data: { controller: "map", point: @point, polygons: @polygon, radius: radius })) do
-  .markers
-    - @markers.each do |marker|
-      - if marker[:geopoint]
-        .markers__marker data-map-target="marker" data-marker-type=@marker_type data-id=marker[:id] data-parent-id=marker[:parent_id] data-point=marker[:geopoint]
-
   - if show_map?
+    .markers
+      - @markers.each do |marker|
+        - if marker[:geopoint]
+          .markers__marker data-map-target="marker" data-marker-type=@marker_type data-id=marker[:id] data-parent-id=marker[:parent_id] data-point=marker[:geopoint]
+
     .map-component__map id="map" role="presentation"

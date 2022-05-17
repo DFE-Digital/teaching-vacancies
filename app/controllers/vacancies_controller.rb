@@ -1,4 +1,6 @@
 class VacanciesController < ApplicationController
+  MAX_TOTAL_RESULTS_FOR_MAP = 100
+
   before_action :set_landing_page, only: %i[index]
   after_action :trigger_search_performed_event, only: %i[index]
 
@@ -9,6 +11,10 @@ class VacanciesController < ApplicationController
       page: params[:page],
     )
     @vacancies = @vacancies_search.vacancies
+
+    @show_map = support_user_signed_in? &&
+                @vacancies_search.location &&
+                @vacancies_search.total_count <= MAX_TOTAL_RESULTS_FOR_MAP
   end
 
   def show
