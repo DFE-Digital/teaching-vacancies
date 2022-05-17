@@ -19,12 +19,14 @@ Rails.application.configure do
                        :data
 
     policy.frame_src   :self,
+                       "https://2673654.fls.doubleclick.net", # Floodlight
                        "https://www.recaptcha.net",
                        "https://www.googletagmanager.com"
 
     policy.img_src     :self,
                        :https,
-                       :data
+                       :data,
+                       "https://2673654.fls.doubleclick.net" # Floodlight
 
     policy.object_src  :none
 
