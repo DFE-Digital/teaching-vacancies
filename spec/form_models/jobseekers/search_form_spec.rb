@@ -41,6 +41,14 @@ RSpec.describe Jobseekers::SearchForm, type: :model do
         it_behaves_like "a correct call of Search::RadiusBuilder"
       end
     end
+
+    context "when the transportation_type and travel_time params have been provided" do
+      let(:params) { { radius: "10", location: "London", transportation_type: "public_transport", travel_time: "45" } }
+
+      it "sets the radius to 0" do
+        expect(subject.radius).to eq 0
+      end
+    end
   end
 
   describe "#strip_trailing_whitespaces_from_params" do

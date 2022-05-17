@@ -90,5 +90,9 @@ RSpec.describe Search::VacancySearch do
         expect(subject.wider_search_suggestions).to eq([1, 2, 3])
       end
     end
+
+    context "when a commute time search has been made" do
+      # not sure what we should do in this case yet
+    end
   end
 end

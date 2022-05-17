@@ -67,6 +67,7 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
   scope :internal, (-> { where(external_source: nil) })
   scope :external, (-> { where.not(external_source: nil) })
 
+  scope :search_within_area, ->(area) { where("ST_Intersects(?, geolocation)", area.to_s) }
   scope :search_by_filter, VacancyFilterQuery
   scope :search_by_location, VacancyLocationQuery
   scope :search_by_full_text, VacancyFullTextSearchQuery

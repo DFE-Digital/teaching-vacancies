@@ -4,6 +4,7 @@ class Jobseekers::SearchForm
   attr_reader :keyword, :previous_keyword,
               :location, :radius,
               :organisation_slug,
+              :transportation_type, :travel_time,
               :job_roles, :subjects, :phases, :working_patterns,
               :job_role_options, :ect_suitable_options, :send_responsible_options,
               :phase_options, :working_pattern_options,
@@ -21,6 +22,8 @@ class Jobseekers::SearchForm
     @working_patterns = params[:working_patterns] || []
     @organisation_slug = params[:organisation_slug] unless @keyword.present? || @location.present?
     @sort = Search::VacancySort.new(keyword: keyword).update(sort_by: params[:sort_by])
+    @transportation_type = params[:transportation_type]
+    @travel_time = params[:travel_time]
 
     set_filters_from_keyword
     unset_filters_from_previous_keyword
@@ -34,9 +37,11 @@ class Jobseekers::SearchForm
     {
       keyword: @keyword,
       previous_keyword: @previous_keyword,
+      organisation_slug: @organisation_slug,
       location: @location,
       radius: @radius,
-      organisation_slug: @organisation_slug,
+      transportation_type: @transportation_type,
+      travel_time: @travel_time,
       job_roles: @job_roles,
       subjects: @subjects,
       phases: @phases,
@@ -94,6 +99,10 @@ class Jobseekers::SearchForm
   end
 
   def set_radius(radius_param)
-    @radius = Search::RadiusBuilder.new(location, radius_param).radius.to_s
+    @radius = commute_area_search? ? 0 : Search::RadiusBuilder.new(location, radius_param).radius.to_s
+  end
+
+  def commute_area_search?
+    transportation_type.present? && travel_time.present?
   end
 end
