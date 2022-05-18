@@ -2,7 +2,7 @@ ul.search-results role="list"
   - vacancies.each do |vacancy|
     li role="listitem" tab-index="0"
       h2.govuk-heading-m class="govuk-!-margin-bottom-0"
-        = govuk_link_to(vacancy.job_title, job_path(vacancy), class: "view-vacancy-link")
+        = results_link(vacancy, class: "view-vacancy-link")
       p.govuk-body
         = vacancy_full_job_location(vacancy)
       dl

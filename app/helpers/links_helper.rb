@@ -114,6 +114,16 @@ module LinksHelper
     )
   end
 
+  def results_link(vacancy, **kwargs)
+    tracked_link_to(
+      vacancy.job_title,
+      job_path(vacancy),
+      link_type: :vacancy_visted_from_list,
+      link_subject: anon(vacancy.id),
+      **kwargs,
+    )
+  end
+
   def similar_job_link(vacancy, **kwargs)
     tracked_link_to(
       vacancy.job_title,
