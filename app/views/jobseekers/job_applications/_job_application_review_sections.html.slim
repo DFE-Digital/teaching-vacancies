@@ -4,6 +4,7 @@
 = render "jobseekers/job_applications/review/employment_history", r: r
 = render "jobseekers/job_applications/review/personal_statement", r: r
 = render "jobseekers/job_applications/review/references", r: r
-= render "jobseekers/job_applications/review/equal_opportunities", r: r
+- if jobseeker_signed_in?
+  = render "jobseekers/job_applications/review/equal_opportunities", r: r
 = render "jobseekers/job_applications/review/ask_for_support", r: r
 = render "jobseekers/job_applications/review/declarations", r: r
