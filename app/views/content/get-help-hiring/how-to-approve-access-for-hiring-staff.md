@@ -10,7 +10,7 @@ Access to Teaching Vacancies is managed through [DfE Sign-in](https://services.s
 
 If hiring staff from a school, multi-academy trust (MAT) or local authority (LA) need to post a job on Teaching Vacancies, they can only do so after being granted access by an approver at the relevant organisation.
 
-This guidance is for account approvers who grant people access to accounts and services. If you require approval rights and are looking to post jobs, [read our guidance on requesting access to organisations on Teaching Vacancies](https://teaching-vacancies.service.gov.uk/get-help-hiring/how-to-request-organisation-access).
+This guidance is for account approvers who grant people access to accounts and services. If you require access rights and are looking to post jobs, [read our guidance on requesting access to organisations on Teaching Vacancies](https://teaching-vacancies.service.gov.uk/get-help-hiring/how-to-request-organisation-access).
 
 ## Granting access to users
 The quickest way to enable hiring staff to post jobs on Teaching Vacancies is to give them access directly.
@@ -39,6 +39,6 @@ If you want to see who has access to your organisation, what services they can u
 You can remove services from users within your organisation, or remove them from the organisation entirely. If you remove the user from a MAT or LA organisation, be aware that they may still have access to an individual organisation if they’ve been granted access separately.
 
 ## Get help
-Submit a support request through the [DfE Sign-In help page](https://help.signin.education.gov.uk/contact-us) or visit [DfE Sign-in Help](https://help.signin.education.gov.uk), which includes guidance on services, organisations, and other related information. We are unable to assist with the approvals process through Teaching Vacancies.
+Submit a support request through the [DfE Sign-In help page](https://help.signin.education.gov.uk/contact-us) or visit [DfE Sign-In Help](https://help.signin.education.gov.uk), which includes guidance on services, organisations, and other related information. We are unable to assist with the approvals process through Teaching Vacancies.
 
-If you have a query that’s not covered within that guidance, please [contact us](https://teaching-vacancies.service.gov.uk/support_request/new).
+If you have a query that is not covered within that guidance, please [contact us](https://teaching-vacancies.service.gov.uk/support_request/new).
