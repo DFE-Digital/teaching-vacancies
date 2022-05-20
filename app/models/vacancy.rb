@@ -48,6 +48,7 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_one :equal_opportunities_report, dependent: :destroy
   has_many :organisation_vacancies, dependent: :destroy
   has_many :organisations, through: :organisation_vacancies, dependent: :destroy, after_add: :refresh_geolocation, after_remove: :refresh_geolocation
+  has_many :markers, dependent: :destroy
 
   delegate :name, to: :organisation, prefix: true, allow_nil: true
 
@@ -83,6 +84,7 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
   before_save :refresh_geolocation, if: -> { job_location_changed? }
+  after_save :reset_markers, if: -> { saved_change_to_status? && (listed? || pending?) }
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[7:00 8:00 9:00 10:00 11:00 12:00 13:00 14:00 15:00 16:00 17:00 23:59].freeze
@@ -222,6 +224,13 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
     postcode
   end
 
+  def reset_markers
+    markers.delete_all
+    organisations.each do |organisation|
+      markers.create(organisation: organisation, geopoint: organisation.geopoint)
+    end
+  end
+
   private
 
   def slug_candidates
@@ -251,5 +260,6 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
                          points = organisations.filter_map(&:geopoint)
                          points.presence && points.first.factory.multi_point(points)
                        end
+    reset_markers if persisted? && (listed? || pending?)
   end
 end

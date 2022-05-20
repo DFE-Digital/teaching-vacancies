@@ -66,6 +66,26 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
+      "fingerprint": "4dc8ea18d14c96a6f2c2058fe234c8c0f39653ca43ce7ed40f0f7a90cdf84d11",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/queries/location_query.rb",
+      "line": 23,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "scope.joins(\"\\n          INNER JOIN location_polygons\\n          ON ST_DWithin(#{field_name}, location_polygons.area, #{convert_miles_to_metres(radius_in_miles.to_i)})\\n        \")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "LocationQuery",
+        "method": "call"
+      },
+      "user_input": "field_name",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
       "fingerprint": "549d2779be79702f98156c6ec1a388b35ff19d87b0978910d4fad9d59a424cb9",
       "check_name": "SQL",
       "message": "Possible SQL injection",
@@ -82,6 +102,26 @@
       "user_input": "constituents.map do\n ActiveRecord::Base.connection.quote(c.downcase)\n end.join(\", \")",
       "confidence": "Medium",
       "note": "This is our own static data with no user input provided in the query"
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "96ec063511ec5b3ff90cd40b0814b7c156c7aab549803b3cb6837de5141336a6",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/queries/location_query.rb",
+      "line": 35,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "scope.where(\"ST_DWithin(#{field_name}, ?, ?)\", \"POINT(#{Geocoding.new(location_query.strip.downcase).coordinates.second} #{Geocoding.new(location_query.strip.downcase).coordinates.first})\", convert_miles_to_metres(radius_in_miles.to_i))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "LocationQuery",
+        "method": "call"
+      },
+      "user_input": "field_name",
+      "confidence": "Weak",
+      "note": ""
     },
     {
       "warning_type": "SQL Injection",
@@ -124,6 +164,6 @@
       "note": "User input is coerced to integer"
     }
   ],
-  "updated": "2022-01-24 16:26:07 +0000",
-  "brakeman_version": "5.2.0"
+  "updated": "2022-05-20 15:26:58 +0100",
+  "brakeman_version": "5.2.3"
 }
