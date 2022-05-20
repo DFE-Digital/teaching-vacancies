@@ -23,6 +23,6 @@ class SchoolGroupMembership < ApplicationRecord
             "(#{marked_for_deletion.count})"
     end
 
-    marked_for_deletion.delete_all
+    marked_for_deletion.destroy_all
   end
 end
