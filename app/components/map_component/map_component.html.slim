@@ -1,8 +1,13 @@
-= tag.div(class: classes, **html_attributes.merge(data: { controller: "map", point: @point, polygons: @polygon, radius: radius })) do
+= tag.div(class: classes, **html_attributes.merge(data: { controller: "map map-sidebar", action: "map:user:interaction->map-sidebar#close map:marker:click->map-sidebar#open", point: @point, polygons: @polygon, radius: radius })) do
   - if show_map?
     .markers
       - @markers.each do |marker|
         - if marker[:geopoint]
           .markers__marker data-map-target="marker" data-marker-type=@marker_type data-id=marker[:id] data-parent-id=marker[:parent_id] data-point=marker[:geopoint]
 
-    .map-component__map id="map" role="presentation"
+    .map-component__container
+      .sidebar-component data-map-sidebar-target="container"
+        button.sidebar-component__close.icon.icon--close data-action="click->map-sidebar#close click->map#centerMarker" data-map-sidebar-target="close"
+        .sidebar-component__content data-map-sidebar-target="content" id="sidebar-content" role="region" aria-live="polite"
+
+      .map-component__map id="map" role="presentation"

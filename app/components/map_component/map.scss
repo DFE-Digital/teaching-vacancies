@@ -2,51 +2,57 @@
 
 .js-enabled {
   .map-component {
-    &__map {
-      border: 1px solid $govuk-border-colour;
-      height: 400px;
-      margin-bottom: govuk-spacing(4);
-      margin-top: govuk-spacing(4);
-      width: 100%;
+    &__container {
+      position: relative;
 
-      &__marker {
-        &:focus {
-          outline: $govuk-focus-width solid $govuk-focus-colour;
-        }
-      }
+      .map-component__map {
+        border: 1px solid $govuk-border-colour;
+        height: 400px;
+        margin-bottom: govuk-spacing(4);
 
-      &__cluster {
-        background-color: govuk-colour('light-blue');
-        border: 2px solid $govuk-input-border-colour;
-        border-radius: 50%;
+        &__marker {
+          &:focus {
+            outline: $govuk-focus-width solid $govuk-focus-colour !important;
+          }
 
-        &:focus {
-          outline: $govuk-focus-width solid $govuk-focus-colour;
+          &--show {
+            outline: 2px solid govuk-colour('black') !important;
+          }
         }
 
-        span {
-          color: govuk-colour('white');
-          display: block;
-          font-size: 1.2em;
-          line-height: 2.1 !important;
-          text-align: center;
+        &__cluster {
+          background-color: govuk-colour('light-blue');
+          border: 2px solid $govuk-input-border-colour;
+          border-radius: 50%;
+
+          &:focus {
+            outline: $govuk-focus-width solid $govuk-focus-colour;
+          }
+
+          span {
+            color: govuk-colour('white');
+            display: block;
+            font-size: 1.2em;
+            line-height: 2.1 !important;
+            text-align: center;
+          }
+
+          &--medium {
+            background-color: govuk-colour('blue');
+          }
+
+          &--large {
+            background-color: govuk-colour('dark-blue');
+          }
         }
 
-        &--medium {
-          background-color: govuk-colour('blue');
-        }
+        &__popup {
+          margin-bottom: 32px;
+          margin-left: 2px;
 
-        &--large {
-          background-color: govuk-colour('dark-blue');
-        }
-      }
-
-      &__popup {
-        margin-bottom: 32px;
-        margin-left: 2px;
-
-        .popup * {
-          font-size: 1.1em;
+          .popup * {
+            font-size: 1.1em;
+          }
         }
       }
     }

@@ -8,6 +8,7 @@ import { Application } from '@hotwired/stimulus';
 // view components
 import FiltersController from '../../components/filters_component/filters_component';
 import MapController from '../../components/map_component/map_component';
+import MapSidebarController from '../../components/map_component/sidebar';
 
 // js components
 import AutocompleteController from './components/autocomplete/autocomplete';
@@ -43,6 +44,7 @@ application.register('form', FormController);
 application.register('location-finder', LocationFinderController);
 application.register('manage-qualifications', ManageQualificationsController);
 application.register('map', MapController);
+application.register('map-sidebar', MapSidebarController);
 application.register('panel', PanelController);
 application.register('show-hidden-content', ShowHiddenContentController);
 application.register('tracked-link', TrackedLinkController);

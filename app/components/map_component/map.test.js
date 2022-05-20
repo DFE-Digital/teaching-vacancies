@@ -28,7 +28,10 @@ let spies;
 beforeAll(() => {
   document.body.innerHTML = `<div class='map-component' id='map-component' data-controller='map' data-radius='12' data-point=${point}>
   <div id='markers'></div>
-  <div class='map-component__map' id='map'></div>
+    <div class="map-component__container">
+      <div class="map-component__sidebar" data-map-target="sidebar"></div>
+      <div class='map-component__map' id='map'></div>
+    </div>
   </div>`;
 
   jest.mock('./map_component', () => jest.fn().mockImplementation(() => ({
@@ -68,18 +71,43 @@ describe('when map is initialised with layers', () => {
   };
 
   test('location marker is added to map', () => {
-    expect(spies.addMarker).toHaveBeenNthCalledWith(1, { point: { type: 'Point', coordinates: [-0.1583477, 51.46761] }, variant: 'location' });
+    expect(spies.addMarker).toHaveBeenNthCalledWith(1, { point: { type: 'Point', coordinates: [-0.1583477, 51.46761] }, variant: 'location', title: 'Search location' });
   });
 
-  test('markers are added to map', () => {
-    markerOptions.addToLayer = expect.any(Object);
+  markerOptions.addToLayer = expect.any(Object);
+
+  test('organisation marker is added to map', () => {
     markerOptions.variant = 'pin';
-    markerOptions.popup = {
-      data: expect.any(Function),
+    markerOptions.title = 'Vacancy location';
+    markerOptions.details = {
+      target: {
+        data: expect.any(Function),
+        eventHandlers: {
+          opened: expect.any(Function),
+          close: expect.any(Function),
+        },
+        ui: 'default',
+      },
       open: false,
     };
 
     expect(spies.addMarker).toHaveBeenNthCalledWith(2, markerOptions);
+  });
+
+  test('vacancy marker is added to map', () => {
+    markerOptions.variant = 'pin';
+    markerOptions.title = 'Vacancy';
+    markerOptions.details = {
+      target: {
+        data: expect.any(Function),
+        eventHandlers: {
+          opened: expect.any(Function),
+          close: expect.any(Function),
+        },
+        ui: 'custom',
+      },
+      open: false,
+    };
     expect(spies.addMarker).toHaveBeenNthCalledWith(3, markerOptions);
   });
 

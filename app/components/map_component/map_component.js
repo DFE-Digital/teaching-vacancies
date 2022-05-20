@@ -2,6 +2,7 @@ import { Controller } from '@hotwired/stimulus';
 import Map from './map';
 import Cluster from './cluster';
 import MarkerData from './marker/service';
+import template from './marker/template';
 import './map.scss';
 
 const MapController = class extends Controller {
@@ -23,7 +24,7 @@ const MapController = class extends Controller {
     this.createMap();
 
     if (this.element.dataset.radius) {
-      this.addMarker({ point: this.point, variant: 'location' });
+      this.addMarker({ point: this.point, variant: 'location', title: 'Search location' });
       this.addLayer(Map.createCircle(this.radius, this.point, MapController.SHAPE_STYLES));
     }
 
@@ -31,9 +32,23 @@ const MapController = class extends Controller {
       this.addMarker({
         point: JSON.parse(markerTarget.dataset.point),
         variant: 'pin',
-        popup: {
-          data: () => MarkerData.getMetaData(markerTarget.dataset),
+        id: markerTarget.dataset.id,
+        title: markerTarget.dataset.markerType === 'organisation' ? 'Vacancy location' : 'Vacancy',
+        details: {
           open: this.markerTargets.length === 1,
+          target: {
+            data: () => MarkerData.getMetaData(markerTarget.dataset),
+            ui: markerTarget.dataset.markerType === 'vacancy' ? 'custom' : 'default',
+            eventHandlers: {
+              opened: markerTarget.dataset.markerType === 'vacancy'
+                ? (markerData) => {
+                  markerData.id = markerTarget.dataset.id;
+                  this.dispatch('marker:click', { detail: markerData, id: markerTarget.dataset.id });
+                }
+                : (markerData) => template.popup(markerData),
+              close: () => this.dispatch('user:interaction'),
+            },
+          },
         },
         addToLayer: this.cluster.group,
       });
@@ -63,6 +78,10 @@ const MapController = class extends Controller {
 
   addMarker(options) {
     this.map.createMarker(options);
+  }
+
+  centerMarker() {
+    this.map.centerActiveMarker();
   }
 
   addLayer(layer) {
