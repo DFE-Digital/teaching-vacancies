@@ -39,7 +39,7 @@ class VacanciesController < ApplicationController
     %w[job_role job_roles subjects phases working_patterns].each do |facet|
       params[facet] = params[facet].split if params[facet].is_a?(String)
     end
-    params.permit(:keyword, :location, :radius, :subject, :sort_by,
+    params.permit(:keyword, :previous_keyword, :location, :radius, :subject, :sort_by,
                   job_role: [], job_roles: [], subjects: [], phases: [], working_patterns: [])
   end
 

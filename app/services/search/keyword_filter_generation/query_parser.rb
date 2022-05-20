@@ -27,6 +27,6 @@ class Search::KeywordFilterGeneration::QueryParser < Parslet::Parser
   end
 
   def parse(query)
-    super(query.downcase.delete("."))
+    super(query.downcase.delete(".,;"))
   end
 end

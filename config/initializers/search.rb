@@ -12,17 +12,17 @@ Rails.application.configure do
   synonym_triggers = synonyms
     .flatten
     .uniq
-    .sort_by { |phrase| phrase.count(" ") }
+    .sort_by { |phrase| [phrase.count(" "), phrase.length] }
     .reverse
   oneway_synonym_triggers = oneway_synonyms
     .keys
     .uniq
-    .sort_by { |phrase| phrase.count(" ") }
+    .sort_by { |phrase| [phrase.count(" "), phrase.length] }
     .reverse
   keyword_filter_mapping_triggers = keyword_filter_mappings
     .keys
     .uniq
-    .sort_by { |phrase| phrase.count(" ") }
+    .sort_by { |phrase| [phrase.count(" "), phrase.length] }
     .reverse
 
   config.x.search.synonyms = synonyms
