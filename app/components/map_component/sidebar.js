@@ -51,7 +51,8 @@ const Sidebar = class extends Controller {
       this.open();
     }
 
-    this.contentTarget.innerHTML = template.sidebar(detail);
+    this.contentTarget.innerHTML = '';
+    this.contentTarget.appendChild(template.sidebar(detail));
     this.userClosed = false;
   }
 

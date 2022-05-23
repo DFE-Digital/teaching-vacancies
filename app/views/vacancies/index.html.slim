@@ -23,7 +23,7 @@
                 polygon: @vacancies_search.location_search.geojson_polygon,
                 point: @vacancies_search.location_search.geojson_point,
                 radius: @vacancies_search.location_search.radius_in_meters,
-                marker_type: "vacancy")
+                marker: { type: "vacancy", tracking: { link: "vacancy_visited_from_map", marker: "vacancy_popup_opened_from_map" } })
 
       #search-results
         - if @vacancies.any?

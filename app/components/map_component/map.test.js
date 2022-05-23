@@ -27,7 +27,7 @@ let spies;
 
 beforeAll(() => {
   document.body.innerHTML = `<div class='map-component' id='map-component' data-controller='map' data-radius='12' data-point=${point}>
-  <div id='markers'></div>
+  <div id='markers' data-map-target='markers'></div>
     <div class="map-component__container">
       <div class="map-component__sidebar" data-map-target="sidebar"></div>
       <div class='map-component__map' id='map'></div>
