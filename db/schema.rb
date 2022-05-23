@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_13_132632) do
+ActiveRecord::Schema.define(version: 2022_05_20_105754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -258,6 +258,17 @@ ActiveRecord::Schema.define(version: 2022_05_13_132632) do
     t.geography "area", limit: {:srid=>4326, :type=>"geometry", :geographic=>true}
     t.index ["area"], name: "index_location_polygons_on_area", using: :gist
     t.index ["name"], name: "index_location_polygons_on_name"
+  end
+
+  create_table "markers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "vacancy_id", null: false
+    t.uuid "organisation_id", null: false
+    t.geography "geopoint", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["geopoint"], name: "index_markers_on_geopoint", using: :gist
+    t.index ["organisation_id"], name: "index_markers_on_organisation_id"
+    t.index ["vacancy_id"], name: "index_markers_on_vacancy_id"
   end
 
   create_table "notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -514,6 +525,8 @@ ActiveRecord::Schema.define(version: 2022_05_13_132632) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "emergency_login_keys", "publishers"
+  add_foreign_key "markers", "organisations"
+  add_foreign_key "markers", "vacancies"
   add_foreign_key "notes", "job_applications"
   add_foreign_key "notes", "publishers"
   add_foreign_key "publisher_preferences", "publishers"

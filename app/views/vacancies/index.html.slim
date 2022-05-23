@@ -6,10 +6,7 @@
 = search_results_heading(vacancies_search: @vacancies_search, landing_page: @landing_page)
 
 - if @show_map
-  = map(markers: vacancy_map_markers(@vacancies_search.all,
-                                     @vacancies_search.location_search.polygon,
-                                     @vacancies_search.location_search.point_coordinates,
-                                     @vacancies_search.location_search.radius_in_meters),
+  = map(markers: @vacancies_search.markers,
         polygon: @vacancies_search.location_search.geojson_polygon,
         point: @vacancies_search.location_search.geojson_point,
         radius: @vacancies_search.location_search.radius_in_meters,

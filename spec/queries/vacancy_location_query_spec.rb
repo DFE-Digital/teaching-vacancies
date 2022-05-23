@@ -59,7 +59,7 @@ RSpec.describe VacancyLocationQuery do
         expect(Geocoding).to receive(:new).with("louth").and_return(geocoder)
 
         expect(default_scope).to receive(:where).with(
-          "ST_DWithin(geolocation, ?, ?)",
+          "ST_DWithin(vacancies.geolocation, ?, ?)",
           "POINT(7 -7)",
           143_201,
         ).and_return(where_scope)
