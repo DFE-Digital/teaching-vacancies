@@ -117,7 +117,6 @@ module VacanciesHelper
     {
       "#{t("breadcrumbs.home")}": root_path,
       **parent_breadcrumb,
-      "#{vacancy.job_title}": "",
     }
   end
 
