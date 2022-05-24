@@ -1,7 +1,7 @@
 class Jobseekers::SearchForm
   include ActiveModel::Model
 
-  attr_reader :keyword,
+  attr_reader :keyword, :previous_keyword,
               :location, :radius,
               :job_roles, :subjects, :phases, :working_patterns,
               :job_role_options, :ect_suitable_options, :send_responsible_options,
@@ -11,6 +11,7 @@ class Jobseekers::SearchForm
   def initialize(params = {})
     strip_trailing_whitespaces_from_params(params)
     @keyword = params[:keyword] || params[:subject]
+    @previous_keyword = params[:previous_keyword]
     @location = params[:location]
     @job_roles = params[:job_roles] || params[:job_role] || []
     @subjects = params[:subjects]
@@ -26,6 +27,7 @@ class Jobseekers::SearchForm
   def to_hash
     {
       keyword: @keyword,
+      previous_keyword: @previous_keyword,
       location: @location,
       radius: @radius,
       job_roles: @job_roles,
