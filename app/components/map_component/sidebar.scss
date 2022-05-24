@@ -46,11 +46,11 @@
     &__close {
       background-color: transparent;
       border: 0;
-      height: 24px;
+      height: 14px;
       position: absolute;
-      right: 0;
+      right: govuk-spacing(2);
       top: govuk-spacing(2);
-      width: 24px;
+      width: 14px;
 
       &:focus {
         outline: $govuk-focus-width solid $govuk-focus-colour;

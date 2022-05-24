@@ -17,6 +17,7 @@ const Sidebar = class extends Controller {
 
   close() {
     this.containerTarget.classList.remove(SIDEBAR_VISIBLE_CLASS);
+    this.closeTarget.blur();
     document.getElementById(this.currentId).focus();
   }
 };
