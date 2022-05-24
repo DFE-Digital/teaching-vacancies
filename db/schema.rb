@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_20_105754) do
+ActiveRecord::Schema.define(version: 2022_05_24_160302) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -506,6 +506,7 @@ ActiveRecord::Schema.define(version: 2022_05_20_105754) do
     t.string "external_advert_url"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["geolocation"], name: "index_vacancies_on_geolocation", using: :gist
+    t.index ["publish_on"], name: "index_vacancies_on_publish_on"
     t.index ["publisher_id"], name: "index_vacancies_on_publisher_id"
     t.index ["publisher_organisation_id"], name: "index_vacancies_on_publisher_organisation_id"
     t.index ["searchable_content"], name: "index_vacancies_on_searchable_content", using: :gin
