@@ -11,6 +11,7 @@ class Api::MarkersController < Api::ApplicationController
       heading_text: heading_text,
       heading_url: heading_url,
       anonymised_id: anonymised_id,
+      name: organisation.name,
       address: full_address(organisation),
       description: description,
       details: details,
@@ -48,10 +49,10 @@ class Api::MarkersController < Api::ApplicationController
 
     [
       { label: t("jobs.salary"), value: vacancy.salary },
-      { label: organisation_type_label(vacancy), value: organisation_type(organisation) },
+      { label: t("jobs.phase"), value: vacancy.readable_phases.map(&:capitalize).join(", ") },
       { label: t("jobs.working_patterns"), value: working_patterns(vacancy) },
       { label: t("jobs.expires_at"), value: format_time_to_datetime_at(vacancy.expires_at) },
-    ]
+    ].select { |d| d[:value].present? }
   end
 
   def check_valid_params

@@ -1,4 +1,4 @@
-import popup from './popup';
+import template from './template';
 import Service from './service';
 
 jest.mock('./service');
@@ -11,7 +11,7 @@ describe('when an organisation popup is created', () => {
       markerType: 'organisation',
     });
 
-    document.body.insertAdjacentHTML('afterbegin', popup(response));
+    document.body.insertAdjacentHTML('afterbegin', template.popup(response));
   });
 
   test('it displays heading link', () => {
@@ -38,7 +38,7 @@ describe('when a vacancy popup is created', () => {
       markerType: 'vacancy',
     });
 
-    document.body.insertAdjacentHTML('afterbegin', popup(response));
+    document.body.insertAdjacentHTML('afterbegin', template.popup(response));
   });
 
   test('it displays heading link', () => {
