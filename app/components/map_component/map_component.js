@@ -6,7 +6,7 @@ import template from './marker/template';
 import './map.scss';
 
 const MapController = class extends Controller {
-  static targets = ['marker'];
+  static targets = ['marker', 'markers'];
 
   static DEFAULT_ZOOM = 13;
 
@@ -18,32 +18,56 @@ const MapController = class extends Controller {
     opacity: 1,
   };
 
+  static MARKER_OPTIONS = {
+    vacancy: {
+      ui: 'custom',
+      title: 'Vacancy',
+      variant: 'pin',
+    },
+    organisation: {
+      ui: 'default',
+      title: 'Vacancy location',
+      variant: 'pin',
+    },
+    location: {
+      title: 'Search location',
+      variant: 'location',
+    },
+  };
+
   connect() {
     if (this.markerTargets.length === 0) return;
 
     this.createMap();
 
     if (this.element.dataset.radius) {
-      this.addMarker({ point: this.point, variant: 'location', title: 'Search location' });
+      this.addMarker({
+        point: this.point,
+        variant: MapController.MARKER_OPTIONS.location.variant,
+        title: MapController.MARKER_OPTIONS.location.title,
+      });
       this.addLayer(Map.createCircle(this.radius, this.point, MapController.SHAPE_STYLES));
     }
 
-    this.markerTargets.forEach((markerTarget) => {
-      this.addMarker({
-        point: JSON.parse(markerTarget.dataset.point),
-        variant: 'pin',
-        id: markerTarget.dataset.id,
-        title: markerTarget.dataset.markerType === 'organisation' ? 'Vacancy location' : 'Vacancy',
+    let markerOptions;
+
+    this.markerTargets.forEach((marker) => {
+      markerOptions = {
+        point: JSON.parse(marker.dataset.point),
+        variant: MapController.MARKER_OPTIONS[marker.dataset.markerType].variant,
+        id: marker.dataset.id,
+        title: MapController.MARKER_OPTIONS[marker.dataset.markerType].title,
         details: {
           open: this.markerTargets.length === 1,
           target: {
-            data: () => MarkerData.getMetaData(markerTarget.dataset),
-            ui: markerTarget.dataset.markerType === 'vacancy' ? 'custom' : 'default',
+            data: () => MarkerData.getMetaData(marker.dataset),
+            ui: MapController.MARKER_OPTIONS[marker.dataset.markerType].ui,
             eventHandlers: {
-              opened: markerTarget.dataset.markerType === 'vacancy'
+              opened: marker.dataset.markerType === 'vacancy'
                 ? (markerData) => {
-                  markerData.id = markerTarget.dataset.id;
-                  this.dispatch('marker:click', { detail: markerData, id: markerTarget.dataset.id });
+                  this.dispatch('marker:click', {
+                    detail: { ...markerData, ...{ id: marker.dataset.id } },
+                  });
                 }
                 : (markerData) => template.popup(markerData),
               close: () => this.dispatch('user:interaction'),
@@ -51,7 +75,9 @@ const MapController = class extends Controller {
           },
         },
         addToLayer: this.cluster.group,
-      });
+      };
+
+      this.addMarker(markerOptions);
     });
 
     if (this.polygons) this.addLayer(Map.createPolygon(this.polygons, MapController.SHAPE_STYLES));
