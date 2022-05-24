@@ -22,7 +22,7 @@ class ImportFromVacancySourcesJob < ApplicationJob
 
       Vacancy.live.where(external_source: source_klass.source_name, updated_at: (...import_start_time)).find_each do |v|
         Rails.logger.info("Set vacancy #{v.id} as removed from external system")
-        v.update(status: :removed_from_external_system)
+        v.update_attribute(:status, :removed_from_external_system)
       end
     end
   end

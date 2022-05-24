@@ -70,7 +70,7 @@ class UnitedLearningVacancySource
 
       # TODO: What about central office/multiple school vacancies?
       job_location: :at_one_school,
-      readable_job_location: organisations_for(item).first.name,
+      readable_job_location: organisations_for(item).first&.name,
       organisations: organisations_for(item),
       about_school: organisations_for(item).first&.description,
     }

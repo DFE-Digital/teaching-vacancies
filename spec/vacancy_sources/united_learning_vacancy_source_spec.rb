@@ -48,6 +48,7 @@ RSpec.describe UnitedLearningVacancySource do
         create(
           :vacancy,
           :external,
+          phase: "secondary",
           external_source: "united_learning",
           external_reference: "751190",
           organisations: [school],

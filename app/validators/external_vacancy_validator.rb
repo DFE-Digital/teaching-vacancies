@@ -3,7 +3,8 @@ class ExternalVacancyValidator < ActiveModel::Validator
     validate_presence(
       record,
       :job_title, :job_advert, :salary, :publish_on, :expires_at,
-      :external_reference, :external_advert_url
+      :external_reference, :external_advert_url,
+      :job_roles, :contract_type, :phase, :working_patterns
     )
 
     record.errors.add(:organisations, "No school(s) associated with vacancy") if record.organisations.empty?

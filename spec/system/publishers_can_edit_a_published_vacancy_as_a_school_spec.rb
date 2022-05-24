@@ -333,6 +333,7 @@ RSpec.describe "Publishers can edit a vacancy" do
     let!(:vacancy) do
       create(
         :vacancy, :external, :at_one_school, :published, :expires_tomorrow,
+        phase: "secondary",
         job_title: "Imported vacancy",
         organisations: [school]
       )
