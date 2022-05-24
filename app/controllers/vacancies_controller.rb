@@ -1,5 +1,5 @@
 class VacanciesController < ApplicationController
-  MAX_TOTAL_RESULTS_FOR_MAP = 200
+  MAX_TOTAL_RESULTS_FOR_MAP = 500
 
   before_action :set_landing_page, only: %i[index]
   after_action :trigger_search_performed_event, only: %i[index]
