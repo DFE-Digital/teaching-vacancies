@@ -5,13 +5,6 @@
 
 = search_results_heading(vacancies_search: @vacancies_search, landing_page: @landing_page)
 
-- if @show_map
-  = map(markers: @vacancies_search.markers,
-        polygon: @vacancies_search.location_search.geojson_polygon,
-        point: @vacancies_search.location_search.geojson_point,
-        radius: @vacancies_search.location_search.radius_in_meters,
-        marker_type: "vacancy")
-
 = form_for @form, as: "", url: jobs_path, method: :get, html: { data: { controller: "form" }, role: "search" } do |f|
   .govuk-grid-row
     .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-3"
@@ -23,9 +16,15 @@
     .govuk-grid-column-two-thirds-at-desktop
       = render "vacancies/search/fields_and_button", f: f, form: @form
       = render "vacancies/search/open_filters_button", form: @form
-      = render "vacancies/search/sort_and_stats", form: @form, vacancies_search: @vacancies_search, vacancies: @vacancies
       #search-results
+        - if @show_map
+          = map(markers: @vacancies_search.markers,
+                polygon: @vacancies_search.location_search.geojson_polygon,
+                point: @vacancies_search.location_search.geojson_point,
+                radius: @vacancies_search.location_search.radius_in_meters,
+                marker_type: "vacancy")
         - if @vacancies.any?
+          = render "vacancies/search/sort_and_stats", form: @form, vacancies_search: @vacancies_search, vacancies: @vacancies
           = render "vacancies/search/results", vacancies: @vacancies
         - elsif @vacancies_search.active_criteria?
           = render "vacancies/search/no_results_suggestions", vacancies_search: @vacancies_search

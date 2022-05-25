@@ -35,11 +35,12 @@
       margin-right: govuk-spacing(2);
       position: absolute;
       top: govuk-spacing(2);
+      width: 94%;
       z-index: 10000;
 
       @include govuk-media-query($from: desktop) {
         left: govuk-spacing(2);
-        width: 30%;
+        width: 42%;
       }
     }
 
