@@ -4,6 +4,7 @@
 
 .govuk-grid-row class="govuk-!-margin-top-6"
   .govuk-grid-column-one-half
+    p.govuk-body Number of organisations without slug: #{Organisation.where(slug: nil).count}
     h2.govuk-heading-m = t(".title_h2")
     p.govuk-body = t(".description")
     p.govuk-body = t(".personal_statement_section.description_html",

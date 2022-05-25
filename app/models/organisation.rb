@@ -1,6 +1,10 @@
 require "digest"
 
 class Organisation < ApplicationRecord
+  extend FriendlyId
+
+  friendly_id :slug_candidates, use: :slugged
+
   has_many :organisation_vacancies, dependent: :destroy
   has_many :vacancies, through: :organisation_vacancies
 
@@ -72,5 +76,11 @@ class Organisation < ApplicationRecord
 
   def has_ofsted_report?
     urn.present?
+  end
+
+  private
+
+  def slug_candidates
+    [:name, %i[name town], %i[name postcode]]
   end
 end
