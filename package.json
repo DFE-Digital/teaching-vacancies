@@ -37,7 +37,7 @@
     "jest": "^28.1.0",
     "jest-environment-jsdom": "^28.1.0",
     "postcss": "^8.4.8",
-    "stylelint": "^14.8.2",
+    "stylelint": "^14.8.5",
     "stylelint-config-sass-guidelines": "^9.0.1",
     "stylelint-config-standard": "^25.0.0",
     "webpack": "^4.44.2",
