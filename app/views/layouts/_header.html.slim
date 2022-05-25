@@ -5,7 +5,7 @@
     - if current_organisation.school_group?
       = header.navigation_item text: t("nav.manage_settings"), href: publishers_schools_path, active: schools_in_your_trust_active?
     - else
-      = header.navigation_item text: t("nav.manage_settings"), href: publishers_school_path(current_organisation), active: schools_in_your_trust_active?
+      = header.navigation_item text: t("nav.manage_settings"), href: publishers_school_path(current_organisation.id), active: schools_in_your_trust_active?
     = header.navigation_item text: t("nav.notifications_html", count: current_publisher.notifications.unread.count), href: publishers_notifications_path
     = header.navigation_item text: t("nav.school_hiring_guides"), href: posts_path(section: "get-help-hiring")
     = header.navigation_item text: t("nav.sign_out"), href: destroy_publisher_session_path, options: { method: :delete }
