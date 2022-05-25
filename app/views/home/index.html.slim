@@ -4,12 +4,8 @@
 
 .govuk-grid-row class="govuk-!-margin-top-6"
   .govuk-grid-column-one-half
-    h2.govuk-heading-m = t(".title_h2")
-    p.govuk-body = t(".description")
-    p.govuk-body = t(".personal_statement_section.description_html",
-                     personal_statement_guide_link: govuk_link_to(t(".personal_statement_section.link_text"),
-                                                    post_path(section: "jobseeker-guides", post_name: "how-to-write-teacher-personal-statement"),
-                                                    class: "govuk-link--no-visited-state"))
+    p.govuk-body Number of organisations without slug: #{Organisation.where(slug: nil).count}
+
   .govuk-grid-column-one-quarter
     h2.govuk-heading-m = t(".jobseeker_section.title")
     - if jobseeker_signed_in?
