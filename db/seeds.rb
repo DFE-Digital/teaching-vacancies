@@ -7,6 +7,7 @@ Gias::ImportSchoolsAndLocalAuthorities.new.call
 Gias::ImportTrusts.new.call
 
 ImportPolygonDataJob.perform_now
+SetOrganisationSlugsJob.perform_later
 
 bexleyheath_school = School.find_by!(urn: "137138")
 weydon_trust = SchoolGroup.find_by!(uid: "16644")
