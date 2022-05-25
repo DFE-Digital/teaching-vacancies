@@ -2,7 +2,7 @@
   - summary_list.row do |row|
     - row.key text: t("schools.description")
     - row.value text: organisation.description? ? truncate(organisation.description, length: 130) : "Not provided"
-    - row.action text: t("buttons.change"), href: edit_publishers_school_path(organisation), classes: "govuk-link--no-visited-state"
+    - row.action text: t("buttons.change"), href: edit_publishers_school_path(organisation.id), classes: "govuk-link--no-visited-state"
 
   - unless organisation.local_authority?
     - summary_list.row do |row|
@@ -27,12 +27,12 @@
     - summary_list.row do |row|
       - row.key text: t("schools.website")
       - row.value text: organisation.url ? open_in_new_tab_link_to(organisation.url, organisation.url, class: "wordwrap") : t("jobs.not_defined")
-      - row.action text: t("buttons.change"), href: edit_publishers_school_path(organisation), classes: "govuk-link--no-visited-state"
+      - row.action text: t("buttons.change"), href: edit_publishers_school_path(organisation.id), classes: "govuk-link--no-visited-state"
   - else
     - summary_list.row do |row|
       - row.key text: t("school_groups.website", organisation_type: organisation_type_basic(organisation).humanize)
       - row.value text: organisation.url ? open_in_new_tab_link_to(organisation.url, organisation.url, class: "wordwrap") : t("jobs.not_defined")
-      - row.action text: t("buttons.change"), href: edit_publishers_school_path(organisation), classes: "govuk-link--no-visited-state"
+      - row.action text: t("buttons.change"), href: edit_publishers_school_path(organisation.id), classes: "govuk-link--no-visited-state"
 
   - if organisation.school?
     - summary_list.row do |row|
