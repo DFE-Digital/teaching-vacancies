@@ -29,7 +29,7 @@ class VacanciesController < ApplicationController
   private
 
   def form
-    @form ||= Jobseekers::SearchForm.new(search_params.merge(filters_from_keywords))
+    @form ||= Jobseekers::SearchForm.new(search_params.merge(landing_page: @landing_page))
   end
 
   def search_params
@@ -41,20 +41,6 @@ class VacanciesController < ApplicationController
     end
     params.permit(:keyword, :previous_keyword, :location, :radius, :subject, :sort_by,
                   job_role: [], job_roles: [], subjects: [], phases: [], working_patterns: [])
-  end
-
-  # Determines additional filters to apply if the user's keyword(s) match certain phrases
-  # (to improve quality of results)
-  def filters_from_keywords
-    # Do not apply filters on landing pages, even if they have a keyword set (as landing pages
-    # should always be 100% manually configured)
-    return {} if @landing_page
-
-    # If the user changes the filters *without* changing their keywords, do not override their
-    # decision
-    return {} if params[:previous_keyword] == params[:keyword]
-
-    Search::KeywordFilterGeneration::QueryParser.filters_from_query(params[:keyword])
   end
 
   def set_landing_page
@@ -83,7 +69,7 @@ class VacanciesController < ApplicationController
         vacancies_on_page: vacancy_ids,
         location_polygon_used: polygon_id,
         landing_page: params[:landing_page_slug],
-        filters_set_from_keywords: filters_from_keywords.present?,
+        filters_set_from_keywords: form.filters_from_keyword.present?,
       )
     end
   end
