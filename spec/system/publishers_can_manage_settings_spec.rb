@@ -22,7 +22,7 @@ RSpec.describe "Publishers can manage settings" do
       click_on I18n.t("buttons.save_changes")
 
       expect(page).to have_content("Details updated for #{organisation.name}")
-      expect(page.current_path).to eq(publishers_school_path(organisation))
+      expect(page.current_path).to eq(publishers_school_path(organisation.id))
     end
   end
 
