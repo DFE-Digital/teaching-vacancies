@@ -346,8 +346,10 @@ ActiveRecord::Schema.define(version: 2022_05_24_160302) do
     t.string "establishment_status"
     t.geography "geopoint", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
     t.text "gias_data_hash"
+    t.string "slug"
     t.index ["geopoint"], name: "index_organisations_on_geopoint", using: :gist
     t.index ["local_authority_code"], name: "index_organisations_on_local_authority_code", unique: true
+    t.index ["slug"], name: "index_organisations_on_slug", unique: true
     t.index ["uid"], name: "index_organisations_on_uid", unique: true
     t.index ["urn"], name: "index_organisations_on_urn", unique: true
   end
