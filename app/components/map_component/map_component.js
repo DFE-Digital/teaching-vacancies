@@ -5,6 +5,23 @@ import MarkerData from './marker/service';
 import template from './marker/template';
 import './map.scss';
 
+const MARKER_OPTIONS = {
+  vacancy: {
+    ui: 'custom',
+    title: 'Vacancy',
+    variant: 'pin',
+  },
+  organisation: {
+    ui: 'default',
+    title: 'Vacancy location',
+    variant: 'pin',
+  },
+  location: {
+    title: 'Search location',
+    variant: 'location',
+  },
+};
+
 const MapController = class extends Controller {
   static targets = ['marker', 'markers'];
 
@@ -18,22 +35,7 @@ const MapController = class extends Controller {
     opacity: 1,
   };
 
-  static MARKER_OPTIONS = {
-    vacancy: {
-      ui: 'custom',
-      title: 'Vacancy',
-      variant: 'pin',
-    },
-    organisation: {
-      ui: 'default',
-      title: 'Vacancy location',
-      variant: 'pin',
-    },
-    location: {
-      title: 'Search location',
-      variant: 'location',
-    },
-  };
+  static MARKER_OPTIONS = MARKER_OPTIONS;
 
   connect() {
     if (this.markerTargets.length === 0) return;
@@ -63,7 +65,7 @@ const MapController = class extends Controller {
             data: () => MarkerData.getMetaData(marker.dataset),
             ui: MapController.MARKER_OPTIONS[marker.dataset.markerType].ui,
             eventHandlers: {
-              opened: marker.dataset.markerType === 'vacancy'
+              opened: MapController.MARKER_OPTIONS[marker.dataset.markerType].ui === 'custom'
                 ? (markerData) => {
                   this.dispatch('marker:click', {
                     detail: { ...markerData, ...{ id: marker.dataset.id } },
