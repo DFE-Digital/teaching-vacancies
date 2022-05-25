@@ -2,6 +2,12 @@
 
 .js-enabled {
   .panel-component {
+    margin-top: 0;
+
+    @include govuk-media-query($until: desktop) {
+      margin-top: govuk-spacing(2);
+    }
+
     &__toggle {
       display: block;
       width: 100%;
