@@ -1,0 +1,9 @@
+.search-results.divider-bottom class="govuk-!-margin-bottom-3"
+  .govuk-heading-m = organisation_name
+
+  .no-results__job-alert-link--organisation
+    = govuk_link_to t("jobs.alert.organisation", organisation_type: organisation_type_basic(@vacancies_search.organisation)),
+                    new_subscription_path(search_criteria: @vacancies_search.search_criteria),
+                    class: "icon icon--left icon--alert-blue"
+
+p = t(".no_active_jobs")

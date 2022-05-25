@@ -249,4 +249,9 @@ Rails.application.routes.draw do
       to: "vacancies#index",
       as: :landing_page,
       constraints: ->(params, _) { LandingPage.exists?(params[:landing_page_slug]) }
+
+  get "/organisations/:organisation_landing_page_name",
+      to: "vacancies#index",
+      as: :organisation_landing_page,
+      constraints: ->(params, _) { OrganisationLandingPage.exists?(params[:organisation_landing_page_name]) }
 end

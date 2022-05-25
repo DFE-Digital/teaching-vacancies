@@ -75,9 +75,9 @@ module VacanciesHelper
 
   def vacancy_full_job_location(vacancy)
     organisation = vacancy.organisation
-    return "#{t('publishers.organisations.readable_job_location.at_multiple_schools')}, #{organisation.name}" if vacancy.at_multiple_schools?
+    return "#{t('publishers.organisations.readable_job_location.at_multiple_schools')}, #{govuk_link_to(organisation.name, organisation_landing_page_path(organisation))}".html_safe if vacancy.at_multiple_schools?
 
-    address_join([organisation.name, organisation.town, organisation.county, organisation.postcode])
+    address_join([govuk_link_to(organisation.name, organisation_landing_page_path(organisation)), organisation.town, organisation.county, organisation.postcode]).html_safe
   end
 
   def vacancy_job_location_heading(vacancy)
@@ -106,7 +106,10 @@ module VacanciesHelper
     referrer = URI(request.referrer || "")
     referred_from_jobs_path = referrer.host == request.host && referrer.path == jobs_path
 
-    parent_breadcrumb = if referred_from_jobs_path
+    parent_breadcrumb = if (organisation_slug = referrer_organisation_slug(referrer))
+                          landing_page = OrganisationLandingPage[organisation_slug]
+                          { landing_page.name => organisation_landing_page_path(organisation_slug) }
+                        elsif referred_from_jobs_path
                           { t("breadcrumbs.jobs") => request.referrer }
                         elsif (lp = LandingPage.matching(job_roles: [vacancy.main_job_role]))
                           { lp.title => landing_page_path(lp.slug) }
@@ -118,6 +121,14 @@ module VacanciesHelper
       "#{t("breadcrumbs.home")}": root_path,
       **parent_breadcrumb,
     }
+  end
+
+  def referrer_organisation_slug(referrer)
+    organisation_slug = referrer.path.gsub("/organisations/", "")
+
+    return unless referrer.host == request.host && OrganisationLandingPage.exists?(organisation_slug)
+
+    organisation_slug
   end
 
   def vacancy_activity_log_item(attribute, new_value, organisation_type)

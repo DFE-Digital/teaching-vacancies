@@ -1,14 +1,14 @@
 class SubscriptionPresenter < BasePresenter
   include ApplicationHelper
+  include OrganisationsHelper
 
-  SEARCH_CRITERIA_SORT_ORDER = %i[location
-                                  radius
+  SEARCH_CRITERIA_SORT_ORDER = %w[organisation_slug
                                   keyword
-                                  subject
-                                  job_title
-                                  working_patterns
+                                  location
+                                  job_roles
+                                  subjects
                                   phases
-                                  newly_qualified_teacher].freeze
+                                  working_patterns].freeze
 
   def filtered_search_criteria
     @filtered_search_criteria ||= sorted_search_criteria.each_with_object({}) { |(field, value), criteria|
@@ -20,21 +20,11 @@ class SubscriptionPresenter < BasePresenter
   private
 
   def sorted_search_criteria
-    search_criteria.sort_by { |(key, _)| SEARCH_CRITERIA_SORT_ORDER.find_index(key) || SEARCH_CRITERIA_SORT_ORDER.count }.to_h
-  end
-
-  def full_search_criteria
-    available_filter_hash.merge(sorted_search_criteria.symbolize_keys)
-  end
-
-  def available_filter_hash
-    SEARCH_CRITERIA_SORT_ORDER.index_with { |_el| nil }
+    search_criteria.except("radius").sort_by { |(key, _)| SEARCH_CRITERIA_SORT_ORDER.find_index(key) || SEARCH_CRITERIA_SORT_ORDER.count }.to_h
   end
 
   def search_criteria_field(field, value)
     case field
-    when "radius", "sort_by"
-      nil
     when "location"
       render_location_filter(value, search_criteria["radius"])
     when "job_roles"
@@ -45,8 +35,8 @@ class SubscriptionPresenter < BasePresenter
       render_working_patterns_filter(value)
     when "phases"
       render_phases_filter(value)
-    when "newly_qualified_teacher"
-      render_ect_filter(value)
+    when "organisation_slug"
+      render_organisation_filter
     else
       { "#{field}": value }
     end
@@ -78,7 +68,7 @@ class SubscriptionPresenter < BasePresenter
     { education_phases: value.map { |role| I18n.t("jobs.education_phase_options.#{role}") }.join(", ") }
   end
 
-  def render_ect_filter(value)
-    { '': "Suitable for ECTs" } if value.eql?("true")
+  def render_organisation_filter
+    { organisation_type_basic(organisation).titleize => organisation.name }
   end
 end

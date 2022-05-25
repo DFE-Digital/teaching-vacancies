@@ -26,3 +26,7 @@
 
   - if contact_details
     = render "vacancies/listing/contact_details", vacancy: vacancy, summary_list: summary_list
+
+  - summary_list.row do |row|
+    - row.key text: "See more jobs"
+    - row.value text: organisation_vacancies_link(organisation)

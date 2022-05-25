@@ -55,4 +55,8 @@ class Subscription < ApplicationRecord
   def fix_wrong_email
     self.email = email.gsub(/\.con$/, ".com")
   end
+
+  def organisation
+    Organisation.find_by(slug: search_criteria["organisation_slug"])
+  end
 end

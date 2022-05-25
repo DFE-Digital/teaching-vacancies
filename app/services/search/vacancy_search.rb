@@ -5,13 +5,14 @@ class Search::VacancySearch
   extend Forwardable
   def_delegators :location_search, :point_coordinates
 
-  attr_reader :search_criteria, :keyword, :location, :radius, :sort, :page, :per_page
+  attr_reader :search_criteria, :keyword, :location, :radius, :organisation_slug, :sort, :page, :per_page
 
   def initialize(search_criteria, sort: nil, page: nil, per_page: nil)
     @search_criteria = search_criteria
     @keyword = search_criteria[:keyword]
     @location = search_criteria[:location]
     @radius = search_criteria[:radius]
+    @organisation_slug = search_criteria[:organisation_slug]
 
     @sort = sort || Search::VacancySort.new(keyword: keyword)
     @per_page = (per_page || DEFAULT_HITS_PER_PAGE).to_i
@@ -49,6 +50,10 @@ class Search::VacancySearch
     [(page * per_page), total_count].min
   end
 
+  def organisation
+    Organisation.find_by(slug: organisation_slug) if organisation_slug
+  end
+
   def vacancies
     @vacancies ||= scope.page(page).per(per_page)
   end
@@ -68,6 +73,7 @@ class Search::VacancySearch
 
   def scope
     scope = Vacancy.live.includes(:organisations)
+    scope = scope.where(id: organisation.all_vacancies.pluck(:id)) if organisation
     scope = scope.search_by_location(location, radius) if location
     scope = scope.search_by_filter(search_criteria) if search_criteria.any?
     scope = scope.search_by_full_text(keyword) if keyword.present?

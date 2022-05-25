@@ -65,84 +65,96 @@ RSpec.describe SubscriptionPresenter do
       end
     end
 
-    context "with the ECT filter" do
-      let(:search_criteria) { { newly_qualified_teacher: "true" } }
+    context "when the job alert has been created from an organisation landing page" do
+      let(:search_criteria) { { organisation_slug: organisation.slug } }
 
-      it "formats and returns the working pattern" do
-        expect(presenter.filtered_search_criteria[""]).to eq("Suitable for ECTs")
+      context "when the organisation is a school" do
+        let(:organisation) { create(:school) }
+
+        it "formats and returns the organisation type as the key and the organisation name as the value" do
+          expect(presenter.filtered_search_criteria["School"]).to eq(organisation.name)
+        end
+      end
+
+      context "when the organisation is a trust" do
+        let(:organisation) { create(:trust) }
+
+        it "formats and returns the organisation type as the key and the organisation name as the value" do
+          expect(presenter.filtered_search_criteria["Trust"]).to eq(organisation.name)
+        end
+      end
+
+      context "when the organisation is a local authority" do
+        let(:organisation) { create(:local_authority) }
+
+        it "formats and returns the organisation type as the key and the organisation name as the value" do
+          expect(presenter.filtered_search_criteria["Local Authority"]).to eq(organisation.name)
+        end
       end
     end
 
-    context "with unsorted filters" do
+    context "when search criteria are in a different order to the presentable order" do
+      let(:organisation) { create(:school) }
       let(:search_criteria) do
         {
           phases: %w[secondary 16-19],
+          organisation_slug: organisation.slug,
           radius: "10",
-          job_title: "leader",
-          newly_qualified_teacher: "true",
+          job_roles: %w[ect_suitable leadership middle_leader],
           location: "EC2 9AN",
           working_patterns: %w[part_time],
-          subject: "maths",
+          subjects: %w[maths english science],
+          keyword: "foobar",
         }
       end
 
-      it "returns the filters in sort order" do
-        expect(presenter.filtered_search_criteria).to eq(
-          "location" => "Within 10 miles of EC2 9AN",
-          "subject" => "maths",
-          "job_title" => "leader",
-          "working_patterns" => "Part time",
-          "education_phases" => "Secondary, 16-19",
-          "" => "Suitable for ECTs",
-        )
+      it "returns the filters in the presentable order" do
+        expect(presenter.filtered_search_criteria.keys).to eq([
+          organisation_type_basic(organisation).titleize,
+          "keyword",
+          "location",
+          "job_roles",
+          "subjects",
+          "education_phases",
+          "working_patterns",
+        ])
       end
     end
 
     context "with unknown filters" do
+      let(:organisation) { create(:school) }
       let(:search_criteria) do
         {
           radius: "10",
           something: "test",
-          job_title: "leader",
-          newly_qualified_teacher: "true",
           something_else: "testing",
+          phases: %w[secondary 16-19],
+          organisation_slug: organisation.slug,
+          job_roles: %w[ect_suitable leadership middle_leader],
           location: "EC2 9AN",
-          subject: "maths",
+          working_patterns: %w[part_time],
+          subjects: %w[maths english science],
+          keyword: "foobar",
         }
       end
 
       it "returns the unknown filters last" do
-        expect(presenter.filtered_search_criteria).to eq(
-          "location" => "Within 10 miles of EC2 9AN",
-          "subject" => "maths",
-          "job_title" => "leader",
-          "" => "Suitable for ECTs",
-          "something" => "test",
-          "something_else" => "testing",
-        )
+        expect(presenter.filtered_search_criteria.keys).to eq([
+          organisation_type_basic(organisation).titleize,
+          "keyword",
+          "location",
+          "job_roles",
+          "subjects",
+          "education_phases",
+          "working_patterns",
+          "something",
+          "something_else",
+        ])
       end
     end
   end
 
-  describe "#full_search_criteria" do
-    let(:full_search_criteria) { presenter.send(:full_search_criteria) }
-
-    it "adds all possible search criteria to subscription criteria" do
-      expect(full_search_criteria.count).to eq(described_class::SEARCH_CRITERIA_SORT_ORDER.count)
-      expect(full_search_criteria.keys).to match_array(described_class::SEARCH_CRITERIA_SORT_ORDER)
-      expect(full_search_criteria[:keyword]).to eq(search_criteria[:keyword])
-    end
-  end
-
   describe "#search_criteria_field" do
-    it "does not return the radius field" do
-      expect(presenter.send(:search_criteria_field, "radius", "some radius")).to eq(nil)
-    end
-
-    it "does not return the sort_by field" do
-      expect(presenter.send(:search_criteria_field, "sort_by", "search_replica")).to eq(nil)
-    end
-
     it "returns a field:value hash" do
       expect(presenter.send(:search_criteria_field, "random_field", "value")).to eq({ random_field: "value" })
     end

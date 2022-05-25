@@ -1,7 +1,8 @@
 = render "vacancies/search/keyword", f: f, wide: false
-= render "vacancies/search/location", f: f, wide: false
-= render "vacancies/search/current_location", target: "jobseekers-subscription-form-location-field"
-= render "vacancies/search/radius", f: f, wide: false
+- unless @organisation
+  = render "vacancies/search/location", f: f, wide: false
+  = render "vacancies/search/current_location", target: "jobseekers-subscription-form-location-field"
+  = render "vacancies/search/radius", f: f, wide: false
 
 .divider-bottom class="govuk-!-margin-top-6"
 

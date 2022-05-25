@@ -18,6 +18,11 @@ en:
       title: "School & Teaching Jobs in %{location}"
       heading: "%{count} school and teaching jobs in %{location}"
       meta_description: "Find school and teaching jobs in %{location} with Teaching Vacancies. Search for roles and set up email alerts for the latest jobs near you."
+
+    _organisation:
+      title: "School & Teaching Jobs at %{organisation}"
+      heading: "%{count} jobs found at %{organisation}"
+      meta_description: "Find school and teaching jobs at %{organisation} with Teaching Vacancies. Search for roles and set up email alerts for the latest jobs near you."
     ##
     # Content for "static" (non-location) landing pages
     #   Every key is a landing page slug and must exist in `config/landing_pages.yml`

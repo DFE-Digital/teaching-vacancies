@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe Jobseekers::AlertMailer do
   include DatesHelper
+  include NotifyViewsHelper
   include OrganisationsHelper
   include ERB::Util
 
@@ -22,7 +23,7 @@ RSpec.describe Jobseekers::AlertMailer do
   let(:mail) { described_class.alert(subscription.id, vacancies.pluck(:id)) }
   # The array of vacancies is set to length 1 because the order varies, making it hard to test url parameters.
   let(:vacancies) { create_list(:vacancy, 1, :published, organisations: [school]).map { |vacancy| VacancyPresenter.new(vacancy) } }
-  let(:campaign_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "#{frequency}_alert" } }
+  let(:utm_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "#{frequency}_alert" } }
   let(:relevant_job_alert_feedback_url) do
     new_subscription_job_alert_feedback_url(
       subscription.token,
@@ -74,8 +75,8 @@ RSpec.describe Jobseekers::AlertMailer do
       expect(body).to include(I18n.t("jobseekers.alert_mailer.alert.summary.daily", count: 1))
                   .and include(vacancies.first.job_title)
                   .and include(vacancies.first.job_title)
-                  .and include(job_url(vacancies.first, **campaign_params))
-                  .and include(vacancy_full_job_location(vacancies.first))
+                  .and include(job_url(vacancies.first, **utm_params))
+                  .and include(organisation_landing_page_url(vacancies.first.organisation.slug, **utm_params))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.salary", salary: vacancies.first.salary))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.working_pattern", working_pattern: vacancies.first.readable_working_patterns))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.closing_date", closing_date: format_time_to_datetime_at(vacancies.first.expires_at)))
@@ -84,14 +85,14 @@ RSpec.describe Jobseekers::AlertMailer do
                   .and include("Keyword: English")
                   .and include(I18n.t("jobseekers.alert_mailer.alert.alert_frequency", frequency: subscription.frequency))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.edit_link_text"))
-                  .and include(edit_subscription_url(subscription.token, **campaign_params))
+                  .and include(edit_subscription_url(subscription.token, **utm_params))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.feedback.heading"))
                   .and match(/(\[#{I18n.t('jobseekers.alert_mailer.alert.feedback.relevant_link_text')}\]\(.+true)/)
                   .and include(relevant_job_alert_feedback_url)
                   .and match(/(\[#{I18n.t('jobseekers.alert_mailer.alert.feedback.irrelevant_link_text')}\]\(.+false)/)
                   .and include(irrelevant_job_alert_feedback_url)
                   .and include(I18n.t("jobseekers.alert_mailer.alert.feedback.reason"))
-                  .and include(unsubscribe_subscription_url(subscription.token, **campaign_params))
+                  .and include(unsubscribe_subscription_url(subscription.token, **utm_params))
     end
 
     context "when the subscription email matches a jobseeker account" do
@@ -126,8 +127,8 @@ RSpec.describe Jobseekers::AlertMailer do
       expect(body).to include(I18n.t("jobseekers.alert_mailer.alert.summary.weekly", count: 1))
                   .and include(vacancies.first.job_title)
                   .and include(vacancies.first.job_title)
-                  .and include(job_url(vacancies.first, **campaign_params))
-                  .and include(vacancy_full_job_location(vacancies.first))
+                  .and include(job_url(vacancies.first, **utm_params))
+                  .and include(organisation_landing_page_url(vacancies.first.organisation.slug, **utm_params))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.salary", salary: vacancies.first.salary))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.working_pattern",
                                       working_pattern: vacancies.first.readable_working_patterns))
@@ -138,14 +139,14 @@ RSpec.describe Jobseekers::AlertMailer do
                   .and include("Keyword: English")
                   .and include(I18n.t("jobseekers.alert_mailer.alert.alert_frequency", frequency: subscription.frequency))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.edit_link_text"))
-                  .and include(edit_subscription_url(subscription.token, **campaign_params))
+                  .and include(edit_subscription_url(subscription.token, **utm_params))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.feedback.heading"))
                   .and match(/(\[#{I18n.t('jobseekers.alert_mailer.alert.feedback.relevant_link_text')}\]\(.+true)/)
                   .and include(relevant_job_alert_feedback_url)
                   .and match(/(\[#{I18n.t('jobseekers.alert_mailer.alert.feedback.irrelevant_link_text')}\]\(.+false)/)
                   .and include(irrelevant_job_alert_feedback_url)
                   .and include(I18n.t("jobseekers.alert_mailer.alert.feedback.reason"))
-                  .and include(unsubscribe_subscription_url(subscription.token, **campaign_params))
+                  .and include(unsubscribe_subscription_url(subscription.token, **utm_params))
     end
 
     context "when the subscription email matches a jobseeker account" do
