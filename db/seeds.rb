@@ -9,8 +9,11 @@ Gias::ImportTrusts.new.call
 ImportPolygonDataJob.perform_now
 
 bexleyheath_school = School.find_by!(urn: "137138")
+bexleyheath_school.save!
 weydon_trust = SchoolGroup.find_by!(uid: "16644")
+weydon_trust.save!
 southampton_la = SchoolGroup.find_by!(local_authority_code: "852")
+southampton_la.save!
 
 # Users
 users = [
@@ -87,3 +90,5 @@ Vacancy.listed.each do |vacancy|
     FactoryBot.create(:job_application, :"status_#{application_status}", jobseeker: jobseeker, vacancy: vacancy)
   end
 end
+
+SetOrganisationSlugsJob.perform_later

@@ -16,6 +16,11 @@ namespace :db do
       FactoryBot.create(:vacancy, organisations: [school])
     end
   end
+
+  desc "Add FriendlyId slugs to Organisation records"
+  task add_friendlyid_organisation_slugs: :environment do
+    SetOrganisationSlugsJob.perform_now
+  end
 end
 
 namespace :dsi do
@@ -30,6 +35,7 @@ namespace :gias do
   desc "Import schools, trusts and local authorities data"
   task import_schools: :environment do
     ImportOrganisationDataJob.perform_now
+    SetOrganisationSlugsJob.perform_now
   end
 end
 
