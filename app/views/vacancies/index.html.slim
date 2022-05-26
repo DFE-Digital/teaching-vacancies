@@ -1,5 +1,6 @@
 - content_for :skip_links do
-  = govuk_skip_link(href: "#search-results", text: t("jobs.skip_link"))
+  = govuk_skip_link(href: "#map-results", text: t("jobs.skip_link_map"))
+  = govuk_skip_link(href: "#search-results", text: t("jobs.skip_link_list"))
 
 = render "vacancies/search/page_title_and_description", landing_page: @landing_page
 
@@ -16,13 +17,15 @@
     .govuk-grid-column-two-thirds-at-desktop
       = render "vacancies/search/fields_and_button", f: f, form: @form
       = render "vacancies/search/open_filters_button", form: @form
-      #search-results
-        - if @show_map
+      - if @show_map
+        #map-results
           = map(markers: @vacancies_search.markers,
                 polygon: @vacancies_search.location_search.geojson_polygon,
                 point: @vacancies_search.location_search.geojson_point,
                 radius: @vacancies_search.location_search.radius_in_meters,
                 marker_type: "vacancy")
+
+      #search-results
         - if @vacancies.any?
           = render "vacancies/search/sort_and_stats", form: @form, vacancies_search: @vacancies_search, vacancies: @vacancies
           = render "vacancies/search/results", vacancies: @vacancies

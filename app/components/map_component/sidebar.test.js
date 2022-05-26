@@ -19,12 +19,12 @@ let openButton;
 
 beforeAll(() => {
   document.body.innerHTML = `<div data-controller="sidebar" data-action="sidebar:marker:click->sidebar#open">
-     <div data-sidebar-target="container">
-     <button data-action="click->sidebar#close" data-sidebar-target="close">panel toggle</button>
-     <div data-sidebar-target="content"></div>
-   </div>
-   </div>
-   <button id="open">open</button>`;
+    <div data-sidebar-target="container">
+    <button data-action="click->sidebar#close" data-sidebar-target="close">close</button>
+    <div data-sidebar-target="content"></div>
+  </div>
+  </div>
+  <button id="open">open</button>`;
 
   openButton = document.getElementById('open');
   initialiseStimulus();
