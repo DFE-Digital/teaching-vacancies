@@ -43,10 +43,6 @@ RSpec.describe VacanciesHelper do
       expect(subject[1]).to eq(["Landing Page", landing_page_path("landing")])
     end
 
-    it "has the job as its last breadcrumb" do
-      expect(subject[2]).to eq([:"A Job", ""])
-    end
-
     context "when the user comes from the search page" do
       let(:referrer) { jobs_url(foo: "bar", host: "example.com") }
 
