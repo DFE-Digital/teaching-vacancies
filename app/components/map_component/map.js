@@ -87,11 +87,9 @@ const Map = class {
 
       this.positionActiveMarker(marker);
 
-      this.container.on('preclick zoomstart', (e) => {
-        if (e.originalEvent.target.classList.contains('map-component__map')) {
-          target.eventHandlers.close();
-          marker.getElement().blur();
-        }
+      this.container.on('preclick zoomstart', () => {
+        target.eventHandlers.close();
+        marker.getElement().blur();
       });
     });
   }
