@@ -3,26 +3,28 @@ import Service from './service';
 
 jest.mock('./service');
 
-describe('when an organisation popup is created', () => {
+describe('when a tracked organisation popup is created', () => {
   let response;
 
   beforeAll(async () => {
     response = await Service.getMetaData({
       markerType: 'organisation',
+      tracked: true,
     });
 
-    document.body.insertAdjacentHTML('afterbegin', template.popup(response));
+    document.body.innerHTML = '';
+    document.body.appendChild(template.popup(response));
   });
 
   test('it displays heading link', () => {
-    expect(document.querySelector('.popup-title').innerHTML).toEqual(expect.stringContaining(response.heading_text));
-    expect(document.querySelector('.popup-title a').href).toEqual(expect.stringContaining(response.heading_url));
+    expect(document.querySelector('h4').innerHTML).toEqual(expect.stringContaining(response.heading_text));
+    expect(document.querySelector('h4 a').href).toEqual(expect.stringContaining(response.heading_url));
   });
 
   test('heading link has tracking data', () => {
-    expect(document.querySelector('.popup-link').dataset.controller).toEqual('tracked-link');
-    expect(document.querySelector('.popup-link').dataset.action).toEqual(expect.any(String));
-    expect(document.querySelector('.popup-link').dataset.linkSubject).toEqual(expect.any(String));
+    expect(document.querySelector('.tracked').dataset.controller).toEqual('tracked-link');
+    expect(document.querySelector('.tracked').dataset.action).toEqual(expect.any(String));
+    expect(document.querySelector('.tracked').dataset.linkSubject).toEqual(expect.any(String));
   });
 
   test('it displays address', () => {
@@ -30,26 +32,28 @@ describe('when an organisation popup is created', () => {
   });
 });
 
-describe('when a vacancy popup is created', () => {
+describe('when an untracked vacancy popup is created', () => {
   let response;
 
   beforeAll(async () => {
     response = await Service.getMetaData({
       markerType: 'vacancy',
+      tracked: false,
     });
 
-    document.body.insertAdjacentHTML('afterbegin', template.popup(response));
+    document.body.innerHTML = '';
+    document.body.appendChild(template.popup(response));
   });
 
   test('it displays heading link', () => {
-    expect(document.querySelector('.popup-title').innerHTML).toEqual(expect.stringContaining(response.heading_text));
-    expect(document.querySelector('.popup-title a').href).toEqual(expect.stringContaining(response.heading_url));
+    expect(document.querySelector('h4').innerHTML).toEqual(expect.stringContaining(response.heading_text));
+    expect(document.querySelector('h4 a').href).toEqual(expect.stringContaining(response.heading_url));
   });
 
   test('heading link has no tracking data', () => {
-    expect(document.querySelector('.popup-link').dataset.controller).toBeFalsy();
-    expect(document.querySelector('.popup-link').dataset.action).toBeFalsy();
-    expect(document.querySelector('.popup-link').dataset.linkSubject).toBeFalsy();
+    expect(document.querySelector('.tracked').dataset.controller).toBeFalsy();
+    expect(document.querySelector('.tracked').dataset.action).toBeFalsy();
+    expect(document.querySelector('.tracked').dataset.linkSubject).toBeFalsy();
   });
 
   test('it displays address', () => {

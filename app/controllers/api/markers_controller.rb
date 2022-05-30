@@ -37,7 +37,7 @@ class Api::MarkersController < Api::ApplicationController
   end
 
   def anonymised_id
-    StringAnonymiser.new(vacancy.id).to_s if params[:marker_type] == "organisation"
+    StringAnonymiser.new(vacancy.id).to_s
   end
 
   def description

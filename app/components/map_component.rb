@@ -1,9 +1,9 @@
 class MapComponent < GovukComponent::Base
-  def initialize(markers:, marker_type: nil, polygon: nil, point: nil, radius: nil, classes: [], html_attributes: {})
+  def initialize(markers:, marker: {}, polygon: nil, point: nil, radius: nil, classes: [], html_attributes: {})
     super(classes: classes, html_attributes: html_attributes)
 
     @markers = markers
-    @marker_type = marker_type
+    @marker = marker
     @polygon = polygon
     @point = point
     @radius = radius

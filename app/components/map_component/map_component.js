@@ -51,7 +51,12 @@ const MapController = class extends Controller {
       this.addLayer(Map.createCircle(this.radius, this.point, MapController.SHAPE_STYLES));
     }
 
+    let tracking;
     let markerOptions;
+
+    if (this.markersTarget.dataset.markerTracking) {
+      tracking = JSON.parse(this.markersTarget.dataset.markerTracking);
+    }
 
     this.markerTargets.forEach((marker) => {
       markerOptions = {
@@ -68,10 +73,10 @@ const MapController = class extends Controller {
               open: MapController.MARKER_OPTIONS[marker.dataset.markerType].ui === 'custom'
                 ? (markerData) => {
                   this.dispatch('sidebar:update', {
-                    detail: { ...markerData, ...{ id: marker.dataset.id } },
+                    detail: { ...markerData, ...{ trackingType: tracking.link, id: marker.dataset.id } },
                   });
                 }
-                : (markerData) => template.popup(markerData),
+                : (markerData) => template.popup({ ...markerData, ...{ trackingType: tracking.link } }),
               close: () => this.dispatch('sidebar:close'),
               focus: () => this.dispatch('sidebar:focus'),
               interaction: () => this.dispatch('interaction'),
@@ -80,6 +85,8 @@ const MapController = class extends Controller {
         },
         addToLayer: this.cluster.group,
       };
+
+      if (tracking) markerOptions.trackingType = tracking.marker;
 
       this.addMarker(markerOptions);
     });

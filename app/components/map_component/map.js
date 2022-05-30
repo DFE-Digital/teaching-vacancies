@@ -1,6 +1,7 @@
 import 'leaflet';
 import 'leaflet.markercluster/dist/leaflet.markercluster';
 import { GestureHandling } from 'leaflet-gesture-handling';
+import template from './marker/template';
 
 const Map = class {
   constructor(point, zoom) {
@@ -19,6 +20,7 @@ const Map = class {
   createMarker({
     point,
     id,
+    trackingType,
     title,
     variant,
     details = {},
@@ -37,6 +39,7 @@ const Map = class {
         marker.on('add', () => {
           marker.on('add', () => marker.getElement().setAttribute('aria-controls', 'sidebar-content'));
           marker.getElement().setAttribute('id', id);
+          Map.onAddMarker(marker, id, trackingType);
           if (details.target && details.target.ui === 'custom') {
             this.markerCustomUIEvents(marker, details);
           }
@@ -111,6 +114,14 @@ const Map = class {
       marker.getElement().classList.remove('icon--map-pin');
       marker.getElement().classList.add('icon--map-pin--active');
     }
+  }
+
+  static onAddMarker(marker, id, trackingType) {
+    const tracking = template.trackingAttributes(id, trackingType);
+    const markerEl = marker.getElement();
+    Object.keys(tracking).forEach((a) => { markerEl.dataset[a] = tracking[a]; });
+    markerEl.setAttribute('aria-controls', 'map-sidebar');
+    markerEl.setAttribute('id', id);
   }
 
   static createPolygon(polygon, styles) {
