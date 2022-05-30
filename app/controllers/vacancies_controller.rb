@@ -6,8 +6,8 @@ class VacanciesController < ApplicationController
 
   def index
     @vacancies_search = Search::VacancySearch.new(
-      search_form.to_hash,
-      sort: search_form.sort,
+      form.to_hash,
+      sort: form.sort,
       page: params[:page],
     )
     @vacancies = @vacancies_search.vacancies
@@ -28,8 +28,8 @@ class VacanciesController < ApplicationController
 
   private
 
-  def search_form
-    @form = Jobseekers::SearchForm.new(search_params.merge(filters_from_keywords))
+  def form
+    @form ||= Jobseekers::SearchForm.new(search_params.merge(filters_from_keywords))
   end
 
   def search_params
@@ -76,8 +76,8 @@ class VacanciesController < ApplicationController
 
       request_event.trigger(
         :search_performed,
-        search_criteria: search_form.to_hash,
-        sort_by: search_form.sort.by,
+        search_criteria: form.to_hash,
+        sort_by: form.sort.by,
         page: params[:page] || 1,
         total_count: @vacancies_search.total_count,
         vacancies_on_page: vacancy_ids,
