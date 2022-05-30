@@ -12,9 +12,15 @@ const Cluster = class {
 
   static CLUSTER_LIMIT = 50;
 
-  constructor() {
+  constructor({ eventHandlers }) {
     this.group = L.markerClusterGroup({
       iconCreateFunction: (cluster) => {
+        cluster.on('add', () => {
+          cluster.getElement().addEventListener('focus', () => {
+            eventHandlers.focus();
+          });
+        });
+
         const properties = Cluster.icon(cluster.getChildCount());
 
         return L.divIcon({
