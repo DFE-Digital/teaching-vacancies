@@ -15,10 +15,8 @@ const initialiseStimulus = () => {
   application.register('sidebar', SidebarController);
 };
 
-let openButton;
-
 beforeAll(() => {
-  document.body.innerHTML = `<div data-controller="sidebar" data-action="sidebar:marker:click->sidebar#open">
+  document.body.innerHTML = `<div data-controller="sidebar" data-action="sidebar:marker:click->sidebar#update">
     <div data-sidebar-target="container">
     <button data-action="click->sidebar#close" data-sidebar-target="close">close</button>
     <div data-sidebar-target="content"></div>
@@ -26,7 +24,6 @@ beforeAll(() => {
   </div>
   <button id="open">open</button>`;
 
-  openButton = document.getElementById('open');
   initialiseStimulus();
 });
 
@@ -38,10 +35,6 @@ describe('sidebar is opened', () => {
 
   test('container is visible', () => {
     expect(controller.containerTarget.classList.contains(SIDEBAR_VISIBLE_CLASS)).toBe(true);
-  });
-
-  test('close button is focused', () => {
-    expect(controller.closeTarget === document.activeElement).toBe(true);
   });
 
   test('content is set', () => {
@@ -56,9 +49,5 @@ describe('sidebar is closed', () => {
 
   test('container is hidden', () => {
     expect(controller.containerTarget.classList.contains(SIDEBAR_VISIBLE_CLASS)).toBe(false);
-  });
-
-  test('open element is focused', () => {
-    expect(openButton === document.activeElement).toBe(true);
   });
 });

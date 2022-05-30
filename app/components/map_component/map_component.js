@@ -65,14 +65,16 @@ const MapController = class extends Controller {
             data: () => MarkerData.getMetaData(marker.dataset),
             ui: MapController.MARKER_OPTIONS[marker.dataset.markerType].ui,
             eventHandlers: {
-              opened: MapController.MARKER_OPTIONS[marker.dataset.markerType].ui === 'custom'
+              open: MapController.MARKER_OPTIONS[marker.dataset.markerType].ui === 'custom'
                 ? (markerData) => {
-                  this.dispatch('marker:click', {
+                  this.dispatch('sidebar:update', {
                     detail: { ...markerData, ...{ id: marker.dataset.id } },
                   });
                 }
                 : (markerData) => template.popup(markerData),
-              close: () => this.dispatch('user:interaction'),
+              close: () => this.dispatch('sidebar:close'),
+              focus: () => this.dispatch('sidebar:focus'),
+              interaction: () => this.dispatch('interaction'),
             },
           },
         },
@@ -101,15 +103,28 @@ const MapController = class extends Controller {
 
   createMap() {
     this.map = new Map(this.point, MapController.DEFAULT_ZOOM);
-    this.cluster = new Cluster();
+    this.cluster = new Cluster({
+      eventHandlers: {
+        focus: () => this.dispatch('interaction'),
+      },
+    });
   }
 
   addMarker(options) {
     this.map.createMarker(options);
   }
 
-  centerMarker() {
-    this.map.centerActiveMarker();
+  centerCluster({ detail }) {
+    const point = this.map.container.latLngToContainerPoint(detail.latlng);
+    this.map.positionToPoint(point);
+  }
+
+  focusMarker({ detail }) {
+    this.map.focusMarker(detail.id, detail.offset);
+  }
+
+  blurMarker() {
+    this.map.blurMarker();
   }
 
   addLayer(layer) {

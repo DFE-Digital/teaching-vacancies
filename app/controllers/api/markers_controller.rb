@@ -48,8 +48,8 @@ class Api::MarkersController < Api::ApplicationController
     return if params[:marker_type] == "organisation"
 
     [
-      { label: t("jobs.salary"), value: vacancy.salary },
-      { label: t("jobs.phase"), value: vacancy.readable_phases.map(&:capitalize).join(", ") },
+      { label: t("jobs.annual_salary"), value: vacancy.salary },
+      { label: t("jobs.school_type"), value: vacancy.readable_phases.map(&:capitalize).join(", ") },
       { label: t("jobs.working_patterns"), value: working_patterns(vacancy) },
       { label: t("jobs.expires_at"), value: format_time_to_datetime_at(vacancy.expires_at) },
     ].select { |d| d[:value].present? }
