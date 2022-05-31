@@ -1,14 +1,14 @@
 = tag.div(class: classes, **html_attributes.merge(data: { controller: "map map-sidebar", action: "map-sidebar:closed->map#focusMarker map-sidebar:opened->map#focusMarker map:sidebar:update->map-sidebar#update map:sidebar:focus->map-sidebar#focus map:sidebar:close->map-sidebar#close map:interaction->map-sidebar#blur map:interaction->map#blurMarker", point: @point, polygons: @polygon, radius: radius })) do
-  - if show_map?
-    .markers data-map-target="markers" data-marker-tracking=@marker[:tracking].to_json
-      - @markers.each do |marker|
-        - if marker[:geopoint]
-          .markers__marker data-map-target="marker" data-marker-type=@marker[:type] data-id=marker[:id] data-parent-id=marker[:parent_id] data-point=marker[:geopoint]
 
-    .map-component__container
-      .sidebar-component data-map-sidebar-target="container" tabindex="-1" id="sidebar-content" role="dialog" aria-live="polite"
-        .sidebar-component__content data-map-sidebar-target="content"
-        button.sidebar-component__close.icon.icon--close.govuk-body-s data-action="click->map-sidebar#close" data-map-sidebar-target="close" type="button"
-          = "Close"
+  .markers data-map-target="markers" data-marker-tracking=@marker[:tracking].to_json
+    - @markers.each do |marker|
+      - if marker[:geopoint]
+        .markers__marker data-map-target="marker" data-marker-type=@marker[:type] data-id=marker[:id] data-parent-id=marker[:parent_id] data-point=marker[:geopoint]
 
-      .map-component__map id="map" role="presentation"
+  .map-component__container
+    .sidebar-component data-map-sidebar-target="container" tabindex="-1" id="sidebar-content" role="dialog" aria-live="polite"
+      .sidebar-component__content data-map-sidebar-target="content"
+      button.sidebar-component__close.icon.icon--close.govuk-body-s data-action="click->map-sidebar#close" data-map-sidebar-target="close" type="button"
+        = "Close"
+
+    .map-component__map id="map" role="presentation"
