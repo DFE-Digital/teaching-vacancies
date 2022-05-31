@@ -139,7 +139,7 @@ jobs:
 
       - name: Set matrix environments (Push to main)
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: echo "MATRIX_ENVIRONMENTS={\"environment\":[\"staging\",\"production\",\"qa\"]}" >> $GITHUB_ENV
+        run: echo "MATRIX_ENVIRONMENTS={\"environment\":[\"staging\",\"production\",\"qa\",\"sandbox\"]}" >> $GITHUB_ENV
 
       - name: Set matrix environments (Push to non main branch)
         if: github.event_name == 'push' && github.ref != 'refs/heads/main'
