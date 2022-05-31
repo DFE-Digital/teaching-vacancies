@@ -19,7 +19,7 @@ class MapComponent < GovukComponent::Base
     %w[map-component]
   end
 
-  def show_map?
+  def render?
     @markers.any? { |marker| marker[:geopoint] }
   end
 end
