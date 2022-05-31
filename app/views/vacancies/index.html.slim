@@ -2,6 +2,8 @@
   = govuk_skip_link(href: "#map-results", text: t("jobs.skip_link_map"))
   = govuk_skip_link(href: "#search-results", text: t("jobs.skip_link_list"))
 
+- content_for :turbo, true
+
 = render "vacancies/search/page_title_and_description", landing_page: @landing_page
 
 = search_results_heading(vacancies_search: @vacancies_search, landing_page: @landing_page)
@@ -23,7 +25,8 @@
                 polygon: @vacancies_search.location_search.geojson_polygon,
                 point: @vacancies_search.location_search.geojson_point,
                 radius: @vacancies_search.location_search.radius_in_meters,
-                marker: { type: "vacancy", tracking: { link: "vacancy_visited_from_map", marker: "vacancy_popup_opened_from_map" } })
+                marker: { type: "vacancy", tracking: { link: "vacancy_visited_from_map", marker: "vacancy_popup_opened_from_map" } },
+                html_attributes: { "data-turbo": false })
 
       #search-results
         - if @vacancies.any?

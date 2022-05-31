@@ -8,6 +8,8 @@ html.govuk-template.app-html-class lang="en"
     = stylesheet_pack_tag "application", media: "all"
     = csrf_meta_tags
     = render "layouts/sentry_js_config"
+    - if content_for? :turbo
+      = javascript_pack_tag "turbo"
 
   body class=body_class
     = render "layouts/google_tag_manager_body" if include_google_tag_manager?
@@ -20,7 +22,10 @@ html.govuk-template.app-html-class lang="en"
       = content_for :breadcrumbs
       = render "layouts/flash_messages"
       main#main-content.govuk-main-wrapper role="main"
-        = yield
+        - if content_for? :turbo
+          turbo-frame#turbo-frame = yield
+        - else
+          = yield
       = content_for :after_main
     = render "layouts/footer"
     = render "layouts/cookies_banner"

@@ -9,7 +9,7 @@ export default class extends Controller {
   }
 
   submitHandler() {
-    this.formEl.closest('form').submit();
+    this.formEl.closest('form').requestSubmit();
   }
 
   clearListener(e) {

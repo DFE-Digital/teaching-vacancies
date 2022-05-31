@@ -37,7 +37,8 @@ Rails.application.configure do
                        "https://www.googletagmanager.com",
                        "https://www.recaptcha.net"
 
-    policy.style_src   :self
+    policy.style_src   :self,
+                       :unsafe_inline
   end
 
   # Generate session nonces for permitted importmap and inline scripts
