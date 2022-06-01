@@ -31,7 +31,7 @@
     "backstopjs": "^6.0.2",
     "concurrently": "^7.2.1",
     "dotenv": "^16.0.1",
-    "eslint": "^8.15.0",
+    "eslint": "^8.16.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.3",
     "jest": "^28.1.0",
