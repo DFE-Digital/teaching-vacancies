@@ -14,11 +14,13 @@ const popup = (data) => {
 
 const sidebar = (data) => {
   const html = `<div class="sidebar">
+                <div id="sidebar-content" role="dialog" aria-live="polite">
                 <h2 class="popup-title govuk-!-margin-bottom-1 govuk-!-font-size-16">
                 <a class="tracked govuk-link govuk-!-font-weight-bold"
                 href="${data.heading_url}">${data.heading_text}</a>
                 </h2>
                 <p class="govuk-body-s govuk-!-margin-bottom-2">${data.name}, ${data.address}</p>
+                </div>
                 ${Array.isArray(data.details) ? data.details.map((detail) => `<dl><dt class="govuk-!-font-weight-bold">${detail.label}</dt><dd>${detail.value}</dt></dd></dl>`).join('') : ''}
                 </div>`;
 

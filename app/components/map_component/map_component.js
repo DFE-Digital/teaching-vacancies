@@ -77,7 +77,6 @@ const MapController = class extends Controller {
                   });
                 }
                 : (markerData) => template.popup({ ...markerData, ...{ trackingType: tracking.link } }),
-              close: () => this.dispatch('sidebar:close'),
               focus: () => this.dispatch('sidebar:focus'),
               interaction: () => this.dispatch('interaction'),
             },

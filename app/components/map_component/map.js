@@ -64,7 +64,6 @@ const Map = class {
       }
 
       if (['Escape', 'Esc'].includes(e.originalEvent.key)) {
-        target.eventHandlers.close();
         this.activeMarker(marker);
       }
     });

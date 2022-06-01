@@ -84,7 +84,6 @@ describe('when map is initialised with layers', () => {
         data: expect.any(Function),
         eventHandlers: {
           open: expect.any(Function),
-          close: expect.any(Function),
           focus: expect.any(Function),
           interaction: expect.any(Function),
         },
@@ -104,7 +103,6 @@ describe('when map is initialised with layers', () => {
         data: expect.any(Function),
         eventHandlers: {
           open: expect.any(Function),
-          close: expect.any(Function),
           focus: expect.any(Function),
           interaction: expect.any(Function),
         },
