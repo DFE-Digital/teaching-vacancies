@@ -27,7 +27,7 @@
     "rails-ujs": "^5.2.8"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.17.0",
+    "@babel/eslint-parser": "^7.18.2",
     "backstopjs": "^6.0.2",
     "concurrently": "^7.2.1",
     "dotenv": "^16.0.1",
