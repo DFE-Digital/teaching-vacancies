@@ -40,7 +40,7 @@
       position: absolute;
       top: govuk-spacing(2);
       width: 94%;
-      z-index: 10000;
+      z-index: 3000;
 
       @include govuk-media-query($from: desktop) {
         left: govuk-spacing(2);
