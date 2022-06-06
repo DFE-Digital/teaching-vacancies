@@ -55,4 +55,55 @@ RSpec.describe Jobseekers::SearchForm, type: :model do
       end
     end
   end
+
+  describe "#set_filters_from_keyword" do
+    let(:params) { { keyword: keyword, previous_keyword: previous_keyword, landing_page: landing_page, subjects: subjects } }
+
+    context "when landing_page is not present" do
+      let(:keyword) { "math" }
+      let(:previous_keyword) { "" }
+      let(:landing_page) { "" }
+      let(:subjects) { %w[Mathematics Statistics] }
+
+      it "sets the filters from the keyword" do
+        expect(subject.subjects).to eq %w[Mathematics Statistics]
+      end
+    end
+
+    context "when landing_page is present" do
+      let(:keyword) { "math" }
+      let(:previous_keyword) { "" }
+      let(:landing_page) { "landing_page" }
+      let(:subjects) { %w[Computing] }
+
+      it "does not set the filters from the keyword" do
+        expect(subject.subjects).to eq %w[Computing]
+      end
+    end
+
+    context "when keyword is the same as previous_keyword" do
+      let(:keyword) { "math" }
+      let(:previous_keyword) { "math" }
+      let(:landing_page) { "" }
+      let(:subjects) { %w[Computing] }
+
+      it "does not set the filters from the keyword" do
+        expect(subject.subjects).to eq %w[Computing]
+      end
+    end
+  end
+
+  describe "#unset_filters_from_previous_keyword" do
+    let(:params) { { keyword: keyword, previous_keyword: previous_keyword, subjects: subjects } }
+
+    context "when keyword is blank and previous_keyword is present" do
+      let(:keyword) { "" }
+      let(:previous_keyword) { "maths" }
+      let(:subjects) { %w[Mathematics Statistics] }
+
+      it "unsets the filters set from the previous keyword" do
+        expect(subject.subjects).to eq []
+      end
+    end
+  end
 end
