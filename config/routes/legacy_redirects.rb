@@ -16,7 +16,8 @@ get "sign-up-for-NQT-job-alerts", to: redirect("/sign-up-for-ECT-job-alerts")
 # Legacy landing pages
 ## Job roles
 get "teaching-jobs-for-teacher", to: redirect("teacher-jobs")
-get "teaching-jobs-for-leadership", to: redirect("leadership-jobs")
+get "teaching-jobs-for-leadership", to: redirect("senior-leader-jobs")
+get "leadership-jobs", to: redirect("senior-leader-jobs")
 get "teaching-jobs-for-teaching_assistant", to: redirect("teaching-assistant-jobs")
 get "teaching-jobs-for-teaching-assistant", to: redirect("teaching-assistant-jobs")
 get "teaching-jobs-for-education_support", to: redirect("education-support-jobs")

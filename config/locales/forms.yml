@@ -234,9 +234,9 @@ en:
           finance manager, administrative assistant, cleaner or chef.
         main_job_role_options:
           education_support: Includes learning support and tutors
-          leadership: Includes Deputy/Assistant Head, Headteacher, and trust-level roles
           middle_leader: Includes Heads of Year or Department
           sendco: Special educational needs and disabilities coordinator
+          senior_leader: Includes Deputy/Assistant Head, Headteacher, and trust-level roles
           teaching_assistant: Includes Higher Level Teaching Assistants (HLTAs) and SEND teaching assistants
       publishers_job_listing_job_role_details_form:
         additional_job_roles: Select all that apply
@@ -583,11 +583,11 @@ en:
           ect_suitable: Suitable for early career teachers
           ect_suitable_hidden_prefix: Only show results
           education_support: Education support
-          leadership: Leadership
           middle_leader: Middle leader
           sen_specialist: Special Educational Needs and Disability Coordinator (SENDCo)
           send_responsible: Special Educational Needs and Disability Coordinator (SENDCo)
           sendco: SENDCo
+          senior_leader: Senior leader
           teacher: Teacher
           teaching_assistant: Teaching assistant
         key_stages_options:
@@ -597,9 +597,9 @@ en:
       publishers_job_listing_job_role_form:
         main_job_role_options:
           education_support: Education support
-          leadership: Leadership
           middle_leader: Middle leader
           sendco: SENDCo
+          senior_leader: Senior leader
           teacher: Teacher
           teaching_assistant: Teaching assistant
       publishers_job_listing_job_role_details_form:

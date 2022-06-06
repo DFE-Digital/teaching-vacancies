@@ -14,7 +14,7 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # vacancies *may* have more than one main job role as we used to allow multiple.
   # TODO: This is a compromise to keep changes to the data model minimal for now. Once the legacy vacancies are gone,
   #       we should refactor the data model.
-  MAIN_JOB_ROLES = { teacher: 0, leadership: 1, middle_leader: 7, teaching_assistant: 6, education_support: 4, sendco: 5 }.freeze
+  MAIN_JOB_ROLES = { teacher: 0, senior_leader: 1, middle_leader: 7, teaching_assistant: 6, education_support: 4, sendco: 5 }.freeze
   ADDITIONAL_JOB_ROLES = { send_responsible: 2, ect_suitable: 3 }.freeze
 
   ATTRIBUTES_TO_TRACK_IN_ACTIVITY_LOG = %i[

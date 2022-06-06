@@ -26,9 +26,9 @@ shared:
   education-support-jobs:
     job_roles:
       - education_support
-  leadership-jobs:
+  senior-leader-jobs:
     job_roles:
-      - leadership
+      - senior_leader
   middle-leader-jobs:
     job_roles:
       - middle_leader
