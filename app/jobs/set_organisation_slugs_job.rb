@@ -2,8 +2,8 @@ class SetOrganisationSlugsJob < ApplicationJob
   queue_as :default
 
   def perform
-    Organisation.find_in_batches do |batch|
-      SetOrganisationSlugsOfBatchJob.perform_later(batch.pluck(:id))
+    Organisation.find_each(batch_size: 50) do |organisation|
+      organisation.save if organisation.slug.nil?
     end
   end
 end

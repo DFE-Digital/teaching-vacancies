@@ -25,7 +25,6 @@ RSpec.describe "Sidekiq configuration" do
       Noticed::DeliveryMethods::Email
       Sentry::SendEventJob
       SetOrganisationSlugsJob
-      SetOrganisationSlugsOfBatchJob
     ]
   end
 
