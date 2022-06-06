@@ -18,4 +18,15 @@ RSpec.describe LinksHelper do
       expect(subject).to match(/data-awesome="true"/)
     end
   end
+
+  describe "#organisation_vacancies_link" do
+    subject { helper.organisation_vacancies_link(organisation) }
+
+    let(:organisation) { create(:school) }
+    let(:link_text) { "#{URI(root_url).host}/organisations/#{organisation.slug}" }
+
+    it "generates a link with the URL included in the link text" do
+      expect(subject).to have_link("#{link_text} (opens in a new tab)", href: helper.organisation_landing_page_path(organisation))
+    end
+  end
 end

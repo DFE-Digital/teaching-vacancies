@@ -15,6 +15,7 @@ RSpec.describe SearchResultsHeadingComponent, type: :component do
     allow(vacancies_search).to receive_message_chain(:location_search, :location).and_return(location)
     allow(vacancies_search).to receive_message_chain(:total_count).and_return(count)
     allow(vacancies_search).to receive_message_chain(:location_search, :radius).and_return(radius)
+    allow(vacancies_search).to receive(:organisation_slug).and_return(nil)
   end
 
   context "when landing_page is given" do
@@ -55,7 +56,7 @@ RSpec.describe SearchResultsHeadingComponent, type: :component do
     end
   end
 
-  context "when neither keyword and location are present" do
+  context "when neither keyword, location, or organisation slug are present" do
     let(:keyword) { nil }
     let(:location) { nil }
     before { subject }
@@ -63,6 +64,20 @@ RSpec.describe SearchResultsHeadingComponent, type: :component do
     it "renders correct heading" do
       expect(rendered_component).to include(
         I18n.t("jobs.search_result_heading.without_search_html", jobs_count: count, count: count),
+      )
+    end
+  end
+
+  context "when organisation slug is present" do
+    before do
+      allow(vacancies_search).to receive(:organisation_slug).and_return("bexleyheath-academy")
+      allow(vacancies_search).to receive_message_chain(:organisation, :name).and_return("Bexleyheath Academy")
+      subject
+    end
+
+    it "renders correct heading" do
+      expect(rendered_component).to include(
+        I18n.t("jobs.search_result_heading.organisation_html", organisation: vacancies_search.organisation.name),
       )
     end
   end

@@ -27,11 +27,11 @@ class Publishers::SchoolsController < Publishers::BaseController
   private
 
   def organisation
-    @organisation ||= current_organisation.id == params[:id] ? current_organisation : current_organisation.schools.find(params[:id])
+    @organisation ||= current_organisation.friendly_id == params[:id] ? current_organisation : current_organisation.schools.friendly.find(params[:id])
   end
 
   def redirect_path
-    current_organisation.school? ? publishers_school_path(current_organisation.id) : publishers_schools_path
+    current_organisation.school? ? publishers_school_path(current_organisation) : publishers_schools_path
   end
 
   def organisation_params

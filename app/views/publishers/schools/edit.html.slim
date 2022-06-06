@@ -4,7 +4,7 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-l = t(".title", organisation_type: organisation_type_basic(@organisation))
 
-    = form_for @organisation_form, url: publishers_school_path(@organisation.id), method: :patch do |f|
+    = form_for @organisation_form, url: publishers_school_path(@organisation), method: :patch do |f|
       = f.govuk_error_summary
 
       h2.govuk-heading-m = @organisation.name

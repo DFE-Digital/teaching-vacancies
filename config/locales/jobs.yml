@@ -109,6 +109,7 @@ en:
         other: >-
           within <span class='govuk-!-font-weight-bold'>%{count} %{units}</span> of
       location_html: <span class='govuk-!-font-weight-bold text-capitalize'>&lsquo;%{location}&rsquo;</span>
+      organisation_html: at %{organisation}
       unit_of_length: mile
       without_search_html:
         one: There is <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> job listed
@@ -159,6 +160,7 @@ en:
         verbose:
           link_text: Get a job alert
           reminder: when similar jobs are listed
+      organisation: Get a job alert for jobs with this %{organisation_type}
 
     contents: Contents
     similar_jobs:

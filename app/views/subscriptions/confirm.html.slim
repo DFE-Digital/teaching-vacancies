@@ -6,11 +6,16 @@
 
     h2.govuk-heading-m = t(".next_step")
 
-    p.govuk-body = t(".next_step_details")
+    p.govuk-body
+      - if @subscription.organisation
+        = t(".next_step_details.with_organisation_html",
+            organisation_link: govuk_link_to(@subscription.organisation.name, organisation_landing_page_path(@subscription.organisation)))
+      - else
+        = t(".next_step_details.without_organisation")
 
     = render "subscription_details", subscription: @subscription, current_subscription: false
 
-    .divider-bottom
+    .divider-bottom class="govuk-!-padding-bottom-4"
       p.govuk-body = t(".unsubscribe")
 
       = govuk_link_to t(".back_to_search_results"), jobs_path(@subscription.search_criteria), class: "govuk-!-font-size-19"

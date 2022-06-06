@@ -7,16 +7,17 @@ class SearchResultsHeadingComponent < ViewComponent::Base
     @radius = @vacancies_search.location_search.radius
     @total_count = @vacancies_search.total_count
     @readable_count = number_with_delimiter(@total_count)
+    @organisation_slug = @vacancies_search.organisation_slug
   end
 
   def heading
     return @landing_page.heading if @landing_page
 
-    if @keyword.blank? && @location.blank?
+    if @keyword.blank? && @location.blank? && @organisation_slug.blank?
       return t("jobs.search_result_heading.without_search_html", jobs_count: @readable_count, count: @total_count)
     end
 
-    [count_phrase, keyword_phrase, radius_phrase, location_phrase].compact.join(" ")
+    [count_phrase, keyword_phrase, radius_phrase, location_phrase, organisation_phrase].compact.join(" ")
   end
 
   private
@@ -44,6 +45,12 @@ class SearchResultsHeadingComponent < ViewComponent::Base
 
     # A radius of 0 is only possible for polygon searches.
     t("jobs.search_result_heading.radius_html", count: @radius, units: units)
+  end
+
+  def organisation_phrase
+    return unless @organisation_slug.present?
+
+    t("jobs.search_result_heading.organisation_html", organisation: @vacancies_search.organisation.name)
   end
 
   def units

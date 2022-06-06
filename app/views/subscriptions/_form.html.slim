@@ -5,6 +5,10 @@
 
   p.govuk-body-m class="govuk-!-margin-bottom-4" = t("#{i18n_prefix}.description")
 
+  - if @organisation
+    p.govuk-body-m = t("subscriptions.new.organisation_link_html", organisation_landing_page_link: govuk_link_to(@organisation.name, organisation_landing_page_path(@organisation)))
+    = f.hidden_field :organisation_slug, value: @organisation.slug
+
   .subscription-criteria
     = render "fields", f: f
 

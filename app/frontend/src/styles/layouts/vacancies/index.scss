@@ -1,4 +1,19 @@
 .vacancies_index {
+  .no-results {
+    &__job-alert-link {
+      &--organisation {
+        @include govuk-font(19);
+      
+        font-weight: 700;
+        padding-bottom: govuk-spacing(2);
+      
+        .govuk-link {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
   .search-results {
     list-style: none;
     margin: 0;

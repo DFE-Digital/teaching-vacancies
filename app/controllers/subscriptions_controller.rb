@@ -9,6 +9,7 @@ class SubscriptionsController < ApplicationController
     @ect_job_alert = params[:ect_job_alert]
     session[:subscription_autopopulated] = params[:search_criteria].present?
     @form = Jobseekers::SubscriptionForm.new(params[:search_criteria].present? ? search_criteria_params : email)
+    @organisation = Organisation.friendly.find(search_criteria_params[:organisation_slug]) if organisation_job_alert?
   end
 
   def create
@@ -35,6 +36,7 @@ class SubscriptionsController < ApplicationController
 
   def edit
     @subscription = Subscription.find_and_verify_by_token(token)
+    @organisation = @subscription.organisation
     @form = Jobseekers::SubscriptionForm.new(@subscription)
   end
 
@@ -104,12 +106,12 @@ class SubscriptionsController < ApplicationController
 
   def search_criteria_params
     params.require(:search_criteria)
-          .permit(:keyword, :location, :radius, job_roles: [], subjects: [], phases: [], working_patterns: [])
+          .permit(:keyword, :location, :organisation_slug, :radius, job_roles: [], subjects: [], phases: [], working_patterns: [])
   end
 
   def subscription_params
     params.require(:jobseekers_subscription_form)
-          .permit(:email, :frequency, :keyword, :location, :radius, job_roles: [], subjects: [], phases: [], working_patterns: [])
+          .permit(:email, :frequency, :keyword, :location, :organisation_slug, :radius, job_roles: [], subjects: [], phases: [], working_patterns: [])
   end
 
   def token
@@ -135,5 +137,9 @@ class SubscriptionsController < ApplicationController
       store_return_location(jobseekers_subscriptions_path)
       render :confirm
     end
+  end
+
+  def organisation_job_alert?
+    params[:search_criteria] && search_criteria_params[:organisation_slug].present?
   end
 end

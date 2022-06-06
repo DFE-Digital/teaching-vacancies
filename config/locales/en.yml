@@ -343,6 +343,7 @@ en:
     no_information: No information available
     not_given: Not given
     ofsted_report: Ofsted report
+    organisation_page: '%{organisation_type} page'
     phase: Education phase
     school_age: School age
     school_details: School details
@@ -408,7 +409,9 @@ en:
       header:
         create: Your email subscription has started
         update: Your job alert has been updated
-      next_step_details: 'We’ll email you details of any new teaching jobs that match the following criteria:'
+      next_step_details:
+        with_organisation_html: We’ll email you details of any new teaching jobs that appear for %{organisation_link}
+        without_organisation: 'We’ll email you details of any new teaching jobs that match the following criteria:'
       next_step: What happens next
       title:
         create: Subscription confirmation
@@ -447,6 +450,7 @@ en:
     manage: Manage your subscription
     new:
       description: You can change the search criteria you have used by amending the keywords, location or filters before you create your alert.
+      organisation_link_html: This alert will only send you emails about %{organisation_landing_page_link}.
       title: Create your job alert
     unsubscribe:
       confirmation: Are you sure you want to unsubscribe?
@@ -584,6 +588,8 @@ en:
         Search for teaching jobs near you and other school jobs including headteacher and teaching assistant. Visit the official place to find teaching jobs.
       no_polygons: This search didn't use any polygons.
     search:
+      no_results_organisation:
+        no_active_jobs: There are no active jobs
       no_results_suggestions:
         wider_search_suggestions:
           heading:

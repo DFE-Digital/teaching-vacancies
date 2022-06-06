@@ -21,6 +21,7 @@ FactoryBot.define do
     group_type { "Multi-academy trust" }
     name { "#{Faker::Company.name.delete("'")} Trust" }
     postcode { Faker::Address.postcode }
+    sequence(:slug) { |n| "#{name.parameterize}-#{n}" }
     town { Faker::Address.city.delete("'") }
     uid { Faker::Number.number(digits: 5).to_s }
     url_override { Faker::Internet.url(host: "example.com") }

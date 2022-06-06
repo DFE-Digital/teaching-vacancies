@@ -3,13 +3,14 @@ class Jobseekers::SubscriptionForm < BaseForm
                 :keyword, :location, :radius,
                 :job_roles, :subjects, :phases, :working_patterns,
                 :job_role_options, :ect_suitable_options, :send_responsible_options,
-                :phase_options, :working_pattern_options
+                :phase_options, :working_pattern_options,
+                :organisation_slug
 
   validates :email, presence: true, email_address: true
   validates :frequency, presence: true
 
   validate :unique_job_alert
-  validate :location_and_one_other_criterion_selected
+  validate :location_and_one_other_criterion_selected, unless: :organisation_slug
 
   def initialize(params = {}) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
     search_criteria = params[:search_criteria]&.symbolize_keys || {}
@@ -22,6 +23,7 @@ class Jobseekers::SubscriptionForm < BaseForm
     @subjects = params[:subjects]&.reject(&:blank?) || search_criteria[:subjects]
     @phases = params[:phases]&.reject(&:blank?) || search_criteria[:phases]
     @working_patterns = params[:working_patterns]&.reject(&:blank?) || search_criteria[:working_patterns]
+    @organisation_slug = params[:organisation_slug]
 
     set_radius((params[:radius] || search_criteria[:radius]))
     set_facet_options
@@ -44,6 +46,7 @@ class Jobseekers::SubscriptionForm < BaseForm
       subjects: subjects,
       phases: phases,
       working_patterns: working_patterns,
+      organisation_slug: organisation_slug,
     }.compact.delete_if { |_k, v| v.blank? || v.empty? }
   end
 

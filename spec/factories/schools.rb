@@ -31,6 +31,7 @@ FactoryBot.define do
     phase { :secondary }
     readable_phases { %w[secondary] }
     region { "South-East England" }
+    sequence(:slug) { |n| "#{name.parameterize}-#{n}" }
     school_type { "LA maintained school" }
     postcode { Faker::Address.postcode }
     town { Faker::Address.city.delete("'") }

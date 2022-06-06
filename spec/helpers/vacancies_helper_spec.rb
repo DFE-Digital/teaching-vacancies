@@ -2,14 +2,15 @@ require "rails_helper"
 
 RSpec.describe VacanciesHelper do
   describe "#vacancy_full_job_location" do
-    subject { vacancy_full_job_location(vacancy) }
+    subject { helper.vacancy_full_job_location(vacancy) }
+    let(:organisation_link) { helper.govuk_link_to(vacancy.organisation.name, organisation_landing_page_path(vacancy.organisation.slug)) }
 
     context "when job_location is at_multiple_schools" do
       let(:trust) { build(:trust, name: "Magic Trust") }
       let(:vacancy) { build(:vacancy, :at_multiple_schools, organisations: [trust]) }
 
       it "returns the multiple schools location" do
-        expect(subject).to eq("More than one school, Magic Trust")
+        expect(subject).to eq("More than one school, #{organisation_link}")
       end
     end
 
@@ -18,7 +19,7 @@ RSpec.describe VacanciesHelper do
       let(:vacancy) { build(:vacancy, organisations: [school]) }
 
       it "returns the full location" do
-        expect(subject).to eq("Magic School, Cool Town, Orange County, SW1A")
+        expect(subject).to eq("#{organisation_link}, Cool Town, Orange County, SW1A")
       end
     end
   end
@@ -39,8 +40,26 @@ RSpec.describe VacanciesHelper do
       expect(subject[0].last).to eq(root_path)
     end
 
-    it "has the landing page as its second breadcrumb" do
-      expect(subject[1]).to eq(["Landing Page", landing_page_path("landing")])
+    context "when coming from a landing page" do
+      it "has the landing page as its second breadcrumb" do
+        expect(subject[1]).to eq(["Landing Page", landing_page_path("landing")])
+      end
+
+      context "when coming from an organisation landing page" do
+        let(:organisation_slug) { "organisation-slug" }
+        let(:referrer) { organisation_landing_page_url(organisation_landing_page_name: organisation_slug, host: "example.com") }
+        let(:organisation_landing_page) { instance_double(OrganisationLandingPage, slug: organisation_slug, name: "Organisation Landing Page") }
+
+        before do
+          allow(LandingPage).to receive(:matching).with(job_roles: %w[teacher]).and_return(nil)
+          allow(OrganisationLandingPage).to receive(:exists?).with(organisation_slug).and_return(true)
+          allow(OrganisationLandingPage).to receive(:[]).with(organisation_slug).and_return(organisation_landing_page)
+        end
+
+        it "has the organisation landing page as its second breadcrumb" do
+          expect(subject[1]).to eq(["Organisation Landing Page", organisation_landing_page_path(organisation_slug)])
+        end
+      end
     end
 
     context "when the user comes from the search page" do

@@ -60,6 +60,13 @@ module LinksHelper
     )
   end
 
+  def organisation_vacancies_link(organisation)
+    open_in_new_tab_link_to(
+      "#{request.host}/organisations/#{organisation.slug}",
+      organisation_landing_page_path(organisation),
+    )
+  end
+
   def external_advert_link(vacancy, **kwargs)
     tracked_open_in_new_tab_button_link_to(
       t("jobs.external.link"),

@@ -39,13 +39,15 @@ class VacanciesController < ApplicationController
     %w[job_role job_roles subjects phases working_patterns].each do |facet|
       params[facet] = params[facet].split if params[facet].is_a?(String)
     end
-    params.permit(:keyword, :previous_keyword, :location, :radius, :subject, :sort_by,
+    params.permit(:keyword, :previous_keyword, :organisation_slug, :location, :radius, :subject, :sort_by,
                   job_role: [], job_roles: [], subjects: [], phases: [], working_patterns: [])
   end
 
   def set_landing_page
     if params[:landing_page_slug].present?
       @landing_page = LandingPage[params[:landing_page_slug]]
+    elsif params[:organisation_landing_page_name].present?
+      @landing_page = OrganisationLandingPage[params[:organisation_landing_page_name]]
     elsif params[:location_landing_page_name].present?
       @landing_page = LocationLandingPage[params[:location_landing_page_name]]
     end

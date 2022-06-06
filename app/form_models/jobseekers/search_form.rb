@@ -3,6 +3,7 @@ class Jobseekers::SearchForm
 
   attr_reader :keyword, :previous_keyword,
               :location, :radius,
+              :organisation_slug,
               :job_roles, :subjects, :phases, :working_patterns,
               :job_role_options, :ect_suitable_options, :send_responsible_options,
               :phase_options, :working_pattern_options,
@@ -18,6 +19,7 @@ class Jobseekers::SearchForm
     @subjects = params[:subjects] || []
     @phases = params[:phases] || []
     @working_patterns = params[:working_patterns] || []
+    @organisation_slug = params[:organisation_slug] unless @keyword.present? || @location.present?
     @sort = Search::VacancySort.new(keyword: keyword).update(sort_by: params[:sort_by])
 
     set_filters_from_keyword
@@ -34,6 +36,7 @@ class Jobseekers::SearchForm
       previous_keyword: @previous_keyword,
       location: @location,
       radius: @radius,
+      organisation_slug: @organisation_slug,
       job_roles: @job_roles,
       subjects: @subjects,
       phases: @phases,
