@@ -55,7 +55,7 @@ class Jobseekers::SearchForm
     # changing their keywords, do not override their decision
     return if @keyword.blank? || @landing_page || @previous_keyword == @keyword
 
-    @filters_from_keyword = Search::KeywordFilterGeneration::QueryParser.filters_from_query(@keyword)
+    @filters_from_keyword = Search::KeywordFilterGeneration::QueryParser.filters_from_query(@keyword) || {}
     @subjects += filters_from_keyword["subjects"]
     @job_roles += filters_from_keyword["job_roles"]
     @phases += filters_from_keyword["phases"]
@@ -65,7 +65,7 @@ class Jobseekers::SearchForm
   def unset_filters_from_previous_keyword
     return unless @keyword.blank? && @previous_keyword.present?
 
-    previous_filters = Search::KeywordFilterGeneration::QueryParser.filters_from_query(@previous_keyword)
+    previous_filters = Search::KeywordFilterGeneration::QueryParser.filters_from_query(@previous_keyword) || {}
     @subjects -= previous_filters["subjects"]
     @job_roles -= previous_filters["job_roles"]
     @phases -= previous_filters["phases"]
