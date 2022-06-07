@@ -125,7 +125,7 @@ module LinksHelper
     tracked_link_to(
       vacancy.job_title,
       job_path(vacancy),
-      link_type: :vacancy_visted_from_list,
+      link_type: :vacancy_visited_from_list,
       link_subject: anon(vacancy.id),
       **kwargs,
     )
