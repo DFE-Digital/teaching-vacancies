@@ -45,6 +45,8 @@ class UnitedLearningVacancySource
       v.assign_attributes(attributes_for(item))
 
       yield v
+    rescue StandardError => e
+      Sentry.capture_exception(e)
     end
   end
 
