@@ -13,7 +13,7 @@
     - Art and design
 "assistant head":
   job_roles:
-    - leadership
+    - senior_leader
 "biology":
   phases:
     - secondary
@@ -28,7 +28,7 @@
     - Business studies
 "ceo":
   job_roles:
-    - leadership
+    - senior_leader
 "chemistry":
   phases:
     - secondary
@@ -63,7 +63,7 @@
     - Dance
 "deputy":
   job_roles:
-    - leadership
+    - senior_leader
 "design":
   phases:
     - secondary
@@ -154,7 +154,7 @@
     - middle_leader
 "head of school":
   job_roles:
-    - leadership
+    - senior_leader
 "head of science":
   job_roles:
     - middle_leader
@@ -166,10 +166,10 @@
     - middle_leader
 "head teacher":
   job_roles:
-    - leadership
+    - senior_leader
 "headteacher":
   job_roles:
-    - leadership
+    - senior_leader
 "health":
   subjects:
     - Health and social care
@@ -264,11 +264,11 @@
 "leader":
   job_roles:
     - middle_leader
-    - leadership
+    - senior_leader
 "leadership":
   job_roles:
     - middle_leader
-    - leadership
+    - senior_leader
 "learning support assistant":
   job_roles:
     - teaching_assistant
@@ -405,7 +405,7 @@
     - primary
 "principal":
   job_roles:
-    - leadership
+    - senior_leader
 "product":
   phases:
     - secondary
@@ -477,13 +477,13 @@
     - sendco
 "senior leader":
   job_roles:
-    - leadership
+    - senior_leader
 "senior leadership":
   job_roles:
-    - leadership
+    - senior_leader
 "senior leadership team":
   job_roles:
-    - leadership
+    - senior_leader
 "sex education":
   subjects:
     - Relationships and sex education
@@ -493,7 +493,7 @@
     - secondary
 "slt":
   job_roles:
-    - leadership
+    - senior_leader
 "social care":
   phases:
     - secondary

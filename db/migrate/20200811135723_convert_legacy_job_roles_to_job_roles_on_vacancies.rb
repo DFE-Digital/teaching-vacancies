@@ -4,7 +4,7 @@ class ConvertLegacyJobRolesToJobRolesOnVacancies < ActiveRecord::Migration[5.2]
       job_roles = vacancy.legacy_job_roles.map do |job_role|
         if job_role == I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.teacher")
           0
-        elsif job_role == I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.leadership")
+        elsif job_role == I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.senior_leader")
           1
         elsif job_role == I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.sen_specialist")
           2

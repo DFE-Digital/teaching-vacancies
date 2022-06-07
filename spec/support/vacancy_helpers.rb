@@ -27,7 +27,7 @@ module VacancyHelpers
       vacancy.additional_job_roles&.each do |job_role|
         check I18n.t("helpers.label.publishers_job_listing_job_role_details_form.additional_job_roles_options.#{job_role}")
       end
-    elsif vacancy.main_job_role.in?(%w[leadership middle_leader education_support])
+    elsif vacancy.main_job_role.in?(%w[senior_leader middle_leader education_support])
       value = vacancy.job_roles.include?("send_responsible") ? "yes" : "no"
       find("label[for='publishers-job-listing-job-role-details-form-send-responsible-#{value}-field']").click
     end

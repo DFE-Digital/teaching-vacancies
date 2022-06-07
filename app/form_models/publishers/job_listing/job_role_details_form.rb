@@ -3,7 +3,7 @@ class Publishers::JobListing::JobRoleDetailsForm < Publishers::JobListing::Vacan
 
   validates :send_responsible,
             inclusion: { in: %w[yes no] },
-            if: -> { vacancy.main_job_role.in?(%w[leadership middle_leader teaching_assistant education_support]) }
+            if: -> { vacancy.main_job_role.in?(%w[senior_leader middle_leader teaching_assistant education_support]) }
 
   def self.fields
     %i[additional_job_roles]

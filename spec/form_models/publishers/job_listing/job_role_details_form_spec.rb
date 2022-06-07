@@ -50,8 +50,8 @@ RSpec.describe Publishers::JobListing::JobRoleDetailsForm, type: :model do
     it { is_expected.not_to validate_inclusion_of(:send_responsible).in_array(%w[yes no]) }
   end
 
-  context "when main job role is leadership" do
-    let(:vacancy) { build(:vacancy, main_job_role: "leadership") }
+  context "when main job role is senior_leader" do
+    let(:vacancy) { build(:vacancy, main_job_role: "senior_leader") }
 
     it_behaves_like "a form with send_responsible radios"
   end

@@ -44,8 +44,8 @@ en:
       title: "Education & School Support Jobs"
       heading: "%{count} education and school support jobs"
       meta_description: "Find jobs for LSAs, HR managers, finance officers, admin assistants, cover supervisors and other non-teaching vacancies in schools near you."
-    leadership-jobs:
-      name: "Leadership"
+    senior-leader-jobs:
+      name: "Senior leader"
       title: "Headteacher & School Leadership Jobs"
       heading: "%{count} headteacher and school leadership jobs"
       meta_description: "Discover headteacher jobs, assistant and deputy head vacancies, and senior school leadership roles in primary and secondary schools near you."
