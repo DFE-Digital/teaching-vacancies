@@ -80,6 +80,22 @@ class VacancyPresenter < BasePresenter
     [type, duration].compact.join(" ")
   end
 
+  def school_group_names
+    return organisations.map(&:name) if organisations.none?(&:school?)
+
+    organisations.map(&:school_groups).flatten.map(&:name).uniq
+  end
+
+  def school_group_types
+    return organisations.map(&:group_type) if organisations.none?(&:school?)
+
+    organisations.map(&:school_groups).flatten.map(&:group_type).reject(&:blank?).uniq
+  end
+
+  def religious_character
+    organisations.map(&:religious_character).reject(&:blank?).uniq unless organisations.none?(&:school?)
+  end
+
   private
 
   def fix_bullet_points(text)
