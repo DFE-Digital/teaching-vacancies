@@ -112,6 +112,10 @@ const MapController = class extends Controller {
     this.cluster = new Cluster({
       eventHandlers: {
         focus: () => this.dispatch('interaction'),
+        enter: ({ detail }) => {
+          this.dispatch('sidebar:update', { detail: { id: detail.id } });
+        },
+        leave: () => this.dispatch('interaction'),
       },
     });
   }

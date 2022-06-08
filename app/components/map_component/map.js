@@ -7,12 +7,14 @@ const Map = class {
   constructor(point, zoom) {
     L.Map.addInitHook('addHandler', 'gestureHandling', GestureHandling);
     this.centerPoint = point.coordinates.reverse();
-    this.container = L.map('map', { tap: false, gestureHandling: true }).setView(this.centerPoint, zoom);
+    this.container = L.map('map', { tap: false, gestureHandling: true, zoomControl: false }).setView(this.centerPoint, zoom);
 
     L.tileLayer(
       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       { attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' },
     ).addTo(this.container);
+
+    L.control.zoom({ position: 'topright' }).addTo(this.container);
 
     this.markerOffset = { x: 0, y: 0 };
   }
