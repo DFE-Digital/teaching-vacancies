@@ -259,4 +259,158 @@ RSpec.describe VacancyPresenter do
       expect(subject.columns).to eq(vacancy.class.columns)
     end
   end
+
+  describe "#school_group_names" do
+    let(:publisher) { build_stubbed(:publisher) }
+    let(:trust) { build_stubbed(:trust, name: "Cheesy trust name") }
+    let(:local_authority) { build_stubbed(:local_authority, name: "Tower Hamlets") }
+
+    context "when the vacancy isn't associated with any schools" do
+      let(:vacancy) do
+        build_stubbed(:vacancy, :central_office,
+                      organisations: organisations,
+                      publisher_organisation: publisher_organisation,
+                      publisher: publisher)
+      end
+      let(:organisations) { [trust] }
+      let(:publisher_organisation) { trust }
+
+      it "returns the names of all of the school groups the job is associated with" do
+        expect(subject.school_group_names).to eq([trust.name])
+      end
+    end
+
+    context "when the vacancy is at one school" do
+      let(:vacancy) do
+        build_stubbed(:vacancy, :at_one_school,
+                      organisations: organisations,
+                      publisher_organisation: publisher_organisation,
+                      publisher: publisher)
+      end
+      let(:organisations) { [school] }
+      let(:school) { build_stubbed(:school, school_groups: [local_authority]) }
+      let(:publisher_organisation) { school }
+
+      it "returns the name of the local authority the school is within" do
+        expect(subject.school_group_names).to eq([local_authority.name])
+      end
+    end
+
+    context "when the vacancy is at multiple schools" do
+      let(:vacancy) do
+        build_stubbed(:vacancy, :at_multiple_schools,
+                      organisations: organisations,
+                      publisher_organisation: publisher_organisation,
+                      publisher: publisher)
+      end
+      let(:school_one) { build_stubbed(:school, school_groups: [trust, local_authority]) }
+      let(:school_two) { build_stubbed(:school, school_groups: [trust, local_authority]) }
+      let(:organisations) { [school_one, school_two] }
+      let(:publisher_organisation) { trust }
+
+      it "returns the names of all of the school groups the vacancy is associated with" do
+        expect(subject.school_group_names).to eq([trust.name, local_authority.name])
+      end
+    end
+  end
+
+  describe "#school_group_types" do
+    let(:publisher) { build_stubbed(:publisher) }
+    let(:trust) { build_stubbed(:trust, name: "Cheesy trust name") }
+    let(:local_authority) { build_stubbed(:local_authority, name: "Tower Hamlets") }
+
+    context "when the vacancy isn't associated with any schools" do
+      let(:vacancy) do
+        build_stubbed(:vacancy, :central_office,
+                      organisations: organisations,
+                      publisher_organisation: publisher_organisation,
+                      publisher: publisher)
+      end
+      let(:organisations) { [trust] }
+      let(:publisher_organisation) { trust }
+
+      it "returns the names of all of the school groups the vacancy is associated with" do
+        expect(subject.school_group_types).to eq([trust.group_type])
+      end
+    end
+
+    context "when the vacancy is at one school" do
+      let(:vacancy) do
+        build_stubbed(:vacancy, :at_one_school,
+                      organisations: organisations,
+                      publisher_organisation: publisher_organisation,
+                      publisher: publisher)
+      end
+      let(:organisations) { [school] }
+      let(:school) { build_stubbed(:school, school_groups: [local_authority]) }
+      let(:publisher_organisation) { school }
+
+      it "returns the name of the local authority the school is within" do
+        expect(subject.school_group_types).to eq([local_authority.group_type])
+      end
+    end
+
+    context "when the vacancy is at multiple schools" do
+      let(:vacancy) do
+        build_stubbed(:vacancy, :at_multiple_schools,
+                      organisations: organisations,
+                      publisher_organisation: publisher_organisation,
+                      publisher: publisher)
+      end
+      let(:school_one) { build_stubbed(:school, school_groups: [trust, local_authority]) }
+      let(:school_two) { build_stubbed(:school, school_groups: [trust, local_authority]) }
+      let(:organisations) { [school_one, school_two] }
+      let(:publisher_organisation) { trust }
+
+      it "returns the names of all of the school groups the vacancy is associated with" do
+        expect(subject.school_group_types).to eq([trust.group_type, local_authority.group_type])
+      end
+    end
+
+    context "when the school group does not have a group type" do
+      let(:vacancy) do
+        build_stubbed(:vacancy, :at_one_school,
+                      organisations: organisations,
+                      publisher_organisation: publisher_organisation,
+                      publisher: publisher)
+      end
+      let(:trust_with_no_group_type) { build_stubbed(:trust, group_type: "") }
+      let(:school) { build_stubbed(:school, school_groups: [trust_with_no_group_type]) }
+      let(:organisations) { [school] }
+      let(:publisher_organisation) { school }
+
+      it "returns an empty array" do
+        expect(subject.school_group_types).to eq([])
+      end
+    end
+  end
+
+  describe "#religious_character" do
+    let(:vacancy) do
+      build_stubbed(:vacancy, location,
+                    organisations: organisations,
+                    publisher_organisation: publisher_organisation,
+                    publisher: publisher)
+    end
+    let(:location) { :at_one_school }
+    let(:school) { build(:school) }
+    let(:organisations) { [school] }
+    let(:publisher_organisation) { school }
+    let(:publisher) { build_stubbed(:publisher) }
+
+    it "returns the religious character of each school" do
+      expect(subject.religious_character).to eq([school.religious_character])
+    end
+
+    context "when the vacancy isn't associated with any schools" do
+      let(:location) { :central_office }
+      let(:trust) { build_stubbed(:trust) }
+      let(:organisations) { [trust] }
+      let(:publisher_organisation) { trust }
+
+      it "returns an empty array" do
+        expect(subject.religious_character).to eq(nil)
+      end
+    end
+  end
 end
