@@ -21,17 +21,17 @@ const Cluster = class {
 
         cluster.on('click keydown', (c) => {
           if (c.target.getAllChildMarkers().length) {
-            const [marker] = c.target.getAllChildMarkers();
-
-            marker.once('add', () => {
-              eventHandlers.enter({
-                detail: {
-                  id: marker.getElement().id,
-                },
+            c.target.getAllChildMarkers().forEach((marker) => {
+              marker.once('add', () => {
+                eventHandlers.enter({
+                  detail: {
+                    id: marker.getElement().id,
+                  },
+                });
               });
-            });
 
-            marker.once('remove', eventHandlers.leave);
+              marker.once('remove', eventHandlers.leave);
+            });
           }
         });
 
@@ -69,4 +69,3 @@ const Cluster = class {
 };
 
 export default Cluster;
-
