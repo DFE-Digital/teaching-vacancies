@@ -3,12 +3,12 @@ APP_ROLE: sandbox
 AUTHENTICATION_FALLBACK: false
 BIG_QUERY_DATASET: sandbox_dataset
 DFE_SIGN_IN_ISSUER: https://oidc.signin.education.gov.uk
-DFE_SIGN_IN_REDIRECT_URL: https://teaching-vacancies.service.gov.uk/auth/dfe/callback
+DFE_SIGN_IN_REDIRECT_URL: https://sandbox.teaching-vacancies.service.gov.uk/auth/dfe/callback
 DFE_SIGN_IN_REGISTRATION_URL: https://profile.signin.education.gov.uk/register
 DFE_SIGN_IN_URL: https://api.signin.education.gov.uk
 DISABLE_EXPENSIVE_JOBS: true
 DOMAIN: sandbox.teaching-vacancies.service.gov.uk
-ENFORCE_LOCAL_AUTHORITY_ALLOWLIST: false
+ENFORCE_LOCAL_AUTHORITY_ALLOWLIST: true
 RAILS_ENV: production
 RAILS_LOG_TO_STDOUT: true
 RAILS_MAX_THREADS: 5
