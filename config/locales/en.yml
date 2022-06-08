@@ -380,6 +380,7 @@ en:
     status_tags:
       action_required: action required
       complete: complete
+      in_progress: in progress
       not_started: not started
       optional: optional
 

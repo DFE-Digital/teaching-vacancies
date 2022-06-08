@@ -76,6 +76,8 @@
         = govuk_button_link_to t(employments.job.none? ? "buttons.add_job" : "buttons.add_another_job"), new_jobseekers_job_application_employment_path(job_application), class: "govuk-button--secondary govuk-!-margin-bottom-0"
 
     = form_for form, url: wizard_path, method: :patch do |f|
+      = f.govuk_error_summary
+      = f.govuk_collection_radio_buttons :employment_history_section_completed, %w[true false], :to_s
       = f.govuk_submit job_application_build_submit_button_text do
         = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
         span.govuk-caption-m

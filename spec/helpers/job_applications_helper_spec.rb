@@ -172,4 +172,26 @@ RSpec.describe JobApplicationsHelper do
       end
     end
   end
+
+  describe "#job_application_step_in_progress?" do
+    subject { helper.job_application_step_in_progress?(job_application, step) }
+
+    let(:step) { :qualifications }
+
+    context "when step is in progress" do
+      let(:job_application) { create(:job_application, in_progress_steps: %w[qualifications]) }
+
+      it "returns true" do
+        expect(subject).to eq(true)
+      end
+    end
+
+    context "when step is completed" do
+      let(:job_application) { create(:job_application) }
+
+      it "returns false" do
+        expect(subject).to eq(false)
+      end
+    end
+  end
 end

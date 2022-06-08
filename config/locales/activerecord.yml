@@ -306,6 +306,10 @@ en:
               blank: Give details about any close relationships with people within the organisation
             right_to_work_in_uk:
               inclusion: Select yes if you have the right to work in the UK
+        jobseekers/job_application/employment_history_form:
+          attributes:
+            employment_history_section_completed:
+              blank: Select yes if you have completed this section
         jobseekers/job_application/equal_opportunities_form:
           attributes:
             age:
@@ -364,6 +368,10 @@ en:
               not_a_number: Enter the year your QTS was awarded
             statutory_induction_complete:
               inclusion: Select yes if you have completed your statutory induction year
+        jobseekers/job_application/qualifications_form:
+          attributes:
+            qualifications_section_completed:
+              blank: Select yes if you have completed this section
         jobseekers/job_application/review_form:
           attributes:
             confirm_data_accurate:

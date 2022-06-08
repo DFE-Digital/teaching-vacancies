@@ -5,7 +5,7 @@ RSpec.describe StatusTagHelper do
     subject { helper.review_section_tag(record, steps, form_classes) }
 
     context "when it is passed a job application" do
-      let(:record) { build_stubbed(:job_application, completed_steps: %w[personal_details professional_status]) }
+      let(:record) { build_stubbed(:job_application, completed_steps: %w[personal_details professional_status], in_progress_steps: %w[qualifications]) }
       let(:form_classes) { [Jobseekers::JobApplication::PersonalDetailsForm] }
 
       context "when there is an error on the step's form object" do
@@ -31,6 +31,14 @@ RSpec.describe StatusTagHelper do
 
         it "returns 'not started' tag" do
           expect(subject).to eq(helper.govuk_tag(text: I18n.t("shared.status_tags.not_started"), colour: "grey"))
+        end
+      end
+
+      context "when the step is in progress" do
+        let(:steps) { [:qualifications] }
+
+        it "returns 'in progress' tag" do
+          expect(subject).to eq(helper.govuk_tag(text: I18n.t("shared.status_tags.in_progress"), colour: "yellow"))
         end
       end
     end
