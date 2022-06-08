@@ -16,9 +16,23 @@ const Cluster = class {
     this.group = L.markerClusterGroup({
       iconCreateFunction: (cluster) => {
         cluster.on('add', () => {
-          cluster.getElement().addEventListener('focus', () => {
-            eventHandlers.focus();
-          });
+          cluster.getElement().addEventListener('focus', eventHandlers.focus);
+        });
+
+        cluster.on('click keydown', (c) => {
+          if (c.target.getAllChildMarkers().length) {
+            const [marker] = c.target.getAllChildMarkers();
+
+            marker.once('add', () => {
+              eventHandlers.enter({
+                detail: {
+                  id: marker.getElement().id,
+                },
+              });
+            });
+
+            marker.once('remove', eventHandlers.leave);
+          }
         });
 
         const properties = Cluster.icon(cluster.getChildCount());
@@ -55,3 +69,4 @@ const Cluster = class {
 };
 
 export default Cluster;
+
