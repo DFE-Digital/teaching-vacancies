@@ -17,14 +17,8 @@ data "aws_iam_policy_document" "deployments_role_policy" {
   statement {
     sid     = "ReadWriteTerraformState"
     actions = ["s3:GetObject", "s3:PutObject"]
-    # By specifically granting permissions on these prefixes
-    # We are defending against the unintentional creation of further namespaces
     resources = [
-      "arn:aws:s3:::${data.aws_s3_bucket.terraform_state.bucket}/dev/*",
-      "arn:aws:s3:::${data.aws_s3_bucket.terraform_state.bucket}/production/*",
-      "arn:aws:s3:::${data.aws_s3_bucket.terraform_state.bucket}/qa/*",
-      "arn:aws:s3:::${data.aws_s3_bucket.terraform_state.bucket}/review/*",
-      "arn:aws:s3:::${data.aws_s3_bucket.terraform_state.bucket}/staging/*"
+      "arn:aws:s3:::${data.aws_s3_bucket.terraform_state.bucket}/*"
     ]
   }
   statement {
