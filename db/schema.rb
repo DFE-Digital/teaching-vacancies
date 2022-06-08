@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_24_160302) do
+ActiveRecord::Schema.define(version: 2022_06_08_084016) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(version: 2022_05_24_160302) do
     t.text "organisation_ciphertext"
     t.text "job_title_ciphertext"
     t.text "main_duties_ciphertext"
+    t.index ["job_application_id"], name: "index_employments_on_job_application_id"
   end
 
   create_table "equal_opportunities_reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -125,6 +126,7 @@ ActiveRecord::Schema.define(version: 2022_05_24_160302) do
     t.integer "age_forty_to_forty_nine", default: 0, null: false
     t.integer "age_fifty_to_fifty_nine", default: 0, null: false
     t.integer "age_sixty_and_over", default: 0, null: false
+    t.index ["vacancy_id"], name: "index_equal_opportunities_reports_on_vacancy_id"
   end
 
   create_table "feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -215,6 +217,7 @@ ActiveRecord::Schema.define(version: 2022_05_24_160302) do
     t.text "further_instructions_ciphertext"
     t.text "rejection_reasons_ciphertext"
     t.text "gaps_in_employment_details_ciphertext"
+    t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end
 
   create_table "jobseekers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -350,6 +353,7 @@ ActiveRecord::Schema.define(version: 2022_05_24_160302) do
     t.index ["geopoint"], name: "index_organisations_on_geopoint", using: :gist
     t.index ["local_authority_code"], name: "index_organisations_on_local_authority_code", unique: true
     t.index ["slug"], name: "index_organisations_on_slug", unique: true
+    t.index ["type"], name: "index_organisations_on_type"
     t.index ["uid"], name: "index_organisations_on_uid", unique: true
     t.index ["urn"], name: "index_organisations_on_urn", unique: true
   end
@@ -374,6 +378,7 @@ ActiveRecord::Schema.define(version: 2022_05_24_160302) do
     t.text "given_name_ciphertext"
     t.datetime "dismissed_new_features_page_at"
     t.datetime "unsubscribed_from_expired_vacancy_prompt_at"
+    t.index ["email"], name: "index_publishers_on_email"
     t.index ["oid"], name: "index_publishers_on_oid", unique: true
   end
 
@@ -398,6 +403,7 @@ ActiveRecord::Schema.define(version: 2022_05_24_160302) do
     t.integer "year"
     t.uuid "job_application_id", null: false
     t.text "finished_studying_details_ciphertext"
+    t.index ["job_application_id"], name: "index_qualifications_on_job_application_id"
   end
 
   create_table "references", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -410,6 +416,7 @@ ActiveRecord::Schema.define(version: 2022_05_24_160302) do
     t.text "organisation_ciphertext"
     t.text "email_ciphertext"
     t.text "phone_number_ciphertext"
+    t.index ["job_application_id"], name: "index_references_on_job_application_id"
   end
 
   create_table "saved_jobs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -417,6 +424,7 @@ ActiveRecord::Schema.define(version: 2022_05_24_160302) do
     t.uuid "vacancy_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["jobseeker_id"], name: "index_saved_jobs_on_jobseeker_id"
   end
 
   create_table "school_group_memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -425,6 +433,7 @@ ActiveRecord::Schema.define(version: 2022_05_24_160302) do
     t.boolean "do_not_delete"
     t.datetime "created_at", precision: 6
     t.datetime "updated_at", precision: 6
+    t.index ["school_group_id", "school_id"], name: "index_school_group_memberships_on_school_group_id_and_school_id"
     t.index ["school_id", "school_group_id"], name: "index_school_group_memberships_on_school_id_and_school_group_id", unique: true
   end
 
@@ -446,6 +455,7 @@ ActiveRecord::Schema.define(version: 2022_05_24_160302) do
     t.float "recaptcha_score"
     t.boolean "active", default: true
     t.datetime "unsubscribed_at"
+    t.index ["email"], name: "index_subscriptions_on_email"
   end
 
   create_table "support_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -512,6 +522,8 @@ ActiveRecord::Schema.define(version: 2022_05_24_160302) do
     t.index ["publisher_id"], name: "index_vacancies_on_publisher_id"
     t.index ["publisher_organisation_id"], name: "index_vacancies_on_publisher_organisation_id"
     t.index ["searchable_content"], name: "index_vacancies_on_searchable_content", using: :gin
+    t.index ["slug"], name: "index_vacancies_on_slug"
+    t.index ["status"], name: "index_vacancies_on_status"
   end
 
   create_table "versions", force: :cascade do |t|
@@ -528,12 +540,18 @@ ActiveRecord::Schema.define(version: 2022_05_24_160302) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "emergency_login_keys", "publishers"
+  add_foreign_key "employments", "job_applications"
+  add_foreign_key "equal_opportunities_reports", "vacancies"
+  add_foreign_key "job_applications", "vacancies"
   add_foreign_key "markers", "organisations"
   add_foreign_key "markers", "vacancies"
   add_foreign_key "notes", "job_applications"
   add_foreign_key "notes", "publishers"
   add_foreign_key "publisher_preferences", "publishers"
   add_foreign_key "qualification_results", "qualifications"
+  add_foreign_key "qualifications", "job_applications"
+  add_foreign_key "references", "job_applications"
+  add_foreign_key "saved_jobs", "jobseekers"
   add_foreign_key "vacancies", "organisations", column: "publisher_organisation_id"
   add_foreign_key "vacancies", "publishers"
 end
