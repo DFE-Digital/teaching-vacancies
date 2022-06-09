@@ -2,7 +2,16 @@
 
 h1.govuk-heading-l = t("support_users.dashboard.heading")
 
+h2.govuk-heading-m = t("support_users.dashboard.user_feedback_heading")
 nav
   ul.govuk-list
     li
       = govuk_link_to t("support_users.dashboard.user_feedback_link"), support_users_feedback_general_path
+
+hr.govuk-section-break.govuk-section-break--l
+
+h2.govuk-heading-m = t("support_users.dashboard.development_tools_heading")
+nav
+  ul.govuk-list
+    li
+      = govuk_link_to t("support_users.dashboard.sidekiq_link"), "/sidekiq"

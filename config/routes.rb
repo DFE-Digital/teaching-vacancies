@@ -2,14 +2,13 @@ require "sidekiq/web"
 require "sidekiq/cron/web"
 
 Rails.application.routes.draw do
-  unless Rails.env.development?
-    Sidekiq::Web.use ActionDispatch::Session::ActiveRecordStore
-    Sidekiq::Web.use Rack::Auth::Basic do |username, password|
-      ActiveSupport::SecurityUtils.secure_compare(::Digest::SHA256.hexdigest(username), ::Digest::SHA256.hexdigest(ENV.fetch("SIDEKIQ_USERNAME", nil))) &
-        ActiveSupport::SecurityUtils.secure_compare(::Digest::SHA256.hexdigest(password), ::Digest::SHA256.hexdigest(ENV.fetch("SIDEKIQ_PASSWORD", nil)))
+  if Rails.env.development?
+    mount Sidekiq::Web, at: "/sidekiq"
+  else
+    authenticate :support_user do
+      mount Sidekiq::Web, at: "/sidekiq"
     end
   end
-  mount Sidekiq::Web, at: "/sidekiq"
 
   get "check" => "application#check"
 

@@ -483,7 +483,10 @@ en:
     dashboard:
       heading: Dashboard
       title: Support user dashboard
+      user_feedback_heading: User feedback
       user_feedback_link: View user feedback
+      development_tools_heading: Developer tools
+      sidekiq_link: View Sidekiq dashboard
     feedbacks:
       general:
         title: General feedback
