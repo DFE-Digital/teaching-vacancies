@@ -19,7 +19,7 @@ class Jobseekers::SearchForm
     @subjects = params[:subjects] || []
     @phases = params[:phases] || []
     @working_patterns = params[:working_patterns] || []
-    @organisation_slug = params[:organisation_slug] unless @keyword.present? || @location.present?
+    @organisation_slug = params[:organisation_slug]
     @sort = Search::VacancySort.new(keyword: keyword).update(sort_by: params[:sort_by])
 
     set_filters_from_keyword

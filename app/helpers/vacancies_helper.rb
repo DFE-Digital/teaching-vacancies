@@ -131,6 +131,14 @@ module VacanciesHelper
     organisation_slug
   end
 
+  def organisation_landing_page_breadcrumbs(organisation_slug)
+    landing_page = OrganisationLandingPage[organisation_slug]
+    {
+      t("breadcrumbs.home") => root_path,
+      landing_page.name => nil,
+    }
+  end
+
   def vacancy_activity_log_item(attribute, new_value, organisation_type)
     new_value.map! { |value| Vacancy.array_enums[attribute.to_sym].key(value).humanize } if attribute.to_sym.in?(Vacancy.array_enums)
 

@@ -28,6 +28,7 @@ class OrganisationLandingPage < LandingPage
     super.merge(
       scope: [:landing_pages, "_organisation"],
       organisation: name,
+      count: count,
     )
   end
 end

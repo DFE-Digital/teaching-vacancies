@@ -59,7 +59,7 @@ RSpec.describe OrganisationLandingPage do
   end
 
   describe "i18n methods" do
-    specify { expect(subject.heading).to eq(I18n.t("landing_pages._organisation.heading", organisation: "Test Organisation", count: "<span class=\"govuk-!-font-weight-bold\">42</span>")) }
+    specify { expect(subject.heading).to eq(I18n.t("landing_pages._organisation.heading", organisation: "Test Organisation", count: "42")) }
     specify { expect(subject.meta_description).to eq(I18n.t("landing_pages._organisation.meta_description", organisation: "Test Organisation")) }
     specify { expect(subject.name).to eq("Test Organisation") }
     specify { expect(subject.title).to eq(I18n.t("landing_pages._organisation.title", organisation: "Test Organisation")) }
