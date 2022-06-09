@@ -9,7 +9,7 @@ RSpec.describe "Jobseekers can view organisation landing pages" do
       visit organisation_landing_page_path(school.slug)
 
       expect(page.title).to eq("School & Teaching Jobs at #{school.name} - Teaching Vacancies")
-      expect(page).to have_css("h1", text: "1 jobs found at #{school.name}")
+      expect(page).to have_css("h1", text: "1 job found at #{school.name}")
       expect(page).to have_link(vacancy.job_title.to_s)
       expect(page).to have_link(school.name, href: organisation_landing_page_path(school.slug))
     end

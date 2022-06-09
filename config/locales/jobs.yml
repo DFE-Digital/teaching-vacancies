@@ -109,7 +109,7 @@ en:
         other: >-
           within <span class='govuk-!-font-weight-bold'>%{count} %{units}</span> of
       location_html: <span class='govuk-!-font-weight-bold text-capitalize'>&lsquo;%{location}&rsquo;</span>
-      organisation_html: at %{organisation}
+      organisation_html: at <span class='govuk-!-font-weight-bold'>%{organisation}</span>
       unit_of_length: mile
       without_search_html:
         one: There is <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> job listed

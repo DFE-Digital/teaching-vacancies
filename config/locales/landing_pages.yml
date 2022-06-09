@@ -21,7 +21,9 @@ en:
 
     _organisation:
       title: "School & Teaching Jobs at %{organisation}"
-      heading: "%{count} jobs found at %{organisation}"
+      heading:
+        one: "<span class='govuk-!-font-weight-bold'>%{count}</span> job found at <span class='govuk-!-font-weight-bold'>%{organisation}</span>"
+        other: "<span class='govuk-!-font-weight-bold'>%{count}</span> jobs found at <span class='govuk-!-font-weight-bold'>%{organisation}</span>"
       meta_description: "Find school and teaching jobs at %{organisation} with Teaching Vacancies. Search for roles and set up email alerts for the latest jobs near you."
     ##
     # Content for "static" (non-location) landing pages
