@@ -123,7 +123,7 @@ module AuthHelpers
 
   def sign_in_support_user(navigate: false)
     visit new_support_user_session_path if navigate
-    click_on I18n.t("buttons.continue_to_dsi")
+    click_on I18n.t("support_users.sessions.new.button_text")
   end
 
   def stub_accepted_terms_and_conditions

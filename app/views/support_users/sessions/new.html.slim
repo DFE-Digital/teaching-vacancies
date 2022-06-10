@@ -1,18 +1,9 @@
-- content_for :page_title_prefix, t(".sign_in.title")
-
-- content_for :breadcrumbs do
-  = govuk_back_link text: t("buttons.back"), href: page_path("sign-in")
+- content_for :page_title_prefix, t(".title")
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    h1.govuk-heading-l = t(".sign_in.title")
+    h1.govuk-heading-l = t(".title")
 
-    p = t(".sign_in.description")
-    = govuk_button_to t("buttons.continue_to_dsi"), auth_dfe_path
+    p = t(".main_login_guidance_html", link: govuk_link_to(t(".main_login_link_text"), page_path("sign-in")))
 
-  .govuk-grid-column-one-third
-    h2.govuk-heading-m = t(".no_account.heading")
-
-    p.govuk-body = t(".no_account.content_html", link: govuk_link_to(t(".no_account.login_link_text"), auth_dfe_path))
-
-    p.govuk-body = t(".no_account.account_request_html", link: govuk_link_to(t(".no_account.account_request_link_text"), page_path("dsi-account-request")))
+    = govuk_button_to t(".button_text"), auth_dfe_path
