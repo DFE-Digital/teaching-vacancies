@@ -8,7 +8,7 @@ class TabsComponent < ApplicationComponent
 
   private
 
-  def default_classes
-    %w[tabs-component]
+  def default_attributes
+    { class: %w[tabs-component] }
   end
 end

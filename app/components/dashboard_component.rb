@@ -82,7 +82,7 @@ class DashboardComponent < ApplicationComponent
     )
   end
 
-  def default_classes
-    %w[dashboard-component]
+  def default_attributes
+    { class: %w[dashboard-component] }
   end
 end

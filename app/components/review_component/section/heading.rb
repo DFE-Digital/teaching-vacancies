@@ -11,8 +11,8 @@ class ReviewComponent::Section::Heading < ApplicationComponent
 
   attr_reader :title, :text, :href
 
-  def default_classes
-    %w[review-component__section__heading]
+  def default_attributes
+    { class: %w[review-component__section__heading] }
   end
 
   def edit_link

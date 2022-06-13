@@ -18,7 +18,7 @@ class TimelineComponent < ApplicationComponent
 
   private
 
-  def default_classes
-    %w[timeline-component]
+  def default_attributes
+    { class: %w[timeline-component] }
   end
 end

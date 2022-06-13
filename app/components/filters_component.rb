@@ -57,7 +57,7 @@ class FiltersComponent < ApplicationComponent
     options[:remove_buttons] && filters[:total_count]&.positive?
   end
 
-  def default_classes
-    %w[filters-component]
+  def default_attributes
+    { class: %w[filters-component] }
   end
 end

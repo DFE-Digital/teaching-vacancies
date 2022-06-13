@@ -21,7 +21,7 @@ class CardComponent < ApplicationComponent
 
   private
 
-  def default_classes
-    %w[card-component]
+  def default_attributes
+    { class: %w[card-component] }
   end
 end

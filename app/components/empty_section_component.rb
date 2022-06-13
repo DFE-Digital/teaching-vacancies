@@ -9,7 +9,7 @@ class EmptySectionComponent < ApplicationComponent
 
   private
 
-  def default_classes
-    %w[empty-section-component]
+  def default_attributes
+    { class: %w[empty-section-component] }
   end
 end

@@ -1,5 +1,5 @@
 class ReviewComponent::Sidebar < ApplicationComponent
-  def default_classes
-    %w[govuk-grid-column-one-third]
+  def default_attributes
+    { class: %w[govuk-grid-column-one-third] }
   end
 end

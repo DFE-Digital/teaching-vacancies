@@ -46,8 +46,8 @@ class ReviewComponent::Section < ApplicationComponent
 
   attr_reader :id
 
-  def default_classes
-    %w[review-component__section]
+  def default_attributes
+    { class: %w[review-component__section] }
   end
 
   def heading_text

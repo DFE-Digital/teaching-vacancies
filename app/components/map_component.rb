@@ -15,8 +15,8 @@ class MapComponent < ApplicationComponent
     @polygon.nil? && @radius ? @radius : nil
   end
 
-  def default_classes
-    %w[map-component]
+  def default_attributes
+    { class: %w[map-component] }
   end
 
   def render?

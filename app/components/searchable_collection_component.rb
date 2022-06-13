@@ -28,7 +28,7 @@ class SearchableCollectionComponent < ApplicationComponent
 
   private
 
-  def default_classes
-    %w[searchable-collection-component]
+  def default_attributes
+    { class: %w[searchable-collection-component] }
   end
 end

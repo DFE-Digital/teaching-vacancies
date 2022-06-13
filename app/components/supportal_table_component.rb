@@ -67,7 +67,7 @@ class SupportalTableComponent < ApplicationComponent
     end
   end
 
-  def default_classes
-    %w[supportal-table-component]
+  def default_attributes
+    { class: %w[supportal-table-component] }
   end
 end

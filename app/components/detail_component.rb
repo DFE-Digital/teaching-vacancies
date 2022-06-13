@@ -12,7 +12,7 @@ class DetailComponent < ApplicationComponent
 
   private
 
-  def default_classes
-    %w[detail-component]
+  def default_attributes
+    { class: %w[detail-component] }
   end
 end

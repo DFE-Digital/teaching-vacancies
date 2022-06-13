@@ -15,7 +15,7 @@ class SupportingDocumentComponent < ApplicationComponent
 
   private
 
-  def default_classes
-    %w[supporting-document-component icon icon--left icon--document]
+  def default_attributes
+    { class: %w[supporting-document-component icon icon--left icon--document] }
   end
 end

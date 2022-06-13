@@ -14,7 +14,7 @@ class CookiesBannerComponent < ApplicationComponent
 
   private
 
-  def default_classes
-    %w[cookies-banner-component]
+  def default_attributes
+    { class: %w[cookies-banner-component] }
   end
 end

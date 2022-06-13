@@ -36,7 +36,7 @@ class SortComponent < ApplicationComponent
     end
   end
 
-  def default_classes
-    %w[sort-component]
+  def default_attributes
+    { class: %w[sort-component] }
   end
 end

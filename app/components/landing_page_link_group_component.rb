@@ -39,8 +39,8 @@ class LandingPageLinkGroupComponent < ApplicationComponent
     ].compact.join
   end
 
-  def default_classes
-    %w[homepage-landing-page-link-group-component]
+  def default_attributes
+    { class: %w[homepage-landing-page-link-group-component] }
   end
 
   def location?(location)

@@ -15,7 +15,7 @@ class NavigationListComponent < ApplicationComponent
 
   private
 
-  def default_classes
-    %w[navigation-list-component]
+  def default_attributes
+    { class: %w[navigation-list-component] }
   end
 end

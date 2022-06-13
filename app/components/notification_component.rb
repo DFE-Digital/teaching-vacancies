@@ -9,8 +9,8 @@ class NotificationComponent < ApplicationComponent
 
   private
 
-  def default_classes
-    %w[notification-component]
+  def default_attributes
+    { class: %w[notification-component] }
   end
 
   def unread_tag

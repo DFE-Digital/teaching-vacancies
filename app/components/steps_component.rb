@@ -20,7 +20,7 @@ class StepsComponent < ApplicationComponent
 
   private
 
-  def default_classes
-    %w[steps-component]
+  def default_attributes
+    { class: %w[steps-component] }
   end
 end
