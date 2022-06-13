@@ -4,41 +4,14 @@ RSpec.describe Jobseekers::SearchForm, type: :model do
   subject { described_class.new(params) }
 
   describe "#initialize" do
-    let(:radius_builder) { instance_double(Search::RadiusBuilder) }
-    let(:expected_radius) { "1000" }
     let(:params) { { radius: radius, location: location } }
 
-    before { allow(radius_builder).to receive(:radius).and_return(expected_radius) }
-
-    context "when location param is provided" do
+    context "when location param is provided and is not a location polygon and radius is zero" do
       let(:location) { "North Nowhere" }
+      let(:radius) { "0" }
 
-      context "when radius param is provided" do
-        let(:radius) { "1" }
-
-        it_behaves_like "a correct call of Search::RadiusBuilder"
-      end
-
-      context "when radius param is not provided" do
-        let(:radius) { nil }
-
-        it_behaves_like "a correct call of Search::RadiusBuilder"
-      end
-    end
-
-    context "when location param is not provided" do
-      let(:location) { nil }
-
-      context "when radius param is provided" do
-        let(:radius) { "1" }
-
-        it_behaves_like "a correct call of Search::RadiusBuilder"
-      end
-
-      context "when radius param is not provided" do
-        let(:radius) { nil }
-
-        it_behaves_like "a correct call of Search::RadiusBuilder"
+      it "sets the radius to 10 miles" do
+        expect(subject.radius).to eq(10)
       end
     end
   end

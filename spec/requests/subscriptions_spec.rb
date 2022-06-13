@@ -67,7 +67,7 @@ RSpec.describe "Subscriptions" do
     it "creates a subscription" do
       expect { subject }.to change { Subscription.count }.by(1)
       expect(created_subscription.email).to eq("foo@example.net")
-      expect(created_subscription.search_criteria.symbolize_keys).to eq({ keyword: "english", location: "London", radius: "0" })
+      expect(created_subscription.search_criteria.symbolize_keys).to eq({ keyword: "english", location: "London" })
     end
 
     it "triggers a `job_alert_subscription_created` event" do
@@ -116,7 +116,7 @@ RSpec.describe "Subscriptions" do
     it "updates the subscription" do
       expect { subject }.not_to(change { Subscription.count })
       expect(subscription.reload.email).to eq("jimi@hendrix.com")
-      expect(subscription.reload.search_criteria.symbolize_keys).to eq({ keyword: "english", location: "London", radius: "0" })
+      expect(subscription.reload.search_criteria.symbolize_keys).to eq({ keyword: "english", location: "London" })
     end
 
     it "triggers a `job_alert_subscription_updated` event" do

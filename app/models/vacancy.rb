@@ -64,8 +64,8 @@ class Vacancy < ApplicationRecord
   scope :external, (-> { where.not(external_source: nil) })
 
   scope :search_by_filter, VacancyFilterQuery
-  scope :search_by_location, VacancyLocationQuery
   scope :search_by_full_text, VacancyFullTextSearchQuery
+  scope :search_within_area, ->(area) { where("ST_Intersects(?, geolocation)", area.to_s) }
 
   validates :slug, presence: true
   validate :enable_job_applications_cannot_be_changed_once_listed

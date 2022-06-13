@@ -114,6 +114,6 @@ describe('when map is initialised with layers', () => {
   });
 
   test('polygons and radius circles are added to map', () => {
-    expect(spies.addLayer).toHaveBeenCalledTimes(3);
+    expect(spies.addLayer).toHaveBeenCalledTimes(2);
   });
 });

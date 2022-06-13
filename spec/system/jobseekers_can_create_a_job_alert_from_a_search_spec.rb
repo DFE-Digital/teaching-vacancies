@@ -4,7 +4,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
   let(:location) { "London" }
   let!(:location_polygon) { create(:location_polygon, name: "london") }
 
-  let(:search_with_polygons?) { false }
+  let(:location_polygon_search?) { false }
   let(:jobseeker_signed_in?) { false }
   let(:jobseeker) { build_stubbed(:jobseeker) }
 
@@ -100,7 +100,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
     end
 
     context "when a polygon search is carried out" do
-      let(:search_with_polygons?) { true }
+      let(:location_polygon_search?) { true }
       let(:location) { "London" }
 
       scenario "successfully creates a job alert" do
@@ -120,7 +120,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
     end
 
     context "when a point location search is carried out" do
-      let(:search_with_polygons?) { false }
+      let(:location_polygon_search?) { false }
       let(:location) { "SW1A 1AA" }
 
       scenario "successfully creates a job alert" do
@@ -137,17 +137,6 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
         expect(message_delivery).to receive(:deliver_later)
         click_on I18n.t("buttons.subscribe")
       end
-
-      context "and the user submits a radius of 0 on the create a job alert page" do
-        scenario "sets radius to a default radius" do
-          fill_in_subscription_fields
-          select I18n.t("jobs.search.number_of_miles", count: 0), from: "radius"
-
-          click_on I18n.t("buttons.subscribe")
-
-          expect(page).to have_content(I18n.t("jobs.search.number_of_miles", count: Search::RadiusBuilder::DEFAULT_RADIUS_FOR_POINT_SEARCHES))
-        end
-      end
     end
   end
 
@@ -162,8 +151,8 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
   def and_perform_a_search
     fill_in "keyword", with: "english"
     fill_in "location", with: location
-    if search_with_polygons?
-      select "25 miles", from: "radius"
+    if location_polygon_search?
+      # select "25 miles", from: "radius"
     end
     check I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.teacher")
     check I18n.t("jobs.filters.ect_suitable")
@@ -176,8 +165,8 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
     expect(page.find_field("jobseekers-subscription-form-keyword-field").value).to eq("english")
     expect(page.find_field("jobseekers-subscription-form-location-field").value).to eq(location)
     expect(page).to have_css(".location-finder__input")
-    if search_with_polygons?
-      expect(page.find_field("jobseekers-subscription-form-radius-field").value).to eq("25")
+    if location_polygon_search?
+      # expect(page.find_field("jobseekers-subscription-form-radius-field").value).to eq("25")
     end
     expect(page.find_field("jobseekers-subscription-form-job-roles-teacher-field")).to be_checked
     expect(page.find_field("jobseekers-subscription-form-ect-statuses-ect-suitable-field")).to be_checked

@@ -41,13 +41,12 @@ const MapController = class extends Controller {
 
     this.createMap();
 
-    if (this.element.dataset.radius) {
+    if (this.point) {
       this.addMarker({
         point: this.point,
         variant: MapController.MARKER_OPTIONS.location.variant,
         title: MapController.MARKER_OPTIONS.location.title,
       });
-      this.addLayer(Map.createCircle(this.radius, this.point, MapController.SHAPE_STYLES));
     }
 
     let tracking;

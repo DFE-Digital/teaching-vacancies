@@ -15,5 +15,5 @@
 # TODO: Remove when we have upgraded to rgeo gem >= 3.0
 
 RGeo::ActiveRecord::SpatialFactoryStore.instance.tap do |config|
-  config.default = RGeo::Geographic.spherical_factory(srid: 4326, uses_lenient_assertions: true)
+  config.default = RGeo::Geographic.spherical_factory(srid: 4326, uses_lenient_assertions: true, buffer_resolution: 8)
 end

@@ -1,4 +1,4 @@
-= tag.div(**html_attributes.merge(data: { controller: "map map-sidebar", action: "map-sidebar:closed->map#focusMarker map-sidebar:opened->map#focusMarker map:sidebar:update->map-sidebar#update map:sidebar:focus->map-sidebar#focus map:interaction->map-sidebar#blur map:interaction->map#blurMarker", point: @point, polygons: @polygon, radius: radius })) do
+= tag.div(**html_attributes.merge(data: { controller: "map map-sidebar", action: "map-sidebar:closed->map#focusMarker map-sidebar:opened->map#focusMarker map:sidebar:update->map-sidebar#update map:sidebar:focus->map-sidebar#focus map:interaction->map-sidebar#blur map:interaction->map#blurMarker", point: @point, polygons: @polygon })) do
 
   .markers data-map-target="markers" data-marker-tracking=@marker[:tracking].to_json
     - @markers.each do |marker|

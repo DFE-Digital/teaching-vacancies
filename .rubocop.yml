@@ -146,7 +146,7 @@ Metrics/CyclomaticComplexity:
     - "spec/**/*"
 
 Metrics/MethodLength:
-  Max: 18 # Default 10
+  Max: 19 # Default 10
   Exclude:
     - "config/**/*"
     - "spec/**/*"

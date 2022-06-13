@@ -1,6 +1,6 @@
 class Jobseekers::SubscriptionForm < BaseForm
   attr_accessor :email, :frequency,
-                :keyword, :location, :radius,
+                :keyword, :location, :radius, :transportation_type, :travel_time,
                 :job_roles, :ect_statuses, :subjects, :phases, :working_patterns,
                 :job_role_options, :ect_status_options,
                 :phase_options, :working_pattern_options,
@@ -19,6 +19,9 @@ class Jobseekers::SubscriptionForm < BaseForm
     @frequency = params[:frequency]
     @keyword = params[:keyword] || search_criteria[:keyword]
     @location = params[:location] || search_criteria[:location]
+    @radius = params[:radius] || search_criteria[:radius] if location
+    @transportation_type = params[:transportation_type] || search_criteria[:transportation_type]
+    @travel_time = params[:travel_time] || search_criteria[:travel_time]
     @job_roles = params[:job_roles]&.reject(&:blank?) || search_criteria[:job_roles] || []
     @ect_statuses = params[:ect_statuses]&.reject(&:blank?) || search_criteria[:ect_statuses] || []
     @subjects = params[:subjects]&.reject(&:blank?) || search_criteria[:subjects]
@@ -26,7 +29,6 @@ class Jobseekers::SubscriptionForm < BaseForm
     @working_patterns = params[:working_patterns]&.reject(&:blank?) || search_criteria[:working_patterns]
     @organisation_slug = params[:organisation_slug]
 
-    set_radius((params[:radius] || search_criteria[:radius]))
     set_facet_options
   end
 
@@ -42,7 +44,9 @@ class Jobseekers::SubscriptionForm < BaseForm
     {
       keyword: keyword,
       location: location,
-      radius: (@location.present? ? radius : nil),
+      radius: radius,
+      travel_time: travel_time,
+      transportation_type: transportation_type,
       job_roles: job_roles,
       ect_statuses: ect_statuses,
       subjects: subjects,
@@ -73,9 +77,5 @@ class Jobseekers::SubscriptionForm < BaseForm
     return unless Subscription.where(job_alert_params).exists?
 
     errors.add(:base, I18n.t("subscriptions.errors.duplicate_alert"))
-  end
-
-  def set_radius(radius_param)
-    @radius = Search::RadiusBuilder.new(location, radius_param).radius.to_s
   end
 end

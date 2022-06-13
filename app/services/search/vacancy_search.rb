@@ -1,14 +1,19 @@
 class Search::VacancySearch
   extend Forwardable
-  def_delegators :location_search, :point_coordinates
+  def_delegators :location_search, :point, :polygon, :point_coordinates,
+                 :area, :location_polygon, :valid_location_search?,
+                 :commute_area_search?, :location_polygon_search?
 
-  attr_reader :search_criteria, :keyword, :location, :radius, :organisation_slug, :sort
+  attr_reader :search_criteria, :keyword, :location, :radius, :organisation_slug,
+              :transportation_type, :travel_time, :sort
 
   def initialize(search_criteria, sort: nil)
     @search_criteria = search_criteria
     @keyword = search_criteria[:keyword]
     @location = search_criteria[:location]
     @radius = search_criteria[:radius]
+    @transportation_type = search_criteria[:transportation_type]
+    @travel_time = search_criteria[:travel_time]
     @organisation_slug = search_criteria[:organisation_slug]
 
     @sort = sort || Search::VacancySort.new(keyword: keyword)
@@ -32,10 +37,11 @@ class Search::VacancySearch
   end
 
   def location_search
-    @location_search ||= Search::LocationBuilder.new(search_criteria[:location], search_criteria[:radius])
+    @location_search ||= Search::LocationBuilder.new(location, radius, travel_time, transportation_type)
   end
 
   def wider_search_suggestions
+    return if commute_area_search?
     return unless vacancies.empty? && search_criteria[:location].present?
 
     Search::WiderSuggestionsBuilder.new(search_criteria).suggestions
@@ -46,14 +52,12 @@ class Search::VacancySearch
   end
 
   def vacancies
-    @vacancies ||= scope
+    @vacancies ||= vacancies_scope
   end
 
   def markers
-    @markers ||= Marker.search_by_location(location, radius)
-                       .where(vacancy_id: scope.pluck(:id))
-                       .pluck(:vacancy_id, :organisation_id, :geopoint)
-                       .map { |marker| marker_for_map(*marker) }
+    @markers ||= markers_scope.pluck(:vacancy_id, :organisation_id, :geopoint)
+                              .map { |marker| marker_for_map(*marker) }
   end
 
   def total_count
@@ -62,13 +66,19 @@ class Search::VacancySearch
 
   private
 
-  def scope
+  def vacancies_scope
     scope = Vacancy.live.includes(:organisations)
     scope = scope.where(id: organisation.all_vacancies.pluck(:id)) if organisation
-    scope = scope.search_by_location(location, radius) if location
+    scope = scope.search_within_area(area) if valid_location_search?
     scope = scope.search_by_filter(search_criteria) if search_criteria.any?
     scope = scope.search_by_full_text(keyword) if keyword.present?
     scope = scope.reorder(sort.by => sort.order) if sort&.by_db_column?
+    scope
+  end
+
+  def markers_scope
+    scope = Marker.where(vacancy_id: vacancies_scope.pluck(:id))
+    scope = scope.search_within_area(area) if valid_location_search?
     scope
   end
 

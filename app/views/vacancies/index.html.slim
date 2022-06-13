@@ -29,9 +29,8 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
       - if @show_map
         #map-results
           = map(markers: @vacancies_search.markers,
-                polygon: @vacancies_search.location_search.geojson_polygon,
-                point: @vacancies_search.location_search.geojson_point,
-                radius: @vacancies_search.location_search.radius_in_meters,
+                polygon: @vacancies_search.polygon,
+                point: @vacancies_search.point,
                 marker: { type: "vacancy", tracking: { link: "vacancy_visited_from_map", marker: "vacancy_popup_opened_from_map" } })
 
       #search-results

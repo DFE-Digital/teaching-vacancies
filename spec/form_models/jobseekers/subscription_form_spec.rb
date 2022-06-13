@@ -13,7 +13,7 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
   subject { described_class.new(params) }
 
   describe "#initialize" do
-    let(:radius_builder) { instance_double(Search::RadiusBuilder) }
+    let(:radius_builder) { instance_double(Search::LocationBuilder) }
     let(:expected_radius) { "1000" }
     let(:keyword) { "jobs" }
     let(:job_roles) { %w[teacher wizard] }
@@ -32,81 +32,6 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
       let(:params) { { search_criteria: { keyword: keyword, job_roles: job_roles, phases: phases, working_patterns: working_patterns } } }
 
       it_behaves_like "a form with the correct attributes"
-    end
-
-    context "when a radius is provided in the params" do
-      let(:radius) { "1" }
-
-      context "when a location is provided in the params" do
-        let(:location) { "North Nowhere" }
-        let(:params) { { radius: radius, location: location } }
-
-        it_behaves_like "a correct call of Search::RadiusBuilder"
-      end
-
-      context "when a location is provided in the search_criteria param" do
-        let(:location) { "North Nowhere" }
-        let(:params) { { radius: radius, search_criteria: { location: location } } }
-
-        it_behaves_like "a correct call of Search::RadiusBuilder"
-      end
-
-      context "when a location is not provided" do
-        let(:location) { nil }
-        let(:params) { { radius: radius } }
-
-        it_behaves_like "a correct call of Search::RadiusBuilder"
-      end
-    end
-
-    context "when a radius is provided in the search_criteria param" do
-      let(:radius) { "1" }
-
-      context "when a location is provided in the params" do
-        let(:location) { "North Nowhere" }
-        let(:params) { { search_criteria: { radius: radius }, location: location } }
-
-        it_behaves_like "a correct call of Search::RadiusBuilder"
-      end
-
-      context "when a location is provided in the search_criteria param" do
-        let(:location) { "North Nowhere" }
-        let(:params) { { search_criteria: { radius: radius, location: location } } }
-
-        it_behaves_like "a correct call of Search::RadiusBuilder"
-      end
-
-      context "when a location is not provided" do
-        let(:location) { nil }
-        let(:params) { { search_criteria: { radius: radius } } }
-
-        it_behaves_like "a correct call of Search::RadiusBuilder"
-      end
-    end
-
-    context "when a radius is not provided" do
-      let(:radius) { nil }
-
-      context "when a location is provided in the params" do
-        let(:location) { "North Nowhere" }
-        let(:params) { { location: location } }
-
-        it_behaves_like "a correct call of Search::RadiusBuilder"
-      end
-
-      context "when a location is provided in the search_criteria param" do
-        let(:location) { "North Nowhere" }
-        let(:params) { { search_criteria: { location: location } } }
-
-        it_behaves_like "a correct call of Search::RadiusBuilder"
-      end
-
-      context "when a location is not provided" do
-        let(:location) { nil }
-        let(:params) { {} }
-
-        it_behaves_like "a correct call of Search::RadiusBuilder"
-      end
     end
   end
 

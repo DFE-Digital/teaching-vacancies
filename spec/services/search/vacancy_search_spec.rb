@@ -28,7 +28,7 @@ RSpec.describe Search::VacancySearch do
     allow(school).to receive_message_chain(:all_vacancies, :pluck).and_return(vacancy_ids)
     allow(Vacancy).to receive(:live).and_return(scope)
     allow(scope).to receive(:includes).with(:organisations).and_return(scope)
-    allow(scope).to receive(:search_by_location).with("Louth", 10).and_return(scope)
+    allow(scope).to receive(:search_within_area).and_return(scope)
     allow(scope).to receive(:search_by_filter).and_return(scope)
     allow(scope).to receive(:search_by_full_text).with("maths teacher").and_return(scope)
     allow(scope).to receive(:where).with(id: vacancy_ids).and_return(scope)
