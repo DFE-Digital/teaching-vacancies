@@ -1,4 +1,4 @@
-class NotificationComponent < GovukComponent::Base
+class NotificationComponent < ApplicationComponent
   attr_reader :notification
 
   def initialize(notification:, classes: [], html_attributes: {})

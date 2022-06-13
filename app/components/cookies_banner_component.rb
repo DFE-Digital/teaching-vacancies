@@ -1,4 +1,4 @@
-class CookiesBannerComponent < GovukComponent::Base
+class CookiesBannerComponent < ApplicationComponent
   attr_reader :create_path, :reject_path, :preferences_path
 
   renders_one :body

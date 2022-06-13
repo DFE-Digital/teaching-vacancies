@@ -1,6 +1,6 @@
 # This is an abstract class.  See VacancyReviewComponent or
 # JobApplicationReviewComponent for specific implementations.
-class ReviewComponent < GovukComponent::Base
+class ReviewComponent < ApplicationComponent
   renders_one :header
 
   renders_one :above

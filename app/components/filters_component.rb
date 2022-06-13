@@ -1,4 +1,4 @@
-class FiltersComponent < GovukComponent::Base
+class FiltersComponent < ApplicationComponent
   attr_accessor :filters, :submit_button, :options, :title
 
   def self.variants

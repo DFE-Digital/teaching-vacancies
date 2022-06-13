@@ -1,4 +1,4 @@
-class SupportingDocumentComponent < GovukComponent::Base
+class SupportingDocumentComponent < ApplicationComponent
   delegate :open_in_new_tab_link_to, to: :helpers
 
   attr_reader :supporting_document

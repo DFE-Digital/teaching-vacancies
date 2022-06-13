@@ -1,4 +1,4 @@
-class DetailComponent < GovukComponent::Base
+class DetailComponent < ApplicationComponent
   attr_reader :title
 
   renders_one :body

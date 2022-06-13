@@ -1,4 +1,4 @@
-class LandingPageLinkComponent < GovukComponent::Base
+class LandingPageLinkComponent < ApplicationComponent
   include LinksHelper
 
   attr_reader :landing_page

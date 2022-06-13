@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe FailSafe, type: :component do
   let(:my_component_class) do
-    Class.new(GovukComponent::Base) do
+    Class.new(ApplicationComponent) do
       include FailSafe
 
       def self.name

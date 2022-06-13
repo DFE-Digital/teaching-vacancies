@@ -1,4 +1,4 @@
-class CardComponent < GovukComponent::Base
+class CardComponent < ApplicationComponent
   renders_one :header
   renders_one :body
 

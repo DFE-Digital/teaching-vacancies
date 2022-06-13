@@ -1,4 +1,4 @@
-class SearchableCollectionComponent < GovukComponent::Base
+class SearchableCollectionComponent < ApplicationComponent
   attr_accessor :collection, :collection_count, :threshold, :border, :label_text, :options, :scrollable
 
   def initialize(collection:, collection_count:, options: {}, label_text: nil, classes: [], html_attributes: {})

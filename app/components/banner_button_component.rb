@@ -1,4 +1,4 @@
-class BannerButtonComponent < GovukComponent::Base
+class BannerButtonComponent < ApplicationComponent
   attr_reader :text, :href, :method, :params, :icon
 
   ICONS = %w[alert-white alert-blue apply check cross document green-tick info notice save saved search start success warning].freeze

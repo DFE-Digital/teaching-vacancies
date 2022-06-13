@@ -1,4 +1,4 @@
-class ReviewComponent::Section::Heading < GovukComponent::Base
+class ReviewComponent::Section::Heading < ApplicationComponent
   def initialize(title:, link_to: [], allow_edit: true, classes: [], html_attributes: {})
     super(classes: classes, html_attributes: html_attributes)
 

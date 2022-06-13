@@ -1,4 +1,4 @@
-class EnvironmentBannerComponent < GovukComponent::Base
+class EnvironmentBannerComponent < ApplicationComponent
   include FailSafe
 
   def initialize(classes: [], html_attributes: {})

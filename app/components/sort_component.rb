@@ -1,6 +1,6 @@
 # When there are only two sorting options, these should be presented as links, not
 # options in a drop-down. This component manages that display logic, among other things.
-class SortComponent < GovukComponent::Base
+class SortComponent < ApplicationComponent
   attr_reader :url_params, :path, :sort
 
   # @param [Method] path The helper method which generates the destination path for the links or forms
