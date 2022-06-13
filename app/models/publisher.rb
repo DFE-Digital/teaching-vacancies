@@ -8,7 +8,7 @@ class Publisher < ApplicationRecord
   has_many :publisher_preferences, dependent: :destroy
   has_many :vacancies
 
-  lockbox_encrypts :family_name, :given_name
+  has_encrypted :family_name, :given_name
 
   devise :timeoutable
   self.timeout_in = 60.minutes # Overrides default Devise configuration

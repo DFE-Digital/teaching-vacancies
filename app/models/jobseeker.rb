@@ -1,5 +1,5 @@
 class Jobseeker < ApplicationRecord
-  lockbox_encrypts :last_sign_in_ip, :current_sign_in_ip
+  has_encrypted :last_sign_in_ip, :current_sign_in_ip
 
   devise(*%I[
     confirmable
