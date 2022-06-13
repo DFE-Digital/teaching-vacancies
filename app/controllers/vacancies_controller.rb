@@ -12,9 +12,7 @@ class VacanciesController < ApplicationController
     )
     @vacancies = @vacancies_search.vacancies
 
-    @show_map = current_variant?(:"2022_05_show_map_results", :show_map) &&
-                @vacancies_search.location &&
-                @vacancies_search.total_count <= MAX_TOTAL_RESULTS_FOR_MAP
+    @show_map = @vacancies_search.location.present?
   end
 
   def show
@@ -39,7 +37,8 @@ class VacanciesController < ApplicationController
     %w[job_role job_roles subjects phases working_patterns].each do |facet|
       params[facet] = params[facet].split if params[facet].is_a?(String)
     end
-    params.permit(:keyword, :previous_keyword, :organisation_slug, :location, :radius, :subject, :sort_by,
+    params.permit(:keyword, :previous_keyword, :organisation_slug, :location,
+                  :radius, :transportation_type, :travel_time, :subject, :sort_by,
                   job_role: [], job_roles: [], subjects: [], phases: [], working_patterns: [])
   end
 
@@ -60,7 +59,7 @@ class VacanciesController < ApplicationController
   def trigger_search_performed_event
     fail_safe do
       vacancy_ids = @vacancies_search.vacancies.map(&:id).map { |s| StringAnonymiser.new(s).to_s }
-      polygon_id = StringAnonymiser.new(@vacancies_search.location_search.polygon.id).to_s if @vacancies_search.location_search.polygon
+      polygon_id = StringAnonymiser.new(@vacancies_search.location_polygon.id).to_s if @vacancies_search.location_polygon_search?
 
       request_event.trigger(
         :search_performed,

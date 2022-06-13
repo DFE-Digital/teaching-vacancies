@@ -70,6 +70,7 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
   scope :search_by_filter, VacancyFilterQuery
   scope :search_by_location, VacancyLocationQuery
   scope :search_by_full_text, VacancyFullTextSearchQuery
+  scope :search_within_area, ->(area) { where("ST_Intersects(?, geolocation)", area.to_s) }
 
   paginates_per 10
 

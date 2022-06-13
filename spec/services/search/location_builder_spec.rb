@@ -4,13 +4,12 @@ RSpec.shared_examples "a search using polygons" do
   it "sets the correct attributes" do
     buffered_polygon = LocationPolygon.buffered(expected_radius).find_by(name: location_polygon.name)
     expect(subject.polygon.area).to eq(buffered_polygon.area)
-    expect(subject.location_filter).to eq({})
     expect(subject.radius).to eq(expected_radius)
   end
 end
 
 RSpec.describe Search::LocationBuilder do
-  subject { described_class.new(location, radius) }
+  subject { described_class.new(location, radius, travel_time, transportation_type) }
 
   let(:point_location) { "SW1A 1AA" }
   let(:radius) { 10 }
@@ -45,10 +44,8 @@ RSpec.describe Search::LocationBuilder do
 
       it "sets radius attribute, and location filter around the location" do
         expect(subject.polygon).to be_nil
-        expect(subject.location_filter).to eq({
-          point_coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
-          radius: radius_in_metres,
-        })
+        expect(subject.point_coordinates).to eq(Geocoder::DEFAULT_STUB_COORDINATES)
+        expect(subject.radius_in_meters).to eq(radius_in_metres)
         expect(subject.radius).to eq(expected_radius)
       end
     end
@@ -59,7 +56,6 @@ RSpec.describe Search::LocationBuilder do
       it "does not set location filters" do
         expect(subject.location).to be nil
         expect(subject.polygon).to be nil
-        expect(subject.location_filter).to eq({})
       end
     end
   end

@@ -16,7 +16,7 @@ class Search::RadiusBuilder
   def get_radius(radius)
     return DEFAULT_BUFFER_FOR_POLYGON_SEARCHES unless location.present?
 
-    if !search_with_polygons? && radius.to_s == DEFAULT_BUFFER_FOR_POLYGON_SEARCHES.to_s
+    if !location_polygon_search? && radius.to_s == DEFAULT_BUFFER_FOR_POLYGON_SEARCHES.to_s
       DEFAULT_RADIUS_FOR_POINT_SEARCHES
     else
       Integer(radius || default_radius).abs
@@ -24,10 +24,10 @@ class Search::RadiusBuilder
   end
 
   def default_radius
-    search_with_polygons? ? DEFAULT_BUFFER_FOR_POLYGON_SEARCHES : DEFAULT_RADIUS_FOR_POINT_SEARCHES
+    location_polygon_search? ? DEFAULT_BUFFER_FOR_POLYGON_SEARCHES : DEFAULT_RADIUS_FOR_POINT_SEARCHES
   end
 
-  def search_with_polygons?
+  def location_polygon_search?
     location.present? && LocationPolygon.include?(location)
   end
 end

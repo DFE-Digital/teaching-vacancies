@@ -4,7 +4,8 @@ class SearchResultsHeadingComponent < ViewComponent::Base
     @landing_page = landing_page
     @keyword = @vacancies_search.keyword
     @location = @vacancies_search.location_search.location
-    @radius = @vacancies_search.location_search.radius
+    @transportation_type = @vacancies_search.transportation_type
+    @travel_time = @vacancies_search.travel_time
     @total_count = @vacancies_search.total_count
     @readable_count = number_with_delimiter(@total_count)
     @organisation_slug = @vacancies_search.organisation_slug
@@ -17,7 +18,7 @@ class SearchResultsHeadingComponent < ViewComponent::Base
       return t("jobs.search_result_heading.without_search_html", jobs_count: @readable_count, count: @total_count)
     end
 
-    [count_phrase, keyword_phrase, radius_phrase, location_phrase, organisation_phrase].compact.join(" ")
+    [count_phrase, keyword_phrase, commute_phrase, location_phrase, organisation_phrase].compact.join(" ")
   end
 
   private
@@ -40,21 +41,17 @@ class SearchResultsHeadingComponent < ViewComponent::Base
     t("jobs.search_result_heading.location_html", location: @location)
   end
 
-  def radius_phrase
+  def commute_phrase
     return unless @location.present?
+    return "in" unless @transportation_type.present? && @travel_time.present?
 
-    # A radius of 0 is only possible for polygon searches.
-    t("jobs.search_result_heading.radius_html", count: @radius, units: units)
+    t("jobs.search_result_heading.commute_html", minutes: @travel_time, transportation_type: @transportation_type.humanize.downcase)
   end
 
   def organisation_phrase
     return unless @organisation_slug.present?
 
     t("jobs.search_result_heading.organisation_html", organisation: @vacancies_search.organisation.name)
-  end
-
-  def units
-    t("jobs.search_result_heading.unit_of_length").pluralize(@radius.to_i)
   end
 
   def job_role(role)

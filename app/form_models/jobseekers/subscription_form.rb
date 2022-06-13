@@ -1,6 +1,6 @@
 class Jobseekers::SubscriptionForm < BaseForm
   attr_accessor :email, :frequency,
-                :keyword, :location, :radius,
+                :keyword, :location, :radius, :transportation_type, :travel_time,
                 :job_roles, :subjects, :phases, :working_patterns,
                 :job_role_options, :ect_suitable_options, :send_responsible_options,
                 :phase_options, :working_pattern_options,
@@ -19,6 +19,8 @@ class Jobseekers::SubscriptionForm < BaseForm
     @frequency = params[:frequency]
     @keyword = params[:keyword] || search_criteria[:keyword]
     @location = params[:location] || search_criteria[:location]
+    @transportation_type = params[:transportation_type] || search_criteria[:transportation_type]
+    @travel_time = params[:travel_time] || search_criteria[:travel_time]
     @job_roles = params[:job_roles]&.reject(&:blank?) || search_criteria[:job_roles] || []
     @subjects = params[:subjects]&.reject(&:blank?) || search_criteria[:subjects]
     @phases = params[:phases]&.reject(&:blank?) || search_criteria[:phases]
@@ -41,7 +43,9 @@ class Jobseekers::SubscriptionForm < BaseForm
     {
       keyword: keyword,
       location: location,
-      radius: (@location.present? ? radius : nil),
+      radius: (@location.present? && @travel_time.blank? && transportation_type.blank? ? radius : nil),
+      travel_time: travel_time,
+      transportation_type: transportation_type,
       job_roles: job_roles,
       subjects: subjects,
       phases: phases,
@@ -75,6 +79,8 @@ class Jobseekers::SubscriptionForm < BaseForm
   end
 
   def set_radius(radius_param)
+    return if transportation_type && travel_time
+
     @radius = Search::RadiusBuilder.new(location, radius_param).radius.to_s
   end
 end

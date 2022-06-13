@@ -2,7 +2,11 @@
 - unless @organisation
   = render "vacancies/search/location", f: f, wide: false
   = render "vacancies/search/current_location", target: "jobseekers-subscription-form-location-field"
-  = render "vacancies/search/radius", f: f, wide: false
+  - if @form.radius
+    = render "vacancies/search/radius", f: f, wide: false
+  - else
+    = render "vacancies/search/travel_time", f: f
+    = render "vacancies/search/transportation_type", f: f
 
 .divider-bottom class="govuk-!-margin-top-6"
 

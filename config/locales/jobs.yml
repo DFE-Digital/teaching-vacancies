@@ -91,6 +91,8 @@ en:
           teaching_assistant: Teaching Assistant
         title: "Popular searches:"
       title: Search job listings
+      transportation_type: By
+      travel_time: Within
       use_current_location_html: use current location<span class="govuk-visually-hidden"> to search teaching vacancies</span>
       within_radius: Search radius
 
@@ -102,12 +104,7 @@ en:
         one: matches <span class='govuk-!-font-weight-bold'>&lsquo;%{keyword}&rsquo;</span>
         other: match <span class='govuk-!-font-weight-bold'>&lsquo;%{keyword}&rsquo;</span>
       no_keyword: found
-      radius_html:
-        zero: in
-        one: >-
-          within <span class='govuk-!-font-weight-bold'>%{count} %{units}</span> of
-        other: >-
-          within <span class='govuk-!-font-weight-bold'>%{count} %{units}</span> of
+      commute_html: within <span class='govuk-!-font-weight-bold'>%{minutes} minutes</span> by <span class='govuk-!-font-weight-bold'>%{transportation_type}</span> from
       location_html: <span class='govuk-!-font-weight-bold text-capitalize'>&lsquo;%{location}&rsquo;</span>
       organisation_html: at <span class='govuk-!-font-weight-bold'>%{organisation}</span>
       unit_of_length: mile

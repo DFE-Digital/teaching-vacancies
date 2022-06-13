@@ -14,4 +14,12 @@ module VacanciesOptionsHelper
       radii << [t("jobs.search.number_of_miles", count: radius), radius]
     end
   end
+
+  def transportation_type_options
+    %w[cycling driving public_transport walking train bus]
+  end
+
+  def travel_time_options
+    %w[10_mins 15_mins 20_mins 30_mins 45_mins 60_mins 90_mins 120_mins]
+  end
 end

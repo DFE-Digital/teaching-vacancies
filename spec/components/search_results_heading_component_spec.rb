@@ -8,13 +8,15 @@ RSpec.describe SearchResultsHeadingComponent, type: :component do
   let(:keyword) { "maths" }
   let(:location) { "London" }
   let(:count) { 10 }
-  let(:radius) { 10 }
+  let(:transportation_type) { "public_transport" }
+  let(:travel_time) { "45" }
 
   before do
     allow(vacancies_search).to receive(:keyword).and_return(keyword)
     allow(vacancies_search).to receive_message_chain(:location_search, :location).and_return(location)
     allow(vacancies_search).to receive_message_chain(:total_count).and_return(count)
-    allow(vacancies_search).to receive_message_chain(:location_search, :radius).and_return(radius)
+    allow(vacancies_search).to receive(:transportation_type).and_return(transportation_type)
+    allow(vacancies_search).to receive(:travel_time).and_return(travel_time)
     allow(vacancies_search).to receive(:organisation_slug).and_return(nil)
   end
 
@@ -26,17 +28,18 @@ RSpec.describe SearchResultsHeadingComponent, type: :component do
     end
   end
 
-  context "when searching with a keyword and a location with no radius (a polygon search)" do
-    let(:radius) { 0 }
+  context "when searching with a keyword and a location without commute time" do
+    let(:transportation_type) { "" }
+    let(:travel_time) { "" }
 
     it "renders correct heading text" do
       expect(subject.text).to eq("#{count} jobs match ‘#{keyword}’ in ‘#{location}’")
     end
   end
 
-  context "when searching with a keyword and a location with a radius (polygon or point)" do
+  context "when searching with a keyword and a location with commute time" do
     it "renders correct heading text" do
-      expect(subject.text).to eq("#{count} jobs match ‘#{keyword}’ within #{radius} miles of ‘#{location}’")
+      expect(subject.text).to eq("#{count} jobs match ‘#{keyword}’ within #{travel_time} minutes by #{transportation_type.humanize.downcase} from ‘#{location}’")
     end
   end
 
@@ -45,14 +48,6 @@ RSpec.describe SearchResultsHeadingComponent, type: :component do
 
     it "renders correct heading text" do
       expect(subject.text).to eq("#{count} jobs match ‘#{keyword}’")
-    end
-  end
-
-  context "when searching with a location and no keyword" do
-    let(:keyword) { nil }
-
-    it "renders correct heading text" do
-      expect(subject.text).to eq("#{count} jobs found within #{radius} miles of ‘#{location}’")
     end
   end
 
