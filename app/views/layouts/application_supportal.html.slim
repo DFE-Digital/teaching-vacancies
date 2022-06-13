@@ -1,0 +1,24 @@
+doctype html
+html.govuk-template.app-html-class lang="en"
+  head
+    title #{content_for :page_title_prefix} - #{t("app.support_title")}
+    = stylesheet_pack_tag "application", media: "all"
+    = csrf_meta_tags
+    = render "layouts/sentry_js_config"
+
+  body class=body_class
+    = render "layouts/add_js_enabled_class_to_body"
+    = render "layouts/skip_links"
+    = render EnvironmentBannerComponent.new
+    = govuk_header(logotype: "", homepage_url: support_user_root_path) do |header|
+      - header.product_name(name: t("app.support_title"))
+      - header.navigation_item(text: t("nav.support_user_return_to_service"), href: root_path)
+      - header.navigation_item(text: t("nav.sign_out"), href: destroy_support_user_session_path, options: { method: :delete }) if support_user_signed_in?
+    div class="govuk-width-container"
+      = content_for :breadcrumbs
+      = render "layouts/flash_messages"
+      main#main-content.govuk-main-wrapper role="main"
+        = yield
+      = content_for :after_main
+    = govuk_footer
+    = javascript_pack_tag "application"

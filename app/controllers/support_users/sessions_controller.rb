@@ -1,6 +1,8 @@
 class SupportUsers::SessionsController < Devise::SessionsController
   include ReturnPathTracking::Helpers
 
+  layout "application_supportal"
+
   def new
     if (login_failure = params[:login_failure])
       flash.now[:alert] = t("devise.failure.#{login_failure}")
