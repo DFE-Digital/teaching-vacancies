@@ -1,4 +1,4 @@
-class MapComponent < GovukComponent::Base
+class MapComponent < ApplicationComponent
   def initialize(markers:, marker: {}, polygon: nil, point: nil, radius: nil, classes: [], html_attributes: {})
     super(classes: classes, html_attributes: html_attributes)
 

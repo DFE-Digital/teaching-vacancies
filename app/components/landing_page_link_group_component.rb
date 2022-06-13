@@ -1,4 +1,4 @@
-class LandingPageLinkGroupComponent < GovukComponent::Base
+class LandingPageLinkGroupComponent < ApplicationComponent
   include FailSafe
 
   def initialize(title: nil, subgroup: false, use_locations: false, list_class: "", classes: [], html_attributes: {})

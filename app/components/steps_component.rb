@@ -1,4 +1,4 @@
-class StepsComponent < GovukComponent::Base
+class StepsComponent < ApplicationComponent
   attr_reader :title
 
   def initialize(title: nil, classes: [], html_attributes: {})

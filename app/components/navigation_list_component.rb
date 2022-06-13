@@ -1,4 +1,4 @@
-class NavigationListComponent < GovukComponent::Base
+class NavigationListComponent < ApplicationComponent
   attr_reader :title
 
   def initialize(title: nil, classes: [], html_attributes: {})

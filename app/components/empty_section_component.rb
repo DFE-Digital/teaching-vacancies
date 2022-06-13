@@ -1,4 +1,4 @@
-class EmptySectionComponent < GovukComponent::Base
+class EmptySectionComponent < ApplicationComponent
   attr_reader :title
 
   def initialize(title: nil, classes: [], html_attributes: {})

@@ -1,4 +1,4 @@
-class SupportalTableComponent < GovukComponent::Base
+class SupportalTableComponent < ApplicationComponent
   SUPPORTED_TYPES = %i[
     boolean
     column
