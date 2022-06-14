@@ -13,7 +13,7 @@ RSpec.shared_examples "a successful Support User sign in" do
       .with_data(sign_in_type: "dsi")
 
     within(".govuk-header__navigation") { expect(page).to have_selector(:link_or_button, I18n.t("nav.sign_out")) }
-    within(".govuk-header__navigation") { expect(page).to have_selector(:link_or_button, I18n.t("nav.support_user_dashboard")) }
+    within(".govuk-header__navigation") { expect(page).to have_selector(:link_or_button, I18n.t("nav.support_user_return_to_service")) }
   end
 end
 

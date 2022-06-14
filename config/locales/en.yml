@@ -15,6 +15,7 @@ en:
       cookie: Skip to cookie consent
       main: Skip to main content
     title: Teaching Vacancies
+    support_title: Support for Teaching Vacancies
 
   banners:
     alert: Warning
@@ -226,7 +227,8 @@ en:
     school_hiring_guides: School hiring guides
     sign_in: Sign in
     sign_out: Sign out
-    support_user_dashboard: Dashboard
+    support_user_dashboard: Support dashboard
+    support_user_return_to_service: Return to Teaching Vacancies
     your_account: My account
 
   number:
