@@ -40,7 +40,7 @@ const MapController = class extends Controller {
   connect() {
     if (this.markerTargets.length === 0) return;
 
-    this.createMap();
+    this.createMap(MapController.MARKER_OPTIONS.location.variant.ui);
 
     if (this.element.dataset.radius) {
       this.addMarker({
@@ -107,13 +107,15 @@ const MapController = class extends Controller {
     return this.element.dataset.polygons ? JSON.parse(this.element.dataset.polygons) : false;
   }
 
-  createMap() {
+  createMap(markerType) {
     this.map = new Map(this.point, MapController.DEFAULT_ZOOM);
     this.cluster = new Cluster({
       eventHandlers: {
         focus: () => this.dispatch('interaction'),
         enter: ({ detail }) => {
-          this.dispatch('sidebar:update', { detail: { id: detail.id } });
+          if (markerType === 'custom') {
+            this.dispatch('sidebar:update', { detail: { id: detail.id } });
+          }
         },
         leave: () => this.dispatch('interaction'),
       },
