@@ -4,7 +4,9 @@
   position: relative;
 
   .govuk-body {
-    margin-bottom: 0;
+    @include govuk-media-query($from: tablet) {
+      margin-bottom: 0;
+    }
   }
 
   &__menu {

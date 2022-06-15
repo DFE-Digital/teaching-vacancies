@@ -47,25 +47,29 @@
 
   .search-results-controls {
     background-color: govuk-colour('light-grey');
-    margin-bottom: govuk-spacing(4);
-    padding: $govuk-gutter-half;
+    padding: $govuk-gutter-half 0;
 
-    @include govuk-media-query($from: tablet) {
+    @include govuk-media-query($from: desktop) {
       background-color: transparent;
-      column-gap: govuk-spacing(2);
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      padding: 0;
+
+      .govuk-grid-column-two-thirds-at-desktop {
+        column-gap: $govuk-gutter-half;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+
+        @include govuk-media-query($from: desktop) {
+          flex-direction: row;
+          flex-wrap: nowrap;
+        }
+      }
 
       .govuk-heading-m {
         display: none;
       }
 
-      .autocomplete__menu {
-        @include govuk-media-query($from: desktop) {
-          position: absolute;
-        }
+      .autocomplete {
+        flex-grow: 1;
       }
 
       >* {
@@ -74,16 +78,16 @@
 
       &__submit {
         flex-basis: 100%;
+        margin-top: govuk-spacing(5);
 
-        @media (min-width: 1020px) {
-          flex-basis: auto;
-          flex-grow: 0;
+        @media (min-width: 900px) {
           margin-top: govuk-spacing(6);
         }
-      }
 
-      @media (min-width: 1020px) {
-        flex-wrap: nowrap;
+        @include govuk-media-query($from: tablet) {
+          flex-basis: auto;
+          flex-grow: 0;
+        }
       }
 
       .govuk-hint {
@@ -91,11 +95,14 @@
       }
     }
 
-    .location-search__radius {
-      flex-basis: 200px;
+    .govuk-label {
+      @include govuk-font(16);
+      font-weight: 700;
+      white-space: nowrap;
 
-      .govuk-select[name='radius'] {
-        width: 100%;
+      @media (min-width: 900px) {
+        @include govuk-font(19);
+        font-weight: 700;
       }
     }
   }

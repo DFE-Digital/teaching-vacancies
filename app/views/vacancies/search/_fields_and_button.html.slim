@@ -1,12 +1,15 @@
-.search-results-controls class="govuk-!-margin-bottom-0"
-  h2.govuk-heading-m = t("jobs.search.title")
-  = render "vacancies/search/keyword", f: f
-  - unless @vacancies_search.organisation_slug.present?
-    = render "vacancies/search/location", show_hint: false, f: f
-    = render "vacancies/search/current_location", target: "location-field"
-    = render "vacancies/search/travel_time", f: f
-    = render "vacancies/search/transportation_type", f: f
-  = f.hidden_field :sort_by, value: form.sort.by
+.search-results-controls.govuk-grid-row class="govuk-!-margin-bottom-0"
+  .govuk-grid-column-one-third-at-desktop
+    h2.govuk-heading-m = t("jobs.search.title")
+    = render "vacancies/search/keyword", f: f
 
-  .search-results-controls__submit
-    = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-3 govuk-!-width-full"
+  .govuk-grid-column-two-thirds-at-desktop
+    - unless @vacancies_search.organisation_slug.present?
+      = render "vacancies/search/location", show_hint: false, f: f
+      = render "vacancies/search/current_location", target: "location-field"
+      = render "vacancies/search/travel_time", f: f
+      = render "vacancies/search/transportation_type", f: f
+    = f.hidden_field :sort_by, value: form.sort.by
+
+    .search-results-controls__submit
+      = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-3 govuk-!-width-full"

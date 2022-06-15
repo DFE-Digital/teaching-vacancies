@@ -1,8 +1,9 @@
-= f.govuk_collection_select :transportation_type,
-    transportation_type_options,
-    :downcase,
-    :humanize,
-    label: { text: t("jobs.search.transportation_type"), size: "s" },
-    class: %w[govuk-!-width-full],
-    options: { selected: @form.transportation_type, include_blank: true }
-    / data: { action: ("change->form#submitListener" if @vacancies_search.commute_area_search?) }
+div style="flex-grow:1"
+    = f.govuk_collection_select :transportation_type,
+        transportation_type_options,
+        :downcase,
+        :humanize,
+        label: { text: t("jobs.search.transportation_type"), size: "s" },
+        class: %w[govuk-!-width-full],
+        options: { selected: @form.transportation_type, include_blank: true }
+        / data: { action: ("change->form#submitListener" if @vacancies_search.commute_area_search?) }
