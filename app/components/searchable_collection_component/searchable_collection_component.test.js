@@ -8,7 +8,7 @@ describe('searchCheckbox', () => {
   beforeEach(() => {
     document.body.innerHTML = `<div class="accordion-content__group">
 <input type="text" class="searchable-collection-component__search-input" />
-<div class="govuk-visually-hidden collection-match" aria-live="polite" role="status"></div>
+<div class="govuk-visually-hidden collection-match" aria-live="assertive" role="status"></div>
 <div class="govuk-checkboxes__item">
 <input type="checkbox" value="abc" class="govuk-checkboxes__input" />
 </div>
