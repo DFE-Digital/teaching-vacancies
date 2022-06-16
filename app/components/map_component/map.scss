@@ -1,7 +1,13 @@
 @import 'base_component';
 
+.map-component {
+  display: none;
+}
+
 .js-enabled {
   .map-component {
+    display: block;
+
     &__container {
       position: relative;
 
