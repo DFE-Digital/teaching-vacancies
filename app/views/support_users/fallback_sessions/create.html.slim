@@ -1,0 +1,6 @@
+- content_for :page_title_prefix, t(".title")
+
+h1.govuk-heading-l = t(".title")
+
+p.govuk-body = t(".sent")
+p.govuk-body = t(".check_spam_html", try_again: govuk_link_to("try again", new_support_user_session_path))

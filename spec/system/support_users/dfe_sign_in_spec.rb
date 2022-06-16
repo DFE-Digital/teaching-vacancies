@@ -1,5 +1,4 @@
 require "rails_helper"
-require "message_encryptor"
 
 RSpec.shared_examples "a successful Support User sign in" do
   before do

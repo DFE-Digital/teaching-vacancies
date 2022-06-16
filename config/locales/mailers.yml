@@ -183,3 +183,11 @@ en:
         view_applications:
           one: View %{count} new application
           other: View %{count} new applications
+
+  support_users:
+    authentication_fallback_mailer:
+      sign_in_fallback:
+        subject: Sign In to Support for Teaching Vacancies
+        link: Sign In
+        heading: Sign In to Support for Teaching Vacancies
+        body: Click the link below to sign in to Support for Teaching Vacancies. You must use this link within five minutes of requesting it.
