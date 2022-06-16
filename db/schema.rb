@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_08_084016) do
+ActiveRecord::Schema.define(version: 2022_06_16_154050) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -217,6 +217,9 @@ ActiveRecord::Schema.define(version: 2022_06_08_084016) do
     t.text "further_instructions_ciphertext"
     t.text "rejection_reasons_ciphertext"
     t.text "gaps_in_employment_details_ciphertext"
+    t.integer "in_progress_steps", default: [], null: false, array: true
+    t.boolean "employment_history_section_completed"
+    t.boolean "qualifications_section_completed"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end
 
