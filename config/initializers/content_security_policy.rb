@@ -12,7 +12,8 @@ Rails.application.configure do
     policy.connect_src :self,
                        "https://api.postcodes.io",
                        "https://*.sentry.io",
-                       "https://www.google-analytics.com",
+                       "https://*.google-analytics.com",
+                       "https://*.analytics.google.com",
                        *development_env_additional_connect_src # Allow using webpack-dev-server in development
 
     policy.font_src    :self,
