@@ -12,7 +12,7 @@
 = form_for @form, as: "", url: jobs_path, method: :get, html: { data: { controller: "form" }, role: "search" } do |f|
   .govuk-grid-row
     .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-3"
-      = render "vacancies/search/filters", f: f, form: @form
+      = render "vacancies/search/filters", f: f, form: @form, vacancies_search: @vacancies_search
       / When the user refines their search, this helps us figure out if they've changed the
       / keyword(s), or just adjusted the filters
       = f.hidden_field :previous_keyword, value: @vacancies_search.keyword

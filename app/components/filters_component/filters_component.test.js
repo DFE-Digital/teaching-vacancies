@@ -16,7 +16,6 @@ describe('filters view component', () => {
     initialiseStimulus();
 
     document.body.innerHTML = `<form data-controller="form"><div class="filters-component" data-controller="filters">
-    <button data-action="click->filters#clear" data-filters-target="clear" id="clear">Clear filters</button>
     <ul>
     <li><button data-action="click->filters#remove" data-group="group_1" data-key="option_1">option1</button></li>
     <li><button data-action="click->filters#remove" data-group="group_1" data-key="option_2">option2</button></li>
@@ -35,35 +34,6 @@ describe('filters view component', () => {
     </div>
     </div>
     </form>`;
-  });
-
-  describe('clear all filters control', () => {
-    it('should uncheck all filters', () => {
-      const filterCheckboxes = Array.from(document.getElementsByTagName('input'));
-      const [form] = document.getElementsByTagName('form');
-
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-      });
-
-      filterCheckboxes.forEach((checkbox) => {
-        expect(checkbox.checked).toBe(false);
-      });
-
-      filterCheckboxes.forEach((checkbox) => {
-        checkbox.checked = true;
-      });
-
-      filterCheckboxes.forEach((checkbox) => {
-        expect(checkbox.checked).toBe(true);
-      });
-
-      document.getElementById('clear').click();
-
-      filterCheckboxes.forEach((checkbox) => {
-        expect(checkbox.checked).toBe(false);
-      });
-    });
   });
 
   describe('remove button for specific filter control', () => {

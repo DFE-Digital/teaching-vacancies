@@ -32,6 +32,7 @@
           = form_for [:publishers, @publisher_preference], html: { data: { controller: "form", "hide-submit": true } } do |f|
             = filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
                       filters: { total_count: @publisher_preference.organisations.count },
+                      clear_filters_link: { text: t("shared.filter_group.clear_all_filters"), url: publishers_publisher_preference_path(@publisher_preference), method: :delete },
                       options: { remove_buttons: true, publisher_preference: (@publisher_preference if @organisation.local_authority?) },
                       html_attributes: { tabindex: "-1" }) do |filters_component|
                         - filters_component.remove_buttons do |rb|

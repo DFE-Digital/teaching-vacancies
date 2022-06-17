@@ -103,7 +103,7 @@ Rails.application.routes.draw do
       get :reminder
     end
     resources :notifications, only: %i[index]
-    resources :publisher_preferences, only: %i[new create edit update]
+    resources :publisher_preferences, only: %i[new create edit update destroy]
     resources :schools, only: %i[index show edit update]
     resource :terms_and_conditions, only: %i[show update]
   end

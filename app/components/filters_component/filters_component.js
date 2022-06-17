@@ -34,10 +34,6 @@ const FiltersComponent = class extends Controller {
     FiltersComponent.unCheckCheckbox(FiltersComponent.findCheckboxInGroup(this.getGroupEl(e.target.dataset.group), e.target.dataset.key));
   }
 
-  clear() {
-    this.groupTargets.forEach((groupEl) => FiltersComponent.getCheckboxesInGroup(groupEl).forEach((checkbox) => FiltersComponent.unCheckCheckbox(checkbox)));
-  }
-
   mobileBehaviour() {
     this.element.closest('form').removeAttribute('data-controller');
     this.element.setAttribute('tabindex', '-1');

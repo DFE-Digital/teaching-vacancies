@@ -52,6 +52,7 @@ ruby:
 
 = filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
   filters: { total_count: form.total_filters },
+  clear_filters_link: { text: t("shared.filter_group.clear_all_filters"), url: jobs_path(vacancies_search.active_criteria_without_filters) },
   options: { heading_text: "Filter results", remove_buttons: true },
   html_attributes: { tabindex: "-1", id: "filters-component" }) do |filters_component|
     - filters_component.remove_buttons do |rb|
