@@ -108,12 +108,15 @@ const MapController = class extends Controller {
   }
 
   createMap() {
+    const markerType = MapController.MARKER_OPTIONS[this.markerTargets[0].dataset.markerType].ui;
     this.map = new Map(this.point, MapController.DEFAULT_ZOOM);
     this.cluster = new Cluster({
       eventHandlers: {
         focus: () => this.dispatch('interaction'),
         enter: ({ detail }) => {
-          this.dispatch('sidebar:update', { detail: { id: detail.id } });
+          if (markerType === 'custom') {
+            this.dispatch('sidebar:update', { detail: { id: detail.id } });
+          }
         },
         leave: () => this.dispatch('interaction'),
       },
