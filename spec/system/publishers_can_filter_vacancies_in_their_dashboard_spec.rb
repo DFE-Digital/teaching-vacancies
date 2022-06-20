@@ -42,6 +42,20 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
           expect(page).to_not have_content(school2_draft_vacancy.job_title)
         end
       end
+
+      context "when clearing all filters" do
+        before do
+          PublisherPreference.create(publisher: publisher, organisation: trust, organisations: [school1])
+          visit jobs_with_type_organisation_path(:published)
+          click_on I18n.t("shared.filter_group.clear_all_filters")
+        end
+
+        it "shows all published vacancies again" do
+          expect(page).to_not have_css(".filters-component__remove-tags__tag")
+          expect(page).to have_content(school_group_vacancy.job_title)
+          expect(page).to have_content(school1_vacancy.job_title)
+        end
+      end
     end
 
     context "when viewing draft jobs tab" do

@@ -24,6 +24,10 @@ class Search::VacancySearch
       .reject { |k, v| v.blank? || (k == :radius && search_criteria[:location].blank?) }
   end
 
+  def active_criteria_without_filters
+    active_criteria.merge(job_roles: [], phases: [], working_patterns: [], subjects: [], previous_keyword: keyword, skip_strip_checkboxes: true)
+  end
+
   def active_criteria?
     active_criteria.any?
   end

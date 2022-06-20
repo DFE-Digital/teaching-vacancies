@@ -4,12 +4,14 @@ RSpec.describe FiltersComponent, type: :component do
   let(:form) { instance_double(GOVUKDesignSystemFormBuilder::FormBuilder) }
   let(:options) { { remove_buttons: true } }
   let(:filters) { { total_count: 2 } }
+  let(:clear_filters_link) { { text: "clear", url: "/clear-all", method: :post } }
 
   let(:kwargs) do
     {
       submit_button: form.govuk_submit("apply filters"),
       filters: filters,
       options: options,
+      clear_filters_link: clear_filters_link,
     }
   end
 
@@ -31,6 +33,7 @@ RSpec.describe FiltersComponent, type: :component do
 
     it "renders filter remove UI" do
       expect(subject.css(".filters-component__remove").to_html).not_to be_blank
+      expect(page).to have_link("clear", href: "/clear-all")
     end
 
     it "renders filter remove buttons for the selected filters" do

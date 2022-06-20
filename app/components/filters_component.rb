@@ -5,13 +5,18 @@ class FiltersComponent < ApplicationComponent
     %w[default]
   end
 
-  def initialize(submit_button:, options:, filters: {}, title: nil, classes: [], html_attributes: {})
+  def initialize(submit_button:, options:, filters: {}, clear_filters_link: {}, title: nil, classes: [], html_attributes: {})
     super(classes: classes, html_attributes: html_attributes.merge({ data: { controller: "filters" } }))
 
     @submit_button = submit_button
     @options = options
     @filters = filters
+    @clear_filters_link = clear_filters_link
     @title = title
+  end
+
+  def clear_filters_link
+    govuk_link_to @clear_filters_link[:text], @clear_filters_link[:url], method: @clear_filters_link[:method]
   end
 
   renders_many :groups, lambda { |key:, component:, title: nil|

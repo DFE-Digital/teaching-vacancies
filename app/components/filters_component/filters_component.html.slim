@@ -10,8 +10,7 @@
       .filters-component__remove__heading
         .govuk-body.filters-component__remove__heading-title class="govuk-!-margin-bottom-0"
           = t("shared.filter_group.current_selected_filters")
-        button.filters-component__heading-link-button.govuk-body.govuk-link data-filters-target="clear" data-action="click->filters#clear" class="govuk-!-margin-bottom-0"
-          = t("shared.filter_group.clear_all_filters")
+        = clear_filters_link
 
       .filters-component__remove-groups
         = remove_buttons

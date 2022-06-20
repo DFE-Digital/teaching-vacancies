@@ -45,12 +45,19 @@ RSpec.shared_examples "a successful search" do
     end
 
     context "when sorting by most relevant" do
-      before do
-        click_on I18n.t("jobs.sort_by.most_relevant").humanize
-      end
+      before { click_on I18n.t("jobs.sort_by.most_relevant").humanize }
 
       it "lists the most relevant jobs first" do
         expect("Maths Teacher 2").to appear_before("Maths 1")
+      end
+    end
+
+    context "when clearing all applied filters" do
+      before { click_on I18n.t("shared.filter_group.clear_all_filters") }
+
+      it "displays no filter remove buttons" do
+        expect(page).to_not have_css("button", text: "Remove this filterMathematics")
+        expect(page).to_not have_css("button", text: "Remove this filterTeacher")
       end
     end
   end

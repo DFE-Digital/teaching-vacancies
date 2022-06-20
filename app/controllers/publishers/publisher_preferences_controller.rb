@@ -35,6 +35,12 @@ class Publishers::PublisherPreferencesController < Publishers::BaseController
     redirect_to jobs_with_type_organisation_path(publisher_preference_params[:jobs_type])
   end
 
+  def destroy
+    publisher_preference = PublisherPreference.find_by(publisher: current_publisher, organisation: current_organisation)
+    publisher_preference.organisation_publisher_preferences.destroy_all
+    redirect_to organisation_path
+  end
+
   private
 
   def publisher_preference_params
