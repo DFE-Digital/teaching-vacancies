@@ -122,4 +122,8 @@ module JobApplicationsHelper
   def gap_duration(current_employment, next_employment)
     distance_of_time_in_words(current_employment.ended_on, next_employment&.started_on || Date.current)
   end
+
+  def job_application_step_in_progress?(job_application, step)
+    job_application.in_progress_steps.include?(step.to_s)
+  end
 end

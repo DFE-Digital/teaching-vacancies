@@ -35,9 +35,14 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
         expect(subject.slice(attributes_to_copy)).to eq(recent_job_application.slice(attributes_to_copy))
       end
 
-      it "copies completed steps" do
+      it "copies completed steps except qualifications and employment history" do
         expect(subject.completed_steps)
-          .to eq(%w[personal_details professional_status qualifications employment_history references ask_for_support])
+          .to eq(%w[personal_details professional_status references ask_for_support])
+      end
+
+      it "sets in progress steps as qualifications and employment history" do
+        expect(subject.in_progress_steps)
+          .to eq(%w[qualifications employment_history])
       end
     end
 
@@ -65,11 +70,19 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
         .to eq(recent_job_application.qualifications.map { |qualification| qualification.slice(*attributes_to_copy) })
     end
 
+    it "sets qualifications section completed to false" do
+      expect(subject.qualifications_section_completed).to eq(false)
+    end
+
     it "copies employments" do
       attributes_to_copy = %i[organisation job_title subjects current_role main_duties started_on ended_on]
 
       expect(subject.employments.map { |employment| employment.slice(*attributes_to_copy) })
         .to eq(recent_job_application.employments.map { |employment| employment.slice(*attributes_to_copy) })
+    end
+
+    it "sets employment history section completed to false" do
+      expect(subject.employment_history_section_completed).to eq(false)
     end
 
     it "copies references" do

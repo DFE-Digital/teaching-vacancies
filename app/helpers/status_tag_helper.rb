@@ -4,6 +4,8 @@ module StatusTagHelper
 
     if form_classes.all?(&:optional?)
       optional
+    elsif resource.is_a?(JobApplication) && steps.all? { |step| job_application_step_in_progress?(resource, step) }
+      in_progress
     elsif steps.none? { |step| vacancy_step_completed?(resource, step) }
       not_started
     elsif step_forms_contain_errors?(resource, form_classes)
@@ -35,5 +37,9 @@ module StatusTagHelper
 
   def complete
     govuk_tag(text: t("shared.status_tags.complete"))
+  end
+
+  def in_progress
+    govuk_tag(text: t("shared.status_tags.in_progress"), colour: "yellow")
   end
 end

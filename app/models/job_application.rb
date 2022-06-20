@@ -17,6 +17,11 @@ class JobApplication < ApplicationRecord
     declarations: 8,
   }
 
+  array_enum in_progress_steps: {
+    qualifications: 0,
+    employment_history: 1,
+  }
+
   # If you want to add a status, be sure to add a `status_at` column to the `job_applications` table
   enum status: { draft: 0, submitted: 1, reviewed: 2, shortlisted: 3, unsuccessful: 4, withdrawn: 5 }, _default: 0
 

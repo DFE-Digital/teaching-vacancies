@@ -133,6 +133,8 @@ en:
         institution: For example, a university or college
       jobseekers_job_application_details_reference_form:
         phone_number: Please only give a phone number that your referee is happy to be contacted on.
+      jobseekers_job_application_employment_history_form:
+        employment_history_section_completed: Ensure you've added all your employment history.
       jobseekers_job_application_equal_opportunities_form:
         gender: If the options below do not reflect how you identify, please select ‘Other gender identity’.
         ethnicity: If the options below do not reflect how you identify, please select ‘Other ethnic group’.
@@ -154,6 +156,8 @@ en:
         phone_number: Enter a phone number you are happy to be contacted on, like 01632 960 001, 07700 900 982 or +44 0808 157 0192.
         previous_names: For example maiden name or name at birth, if different from the name you have now.
         teacher_reference_number: Enter the 7 numbers of your TRN, excluding any letters and symbols.
+      jobseekers_job_application_qualifications_form:
+        qualifications_section_completed: Ensure you've added all the education and qualifications you've done.
       jobseekers_job_alert_further_feedback_form:
         comment: This is optional, but the information will help us to make improvements.
         email: >-
@@ -333,6 +337,10 @@ en:
         organisation: School or other organisation
         subjects_review: Subjects and key stages taught
         subjects_html: Subjects and key stages taught (optional<span class='govuk-visually-hidden'> field</span>)</span>
+      jobseekers_job_application_employment_history_form:
+        employment_history_section_completed_options:
+          false: No, I'll come back to it later
+          true: Yes, I've completed this section
       jobseekers_job_application_details_qualifications_category_form:
         category_options:
           gcse: GCSEs
@@ -452,6 +460,10 @@ en:
           on_track: I'm on track to receive my QTS
           "yes": "Yes"
         qualified_teacher_status_year: Year QTS was awarded
+      jobseekers_job_application_qualifications_form:
+        qualifications_section_completed_options:
+          false: No, I'll come back to it later
+          true: Yes, I've completed this section
       jobseekers_job_application_review_form:
         confirm_data_accurate_options:
           "1": I confirm that the above information is accurate and complete
@@ -660,6 +672,8 @@ en:
       jobseekers_job_application_declarations_form:
         close_relationships: Do you have any family or close relationship with people within %{organisation}?
         right_to_work_in_uk: Do you have the right to work in the UK?
+      jobseekers_job_application_employment_history_form:
+        employment_history_section_completed: Have you completed this section?
       jobseekers_job_application_equal_opportunities_form:
         age: How old are you?
         disability: Do you consider yourself to have a disability as defined by the Equality Act 2010?
@@ -691,6 +705,8 @@ en:
       jobseekers_job_application_professional_status_form:
         statutory_induction_complete: Have you completed your statutory induction year?
         qualified_teacher_status: Do you have qualified teacher status (QTS)?
+      jobseekers_job_application_qualifications_form:
+        qualifications_section_completed: Have you completed this section?
       jobseekers_job_application_withdraw_form:
         withdraw_reason: Why would you like to withdraw your application?
 

@@ -77,7 +77,23 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   def update_params
-    form_params.merge(completed_steps: job_application.completed_steps.append(step.to_s).uniq)
+    if step_incomplete?
+      form_params.merge(
+        completed_steps: job_application.completed_steps.delete_if { |completed_step| completed_step == step.to_s },
+        in_progress_steps: job_application.in_progress_steps.append(step.to_s).uniq,
+      )
+    else
+      form_params.merge(
+        completed_steps: job_application.completed_steps.append(step.to_s).uniq,
+        in_progress_steps: job_application.in_progress_steps.delete_if { |in_progress_step| in_progress_step == step.to_s },
+      )
+    end
+  end
+
+  def step_incomplete?
+    return unless step.in? %i[qualifications employment_history]
+
+    form_params["#{step}_section_completed"] == "false"
   end
 
   def vacancy

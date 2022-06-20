@@ -7,7 +7,7 @@ class Jobseekers::JobApplications::QuickApply
   end
 
   def job_application
-    new_job_application.assign_attributes(recent_job_application.slice(*attributes_to_copy).merge(completed_steps: completed_steps))
+    new_job_application.assign_attributes(recent_job_application.slice(*attributes_to_copy).merge(completed_steps: completed_steps, in_progress_steps: in_progress_steps))
     copy_qualifications
     copy_employments
     copy_references
@@ -43,7 +43,11 @@ class Jobseekers::JobApplications::QuickApply
   end
 
   def completed_steps
-    %w[personal_details professional_status qualifications employment_history references ask_for_support].select { |step| relevant_steps.include?(step.to_sym) }
+    %w[personal_details professional_status references ask_for_support].select { |step| relevant_steps.include?(step.to_sym) }
+  end
+
+  def in_progress_steps
+    %w[qualifications employment_history]
   end
 
   def copy_qualifications
@@ -56,6 +60,7 @@ class Jobseekers::JobApplications::QuickApply
         new_result.update(qualification: new_qualification)
       end
     end
+    new_job_application.qualifications_section_completed = false
   end
 
   def copy_employments
@@ -63,6 +68,7 @@ class Jobseekers::JobApplications::QuickApply
       new_employment = employment.dup
       new_employment.update(job_application: new_job_application, salary: "")
     end
+    new_job_application.employment_history_section_completed = false
   end
 
   def copy_references
