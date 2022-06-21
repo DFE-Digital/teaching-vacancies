@@ -8,6 +8,16 @@ class Jobseekers::AccountPreview < ActionMailer::Preview
     Jobseekers::AccountMailer.confirmation_instructions(Jobseeker.first, "fake_token")
   end
 
+  def confirmation_instructions_reminder
+    jobseeker = FactoryBot.build(:jobseeker, confirmed_at: nil, confirmation_sent_at: 5.days.ago)
+    Jobseekers::AccountMailer.confirmation_instructions(jobseeker, "fake_token")
+  end
+
+  def reconfirmation_instructions
+    jobseeker = FactoryBot.build(:jobseeker, email: "oldemail@example.com", unconfirmed_email: "newemail@example.com")
+    Jobseekers::AccountMailer.confirmation_instructions(jobseeker, "fake_token")
+  end
+
   def email_changed
     Jobseekers::AccountMailer.email_changed(Jobseeker.first)
   end
