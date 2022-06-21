@@ -84,6 +84,11 @@ module NotifyViewsHelper
     notify_link(url, t(".create_account.link"))
   end
 
+  def support_user_fallback_sign_in_link(signed_id)
+    url = support_users_fallback_session_url(signed_id)
+    notify_link(url, t(".link"))
+  end
+
   def unlock_account_link(token)
     url = jobseeker_unlock_url(unlock_token: token, **utm_params)
     notify_link(url, t(".link"))

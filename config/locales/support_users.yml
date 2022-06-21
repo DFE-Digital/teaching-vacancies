@@ -60,9 +60,21 @@ en:
             highly_dissatisfied: Highly dissatisfied
 
     papertrail_display_name: "%{first_name} %{last_name} (DfE Teaching Vacancies team)"
+
+    fallback_sessions:
+      create:
+        check_spam_html: >-
+          If our email doesn’t arrive within 5 minutes, check your spam or junk folder, or %{try_again}.
+        title: Check your email
+        sent: >-
+          If you have access to the support dashboard, we’ve sent you an email.
+          Click on the link in the email to sign in and return to this service.
+          You do not need to keep this page open.
+
     sessions:
       new:
         button_text: Continue
+        fallback_info: We cannot use DfE Sign In at the moment, so we will email you a link to sign in instead. You will only be able to sign in if you have used the support dashboard before.
         main_login_guidance_html: This service is only for internal use at the Department for Education. If you are looking for a job or want to post a job listing, you need to %{link} instead.
         main_login_link_text: sign in to Teaching Vacancies
         title: Sign in to the support dashboard

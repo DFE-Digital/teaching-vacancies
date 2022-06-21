@@ -3,18 +3,19 @@
 #
 # This event should only be triggered in mailers.
 class EmailEvent < Event
-  def initialize(notify_template, email, uid, jobseeker: nil, publisher: nil, ab_tests: nil)
+  def initialize(notify_template, email, uid, jobseeker: nil, publisher: nil, support_user: nil, ab_tests: nil)
     @notify_template = notify_template
     @email = email
     @uid = uid
     @jobseeker = jobseeker
     @publisher = publisher
+    @support_user = support_user
     @ab_tests = ab_tests
   end
 
   private
 
-  attr_reader :notify_template, :email, :uid, :jobseeker, :publisher, :ab_tests
+  attr_reader :notify_template, :email, :uid, :jobseeker, :publisher, :support_user, :ab_tests
 
   def base_data
     @base_data ||= super.merge(
@@ -29,6 +30,7 @@ class EmailEvent < Event
       { key: "email_identifier", value: anonymise(email) },
       { key: "user_anonymised_jobseeker_id", value: anonymise(jobseeker&.id) },
       { key: "user_anonymised_publisher_id", value: anonymise(publisher&.oid) },
+      { key: "user_anonymised_support_user_id", value: anonymise(support_user&.id) },
     )
   end
 end

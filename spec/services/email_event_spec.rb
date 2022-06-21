@@ -1,12 +1,13 @@
 require "rails_helper"
 
 RSpec.describe EmailEvent do
-  subject { described_class.new(notify_template, email, uid, jobseeker: jobseeker, publisher: publisher, ab_tests: ab_tests) }
+  subject { described_class.new(notify_template, email, uid, jobseeker: jobseeker, publisher: publisher, support_user: support_user, ab_tests: ab_tests) }
 
   let(:notify_template) { "test_template" }
   let(:email) { "test@example.net" }
   let(:jobseeker) { instance_double(Jobseeker, id: 1234, email: "test@example.net") }
   let(:publisher) { instance_double(Publisher, oid: 4321) }
+  let(:support_user) { instance_double(SupportUser, id: 9876) }
   let(:uid) { SecureRandom.uuid }
   let(:ab_tests) { { example_AB_test: "present" } }
 
@@ -21,6 +22,7 @@ RSpec.describe EmailEvent do
           { key: "email_identifier", value: anonymised_form_of("test@example.net") },
           { key: "user_anonymised_jobseeker_id", value: anonymised_form_of("1234") },
           { key: "user_anonymised_publisher_id", value: anonymised_form_of("4321") },
+          { key: "user_anonymised_support_user_id", value: anonymised_form_of("9876") },
           { key: "foozy", value: "barzy" },
         ],
         request_ab_tests: [{ test: :example_AB_test, variant: "present" }],

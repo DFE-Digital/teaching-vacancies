@@ -126,6 +126,8 @@ Rails.application.routes.draw do
   end
 
   namespace :support_users, path: "support-users" do
+    resources :fallback_sessions, only: %i[create show]
+
     get "feedback/general", to: "feedbacks#general"
     get "feedback/job-alerts", to: "feedbacks#job_alerts"
     get "feedback/satisfaction-ratings", to: "feedbacks#satisfaction_ratings"
