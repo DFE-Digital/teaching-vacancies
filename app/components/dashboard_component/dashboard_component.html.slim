@@ -33,10 +33,15 @@
             = filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
                       filters: { total_count: @publisher_preference.organisations.count },
                       clear_filters_link: { text: t("shared.filter_group.clear_all_filters"), url: publishers_publisher_preference_path(@publisher_preference), method: :delete },
-                      options: { remove_buttons: true, publisher_preference: (@publisher_preference if @organisation.local_authority?) },
+                      options: { remove_filter_links: true, publisher_preference: (@publisher_preference if @organisation.local_authority?) },
                       html_attributes: { tabindex: "-1" }) do |filters_component|
-                        - filters_component.remove_buttons do |rb|
-                          - rb.group(key: "locations", selected: @publisher_preference.organisations.map(&:id), options: @organisation_options, value_method: :id, selected_method: :name)
+                        - filters_component.remove_filter_links do |rb|
+                          - rb.group(key: "locations",
+                                     selected: @publisher_preference.organisations.map(&:id),
+                                     options: @organisation_options,
+                                     value_method: :id,
+                                     selected_method: :name,
+                                     remove_filter_link: { url_helper: :publishers_remove_organisation_filter_path })
 
                         - filters_component.group key: "locations", component: f.govuk_collection_check_boxes(:organisation_ids, @organisation_options, :id, :label, small: true, legend: { text: "Locations" }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
 

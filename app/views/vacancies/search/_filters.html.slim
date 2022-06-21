@@ -2,7 +2,7 @@ ruby:
   filter_types = [
     {
       legend: t("jobs.filters.job_roles"),
-      key: "job_roles",
+      key: :job_roles,
       selected: form.job_roles.reject { |role| role.in?(%w[ect_suitable send_responsible]) },
       options: form.job_role_options,
       value_method: :first,
@@ -10,7 +10,7 @@ ruby:
     },
     {
       legend: t("jobs.filters.subject"),
-      key: "subjects",
+      key: :subjects,
       selected: form.subjects,
       options: SUBJECT_OPTIONS,
       value_method: :first,
@@ -18,7 +18,7 @@ ruby:
       },
     {
       legend: t("jobs.filters.ect_suitable"),
-      key: "ect_suitable",
+      key: :job_roles,
       selected: form.job_roles.include?("ect_suitable") ? form.job_roles : [],
       options: form.ect_suitable_options,
       value_method: :first,
@@ -26,7 +26,7 @@ ruby:
     },
     {
       legend: t("jobs.filters.send_responsible"),
-      key: "send_responsible",
+      key: :job_roles,
       selected: form.job_roles.include?("send_responsible") ? form.job_roles : [],
       options: form.send_responsible_options,
       value_method: :first,
@@ -34,7 +34,7 @@ ruby:
     },
     {
       legend: t("jobs.filters.phases"),
-      key: "education_phase",
+      key: :phases,
       selected: form.phases,
       options: form.phase_options,
       value_method: :first,
@@ -42,7 +42,7 @@ ruby:
     },
     {
       legend: t("jobs.filters.working_patterns"),
-      key: "working_patterns",
+      key: :working_patterns,
       selected: form.working_patterns,
       options: form.working_pattern_options,
       value_method: :first,
@@ -52,12 +52,12 @@ ruby:
 
 = filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
   filters: { total_count: form.total_filters },
-  clear_filters_link: { text: t("shared.filter_group.clear_all_filters"), url: jobs_path(vacancies_search.active_criteria_without_filters) },
-  options: { heading_text: "Filter results", remove_buttons: true },
+  clear_filters_link: { text: t("shared.filter_group.clear_all_filters"), url: jobs_path(vacancies_search.clear_filters_params) },
+  options: { heading_text: "Filter results", remove_filter_links: true },
   html_attributes: { tabindex: "-1", id: "filters-component" }) do |filters_component|
-    - filters_component.remove_buttons do |rb|
+    - filters_component.remove_filter_links do |rb|
       - filter_types.each do |filter_type|
-        - rb.group(**filter_type)
+        - rb.group(**filter_type.merge(remove_filter_link: { url_helper: :jobs_path, params: vacancies_search.remove_filter_params }))
     - filters_component.group key: "job_roles", component: f.govuk_collection_check_boxes(:job_roles, form.job_role_options, :first, :last, small: true, legend: { text: t("jobs.filters.job_roles") }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
     - filters_component.group key: "subjects", title: t("jobs.filters.subject"), component: searchable_collection(collection: f.govuk_collection_check_boxes(:subjects,
         SUBJECT_OPTIONS,
