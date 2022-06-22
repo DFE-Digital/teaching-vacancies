@@ -71,13 +71,6 @@ gem "wicked"
 gem "xml-sitemap"
 gem "zendesk_api"
 
-# TODO: These are required by Ruby 3.1, but not automatically pulled in by Rails right now
-#  c.f. https://github.com/rails/rails/commit/5dd292f5511fedd91833dc8482baf696cb821af6
-#  This can be removed once we have a version of Rails that includes them in its dependencies.
-gem "net-imap", require: false
-gem "net-pop", require: false
-gem "net-smtp", require: false
-
 group :development do
   gem "amazing_print" # optional dependency of `rails_semantic_logger`
   gem "aws-sdk-ssm"

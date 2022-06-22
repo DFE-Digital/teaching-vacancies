@@ -726,9 +726,6 @@ DEPENDENCIES
   lockbox
   mail-notify
   mimemagic
-  net-imap
-  net-pop
-  net-smtp
   nokogiri
   noticed
   omniauth (< 2)
