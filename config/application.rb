@@ -37,17 +37,6 @@ module TeacherVacancyService
       g.orm :active_record, primary_key_type: :uuid
     end
 
-    # Override default headers to disable legacy XSS protection
-    # TODO: This will be the default in Rails 7.0, at which point we can remove this
-    config.action_dispatch.default_headers = {
-      "X-Frame-Options" => "SAMEORIGIN",
-      "X-XSS-Protection" => "0",
-      "X-Content-Type-Options" => "nosniff",
-      "X-Download-Options" => "noopen",
-      "X-Permitted-Cross-Domain-Policies" => "none",
-      "Referrer-Policy" => "strict-origin-when-cross-origin",
-    }
-
     config.action_view.sanitized_allowed_tags = %w[p br strong em ul li h1 h2 h3 h4 h5]
     config.action_view.default_form_builder = GOVUKDesignSystemFormBuilder::FormBuilder
 

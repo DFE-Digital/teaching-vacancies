@@ -166,10 +166,10 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.salary)
     expect(page.html).to include(vacancy.benefits)
 
-    expect(page).to have_content(vacancy.publish_on.to_s.strip)
-    expect(page).to have_content(vacancy.expires_at.to_date.to_s.strip)
+    expect(page).to have_content(vacancy.publish_on.to_formatted_s.strip)
+    expect(page).to have_content(vacancy.expires_at.to_date.to_formatted_s.strip)
     if vacancy.starts_on?
-      expect(page).to have_content(vacancy.starts_on.to_s.strip)
+      expect(page).to have_content(vacancy.starts_on.to_formatted_s.strip)
     elsif vacancy.starts_asap?
       expect(page).to have_content(I18n.t("jobs.starts_asap"))
     end
@@ -202,10 +202,10 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.salary)
     expect(page.html).to include(vacancy.benefits)
 
-    expect(page).to have_content(vacancy.publish_on.to_s.strip)
-    expect(page).to have_content(vacancy.expires_at.to_date.to_s.strip)
+    expect(page).to have_content(vacancy.publish_on.to_formatted_s.strip)
+    expect(page).to have_content(vacancy.expires_at.to_date.to_formatted_s.strip)
     if vacancy.starts_on?
-      expect(page).to have_content(vacancy.starts_on.to_s.strip)
+      expect(page).to have_content(vacancy.starts_on.to_formatted_s.strip)
     elsif vacancy.starts_asap?
       expect(page).to have_content(I18n.t("jobs.starts_asap"))
     end

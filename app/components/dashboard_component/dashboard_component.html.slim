@@ -83,7 +83,7 @@
                 - when "pending"
                   dl
                     dt = "#{t('jobs.publication_date')}:"
-                    dd = vacancy.publish_on
+                    dd = vacancy.publish_on.to_formatted_s
                   dl
                     dt = "#{t('jobs.manage.closing_date')}:"
                     dd = format_time_to_datetime_at(vacancy.expires_at)
@@ -95,7 +95,7 @@
                       p.govuk-body-s = t("jobs.manage.view_applicants", count: 0)
                   dl
                     dt = "#{t('jobs.date_listed')}:"
-                    dd = vacancy.publish_on
+                    dd = vacancy.publish_on.to_formatted_s
                   dl
                     dt = "#{t('jobs.manage.expired.expired_on')}:"
                     dd = format_time_to_datetime_at(vacancy.expires_at)

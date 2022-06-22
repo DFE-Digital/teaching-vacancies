@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby "3.1.2"
 
-RAILS_VERSION = "~> 6.1.6".freeze
+RAILS_VERSION = "~> 7.0.3".freeze
 gem "actionmailer", RAILS_VERSION
 gem "actionpack", RAILS_VERSION
 gem "activejob", RAILS_VERSION
@@ -86,9 +86,8 @@ group :development do
   gem "solargraph", require: false
   gem "spring"
   gem "spring-commands-rspec"
-  # TODO: Add back when version supporting Spring >= 4.0 is released
-  #       see https://github.com/rails/spring-watcher-listen/issues/27
-  # gem "spring-watcher-listen"
+  # TODO: Pinned until Spring >= 3 compatible version released
+  gem "spring-watcher-listen", github: "rails/spring-watcher-listen"
   gem "web-console"
 end
 
