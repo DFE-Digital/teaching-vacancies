@@ -104,7 +104,7 @@ group :development, :test do
   gem "pry-rails"
   gem "rack-mini-profiler", require: false
   gem "rails-controller-testing"
-  gem "rspec-rails", "5.0.2" # TODO: Pinned pending https://github.com/rspec/rspec-rails/pull/2570
+  gem "rspec-rails", ">= 6.0.0rc" # TODO: Unpin when 6.0 final is out
   gem "rubocop-performance"
   gem "rubocop-rails"
   gem "rubocop-rspec"

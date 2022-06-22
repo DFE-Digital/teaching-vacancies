@@ -38,7 +38,7 @@ RSpec.describe Jobseekers::CloseAccount do
     it "sends an email to jobseeker" do
       expect { subject.call }
         .to have_enqueued_email(Jobseekers::AccountMailer, :account_closed)
-        .with(hash_including(args: [jobseeker]))
+        .with(jobseeker)
     end
 
     it "marks subscriptions as inactive" do
