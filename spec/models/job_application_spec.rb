@@ -162,7 +162,7 @@ RSpec.describe JobApplication do
     it "delivers `application_submitted` email" do
       expect { subject }
         .to have_enqueued_email(Jobseekers::JobApplicationMailer, :application_submitted)
-        .with(hash_including(args: [job_application]))
+        .with(job_application)
     end
   end
 end
