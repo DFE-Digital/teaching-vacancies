@@ -24,7 +24,8 @@
     "leaflet": "^1.8.0",
     "leaflet-gesture-handling": "^1.2.2",
     "leaflet.markercluster": "^1.5.3",
-    "rails-ujs": "^5.2.8"
+    "rails-ujs": "^5.2.8",
+    "selfsigned": "^1.10.8"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.18.2",
