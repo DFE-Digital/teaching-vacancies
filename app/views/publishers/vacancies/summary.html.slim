@@ -9,7 +9,7 @@
     - if @vacancy.publish_on.today?
       p.govuk-body = t(".date_posted_now")
     - else
-      p.govuk-body = t(".date_posted", date: @vacancy.publish_on)
+      p.govuk-body = t(".date_posted", date: @vacancy.publish_on.to_formatted_s)
 
     p.govuk-body
       = t(".date_expires", application_deadline: format_time_to_datetime_at(@vacancy.expires_at))

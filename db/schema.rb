@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_16_154050) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_06_22_101735) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -25,7 +24,7 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
     t.string "record_type", null: false
     t.uuid "record_id", null: false
     t.uuid "blob_id", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -37,8 +36,8 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
     t.text "metadata"
     t.string "service_name", null: false
     t.bigint "byte_size", null: false
-    t.string "checksum", null: false
-    t.datetime "created_at", null: false
+    t.string "checksum"
+    t.datetime "created_at", precision: nil, null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
@@ -52,17 +51,17 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
     t.uuid "subscription_id"
     t.date "run_on"
     t.string "job_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "status", default: 0
     t.index ["subscription_id"], name: "index_alert_runs_on_subscription_id"
   end
 
   create_table "emergency_login_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.datetime "not_valid_after", null: false
+    t.datetime "not_valid_after", precision: nil, null: false
     t.uuid "publisher_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["publisher_id"], name: "index_emergency_login_keys_on_publisher_id"
   end
 
@@ -73,8 +72,8 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
     t.date "started_on"
     t.date "ended_on"
     t.uuid "job_application_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "employment_type", default: 0
     t.text "reason_for_break", default: ""
     t.text "organisation_ciphertext"
@@ -117,8 +116,8 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
     t.integer "religion_prefer_not_to_say", default: 0, null: false
     t.integer "religion_sikh", default: 0, null: false
     t.string "religion_other_descriptions", default: [], null: false, array: true
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "age_under_twenty_five", default: 0, null: false
     t.integer "age_twenty_five_to_twenty_nine", default: 0, null: false
     t.integer "age_prefer_not_to_say", default: 0, null: false
@@ -130,8 +129,8 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
   end
 
   create_table "feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "feedback_type"
     t.integer "rating"
     t.text "comment"
@@ -161,7 +160,7 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
     t.uuid "sluggable_id", null: false
     t.string "sluggable_type", limit: 50
     t.string "scope"
-    t.datetime "created_at"
+    t.datetime "created_at", precision: nil
     t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
@@ -170,16 +169,16 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
 
   create_table "job_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "status"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.uuid "jobseeker_id"
     t.uuid "vacancy_id"
     t.integer "completed_steps", default: [], null: false, array: true
-    t.datetime "submitted_at"
-    t.datetime "draft_at"
-    t.datetime "shortlisted_at"
-    t.datetime "unsuccessful_at"
-    t.datetime "withdrawn_at"
+    t.datetime "submitted_at", precision: nil
+    t.datetime "draft_at", precision: nil
+    t.datetime "shortlisted_at", precision: nil
+    t.datetime "unsuccessful_at", precision: nil
+    t.datetime "withdrawn_at", precision: nil
     t.string "qualified_teacher_status", default: "", null: false
     t.string "qualified_teacher_status_year", default: "", null: false
     t.text "qualified_teacher_status_details", default: "", null: false
@@ -197,7 +196,7 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
     t.string "ethnicity_description", default: "", null: false
     t.string "religion", default: "", null: false
     t.string "religion_description", default: "", null: false
-    t.datetime "reviewed_at"
+    t.datetime "reviewed_at", precision: nil
     t.string "country", default: "", null: false
     t.string "age", default: "", null: false
     t.string "email_address", default: "", null: false
@@ -227,19 +226,19 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
+    t.datetime "reset_password_sent_at", precision: nil
     t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
+    t.datetime "current_sign_in_at", precision: nil
+    t.datetime "last_sign_in_at", precision: nil
     t.string "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
+    t.datetime "confirmed_at", precision: nil
+    t.datetime "confirmation_sent_at", precision: nil
     t.string "unconfirmed_email"
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
-    t.datetime "locked_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "locked_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.date "account_closed_on"
     t.text "current_sign_in_ip_ciphertext"
     t.text "last_sign_in_ip_ciphertext"
@@ -252,15 +251,15 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
   create_table "local_authority_publisher_schools", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "publisher_preference_id"
     t.uuid "school_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "location_polygons", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "location_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.geography "area", limit: {:srid=>4326, :type=>"geometry", :geographic=>true}
     t.index ["area"], name: "index_location_polygons_on_area", using: :gist
     t.index ["name"], name: "index_location_polygons_on_name"
@@ -270,8 +269,8 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
     t.uuid "vacancy_id", null: false
     t.uuid "organisation_id", null: false
     t.geography "geopoint", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["geopoint"], name: "index_markers_on_geopoint", using: :gist
     t.index ["organisation_id"], name: "index_markers_on_organisation_id"
     t.index ["vacancy_id"], name: "index_markers_on_vacancy_id"
@@ -281,8 +280,8 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
     t.string "content"
     t.uuid "publisher_id", null: false
     t.uuid "job_application_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["job_application_id"], name: "index_notes_on_job_application_id"
     t.index ["publisher_id"], name: "index_notes_on_publisher_id"
   end
@@ -292,9 +291,9 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
     t.uuid "recipient_id", null: false
     t.string "type", null: false
     t.jsonb "params"
-    t.datetime "read_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "read_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["read_at"], name: "index_notifications_on_read_at"
     t.index ["recipient_type", "recipient_id"], name: "index_notifications_on_recipient"
   end
@@ -302,22 +301,22 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
   create_table "organisation_publisher_preferences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "organisation_id"
     t.uuid "publisher_preference_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "organisation_publishers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "organisation_id"
     t.uuid "publisher_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "organisation_vacancies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "organisation_id"
     t.uuid "vacancy_id"
-    t.datetime "created_at", precision: 6
-    t.datetime "updated_at", precision: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["organisation_id", "vacancy_id"], name: "index_organisation_vacancies_on_organisation_id_and_vacancy_id", unique: true
     t.index ["vacancy_id", "organisation_id"], name: "index_organisation_vacancies_on_vacancy_id_and_organisation_id", unique: true
   end
@@ -339,8 +338,8 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
     t.text "locality"
     t.text "address3"
     t.json "gias_data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "readable_phases", array: true
     t.string "url_override"
     t.string "region"
@@ -364,23 +363,23 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
   create_table "publisher_preferences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "publisher_id"
     t.uuid "organisation_id"
-    t.datetime "created_at", precision: 6
-    t.datetime "updated_at", precision: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["organisation_id"], name: "index_publisher_preferences_on_organisation_id"
     t.index ["publisher_id"], name: "index_publisher_preferences_on_publisher_id"
   end
 
   create_table "publishers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "oid"
-    t.datetime "accepted_terms_at"
+    t.datetime "accepted_terms_at", precision: nil
     t.string "email"
-    t.datetime "last_activity_at"
-    t.datetime "created_at", precision: 6
-    t.datetime "updated_at", precision: 6
+    t.datetime "last_activity_at", precision: nil
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.text "family_name_ciphertext"
     t.text "given_name_ciphertext"
-    t.datetime "dismissed_new_features_page_at"
-    t.datetime "unsubscribed_from_expired_vacancy_prompt_at"
+    t.datetime "dismissed_new_features_page_at", precision: nil
+    t.datetime "unsubscribed_from_expired_vacancy_prompt_at", precision: nil
     t.index ["email"], name: "index_publishers_on_email"
     t.index ["oid"], name: "index_publishers_on_oid", unique: true
   end
@@ -389,14 +388,14 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
     t.uuid "qualification_id", null: false
     t.string "subject", null: false
     t.string "grade", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["qualification_id"], name: "index_qualification_results_on_qualification_id"
   end
 
   create_table "qualifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "category"
     t.boolean "finished_studying"
     t.string "grade", default: "", null: false
@@ -412,8 +411,8 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
   create_table "references", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "relationship", default: "", null: false
     t.uuid "job_application_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.text "name_ciphertext"
     t.text "job_title_ciphertext"
     t.text "organisation_ciphertext"
@@ -425,8 +424,8 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
   create_table "saved_jobs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "jobseeker_id"
     t.uuid "vacancy_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["jobseeker_id"], name: "index_saved_jobs_on_jobseeker_id"
   end
 
@@ -434,8 +433,8 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
     t.uuid "school_id"
     t.uuid "school_group_id"
     t.boolean "do_not_delete"
-    t.datetime "created_at", precision: 6
-    t.datetime "updated_at", precision: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["school_group_id", "school_id"], name: "index_school_group_memberships_on_school_group_id_and_school_id"
     t.index ["school_id", "school_group_id"], name: "index_school_group_memberships_on_school_id_and_school_group_id", unique: true
   end
@@ -443,8 +442,8 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
   create_table "sessions", force: :cascade do |t|
     t.string "session_id", null: false
     t.text "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["session_id"], name: "index_sessions_on_session_id", unique: true
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
@@ -453,11 +452,11 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
     t.string "email"
     t.integer "frequency"
     t.jsonb "search_criteria"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.float "recaptcha_score"
     t.boolean "active", default: true
-    t.datetime "unsubscribed_at"
+    t.datetime "unsubscribed_at", precision: nil
     t.index ["email"], name: "index_subscriptions_on_email"
   end
 
@@ -466,8 +465,8 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
     t.string "email"
     t.string "given_name"
     t.string "family_name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["oid"], name: "index_support_users_on_oid"
   end
 
@@ -480,15 +479,15 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
     t.string "contact_email"
     t.integer "status"
     t.date "publish_on"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "application_link"
     t.integer "working_patterns", array: true
     t.integer "listed_elsewhere"
     t.integer "hired_status"
-    t.datetime "stats_updated_at"
+    t.datetime "stats_updated_at", precision: nil
     t.uuid "publisher_id"
-    t.datetime "expires_at"
+    t.datetime "expires_at", precision: nil
     t.string "salary"
     t.text "about_school"
     t.string "subjects", array: true
@@ -515,7 +514,7 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
     t.tsvector "searchable_content"
     t.boolean "google_index_removed", default: false
     t.string "parental_leave_cover_contract_duration"
-    t.datetime "expired_vacancy_feedback_email_sent_at"
+    t.datetime "expired_vacancy_feedback_email_sent_at", precision: nil
     t.string "external_source"
     t.string "external_reference"
     t.string "external_advert_url"
@@ -535,7 +534,7 @@ ActiveRecord::Schema.define(version: 2022_06_16_154050) do
     t.string "event", null: false
     t.string "whodunnit"
     t.text "object"
-    t.datetime "created_at"
+    t.datetime "created_at", precision: nil
     t.jsonb "object_changes"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end

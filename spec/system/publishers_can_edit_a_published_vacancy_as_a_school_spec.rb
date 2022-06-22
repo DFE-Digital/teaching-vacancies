@@ -169,7 +169,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         expect(current_path).to eq(organisation_job_path(vacancy.id))
         # Using String#strip to get rid of an initial space in e.g. " 1 July 2020" which caused test failures
         # due to a leading newline in the body ("\n1 July 2020").
-        expect(page).to have_content(expiry_date.to_s.strip)
+        expect(page).to have_content(expiry_date.to_formatted_s.strip)
       end
 
       scenario "adds a job to update the Google index in the queue" do
