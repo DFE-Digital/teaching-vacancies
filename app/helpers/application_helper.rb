@@ -41,4 +41,12 @@ module ApplicationHelper
   def include_google_tag_manager?
     cookies["consented-to-cookies"] == "yes" && Rails.configuration.app_role.production?
   end
+
+  def phase_banner_text
+    if Rails.env == "sandbox"
+      "sandbox"
+    else
+      "beta"
+    end
+  end
 end

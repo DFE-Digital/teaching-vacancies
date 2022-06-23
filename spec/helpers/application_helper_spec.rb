@@ -50,4 +50,18 @@ RSpec.describe ApplicationHelper do
       expect(helper.recaptcha).to eq(captcha)
     end
   end
+
+  describe "#phase_banner_text" do
+    subject { helper.phase_banner_text }
+    let(:environment) { "development" }
+
+    before { allow(Rails).to receive(:env).and_return(environment) }
+
+    it { is_expected.to eq("beta") }
+
+    context "sandbox" do
+      let(:environment) { "sandbox" }
+      it { is_expected.to eq("sandbox") }
+    end
+  end
 end
