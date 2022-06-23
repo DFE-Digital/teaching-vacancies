@@ -14,7 +14,9 @@ class Subscription < ApplicationRecord
     key_generator_secret = SUBSCRIPTION_KEY_GENERATOR_SECRET
     key_generator_salt = SUBSCRIPTION_KEY_GENERATOR_SALT
 
-    key_generator = ActiveSupport::KeyGenerator.new(key_generator_secret).generate_key(key_generator_salt, 32)
+    key_generator = ActiveSupport::KeyGenerator
+      .new(key_generator_secret, hash_digest_class: SUBSCRIPTION_KEY_GENERATOR_DIGEST_CLASS)
+      .generate_key(key_generator_salt, 32)
 
     ActiveSupport::MessageEncryptor.new(key_generator)
   end
