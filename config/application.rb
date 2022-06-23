@@ -98,6 +98,11 @@ module TeacherVacancyService
     config.view_component.preview_controller = "PreviewsController"
     config.view_component.show_previews = true
 
+    # TODO: We use Devise's `after_sign_out_path_for` to redirect users to DSI after signing out,
+    # and have no way of disabling the foreign host redirect protection in that instance. Until
+    # we figure out a way around that, this keeps the pre-Rails 7 default around.
+    Rails.application.config.action_controller.raise_on_open_redirects = false
+
     Rails.autoloaders.main.ignore(Rails.root.join("app/frontend"))
 
     config.after_initialize do |app|

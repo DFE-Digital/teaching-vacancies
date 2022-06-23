@@ -17,7 +17,7 @@ RSpec.describe BannerButtonComponent, type: :component do
 
     it "renders the banner button" do
       expect(page).to have_css("form[method='post'][action='/some-test-path']", class: "banner-button-component") do |form|
-        expect(form).to have_css("input[type='submit'][value='A cool button']", class: "banner-button-component__button icon icon--left icon--apply")
+        expect(form).to have_css("button[type='submit']", text: "A cool button", class: "banner-button-component__button icon icon--left icon--apply")
         expect(form).to have_css("input[type='hidden'][name='key'][value='value']", visible: false)
       end
     end
