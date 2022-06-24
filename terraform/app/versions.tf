@@ -13,9 +13,5 @@ terraform {
       source  = "StatusCakeDev/statuscake"
       version = "~> 1.0.1"
     }
-    template = {
-      source  = "hashicorp/template"
-      version = "~> 2.1.2"
-    }
   }
 }
