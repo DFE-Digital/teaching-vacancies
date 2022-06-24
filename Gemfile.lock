@@ -603,6 +603,13 @@ GEM
     spring (3.1.1)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
+    sprockets (4.0.3)
+      concurrent-ruby (~> 1.0)
+      rack (> 1, < 3)
+    sprockets-rails (3.4.2)
+      actionpack (>= 5.2)
+      activesupport (>= 5.2)
+      sprockets (>= 3.0.0)
     strscan (3.0.3)
     swd (1.3.0)
       activesupport (>= 3)
@@ -768,6 +775,7 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   spring-watcher-listen!
+  sprockets-rails
   tzinfo-data
   validate_url
   vcr
