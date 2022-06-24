@@ -73,13 +73,11 @@ FactoryBot.define do
     trait :at_one_school do
       job_location { "at_one_school" }
       readable_job_location { Faker::Educator.secondary_school.strip.delete("'") }
-      postcode_from_mean_geolocation { "A99 B99" }
     end
 
     trait :at_multiple_schools do
       job_location { "at_multiple_schools" }
       readable_job_location { "More than one school (2)" }
-      postcode_from_mean_geolocation { "Z89 Y76" }
     end
 
     trait :fail_minimum_validation do

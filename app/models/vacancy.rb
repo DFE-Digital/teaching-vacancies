@@ -202,28 +202,6 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
     job_applications.after_submission.count >= EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD
   end
 
-  def set_postcode_from_mean_geolocation(persist: true)
-    # When SimilarJobs searches for jobs similar to a multi-school job, we need to derive a location to search around.
-    # Take the mean of the geopoints of the school(s) the vacancy is at, and use it to look up a human-readable
-    # version of that location (i.e. a postcode).
-    return if central_office?
-
-    if at_one_school?
-      postcode = organisation.postcode
-    else
-      schools = organisations.schools.where.not(geopoint: nil)
-      centroid = schools.pluck(Arel.sql("ST_Centroid(ST_Collect(geopoint::geometry))::geography")).first
-      return unless centroid
-
-      postcode = Geocoding.new([centroid.x, centroid.y]).postcode_from_coordinates
-    end
-    return unless postcode
-
-    self.postcode_from_mean_geolocation = postcode
-    save if persist
-    postcode
-  end
-
   def reset_markers
     markers.delete_all
     organisations.each do |organisation|

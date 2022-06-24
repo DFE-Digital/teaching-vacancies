@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_22_101735) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_27_143706) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -506,7 +506,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_22_101735) do
     t.string "completed_steps", default: [], null: false, array: true
     t.string "actual_salary"
     t.text "working_patterns_details"
-    t.string "postcode_from_mean_geolocation"
     t.integer "phase"
     t.integer "key_stages", array: true
     t.geography "geolocation", limit: {:srid=>4326, :type=>"geometry", :geographic=>true}

@@ -42,7 +42,6 @@ RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: tr
   end
 
   def and_the_search_criteria_are_populated
-    expect(page.find_field("jobseekers-subscription-form-keyword-field").value).to eq("English")
     expect(page.find_field("jobseekers-subscription-form-location-field").value).to eq(school.postcode)
     expect(page.find_field("jobseekers-subscription-form-radius-field").value).to eq(Search::CriteriaInventor::DEFAULT_RADIUS_IN_MILES.to_s)
     expect(page.find_field("jobseekers-subscription-form-job-roles-teacher-field")).to be_checked
