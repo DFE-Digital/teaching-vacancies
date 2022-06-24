@@ -11,7 +11,7 @@ class Publisher < ApplicationRecord
   has_encrypted :family_name, :given_name
 
   devise :timeoutable
-  self.timeout_in = 60.minutes # Overrides default Devise configuration
+  self.timeout_in = 120.minutes # Overrides default Devise configuration
 
   def vacancies_with_job_applications_submitted_yesterday
     vacancies.distinct
