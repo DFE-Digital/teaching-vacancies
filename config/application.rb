@@ -26,7 +26,7 @@ require_relative "../lib/vcap_services"
 
 require "rack-mini-profiler" if ENV.fetch("RACK_MINI_PROFILER", nil) == "true" && !Rails.env.production?
 
-module TeacherVacancyService
+module TeachingVacancies
   class Application < Rails::Application
     config.load_defaults 7.0
 
