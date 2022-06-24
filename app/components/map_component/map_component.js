@@ -3,7 +3,6 @@ import Map from './map';
 import Cluster from './cluster';
 import MarkerData from './marker/service';
 import template from './marker/template';
-import './map.scss';
 
 const MARKER_OPTIONS = {
   vacancy: {

@@ -1,0 +1,67 @@
+$govuk-global-styles: true;
+$govuk-new-link-styles: true;
+$govuk-assets-path: "/";
+
+// External dependencioes
+@import 'accessible-autocomplete/dist/accessible-autocomplete.min';
+@import 'govuk-frontend/govuk/all';
+@import 'leaflet/dist/leaflet';
+@import 'leaflet.markercluster/dist/MarkerCluster';
+@import 'leaflet-gesture-handling/dist/leaflet-gesture-handling';
+
+@import 'base/global';
+@import 'base/govuk/components/accordion';
+@import 'base/govuk/components/error-summary';
+@import 'base/govuk/components/inset-text';
+@import 'base/form';
+@import 'base/grid';
+@import 'base/icons';
+@import 'base/mixins';
+@import 'base/utilities';
+
+@import 'layouts/footer';
+@import 'layouts/header';
+@import 'layouts/help-guide';
+@import 'layouts/pagination';
+
+@import 'layouts/home/index';
+@import 'layouts/pages/list-school-job';
+@import 'layouts/posts/index';
+@import 'layouts/subscriptions/new';
+@import 'layouts/support_users/feedbacks';
+@import 'layouts/updates/index';
+@import 'layouts/vacancies/index';
+@import 'layouts/vacancies/show';
+
+// View Components
+@import 'components/account_survey_link_component';
+@import 'components/banner_button_component';
+@import 'components/card_component';
+@import 'components/cookies_banner_component';
+@import 'components/dashboard_component';
+@import 'components/detail_component';
+@import 'components/empty_section_component';
+@import 'components/environment_banner_component';
+@import 'components/filters_component';
+@import 'components/job_alert_link_component';
+@import 'components/map';
+@import 'components/sidebar';
+@import 'components/navigation_list_component';
+@import 'components/notification_component';
+@import 'components/review_component';
+@import 'components/searchable_collection_component';
+@import 'components/sort_component';
+@import 'components/steps_component';
+@import 'components/supportal_table_component';
+@import 'components/supporting_document_component';
+@import 'components/tabs_component';
+@import 'components/timeline_component';
+@import 'components/error_component';
+
+// JS Components
+@import 'js_components/autocomplete';
+@import 'js_components/loadingIndicator';
+@import 'js_components/locationFinder';
+@import 'js_components/manageQualifications';
+@import 'js_components/panel';
+@import 'js_components/uploadDocuments';

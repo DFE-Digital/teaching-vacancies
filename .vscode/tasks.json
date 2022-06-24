@@ -34,6 +34,21 @@
       }
     },
     {
+      "label": "Asset build (CSS)",
+      "type": "shell",
+      "command": "yarn build:css --watch",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": [],
+      "options": {
+        "statusbar": {
+          "hide" : true
+        }
+      }
+    },
+    {
       "label": "Sidekiq",
       "type": "shell",
       "command": "bundle exec sidekiq",
@@ -53,6 +68,7 @@
       "dependsOn": [
         "Rails",
         "Webpack dev server",
+        "Asset build (CSS)",
         "Sidekiq"
       ],
       "problemMatcher": [],

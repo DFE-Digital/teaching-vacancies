@@ -1,6 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
 import template from './marker/template';
-import './sidebar.scss';
 
 export const COMPONENT_CLASS = 'sidebar-component';
 export const SIDEBAR_VISIBLE_CLASS = `${COMPONENT_CLASS}--visible`;

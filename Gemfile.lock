@@ -155,6 +155,8 @@ GEM
     crack (0.4.5)
       rexml
     crass (1.0.6)
+    cssbundling-rails (1.1.1)
+      railties (>= 6.0.0)
     declarative (0.0.20)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
@@ -708,6 +710,7 @@ DEPENDENCIES
   byebug
   capybara
   climate_control
+  cssbundling-rails
   devise
   dotenv-rails
   factory_bot_rails

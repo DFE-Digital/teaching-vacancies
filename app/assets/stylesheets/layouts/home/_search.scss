@@ -1,6 +1,6 @@
 .search {
   @include govuk-media-query($until: tablet) {
-    background: url('../../images/TVS-logo.png') no-repeat 100% 10px/120px auto govuk-colour('dark-blue');
+    background: url('/TVS-logo.png') no-repeat 100% 10px/120px auto govuk-colour('dark-blue');
     padding: govuk-spacing(4);
 
     h1 {
@@ -14,7 +14,7 @@
   }
 
   @include govuk-media-query($from: tablet) {
-    background: url('../../images/TVS-logo.png') no-repeat 100% 10px/150px auto govuk-colour('dark-blue');
+    background: url('/TVS-logo.png') no-repeat 100% 10px/150px auto govuk-colour('dark-blue');
     padding: govuk-spacing(6);
 
     h1 {
