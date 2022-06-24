@@ -14,6 +14,7 @@
         label: { size: "s" },
         accept: ".doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, image/jpeg, image/png, video/mp4",
         multiple: true,
+        include_hidden: false,
         enctype: "multipart/form-data",
         "data-upload-documents-target": "inputFileUpload",
         "data-action": "change->upload-documents#uploadFiles",
