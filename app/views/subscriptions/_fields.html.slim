@@ -8,7 +8,7 @@
 
 .plain-styling
   = filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
-    options: { remove_buttons: false }) do |filters_component|
+    options: { remove_filter_links: false }) do |filters_component|
       - filters_component.group key: "job_roles", component: f.govuk_collection_check_boxes(:job_roles, @form.job_role_options, :first, :last, small: false, legend: { text: t("jobs.filters.job_roles") }, hint: nil)
       - filters_component.group key: "subjects", title: t("jobs.filters.subject"), component: searchable_collection(collection: f.govuk_collection_check_boxes(:subjects,
         SUBJECT_OPTIONS,

@@ -375,7 +375,7 @@ en:
       clear_all_filters: Clear filters
       close_all_filter_groups: Close all
       current_selected_filters: Selected filters
-      remove_filter_hidden: Remove this filter
+      remove_filter_hidden: "Remove this filter "
       return_to_results: Return to results
     status_tags:
       action_required: action required

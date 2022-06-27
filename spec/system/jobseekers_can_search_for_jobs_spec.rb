@@ -5,7 +5,7 @@ RSpec.shared_examples "a successful search" do
     let(:keyword) { "Teacher" }
 
     it "adds the expected filters" do
-      expect(page).to have_css("button", text: "Remove this filterTeacher")
+      expect(page).to have_css("a", text: "Remove this filter Teacher")
     end
 
     it "displays page 1 jobs" do
@@ -30,8 +30,8 @@ RSpec.shared_examples "a successful search" do
     let(:keyword) { "Maths Teacher" }
 
     it "adds the expected filters" do
-      expect(page).to have_css("button", text: "Remove this filterMathematics")
-      expect(page).to have_css("button", text: "Remove this filterTeacher")
+      expect(page).to have_css("a", text: "Remove this filter Mathematics")
+      expect(page).to have_css("a", text: "Remove this filter Teacher")
     end
 
     it "displays only the Maths jobs" do
@@ -55,9 +55,18 @@ RSpec.shared_examples "a successful search" do
     context "when clearing all applied filters" do
       before { click_on I18n.t("shared.filter_group.clear_all_filters") }
 
-      it "displays no filter remove buttons" do
-        expect(page).to_not have_css("button", text: "Remove this filterMathematics")
-        expect(page).to_not have_css("button", text: "Remove this filterTeacher")
+      it "displays no remove filter links" do
+        expect(page).to_not have_css("a", text: "Remove this filter Mathematics")
+        expect(page).to_not have_css("a", text: "Remove this filter Teacher")
+      end
+    end
+
+    context "when removing a filter" do
+      before { click_on "Remove this filter Mathematics" }
+
+      it "removes the filter" do
+        expect(page).to_not have_css("a", text: "Remove this filter Mathematics")
+        expect(page).to have_css("a", text: "Remove this filter Teacher")
       end
     end
   end

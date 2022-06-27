@@ -5,7 +5,7 @@
       h2.govuk-heading-m
         = options[:heading_text]
 
-  - if display_remove_buttons?
+  - if display_remove_filter_links?
     .filters-component__remove
       .filters-component__remove__heading
         .govuk-body.filters-component__remove__heading-title class="govuk-!-margin-bottom-0"
@@ -13,7 +13,7 @@
         = clear_filters_link
 
       .filters-component__remove-groups
-        = remove_buttons
+        = remove_filter_links
 
   .filters-component__groups
     - groups.each do |group|

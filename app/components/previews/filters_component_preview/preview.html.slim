@@ -22,8 +22,8 @@ ruby:
   | Component preview
 
 = form_for @preview_form, url: preview_view_component_path("#{@preview.preview_name}/#{@example_name}"), html: { method: "get" } do |f|
-  = render(@preview_class.new(submit_button: f.govuk_submit(t("buttons.apply_filters")), filters: { total_count: 1 }, options: { heading_text: "Filters preview", remove_buttons: true })) do |filters_component|
-    - filters_component.remove_buttons do |rb|
+  = render(@preview_class.new(submit_button: f.govuk_submit(t("buttons.apply_filters")), filters: { total_count: 1 }, options: { heading_text: "Filters preview", remove_filter_links: true })) do |filters_component|
+    - filters_component.remove_filter_links do |rb|
       - filter_types.each do |filter_type|
         - rb.group(**filter_type)
     - filters_component.group key: "preview_group_1", component: f.govuk_collection_check_boxes(:options, filter_types[0][:options], :first, :last, small: true, legend: { text: "filter group" }, hint: nil)

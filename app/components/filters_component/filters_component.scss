@@ -64,21 +64,24 @@
       }
 
       &__tag {
-        @include govuk-font(16);
         background-color: govuk-colour('white');
+        border: 1px solid $govuk-input-border-colour;
         border-radius: govuk-spacing(1);
-        border-width: 1px;
         cursor: pointer;
         -webkit-font-smoothing: antialiased;
         font-weight: 400;
-        line-height: 1.25;
-        margin-top: 5px;
-        padding: 5px;
+        line-height: 2.5;
+        margin-top: govuk-spacing(1);
+        padding: govuk-spacing(1);
         text-align: left;
 
         &::after {
           height: 0;
           width: 0;
+        }
+
+        &:hover {
+          text-decoration: none;
         }
 
         &:focus {

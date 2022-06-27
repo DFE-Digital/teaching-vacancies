@@ -106,6 +106,7 @@ Rails.application.routes.draw do
     resources :publisher_preferences, only: %i[new create edit update destroy]
     resources :schools, only: %i[index show edit update]
     resource :terms_and_conditions, only: %i[show update]
+    get :remove_organisation_filter, to: "publisher_preferences#remove_organisation"
   end
 
   scope :publishers do

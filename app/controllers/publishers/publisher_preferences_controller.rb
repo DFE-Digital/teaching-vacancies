@@ -41,6 +41,12 @@ class Publishers::PublisherPreferencesController < Publishers::BaseController
     redirect_to organisation_path
   end
 
+  def remove_organisation
+    publisher_preference = PublisherPreference.find_by(publisher: current_publisher, organisation: current_organisation)
+    publisher_preference.organisation_publisher_preferences.find_by(organisation_id: params[:filter_id]).destroy
+    redirect_to organisation_path
+  end
+
   private
 
   def publisher_preference_params
