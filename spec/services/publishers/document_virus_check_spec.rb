@@ -37,8 +37,7 @@ RSpec.describe Publishers::DocumentVirusCheck do
 
       it "deletes the temporary downloaded file and the file on Google Drive" do
         expect(drive_service).to receive(:delete_file).with("0xDECAFBAD")
-        expect(File).to receive(:exist?).with("0xDECAFBAD").and_return(true)
-        expect(File).to receive(:delete).with("0xDECAFBAD").and_return(true)
+        expect(FileUtils).to receive(:rm_rf).with("0xDECAFBAD").and_return(true)
 
         subject.safe?
       end

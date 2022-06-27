@@ -10,7 +10,7 @@ class ApplicationRecord < ActiveRecord::Base
   DATA_ACCESS_PERIOD_FOR_PUBLISHERS = 1.year.freeze
 
   def attributes_except_ciphertext
-    attributes.reject { |k, _v| k.include?("_ciphertext") }
+    attributes.reject { |k, _v| k.end_with?("_ciphertext") }
   end
 
   private
