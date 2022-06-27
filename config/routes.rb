@@ -23,14 +23,14 @@ Rails.application.routes.draw do
   draw :legacy_redirects
 
   devise_for :jobseekers, controllers: {
-    confirmations: "jobseekers/confirmations",
-    passwords: "jobseekers/passwords",
-    registrations: "jobseekers/registrations",
-    sessions: "jobseekers/sessions",
-    unlocks: "jobseekers/unlocks",
-  }, path_names: {
-    sign_in: "sign-in",
-  }
+                            confirmations: "jobseekers/confirmations",
+                            passwords: "jobseekers/passwords",
+                            registrations: "jobseekers/registrations",
+                            sessions: "jobseekers/sessions",
+                            unlocks: "jobseekers/unlocks",
+                          }, path_names: {
+                            sign_in: "sign-in",
+                          }
 
   get "/jobseekers/saved_jobs", to: "jobseekers/saved_jobs#index", as: :jobseeker_root
 

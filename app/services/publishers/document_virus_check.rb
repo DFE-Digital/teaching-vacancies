@@ -22,7 +22,7 @@ class Publishers::DocumentVirusCheck
 
     raise e
   ensure
-    File.delete(uploaded_file.id.to_s) if File.exist?(uploaded_file.id.to_s)
+    FileUtils.rm_rf(uploaded_file.id.to_s)
     drive_service.delete_file(uploaded_file.id)
   end
 

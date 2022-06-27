@@ -19,7 +19,7 @@ class SchoolGroupMembership < ApplicationRecord
     Sentry.capture_message("Memberships to delete, by SchoolGroup: #{to_delete}", level: :info)
 
     if marked_for_deletion.count > MAX_RECORDS_TO_BULK_DELETE
-      raise "Exceeded maximum count of `SchoolGroupMembership`s to bulk delete "\
+      raise "Exceeded maximum count of `SchoolGroupMembership`s to bulk delete " \
             "(#{marked_for_deletion.count})"
     end
 
