@@ -402,6 +402,11 @@ GEM
       ast (~> 2.4.1)
     parslet (2.0.0)
     pg (1.4.0)
+    propshaft (0.6.4)
+      actionpack (>= 7.0.0)
+      activesupport (>= 7.0.0)
+      rack
+      railties (>= 7.0.0)
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -734,6 +739,7 @@ DEPENDENCIES
   paper_trail-globalid
   parslet
   pg
+  propshaft
   pry
   pry-byebug
   pry-rails
