@@ -19,9 +19,6 @@
 #   - You can add a query parameter such as the below to force a particular variant:
 #     ?ab_test_override[similar_jobs_position]=default
 shared:
-  2022_05_show_map_results:
-    show_map: 1
-    no_map: 1
   # A fake test to test (ha!) the AB testing functionality
   2021_01_testing_test:
     red: 1
@@ -34,6 +31,3 @@ shared:
     bar: 1
     baz: 1
 test:
-  2022_05_show_map_results:
-    show_map: 1
-    no_map: 0

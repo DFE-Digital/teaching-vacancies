@@ -12,9 +12,7 @@ class VacanciesController < ApplicationController
     )
     @vacancies = @vacancies_search.vacancies
 
-    @show_map = current_variant?(:"2022_05_show_map_results", :show_map) &&
-                @vacancies_search.location &&
-                @vacancies_search.total_count <= MAX_TOTAL_RESULTS_FOR_MAP
+    @show_map = @vacancies_search.location && @vacancies_search.total_count <= MAX_TOTAL_RESULTS_FOR_MAP
   end
 
   def show
