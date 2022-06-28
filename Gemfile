@@ -21,7 +21,6 @@ gem "addressable"
 gem "array_enum"
 gem "aws-sdk-s3", require: false
 gem "breasal"
-gem "browser"
 gem "devise"
 gem "factory_bot_rails"
 gem "faker"
@@ -53,7 +52,6 @@ gem "pg"
 gem "puma"
 gem "rack-attack"
 gem "rack-cors"
-gem "rails-html-sanitizer"
 gem "rails_semantic_logger"
 gem "recaptcha"
 gem "redis"
@@ -76,7 +74,6 @@ gem "zendesk_api"
 group :development do
   gem "amazing_print" # optional dependency of `rails_semantic_logger`
   gem "aws-sdk-ssm"
-  gem "launchy"
   gem "listen"
   gem "solargraph", require: false
   gem "spring"
