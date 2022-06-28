@@ -12,7 +12,7 @@ inputs:
   node-version:
     description: The version of Node.js to install
     required: false
-    default: "14.x"
+    default: "16.x"
 
 runs:
   using: composite
