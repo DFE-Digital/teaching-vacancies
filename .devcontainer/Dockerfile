@@ -4,7 +4,7 @@ FROM ruby:${RUBY_VERSION}
 ARG USERNAME=teaching-vacancies
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
-ARG NODEJS_MAJOR_VERSION=14
+ARG NODEJS_MAJOR_VERSION=16
 
 # Set up NodeSource repository for newer Node.JS
 RUN apt update -yq \
