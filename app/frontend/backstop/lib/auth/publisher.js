@@ -1,8 +1,10 @@
 module.exports = async (page, scenario, viewport, isReference, browserContext) => {
   await page.goto(`${scenario.BASE_URL}/publishers/sign-in`);
 
-  await page.waitForSelector('input[type="submit"]');
-  await page.click('input[type="submit"]');
+  const signInSelector = 'button[type="submit"]';
+
+  await page.waitForSelector(signInSelector);
+  await page.click(signInSelector);
 
   await page.fill('input[name="username"]', process.env.VISUAL_TEST_PUBLISHER_USERNAME);
   await page.fill('input[name="password"]', process.env.VISUAL_TEST_PUBLISHER_PASSWORD);
