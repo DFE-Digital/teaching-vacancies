@@ -83,6 +83,11 @@ send_inactive_account_email:
   class: 'SendInactiveAccountEmailJob'
   queue: low
 
+send_account_confirmation_reminder_email:
+  cron: '0 9 * * *'
+  class: 'SendAccountConfirmationReminderEmailJob'
+  queue: default
+
 send_job_application_data_expiry_notification:
   cron: '0 6 * * *'
   class: 'SendJobApplicationDataExpiryNotificationJob'

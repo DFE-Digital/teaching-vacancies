@@ -31,6 +31,11 @@ en:
           intro: You have requested to change your email address to this address
           link: Confirm new email address
           subject: Confirm your new email for Teaching Vacancies
+        reminder:
+          heading: This is a reminder to verify your account with Teaching Vacancies
+          intro: You have requested to create an account with this email address.
+          link: Verify email and create account
+          subject: "Reminder: verify your account with teaching vacancies"
       email_changed:
         heading: The email for your Teaching Vacancies account has been updated
         intro: Your email has been successfully updated

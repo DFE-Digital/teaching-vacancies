@@ -60,6 +60,21 @@ RSpec.describe Jobseekers::AccountMailer do
         expect { mail.deliver_now }.to have_triggered_event(:jobseeker_confirmation_instructions).with_data(expected_data)
       end
     end
+
+    context "when the jobseeker is being reminded to confirm" do
+      let(:jobseeker) { create(:jobseeker, email: "test@example.net", confirmation_token: token, unconfirmed_email: "test@example.net", confirmed_at: nil, confirmation_sent_at: 5.days.ago) }
+
+      it "sends a `jobseeker_confirmation_instructions` email" do
+        expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.confirmation_instructions.reminder.subject"))
+        expect(mail.to).to eq(["test@example.net"])
+        expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.confirmation_instructions.reminder.heading"))
+                                 .and include(jobseeker_confirmation_path(confirmation_token: token))
+      end
+
+      it "triggers a `jobseeker_confirmation_instructions` email event" do
+        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_confirmation_instructions).with_data(expected_data)
+      end
+    end
   end
 
   describe "#email_changed" do

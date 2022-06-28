@@ -2,7 +2,11 @@ module Jobseekers::DeviseEmails
   def confirmation_instructions(record, token, _opts = {})
     to = subject = nil
 
-    if record.pending_reconfirmation?
+    if !record.confirmed? && record.confirmation_sent_at < 4.days.ago
+      to = record.unconfirmed_email
+      subject = t(".reminder.subject")
+      @confirmation_type = ".reminder"
+    elsif record.pending_reconfirmation?
       to = record.unconfirmed_email
       subject = t(".reconfirmation.subject")
       @confirmation_type = ".reconfirmation"
