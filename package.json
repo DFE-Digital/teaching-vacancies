@@ -68,9 +68,6 @@
     "coveragePathIgnorePatterns": [
       "<rootDir>/app/frontend/src/lib/polyfill/*"
     ],
-    "moduleNameMapper": {
-      "\\.scss$": "<rootDir>/app/frontend/src/__mocks__/style.js"
-    },
     "testEnvironment": "jest-environment-jsdom"
   },
   "resolutions": {
