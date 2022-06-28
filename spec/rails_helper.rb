@@ -45,9 +45,6 @@ Dir[Rails.root.join("spec/page_objects/**/*.rb")].each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
 
-user_agents ||= YAML.load_file(Browser.root.join("test/ua.yml")).freeze
-USER_AGENTS = user_agents
-
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
