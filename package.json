@@ -52,7 +52,7 @@
     "test": "concurrently \"yarn run js:test\" \"yarn run js:lint\" \"yarn run sass:lint\"",
     "js:test": "jest",
     "js:test:coverage": "jest --coverage",
-    "js:lint": "eslint ./app/frontend/src ./app/components",
+    "js:lint": "eslint ./app/frontend/src",
     "sass:lint": "yarn stylelint app/assets/stylesheets/**/*.scss -q",
     "backstop:execute": "backstop $CMD --config='app/frontend/backstop/backstop.config.js'",
     "visual:test:reference": "CMD=reference yarn run backstop:execute",
@@ -62,8 +62,7 @@
   },
   "jest": {
     "testMatch": [
-      "<rootDir>/app/frontend/src/**/*.test.js",
-      "<rootDir>/app/components/**/*.test.js"
+      "<rootDir>/app/frontend/src/**/*.test.js"
     ],
     "coveragePathIgnorePatterns": [
       "<rootDir>/app/frontend/src/lib/polyfill/*"

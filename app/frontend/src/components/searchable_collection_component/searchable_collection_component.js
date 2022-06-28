@@ -1,5 +1,5 @@
-import '../../frontend/src/lib/polyfill/closest.polyfill';
-import '../../frontend/src/lib/polyfill/from.polyfill';
+import '../../lib/polyfill/closest.polyfill';
+import '../../lib/polyfill/from.polyfill';
 
 export const searchableClassNames = ['govuk-checkboxes__input', 'govuk-radios__input'];
 
