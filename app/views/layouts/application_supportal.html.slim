@@ -2,7 +2,7 @@ doctype html
 html.govuk-template.app-html-class lang="en"
   head
     title #{content_for :page_title_prefix} - #{t("app.support_title")}
-    = stylesheet_pack_tag "application", media: "all"
+    = stylesheet_link_tag "application", media: "all"
     = csrf_meta_tags
     = render "layouts/sentry_js_config"
 

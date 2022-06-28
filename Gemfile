@@ -10,9 +10,9 @@ gem "activemodel", RAILS_VERSION
 gem "activerecord", RAILS_VERSION
 gem "activestorage", RAILS_VERSION
 gem "activesupport", RAILS_VERSION
-gem "railties", RAILS_VERSION
-
+gem "cssbundling-rails"
 gem "propshaft"
+gem "railties", RAILS_VERSION
 
 gem "activerecord-import"
 gem "activerecord-postgis-adapter"
