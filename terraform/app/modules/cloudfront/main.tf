@@ -68,7 +68,8 @@ resource "aws_cloudfront_distribution" "default" {
     target_origin_id       = "${var.service_name}-${var.environment}-default-origin"
     viewer_protocol_policy = "redirect-to-https"
     cache_policy_id        = data.aws_cloudfront_cache_policy.managed-caching-optimized.id
-    compress               = var.enable_cloudfront_compress
+    # Packs are pre-compressed by Rails (and will be removed soon)
+    compress = false
   }
 
   ordered_cache_behavior {
