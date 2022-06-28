@@ -6,6 +6,7 @@
   display: block;
   margin-bottom: -40px;
   position: sticky;
+  z-index: 3000;
 
   @include govuk-media-query($until: desktop) {
     margin: 0 -15px !important;
