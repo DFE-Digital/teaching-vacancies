@@ -551,52 +551,6 @@ RSpec.describe Vacancy do
     end
   end
 
-  describe "#set_mean_geolocation_from_postcode" do
-    let(:school) { create(:school, geopoint: "POINT(1 2)", postcode: "A12 B34") }
-
-    context "when at a single school" do
-      subject { create(:vacancy, organisations: [school]) }
-
-      before { subject.set_postcode_from_mean_geolocation }
-
-      it "uses the school's postcode" do
-        expect(subject.postcode_from_mean_geolocation).to eq("A12 B34")
-      end
-    end
-
-    context "when in a trust" do
-      let(:trust) { create(:trust, schools: [school]) }
-
-      context "when at a single school in a trust" do
-        subject { create(:vacancy, :at_one_school, organisations: [school]) }
-
-        before { subject.set_postcode_from_mean_geolocation }
-
-        it "uses the school's postcode" do
-          expect(subject.postcode_from_mean_geolocation).to eq("A12 B34")
-        end
-      end
-
-      context "when at multiple schools in a school group" do
-        subject { create(:vacancy, :at_multiple_schools, organisations: [school, school2]) }
-
-        let(:trust) { create(:trust, schools: [school, school2]) }
-        let(:school2) { create(:school, geopoint: "POINT(5 6)") }
-        let(:geocoding) { instance_double(Geocoding) }
-
-        before do
-          allow(Geocoding).to receive(:new).with([3.0, 4.0]).and_return(geocoding)
-          allow(geocoding).to receive(:postcode_from_coordinates).and_return("New postcode")
-          subject.set_postcode_from_mean_geolocation
-        end
-
-        it "sets postcode_from_mean_geolocation to the output of Geocoding#postcode_from_coordinates, using the mean of the two geolocations" do
-          expect(subject.postcode_from_mean_geolocation).to eq("New postcode")
-        end
-      end
-    end
-  end
-
   context "publishers can set certain attributes under certain conditions" do
     context "when the vacancy is at the central office of a trust" do
       subject { build_stubbed(:vacancy, :central_office) }
