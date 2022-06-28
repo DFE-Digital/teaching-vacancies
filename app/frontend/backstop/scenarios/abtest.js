@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const testConfig = fs.readFileSync('./config/ab_tests.yml', 'utf8');
 
-const pages = YAML.parse(testConfig).visual;
+const pages = YAML.parse(testConfig).test;
 
 module.exports.hasVariants = (page) => Object.keys(pages).find(p => p === page);
 
