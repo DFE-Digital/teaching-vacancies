@@ -28,7 +28,6 @@
     "selfsigned": "^1.10.8"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.18.2",
     "backstopjs": "^6.1.0",
     "concurrently": "^7.2.1",
     "dotenv": "^16.0.1",
