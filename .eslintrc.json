@@ -34,5 +34,6 @@
         "no-unused-expressions": ["error", { "allowTernary": true }],
         "no-param-reassign": [2, { "props": false }]
     },
+    "ignorePatterns": ["app/assets/javascript/packs/*.js"],
     "root": true
 }

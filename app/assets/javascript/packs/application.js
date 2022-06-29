@@ -4,7 +4,7 @@ import Rails from 'rails-ujs';
 
 import { initAll } from 'govuk-frontend';
 
-import 'src/application';
+import 'application';
 
 Rails.start();
 
