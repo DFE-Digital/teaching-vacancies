@@ -1,0 +1,208 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 12,
+  "links": [],
+  "panels": [
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 8,
+      "options": {
+        "content": "<h1 style=\"text-align:center;\">Teaching vacancies</h1>",
+        "mode": "html"
+      },
+      "pluginVersion": "7.5.12",
+      "timeFrom": null,
+      "timeShift": null,
+      "type": "text"
+    },
+    {
+      "aliasColors": {
+        "5xx errors": "red",
+        "All requests": "blue"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "fill": 8,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 20,
+        "w": 24,
+        "x": 0,
+        "y": 2
+      },
+      "hiddenSeries": false,
+      "id": 5,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 0,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.12",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:256"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(rate(requests{app=\"teaching-vacancies-production\"}[$__rate_interval]))*60",
+          "interval": "",
+          "legendFormat": "All requests",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(rate(requests{app=\"teaching-vacancies-production\", status_range=\"5xx\"}[$__rate_interval]))*60",
+          "interval": "",
+          "legendFormat": "5xx errors",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:563",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:564",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "cacheTimeout": null,
+      "css_data": ".total {\nbackground-color:#5794f2;\n}\n.error {\nbackground-color:#f2495c;\n}\n.panel-text {\nfont-size: large;\n\n}\n.desc {\nfloat:left;\ntext-align: left;\n}\n.legend {\nfloat:right;\ntext-align: right;\n}",
+      "datasource": null,
+      "doInit": {},
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "format": "short",
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
+      "handleMetric": {},
+      "html_data": "<div class=\"panel-text\">\n    <div class=\"desc\">\n        Traffic in requests per minute\n    </div>\n    \n    <div class=\"legend\">\n        Legend:\n        <span class=\"total\">&nbsp;&nbsp;&nbsp;</span>&nbsp;Total requests\n        <span class=\"error\">&nbsp;&nbsp;&nbsp;</span>&nbsp;Errors (5xx)\n    </div>\n</div>",
+      "id": 13,
+      "interval": null,
+      "js_code": "",
+      "js_init_code": "",
+      "links": [],
+      "maxDataPoints": 3,
+      "nullPointMode": "connected",
+      "pluginVersion": "7.1.0",
+      "targets": [
+        {
+          "queryType": "randomWalk",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "type": "aidanmountford-html-panel"
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 27,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "BAT traffic",
+  "uid": "85ArdlD7k",
+  "version": 1
+}
