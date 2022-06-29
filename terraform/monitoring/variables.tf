@@ -11,4 +11,6 @@ locals {
   secrets                    = yamldecode(data.aws_ssm_parameter.monitoring_secrets.value)
   alertmanager_slack_url     = local.secrets["alertmanager_slack_url"]
   alertmanager_slack_channel = "twd_tv_dev"
+  grafana_dashboard_files    = fileset(path.module, "dashboards/*")
+  grafana_dashboard_strings  = [for f in local.grafana_dashboard_files : file(f)]
 }
