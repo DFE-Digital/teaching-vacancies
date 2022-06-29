@@ -9,6 +9,7 @@
   }
 
   &__heading {
+    padding-bottom: govuk-spacing(2);
     position: relative;
 
     .govuk-heading-m {
@@ -19,7 +20,6 @@
   &__remove {
     box-shadow: none;
     display: none;
-    margin-bottom: govuk-spacing(2);
     padding: govuk-spacing(1) 0;
     position: relative;
 
@@ -122,22 +122,6 @@
       &:last-of-type {
         border-bottom: 0;
         margin-bottom: 0;
-      }
-    }
-  }
-
-  button[type='submit'] {
-    bottom: 0;
-    position: sticky;
-    width: 100%;
-  }
-}
-
-.js-enabled {
-  .filters-component {
-    button[type='submit'] {
-      @include govuk-media-query($from: desktop) {
-        display: none;
       }
     }
   }
