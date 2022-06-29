@@ -12,7 +12,7 @@ let scenarios = [
   ...require('./scenarios/jobseeker')
 ];
 
-// map variants on pages that have abtests running 
+// map variants on pages that have abtests running
 const { hasVariants, mapVariants } = require('./scenarios/abtest');
 
 scenarios = scenarios.map((scenario) => hasVariants(scenario.label) ? mapVariants(scenario) : scenario).flat();
@@ -54,7 +54,7 @@ module.exports = {
   "paths": {
     "bitmaps_reference": "visual_snapshots",
     "bitmaps_test": "visual_regression/bitmaps_test",
-    "engine_scripts": "app/frontend/backstop/lib",
+    "engine_scripts": "backstop/lib",
     "html_report": "visual_regression/html_report",
     "ci_report": "visual_regression/ci_report"
   },

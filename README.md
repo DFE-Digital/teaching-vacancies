@@ -181,7 +181,7 @@ VISUAL_TEST_PUBLISHER_PASSWORD=xxx
 
 ### Usage
 
-If you have never run tests before, ensure you have created an `app/frontend/backstop/lib/.tmp` folder for authentication tokens. (TODO could do with automating)
+If you have never run tests before, ensure you have created an `backstop/lib/.tmp` folder for authentication tokens. (TODO could do with automating)
 
 ```bash
 # Create reference snapshot images
