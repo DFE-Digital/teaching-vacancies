@@ -43,7 +43,7 @@ module ApplicationHelper
   end
 
   def phase_banner_text
-    if Rails.env == "sandbox"
+    if Rails.configuration.app_role.sandbox?
       "sandbox"
     else
       "beta"

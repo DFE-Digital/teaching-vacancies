@@ -53,14 +53,16 @@ RSpec.describe ApplicationHelper do
 
   describe "#phase_banner_text" do
     subject { helper.phase_banner_text }
-    let(:environment) { "development" }
+    let(:sandbox) { false }
 
-    before { allow(Rails).to receive(:env).and_return(environment) }
+    before do
+      allow(Rails.configuration.app_role).to receive(:sandbox?).and_return(sandbox)
+    end
 
     it { is_expected.to eq("beta") }
 
     context "sandbox" do
-      let(:environment) { "sandbox" }
+      let(:sandbox) { true }
       it { is_expected.to eq("sandbox") }
     end
   end
