@@ -25,7 +25,7 @@
     "leaflet-gesture-handling": "^1.2.2",
     "leaflet.markercluster": "^1.5.3",
     "rails-ujs": "^5.2.8",
-    "selfsigned": "^1.10.8"
+    "selfsigned": "^2.0.1"
   },
   "devDependencies": {
     "backstopjs": "^6.1.0",
