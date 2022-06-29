@@ -19,9 +19,9 @@
       }
     },
     {
-      "label": "Webpack dev server",
+      "label": "Asset build (JS)",
       "type": "shell",
-      "command": "./bin/webpack-dev-server",
+      "command": "yarn build --watch",
       "presentation": {
         "reveal": "always",
         "panel": "shared"
@@ -67,7 +67,7 @@
       "label": "TV: Run all services",
       "dependsOn": [
         "Rails",
-        "Webpack dev server",
+        "Asset build (JS)",
         "Asset build (CSS)",
         "Sidekiq"
       ],

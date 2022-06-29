@@ -3,7 +3,9 @@ import * as Sentry from '@sentry/browser';
 import 'core-js/modules/es.weak-map';
 import 'core-js/modules/es.weak-set';
 import '@stimulus/polyfills';
+import { initAll } from 'govuk-frontend';
 import { Application } from '@hotwired/stimulus';
+import Rails from 'rails-ujs';
 
 // view components
 import FiltersController from './components/filters_component/filters_component';
@@ -50,3 +52,6 @@ application.register('show-hidden-content', ShowHiddenContentController);
 application.register('tracked-link', TrackedLinkController);
 application.register('upload-documents', UploadDocumentsController);
 application.register('utils', UtilsController);
+
+Rails.start();
+initAll();

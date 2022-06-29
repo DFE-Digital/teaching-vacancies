@@ -8,13 +8,11 @@ Rails.application.configure do
   config.content_security_policy do |policy|
     policy.default_src :self
 
-    development_env_additional_connect_src = %w[http://localhost:3035 ws://localhost:3035] if Rails.env.development?
     policy.connect_src :self,
                        "https://api.postcodes.io",
                        "https://*.sentry.io",
                        "https://*.google-analytics.com",
-                       "https://*.analytics.google.com",
-                       *development_env_additional_connect_src # Allow using webpack-dev-server in development
+                       "https://*.analytics.google.com"
 
     policy.font_src    :self,
                        :data

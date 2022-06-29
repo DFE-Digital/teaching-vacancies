@@ -21,4 +21,4 @@ html.govuk-template.app-html-class lang="en"
         = yield
       = content_for :after_main
     = govuk_footer
-    = javascript_pack_tag "application"
+    = javascript_include_tag "application", defer: true
