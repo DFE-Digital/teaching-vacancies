@@ -24,4 +24,5 @@ html.govuk-template.app-html-class lang="en"
       = content_for :after_main
     = render "layouts/footer"
     = render "layouts/cookies_banner"
+    = javascript_include_tag "basic", defer: true
     = javascript_include_tag "application", defer: true

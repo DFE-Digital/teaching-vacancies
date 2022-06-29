@@ -45,7 +45,8 @@
     "yaml": "^2.1.1"
   },
   "scripts": {
-    "build": "esbuild app/assets/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets --target=es6",
+    "prebuild": "esbuild app/assets/javascript/basic.js --bundle --outdir=app/assets/builds --public-path=assets --target=es5,ie11",
+    "build": "esbuild app/assets/javascript/application.js --bundle --sourcemap --outdir=app/assets/builds --public-path=assets --target=es6",
     "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules --quiet-deps",
     "test": "concurrently \"yarn run js:test\" \"yarn run js:lint\" \"yarn run sass:lint\"",
     "js:test": "jest",
