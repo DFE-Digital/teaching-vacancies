@@ -11,6 +11,7 @@ gem "activerecord", RAILS_VERSION
 gem "activestorage", RAILS_VERSION
 gem "activesupport", RAILS_VERSION
 gem "cssbundling-rails"
+gem "jsbundling-rails"
 gem "propshaft"
 gem "railties", RAILS_VERSION
 
@@ -66,7 +67,6 @@ gem "skylight"
 gem "slim-rails"
 gem "validate_url"
 gem "view_component"
-gem "webpacker"
 gem "wicked"
 gem "xml-sitemap"
 gem "zendesk_api"

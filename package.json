@@ -11,7 +11,6 @@
   ],
   "dependencies": {
     "@hotwired/stimulus": "^3.0.1",
-    "@rails/webpacker": "^5.4.2",
     "@sentry/browser": "^7.1.1",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^2.0.4",
@@ -20,34 +19,41 @@
     "core-js": "^3.23.1",
     "govuk-frontend": "^4.1.0",
     "jquery": "^3.5.0",
-    "jsdom": "^20.0.0",
     "leaflet": "^1.8.0",
     "leaflet-gesture-handling": "^1.2.2",
     "leaflet.markercluster": "^1.5.3",
-    "rails-ujs": "^5.2.8",
-    "selfsigned": "^1.10.8"
+    "rails-ujs": "^5.2.8"
   },
   "devDependencies": {
+    "@babel/core": "^7.18.6",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-object-rest-spread": "^7.18.6",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/plugin-transform-destructuring": "^7.18.6",
+    "@babel/plugin-transform-regenerator": "^7.18.6",
+    "@babel/plugin-transform-runtime": "^7.18.6",
+    "@babel/preset-env": "^7.18.6",
+    "babel-plugin-dynamic-import-node": "^2.3.3",
+    "babel-plugin-macros": "^3.1.0",
     "backstopjs": "^6.1.0",
     "concurrently": "^7.2.1",
     "dotenv": "^16.0.1",
+    "esbuild": "^0.14.47",
     "eslint": "^8.17.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.3",
     "jest": "^28.1.1",
     "jest-environment-jsdom": "^28.1.1",
+    "jsdom": "^20.0.0",
     "postcss": "^8.4.8",
     "sass": "^1.53.0",
     "stylelint": "^14.9.1",
     "stylelint-config-sass-guidelines": "^9.0.1",
     "stylelint-config-standard": "^26.0.0",
-    "webpack": "^4.44.2",
-    "webpack-dev-server": "^3.11.2",
     "yaml": "^2.1.1"
   },
   "scripts": {
-    "server": "rails s",
-    "dev": "./bin/webpack-dev-server",
+    "build": "esbuild app/assets/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets --target=es6",
     "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules --quiet-deps",
     "test": "concurrently \"yarn run js:test\" \"yarn run js:lint\" \"yarn run sass:lint\"",
     "js:test": "jest",
@@ -68,9 +74,5 @@
       "<rootDir>/app/assets/javascript/lib/polyfill/*"
     ],
     "testEnvironment": "jest-environment-jsdom"
-  },
-  "resolutions": {
-    "serialize-javascript": "^3.1.0",
-    "webpack-dev-server/**/selfsigned": "^1.10.8"
   }
 }
