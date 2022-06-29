@@ -7,7 +7,7 @@ module "prometheus_all" {
   paas_exporter_username       = local.secrets["paas_exporter_username"]
   paas_exporter_password       = local.secrets["paas_exporter_password"]
   grafana_admin_password       = local.secrets["grafana_admin_password"]
-  grafana_json_dashboards      = [file("${path.module}/config/paas_dashboard.json")]
+  grafana_json_dashboards      = fileset(path.module, "dashboards/*")
   alert_rules                  = file("${path.module}/config/alert.rules.yml")
   alertmanager_slack_url       = local.alertmanager_slack_url
   alertmanager_slack_channel   = local.alertmanager_slack_channel
