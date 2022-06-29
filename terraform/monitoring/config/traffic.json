@@ -32,7 +32,7 @@
       },
       "id": 8,
       "options": {
-        "content": "<h1 style=\"text-align:center;\">Teaching vacancies</h1>",
+        "content": "<h1 style=\"text-align:center;\">Teaching Vacancies</h1>",
         "mode": "html"
       },
       "pluginVersion": "7.5.12",
@@ -202,7 +202,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Teaching vacancies traffic",
+  "title": "Teaching Vacancies traffic",
   "uid": "85ArdlD7k",
   "version": 1
 }
