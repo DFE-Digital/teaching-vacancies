@@ -15,7 +15,7 @@ RSpec.describe SearchableCollectionComponent, type: :component do
 
   let(:base) do
     {
-      label_text: "search colllection",
+      text: { aria_label: "search collection" },
       collection: form.govuk_collection_check_boxes(:attributes,
                                                     collection,
                                                     :first,
@@ -52,7 +52,7 @@ RSpec.describe SearchableCollectionComponent, type: :component do
     end
 
     it "has aria label to describe collection to search" do
-      expect(inline_component.css(".searchable-collection-component__search-input").attribute("aria-label").value).to eq("search colllection")
+      expect(inline_component.css(".govuk-input").attribute("aria-label").value).to eq("search collection")
     end
 
     it "is scrollable" do

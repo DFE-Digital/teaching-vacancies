@@ -1,12 +1,12 @@
 class SearchableCollectionComponent < ApplicationComponent
   attr_accessor :collection, :collection_count, :threshold, :border, :label_text, :options, :scrollable
 
-  def initialize(collection:, collection_count:, options: {}, label_text: nil, classes: [], html_attributes: {})
+  def initialize(collection:, collection_count:, options: {}, text: {}, classes: [], html_attributes: {})
     super(classes: classes, html_attributes: html_attributes.merge({ data: { controller: "searchable-collection" } }))
 
     @collection = collection
     @threshold = options[:threshold] || 10
-    @label_text = label_text
+    @text = text
     @border = options[:border] || false
     @collection_count = collection_count
     @scrollable = options[:scrollable] || searchable?

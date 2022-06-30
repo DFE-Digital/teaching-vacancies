@@ -11,6 +11,7 @@ import Rails from 'rails-ujs';
 import FiltersController from './components/filters_component/filters_component';
 import MapController from './components/map_component/map_component';
 import MapSidebarController from './components/map_component/sidebar';
+import SearchableCollectionComponent from './components/searchable_collection_component/searchable_collection';
 
 // js components
 import AutocompleteController from './js_components/autocomplete/autocomplete';
@@ -48,6 +49,7 @@ application.register('manage-qualifications', ManageQualificationsController);
 application.register('map', MapController);
 application.register('map-sidebar', MapSidebarController);
 application.register('panel', PanelController);
+application.register('searchable-collection', SearchableCollectionComponent);
 application.register('show-hidden-content', ShowHiddenContentController);
 application.register('tracked-link', TrackedLinkController);
 application.register('upload-documents', UploadDocumentsController);
