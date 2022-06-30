@@ -17,6 +17,7 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
   end
 
   def check_your_email
+    flash.delete(:notice)
     @resource = Jobseeker.find(session[:jobseeker_id])
   end
 
