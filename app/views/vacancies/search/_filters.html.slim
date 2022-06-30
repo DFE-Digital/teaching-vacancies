@@ -58,7 +58,7 @@ ruby:
     - filters_component.remove_filter_links do |rb|
       - filter_types.each do |filter_type|
         - rb.group(**filter_type.merge(remove_filter_link: { url_helper: :jobs_path, params: vacancies_search.remove_filter_params }))
-    - filters_component.group key: "job_roles", component: f.govuk_collection_check_boxes(:job_roles, form.job_role_options, :first, :last, small: true, legend: { text: t("jobs.filters.job_roles") }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
+    - filters_component.group key: "job_roles", component: f.govuk_collection_check_boxes(:job_roles, form.job_role_options, :first, :last, small: true, legend: { text: t("jobs.filters.job_roles") }, hint: nil)
     - filters_component.group key: "subjects", title: t("jobs.filters.subject"), component: searchable_collection(collection: f.govuk_collection_check_boxes(:subjects,
         SUBJECT_OPTIONS,
         :first,
@@ -66,12 +66,11 @@ ruby:
         :last,
         small: true,
         legend: nil,
-        hint: nil,
-        form_group: { data: { action: "change->form#submitListener" } }),
+        hint: nil),
         collection_count: SUBJECT_OPTIONS.count,
         options: { scrollable: true },
         label_text: t("jobs.filters.subject"))
-    - filters_component.group key: "ect_suitable", component: f.govuk_collection_check_boxes(:job_roles, form.ect_suitable_options, :first, :last, small: true, legend: { text: t("jobs.filters.ect_suitable") }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
-    - filters_component.group key: "send_responsible", component: f.govuk_collection_check_boxes(:job_roles, form.send_responsible_options, :first, :last, small: true, legend: { text: t("jobs.filters.send_responsible") }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
-    - filters_component.group key: "education_phase", component: f.govuk_collection_check_boxes(:phases, form.phase_options, :first, :last, small: true, legend: { text: t("jobs.filters.phases") }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
-    - filters_component.group key: "working_patterns", component: f.govuk_collection_check_boxes(:working_patterns, form.working_pattern_options, :first, :last, small: true, legend: { text: t("jobs.filters.working_patterns") }, hint: nil, form_group: { data: { action: "change->form#submitListener" } })
+    - filters_component.group key: "ect_suitable", component: f.govuk_collection_check_boxes(:job_roles, form.ect_suitable_options, :first, :last, small: true, legend: { text: t("jobs.filters.ect_suitable") }, hint: nil)
+    - filters_component.group key: "send_responsible", component: f.govuk_collection_check_boxes(:job_roles, form.send_responsible_options, :first, :last, small: true, legend: { text: t("jobs.filters.send_responsible") }, hint: nil)
+    - filters_component.group key: "education_phase", component: f.govuk_collection_check_boxes(:phases, form.phase_options, :first, :last, small: true, legend: { text: t("jobs.filters.phases") }, hint: nil)
+    - filters_component.group key: "working_patterns", component: f.govuk_collection_check_boxes(:working_patterns, form.working_pattern_options, :first, :last, small: true, legend: { text: t("jobs.filters.working_patterns") }, hint: nil)
