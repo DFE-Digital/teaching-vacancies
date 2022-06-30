@@ -379,7 +379,7 @@ en:
         name: Name
         organisation: Organisation
         relationship: Relationship to applicant
-        phone_number: Phone number
+        phone_number_html: Phone number (optional<span class='govuk-visually-hidden'> field</span>)</span>
       jobseekers_job_application_equal_opportunities_form:
         age_options:
           under_twenty_five: Under 25
@@ -672,6 +672,8 @@ en:
       jobseekers_job_application_declarations_form:
         close_relationships: Do you have any family or close relationship with people within %{organisation}?
         right_to_work_in_uk: Do you have the right to work in the UK?
+      jobseekers_job_application_details_reference_form:
+        phone_number: Phone number
       jobseekers_job_application_employment_history_form:
         employment_history_section_completed: Have you completed this section?
       jobseekers_job_application_equal_opportunities_form:
