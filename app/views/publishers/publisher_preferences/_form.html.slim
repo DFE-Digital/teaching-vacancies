@@ -14,7 +14,7 @@
           classes: "checkbox-label__bold"),
           collection_count: current_organisation.schools.not_universities.not_closed.order(:name).count,
           options: { border: true },
-          label_text: "search organisation schools")
+          text: { aria_label: "search organisation schools" })
 
   - if current_organisation.schools_outside_local_authority.not_closed.any?
     = f.govuk_check_boxes_fieldset :school_ids_fieldset,
@@ -32,7 +32,7 @@
           classes: "checkbox-label__bold"),
           collection_count: current_organisation.schools_outside_local_authority.not_closed.order(:name).count,
           options: { border: true },
-          label_text: "search schools outside local authority")
+          text: { aria_label: "search schools outside local authority" })
   - else
     h3.govuk-heading-s = t(".schools_out", organisation: current_organisation.name)
     p.govuk-body = t(".schools_out_hint_html", email: govuk_mail_to(t("help.email"), t("help.email")))

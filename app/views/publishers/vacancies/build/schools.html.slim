@@ -27,7 +27,7 @@
             classes: "checkbox-label__bold govuk-!-margin-top-2"),
             collection_count: @school_options.count,
             options: { border: true },
-            label_text: "search schools")
+            text: { aria_label: "search schools" })
         - else
           = searchable_collection(collection: f.govuk_collection_radio_buttons(:organisation_ids,
             @school_options,
@@ -39,7 +39,7 @@
             classes: "checkbox-label__bold govuk-!-margin-top-2"),
             collection_count: @school_options.count,
             options: { border: true },
-            label_text: "search schools")
+            text: { aria_label: "search schools" })
 
       div class="govuk-!-margin-top-6"
         = render "publishers/vacancies/vacancy_form_partials/submit", f: f

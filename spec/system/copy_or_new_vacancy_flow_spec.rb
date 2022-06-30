@@ -74,7 +74,7 @@ RSpec.describe "Copy-or-new vacancy flow" do
         page.find("label", text: "Copy an existing job listing").click
         click_on "Continue"
 
-        fill_in class: "searchable-collection-component__search-input", with: original_vacancy.job_title[0..5]
+        fill_in class: "govuk-input", with: original_vacancy.job_title[0..5]
         page.find("label.govuk-radios__label", text: original_vacancy.job_title, match: :first).click
         click_on "Continue"
 

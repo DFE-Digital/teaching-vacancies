@@ -69,7 +69,7 @@ ruby:
         hint: nil),
         collection_count: SUBJECT_OPTIONS.count,
         options: { scrollable: true },
-        label_text: t("jobs.filters.subject"))
+        text: { aria_label: t("jobs.filters.subject"), placeholder: t("helpers.hint.publishers_job_listing_job_details_form.subjects_placeholder") })
     - filters_component.group key: "ect_suitable", component: f.govuk_collection_check_boxes(:job_roles, form.ect_suitable_options, :first, :last, small: true, legend: { text: t("jobs.filters.ect_suitable") }, hint: nil)
     - filters_component.group key: "send_responsible", component: f.govuk_collection_check_boxes(:job_roles, form.send_responsible_options, :first, :last, small: true, legend: { text: t("jobs.filters.send_responsible") }, hint: nil)
     - filters_component.group key: "education_phase", component: f.govuk_collection_check_boxes(:phases, form.phase_options, :first, :last, small: true, legend: { text: t("jobs.filters.phases") }, hint: nil)
