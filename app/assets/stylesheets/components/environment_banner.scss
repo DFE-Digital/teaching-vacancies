@@ -1,4 +1,4 @@
-@import 'base_component';
+@import 'base';
 
 @mixin striped-banner($background-color, $tint: 10) {
   $stripe-color: govuk-tint($background-color, $tint);

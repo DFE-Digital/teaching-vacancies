@@ -1,5 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
-import Map from './map';
+import Map from './leaflet';
 import Cluster from './cluster';
 import MarkerData from './marker/service';
 import template from './marker/template';
