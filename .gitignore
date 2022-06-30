@@ -17,8 +17,6 @@
 
 /node_modules
 /public/assets
-/public/packs
-/public/packs-test
 /yarn-error.log
 /vendor/cache
 yarn-debug.log*

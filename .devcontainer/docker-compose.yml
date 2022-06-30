@@ -10,7 +10,6 @@ services:
       - ..:/workspace:cached
       - bundle:/usr/local/bundle
       - node_modules:/workspace/node_modules
-      - packs:/workspace/public/packs
       - tmp:/workspace/tmp
     working_dir: /workspace
     command: sleep infinity
@@ -66,7 +65,5 @@ volumes:
   # Caches for Bundler/NPM/Yarn-installed dependencies to persist across rebuilds and install faster
   bundle:
   node_modules:
-  # Tempfile and packs directories are IO-heavy and we don't need to have their contents
-  # replicated on host
+  # Tempfile directory is IO-heavy and we don't need to have its contents replicated on host
   tmp:
-  packs:
