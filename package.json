@@ -1,5 +1,6 @@
 {
   "name": "teaching-vacancies",
+  "type": "module",
   "private": true,
   "engine": {
     "node": ">=16.0.0"
@@ -30,6 +31,7 @@
     "concurrently": "^7.2.2",
     "dotenv": "^16.0.1",
     "esbuild": "^0.14.47",
+    "esbuild-plugin-babel": "^0.2.3",
     "eslint": "^8.18.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
@@ -44,7 +46,7 @@
     "yaml": "^2.1.1"
   },
   "scripts": {
-    "build": "esbuild app/assets/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets --target=es6",
+    "build": "node esbuild.config.js",
     "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules --quiet-deps",
     "test": "concurrently \"yarn run js:test\" \"yarn run js:lint\" \"yarn run sass:lint\"",
     "js:test": "jest",
@@ -58,7 +60,9 @@
     "postvisual:test:approve": "node backstop/lib/clean.js"
   },
   "babel": {
-    "presets": ["@babel/preset-env"]
+    "presets": [
+      "@babel/preset-env"
+    ]
   },
   "jest": {
     "testMatch": [
