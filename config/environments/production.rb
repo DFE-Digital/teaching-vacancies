@@ -45,7 +45,7 @@ Rails.application.configure do
 
   config.cache_store = :redis_cache_store, { url: config.redis_cache_url, pool_size: ENV.fetch("RAILS_MAX_THREADS", 5) }
 
-  # This will affect assets in /public, /packs e.g. Webpack assets to be cached in Cloudfront
+  # This will affect assets in /public to be cached in Cloudfront
   config.public_file_server.headers = { "Cache-Control" => "public, max-age=#{1.year.seconds}" }
 
   # Use a real queuing backend for Active Job
