@@ -74,6 +74,7 @@
         margin-top: govuk-spacing(1);
         padding: govuk-spacing(1);
         text-align: left;
+        white-space: nowrap;
 
         &::after {
           height: 0;
