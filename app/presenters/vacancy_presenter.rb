@@ -20,7 +20,7 @@ class VacancyPresenter < BasePresenter
   end
 
   def how_to_apply
-    simple_format(model.how_to_apply) if model.how_to_apply.present?
+    simple_format(fix_bullet_points(model.how_to_apply)) if model.how_to_apply.present?
   end
 
   def benefits
