@@ -4,7 +4,7 @@
 
 import { Application } from '@hotwired/stimulus';
 
-import MapController from './map_component';
+import MapController from './map';
 
 let application;
 
@@ -34,7 +34,7 @@ beforeAll(() => {
     </div>
   </div>`;
 
-  jest.mock('./map_component', () => jest.fn().mockImplementation(() => ({
+  jest.mock('./map', () => jest.fn().mockImplementation(() => ({
     addLayer: jest.fn(),
     addMarker: jest.fn(),
   })));

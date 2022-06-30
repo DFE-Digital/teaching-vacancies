@@ -8,10 +8,10 @@ import { Application } from '@hotwired/stimulus';
 import Rails from 'rails-ujs';
 
 // view components
-import FiltersController from './components/filters_component/filters_component';
-import MapController from './components/map_component/map_component';
-import MapSidebarController from './components/map_component/sidebar';
-import SearchableCollectionComponent from './components/searchable_collection_component/searchable_collection';
+import FiltersController from './components/filters/filters';
+import MapController from './components/map/map';
+import MapSidebarController from './components/map/sidebar';
+import SearchableCollectionComponent from './components/searchable_collection/searchable_collection';
 
 // js components
 import AutocompleteController from './js_components/autocomplete/autocomplete';
