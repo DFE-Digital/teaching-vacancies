@@ -13,7 +13,7 @@ const watch = process.argv[process.argv.length - 1] == '--watch';
 
 esbuild
     .build({
-        entryPoints: ['app/assets/javascript/application.js'],
+        entryPoints: ['app/assets/javascript/application.js', 'app/assets/javascript/turbo.js'],
         bundle: true,
         outdir: 'app/assets/builds',
         publicPath: 'assets',

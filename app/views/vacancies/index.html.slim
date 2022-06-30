@@ -5,9 +5,11 @@
 - content_for :breadcrumbs do
   = govuk_breadcrumbs breadcrumbs: organisation_landing_page_breadcrumbs(@vacancies_search.organisation_slug) if @vacancies_search.organisation_slug.present?
 
+- content_for :turbo, true
+
 = render "vacancies/search/page_title_and_description", landing_page: @landing_page
 
-h1 class="govuk-heading-l" role="heading" aria-level="1"
+h1 class="govuk-heading-l" role="heading" aria-level="1" aria-live="assertive"
   = search_results_heading(vacancies_search: @vacancies_search, landing_page: @landing_page)
 
 - if @vacancies_search.active_criteria? && @vacancies.count.positive?
@@ -27,7 +29,7 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
       = render "vacancies/search/open_filters_button", form: @form
 
       - if @show_map
-        #map-results
+        #map-results data-turbo="false"
           = map(markers: @vacancies_search.markers,
                 polygon: @vacancies_search.location_search.geojson_polygon,
                 point: @vacancies_search.location_search.geojson_point,
