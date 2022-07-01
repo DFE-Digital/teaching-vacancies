@@ -338,7 +338,6 @@ en:
       extend_link_text: Extend deadline
       external_notice: This job listing was imported from your organisation's recruitment system and cannot be changed on Teaching Vacancies.
       external_tag: Imported
-      heading_html: "%{email} <span class='govuk-!-font-weight-regular'>- %{organisation}</span>"
       expired:
         expired_on: Listing ended
         no_jobs:
