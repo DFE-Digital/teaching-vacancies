@@ -74,7 +74,6 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       visit new_publisher_session_path
 
       expect(page).to have_content(organisation.name)
-      expect(page).to have_content(dsi_email_address)
       expect(current_path).to eq(organisation_path)
     end
 
@@ -157,7 +156,6 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       visit new_publisher_session_path
 
       expect(page).to have_content(organisation.name)
-      expect(page).to have_content(dsi_email_address)
       expect(current_path).to eq(organisation_path)
     end
   end
@@ -183,7 +181,6 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
         sign_in_publisher
 
         expect(page).to have_content(organisation.name)
-        expect(page).to have_content(dsi_email_address)
         expect(current_path).to eq(organisation_path)
       end
     end

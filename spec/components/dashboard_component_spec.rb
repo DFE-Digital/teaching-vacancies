@@ -5,11 +5,10 @@ RSpec.describe DashboardComponent, type: :component do
   let(:sort) { Publishers::VacancySort.new(organisation, selected_type).update(sort_by: "job_title") }
   let(:selected_type) { "published" }
   let(:publisher_preference) { create(:publisher_preference, publisher: publisher, organisation: organisation) }
-  let(:email) { "publisher@example.net" }
 
   subject do
     described_class.new(
-      organisation: organisation, sort: sort, selected_type: selected_type, publisher_preference: publisher_preference, email: email,
+      organisation: organisation, sort: sort, selected_type: selected_type, publisher_preference: publisher_preference,
     )
   end
 

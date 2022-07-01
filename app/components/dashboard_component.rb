@@ -1,12 +1,11 @@
 class DashboardComponent < ApplicationComponent
   include DatesHelper
 
-  def initialize(organisation:, sort:, selected_type:, publisher_preference:, email:, classes: [], html_attributes: {})
+  def initialize(organisation:, sort:, selected_type:, publisher_preference:, classes: [], html_attributes: {})
     super(classes: classes, html_attributes: html_attributes)
     @organisation = organisation
     @sort = sort
     @publisher_preference = publisher_preference
-    @email = email
     @vacancy_types = %w[published expired pending draft awaiting_feedback]
     @selected_type = @vacancy_types.include?(selected_type) ? selected_type : "published"
 

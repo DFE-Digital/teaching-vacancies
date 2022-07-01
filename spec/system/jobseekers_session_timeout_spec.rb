@@ -8,7 +8,6 @@ RSpec.describe "Jobseekers session timeout" do
 
   it "expires after the desired timeout period" do
     visit jobseekers_saved_jobs_path
-    expect(page).to have_content(jobseeker.email)
 
     travel(timeout_period + 10.seconds) do
       visit jobseekers_saved_jobs_path
@@ -22,13 +21,11 @@ RSpec.describe "Jobseekers session timeout" do
 
   it "doesn't expire before the desired timeout period" do
     visit jobseekers_saved_jobs_path
-    expect(page).to have_content(jobseeker.email)
 
     travel(timeout_period - 1.day) do
       visit jobseekers_saved_jobs_path
 
       expect(current_path).to eq(jobseekers_saved_jobs_path)
-      expect(page).to have_content(jobseeker.email)
     end
   end
 end
