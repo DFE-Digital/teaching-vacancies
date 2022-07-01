@@ -22,6 +22,7 @@
               - row.key text: t("helpers.label.jobseekers_job_application_details_reference_form.email")
               - row.value text: reference.email
 
-            - summary_list.row do |row|
-              - row.key text: t("helpers.label.jobseekers_job_application_details_reference_form.phone_number")
-              - row.value text: reference.phone_number
+            - if reference.phone_number?
+              - summary_list.row do |row|
+                - row.key text: t("helpers.legend.jobseekers_job_application_details_reference_form.phone_number")
+                - row.value text: reference.phone_number
