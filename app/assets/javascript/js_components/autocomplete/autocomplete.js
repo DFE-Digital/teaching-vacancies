@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 import accessibleAutocomplete from 'accessible-autocomplete';
 
-import api from '../../lib/api';
+import api from './api';
 
 const SHOW_SUGGESTIONS_THRESHOLD = 3;
 const SUGGESTIONS_CLASSNAME = 'autocomplete__suggestions';
