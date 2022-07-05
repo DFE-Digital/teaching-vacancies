@@ -4,13 +4,13 @@
 
 ### Build and deploy - GitHub Actions
 
-The deployments to all environments share the same and simplified workflow. The deployment to review app (via Pull Request), staging, production, and qa go through the CI/CD pipeline. To deploy to `Dev` environment, a `git push local_branch_name:dev -f` is required to commence deployment. This will trigger the same workflows as used in deploying to other environment.
+The deployments to all environments share the same and simplified workflow. The deployment to review app (via Pull Request), staging, production, qa, and sandbox go through the CI/CD pipeline. To deploy to `Dev` environment, a `git push local_branch_name:dev -f` is required to commence deployment. This will trigger the same workflows as used in deploying to other environment.
 
 Once the PR has been merged to main or a `deploy`tag applied to Review app or `git push` to dev branch:-
 
 The GitHub actions workflow [build_and_deploy.yml](../.github/workflows/build_and_deploy.yml) performs these steps:
 
-- Builds and tags a Docker image from code in the `main` (staging, prod, and qa environments), `Dev` or `review app` branch
+- Builds and tags a Docker image from code in the `main` (staging, prod, qa and sandbox environments), `Dev` or `review app` branch
 - Tags the Docker image with the commit SHA as the tag
 - Logs in to Github's container registry as the service account `twd-tv-ci`
 - Pushes the image to GitHub packages, after it has been scanned by `Snyk` for vulnerabilities

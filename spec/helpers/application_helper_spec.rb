@@ -50,4 +50,20 @@ RSpec.describe ApplicationHelper do
       expect(helper.recaptcha).to eq(captcha)
     end
   end
+
+  describe "#phase_banner_text" do
+    subject { helper.phase_banner_text }
+    let(:sandbox) { false }
+
+    before do
+      allow(Rails.configuration.app_role).to receive(:sandbox?).and_return(sandbox)
+    end
+
+    it { is_expected.to eq("beta") }
+
+    context "sandbox" do
+      let(:sandbox) { true }
+      it { is_expected.to eq("sandbox") }
+    end
+  end
 end

@@ -74,6 +74,13 @@ qa: ## qa
 		$(eval var_file=$(env))
 		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
 
+.PHONY: sandbox
+sandbox: ## sandbox
+		$(eval env=sandbox)
+		$(eval space=teaching-vacancies-production)
+		$(eval var_file=$(env))
+		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
+
 ##@ Docker - build, tag, and push an image from local code. Requires Docker CLI
 
 .PHONY: build-local-image
@@ -103,7 +110,7 @@ plan-local-image: push-local-image terraform-app-plan## make passcode=MyPasscode
 .PHONY: deploy-local-image
 deploy-local-image: push-local-image terraform-app-plan## make passcode=MyPasscode <env> deploy-local-image # Requires active Docker Hub session (`docker login`)
 
-##@ Plan or apply changes to dev, review, staging, or production. Requires Terraform CLI
+##@ Plan or apply changes to dev, review, staging, sandbox or production. Requires Terraform CLI
 
 .PHONY: check-terraform-variables
 check-terraform-variables:
