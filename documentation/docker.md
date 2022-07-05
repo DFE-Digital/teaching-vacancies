@@ -38,14 +38,13 @@ RUN yarn install --check-files
 
 COPY . .
 
-RUN RAILS_ENV=production bundle exec rake webpacker:compile
+RUN RAILS_ENV=production bundle exec rake assets:precompile
 ```
 
 - Name the stage `builder` so that it can be built individually, and allow copying of files to the `production` stage
-- Run a Ruby bundle command, excluding `development` and `test`
+- Run a Ruby bundle command, excluding `development` and `test` dependencies
 - Copy any remaining files in the repo that were excluded by the [.dockerignore](../.dockerignore) file
-- Run a Ruby bundle command, first setting `RAILS_ENV` to staging:
-    - `bundle exec rake webpacker:compile`
+- Precompile application frontend assets
 
 Steps from the `production` stage worth highlighting:
 
