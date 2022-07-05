@@ -104,9 +104,24 @@ en:
     send_responsible:
       inclusion: Select whether the role has SEND responsibilities
   job_location_errors: &job_location_errors
-    job_location:
-      inclusion: Select the location where the job will be based
-      blank: Select the location where the job will be based
+    organisation_ids:
+      blank: Select the locations where the job will be based
+  job_title_errors: &job_title_errors
+    job_title:
+      blank: Enter a job title
+      too_short: Job title must be at least %{count} characters
+      too_long: Job title must not be more than %{count} characters
+      invalid_characters: Job title must not contain any HTML tags
+  key_stages_errors: &key_stages_errors
+    key_stages:
+      blank: Select at least one key stage
+  contract_type_errors: &contract_type_errors
+    contract_type:
+      inclusion: Select if the contract type is permanent, fixed term or parental leave cover
+    fixed_term_contract_duration:
+      blank: Enter the length of the fixed term contract
+    parental_leave_cover_contract_duration:
+      blank: Enter the length of the maternity or parental leave cover contract
   schools_errors: &schools_errors
     organisation_ids:
       blank: Select the schools where the job will be based
@@ -131,11 +146,23 @@ en:
     working_patterns:
       blank: Select a working pattern
       inclusion: Select a working pattern
+    working_patterns_details: 
+      blank: Enter part time details
   pay_package_errors: &pay_package_errors
+    actual_salary:
+      blank: Enter the actual salary
+      too_long: Actual salary must not be more than %{count} characters
+      invalid_characters: Actual salary must not contain any HTML tags
+    pay_scale:
+      blank: Enter the pay scale
+      too_long: Pay scale must not be more than %{count} characters
+      invalid_characters: Pay scale must not contain any HTML tags
     salary:
-      blank: Enter a salary
+      blank: Enter the full-time salary
       too_long: Salary must not be more than %{count} characters
       invalid_characters: Salary must not contain any HTML tags
+    salary_types:
+      invalid: Enter a salary
   important_dates_errors: &important_dates_errors
     expires_at:
       after: The closing date must be after the date the job will be listed
@@ -232,6 +259,9 @@ en:
         publishers/job_listing/job_location_form:
           attributes:
             <<: *job_location_errors
+        publishers/job_listing/job_title_form:
+          attributes:
+            <<: *job_title_errors
         publishers/job_listing/schools_form:
           attributes:
             <<: *schools_errors
@@ -241,6 +271,12 @@ en:
         publishers/job_listing/job_details_form:
           attributes:
             <<: *job_details_errors
+        publishers/job_listing/key_stages_form:
+          attributes:
+            <<: *key_stages_errors
+        publishers/job_listing/contract_type_form:
+          attributes:
+            <<: *contract_type_errors
         publishers/job_listing/working_patterns_form:
           attributes:
             <<: *working_patterns_errors

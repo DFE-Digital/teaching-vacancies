@@ -17,7 +17,7 @@ class VacancyFormPageHeadingComponent < ViewComponent::Base
   def page_title
     return t("jobs.edit_job_title", job_title: vacancy.job_title) if vacancy.published?
 
-    t("jobs.create_a_job_title", organisation: organisation_from_job_location)
+    # t("jobs.create_a_job_title", organisation: organisation_from_job_location)
   end
 
   def organisation_from_job_location

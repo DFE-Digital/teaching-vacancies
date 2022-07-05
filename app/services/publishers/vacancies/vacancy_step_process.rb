@@ -7,11 +7,7 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
     @session = session
 
     super(current_step, {
-      job_role: job_role_steps,
-      job_location: job_location_steps,
       job_details: job_details_steps,
-      working_patterns: %i[working_patterns],
-      pay_package: %i[pay_package],
       important_dates: %i[important_dates],
       applying_for_the_job: applying_for_the_job_steps,
       documents: %i[documents],
@@ -28,31 +24,12 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
 
   private
 
-  def job_role_steps
-    if vacancy.main_job_role == "sendco"
-      %i[job_role]
-    else
-      %i[job_role job_role_details]
-    end
-  end
-
-  def job_location_steps
-    return nil if organisation.school?
-
-    most_up_to_date_job_location = session[:job_location].presence || vacancy.job_location
-    if most_up_to_date_job_location == "central_office"
-      %i[job_location]
-    else
-      %i[job_location schools]
-    end
-  end
-
   def job_details_steps
-    if vacancy.allow_phase_to_be_set?
-      %i[education_phases job_details]
-    else
-      %i[job_details]
-    end
+    steps = %i[job_location job_role education_phases job_title key_stages subjects contract_type working_patterns pay_package]
+    steps.delete(:job_location) if organisation.school?
+    steps.delete(:education_phases) unless vacancy.allow_phase_to_be_set?
+
+    steps
   end
 
   def applying_for_the_job_steps

@@ -1,0 +1,14 @@
+- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.key_stages"))
+
+.govuk-grid-row
+  .govuk-grid-column-full
+    = vacancy_form_page_heading(vacancy, step_process)
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
+      = f.govuk_error_summary
+
+      = f.govuk_collection_check_boxes :key_stages, vacancy.possible_key_stages, :to_s, :to_s, legend: { size: "l" }
+
+      = render "publishers/vacancies/vacancy_form_partials/submit", f: f

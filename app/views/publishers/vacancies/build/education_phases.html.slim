@@ -19,7 +19,3 @@
         = f.govuk_radio_button :phase, :multiple_phases
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
-
-  - unless vacancy.published?
-    .govuk-grid-column-one-third
-      = render "steps"

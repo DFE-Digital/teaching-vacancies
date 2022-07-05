@@ -1,0 +1,27 @@
+- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.job_title"))
+
+= vacancy_form_page_heading(vacancy, step_process)
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
+      = f.govuk_error_summary
+
+      = f.govuk_text_area :job_title,
+        label: { size: "l" },
+        class: "govuk-input string required",
+        max_chars: 75,
+        required: true
+
+      = govuk_inset_text do
+        - link = vacancy.allow_phase_to_be_set? ? govuk_link_to(t("publishers.vacancies.build.job_details.phase_inset_text.link_text"), organisation_job_build_path(vacancy.id, :education_phases)) : ""
+        - if vacancy.one_phase?
+          = t("publishers.vacancies.build.job_details.phase_inset_text.one_phase_html", phase: vacancy.readable_phases.first.humanize, link: link)
+        - else
+          = t("publishers.vacancies.build.job_details.phase_inset_text.multiple_phases_html", link: link)
+
+      = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+
+  - unless vacancy.published?
+    .govuk-grid-column-one-third
+      = render "steps"

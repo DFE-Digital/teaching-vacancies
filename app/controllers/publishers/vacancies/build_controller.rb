@@ -2,8 +2,8 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   include Wicked::Wizard
   include OrganisationsHelper
 
-  steps :job_role, :job_role_details, :job_location, :schools, :education_phases, :job_details, :working_patterns,
-        :pay_package, :important_dates, :applying_for_the_job, :applying_for_the_job_details, :documents, :job_summary
+  steps :job_location, :job_role, :education_phases, :job_title, :key_stages, :subjects, :contract_type, :working_patterns, :pay_package,
+        :important_dates, :applying_for_the_job, :applying_for_the_job_details, :documents, :job_summary
 
   helper_method :back_path, :form
 
@@ -26,6 +26,9 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
       update_vacancy
       if session[:current_step] == :review
         update_listing
+      elsif params[:redirect]
+        vacancy.save
+        redirect_to(jobs_with_type_organisation_path(:draft))
       else
         render_wizard vacancy
       end
@@ -72,7 +75,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   end
 
   def set_school_options
-    return unless step == :schools && current_organisation.school_group?
+    return unless step == :job_location && current_organisation.school_group?
 
     schools = current_organisation.local_authority? ? current_publisher_preference.schools : current_organisation.schools
     @school_options = schools.not_closed.order(:name).map do |school|

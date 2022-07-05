@@ -7,15 +7,21 @@
     = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
       = f.govuk_error_summary
 
-      h2.govuk-heading-l = t("publishers.vacancies.steps.job_location")
+      / = f.govuk_fieldset do
+      /   / TODO:  do we want this?
+      /   - if current_organisation.local_authority?
+      /     span.govuk-hint
+      /       = t("helpers.hint.publishers_job_listing_schools_form.edit_schools")
+      /       =< govuk_link_to t("helpers.hint.publishers_job_listing_schools_form.add_school"),
+      /                          edit_publishers_publisher_preference_path(current_publisher_preference), class: "govuk-link--no-visited-state"
+      = f.govuk_collection_check_boxes(:organisation_ids,
+        @school_options,
+        :id,
+        :name,
+        :address,
+        legend: { size: "l" },
+        hint: nil,
+        classes: "checkbox-label__bold govuk-!-margin-top-2")
 
-      = f.govuk_collection_radio_buttons :job_location, t("helpers.options.publishers_job_listing_job_location_form.job_location.#{current_organisation.group_type}"), :first, :last
-
-      .govuk-button-group
-        = f.govuk_submit t("buttons.continue")
-        - unless vacancy.published?
-          = govuk_link_to t("buttons.cancel_and_return_to_jobs"), jobs_with_type_organisation_path(:draft), class: "govuk-link--no-visited-state"
-
-  - unless vacancy.published?
-    .govuk-grid-column-one-third
-      = render "steps"
+      div class="govuk-!-margin-top-6"
+        = render "publishers/vacancies/vacancy_form_partials/submit", f: f

@@ -22,7 +22,7 @@ module VacanciesHelper
   end
 
   def salary_value(vacancy)
-    safe_join [vacancy.salary, actual_salary(vacancy)]
+    safe_join [vacancy.salary, actual_salary(vacancy), pay_scale(vacancy)]
   end
 
   def actual_salary(vacancy)
@@ -32,6 +32,16 @@ module VacanciesHelper
       tag.div(t("jobs.actual_salary"), class: "govuk-hint govuk-!-margin-bottom-0 govuk-!-margin-top-1 govuk-!-font-size-16"),
       vacancy.actual_salary,
     ]
+  end
+
+  # TODO: Add pay scale method
+  def pay_scale(vacancy)
+    return unless vacancy.pay_scale?
+
+    # [
+    #   tag.div(t("jobs.actual_salary"), class: "govuk-hint govuk-!-margin-bottom-0 govuk-!-margin-top-1 govuk-!-font-size-16"),
+    #   vacancy.actual_salary,
+    # ]
   end
 
   def organisation_type_label(vacancy)

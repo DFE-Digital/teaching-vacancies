@@ -7,13 +7,10 @@
     = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
       = f.govuk_error_summary
 
-      = f.govuk_collection_check_boxes :working_patterns, Vacancy.working_patterns.keys, :to_s, :to_s,
-        legend: -> { tag.h2(t("publishers.vacancies.steps.working_patterns"), class: "govuk-heading-l") }
+      = f.govuk_check_boxes_fieldset :working_patterns, hint: nil, legend: { size: "l" } do
+        = f.govuk_check_box :working_patterns, "full_time", link_errors: true
 
-      = f.govuk_text_area :working_patterns_details, label: { size: "s", id: "working-pattern-details-label" }
+        = f.govuk_check_box :working_patterns, "part_time" do
+          = f.govuk_text_area :working_patterns_details, label: { size: "s" }, max_words: 50
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
-
-  - unless vacancy.published?
-    .govuk-grid-column-one-third
-      = render "steps"

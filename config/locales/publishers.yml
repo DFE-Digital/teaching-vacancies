@@ -178,16 +178,20 @@ en:
             or you can direct them to another service, like the local authority or a school's website.
             Read about %{link}.
           step_title: Applying for the job
+        contract_type:
+          step_title: Contract type
         documents:
           accessibility_link_text: How to make documents accessible
           step_title: Supporting documents
+        education_phases:
+          step_title: Age group
         important_dates:
           step_title: Important dates and deadlines
         job_details:
           step_title: Job details
           phase_inset_text:
             link_text: Change the education phase.
-            one_phase_html: You are listing a %{phase} phase role. %{link}
+            one_phase_html: The job listing will say it's a %{phase} role. %{link}
             multiple_phases_html: You are listing a role covering more than one phase. %{link}
         job_location:
           step_title: Job location
@@ -195,10 +199,16 @@ en:
           step_title: Job role
         job_summary:
           step_title: Job summary
+        job_title:
+          step_title: Job title
+        key_stages:
+          step_title: Key stages
         pay_package:
           step_title: Pay package
         review:
           step_title: Review the job listing
+        subjects:
+          step_title: Subjects
         working_patterns:
           step_title: Working patterns
       confirm_destroy:
@@ -329,10 +339,14 @@ en:
         view_live_listing_link: View this listing
         view_live_listing_title: View the live job listing
       steps:
-        job_role: Job role
-        job_location: Job location
+        job_location: Locations where the job is based
         schools: Job location
-        education_phases: Job details
+        job_role: Job role
+        education_phases: Age groups
+        job_title: Job title
+        key_stages: Key stages
+        subjects: Subjects
+        contract_type: Contract type
         job_details: Job details
         working_patterns: Working patterns
         pay_package: Pay package

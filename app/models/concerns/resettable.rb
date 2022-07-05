@@ -11,7 +11,6 @@ module Resettable
     reset_parental_leave_cover_contract_duration
     # Key stages and subjects are dependent on phase, so reset phase first
     reset_phase
-    reset_key_stages
     reset_subjects
   end
 
@@ -35,10 +34,6 @@ module Resettable
 
   def reset_phase
     self.phase = nil unless allow_phase_to_be_set?
-  end
-
-  def reset_key_stages
-    self.key_stages = [] unless allow_key_stages?
   end
 
   def reset_subjects

@@ -31,7 +31,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     reset_session_vacancy!
     vacancy = Vacancy.create(organisations: [current_organisation])
     vacancy.update(enable_job_applications: false) if current_organisation.local_authority?
-    redirect_to organisation_job_build_path(vacancy.id, :job_role)
+    redirect_to organisation_job_build_path(vacancy.id, :job_location)
   end
 
   def review

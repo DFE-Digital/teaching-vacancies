@@ -60,6 +60,7 @@ en:
     resend_email: Resend request
     save: Save
     save_and_continue: Save and continue
+    save_and_finish_later: Save and finish later
     save_changes: Save changes
     save_employment: Save role
     save_qualification:
@@ -232,16 +233,6 @@ en:
           16-19: What key stages will the role focus on?
         subjects: What subjects will the teacher focus on?
         subjects_placeholder: Search
-      publishers_job_listing_job_role_form:
-        main_job_role:  >-
-          You can list all the roles below on Teaching Vacancies. You cannot list other roles such as
-          finance manager, administrative assistant, cleaner or chef.
-        main_job_role_options:
-          education_support: Includes learning support and tutors
-          middle_leader: Includes Heads of Year or Department
-          sendco: Special educational needs and disabilities coordinator
-          senior_leader: Includes Deputy/Assistant Head, Headteacher, and trust-level roles
-          teaching_assistant: Includes Higher Level Teaching Assistants (HLTAs) and SEND teaching assistants
       publishers_job_listing_job_role_details_form:
         additional_job_roles: Select all that apply
       publishers_job_listing_job_summary_form:
@@ -255,16 +246,17 @@ en:
           You should cover what the role is and who you're looking to recruit.
           The first 20 to 40 words will be shown in search results, so make them stand out.
       publishers_job_listing_pay_package_form:
-        actual_salary: For part time or term time roles this is what the candidate will actually be paid
-        benefits: >-
-          Include special educational needs (SEN) allowances and teaching and learning responsibility (TLR) payments,
-          for example
+        salary_types_options:
+          full_time: This is what the annual salary would be for someone working full time
+          part_time: This is the annual amount someone will take home
       publishers_job_listing_schools_form:
         add_school: Add a school to your account
         edit_schools: "Can't see the school you are looking for?"
+      publishers_job_listing_job_title_form:
+        job_title: For example 'Teacher of KS1'
       publishers_job_listing_working_patterns_form:
-        working_patterns: Select all working patterns you will consider for the role.
-        working_patterns_details: Include the number of hours or days (for example "20 hours per week" or "Monday to Wednesday") and information on any flexible working policies (for example staggered or compressed hours).
+        working_patterns_options:
+          full_time: Usually 35 hours or more per week, Monday to Friday
 
     label:
       publishers_new_features_form:
@@ -522,6 +514,13 @@ en:
         personal_statement_guidance_html: Help candidates to write their personal statement (optional<span class='govuk-visually-hidden'> field</span>)</span>
         school_visits_html: School visits (optional<span class='govuk-visually-hidden'> field</span>)</span>
         trust_visits_html: Trust visits (optional<span class='govuk-visually-hidden'> field</span>)</span>
+      publishers_job_listing_contract_type_form:
+        contract_type_options:
+          fixed_term: Fixed term
+          parental_leave_cover: Maternity or parental leave cover
+          permanent: Permanent
+        fixed_term_contract_duration: Length of contract
+        parental_leave_cover_contract_duration: Length of contract
       publishers_job_listing_copy_vacancy_form:
         job_title: Job title
         publish_on_day_options:
@@ -608,10 +607,10 @@ en:
           ks2: KS2
       publishers_job_listing_job_role_form:
         main_job_role_options:
-          education_support: Education support
-          middle_leader: Middle leader
-          sendco: SENDCo
-          senior_leader: Senior leader
+          education_support: Learning support, cover supervisor or tutor
+          middle_leader: Head of year, department, curriculum or phase
+          sendco: SENDCo (special educational needs and disabilities coordinator)
+          senior_leader: Headteacher, deputy or assistant headteacher
           teacher: Teacher
           teaching_assistant: Teaching assistant
       publishers_job_listing_job_role_details_form:
@@ -621,12 +620,26 @@ en:
       publishers_job_listing_job_summary_form:
         about_organisation: About %{organisation}
         job_advert: Job advert
+      publishers_job_listing_job_title_form:
+        job_title: Job title
+      publishers_job_listing_key_stages_form:
+        key_stages_options:
+          early_years: Early years
+          ks1: Key stage 1
+          ks2: Key stage 2
+          ks3: Key stage 3
+          ks4: Key stage 4
+          ks5: Key stage 5
       publishers_job_listing_pay_package_form:
-        actual_salary_html: Actual salary (optional<span class='govuk-visually-hidden'> field</span>)</span>
-        benefits_html: Additional allowances (optional<span class='govuk-visually-hidden'> field</span>)</span>
-        salary: Annual or full time equivalent (FTE) salary
+        actual_salary: Actual salary
+        salary: Full-time equivalent salary
+        pay_scale: Pay scale
+        salary_types_options:
+          full_time: Full-time equivalent salary
+          part_time: Actual salary
+          pay_scale: Pay scale
       publishers_job_listing_working_patterns_form:
-        working_patterns_details_html: What are the specifics of the working pattern? (optional<span class='govuk-visually-hidden'> field</span>)</span>
+        working_patterns_details: Details
         working_patterns_options:
           flexible: Flexible
           full_time: Full time
@@ -720,6 +733,8 @@ en:
 
       publishers_job_listing_applying_for_the_job_form:
         enable_job_applications: How would you like candidates to apply?
+      publishers_job_listing_contract_type_form:
+        contract_type: Contract type
       publishers_job_listing_copy_vacancy_form:
         expires_at: Closing date
         expiry_time: Time application is due
@@ -756,15 +771,21 @@ en:
         key_stages_html: Key stage (optional<span class='govuk-visually-hidden'> field</span>)</span>
         subjects_html: Subject(s) (optional<span class='govuk-visually-hidden'> field</span>)</span>
       publishers_job_listing_job_role_form:
-        main_job_role: What is the job role?
+        main_job_role: Job role
       publishers_job_listing_job_role_details_form:
         additional_job_roles_html: Tell us more about the role (optional<span class='govuk-visually-hidden'> field</span>)</span>
         send_responsible: Does the role have SEND responsibilities (special educational needs and disabilities)?
       publishers_job_listing_job_location_form:
-        job_location: Where will the job be based?
+        organisation_ids: Locations where the job is based
+      publishers_job_listing_key_stages_form:
+        key_stages: Key stages
+      publishers_job_listing_pay_package_form:
+        salary_types: Salary details
       publishers_job_listing_schools_form:
         organisation_ids: In which schools will the job be based?
         organisation_id: In which school will the job be based?
+      publishers_job_listing_subjects_form:
+        subjects: Subjects (optional)
       publishers_job_listing_working_patterns_form:
         working_patterns: Working patterns
       subscription:

@@ -44,14 +44,13 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
     )
   end
 
-  def readable_job_location(job_location, school_name: nil, schools_count: nil)
-    case job_location
-    when "at_one_school"
-      school_name
-    when "at_multiple_schools"
+  def readable_job_location(organisation_ids, school_name: nil, schools_count: nil)
+    return nil if organisation_ids.empty?
+
+    if organisation_ids.count > 1
       t("publishers.organisations.readable_job_location.at_multiple_schools_with_count", count: schools_count)
-    when "central_office"
-      t("publishers.organisations.readable_job_location.central_office")
+    else
+      school_name
     end
   end
 

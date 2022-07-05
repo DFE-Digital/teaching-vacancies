@@ -1,18 +1,18 @@
 class Publishers::JobListing::JobLocationForm < Publishers::JobListing::VacancyForm
-  attr_accessor :job_location, :readable_job_location, :organisation_ids
+  attr_accessor :readable_job_location, :organisation_ids, :status
 
-  validates :job_location, presence: true
+  validates :organisation_ids, presence: true
 
   def self.fields
-    %i[job_location]
+    %i[organisation_ids]
   end
 
-  def params_to_save
-    {
-      completed_steps: params[:completed_steps],
-      job_location: params[:job_location] == "central_office" ? params[:job_location] : nil,
-      readable_job_location: params[:readable_job_location],
-      organisation_ids: params[:organisation_ids],
-    }.compact
+  def initialize(params, vacancy)
+    @organisation_ids = if params[:organisation_ids].is_a?(Array)
+                          params[:organisation_ids].first
+                        else
+                          params[:organisation_ids]
+                        end
+    super
   end
 end

@@ -1,0 +1,19 @@
+- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.subjects"))
+
+= vacancy_form_page_heading(vacancy, step_process)
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
+      = f.govuk_error_summary
+
+      = f.govuk_collection_check_boxes(:subjects,
+            SUBJECT_OPTIONS,
+            :first,
+            :first,
+            :last,
+            legend: { size: "l" },
+            hint: nil,
+            classes: "checkbox-label__bold")
+
+      = render "publishers/vacancies/vacancy_form_partials/submit", f: f

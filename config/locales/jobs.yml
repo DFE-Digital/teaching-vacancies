@@ -172,7 +172,7 @@ en:
     new_job_listing_details: New job listing details
     review_page_title: Review the job listing — Create a job listing for %{organisation}
     edit_job_title: Edit %{job_title}
-    current_step: Step %{step} of %{total}
+    current_step: Create job listing - section %{step} of %{total}
 
     location: Location
     location_find_more_html:

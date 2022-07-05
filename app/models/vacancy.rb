@@ -25,8 +25,8 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # When removing a job_role or working_pattern, remember to update *subscriptions* that have the old values.
   array_enum job_roles: MAIN_JOB_ROLES.merge(ADDITIONAL_JOB_ROLES)
-  array_enum key_stages: { early_years: 0, ks1: 1, ks2: 2 }
-  array_enum working_patterns: { full_time: 0, part_time: 100, flexible: 104, job_share: 101, term_time: 102 }
+  array_enum key_stages: { early_years: 0, ks1: 1, ks2: 2, ks3: 3, ks4: 4, ks5: 5 }
+  array_enum working_patterns: { full_time: 0, part_time: 100 }
   # Legacy vacancies can have these working_pattern options too: { compressed_hours: 102, staggered_hours: 103 }
 
   enum contract_type: { permanent: 0, fixed_term: 1, parental_leave_cover: 2 }
@@ -140,10 +140,6 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
     enable_job_applications? && published? && !pending?
   end
 
-  def allow_key_stages?
-    !one_phase? || readable_phases == %w[primary] || readable_phases == %w[middle]
-  end
-
   def allow_subjects?
     readable_phases != ["primary"]
   end
@@ -205,6 +201,16 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
     organisations.each do |organisation|
       markers.create(organisation: organisation, geopoint: organisation.geopoint)
     end
+  end
+
+  def possible_key_stages
+    stages = []
+    stages.append(%w[early_years ks1 ks2]) if readable_phases.include? "primary"
+    stages.append(%w[ks2 ks3 ks4]) if readable_phases.include? "middle"
+    stages.append(%w[ks3 ks4 ks5]) if readable_phases.include? "secondary"
+    stages.append(%w[ks4 ks5]) if readable_phases.include? "16-19"
+
+    stages.flatten.uniq
   end
 
   private
