@@ -44,8 +44,9 @@ gem "mail-notify"
 gem "mimemagic"
 gem "nokogiri"
 gem "noticed"
-gem "omniauth", "< 2" # TODO: Pinned pending fixes
-gem "omniauth_openid_connect", "< 0.4" # TODO: Pinned pending fixes
+gem "omniauth"
+gem "omniauth_openid_connect"
+gem "omniauth-rails_csrf_protection", "~> 1.0"
 gem "paper_trail"
 gem "paper_trail-globalid"
 gem "parslet"
