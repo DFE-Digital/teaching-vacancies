@@ -36,9 +36,9 @@ To get the application running:
   display "`Done. Press any key to close the terminal.`"
 
 When the build has finished, you can run the application by clicking on "▶️ Start app" in the status
-bar. This will start:
+bar, using the VS Code "Run task" option, or the Rails convention `bin/dev` script. This will start:
 - The Rails application running on http://localhost:3000
-- Webpack Dev Server for fast reloading of frontend asset changes
+- An asset build task each for Javascript and CSS
 - Sidekiq for processing background jobs
 
 <details>
@@ -53,6 +53,9 @@ bar. This will start:
   > or IDE), running a Linux VM with a container engine for that extra bit of performance, or just
   > using the container definitions as a guide to setting the app up locally without any Docker
   > involvement at all.
+  >
+  > Following convention, a `bin/dev` script is provided that uses Foreman to run all the tasks
+  > needed for the application.
 </details>
 
 * [API Documentation](https://docs.teaching-vacancies.service.gov.uk)
