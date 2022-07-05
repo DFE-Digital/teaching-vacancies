@@ -13,7 +13,7 @@ const initialiseStimulus = () => {
   application.register('locationFinder', LocationFinderController);
 };
 
-jest.mock('../../lib/api');
+jest.mock('./api');
 
 export const currentPosition = (coords) => ({
   getCurrentPosition: jest.fn().mockImplementationOnce((success) => Promise.resolve(success(coords))),

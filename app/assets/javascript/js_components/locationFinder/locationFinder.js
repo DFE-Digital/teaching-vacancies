@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 
 import loader from '../loadingIndicator/loadingIndicator';
-import api from '../../lib/api';
+import api from './api';
 import logger from '../../lib/logging';
 
 export const ERROR_MESSAGE = 'Unable to find your location';

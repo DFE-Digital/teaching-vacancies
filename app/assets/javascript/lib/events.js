@@ -1,8 +1,12 @@
 import axios from 'axios';
 import logger from './logging';
-import { railsCsrfToken } from './utils';
 
 const EVENTS_ENDPOINT = '/api/events';
+
+export const railsCsrfToken = () => {
+  const tokenElem = document.getElementsByName('csrf-token')[0];
+  return tokenElem && tokenElem.content;
+};
 
 // Triggers an event and makes a request to the backend endpoint with the event data.
 export const triggerEvent = (type, data) => {
