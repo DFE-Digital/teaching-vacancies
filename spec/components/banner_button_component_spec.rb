@@ -24,13 +24,13 @@ RSpec.describe BannerButtonComponent, type: :component do
   end
 
   describe "#icon_class" do
-    subject { described_class.new(**kwargs).send(:icon_class) }
+    subject { described_class.new(**kwargs).send(:icon_classes) }
 
     context "when no icon is specified" do
       let(:icon) { nil }
 
-      it "returns nil" do
-        expect(subject).to be_nil
+      it "returns an empty array" do
+        expect(subject).to be_empty
       end
     end
 

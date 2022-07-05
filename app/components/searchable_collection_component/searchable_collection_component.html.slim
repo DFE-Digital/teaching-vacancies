@@ -1,4 +1,4 @@
-= tag.div(class: classes, **html_attributes.merge(data: { controller: "searchable-collection" })) do
+= tag.div(**html_attributes.merge(data: { controller: "searchable-collection" })) do
   div class="#{border_class} #{scrollable_class}"
     - if searchable?
       .searchable-collection-component__search
