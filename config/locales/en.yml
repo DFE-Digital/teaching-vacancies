@@ -11,6 +11,11 @@ en:
     govuk: GOV.UK
     menu: Menu
     opens_in_new_tab: "%{link_text} (opens in a new tab)"
+    pagy_stats_html: >-
+      Showing <span class='govuk-!-font-weight-bold'>%{from}</span>
+      to <span class='govuk-!-font-weight-bold'>%{to}</span>
+      of <span class='govuk-!-font-weight-bold'>%{total}</span>
+      %{type}
     skip_link:
       cookie: Skip to cookie consent
       main: Skip to main content
