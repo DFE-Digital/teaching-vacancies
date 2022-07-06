@@ -5,7 +5,7 @@ RSpec.describe ValidatableSummaryListComponent, type: :component do
   let(:show_errors) { false }
   let(:error_path) { "/test-path" }
 
-  let(:list_kwargs) { { html_attributes: "a-value" } }
+  let(:list_kwargs) { { html_attributes: { key: "a-value" } } }
 
   let(:list) do
     described_class.new(

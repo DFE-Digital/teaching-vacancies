@@ -1,4 +1,4 @@
-= tag.div(class: classes, **html_attributes) do
+= tag.div(**html_attributes) do
   = govuk_cookie_banner do |cookie_banner|
     - cookie_banner.message(heading_text: t("cookies_preferences.banner.heading"), text: t("cookies_preferences.banner.body").join(" ")) do |message|
       - message.action { govuk_button_to t("cookies_preferences.banner.buttons.accept"), create_path, id: "cookie-consent" }

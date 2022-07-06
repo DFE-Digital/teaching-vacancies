@@ -31,7 +31,7 @@ gem "geocoder"
 gem "google-apis-drive_v3"
 gem "google-apis-indexing_v3"
 gem "google-cloud-bigquery"
-gem "govuk-components", "3.0.4" # TODO: Pinned pending fixes for incompatible 3.0.6
+gem "govuk-components"
 gem "govuk_design_system_formbuilder"
 gem "high_voltage"
 gem "httparty"
