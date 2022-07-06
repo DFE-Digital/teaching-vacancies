@@ -15,8 +15,7 @@
             .govuk-body.float-right
               = pagy_stats(@pagy, type: "notification")
 
-        - @notifications.each do |notification|
-          = render NotificationComponent.new notification: notification.to_notification
+        = render @notifications
 
         .govuk-grid-row
           .govuk-grid-column-full

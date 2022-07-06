@@ -1,0 +1,9 @@
+.notification
+  .notification__content
+    - unless notification.read?
+      .notification__tag
+        = govuk_tag text: "new", colour: "blue"
+    .notification__message
+      == notification.to_notification.message
+    .notification__timestamp
+      = notification.to_notification.timestamp
