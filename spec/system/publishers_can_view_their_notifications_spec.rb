@@ -23,7 +23,7 @@ RSpec.describe "Publishers can view their notifications" do
 
   context "when paginating" do
     before do
-      stub_const("Publishers::NotificationsController::DEFAULT_NOTIFICATIONS_PER_PAGE", 1)
+      stub_const("Publishers::NotificationsController::NOTIFICATIONS_PER_PAGE", 1)
       Publishers::JobApplicationReceivedNotification.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
       Publishers::JobApplicationReceivedNotification.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
       visit root_path

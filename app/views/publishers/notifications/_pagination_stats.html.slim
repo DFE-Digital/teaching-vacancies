@@ -1,8 +1,0 @@
-.govuk-body.float-right
-  | Showing
-  span class="govuk-!-font-weight-bold" =<> ((notifications.current_page - 1) * notifications.limit_value) + 1
-  | to
-  span class="govuk-!-font-weight-bold" =<> ((notifications.current_page - 1) * notifications.limit_value) + notifications.count
-  | of
-  span class="govuk-!-font-weight-bold" =<> notifications.total_count
-  | notifications
