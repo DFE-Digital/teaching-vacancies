@@ -14,10 +14,10 @@ class PreviewsController < ApplicationController
     @previews = ViewComponent::Preview.all
     @page_title = "Component Previews"
 
-    @preview_variants = @preview.component_class.variants
-    @preview_form = @preview.form.new(params)
+    @preview_form = @preview.form.new
     @preview_name = @preview.component_name
     @preview_class = @preview.component_class
+    @options = @preview.options
 
     prepend_application_view_paths
     prepend_preview_examples_view_path

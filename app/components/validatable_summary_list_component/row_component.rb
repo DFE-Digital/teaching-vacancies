@@ -34,7 +34,7 @@ class ValidatableSummaryListComponent::RowComponent < GovukComponent::SummaryLis
     elsif boolean?
       val ? "Yes" : "No"
     else
-      val
+      raw val
     end
   end
 

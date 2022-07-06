@@ -1,0 +1,14 @@
+= tag.div(class: classes, **html_attributes) do
+  .js-hide
+    label.govuk-label.govuk-label--s.editor-component__label data-action="click->editor#focus" for="#{@field_name}-field" id=@label[:id]
+      = @label[:text]
+    - if @hint.present?
+      .govuk-hint id="#{@field_name}-hint"
+        = @hint
+    .editor-component__toolbar data-editor-target="toolbar"
+      button.icon.icon--richtext-ul.govuk-button.govuk-button--secondary.editor-component__toolbar-button type="button" data-action="editor#performAction" data-editor-action="ul" aria-controls="editor-content-#{@field_name}"
+        = "Toggle bullet points"
+    .editor-component__content contenteditable="true" data-editor-target="editor" data-action="input->editor#update paste->editor#handlePaste" id="editor-content-#{@field_name}"
+      == @value
+  .editor-component__form-input data-editor-target="formInput"
+    = @form_input

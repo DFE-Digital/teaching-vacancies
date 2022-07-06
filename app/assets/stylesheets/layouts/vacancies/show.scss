@@ -1,3 +1,8 @@
 .vacancies_show {
+  // needed for legacy vacancies that havent been edited with editor component
+  section {
+    @extend .govuk-body;
+  }
+
   @import './similar-jobs';
 }

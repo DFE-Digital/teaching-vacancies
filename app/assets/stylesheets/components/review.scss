@@ -51,14 +51,18 @@
 
       @include govuk-media-query($from: tablet) {
         border-top: 1px solid $govuk-border-colour;
-
-        .govuk-body {
-          padding-top: govuk-spacing(2);
-        }
       }
 
       .govuk-summary-list__value {
         padding-right: 0;
+
+        > li {
+          display: contents;
+
+          ul {
+            list-style-type: disc;
+          }
+        }
       }
 
       .govuk-summary-list__key {

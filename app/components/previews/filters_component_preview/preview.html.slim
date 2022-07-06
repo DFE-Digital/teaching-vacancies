@@ -1,30 +1,10 @@
-ruby:
-  filter_types = [
-    {
-      legend: "filter group",
-      key: "preview_group_1",
-      selected: %w[option_1 option_2],
-      options: [%w[option_1 option1], %w[option_2 option2]],
-      value_method: :first,
-      selected_method: :last,
-    },
-    {
-      legend: "filter group",
-      key: "preview_group_2",
-      selected: %w[option_1 option_2],
-      options: [%w[option_1 option1], %w[option_2 option2]],
-      value_method: :first,
-      selected_method: :last,
-    },
-  ]
-
 - content_for :page_title_prefix do
   | Component preview
 
 = form_for @preview_form, url: preview_view_component_path("#{@preview.preview_name}/#{@example_name}"), html: { method: "get" } do |f|
-  = render(@preview_class.new(submit_button: f.govuk_submit(t("buttons.apply_filters")), filters: { total_count: 1 }, options: { heading_text: "Filters preview", remove_filter_links: true })) do |filters_component|
+  = render(@preview_class.new(submit_button: f.govuk_submit(t("buttons.apply_filters")), clear_filters_link: { text: "clear filters", url: "/" }, filters: { total_count: 1 }, options: { heading_text: "Filters preview", remove_filter_links: true })) do |filters_component|
     - filters_component.remove_filter_links do |rb|
-      - filter_types.each do |filter_type|
-        - rb.group(**filter_type)
-    - filters_component.group key: "preview_group_1", component: f.govuk_collection_check_boxes(:options, filter_types[0][:options], :first, :last, small: true, legend: { text: "filter group" }, hint: nil)
-    - filters_component.group key: "preview_group_2", component: f.govuk_collection_check_boxes(:options, filter_types[1][:options], :first, :last, small: true, legend: { text: "filter group" }, hint: nil)
+      - @preview.options.each do |filter_type|
+        - rb.group(**filter_type.merge(remove_filter_link: { url_helper: :jobs_path }))
+    - filters_component.group key: "preview_group_1", component: f.govuk_collection_check_boxes(:options, @preview.options[0][:options], :first, :last, small: true, legend: { text: "filter group" }, hint: nil)
+    - filters_component.group key: "preview_group_2", component: f.govuk_collection_check_boxes(:options, @preview.options[1][:options], :first, :last, small: true, legend: { text: "filter group" }, hint: nil)

@@ -7,10 +7,6 @@ class VacancyPresenter < BasePresenter
     model.class.columns
   end
 
-  def job_advert
-    simple_format(fix_bullet_points(model.job_advert))
-  end
-
   def about_school
     simple_format(fix_bullet_points(model.about_school))
   end
