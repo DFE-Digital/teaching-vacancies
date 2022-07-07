@@ -1,5 +1,5 @@
 = tag.div(class: classes, **html_attributes) do
-  .js-hide
+  .editor-component__controls
     label.govuk-label.govuk-label--s.editor-component__label data-action="click->editor#focus" for="#{@field_name}-field" id=@label[:id]
       = @label[:text]
     - if @hint.present?
