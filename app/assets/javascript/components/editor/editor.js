@@ -47,6 +47,7 @@ const EditorController = class extends Controller {
     }
 
     this.removeEmptyParagraphs();
+    this.removeNbsp();
     this.replaceBullets();
     this.wrapOrphanedText();
 
@@ -56,8 +57,8 @@ const EditorController = class extends Controller {
   static sanitize(clipboardData) {
     return DOMPurify.sanitize(clipboardData, {
       ALLOWED_TAGS: EditorController.ALLOWED_TAGS,
-      FORBID_TAGS: ['link', 'script', 'strong', 'br'],
-      FORBID_ATTR: ['style', 'font', 'dir', 'role', 'class', 'id'],
+      FORBID_TAGS: ['link', 'script', 'strong', 'br', 'font'],
+      FORBID_ATTR: ['style', 'font', 'dir', 'role', 'class', 'id', 'align'],
       ALLOW_ARIA_ATTR: false,
       RETURN_DOM_FRAGMENT: true,
     });
@@ -99,14 +100,20 @@ const EditorController = class extends Controller {
     this.editorTarget.focus();
   }
 
+  removeNbsp() {
+    this.editorTarget.innerHTML = this.editorTarget.innerHTML.replace(/&nbsp;/g, '');
+  }
+
   replaceBullets() {
     let ul = null;
     const bulletUnicode = '\u2022';
     const bulletOperatorUnicode = '\u00B7';
-    const replace = new RegExp(`(${bulletUnicode}|${bulletOperatorUnicode})`);
+    const blackCircleUnicode = '\u25CF';
+    const bulletUnicodes = [bulletUnicode, bulletOperatorUnicode, blackCircleUnicode];
+    const replace = new RegExp(`(${bulletUnicodes.join('|')})`);
 
     Array.from(this.editorTarget.getElementsByTagName('p')).forEach((node) => {
-      if (node.textContent.charAt(0) === bulletUnicode || node.textContent.charAt(0) === bulletOperatorUnicode) {
+      if (bulletUnicodes.filter((bu) => node.textContent.charAt(0) === bu).length > 0) {
         if (!ul) {
           ul = document.createElement('ul');
           node.parentNode.insertBefore(ul, node.nextSibling);
