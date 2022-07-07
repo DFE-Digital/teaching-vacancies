@@ -102,7 +102,7 @@ describe('Content editable form control', () => {
   });
 
   it('should replace bullet characters with html list', () => {
-    controller.editorTarget.innerHTML = '<p>para text</p><p>• 1</p><p>• 2</p><p>para text 2</p><p>· 3</p>';
+    controller.editorTarget.innerHTML = '<p>para text</p><p>• 1</p><p>● 2</p><p>para text 2</p><p>· 3</p>';
     controller.replaceBullets();
     expect(controller.editorTarget.innerHTML).toBe('<p>para text</p><ul><li>1</li><li>2</li></ul><p>para text 2</p><ul><li>3</li></ul>');
   });
