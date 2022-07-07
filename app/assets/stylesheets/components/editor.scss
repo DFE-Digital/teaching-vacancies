@@ -19,7 +19,7 @@ editor-content {
 
 .js-enabled {
   .editor-component {
-    .js-hide {
+    &__controls {
       display: block;
     }
 
@@ -31,7 +31,7 @@ editor-content {
 
 
 .editor-component {
-  .js-hide {
+  &__controls {
     display: none;
   }
 
