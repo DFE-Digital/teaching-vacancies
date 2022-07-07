@@ -17,6 +17,10 @@
       @extend .govuk-heading-m;
     }
 
+    img {
+      width: 100%;
+    }
+
     ol {
       @extend .govuk-list, .govuk-list--number;
     }
