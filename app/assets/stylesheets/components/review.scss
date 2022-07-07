@@ -18,6 +18,8 @@
       }
 
       &__title {
+        padding-bottom: govuk-spacing(2);
+
         @include govuk-media-query($from: tablet) {
           flex-basis: 75%;
         }

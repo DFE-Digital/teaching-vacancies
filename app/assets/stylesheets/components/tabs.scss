@@ -32,7 +32,7 @@
     &__list {
       font-size: 0;
       list-style: none;
-      margin: 0;
+      margin-bottom: govuk-spacing(5);
       padding: 0;
     }
 
@@ -59,6 +59,7 @@
       padding-bottom: govuk-spacing(3);
       padding-top: govuk-spacing(3);
       position: relative;
+      text-decoration: none;
 
       @include govuk-media-query ($until: desktop) {
         padding: govuk-spacing(2);
