@@ -97,7 +97,8 @@ RSpec.describe Subscription do
     let(:date_yesterday) { Time.zone.yesterday.to_time }
     let(:date_today) { Date.current.to_time }
     let(:subscription) { create(:subscription, frequency: :daily, search_criteria: { keyword: "english" }) }
-    let(:vacancies) { double("vacancies") }
+    let(:vacancies) { double("vacancies", limit: limited_vacancies) }
+    let(:limited_vacancies) { double("limited vacancies") }
     let(:vacancy_search) { double(vacancies: vacancies) }
 
     it "searches with an appropriate date range" do
@@ -107,11 +108,10 @@ RSpec.describe Subscription do
           from_date: date_yesterday,
           to_date: date_today,
         },
-        { per_page: 500 },
       ).and_return(vacancy_search)
 
       travel_to(expired_now) do
-        expect(subscription.vacancies_for_range(date_yesterday, date_today)).to eq(vacancies)
+        expect(subscription.vacancies_for_range(date_yesterday, date_today)).to eq(limited_vacancies)
       end
     end
   end

@@ -21,21 +21,21 @@ RSpec.describe "Jobseekers can view all the jobs" do
         expect(page).not_to have_content(I18n.t("jobs.sort_by.most_relevant").humanize)
         expect(page).not_to have_content(I18n.t("jobs.sort_by.publish_on.descending").humanize)
 
-        within "ul.pagination" do
+        within ".govuk-pagination" do
           click_on "Next"
         end
 
         within("ul.search-results") { expect(page).to have_css("li", count: 2) }
         expect(page).to have_css(".search-results-sorting__stats", text: "Showing 3 to 4 of 5 results")
 
-        within "ul.pagination" do
+        within ".govuk-pagination" do
           click_on "Previous"
         end
 
         within("ul.search-results") { expect(page).to have_css("li", count: 2) }
         expect(page).to have_css(".search-results-sorting__stats", text: "Showing 1 to 2 of 5 results")
 
-        within "ul.pagination" do
+        within ".govuk-pagination" do
           click_on "3"
         end
 
@@ -45,7 +45,7 @@ RSpec.describe "Jobseekers can view all the jobs" do
     end
 
     before do
-      stub_const("Search::VacancySearch::DEFAULT_HITS_PER_PAGE", 2)
+      stub_const("Pagy::DEFAULT", Pagy::DEFAULT.merge(items: 2))
     end
 
     context "when visiting the home page and performing an empty search" do

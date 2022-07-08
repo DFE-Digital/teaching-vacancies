@@ -22,8 +22,9 @@ class Search::SimilarJobs
   def similar_job_ids
     Rails.cache.fetch([:similar_job_ids, vacancy.id], expires_in: CACHE_DURATION) do
       Search::VacancySearch
-        .new(criteria, per_page: NUMBER_OF_SIMILAR_JOBS * 3) # Fetch more than we need in case some expire while being cached
+        .new(criteria)
         .vacancies
+        .limit(NUMBER_OF_SIMILAR_JOBS * 3) # Fetch more than we need in case some expire while being cached
         .reject { |job| job.id == vacancy.id }
         .map(&:id)
     end

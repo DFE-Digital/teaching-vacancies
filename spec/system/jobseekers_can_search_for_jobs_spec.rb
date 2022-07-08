@@ -10,17 +10,17 @@ RSpec.shared_examples "a successful search" do
 
     it "displays page 1 jobs" do
       within("ul.search-results") { expect(page).to have_css("li", count: 2) }
-      expect(page).to have_css(".search-results-sorting__stats", text: strip_tags(I18n.t("jobs.number_of_results_html", first: 1, last: 2, count: 6)))
+      expect(page).to have_css(".search-results-sorting__stats", text: strip_tags(I18n.t("app.pagy_stats_html", from: 1, to: 2, total: 6, type: "results")))
     end
 
     context "when navigating between pages" do
       it "displays page 3 jobs" do
-        within "ul.pagination" do
+        within ".govuk-pagination" do
           click_on "3"
         end
 
         within("ul.search-results") { expect(page).to have_css("li", count: 2) }
-        expect(page).to have_css(".search-results-sorting__stats", text: strip_tags(I18n.t("jobs.number_of_results_html", first: 5, last: 6, count: 6)))
+        expect(page).to have_css(".search-results-sorting__stats", text: strip_tags(I18n.t("app.pagy_stats_html", from: 5, to: 6, total: 6, type: "results")))
       end
     end
   end
@@ -35,7 +35,7 @@ RSpec.shared_examples "a successful search" do
     end
 
     it "displays only the Maths jobs" do
-      expect(page).to have_css(".search-results-sorting__stats", text: strip_tags(I18n.t("jobs.number_of_results_one_page_html", count: 2)))
+      expect(page).to have_css(".search-results-sorting__stats", text: strip_tags(I18n.t("app.pagy_stats_html", from: 1, to: 2, total: 2, type: "results")))
     end
 
     context "when sorting the jobs by most recently published" do
@@ -85,7 +85,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
   context "when searching using the mobile search fields" do
     before do
-      stub_const("Search::VacancySearch::DEFAULT_HITS_PER_PAGE", per_page)
+      stub_const("Pagy::DEFAULT", Pagy::DEFAULT.merge(items: per_page))
       visit jobs_path
       fill_in "Keyword", with: keyword
       click_on I18n.t("buttons.search")
@@ -96,7 +96,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
   context "when searching using the desktop search field" do
     before do
-      stub_const("Search::VacancySearch::DEFAULT_HITS_PER_PAGE", per_page)
+      stub_const("Pagy::DEFAULT", Pagy::DEFAULT.merge(items: per_page))
       visit jobs_path
       fill_in "Keyword", with: keyword
       click_on I18n.t("buttons.search")
