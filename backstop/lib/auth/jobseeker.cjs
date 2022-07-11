@@ -8,5 +8,5 @@ module.exports = async (page, scenario, viewport, isReference, browserContext) =
 
   await page.click('button[type="submit"]');
 
-  await require('../setSessionCookie')(browserContext, scenario.cookiePath);
+  await require('../setSessionCookie.cjs')(browserContext, scenario.cookiePath);
 };

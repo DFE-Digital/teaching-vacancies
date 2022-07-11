@@ -3,7 +3,7 @@
   "type": "module",
   "private": true,
   "engine": {
-    "node": ">=16.0.0"
+    "node": ">=18.0.0"
   },
   "browserslist": [
     "last 2 major versions",
@@ -28,7 +28,6 @@
   "devDependencies": {
     "@babel/core": "^7.18.6",
     "@babel/preset-env": "^7.18.6",
-    "backstopjs": "^6.1.0",
     "concurrently": "^7.2.2",
     "dotenv": "^16.0.1",
     "esbuild": "^0.14.48",
@@ -54,7 +53,7 @@
     "js:test:coverage": "jest --coverage",
     "js:lint": "eslint ./app/assets/javascript",
     "sass:lint": "yarn stylelint app/assets/stylesheets/**/*.scss -q",
-    "backstop:execute": "backstop $CMD --config='backstop/backstop.config.js'",
+    "backstop:execute": "backstop $CMD --config='backstop/backstop.config.cjs'",
     "visual:test:reference": "CMD=reference yarn run backstop:execute",
     "visual:test:run": "CMD=test yarn run backstop:execute",
     "visual:test:approve": "CMD=approve yarn run backstop:execute",

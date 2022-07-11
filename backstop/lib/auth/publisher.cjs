@@ -17,5 +17,5 @@ module.exports = async (page, scenario, viewport, isReference, browserContext) =
 
   await page.waitForSelector('.govuk-main-wrapper');
 
-  await require('../setSessionCookie')(browserContext, scenario.cookiePath);
+  await require('../setSessionCookie.cjs')(browserContext, scenario.cookiePath);
 };

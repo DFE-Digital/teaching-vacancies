@@ -2,7 +2,7 @@ const AUTH_TYPE = 'publisher';
 
 module.exports = [
   {
-    "onBeforeScript": "auth.js",
+    "onBeforeScript": "auth.cjs",
     "AUTH_TYPE": AUTH_TYPE,
     "cookiePath": `${AUTH_TYPE}.json`,
     "label": "Publisher active jobs",
@@ -14,7 +14,7 @@ module.exports = [
     ]
   },
   {
-    "onBeforeScript": "auth.js",
+    "onBeforeScript": "auth.cjs",
     "AUTH_TYPE": AUTH_TYPE,
     "cookiePath": `${AUTH_TYPE}.json`,
     "label": "Publisher draft jobs",
@@ -26,7 +26,7 @@ module.exports = [
     ]
   },
   {
-    "onBeforeScript": "auth.js",
+    "onBeforeScript": "auth.cjs",
     "AUTH_TYPE": AUTH_TYPE,
     "cookiePath": `${AUTH_TYPE}.json`,
     "label": "Publisher expired jobs",
@@ -38,7 +38,7 @@ module.exports = [
     ]
   },
   {
-    "onBeforeScript": "auth.js",
+    "onBeforeScript": "auth.cjs",
     "AUTH_TYPE": AUTH_TYPE,
     "cookiePath": `${AUTH_TYPE}.json`,
     "label": "Publisher scheduled jobs",
@@ -50,7 +50,7 @@ module.exports = [
     ]
   },
   {
-    "onBeforeScript": "auth.js",
+    "onBeforeScript": "auth.cjs",
     "AUTH_TYPE": AUTH_TYPE,
     "cookiePath": `${AUTH_TYPE}.json`,
     "label": "Publisher awaiting feedback jobs",
@@ -62,7 +62,7 @@ module.exports = [
     ]
   },
   {
-    "onBeforeScript": "auth.js",
+    "onBeforeScript": "auth.cjs",
     "AUTH_TYPE": AUTH_TYPE,
     "cookiePath": `${AUTH_TYPE}.json`,
     "label": "Publisher manage job listing page",
@@ -75,7 +75,7 @@ module.exports = [
     ]
   },
   {
-    "onBeforeScript": "auth.js",
+    "onBeforeScript": "auth.cjs",
     "AUTH_TYPE": AUTH_TYPE,
     "cookiePath": `${AUTH_TYPE}.json`,
     "label": "Publisher job listing applicants page",
@@ -88,7 +88,7 @@ module.exports = [
     ]
   },
   {
-    "onBeforeScript": "auth.js",
+    "onBeforeScript": "auth.cjs",
     "AUTH_TYPE": AUTH_TYPE,
     "cookiePath": `${AUTH_TYPE}.json`,
     "label": "Publisher manage settings page",
@@ -113,7 +113,7 @@ module.exports = [
     ]
   },
   {
-    "onBeforeScript": "auth.js",
+    "onBeforeScript": "auth.cjs",
     "AUTH_TYPE": AUTH_TYPE,
     "cookiePath": `${AUTH_TYPE}.json`,
     "label": "Publisher manage settings page",
@@ -133,7 +133,7 @@ module.exports = [
     ]
   },
   {
-    "onBeforeScript": "auth.js",
+    "onBeforeScript": "auth.cjs",
     "AUTH_TYPE": AUTH_TYPE,
     "cookiePath": `${AUTH_TYPE}.json`,
     "label": "Publisher notifications page",
