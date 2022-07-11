@@ -13,9 +13,15 @@ export const LOADING_PLACEHOLDER = 'Finding Location...';
 const LocationFinder = class extends Controller {
   static loader = loader;
 
+  static values = {
+    input: String,
+    source: String,
+  };
+
+  static targets = ['button'];
+
   connect() {
-    [this.inputContainer] = Array.from(document.getElementsByClassName('location-field__container'));
-    this.input = document.getElementById(this.element.dataset.target);
+    this.input = document.getElementById(this.inputValue);
 
     this.input.addEventListener('focus', () => {
       this.removeErrorMessage();
@@ -26,7 +32,7 @@ const LocationFinder = class extends Controller {
     this.startLoading();
 
     navigator.geolocation.getCurrentPosition((data) => {
-      api[this.element.dataset.source](data.coords.latitude, data.coords.longitude).then((postcode) => {
+      api[this.sourceValue](data.coords.latitude, data.coords.longitude).then((postcode) => {
         postcode ? this.onSuccess(postcode) : this.onFailure();
       }).catch(() => {
         this.onFailure();
@@ -59,19 +65,19 @@ const LocationFinder = class extends Controller {
       this.errorMessage.id = 'location-finder__error';
       this.errorMessage.classList.add('location-finder__error');
       this.errorMessage.innerHTML = ERROR_MESSAGE;
-      this.element.insertAdjacentHTML('afterend', this.errorMessage.outerHTML);
+      this.element.insertAdjacentHTML('beforeend', this.errorMessage.outerHTML);
     }
   }
 
   startLoading() {
     this.input.disabled = true;
     this.input.value = '';
-    LocationFinder.loader.add(this.inputContainer, LOADING_PLACEHOLDER);
+    LocationFinder.loader.add(this.input.parentElement, LOADING_PLACEHOLDER);
   }
 
   stopLoading() {
     this.input.removeAttribute('disabled');
-    LocationFinder.loader.remove(this.inputContainer, DEFAULT_PLACEHOLDER);
+    LocationFinder.loader.remove(this.input.parentElement, DEFAULT_PLACEHOLDER);
   }
 };
 

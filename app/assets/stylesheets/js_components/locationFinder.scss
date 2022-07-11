@@ -1,16 +1,27 @@
 @import 'govuk-frontend/govuk/base';
 
+.js-enabled {
+  .location-finder {
+    display: block;
+
+    @include govuk-media-query($from: tablet) {
+      display: none;
+    }
+  }
+}
+
 .location-finder {
   @include govuk-font(16);
-  display: block;
+  display: none;
   position: relative;
 
-  @include govuk-media-query($from: tablet) {
-    display: none;
-  }
-
-  &__link-prefix {
+  &__button {
+    background-color: transparent;
+    border: 0;
     color: inherit;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
   }
 
   .govuk-c-loader {

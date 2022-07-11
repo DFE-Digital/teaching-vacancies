@@ -1,6 +1,10 @@
-.subscriptions_new,
-.subscriptions_create {
-  .location-finder {
-    display: block;
+.js-enabled {
+  &.subscriptions_new,
+  &.subscriptions_create {
+    .location-finder {
+      @include govuk-media-query($from: mobile) {
+        display: block;
+      }
+    }
   }
 }
