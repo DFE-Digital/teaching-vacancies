@@ -2,7 +2,7 @@ const AUTH_TYPE = 'jobseeker';
 
 module.exports = [
   {
-    "onBeforeScript": "auth.js",
+    "onBeforeScript": "auth.cjs",
     "AUTH_TYPE": AUTH_TYPE,
     "cookiePath": `${AUTH_TYPE}.json`,
     "label": "Jobseeker my applications page",
@@ -14,7 +14,7 @@ module.exports = [
     ]
   },
   {
-    "onBeforeScript": "auth.js",
+    "onBeforeScript": "auth.cjs",
     "AUTH_TYPE": AUTH_TYPE,
     "cookiePath": `${AUTH_TYPE}.json`,
     "label": "Jobseeker view application page",
@@ -27,7 +27,7 @@ module.exports = [
     ]
   },
   {
-    "onBeforeScript": "auth.js",
+    "onBeforeScript": "auth.cjs",
     "AUTH_TYPE": AUTH_TYPE,
     "cookiePath": `${AUTH_TYPE}.json`,
     "label": "Jobseeker saved jobs page",
@@ -39,7 +39,7 @@ module.exports = [
     ]
   },
   {
-    "onBeforeScript": "auth.js",
+    "onBeforeScript": "auth.cjs",
     "AUTH_TYPE": AUTH_TYPE,
     "cookiePath": `${AUTH_TYPE}.json`,
     "label": "Jobseeker view account page",

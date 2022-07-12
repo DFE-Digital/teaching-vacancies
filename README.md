@@ -173,6 +173,10 @@ This is currently a tool for developers to test changes locally against the QA e
 
 ### Setup
 
+Install the backstopjs library as a global dependency
+
+`npm install -g backstopjs@6.1.0`
+
 Add the following variables to your local `.env` file:
 
 ```bash

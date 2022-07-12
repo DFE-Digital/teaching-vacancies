@@ -13,8 +13,8 @@ module.exports = async (page, scenario, viewport, isReference, browserContext) =
   const cookies = await exists(scenario.cookiePath)  
 
   if (!cookies) {
-    await require(`./auth/${scenario.AUTH_TYPE}`)(page, scenario, viewport, isReference, browserContext);
+    await require(`./auth/${scenario.AUTH_TYPE}.cjs`)(page, scenario, viewport, isReference, browserContext);
   }
 
-  await require('./playwright/loadCookies')(browserContext, scenario, scenario.cookieConsent);
+  await require('./playwright/loadCookies.cjs')(browserContext, scenario, scenario.cookieConsent);
 };

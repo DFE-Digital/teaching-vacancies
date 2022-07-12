@@ -5,15 +5,15 @@ const TEMP_FOLDER = 'lib/.tmp'
 
 //create flat array of scenarios
 let scenarios = [
-  ...require('./scenarios/public'),
-  ...require('./scenarios/common'),
-  ...require('./scenarios/components'),
-  ...require('./scenarios/publisher'),
-  ...require('./scenarios/jobseeker')
+  ...require('./scenarios/public.cjs'),
+  ...require('./scenarios/common.cjs'),
+  ...require('./scenarios/components.cjs'),
+  ...require('./scenarios/publisher.cjs'),
+  ...require('./scenarios/jobseeker.cjs')
 ];
 
 // map variants on pages that have abtests running
-const { hasVariants, mapVariants } = require('./scenarios/abtest');
+const { hasVariants, mapVariants } = require('./scenarios/abtest.cjs');
 
 scenarios = scenarios.map((scenario) => hasVariants(scenario.label) ? mapVariants(scenario) : scenario).flat();
 
@@ -48,8 +48,8 @@ module.exports = {
       "height": 1024
     }
   ],
-  "onBeforeScript": "playwright/onBefore.js",
-  "onReadyScript": "playwright/onReady.js",
+  "onBeforeScript": "playwright/onBefore.cjs",
+  "onReadyScript": "playwright/onReady.cjs",
   "scenarios": scenarios,
   "paths": {
     "bitmaps_reference": "visual_snapshots",
