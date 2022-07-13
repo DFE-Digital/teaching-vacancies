@@ -38,5 +38,3 @@
     - else
       = render EmptySectionComponent.new title: t(".zero_saved_jobs_title") do
         = t(".zero_saved_jobs_body_html", link_to: govuk_link_to(t(".link_find"), root_path))
-
-- content_for :after_main, account_survey_link(origin: url_for)

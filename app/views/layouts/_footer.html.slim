@@ -12,7 +12,10 @@
           = t("footer.headings.feedback")
         ul.govuk-footer__list
           li.govuk-footer__list-item
-            = link_to t("footer.provide_feedback"), new_feedback_path, class: "govuk-footer__link"
+            - if jobseeker_signed_in?
+              = link_to t("footer.provide_feedback"), new_jobseekers_account_feedback_path(origin: url_for), class: "govuk-footer__link"
+            - else
+              = link_to t("footer.provide_feedback"), new_feedback_path, class: "govuk-footer__link"
 
       .govuk-grid-column-one-half
         span.govuk-footer__heading.govuk-heading-m
