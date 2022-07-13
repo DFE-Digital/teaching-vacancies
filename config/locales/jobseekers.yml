@@ -222,8 +222,8 @@ en:
         find_and_apply: Find and apply
         no_job_applications: You have not applied for any teaching jobs
         no_job_applications_body_html: "%{link_to} for a teaching job."
-        page_title: My applications
-        page_title_with_count: My applications (%{count})
+        page_title: Applications
+        page_title_with_count: Applications (%{count})
         skip_link: Skip to my job applications
         view_application: View application
       new:

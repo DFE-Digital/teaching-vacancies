@@ -14,7 +14,7 @@ RSpec.describe "Jobseekers can view their dashboard" do
     end
   end
 
-  it "shows `My applications` tab" do
+  it "shows `Applications` tab" do
     expect(page).to have_css(".tabs-component") do |dashboard|
       expect(dashboard).to have_css(".tabs-component-navigation__list") do |nav|
         expect(nav).to have_link(I18n.t("jobseekers.job_applications.index.page_title"))
