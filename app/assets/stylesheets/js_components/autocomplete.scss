@@ -3,17 +3,25 @@
 .autocomplete {
   position: relative;
 
-  .govuk-body {
+  .govuk-form-group {
     margin-bottom: 0;
   }
 
   &__menu {
     position: relative;
     z-index: 1000;
+
+    @include govuk-media-query($from: tablet) {
+      position: absolute;
+    }
   }
 
-  &__suggestions--highlight {
-    font-weight: bold;
+  &__suggestions {
+    margin-bottom: 0;
+
+    &--highlight {
+      font-weight: bold;
+    }
   }
 
   &__wrapper {

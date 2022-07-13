@@ -1,3 +1,4 @@
-.location-finder.govuk-body class="govuk-!-margin-top-1 govuk-!-margin-bottom-4"
-  span.location-finder__link-prefix = "or "
-  =< govuk_link_to(t("jobs.search.use_current_location_html"), "#", class: "govuk-link--no-visited-state", data: { target: target, controller: "location-finder", source: "getPostcodeFromCoordinates", action: "click->location-finder#findLocation" })
+.location-finder class="govuk-!-margin-bottom-6 govuk-!-margin-top-1" data-controller="location-finder" data-location-finder-source-value="getPostcodeFromCoordinates" data-location-finder-input-value=target
+  button.location-finder__button data-action="click->location-finder#findLocation" data-location-finder-target="button" type="button"
+    span.location-finder__link-prefix = "or "
+    = t("jobs.search.use_current_location_html")

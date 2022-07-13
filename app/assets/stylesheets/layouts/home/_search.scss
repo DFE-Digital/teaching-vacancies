@@ -1,4 +1,6 @@
 .search {
+  color: govuk-colour('white');
+
   @include govuk-media-query($until: tablet) {
     background: url('/TVS-logo.png') no-repeat 100% 10px/120px auto govuk-colour('dark-blue');
     padding: govuk-spacing(4);

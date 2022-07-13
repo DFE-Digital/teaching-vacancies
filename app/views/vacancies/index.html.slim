@@ -21,6 +21,7 @@
     .govuk-grid-column-two-thirds-at-desktop
       = render "vacancies/search/fields_and_button", f: f, form: @form
       = render "vacancies/search/open_filters_button", form: @form
+
       - if @show_map
         #map-results
           = map(markers: @vacancies_search.markers,
