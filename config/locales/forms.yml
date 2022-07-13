@@ -17,7 +17,7 @@ en:
     back_to_teaching_vacancies: Back to Teaching Vacancies
     cancel: Cancel
     cancel_and_return: Cancel and return
-    cancel_and_return_to_account: Cancel and return to my account
+    cancel_and_return_to_account: Cancel and return to account
     cancel_and_return_to_jobs: Cancel and return to manage jobs
     cancel_copy: Cancel job listing copy
     cancel_end_listing: Cancel ending job listing
@@ -30,7 +30,7 @@ en:
     confirm_rejection: Confirm rejection
     confirm_unsubscribe: Unsubscribe
     continue: Continue
-    continue_to_account: Continue to my account
+    continue_to_account: Continue to your account
     continue_to_dsi: Continue to DfE Sign-in
     copy_listing: Copy job listing
     copy_url: Copy URL
@@ -92,7 +92,7 @@ en:
     update_job: Update listing
     update_password: Update password
     upload_files: Upload files
-    view_account: View my account
+    view_account: View your account
     withdraw_application: Withdraw application
 
   helpers:
