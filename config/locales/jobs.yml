@@ -101,9 +101,9 @@ en:
       location_html: <span class='govuk-!-font-weight-bold text-capitalize'>&lsquo;%{location}&rsquo;</span>
       organisation_html: at <span class='govuk-!-font-weight-bold'>%{organisation}</span>
       unit_of_length: mile
-      without_search_html:
-        one: There is <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> job listed
-        other: There are <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> jobs listed
+      without_search:
+        one: "%{jobs_count} job listed"
+        other: "%{jobs_count} jobs listed"
 
     legacy_job_alert:
       link: Receive a job alert

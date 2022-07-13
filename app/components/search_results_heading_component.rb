@@ -14,7 +14,7 @@ class SearchResultsHeadingComponent < ViewComponent::Base
     return @landing_page.heading if @landing_page
 
     if @keyword.blank? && @location.blank? && @organisation_slug.blank?
-      return t("jobs.search_result_heading.without_search_html", jobs_count: @readable_count, count: @total_count)
+      return t("jobs.search_result_heading.without_search", jobs_count: @readable_count, count: @total_count)
     end
 
     [count_phrase, keyword_phrase, radius_phrase, location_phrase, organisation_phrase].compact.join(" ")
