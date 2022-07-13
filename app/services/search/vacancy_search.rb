@@ -1,13 +1,10 @@
 class Search::VacancySearch
-  DEFAULT_HITS_PER_PAGE = 20
-  DEFAULT_PAGE = 1
-
   extend Forwardable
   def_delegators :location_search, :point_coordinates
 
-  attr_reader :search_criteria, :keyword, :location, :radius, :organisation_slug, :sort, :page, :per_page
+  attr_reader :search_criteria, :keyword, :location, :radius, :organisation_slug, :sort
 
-  def initialize(search_criteria, sort: nil, page: nil, per_page: nil)
+  def initialize(search_criteria, sort: nil)
     @search_criteria = search_criteria
     @keyword = search_criteria[:keyword]
     @location = search_criteria[:location]
@@ -15,8 +12,6 @@ class Search::VacancySearch
     @organisation_slug = search_criteria[:organisation_slug]
 
     @sort = sort || Search::VacancySort.new(keyword: keyword)
-    @per_page = (per_page || DEFAULT_HITS_PER_PAGE).to_i
-    @page = (page || DEFAULT_PAGE).to_i
   end
 
   def active_criteria
@@ -46,24 +41,12 @@ class Search::VacancySearch
     Search::WiderSuggestionsBuilder.new(search_criteria).suggestions
   end
 
-  def out_of_bounds?
-    page_from > total_count
-  end
-
-  def page_from
-    ((page - 1) * per_page) + 1
-  end
-
-  def page_to
-    [(page * per_page), total_count].min
-  end
-
   def organisation
     Organisation.find_by(slug: organisation_slug) if organisation_slug
   end
 
   def vacancies
-    @vacancies ||= scope.page(page).per(per_page)
+    @vacancies ||= scope
   end
 
   def markers
@@ -74,7 +57,7 @@ class Search::VacancySearch
   end
 
   def total_count
-    vacancies.total_count
+    vacancies.count
   end
 
   private

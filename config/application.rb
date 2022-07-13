@@ -1,6 +1,5 @@
 require_relative "boot"
 
-require "kaminari"
 require "rails"
 # Pick the frameworks you want:
 require "active_model/railtie"

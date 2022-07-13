@@ -9,8 +9,6 @@ RSpec.describe Search::WiderSuggestionsBuilder do
       keyword: "test",
       location: "somewhere",
       filters: [],
-      page: 1,
-      per_page: 5,
       sort_by: nil,
     }
   end

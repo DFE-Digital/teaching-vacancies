@@ -39,5 +39,5 @@
           = render "vacancies/search/no_results_suggestions", vacancies_search: @vacancies_search
         - else
           = render "vacancies/search/no_results"
-      = render "vacancies/search/pagination", vacancies_search: @vacancies_search
+      = govuk_pagination(pagy: @pagy)
       = job_alert_link(vacancies_search: @vacancies_search, count: @vacancies.count)

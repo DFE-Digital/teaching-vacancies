@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Search::VacancySearch do
-  subject { described_class.new(form_hash, sort: sort, page: page, per_page: per_page) }
+  subject { described_class.new(form_hash, sort: sort) }
 
   let(:form_hash) do
     {
@@ -16,14 +16,12 @@ RSpec.describe Search::VacancySearch do
   let(:location) { "Louth" }
   let(:radius) { 10 }
   let(:sort) { Search::VacancySort.new(keyword: keyword) }
-  let(:per_page) { 20 }
-  let(:page) { 1 }
   let(:organisation_slug) { "test-slug" }
   let(:vacancy_ids) { ["test-id"] }
 
   let(:school) { create(:school) }
 
-  let(:scope) { double("scope", total_count: 870) }
+  let(:scope) { double("scope", count: 870) }
 
   before do
     allow(subject).to receive(:organisation).and_return(school)
@@ -34,32 +32,6 @@ RSpec.describe Search::VacancySearch do
     allow(scope).to receive(:search_by_filter).and_return(scope)
     allow(scope).to receive(:search_by_full_text).with("maths teacher").and_return(scope)
     allow(scope).to receive(:where).with(id: vacancy_ids).and_return(scope)
-
-    allow(scope).to receive(:page).with(page).and_return(scope)
-    allow(scope).to receive(:per).with(per_page).and_return(scope)
-  end
-
-  describe "pagination helpers" do
-    let(:scope) { double("scope", total_count: 50) }
-    let(:page) { 3 }
-
-    it "returns the expected bounds" do
-      expect(subject).not_to be_out_of_bounds
-
-      expect(subject.page_from).to eq(41)
-      expect(subject.page_to).to eq(50)
-    end
-
-    context "when out of bounds" do
-      let(:scope) { double("scope", total_count: 20) }
-
-      it "returns the expected bounds" do
-        expect(subject).to be_out_of_bounds
-
-        expect(subject.page_from).to eq(41)
-        expect(subject.page_to).to eq(20)
-      end
-    end
   end
 
   describe "performing search" do

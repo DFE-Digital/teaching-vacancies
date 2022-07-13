@@ -48,16 +48,6 @@ en:
       secondary: Secondary
       16-19: 16-19
 
-    number_of_results_html: >-
-      Showing
-      <span class="govuk-!-font-weight-bold">%{first}</span> to
-      <span class="govuk-!-font-weight-bold">%{last}</span> of
-      <span class="govuk-!-font-weight-bold">%{count}</span> results
-    number_of_results_one_page_html:
-      zero: ''
-      one: Showing <span class="govuk-!-font-weight-bold">%{count}</span> result
-      other: Showing <span class="govuk-!-font-weight-bold">%{count}</span> results
-
     no_jobs:
       heading: Try another search
       intro: 'You may get more results if you:'

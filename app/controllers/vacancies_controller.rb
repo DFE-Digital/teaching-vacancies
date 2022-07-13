@@ -5,12 +5,8 @@ class VacanciesController < ApplicationController
   after_action :trigger_search_performed_event, only: %i[index]
 
   def index
-    @vacancies_search = Search::VacancySearch.new(
-      form.to_hash,
-      sort: form.sort,
-      page: params[:page],
-    )
-    @vacancies = @vacancies_search.vacancies
+    @vacancies_search = Search::VacancySearch.new(form.to_hash, sort: form.sort)
+    @pagy, @vacancies = pagy(@vacancies_search.vacancies)
 
     @show_map = @vacancies_search.location && @vacancies_search.total_count <= MAX_TOTAL_RESULTS_FOR_MAP
   end

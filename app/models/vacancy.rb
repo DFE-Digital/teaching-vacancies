@@ -71,8 +71,6 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
   scope :search_by_location, VacancyLocationQuery
   scope :search_by_full_text, VacancyFullTextSearchQuery
 
-  paginates_per 10
-
   validates :slug, presence: true
   validate :enable_job_applications_cannot_be_changed_once_listed
   validates_with ExternalVacancyValidator, if: :external?
