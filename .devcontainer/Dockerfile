@@ -12,8 +12,12 @@ RUN apt update -yq \
    && apt install curl gnupg -yq \
    && curl -sL https://deb.nodesource.com/setup_$NODEJS_MAJOR_VERSION.x | bash
 
+# Set up repository for CloudFoundry CLI
+RUN wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | apt-key add - \
+    && echo "deb https://packages.cloudfoundry.org/debian stable main" > /etc/apt/sources.list.d/cloudfoundry-cli.list
+
 # Set up dependencies
-RUN apt install -y nodejs postgresql-client redis-tools less vim sudo shared-mime-info man-db
+RUN apt update && apt install -y cf8-cli nodejs postgresql-client redis-tools less vim sudo shared-mime-info man-db
 RUN npm install -g yarn
 
 # Install Terraform
@@ -21,6 +25,9 @@ RUN curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/$TERRAFO
     && unzip /tmp/terraform.zip -d /tmp \
     && mv /tmp/terraform /usr/bin/terraform \
     && chmod +x /usr/bin/terraform
+
+# Install Cloudfoundry
+RUN
 
 # Set up unprivileged local user
 RUN groupadd --gid $USER_GID $USERNAME \
