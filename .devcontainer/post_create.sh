@@ -15,6 +15,9 @@ sudo chown -R $(id -u):$(id -g) .
 log 'Install Ruby dependencies'
 bundle install
 
+log 'Install optional devcontainer Ruby dependencies'
+gem install solargraph
+
 log 'Install Javascript dependencies'
 yarn install
 
