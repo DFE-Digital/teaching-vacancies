@@ -1,6 +1,5 @@
 module ComponentsHelper
   {
-    account_survey_link: "AccountSurveyLinkComponent",
     banner_button: "BannerButtonComponent",
     card: "CardComponent",
     dashboard: "DashboardComponent",

@@ -17,5 +17,3 @@
           - row.action(text: t("buttons.change"), href: edit_jobseeker_registration_path(password_update: true), visually_hidden_text: t(".summary_list.password"))
 
       p = govuk_link_to t(".close_account"), jobseekers_confirm_destroy_account_path
-
-  - content_for :after_main, account_survey_link(origin: url_for)
