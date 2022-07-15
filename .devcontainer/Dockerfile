@@ -26,9 +26,6 @@ RUN curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/$TERRAFO
     && mv /tmp/terraform /usr/bin/terraform \
     && chmod +x /usr/bin/terraform
 
-# Install Cloudfoundry
-RUN
-
 # Set up unprivileged local user
 RUN groupadd --gid $USER_GID $USERNAME \
     && groupadd bundler \
