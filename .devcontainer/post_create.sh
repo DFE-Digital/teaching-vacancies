@@ -21,6 +21,9 @@ gem install solargraph
 log 'Install Javascript dependencies'
 yarn install
 
+log 'Set API endpoint for CloudFoundry CLI'
+cf api api.london.cloud.service.gov.uk
+
 log 'Ensure `tmp` folder has a `.keep` file'
 # (this is present on the host, but the container uses a volume for the `tmp` directory,
 # leading Git to believe the `.keep` file has gone missing)
