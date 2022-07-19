@@ -32,20 +32,20 @@ RSpec.describe "Publishers can view their notifications" do
     it "clicks notifications link, renders the notifications, paginates, and marks as read" do
       click_on strip_tags(I18n.t("nav.notifications_html", count: 2))
 
-      expect(page).to have_css("div", class: "notification", count: 1) do |notification|
-        expect(notification).to have_css("div", class: "notification__tag", text: "new", count: 1)
+      within first(".notification") do
+        expect(page).to have_css("div", class: "notification__tag", text: "new", count: 1)
       end
 
       click_on "Next"
 
-      expect(page).to have_css("div", class: "notification", count: 1) do |notification|
-        expect(notification).to have_css("div", class: "notification__tag", text: "new", count: 1)
+      within first(".notification") do
+        expect(page).to have_css("div", class: "notification__tag", text: "new", count: 1)
       end
 
       click_on "Previous"
 
-      expect(page).to have_css("div", class: "notification", count: 1) do |notification|
-        expect(notification).not_to have_css("div", class: "notification__tag", text: "new", count: 1)
+      within first(".notification") do
+        expect(page).not_to have_css("div", class: "notification__tag", text: "new", count: 1)
       end
     end
   end

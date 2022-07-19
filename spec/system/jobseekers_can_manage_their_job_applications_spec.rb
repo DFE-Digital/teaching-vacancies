@@ -21,17 +21,27 @@ RSpec.describe "Jobseekers can manage their job applications" do
       before { visit jobseekers_job_applications_path }
 
       context "when the jobseeker views job applications" do
-        it "shows draft job applications then submitted job applications" do
+        it "shows job applications in draft/submitted/shortlisted/passed order" do
           expect(page).to have_css("h1.govuk-heading-l", text: I18n.t("jobseekers.job_applications.index.page_title"))
-          expect(page).to have_css(".card-component", count: 4) do |cards|
-            expect(cards[0]).to have_css(".card-component__header", text: draft_job_application.vacancy.job_title)
-            expect(cards[0]).to have_css(".card-component__body", text: "draft")
-            expect(cards[1]).to have_css(".card-component__header", text: deadline_passed_job_application.vacancy.job_title)
-            expect(cards[1]).to have_css(".card-component__body", text: "deadline passed")
-            expect(cards[2]).to have_css(".card-component__header", text: submitted_job_application.vacancy.job_title)
-            expect(cards[2]).to have_css(".card-component__body", text: "submitted")
-            expect(cards[1]).to have_css(".card-component__header", text: shortlisted_job_application.vacancy.job_title)
-            expect(cards[1]).to have_css(".card-component__body", text: "shortlisted")
+
+          within ".card-component:nth-child(1)" do
+            expect(page).to have_css(".card-component__header", text: draft_job_application.vacancy.job_title)
+            expect(page).to have_css(".card-component__actions", text: "draft")
+          end
+
+          within ".card-component:nth-child(2)" do
+            expect(page).to have_css(".card-component__header", text: submitted_job_application.vacancy.job_title)
+            expect(page).to have_css(".card-component__actions", text: "submitted")
+          end
+
+          within ".card-component:nth-child(3)" do
+            expect(page).to have_css(".card-component__header", text: shortlisted_job_application.vacancy.job_title)
+            expect(page).to have_css(".card-component__actions", text: "shortlisted")
+          end
+
+          within ".card-component:nth-child(4)" do
+            expect(page).to have_css(".card-component__header", text: deadline_passed_job_application.vacancy.job_title)
+            expect(page).to have_css(".card-component__actions", text: "deadline passed")
           end
         end
 
