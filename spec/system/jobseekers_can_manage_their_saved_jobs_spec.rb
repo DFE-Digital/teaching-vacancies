@@ -24,50 +24,46 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
         it "shows saved jobs" do
           expect(page).to have_content(I18n.t("jobseekers.saved_jobs.index.page_title"))
           expect(page).to have_css("h1.govuk-heading-l", text: I18n.t("jobseekers.saved_jobs.index.page_title"))
-          expect(page).to have_css(".card-component", count: 3) do |cards|
-            expect(cards[0]).to have_css(".card-component__header", text: expired_vacancy.job_title)
-            expect(cards[1]).to have_css(".card-component__header", text: vacancy2.job_title)
-            expect(cards[2]).to have_css(".card-component__header", text: vacancy1.job_title)
+          expect(page).to have_css(".card-component", count: 3)
+
+          within ".card-component:nth-child(1)" do
+            expect(page).to have_css(".card-component__header", text: expired_vacancy.job_title)
+          end
+
+          within ".card-component:nth-child(2)" do
+            expect(page).to have_css(".card-component__header", text: vacancy2.job_title)
+          end
+
+          within ".card-component:nth-child(3)" do
+            expect(page).to have_css(".card-component__header", text: vacancy1.job_title)
           end
         end
 
         it "shows deadline passed label for expired jobs" do
-          expect(page).to have_css(".card-component", count: 3) do |cards|
-            expect(cards[0]).to have_css(".card-component__body", text: I18n.t("jobseekers.saved_jobs.index.deadline_passed"))
-            expect(cards[1]).not_to have_css(".card-component__body", text: I18n.t("jobseekers.saved_jobs.index.deadline_passed"))
-            expect(cards[2]).not_to have_css(".card-component__body", text: I18n.t("jobseekers.saved_jobs.index.deadline_passed"))
+          within ".card-component:nth-child(1)" do
+            expect(page).to have_css(".card-component__body", text: I18n.t("jobseekers.saved_jobs.index.deadline_passed"))
+          end
+
+          within ".card-component:nth-child(2)" do
+            expect(page).not_to have_css(".card-component__body", text: I18n.t("jobseekers.saved_jobs.index.deadline_passed"))
+          end
+
+          within ".card-component:nth-child(3)" do
+            expect(page).not_to have_css(".card-component__body", text: I18n.t("jobseekers.saved_jobs.index.deadline_passed"))
           end
         end
 
         it "does not show apply for this job links" do
-          expect(page).to have_css(".card-component", count: 3) do |cards|
-            expect(cards[0]).to have_css(".card-component__actions") do |actions|
-              expect(actions).not_to have_link(I18n.t("jobseekers.saved_jobs.index.apply"))
-            end
-
-            expect(cards[1]).to have_css(".card-component__actions") do |actions|
-              expect(actions).not_to have_link(I18n.t("jobseekers.saved_jobs.index.apply"))
-            end
-
-            expect(cards[2]).to have_css(".card-component__actions") do |actions|
-              expect(actions).not_to have_link(I18n.t("jobseekers.saved_jobs.index.apply"))
-            end
+          within ".card-component:nth-child(1)" do
+            expect(page).not_to have_link(I18n.t("jobseekers.saved_jobs.index.apply"))
           end
-        end
 
-        it "shows apply for this job link for live jobs that can be applied to" do
-          expect(page).to have_css(".card-component", count: 3) do |cards|
-            expect(cards[0]).to have_css(".card-component__actions") do |actions|
-              expect(actions).not_to have_link(I18n.t("jobseekers.saved_jobs.index.apply"))
-            end
+          within ".card-component:nth-child(2)" do
+            expect(page).to have_link(I18n.t("jobseekers.saved_jobs.index.apply"))
+          end
 
-            expect(cards[1]).to have_css(".card-component__actions") do |actions|
-              expect(actions).to have_link(I18n.t("jobseekers.saved_jobs.index.apply"))
-            end
-
-            expect(cards[2]).to have_css(".card-component__actions") do |actions|
-              expect(actions).not_to have_link(I18n.t("jobseekers.saved_jobs.index.apply"))
-            end
+          within ".card-component:nth-child(3)" do
+            expect(page).not_to have_link(I18n.t("jobseekers.saved_jobs.index.apply"))
           end
         end
 
