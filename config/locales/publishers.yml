@@ -205,21 +205,6 @@ en:
       confirm_destroy:
         are_you_sure: Are you sure you want to delete the draft listing?
         page_title: Delete draft listing
-      create_or_copy:
-        cancel: Cancel and return to manage jobs
-        cancel_caption: If you click cancel you will lose any unsaved information from this step. Completed details from previous steps will be saved in your draft jobs.
-        form:
-          options:
-            copy_existing: Copy an existing job listing
-            create_new: Start with a blank template
-          submit: Continue
-        heading: What do you want to do?
-        job_ad_guide:
-          description_desktop: Find out the essential things to include to attract the right candidates for your role.
-          description_mobile: Get guidance around how to attract top talent.
-          link_text: View article
-          title: How to create the perfect teacher job ad
-        page_title: Create or copy a job listing
       destroy:
         success_html: >-
           %{job_title} has been <span class="govuk-!-font-weight-bold">deleted</span>
@@ -322,10 +307,6 @@ en:
       review:
         heading: Review the job listing
         steps: Create a job listing steps
-      select_a_job_for_copying:
-        closing_date: "Closing date: %{date}"
-        heading: Select a job to copy
-        page_title: Select a job to copy
       show:
         view_live_listing_link: View this listing
         view_live_listing_title: View the live job listing
@@ -342,6 +323,8 @@ en:
         applying_for_the_job: Applying for the job
         job_summary: Job summary
         review_heading: Review the job listing
+      submit:
+        cancel_caption: If you click cancel you will lose any unsaved information from this step. Completed details from previous steps will be saved in your draft jobs.
       summary:
         create_another_job_listing: Create another job listing
         date_expires: >-

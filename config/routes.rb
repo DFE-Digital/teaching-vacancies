@@ -200,12 +200,6 @@ Rails.application.routes.draw do
       resource :documents, only: %i[create destroy show], controller: "publishers/vacancies/documents"
       resource :application_forms, only: %i[create destroy], controller: "publishers/vacancies/application_forms"
 
-      collection do
-        get :create_or_copy, to: "publishers/vacancies#create_or_copy", path: "create-or-copy"
-        get :select_a_job_for_copying, to: "publishers/vacancies#select_a_job_for_copying", path: "select-a-job-for-copying"
-        get :redirect_to_copy_job, to: "publishers/vacancies#redirect_to_copy_job"
-      end
-
       get :confirm_destroy
       get :preview
       post :publish, to: "publishers/vacancies/publish#create"

@@ -10,10 +10,7 @@
       span.govuk-caption-l = @organisation.name
       h1.govuk-heading-l = t("jobs.dashboard.#{@selected_type}.with_count_html", count: @vacancies.count)
     .govuk-grid-column-one-quarter
-      - if @organisation.all_vacancies.active.any?
-        = govuk_button_link_to t("buttons.create_job"), create_or_copy_organisation_jobs_path, class: "float-right"
-      - else
-        = govuk_button_to t("buttons.create_job"), organisation_jobs_path, class: "float-right"
+      = govuk_button_to t("buttons.create_job"), organisation_jobs_path, class: "float-right"
 
   = tabs do |tabs|
     - @vacancy_types.each do |vacancy_type|
@@ -60,7 +57,7 @@
       - elsif @selected_type == "awaiting_feedback"
         = render "publishers/organisations/vacancies_awaiting_feedback", organisation: @organisation, vacancies: @vacancies
       - else
-        = govuk_summary_list actions: false do |summary_list|
+        = govuk_summary_list do |summary_list|
           - vacancies.each do |vacancy|
             - summary_list.row do |row|
               - row.key do
@@ -114,6 +111,8 @@
                 - if vacancy.external?
                   p.govuk-body-xs.external-notice
                     = t("jobs.manage.external_notice")
+              - unless vacancy.external?
+                - row.action(text: t("buttons.copy_listing"), href: new_organisation_job_copy_path(job_id: vacancy.id), visually_hidden_text: "#{t('buttons.copy_listing')} #{vacancy.job_title}")
 
     - unless @organisation.school_group?
       .govuk-grid-column-one-quarter

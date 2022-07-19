@@ -68,6 +68,12 @@ RSpec.describe "Copying a vacancy" do
     expect(page).to have_content(I18n.t("publishers.vacancies.summary.success"))
   end
 
+  scenario "a job can be copied from the dashboard" do
+    visit organisation_path
+    click_on "#{I18n.t('buttons.copy_listing')} #{original_vacancy.job_title}"
+    expect(current_path).to eq new_organisation_job_copy_path(job_id: original_vacancy.id)
+  end
+
   context "when the original job is now invalid" do
     let!(:original_vacancy) do
       create_published_vacancy(about_school: nil, job_location: "at_one_school", organisations: [school]) do |vacancy|
