@@ -155,7 +155,7 @@ jobs:
           docker run -t -e "SNYK_TOKEN=${{ env.SNYK_TOKEN }}" \
             -v "/var/run/docker.sock:/var/run/docker.sock" \
             -v "$GITHUB_WORKSPACE:/project"  \
-            snyk/snyk-cli:docker test --docker ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }} --file=Dockerfile
+            snyk/snyk-cli:docker test --docker ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }} --file=Dockerfile --fail-on=all
 
       - name: Push ${{ env.DOCKER_REPOSITORY }} images
         if: ${{ success() }}
