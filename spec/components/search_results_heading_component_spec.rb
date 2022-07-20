@@ -62,7 +62,7 @@ RSpec.describe SearchResultsHeadingComponent, type: :component do
     before { subject }
 
     it "renders correct heading" do
-      expect(rendered_component).to include(
+      expect(page).to have_content(
         I18n.t("jobs.search_result_heading.without_search", jobs_count: count, count: count),
       )
     end
@@ -76,9 +76,7 @@ RSpec.describe SearchResultsHeadingComponent, type: :component do
     end
 
     it "renders correct heading" do
-      expect(rendered_component).to include(
-        I18n.t("jobs.search_result_heading.organisation_html", organisation: vacancies_search.organisation.name),
-      )
+      expect(page).to have_content(vacancies_search.organisation.name)
     end
   end
 end

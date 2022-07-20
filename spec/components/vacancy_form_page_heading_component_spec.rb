@@ -34,13 +34,13 @@ RSpec.describe VacancyFormPageHeadingComponent, type: :component do
       let(:status) { :draft }
 
       it "shows the current step" do
-        expect(rendered_component).to include(I18n.t("jobs.current_step", step: 1, total: 2))
+        expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 2))
       end
     end
 
     context "when vacancy is published" do
       it "does not show the current step" do
-        expect(rendered_component).not_to include("Step")
+        expect(page).not_to have_content("Step")
       end
     end
   end
@@ -50,7 +50,7 @@ RSpec.describe VacancyFormPageHeadingComponent, type: :component do
 
     context "when the vacancy is published" do
       it "returns edit job title" do
-        expect(rendered_component).to include(I18n.t("jobs.edit_job_title", job_title: "Test job title"))
+        expect(page).to have_content(I18n.t("jobs.edit_job_title", job_title: "Test job title"))
       end
     end
 
@@ -58,7 +58,7 @@ RSpec.describe VacancyFormPageHeadingComponent, type: :component do
       let(:status) { :draft }
 
       it "returns create a job title" do
-        expect(rendered_component).to include(I18n.t("jobs.create_a_job_title", organisation: "Teaching Vacancies Academy"))
+        expect(page).to have_content(I18n.t("jobs.create_a_job_title", organisation: "Teaching Vacancies Academy"))
       end
     end
   end

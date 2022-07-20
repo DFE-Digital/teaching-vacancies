@@ -90,6 +90,7 @@ group :development, :test do
   gem "brakeman"
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "dotenv-rails"
+  gem "launchy", "~> 2.5"
   gem "pry"
   gem "pry-byebug"
   gem "pry-rails"

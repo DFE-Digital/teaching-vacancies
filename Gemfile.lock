@@ -300,6 +300,8 @@ GEM
     jwt (2.4.1)
     kramdown (2.4.0)
       rexml
+    launchy (2.5.0)
+      addressable (~> 2.7)
     listen (3.7.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -694,6 +696,7 @@ DEPENDENCIES
   jbuilder
   jsbundling-rails
   kramdown
+  launchy (~> 2.5)
   listen
   lockbox
   mail-notify
