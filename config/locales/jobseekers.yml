@@ -440,16 +440,17 @@ en:
         title: Reset your password
     registrations:
       check_your_email:
-        additional_instructions: >-
-          To finish setting up your Teaching Vacancies account you must click the link in the email.
-          If you have not received the email after a few minutes, please check your spam folder.
-        description: "We have sent you an email with instructions on how to verify your email address. We sent the email to:"
+        additional_instructions_html: >-
+          If it hasn't arrived after a few minutes, check your spam folder,
+          %{resend_link}, or <a href="%{request_support_link}" class="govuk-link">submit a support request</a>.
+        description: "An email has been sent to you with instructions on how to verify your email address and set up your Teaching Vacancies account."
         having_trouble_html: Still having trouble? %{mail_to} to our support team.
+        instructions: To finish setting up your account, click the link in the email.
         report_it: Report it
         request_support_link: Request support
         resend_summary: Need us to resend the email?
         resend_text_html: If you did not receive the email, you can %{resend_link} or %{restart_link}.<br><br>Need help? %{request_support_link}.
-        resend_link: request a new one
+        resend_link: click to resend the email
         restart_link: provide another email address
         title: Check your email
       confirm_destroy:
