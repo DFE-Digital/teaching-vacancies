@@ -6,10 +6,6 @@
 
     p.govuk-body = t(".description")
 
-    p.govuk-body class="govuk-!-font-weight-bold" = @resource.email
+    p.govuk-body = t(".instructions")
 
-    p.govuk-body = t(".additional_instructions")
-
-    = govuk_details summary_text: t(".resend_summary"), text: t(".resend_text_html", resend_link: govuk_link_to(t(".resend_link"), jobseekers_resend_instructions_path),
-                                                                                     restart_link: govuk_link_to(t(".restart_link"), new_jobseeker_registration_path),
-                                                                                     request_support_link: govuk_link_to(t(".request_support_link"), new_support_request_path))
+    p.govuk-body = t(".additional_instructions_html", request_support_link: t(".request_support_link"), resend_link: govuk_link_to(t(".resend_link"), jobseekers_resend_instructions_path))
