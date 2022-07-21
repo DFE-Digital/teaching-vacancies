@@ -97,7 +97,11 @@ const Map = class {
 
   focusMarker(id, offset) {
     this.markerOffset = offset;
-    document.getElementById(id).focus();
+    const marker = document.getElementById(id);
+
+    if (marker) {
+      marker.focus();
+    }
   }
 
   /* eslint-disable class-methods-use-this */
