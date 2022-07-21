@@ -79,7 +79,7 @@ class UnitedLearningVacancySource
   end
 
   def job_roles_for(item)
-    roles = item["Job_roles"].presence&.split(",")
+    roles = item["Job_roles"].presence&.gsub("leadership", "senior_leader")&.gsub(/\s+/, "")&.split(",")
     roles.push("ect_suitable") if item["ect_suitable"] == "yes"
     roles.push("send_responsible") if item["send_responsible"] == "yes"
     roles
