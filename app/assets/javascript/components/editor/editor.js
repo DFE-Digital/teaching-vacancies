@@ -76,7 +76,7 @@ const EditorController = class extends Controller {
     const paragraphs = this.editorTarget.querySelectorAll('p');
     paragraphs.forEach((p) => {
       if (p.textContent.trim().length > 0) return;
-      this.editorTarget.removeChild(p);
+      p.parentNode.removeChild(p);
     });
   }
 
