@@ -6,6 +6,4 @@
 
     p.govuk-body = t(".description")
 
-    p.govuk-body = t(".instructions")
-
-    p.govuk-body = t(".additional_instructions_html", request_support_link: t(".request_support_link"), resend_link: govuk_link_to(t(".resend_link"), jobseekers_resend_instructions_path))
+    p.govuk-body = t(".instructions_html", request_support_link: t(".request_support_link"), resend_link: govuk_link_to(t(".resend_link"), jobseekers_resend_instructions_path))
