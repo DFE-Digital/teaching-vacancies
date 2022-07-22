@@ -29,7 +29,7 @@ RSpec.describe JobAlertLinkComponent, type: :component do
     let(:search_params_present?) { false }
 
     it "does not render the job alerts link" do
-      expect(rendered_component).to be_blank
+      expect(page).to_not have_css(".job-alert-cta")
     end
   end
 end

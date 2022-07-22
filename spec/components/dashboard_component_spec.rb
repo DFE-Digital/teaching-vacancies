@@ -19,7 +19,7 @@ RSpec.describe DashboardComponent, type: :component do
     before { render_inline(subject) }
 
     it "renders the Create a job listing button that skips the copy existing page" do
-      expect(rendered_component).to include(Rails.application.routes.url_helpers.organisation_jobs_path)
+      expect(page).to have_link(href: Rails.application.routes.url_helpers.organisation_jobs_path)
     end
   end
 
@@ -33,7 +33,7 @@ RSpec.describe DashboardComponent, type: :component do
         let!(:inline_component) { render_inline(subject) }
 
         it "renders the Create a job listing button that does not skip the copy existing page" do
-          expect(rendered_component).to include(Rails.application.routes.url_helpers.create_or_copy_organisation_jobs_path)
+          expect(page).to have_link(href: Rails.application.routes.url_helpers.create_or_copy_organisation_jobs_path)
         end
 
         it "renders the number of jobs in the heading" do
@@ -45,16 +45,16 @@ RSpec.describe DashboardComponent, type: :component do
         end
 
         it "renders the link to view applicants" do
-          expect(rendered_component).to include(I18n.t("jobs.manage.view_applicants", count: 1))
-          expect(rendered_component).to include(Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id))
+          expect(page).to have_content(I18n.t("jobs.manage.view_applicants", count: 1))
+          expect(page).to have_link(href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id))
         end
 
         context "when withdrawn applications have also been received" do
           let(:withdrawn_job_application) { create(:job_application, :status_withdrawn, vacancy: vacancy) }
 
           it "does not affect the count" do
-            expect(rendered_component).to include(I18n.t("jobs.manage.view_applicants", count: 1))
-            expect(rendered_component).to include(Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id))
+            expect(page).to have_content(I18n.t("jobs.manage.view_applicants", count: 1))
+            expect(page).to have_link(href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id))
           end
         end
 
@@ -70,7 +70,7 @@ RSpec.describe DashboardComponent, type: :component do
           let(:selected_type) { "draft" }
 
           it "uses the correct 'no jobs' text ('no filters')" do
-            expect(rendered_component).to include(I18n.t("jobs.manage.draft.no_jobs.no_filters"))
+            expect(page).to have_content(I18n.t("jobs.manage.draft.no_jobs.no_filters"))
           end
         end
       end
@@ -99,8 +99,8 @@ RSpec.describe DashboardComponent, type: :component do
         end
 
         it "renders the link to view applicants" do
-          expect(rendered_component).to include(I18n.t("jobs.manage.view_applicants", count: 1))
-          expect(rendered_component).to include(Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id))
+          expect(page).to have_content(I18n.t("jobs.manage.view_applicants", count: 1))
+          expect(page).to have_link(href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id))
         end
 
         it "renders the filters sidebar" do
@@ -141,7 +141,7 @@ RSpec.describe DashboardComponent, type: :component do
         end
 
         it "does not render the link to view applicants" do
-          expect(rendered_component).not_to include(I18n.t("jobs.manage.view_applicants", count: 1))
+          expect(page).not_to have_content(I18n.t("jobs.manage.view_applicants", count: 1))
         end
 
         it "renders the vacancy readable job location in the table" do
@@ -172,7 +172,7 @@ RSpec.describe DashboardComponent, type: :component do
           let(:selected_type) { "draft" }
 
           it "uses the correct 'no jobs' text ('no filters')" do
-            expect(rendered_component).to include(I18n.t("jobs.manage.draft.no_jobs.no_filters"))
+            expect(page).to have_content(I18n.t("jobs.manage.draft.no_jobs.no_filters"))
           end
         end
       end
@@ -185,8 +185,8 @@ RSpec.describe DashboardComponent, type: :component do
       before { render_inline(subject) }
 
       it "renders plain text of 0 applicants" do
-        expect(rendered_component).to include(I18n.t("jobs.manage.view_applicants", count: 0))
-        expect(rendered_component).not_to include(Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id))
+        expect(page).to have_content(I18n.t("jobs.manage.view_applicants", count: 0))
+        expect(page).not_to have_link(href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id))
       end
     end
   end
@@ -205,11 +205,11 @@ RSpec.describe DashboardComponent, type: :component do
       let!(:inline_component) { render_inline(subject) }
 
       it "renders the vacancy in Oxford" do
-        expect(rendered_component).to include(vacancy_oxford.job_title)
+        expect(page).to have_content(vacancy_oxford.job_title)
       end
 
       it "does not render the vacancy in Cambridge" do
-        expect(rendered_component).not_to include(vacancy_cambridge.job_title)
+        expect(page).not_to have_content(vacancy_cambridge.job_title)
       end
     end
 
@@ -217,7 +217,7 @@ RSpec.describe DashboardComponent, type: :component do
       let!(:inline_component) { render_inline(subject) }
 
       it "uses the correct no jobs text ('with filters')" do
-        expect(rendered_component).to include(I18n.t("jobs.manage.published.no_jobs.with_filters"))
+        expect(page).to have_content(I18n.t("jobs.manage.published.no_jobs.with_filters"))
       end
     end
   end
